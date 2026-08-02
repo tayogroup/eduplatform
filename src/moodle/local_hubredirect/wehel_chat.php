@@ -152,9 +152,18 @@ if ($courseoutline === '') {
     $courseoutline = '(The course outline was not provided; you know only the current unit.)';
 }
 
+// Any advertised tool with a definition in the prompt source gets defined for
+// the model; the client resolves the calls, so nothing else is server-side.
 $requestedtools = $payload['tools'] ?? [];
-$usetool = is_array($requestedtools) && in_array('get_unit', $requestedtools, true)
-    && isset($promptdata['tools']['get_unit']) && is_array($promptdata['tools']['get_unit']);
+$tooldefs = [];
+if (is_array($requestedtools)) {
+    foreach ($requestedtools as $toolname) {
+        if (is_string($toolname) && isset($promptdata['tools'][$toolname]) && is_array($promptdata['tools'][$toolname])) {
+            $tooldefs[] = array_merge(['name' => $toolname], $promptdata['tools'][$toolname]);
+        }
+    }
+}
+$usetool = count($tooldefs) > 0;
 
 $messages = $payload['messages'] ?? null;
 if (!is_array($messages) || !count($messages) || count($messages) > 30) {
@@ -262,8 +271,8 @@ $request = [
     'system' => $system,
     'messages' => $conversation,
 ];
-if ($usetool) {
-    $request['tools'] = [array_merge(['name' => 'get_unit'], $promptdata['tools']['get_unit'])];
+if ($tooldefs) {
+    $request['tools'] = $tooldefs;
 }
 $body = json_encode($request, JSON_UNESCAPED_UNICODE);
 

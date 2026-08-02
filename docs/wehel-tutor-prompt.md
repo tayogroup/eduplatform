@@ -35,11 +35,23 @@ architecture — the lesson loads it into the browser — so the client sends it
 with each request and the endpoint stays stateless. The secret being protected
 server-side is the API key, not the answer keys.
 
-Grounding has three scopes: the **open unit travels in full**; the request also
+Grounding has four scopes: the **open unit travels in full**; the request also
 carries a **course outline** — one line per unit of the loaded manifest
 (`outlineFromManifest` in `shell/wehel.js`, `{{COURSE_OUTLINE}}` in the
-template) — so Wehel knows where the unit sits in the year; and Wehel can pull
-**any other listed unit's full content on demand** through the `get_unit` tool.
+template) — so Wehel knows where the unit sits in the year; Wehel can pull
+**any other listed unit's full content on demand** through the `get_unit` tool;
+and it can reach **across the whole academy**: `get_course_outline` lists any
+(subject, grade) course's units, and `get_unit` takes an optional subject and
+grade to load a unit from another course entirely — connecting subjects, or
+pulling an earlier grade's material for revision. There is no index or
+embedding store behind this: every course's data sits on the same origin as the
+page (dev siblings under `/ehel-academy/`, CDN under `../../content/<subject>/gNN/`
+— the same convention `course-app.js` uses), so `courseDataRoot` in
+`shell/wehel.js` resolves any course and the browser just fetches. Unknown
+subjects and never-built courses come back as plain prose tool results ("is not
+available"), so the model gets an honest answer instead of an error. The prompt
+pins the role: other courses' material supports THIS subject's lesson — Wehel
+never wanders off into a different class.
 
 The tool loop is client-side by design: the endpoint defines `get_unit` (schema
 in `wehel_prompt.json` under `tools`) and, when Claude calls it, returns

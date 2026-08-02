@@ -145,7 +145,12 @@ async function handleWehelChat(req, res) {
   if (!Number.isInteger(grade) || grade < 1 || grade > 9) throw new Error('Unknown grade.');
   const channel = payload.channel === 'voice' ? 'voice' : 'text';
   const clean = (value, max) => String(value ?? '').replace(/\s+/g, ' ').trim().slice(0, max);
-  const useUnitTool = Array.isArray(payload.tools) && payload.tools.includes('get_unit') && promptData.tools?.get_unit;
+  // Any advertised tool with a definition in the prompt source gets defined for
+  // the model; the client resolves the calls, so nothing else is server-side.
+  const toolDefs = (Array.isArray(payload.tools) ? payload.tools : [])
+    .filter((name) => typeof name === 'string' && promptData.tools?.[name])
+    .map((name) => ({ name, ...promptData.tools[name] }));
+  const useUnitTool = toolDefs.length > 0;
 
   const messages = Array.isArray(payload.messages) ? payload.messages.slice(-30) : [];
   // Content is either a plain string or an array of API content blocks — the
@@ -205,7 +210,7 @@ async function handleWehelChat(req, res) {
       model,
       max_tokens: Math.max(200, Math.min(2000, Number(promptData.maxTokens) || 700)),
       system,
-      ...(useUnitTool ? { tools: [{ name: 'get_unit', ...promptData.tools.get_unit }] } : {}),
+      ...(toolDefs.length ? { tools: toolDefs } : {}),
       messages: conversation
     })
   });

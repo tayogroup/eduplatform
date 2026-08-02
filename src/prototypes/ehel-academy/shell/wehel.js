@@ -54,6 +54,58 @@ export function unitFetcher(manifest, dataRootUrl) {
   };
 }
 
+// --- cross-academy lookups ---------------------------------------------------
+// Every course's data sits on the same origin as the page: in dev the subjects
+// are siblings under /ehel-academy/, and on the CDN every course reads
+// ../../content/<subject>/gNN/ relative to its own base — the same convention
+// course-app.js uses for the current course. So the browser can resolve any
+// (subject, grade) to a data root without server help.
+const ACADEMY_SUBJECTS = ["science", "mathematics", "computing", "english", "global-perspectives", "intensive-english"];
+const pad2 = (n) => String(n).padStart(2, "0");
+
+function courseDataRoot(subjectKey, grade) {
+  const marker = "/ehel-academy/";
+  const at = location.pathname.indexOf(marker);
+  if (IS_LOCAL_DEV && at !== -1) {
+    const stageDir = subjectKey === "intensive-english" ? `level-${grade}` : `grade-${grade}`;
+    return new URL(`${location.pathname.slice(0, at + marker.length)}${subjectKey}/${stageDir}/data/`, location.origin);
+  }
+  return new URL(`../../content/${subjectKey}/g${pad2(grade)}/`, document.baseURI);
+}
+
+// Both handlers answer with plain prose on any miss — a 404 for a course that
+// was never built is a normal answer for the model, not an error.
+function resolveCourseRef(meta, input) {
+  const subject = input?.subject ? String(input.subject) : meta.subject;
+  const grade = input?.grade !== undefined && input?.grade !== null ? Number(input.grade) : Number(meta.grade);
+  if (!ACADEMY_SUBJECTS.includes(subject)) return { error: `Unknown subject "${subject}". Available: ${ACADEMY_SUBJECTS.join(", ")}.` };
+  if (!Number.isInteger(grade) || grade < 1 || grade > 9) return { error: `Grade ${input?.grade} is not a valid grade (1-8).` };
+  return { subject, grade };
+}
+
+async function handleGetUnit(meta, fetchUnit, input) {
+  const ref = resolveCourseRef(meta, input);
+  if (ref.error) return ref.error;
+  const unitNo = Number(input?.unitNo);
+  const label = `Unit ${input?.unitNo} of ${ref.subject} grade ${ref.grade}`;
+  if (ref.subject === meta.subject && ref.grade === Number(meta.grade) && fetchUnit) {
+    const unit = await fetchUnit(unitNo);
+    return unit ? JSON.stringify(unit).slice(0, 120000) : `${label} does not exist — only the units in the year outline.`;
+  }
+  const response = await fetch(new URL(`units/unit-${unitNo}.json`, courseDataRoot(ref.subject, ref.grade)));
+  if (!response.ok) return `${label} is not available.`;
+  return JSON.stringify(await response.json()).slice(0, 120000);
+}
+
+async function handleGetCourseOutline(meta, input) {
+  const ref = resolveCourseRef(meta, input);
+  if (ref.error) return ref.error;
+  const response = await fetch(new URL("course-manifest.json", courseDataRoot(ref.subject, ref.grade)));
+  if (!response.ok) return `The ${ref.subject} grade ${ref.grade} course is not available.`;
+  const manifest = await response.json();
+  return `${ref.subject} grade ${ref.grade} units:\n${outlineFromManifest(manifest)}`.slice(0, 6000);
+}
+
 export async function askWehel({ meta, messages, channel = "text", mode = "", fetchUnit = null }) {
   const wstoken = new URLSearchParams(location.search).get("wstoken") || undefined;
   const post = async (conversation) => {
@@ -74,7 +126,7 @@ export async function askWehel({ meta, messages, channel = "text", mode = "", fe
         channel,
         mode: mode || undefined,
         wstoken,
-        tools: fetchUnit ? ["get_unit"] : [],
+        tools: fetchUnit ? ["get_unit", "get_course_outline"] : [],
         messages: conversation,
       }),
     });
@@ -88,23 +140,18 @@ export async function askWehel({ meta, messages, channel = "text", mode = "", fe
   // endpoint stays stateless and never has to reach into the CDN. The tool
   // exchange lives only in this call; the stored transcript keeps plain text.
   const conversation = apiMessages(messages);
-  for (let round = 0; round < 3; round += 1) {
+  for (let round = 0; round < 4; round += 1) {
     const result = await post(conversation);
     if (result.reply) return String(result.reply);
     if (!result.toolUse || !fetchUnit) break;
     const { id, name, input } = result.toolUse;
     let content;
-    if (name !== "get_unit") {
-      content = `Unknown tool ${name}.`;
-    } else {
-      try {
-        const unit = await fetchUnit(Number(input?.unitNo));
-        content = unit
-          ? JSON.stringify(unit).slice(0, 120000)
-          : `Unit ${input?.unitNo} does not exist in this course — only the units in the year outline.`;
-      } catch (error) {
-        content = `Unit ${input?.unitNo} could not be loaded right now.`;
-      }
+    try {
+      if (name === "get_unit") content = await handleGetUnit(meta, fetchUnit, input);
+      else if (name === "get_course_outline") content = await handleGetCourseOutline(meta, input);
+      else content = `Unknown tool ${name}.`;
+    } catch (error) {
+      content = "That could not be looked up right now.";
     }
     conversation.push({ role: "assistant", content: result.assistantContent });
     conversation.push({ role: "user", content: [{ type: "tool_result", tool_use_id: id, content }] });

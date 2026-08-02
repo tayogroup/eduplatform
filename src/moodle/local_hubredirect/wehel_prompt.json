@@ -136,21 +136,48 @@
     ]
   },
   "otherUnitsNotes": {
-    "withTool": "You hold the FULL content of the current unit only, but you can load any other listed unit's full content with the get_unit tool. Use it when the learner's question genuinely needs that unit's exact material — its wording, examples, practice questions or answer keys — for example revising an earlier unit or checking work against another unit's answers. One unit at a time, and only when the outline alone is not enough; for a passing mention, the outline and your general knowledge suffice. Never mention the tool itself to the learner — just say you are having a look at that unit:",
+    "withTool": "You hold the FULL content of the current unit only, but you can look things up. The get_unit tool loads any other listed unit's full content — use it when the learner's question genuinely needs that unit's exact material (its wording, examples, practice questions or answer keys), for example revising an earlier unit or checking work against another unit's answers. You can also look across the whole academy: get_course_outline lists the units of ANY course (subjects: science, mathematics, computing, english, global-perspectives, intensive-english; grades/stages 1-8), and get_unit accepts an optional subject and grade to load a unit from another course entirely — use that when the learner asks how something connects to another subject, or needs material from an earlier grade to catch up. Remember whose tutor you are: bring other courses' material in to support THIS subject's learning, never to wander off into a different lesson. One lookup at a time, only when the year outline and your general knowledge are not enough, and if a course or unit is not available the tool will say so — trust that answer. Never mention the tools themselves to the learner — just say you are having a look:",
     "withoutTool": "You only hold the FULL content of the current unit; if a question really needs another unit's exact material, answer from general knowledge and say the lesson pages for that unit have the details:"
   },
   "tools": {
     "get_unit": {
-      "description": "Load the full content of another unit from this same course (same subject, same grade). Returns the unit's JSON — explainers, key words, practice questions and answer keys, the same shape as UNIT CONTENT. Only unit numbers listed in THE YEAR AT A GLANCE exist; anything else returns an error.",
+      "description": "Load the full content of a unit. With only unitNo, loads from the learner's current course; with subject and grade, loads from any other course in the academy (an earlier grade, or a different subject). Returns the unit's JSON — explainers, key words, practice questions and answer keys, the same shape as UNIT CONTENT. Unavailable units return a plain message saying so.",
       "input_schema": {
         "type": "object",
         "properties": {
           "unitNo": {
             "type": "integer",
-            "description": "The unit number to load, exactly as listed in the year outline."
+            "description": "The unit number to load. For the current course, exactly as listed in the year outline; for another course, as listed by get_course_outline."
+          },
+          "subject": {
+            "type": "string",
+            "enum": ["science", "mathematics", "computing", "english", "global-perspectives", "intensive-english"],
+            "description": "Optional: another course's subject. Omit for the learner's current course."
+          },
+          "grade": {
+            "type": "integer",
+            "description": "Optional: another course's grade or stage (1-8; intensive-english uses levels). Omit for the learner's current course."
           }
         },
         "required": ["unitNo"]
+      }
+    },
+    "get_course_outline": {
+      "description": "List the units (numbers and titles) of any course in the academy — use before get_unit when you do not know another course's unit numbers. Unavailable courses return a plain message saying so.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "subject": {
+            "type": "string",
+            "enum": ["science", "mathematics", "computing", "english", "global-perspectives", "intensive-english"],
+            "description": "The course's subject."
+          },
+          "grade": {
+            "type": "integer",
+            "description": "The course's grade or stage (1-8; intensive-english uses levels)."
+          }
+        },
+        "required": ["subject", "grade"]
       }
     }
   },

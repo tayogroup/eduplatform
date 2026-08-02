@@ -29,11 +29,38 @@ const grades = process.argv.slice(2).length ? process.argv.slice(2).map(Number) 
 // Without that, removing "[SAFE]" turned a paragraph of electrical safety
 // guidance into a boundary and dropped it from the unit.
 const SOURCE_MARKER = /\[(?:[A-Za-z]{1,12}|!)\]\s*/g;
-const tidy = (value = "") => String(value)
+// Sub-headings the source runs straight into the sentence after them, listed
+// rather than matched by shape. A shape rule cannot tell a heading from a
+// proper noun: the same pattern catches "The Rift Valley", "The Dead Sea",
+// "The Periodic Table" and "In East Africa", and splitting those would be
+// worse than the seam. Each entry below was read in context first, and the
+// ones already punctuated in the source ("What You Need:", "Did You Know?",
+// "Worked Example 1:") are deliberately absent.
+//
+// Longest first, so "The Golden Rule of Changing State" wins over any prefix.
+const KNOWN_HEADINGS = [
+  "The Golden Rule of Changing State",
+  "Common Misconception",
+  "Your Hypothesis",
+  "Safety First",
+];
+const HEADING_RUN_ON = KNOWN_HEADINGS.map((phrase) => ({
+  phrase,
+  // Only where it opens the text or follows a sentence, and only where the
+  // next word starts a new one — never when already punctuated.
+  pattern: new RegExp(`(^|[.!?]\\s+)${phrase.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\s+(?=[A-Z0-9])`, "g"),
+}));
+function punctuateKnownHeadings(value) {
+  let out = value;
+  for (const { phrase, pattern } of HEADING_RUN_ON) out = out.replace(pattern, `$1${phrase}: `);
+  return out;
+}
+
+const tidy = (value = "") => punctuateKnownHeadings(String(value)
   .replace(/�/g, "–")
   .replace(SOURCE_MARKER, "")
   .replace(/\s+/g, " ")
-  .trim();
+  .trim());
 const slug = (value = "") => tidy(value).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 const sentence = (value = "", max = 250) => {
   const text = tidy(value);
@@ -172,7 +199,13 @@ function reviewTarget(unit, category, itemId) {
 function applyReviewFields(unit, category, itemId, fields, label) {
   const target = reviewTarget(unit, category, itemId);
   if (!target) { reviewStats.missed.push(`${label} ${category}/${itemId} (item not found)`); return; }
-  for (const [field, value] of Object.entries(fields)) {
+  // Reviewed text is written straight over the built content and never passes
+  // through tidy(), so a mechanical fix in the builder cannot reach a field a
+  // reviewer has touched — they inherited the seam from the export and had no
+  // reason to repunctuate it. Apply the heading rule here too, and only that
+  // rule: tidy() would collapse the blank lines separating paragraphs.
+  for (let [field, value] of Object.entries(fields)) {
+    if (typeof value === "string") value = punctuateKnownHeadings(value);
     if (category === "Unit Overview") {
       target[field][field === "outcomes" ? "outcomes" : field] = value;
     } else if (category === "Game Round") {

@@ -37,7 +37,12 @@ const TREES = [
   { name: "computing", src: path.join(EHEL, "computing"), dest: "app/computing", excludeTop: ["media"] },
   { name: "global-perspectives", src: path.join(EHEL, "global-perspectives"), dest: "app/global-perspectives", excludeTop: ["media"] },
   { name: "intensive-english", src: path.join(EHEL, "intensive-english"), dest: "app/intensive-english", excludeTop: ["media"] },
-  { name: "vocabulary", src: path.join(EHEL, "vocabulary"), dest: "app/vocabulary", excludeTop: [] },
+  // The standalone WordQuest app (app/vocabulary/) was retired: its 276 words
+  // were already carried into English Grade 2, which extended them to 306. Its
+  // art, lecture videos and word audio moved into english/ and ship with that
+  // tree. app/vocabulary/ has since been deleted from the storage zone; note
+  // that dropping a tree here does not remove it, because deploy only adds and
+  // overwrites — a retired tree has to be deleted in storage by hand.
   { name: "shared", src: path.join(EHEL, "shared"), dest: "app/shared", excludeTop: [] },
   // The unified course shell. The older subjects each carry a hand-written
   // shared/course-ui.js and never referenced this, so it was never uploaded;
@@ -86,6 +91,12 @@ const ctFor = (f) => CT[path.extname(f).toLowerCase()] || "application/octet-str
 // matching only grade-N here would have uploaded all 40 units of JSON into the
 // app tree — redundant, unreferenced, and served from content/ anyway.
 const DATA_DIR_RE = /(^|\/)(grade|level)-\d+\/data$/;
+// Two more per-grade dirs the app never requests, both left by the WordQuest
+// retirement: source/ holds the Grade 2 build inputs, and vocabulary-audio/ the
+// 276 word clips only the retired app and the dead grade-2/unit-N redirect
+// stubs ever read. Shipping them would restore 69 MB of dead weight to the very
+// tree the retirement cleared.
+const UNSERVED_DIR_RE = /(^|\/)(grade|level)-\d+\/(source|vocabulary-audio)$/;
 function walk(root, rel = "", skipTop = []) {
   const out = [];
   const abs = path.join(root, rel);
@@ -95,6 +106,7 @@ function walk(root, rel = "", skipTop = []) {
     const st = fs.statSync(path.join(abs, name));
     if (st.isDirectory()) {
       if (DATA_DIR_RE.test(childRel)) continue;
+      if (UNSERVED_DIR_RE.test(childRel)) continue;
       out.push(...walk(root, childRel, skipTop));
     } else if (st.isFile()) out.push(childRel);
   }

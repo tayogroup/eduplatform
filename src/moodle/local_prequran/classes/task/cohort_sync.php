@@ -72,6 +72,22 @@ class cohort_sync extends \core\task\scheduled_task {
             $cohortid = $this->ensure_cohort((string)$c['idnumber'], (string)($c['name'] ?? $c['idnumber']), $systemctx);
             $cohortsdone++;
 
+            // This task NEVER creates users. A roster member who is not already
+            // a Moodle account is counted as unmatched, traced, and skipped —
+            // nothing else. Accounts are made separately (see
+            // tools/create_pilot_accounts.php for the demo ones).
+            //
+            // Stated plainly because the opposite was believed once: commit
+            // 781ed0d9 emptied the published rosters on the grounds that
+            // "cohort_sync creates the users it finds", and 40 placeholder
+            // members would therefore have become 40 live accounts. They would
+            // not have. Emptying them is still right — unmatched members only
+            // add noise to every cron run — but not for that reason.
+            //
+            // The practical consequence runs the other way: a real learner
+            // missing from Moodle is skipped in silence apart from one mtrace
+            // line, so check the unmatched count in the summary rather than
+            // assuming enrolment worked.
             foreach (($c['members'] ?? []) as $m) {
                 $user = $this->find_user($m);
                 if (!$user) {

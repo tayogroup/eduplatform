@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-02T10:33:39.318Z",
+  "generatedAt": "2026-08-02T11:52:22.079Z",
   "stage": {
     "id": "s07",
     "label": "Stage 7"
@@ -1370,59 +1370,59 @@
       "difficulty": "Core",
       "context": "Home",
       "prompt": "Each program has a blank shown as ______. Write the code that belongs in the blank.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "print -> print(\"I love learning Python\")",
       "hint": "Work out which idea this is about — text-based programming, block-based programming, Python — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "Check your reasoning against this: print -> print(\"I love learning Python\")"
     },
     {
       "id": "rp02",
       "outcomeId": "lo02",
       "difficulty": "Core",
       "context": "School",
-      "prompt": "D1: Display a message",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "Display a message\nFill the blank so it prints the message:\n______(\"I love learning Python\")",
+      "answer": "print -> print(\"I love learning Python\")",
       "hint": "Work out which idea this is about — text-based programming, block-based programming, Python — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "Check your reasoning against this: print -> print(\"I love learning Python\")"
     },
     {
       "id": "rp03",
       "outcomeId": "lo03",
       "difficulty": "Core",
       "context": "Market",
-      "prompt": "Fill the blank so it prints the message:",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "Store then show a name\nFill the blank so it shows the stored name:\nname = \"Zane\"\nprint(\"Hello\", ______)",
+      "answer": "name -> print(\"Hello\", name). Do not put quotes around name, or it prints the word 'name'.",
       "hint": "Work out which idea this is about — text-based programming, block-based programming, Python — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "Check your reasoning against this: name -> print(\"Hello\", name). Do not put quotes around name, or it prints the word 'name'."
     },
     {
       "id": "rp04",
       "outcomeId": "lo04",
       "difficulty": "Challenge",
       "context": "Community",
-      "prompt": "______(\"I love learning Python\")",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "Cast an input for maths\nFill the blank so age + 1 works:\nage = ______(input(\"Enter your age: \"))\nprint(\"Next year you will be\", age + 1)",
+      "answer": "int -> age = int(input(\"Enter your age: \")). This lets age + 1 work as a number.",
       "hint": "Work out which idea this is about — text-based programming, block-based programming, Python — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "Check your reasoning against this: int -> age = int(input(\"Enter your age: \")). This lets age + 1 work as a number."
     },
     {
       "id": "rp05",
       "outcomeId": "lo05",
       "difficulty": "Challenge",
       "context": "Travel",
-      "prompt": "D2: Store then show a name",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "Area of a square\nFill the blank with the correct operator:\nlength = int(input(\"Enter the length: \"))\narea = length ______ length\nprint(\"The area is\", area)",
+      "answer": "* -> area = length * length. The star means multiply.",
       "hint": "Work out which idea this is about — text-based programming, block-based programming, Python — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "Check your reasoning against this: * -> area = length * length. The star means multiply."
     },
     {
       "id": "rp06",
       "outcomeId": "lo06",
       "difficulty": "Challenge",
       "context": "Health",
-      "prompt": "Fill the blank so it shows the stored name:",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "A condition\nFill the blank so 'You passed' shows for 50 or more:\nscore = int(input(\"Enter your score: \"))\nif score ______ 50:\nprint(\"You passed\")\nprint(\"Try again\")",
+      "answer": ">= -> if score >= 50. Greater-than-or-equal-to means 50 counts as a pass.",
       "hint": "Work out which idea this is about — text-based programming, block-based programming, Python — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "Check your reasoning against this: >= -> if score >= 50. Greater-than-or-equal-to means 50 counts as a pass."
     }
   ],
   "reasoningPrompts": [

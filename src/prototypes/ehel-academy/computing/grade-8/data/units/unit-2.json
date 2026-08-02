@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-02T10:33:39.494Z",
+  "generatedAt": "2026-08-02T11:52:22.267Z",
   "stage": {
     "id": "s08",
     "label": "Stage 8"
@@ -1267,9 +1267,9 @@
       "difficulty": "Core",
       "context": "Home",
       "prompt": "Profit for row 3 = (price minus cost) times number sold: F3 = ____",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "=(C3-B3)*D3",
       "hint": "Work out which idea this is about — AutoValue, cell, cell reference — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "Check your reasoning against this: =(C3-B3)*D3"
     },
     {
       "id": "rp02",
@@ -1277,9 +1277,9 @@
       "difficulty": "Core",
       "context": "School",
       "prompt": "Total profit for rows 3 to 6: F7 = ____",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "=SUM(F3:F6)",
       "hint": "Work out which idea this is about — AutoValue, cell, cell reference — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "Check your reasoning against this: =SUM(F3:F6)"
     },
     {
       "id": "rp03",
@@ -1287,9 +1287,9 @@
       "difficulty": "Core",
       "context": "Market",
       "prompt": "Average of the profits in F3 to F6: = ____ (F3:F6)",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "=AVERAGE(F3:F6)",
       "hint": "Work out which idea this is about — AutoValue, cell, cell reference — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "Check your reasoning against this: =AVERAGE(F3:F6)"
     },
     {
       "id": "rp04",
@@ -1297,9 +1297,9 @@
       "difficulty": "Challenge",
       "context": "Community",
       "prompt": "A query to find reviews with a score of exactly 5: WHERE \"ReviewScore\" ____ 5",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "= (equal to): WHERE \"ReviewScore\" = 5",
       "hint": "Work out which idea this is about — AutoValue, cell, cell reference — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "Check your reasoning against this: = (equal to): WHERE \"ReviewScore\" = 5"
     },
     {
       "id": "rp05",
@@ -1307,9 +1307,9 @@
       "difficulty": "Challenge",
       "context": "Travel",
       "prompt": "A query to find reviewers aged 13 or over: WHERE \"ReviewerAge\" ____ 13",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": ">= (greater than or equal to): WHERE \"ReviewerAge\" >= 13",
       "hint": "Work out which idea this is about — AutoValue, cell, cell reference — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "Check your reasoning against this: >= (greater than or equal to): WHERE \"ReviewerAge\" >= 13"
     },
     {
       "id": "rp06",
@@ -1317,9 +1317,9 @@
       "difficulty": "Challenge",
       "context": "Health",
       "prompt": "Each item has one mistake. Find it, then write the corrected version.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "A range needs a colon, not a dash. Correct: =SUM(F3:F6).",
       "hint": "Work out which idea this is about — AutoValue, cell, cell reference — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "Check your reasoning against this: A range needs a colon, not a dash. Correct: =SUM(F3:F6)."
     }
   ],
   "reasoningPrompts": [

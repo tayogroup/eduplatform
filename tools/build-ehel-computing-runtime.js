@@ -799,8 +799,13 @@ function buildGrade(grade) {
   function practiceFromSections(practiceDoc, unitWords = []) {
     const items = [];
     const mcqs = [];
+    // A section heading marks itself as a key two ways: "Answer Key - Section
+    // C", or the question heading with a parenthetical — "Section B - Short
+    // Answer (model answers)". Both are sections in their own right, so without
+    // this they are read as question runs of their own.
+    const isKeyHeading = (name) => /answer\s*keys?\b/i.test(name || "") || /\(\s*(?:model\s+)?answers?\b/i.test(name || "");
     const sections = [...new Set(practiceDoc.blocks.map((block) => block.section))]
-      .filter((name) => /^Section\s+[A-E]\b/i.test(name) && !/answer key/i.test(name));
+      .filter((name) => /^Section\s+[A-E]\b/i.test(name) && !isKeyHeading(name));
     const levelFor = { A: "Warm-up", B: "Core", C: "Core", D: "Challenge", E: "Extension" };
     // Naming this unit's own key words is what makes a hint usable. A single
     // generic sentence shared by every unit in the subject is decoration.
@@ -826,37 +831,65 @@ function buildGrade(grade) {
 
     for (const name of sections) {
       const letter = name.match(/^Section\s+([A-E])/i)[1].toUpperCase();
-      const tasks = practiceDoc.blocks
-        .filter((block) => block.section === name && block.content_kind !== "Heading" && beforeKeys(block))
+      const namesThisSection = (heading) => new RegExp(`\\bSection\\s+${letter}\\b`, "i").test(heading || "");
+      // When this section's key has a heading of its own, that heading is the
+      // whole story and position must not be consulted. One layout interleaves
+      // them — Section A, Answer Key - Section A, Section B, Answer Key -
+      // Section B — so the first key sits above most of the questions. Read
+      // positionally, everything from Section B down was treated as key text
+      // and four sections of an eight-section booklet produced nothing at all.
+      const namedKeys = practiceDoc.blocks.filter((block) =>
+        block.content_kind !== "Heading" && namesThisSection(block.section) && isKeyHeading(block.section));
+      const taskLines = practiceDoc.blocks
+        .filter((block) => block.section === name && block.content_kind !== "Heading"
+          && (namedKeys.length > 0 || beforeKeys(block)))
         .map((block) => tidy(block.text))
         // The line under a section heading is the rubric, not a question. Left
         // in, it becomes task 0 and every answer after it is off by one — the
         // TLD question answered with the padlock explanation.
-        .filter((text) => text.length > 12 && !/^(choose|circle|tick|answer (?:each|in|the)|write (?:your|down|the letter)|read each|use (?:the|what)|for each|sort or match|copy each|some of these)/i.test(text));
+        .filter((text) => text.length > 12 && !/^(choose|circle|tick|answer (?:each|in|the)|write (?:your|down|the letter)|read each|use (?:the|what)|for each|sort or match|copy each|some of these|these questions|this quiz)/i.test(text))
+        // A heading for a later section, swept into this one by the extractor.
+        // It is neither a question nor an answer, and it appears once in each
+        // run, so leaving it in shifts one side against the other.
+        .filter((text) => !/^Section\s+[A-F]\b/i.test(text));
+      // "C1.", "C2." — the label the books put on both a question and its
+      // answer. Where they are present they beat position outright, and they
+      // also say where one question ends: a "predict the output" question is a
+      // stem followed by its program, and every line of that program was being
+      // read as a question of its own. Twenty-five items, none answerable.
+      const LABEL = new RegExp(`^(?:${letter}\\s*)?(\\d{1,2})\\s*[.):]\\s*`, "i");
+      const groupByLabel = (lines) => {
+        if (!lines.some((line) => LABEL.test(line))) return lines;
+        const out = [];
+        for (const line of lines) {
+          if (LABEL.test(line) || !out.length) out.push(line);
+          else out[out.length - 1] += `\n${line}`;
+        }
+        return out;
+      };
+      const tasks = groupByLabel(taskLines);
       // The books head their answer keys two ways round — "Answer Key - Section
       // A (Multiple Choice)" and "Section A: Answer Key" — so match a heading
       // that names both, in either order. Matching only the first form left
       // every question in those units with the fallback "work through the task"
       // string instead of its answer, which is precisely what a learner with no
       // teacher cannot do without.
-      const keySection = practiceDoc.blocks.filter((block) => {
-        const heading = block.section || "";
-        if (block.content_kind === "Heading") return false;
-        if (!new RegExp(`\\bSection\\s+${letter}\\b`, "i").test(heading)) return false;
-        // Either the heading says "Answer Key", or the block sits past the
-        // answer-key boundary — which is the only thing that separates the two
-        // runs in the layout that repeats the question heading over its key.
-        return /answer\s*key/i.test(heading) || afterKeys(block);
-      });
-      const keys = keySection.map((block) => tidy(block.text)).filter((text) => text.length > 1);
-      // Keys are numbered ("3. A condition is a question answered True or
-      // False."), so match a task to its key by number rather than by index —
-      // a stray instruction line in the task run would otherwise shift every
-      // answer by one.
+      // A named key wins outright. Position is the fallback for the one layout
+      // that repeats the question heading verbatim over its key, where nothing
+      // but the order distinguishes the two runs.
+      const keySection = namedKeys.length
+        ? namedKeys
+        : practiceDoc.blocks.filter((block) => block.content_kind !== "Heading"
+          && namesThisSection(block.section) && afterKeys(block));
+      const keys = groupByLabel(keySection.map((block) => tidy(block.text))
+        .filter((text) => text.length > 1 && !/^Section\s+[A-F]\b/i.test(text)));
+      // Keys are labelled ("3." or "C3."), so match a task to its key by that
+      // label rather than by index — a stray instruction line in either run
+      // would otherwise shift every answer after it by one.
       const keyByNumber = new Map();
       for (const key of keys) {
-        const match = /^(\d{1,2})\s*[.):]\s*(.+)$/.exec(key);
-        if (match) keyByNumber.set(Number(match[1]), tidy(match[2]));
+        const match = LABEL.exec(key);
+        if (match) keyByNumber.set(Number(match[1]), tidy(key.slice(match[0].length)));
       }
       // Unnumbered keys can only be read positionally, and position is only
       // trustworthy when the two runs are the same length. One stray line in
@@ -864,12 +897,14 @@ function buildGrade(grade) {
       // is worse for a learner checking their work than no answer at all.
       const aligned = keys.length === tasks.length;
       if (!aligned && !keyByNumber.size && keys.length) {
-        practiceStats.unaligned.push(`${practiceDoc.unit_label || ""} ${name}: ${tasks.length} questions vs ${keys.length} key lines`);
+        practiceStats.unaligned.push(`g${grade}/unit-${practiceDoc.unit} ${name}: ${tasks.length} questions vs ${keys.length} key lines`);
       }
       tasks.forEach((prompt, index) => {
-        const numbered = /^(\d{1,2})\s*[.):]\s*(.+)$/.exec(prompt);
+        const numbered = LABEL.exec(prompt);
         const number = numbered ? Number(numbered[1]) : index + 1;
-        const stem = numbered ? tidy(numbered[2]) : prompt;
+        // tidy() collapses whitespace, which would fold a program back onto one
+        // line, so a grouped prompt keeps its own line breaks.
+        const stem = numbered ? prompt.slice(numbered[0].length).trim() : prompt;
         const answer = keyByNumber.get(number) || (aligned ? tidy(keys[index] || "") : "");
         if (!stem || stem.length < 12) return;
         items.push({

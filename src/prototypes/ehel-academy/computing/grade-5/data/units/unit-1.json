@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-02T10:36:10.171Z",
+  "generatedAt": "2026-08-02T11:52:21.846Z",
   "stage": {
     "id": "s05",
     "label": "Stage 5"
@@ -672,6 +672,34 @@
       "prompt": "Success criteria are: (a) bugs in the code (b) the list of things a program must do to be a success (c) the user's score (d) a type of loop",
       "answer": "12 (b) the list of things a program must do to be a success.",
       "hint": "Look back at what variable and value mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p13",
+      "level": "Core",
+      "prompt": "Explain what it means to 'assign' a value to a variable, and give an example.",
+      "answer": "To assign means to put a value into a variable. Example: set Age to 10 assigns the value 10 to the variable Age.",
+      "hint": "Look back at what variable and value mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p14",
+      "level": "Core",
+      "prompt": "Why should variable names be meaningful? Give a good name and a bad name for a variable that stores a score.",
+      "answer": "Meaningful names tell you what is stored, so the program is easy to read. Good: Score. Bad: x (it tells you nothing).",
+      "hint": "Look back at what variable and value mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p15",
+      "level": "Core",
+      "prompt": "What is the difference between the set to block and the change by block in Scratch?",
+      "answer": "set to replaces the value with a brand-new one (for example, set Score to 0). change by adds an amount to the current value (for example, change Score by 1).",
+      "hint": "Look back at what variable and value mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p16",
+      "level": "Core",
+      "prompt": "What is a condition? Give one example that returns True and one that returns False.",
+      "answer": "A condition is a question answered True or False. 10 = 10 returns True; 10 = 5 returns False.",
+      "hint": "Look back at what variable and value mean in this unit, then answer in your own words."
     }
   ],
   "activities": [
@@ -1242,9 +1270,9 @@
       "outcomeId": "lo01",
       "difficulty": "Core",
       "context": "Home",
-      "prompt": "What does a comparison operator like equal to give back? (a) a number (b) a word (c) True or False (d) a sound",
+      "prompt": "Make the score start at zero:\nwhen green flag clicked\n_____ [Score v] to 0",
       "answer": "D1. set — the block is set [Score v] to 0.",
-      "hint": "Look back at what variable and value mean in this unit, then answer in your own words.",
+      "hint": "Work out which idea this is about — variable, value, assign — then explain your reasoning step by step.",
       "errorFeedback": "Check your reasoning against this: D1. set — the block is set [Score v] to 0."
     },
     {
@@ -1252,9 +1280,9 @@
       "outcomeId": "lo02",
       "difficulty": "Core",
       "context": "School",
-      "prompt": "In Scratch, where is the user's typed input stored? (a) in score (b) in answer (c) in input (d) in key",
+      "prompt": "Add 1 to the score when the ball is clicked:\nwhen this sprite clicked\n_____ [Score v] by 1",
       "answer": "D2. change — the block is change [Score v] by 1.",
-      "hint": "Look back at what variable and value mean in this unit, then answer in your own words.",
+      "hint": "Work out which idea this is about — variable, value, assign — then explain your reasoning step by step.",
       "errorFeedback": "Check your reasoning against this: D2. change — the block is change [Score v] by 1."
     },
     {
@@ -1262,20 +1290,40 @@
       "outcomeId": "lo03",
       "difficulty": "Core",
       "context": "Market",
-      "prompt": "Which words make a selection statement? (a) REPEAT UNTIL (b) IF THEN ELSE (c) SET TO (d) MOVE TURN",
+      "prompt": "Only say 'Correct!' if the answer is variable:\nask [What stores a value that can change?] and wait\nif <(answer) _____ [variable]> then\nsay [Correct!] for 2 seconds",
       "answer": "D3. = (equal to) — the condition is (answer) = [variable].",
-      "hint": "Look back at what variable and value mean in this unit, then answer in your own words.",
+      "hint": "Work out which idea this is about — variable, value, assign — then explain your reasoning step by step.",
       "errorFeedback": "Check your reasoning against this: D3. = (equal to) — the condition is (answer) = [variable]."
     },
     {
       "id": "rp04",
       "outcomeId": "lo04",
-      "difficulty": "Core",
+      "difficulty": "Challenge",
       "context": "Community",
-      "prompt": "What does decomposition mean? (a) deleting code (b) breaking a big problem into smaller parts (c) repeating a loop (d) hiding a variable",
+      "prompt": "Store the user's typed answer in a variable called Name:\nask [What is your name?] and wait\nset [Name v] to _____",
       "answer": "D4. (answer) — the block is set [Name v] to (answer), using Scratch's built-in answer variable.",
-      "hint": "Look back at what variable and value mean in this unit, then answer in your own words.",
+      "hint": "Work out which idea this is about — variable, value, assign — then explain your reasoning step by step.",
       "errorFeedback": "Check your reasoning against this: D4. (answer) — the block is set [Name v] to (answer), using Scratch's built-in answer variable."
+    },
+    {
+      "id": "rp05",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "context": "Travel",
+      "prompt": "On the micro:bit, reset the count to zero when shaken:\n_____ Count to 0",
+      "answer": "Use a ‘when this sprite clicked’ block, followed by ‘change score by 1’.",
+      "hint": "Work out which idea this is about — variable, value, assign — then explain your reasoning step by step.",
+      "errorFeedback": "Use ‘change score by 1’, not ‘set score to 1’, so the existing score increases by one."
+    },
+    {
+      "id": "rp06",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "context": "Health",
+      "prompt": "This program should say the user's name, but it always says nothing useful. What is the bug?\nwhen green flag clicked\nsay (answer) for 2 seconds\nask [What is your name?] and wait",
+      "answer": "The blocks are in the wrong ORDER (a sequence bug). It says answer BEFORE the ask runs, so answer is empty. Fix: put the ask block before the say block.",
+      "hint": "Work out which idea this is about — variable, value, assign — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: The blocks are in the wrong ORDER (a sequence bug). It says answer BEFORE the ask runs, so answer is empty. Fix: put the ask block before the say block."
     }
   ],
   "reasoningPrompts": [
@@ -1284,52 +1332,78 @@
       "outcomeId": "lo01",
       "difficulty": "Core",
       "responseMode": "text",
-      "prompt": "Explain the key idea in assigning variables, and give one example of your own.",
+      "prompt": "Explain what it means to 'assign' a value to a variable, and give an example.",
       "keyIdeas": [
         "variable",
         "value",
         "assign"
       ],
-      "modelAnswer": "A variable is a named box that stores a piece of data. The special thing about a variable is that the value inside it can change while the program runs. You can put a value in, use it later, and change it whenever you need to. A variable can only hold one value at a time: if you put a new value in, the old one is gone, just like a box that can hold only one thing.\n\nThe data we store is called a value. A value can be a number (like 10), some text (like Leila), or a symbol. When we put a value into a variable, we say we assign the value to the variable.\n\nYou have used variables before without knowing it. Think about a count-controlled loop - a loop that repeats an exact number of times. The number of repeats is stored in a variable, often called Count:\n\nA count-controlled loop; the variable Count stores the number of repeats\n\nHere Count is a variable. Its value is 4, so the loop repeats 4 times. If you change the value to set Count to 2, the very same loop now repeats only 2 times. You did not rewrite the loop - you just changed the value inside the variable. That is the power of a variable.\n\nA variable name should be meaningful - it should tell you what is stored inside. The name Count tells you it stores how many times to repeat. A name like x tells you nothing. Good names make your program much easier to read, both for you and for anyone else who uses it.\n\nThe word 'algorithm' comes from the name of a great scholar who lived over 1,000 years ago: Muhammad ibn Musa al-Khwarizmi. The word 'algebra' also comes from the title of one of his books. Every time you say 'algorithm', you are remembering a brilliant mathematician!\n\nImagine a program that makes a birthday card. The card says 'Happy Birthday', then the person's name and age. The name and age change depending on whose birthday it is, so we store them in variables. For Sami's card we assign the values like this:\n\nAssigning a text value and a number value\n\nNow the program can use these variables to build the message. The variable Name holds the text Sami, and the variable Age holds the number 10. If it were Nadia's birthday and she is turning 8, we would simply assign set Name to Nadia and set Age to 8, and the same program would make her card. We change the values, not the program.\n\nDisplaying what is inside a variable\n\nLet us follow another example. Sami stores his favourite fruit in a well-named variable, then displays it:\n\nTrace the result. The variable MyFavouriteFruit is assigned the value banana. The say instruction then outputs what is inside the variable, so the program says banana. If Leila used the same program, she might write set MyFavouriteFruit to mango, and it would say mango. The variable holds a temporary value - temporary means it is not kept forever and can be changed for a different user.\n\nVariables in Scratch: Leila's basketball scoreboard\n\nNow let us build a real program in Scratch. Leila wants a basketball scoreboard. In basketball, a basket scored from inside the three-point line is worth 2 points, and one scored from outside it is worth 3 points. First, in Scratch, click Variables in the blocks palette, then Make a Variable, name it Score, and choose For all sprites. Do the same to make a variable called Shots.\n\nHere is the code. Each basketball is a sprite. When you click a basketball, it means someone scored, so the score and the shot counter both change:\n\nScratch: a basketball scoreboard using two variables"
+      "modelAnswer": "To assign means to put a value into a variable. Example: set Age to 10 assigns the value 10 to the variable Age."
     },
     {
       "id": "reason02",
       "outcomeId": "lo02",
       "difficulty": "Core",
       "responseMode": "text",
-      "prompt": "Explain the key idea in using operators, and give one example of your own.",
+      "prompt": "Why should variable names be meaningful? Give a good name and a bad name for a variable that stores a score.",
       "keyIdeas": [
-        "variable",
         "value",
-        "assign"
+        "assign",
+        "meaningful name"
       ],
-      "modelAnswer": "An operator is a symbol that does an action on values. In this subunit you meet two families of operators: arithmetic operators for doing maths, and comparison operators for comparing values.\n\nArithmetic is the use of numbers in calculations, such as adding or subtracting. The two most important arithmetic operators are + for addition and - for subtraction. (Computers can also multiply with * and divide with /, but in this unit we focus on + and -.) For example, 7 + 6 tells the computer to add 7 and 6, and 10 - 3 tells it to subtract 3 from 10.\n\nWe can use arithmetic operators with variables, not just plain numbers. Here is the classic example:\n\nAdding two variables and storing the answer in a third variable\n\nTrace the result. First, 7 is assigned to FirstNumber and 6 is assigned to SecondNumber. Then the computer adds the values inside those two variables: 7 + 6 = 13. The answer 13 is assigned to the variable Result. So the value of Result is 13. Because we used variables, we can change the two numbers without rewriting the calculation.\n\nRemember two rules that catch people out. First, a variable holds only the last value assigned to it: if you set Balls to 1, then set Balls to 2, then set Balls to 3, the value of Balls is 3. Second, instructions run in sequence, one after another, from top to bottom.\n\nSometimes we do not know a value until the program runs. Think of Sami's little sister Nadia using a calculator: the numbers change every time. This is where user input comes in - the user provides the data. In Scratch, the ask [ ] and wait block (in the Sensing section) lets the user type on the keyboard. Whatever they type is stored in a special variable called answer.\n\nBecause answer changes every time someone types, it is a good idea to copy it into a variable with a meaningful name:\n\nStoring user input in a well-named variable\n\nTrace the result. If the user types Maya, the value Maya is stored in answer, and then copied into the variable Name. Now, even if the user later types something else, the variable Name still remembers Maya.\n\nNow Sami builds a calculator in Scratch. It has an addition button and a subtraction button, each a sprite. Here is the working code:\n\nScratch: a calculator that adds or subtracts two user inputs\n\n--- Subtraction button sprite ---\n\nTrace the result. Suppose the user clicks the addition button and enters 7 then 5. Number1 becomes 7, Number2 becomes 5, Result becomes 7 + 5 = 12, and the sprite says 12. If instead the user clicks the subtraction button and enters 7 then 5, Result becomes 7 - 5 = 2, and the sprite says 2. The calculation blocks use the arithmetic operators + and - from the green Operators section.\n\nComparison operators and conditions\n\nSometimes we want to compare two values rather than do maths with them. A comparison operator compares two values and gives back True or False. In programming we say it returns True or False. The one you need here is equal to, written =. It checks if two values are the same.\n\nImagine a ride at a theme park where you must be exactly 150 cm tall. If your height is 150, then Height = 150 returns True. If your height is 160, then Height = 150 returns False, because 160 is not the same as 150.\n\nA comparison like this is called a condition. A condition is like a question that can only be answered True or False. Height = 150 can be read as the question: 'Is height equal to 150?' Conditions are the foundation of selection, which is the very next subunit."
+      "modelAnswer": "Meaningful names tell you what is stored, so the program is easy to read. Good: Score. Bad: x (it tells you nothing)."
     },
     {
       "id": "reason03",
       "outcomeId": "lo03",
       "difficulty": "Core",
       "responseMode": "text",
-      "prompt": "Explain the key idea in selection, and give one example of your own.",
+      "prompt": "What is the difference between the set to block and the change by block in Scratch?",
       "keyIdeas": [
-        "variable",
-        "value",
-        "assign"
+        "assign",
+        "meaningful name",
+        "count-controlled loop"
       ],
-      "modelAnswer": "So far your programs have run in a straight line - every instruction, every time. Selection changes that. Selection lets your program decide what to do next, based on the answer to a condition. It is the third big way to control a program, alongside sequence (the order of instructions) and iteration (repeating instructions).\n\nA selection statement has a condition and some instructions that run only if the condition is True. We write it with IF, THEN and ELSE. After IF comes the condition. After THEN comes what to do if the condition is True. After ELSE comes what to do if the condition is False.\n\nAn everyday IF THEN ELSE selection statement\n\nContinue with the rest of the day\n\nTrace the result. If it is very cold, the condition is True, so you take a jacket. If it is not very cold, the condition is False, so you take a jumper instead. Either way, you then continue with the rest of your day. If there were no ELSE, then when the condition was False the program would simply skip the jacket step and carry on.\n\nHere is another example. Notice that the last line runs no matter what:\n\nOnly one of the first two lines runs; the last line always runs\n\nTrace the result. If it is the morning, the program says 'Good morning'. If it is not, it says 'Good afternoon'. In both cases it then says 'How are you?', because that instruction is outside the selection statement.\n\nIn Scratch, selection uses the if <> then block and the if <> then ... else block from the orange Control section. The diamond-and-hexagon shape at the top holds the condition. Here is a program that reacts to the colour of your T-shirt:\n\nScratch: selection that checks user input\n\nTrace the result. If the user types blue, the condition TShirtColour = blue is True, so the sprite switches to the blue costume. If the user types anything else, the condition is False, so the ELSE branch runs and the sprite switches to the orange costume.\n\nTheo wants to fly a rocket ship around the screen using the arrow keys. He uses one IF for each arrow key, all inside a forever loop so the keys are checked again and again:\n\nScratch: control a rocket ship with the four arrow keys"
+      "modelAnswer": "set to replaces the value with a brand-new one (for example, set Score to 0). change by adds an amount to the current value (for example, change Score by 1)."
     },
     {
       "id": "reason04",
       "outcomeId": "lo04",
-      "difficulty": "Core",
+      "difficulty": "Challenge",
       "responseMode": "text",
-      "prompt": "Explain the key idea in planning solutions, and give one example of your own.",
+      "prompt": "What is a condition? Give one example that returns True and one that returns False.",
       "keyIdeas": [
-        "variable",
-        "value",
-        "assign"
+        "meaningful name",
+        "count-controlled loop",
+        "operator"
       ],
-      "modelAnswer": "Good programmers plan before they build. In this subunit you learn that the same task can be solved by different algorithms, that some algorithms are more efficient than others, and how to plan a solution by breaking a problem into parts.\n\nDifferent algorithms, different efficiency\n\nThink about walking from your classroom to the lunch hall. There are several routes, and some are shorter than others. In the same way, one problem can be solved by several algorithms. An algorithm is efficient when it carries out only the instructions that are actually needed, with no wasted steps.\n\nOne great way to make an algorithm more efficient is to use selection to skip steps you do not need. Compare two versions of a morning routine:\n\nA linear routine versus a routine that uses selection\n\n3 IF ShoweredLastNight equal to YES\n\n6 Take a shower, then get dressed\n\n7 Eat breakfast, then brush your teeth\n\nTrace the result. The linear routine always does all 7 steps, even on a day you already showered last night, and even on a weekend. The selection routine checks conditions first: if you showered last night, it skips the shower; if it is not a school day, it does not send you to school. Even though the selection version is longer to write, it is more efficient to run, because it does not do unnecessary work.\n\nDecomposition means breaking a big problem into smaller parts, called sub-problems, that are easier to solve one at a time. When we plan a program, it helps to decompose the problem into four things a computer can work with: inputs, processes, conditions and outputs.\n\nMaya plans a small chatbot that asks about a favourite animal. If you answer 'panda', it agrees with you; otherwise it gently disagrees. First she decomposes the problem into its parts:\n\nInput: ask the user for their favourite animal and store the answer.\n\nProcess: keep the answer in a variable called FavouriteAnimal.\n\nCondition: check IF FavouriteAnimal is equal to panda.\n\nOutput: say one message if True, and a different message if False.\n\nThen she turns her plan into an algorithm, and finally into Scratch code:\n\nScratch: a chatbot planned by decomposition\n\nsay [That is a cool animal, but pandas are the best!] for 2 seconds\n\nTrace the result. If the user types panda, the condition is True and the chatbot says 'Mine too!'. If the user types lion (or anything else), the condition is False and it says 'That is a cool animal, but pandas are the best!'. Because Maya planned the input, process, condition and output first, building the code was quick and clear.\n\nProgrammers use comments to explain their code. In an algorithm we often write a comment after two slashes, like this: // this line checks the answer. Comments do not run - they are just notes for humans to read. They make a program much friendlier to work on.\n\nPart — What it means · Example\n\nInput — Data the user gives to the program. · The user types their answer.\n\nProcess — The work the program does with the data. · The answer is stored in a variable.\n\nCondition — A True/False question the program checks. · Is the answer equal to 'panda'?"
+      "modelAnswer": "A condition is a question answered True or False. 10 = 10 returns True; 10 = 5 returns False."
+    },
+    {
+      "id": "reason05",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "Explain, in your own words, what IF THEN ELSE does.",
+      "keyIdeas": [
+        "count-controlled loop",
+        "operator",
+        "arithmetic operator"
+      ],
+      "modelAnswer": "IF THEN ELSE checks a condition. If it is True, it runs the THEN instructions. If it is False, it runs the ELSE instructions instead."
+    },
+    {
+      "id": "reason06",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "What are the four parts you decompose a problem into when planning a program?",
+      "keyIdeas": [
+        "operator",
+        "arithmetic operator",
+        "comparison operator"
+      ],
+      "modelAnswer": "Input, process, condition and output."
     }
   ],
   "project": {

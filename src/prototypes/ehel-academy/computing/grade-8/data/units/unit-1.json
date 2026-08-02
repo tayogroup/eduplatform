@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-02T10:33:39.466Z",
+  "generatedAt": "2026-08-02T11:52:22.231Z",
   "stage": {
     "id": "s08",
     "label": "Stage 8"
@@ -1332,60 +1332,60 @@
       "outcomeId": "lo01",
       "difficulty": "Core",
       "context": "Home",
-      "prompt": "D1. Input: 72",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "Input: 72\nscore = int(input(\"Enter your percentage: \"))\nif score >= 80:\nprint(\"Gold star\")\nelif score >= 60:\nprint(\"Silver star\")\nelif score >= 50:\nprint(\"Bronze star\")\nprint(\"You needed 50% to pass\")",
+      "answer": "72 is not >= 80, but is >= 60, so it prints: Silver star.",
       "hint": "Work out which idea this is about — Algorithm, Pseudocode, High-level language — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "Check your reasoning against this: 72 is not >= 80, but is >= 60, so it prints: Silver star."
     },
     {
       "id": "rp02",
       "outcomeId": "lo02",
       "difficulty": "Core",
       "context": "School",
-      "prompt": "score = int(input(\"Enter your percentage: \"))",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "Input: 3 (no other input needed)",
+      "answer": "answer 3 is not equal to 50, and 3 > 50 is false, so the else runs: Too low.",
       "hint": "Work out which idea this is about — Algorithm, Pseudocode, High-level language — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "Check your reasoning against this: answer 3 is not equal to 50, and 3 > 50 is false, so the else runs: Too low."
     },
     {
       "id": "rp03",
       "outcomeId": "lo03",
       "difficulty": "Core",
       "context": "Market",
-      "prompt": "if score >= 80:",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "Print 'You passed' only when score is 50 or more.\nscore = int(input(\"Enter your score: \"))\nif score ____ 50:\nprint(\"You passed\")",
+      "answer": "INPUT.",
       "hint": "Work out which idea this is about — Algorithm, Pseudocode, High-level language — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "Check your reasoning against this: INPUT."
     },
     {
       "id": "rp04",
       "outcomeId": "lo04",
       "difficulty": "Challenge",
       "context": "Community",
-      "prompt": "print(\"Gold star\")",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "Give a discount only when both conditions are true.\nif age < 16 ____ card == \"yes\":\nprint(\"You get 10% discount\")",
+      "answer": "(20 + 200) / 20 = 220 / 20 = 11. newValue is 11.",
       "hint": "Work out which idea this is about — Algorithm, Pseudocode, High-level language — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "Check your reasoning against this: (20 + 200) / 20 = 220 / 20 = 11. newValue is 11."
     },
     {
       "id": "rp05",
       "outcomeId": "lo05",
       "difficulty": "Challenge",
       "context": "Travel",
-      "prompt": "elif score >= 60:",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "Import the library, then round 8.2 up.\nprint(math.____(8.2))",
+      "answer": "!= is 'not equal to'.",
       "hint": "Work out which idea this is about — Algorithm, Pseudocode, High-level language — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "Check your reasoning against this: != is 'not equal to'."
     },
     {
       "id": "rp06",
       "outcomeId": "lo06",
       "difficulty": "Challenge",
       "context": "Health",
-      "prompt": "print(\"Silver star\")",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "Complete the function so it returns double the number.\ndef double(number):\n____ number * 2\nprint(double(6))",
+      "answer": "Check 12 (no), 3 (no), 33 (yes - found at the third item, position 2 counting from 0). It stops as soon as it finds 33.",
       "hint": "Work out which idea this is about — Algorithm, Pseudocode, High-level language — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "Check your reasoning against this: Check 12 (no), 3 (no), 33 (yes - found at the third item, position 2 counting from 0). It stops as soon as it finds 33."
     }
   ],
   "reasoningPrompts": [

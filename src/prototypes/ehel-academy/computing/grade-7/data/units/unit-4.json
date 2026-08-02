@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-02T10:33:39.394Z",
+  "generatedAt": "2026-08-02T11:52:22.150Z",
   "stage": {
     "id": "s07",
     "label": "Stage 7"
@@ -1184,60 +1184,50 @@
       "outcomeId": "lo01",
       "difficulty": "Core",
       "context": "Home",
-      "prompt": "These questions ask you to design, not just recall. Sketch your answers on paper.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "Design a table. A school library wants a database of its books. List at least five sensible fields, choose a LibreOffice Base data type for each, and mark which field should be the primary key.",
+      "answer": "1 Example fields: BookID (Integer, AutoValue) *primary key*; Title (Text); Author (Text); Category (Text); YearPublished (Integer); CopiesAvailable (Integer); OnLoan (Yes/No). BookID is the primary key because it is unique and never repeats.",
       "hint": "Work out which idea this is about — data, analyse, data model — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "Check your reasoning against this: 1 Example fields: BookID (Integer, AutoValue) *primary key*; Title (Text); Author (Text); Category (Text); YearPublished (Integer); CopiesAvailable (Integer); OnLoan (Yes/No). BookID is the primary key because it is unique and never repeats."
     },
     {
       "id": "rp02",
       "outcomeId": "lo02",
       "difficulty": "Core",
       "context": "School",
-      "prompt": "Design a table. A school library wants a database of its books. List at least five sensible fields, choose a LibreOffice Base data type for each, and mark which field should be the primary key.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "Write a query. Using your library table, write the field and criterion you would use to find every book published after the year 2017.",
+      "answer": "2 Field: YearPublished. Criterion: > 2017.",
       "hint": "Work out which idea this is about — data, analyse, data model — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "Check your reasoning against this: 2 Field: YearPublished. Criterion: > 2017."
     },
     {
       "id": "rp03",
       "outcomeId": "lo03",
       "difficulty": "Core",
       "context": "Market",
-      "prompt": "Write a query. Using your library table, write the field and criterion you would use to find every book published after the year 2017.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "Write a query. Write the field and criterion to find every book with fewer than 3 copies available.",
+      "answer": "3 Field: CopiesAvailable. Criterion: < 3.",
       "hint": "Work out which idea this is about — data, analyse, data model — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "Check your reasoning against this: 3 Field: CopiesAvailable. Criterion: < 3."
     },
     {
       "id": "rp04",
       "outcomeId": "lo04",
       "difficulty": "Challenge",
       "context": "Community",
-      "prompt": "Write a query. Write the field and criterion to find every book with fewer than 3 copies available.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "Design a form. Sketch a user-friendly data-capture form to register a new library member. Label at least four good design features on your sketch.",
+      "answer": "4 Good features to label: a clear title and purpose, the library's name/logo, correctly sized boxes, headings that match the fields, an example (e.g. date as dd/mm/yyyy), and multiple-choice options where suitable.",
       "hint": "Work out which idea this is about — data, analyse, data model — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "Check your reasoning against this: 4 Good features to label: a clear title and purpose, the library's name/logo, correctly sized boxes, headings that match the fields, an example (e.g. date as dd/mm/yyyy), and multiple-choice options where suitable."
     },
     {
       "id": "rp05",
       "outcomeId": "lo05",
       "difficulty": "Challenge",
       "context": "Travel",
-      "prompt": "Design a form. Sketch a user-friendly data-capture form to register a new library member. Label at least four good design features on your sketch.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
-      "hint": "Work out which idea this is about — data, analyse, data model — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
-    },
-    {
-      "id": "rp06",
-      "outcomeId": "lo06",
-      "difficulty": "Challenge",
-      "context": "Health",
       "prompt": "Write a conditional-formatting rule. In a spreadsheet of stall takings, describe the rule that would turn a cell green when takings reach a target of 500000 shillings.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "5 Rule: select the takings cell, Format > Conditional > Condition, set 'Cell value is greater than or equal to 500000' and Apply Style 'Good' (green).",
       "hint": "Work out which idea this is about — data, analyse, data model — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "Check your reasoning against this: 5 Rule: select the takings cell, Format > Conditional > Condition, set 'Cell value is greater than or equal to 500000' and Apply Style 'Good' (green)."
     }
   ],
   "reasoningPrompts": [

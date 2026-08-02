@@ -91,6 +91,60 @@ the rules above:
   `CDN-CachedAt` as the bare URL. The path is the cache key; the query is not
   part of it.
 
+  That probe is safe because it targets a path that **exists**, on the 30-day
+  tier. Do not adapt it to a `v{N}/` path you have not uploaded yet — see the
+  warning below.
+
+### ⚠ Never request a `v{N}/` URL before you upload it
+
+Edge Rule #1 sets **Override Cache Time = 1 year** on `*/app/*/v`. Bunny applies
+an override to whatever the origin returned — including a **404**. So fetching a
+version path that does not exist yet caches the miss for a year, and the release
+you upload afterwards is invisible behind it.
+
+This is not theoretical. On 2026-08-02 a pre-deploy check ran
+
+```bash
+curl -o /dev/null -w '%{http_code}' ".../app/computing/v114/course-ui.js"   # DON'T
+```
+
+to see whether `v114` existed. It did not. The deploy then uploaded all 77 files
+successfully, and every course still broke: `index.html` had flipped to `v114`,
+but the edge kept serving the cached 404. The signature is unmistakable once you
+look for it —
+
+```
+CDN-Cache: HIT
+CDN-RequestPullCode: 404          ← the origin 404 that got cached
+Cache-Control: public, max-age=31536000
+```
+
+Three things make it nasty:
+
+- **The deploy reports success.** Storage really does have every file; only the
+  edge is lying. `curl` against `storage.bunnycdn.com` returns 200 the whole time.
+- **It poisons only the exact URLs requested.** That check hit `course-ui.js` and
+  `design-system.css` but never `course-ui.css`, so the CSS loaded and the JS
+  404'd — the courses rendered, styled, and never booted. A half-broken app is
+  much harder to read than a dead one.
+- **You probably cannot purge it.** A purge needs the Bunny **account API key**,
+  which is not in `.env` (that holds the *storage* key). Without it the poisoned
+  path stays poisoned.
+
+**Recovery: bump the tag.** `v{N+1}` is a path nothing has ever requested, so it
+cannot be poisoned. That is the whole point of immutable paths, and it is faster
+than chasing a purge. v114 was abandoned this way and v115 shipped minutes later.
+
+**To check whether a tag is free, ask storage, not the CDN** — storage is the
+origin, so a 404 there caches nothing:
+
+```bash
+curl -s -o /dev/null -w '%{http_code}\n' -H "AccessKey: $BUNNY_KEY" "https://storage.bunnycdn.com/ehelacademy/Ehel%20Primary/app/computing/v117/course-ui.js"
+```
+
+**Verify a release only after the upload finishes.** At that point the paths
+exist, so requesting them caches a 200 — which is what you want anyway.
+
 ### The invariant: a version bundle must be self-contained
 
 Path versioning only busts the cache for what is **inside** `v{N}/`. Anything a

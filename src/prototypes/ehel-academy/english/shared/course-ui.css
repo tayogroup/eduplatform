@@ -140,6 +140,21 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
 .brand-mark { width: 40px; height: 40px; display: grid; place-items: center; background: var(--teal); color: white; border-radius: 7px; font: var(--weight-medium) 22px var(--font-serif); }
 .brand strong, .brand small { display: block; }
 .brand small { margin-top: 2px; color: var(--muted); font-size: 14px; }
+
+/* Brand block: real logo instead of the "E" tile, larger bold school name,
+   and the WebGL text shimmer (shared/brand-fx.js). The DOM text keeps its
+   layout and stays readable by screen readers; when the shader is live the
+   glyph fill goes transparent and the canvas paints in its place. Without
+   JS or WebGL these rules alone still give the bigger, bold static text.
+   Every subject imports this file, so this one addition covers all of
+   them; computing keeps its own copy of the same rules (harmless
+   duplicate) since it shipped this design first. */
+.brand-logo { width: 44px; height: 44px; object-fit: contain; display: block; }
+.brand-text strong { display: block; font-size: 20px; font-weight: var(--weight-bold); letter-spacing: .2px; }
+.brand-text small { display: block; font-size: 15px; font-weight: var(--weight-medium); color: var(--teal-dark, #0f5147); }
+[data-brand-fx] { position: relative; }
+.brand-fx-live { color: transparent !important; }
+.brand-fx-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
 .unit-progress { display: flex; align-items: center; gap: 12px; font-size: 14px; color: var(--muted); }
 .unit-progress strong { color: var(--ink); }
 .progress-track { height: 8px; background: #e6ecef; border-radius: 99px; overflow: hidden; flex: 1; }

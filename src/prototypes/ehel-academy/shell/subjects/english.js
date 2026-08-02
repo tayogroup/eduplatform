@@ -66,10 +66,17 @@ async function attachCaptions(video) {
   }
 }
 const defaultUnit = gradeNumber === 1 ? 0 : 1;
+// Unit -1 is the Prerequisite unit, present on every grade before Unit 1: a
+// placement exam over the previous grades' essential outcomes. It has no
+// units/unit-*.json of its own — load() fetches placement-exam.json instead
+// and synthesizes the small course shell the shared chrome needs.
+const PREREQ_UNIT = -1;
 const requestedUnit = Number(routeParams.get("unit") ?? defaultUnit);
-const unitNumber = requestedUnit >= defaultUnit && requestedUnit <= 10 ? requestedUnit : defaultUnit;
+const isPrereqUnit = requestedUnit === PREREQ_UNIT;
+const unitNumber = isPrereqUnit ? PREREQ_UNIT : (requestedUnit >= defaultUnit && requestedUnit <= 10 ? requestedUnit : defaultUnit);
 const STORAGE_KEY = `ehel-english-g${gradeNumber}-u${unitNumber}-progress-v1`;
 const FINAL_QUIZ_STORAGE_KEY = `ehel-english-g${gradeNumber}-course-final-quiz-v1`;
+const PLACEMENT_STORAGE_KEY = `ehel-english-g${gradeNumber}-placement-exam-v1`;
 const AI_STORAGE_KEY = `ehel-english-g${gradeNumber}-u${unitNumber}-ai-v1`;
 const AI_VOICE_ID = "XfNU2rGpBa01ckF309OY";
 const AI_NARRATION_RATE = 0.90;
@@ -516,6 +523,7 @@ let course;
 let dictionary;
 let manifest;
 let finalAssessment;
+let placementExam;
 let gamePack;
 let route = location.hash.slice(1) || "overview";
 let audioEnabled = true;
@@ -533,6 +541,7 @@ let quizIndex = 0;
 let quizScore = 0;
 let quizLocked = false;
 let finalQuizIndex = 0;
+let placementIndex = 0;
 let activeGameId = null;
 let gameRoundIndex = 0;
 let gameScore = 0;
@@ -665,7 +674,26 @@ function saveFinalQuizProgress() {
   renderNav();
 }
 
+function loadPlacementProgress() {
+  try {
+    return { answers: {}, attempts: [], currentIndex: 0, completed: false, band: null, submitted: false, startedAt: null, ...JSON.parse(localStorage.getItem(PLACEMENT_STORAGE_KEY) || "{}") };
+  } catch {
+    return { answers: {}, attempts: [], currentIndex: 0, completed: false, band: null, submitted: false, startedAt: null };
+  }
+}
+
+function savePlacementProgress() {
+  localStorage.setItem(PLACEMENT_STORAGE_KEY, JSON.stringify(placementProgress));
+  renderNav();
+}
+
 function visibleSections() {
+  if (isPrereqUnit) {
+    return [
+      ["overview", "layout-dashboard", "Overview"],
+      ["placement", "clipboard-check", placementExam?.kind === "readiness" ? "Readiness check" : "Placement exam"],
+    ];
+  }
   const available = sections.filter(([id]) => id !== "games" || gamePack);
   return unitNumber === 10 ? [...available, ["final-quiz", "trophy", "Final course quiz"]] : available;
 }
@@ -838,6 +866,7 @@ function renderOverview() {
         <section class="panel"><h3>Your unit at a glance</h3><div class="stat-row"><div class="stat"><strong>${course.dictionaryLinks.length}</strong><small>words</small></div><div class="stat"><strong>${course.readings.length}</strong><small>texts</small></div><div class="stat"><strong>${course.quizzes.length}</strong><small>quiz points</small></div></div></section>
         <section class="panel"><h3>Recommended path</h3><ol class="path-list">${learningPath.map((item) => `<li>${icon("circle-check-big")}<span>${escapeHtml(item)}</span></li>`).join("")}</ol></section>
         <section class="panel"><h3>Keep going</h3><p>${progress.completed.length ? `You have completed ${progress.completed.length} learning sections. Pick up where you left off.` : "Your progress will save on this device as you learn."}</p><button class="button primary" data-go="${progress.completed.includes("lecture") ? "dictionary" : "lecture"}" type="button">Continue ${icon("arrow-right")}</button></section>
+        ${unitNumber === defaultUnit && !placementProgress.completed ? `<section class="panel final-quiz-callout"><span class="eyebrow">New to ${gradeLabel}?</span><h3>Prerequisite: placement exam</h3><p>A short exam over your earlier English finds your perfect starting point and suggests review lessons if you need them.</p><a class="button gold" href="${courseLocation(PREREQ_UNIT, "placement")}">Take the placement exam ${icon("arrow-right")}</a></section>` : ""}
         ${unitNumber === 10 ? `<section class="panel final-quiz-callout"><span class="eyebrow">After your capstone</span><h3>Final course quiz</h3><p>Complete 30 questions across words, reading, grammar, speaking and writing. Your answers save as you work.</p><button class="button gold" data-go="final-quiz" type="button">${finalQuizProgress.completed ? "View my results" : "Open final quiz"} ${icon("arrow-right")}</button></section>` : ""}
       </div>
     </div>`;
@@ -1860,6 +1889,208 @@ function renderFinalQuizResults(results) {
   icons();
 }
 
+// ===================== prerequisite unit: placement exam =====================
+// Unit -1 on every grade. The exam data (questions, banding thresholds,
+// remediation links) lives in grade-N/data/placement-exam.json — the UI only
+// applies it, so curriculum can retune bands without a code change.
+
+function placementLocation(targetGrade, targetUnit, nextRoute = "overview") {
+  const url = new URL(location.href);
+  url.searchParams.set("grade", targetGrade);
+  url.searchParams.set("unit", targetUnit ?? (Number(targetGrade) === 1 ? 0 : 1));
+  url.hash = nextRoute;
+  return url.href;
+}
+
+function remediationHref(item) {
+  if (item.href) return new URL(item.href, location.href).href;
+  return placementLocation(item.grade, item.unit);
+}
+
+function remediationLabel(item) {
+  if (item.href) return item.title || "Foundation course";
+  return `${item.grade != null ? `Grade ${item.grade}, ` : ""}Unit ${item.unit}: ${item.title}`;
+}
+
+function placementBand(percent, sectionScores) {
+  const banding = placementExam.banding || {};
+  const ready = banding.ready || {};
+  const review = banding.readyWithReview || {};
+  const criticalRule = banding.criticalSection;
+  const critical = criticalRule && sectionScores.find((item) => item.id === criticalRule.sectionId);
+  if (percent < (review.minOverallPercent ?? 50) || (critical && critical.percent <= (criticalRule.maxFailPercent ?? 40))) return "notReady";
+  if (percent >= (ready.minOverallPercent ?? 80) && sectionScores.every((item) => item.percent >= (ready.minSectionPercent ?? 60))) return "ready";
+  return "readyWithReview";
+}
+
+function calculatePlacementResults(answers = placementProgress.answers) {
+  const answered = placementExam.questions.filter((question) => answers[question.questionId]);
+  const correct = answered.filter((question) => answers[question.questionId].selected === question.correctAnswer);
+  const sectionScores = placementExam.sections.map((section) => {
+    const questions = placementExam.questions.filter((question) => question.sectionId === section.sectionId);
+    const score = questions.filter((question) => answers[question.questionId]?.selected === question.correctAnswer).length;
+    return { id: section.sectionId, label: section.title, score, total: questions.length, percent: questions.length ? Math.round((score / questions.length) * 100) : 0, remediation: section.remediation || [] };
+  });
+  const areaNames = [...new Set(placementExam.questions.map((question) => question.curriculumArea))];
+  const areaScores = areaNames.map((area) => {
+    const questions = placementExam.questions.filter((question) => question.curriculumArea === area);
+    const score = questions.filter((question) => answers[question.questionId]?.selected === question.correctAnswer).length;
+    return { id: area, label: area, score, total: questions.length, percent: questions.length ? Math.round((score / questions.length) * 100) : 0 };
+  });
+  const percent = Math.round((correct.length / placementExam.totalMarks) * 100);
+  return { answered: answered.length, score: correct.length, total: placementExam.totalMarks, percent, sectionScores, areaScores, band: placementBand(percent, sectionScores) };
+}
+
+function finalizePlacement() {
+  const results = calculatePlacementResults();
+  if (!placementProgress.submitted) {
+    placementProgress.attempts.push({
+      attempt: placementProgress.attempts.length + 1,
+      startedAt: placementProgress.startedAt,
+      submittedAt: new Date().toISOString(),
+      answers: { ...placementProgress.answers },
+      score: results.score,
+      total: results.total,
+      percent: results.percent,
+      band: results.band,
+      sectionScores: results.sectionScores,
+      areaScores: results.areaScores,
+    });
+  }
+  placementProgress.currentIndex = placementExam.questions.length;
+  placementProgress.completed = true;
+  placementProgress.band = results.band;
+  placementProgress.submitted = true;
+  savePlacementProgress();
+  complete("placement");
+  emitProgress({ type: "checkpoint.result", unit: "prereq", section: "placement-exam", score: results.percent, passed: results.band !== "notReady", attempt: placementProgress.attempts.length });
+  renderPlacementResults(results);
+}
+
+function renderPrereqOverview() {
+  const isReadiness = placementExam.kind === "readiness";
+  const facts = `<div class="final-quiz-facts"><span><strong>${placementExam.questionCount}</strong> questions</span><span><strong>${placementExam.estimatedMinutes}</strong> minutes</span><span><strong>${placementExam.sections.length}</strong> sections</span></div>`;
+  const bandInfo = placementProgress.submitted && placementProgress.band ? (placementExam.banding[placementProgress.band] || {}) : null;
+  $("#app").innerHTML = `${pageHeader(`${gradeLabel} · Prerequisite unit`, placementExam.title, placementExam.description, isReadiness ? "Readiness check" : "Placement exam")}
+    <div class="final-quiz-intro">
+      <section class="panel final-quiz-hero"><div class="final-quiz-mark">${icon("compass")}</div><span class="eyebrow">Before Unit 1</span><h2>${isReadiness ? "Let's see what you already know." : `Show what you remember — we'll find your perfect start.`}</h2><p>${escapeHtml(placementExam.attemptsAllowed || "You can try as many times as you like.")} Your answers save on this device after every question.</p>${facts}
+      ${bandInfo
+        ? `<div class="audio-actions"><button class="button gold" data-go="placement" type="button">${icon("chart-no-axes-column-increasing")} View my placement report</button><a class="button secondary" href="${courseLocation(defaultUnit)}">Go to Unit 1 ${icon("arrow-right")}</a></div>`
+        : `<div class="audio-actions"><button class="button gold" data-go="placement" type="button">${isReadiness ? "Start readiness check" : "Start placement exam"} ${icon("arrow-right")}</button><a class="button secondary" href="${courseLocation(defaultUnit)}">Skip for now — open Unit 1</a></div>`}
+      </section>
+      <div class="final-section-grid">${placementExam.sections.map((section) => `<article class="panel final-section-card"><span>${String(section.sequence).padStart(2, "0")}</span><h3>${escapeHtml(section.title)}</h3><p>${escapeHtml(section.description)}</p><small>${section.questionCount} questions</small></article>`).join("")}</div>
+      <section class="panel"><h3>How placement works</h3><ol class="path-list">
+        <li>${icon("circle-check-big")}<span><strong>Ready:</strong> you move straight on to Unit 1.</span></li>
+        <li>${icon("book-open")}<span><strong>Ready with review:</strong> you start Unit 1 and warm up with a few review lessons.</span></li>
+        <li>${icon("sprout")}<span><strong>Build strong roots first:</strong> we suggest the best course to grow from — a grown-up or teacher can help you choose.</span></li>
+      </ol></section>
+    </div>`;
+  $$('[data-go]').forEach((button) => button.addEventListener("click", () => navigate(button.dataset.go)));
+  icons();
+}
+
+function renderPlacementExam() {
+  if (!isPrereqUnit) return navigate("overview");
+  if (placementProgress.submitted) return renderPlacementResults(calculatePlacementResults());
+  const hasStarted = Object.keys(placementProgress.answers).length > 0 || placementProgress.startedAt;
+  if (!hasStarted) {
+    placementProgress.startedAt = new Date().toISOString();
+    placementProgress.currentIndex = 0;
+    savePlacementProgress();
+    placementIndex = 0;
+    drawPlacementQuestion();
+    return;
+  }
+  placementIndex = Math.min(placementProgress.currentIndex || 0, placementExam.questions.length - 1);
+  drawPlacementQuestion();
+}
+
+function drawPlacementQuestion() {
+  const question = placementExam.questions[placementIndex];
+  if (!question) return finalizePlacement();
+  const section = placementExam.sections.find((item) => item.sectionId === question.sectionId);
+  const savedAnswer = placementProgress.answers[question.questionId];
+  const options = question.options.split(" | ");
+  const sectionQuestionNumber = placementExam.questions.filter((item) => item.sectionId === question.sectionId && item.sequence <= question.sequence).length;
+  const sourceNote = question.sourceGrade ? `From Grade ${question.sourceGrade}${question.sourceUnitNo ? ` · Unit ${question.sourceUnitNo}` : ""}` : "Getting-ready skills";
+  $("#app").innerHTML = `${pageHeader(`Section ${section.sequence} of ${placementExam.sections.length}`, section.title, section.description, `Question ${placementIndex + 1} of ${placementExam.questionCount}`)}
+    <section class="panel quiz-shell final-quiz-shell">
+      <div class="quiz-top"><span>${sectionQuestionNumber} of ${section.questionCount} in this section</span><strong>${Object.keys(placementProgress.answers).length} answers saved</strong></div>
+      <div class="progress-track"><span style="width:${(placementIndex / placementExam.questionCount) * 100}%"></span></div>
+      <div class="final-question-meta"><span>${escapeHtml(sourceNote)}</span></div>
+      <h2 class="quiz-question">${escapeHtml(question.question)}</h2>
+      <div class="quiz-options">${options.map((option) => {
+        const isSelected = savedAnswer?.selected === option;
+        const state = savedAnswer ? (option === question.correctAnswer ? "correct" : isSelected ? "wrong" : "") : "";
+        return `<button class="quiz-option ${state}" data-placement-option="${escapeHtml(option)}" type="button" ${savedAnswer ? "disabled" : ""}>${escapeHtml(option)}</button>`;
+      }).join("")}</div>
+      <div id="placement-feedback" role="status" aria-live="polite" aria-atomic="true">${savedAnswer ? `<p class="feedback ${savedAnswer.correct ? "good" : "try"}"><span class="status-note">${savedAnswer.correct ? "Correct!" : "Not quite."}</span> ${escapeHtml(question.explanation)}</p>` : ""}</div>
+      <div class="final-quiz-actions"><span>${icon("save")} Answers save on this device</span><button class="button primary" id="next-placement-question" type="button" ${savedAnswer ? "" : "hidden"}>${placementIndex === placementExam.questionCount - 1 ? "Finish and see my report" : "Next question"} ${icon("arrow-right")}</button></div>
+    </section>`;
+  $$('[data-placement-option]').forEach((button) => button.addEventListener("click", () => {
+    if (placementProgress.answers[question.questionId]) return;
+    const selected = button.dataset.placementOption;
+    placementProgress.answers[question.questionId] = { selected, correct: selected === question.correctAnswer, answeredAt: new Date().toISOString() };
+    placementProgress.currentIndex = placementIndex;
+    savePlacementProgress();
+    drawPlacementQuestion();
+  }));
+  if (savedAnswer) $("#next-placement-question").addEventListener("click", () => {
+    if (placementIndex >= placementExam.questionCount - 1) return finalizePlacement();
+    placementIndex += 1;
+    placementProgress.currentIndex = placementIndex;
+    savePlacementProgress();
+    drawPlacementQuestion();
+  });
+  icons();
+}
+
+function renderPlacementResults(results) {
+  const banding = placementExam.banding || {};
+  const bandInfo = banding[results.band] || {};
+  const minSectionPercent = banding.ready?.minSectionPercent ?? 60;
+  const weakSections = results.sectionScores.filter((item) => item.percent < minSectionPercent);
+  const reviewSections = weakSections.length ? weakSections : results.sectionScores.filter((item) => item.percent < (banding.ready?.minOverallPercent ?? 80));
+  const recommendation = banding.notReady?.recommendation;
+  const heroActions = results.band === "notReady"
+    ? `<div class="audio-actions">${recommendation ? `<a class="button gold" href="${recommendation.href ? new URL(recommendation.href, location.href).href : placementLocation(recommendation.grade)}">${icon("sprout")} Start ${escapeHtml(recommendation.label || "the recommended course")}</a>` : ""}<button class="button secondary" id="retry-placement" type="button">${icon("rotate-ccw")} Try again</button><a class="button secondary" href="${courseLocation(defaultUnit)}">My teacher says continue to ${gradeLabel} ${icon("arrow-right")}</a></div>`
+    : `<div class="audio-actions"><a class="button gold" href="${courseLocation(defaultUnit)}">Start ${gradeLabel}, Unit ${defaultUnit} ${icon("arrow-right")}</a><button class="button secondary" id="retry-placement" type="button">${icon("rotate-ccw")} Try again</button></div>`;
+  $("#app").innerHTML = `${pageHeader("Your placement report", bandInfo.label || "Placement report", placementExam.title, `${results.percent}% overall`)}
+    <div class="final-results-layout">
+      <section class="panel final-result-summary"><div class="score-ring">${results.score}/${results.total}</div><span class="eyebrow">${results.percent}% overall</span><h2>${escapeHtml(bandInfo.label || "Your report is ready")}</h2><p>${escapeHtml(bandInfo.message || "Here is how you did in each section.")}</p>${heroActions}</section>
+      <section class="panel"><h2>Section scores</h2><div class="result-bars">${results.sectionScores.map((item) => `<div class="result-bar"><div><strong>${escapeHtml(item.label)}</strong><span>${item.score}/${item.total}</span></div><div class="progress-track"><span style="width:${item.percent}%"></span></div></div>`).join("")}</div></section>
+      <section class="panel"><h2>Skills report</h2><div class="skill-score-grid">${results.areaScores.map((item) => `<div><span>${escapeHtml(item.label)}</span><strong>${item.percent}%</strong><small>${item.score} of ${item.total}</small></div>`).join("")}</div></section>
+      <section class="panel"><h2>${reviewSections.length ? "Your review plan" : "Every section is secure"}</h2>${reviewSections.length
+        ? `<p>These lessons rebuild exactly what each section tests. Do them in order, then try the exam again.</p><div class="review-list">${reviewSections.flatMap((item) => (item.remediation || []).map((entry) => `<a href="${remediationHref(entry)}"><span><strong>${escapeHtml(remediationLabel(entry))}</strong><small>Rebuilds: ${escapeHtml(item.label)} (${item.percent}%)</small></span>${icon("arrow-up-right")}</a>`)).join("")}</div>`
+        : `<p>You met the target in every section. ${gradeLabel} is the right place for you.</p>`}
+      </section>
+      <section class="panel"><h2>Need help understanding your report?</h2><p>Wehel Tutor can explain any question you found hard, and a grown-up or teacher can help you choose your path.</p><a class="button secondary" href="${courseLocation(defaultUnit, "ai")}">${icon("sparkles")} Ask Wehel Tutor</a></section>
+    </div>`;
+  $("#retry-placement")?.addEventListener("click", () => {
+    placementProgress.answers = {};
+    placementProgress.currentIndex = 0;
+    placementProgress.completed = false;
+    placementProgress.band = null;
+    placementProgress.submitted = false;
+    placementProgress.startedAt = null;
+    savePlacementProgress();
+    placementIndex = 0;
+    renderPlacementExam();
+  });
+  icons();
+}
+
+function renderPrereqTeacher() {
+  const latest = placementProgress.attempts[placementProgress.attempts.length - 1];
+  const bandLabel = (band) => (placementExam.banding?.[band]?.label) || band || "—";
+  $("#app").innerHTML = `${pageHeader("Teacher view", `${gradeLabel} placement exam`, "Placement evidence for entry to this grade, with per-section remediation guidance.", "Placement diagnostics")}
+    <div class="section-stack">
+      <section class="panel approval-banner"><h2>Purpose</h2><p>The prerequisite unit measures readiness for ${escapeHtml(cambridgeLabel(gradeNumber))}. Bands are advisory: a teacher or parent can override the recommendation. Thresholds live in placement-exam.json.</p></section>
+      ${latest ? `<section class="panel"><h2>Latest attempt</h2><div class="teacher-assessment-summary"><div><strong>${latest.percent}%</strong><span>${latest.score}/${latest.total} marks</span></div><div><strong>${escapeHtml(bandLabel(latest.band))}</strong><span>Attempt ${latest.attempt} of ${placementProgress.attempts.length}</span></div><div><strong>${new Date(latest.submittedAt).toLocaleDateString()}</strong><span>Latest submission</span></div></div>
+      <div class="teacher-table-scroll"><table class="teacher-table"><thead><tr><th>Section</th><th>Score</th><th>Percent</th><th>Teaching response</th></tr></thead><tbody>${latest.sectionScores.map((item) => `<tr><td>${escapeHtml(item.label)}</td><td>${item.score}/${item.total}</td><td>${item.percent}%</td><td>${item.percent >= (placementExam.banding?.ready?.minSectionPercent ?? 60) ? "Secure for entry." : "Re-teach via the section's linked review units before or alongside Unit 1."}</td></tr>`).join("")}</tbody></table></div></section>` : `<section class="panel"><h2>No attempt yet</h2><p>No submitted attempt is stored on this device. The exam holds ${placementExam.questionCount} questions across ${placementExam.sections.length} sections and reports one of three bands: Ready, Ready with review, or a recommendation to start from ${escapeHtml(placementExam.banding?.notReady?.recommendation?.label || "an earlier course")}.</p></section>`}
+    </div>`;
+}
+
 const aiModes = [
   ["teach", "presentation", "Teach me"],
   ["help", "life-buoy", "Help me"],
@@ -2517,6 +2748,7 @@ function renderTeacher() {
 // ===================== stores + config + boot =====================
 // The two English-only stores load here (their load fns are hoisted above).
 const finalQuizProgress = loadFinalQuizProgress();
+const placementProgress = loadPlacementProgress();
 const aiState = loadAIState();
 
 const config = {
@@ -2535,13 +2767,14 @@ const config = {
   courseKey: (g) => `ehel-eng-g${String(g).padStart(2, "0")}`,
   extendSummary: (p, base) => ({ ...base, knownWords: p.knownWords ? [...p.knownWords] : undefined }),
   visibleSections: () => visibleSections().map(([id, ic, lb]) => (id === "lecture" && unitNumber === 10 ? [id, ic, "Capstone launch"] : [id, ic, lb])),
-  isSectionDone: (id) => (id === "final-quiz" ? finalQuizProgress.completed : progress.completed.includes(id)),
+  isSectionDone: (id) => (id === "final-quiz" ? finalQuizProgress.completed : id === "placement" ? placementProgress.completed : progress.completed.includes(id)),
   onNavigate: () => stopAudio(),
   onBeforeRender: () => { route = shellCtx.route; stopAudio(); document.body.classList.remove("gc-full"); $("#app").setAttribute("aria-busy", "true"); },
   onAfterRender: () => { $("#app").setAttribute("aria-busy", "false"); prepareScreenReaderView(); icons(); },
   onNavRendered: () => icons(),
   renderers: {
-    overview: () => renderOverview(),
+    overview: () => (isPrereqUnit ? renderPrereqOverview() : renderOverview()),
+    placement: () => renderPlacementExam(),
     lecture: () => renderLecture(),
     ai: () => renderAIEnglish(),
     dictionary: () => renderDictionary(),
@@ -2557,10 +2790,29 @@ const config = {
     live: () => renderLive(),
     reflect: () => renderReflect(),
     "final-quiz": () => renderFinalQuiz(),
-    teacher: () => renderTeacher(),
+    teacher: () => (isPrereqUnit ? renderPrereqTeacher() : renderTeacher()),
   },
   bind,
   async load(ctx) {
+    if (isPrereqUnit) {
+      const [manifestResponse, placementResponse] = await Promise.all([
+        fetch(new URL("course-manifest.json", ctx.dataRootUrl)),
+        fetch(new URL("placement-exam.json", ctx.dataRootUrl)),
+      ]);
+      const failed = [manifestResponse, placementResponse].find((response) => !response.ok);
+      if (failed) throw new Error(`Course data could not be loaded (${failed.status} ${failed.url}).`);
+      [manifest, placementExam] = await Promise.all([manifestResponse.json(), placementResponse.json()]);
+      // Synthetic course shell: just enough for the shared chrome (labels,
+      // screen-reader announcements) — no unit.json exists for unit -1.
+      course = {
+        grade: manifest.grade,
+        subject: manifest.subject,
+        term: { label: "Before you begin" },
+        unit: { unitNo: "P", unitTitle: placementExam.shortTitle || "Prerequisite" },
+        visual: {},
+      };
+      return { manifest, course };
+    }
     const [manifestResponse, courseResponse, dictionaryResponse, finalAssessmentResponse, lectureMediaResponse] = await Promise.all([
       fetch(new URL("course-manifest.json", ctx.dataRootUrl)),
       fetch(new URL(`units/unit-${unitNumber}.json`, ctx.dataRootUrl)),
@@ -2595,12 +2847,19 @@ const config = {
     }
     if (location.hash.slice(1) === "final-quiz" && unitNumber !== 10) location.hash = "overview";
     if (location.hash.slice(1) === "games" && !gamePack) location.hash = "overview";
-    document.title = `${gradeLabel} English | Unit ${course.unit.unitNo}: ${course.unit.unitTitle}`;
+    if (isPrereqUnit && !["overview", "placement", "teacher"].includes(location.hash.slice(1))) location.hash = "overview";
+    if (!isPrereqUnit && location.hash.slice(1) === "placement") location.hash = "overview";
+    document.title = isPrereqUnit
+      ? `${gradeLabel} English | Prerequisite: ${placementExam.title}`
+      : `${gradeLabel} English | Unit ${course.unit.unitNo}: ${course.unit.unitTitle}`;
     $("#course-label").textContent = `${course.grade.label} · ${course.subject} · ${course.term.label}`;
     $("#unit-title").textContent = course.unit.unitTitle;
     $("#grade-select").innerHTML = Array.from({ length: 8 }, (_, index) => index + 1).map((grade) => `<option value="${grade}" ${grade === gradeNumber ? "selected" : ""}>Grade ${grade}</option>`).join("");
     $("#grade-select").addEventListener("change", (event) => { location.href = gradeLocation(event.target.value); });
-    const unitOptions = manifest.units.map((unit) => `<option value="${unit.number}" ${unit.number === unitNumber ? "selected" : ""}>Unit ${unit.number}: ${escapeHtml(unit.title)}</option>`).join("");
+    const unitOptions = [
+      `<option value="${PREREQ_UNIT}" ${isPrereqUnit ? "selected" : ""}>Prerequisite: Placement exam</option>`,
+      ...manifest.units.map((unit) => `<option value="${unit.number}" ${unit.number === unitNumber ? "selected" : ""}>Unit ${unit.number}: ${escapeHtml(unit.title)}</option>`),
+    ].join("");
     for (const picker of [$("#unit-select"), $("#top-unit-select")]) {
       picker.innerHTML = unitOptions;
       picker.addEventListener("change", (event) => { location.href = courseLocation(event.target.value); });

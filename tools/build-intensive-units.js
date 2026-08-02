@@ -328,7 +328,10 @@ function buildUnit(authored) {
 
   return {
     schemaVersion: SCHEMA_VERSION,
-    generatedAt: new Date().toISOString().slice(0, 10),
+    // No build date: it was read by nothing, and stamping one made every
+    // rebuild dirty all 40 unit files and re-upload all 44 content files on a
+    // hash-compared deploy, for no content change. generate-ehel-catalog.js
+    // keeps its output byte-stable for the same reason.
     subject: "English",
     course: "Ehel Intensive English",
     level: { id: lid, number: level.number, label: level.label, cefr: level.cefr },

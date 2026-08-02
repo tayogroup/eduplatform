@@ -8,6 +8,7 @@
     "build:bunny:staging": "node tools/build-bunny-output.js all --base-path=/pre_quraan_staging/",
     "check:alphabet": "node tools/build-unit-runtime-bundle.js alphabet && node --check src/units/alphabet/unit.runtime.js && node --check src/shared/js/runtime/runtime.bundle.js",
     "create:unit": "node tools/create-unit.js",
+    "test:tools": "node --test \"tests/tools/**/*.test.js\"",
     "deploy:bunny": "node tools/deploy-bunny-storage.js",
     "deploy:integration": "node tools/deploy-bunny-storage.js --target=integration",
     "deploy:integration:dry-run": "node tools/deploy-bunny-storage.js --target=integration --dry-run",
@@ -163,6 +164,8 @@
     "extend:math-explainers": "node tools/extend-ehel-math-explainers.mjs",
     "refresh:math-modules": "node tools/refresh-ehel-math-modules.mjs",
     "check:math": "node tools/check-math-content.mjs && node tools/check-ehel-audio-coverage.mjs mathematics",
+    "build:intensive": "node tools/build-intensive-units.js",
+    "check:intensive": "node tools/build-intensive-units.js && node tools/check-intensive-audio-coverage.mjs",
     "check:courses": "node tools/check-science-content.mjs && node tools/check-science-webgl-scenes.mjs && node tools/check-math-content.mjs && node tools/check-computing-content.mjs && node tools/check-computing-webgl-scenes.mjs",
     "repair:math-voice": "node tools/repair-ehel-math-adult-voice.mjs",
     "fix:verb-agreement": "node tools/fix-ehel-verb-agreement.mjs"

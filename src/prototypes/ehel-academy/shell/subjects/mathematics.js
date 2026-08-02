@@ -638,15 +638,14 @@ function drawCapstoneQuizQuestion() {
   }));
 }
 
-function renderReference() {
-  const terms = course.reference.terms.map(([term, meaning]) => `<tr><td><strong>${escapeHtml(term)}</strong></td><td>${escapeHtml(meaning)}</td></tr>`).join("");
-  const mistakes = course.reference.commonMistakes.map(([mistake, correction]) => `<tr><td>${escapeHtml(mistake)}</td><td>${escapeHtml(correction)}</td></tr>`).join("");
-  $("#app").innerHTML = `${pageHeader("Keep beside you", "Quick reference", `The key rules, words and corrections extracted from the Unit ${course.unit.unitNo} reference document.`)}
-    <div class="reference-grid">${course.reference.rules.map((rule) => `<article class="panel rule-card"><h2>${escapeHtml(rule.title)}</h2><p>${escapeHtml(rule.text)}</p></article>`).join("")}</div>
-    <div class="reference-grid" style="margin-top:18px"><section class="panel"><h2>Vocabulary</h2><table class="term-table"><thead><tr><th>Word</th><th>Meaning</th></tr></thead><tbody>${terms}</tbody></table></section><section class="panel"><h2>Common mistakes</h2><table class="term-table"><thead><tr><th>Mistake</th><th>Correct approach</th></tr></thead><tbody>${mistakes}</tbody></table></section></div>
-    <p><button class="button primary" id="reference-done" type="button">Reference reviewed ✓</button></p>`;
-  $("#reference-done").addEventListener("click", () => complete("reference", "Reference reviewed."));
-}
+// No renderReference here, unlike science.js and computing.js. Mathematics has
+// no "reference" section in its nav and never registered the route, so the
+// function was unreachable: 8 lines of a Quick Reference page no learner could
+// open, and a complete("reference") that could not fire. The unit data it read
+// is still used — course.reference.terms builds the Math Words & Symbols page
+// and course.reference.rules backs the AI tutor's replies — so only the
+// orphaned page went. Restoring the page is a product decision: add "reference"
+// to the nav sections and the routes map together, never the function alone.
 
 function buildTutorReply(message) {
   const lower = message.toLowerCase();

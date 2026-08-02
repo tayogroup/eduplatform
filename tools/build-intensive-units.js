@@ -558,6 +558,18 @@ for (const level of plan.levels) {
       exitDescriptor: level.exitDescriptor, exitAssessment: level.exitAssessment,
     },
     levels: levelSummaries,
+    // KNOWN ISSUE, not yet fixed: this value is dead. The app does not read
+    // it — shell/subjects/intensive-english.js hardcodes the same rule twice
+    // instead (`level === 1 ? 0 : 1`, once for the initial route and once in
+    // the defaultUnit(level) callback passed to the shared shell). Today the
+    // hardcode and this plan-derived value agree, so nothing is broken. It
+    // breaks silently the day a Level 3+ unit set opens anywhere other than
+    // unit 1: the manifest would hold the right answer and the app would
+    // still send learners to a unit that does not exist. Fix by having the
+    // shell read config.defaultUnit from the loaded manifest and deleting
+    // both hardcodes, making course-plan.json the single source. Left
+    // unfixed here because the fix is in shell code, which was out of scope
+    // for this pass — do it when Level 3 is authored, not before.
     defaultUnit: level.defaultUnit,
     units,
   }, null, 1), "utf8");

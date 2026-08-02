@@ -1074,7 +1074,7 @@ function buildUnit(unit, grade, framework) {
         ? "Imported - Cambridge objective mapping still to be assigned"
         : (unit.skill
           ? "Imported - curriculum review required"
-          : "Imported - objectives inferred from the guide's skill list; curriculum sign-off required"),
+          : guidedReviewStatus(`gp-g${pad2(grade.year)}-u${pad2(unit.unitNo)}`, objectives)),
     },
     cambridge: {
       level: grade.framework.level,
@@ -1150,6 +1150,35 @@ const REVIEW_PATH = path.join(COURSE_DIR, "data", "script-review.json");
 // learner gets. Authored by Ehel Academy, shown ALONGSIDE the official text
 // rather than replacing it, and never used where the pack supplied its own.
 const LEARNER_TEXT_PATH = path.join(COURSE_DIR, "data", "objective-learner-text.json");
+
+// The Stage 1-3 mappings are inferred, and the project owner signed off the
+// exact claim set on 2026-08-02. The sign-off pins WHAT was approved: a later
+// builder change that alters a unit's claims must not silently keep the
+// signed-off status, so every rebuild compares against this record and a
+// drifted unit reverts to "re-approval required".
+const SIGNOFF_PATH = path.join(COURSE_DIR, "data", "stage1-3-objective-signoff.json");
+
+function loadSignoff() {
+  if (!fs.existsSync(SIGNOFF_PATH)) return null;
+  try {
+    return JSON.parse(fs.readFileSync(SIGNOFF_PATH, "utf8"));
+  } catch (error) {
+    console.error(`error: ${SIGNOFF_PATH} is not readable JSON — ${error.message}`);
+    process.exit(1);
+  }
+}
+const SIGNOFF = loadSignoff();
+
+function guidedReviewStatus(unitId, objectives) {
+  const approved = SIGNOFF?.claims?.[unitId];
+  const produced = objectives.map((o) => o.code);
+  if (approved && approved.length === produced.length && approved.every((c, i) => c === produced[i])) {
+    return `Objectives inferred from the unit's own documents; signed off by ${SIGNOFF.approvedBy} on ${SIGNOFF.approvedOn}`;
+  }
+  return approved
+    ? "Imported - objective mapping changed since sign-off; re-approval required"
+    : "Imported - objectives inferred from the guide's skill list; curriculum sign-off required";
+}
 
 function loadObjectiveLearnerText() {
   if (!fs.existsSync(LEARNER_TEXT_PATH)) return {};

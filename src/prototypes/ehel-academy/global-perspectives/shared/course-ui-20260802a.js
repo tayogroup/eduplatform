@@ -246,6 +246,9 @@ function table(spec) {
 
 const MARKER = { tutor: "🤖", bigIdea: "💡", model: "🔍", speak: "🗣", teacher: "🤝", reflect: "🪞" };
 
+// Stages 1-3 are the guided packs, where a grown-up works alongside the learner.
+const isGuided = () => course?.unit?.packShape === "guided";
+
 function box(item, role) {
   const marker = MARKER[role] || "•";
   const lines = item.lines?.length ? list(item.lines) : "";
@@ -287,7 +290,7 @@ function renderOverview() {
   </section>
   ${path.length ? `<section class="panel"><h2>What you will work through</h2>${list(path)}</section>` : ""}
   ${course.outcomes?.length ? `<section class="panel"><h2>By the end you will be able to</h2>${list(course.outcomes.map((o) => o.text))}</section>` : ""}
-  ${objectives.length ? `<section class="panel">
+  ${objectives.length && !isGuided() ? `<section class="panel">
     <h2>Cambridge objectives</h2>
     <p>This unit covers these ${escapeHtml(course.cambridge.level)} objectives at Stage ${course.cambridge.stage}.</p>
     ${table({
@@ -481,8 +484,14 @@ function renderTeacher() {
   ${doneButton("teacher")}`;
 }
 
+// The Cambridge objectives table lives here, not on the learner's overview.
+// At Stages 1-3 those objectives have no learner paraphrase, so the overview
+// was showing curriculum prose written for adults — "Begin to participate in
+// simple investigations" — to a five-year-old. The grown-up is the reader who
+// can actually use it, and this is their section.
 function renderGrownUp() {
   const guide = course.grownUpGuide;
+  const objectives = course.cambridge?.objectives || [];
   const parts = guide.sections.map((part) => `
     <article class="panel">
       <h2>${escapeHtml(part.title)}</h2>
@@ -497,6 +506,17 @@ function renderGrownUp() {
     <p style="margin-top:12px">${escapeHtml(guide.intro)}</p>
     ${guide.notes?.length ? list(guide.notes) : ""}
   </section>
+  ${objectives.length ? `<section class="panel">
+    <h2>Cambridge objectives</h2>
+    <p>What this unit covers in ${escapeHtml(course.cambridge.level)} at Stage ${course.cambridge.stage}.
+    These are Cambridge's own words, for you rather than for the learner — the unit teaches them
+    through the activities and the mini-project, not by naming them.</p>
+    ${table({
+      headers: ["Code", "Sub-strand", "Cambridge's wording"],
+      rows: objectives.map((o) => [o.code, o.subStrand, o.text]),
+    })}
+    <p class="muted">${escapeHtml(course.unit.reviewStatus)}</p>
+  </section>` : ""}
   ${parts}`;
 }
 

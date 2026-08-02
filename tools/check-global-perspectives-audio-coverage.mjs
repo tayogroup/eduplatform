@@ -25,7 +25,17 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const UI = path.join(ROOT, "src", "prototypes", "ehel-academy", "global-perspectives", "shared", "course-ui.js");
+// The runtime carries a dated filename, because the pull zone ignores query
+// strings and serves it max-age=2592000 — a new name is the only reliable
+// cache-bust. Resolve whichever one is present rather than hard-coding a date,
+// so minting the next one does not silently skip this whole check.
+const SHARED = path.join(ROOT, "src", "prototypes", "ehel-academy", "global-perspectives", "shared");
+const uiCandidates = fs.readdirSync(SHARED).filter((f) => /^course-ui(?:-\d{8}[a-z])?\.js$/.test(f)).sort();
+if (uiCandidates.length !== 1) {
+  console.error(`expected exactly one course-ui*.js in ${SHARED}, found: ${uiCandidates.join(", ") || "none"}`);
+  process.exit(1);
+}
+const UI = path.join(SHARED, uiCandidates[uiCandidates.length - 1]);
 const GEN = path.join(ROOT, "tools", "lib", "ehel-global-perspectives-narration.js");
 const HASH_LIB = path.join(ROOT, "tools", "lib", "ehel-narration-hash.js");
 

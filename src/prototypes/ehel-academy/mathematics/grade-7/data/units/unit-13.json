@@ -80,7 +80,7 @@
       "id": "concept-4-outcomes-events-and-the-sample-space",
       "title": "Outcomes, Events and the Sample Space",
       "explanation": "To calculate probabilities correctly, you first need three precise words. An outcome is a single possible result of an experiment. When you roll a die, the possible outcomes are 1, 2, 3, 4, 5 and 6. When you flip a coin, the outcomes are heads and tails. An outcome is one thing that could happen on one go.\n\nAn event is one or more outcomes that you are interested in. An event can be simple (a single outcome) or compound (several outcomes). 'Rolling a 4' is a simple event, made of just one outcome. 'Rolling an even number' is a compound event, made of the outcomes 2, 4 and 6. The event is the thing you are asking about; the outcomes are the individual results that make it up.\n\nThe sample space is the set of all possible outcomes of an experiment. For one die roll, the sample space is {1, 2, 3, 4, 5, 6}. For one coin flip it is {heads, tails}. For spinning a spinner with four equal colours – red, green, blue, yellow – the sample space is {red, green, blue, yellow}. Listing the sample space carefully is the single most important habit in this unit, because if you miss an outcome, every probability you calculate afterwards will be wrong.\n\nWhen an experiment has two stages, list the sample space in an organised way so that you catch every combination. Suppose Yusuf flips a coin and rolls a die at the same time. To find all the outcomes, pair each coin result with each die result: H1, H2, H3, H4, H5, H6, T1, T2, T3, T4, T5, T6. That is 2 × 6 = 12 outcomes in the sample space. A table with the coin results down the side and the die results across the top helps you list them without missing any – each cell of the table is one outcome.",
-      "example": "Here is another two-stage example that matters for later work. Roll two dice and add the scores. The number of outcomes is 6 × 6 = 36, from (1,1) up to (6,6). But the possible totals run only from 2 to 12, and they are not equally likely. There is just one way to make a total of 2 (a 1 and a 1), but six ways to make a total of 7 (1+6, 2+5, 3+4, 4+3, 5+2, 6+1). This is a crucial lesson: to use the probability formula safely, the outcomes you count must be the equally likely ones (the 36 dice pairs), not the unequal totals."
+      "example": "Here is another two-stage example that matters for later work. Roll two dice and add the scores. The number of outcomes is 6 × 6 = 36, from (1,1) up to (6,6). But the possible totals run only from 2 to 12, and they are not equally likely. There is just one way to make a total of 2 (a 1 and a 1), but six ways to make a total of 7 (1+6, 2+5, 3+4, 4+3, 5+2, 6+1). This is a crucial lesson: to use the probability formula safely, the outcomes you count must be the equally likely ones (the 36 die pairs), not the unequal totals."
     },
     {
       "id": "concept-5-calculating-theoretical-probability",
@@ -154,7 +154,7 @@
       "answer": "1 − 0.35 = 0.65.",
       "modelType": "model-5",
       "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Outcome or Event.",
-      "explanation": "Calculating Theoretical Probability: Now we reach the heart of the unit: the formula for theoretical probability. When every outcome is equally likely, the probability of an event is the number of favourable outcomes divided by the total number of possible outcomes, written P(event) = favourable outcomes ÷ total outcomes. Rolling a 4 on a fair dice gives one favourable outcome out of six, so P(4) = 1/6. Every probability lies between 0 and 1, and the probabilities of all the possible outcomes add to 1."
+      "explanation": "Calculating Theoretical Probability: Now we reach the heart of the unit: the formula for theoretical probability. When every outcome is equally likely, the probability of an event is the number of favourable outcomes divided by the total number of possible outcomes, written P(event) = favourable outcomes ÷ total outcomes. Rolling a 4 on a fair die gives one favourable outcome out of six, so P(4) = 1/6. Every probability lies between 0 and 1, and the probabilities of all the possible outcomes add to 1."
     },
     {
       "id": "explore-6",
@@ -352,7 +352,7 @@
       "difficulty": "Intermediate",
       "title": "Total of two dice",
       "prompt": "Two fair dice are rolled and the scores are added. Find P(total of 7).",
-      "solution": "There are 6 × 6 = 36 equally likely outcomes. The pairs giving a total of 7 are (1,6), (2,5), (3,4), (4,3), (5,2) and (6,1) — that is 6 favourable outcomes. So P(total of 7) = 6/36 = 1/6. This is why 7 is the most common total when rolling two dice."
+      "solution": "There are 6 × 6 = 36 equally likely outcomes. The pairs giving a total of 7 are (1,6), (2,5), (3,4), (4,3), (5,2) and (6,1) — that is 6 favourable outcomes. So P(total of 7) = 6/36 = 1/6. This is why 7 is the most common total when rolling two die."
     },
     {
       "id": "we08",
@@ -520,7 +520,7 @@
       "materials": "two dice, paper, a pencil.",
       "steps": [
         "List every total from 2 to 12. Predict which total you think will come up most often.",
-        "Roll the two dice 50 times, each time adding the scores and tallying the total.",
+        "Roll the two die 50 times, each time adding the scores and tallying the total.",
         "Make a bar of tallies for each total. Which total won?",
         "Explain your result: there are 6 ways to make 7 but only 1 way to make 2 or 12.",
         "Challenge: work out the theoretical probability of each total out of 36 and compare it to your tallies."

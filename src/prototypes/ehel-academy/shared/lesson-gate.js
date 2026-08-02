@@ -46,7 +46,16 @@ const CSS = `
   box-shadow:0 12px 30px #f2c14e4d}
 .lg-gate:hover .lg-gate-btn{background:#ffd469}
 @keyframes lgTileIn{from{opacity:0;transform:translateY(10px) scale(.96)}to{opacity:1;transform:none}}
-@media (prefers-reduced-motion:reduce){.lg-gate-inner{animation:none}}`;
+@media (prefers-reduced-motion:reduce){.lg-gate-inner{animation:none}}
+.lg-gate-diag{position:absolute;left:0;right:0;bottom:9px;font-size:11px;line-height:1.4;
+  color:#cfe0f0;opacity:.45;pointer-events:none;user-select:text}`;
+
+// Version stamp shown in the diagnostics line. Bump when this file's mount
+// behaviour changes: a screenshot of the gate then says which code produced
+// it. This exists because three fixes here "changed nothing" for a tester
+// whose dev server was silently serving an out-of-date worktree copy — the
+// only visible artefact was the gate itself, and it carried no provenance.
+const LG_VERSION = "lg3";
 
 // "Already started" must survive the app's own reload (it reloads itself once
 // after boot) and any later fullscreen exits — otherwise ESC mid-lesson lands
@@ -127,9 +136,15 @@ function bindEscapeLock() {
 export function mountLessonGate(opts = {}) {
   if (typeof document === "undefined") return;
 
-  const subject = SUBJECTS[String(opts.subjectKey || "").toLowerCase()] || SUBJECTS.eng;
+  const keyRaw = String(opts.subjectKey || "").toLowerCase();
+  const subject = SUBJECTS[keyRaw] || SUBJECTS.eng;
   const stage = Number(opts.stage || 0);
   const title = opts.title || (stage > 0 ? `Grade ${stage} ${subject.label}` : subject.label);
+  // Provenance for the diagnostics line: which code version, which key was
+  // asked for (∅ + English fallback is itself a finding), who called, where.
+  const diag = `${LG_VERSION} · key=${keyRaw || "∅"}→${subject.label}`
+    + ` · via=${opts.via || "shell"} · ${location.pathname}`;
+  try { console.info(`[lesson-gate] ${diag}`); } catch { /* consoleless embedder */ }
 
   bindEscapeLock();
   armFullscreenOnFirstGesture();
@@ -157,12 +172,16 @@ export function mountLessonGate(opts = {}) {
     const mark = `<span class="lg-gate-mark" style="background:${subject.tint}" aria-hidden="true">${subject.mark}</span>`;
     gate.innerHTML = `<div class="lg-gate-inner">${mark}`
       + `<h2></h2><p>Tap to begin — the lesson fills the whole screen.</p>`
-      + `<span class="lg-gate-btn">▶ Start</span></div>`;
+      + `<span class="lg-gate-btn">▶ Start</span></div>`
+      + `<small class="lg-gate-diag" aria-hidden="true"></small>`;
     // h2, not h1: the page behind the gate already carries the unit's h1, and
     // both are exposed at once while the gate is up — two h1s on one page. The
     // gate is role="button" with aria-label="Start <title>", so this heading is
     // only a visual echo of a name the control already announces.
     gate.querySelector("h2").textContent = title; // never inject the title as HTML
+    // textContent, same reason; aria-hidden because the console already carries
+    // this line and screen readers gain nothing from a build stamp.
+    gate.querySelector(".lg-gate-diag").textContent = diag;
 
     const open = () => {
       setDismissed();
@@ -204,10 +223,15 @@ function selfMount() {
   // [a-z-] not [a-z]: global-perspectives and intensive-english are hyphenated
   // slugs, and a class without the hyphen fails to match them at all.
   const seg = (location.pathname.match(/\/(?:app|ehel-academy)\/([a-z-]+)\//i) || [])[1] || "";
-  if (!SUBJECTS[seg.toLowerCase()]) return; // unknown subject: leave it to the shell's explicit call
+  if (!SUBJECTS[seg.toLowerCase()]) {
+    // Unknown subject: mount nothing and leave the gate to the shell's
+    // explicit call — but say so, or this path is invisible when debugging.
+    try { console.info(`[lesson-gate] ${LG_VERSION} · self-mount skipped (key=${seg || "∅"}) · ${location.pathname}`); } catch { /* consoleless embedder */ }
+    return;
+  }
   const p = new URLSearchParams(location.search);
   const stage = Number(p.get("grade") || p.get("stage") || 0);
-  mountLessonGate({ subjectKey: seg, stage });
+  mountLessonGate({ subjectKey: seg, stage, via: "url" });
 }
 
 if (typeof document !== "undefined") {

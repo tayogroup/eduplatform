@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-02T14:08:46.767Z",
+  "generatedAt": "2026-08-02T14:52:05.376Z",
   "stage": {
     "id": "s08",
     "label": "Stage 8"
@@ -634,88 +634,88 @@
       "hint": "Look back at what network and network hardware mean in this unit, then answer in your own words."
     },
     {
-      "id": "p05",
-      "level": "Warm-up",
-      "prompt": "What is the main weakness of a bus topology? A) It needs too many switches B) If the backbone cable breaks, the whole network fails C) It is too fast D) It cannot use cables",
-      "answer": "B — in a bus, if the backbone cable breaks the whole network fails.",
+      "id": "p17",
+      "level": "Core",
+      "prompt": "For a PAN, state how many devices it usually has, where they are located, and who owns the hardware.",
+      "answer": "A PAN usually has just a few devices, located very close together around one person, and the user owns all the hardware.",
       "hint": "Look back at what network and network hardware mean in this unit, then answer in your own words."
     },
     {
-      "id": "p06",
-      "level": "Warm-up",
-      "prompt": "Copper cables carry data as: A) Pulses of light B) Electrical signals C) Radio waves only D) Sound",
-      "answer": "B — copper carries data as electrical signals.",
+      "id": "p18",
+      "level": "Core",
+      "prompt": "Give one similarity and one difference between a LAN and a WAN.",
+      "answer": "Similarity: both connect several devices to share data. Difference: a LAN is in one building; a WAN spans a large area, and in a WAN some hardware belongs to an ISP.",
       "hint": "Look back at what network and network hardware mean in this unit, then answer in your own words."
     },
     {
-      "id": "p07",
-      "level": "Warm-up",
-      "prompt": "Which is an advantage of fibre optic over copper? A) Cheaper to make B) Not affected by electromagnetic interference C) Easier to install everywhere D) Thicker and stronger",
-      "answer": "B — fibre uses light, so it is not affected by electromagnetic interference.",
+      "id": "p19",
+      "level": "Core",
+      "prompt": "Name the four network topologies you have studied.",
+      "answer": "Bus, star, ring and mesh.",
       "hint": "Look back at what network and network hardware mean in this unit, then answer in your own words."
     },
     {
-      "id": "p08",
-      "level": "Warm-up",
-      "prompt": "Which is normally true of a wired connection compared with wireless? A) Less secure B) Slower C) More secure and more reliable D) Cheaper to expand",
-      "answer": "C — wired is normally more secure and more reliable than wireless.",
+      "id": "p20",
+      "level": "Core",
+      "prompt": "Give one advantage and one disadvantage of a star topology.",
+      "answer": "Advantage: if one cable breaks only that device is offline, and it is easy to add devices. Disadvantage: it uses more cable, and if the central switch fails the whole network goes down.",
       "hint": "Look back at what network and network hardware mean in this unit, then answer in your own words."
     },
     {
-      "id": "p09",
-      "level": "Warm-up",
-      "prompt": "Data sent across a network is broken into: A) Bytes only B) Data packets C) Cables D) Firewalls",
-      "answer": "B — data is broken into data packets to travel across a network.",
-      "hint": "Look back at what network and network hardware mean in this unit, then answer in your own words."
+      "id": "p35",
+      "level": "Challenge",
+      "prompt": "Maya is designing the Hargeisa office network. She wants it to be reliable and easy to add computers to later. Which topology should she choose, and why? What is the one risk of that topology?",
+      "answer": "A star topology — if one cable fails only that computer is affected, and new computers are easy to add by plugging into the switch. The one risk: if the central switch fails, the whole office network goes down.",
+      "hint": "Work out which idea this is about — network, network hardware, PAN — then explain your reasoning step by step."
     },
     {
-      "id": "p10",
-      "level": "Warm-up",
-      "prompt": "What is a protocol? A) A type of cable B) An agreed set of rules for sending data C) A kind of virus D) A wireless access point",
-      "answer": "B — a protocol is an agreed set of rules for sending data.",
-      "hint": "Look back at what network and network hardware mean in this unit, then answer in your own words."
+      "id": "p36",
+      "level": "Challenge",
+      "prompt": "The Hargeisa and Mogadishu offices will send private price lists to each other. Explain how encryption keeps these safe even if a hacker intercepts them.",
+      "answer": "Encryption scrambles the price list into cipher text before it is sent. Even if a hacker intercepts it on the way, they cannot understand it without the key. Only the Mogadishu office, with the correct key, can decrypt it back to plaintext.",
+      "hint": "Work out which idea this is about — network, network hardware, PAN — then explain your reasoning step by step."
     },
     {
-      "id": "p11",
-      "level": "Warm-up",
-      "prompt": "Which of these can cause an error in transmitted data? A) Electrical interference B) Crosstalk C) A power surge D) All of these",
-      "answer": "D — interference, crosstalk and power surges can all cause errors.",
-      "hint": "Look back at what network and network hardware mean in this unit, then answer in your own words."
+      "id": "p37",
+      "level": "Challenge",
+      "prompt": "Karim downloads a supplier's catalogue that a friend emailed him. He trusts the friend, so he thinks he does not need to scan it. Explain why he should still scan it, and what could happen if he does not.",
+      "answer": "A virus can hide in any file, and a friend may pass one on without knowing. If Karim does not scan it, a virus could corrupt or delete the business's data. Antivirus should scan every download, even from trusted people.",
+      "hint": "Work out which idea this is about — network, network hardware, PAN — then explain your reasoning step by step."
     },
     {
-      "id": "p12",
-      "level": "Warm-up",
-      "prompt": "What does an echo check do? A) Encrypts data B) Compares sent data with a returned copy to detect errors C) Deletes viruses D) Speeds up the network",
-      "answer": "B — an echo check compares sent data with the returned copy to detect errors.",
-      "hint": "Look back at what network and network hardware mean in this unit, then answer in your own words."
+      "id": "p38",
+      "level": "Challenge",
+      "prompt": "A message of eight bits is sent from Hargeisa, but arrives with one bit flipped. Explain how an echo check would detect this and what happens next.",
+      "answer": "The receiver echoes a copy of the eight bits back to the sender. The sender compares it with what it sent, sees that one bit is different, and knows an error occurred. It then sends the data again so the correct version arrives.",
+      "hint": "Work out which idea this is about — network, network hardware, PAN — then explain your reasoning step by step."
     },
     {
-      "id": "p13",
-      "level": "Warm-up",
-      "prompt": "A message before it is encrypted is called: A) Cipher text B) Plaintext C) A packet D) A protocol",
-      "answer": "B — the message before encryption is plaintext.",
-      "hint": "Look back at what network and network hardware mean in this unit, then answer in your own words."
+      "id": "p40",
+      "level": "Extension",
+      "prompt": "Encrypt the plaintext word DATA.",
+      "answer": "DATA encrypts to GDWD. (D=G, A=D, T=W, A=D.)",
+      "hint": "Work out which idea this is about — network, network hardware, PAN — then explain your reasoning step by step."
     },
     {
-      "id": "p14",
-      "level": "Warm-up",
-      "prompt": "Using a Caesar cipher with a shift of 3 to the right, the letter A becomes: A) C B) D C) X D) Z",
-      "answer": "B — with a shift of 3 to the right, A becomes D.",
-      "hint": "Look back at what network and network hardware mean in this unit, then answer in your own words."
+      "id": "p41",
+      "level": "Extension",
+      "prompt": "Encrypt the plaintext word VIRUS.",
+      "answer": "VIRUS encrypts to YLUXV. (V=Y, I=L, R=U, U=X, S=V.)",
+      "hint": "Work out which idea this is about — network, network hardware, PAN — then explain your reasoning step by step."
     },
     {
-      "id": "p15",
-      "level": "Warm-up",
-      "prompt": "What does a firewall do? A) Scans files for viruses B) Checks data against rules and blocks unsafe data C) Encrypts your password D) Speeds up downloads",
-      "answer": "B — a firewall checks data against rules and blocks unsafe data.",
-      "hint": "Look back at what network and network hardware mean in this unit, then answer in your own words."
+      "id": "p42",
+      "level": "Extension",
+      "prompt": "Decrypt the cipher word KDFNHU.",
+      "answer": "KDFNHU decrypts to HACKER. (K=H, D=A, F=C, N=K, H=E, U=R.)",
+      "hint": "Work out which idea this is about — network, network hardware, PAN — then explain your reasoning step by step."
     },
     {
-      "id": "p16",
-      "level": "Warm-up",
-      "prompt": "If antivirus software finds a virus, it may move it to a safe holding area called: A) A packet B) A protocol C) Quarantine D) A topology",
-      "answer": "C — a suspected virus can be moved to quarantine.",
-      "hint": "Look back at what network and network hardware mean in this unit, then answer in your own words."
+      "id": "p43",
+      "level": "Extension",
+      "prompt": "Decrypt the cipher word DQWLYLUXV.",
+      "answer": "DQWLYLUXV decrypts to ANTIVIRUS. (D=A, Q=N, W=T, L=I, Y=V, L=I, U=R, X=U, V=S.)",
+      "hint": "Work out which idea this is about — network, network hardware, PAN — then explain your reasoning step by step."
     }
   ],
   "activities": [

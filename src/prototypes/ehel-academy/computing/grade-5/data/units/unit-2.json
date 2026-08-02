@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-02T14:08:46.343Z",
+  "generatedAt": "2026-08-02T14:52:04.951Z",
   "stage": {
     "id": "s05",
     "label": "Stage 5"
@@ -627,81 +627,81 @@
       "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words."
     },
     {
-      "id": "p06",
-      "level": "Warm-up",
-      "prompt": "In a spreadsheet, the symbol for multiply is: (a) x (b) * (c) / (d) +",
-      "answer": "(b) The asterisk * means multiply; the slash / means divide.",
-      "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p07",
-      "level": "Warm-up",
-      "prompt": "Which formula correctly adds the values from B2 to B6? (a) =SUMB2:B6 (b) SUM(B2:B6) (c) =SUM(B2:B6) (d) =SUM(B2-B6)",
-      "answer": "(c) =SUM(B2:B6) has the equals sign, the function name, brackets and a colon.",
-      "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p08",
-      "level": "Warm-up",
-      "prompt": "The AVERAGE function calculates the: (a) Total (b) Largest value (c) Mean (d) Smallest value",
-      "answer": "(c) AVERAGE finds the mean: add the values and divide by how many there are.",
-      "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p09",
-      "level": "Warm-up",
-      "prompt": "Which chart is best for categorical data like favourite fruit? (a) Line graph (b) Bar chart (c) A single number (d) A formula",
-      "answer": "(b) A bar chart is best for categorical (and discrete) data.",
-      "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p10",
-      "level": "Warm-up",
-      "prompt": "Which chart is best for showing temperature changing over a day? (a) Bar chart (b) Line graph (c) Table only (d) Pie of names",
-      "answer": "(b) A line graph shows continuous data changing over time.",
-      "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p11",
-      "level": "Warm-up",
-      "prompt": "The key on a chart that shows what each colour means is called the: (a) Axis (b) Legend (c) Cell (d) Range",
-      "answer": "(b) The legend is the key that shows what each colour means.",
-      "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p12",
-      "level": "Warm-up",
-      "prompt": "The y axis on a chart is: (a) Horizontal (b) Vertical (c) A colour (d) A title",
-      "answer": "(b) The y axis is vertical; the x axis is horizontal.",
-      "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p13",
-      "level": "Warm-up",
-      "prompt": "In =SUM(B2:B8), the part B2:B8 is called a: (a) Legend (b) Range (c) Formula (d) Chart",
-      "answer": "(b) B2:B8 is a range - all the cells from B2 to B8.",
-      "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p14",
-      "level": "Warm-up",
-      "prompt": "When you change a number that a formula uses, the formula's answer: (a) Stays the same (b) Must be redone by hand (c) Updates by itself (d) Turns into text",
-      "answer": "(c) A formula updates its answer by itself when the data changes.",
-      "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p15",
-      "level": "Warm-up",
-      "prompt": "To find a word quickly in a big spreadsheet you use: (a) A chart (b) The Find tool (c) The AVERAGE function (d) A legend",
-      "answer": "(b) The Find tool (Ctrl+F) searches for your criteria in the spreadsheet.",
-      "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words."
-    },
-    {
       "id": "p16",
       "level": "Core",
       "prompt": "In your own words, what is the difference between data and information? Give an example of each.",
       "answer": "Data is meaningless facts or figures on their own, like '7' or 'green'. Information is data with meaning, like 'green is the most popular colour in the class'.",
       "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p17",
+      "level": "Core",
+      "prompt": "What is the difference between discrete and continuous data? Give an example of each.",
+      "answer": "Discrete data is counted and is a whole value (for example, the number of learners). Continuous data is measured and can be any value, including decimals (for example, a temperature of 24.5 degrees).",
+      "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p18",
+      "level": "Core",
+      "prompt": "Name three tools you can use to collect data in a statistical investigation.",
+      "answer": "Any three of: a data logger, a spreadsheet (LibreOffice Calc), a database, a form or questionnaire, or document production tools.",
+      "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p19",
+      "level": "Core",
+      "prompt": "What does a validation rule do, and why is it useful?",
+      "answer": "A validation rule limits what a cell will accept (for example, only whole numbers 1 to 5, or only items from a list). It is useful because it stops many mistakes before they happen.",
+      "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p26",
+      "level": "Challenge",
+      "prompt": "AVERAGE(B2:B6)",
+      "answer": "Incorrect - missing brackets. Correct: =SUM(B2:B6).",
+      "hint": "Work out which idea this is about — analyse, automatically, average — then explain your reasoning step by step."
+    },
+    {
+      "id": "p27",
+      "level": "Challenge",
+      "prompt": "=AVERAGE(B2-B6)",
+      "answer": "Incorrect - a range on its own is not a calculation; there is no function or operator. Correct (for a total): =SUM(B2:B6).",
+      "hint": "Work out which idea this is about — analyse, automatically, average — then explain your reasoning step by step."
+    },
+    {
+      "id": "p28",
+      "level": "Challenge",
+      "prompt": "=AVERAGE(B2B6)",
+      "answer": "Correct.",
+      "hint": "Work out which idea this is about — analyse, automatically, average — then explain your reasoning step by step."
+    },
+    {
+      "id": "p29",
+      "level": "Extension",
+      "prompt": "Leila made a bar chart of the favourite fruit in her class. The bars had these heights: Mango 9, Banana 6, Orange 4, Watermelon 4, Dates 2. Answer the questions using those values.",
+      "answer": "13:00 (1 o'clock), at 32 degrees.",
+      "hint": "Work out which idea this is about — analyse, automatically, average — then explain your reasoning step by step."
+    },
+    {
+      "id": "p30",
+      "level": "Extension",
+      "prompt": "Which fruit is the most popular?",
+      "answer": "27 degrees.",
+      "hint": "Work out which idea this is about — analyse, automatically, average — then explain your reasoning step by step."
+    },
+    {
+      "id": "p31",
+      "level": "Extension",
+      "prompt": "Which fruit is the least popular?",
+      "answer": "Between 13:00 and 14:00 - it peaked at 13:00 and then fell.",
+      "hint": "Work out which idea this is about — analyse, automatically, average — then explain your reasoning step by step."
+    },
+    {
+      "id": "p32",
+      "level": "Extension",
+      "prompt": "How many learners answered the survey altogether?",
+      "answer": "Because temperature is continuous data that changes over time, and the line shows the rise and fall clearly.",
+      "hint": "Work out which idea this is about — analyse, automatically, average — then explain your reasoning step by step."
     }
   ],
   "activities": [

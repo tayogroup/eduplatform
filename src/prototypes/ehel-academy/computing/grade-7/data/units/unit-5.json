@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-02T14:08:46.654Z",
+  "generatedAt": "2026-08-02T14:52:05.266Z",
   "stage": {
     "id": "s07",
     "label": "Stage 7"
@@ -504,76 +504,6 @@
       "hint": "Look back at what Software and Hardware mean in this unit, then answer in your own words."
     },
     {
-      "id": "p05",
-      "level": "Warm-up",
-      "prompt": "A single binary digit (0 or 1) is called a: (a) byte (b) pixel (c) bit (d) file",
-      "answer": "(c) A bit. It is short for 'binary digit'.",
-      "hint": "Look back at what Software and Hardware mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p06",
-      "level": "Warm-up",
-      "prompt": "How many bits are in one byte? (a) 2 (b) 4 (c) 8 (d) 16",
-      "answer": "(c) 8 bits make one byte.",
-      "hint": "Look back at what Software and Hardware mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p07",
-      "level": "Warm-up",
-      "prompt": "A tiny dot that makes up a bitmap image is a: (a) vector (b) pixel (c) sensor (d) gate",
-      "answer": "(b) A pixel, short for 'picture element'.",
-      "hint": "Look back at what Software and Hardware mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p08",
-      "level": "Warm-up",
-      "prompt": "The number of bits used to represent the colour of a pixel is the: (a) resolution (b) colour depth (c) bandwidth (d) byte",
-      "answer": "(b) Colour depth. More bits per pixel means more possible colours.",
-      "hint": "Look back at what Software and Hardware mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p09",
-      "level": "Warm-up",
-      "prompt": "Which sensor would best help a driverless car detect an obstacle just ahead? (a) humidity (b) proximity (c) temperature (d) tilt",
-      "answer": "(b) Proximity, which detects how close a nearby object is.",
-      "hint": "Look back at what Software and Hardware mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p10",
-      "level": "Warm-up",
-      "prompt": "An AND gate outputs 1 only when: (a) either input is 1 (b) both inputs are 1 (c) the input is 0 (d) neither input is 1",
-      "answer": "(b) Both inputs are 1. That is the rule of the AND gate.",
-      "hint": "Look back at what Software and Hardware mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p11",
-      "level": "Warm-up",
-      "prompt": "A NOT gate always outputs: (a) 1 (b) 0 (c) the same as its input (d) the opposite of its input",
-      "answer": "(d) The opposite of its input. A NOT gate is also called an inverter.",
-      "hint": "Look back at what Software and Hardware mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p12",
-      "level": "Warm-up",
-      "prompt": "Which is the correct order from smallest to largest? (a) byte, bit, KB, MB (b) bit, byte, KB, MB (c) bit, KB, byte, MB (d) MB, KB, byte, bit",
-      "answer": "(b) bit, byte, KB, MB. A bit is smallest; a byte is 8 bits; then kilobyte, then megabyte.",
-      "hint": "Look back at what Software and Hardware mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p13",
-      "level": "Warm-up",
-      "prompt": "Converting a sound wave into binary is done by a(n): (a) ADC (analogue-to-digital converter) (b) pixel (c) OR gate (d) cookie",
-      "answer": "(a) An ADC. Computers cannot store analogue sound, so it must be converted to binary.",
-      "hint": "Look back at what Software and Hardware mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p14",
-      "level": "Warm-up",
-      "prompt": "Which is an example of image recognition? (a) A spam filter sorting emails (b) Face unlock on a phone (c) A thermostat reading temperature (d) A calculator adding numbers",
-      "answer": "(b) Face unlock. It identifies a face from an image.",
-      "hint": "Look back at what Software and Hardware mean in this unit, then answer in your own words."
-    },
-    {
       "id": "p15",
       "level": "Core",
       "prompt": "Android (the whole operating system)",
@@ -586,6 +516,76 @@
       "prompt": "A web browser",
       "answer": "A - a browser is a tool you open to do a task (visit websites).",
       "hint": "Look back at what Software and Hardware mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p17",
+      "level": "Core",
+      "prompt": "Antivirus program",
+      "answer": "S - antivirus is a utility that protects the system.",
+      "hint": "Look back at what Software and Hardware mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p18",
+      "level": "Core",
+      "prompt": "A spreadsheet program",
+      "answer": "A - a spreadsheet helps the user complete a task.",
+      "hint": "Look back at what Software and Hardware mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p33",
+      "level": "Challenge",
+      "prompt": "Sami's farm: Sami photographs a sorghum leaf and an app tells him it may be diseased. Explain, using the image-recognition steps, how the app decides this. Name the input, the process and the output.",
+      "answer": "Input: the leaf photo (a grid of pixels in binary). Process: the app finds features (colour, spots, texture) and compares them with thousands of learned leaf images to predict disease. Output: a warning and advice. It improves as more farmers confirm results.",
+      "hint": "Work out which idea this is about — Software, Hardware, Systems software — then explain your reasoning step by step."
+    },
+    {
+      "id": "p34",
+      "level": "Challenge",
+      "prompt": "Nadia's market: Nadia wants a system to sort dates into ripe, unripe and damaged. Suggest which sensor(s) and which AI feature it should use, and describe one benefit and one concern.",
+      "answer": "Use a camera with image recognition (and possibly a colour sensor). Benefit: faster, more consistent sorting than by hand. Concern: it may misjudge unusual dates or poor photos, and it costs money and needs power/internet.",
+      "hint": "Work out which idea this is about — Software, Hardware, Systems software — then explain your reasoning step by step."
+    },
+    {
+      "id": "p35",
+      "level": "Challenge",
+      "prompt": "Storage worry: A clinic wants to store thousands of X-ray images. Explain why higher-resolution images need more storage, and suggest one sensible trade-off.",
+      "answer": "Higher resolution means more pixels, and each pixel needs bits, so files grow quickly; thousands of large images need a lot of storage. Trade-off: use a resolution high enough to see detail clearly but not larger than needed, or compress images sensibly.",
+      "hint": "Work out which idea this is about — Software, Hardware, Systems software — then explain your reasoning step by step."
+    },
+    {
+      "id": "p36",
+      "level": "Challenge",
+      "prompt": "Fair use: A shopping app tracks everything Maya searches for and shows her adverts. Give one benefit and one privacy concern, and one thing the app should do to be fair.",
+      "answer": "Benefit: Maya sees products she may actually want. Concern: the app collects a lot of personal data, often through cookies, which risks her privacy. To be fair it should ask permission clearly, explain what it collects, and let her turn tracking off.",
+      "hint": "Work out which idea this is about — Software, Hardware, Systems software — then explain your reasoning step by step."
+    },
+    {
+      "id": "p37",
+      "level": "Extension",
+      "prompt": "Show your working.",
+      "answer": "Systems software: an operating system (or antivirus, file manager). Application software: a browser (or game, word processor, camera app).",
+      "hint": "Work out which idea this is about — Software, Hardware, Systems software — then explain your reasoning step by step."
+    },
+    {
+      "id": "p38",
+      "level": "Extension",
+      "prompt": "How many bits are needed to store a 10 by 10 bitmap with a colour depth of 1? Convert your answer to bytes.",
+      "answer": "False. Most AI is invisible software inside apps and services, such as spam filters and face unlock; it is not usually a robot.",
+      "hint": "Work out which idea this is about — Software, Hardware, Systems software — then explain your reasoning step by step."
+    },
+    {
+      "id": "p39",
+      "level": "Extension",
+      "prompt": "How many bits are needed for the same 10 by 10 bitmap with a colour depth of 2?",
+      "answer": "Any two of: capture the image as pixels; prepare it; find features (edges, colours, shapes); compare with learned examples; predict the most likely label; act on the result; learn from feedback.",
+      "hint": "Work out which idea this is about — Software, Hardware, Systems software — then explain your reasoning step by step."
+    },
+    {
+      "id": "p40",
+      "level": "Extension",
+      "prompt": "With a colour depth of 2, how many different colours can each pixel show? List the four binary codes.",
+      "answer": "It converts an analogue signal, such as a sound wave from a microphone, into binary so a computer can store and process it.",
+      "hint": "Work out which idea this is about — Software, Hardware, Systems software — then explain your reasoning step by step."
     }
   ],
   "activities": [

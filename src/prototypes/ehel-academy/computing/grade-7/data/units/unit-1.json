@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-02T14:08:46.556Z",
+  "generatedAt": "2026-08-02T14:52:05.173Z",
   "stage": {
     "id": "s07",
     "label": "Stage 7"
@@ -726,62 +726,6 @@
       "hint": "Look back at what text-based programming and block-based programming mean in this unit, then answer in your own words."
     },
     {
-      "id": "p05",
-      "level": "Warm-up",
-      "prompt": "Which operator means 'multiply' in Python? a) x b) * c) X d) times",
-      "answer": "b) The asterisk, *, is the multiplication operator in Python.",
-      "hint": "Look back at what text-based programming and block-based programming mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p06",
-      "level": "Warm-up",
-      "prompt": "What is the result of 10 / 2 in Python? a) 5 b) 5.0 c) \"5\" d) 20",
-      "answer": "b) 5.0. Division with / always gives a float, so the answer shows .0.",
-      "hint": "Look back at what text-based programming and block-based programming mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p07",
-      "level": "Warm-up",
-      "prompt": "Which symbol starts a comment in Python? a) // b) # c) — d) /*",
-      "answer": "b) #. A hash starts a comment, which Python ignores.",
-      "hint": "Look back at what text-based programming and block-based programming mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p08",
-      "level": "Warm-up",
-      "prompt": "What does casting with int() do? a) Prints an integer b) Changes data into a whole number c) Deletes decimals forever d) Makes text bigger",
-      "answer": "b) Changes data into a whole number. int() casts data to an integer.",
-      "hint": "Look back at what text-based programming and block-based programming mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p09",
-      "level": "Warm-up",
-      "prompt": "In BIDMAS, which is done first? a) Addition b) Subtraction c) Brackets d) Multiplication",
-      "answer": "c) Brackets. In BIDMAS, brackets are always worked out first.",
-      "hint": "Look back at what text-based programming and block-based programming mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p10",
-      "level": "Warm-up",
-      "prompt": "Which operator checks if two values are equal, inside an IF statement? a) = b) == c) => d) !=",
-      "answer": "b) ==. Double equals compares values; a single = stores a value.",
-      "hint": "Look back at what text-based programming and block-based programming mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p11",
-      "level": "Warm-up",
-      "prompt": "What is a variable? a) A fixed number b) A named place in memory that stores a value c) A type of error d) A comment",
-      "answer": "b) A named place in memory that stores a value. Its value can change as the program runs.",
-      "hint": "Look back at what text-based programming and block-based programming mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p12",
-      "level": "Warm-up",
-      "prompt": "What is debugging? a) Adding new features b) Finding and fixing errors c) Saving a file d) Running a program",
-      "answer": "b) Finding and fixing errors. Debugging removes bugs from a program.",
-      "hint": "Look back at what text-based programming and block-based programming mean in this unit, then answer in your own words."
-    },
-    {
       "id": "p13",
       "level": "Core",
       "prompt": "In your own words, what is the difference between block-based and text-based programming?",
@@ -808,6 +752,62 @@
       "prompt": "Give one example each of a string, an integer and a float.",
       "answer": "Examples: a string is \"Leila\"; an integer is 12; a float is 3.5. (Any sensible examples are correct.)",
       "hint": "Look back at what text-based programming and block-based programming mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p31",
+      "level": "Challenge",
+      "prompt": "Each program has a blank shown as ______. Write the code that belongs in the blank.",
+      "answer": "print -> print(\"I love learning Python\")",
+      "hint": "Work out which idea this is about — text-based programming, block-based programming, Python — then explain your reasoning step by step."
+    },
+    {
+      "id": "p33",
+      "level": "Challenge",
+      "prompt": "Store then show a name\nFill the blank so it shows the stored name:\nname = \"Zane\"\nprint(\"Hello\", ______)",
+      "answer": "name -> print(\"Hello\", name). Do not put quotes around name, or it prints the word 'name'.",
+      "hint": "Work out which idea this is about — text-based programming, block-based programming, Python — then explain your reasoning step by step."
+    },
+    {
+      "id": "p34",
+      "level": "Challenge",
+      "prompt": "Cast an input for maths\nFill the blank so age + 1 works:\nage = ______(input(\"Enter your age: \"))\nprint(\"Next year you will be\", age + 1)",
+      "answer": "int -> age = int(input(\"Enter your age: \")). This lets age + 1 work as a number.",
+      "hint": "Work out which idea this is about — text-based programming, block-based programming, Python — then explain your reasoning step by step."
+    },
+    {
+      "id": "p35",
+      "level": "Challenge",
+      "prompt": "Area of a square\nFill the blank with the correct operator:\nlength = int(input(\"Enter the length: \"))\narea = length ______ length\nprint(\"The area is\", area)",
+      "answer": "* -> area = length * length. The star means multiply.",
+      "hint": "Work out which idea this is about — text-based programming, block-based programming, Python — then explain your reasoning step by step."
+    },
+    {
+      "id": "p37",
+      "level": "Extension",
+      "prompt": "Each program has exactly one error. Find it, name it, and write the corrected line.",
+      "answer": "Case error. Print has a capital P. Corrected: print(\"Hello world\")",
+      "hint": "Work out which idea this is about — text-based programming, block-based programming, Python — then explain your reasoning step by step."
+    },
+    {
+      "id": "p38",
+      "level": "Extension",
+      "prompt": "Print(\"Hello world\")",
+      "answer": "Missing comma. There is no comma between the text and the calculation. Corrected: print(\"The total is\", 7 + 3) (this displays: The total is 10)",
+      "hint": "Work out which idea this is about — text-based programming, block-based programming, Python — then explain your reasoning step by step."
+    },
+    {
+      "id": "p39",
+      "level": "Extension",
+      "prompt": "print(\"The total is\" 7 + 3)",
+      "answer": "Variable name mismatch. Line 1 defines name, but line 2 uses names. Corrected line 2: print(\"The name you entered was\", name)",
+      "hint": "Work out which idea this is about — text-based programming, block-based programming, Python — then explain your reasoning step by step."
+    },
+    {
+      "id": "p40",
+      "level": "Extension",
+      "prompt": "name = input(\"Enter a name\")",
+      "answer": "Inputs not cast. Both inputs are strings, so + joins them (50 and 100 give 50100). Corrected: num1 = int(input(\"Enter the first number: \")) and num2 = int(input(\"Enter the second number: \")).",
+      "hint": "Work out which idea this is about — text-based programming, block-based programming, Python — then explain your reasoning step by step."
     }
   ],
   "activities": [

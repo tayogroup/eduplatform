@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-02T14:08:46.576Z",
+  "generatedAt": "2026-08-02T14:52:05.193Z",
   "stage": {
     "id": "s07",
     "label": "Stage 7"
@@ -713,69 +713,6 @@
       "hint": "Look back at what accelerometer and algorithm mean in this unit, then answer in your own words."
     },
     {
-      "id": "p05",
-      "level": "Warm-up",
-      "prompt": "What does sleep(1000) do? (a) Turns off the micro:bit (b) Waits 1000 seconds (c) Pauses the program for 1 second (d) Repeats 1000 times",
-      "answer": "(c) sleep(1000) pauses for 1000 milliseconds, which is 1 second.",
-      "hint": "Look back at what accelerometer and algorithm mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p06",
-      "level": "Warm-up",
-      "prompt": "Which of these is an input? (a) The LED display (b) The speaker (c) Button A (d) The scroll command",
-      "answer": "(c) Button A is an input; the display and speaker are outputs.",
-      "hint": "Look back at what accelerometer and algorithm mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p07",
-      "level": "Warm-up",
-      "prompt": "What data type is the temperature reading 27? (a) String (b) Integer (c) Image (d) Gesture",
-      "answer": "(b) A whole number with no quotation marks is an integer.",
-      "hint": "Look back at what accelerometer and algorithm mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p08",
-      "level": "Warm-up",
-      "prompt": "What data type is 'Maya'? (a) Integer (b) Gesture (c) String (d) Boolean",
-      "answer": "(c) Text inside quotation marks is a string.",
-      "hint": "Look back at what accelerometer and algorithm mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p09",
-      "level": "Warm-up",
-      "prompt": "The operator >= means: (a) greater than (b) less than or equal to (c) greater than or equal to (d) not equal to",
-      "answer": "(c) >= means greater than or equal to.",
-      "hint": "Look back at what accelerometer and algorithm mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p10",
-      "level": "Warm-up",
-      "prompt": "A simulator is: (a) A real micro:bit (b) Software that behaves like the real device so you can test safely (c) A type of sensor (d) A battery pack",
-      "answer": "(b) A simulator behaves like the real device so you can test safely on screen.",
-      "hint": "Look back at what accelerometer and algorithm mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p11",
-      "level": "Warm-up",
-      "prompt": "Flashing a program means: (a) Making the LEDs blink (b) Downloading your program onto the physical micro:bit (c) Deleting the code (d) Causing an error",
-      "answer": "(b) Flashing downloads (copies) your program onto the physical micro:bit.",
-      "hint": "Look back at what accelerometer and algorithm mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p12",
-      "level": "Warm-up",
-      "prompt": "Which of these is systems software? (a) A web browser (b) The operating system (c) A word processor (d) A MicroPython program",
-      "answer": "(b) The operating system is systems software; the others are applications.",
-      "hint": "Look back at what accelerometer and algorithm mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p13",
-      "level": "Warm-up",
-      "prompt": "Why must Image.HEART be typed in capital letters? (a) It looks nicer (b) The MicroPython syntax requires the exact spelling and capitals (c) It makes the heart bigger (d) It does not matter",
-      "answer": "(b) Syntax is strict: the name must be spelled exactly, in capitals, or the program will not run.",
-      "hint": "Look back at what accelerometer and algorithm mean in this unit, then answer in your own words."
-    },
-    {
       "id": "p14",
       "level": "Core",
       "prompt": "In your own words, what is decomposition and why is it useful when planning a program?",
@@ -795,6 +732,69 @@
       "prompt": "What is the difference between an input and an output? Give one micro:bit example of each.",
       "answer": "An input is data going in (for example pressing button A); an output is what the device produces (for example the LED display showing a heart, or the speaker playing a tune).",
       "hint": "Look back at what accelerometer and algorithm mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p17",
+      "level": "Core",
+      "prompt": "What does the while True loop do, and why do button programs need it?",
+      "answer": "while True repeats the indented code forever. Button programs need it so the micro:bit keeps checking for a press again and again instead of checking once and stopping.",
+      "hint": "Look back at what accelerometer and algorithm mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p41",
+      "level": "Challenge",
+      "prompt": "D1 - Show a heart when button A is pressed",
+      "answer": "if button_a.is_pressed(): then display.show(Image.HEART)",
+      "hint": "Work out which idea this is about — accelerometer, algorithm, algorithm tracing — then explain your reasoning step by step."
+    },
+    {
+      "id": "p42",
+      "level": "Challenge",
+      "prompt": "display.show(____)",
+      "answer": "import music and if pin_logo.is_touched(): and music.play(music.BADDY)",
+      "hint": "Work out which idea this is about — accelerometer, algorithm, algorithm tracing — then explain your reasoning step by step."
+    },
+    {
+      "id": "p43",
+      "level": "Challenge",
+      "prompt": "D2 - Scroll your name, then show a duck",
+      "answer": "sleep(2000) (lower-case sleep pauses the program for 2 seconds)",
+      "hint": "Work out which idea this is about — accelerometer, algorithm, algorithm tracing — then explain your reasoning step by step."
+    },
+    {
+      "id": "p44",
+      "level": "Challenge",
+      "prompt": "display.____('Nora')",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — accelerometer, algorithm, algorithm tracing — then explain your reasoning step by step."
+    },
+    {
+      "id": "p56",
+      "level": "Extension",
+      "prompt": "Each program below has one or more bugs. Find them, then write the corrected program. Check your work against the Answer Key.",
+      "answer": "Three bugs. Change button_b to button_a; change Image.happy to Image.HAPPY (capitals); and put quotation marks around Hello so it becomes 'Hello'.",
+      "hint": "Work out which idea this is about — accelerometer, algorithm, algorithm tracing — then explain your reasoning step by step."
+    },
+    {
+      "id": "p57",
+      "level": "Extension",
+      "prompt": "E1 - Should show a happy face and scroll 'Hello' when button A is pressed",
+      "answer": "Missing the import. Add from microbit import * as the first line.",
+      "hint": "Work out which idea this is about — accelerometer, algorithm, algorithm tracing — then explain your reasoning step by step."
+    },
+    {
+      "id": "p58",
+      "level": "Extension",
+      "prompt": "if button_b.is_pressed():",
+      "answer": "Two bugs. Add import music near the top, and change the operator: dark means the light is low, so use <= 10 instead of > 10.",
+      "hint": "Work out which idea this is about — accelerometer, algorithm, algorithm tracing — then explain your reasoning step by step."
+    },
+    {
+      "id": "p59",
+      "level": "Extension",
+      "prompt": "display.scroll(Hello)",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — accelerometer, algorithm, algorithm tracing — then explain your reasoning step by step."
     }
   ],
   "activities": [

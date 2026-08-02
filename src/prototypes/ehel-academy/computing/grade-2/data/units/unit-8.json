@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-02T14:08:45.890Z",
+  "generatedAt": "2026-08-02T14:52:04.482Z",
   "stage": {
     "id": "s02",
     "label": "Stage 2"
@@ -77,7 +77,7 @@
       "title": "Be the marker: an algorithm that draws (unplugged)",
       "explanation": "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down — it means “put the pen on the paper and start drawing”. Then Move forward makes a line.\n\nI am going to be a drawing robot. But I only do what you tell me, one command at a time. draw a line. How far? Which way?",
       "example": "And my marker is still up, so nothing happens! Now you can give you clean commands and follow them exactly",
-      "checkYourself": "Can you understand that Marker down must come before drawing, and that Move forward needs a direction and a number? Does you follow the commands in order?"
+      "checkYourself": "Can you understand that Marker down must come before drawing, and that Move forward needs a direction and a number? Do you follow the commands in order?"
     },
     {
       "id": "concept-2-turns-make-corners-drawing-a-letter-unplugged",
@@ -105,7 +105,7 @@
       "title": "Be an artist: the Mini-Project",
       "explanation": "They plan an algorithm for a letter, make it (as the marker, on the floor grid, or in ScratchJr), use Repeat to shorten a straight part, then check and fix it. This session and the Mini-Project go hand in hand.\n\nNow you are the artist. You will make a letter with code for our Ehel Academy display.",
       "example": "First plan your steps, then make it, then check it works — and if a command is wrong, find it and fix it. Keep letters simple — L, C, T or I are perfect.",
-      "checkYourself": "Does your letter come out roughly right? Did you use a Repeat? Did you find and fix the wrong command? Does you plan before making?"
+      "checkYourself": "Does your letter come out roughly right? Did you use a Repeat? Did you find and fix the wrong command? Do you plan before making?"
     }
   ],
   "codeExamples": [
@@ -918,14 +918,14 @@
         "type": "Concept",
         "outcomeId": "lo01",
         "difficulty": "Basic",
-        "question": "What does “algorithm” mean in computing?",
+        "question": "Which of these describes “Be the marker: an algorithm that draws”?",
         "options": [
-          "A set of instructions in the right order.",
-          "One thing you tell the device to do.",
-          "An algorithm a device can follow.",
-          "Pen on the paper (draw) / pen lifted (do not draw)."
+          "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down - it means…",
+          "A turn makes a corner. Turn left and Turn right each turn a quarter - like turning to face the side of the room. A turn happens on the spot; it does…",
+          "Some devices can move. We can program them - write instructions and you can follow. And here is the art: the path can be the shape of a letter.",
+          "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same…"
         ],
-        "answer": "A set of instructions in the right order.",
+        "answer": "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down - it means…",
         "hint": "Use the Unit 8 Computing Words reference.",
         "explanation": "Algorithm means a set of instructions in the right order."
       },
@@ -934,14 +934,14 @@
         "type": "Concept",
         "outcomeId": "lo02",
         "difficulty": "Basic",
-        "question": "What does “instruction” mean in computing?",
+        "question": "Which of these describes “Turns make corners: drawing a letter”?",
         "options": [
-          "An algorithm a device can follow.",
-          "One thing you tell the device to do.",
-          "Pen on the paper (draw) / pen lifted (do not draw).",
-          "Go straight the way you are facing."
+          "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down - it means…",
+          "A turn makes a corner. Turn left and Turn right each turn a quarter - like turning to face the side of the room. A turn happens on the spot; it does…",
+          "Some devices can move. We can program them - write instructions and you can follow. And here is the art: the path can be the shape of a letter.",
+          "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same…"
         ],
-        "answer": "One thing you tell the device to do.",
+        "answer": "A turn makes a corner. Turn left and Turn right each turn a quarter - like turning to face the side of the room. A turn happens on the spot; it does…",
         "hint": "Use the Unit 8 Computing Words reference.",
         "explanation": "Instruction means one thing you tell the device to do."
       },
@@ -950,14 +950,14 @@
         "type": "Concept",
         "outcomeId": "lo03",
         "difficulty": "Basic",
-        "question": "What does “program” mean in computing?",
+        "question": "Which of these describes “Program a robot on the floor grid”?",
         "options": [
-          "Pen on the paper (draw) / pen lifted (do not draw).",
-          "Go straight the way you are facing.",
-          "Turn a quarter, to make a corner.",
-          "An algorithm a device can follow."
+          "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down - it means…",
+          "A turn makes a corner. Turn left and Turn right each turn a quarter - like turning to face the side of the room. A turn happens on the spot; it does…",
+          "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same…",
+          "Some devices can move. We can program them - write instructions and you can follow. And here is the art: the path can be the shape of a letter."
         ],
-        "answer": "An algorithm a device can follow.",
+        "answer": "Some devices can move. We can program them - write instructions and you can follow. And here is the art: the path can be the shape of a letter.",
         "hint": "Use the Unit 8 Computing Words reference.",
         "explanation": "Program means an algorithm a device can follow."
       },
@@ -966,48 +966,48 @@
         "type": "Concept",
         "outcomeId": "lo04",
         "difficulty": "Basic",
-        "question": "What does “marker down / up” mean in computing?",
+        "question": "Which of these describes “Repeat: a shorter way”?",
         "options": [
-          "Go straight the way you are facing.",
-          "Turn a quarter, to make a corner.",
-          "Pen on the paper (draw) / pen lifted (do not draw).",
-          "Do the same step again and again - a shorter way."
+          "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down - it means…",
+          "A turn makes a corner. Turn left and Turn right each turn a quarter - like turning to face the side of the room. A turn happens on the spot; it does…",
+          "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same…",
+          "Some devices can move. We can program them - write instructions and you can follow. And here is the art: the path can be the shape of a letter."
         ],
-        "answer": "Pen on the paper (draw) / pen lifted (do not draw).",
+        "answer": "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same…",
         "hint": "Use the Unit 8 Computing Words reference.",
-        "explanation": "Marker down / up means pen on the paper (draw) / pen lifted (do not draw).."
+        "explanation": "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same…"
       },
       {
         "id": "q05",
         "type": "Application",
         "outcomeId": "lo05",
         "difficulty": "Core",
-        "question": "What does “move forward” mean in computing?",
+        "question": "Which of these describes “Be an artist: the Mini-Project”?",
         "options": [
-          "Turn a quarter, to make a corner.",
-          "Go straight the way you are facing.",
-          "Do the same step again and again — a shorter way.",
-          "The line the device travels along."
+          "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down - it means…",
+          "They plan an algorithm for a letter, make it (as the marker, on the floor grid, or in ScratchJr), use Repeat to shorten a straight part, then check…",
+          "A turn makes a corner. Turn left and Turn right each turn a quarter - like turning to face the side of the room. A turn happens on the spot; it does…",
+          "Some devices can move. We can program them - write instructions and you can follow. And here is the art: the path can be the shape of a letter."
         ],
-        "answer": "Go straight the way you are facing.",
+        "answer": "They plan an algorithm for a letter, make it (as the marker, on the floor grid, or in ScratchJr), use Repeat to shorten a straight part, then check…",
         "hint": "Use the Unit 8 Computing Words reference.",
-        "explanation": "Move forward means go straight the way you are facing."
+        "explanation": "They plan an algorithm for a letter, make it (as the marker, on the floor grid, or in ScratchJr), use Repeat to shorten a straight part, then check…"
       },
       {
         "id": "q06",
         "type": "Application",
         "outcomeId": "lo06",
         "difficulty": "Core",
-        "question": "What does “turn left / right” mean in computing?",
+        "question": "What should you do when this happens: The order does not matter.",
         "options": [
-          "Turn a quarter, to make a corner.",
-          "Do the same step again and again — a shorter way.",
-          "The line the device travels along.",
-          "What it does"
+          "It matters a lot. Draw the foot of an L before the tall line and you get a different shape. Show a muddled version to prove it.",
+          "Without Marker down the device moves but draws nothing. Marker up is useful too - it lets us move to a new place without leaving a line.",
+          "You make corners in opposite directions. The wrong turn draws the shape back to front.",
+          "No - a turn happens on the spot. You still need a Move forward to make a line."
         ],
-        "answer": "Turn a quarter, to make a corner.",
+        "answer": "It matters a lot. Draw the foot of an L before the tall line and you get a different shape. Show a muddled version to prove it.",
         "hint": "Use the Unit 8 Computing Words reference.",
-        "explanation": "Turn left / right means turn a quarter, to make a corner."
+        "explanation": "It matters a lot. Draw the foot of an L before the tall line and you get a different shape. Show a muddled version to prove it."
       },
       {
         "id": "q07",
@@ -1016,85 +1016,85 @@
         "difficulty": "Core",
         "question": "Which computing word matches this meaning: Do the same step again and again — a shorter way.?",
         "options": [
-          "path",
-          "Start program",
-          "Marker down",
-          "repeat"
+          "It matters a lot. Draw the foot of an L before the tall line and you get a different shape. Show a muddled version to prove it.",
+          "You make corners in opposite directions. The wrong turn draws the shape back to front.",
+          "No - a turn happens on the spot. You still need a Move forward to make a line.",
+          "Without Marker down the device moves but draws nothing. Marker up is useful too - it lets us move to a new place without leaving a line."
         ],
-        "answer": "repeat",
+        "answer": "Without Marker down the device moves but draws nothing. Marker up is useful too - it lets us move to a new place without leaving a line.",
         "hint": "Use the Unit 8 Computing Words reference.",
-        "explanation": "Repeat means do the same step again and again — a shorter way."
+        "explanation": "Without Marker down the device moves but draws nothing. Marker up is useful too - it lets us move to a new place without leaving a line."
       },
       {
         "id": "q08",
         "type": "Application",
         "outcomeId": "lo01",
         "difficulty": "Core",
-        "question": "Which computing word matches this meaning: The line the device travels along.?",
+        "question": "What should you do when this happens: Turn left and turn right are the same.",
         "options": [
-          "Start program",
-          "Marker down",
-          "path",
-          "Marker up"
+          "It matters a lot. Draw the foot of an L before the tall line and you get a different shape. Show a muddled version to prove it.",
+          "Without Marker down the device moves but draws nothing. Marker up is useful too - it lets us move to a new place without leaving a line.",
+          "You make corners in opposite directions. The wrong turn draws the shape back to front.",
+          "No - a turn happens on the spot. You still need a Move forward to make a line."
         ],
-        "answer": "path",
+        "answer": "You make corners in opposite directions. The wrong turn draws the shape back to front.",
         "hint": "Use the Unit 8 Computing Words reference.",
-        "explanation": "Path means the line the device travels along."
+        "explanation": "You make corners in opposite directions. The wrong turn draws the shape back to front."
       },
       {
         "id": "q09",
         "type": "Reasoning",
         "outcomeId": "lo02",
         "difficulty": "Core",
-        "question": "Which computing word matches this meaning: Get ready to begin. (The very first step.)?",
+        "question": "What should you do when this happens: A turn also moves me forward.",
         "options": [
-          "Marker down",
-          "Start program",
-          "Marker up",
-          "Move forward (number)"
+          "It matters a lot. Draw the foot of an L before the tall line and you get a different shape. Show a muddled version to prove it.",
+          "No - a turn happens on the spot. You still need a Move forward to make a line.",
+          "Without Marker down the device moves but draws nothing. Marker up is useful too - it lets us move to a new place without leaving a line.",
+          "You make corners in opposite directions. The wrong turn draws the shape back to front."
         ],
-        "answer": "Start program",
+        "answer": "No - a turn happens on the spot. You still need a Move forward to make a line.",
         "hint": "Use the Unit 8 Computing Words reference.",
-        "explanation": "Start program means get ready to begin. (The very first step.)."
+        "explanation": "No - a turn happens on the spot. You still need a Move forward to make a line."
       },
       {
         "id": "q10",
         "type": "Reasoning",
         "outcomeId": "lo03",
         "difficulty": "Challenge",
-        "question": "Which computing word matches this meaning: Put the pen on the paper — now the device draws as it moves.?",
+        "question": "What should you do when this happens: The robot will know what I mean.",
         "options": [
-          "Marker up",
-          "Move forward (number)",
-          "Turn right",
-          "Marker down"
+          "It matters a lot. Draw the foot of an L before the tall line and you get a different shape. Show a muddled version to prove it.",
+          "Without Marker down the device moves but draws nothing. Marker up is useful too - it lets us move to a new place without leaving a line.",
+          "You make corners in opposite directions. The wrong turn draws the shape back to front.",
+          "It will not. A device does exactly the commands, in order, even if that is wrong. We find the wrong command and fix it ourselves."
         ],
-        "answer": "Marker down",
+        "answer": "It will not. A device does exactly the commands, in order, even if that is wrong. We find the wrong command and fix it ourselves.",
         "hint": "Use the Unit 8 Computing Words reference.",
-        "explanation": "Marker down means put the pen on the paper — now the device draws as it moves."
+        "explanation": "It will not. A device does exactly the commands, in order, even if that is wrong. We find the wrong command and fix it ourselves."
       },
       {
         "id": "q11",
         "type": "Reasoning",
         "outcomeId": "lo04",
         "difficulty": "Challenge",
-        "question": "Which computing word matches this meaning: Lift the pen — now the device can move without drawing.?",
+        "question": "Which computing word matches this meaning: Put the pen on the paper — now the device draws as it moves.?",
         "options": [
-          "Marker up",
-          "Move forward (number)",
-          "Turn right",
-          "Turn left"
+          "No - Repeat 4 times gives the same result as writing the step four times. It is just a shorter way to write it.",
+          "It matters a lot. Draw the foot of an L before the tall line and you get a different shape. Show a muddled version to prove it.",
+          "Without Marker down the device moves but draws nothing. Marker up is useful too - it lets us move to a new place without leaving a line.",
+          "You make corners in opposite directions. The wrong turn draws the shape back to front."
         ],
-        "answer": "Marker up",
+        "answer": "No - Repeat 4 times gives the same result as writing the step four times. It is just a shorter way to write it.",
         "hint": "Use the Unit 8 Computing Words reference.",
-        "explanation": "Marker up means lift the pen — now the device can move without drawing."
+        "explanation": "Marker down means put the pen on the paper — now the device draws as it moves."
       },
       {
         "id": "q12",
         "type": "Reasoning",
         "outcomeId": "lo05",
         "difficulty": "Challenge",
-        "question": "Which computing word matches this meaning: Go straight, that many steps, the way you are facing.?",
+        "question": "Which computing word matches this meaning: Lift the pen — now the device can move without drawing.?",
         "options": [
           "Turn right",
           "Turn left",
@@ -1119,52 +1119,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “algorithm” mean in computing?",
+            "prompt": "Which of these describes “Be the marker: an algorithm that draws”?",
             "choices": [
-              "A set of instructions in the right order.",
-              "One thing you tell the device to do.",
-              "An algorithm a device can follow.",
-              "Pen on the paper (draw) / pen lifted (do not draw)."
+              "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down - it means…",
+              "A turn makes a corner. Turn left and Turn right each turn a quarter - like turning to face the side of the room. A turn happens on the spot; it does…",
+              "Some devices can move. We can program them - write instructions and you can follow. And here is the art: the path can be the shape of a letter.",
+              "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same…"
             ],
-            "answer": "A set of instructions in the right order.",
+            "answer": "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down - it means…",
             "clue": "Use the Unit 8 Computing Words reference.",
             "explanation": "Algorithm means a set of instructions in the right order."
           },
           {
-            "prompt": "What does “marker down / up” mean in computing?",
+            "prompt": "Which of these describes “Repeat: a shorter way”?",
             "choices": [
-              "Pen on the paper (draw) / pen lifted (do not draw).",
-              "Go straight the way you are facing.",
-              "Turn a quarter, to make a corner.",
-              "Do the same step again and again - a shorter way."
+              "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same…",
+              "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down - it means…",
+              "A turn makes a corner. Turn left and Turn right each turn a quarter - like turning to face the side of the room. A turn happens on the spot; it does…",
+              "Some devices can move. We can program them - write instructions and you can follow. And here is the art: the path can be the shape of a letter."
             ],
-            "answer": "Pen on the paper (draw) / pen lifted (do not draw).",
+            "answer": "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same…",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Marker down / up means pen on the paper (draw) / pen lifted (do not draw).."
+            "explanation": "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same…"
           },
           {
             "prompt": "Which computing word matches this meaning: Do the same step again and again — a shorter way.?",
             "choices": [
-              "repeat",
-              "path",
-              "Start program",
-              "Marker down"
+              "Without Marker down the device moves but draws nothing. Marker up is useful too - it lets us move to a new place without leaving a line.",
+              "It matters a lot. Draw the foot of an L before the tall line and you get a different shape. Show a muddled version to prove it.",
+              "You make corners in opposite directions. The wrong turn draws the shape back to front.",
+              "No - a turn happens on the spot. You still need a Move forward to make a line."
             ],
-            "answer": "repeat",
+            "answer": "Without Marker down the device moves but draws nothing. Marker up is useful too - it lets us move to a new place without leaving a line.",
             "clue": "Use the Unit 8 Computing Words reference.",
             "explanation": "Repeat means do the same step again and again — a shorter way."
           },
           {
-            "prompt": "Which computing word matches this meaning: Put the pen on the paper - now the device draws as it moves.?",
+            "prompt": "What should you do when this happens: The robot will know what I mean.",
             "choices": [
-              "Marker down",
-              "Marker up",
-              "Move forward (number)",
-              "Turn right"
+              "It will not. A device does exactly the commands, in order, even if that is wrong. We find the wrong command and fix it ourselves.",
+              "It matters a lot. Draw the foot of an L before the tall line and you get a different shape. Show a muddled version to prove it.",
+              "Without Marker down the device moves but draws nothing. Marker up is useful too - it lets us move to a new place without leaving a line.",
+              "You make corners in opposite directions. The wrong turn draws the shape back to front."
             ],
-            "answer": "Marker down",
+            "answer": "It will not. A device does exactly the commands, in order, even if that is wrong. We find the wrong command and fix it ourselves.",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Marker down means put the pen on the paper - now the device draws as it moves.."
+            "explanation": "It will not. A device does exactly the commands, in order, even if that is wrong. We find the wrong command and fix it ourselves."
           }
         ]
       },
@@ -1177,50 +1177,50 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “instruction” mean in computing?",
+            "prompt": "Which of these describes “Turns make corners: drawing a letter”?",
             "choices": [
-              "One thing you tell the device to do.",
-              "An algorithm a device can follow.",
-              "Pen on the paper (draw) / pen lifted (do not draw).",
-              "Go straight the way you are facing."
+              "A turn makes a corner. Turn left and Turn right each turn a quarter - like turning to face the side of the room. A turn happens on the spot; it does…",
+              "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down - it means…",
+              "Some devices can move. We can program them - write instructions and you can follow. And here is the art: the path can be the shape of a letter.",
+              "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same…"
             ],
-            "answer": "One thing you tell the device to do.",
+            "answer": "A turn makes a corner. Turn left and Turn right each turn a quarter - like turning to face the side of the room. A turn happens on the spot; it does…",
             "clue": "Use the Unit 8 Computing Words reference.",
             "explanation": "Instruction means one thing you tell the device to do."
           },
           {
-            "prompt": "What does “move forward” mean in computing?",
+            "prompt": "Which of these describes “Be an artist: the Mini-Project”?",
             "choices": [
               "Go straight the way you are facing.",
               "Turn a quarter, to make a corner.",
               "Do the same step again and again — a shorter way.",
               "The line the device travels along."
             ],
-            "answer": "Go straight the way you are facing.",
+            "answer": "They plan an algorithm for a letter, make it (as the marker, on the floor grid, or in ScratchJr), use Repeat to shorten a straight part, then check…",
             "clue": "Use the Unit 8 Computing Words reference.",
             "explanation": "Move forward means go straight the way you are facing."
           },
           {
-            "prompt": "Which computing word matches this meaning: The line the device travels along.?",
+            "prompt": "What should you do when this happens: Turn left and turn right are the same.",
             "choices": [
-              "path",
-              "Start program",
-              "Marker down",
-              "Marker up"
+              "You make corners in opposite directions. The wrong turn draws the shape back to front.",
+              "It matters a lot. Draw the foot of an L before the tall line and you get a different shape. Show a muddled version to prove it.",
+              "Without Marker down the device moves but draws nothing. Marker up is useful too - it lets us move to a new place without leaving a line.",
+              "No - a turn happens on the spot. You still need a Move forward to make a line."
             ],
-            "answer": "path",
+            "answer": "You make corners in opposite directions. The wrong turn draws the shape back to front.",
             "clue": "Use the Unit 8 Computing Words reference.",
             "explanation": "Path means the line the device travels along."
           },
           {
             "prompt": "Which computing word matches this meaning: Put the pen on the paper — now the device draws as it moves.?",
             "choices": [
-              "Marker up",
-              "Move forward (number)",
-              "Turn right",
-              "Turn left"
+              "No - Repeat 4 times gives the same result as writing the step four times. It is just a shorter way to write it.",
+              "It matters a lot. Draw the foot of an L before the tall line and you get a different shape. Show a muddled version to prove it.",
+              "Without Marker down the device moves but draws nothing. Marker up is useful too - it lets us move to a new place without leaving a line.",
+              "You make corners in opposite directions. The wrong turn draws the shape back to front."
             ],
-            "answer": "Marker up",
+            "answer": "No - Repeat 4 times gives the same result as writing the step four times. It is just a shorter way to write it.",
             "clue": "Use the Unit 8 Computing Words reference.",
             "explanation": "Marker down means put the pen on the paper — now the device draws as it moves."
           }
@@ -1235,40 +1235,40 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “program” mean in computing?",
+            "prompt": "Which of these describes “Program a robot on the floor grid”?",
             "choices": [
-              "An algorithm a device can follow.",
-              "Pen on the paper (draw) / pen lifted (do not draw).",
-              "Go straight the way you are facing.",
-              "Turn a quarter, to make a corner."
+              "Some devices can move. We can program them - write instructions and you can follow. And here is the art: the path can be the shape of a letter.",
+              "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down - it means…",
+              "A turn makes a corner. Turn left and Turn right each turn a quarter - like turning to face the side of the room. A turn happens on the spot; it does…",
+              "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same…"
             ],
-            "answer": "An algorithm a device can follow.",
+            "answer": "Some devices can move. We can program them - write instructions and you can follow. And here is the art: the path can be the shape of a letter.",
             "clue": "Use the Unit 8 Computing Words reference.",
             "explanation": "Program means an algorithm a device can follow."
           },
           {
-            "prompt": "What does “turn left / right” mean in computing?",
+            "prompt": "What should you do when this happens: The order does not matter.",
             "choices": [
               "Turn a quarter, to make a corner.",
               "Do the same step again and again — a shorter way.",
               "The line the device travels along.",
               "What it does"
             ],
-            "answer": "Turn a quarter, to make a corner.",
+            "answer": "It matters a lot. Draw the foot of an L before the tall line and you get a different shape. Show a muddled version to prove it.",
             "clue": "Use the Unit 8 Computing Words reference.",
             "explanation": "Turn left / right means turn a quarter, to make a corner."
           },
           {
-            "prompt": "Which computing word matches this meaning: Get ready to begin. (The very first step.)?",
+            "prompt": "What should you do when this happens: A turn also moves me forward.",
             "choices": [
-              "Start program",
-              "Marker down",
-              "Marker up",
-              "Move forward (number)"
+              "No - a turn happens on the spot. You still need a Move forward to make a line.",
+              "It matters a lot. Draw the foot of an L before the tall line and you get a different shape. Show a muddled version to prove it.",
+              "Without Marker down the device moves but draws nothing. Marker up is useful too - it lets us move to a new place without leaving a line.",
+              "You make corners in opposite directions. The wrong turn draws the shape back to front."
             ],
-            "answer": "Start program",
+            "answer": "No - a turn happens on the spot. You still need a Move forward to make a line.",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Start program means get ready to begin. (The very first step.)."
+            "explanation": "No - a turn happens on the spot. You still need a Move forward to make a line."
           },
           {
             "prompt": "Which computing word matches this meaning: Lift the pen — now the device can move without drawing.?",
@@ -1293,50 +1293,50 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “marker down / up” mean in computing?",
+            "prompt": "Which of these describes “Repeat: a shorter way”?",
             "choices": [
-              "Pen on the paper (draw) / pen lifted (do not draw).",
-              "Go straight the way you are facing.",
-              "Turn a quarter, to make a corner.",
-              "Do the same step again and again - a shorter way."
+              "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same…",
+              "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down - it means…",
+              "A turn makes a corner. Turn left and Turn right each turn a quarter - like turning to face the side of the room. A turn happens on the spot; it does…",
+              "Some devices can move. We can program them - write instructions and you can follow. And here is the art: the path can be the shape of a letter."
             ],
-            "answer": "Pen on the paper (draw) / pen lifted (do not draw).",
+            "answer": "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same…",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Marker down / up means pen on the paper (draw) / pen lifted (do not draw).."
+            "explanation": "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same…"
           },
           {
             "prompt": "Which computing word matches this meaning: Do the same step again and again — a shorter way.?",
             "choices": [
-              "repeat",
-              "path",
-              "Start program",
-              "Marker down"
+              "Without Marker down the device moves but draws nothing. Marker up is useful too - it lets us move to a new place without leaving a line.",
+              "It matters a lot. Draw the foot of an L before the tall line and you get a different shape. Show a muddled version to prove it.",
+              "You make corners in opposite directions. The wrong turn draws the shape back to front.",
+              "No - a turn happens on the spot. You still need a Move forward to make a line."
             ],
-            "answer": "repeat",
+            "answer": "Without Marker down the device moves but draws nothing. Marker up is useful too - it lets us move to a new place without leaving a line.",
             "clue": "Use the Unit 8 Computing Words reference.",
             "explanation": "Repeat means do the same step again and again — a shorter way."
           },
           {
-            "prompt": "Which computing word matches this meaning: Put the pen on the paper - now the device draws as it moves.?",
+            "prompt": "What should you do when this happens: The robot will know what I mean.",
             "choices": [
-              "Marker down",
-              "Marker up",
-              "Move forward (number)",
-              "Turn right"
+              "It will not. A device does exactly the commands, in order, even if that is wrong. We find the wrong command and fix it ourselves.",
+              "It matters a lot. Draw the foot of an L before the tall line and you get a different shape. Show a muddled version to prove it.",
+              "Without Marker down the device moves but draws nothing. Marker up is useful too - it lets us move to a new place without leaving a line.",
+              "You make corners in opposite directions. The wrong turn draws the shape back to front."
             ],
-            "answer": "Marker down",
+            "answer": "It will not. A device does exactly the commands, in order, even if that is wrong. We find the wrong command and fix it ourselves.",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Marker down means put the pen on the paper - now the device draws as it moves.."
+            "explanation": "It will not. A device does exactly the commands, in order, even if that is wrong. We find the wrong command and fix it ourselves."
           },
           {
-            "prompt": "What does “algorithm” mean in computing?",
+            "prompt": "Which of these describes “Be the marker: an algorithm that draws”?",
             "choices": [
-              "A set of instructions in the right order.",
-              "One thing you tell the device to do.",
-              "An algorithm a device can follow.",
-              "Pen on the paper (draw) / pen lifted (do not draw)."
+              "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down - it means…",
+              "A turn makes a corner. Turn left and Turn right each turn a quarter - like turning to face the side of the room. A turn happens on the spot; it does…",
+              "Some devices can move. We can program them - write instructions and you can follow. And here is the art: the path can be the shape of a letter.",
+              "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same…"
             ],
-            "answer": "A set of instructions in the right order.",
+            "answer": "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down - it means…",
             "clue": "Use the Unit 8 Computing Words reference.",
             "explanation": "Algorithm means a set of instructions in the right order."
           }
@@ -1351,50 +1351,50 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “move forward” mean in computing?",
+            "prompt": "Which of these describes “Be an artist: the Mini-Project”?",
             "choices": [
               "Go straight the way you are facing.",
               "Turn a quarter, to make a corner.",
               "Do the same step again and again — a shorter way.",
               "The line the device travels along."
             ],
-            "answer": "Go straight the way you are facing.",
+            "answer": "They plan an algorithm for a letter, make it (as the marker, on the floor grid, or in ScratchJr), use Repeat to shorten a straight part, then check…",
             "clue": "Use the Unit 8 Computing Words reference.",
             "explanation": "Move forward means go straight the way you are facing."
           },
           {
-            "prompt": "Which computing word matches this meaning: The line the device travels along.?",
+            "prompt": "What should you do when this happens: Turn left and turn right are the same.",
             "choices": [
-              "path",
-              "Start program",
-              "Marker down",
-              "Marker up"
+              "You make corners in opposite directions. The wrong turn draws the shape back to front.",
+              "It matters a lot. Draw the foot of an L before the tall line and you get a different shape. Show a muddled version to prove it.",
+              "Without Marker down the device moves but draws nothing. Marker up is useful too - it lets us move to a new place without leaving a line.",
+              "No - a turn happens on the spot. You still need a Move forward to make a line."
             ],
-            "answer": "path",
+            "answer": "You make corners in opposite directions. The wrong turn draws the shape back to front.",
             "clue": "Use the Unit 8 Computing Words reference.",
             "explanation": "Path means the line the device travels along."
           },
           {
             "prompt": "Which computing word matches this meaning: Put the pen on the paper — now the device draws as it moves.?",
             "choices": [
-              "Marker up",
-              "Move forward (number)",
-              "Turn right",
-              "Turn left"
+              "No - Repeat 4 times gives the same result as writing the step four times. It is just a shorter way to write it.",
+              "It matters a lot. Draw the foot of an L before the tall line and you get a different shape. Show a muddled version to prove it.",
+              "Without Marker down the device moves but draws nothing. Marker up is useful too - it lets us move to a new place without leaving a line.",
+              "You make corners in opposite directions. The wrong turn draws the shape back to front."
             ],
-            "answer": "Marker up",
+            "answer": "No - Repeat 4 times gives the same result as writing the step four times. It is just a shorter way to write it.",
             "clue": "Use the Unit 8 Computing Words reference.",
             "explanation": "Marker down means put the pen on the paper — now the device draws as it moves."
           },
           {
-            "prompt": "What does “instruction” mean in computing?",
+            "prompt": "Which of these describes “Turns make corners: drawing a letter”?",
             "choices": [
-              "One thing you tell the device to do.",
-              "An algorithm a device can follow.",
-              "Pen on the paper (draw) / pen lifted (do not draw).",
-              "Go straight the way you are facing."
+              "A turn makes a corner. Turn left and Turn right each turn a quarter - like turning to face the side of the room. A turn happens on the spot; it does…",
+              "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down - it means…",
+              "Some devices can move. We can program them - write instructions and you can follow. And here is the art: the path can be the shape of a letter.",
+              "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same…"
             ],
-            "answer": "One thing you tell the device to do.",
+            "answer": "A turn makes a corner. Turn left and Turn right each turn a quarter - like turning to face the side of the room. A turn happens on the spot; it does…",
             "clue": "Use the Unit 8 Computing Words reference.",
             "explanation": "Instruction means one thing you tell the device to do."
           }
@@ -1409,28 +1409,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “turn left / right” mean in computing?",
+            "prompt": "What should you do when this happens: The order does not matter.",
             "choices": [
               "Turn a quarter, to make a corner.",
               "Do the same step again and again — a shorter way.",
               "The line the device travels along.",
               "What it does"
             ],
-            "answer": "Turn a quarter, to make a corner.",
+            "answer": "It matters a lot. Draw the foot of an L before the tall line and you get a different shape. Show a muddled version to prove it.",
             "clue": "Use the Unit 8 Computing Words reference.",
             "explanation": "Turn left / right means turn a quarter, to make a corner."
           },
           {
-            "prompt": "Which computing word matches this meaning: Get ready to begin. (The very first step.)?",
+            "prompt": "What should you do when this happens: A turn also moves me forward.",
             "choices": [
-              "Start program",
-              "Marker down",
-              "Marker up",
-              "Move forward (number)"
+              "No - a turn happens on the spot. You still need a Move forward to make a line.",
+              "It matters a lot. Draw the foot of an L before the tall line and you get a different shape. Show a muddled version to prove it.",
+              "Without Marker down the device moves but draws nothing. Marker up is useful too - it lets us move to a new place without leaving a line.",
+              "You make corners in opposite directions. The wrong turn draws the shape back to front."
             ],
-            "answer": "Start program",
+            "answer": "No - a turn happens on the spot. You still need a Move forward to make a line.",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Start program means get ready to begin. (The very first step.)."
+            "explanation": "No - a turn happens on the spot. You still need a Move forward to make a line."
           },
           {
             "prompt": "Which computing word matches this meaning: Lift the pen — now the device can move without drawing.?",
@@ -1445,14 +1445,14 @@
             "explanation": "Marker up means lift the pen — now the device can move without drawing."
           },
           {
-            "prompt": "What does “program” mean in computing?",
+            "prompt": "Which of these describes “Program a robot on the floor grid”?",
             "choices": [
-              "An algorithm a device can follow.",
-              "Pen on the paper (draw) / pen lifted (do not draw).",
-              "Go straight the way you are facing.",
-              "Turn a quarter, to make a corner."
+              "Some devices can move. We can program them - write instructions and you can follow. And here is the art: the path can be the shape of a letter.",
+              "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down - it means…",
+              "A turn makes a corner. Turn left and Turn right each turn a quarter - like turning to face the side of the room. A turn happens on the spot; it does…",
+              "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same…"
             ],
-            "answer": "An algorithm a device can follow.",
+            "answer": "Some devices can move. We can program them - write instructions and you can follow. And here is the art: the path can be the shape of a letter.",
             "clue": "Use the Unit 8 Computing Words reference.",
             "explanation": "Program means an algorithm a device can follow."
           }
@@ -1469,50 +1469,50 @@
           {
             "prompt": "Which computing word matches this meaning: Do the same step again and again — a shorter way.?",
             "choices": [
-              "repeat",
-              "path",
-              "Start program",
-              "Marker down"
+              "Without Marker down the device moves but draws nothing. Marker up is useful too - it lets us move to a new place without leaving a line.",
+              "It matters a lot. Draw the foot of an L before the tall line and you get a different shape. Show a muddled version to prove it.",
+              "You make corners in opposite directions. The wrong turn draws the shape back to front.",
+              "No - a turn happens on the spot. You still need a Move forward to make a line."
             ],
-            "answer": "repeat",
+            "answer": "Without Marker down the device moves but draws nothing. Marker up is useful too - it lets us move to a new place without leaving a line.",
             "clue": "Use the Unit 8 Computing Words reference.",
             "explanation": "Repeat means do the same step again and again — a shorter way."
           },
           {
-            "prompt": "Which computing word matches this meaning: Put the pen on the paper - now the device draws as it moves.?",
+            "prompt": "What should you do when this happens: The robot will know what I mean.",
             "choices": [
-              "Marker down",
-              "Marker up",
-              "Move forward (number)",
-              "Turn right"
+              "It will not. A device does exactly the commands, in order, even if that is wrong. We find the wrong command and fix it ourselves.",
+              "It matters a lot. Draw the foot of an L before the tall line and you get a different shape. Show a muddled version to prove it.",
+              "Without Marker down the device moves but draws nothing. Marker up is useful too - it lets us move to a new place without leaving a line.",
+              "You make corners in opposite directions. The wrong turn draws the shape back to front."
             ],
-            "answer": "Marker down",
+            "answer": "It will not. A device does exactly the commands, in order, even if that is wrong. We find the wrong command and fix it ourselves.",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Marker down means put the pen on the paper - now the device draws as it moves.."
+            "explanation": "It will not. A device does exactly the commands, in order, even if that is wrong. We find the wrong command and fix it ourselves."
           },
           {
-            "prompt": "What does “algorithm” mean in computing?",
+            "prompt": "Which of these describes “Be the marker: an algorithm that draws”?",
             "choices": [
-              "A set of instructions in the right order.",
-              "One thing you tell the device to do.",
-              "An algorithm a device can follow.",
-              "Pen on the paper (draw) / pen lifted (do not draw)."
+              "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down - it means…",
+              "A turn makes a corner. Turn left and Turn right each turn a quarter - like turning to face the side of the room. A turn happens on the spot; it does…",
+              "Some devices can move. We can program them - write instructions and you can follow. And here is the art: the path can be the shape of a letter.",
+              "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same…"
             ],
-            "answer": "A set of instructions in the right order.",
+            "answer": "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down - it means…",
             "clue": "Use the Unit 8 Computing Words reference.",
             "explanation": "Algorithm means a set of instructions in the right order."
           },
           {
-            "prompt": "What does “marker down / up” mean in computing?",
+            "prompt": "Which of these describes “Repeat: a shorter way”?",
             "choices": [
-              "Pen on the paper (draw) / pen lifted (do not draw).",
-              "Go straight the way you are facing.",
-              "Turn a quarter, to make a corner.",
-              "Do the same step again and again - a shorter way."
+              "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same…",
+              "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down - it means…",
+              "A turn makes a corner. Turn left and Turn right each turn a quarter - like turning to face the side of the room. A turn happens on the spot; it does…",
+              "Some devices can move. We can program them - write instructions and you can follow. And here is the art: the path can be the shape of a letter."
             ],
-            "answer": "Pen on the paper (draw) / pen lifted (do not draw).",
+            "answer": "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same…",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Marker down / up means pen on the paper (draw) / pen lifted (do not draw).."
+            "explanation": "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same…"
           }
         ]
       },
@@ -1525,50 +1525,50 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which computing word matches this meaning: The line the device travels along.?",
+            "prompt": "What should you do when this happens: Turn left and turn right are the same.",
             "choices": [
-              "path",
-              "Start program",
-              "Marker down",
-              "Marker up"
+              "You make corners in opposite directions. The wrong turn draws the shape back to front.",
+              "It matters a lot. Draw the foot of an L before the tall line and you get a different shape. Show a muddled version to prove it.",
+              "Without Marker down the device moves but draws nothing. Marker up is useful too - it lets us move to a new place without leaving a line.",
+              "No - a turn happens on the spot. You still need a Move forward to make a line."
             ],
-            "answer": "path",
+            "answer": "You make corners in opposite directions. The wrong turn draws the shape back to front.",
             "clue": "Use the Unit 8 Computing Words reference.",
             "explanation": "Path means the line the device travels along."
           },
           {
             "prompt": "Which computing word matches this meaning: Put the pen on the paper — now the device draws as it moves.?",
             "choices": [
-              "Marker up",
-              "Move forward (number)",
-              "Turn right",
-              "Turn left"
+              "No - Repeat 4 times gives the same result as writing the step four times. It is just a shorter way to write it.",
+              "It matters a lot. Draw the foot of an L before the tall line and you get a different shape. Show a muddled version to prove it.",
+              "Without Marker down the device moves but draws nothing. Marker up is useful too - it lets us move to a new place without leaving a line.",
+              "You make corners in opposite directions. The wrong turn draws the shape back to front."
             ],
-            "answer": "Marker up",
+            "answer": "No - Repeat 4 times gives the same result as writing the step four times. It is just a shorter way to write it.",
             "clue": "Use the Unit 8 Computing Words reference.",
             "explanation": "Marker down means put the pen on the paper — now the device draws as it moves."
           },
           {
-            "prompt": "What does “instruction” mean in computing?",
+            "prompt": "Which of these describes “Turns make corners: drawing a letter”?",
             "choices": [
-              "One thing you tell the device to do.",
-              "An algorithm a device can follow.",
-              "Pen on the paper (draw) / pen lifted (do not draw).",
-              "Go straight the way you are facing."
+              "A turn makes a corner. Turn left and Turn right each turn a quarter - like turning to face the side of the room. A turn happens on the spot; it does…",
+              "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down - it means…",
+              "Some devices can move. We can program them - write instructions and you can follow. And here is the art: the path can be the shape of a letter.",
+              "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same…"
             ],
-            "answer": "One thing you tell the device to do.",
+            "answer": "A turn makes a corner. Turn left and Turn right each turn a quarter - like turning to face the side of the room. A turn happens on the spot; it does…",
             "clue": "Use the Unit 8 Computing Words reference.",
             "explanation": "Instruction means one thing you tell the device to do."
           },
           {
-            "prompt": "What does “move forward” mean in computing?",
+            "prompt": "Which of these describes “Be an artist: the Mini-Project”?",
             "choices": [
               "Go straight the way you are facing.",
               "Turn a quarter, to make a corner.",
               "Do the same step again and again — a shorter way.",
               "The line the device travels along."
             ],
-            "answer": "Go straight the way you are facing.",
+            "answer": "They plan an algorithm for a letter, make it (as the marker, on the floor grid, or in ScratchJr), use Repeat to shorten a straight part, then check…",
             "clue": "Use the Unit 8 Computing Words reference.",
             "explanation": "Move forward means go straight the way you are facing."
           }
@@ -1583,16 +1583,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which computing word matches this meaning: Get ready to begin. (The very first step.)?",
+            "prompt": "What should you do when this happens: A turn also moves me forward.",
             "choices": [
-              "Start program",
-              "Marker down",
-              "Marker up",
-              "Move forward (number)"
+              "No - a turn happens on the spot. You still need a Move forward to make a line.",
+              "It matters a lot. Draw the foot of an L before the tall line and you get a different shape. Show a muddled version to prove it.",
+              "Without Marker down the device moves but draws nothing. Marker up is useful too - it lets us move to a new place without leaving a line.",
+              "You make corners in opposite directions. The wrong turn draws the shape back to front."
             ],
-            "answer": "Start program",
+            "answer": "No - a turn happens on the spot. You still need a Move forward to make a line.",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Start program means get ready to begin. (The very first step.)."
+            "explanation": "No - a turn happens on the spot. You still need a Move forward to make a line."
           },
           {
             "prompt": "Which computing word matches this meaning: Lift the pen — now the device can move without drawing.?",
@@ -1607,26 +1607,26 @@
             "explanation": "Marker up means lift the pen — now the device can move without drawing."
           },
           {
-            "prompt": "What does “program” mean in computing?",
+            "prompt": "Which of these describes “Program a robot on the floor grid”?",
             "choices": [
-              "An algorithm a device can follow.",
-              "Pen on the paper (draw) / pen lifted (do not draw).",
-              "Go straight the way you are facing.",
-              "Turn a quarter, to make a corner."
+              "Some devices can move. We can program them - write instructions and you can follow. And here is the art: the path can be the shape of a letter.",
+              "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down - it means…",
+              "A turn makes a corner. Turn left and Turn right each turn a quarter - like turning to face the side of the room. A turn happens on the spot; it does…",
+              "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same…"
             ],
-            "answer": "An algorithm a device can follow.",
+            "answer": "Some devices can move. We can program them - write instructions and you can follow. And here is the art: the path can be the shape of a letter.",
             "clue": "Use the Unit 8 Computing Words reference.",
             "explanation": "Program means an algorithm a device can follow."
           },
           {
-            "prompt": "What does “turn left / right” mean in computing?",
+            "prompt": "What should you do when this happens: The order does not matter.",
             "choices": [
               "Turn a quarter, to make a corner.",
               "Do the same step again and again — a shorter way.",
               "The line the device travels along.",
               "What it does"
             ],
-            "answer": "Turn a quarter, to make a corner.",
+            "answer": "It matters a lot. Draw the foot of an L before the tall line and you get a different shape. Show a muddled version to prove it.",
             "clue": "Use the Unit 8 Computing Words reference.",
             "explanation": "Turn left / right means turn a quarter, to make a corner."
           }
@@ -1641,50 +1641,50 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which computing word matches this meaning: Put the pen on the paper - now the device draws as it moves.?",
+            "prompt": "What should you do when this happens: The robot will know what I mean.",
             "choices": [
-              "Marker down",
-              "Marker up",
-              "Move forward (number)",
-              "Turn right"
+              "It will not. A device does exactly the commands, in order, even if that is wrong. We find the wrong command and fix it ourselves.",
+              "It matters a lot. Draw the foot of an L before the tall line and you get a different shape. Show a muddled version to prove it.",
+              "Without Marker down the device moves but draws nothing. Marker up is useful too - it lets us move to a new place without leaving a line.",
+              "You make corners in opposite directions. The wrong turn draws the shape back to front."
             ],
-            "answer": "Marker down",
+            "answer": "It will not. A device does exactly the commands, in order, even if that is wrong. We find the wrong command and fix it ourselves.",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Marker down means put the pen on the paper - now the device draws as it moves.."
+            "explanation": "It will not. A device does exactly the commands, in order, even if that is wrong. We find the wrong command and fix it ourselves."
           },
           {
-            "prompt": "What does “algorithm” mean in computing?",
+            "prompt": "Which of these describes “Be the marker: an algorithm that draws”?",
             "choices": [
-              "A set of instructions in the right order.",
-              "One thing you tell the device to do.",
-              "An algorithm a device can follow.",
-              "Pen on the paper (draw) / pen lifted (do not draw)."
+              "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down - it means…",
+              "A turn makes a corner. Turn left and Turn right each turn a quarter - like turning to face the side of the room. A turn happens on the spot; it does…",
+              "Some devices can move. We can program them - write instructions and you can follow. And here is the art: the path can be the shape of a letter.",
+              "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same…"
             ],
-            "answer": "A set of instructions in the right order.",
+            "answer": "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down - it means…",
             "clue": "Use the Unit 8 Computing Words reference.",
             "explanation": "Algorithm means a set of instructions in the right order."
           },
           {
-            "prompt": "What does “marker down / up” mean in computing?",
+            "prompt": "Which of these describes “Repeat: a shorter way”?",
             "choices": [
-              "Pen on the paper (draw) / pen lifted (do not draw).",
-              "Go straight the way you are facing.",
-              "Turn a quarter, to make a corner.",
-              "Do the same step again and again - a shorter way."
+              "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same…",
+              "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down - it means…",
+              "A turn makes a corner. Turn left and Turn right each turn a quarter - like turning to face the side of the room. A turn happens on the spot; it does…",
+              "Some devices can move. We can program them - write instructions and you can follow. And here is the art: the path can be the shape of a letter."
             ],
-            "answer": "Pen on the paper (draw) / pen lifted (do not draw).",
+            "answer": "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same…",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Marker down / up means pen on the paper (draw) / pen lifted (do not draw).."
+            "explanation": "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same…"
           },
           {
             "prompt": "Which computing word matches this meaning: Do the same step again and again — a shorter way.?",
             "choices": [
-              "repeat",
-              "path",
-              "Start program",
-              "Marker down"
+              "Without Marker down the device moves but draws nothing. Marker up is useful too - it lets us move to a new place without leaving a line.",
+              "It matters a lot. Draw the foot of an L before the tall line and you get a different shape. Show a muddled version to prove it.",
+              "You make corners in opposite directions. The wrong turn draws the shape back to front.",
+              "No - a turn happens on the spot. You still need a Move forward to make a line."
             ],
-            "answer": "repeat",
+            "answer": "Without Marker down the device moves but draws nothing. Marker up is useful too - it lets us move to a new place without leaving a line.",
             "clue": "Use the Unit 8 Computing Words reference.",
             "explanation": "Repeat means do the same step again and again — a shorter way."
           }
@@ -1701,48 +1701,48 @@
           {
             "prompt": "Which computing word matches this meaning: Put the pen on the paper — now the device draws as it moves.?",
             "choices": [
-              "Marker up",
-              "Move forward (number)",
-              "Turn right",
-              "Turn left"
+              "No - Repeat 4 times gives the same result as writing the step four times. It is just a shorter way to write it.",
+              "It matters a lot. Draw the foot of an L before the tall line and you get a different shape. Show a muddled version to prove it.",
+              "Without Marker down the device moves but draws nothing. Marker up is useful too - it lets us move to a new place without leaving a line.",
+              "You make corners in opposite directions. The wrong turn draws the shape back to front."
             ],
-            "answer": "Marker up",
+            "answer": "No - Repeat 4 times gives the same result as writing the step four times. It is just a shorter way to write it.",
             "clue": "Use the Unit 8 Computing Words reference.",
             "explanation": "Marker down means put the pen on the paper — now the device draws as it moves."
           },
           {
-            "prompt": "What does “instruction” mean in computing?",
+            "prompt": "Which of these describes “Turns make corners: drawing a letter”?",
             "choices": [
-              "One thing you tell the device to do.",
-              "An algorithm a device can follow.",
-              "Pen on the paper (draw) / pen lifted (do not draw).",
-              "Go straight the way you are facing."
+              "A turn makes a corner. Turn left and Turn right each turn a quarter - like turning to face the side of the room. A turn happens on the spot; it does…",
+              "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down - it means…",
+              "Some devices can move. We can program them - write instructions and you can follow. And here is the art: the path can be the shape of a letter.",
+              "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same…"
             ],
-            "answer": "One thing you tell the device to do.",
+            "answer": "A turn makes a corner. Turn left and Turn right each turn a quarter - like turning to face the side of the room. A turn happens on the spot; it does…",
             "clue": "Use the Unit 8 Computing Words reference.",
             "explanation": "Instruction means one thing you tell the device to do."
           },
           {
-            "prompt": "What does “move forward” mean in computing?",
+            "prompt": "Which of these describes “Be an artist: the Mini-Project”?",
             "choices": [
               "Go straight the way you are facing.",
               "Turn a quarter, to make a corner.",
               "Do the same step again and again — a shorter way.",
               "The line the device travels along."
             ],
-            "answer": "Go straight the way you are facing.",
+            "answer": "They plan an algorithm for a letter, make it (as the marker, on the floor grid, or in ScratchJr), use Repeat to shorten a straight part, then check…",
             "clue": "Use the Unit 8 Computing Words reference.",
             "explanation": "Move forward means go straight the way you are facing."
           },
           {
-            "prompt": "Which computing word matches this meaning: The line the device travels along.?",
+            "prompt": "What should you do when this happens: Turn left and turn right are the same.",
             "choices": [
-              "path",
-              "Start program",
-              "Marker down",
-              "Marker up"
+              "You make corners in opposite directions. The wrong turn draws the shape back to front.",
+              "It matters a lot. Draw the foot of an L before the tall line and you get a different shape. Show a muddled version to prove it.",
+              "Without Marker down the device moves but draws nothing. Marker up is useful too - it lets us move to a new place without leaving a line.",
+              "No - a turn happens on the spot. You still need a Move forward to make a line."
             ],
-            "answer": "path",
+            "answer": "You make corners in opposite directions. The wrong turn draws the shape back to front.",
             "clue": "Use the Unit 8 Computing Words reference.",
             "explanation": "Path means the line the device travels along."
           }
@@ -1769,40 +1769,40 @@
             "explanation": "Marker up means lift the pen — now the device can move without drawing."
           },
           {
-            "prompt": "What does “program” mean in computing?",
+            "prompt": "Which of these describes “Program a robot on the floor grid”?",
             "choices": [
-              "An algorithm a device can follow.",
-              "Pen on the paper (draw) / pen lifted (do not draw).",
-              "Go straight the way you are facing.",
-              "Turn a quarter, to make a corner."
+              "Some devices can move. We can program them - write instructions and you can follow. And here is the art: the path can be the shape of a letter.",
+              "An algorithm is a set of instructions in the right order. To draw, a device follows commands. The most important one today is marker down - it means…",
+              "A turn makes a corner. Turn left and Turn right each turn a quarter - like turning to face the side of the room. A turn happens on the spot; it does…",
+              "When we do the same step again and again, we can use Repeat. It makes our algorithm shorter, and the result is exactly the same. Fewer steps, same…"
             ],
-            "answer": "An algorithm a device can follow.",
+            "answer": "Some devices can move. We can program them - write instructions and you can follow. And here is the art: the path can be the shape of a letter.",
             "clue": "Use the Unit 8 Computing Words reference.",
             "explanation": "Program means an algorithm a device can follow."
           },
           {
-            "prompt": "What does “turn left / right” mean in computing?",
+            "prompt": "What should you do when this happens: The order does not matter.",
             "choices": [
               "Turn a quarter, to make a corner.",
               "Do the same step again and again — a shorter way.",
               "The line the device travels along.",
               "What it does"
             ],
-            "answer": "Turn a quarter, to make a corner.",
+            "answer": "It matters a lot. Draw the foot of an L before the tall line and you get a different shape. Show a muddled version to prove it.",
             "clue": "Use the Unit 8 Computing Words reference.",
             "explanation": "Turn left / right means turn a quarter, to make a corner."
           },
           {
-            "prompt": "Which computing word matches this meaning: Get ready to begin. (The very first step.)?",
+            "prompt": "What should you do when this happens: A turn also moves me forward.",
             "choices": [
-              "Start program",
-              "Marker down",
-              "Marker up",
-              "Move forward (number)"
+              "No - a turn happens on the spot. You still need a Move forward to make a line.",
+              "It matters a lot. Draw the foot of an L before the tall line and you get a different shape. Show a muddled version to prove it.",
+              "Without Marker down the device moves but draws nothing. Marker up is useful too - it lets us move to a new place without leaving a line.",
+              "You make corners in opposite directions. The wrong turn draws the shape back to front."
             ],
-            "answer": "Start program",
+            "answer": "No - a turn happens on the spot. You still need a Move forward to make a line.",
             "clue": "Use the Unit 8 Computing Words reference.",
-            "explanation": "Start program means get ready to begin. (The very first step.)."
+            "explanation": "No - a turn happens on the spot. You still need a Move forward to make a line."
           }
         ]
       }

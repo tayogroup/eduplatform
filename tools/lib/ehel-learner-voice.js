@@ -175,7 +175,7 @@ function createLearnerVoice(options = {}) {
   // that survive the directive filter, so it never invents learner prose out of
   // a line that was pure classroom management.
   function toSecondPerson(value = "") {
-    return String(value)
+    const swapped = String(value)
       // "Can they tell you which is big" — the "you" there is the adult, so the
       // pronoun swap below would turn it into "Can you tell you which is big".
       .replace(/\btell(?:s|ing)? you\b/gi, "say")
@@ -194,6 +194,7 @@ function createLearnerVoice(options = {}) {
       .replace(/\byou's\b/gi, "your")
       .replace(/\s+/g, " ")
       .trim();
+    return repairAgreement(swapped);
   }
 
   // In the adult-led guides "they/them/their" usually means the child being
@@ -305,8 +306,37 @@ function createLearnerVoice(options = {}) {
 // CommonJS: the subject builders are CJS (`require`), and the .mjs checkers can
 // still `import { ADULT_ADDRESSED } from "../lib/ehel-learner-voice.js"` because
 // Node detects named exports off a plain object literal assignment.
+// The noun swap replaces the subject but leaves the auxiliary in front of it
+// agreeing with the old one: "Does your child follow the steps?" became "Does
+// you follow the steps?". De-inflecting the verb behind "you" never reached it,
+// because the broken word sits ahead of the pronoun.
+//
+// Exported on its own because reviewed text needs it too. A reviewer correcting
+// narration wording is not asked to repair the converter's grammar, and six
+// reviewed strings duly came back still reading "Does you plan before
+// building?". This is mechanical agreement, not rewriting — it changes none of
+// the reviewer's own words.
+function repairAgreement(value = "") {
+  const AUXILIARIES = {
+    does: "do", is: "are", was: "were", has: "have",
+    "doesn't": "don't", "isn't": "aren't", "wasn't": "weren't", "hasn't": "haven't",
+  };
+  return String(value)
+    .replace(/\b(does|is|was|has|doesn't|isn't|wasn't|hasn't)(\s+you\b)/gi, (whole, auxiliary, rest) => {
+      const base = AUXILIARIES[auxiliary.toLowerCase()];
+      if (!base) return whole;
+      const capitalised = auxiliary[0] === auxiliary[0].toUpperCase();
+      return `${capitalised ? base[0].toUpperCase() + base.slice(1) : base}${rest}`;
+    })
+    // "How many children came by car?" needs the partitive once the noun goes:
+    // "How many you came" is not a sentence a six-year-old can read.
+    .replace(/\bhow many you\b/gi, (whole) => (whole[0] === "H" ? "How many of you" : "how many of you"))
+    .replace(/\bmeans more you\b/gi, "means more");
+}
+
 module.exports = {
   createLearnerVoice,
+  repairAgreement,
   DIRECTIVE_START,
   ADULT_SUBJECT,
   ADULT_ADDRESSED,

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-02T14:08:46.677Z",
+  "generatedAt": "2026-08-02T14:52:05.297Z",
   "stage": {
     "id": "s07",
     "label": "Stage 7"
@@ -596,62 +596,6 @@
       "hint": "Look back at what algorithm and arithmetic operator mean in this unit, then answer in your own words."
     },
     {
-      "id": "p05",
-      "level": "Warm-up",
-      "prompt": "What is the value range for LED brightness? (a) 0 to 1 (b) 0 to 9 (c) 1 to 100 (d) 0 to 255",
-      "answer": "(b) 0 to 9. 0 is off, 9 is full brightness, and 1 to 8 are dimmer levels.",
-      "hint": "Look back at what algorithm and arithmetic operator mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p06",
-      "level": "Warm-up",
-      "prompt": "How many milliseconds are in one second? (a) 10 (b) 60 (c) 100 (d) 1000",
-      "answer": "(d) 1000. So sleep(1000) waits one second and sleep(500) waits half a second.",
-      "hint": "Look back at what algorithm and arithmetic operator mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p07",
-      "level": "Warm-up",
-      "prompt": "Which Boolean operator needs both inputs to be true? (a) AND (b) OR (c) NOT (d) IF",
-      "answer": "(a) AND. AND is true only when both inputs are true.",
-      "hint": "Look back at what algorithm and arithmetic operator mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p08",
-      "level": "Warm-up",
-      "prompt": "A sub-routine in MicroPython is created with which word? (a) sub (b) def (c) loop (d) show",
-      "answer": "(b) def. For example, def light_sequence(): creates a sub-routine.",
-      "hint": "Look back at what algorithm and arithmetic operator mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p09",
-      "level": "Warm-up",
-      "prompt": "What is a prototype? (a) the final finished product (b) a first working model built to test an idea (c) a type of error (d) a kind of sensor",
-      "answer": "(b) a first working model built to test an idea before the final product.",
-      "hint": "Look back at what algorithm and arithmetic operator mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p10",
-      "level": "Warm-up",
-      "prompt": "Pattern recognition is best described as: (a) memorising code (b) looking for a pattern and using it to solve a problem (c) drawing pictures (d) deleting bugs",
-      "answer": "(b) looking for a pattern and using it to solve a problem.",
-      "hint": "Look back at what algorithm and arithmetic operator mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p11",
-      "level": "Warm-up",
-      "prompt": "Which loop repeats forever? (a) for i in range(3): (b) while True: (c) if True: (d) def loop():",
-      "answer": "(b) while True:. It repeats its indented lines forever.",
-      "hint": "Look back at what algorithm and arithmetic operator mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p12",
-      "level": "Warm-up",
-      "prompt": "In an Image string, what separates each row of five digits? (a) a comma (b) a colon (c) a full stop (d) a space",
-      "answer": "(b) a colon. For example \"90000:90000:90000:90000:90000\".",
-      "hint": "Look back at what algorithm and arithmetic operator mean in this unit, then answer in your own words."
-    },
-    {
       "id": "p13",
       "level": "Core",
       "prompt": "Explain why the order of instructions matters in a light sequence. Give an example of what could go wrong.",
@@ -678,6 +622,62 @@
       "prompt": "What is the purpose of a sleep() command between two images in a sequence?",
       "answer": "sleep() pauses the program so each image is visible long enough for the eye to see before the next one replaces it. Without it, images swap too fast to notice.",
       "hint": "Look back at what algorithm and arithmetic operator mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p29",
+      "level": "Challenge",
+      "prompt": "D1 — complete the first line every program needs",
+      "answer": "from microbit import *",
+      "hint": "Work out which idea this is about — algorithm, arithmetic operator, Boolean logic operations — then explain your reasoning step by step."
+    },
+    {
+      "id": "p30",
+      "level": "Challenge",
+      "prompt": "___________________ display.show(Image.HAPPY)",
+      "answer": "sleep(500)",
+      "hint": "Work out which idea this is about — algorithm, arithmetic operator, Boolean logic operations — then explain your reasoning step by step."
+    },
+    {
+      "id": "p31",
+      "level": "Challenge",
+      "prompt": "D2 — wait half a second between the images",
+      "answer": "for frame in frames:",
+      "hint": "Work out which idea this is about — algorithm, arithmetic operator, Boolean logic operations — then explain your reasoning step by step."
+    },
+    {
+      "id": "p32",
+      "level": "Challenge",
+      "prompt": "from microbit import * display.show(Image.SQUARE) ___________ display.show(Image.SQUARE_SMALL)",
+      "answer": "microphone.sound_level() — giving if microphone.sound_level() > 128:",
+      "hint": "Work out which idea this is about — algorithm, arithmetic operator, Boolean logic operations — then explain your reasoning step by step."
+    },
+    {
+      "id": "p39",
+      "level": "Extension",
+      "prompt": "Each program has one or more bugs. Find them and write the corrected line(s).",
+      "answer": "The first line from microbit import * is missing. Add it as the first line so Image and display are defined.",
+      "hint": "Work out which idea this is about — algorithm, arithmetic operator, Boolean logic operations — then explain your reasoning step by step."
+    },
+    {
+      "id": "p40",
+      "level": "Extension",
+      "prompt": "display.show(Image.HEART)",
+      "answer": "SQUAR_SMALL is misspelled — it should be Image.SQUARE_SMALL (with the E). The name must match exactly.",
+      "hint": "Work out which idea this is about — algorithm, arithmetic operator, Boolean logic operations — then explain your reasoning step by step."
+    },
+    {
+      "id": "p41",
+      "level": "Extension",
+      "prompt": "The program crashes straight away. What is missing?",
+      "answer": "There is no colon at the end of the if line. It should be if button_a.is_pressed(): with a colon.",
+      "hint": "Work out which idea this is about — algorithm, arithmetic operator, Boolean logic operations — then explain your reasoning step by step."
+    },
+    {
+      "id": "p42",
+      "level": "Extension",
+      "prompt": "from microbit import * display.show(Image.SQUAR_SMALL)",
+      "answer": "There is no sleep() between the two images, so the first is replaced instantly and you only see the second. Add sleep(500) between the two display.show lines (and a display.clear() at the end is good practice).",
+      "hint": "Work out which idea this is about — algorithm, arithmetic operator, Boolean logic operations — then explain your reasoning step by step."
     }
   ],
   "activities": [

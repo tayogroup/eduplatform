@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-02T14:08:46.373Z",
+  "generatedAt": "2026-08-02T14:52:04.982Z",
   "stage": {
     "id": "s05",
     "label": "Stage 5"
@@ -586,74 +586,74 @@
       "hint": "Look back at what network and hardware mean in this unit, then answer in your own words."
     },
     {
-      "id": "p07",
-      "level": "Warm-up",
-      "prompt": "What extra information does a packet carry, as well as the data? A) The sender and destination IP addresses and a packet number B) A photo C) The Wi-Fi password D) Nothing",
-      "answer": "A - a packet carries the sender and destination IP addresses and a packet number.",
+      "id": "p17",
+      "level": "Core",
+      "prompt": "What device allows a network to access the internet?",
+      "answer": "A router.",
       "hint": "Look back at what network and hardware mean in this unit, then answer in your own words."
     },
     {
-      "id": "p08",
-      "level": "Warm-up",
-      "prompt": "When packets arrive out of order, the computer uses the ... to sort them. A) colour B) packet number C) password D) aerial",
-      "answer": "B - the packet number tells the computer the correct order.",
+      "id": "p18",
+      "level": "Core",
+      "prompt": "What allows devices to connect wirelessly to a network?",
+      "answer": "A wireless access point (a Wi-Fi access point).",
       "hint": "Look back at what network and hardware mean in this unit, then answer in your own words."
     },
     {
-      "id": "p09",
-      "level": "Warm-up",
-      "prompt": "A website is stored on a: A) switch B) web server C) router D) cell tower",
-      "answer": "B - a website is stored on a web server.",
+      "id": "p19",
+      "level": "Core",
+      "prompt": "Explain, in your own words, why we need IP addresses.",
+      "answer": "So that data is sent to exactly the right device. An IP address is like a home address for a device, so the internet knows where to deliver each piece of data.",
       "hint": "Look back at what network and hardware mean in this unit, then answer in your own words."
     },
     {
-      "id": "p10",
-      "level": "Warm-up",
-      "prompt": "Why do humans use a URL instead of an IP address? A) Words are easier to remember than numbers B) URLs are faster C) Computers cannot read numbers D) IP addresses are secret",
-      "answer": "A - words in a URL are far easier to remember than numbers.",
+      "id": "p20",
+      "level": "Core",
+      "prompt": "Give two advantages of a cellular network.",
+      "answer": "Any two of: it covers very large areas; you can connect almost anywhere (even far from towns); it uses strong signals that reach many kilometres.",
       "hint": "Look back at what network and hardware mean in this unit, then answer in your own words."
     },
     {
-      "id": "p11",
-      "level": "Warm-up",
-      "prompt": "What does cloud storage let you do? A) Control the weather B) Save files on servers and reach them anywhere online C) Make Wi-Fi faster D) Delete the internet",
-      "answer": "B - cloud storage saves files on servers you can reach from anywhere online.",
+      "id": "p21",
+      "level": "Core",
+      "prompt": "When data is split into smaller pieces, what do we call these pieces?",
+      "answer": "Packets.",
       "hint": "Look back at what network and hardware mean in this unit, then answer in your own words."
     },
     {
-      "id": "p12",
-      "level": "Warm-up",
-      "prompt": "When a single connection on the internet breaks, usually: A) the whole internet stops B) data takes a different route C) all data is lost D) your device explodes",
-      "answer": "B - data simply takes a different route when one connection breaks.",
-      "hint": "Look back at what network and hardware mean in this unit, then answer in your own words."
+      "id": "p35",
+      "level": "Challenge",
+      "prompt": "Ms Amal is setting up Ehel Academy's network. She wants desktop computers and a printer to be joined by cables, and she also wants tablets to connect with no wires. She wants the whole network to reach the internet. Which three pieces of hardware does she need, and what is each one for?",
+      "answer": "Ms Amal needs a switch (to join the wired desktop computers and printer on one network), a wireless access point (so the tablets can connect with no wires), and a router (so the whole network can reach the internet).",
+      "hint": "Work out which idea this is about — network, hardware, Ethernet cable — then explain your reasoning step by step."
     },
     {
-      "id": "p13",
-      "level": "Warm-up",
-      "prompt": "Which of these could cause a connection to break? A) The power being turned off B) A cable being unplugged C) A fire damaging cables D) All of these",
-      "answer": "D - power loss, an unplugged cable and fire can all break a connection.",
-      "hint": "Look back at what network and hardware mean in this unit, then answer in your own words."
+      "id": "p36",
+      "level": "Challenge",
+      "prompt": "Tariq is walking through Hargeisa using mobile data on his phone. He steps inside a building with thick concrete walls and his internet slows right down. Explain what is happening, using the word interference.",
+      "answer": "The thick concrete walls cause interference - they get in the way of the signal between Tariq's phone and the cell tower. The signal becomes weak, so his connection slows down or struggles to work.",
+      "hint": "Work out which idea this is about — network, hardware, Ethernet cable — then explain your reasoning step by step."
     },
     {
-      "id": "p14",
-      "level": "Warm-up",
-      "prompt": "'Corrupted' data means data that: A) is extra fast B) is damaged and cannot be used C) is encrypted D) has no IP address",
-      "answer": "B - corrupted data is damaged and cannot be used.",
-      "hint": "Look back at what network and hardware mean in this unit, then answer in your own words."
+      "id": "p37",
+      "level": "Challenge",
+      "prompt": "Nadia in Hargeisa sends a long message to Sami in Mogadishu. One packet gets lost on the way. Explain what happens next, and why the message can still arrive correctly in the end.",
+      "answer": "The receiver's computer notices a packet is missing and asks the sender to send that one packet again. The sender re-sends just that packet. Once it arrives, all the packets are present, so they are put back in order using their packet numbers and the full message can be read.",
+      "hint": "Work out which idea this is about — network, hardware, Ethernet cable — then explain your reasoning step by step."
     },
     {
-      "id": "p15",
-      "level": "Warm-up",
-      "prompt": "How do companies protect an important network from failing? A) By using only one server B) By keeping backups and spare connections C) By turning it off D) By hiding it",
-      "answer": "B - backups and spare connections keep the network working if one part fails.",
-      "hint": "Look back at what network and hardware mean in this unit, then answer in your own words."
+      "id": "p38",
+      "level": "Challenge",
+      "prompt": "Rohan is doing his homework online and does not save it. The Wi-Fi drops for a moment and his work disappears. Is this a small or a large network failure? What could Rohan do differently next time?",
+      "answer": "This is a small network failure - it affects one person for a short time. Next time, Rohan should save his work often (and could use cloud storage), so a brief failure does not lose his work.",
+      "hint": "Work out which idea this is about — network, hardware, Ethernet cable — then explain your reasoning step by step."
     },
     {
-      "id": "p16",
-      "level": "Warm-up",
-      "prompt": "Connection speed is measured in: A) kilometres B) megabits per second (Mbps) C) degrees D) packets",
-      "answer": "B - connection speed is measured in megabits per second (Mbps).",
-      "hint": "Look back at what network and hardware mean in this unit, then answer in your own words."
+      "id": "p39",
+      "level": "Challenge",
+      "prompt": "A bank's network fails for a whole day. Describe two effects this could have on ordinary people, and explain one thing the bank could do to stop this happening again.",
+      "answer": "Two effects: people cannot take out or spend their money; bills and shopping cannot be paid. To prevent it, the bank could keep backup servers and spare connections, so that if one fails, another takes over and the service keeps running.",
+      "hint": "Work out which idea this is about — network, hardware, Ethernet cable — then explain your reasoning step by step."
     }
   ],
   "activities": [

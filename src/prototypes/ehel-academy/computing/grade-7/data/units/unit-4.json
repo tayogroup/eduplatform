@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-02T14:08:46.635Z",
+  "generatedAt": "2026-08-02T14:52:05.246Z",
   "stage": {
     "id": "s07",
     "label": "Stage 7"
@@ -596,74 +596,74 @@
       "hint": "Look back at what data and analyse mean in this unit, then answer in your own words."
     },
     {
-      "id": "p07",
-      "level": "Warm-up",
-      "prompt": "An absolute cell reference looks like: (a) H1; (b) $H$1; (c) H:1; (d) (H1).",
-      "answer": "7 (b) $H$1 — dollar signs lock the reference.",
-      "hint": "Look back at what data and analyse mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p08",
-      "level": "Warm-up",
-      "prompt": "In a database, a single row of data about one item is a: (a) field; (b) record; (c) query; (d) form.",
-      "answer": "8 (b) record — a row is one whole record.",
-      "hint": "Look back at what data and analyse mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p09",
-      "level": "Warm-up",
-      "prompt": "In a database, a single column is a: (a) field; (b) record; (c) key; (d) cell.",
-      "answer": "9 (a) field — a column is one field.",
-      "hint": "Look back at what data and analyse mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p10",
-      "level": "Warm-up",
-      "prompt": "A primary key must be: (a) a number only; (b) the first column; (c) unique for every record; (d) always text.",
-      "answer": "10 (c) unique for every record.",
-      "hint": "Look back at what data and analyse mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p11",
-      "level": "Warm-up",
-      "prompt": "Which data type stores only Yes/No or True/False values? (a) Text; (b) Integer; (c) Date; (d) Yes/No [BOOLEAN].",
-      "answer": "11 (d) Yes/No [BOOLEAN].",
-      "hint": "Look back at what data and analyse mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p12",
-      "level": "Warm-up",
-      "prompt": "A query searches a database using: (a) charts; (b) criteria; (c) fonts; (d) fill handles.",
-      "answer": "12 (b) criteria.",
-      "hint": "Look back at what data and analyse mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p13",
-      "level": "Warm-up",
-      "prompt": "Which is a comparison operator? (a) &; (b) >; (c) #; (d) @.",
-      "answer": "13 (b) > (greater than).",
-      "hint": "Look back at what data and analyse mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p14",
-      "level": "Warm-up",
-      "prompt": "Conditional formatting is used to: (a) delete data; (b) highlight data that meets a rule; (c) print a page; (d) rename a file.",
-      "answer": "14 (b) highlight data that meets a rule.",
-      "hint": "Look back at what data and analyse mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p15",
-      "level": "Warm-up",
-      "prompt": "For calculations with lots of money and numbers, the best tool is usually a: (a) database; (b) word processor; (c) spreadsheet; (d) web browser.",
-      "answer": "15 (c) spreadsheet.",
-      "hint": "Look back at what data and analyse mean in this unit, then answer in your own words."
-    },
-    {
       "id": "p16",
       "level": "Core",
       "prompt": "In your own words, what is a data model?",
       "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
       "hint": "Look back at what data and analyse mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p17",
+      "level": "Core",
+      "prompt": "Give two real-life industries that use data models or simulations, and say what each one models.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what data and analyse mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p18",
+      "level": "Core",
+      "prompt": "What is the difference between a field and a record in a database?",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what data and analyse mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p19",
+      "level": "Core",
+      "prompt": "Why does a database table need a primary key?",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what data and analyse mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p20",
+      "level": "Core",
+      "prompt": "Explain the difference between a relative reference and an absolute reference.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what data and analyse mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p26",
+      "level": "Challenge",
+      "prompt": "Design a table. A school library wants a database of its books. List at least five sensible fields, choose a LibreOffice Base data type for each, and mark which field should be the primary key.",
+      "answer": "1 Example fields: BookID (Integer, AutoValue) *primary key*; Title (Text); Author (Text); Category (Text); YearPublished (Integer); CopiesAvailable (Integer); OnLoan (Yes/No). BookID is the primary key because it is unique and never repeats.",
+      "hint": "Work out which idea this is about — data, analyse, data model — then explain your reasoning step by step."
+    },
+    {
+      "id": "p27",
+      "level": "Challenge",
+      "prompt": "Write a query. Using your library table, write the field and criterion you would use to find every book published after the year 2017.",
+      "answer": "2 Field: YearPublished. Criterion: > 2017.",
+      "hint": "Work out which idea this is about — data, analyse, data model — then explain your reasoning step by step."
+    },
+    {
+      "id": "p28",
+      "level": "Challenge",
+      "prompt": "Write a query. Write the field and criterion to find every book with fewer than 3 copies available.",
+      "answer": "3 Field: CopiesAvailable. Criterion: < 3.",
+      "hint": "Work out which idea this is about — data, analyse, data model — then explain your reasoning step by step."
+    },
+    {
+      "id": "p29",
+      "level": "Challenge",
+      "prompt": "Design a form. Sketch a user-friendly data-capture form to register a new library member. Label at least four good design features on your sketch.",
+      "answer": "4 Good features to label: a clear title and purpose, the library's name/logo, correctly sized boxes, headings that match the fields, an example (e.g. date as dd/mm/yyyy), and multiple-choice options where suitable.",
+      "hint": "Work out which idea this is about — data, analyse, data model — then explain your reasoning step by step."
+    },
+    {
+      "id": "p30",
+      "level": "Challenge",
+      "prompt": "Write a conditional-formatting rule. In a spreadsheet of stall takings, describe the rule that would turn a cell green when takings reach a target of 500000 shillings.",
+      "answer": "5 Rule: select the takings cell, Format > Conditional > Condition, set 'Cell value is greater than or equal to 500000' and Apply Style 'Good' (green).",
+      "hint": "Work out which idea this is about — data, analyse, data model — then explain your reasoning step by step."
     }
   ],
   "activities": [
@@ -1384,14 +1384,14 @@
         "type": "Concept",
         "outcomeId": "lo04",
         "difficulty": "Basic",
-        "question": "What does “simulation” mean in computing?",
+        "question": "Which of these describes “Models and simulations”?",
         "options": [
-          "The key data items represented in a data model.",
-          "A more complex model that can predict the outcome of a real-world system, often using graphics.",
-          "An application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc).",
-          "An application used to organise data so it can be stored, processed and accessed electronically (LibreOffice Base)."
+          "Data models and simulations appear in almost every industry. Here are the ones you should be able to describe:",
+          "A simulation is a more advanced kind of model. Simulations use a very large amount of data and often add realistic graphics so a person can see and…",
+          "Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You…",
+          "Each box in the grid is a cell. A cell can hold text, a number or a formula. Every cell has an address made from its column letter and row number,…"
         ],
-        "answer": "A more complex model that can predict the outcome of a real-world system, often using graphics.",
+        "answer": "A simulation is a more advanced kind of model. Simulations use a very large amount of data and often add realistic graphics so a person can see and…",
         "hint": "Use the Unit 4 Computing Words reference.",
         "explanation": "Simulation means a more complex model that can predict the outcome of a real-world system, often using graphics."
       },
@@ -1400,30 +1400,30 @@
         "type": "Application",
         "outcomeId": "lo05",
         "difficulty": "Core",
-        "question": "What does “factors” mean in computing?",
+        "question": "Which of these describes “Where data models are used across industries”?",
         "options": [
-          "An application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc).",
-          "An application used to organise data so it can be stored, processed and accessed electronically (LibreOffice Base).",
-          "The box where a row and a column meet; it can hold text, a number or a formula.",
-          "The key data items represented in a data model."
+          "A simulation is a more advanced kind of model. Simulations use a very large amount of data and often add realistic graphics so a person can see and…",
+          "Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You…",
+          "Each box in the grid is a cell. A cell can hold text, a number or a formula. Every cell has an address made from its column letter and row number,…",
+          "Data models and simulations appear in almost every industry. Here are the ones you should be able to describe:"
         ],
-        "answer": "The key data items represented in a data model.",
+        "answer": "Data models and simulations appear in almost every industry. Here are the ones you should be able to describe:",
         "hint": "Use the Unit 4 Computing Words reference.",
-        "explanation": "Factors means the key data items represented in a data model."
+        "explanation": "Data models and simulations appear in almost every industry. Here are the ones you should be able to describe:"
       },
       {
         "id": "q06",
         "type": "Application",
         "outcomeId": "lo06",
         "difficulty": "Core",
-        "question": "What does “spreadsheet” mean in computing?",
+        "question": "Which of these describes “Spreadsheets: Modelling with LibreOffice Calc”?",
         "options": [
-          "An application used to organise data so it can be stored, processed and accessed electronically (LibreOffice Base).",
-          "The box where a row and a column meet; it can hold text, a number or a formula.",
-          "An application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc).",
-          "The letter-and-number address of a cell, for example B2."
+          "A simulation is a more advanced kind of model. Simulations use a very large amount of data and often add realistic graphics so a person can see and…",
+          "Data models and simulations appear in almost every industry. Here are the ones you should be able to describe:",
+          "Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You…",
+          "Each box in the grid is a cell. A cell can hold text, a number or a formula. Every cell has an address made from its column letter and row number,…"
         ],
-        "answer": "An application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc).",
+        "answer": "Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You…",
         "hint": "Use the Unit 4 Computing Words reference.",
         "explanation": "Spreadsheet means an application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc)."
       },
@@ -1432,96 +1432,96 @@
         "type": "Application",
         "outcomeId": "lo07",
         "difficulty": "Core",
-        "question": "Which computing word matches this meaning: An application used to organise data so it can be stored, processed and accessed electronically (LibreOffice Base).?",
+        "question": "Which of these describes “Cells and cell references”?",
         "options": [
-          "cell",
-          "database",
-          "cell reference",
-          "cell range"
+          "A simulation is a more advanced kind of model. Simulations use a very large amount of data and often add realistic graphics so a person can see and…",
+          "Each box in the grid is a cell. A cell can hold text, a number or a formula. Every cell has an address made from its column letter and row number,…",
+          "Data models and simulations appear in almost every industry. Here are the ones you should be able to describe:",
+          "Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You…"
         ],
-        "answer": "database",
+        "answer": "Each box in the grid is a cell. A cell can hold text, a number or a formula. Every cell has an address made from its column letter and row number,…",
         "hint": "Use the Unit 4 Computing Words reference.",
-        "explanation": "Database means an application used to organise data so it can be stored, processed and accessed electronically (LibreOffice Base)."
+        "explanation": "Each box in the grid is a cell. A cell can hold text, a number or a formula. Every cell has an address made from its column letter and row number,…"
       },
       {
         "id": "q08",
         "type": "Application",
         "outcomeId": "lo08",
         "difficulty": "Core",
-        "question": "Which computing word matches this meaning: The box where a row and a column meet; it can hold text, a number or a formula.?",
+        "question": "Which of these describes “The Input Line and formulas”?",
         "options": [
-          "cell",
-          "cell reference",
-          "cell range",
-          "formula"
+          "Along the top of the window is the Formula Bar. The long white box in it is called the Input Line — this is where you type formulas. To enter a…",
+          "A simulation is a more advanced kind of model. Simulations use a very large amount of data and often add realistic graphics so a person can see and…",
+          "Data models and simulations appear in almost every industry. Here are the ones you should be able to describe:",
+          "Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You…"
         ],
-        "answer": "cell",
+        "answer": "Along the top of the window is the Formula Bar. The long white box in it is called the Input Line — this is where you type formulas. To enter a…",
         "hint": "Use the Unit 4 Computing Words reference.",
-        "explanation": "Cell means the box where a row and a column meet; it can hold text, a number or a formula."
+        "explanation": "Along the top of the window is the Formula Bar. The long white box in it is called the Input Line — this is where you type formulas. To enter a…"
       },
       {
         "id": "q09",
         "type": "Reasoning",
         "outcomeId": "lo01",
         "difficulty": "Core",
-        "question": "Which computing word matches this meaning: The letter-and-number address of a cell, for example B2.?",
+        "question": "Which of these describes “Worked Example 1 — SUM and AVERAGE”?",
         "options": [
-          "cell range",
-          "formula",
-          "cell reference",
-          "function"
+          "A simulation is a more advanced kind of model. Simulations use a very large amount of data and often add realistic graphics so a person can see and…",
+          "Data models and simulations appear in almost every industry. Here are the ones you should be able to describe:",
+          "A function is a ready-made shortcut for a common calculation. The two you will use most are SUM (adds numbers) and AVERAGE (finds the mean). Type…",
+          "Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You…"
         ],
-        "answer": "cell reference",
+        "answer": "A function is a ready-made shortcut for a common calculation. The two you will use most are SUM (adds numbers) and AVERAGE (finds the mean). Type…",
         "hint": "Use the Unit 4 Computing Words reference.",
-        "explanation": "Cell reference means the letter-and-number address of a cell, for example B2."
+        "explanation": "A function is a ready-made shortcut for a common calculation. The two you will use most are SUM (adds numbers) and AVERAGE (finds the mean). Type…"
       },
       {
         "id": "q10",
         "type": "Reasoning",
         "outcomeId": "lo02",
         "difficulty": "Challenge",
-        "question": "Which computing word matches this meaning: A group of cells named by the first and last cell, for example B2:B8.?",
+        "question": "Which of these describes “Worked Example 2”?",
         "options": [
-          "cell range",
-          "formula",
-          "function",
-          "relative reference"
+          "Data models are perfect for money. Imagine a small shop in Hargeisa records how much it sells each day for one week, in shillings. Enter this table…",
+          "A simulation is a more advanced kind of model. Simulations use a very large amount of data and often add realistic graphics so a person can see and…",
+          "Data models and simulations appear in almost every industry. Here are the ones you should be able to describe:",
+          "Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You…"
         ],
-        "answer": "cell range",
+        "answer": "Data models are perfect for money. Imagine a small shop in Hargeisa records how much it sells each day for one week, in shillings. Enter this table…",
         "hint": "Use the Unit 4 Computing Words reference.",
-        "explanation": "Cell range means a group of cells named by the first and last cell, for example B2:B8."
+        "explanation": "Data models are perfect for money. Imagine a small shop in Hargeisa records how much it sells each day for one week, in shillings. Enter this table…"
       },
       {
         "id": "q11",
         "type": "Reasoning",
         "outcomeId": "lo03",
         "difficulty": "Challenge",
-        "question": "Which computing word matches this meaning: A calculation you type into a cell; every formula begins with an = sign.?",
+        "question": "Which of these describes “Formatting”?",
         "options": [
-          "function",
-          "formula",
-          "relative reference",
-          "absolute reference"
+          "A simulation is a more advanced kind of model. Simulations use a very large amount of data and often add realistic graphics so a person can see and…",
+          "A clear model separates the labels (headings) from the data. To make your headings stand out, select cells A1:C1, then press Ctrl+B or click the Bold…",
+          "Data models and simulations appear in almost every industry. Here are the ones you should be able to describe:",
+          "Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You…"
         ],
-        "answer": "formula",
+        "answer": "A clear model separates the labels (headings) from the data. To make your headings stand out, select cells A1:C1, then press Ctrl+B or click the Bold…",
         "hint": "Use the Unit 4 Computing Words reference.",
-        "explanation": "Formula means a calculation you type into a cell; every formula begins with an = sign."
+        "explanation": "A clear model separates the labels (headings) from the data. To make your headings stand out, select cells A1:C1, then press Ctrl+B or click the Bold…"
       },
       {
         "id": "q12",
         "type": "Reasoning",
         "outcomeId": "lo04",
         "difficulty": "Challenge",
-        "question": "Which computing word matches this meaning: A built-in shortcut for a common calculation, for example SUM or AVERAGE.?",
+        "question": "Which of these describes “Worked Example 3”?",
         "options": [
-          "relative reference",
-          "absolute reference",
-          "conditional formatting",
-          "function"
+          "A simulation is a more advanced kind of model. Simulations use a very large amount of data and often add realistic graphics so a person can see and…",
+          "Data models and simulations appear in almost every industry. Here are the ones you should be able to describe:",
+          "Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You…",
+          "This is the most important idea in the whole spreadsheet section, so read it slowly. Your class is saving up for a trip to the ancient rock-art caves…"
         ],
-        "answer": "function",
+        "answer": "This is the most important idea in the whole spreadsheet section, so read it slowly. Your class is saving up for a trip to the ancient rock-art caves…",
         "hint": "Use the Unit 4 Computing Words reference.",
-        "explanation": "Function means a built-in shortcut for a common calculation, for example SUM or AVERAGE."
+        "explanation": "This is the most important idea in the whole spreadsheet section, so read it slowly. Your class is saving up for a trip to the ancient rock-art caves…"
       }
     ]
   },
@@ -1549,38 +1549,38 @@
             "explanation": "Data means raw facts and figures, for example a list of names or prices."
           },
           {
-            "prompt": "What does “simulation” mean in computing?",
+            "prompt": "Which of these describes “Models and simulations”?",
             "choices": [
-              "A more complex model that can predict the outcome of a real-world system, often using graphics.",
-              "The key data items represented in a data model.",
-              "An application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc).",
-              "An application used to organise data so it can be stored, processed and accessed electronically (LibreOffice Base)."
+              "A simulation is a more advanced kind of model. Simulations use a very large amount of data and often add realistic graphics so a person can see and…",
+              "Data models and simulations appear in almost every industry. Here are the ones you should be able to describe:",
+              "Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You…",
+              "Each box in the grid is a cell. A cell can hold text, a number or a formula. Every cell has an address made from its column letter and row number,…"
             ],
-            "answer": "A more complex model that can predict the outcome of a real-world system, often using graphics.",
+            "answer": "A simulation is a more advanced kind of model. Simulations use a very large amount of data and often add realistic graphics so a person can see and…",
             "clue": "Use the Unit 4 Computing Words reference.",
             "explanation": "Simulation means a more complex model that can predict the outcome of a real-world system, often using graphics."
           },
           {
-            "prompt": "Which computing word matches this meaning: An application used to organise data so it can be stored, processed and accessed electronically (LibreOffice Base).?",
+            "prompt": "Which of these describes “Cells and cell references”?",
             "choices": [
-              "database",
-              "cell",
-              "cell reference",
-              "cell range"
+              "Each box in the grid is a cell. A cell can hold text, a number or a formula. Every cell has an address made from its column letter and row number,…",
+              "A simulation is a more advanced kind of model. Simulations use a very large amount of data and often add realistic graphics so a person can see and…",
+              "Data models and simulations appear in almost every industry. Here are the ones you should be able to describe:",
+              "Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You…"
             ],
-            "answer": "database",
+            "answer": "Each box in the grid is a cell. A cell can hold text, a number or a formula. Every cell has an address made from its column letter and row number,…",
             "clue": "Use the Unit 4 Computing Words reference.",
             "explanation": "Database means an application used to organise data so it can be stored, processed and accessed electronically (LibreOffice Base)."
           },
           {
-            "prompt": "Which computing word matches this meaning: A group of cells named by the first and last cell, for example B2:B8.?",
+            "prompt": "Which of these describes “Worked Example 2”?",
             "choices": [
-              "cell range",
-              "formula",
-              "function",
-              "relative reference"
+              "Data models are perfect for money. Imagine a small shop in Hargeisa records how much it sells each day for one week, in shillings. Enter this table…",
+              "A simulation is a more advanced kind of model. Simulations use a very large amount of data and often add realistic graphics so a person can see and…",
+              "Data models and simulations appear in almost every industry. Here are the ones you should be able to describe:",
+              "Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You…"
             ],
-            "answer": "cell range",
+            "answer": "Data models are perfect for money. Imagine a small shop in Hargeisa records how much it sells each day for one week, in shillings. Enter this table…",
             "clue": "Use the Unit 4 Computing Words reference.",
             "explanation": "Cell range means a group of cells named by the first and last cell, for example B2:B8."
           }
@@ -1607,38 +1607,38 @@
             "explanation": "Analyse means examine something in detail so that you fully understand it."
           },
           {
-            "prompt": "What does “factors” mean in computing?",
+            "prompt": "Which of these describes “Where data models are used across industries”?",
             "choices": [
-              "The key data items represented in a data model.",
-              "An application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc).",
-              "An application used to organise data so it can be stored, processed and accessed electronically (LibreOffice Base).",
-              "The box where a row and a column meet; it can hold text, a number or a formula."
+              "Data models and simulations appear in almost every industry. Here are the ones you should be able to describe:",
+              "A simulation is a more advanced kind of model. Simulations use a very large amount of data and often add realistic graphics so a person can see and…",
+              "Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You…",
+              "Each box in the grid is a cell. A cell can hold text, a number or a formula. Every cell has an address made from its column letter and row number,…"
             ],
-            "answer": "The key data items represented in a data model.",
+            "answer": "Data models and simulations appear in almost every industry. Here are the ones you should be able to describe:",
             "clue": "Use the Unit 4 Computing Words reference.",
             "explanation": "Factors means the key data items represented in a data model."
           },
           {
-            "prompt": "Which computing word matches this meaning: The box where a row and a column meet; it can hold text, a number or a formula.?",
+            "prompt": "Which of these describes “The Input Line and formulas”?",
             "choices": [
-              "cell",
-              "cell reference",
-              "cell range",
-              "formula"
+              "Along the top of the window is the Formula Bar. The long white box in it is called the Input Line — this is where you type formulas. To enter a…",
+              "A simulation is a more advanced kind of model. Simulations use a very large amount of data and often add realistic graphics so a person can see and…",
+              "Data models and simulations appear in almost every industry. Here are the ones you should be able to describe:",
+              "Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You…"
             ],
-            "answer": "cell",
+            "answer": "Along the top of the window is the Formula Bar. The long white box in it is called the Input Line — this is where you type formulas. To enter a…",
             "clue": "Use the Unit 4 Computing Words reference.",
             "explanation": "Cell means the box where a row and a column meet; it can hold text, a number or a formula."
           },
           {
-            "prompt": "Which computing word matches this meaning: A calculation you type into a cell; every formula begins with an = sign.?",
+            "prompt": "Which of these describes “Formatting”?",
             "choices": [
-              "formula",
-              "function",
-              "relative reference",
-              "absolute reference"
+              "A clear model separates the labels (headings) from the data. To make your headings stand out, select cells A1:C1, then press Ctrl+B or click the Bold…",
+              "A simulation is a more advanced kind of model. Simulations use a very large amount of data and often add realistic graphics so a person can see and…",
+              "Data models and simulations appear in almost every industry. Here are the ones you should be able to describe:",
+              "Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You…"
             ],
-            "answer": "formula",
+            "answer": "A clear model separates the labels (headings) from the data. To make your headings stand out, select cells A1:C1, then press Ctrl+B or click the Bold…",
             "clue": "Use the Unit 4 Computing Words reference.",
             "explanation": "Formula means a calculation you type into a cell; every formula begins with an = sign."
           }
@@ -1665,38 +1665,38 @@
             "explanation": "Data model means a computer representation of a real-life situation, where data is changed to see what happens."
           },
           {
-            "prompt": "What does “spreadsheet” mean in computing?",
+            "prompt": "Which of these describes “Spreadsheets: Modelling with LibreOffice Calc”?",
             "choices": [
-              "An application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc).",
-              "An application used to organise data so it can be stored, processed and accessed electronically (LibreOffice Base).",
-              "The box where a row and a column meet; it can hold text, a number or a formula.",
-              "The letter-and-number address of a cell, for example B2."
+              "Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You…",
+              "A simulation is a more advanced kind of model. Simulations use a very large amount of data and often add realistic graphics so a person can see and…",
+              "Data models and simulations appear in almost every industry. Here are the ones you should be able to describe:",
+              "Each box in the grid is a cell. A cell can hold text, a number or a formula. Every cell has an address made from its column letter and row number,…"
             ],
-            "answer": "An application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc).",
+            "answer": "Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You…",
             "clue": "Use the Unit 4 Computing Words reference.",
             "explanation": "Spreadsheet means an application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc)."
           },
           {
-            "prompt": "Which computing word matches this meaning: The letter-and-number address of a cell, for example B2.?",
+            "prompt": "Which of these describes “Worked Example 1 — SUM and AVERAGE”?",
             "choices": [
-              "cell reference",
-              "cell range",
-              "formula",
-              "function"
+              "A function is a ready-made shortcut for a common calculation. The two you will use most are SUM (adds numbers) and AVERAGE (finds the mean). Type…",
+              "A simulation is a more advanced kind of model. Simulations use a very large amount of data and often add realistic graphics so a person can see and…",
+              "Data models and simulations appear in almost every industry. Here are the ones you should be able to describe:",
+              "Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You…"
             ],
-            "answer": "cell reference",
+            "answer": "A function is a ready-made shortcut for a common calculation. The two you will use most are SUM (adds numbers) and AVERAGE (finds the mean). Type…",
             "clue": "Use the Unit 4 Computing Words reference.",
             "explanation": "Cell reference means the letter-and-number address of a cell, for example B2."
           },
           {
-            "prompt": "Which computing word matches this meaning: A built-in shortcut for a common calculation, for example SUM or AVERAGE.?",
+            "prompt": "Which of these describes “Worked Example 3”?",
             "choices": [
-              "function",
-              "relative reference",
-              "absolute reference",
-              "conditional formatting"
+              "This is the most important idea in the whole spreadsheet section, so read it slowly. Your class is saving up for a trip to the ancient rock-art caves…",
+              "A simulation is a more advanced kind of model. Simulations use a very large amount of data and often add realistic graphics so a person can see and…",
+              "Data models and simulations appear in almost every industry. Here are the ones you should be able to describe:",
+              "Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You…"
             ],
-            "answer": "function",
+            "answer": "This is the most important idea in the whole spreadsheet section, so read it slowly. Your class is saving up for a trip to the ancient rock-art caves…",
             "clue": "Use the Unit 4 Computing Words reference.",
             "explanation": "Function means a built-in shortcut for a common calculation, for example SUM or AVERAGE."
           }
@@ -1711,38 +1711,38 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “simulation” mean in computing?",
+            "prompt": "Which of these describes “Models and simulations”?",
             "choices": [
-              "A more complex model that can predict the outcome of a real-world system, often using graphics.",
-              "The key data items represented in a data model.",
-              "An application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc).",
-              "An application used to organise data so it can be stored, processed and accessed electronically (LibreOffice Base)."
+              "A simulation is a more advanced kind of model. Simulations use a very large amount of data and often add realistic graphics so a person can see and…",
+              "Data models and simulations appear in almost every industry. Here are the ones you should be able to describe:",
+              "Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You…",
+              "Each box in the grid is a cell. A cell can hold text, a number or a formula. Every cell has an address made from its column letter and row number,…"
             ],
-            "answer": "A more complex model that can predict the outcome of a real-world system, often using graphics.",
+            "answer": "A simulation is a more advanced kind of model. Simulations use a very large amount of data and often add realistic graphics so a person can see and…",
             "clue": "Use the Unit 4 Computing Words reference.",
             "explanation": "Simulation means a more complex model that can predict the outcome of a real-world system, often using graphics."
           },
           {
-            "prompt": "Which computing word matches this meaning: An application used to organise data so it can be stored, processed and accessed electronically (LibreOffice Base).?",
+            "prompt": "Which of these describes “Cells and cell references”?",
             "choices": [
-              "database",
-              "cell",
-              "cell reference",
-              "cell range"
+              "Each box in the grid is a cell. A cell can hold text, a number or a formula. Every cell has an address made from its column letter and row number,…",
+              "A simulation is a more advanced kind of model. Simulations use a very large amount of data and often add realistic graphics so a person can see and…",
+              "Data models and simulations appear in almost every industry. Here are the ones you should be able to describe:",
+              "Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You…"
             ],
-            "answer": "database",
+            "answer": "Each box in the grid is a cell. A cell can hold text, a number or a formula. Every cell has an address made from its column letter and row number,…",
             "clue": "Use the Unit 4 Computing Words reference.",
             "explanation": "Database means an application used to organise data so it can be stored, processed and accessed electronically (LibreOffice Base)."
           },
           {
-            "prompt": "Which computing word matches this meaning: A group of cells named by the first and last cell, for example B2:B8.?",
+            "prompt": "Which of these describes “Worked Example 2”?",
             "choices": [
-              "cell range",
-              "formula",
-              "function",
-              "relative reference"
+              "Data models are perfect for money. Imagine a small shop in Hargeisa records how much it sells each day for one week, in shillings. Enter this table…",
+              "A simulation is a more advanced kind of model. Simulations use a very large amount of data and often add realistic graphics so a person can see and…",
+              "Data models and simulations appear in almost every industry. Here are the ones you should be able to describe:",
+              "Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You…"
             ],
-            "answer": "cell range",
+            "answer": "Data models are perfect for money. Imagine a small shop in Hargeisa records how much it sells each day for one week, in shillings. Enter this table…",
             "clue": "Use the Unit 4 Computing Words reference.",
             "explanation": "Cell range means a group of cells named by the first and last cell, for example B2:B8."
           },
@@ -1769,38 +1769,38 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “factors” mean in computing?",
+            "prompt": "Which of these describes “Where data models are used across industries”?",
             "choices": [
-              "The key data items represented in a data model.",
-              "An application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc).",
-              "An application used to organise data so it can be stored, processed and accessed electronically (LibreOffice Base).",
-              "The box where a row and a column meet; it can hold text, a number or a formula."
+              "Data models and simulations appear in almost every industry. Here are the ones you should be able to describe:",
+              "A simulation is a more advanced kind of model. Simulations use a very large amount of data and often add realistic graphics so a person can see and…",
+              "Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You…",
+              "Each box in the grid is a cell. A cell can hold text, a number or a formula. Every cell has an address made from its column letter and row number,…"
             ],
-            "answer": "The key data items represented in a data model.",
+            "answer": "Data models and simulations appear in almost every industry. Here are the ones you should be able to describe:",
             "clue": "Use the Unit 4 Computing Words reference.",
             "explanation": "Factors means the key data items represented in a data model."
           },
           {
-            "prompt": "Which computing word matches this meaning: The box where a row and a column meet; it can hold text, a number or a formula.?",
+            "prompt": "Which of these describes “The Input Line and formulas”?",
             "choices": [
-              "cell",
-              "cell reference",
-              "cell range",
-              "formula"
+              "Along the top of the window is the Formula Bar. The long white box in it is called the Input Line — this is where you type formulas. To enter a…",
+              "A simulation is a more advanced kind of model. Simulations use a very large amount of data and often add realistic graphics so a person can see and…",
+              "Data models and simulations appear in almost every industry. Here are the ones you should be able to describe:",
+              "Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You…"
             ],
-            "answer": "cell",
+            "answer": "Along the top of the window is the Formula Bar. The long white box in it is called the Input Line — this is where you type formulas. To enter a…",
             "clue": "Use the Unit 4 Computing Words reference.",
             "explanation": "Cell means the box where a row and a column meet; it can hold text, a number or a formula."
           },
           {
-            "prompt": "Which computing word matches this meaning: A calculation you type into a cell; every formula begins with an = sign.?",
+            "prompt": "Which of these describes “Formatting”?",
             "choices": [
-              "formula",
-              "function",
-              "relative reference",
-              "absolute reference"
+              "A clear model separates the labels (headings) from the data. To make your headings stand out, select cells A1:C1, then press Ctrl+B or click the Bold…",
+              "A simulation is a more advanced kind of model. Simulations use a very large amount of data and often add realistic graphics so a person can see and…",
+              "Data models and simulations appear in almost every industry. Here are the ones you should be able to describe:",
+              "Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You…"
             ],
-            "answer": "formula",
+            "answer": "A clear model separates the labels (headings) from the data. To make your headings stand out, select cells A1:C1, then press Ctrl+B or click the Bold…",
             "clue": "Use the Unit 4 Computing Words reference.",
             "explanation": "Formula means a calculation you type into a cell; every formula begins with an = sign."
           },
@@ -1827,38 +1827,38 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “spreadsheet” mean in computing?",
+            "prompt": "Which of these describes “Spreadsheets: Modelling with LibreOffice Calc”?",
             "choices": [
-              "An application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc).",
-              "An application used to organise data so it can be stored, processed and accessed electronically (LibreOffice Base).",
-              "The box where a row and a column meet; it can hold text, a number or a formula.",
-              "The letter-and-number address of a cell, for example B2."
+              "Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You…",
+              "A simulation is a more advanced kind of model. Simulations use a very large amount of data and often add realistic graphics so a person can see and…",
+              "Data models and simulations appear in almost every industry. Here are the ones you should be able to describe:",
+              "Each box in the grid is a cell. A cell can hold text, a number or a formula. Every cell has an address made from its column letter and row number,…"
             ],
-            "answer": "An application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc).",
+            "answer": "Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You…",
             "clue": "Use the Unit 4 Computing Words reference.",
             "explanation": "Spreadsheet means an application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc)."
           },
           {
-            "prompt": "Which computing word matches this meaning: The letter-and-number address of a cell, for example B2.?",
+            "prompt": "Which of these describes “Worked Example 1 — SUM and AVERAGE”?",
             "choices": [
-              "cell reference",
-              "cell range",
-              "formula",
-              "function"
+              "A function is a ready-made shortcut for a common calculation. The two you will use most are SUM (adds numbers) and AVERAGE (finds the mean). Type…",
+              "A simulation is a more advanced kind of model. Simulations use a very large amount of data and often add realistic graphics so a person can see and…",
+              "Data models and simulations appear in almost every industry. Here are the ones you should be able to describe:",
+              "Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You…"
             ],
-            "answer": "cell reference",
+            "answer": "A function is a ready-made shortcut for a common calculation. The two you will use most are SUM (adds numbers) and AVERAGE (finds the mean). Type…",
             "clue": "Use the Unit 4 Computing Words reference.",
             "explanation": "Cell reference means the letter-and-number address of a cell, for example B2."
           },
           {
-            "prompt": "Which computing word matches this meaning: A built-in shortcut for a common calculation, for example SUM or AVERAGE.?",
+            "prompt": "Which of these describes “Worked Example 3”?",
             "choices": [
-              "function",
-              "relative reference",
-              "absolute reference",
-              "conditional formatting"
+              "This is the most important idea in the whole spreadsheet section, so read it slowly. Your class is saving up for a trip to the ancient rock-art caves…",
+              "A simulation is a more advanced kind of model. Simulations use a very large amount of data and often add realistic graphics so a person can see and…",
+              "Data models and simulations appear in almost every industry. Here are the ones you should be able to describe:",
+              "Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You…"
             ],
-            "answer": "function",
+            "answer": "This is the most important idea in the whole spreadsheet section, so read it slowly. Your class is saving up for a trip to the ancient rock-art caves…",
             "clue": "Use the Unit 4 Computing Words reference.",
             "explanation": "Function means a built-in shortcut for a common calculation, for example SUM or AVERAGE."
           },
@@ -1885,26 +1885,26 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which computing word matches this meaning: An application used to organise data so it can be stored, processed and accessed electronically (LibreOffice Base).?",
+            "prompt": "Which of these describes “Cells and cell references”?",
             "choices": [
-              "database",
-              "cell",
-              "cell reference",
-              "cell range"
+              "Each box in the grid is a cell. A cell can hold text, a number or a formula. Every cell has an address made from its column letter and row number,…",
+              "A simulation is a more advanced kind of model. Simulations use a very large amount of data and often add realistic graphics so a person can see and…",
+              "Data models and simulations appear in almost every industry. Here are the ones you should be able to describe:",
+              "Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You…"
             ],
-            "answer": "database",
+            "answer": "Each box in the grid is a cell. A cell can hold text, a number or a formula. Every cell has an address made from its column letter and row number,…",
             "clue": "Use the Unit 4 Computing Words reference.",
             "explanation": "Database means an application used to organise data so it can be stored, processed and accessed electronically (LibreOffice Base)."
           },
           {
-            "prompt": "Which computing word matches this meaning: A group of cells named by the first and last cell, for example B2:B8.?",
+            "prompt": "Which of these describes “Worked Example 2”?",
             "choices": [
-              "cell range",
-              "formula",
-              "function",
-              "relative reference"
+              "Data models are perfect for money. Imagine a small shop in Hargeisa records how much it sells each day for one week, in shillings. Enter this table…",
+              "A simulation is a more advanced kind of model. Simulations use a very large amount of data and often add realistic graphics so a person can see and…",
+              "Data models and simulations appear in almost every industry. Here are the ones you should be able to describe:",
+              "Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You…"
             ],
-            "answer": "cell range",
+            "answer": "Data models are perfect for money. Imagine a small shop in Hargeisa records how much it sells each day for one week, in shillings. Enter this table…",
             "clue": "Use the Unit 4 Computing Words reference.",
             "explanation": "Cell range means a group of cells named by the first and last cell, for example B2:B8."
           },
@@ -1921,14 +1921,14 @@
             "explanation": "Data means raw facts and figures, for example a list of names or prices."
           },
           {
-            "prompt": "What does “simulation” mean in computing?",
+            "prompt": "Which of these describes “Models and simulations”?",
             "choices": [
-              "A more complex model that can predict the outcome of a real-world system, often using graphics.",
-              "The key data items represented in a data model.",
-              "An application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc).",
-              "An application used to organise data so it can be stored, processed and accessed electronically (LibreOffice Base)."
+              "A simulation is a more advanced kind of model. Simulations use a very large amount of data and often add realistic graphics so a person can see and…",
+              "Data models and simulations appear in almost every industry. Here are the ones you should be able to describe:",
+              "Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You…",
+              "Each box in the grid is a cell. A cell can hold text, a number or a formula. Every cell has an address made from its column letter and row number,…"
             ],
-            "answer": "A more complex model that can predict the outcome of a real-world system, often using graphics.",
+            "answer": "A simulation is a more advanced kind of model. Simulations use a very large amount of data and often add realistic graphics so a person can see and…",
             "clue": "Use the Unit 4 Computing Words reference.",
             "explanation": "Simulation means a more complex model that can predict the outcome of a real-world system, often using graphics."
           }
@@ -1943,26 +1943,26 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which computing word matches this meaning: The box where a row and a column meet; it can hold text, a number or a formula.?",
+            "prompt": "Which of these describes “The Input Line and formulas”?",
             "choices": [
-              "cell",
-              "cell reference",
-              "cell range",
-              "formula"
+              "Along the top of the window is the Formula Bar. The long white box in it is called the Input Line — this is where you type formulas. To enter a…",
+              "A simulation is a more advanced kind of model. Simulations use a very large amount of data and often add realistic graphics so a person can see and…",
+              "Data models and simulations appear in almost every industry. Here are the ones you should be able to describe:",
+              "Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You…"
             ],
-            "answer": "cell",
+            "answer": "Along the top of the window is the Formula Bar. The long white box in it is called the Input Line — this is where you type formulas. To enter a…",
             "clue": "Use the Unit 4 Computing Words reference.",
             "explanation": "Cell means the box where a row and a column meet; it can hold text, a number or a formula."
           },
           {
-            "prompt": "Which computing word matches this meaning: A calculation you type into a cell; every formula begins with an = sign.?",
+            "prompt": "Which of these describes “Formatting”?",
             "choices": [
-              "formula",
-              "function",
-              "relative reference",
-              "absolute reference"
+              "A clear model separates the labels (headings) from the data. To make your headings stand out, select cells A1:C1, then press Ctrl+B or click the Bold…",
+              "A simulation is a more advanced kind of model. Simulations use a very large amount of data and often add realistic graphics so a person can see and…",
+              "Data models and simulations appear in almost every industry. Here are the ones you should be able to describe:",
+              "Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You…"
             ],
-            "answer": "formula",
+            "answer": "A clear model separates the labels (headings) from the data. To make your headings stand out, select cells A1:C1, then press Ctrl+B or click the Bold…",
             "clue": "Use the Unit 4 Computing Words reference.",
             "explanation": "Formula means a calculation you type into a cell; every formula begins with an = sign."
           },
@@ -1979,14 +1979,14 @@
             "explanation": "Analyse means examine something in detail so that you fully understand it."
           },
           {
-            "prompt": "What does “factors” mean in computing?",
+            "prompt": "Which of these describes “Where data models are used across industries”?",
             "choices": [
-              "The key data items represented in a data model.",
-              "An application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc).",
-              "An application used to organise data so it can be stored, processed and accessed electronically (LibreOffice Base).",
-              "The box where a row and a column meet; it can hold text, a number or a formula."
+              "Data models and simulations appear in almost every industry. Here are the ones you should be able to describe:",
+              "A simulation is a more advanced kind of model. Simulations use a very large amount of data and often add realistic graphics so a person can see and…",
+              "Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You…",
+              "Each box in the grid is a cell. A cell can hold text, a number or a formula. Every cell has an address made from its column letter and row number,…"
             ],
-            "answer": "The key data items represented in a data model.",
+            "answer": "Data models and simulations appear in almost every industry. Here are the ones you should be able to describe:",
             "clue": "Use the Unit 4 Computing Words reference.",
             "explanation": "Factors means the key data items represented in a data model."
           }
@@ -2001,26 +2001,26 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which computing word matches this meaning: The letter-and-number address of a cell, for example B2.?",
+            "prompt": "Which of these describes “Worked Example 1 — SUM and AVERAGE”?",
             "choices": [
-              "cell reference",
-              "cell range",
-              "formula",
-              "function"
+              "A function is a ready-made shortcut for a common calculation. The two you will use most are SUM (adds numbers) and AVERAGE (finds the mean). Type…",
+              "A simulation is a more advanced kind of model. Simulations use a very large amount of data and often add realistic graphics so a person can see and…",
+              "Data models and simulations appear in almost every industry. Here are the ones you should be able to describe:",
+              "Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You…"
             ],
-            "answer": "cell reference",
+            "answer": "A function is a ready-made shortcut for a common calculation. The two you will use most are SUM (adds numbers) and AVERAGE (finds the mean). Type…",
             "clue": "Use the Unit 4 Computing Words reference.",
             "explanation": "Cell reference means the letter-and-number address of a cell, for example B2."
           },
           {
-            "prompt": "Which computing word matches this meaning: A built-in shortcut for a common calculation, for example SUM or AVERAGE.?",
+            "prompt": "Which of these describes “Worked Example 3”?",
             "choices": [
-              "function",
-              "relative reference",
-              "absolute reference",
-              "conditional formatting"
+              "This is the most important idea in the whole spreadsheet section, so read it slowly. Your class is saving up for a trip to the ancient rock-art caves…",
+              "A simulation is a more advanced kind of model. Simulations use a very large amount of data and often add realistic graphics so a person can see and…",
+              "Data models and simulations appear in almost every industry. Here are the ones you should be able to describe:",
+              "Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You…"
             ],
-            "answer": "function",
+            "answer": "This is the most important idea in the whole spreadsheet section, so read it slowly. Your class is saving up for a trip to the ancient rock-art caves…",
             "clue": "Use the Unit 4 Computing Words reference.",
             "explanation": "Function means a built-in shortcut for a common calculation, for example SUM or AVERAGE."
           },
@@ -2037,14 +2037,14 @@
             "explanation": "Data model means a computer representation of a real-life situation, where data is changed to see what happens."
           },
           {
-            "prompt": "What does “spreadsheet” mean in computing?",
+            "prompt": "Which of these describes “Spreadsheets: Modelling with LibreOffice Calc”?",
             "choices": [
-              "An application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc).",
-              "An application used to organise data so it can be stored, processed and accessed electronically (LibreOffice Base).",
-              "The box where a row and a column meet; it can hold text, a number or a formula.",
-              "The letter-and-number address of a cell, for example B2."
+              "Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You…",
+              "A simulation is a more advanced kind of model. Simulations use a very large amount of data and often add realistic graphics so a person can see and…",
+              "Data models and simulations appear in almost every industry. Here are the ones you should be able to describe:",
+              "Each box in the grid is a cell. A cell can hold text, a number or a formula. Every cell has an address made from its column letter and row number,…"
             ],
-            "answer": "An application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc).",
+            "answer": "Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You…",
             "clue": "Use the Unit 4 Computing Words reference.",
             "explanation": "Spreadsheet means an application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc)."
           }
@@ -2059,14 +2059,14 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which computing word matches this meaning: A group of cells named by the first and last cell, for example B2:B8.?",
+            "prompt": "Which of these describes “Worked Example 2”?",
             "choices": [
-              "cell range",
-              "formula",
-              "function",
-              "relative reference"
+              "Data models are perfect for money. Imagine a small shop in Hargeisa records how much it sells each day for one week, in shillings. Enter this table…",
+              "A simulation is a more advanced kind of model. Simulations use a very large amount of data and often add realistic graphics so a person can see and…",
+              "Data models and simulations appear in almost every industry. Here are the ones you should be able to describe:",
+              "Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You…"
             ],
-            "answer": "cell range",
+            "answer": "Data models are perfect for money. Imagine a small shop in Hargeisa records how much it sells each day for one week, in shillings. Enter this table…",
             "clue": "Use the Unit 4 Computing Words reference.",
             "explanation": "Cell range means a group of cells named by the first and last cell, for example B2:B8."
           },
@@ -2083,26 +2083,26 @@
             "explanation": "Data means raw facts and figures, for example a list of names or prices."
           },
           {
-            "prompt": "What does “simulation” mean in computing?",
+            "prompt": "Which of these describes “Models and simulations”?",
             "choices": [
-              "A more complex model that can predict the outcome of a real-world system, often using graphics.",
-              "The key data items represented in a data model.",
-              "An application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc).",
-              "An application used to organise data so it can be stored, processed and accessed electronically (LibreOffice Base)."
+              "A simulation is a more advanced kind of model. Simulations use a very large amount of data and often add realistic graphics so a person can see and…",
+              "Data models and simulations appear in almost every industry. Here are the ones you should be able to describe:",
+              "Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You…",
+              "Each box in the grid is a cell. A cell can hold text, a number or a formula. Every cell has an address made from its column letter and row number,…"
             ],
-            "answer": "A more complex model that can predict the outcome of a real-world system, often using graphics.",
+            "answer": "A simulation is a more advanced kind of model. Simulations use a very large amount of data and often add realistic graphics so a person can see and…",
             "clue": "Use the Unit 4 Computing Words reference.",
             "explanation": "Simulation means a more complex model that can predict the outcome of a real-world system, often using graphics."
           },
           {
-            "prompt": "Which computing word matches this meaning: An application used to organise data so it can be stored, processed and accessed electronically (LibreOffice Base).?",
+            "prompt": "Which of these describes “Cells and cell references”?",
             "choices": [
-              "database",
-              "cell",
-              "cell reference",
-              "cell range"
+              "Each box in the grid is a cell. A cell can hold text, a number or a formula. Every cell has an address made from its column letter and row number,…",
+              "A simulation is a more advanced kind of model. Simulations use a very large amount of data and often add realistic graphics so a person can see and…",
+              "Data models and simulations appear in almost every industry. Here are the ones you should be able to describe:",
+              "Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You…"
             ],
-            "answer": "database",
+            "answer": "Each box in the grid is a cell. A cell can hold text, a number or a formula. Every cell has an address made from its column letter and row number,…",
             "clue": "Use the Unit 4 Computing Words reference.",
             "explanation": "Database means an application used to organise data so it can be stored, processed and accessed electronically (LibreOffice Base)."
           }
@@ -2117,14 +2117,14 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which computing word matches this meaning: A calculation you type into a cell; every formula begins with an = sign.?",
+            "prompt": "Which of these describes “Formatting”?",
             "choices": [
-              "formula",
-              "function",
-              "relative reference",
-              "absolute reference"
+              "A clear model separates the labels (headings) from the data. To make your headings stand out, select cells A1:C1, then press Ctrl+B or click the Bold…",
+              "A simulation is a more advanced kind of model. Simulations use a very large amount of data and often add realistic graphics so a person can see and…",
+              "Data models and simulations appear in almost every industry. Here are the ones you should be able to describe:",
+              "Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You…"
             ],
-            "answer": "formula",
+            "answer": "A clear model separates the labels (headings) from the data. To make your headings stand out, select cells A1:C1, then press Ctrl+B or click the Bold…",
             "clue": "Use the Unit 4 Computing Words reference.",
             "explanation": "Formula means a calculation you type into a cell; every formula begins with an = sign."
           },
@@ -2141,26 +2141,26 @@
             "explanation": "Analyse means examine something in detail so that you fully understand it."
           },
           {
-            "prompt": "What does “factors” mean in computing?",
+            "prompt": "Which of these describes “Where data models are used across industries”?",
             "choices": [
-              "The key data items represented in a data model.",
-              "An application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc).",
-              "An application used to organise data so it can be stored, processed and accessed electronically (LibreOffice Base).",
-              "The box where a row and a column meet; it can hold text, a number or a formula."
+              "Data models and simulations appear in almost every industry. Here are the ones you should be able to describe:",
+              "A simulation is a more advanced kind of model. Simulations use a very large amount of data and often add realistic graphics so a person can see and…",
+              "Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You…",
+              "Each box in the grid is a cell. A cell can hold text, a number or a formula. Every cell has an address made from its column letter and row number,…"
             ],
-            "answer": "The key data items represented in a data model.",
+            "answer": "Data models and simulations appear in almost every industry. Here are the ones you should be able to describe:",
             "clue": "Use the Unit 4 Computing Words reference.",
             "explanation": "Factors means the key data items represented in a data model."
           },
           {
-            "prompt": "Which computing word matches this meaning: The box where a row and a column meet; it can hold text, a number or a formula.?",
+            "prompt": "Which of these describes “The Input Line and formulas”?",
             "choices": [
-              "cell",
-              "cell reference",
-              "cell range",
-              "formula"
+              "Along the top of the window is the Formula Bar. The long white box in it is called the Input Line — this is where you type formulas. To enter a…",
+              "A simulation is a more advanced kind of model. Simulations use a very large amount of data and often add realistic graphics so a person can see and…",
+              "Data models and simulations appear in almost every industry. Here are the ones you should be able to describe:",
+              "Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You…"
             ],
-            "answer": "cell",
+            "answer": "Along the top of the window is the Formula Bar. The long white box in it is called the Input Line — this is where you type formulas. To enter a…",
             "clue": "Use the Unit 4 Computing Words reference.",
             "explanation": "Cell means the box where a row and a column meet; it can hold text, a number or a formula."
           }
@@ -2175,14 +2175,14 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which computing word matches this meaning: A built-in shortcut for a common calculation, for example SUM or AVERAGE.?",
+            "prompt": "Which of these describes “Worked Example 3”?",
             "choices": [
-              "function",
-              "relative reference",
-              "absolute reference",
-              "conditional formatting"
+              "This is the most important idea in the whole spreadsheet section, so read it slowly. Your class is saving up for a trip to the ancient rock-art caves…",
+              "A simulation is a more advanced kind of model. Simulations use a very large amount of data and often add realistic graphics so a person can see and…",
+              "Data models and simulations appear in almost every industry. Here are the ones you should be able to describe:",
+              "Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You…"
             ],
-            "answer": "function",
+            "answer": "This is the most important idea in the whole spreadsheet section, so read it slowly. Your class is saving up for a trip to the ancient rock-art caves…",
             "clue": "Use the Unit 4 Computing Words reference.",
             "explanation": "Function means a built-in shortcut for a common calculation, for example SUM or AVERAGE."
           },
@@ -2199,26 +2199,26 @@
             "explanation": "Data model means a computer representation of a real-life situation, where data is changed to see what happens."
           },
           {
-            "prompt": "What does “spreadsheet” mean in computing?",
+            "prompt": "Which of these describes “Spreadsheets: Modelling with LibreOffice Calc”?",
             "choices": [
-              "An application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc).",
-              "An application used to organise data so it can be stored, processed and accessed electronically (LibreOffice Base).",
-              "The box where a row and a column meet; it can hold text, a number or a formula.",
-              "The letter-and-number address of a cell, for example B2."
+              "Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You…",
+              "A simulation is a more advanced kind of model. Simulations use a very large amount of data and often add realistic graphics so a person can see and…",
+              "Data models and simulations appear in almost every industry. Here are the ones you should be able to describe:",
+              "Each box in the grid is a cell. A cell can hold text, a number or a formula. Every cell has an address made from its column letter and row number,…"
             ],
-            "answer": "An application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc).",
+            "answer": "Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You…",
             "clue": "Use the Unit 4 Computing Words reference.",
             "explanation": "Spreadsheet means an application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc)."
           },
           {
-            "prompt": "Which computing word matches this meaning: The letter-and-number address of a cell, for example B2.?",
+            "prompt": "Which of these describes “Worked Example 1 — SUM and AVERAGE”?",
             "choices": [
-              "cell reference",
-              "cell range",
-              "formula",
-              "function"
+              "A function is a ready-made shortcut for a common calculation. The two you will use most are SUM (adds numbers) and AVERAGE (finds the mean). Type…",
+              "A simulation is a more advanced kind of model. Simulations use a very large amount of data and often add realistic graphics so a person can see and…",
+              "Data models and simulations appear in almost every industry. Here are the ones you should be able to describe:",
+              "Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You…"
             ],
-            "answer": "cell reference",
+            "answer": "A function is a ready-made shortcut for a common calculation. The two you will use most are SUM (adds numbers) and AVERAGE (finds the mean). Type…",
             "clue": "Use the Unit 4 Computing Words reference.",
             "explanation": "Cell reference means the letter-and-number address of a cell, for example B2."
           }

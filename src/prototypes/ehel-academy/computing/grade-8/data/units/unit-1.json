@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-02T14:08:46.710Z",
+  "generatedAt": "2026-08-02T14:52:05.326Z",
   "stage": {
     "id": "s08",
     "label": "Stage 8"
@@ -686,81 +686,81 @@
       "hint": "Look back at what Algorithm and Pseudocode mean in this unit, then answer in your own words."
     },
     {
-      "id": "p06",
-      "level": "Warm-up",
-      "prompt": "Which order do Boolean operators run in? (a) OR, AND, NOT (b) AND, OR, NOT (c) NOT, AND, OR (d) NOT, OR, AND",
-      "answer": "(c) NOT first, then AND, then OR.",
+      "id": "p17",
+      "level": "Core",
+      "prompt": "What is pseudocode used for, and why is it called 'language independent'?",
+      "answer": "It is used to plan and design a program before coding. It is language independent because any programmer, whatever language they use, can read it and build it in their own language.",
       "hint": "Look back at what Algorithm and Pseudocode mean in this unit, then answer in your own words."
     },
     {
-      "id": "p07",
-      "level": "Warm-up",
-      "prompt": "A linear search works by: (a) jumping to the middle each time (b) checking each item in order until found or the end (c) guessing randomly (d) sorting the data first",
-      "answer": "(b) It checks each item in order until it finds the target or reaches the end.",
+      "id": "p18",
+      "level": "Core",
+      "prompt": "Name the three programming constructs.",
+      "answer": "Sequence, selection and iteration.",
       "hint": "Look back at what Algorithm and Pseudocode mean in this unit, then answer in your own words."
     },
     {
-      "id": "p08",
-      "level": "Warm-up",
-      "prompt": "In Python, which operator means 'is equal to'? (a) = (b) == (c) => (d) <>",
-      "answer": "(b) == means 'is equal to'; a single = assigns a value.",
+      "id": "p19",
+      "level": "Core",
+      "prompt": "State the three parts of a conditional statement.",
+      "answer": "A condition that is true or false; statements that run when it is true; statements that run when it is false.",
       "hint": "Look back at what Algorithm and Pseudocode mean in this unit, then answer in your own words."
     },
     {
-      "id": "p09",
-      "level": "Warm-up",
-      "prompt": "In Python, the command for 'else if' is: (a) elseif (b) else if (c) elif (d) elsif",
-      "answer": "(c) elif.",
+      "id": "p20",
+      "level": "Core",
+      "prompt": "In Python, why must you use == and not = inside an if statement?",
+      "answer": "In Python a single = assigns a value to a variable, while == tests whether two values are equal. A condition needs the comparison ==.",
       "hint": "Look back at what Algorithm and Pseudocode mean in this unit, then answer in your own words."
     },
     {
-      "id": "p10",
-      "level": "Warm-up",
-      "prompt": "The Boolean data type can hold: (a) any number (b) only True or False (c) only text (d) only 0 to 9",
-      "answer": "(b) Only True or False.",
+      "id": "p21",
+      "level": "Core",
+      "prompt": "What is the difference between the data \"True\" and the data True in Python?",
+      "answer": "\"True\" (with quotation marks) is a string - the word. True (no quotation marks) is the Boolean value. They behave differently.",
       "hint": "Look back at what Algorithm and Pseudocode mean in this unit, then answer in your own words."
     },
     {
-      "id": "p11",
-      "level": "Warm-up",
-      "prompt": "What does bool(\"False\") return in Python? (a) False (b) True (c) an error (d) 0",
-      "answer": "(b) True - any non-empty string casts to True, even the word 'False'.",
-      "hint": "Look back at what Algorithm and Pseudocode mean in this unit, then answer in your own words."
+      "id": "p31",
+      "level": "Challenge",
+      "prompt": "Input: 72\nscore = int(input(\"Enter your percentage: \"))\nif score >= 80:\nprint(\"Gold star\")\nelif score >= 60:\nprint(\"Silver star\")\nelif score >= 50:\nprint(\"Bronze star\")\nprint(\"You needed 50% to pass\")",
+      "answer": "72 is not >= 80, but is >= 60, so it prints: Silver star.",
+      "hint": "Work out which idea this is about — Algorithm, Pseudocode, High-level language — then explain your reasoning step by step."
     },
     {
-      "id": "p12",
-      "level": "Warm-up",
-      "prompt": "Which Python code imports the random library? (a) include random (b) import random (c) library random (d) random.import()",
-      "answer": "(b) import random.",
-      "hint": "Look back at what Algorithm and Pseudocode mean in this unit, then answer in your own words."
+      "id": "p32",
+      "level": "Challenge",
+      "prompt": "Input: 3 (no other input needed)",
+      "answer": "answer 3 is not equal to 50, and 3 > 50 is false, so the else runs: Too low.",
+      "hint": "Work out which idea this is about — Algorithm, Pseudocode, High-level language — then explain your reasoning step by step."
     },
     {
-      "id": "p13",
-      "level": "Warm-up",
-      "prompt": "math.floor(7.9) returns: (a) 7 (b) 8 (c) 7.9 (d) 79",
-      "answer": "(a) 7 - floor rounds down.",
-      "hint": "Look back at what Algorithm and Pseudocode mean in this unit, then answer in your own words."
+      "id": "p33",
+      "level": "Extension",
+      "prompt": "Print 'You passed' only when score is 50 or more.\nscore = int(input(\"Enter your score: \"))\nif score ____ 50:\nprint(\"You passed\")",
+      "answer": "INPUT.",
+      "hint": "Work out which idea this is about — Algorithm, Pseudocode, High-level language — then explain your reasoning step by step."
     },
     {
-      "id": "p14",
-      "level": "Warm-up",
-      "prompt": "random.randint(1, 5) could return: (a) 0 (b) 6 (c) 5 (d) 5.5",
-      "answer": "(c) 5 - randint can return either end value; it cannot give 0, 6 or a decimal.",
-      "hint": "Look back at what Algorithm and Pseudocode mean in this unit, then answer in your own words."
+      "id": "p34",
+      "level": "Extension",
+      "prompt": "Give a discount only when both conditions are true.\nif age < 16 ____ card == \"yes\":\nprint(\"You get 10% discount\")",
+      "answer": "(20 + 200) / 20 = 220 / 20 = 11. newValue is 11.",
+      "hint": "Work out which idea this is about — Algorithm, Pseudocode, High-level language — then explain your reasoning step by step."
     },
     {
-      "id": "p15",
-      "level": "Warm-up",
-      "prompt": "Data on the edge of what is allowed (like 16 for an 'under 16' rule) is called: (a) normal data (b) invalid data (c) boundary data (d) random data",
-      "answer": "(c) Boundary data.",
-      "hint": "Look back at what Algorithm and Pseudocode mean in this unit, then answer in your own words."
+      "id": "p35",
+      "level": "Extension",
+      "prompt": "Import the library, then round 8.2 up.\nprint(math.____(8.2))",
+      "answer": "!= is 'not equal to'.",
+      "hint": "Work out which idea this is about — Algorithm, Pseudocode, High-level language — then explain your reasoning step by step."
     },
     {
-      "id": "p16",
-      "level": "Warm-up",
-      "prompt": "In MicroPython, which turns the radio on? (a) radio.start() (b) radio.on() (c) radio.begin() (d) radio.open()",
-      "answer": "(b) radio.on().",
-      "hint": "Look back at what Algorithm and Pseudocode mean in this unit, then answer in your own words."
+      "id": "p36",
+      "level": "Extension",
+      "prompt": "Complete the function so it returns double the number.\ndef double(number):\n____ number * 2\nprint(double(6))",
+      "answer": "Check 12 (no), 3 (no), 33 (yes - found at the third item, position 2 counting from 0). It stops as soon as it finds 33.",
+      "hint": "Work out which idea this is about — Algorithm, Pseudocode, High-level language — then explain your reasoning step by step."
     }
   ],
   "activities": [

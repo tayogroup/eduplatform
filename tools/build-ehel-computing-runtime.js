@@ -39,7 +39,7 @@ const SOURCE_MARKER = /\[(?:TIP|FREE|AI|CT|!|\?|x|\*|>|Star|Note|Warning|Key|Saf
 // 1-4. Only the vocabulary is subject-specific, so it is passed in here; the
 // grammar is shared. Widening these lists changes what this build produces, so
 // they are the Computing words and nothing else.
-const { createLearnerVoice } = require("./lib/ehel-learner-voice.js");
+const { createLearnerVoice, repairAgreement } = require("./lib/ehel-learner-voice.js");
 const VOICE = createLearnerVoice({
   sourceMarker: SOURCE_MARKER,
   learnerVerbs: ["tap", "taps", "drag", "drags", "code", "codes", "program", "programs",
@@ -155,7 +155,11 @@ function applyReviewFields(unit, category, itemId, fields, label) {
   // learner checking their work is marked wrong whatever they pick. Snapshot
   // the shape, and roll the whole item back if the answer stops being offered.
   const isMcq = Array.isArray(target.options) && typeof target.answer === "string";
-  const before = isMcq ? { options: [...target.options], answer: target.answer } : null;
+  // Every field the override touches, not just the answer triple. Restoring
+  // only options and answer left a drifted explanation applied over a question
+  // it was never about — the row was refused and half of it landed anyway.
+  const before = isMcq ? { options: [...target.options] } : null;
+  if (isMcq) for (const field of Object.keys(fields)) before[field] = target[field];
   // A review row is authority over WORDING, never over a structural invariant.
   // The workbook was exported while activities still rendered a shuffled
   // matching table as assertions, so the reviewer signed off "You press the
@@ -164,7 +168,12 @@ function applyReviewFields(unit, category, itemId, fields, label) {
   // refuse any override that reintroduces the shape.
   const stepsBefore = Array.isArray(target.steps) ? [...target.steps] : null;
   const appliedBefore = reviewStats.applied;
-  for (const [field, value] of Object.entries(fields)) {
+  for (const [rawField, rawValue] of Object.entries(fields)) {
+    const field = rawField;
+    // Reviewed text goes through the same mechanical agreement repair the
+    // converter uses. The reviewer was asked for wording, not grammar, so six
+    // strings came back still reading "Does you plan before building?".
+    const value = typeof rawValue === "string" ? repairAgreement(rawValue) : rawValue;
     if (category === "Unit Overview") {
       target[field][field] = value;
     } else if (category === "Game Round") {
@@ -188,11 +197,23 @@ function applyReviewFields(unit, category, itemId, fields, label) {
     }
     reviewStats.applied += 1;
   }
-  if (isMcq && !target.options.includes(target.answer)) {
+  // A question that spells out its own answer is not a question. It happens
+  // when a reviewed row supplies the reverse wording ("Which computing word
+  // matches this meaning: …?") over a slot the builder filled with the forward
+  // question, so the meaning ends up in both the prompt and the key. Short
+  // answers are exempt: "which part is the TLD?" legitimately contains ".com".
+  // Compared loosely: the reviewed question writes "line - small" where the
+  // built answer has "line — small", so a literal match misses the very case
+  // this exists to catch.
+  const loose = (value) => String(value || "").toLowerCase().replace(/[–—]/g, "-").replace(/[^a-z0-9]+/g, " ").trim();
+  const selfAnswering = isMcq
+    && String(target.answer).length > 25
+    && loose(target.question).includes(loose(target.answer));
+  if (isMcq && (!target.options.includes(target.answer) || selfAnswering)) {
     target.options = before.options;
-    target.answer = before.answer;
+    for (const field of Object.keys(fields)) target[field] = before[field];
     reviewStats.applied = appliedBefore;
-    reviewStats.missed.push(`${label} ${category}/${itemId} (override drifted onto another question — answer not among its options)`);
+    reviewStats.missed.push(`${label} ${category}/${itemId} (override drifted onto another question — ${selfAnswering ? "the question spells out its own answer" : "answer not among its options"})`);
   }
   if (stepsBefore && target.steps.some((step) => /^Match: .+ → /.test(String(step)))) {
     target.steps = stepsBefore;
@@ -330,6 +351,43 @@ function balanceOptionPositions(questions = [], scope = "") {
 }
 
 const PRACTICE_PLACEHOLDER = "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.";
+const PRACTICE_LIMIT = 16;
+
+// Which 16 of a unit's practice items ship. Taking the first 16 in source order
+// took Section A and stopped: every one of the 18 Stage 5-8 units hit the cap
+// and between them shipped 259 Warm-up items, 29 Core, and not one Challenge or
+// Extension. The hardest half of the course was built and then discarded.
+//
+// Walk the difficulty bands in turn instead, so every band that exists is
+// represented, and prefer an answered item to one still carrying the
+// placeholder — a learner alone can use the first and not the second.
+function selectPractice(items, limit = PRACTICE_LIMIT) {
+  if (items.length <= limit) return items;
+  const answered = (item) => (String(item.answer || "").startsWith("Work through the task")
+    || String(item.answer || "").startsWith("Say your answer") ? 0 : 1);
+  const buckets = new Map();
+  for (const level of ["Warm-up", "Core", "Challenge", "Extension"]) buckets.set(level, []);
+  for (const item of items) {
+    if (!buckets.has(item.level)) buckets.set(item.level, []);
+    buckets.get(item.level).push(item);
+  }
+  // Stable sort, so source order survives inside each band.
+  for (const bucket of buckets.values()) bucket.sort((a, b) => answered(b) - answered(a));
+
+  const picked = [];
+  let taking = true;
+  while (picked.length < limit && taking) {
+    taking = false;
+    for (const bucket of buckets.values()) {
+      if (picked.length >= limit || !bucket.length) continue;
+      picked.push(bucket.shift());
+      taking = true;
+    }
+  }
+  // Ship them in the order the learner would meet them, not round-robin order.
+  const rank = new Map(items.map((item, index) => [item, index]));
+  return picked.sort((a, b) => rank.get(a) - rank.get(b));
+}
 
 // One key line answers one question. Where two items hold the same answer they
 // are not both right, and practice is scored by matching the learner's response
@@ -360,6 +418,23 @@ function oneAnswerPerQuestion(items = []) {
   return repaired;
 }
 
+// Checked after the fact, not only before. The pre-pass judges an override
+// against the question the builder put in that slot; one that replaces the
+// options and answer as well is self-consistent and slips through, leaving a
+// definition of one word explaining a question about another. The built
+// explanation is derived from the question, so dropping the reviewed one
+// restores something true.
+function dropStrandedExplanations(questions = [], label = "") {
+  for (const question of questions) {
+    const said = /^([A-Za-z][A-Za-z0-9 .'’-]{1,30}?) means /.exec(tidy(question.explanation || ""));
+    if (!said) continue;
+    const about = `${question.question} ${question.answer} ${(question.options || []).join(" ")}`.toLowerCase();
+    if (about.includes(said[1].toLowerCase())) continue;
+    question.explanation = String(question.answer);
+    reviewStats.stranded.push(`${label}: ${question.id} (“${said[1]}”)`);
+  }
+}
+
 function applyScriptReview(unit, grade, unitNumber) {
   const items = ((scriptReview[`grade-${grade}`] || {})[`unit-${unitNumber}`]) || {};
   // The builder's own answers, so an override that breaks an invariant can be
@@ -382,6 +457,8 @@ function applyScriptReview(unit, grade, unitNumber) {
     exploration.answer = built.get(exploration.id);
     reviewStats.refusedSteps.push(`grade ${grade} unit ${unitNumber}: Exploration/${exploration.id} (answer is the instruction list)`);
   }
+  dropStrandedExplanations((unit.assessment || {}).questions, `grade ${grade} unit ${unitNumber}`);
+
   const rebound = oneAnswerPerQuestion(unit.practice);
   if (rebound) reviewStats.refusedSteps.push(`grade ${grade} unit ${unitNumber}: ${rebound} practice answer(s) bound to a second question`);
 }
@@ -427,7 +504,9 @@ function applyCapstoneReview(capstone, grade) {
     const isMcq = Array.isArray(target.options) && typeof target.answer === "string";
     const before = isMcq ? { options: [...target.options], answer: target.answer } : null;
     const appliedBefore = reviewStats.applied;
-    for (const [field, value] of Object.entries(fields)) {
+    for (const [rawField, rawValue] of Object.entries(fields)) {
+      const field = rawField;
+      const value = typeof rawValue === "string" ? repairAgreement(rawValue) : rawValue;
       if (itemId === "capstone-overview") target[field][field] = value;
       else if (field === "evidence" && target.list) target.list[target.index] = value;
       else target[field] = value;
@@ -1977,6 +2056,46 @@ function buildGrade(grade) {
       });
     }
 
+    // Teacher & Parent Guides contain activities and discussion, not quizzes:
+    // across the 46 Stage 1-4 units only 8 of 552 questions came from the pack,
+    // and the rest were vocabulary padding — the summative assessment for those
+    // stages tested two sentence shapes over the glossary. There is nothing
+    // more to harvest, so build questions from what the unit itself taught.
+    // Same construction as the padding, but over the unit's concepts and its
+    // debugging cases rather than its word list, and with distractors drawn
+    // from its siblings, which are true statements about a different thing.
+    const sentenceOf = (value) => sentence(String(value || "").split("\n\n")[0], 150);
+    const siblingMcqs = (rows, ask) => rows
+      .filter((row) => row.answer && row.answer.length > 15)
+      .map((row, index, kept) => {
+        const distractors = kept.filter((other) => other !== row && other.answer !== row.answer)
+          .map((other) => other.answer).slice(0, 3);
+        if (distractors.length < 2) return null;
+        return {
+          question: ask(row),
+          options: [row.answer, ...distractors],
+          answer: row.answer,
+          explanation: row.explanation || row.answer,
+        };
+      })
+      .filter(Boolean);
+
+    mcqs.push(...siblingMcqs(
+      // The source titles carry a trailing note about how the session runs —
+      // "Meet ScratchJr: make a character move (ScratchJr)" — which is about
+      // the activity, not the idea, and lowercasing it mangles the product
+      // names besides.
+      concepts.map((concept) => ({
+        answer: sentenceOf(concept.explanation),
+        title: tidy(String(concept.title).replace(/\s*\([^)]*\)\s*$/, "")),
+      })),
+      (row) => `Which of these describes “${row.title}”?`,
+    ));
+    mcqs.push(...siblingMcqs(
+      (debugging || []).map((bug) => ({ answer: sentenceOf(bug.fix), symptom: sentenceOf(bug.symptom) })),
+      (row) => `What should you do when this happens: ${row.symptom}`,
+    ));
+
     const assessment = assessmentData(mcqs, reference.terms, unitNo, outcomes);
     const finalOutcomes = outcomes.length ? outcomes : concepts.map((concept) => `Explain and use ${concept.title.toLowerCase()}.`);
 
@@ -2047,7 +2166,7 @@ function buildGrade(grade) {
       visualModels,
       methods,
       workedExamples,
-      practice: practice.slice(0, 16),
+      practice: selectPractice(practice),
       activities,
       debugging,
       esafety,
@@ -2178,6 +2297,7 @@ function buildGrade(grade) {
     reviewStatus: "Curriculum review required",
   };
   applyCapstoneReview(gradeCapstone, grade);
+  dropStrandedExplanations((gradeCapstone.quiz || {}).questions, `grade ${grade} capstone`);
   balanceOptionPositions((gradeCapstone.quiz || {}).questions, `g${grade}capstone`);
   fs.writeFileSync(path.join(gradeDir, "data", "grade-capstone.json"), `${JSON.stringify(gradeCapstone, null, 2)}\n`, "utf8");
 

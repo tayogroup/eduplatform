@@ -39,6 +39,12 @@ const TEACHER_REQUIRED = /\bhand (?:it )?in to your teacher\b|\bask your teacher
 // as a defect.
 const THIRD_PERSON_LEARNER = /\bthey (?:learn|only need|will learn|already know|are experts)\b/i;
 
+// The "children" → "you" swap leaves the auxiliary in front of the pronoun
+// agreeing with the subject it replaced, and the partitive missing where the
+// noun was being counted. A six-year-old cannot read past "Does you plan
+// before building?", and nobody in the room can explain it to them.
+const BROKEN_AGREEMENT = /\b(?:does|is|was|has|doesn't|isn't|wasn't|hasn't)\s+you\b|\bhow many you\b|\bmeans more you\b/i;
+
 // Modules whose text must differ per unit. A single string repeated across
 // every grade means the module reads identically from Stage 1 to Stage 7.
 const VARIED_FIELDS = [
@@ -235,6 +241,15 @@ for (const gradeDir of gradeDirs) {
       }
     }
 
+    // A unit at the practice cap has had items dropped. If everything kept is
+    // Warm-up, the selection took the first section and stopped — which is how
+    // all 18 Stage 5-8 units came to ship no Challenge item at all, the harder
+    // half of the course built and then discarded.
+    const practice = unit.practice || [];
+    if (practice.length >= 16 && !practice.some((item) => item.level !== "Warm-up")) {
+      fail(label, "every practice item kept is Warm-up — the harder bands were dropped by the cap");
+    }
+
     // A quiz whose answers cluster in one position is passable without knowing
     // anything: always click that option. At the 80% mastery threshold a unit
     // needs only 10 of 12, so anything much above 40% in one slot makes the
@@ -293,6 +308,7 @@ for (const gradeDir of gradeDirs) {
       if (CLASSROOM_ONLY.test(text)) fail(label, `${where} needs classroom staging a solo learner cannot do: "${text.slice(0, 90)}"`);
       if (TEACHER_REQUIRED.test(text)) fail(label, `${where} requires a teacher with no solo path: "${text.slice(0, 90)}"`);
       if (fromGuide && THIRD_PERSON_LEARNER.test(text)) fail(label, `${where} talks about the learner instead of to them: "${text.slice(0, 90)}"`);
+      if (BROKEN_AGREEMENT.test(text)) fail(label, `${where} left an agreement artefact from the "children" → "you" swap: "${text.slice(0, 90)}"`);
     });
 
     const stage = Number(unit.cambridge?.stage);

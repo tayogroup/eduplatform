@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-02T14:08:46.793Z",
+  "generatedAt": "2026-08-02T14:52:05.405Z",
   "stage": {
     "id": "s08",
     "label": "Stage 8"
@@ -558,88 +558,88 @@
       "hint": "Look back at what ALU (arithmetic logic unit) and application software mean in this unit, then answer in your own words."
     },
     {
-      "id": "p05",
-      "level": "Warm-up",
-      "prompt": "Which is an example of system software? (a) a web browser (b) a game (c) an operating system (d) a word processor",
-      "answer": "(c) an operating system. The others are all application software.",
-      "hint": "Look back at what ALU (arithmetic logic unit) and application software mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p06",
-      "level": "Warm-up",
-      "prompt": "What is the denary value of the binary number 1010? (a) 8 (b) 10 (c) 12 (d) 20",
-      "answer": "(b) 10. 1010 = 8 + 2 = 10.",
-      "hint": "Look back at what ALU (arithmetic logic unit) and application software mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p07",
-      "level": "Warm-up",
-      "prompt": "What is the denary number 12 in binary? (a) 1010 (b) 1100 (c) 0110 (d) 1110",
-      "answer": "(b) 1100. 12 = 8 + 4, so the 8 and 4 places have a 1, giving 1100.",
-      "hint": "Look back at what ALU (arithmetic logic unit) and application software mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p08",
-      "level": "Warm-up",
-      "prompt": "How many bits does standard ASCII use to code each character? (a) 4 (b) 7 (c) 16 (d) 32",
-      "answer": "(b) 7. Standard ASCII uses 7 bits for 128 characters; extended ASCII uses 8 bits.",
-      "hint": "Look back at what ALU (arithmetic logic unit) and application software mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p09",
-      "level": "Warm-up",
-      "prompt": "What is the hexadecimal digit for denary 15? (a) E (b) F (c) 10 (d) 15",
-      "answer": "(b) F. In hex, A=10, B=11, C=12, D=13, E=14, F=15.",
-      "hint": "Look back at what ALU (arithmetic logic unit) and application software mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p10",
-      "level": "Warm-up",
-      "prompt": "How many bits are in one byte? (a) 1 (b) 4 (c) 8 (d) 16",
-      "answer": "(c) 8. A byte is 8 bits.",
-      "hint": "Look back at what ALU (arithmetic logic unit) and application software mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p11",
-      "level": "Warm-up",
-      "prompt": "For a NOT gate, if the input is 0, the output is... (a) 0 (b) 1 (c) both (d) neither",
-      "answer": "(b) 1. A NOT gate outputs the opposite of its input.",
-      "hint": "Look back at what ALU (arithmetic logic unit) and application software mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p12",
-      "level": "Warm-up",
-      "prompt": "An AND gate outputs 1 when... (a) either input is 1 (b) both inputs are 1 (c) both inputs are 0 (d) never",
-      "answer": "(b) both inputs are 1. That is the only row where an AND gate outputs 1.",
-      "hint": "Look back at what ALU (arithmetic logic unit) and application software mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p13",
-      "level": "Warm-up",
-      "prompt": "Which describes machine learning? (a) AI that follows only fixed rules (b) AI that learns from data and adapts (c) a type of monitor (d) a logic gate",
-      "answer": "(b) AI that learns from data and adapts. Rule-based AI only follows fixed instructions.",
-      "hint": "Look back at what ALU (arithmetic logic unit) and application software mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p14",
-      "level": "Warm-up",
-      "prompt": "Augmented reality means... (a) replacing the world with a virtual one (b) adding computer-generated content over the real world (c) a faster CPU (d) deleting data",
-      "answer": "(b) adding computer-generated content over the real world. VR replaces the world instead.",
-      "hint": "Look back at what ALU (arithmetic logic unit) and application software mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p15",
-      "level": "Warm-up",
-      "prompt": "A system that senses its environment and decides with no human control uses... (a) autonomous programming (b) a spreadsheet (c) ROM (d) a browser",
-      "answer": "(a) autonomous programming. It senses and decides with no direct human control.",
-      "hint": "Look back at what ALU (arithmetic logic unit) and application software mean in this unit, then answer in your own words."
-    },
-    {
       "id": "p16",
       "level": "Core",
       "prompt": "Give one similarity and one difference between RAM and ROM.",
       "answer": "Similarity: both are primary memory the CPU can access directly (both are hardware that stores data). Difference: RAM is volatile and temporary; ROM is non-volatile and permanent.",
       "hint": "Look back at what ALU (arithmetic logic unit) and application software mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p17",
+      "level": "Core",
+      "prompt": "Name the three main parts of the CPU and say what each one does.",
+      "answer": "Control unit directs operations and fetches/decodes instructions; ALU does arithmetic and logic; registers are tiny ultra-fast stores for the data being worked on right now.",
+      "hint": "Look back at what ALU (arithmetic logic unit) and application software mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p18",
+      "level": "Core",
+      "prompt": "Describe the three steps of the fetch-decode-execute cycle.",
+      "answer": "Fetch the next instruction from memory; decode it to work out what it means; execute it (for example the ALU does a calculation or data is stored). Then repeat.",
+      "hint": "Look back at what ALU (arithmetic logic unit) and application software mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p19",
+      "level": "Core",
+      "prompt": "Explain the difference between application software and system software, with an example of each.",
+      "answer": "Application software does a task for the user (e.g. a web browser); system software keeps the computer running (e.g. the operating system).",
+      "hint": "Look back at what ALU (arithmetic logic unit) and application software mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p31",
+      "level": "Challenge",
+      "prompt": "D1 - NOT gate",
+      "answer": "D1 - NOT gate: input 0 gives output 1; input 1 gives output 0.",
+      "hint": "Work out which idea this is about — ALU (arithmetic logic unit), application software, ASCII — then explain your reasoning step by step."
+    },
+    {
+      "id": "p32",
+      "level": "Challenge",
+      "prompt": "D2 - AND gate",
+      "answer": "D2 - AND gate outputs (top to bottom): 0, 0, 0, 1. Only 1-and-1 gives 1.",
+      "hint": "Work out which idea this is about — ALU (arithmetic logic unit), application software, ASCII — then explain your reasoning step by step."
+    },
+    {
+      "id": "p33",
+      "level": "Challenge",
+      "prompt": "D4 - Name the gate",
+      "answer": "D3 - OR gate outputs (top to bottom): 0, 1, 1, 1. Only 0-and-0 gives 0.",
+      "hint": "Work out which idea this is about — ALU (arithmetic logic unit), application software, ASCII — then explain your reasoning step by step."
+    },
+    {
+      "id": "p34",
+      "level": "Challenge",
+      "prompt": "Look at this completed truth table and name the logic gate it describes.",
+      "answer": "D4 - Name the gate: the output is 1 whenever at least one input is 1, and 0 only when both are 0, so it is an OR gate.",
+      "hint": "Work out which idea this is about — ALU (arithmetic logic unit), application software, ASCII — then explain your reasoning step by step."
+    },
+    {
+      "id": "p35",
+      "level": "Extension",
+      "prompt": "E1 - The lost homework",
+      "answer": "His essay was held in RAM while he typed, and RAM is volatile, so it needs power to keep its contents. When the power cut out, everything in RAM was lost. He should have saved it to secondary storage (which is non-volatile), so it would survive a power cut.",
+      "hint": "Work out which idea this is about — ALU (arithmetic logic unit), application software, ASCII — then explain your reasoning step by step."
+    },
+    {
+      "id": "p36",
+      "level": "Extension",
+      "prompt": "Sami spends an hour typing an essay but does not save it. The power cuts out and his work is gone. Using the words RAM, volatile and secondary storage, explain exactly why his work disappeared and what he should have done.",
+      "answer": "A machine-learning model learns from examples, and 20 photos is far too few, so it has not learned the features that identify each bird. She should train it on many more labelled photos, including different angles and lighting, so it can learn reliable patterns.",
+      "hint": "Work out which idea this is about — ALU (arithmetic logic unit), application software, ASCII — then explain your reasoning step by step."
+    },
+    {
+      "id": "p37",
+      "level": "Extension",
+      "prompt": "E2 - The bird-spotting app",
+      "answer": "This is autonomous programming: a sensor captures soil-moisture data and the system decides when to water with no human control. A responsible-use point: keep a human able to check and override it, so a faulty sensor cannot, for example, flood or dry out the crops.",
+      "hint": "Work out which idea this is about — ALU (arithmetic logic unit), application software, ASCII — then explain your reasoning step by step."
+    },
+    {
+      "id": "p38",
+      "level": "Extension",
+      "prompt": "Maya wants an app that recognises local birds from photos. She trains it on 20 photos and it guesses badly. Explain, using the idea of machine learning, why it struggles and what she should do to improve it.",
+      "answer": "This is augmented reality. AR adds computer-generated objects over the real world you can still see, whereas virtual reality replaces the real world entirely with a computer-made one. A benefit: learners can see and rotate a 3D model, understanding it far better than from a flat book picture.",
+      "hint": "Work out which idea this is about — ALU (arithmetic logic unit), application software, ASCII — then explain your reasoning step by step."
     }
   ],
   "activities": [

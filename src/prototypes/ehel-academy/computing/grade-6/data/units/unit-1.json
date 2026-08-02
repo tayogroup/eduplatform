@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-02T14:08:46.444Z",
+  "generatedAt": "2026-08-02T14:52:05.058Z",
   "stage": {
     "id": "s06",
     "label": "Stage 6"
@@ -730,62 +730,6 @@
       "hint": "Look back at what algorithm and flowchart mean in this unit, then answer in your own words."
     },
     {
-      "id": "p05",
-      "level": "Warm-up",
-      "prompt": "Which symbol is the multiply operator in programming? (a) x (b) * (c) / (d) +",
-      "answer": "5 (b) *. We use * for multiply and / for divide in programming.",
-      "hint": "Look back at what algorithm and flowchart mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p06",
-      "level": "Warm-up",
-      "prompt": "A variable is best described as: (a) a fixed number (b) a named box that stores a value that can change (c) a type of loop (d) a sound",
-      "answer": "6 (b) a named box that stores a value that can change. That is exactly what a variable is.",
-      "hint": "Look back at what algorithm and flowchart mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p07",
-      "level": "Warm-up",
-      "prompt": "To use a sub-routine you must first: (a) delete it (b) define it (c) print it (d) hide it",
-      "answer": "7 (b) define it. First you define a sub-routine (name it and write its steps), then you can call it.",
-      "hint": "Look back at what algorithm and flowchart mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p08",
-      "level": "Warm-up",
-      "prompt": "In Scratch, which block sends a message to run a sub-routine? (a) say (b) ask (c) broadcast (d) wait",
-      "answer": "8 (c) broadcast. The broadcast block sends a message that a when I receive block catches.",
-      "hint": "Look back at what algorithm and flowchart mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p09",
-      "level": "Warm-up",
-      "prompt": "What does IPO stand for? (a) In-Program-Output (b) Input-Process-Output (c) Input-Print-Order (d) Iterate-Process-Output",
-      "answer": "9 (b) Input-Process-Output. The computer takes in data, works on it, then gives data out.",
-      "hint": "Look back at what algorithm and flowchart mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p10",
-      "level": "Warm-up",
-      "prompt": "On a micro:bit, which of these is an OUTPUT? (a) button A (b) the microphone (c) the LED screen (d) the accelerometer",
-      "answer": "10 (c) the LED screen. The screen is an output. Buttons, microphone and accelerometer are inputs.",
-      "hint": "Look back at what algorithm and flowchart mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p11",
-      "level": "Warm-up",
-      "prompt": "What does 'random' mean in programming? (a) always the same (b) an outcome you cannot predict (c) very fast (d) broken",
-      "answer": "11 (b) an outcome you cannot predict. Like rolling a dice — you cannot know the result in advance.",
-      "hint": "Look back at what algorithm and flowchart mean in this unit, then answer in your own words."
-    },
-    {
-      "id": "p12",
-      "level": "Warm-up",
-      "prompt": "Success criteria are: (a) the list of things a program must do to be a success (b) bugs in the code (c) the code the user sees (d) a type of loop",
-      "answer": "12 (a) the list of things a program must do to be a success. Criteria make evaluation useful.",
-      "hint": "Look back at what algorithm and flowchart mean in this unit, then answer in your own words."
-    },
-    {
       "id": "p13",
       "level": "Core",
       "prompt": "Name the five shapes used in a flowchart and say what each one is for.",
@@ -812,6 +756,62 @@
       "prompt": "What does it mean to 'initialise' a variable? Why is it important?",
       "answer": "To initialise means to set a variable to its starting value (for example set score to 0) at the beginning. It is important so the program does not keep old values from a previous run.",
       "hint": "Look back at what algorithm and flowchart mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p25",
+      "level": "Challenge",
+      "prompt": "Make the score start at zero:\nwhen green flag clicked\n_____ [score v] to 0",
+      "answer": "set - the block is set [score v] to 0.",
+      "hint": "Work out which idea this is about — algorithm, flowchart, decision — then explain your reasoning step by step."
+    },
+    {
+      "id": "p26",
+      "level": "Challenge",
+      "prompt": "Repeat the wave 10 times:\nwait 0.2 seconds",
+      "answer": "repeat - the block is repeat 10.",
+      "hint": "Work out which idea this is about — algorithm, flowchart, decision — then explain your reasoning step by step."
+    },
+    {
+      "id": "p27",
+      "level": "Challenge",
+      "prompt": "Only say 'Correct!' if the answer is 42:\nask [What is 6 x 7?] and wait\nif <(answer) _____ 42> then\nsay [Correct!] for 2 seconds",
+      "answer": "= (equal to) - the condition is (answer) = 42.",
+      "hint": "Work out which idea this is about — algorithm, flowchart, decision — then explain your reasoning step by step."
+    },
+    {
+      "id": "p28",
+      "level": "Challenge",
+      "prompt": "Store the user's typed answer in a variable called guess:\nask [Type your guess] and wait\nset [guess v] to _____",
+      "answer": "(answer) - the block is set [guess v] to (answer), using Scratch's built-in answer variable.",
+      "hint": "Work out which idea this is about — algorithm, flowchart, decision — then explain your reasoning step by step."
+    },
+    {
+      "id": "p29",
+      "level": "Extension",
+      "prompt": "This program should say the user's name, but it always says nothing useful. What is the bug?\nwhen green flag clicked\nsay (answer) for 2 seconds\nask [What is your name?] and wait",
+      "answer": "The blocks are in the wrong ORDER (a sequence bug). It says the answer BEFORE asking the question, so answer is empty. Fix: put the ask block before the say block.",
+      "hint": "Work out which idea this is about — algorithm, flowchart, decision — then explain your reasoning step by step."
+    },
+    {
+      "id": "p30",
+      "level": "Extension",
+      "prompt": "This rock, paper, scissors code sometimes gives the wrong result. Why?\nif <(pick random 1 to 3) = 1> then\nsay [rock] for 1 seconds\nif <(pick random 1 to 3) = 2> then\nsay [paper] for 1 seconds\nif <(pick random 1 to 3) = 3> then\nsay [scissors] for 1 seconds",
+      "answer": "It calls pick random 1 to 3 THREE separate times, so a different number is chosen in each IF. Sometimes none of them match. Fix: pick the random number ONCE, store it in a variable, then check the variable in each IF.",
+      "hint": "Work out which idea this is about — algorithm, flowchart, decision — then explain your reasoning step by step."
+    },
+    {
+      "id": "p31",
+      "level": "Extension",
+      "prompt": "The talking clock says 'One minutes past ten'. How do you fix the grammar?",
+      "answer": "Use a conditional: if the minute value is 1, say 'minute' (singular); otherwise say 'minutes'. So it says 'One minute past ten' when the value is 1.",
+      "hint": "Work out which idea this is about — algorithm, flowchart, decision — then explain your reasoning step by step."
+    },
+    {
+      "id": "p32",
+      "level": "Extension",
+      "prompt": "This quiz never lowers the lives even on a wrong answer. What is missing?\nask [What is 2 + 2?] and wait\nif <(answer) = 4> then\nchange [score v] by 1",
+      "answer": "There is no ELSE branch, so a wrong answer does nothing. Fix: add else change [lives v] by -1 so a wrong answer loses a life.",
+      "hint": "Work out which idea this is about — algorithm, flowchart, decision — then explain your reasoning step by step."
     }
   ],
   "activities": [
@@ -1721,16 +1721,16 @@
         "type": "Reasoning",
         "outcomeId": "lo02",
         "difficulty": "Challenge",
-        "question": "Which computing word matches this meaning: An operator that compares two values: greater than, less than, equal to.?",
+        "question": "Which of these describes “Planning Flowcharts”?",
         "options": [
-          "integer",
-          "comparison operator",
-          "character",
-          "string"
+          "A programming construct is a programming idea you use to build programs. There are three big ones, and almost every program ever written uses them:…",
+          "Before a programmer writes any code, they usually make a plan. One of the best ways to plan is to draw a flowchart. A flowchart is a diagram that…",
+          "Trace the result. If the user types 5, the condition answer < 10 is true, so Scratch runs the first branch and says 'You picked a one-digit number'.…",
+          "Computers organise data into data types. You need three of them in this unit."
         ],
-        "answer": "comparison operator",
+        "answer": "Before a programmer writes any code, they usually make a plan. One of the best ways to plan is to draw a flowchart. A flowchart is a diagram that…",
         "hint": "Use the Unit 1 Computing Words reference.",
-        "explanation": "Comparison operator means an operator that compares two values: greater than, less than, equal to."
+        "explanation": "Before a programmer writes any code, they usually make a plan. One of the best ways to plan is to draw a flowchart. A flowchart is a diagram that…"
       }
     ]
   },
@@ -1898,14 +1898,14 @@
             "explanation": "10 (c) the LED screen. The screen is an output. Buttons, microphone and accelerometer are inputs."
           },
           {
-            "prompt": "Which computing word matches this meaning: An operator that compares two values: greater than, less than, equal to.?",
+            "prompt": "Which of these describes “Planning Flowcharts”?",
             "choices": [
-              "comparison operator",
-              "integer",
-              "character",
-              "string"
+              "Before a programmer writes any code, they usually make a plan. One of the best ways to plan is to draw a flowchart. A flowchart is a diagram that…",
+              "A programming construct is a programming idea you use to build programs. There are three big ones, and almost every program ever written uses them:…",
+              "Trace the result. If the user types 5, the condition answer < 10 is true, so Scratch runs the first branch and says 'You picked a one-digit number'.…",
+              "Computers organise data into data types. You need three of them in this unit."
             ],
-            "answer": "comparison operator",
+            "answer": "Before a programmer writes any code, they usually make a plan. One of the best ways to plan is to draw a flowchart. A flowchart is a diagram that…",
             "clue": "Use the Unit 1 Computing Words reference.",
             "explanation": "Comparison operator means an operator that compares two values: greater than, less than, equal to."
           }
@@ -2060,14 +2060,14 @@
             "explanation": "10 (c) the LED screen. The screen is an output. Buttons, microphone and accelerometer are inputs."
           },
           {
-            "prompt": "Which computing word matches this meaning: An operator that compares two values: greater than, less than, equal to.?",
+            "prompt": "Which of these describes “Planning Flowcharts”?",
             "choices": [
-              "comparison operator",
-              "integer",
-              "character",
-              "string"
+              "Before a programmer writes any code, they usually make a plan. One of the best ways to plan is to draw a flowchart. A flowchart is a diagram that…",
+              "A programming construct is a programming idea you use to build programs. There are three big ones, and almost every program ever written uses them:…",
+              "Trace the result. If the user types 5, the condition answer < 10 is true, so Scratch runs the first branch and says 'You picked a one-digit number'.…",
+              "Computers organise data into data types. You need three of them in this unit."
             ],
-            "answer": "comparison operator",
+            "answer": "Before a programmer writes any code, they usually make a plan. One of the best ways to plan is to draw a flowchart. A flowchart is a diagram that…",
             "clue": "Use the Unit 1 Computing Words reference.",
             "explanation": "Comparison operator means an operator that compares two values: greater than, less than, equal to."
           },
@@ -2222,14 +2222,14 @@
             "explanation": "10 (c) the LED screen. The screen is an output. Buttons, microphone and accelerometer are inputs."
           },
           {
-            "prompt": "Which computing word matches this meaning: An operator that compares two values: greater than, less than, equal to.?",
+            "prompt": "Which of these describes “Planning Flowcharts”?",
             "choices": [
-              "comparison operator",
-              "integer",
-              "character",
-              "string"
+              "Before a programmer writes any code, they usually make a plan. One of the best ways to plan is to draw a flowchart. A flowchart is a diagram that…",
+              "A programming construct is a programming idea you use to build programs. There are three big ones, and almost every program ever written uses them:…",
+              "Trace the result. If the user types 5, the condition answer < 10 is true, so Scratch runs the first branch and says 'You picked a one-digit number'.…",
+              "Computers organise data into data types. You need three of them in this unit."
             ],
-            "answer": "comparison operator",
+            "answer": "Before a programmer writes any code, they usually make a plan. One of the best ways to plan is to draw a flowchart. A flowchart is a diagram that…",
             "clue": "Use the Unit 1 Computing Words reference.",
             "explanation": "Comparison operator means an operator that compares two values: greater than, less than, equal to."
           },
@@ -2384,14 +2384,14 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which computing word matches this meaning: An operator that compares two values: greater than, less than, equal to.?",
+            "prompt": "Which of these describes “Planning Flowcharts”?",
             "choices": [
-              "comparison operator",
-              "integer",
-              "character",
-              "string"
+              "Before a programmer writes any code, they usually make a plan. One of the best ways to plan is to draw a flowchart. A flowchart is a diagram that…",
+              "A programming construct is a programming idea you use to build programs. There are three big ones, and almost every program ever written uses them:…",
+              "Trace the result. If the user types 5, the condition answer < 10 is true, so Scratch runs the first branch and says 'You picked a one-digit number'.…",
+              "Computers organise data into data types. You need three of them in this unit."
             ],
-            "answer": "comparison operator",
+            "answer": "Before a programmer writes any code, they usually make a plan. One of the best ways to plan is to draw a flowchart. A flowchart is a diagram that…",
             "clue": "Use the Unit 1 Computing Words reference.",
             "explanation": "Comparison operator means an operator that compares two values: greater than, less than, equal to."
           },

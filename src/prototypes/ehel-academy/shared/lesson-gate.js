@@ -15,7 +15,9 @@
 //   * a gesture stays primed, so re-entry after Esc is a single tap
 //   * Escape is suppressed and Keyboard Lock taken WHILE fullscreen
 //
-// Shared by English, Mathematics and Science.
+// Shared by every subject. Unrecognised keys fall back to English (see
+// mountLessonGate below), which is why computing and intensive-english
+// showed the English tile until their entries were added here.
 
 const SUBJECTS = {
   eng: { label: "English", mark: "A", tint: "#2a6cb0" },
@@ -24,6 +26,9 @@ const SUBJECTS = {
   mathematics: { label: "Mathematics", mark: "+", tint: "#6d4bd8" },
   sci: { label: "Science", mark: "S", tint: "#e05a47" },
   science: { label: "Science", mark: "S", tint: "#e05a47" },
+  computing: { label: "Computing", mark: "C", tint: "#0f766e" },
+  "global-perspectives": { label: "Global Perspectives", mark: "G", tint: "#6d4aff" },
+  "intensive-english": { label: "Intensive English", mark: "A", tint: "#2a6cb0" },
 };
 
 const CSS = `
@@ -188,7 +193,10 @@ export function mountLessonGate(opts = {}) {
 // exported for explicit use; the dismissed/style guards make a second call a
 // no-op.
 function selfMount() {
-  const seg = (location.pathname.match(/\/app\/([a-z]+)\//i) || [])[1] || "";
+  // [a-z-] not [a-z]: global-perspectives and intensive-english are hyphenated
+  // slugs, and a class without the hyphen fails to match them at all, leaving
+  // seg empty and the gate silently defaulting to English (see SUBJECTS above).
+  const seg = (location.pathname.match(/\/app\/([a-z-]+)\//i) || [])[1] || "";
   const p = new URLSearchParams(location.search);
   const stage = Number(p.get("grade") || p.get("stage") || 0);
   mountLessonGate({ subjectKey: seg, stage });

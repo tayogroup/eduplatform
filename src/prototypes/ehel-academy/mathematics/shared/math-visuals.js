@@ -110,10 +110,10 @@ export function mathDiagram(topic, index, { interactive = true } = {}) {
       <div class="geometry-stage"><canvas class="math-webgl" data-math-scene="${sceneId}" role="img" aria-label="Interactive model. ${esc(diagram.caption)}"></canvas><p class="geometry-fallback" hidden>This device cannot display the interactive model. Use the labels and caption below.</p></div>
       <div class="geometry-labels" aria-hidden="true">${diagram.labels.map((label) => `<span>${esc(label)}</span>`).join("")}</div>
       <div class="geometry-controls"><button type="button" data-geometry-toggle>Pause animation</button><button type="button" data-geometry-reset>Reset view</button><span>Drag the model to turn it</span></div>
-      <figcaption><strong>Interactive example:</strong> ${esc(diagram.caption)}</figcaption>
+      <figcaption><span class="field-label">Interactive example:</span> ${esc(diagram.caption)}</figcaption>
     </figure>`;
   }
   return `<figure class="math-visual"><svg viewBox="0 0 400 190" class="m-diagram" aria-hidden="true" focusable="false">${diagram.art || DIAGRAMS.number[2].art}</svg>
     ${diagram.labels ? `<div class="geometry-labels" aria-hidden="true">${diagram.labels.map((label) => `<span>${esc(label)}</span>`).join("")}</div>` : ""}
-    <figcaption><strong>Visual example:</strong> ${esc(diagram.caption)}</figcaption></figure>`;
+    <figcaption><span class="field-label">Visual example:</span> ${esc(diagram.caption)}</figcaption></figure>`;
 }

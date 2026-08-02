@@ -351,6 +351,19 @@ export async function transcribeForWehel(blob) {
   return String(result.text || "").trim();
 }
 
+// Inline SVG icons (lucide shapes). The four shell-voice subjects never load
+// the lucide runtime, so a data-lucide placeholder renders as an empty element
+// there — inline SVG draws everywhere, emoji-font quirks included.
+const ICON_PATHS = {
+  mic: '<path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/>',
+  volume: '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>',
+  volumeOff: '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="22" x2="16" y1="9" y2="15"/><line x1="16" x2="22" y1="9" y2="15"/>',
+  stop: '<rect width="14" height="14" x="5" y="5" rx="2"/>',
+};
+export function wehelIcon(name) {
+  return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="16" height="16" style="vertical-align:-3px">${ICON_PATHS[name] || ""}</svg>`;
+}
+
 // mountWehelChat renders the conversation into `container` and owns the whole
 // exchange loop. The caller provides the surrounding page (header, asides) and
 // re-mounts on route changes; state lives in the caller's progress store so a
@@ -399,7 +412,7 @@ export function mountWehelChat(options) {
     const label = item.role === "user" ? "You" : (item.offline ? `${tutorLabel} (offline hint)` : tutorLabel);
     const playing = speakingIndex === index;
     const speak = item.role === "assistant" && browserSpeechSupported
-      ? `<button class="button secondary voice-button${playing ? " is-playing" : ""}" data-wehel-speak="${index}" type="button" aria-label="${playing ? "Stop" : `Listen to ${escapeHtml(tutorLabel)}`}">${playing ? "⏹ Stop" : "🔊 Listen"}</button>`
+      ? `<button class="button secondary voice-button${playing ? " is-playing" : ""}" data-wehel-speak="${index}" type="button" aria-label="${playing ? "Stop" : `Listen to ${escapeHtml(tutorLabel)}`}">${playing ? `${wehelIcon("stop")} Stop` : `${wehelIcon("volume")} Listen`}</button>`
       : "";
     return `<article class="ai-message ${item.role}"><strong>${escapeHtml(label)}</strong>${escapeHtml(item.text)}${speak}</article>`;
   };
@@ -415,7 +428,7 @@ export function mountWehelChat(options) {
 
   function render() {
     container.innerHTML = `
-      ${browserSpeechSupported ? `<div class="ai-voice-row"><button class="button secondary" id="wehel-voice-toggle" type="button" aria-pressed="${speakReplies}" title="${speakReplies ? `${escapeHtml(tutorLabel)} reads replies aloud` : "Replies are silent"}">${speakReplies ? "🔊 Voice on" : "🔇 Voice off"}</button></div>` : ""}
+      ${browserSpeechSupported ? `<div class="ai-voice-row"><button class="button secondary" id="wehel-voice-toggle" type="button" aria-pressed="${speakReplies}" title="${speakReplies ? `${escapeHtml(tutorLabel)} reads replies aloud` : "Replies are silent"}">${speakReplies ? `${wehelIcon("volume")} Voice on` : `${wehelIcon("volumeOff")} Voice off`}</button></div>` : ""}
       <div class="ai-conversation" id="wehel-conversation" aria-live="polite">
         ${messages.length ? messages.map(bubble).join("") : bubble({ role: "assistant", text: greeting }, -1)}
         ${busy ? `<article class="ai-message assistant is-thinking"><strong>${escapeHtml(tutorLabel)}</strong><em>is thinking…</em></article>` : ""}
@@ -424,7 +437,7 @@ export function mountWehelChat(options) {
       <form class="ai-compose" id="wehel-form">
         <label class="sr-only" for="wehel-input">Ask ${escapeHtml(tutorLabel)}</label>
         <input id="wehel-input" maxlength="500" placeholder="${escapeHtml(options.placeholder || `Ask about ${meta.unitTitle}…`)}" ${busy ? "disabled" : ""} autocomplete="off">
-        ${micSupported ? `<button class="button secondary" id="wehel-mic" type="button" aria-label="Ask by voice" title="Ask by voice" ${busy ? "disabled" : ""}>🎤</button>` : ""}
+        ${micSupported ? `<button class="button secondary" id="wehel-mic" type="button" aria-label="Ask by voice" title="Ask by voice" ${busy ? "disabled" : ""}>${wehelIcon("mic")}</button>` : ""}
         <button class="button primary" type="submit" ${busy ? "disabled" : ""}>Send</button>
       </form>`;
     if (ui.bindVoiceControls) ui.bindVoiceControls();
@@ -499,7 +512,7 @@ export function mountWehelChat(options) {
       listening = true;
       const input = container.querySelector("#wehel-input");
       button.classList.add("is-recording");
-      button.textContent = "🎙️";
+      button.innerHTML = wehelIcon("mic");
       if (ui.toast) ui.toast("Listening — speak now.");
       try {
         const text = await recognizeSpeech({ onInterim: (interim) => { if (input) input.value = interim; } });
@@ -512,7 +525,7 @@ export function mountWehelChat(options) {
       } finally {
         listening = false;
         button.classList.remove("is-recording");
-        button.textContent = "🎤";
+        button.innerHTML = wehelIcon("mic");
       }
       return;
     }
@@ -526,7 +539,7 @@ export function mountWehelChat(options) {
       recorder.addEventListener("stop", async () => {
         stream.getTracks().forEach((track) => track.stop());
         button.classList.remove("is-recording");
-        button.textContent = "🎤";
+        button.innerHTML = wehelIcon("mic");
         const blob = new Blob(recordedChunks, { type: recorder.mimeType || "audio/webm" });
         recorder = null;
         if (!blob.size) return;
@@ -541,7 +554,7 @@ export function mountWehelChat(options) {
       });
       recorder.start();
       button.classList.add("is-recording");
-      button.textContent = "⏹";
+      button.innerHTML = wehelIcon("stop");
       if (ui.toast) ui.toast("Recording — press again to stop.");
     } catch (error) {
       if (ui.toast) ui.toast("The microphone is not available.");

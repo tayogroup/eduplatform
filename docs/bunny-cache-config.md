@@ -143,7 +143,22 @@ curl -s -o /dev/null -w '%{http_code}\n' -H "AccessKey: $BUNNY_KEY" "https://sto
 ```
 
 **Verify a release only after the upload finishes.** At that point the paths
-exist, so requesting them caches a 200 — which is what you want anyway.
+exist, so requesting them caches a 200 — which is what you want anyway. That is
+what `--verify` does, and it is the reason it is a flag on the deploy rather
+than a separate script somebody would be tempted to run first:
+
+```bash
+BUNNY_KEY=… node tools/deploy-app-version.js v117 --shell --verify
+```
+
+It reads every file in the release back through the edge, plus everything the
+rewritten `index.html` references, and exits non-zero if any of it does not
+serve 200. On a 404 it asks storage before diagnosing, because the two causes
+need opposite fixes:
+
+- **in storage** → the edge cached a miss. Bump the tag.
+- **not in storage** → nothing ever uploaded it. Usually a file untracked in
+  git, which a clean checkout silently has nothing to send for.
 
 ### The invariant: a version bundle must be self-contained
 

@@ -45,12 +45,17 @@ for (const code of ["0058", "0861"]) {
   }
 }
 
+// No available/status here. This course narrates through voiceButton(), which
+// hashes the text and plays media/audio/tts/<hash>.mp3 — 5,524 clips, generated
+// and deployed. Nothing reads these descriptors: the intensive shell never
+// mentions audio.source or audio.available (the grade-based English shell does,
+// but that is a different course). The flags claimed "Not yet generated" for all
+// 503 slots, which read as a course with no audio at all when in fact every
+// Listen button plays.
 const audio = (category, id, levelNumber) => ({
   source: `./media/audio/level-${levelNumber}/${category}/${id}.mp3`,
   ...VOICE,
   slowPlaybackRate: 0.8,
-  available: false,
-  status: "Not yet generated",
 });
 
 // Course-wide rubric set: one standard, so a speaking task in Level 1 Unit 3 is
@@ -540,7 +545,7 @@ for (const level of plan.levels) {
         lemma: link.masterWord, displayWord: link.displayWord,
         partOfSpeech: link.partOfSpeech, canonicalMeaning: link.childMeaning,
         firstTaughtIn: link.unitId,
-        audio: { normal: link.meaningAudio.source, slow: link.meaningAudio.source, slowPlaybackRate: 0.8, ...VOICE, available: false },
+        audio: { normal: link.meaningAudio.source, slow: link.meaningAudio.source, slowPlaybackRate: 0.8, ...VOICE },
         status: REVIEW,
       });
     }

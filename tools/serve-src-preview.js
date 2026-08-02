@@ -206,6 +206,10 @@ async function handleWehelChat(req, res) {
   let system = promptData.template.join('\n').replace(/\{\{[A-Z_]+\}\}/g, (token) => replacements[token] ?? token);
   const modeHint = (promptData.modeHints || {})[String(payload.mode || '')];
   if (modeHint) system += `\n\n${modeHint}`;
+  // Where the learner is standing right now. The dock opens over any lesson
+  // page, so "I don't get this" has a referent.
+  const sectionHint = clean(payload.sectionHint, 80);
+  if (sectionHint) system += `\n\nThe learner is on the "${sectionHint}" page of this unit right now, and is most likely asking about what is on it.`;
 
   if (!process.env.ANTHROPIC_API_KEY) throw new Error('ANTHROPIC_API_KEY is not configured in the local .env file.');
   const model = process.env.WEHEL_MODEL || promptData.model || 'claude-sonnet-5';

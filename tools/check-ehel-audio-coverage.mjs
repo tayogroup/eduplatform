@@ -138,9 +138,9 @@ const SHARED = [
   ["item.question", "assessment"],
   ["item.modelAnswer", "reasoning"],
   // Not pre-generatable: written by the learner or by the tutor at runtime.
-  // (`item.text` is a Wehel chat bubble in shell/wehel.js — conversational
-  // text that does not exist until the learner or the model writes it.)
-  ["item.text", null],
+  // (Wehel's chat bubbles used to appear here as `item.text`. They now speak
+  // through the browser's own voice, not a voiceButton, so the panel no longer
+  // narrates anything this gate is responsible for.)
   ["text", null],
   ["button.hasAttribute(\"data-page-voice\") ? collectPageNarration() : button.dataset.speak", null],
 ];

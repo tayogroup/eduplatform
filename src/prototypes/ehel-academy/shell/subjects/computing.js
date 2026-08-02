@@ -839,12 +839,11 @@ function buildTutorReply(message) {
   return `This unit is about ${course.unit.unitTitle}. A useful rule is: ${course.reference.rules[0]?.text || course.concepts[0]?.explanation} Tell me which step is difficult and I will give one hint.`;
 }
 
-function renderAI() {
+// Every option the Wehel panel needs, shared by the nav section and the
+// shell's floating dock so both mount the same tutor over the same store.
+function wehelOptions() {
   const fw = cambridgeFramework(stageNumber);
-  $("#app").innerHTML = `${pageHeader("Your AI subject expert", "Wehel Tutor — Computing", "Ask questions, go deeper, get quizzed, play 'the literal computer' or get homework help — by text or voice.", "Wehel Tutor · Ehel Academy AI")}
-    <div class="overview-grid"><section class="panel" id="wehel-chat"></section><aside class="section-stack"><section class="panel"><h3>What Wehel Tutor can do</h3><ul class="checklist"><li>Explain this unit more simply — or go deeper</li><li>Quiz you and check your thinking</li><li>Play the literal computer that follows your exact instructions</li><li>Help with homework without doing it for you</li></ul></section><section class="panel"><h3>Learning boundaries</h3><ul class="checklist"><li>Hints before answers</li><li>Unit content first</li><li>Easier questions when needed</li><li>Checkpoint choices stay yours</li></ul></section></aside></div>`;
-  mountWehelChat({
-    container: $("#wehel-chat"),
+  return {
     meta: { subject: "computing", subjectLabel: "Computing", grade: stageNumber, cambridgeCode: `${fw.level} ${fw.code}`, unitNo: course.unit.unitNo, unitTitle: course.unit.unitTitle, courseOutline: outlineFromManifest(manifest), unit: course },
     store: progress,
     ui: { escapeHtml, toast, voiceButton, bindVoiceControls },
@@ -860,7 +859,13 @@ function renderAI() {
     onExchange: (count) => { if (count >= 2) complete("ai"); },
     fetchUnit: unitFetcher(manifest, dataRootUrl),
     onSaved: saveProgress,
-  });
+  };
+}
+
+function renderAI() {
+  $("#app").innerHTML = `${pageHeader("Your AI subject expert", "Wehel Tutor — Computing", "Ask questions, go deeper, get quizzed, play 'the literal computer' or get homework help — by text or voice.", "Wehel Tutor · Ehel Academy AI")}
+    <div class="overview-grid"><section class="panel" id="wehel-chat"></section><aside class="section-stack"><section class="panel"><h3>What Wehel Tutor can do</h3><ul class="checklist"><li>Explain this unit more simply — or go deeper</li><li>Quiz you and check your thinking</li><li>Play the literal computer that follows your exact instructions</li><li>Help with homework without doing it for you</li></ul></section><section class="panel"><h3>Learning boundaries</h3><ul class="checklist"><li>Hints before answers</li><li>Unit content first</li><li>Easier questions when needed</li><li>Checkpoint choices stay yours</li></ul></section></aside></div>`;
+  mountWehelChat({ container: $("#wehel-chat"), ...wehelOptions() });
 }
 
 function renderReflect() {
@@ -930,6 +935,7 @@ const config = {
     teacher: () => (isPrereqUnit ? placement.renderTeacher() : renderTeacher()),
   },
   bind,
+  wehelOptions,
   async load(ctx) {
     const s = ctx.stageNumber, u = ctx.unitNumber;
     if (isPrereqUnit) {

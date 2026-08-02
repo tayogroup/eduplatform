@@ -21,6 +21,7 @@ import { createProgressClient } from "../shared/progress-client.js?v=20260722a";
 import "../shared/seb-session.js?v=20260724a";
 // Welcome gate (adopted from PreQuraan): one tap into fullscreen, every launch.
 import { mountLessonGate } from "../shared/lesson-gate.js?v=20260724a";
+import { mountWehelChat } from "./wehel.js?v=wehel-1";
 
 const pad2 = (n) => String(n).padStart(2, "0");
 
@@ -375,6 +376,105 @@ export function createCourseApp(config) {
     if (config.onAfterRender) config.onAfterRender();
   }
 
+  // --- Wehel dock ----------------------------------------------------------
+  // The tutor is most useful mid-struggle — stuck on a practice question,
+  // lost halfway through an explainer — but as a nav section it can only be
+  // reached by leaving the page you are stuck on, and focus mode hides the nav
+  // altogether. The dock puts the same chat one tap from every page. It mounts
+  // over the SAME store as the section, so the two are one conversation, and
+  // it tells Wehel which page the learner is on so "I don't get this" has a
+  // referent.
+  //
+  // Deliberately quiet: no proactive popups, no attract animation, no
+  // unsolicited messages. It sits still until a learner reaches for it.
+  const DOCK_STYLE = `
+  .wehel-dock-button{position:fixed;right:18px;bottom:18px;z-index:70;display:inline-flex;align-items:center;gap:8px;
+    padding:11px 16px;border:0;border-radius:999px;cursor:pointer;font:inherit;font-size:.95rem;font-weight:600;
+    color:#fff;background:linear-gradient(135deg,#7c3aed,#4f46e5);box-shadow:0 6px 20px rgba(49,46,129,.34)}
+  .wehel-dock-button:hover{transform:translateY(-1px)}
+  .wehel-dock-button:focus-visible{outline:3px solid #c4b5fd;outline-offset:2px}
+  .wehel-dock-button[hidden]{display:none}
+  .wehel-dock-backdrop{position:fixed;inset:0;z-index:71;background:rgba(15,23,42,.45);border:0;padding:0;cursor:pointer}
+  .wehel-drawer{position:fixed;top:0;right:0;bottom:0;z-index:72;width:min(420px,100vw);display:flex;flex-direction:column;
+    background:var(--surface,#fff);color:inherit;box-shadow:-8px 0 30px rgba(15,23,42,.22);border-left:1px solid rgba(15,23,42,.12)}
+  .wehel-drawer-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 16px;
+    border-bottom:1px solid rgba(15,23,42,.12)}
+  .wehel-drawer-head h2{margin:0;font-size:1.02rem;line-height:1.25}
+  .wehel-drawer-head small{display:block;font-weight:400;opacity:.7;font-size:.8rem}
+  .wehel-drawer-close{border:0;background:transparent;color:inherit;font-size:1.5rem;line-height:1;cursor:pointer;padding:4px 8px;border-radius:8px}
+  .wehel-drawer-close:hover{background:rgba(15,23,42,.08)}
+  .wehel-drawer-body{flex:1;overflow-y:auto;padding:14px 16px}
+  @media (max-width:640px){
+    .wehel-drawer{width:100vw;top:auto;height:88vh;border-left:0;border-top-left-radius:16px;border-top-right-radius:16px}
+    .wehel-dock-button span{display:none}
+    .wehel-dock-button{padding:14px;border-radius:50%}
+  }
+  @media print{.wehel-dock-button,.wehel-drawer,.wehel-dock-backdrop{display:none}}`;
+
+  const SPARKLE_ICON = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M18.4 5.6l-2.8 2.8M8.4 15.6l-2.8 2.8"/></svg>';
+
+  function mountWehelDock() {
+    if (!config.wehelOptions) return;
+    const style = document.createElement("style");
+    style.textContent = DOCK_STYLE;
+    document.head.appendChild(style);
+
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "wehel-dock-button";
+    button.setAttribute("aria-label", "Ask Wehel Tutor");
+    button.innerHTML = `${SPARKLE_ICON}<span>Wehel Tutor</span>`;
+
+    let drawer = null, backdrop = null, chatPanel = null;
+    // The section label for the route the learner is on — what the drawer
+    // reports to Wehel as context. Read at send time, not at mount time, so it
+    // stays right as the learner moves around with the drawer open.
+    const sectionHint = () => {
+      const match = (config.visibleSections ? config.visibleSections() : sections).find(([id]) => id === route);
+      return match ? match[2] : "";
+    };
+
+    function close() {
+      if (!drawer) return;
+      drawer.remove(); backdrop?.remove();
+      drawer = null; backdrop = null; chatPanel = null;
+      button.hidden = false;
+      button.focus();
+    }
+
+    function open() {
+      if (drawer) return;
+      backdrop = document.createElement("button");
+      backdrop.type = "button";
+      backdrop.className = "wehel-dock-backdrop";
+      backdrop.setAttribute("aria-label", "Close Wehel Tutor");
+      backdrop.addEventListener("click", close);
+
+      drawer = document.createElement("aside");
+      drawer.className = "wehel-drawer";
+      drawer.setAttribute("role", "dialog");
+      drawer.setAttribute("aria-label", "Wehel Tutor");
+      drawer.innerHTML = `<div class="wehel-drawer-head">
+          <h2>Wehel Tutor<small>Ask about anything on this page</small></h2>
+          <button type="button" class="wehel-drawer-close" aria-label="Close Wehel Tutor">&times;</button>
+        </div><div class="wehel-drawer-body"></div>`;
+      drawer.querySelector(".wehel-drawer-close").addEventListener("click", close);
+
+      document.body.append(backdrop, drawer);
+      button.hidden = true;
+      chatPanel = mountWehelChat({
+        container: drawer.querySelector(".wehel-drawer-body"),
+        sectionHint,
+        ...config.wehelOptions(),
+      });
+      drawer.querySelector("#wehel-input")?.focus();
+    }
+
+    button.addEventListener("click", open);
+    document.addEventListener("keydown", (event) => { if (event.key === "Escape" && drawer) close(); });
+    document.body.appendChild(button);
+  }
+
   // --- ctx: the surface the subject's renderers close over ------------------
   const ctx = {
     $, $$, escapeHtml, icon, voiceButton, pageHeader, toast,
@@ -432,6 +532,7 @@ export function createCourseApp(config) {
       $("#loading")?.remove();
       $("#app").hidden = false;
       renderNav(); updateProgress(); renderRoute();
+      mountWehelDock();
     } catch (error) {
       console.error(error);
       const target = $("#loading") || $("#app");

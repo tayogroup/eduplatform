@@ -164,11 +164,10 @@ function visibleSections() {
 
 // Wehel — the live AI tutor. The audience correction for this course (adult
 // beginner, CEFR level rather than school grade) lives in wehel_prompt.json.
-function renderTutor() {
-  $("#app").innerHTML = `${pageHeader("Your AI English tutor", "Wehel Tutor", "Talk with Wehel Tutor in simple English. Ask about words, patterns, or practise a real conversation — by text or voice.", "Wehel Tutor · Ehel Academy AI")}
-    <section class="panel" id="wehel-chat"></section>`;
-  mountWehelChat({
-    container: $("#wehel-chat"),
+// Every option the Wehel panel needs, shared by the nav section and the
+// shell's floating dock so both mount the same tutor over the same store.
+function wehelOptions() {
+  return {
     meta: {
       subject: "intensive-english", subjectLabel: "English", grade: levelNumber,
       cambridgeCode: `CEFR ${course.unit.cefr?.band || `Level ${levelNumber}`}`,
@@ -190,7 +189,13 @@ function renderTutor() {
     onExchange: (count) => { if (count >= 2 && !progress.completed.includes("tutor")) complete("tutor", "Tutor conversation complete."); },
     fetchUnit: unitFetcher(manifest, shellCtx.dataRootUrl),
     onSaved: saveProgress,
-  });
+  };
+}
+
+function renderTutor() {
+  $("#app").innerHTML = `${pageHeader("Your AI English tutor", "Wehel Tutor", "Talk with Wehel Tutor in simple English. Ask about words, patterns, or practise a real conversation — by text or voice.", "Wehel Tutor · Ehel Academy AI")}
+    <section class="panel" id="wehel-chat"></section>`;
+  mountWehelChat({ container: $("#wehel-chat"), ...wehelOptions() });
 }
 
 function renderOverview() {
@@ -643,6 +648,7 @@ const config = {
     teacher: () => (isPrereqUnit ? placement.renderTeacher() : renderTeacher()),
   },
   bind,
+  wehelOptions,
   async load(ctx) {
     if (isPrereqUnit) {
       const [manifestResponse, placementResponse] = await Promise.all([

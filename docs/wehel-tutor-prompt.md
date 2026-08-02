@@ -423,6 +423,35 @@ the same shared `recognizeSpeech`. Note `SpeechRecognition` is Chrome/Edge
 territory (Chrome sends audio to Google's recogniser; no key or cost to us) —
 Firefox falls back to the STT upload path automatically.
 
+## Placement: the dock (added 2026-08-02)
+
+Wehel Tutor lives in two places, deliberately:
+
+- **The nav section** is the tutoring *room* — full canvas, quick prompts, for
+  deliberate sessions (quiz me, exam prep, role play).
+- **The dock** is a floating button (bottom-right, present on every page and in
+  focus mode, which hides the nav entirely) opening a slide-in drawer — 420px on
+  desktop, a full-width sheet on mobile. It exists because the moments Wehel is
+  most valuable are mid-struggle, and reaching a nav section means abandoning
+  the page you are stuck on.
+
+Both mount the **same shared panel over the same store**, so they are one
+continuous conversation — `livePanels` in `shell/wehel.js` repaints whichever is
+also open. Each subject exposes a `wehelOptions()` builder consumed by both its
+own renderer and `mountWehelDock()` in `course-app.js`. The dock passes a
+`sectionHint` (the current section's label, read at send time) which both
+endpoints append to the system prompt, so "I don't get this" has a referent.
+
+English is the exception that still works: its bespoke mode-tabbed page and the
+shared drawer read the same `aiState.messages`, so the transcript is shared even
+though the two UIs differ.
+
+Deliberately quiet by design: no proactive popups, no attract animation, no
+unsolicited messages — it sits next to lesson content all day for children who
+will click anything that moves. The dock does **not** feed the current quiz
+question into context; the academic-honesty rules are the defense, not hiding
+the tutor.
+
 ## Design decisions worth reviewing
 
 1. **One template, not 48 prompts.** Subject × grade behaviour comes from

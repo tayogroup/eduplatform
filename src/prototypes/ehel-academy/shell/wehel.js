@@ -279,7 +279,20 @@ export function recognizeSpeech({ lang = "en-GB", onInterim } = {}) {
   });
 }
 
-export async function askWehel({ meta, messages, channel = "text", mode = "", fetchUnit = null }) {
+// Live panels sharing one transcript. The dock drawer and the nav section can
+// both be mounted at once over the same store, so an append in either has to
+// repaint the other — otherwise the learner opens the drawer and finds the
+// conversation they just had is missing. Panels whose container has left the
+// DOM are dropped on the next notify rather than tracked.
+const livePanels = new Set();
+function syncPanels(source) {
+  for (const panel of [...livePanels]) {
+    if (!panel.container.isConnected) { livePanels.delete(panel); continue; }
+    if (panel !== source) panel.render();
+  }
+}
+
+export async function askWehel({ meta, messages, channel = "text", mode = "", sectionHint = "", fetchUnit = null }) {
   const wstoken = new URLSearchParams(location.search).get("wstoken") || undefined;
   const post = async (conversation) => {
     const response = await fetch(WEHEL_CHAT_ENDPOINT, {
@@ -298,6 +311,7 @@ export async function askWehel({ meta, messages, channel = "text", mode = "", fe
         unit: meta.unit,
         channel,
         mode: mode || undefined,
+        sectionHint: sectionHint || undefined,
         wstoken,
         tools: fetchUnit ? ["get_unit", "get_course_outline"] : [],
         messages: conversation,
@@ -399,6 +413,7 @@ export function mountWehelChat(options) {
   let listening = false;
   let recorder = null;
   let recordedChunks = [];
+  let panel = null; // this panel's registry entry, assigned after first render
 
   // Speech is the browser's, not ElevenLabs': a reply is written at request
   // time, so no recorded clip can exist for it. One engine for the whole
@@ -470,6 +485,7 @@ export function mountWehelChat(options) {
     messages.push(item);
     if (messages.length > 40) messages.splice(0, messages.length - 40);
     if (options.onSaved) options.onSaved();
+    syncPanels(panel);
   }
 
   async function submit(text, channel) {
@@ -482,7 +498,9 @@ export function mountWehelChat(options) {
     let reply;
     let offline = false;
     try {
-      reply = await askWehel({ meta, messages, channel, mode: options.mode, fetchUnit: options.fetchUnit || null });
+      reply = await askWehel({ meta, messages, channel, mode: options.mode,
+        sectionHint: typeof options.sectionHint === "function" ? options.sectionHint() : options.sectionHint,
+        fetchUnit: options.fetchUnit || null });
     } catch (error) {
       offline = true;
       reply = options.fallbackReply
@@ -562,5 +580,7 @@ export function mountWehelChat(options) {
   }
 
   render();
-  return { render, submit };
+  panel = { container, render, submit };
+  livePanels.add(panel);
+  return panel;
 }

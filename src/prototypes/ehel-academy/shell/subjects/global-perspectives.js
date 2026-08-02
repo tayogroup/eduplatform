@@ -421,16 +421,10 @@ function renderProgressPage() {
 // The tutor section is the one page that is not a pure string renderer: the
 // unit's conversation starters stay as boxes, and Wehel (the live AI subject
 // expert) mounts beneath them once the HTML is in place.
-function renderTutor() {
-  paint("tutor", () => `
-    ${pageHeader("Your AI subject expert", "Wehel Tutor — Global Perspectives", "Wehel Tutor is your discussion partner. Say your ideas out loud, debate both sides, and let it push your thinking further.")}
-    ${(course.tutorPrompts || []).length ? `<section class="panel">${course.tutorPrompts.map((item) => box(item, "tutor")).join("")}</section>` : ""}
-    <section class="panel" id="wehel-chat" style="margin-top:18px"></section>
-    ${doneButton("tutor")}`)();
-  const mountEl = $("#wehel-chat");
-  if (!mountEl) return;
-  mountWehelChat({
-    container: mountEl,
+// Every option the Wehel panel needs, shared by the nav section and the
+// shell's floating dock so both mount the same tutor over the same store.
+function wehelOptions() {
+  return {
     meta: {
       subject: "global-perspectives", subjectLabel: "Global Perspectives", grade: stageNumber,
       cambridgeCode: `${course.cambridge?.level || "Cambridge Global Perspectives"} ${course.cambridge?.code || ""}`.trim(),
@@ -452,7 +446,18 @@ function renderTutor() {
     onExchange: (count) => { if (count >= 2 && !progress.completed.includes("tutor")) complete("tutor", "Tutor conversation counted toward this unit."); },
     fetchUnit: unitFetcher(manifest, dataRootUrl),
     onSaved: saveProgress,
-  });
+  };
+}
+
+function renderTutor() {
+  paint("tutor", () => `
+    ${pageHeader("Your AI subject expert", "Wehel Tutor — Global Perspectives", "Wehel Tutor is your discussion partner. Say your ideas out loud, debate both sides, and let it push your thinking further.")}
+    ${(course.tutorPrompts || []).length ? `<section class="panel">${course.tutorPrompts.map((item) => box(item, "tutor")).join("")}</section>` : ""}
+    <section class="panel" id="wehel-chat" style="margin-top:18px"></section>
+    ${doneButton("tutor")}`)();
+  const mountEl = $("#wehel-chat");
+  if (!mountEl) return;
+  mountWehelChat({ container: $("#wehel-chat"), ...wehelOptions() });
 }
 
 const paint = (id, fn) => () => {
@@ -539,6 +544,7 @@ const config = {
     progress: paint("progress", renderProgressPage),
   },
   bind,
+  wehelOptions,
   async load(ctx) {
     if (isPrereqUnit) {
       const [m, p] = await Promise.all([

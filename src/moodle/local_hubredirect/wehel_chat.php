@@ -291,6 +291,12 @@ $modehints = (array)($promptdata['modeHints'] ?? []);
 if ($modehint !== '' && isset($modehints[$modehint])) {
     $system .= "\n\n" . (string)$modehints[$modehint];
 }
+// Where the learner is standing right now. The dock opens over any lesson
+// page, so "I don't get this" has a referent.
+$sectionhint = $clean($payload['sectionHint'] ?? '', 80);
+if ($sectionhint !== '') {
+    $system .= "\n\nThe learner is on the \"" . $sectionhint . "\" page of this unit right now, and is most likely asking about what is on it.";
+}
 
 // --- call the Anthropic API ---------------------------------------------------
 

@@ -2263,6 +2263,38 @@ async function submitSpeakingRecording(recordingId, target, button, { feedbackSe
   }
 }
 
+// The shell's floating dock mounts the SHARED Wehel panel, while this course
+// keeps its own mode-tabbed page. Both read and write aiState.messages, so the
+// drawer and the page are one conversation — a question asked in the drawer is
+// still there when the learner opens the full tutor page.
+function wehelOptions() {
+  return {
+    meta: {
+      subject: "english", subjectLabel: "English", grade: gradeNumber,
+      cambridgeCode: cambridgeLabel(gradeNumber),
+      unitNo: course.unit.unitNo, unitTitle: course.unit.unitTitle,
+      courseOutline: outlineFromManifest(manifest), unit: course,
+    },
+    store: aiState,
+    key: "messages",
+    ui: { escapeHtml, toast },
+    tutorLabel: "Wehel Tutor",
+    greeting: `Hello! I am Wehel Tutor. Ask me anything about Unit ${course.unit.unitNo}: ${course.unit.unitTitle}.`,
+    placeholder: `Ask about ${course.unit.unitTitle}…`,
+    quickPrompts: [
+      { label: "Explain this", message: "Can you explain what is on this page in a simpler way?" },
+      { label: "Teach me words", message: "Teach me three words from this unit." },
+      { label: "Quiz me", message: "Quiz me on this unit, one question at a time." },
+      { label: "Check my sentence", message: "I will write a sentence. Please help me make it better." },
+    ],
+    mode: aiState.mode,
+    fallbackReply: (message) => buildAIReply(message, aiState.mode),
+    onExchange: () => { if (!progress.completed.includes("ai")) complete("ai"); },
+    fetchUnit: unitFetcher(manifest, dataRootUrl),
+    onSaved: () => { saveAIState(); if (route === "ai") { renderAIEnglish(); icons(); } },
+  };
+}
+
 function renderAIEnglish() {
   if (!aiState.messages.length) aiState.messages.push({ role: "assistant", text: `Hello! I am Wehel Tutor, your AI English teacher and tutor for Unit ${course.unit.unitNo}. Choose Teach me for a lesson or Help me when you are stuck.` });
   const prompts = aiQuickPrompts(aiState.mode);
@@ -2793,6 +2825,7 @@ const config = {
     teacher: () => (isPrereqUnit ? renderPrereqTeacher() : renderTeacher()),
   },
   bind,
+  wehelOptions,
   async load(ctx) {
     if (isPrereqUnit) {
       const [manifestResponse, placementResponse] = await Promise.all([

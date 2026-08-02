@@ -170,7 +170,23 @@ function shellSubjectModule(subject) {
   return fs.readFileSync(path.join(EHEL, "shell", "subjects", `${subject}.js`), "utf8")
     .replace(/\.\.\/\.\.\/(?:english|mathematics|science|computing|global-perspectives|intensive-english)\/shared\/([A-Za-z0-9_-]+\.js)(\?v=[^"']*)?/g, "./$1")
     .replace(/\.\.\/\.\.\/shared\/(course-shell|progress-client)\.js(\?v=[^"']*)?/g, "./$1.js")
-    .replace(/\.\.\/course-app\.js(\?v=[^"']*)?/g, "./course-app.js");
+    // Every shell/ sibling the module imports, not just course-app.js. wehel.js
+    // was the second one and had no rule, so a release rewrote course-app.js and
+    // left `../wehel.js` pointing at app/{subject}/wehel.js — a path nothing
+    // uploads. The entry module would fail to import and the whole course would
+    // render blank, not merely lose its tutor. Matching the filename shape keeps
+    // this true for the next component without another rule here.
+    .replace(/\.\.\/([A-Za-z0-9_-]+\.js)(\?v=[^"']*)?/g, "./$1");
+}
+
+// The shell/ siblings a subject module imports, course-app.js aside — it is
+// packaged separately through shellCore(). Read from the module's own imports so
+// a component added later ships without this file changing.
+function shellComponents(subject) {
+  const src = fs.readFileSync(path.join(EHEL, "shell", "subjects", `${subject}.js`), "utf8");
+  return [...src.matchAll(/^import\s[^"']*["']\.\.\/([A-Za-z0-9_-]+\.js)(?:\?[^"']*)?["']/gm)]
+    .map((m) => m[1])
+    .filter((name) => name !== "course-app.js");
 }
 function shellCore() {
   return fs.readFileSync(path.join(EHEL, "shell", "course-app.js"), "utf8")
@@ -216,6 +232,17 @@ function buildItems() {
     if (SHELL) {
       items.push({ remote: `app/${subject}/${TAG}/course-ui.js`, buf: Buffer.from(shellSubjectModule(subject)) });
       items.push({ remote: `app/${subject}/${TAG}/course-app.js`, buf: Buffer.from(shellCore()) });
+      // Throw rather than skip: a component the module imports but that never
+      // reaches v{TAG}/ is a bundle that cannot load at all. buildItems() runs
+      // before the first upload, so failing here leaves the live release intact.
+      for (const name of shellComponents(subject)) {
+        const src = path.join(EHEL, "shell", name);
+        if (!fs.existsSync(src)) {
+          throw new Error(`shell/subjects/${subject}.js imports ../${name}, which is not in the working tree — `
+            + "the release would ship an entry module that cannot resolve it.");
+        }
+        items.push({ remote: `app/${subject}/${TAG}/${name}`, buf: fs.readFileSync(src) });
+      }
     }
     items.push(...sharedModuleItems(subject));
     // Rewritten entry + release pointer (always upload — they carry the version).

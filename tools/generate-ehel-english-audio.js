@@ -35,7 +35,7 @@ const MODEL_ID = "eleven_multilingual_v2";
 
 // --- args ---
 const args = process.argv.slice(2);
-const category = args.find((a) => /^(readings|grammar-practice|grammar|speaking|vocabulary|dictionary|writing|activities)$/.test(a)) || "readings";
+const category = args.find((a) => /^(readings|grammar-practice|grammar|speaking|vocabulary|dictionary|writing|activities|final-quiz)$/.test(a)) || "readings";
 const grades = args.filter((a) => /^[1-8]$/.test(a)).map(Number);
 const gradeList = grades.length ? grades : [1, 2, 3, 4, 5, 6, 7, 8];
 const dry = args.includes("--dry");
@@ -110,6 +110,49 @@ function dictionaryItems(dictionary, grade) {
           normal: source, slow: source,
           slowPlaybackRate: prev.slowPlaybackRate ?? 0.76,
           cueStart: 0, cueEnd: null,
+          available: true, status: "Generated",
+        };
+      },
+    };
+  });
+}
+
+// The course-level final quiz, whose questions live in their own file rather than in
+// any unit -- so this needs its own loader and its own loop branch, the way
+// dictionary does.
+function quizFile(grade) {
+  return path.join(ENGLISH, `grade-${grade}`, "data", "course-final-quiz.json");
+}
+
+function quizItems(quiz, grade) {
+  // NOT the ./media/audio/unit-final/questions/ path the pending placeholders declared.
+  // Nothing would ever have served that: resolveMediaUrl() in the app only rewrites
+  // sources matching media/audio/grade-<n>/<cat>/ into the deployed media tree, and
+  // upload-media-to-bunny.js only walks those same per-grade category folders. A clip
+  // written to unit-final/questions/ therefore plays in local dev and 404s in
+  // production, and never gets uploaded in the first place. Using the conventional
+  // per-grade path makes the existing app, uploader and audio check all handle these
+  // with no change to any of them. It also stops eight grades sharing one flat folder.
+  const dir = `media/audio/grade-${grade}/quiz`;
+  return (quiz.questions || []).map((question) => {
+    const id = question.questionId;
+    const source = `./${dir}/${id}.mp3`;
+    const prev = question.audio || {};
+    return {
+      id, ref: question, title: `Q${question.sequence}`,
+      // The question stem only, never the options. Reading the choices aloud would
+      // hand over the answer on exactly the questions a read-aloud exists for: g1 q01
+      // asks "Which is the uppercase partner for a?" over options "A | B | D | O", and
+      // a voice reading those says the answer in the same breath as the question.
+      text: narration(question.question),
+      source,
+      output: path.join(ENGLISH, dir, `${id}.mp3`),
+      done: prev.available === true && prev.source === source,
+      apply() {
+        question.audio = {
+          ...prev, source, normal: source, slow: source,
+          provider: "ElevenLabs", voiceId: VOICE_ID, model: MODEL_ID,
+          slowPlaybackRate: prev.slowPlaybackRate ?? 0.76,
           available: true, status: "Generated",
         };
       },
@@ -391,6 +434,19 @@ async function main() {
         if (await processItem(item, grade)) changed = true;
       }
       if (changed) dirtyFiles.set(filePath, { pristine: JSON.parse(dictionaryText), mutated: dictionary });
+      continue;
+    }
+
+    if (category === "final-quiz") {
+      const filePath = quizFile(grade);
+      if (!fs.existsSync(filePath)) continue;
+      const quizText = fs.readFileSync(filePath, "utf8");
+      const quiz = JSON.parse(quizText);
+      let changed = false;
+      for (const item of quizItems(quiz, grade)) {
+        if (await processItem(item, grade)) changed = true;
+      }
+      if (changed) dirtyFiles.set(filePath, { pristine: JSON.parse(quizText), mutated: quiz });
       continue;
     }
 

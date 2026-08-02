@@ -79,9 +79,10 @@ function buildList() {
   if (subjectList.includes("english")) {
     const base = path.join(EHEL, "english", "media", "audio");
     for (let g = 1; g <= 12; g += 1) {
-      // writing/ and activities/ are new trees; grammar practice clips are named
-      // {grammarId}-practice.mp3 and live in grammar/, so they need no entry here.
-      for (const cat of ["readings", "grammar", "speaking", "vocabulary", "dictionary", "writing", "activities"]) {
+      // writing/, activities/ and quiz/ are newer trees; grammar practice clips are
+      // named {grammarId}-practice.mp3 and live in grammar/, so they need no entry here.
+      // quiz/ holds the course-level final assessment read-aloud, one clip per question.
+      for (const cat of ["readings", "grammar", "speaking", "vocabulary", "dictionary", "writing", "activities", "quiz"]) {
         const d = path.join(base, `grade-${g}`, cat);
         if (!fs.existsSync(d)) continue;
         for (const f of fs.readdirSync(d)) if (f.endsWith(".mp3"))

@@ -203,7 +203,25 @@ def main():
     for grade in range(1, 9):
         print(f'{grade:>5} ' + ' '.join(f"{rows[grade][c + '|live']:>10}" for c in cats))
 
-    total_live = sum(rows[g][c + '|live'] for g in range(1, 9) for c in cats)
+    # Total over EVERY live key, not just the nine columns above. Descriptors found in the
+    # quiz/capstone/assessment files are bucketed as "other:<filename>", which has no
+    # column -- so summing only `cats` verified them and then dropped them from the report.
+    # Narrating the 240 final-quiz questions moved them from the pending line into
+    # other:course-final-quiz.json, and the total did not budge, which read as "nothing
+    # happened". Anything checked has to appear in a total.
+    other_live = collections.Counter()
+    for grade in range(1, 9):
+        for key, count in rows[grade].items():
+            name, _, state = key.rpartition('|')
+            if state == 'live' and name not in cats:
+                other_live[name] += count
+    if other_live:
+        print('\nLIVE in files without a column above:')
+        for name, count in other_live.most_common():
+            print(f'  {name:>28} {count}')
+
+    total_live = (sum(rows[g][c + '|live'] for g in range(1, 9) for c in cats)
+                  + sum(other_live.values()))
     print(f'\ntotal live: {total_live}')
 
     pending = collections.Counter()

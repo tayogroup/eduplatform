@@ -14,10 +14,7 @@ const path = require("path");
 
 const { cyrb53, clean, MIN_CHARS } = require("./ehel-narration-hash");
 
-// Speaking is deliberately absent: it is narrated by the app (line 348) but was
-// excluded from this course's audio budget. Adding it here is all that is
-// needed to buy it.
-const CATEGORIES = ["lecture", "readings", "grammar", "words", "wordSentences"];
+const CATEGORIES = ["lecture", "readings", "grammar", "words", "wordSentences", "speaking"];
 
 function textsForUnit(unit, category) {
   switch (category) {
@@ -36,6 +33,9 @@ function textsForUnit(unit, category) {
     // not the shape this button asks for. The app is the authority.
     case "grammar":
       return (unit.grammar || []).map((g) => `${g.title}. ${g.explanation}`);
+    // line 348: voiceButton(task.instructionsAndModelLines)
+    case "speaking":
+      return (unit.speaking || []).map((s) => s.instructionsAndModelLines);
     // line 179: voiceButton(item.displayWord)
     case "words":
       return (unit.dictionaryLinks || []).map((d) => d.displayWord);

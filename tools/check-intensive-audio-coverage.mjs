@@ -41,9 +41,7 @@ const EXPECTED = new Map([
   ["`${lesson.title}. ${lesson.explanation}`", "grammar"],
   ["item.displayWord", "words"],
   ["sentences[activeSentence]", "wordSentences"],
-  // Speaking was excluded from this course's audio budget. Adding "speaking" to
-  // the narration lib's CATEGORIES is all that is needed to buy it.
-  ["task.instructionsAndModelLines", null],
+  ["task.instructionsAndModelLines", "speaking"],
 ]);
 
 const problems = [];

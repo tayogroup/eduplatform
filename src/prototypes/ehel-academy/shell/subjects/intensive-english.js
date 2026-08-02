@@ -19,6 +19,7 @@
 // shown wherever a claim is made about what the learner can do.
 import { escapeHtml as sharedEscapeHtml, icon as sharedIcon } from "../../shared/course-shell.js?v=20260721a";
 import { createCourseApp } from "../course-app.js?v=t2";
+import { mountWehelChat } from "../wehel.js?v=wehel-1";
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
@@ -43,9 +44,10 @@ const sections = [
   ["speaking", "mic-2", "Speaking"],
   ["writing", "pencil-line", "Writing"],
   ["activities", "shapes", "Practice"],
+  ["tutor", "sparkles", "Wehel tutor"],
   ["quiz", "badge-check", "Quiz"],
   ["answers", "list-checks", "Answers"],
-  ["reflect", "sparkles", "My progress"],
+  ["reflect", "trending-up", "My progress"],
 ];
 
 let manifest, course, dictionary;
@@ -99,6 +101,35 @@ function visibleSections() {
 }
 
 // ===================== renderers =====================
+
+// Wehel — the live AI tutor. The audience correction for this course (adult
+// beginner, CEFR level rather than school grade) lives in wehel_prompt.json.
+function renderTutor() {
+  $("#app").innerHTML = `${pageHeader("Your AI English tutor", "Wehel", "Talk with Wehel in simple English. Ask about words, patterns, or practise a real conversation — by text or voice.", "Wehel · Ehel Academy AI")}
+    <section class="panel" id="wehel-chat"></section>`;
+  mountWehelChat({
+    container: $("#wehel-chat"),
+    meta: {
+      subject: "intensive-english", subjectLabel: "English", grade: levelNumber,
+      cambridgeCode: `CEFR ${course.unit.cefr?.band || `Level ${levelNumber}`}`,
+      unitNo: course.unit.unitNo, unitTitle: course.unit.unitTitle, unit: course,
+    },
+    store: progress,
+    ui: { escapeHtml, toast, voiceButton, bindVoiceControls: () => shellCtx.bindVoiceControls() },
+    tutorLabel: "Wehel",
+    greeting: `Hello! I am Wehel, your English tutor. We can talk, practise words, or do a role play. What would you like to do?`,
+    placeholder: "Write to Wehel in English…",
+    quickPrompts: [
+      { label: "Let's talk", message: "Let's have a simple conversation in English." },
+      { label: "Teach me words", message: "Teach me three useful words from this unit." },
+      { label: "Role play", message: "Let's do a role play. You are a shopkeeper and I am buying food." },
+      { label: "Check my sentence", message: "I will write a sentence. Please help me make it better." },
+    ],
+    fallbackReply: () => `I cannot connect right now. Please try again soon. While you wait, practise the words in this unit and make one sentence with each.`,
+    onExchange: (count) => { if (count >= 2 && !progress.completed.includes("tutor")) complete("tutor", "Tutor conversation complete."); },
+    onSaved: saveProgress,
+  });
+}
 
 function renderOverview() {
   const path = String(course.unit.learningPath || "").split("\n").filter(Boolean);
@@ -523,7 +554,7 @@ const config = {
   sections,
   nonCountable: ["overview", "answers"],
   gradeSections: [],
-  progressDefaults: { completed: [], knownWords: [], self: {}, writing: {}, games: {} },
+  progressDefaults: { completed: [], knownWords: [], self: {}, writing: {}, games: {}, aiMessages: [] },
   gradeDefaults: { completed: [] },
   keys: (level, unit) => ({ progress: `ehel-intensive-l${level}-u${unit}-progress-v1` }),
   courseKey: (level) => `ehel-ien-l${String(level).padStart(2, "0")}`,
@@ -542,6 +573,7 @@ const config = {
     speaking: () => renderSpeaking(),
     writing: () => renderWriting(),
     activities: () => renderActivities(),
+    tutor: () => renderTutor(),
     quiz: () => renderQuiz(),
     answers: () => renderAnswers(),
     reflect: () => renderReflect(),

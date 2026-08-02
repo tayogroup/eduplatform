@@ -8,6 +8,7 @@
 import { initComputingWebGL } from "../../computing/shared/computing-webgl.js";
 import { unitTopic, computingDiagram } from "../../computing/shared/computing-visuals.js";
 import { createCourseApp } from "../course-app.js";
+import { mountWehelChat } from "../wehel.js?v=wehel-1";
 
 const pad2 = (n) => String(n).padStart(2, "0");
 
@@ -813,16 +814,25 @@ function buildTutorReply(message) {
 }
 
 function renderAI() {
-  $("#app").innerHTML = `${pageHeader("Adaptive help without giving away answers", "AI Computing Tutor", "Ask for a simpler explanation, a visual-model suggestion, an easier question or one progressive hint.", "Prototype tutor · no external AI connected")}
-    <div class="overview-grid"><section class="panel"><div class="ai-conversation" id="ai-conversation">${progress.aiMessages.length ? progress.aiMessages.map((item) => `<article class="ai-message ${item.role}"><strong>${item.role === "user" ? "You" : "AI Computing Tutor"}</strong>${escapeHtml(item.text)}${voiceButton(item.text, item.role === "user" ? "Listen again" : "Listen to tutor")}</article>`).join("") : `<article class="ai-message"><strong>AI Computing Tutor</strong>Which part of ${escapeHtml(course.unit.unitTitle)} would you like a hint about?${voiceButton(`Which part of ${course.unit.unitTitle} would you like a hint about?`, "Listen to tutor")}</article>`}</div><div class="ai-prompts"><button data-ai-prompt="Explain the first concept in a simpler way" type="button">Explain more simply</button><button data-ai-prompt="Give me an easier question" type="button">Give an easier question</button><button data-ai-prompt="Which visual model should I use?" type="button">Suggest a model</button></div><form class="ai-compose" id="ai-form"><label class="sr-only" for="ai-input">Ask AI Computing Tutor</label><input id="ai-input" maxlength="300" placeholder="Ask about ${escapeHtml(course.unit.unitTitle)}…"><button class="button primary" type="submit">Send</button></form></section><aside class="section-stack"><section class="panel review-banner"><h3>Prototype boundary</h3><p>This coach uses fixed Unit ${course.unit.unitNo} workbook guidance. It does not contact a model or claim to assess open-ended work.</p></section><section class="panel"><h3>Learning boundaries</h3><ul class="checklist"><li>Hints before answers</li><li>Workbook-approved content first</li><li>Easier questions when needed</li><li>Checkpoint choices stay yours</li></ul></section></aside></div>`;
-  const submitTutorMessage = (message) => { progress.aiMessages.push({ role: "user", text: message }, { role: "assistant", text: buildTutorReply(message) }); progress.aiMessages = progress.aiMessages.slice(-16); saveProgress(); if (progress.aiMessages.length >= 6) complete("ai"); renderAI(); requestAnimationFrame(() => { const conversation = $("#ai-conversation"); conversation.scrollTop = conversation.scrollHeight; }); };
-  $$('[data-ai-prompt]').forEach(button=>button.addEventListener("click",()=>submitTutorMessage(button.dataset.aiPrompt)));
-  $("#ai-form").addEventListener("submit", (event) => {
-    event.preventDefault();
-    const input = $("#ai-input");
-    const message = input.value.trim();
-    if (!message) return;
-    submitTutorMessage(message);
+  const fw = cambridgeFramework(stageNumber);
+  $("#app").innerHTML = `${pageHeader("Your AI subject expert", "Wehel — Computing", "Ask questions, go deeper, get quizzed, play 'the literal computer' or get homework help — by text or voice.", "Wehel · Ehel Academy AI")}
+    <div class="overview-grid"><section class="panel" id="wehel-chat"></section><aside class="section-stack"><section class="panel"><h3>What Wehel can do</h3><ul class="checklist"><li>Explain this unit more simply — or go deeper</li><li>Quiz you and check your thinking</li><li>Play the literal computer that follows your exact instructions</li><li>Help with homework without doing it for you</li></ul></section><section class="panel"><h3>Learning boundaries</h3><ul class="checklist"><li>Hints before answers</li><li>Unit content first</li><li>Easier questions when needed</li><li>Checkpoint choices stay yours</li></ul></section></aside></div>`;
+  mountWehelChat({
+    container: $("#wehel-chat"),
+    meta: { subject: "computing", subjectLabel: "Computing", grade: stageNumber, cambridgeCode: `${fw.level} ${fw.code}`, unitNo: course.unit.unitNo, unitTitle: course.unit.unitTitle, unit: course },
+    store: progress,
+    ui: { escapeHtml, toast, voiceButton, bindVoiceControls },
+    tutorLabel: "Wehel",
+    placeholder: `Ask about ${course.unit.unitTitle}…`,
+    quickPrompts: [
+      { label: "Explain more simply", message: "Can you explain the first concept in this unit in a simpler way?" },
+      { label: "Quiz me", message: "Quiz me on this unit, one question at a time." },
+      { label: "Be the literal computer", message: "Let's play a game where you are a computer that follows my instructions exactly." },
+      { label: "Help with homework", message: "Can you help me with my homework about this unit?" },
+    ],
+    fallbackReply: buildTutorReply,
+    onExchange: (count) => { if (count >= 2) complete("ai"); },
+    onSaved: saveProgress,
   });
 }
 

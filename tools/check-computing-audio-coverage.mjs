@@ -126,8 +126,8 @@ const EXPECTED = new Map([
   ["item.question", "assessment"],
   ["item.modelAnswer", "reasoning"],
   // Not pre-generatable: written by the learner or by the tutor at runtime.
-  ["item.text", null],
-  ["`Which part of ${course.unit.unitTitle} would you like a hint about?`", null],
+  // (The AI tutor's own bubbles moved to shell/wehel.js when the canned panel
+  // became Wehel; their text is conversational and never pre-generated.)
   ["text", null],
   ["button.hasAttribute(\"data-page-voice\") ? collectPageNarration() : button.dataset.speak", null],
 ]);

@@ -17,6 +17,7 @@
 // that skill as a chip. `pageHeader` is therefore deliberately absent from the
 // bind list below.
 import { createCourseApp } from "../course-app.js";
+import { mountWehelChat } from "../wehel.js?v=wehel-1";
 
 // Shell-provided bindings (populated by bind(ctx)).
 let $, $$, escapeHtml, icon, voiceButton, toast;
@@ -388,6 +389,41 @@ function renderProgressPage() {
 //    overview. The nav only ever offers available sections, so this matters
 //    only for a hand-typed #hash — but a Stage 6 unit has no "grownup" section
 //    and must not render an empty one.
+// The tutor section is the one page that is not a pure string renderer: the
+// unit's conversation starters stay as boxes, and Wehel (the live AI subject
+// expert) mounts beneath them once the HTML is in place.
+function renderTutor() {
+  paint("tutor", () => `
+    ${pageHeader("Ask Your AI Tutor", "Wehel — Global Perspectives", "Wehel is your discussion partner. Say your ideas out loud, debate both sides, and let it push your thinking further.")}
+    <section class="panel">${(course.tutorPrompts || []).map((item) => box(item, "tutor")).join("")}</section>
+    <section class="panel" id="wehel-chat" style="margin-top:18px"></section>
+    ${doneButton("tutor")}`)();
+  const mountEl = $("#wehel-chat");
+  if (!mountEl) return;
+  mountWehelChat({
+    container: mountEl,
+    meta: {
+      subject: "global-perspectives", subjectLabel: "Global Perspectives", grade: stageNumber,
+      cambridgeCode: `${course.cambridge?.level || "Cambridge Global Perspectives"} ${course.cambridge?.code || ""}`.trim(),
+      unitNo: course.unit.unitNo, unitTitle: course.unit.unitTitle, unit: course,
+    },
+    store: progress,
+    ui: { escapeHtml, toast, voiceButton, bindVoiceControls },
+    tutorLabel: "Wehel",
+    greeting: `Hi! I am Wehel, your Global Perspectives partner. This unit is all about the skill of ${course.unit.skill || course.unit.unitTitle}. Try one of the conversation starters above, or just tell me what you think!`,
+    placeholder: `Talk with Wehel about ${course.unit.skill || course.unit.unitTitle}…`,
+    quickPrompts: [
+      { label: "Explain this skill", message: "Can you explain this unit's skill in a simple way, with an example from daily life?" },
+      { label: "Debate with me", message: "Let's have a friendly debate. Pick a fun topic from this unit and take the other side." },
+      { label: "Quiz me", message: "Ask me questions about this unit, one at a time, and push my thinking." },
+      { label: "Help with my project", message: "Can you help me plan my mini-project for this unit?" },
+    ],
+    fallbackReply: () => `I cannot connect right now. While you wait, try one of the conversation starters above out loud — or re-read the Big Ideas for Unit ${course.unit.unitNo} and tell me later what you found.`,
+    onExchange: (count) => { if (count >= 2 && !progress.completed.includes("tutor")) complete("tutor", "Tutor conversation counted toward this unit."); },
+    onSaved: saveProgress,
+  });
+}
+
 const paint = (id, fn) => () => {
   const app = $("#app");
   const available = availableSections().some(([sectionId]) => sectionId === id);
@@ -445,7 +481,7 @@ const config = {
   // Everything available counts toward the bar except the progress page itself
   // — including the overview, which the other subjects exclude.
   nonCountable: ["progress"],
-  progressDefaults: { completed: [], answersSeen: [], reflection: {}, quiz: {} },
+  progressDefaults: { completed: [], answersSeen: [], reflection: {}, quiz: {}, aiMessages: [] },
   keys: (s, u) => ({ progress: `ehel-gp-s${s}-u${u}-progress-v1` }),
   courseKey: (s) => `ehel-gp-g${String(s).padStart(2, "0")}`,
   renderers: {
@@ -459,7 +495,7 @@ const config = {
     challenge: paint("challenge", renderChallenge),
     activities: paint("activities", renderActivities),
     project: paint("project", renderProject),
-    tutor: paint("tutor", () => renderBoxes("tutor", "tutor", course.tutorPrompts, "Ask Your AI Tutor", "Your discussion partner", "Your tutor is your partner and your class. Say your ideas out loud, and let it push your thinking further.")),
+    tutor: renderTutor,
     practice: paint("practice", renderPractice),
     quiz: paint("quiz", renderQuiz),
     reflect: paint("reflect", renderReflect),

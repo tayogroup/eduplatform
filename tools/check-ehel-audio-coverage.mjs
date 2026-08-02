@@ -34,6 +34,17 @@ const UI = fs.existsSync(SHELL_UI) ? SHELL_UI : LEGACY_UI;
 // cyrb53 and staticVoiceKey live in the shell core once a subject has moved.
 const SHELL_CORE = path.join(ROOT, "src", "prototypes", "ehel-academy", "shell", "course-app.js");
 const RUNTIME = UI === SHELL_UI && fs.existsSync(SHELL_CORE) ? SHELL_CORE : UI;
+// Buttons also live in the shell components a subject module pulls in — the
+// Wehel chat panel renders one per message. Those are found by reading the
+// module's own imports rather than by listing filenames here, so a component
+// added later is scanned without this file being updated. Only siblings under
+// shell/ count: ../../<subject>/shared/*.js are visual helpers with no buttons,
+// and ../course-app.js is already read as RUNTIME.
+const COMPONENTS = UI !== SHELL_UI ? [] : [...fs.readFileSync(SHELL_UI, "utf8")
+  .matchAll(/^import\s[^"']*["']\.\.\/([A-Za-z0-9_-]+\.js)(?:\?[^"']*)?["']/gm)]
+  .map((m) => m[1])
+  .filter((name) => name !== "course-app.js")
+  .map((name) => path.join(ROOT, "src", "prototypes", "ehel-academy", "shell", name));
 const LIB = `ehel-${subject === "mathematics" ? "math" : subject}-narration.js`;
 const GEN = path.join(ROOT, "tools", "lib", LIB);
 // cyrb53 lives in the core shared by every subject, not in the subject lib.
@@ -127,8 +138,9 @@ const SHARED = [
   ["item.question", "assessment"],
   ["item.modelAnswer", "reasoning"],
   // Not pre-generatable: written by the learner or by the tutor at runtime.
+  // (`item.text` is a Wehel chat bubble in shell/wehel.js — conversational
+  // text that does not exist until the learner or the model writes it.)
   ["item.text", null],
-  ["`Which part of ${course.unit.unitTitle} would you like a hint about?`", null],
   ["text", null],
   ["button.hasAttribute(\"data-page-voice\") ? collectPageNarration() : button.dataset.speak", null],
 ];
@@ -145,7 +157,14 @@ const EXPECTED = new Map(subject === "science"
 // in the subject module, but the generic ones — the page-narration handler and
 // speakText's own definition — are in the shared core. Scan both, or the core's
 // pair reads as "a button that no longer exists".
-const sources = RUNTIME === UI ? [ui] : [ui, runtime];
+// A component the module imports but that is not on disk would break the app at
+// load, so say so here rather than silently scanning one file fewer and then
+// reporting its buttons as missing.
+for (const file of COMPONENTS) {
+  if (!fs.existsSync(file)) fail(`${path.relative(ROOT, UI)} imports ${path.relative(ROOT, file)}, which does not exist`);
+}
+const componentSources = COMPONENTS.filter((f) => fs.existsSync(f)).map((f) => fs.readFileSync(f, "utf8"));
+const sources = [ui, ...(RUNTIME === UI ? [] : [runtime]), ...componentSources];
 const found = new Set(sources.flatMap((src) => [...callArguments(src, "voiceButton"), ...callArguments(src, "speakText")]));
 for (const argument of found) {
   if (!EXPECTED.has(argument)) {

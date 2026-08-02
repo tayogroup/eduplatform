@@ -462,11 +462,20 @@ export function createCourseApp(config) {
 
       document.body.append(backdrop, drawer);
       button.hidden = true;
-      chatPanel = mountWehelChat({
-        container: drawer.querySelector(".wehel-drawer-body"),
-        sectionHint,
-        ...config.wehelOptions(),
-      });
+      // A subject edge case (a stub unit, a data shape this page doesn't
+      // carry) must degrade to a closed drawer, never a dead button.
+      try {
+        chatPanel = mountWehelChat({
+          container: drawer.querySelector(".wehel-drawer-body"),
+          sectionHint,
+          ...config.wehelOptions(),
+        });
+      } catch (error) {
+        console.error(error);
+        close();
+        toast("Wehel Tutor is not available on this page.");
+        return;
+      }
       drawer.querySelector("#wehel-input")?.focus();
     }
 

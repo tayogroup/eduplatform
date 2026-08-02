@@ -232,7 +232,13 @@ function applyReviewFields(unit, category, itemId, fields, label) {
 
 function applyScriptReview(unit, grade, unitNumber) {
   const items = ((scriptReview[`grade-${grade}`] || {})[`unit-${unitNumber}`]) || {};
+  // Where practice has been authored, the reviewer's corrections for that
+  // category describe the extracted page furniture it replaced — they were
+  // written against "Year 1 Science — Unit 1 — My Activity Sheet". Applying them
+  // would put the furniture straight back over the authored questions.
+  const authoredPractice = grade === 1 && !!(GRADE1[unitNumber] || {}).practice;
   for (const [category, byId] of Object.entries(items)) {
+    if (authoredPractice && category === "Practice") continue;
     for (const [itemId, fields] of Object.entries(byId)) {
       applyReviewFields(unit, category, itemId, fields, `grade ${grade} unit ${unitNumber}:`);
     }
@@ -329,6 +335,29 @@ const CONCEPT_TITLE_OVERRIDES = {
 
 const GRADE1 = {
   1: {
+    // Stage 1's source is a parent's activity sheet, so the practice extractor
+    // had nothing question-shaped to take and lifted the page furniture instead
+    // — sheet titles, section headings, horizontal rules, table column labels
+    // ("Thing", "Circle one") and picture placeholders. 34 of 72 items were
+    // furniture and only 6 contained a question, so the answer key could not be
+    // written: there is no answer to "———————————————". These are authored.
+    //
+    // Answers lead with the word a five-year-old would type, because the app
+    // matches a learner's response against this string by substring.
+    practice: [
+      { level: "Warm-up", prompt: "A goat eats grass, drinks water and grows bigger. Is a goat living or not living?", answer: "A goat is living because it eats, drinks and grows.", hint: "Living things eat, drink, grow and can have young." },
+      { level: "Warm-up", prompt: "A stone sits on the ground all day. It never eats and it never grows. Is a stone living or not living?", answer: "A stone is not living because it does not eat, drink or grow.", hint: "Ask the four questions: does it grow, eat, drink, and can it have babies?" },
+      { level: "Warm-up", prompt: "Name one thing a living thing must have to stay alive.", answer: "Food, water, air or warmth — any one of these is right.", hint: "There are four. You need them too." },
+      { level: "Core", prompt: "A mango tree does not walk about. Some children say that means it is not alive. Are they right?", answer: "No, a mango tree is living because it grows, drinks water and makes new seeds.", hint: "Moving is not the test. Growing, feeding and having young are." },
+      { level: "Core", prompt: "A toy car rolls across the floor. Does moving make the toy car alive?", answer: "No, the toy car is not living because it does not eat, drink or grow.", hint: "Rivers and clouds move too, and they are not alive." },
+      { level: "Core", prompt: "Write the four things every living thing needs to stay alive.", answer: "Food, water, air and warmth.", hint: "Think about what your own body asks you for each day." },
+      { level: "Challenge", prompt: "A hen has chicks. What does that tell you about the hen?", answer: "The hen is living because living things can have young.", hint: "Only living things make new living things." },
+      { level: "Challenge", prompt: "You feel hungry. Which of the four needs is your body asking for?", answer: "Food. Feeling hungry is your body asking for food.", hint: "You are a living thing, so you need the same four things a goat needs." },
+      { level: "Challenge", prompt: "A banana plant has no mouth. How does it get the water it needs?", answer: "It drinks water from the soil through its roots.", hint: "Look at the part of the plant that hides under the ground." },
+      { level: "Extension", prompt: "Your family keeps a chicken. Write one kind thing you can do to care for it.", answer: "Give it food and clean water, and keep it safe and warm.", hint: "Living things depend on kindness. What would you want if you were the chicken?" },
+      { level: "Extension", prompt: "A seed is small and still. When you plant it and water it, it grows into a plant. Was the seed living?", answer: "Yes, the seed is living because it can grow into a new plant.", hint: "Something that can grow into a new living thing is alive, even when it looks still." },
+      { level: "Extension", prompt: "Sort these into living and not living: a cat, a spoon, a mango plant, a stone.", answer: "Living: the cat and the mango plant. Not living: the spoon and the stone.", hint: "Ask of each one: does it eat, drink, grow, and can it have young?" },
+    ],
     outcomes: [
       "Sort things into living and non-living, and say why.",
       "Say that living things move, feed, grow and can have young.",
@@ -357,6 +386,20 @@ const GRADE1 = {
     ],
   },
   2: {
+    practice: [
+      { level: "Warm-up", prompt: "Which part of a plant hides under the soil and drinks water?", answer: "The roots. Roots drink water from the soil.", hint: "It is the part you cannot see when the plant is growing." },
+      { level: "Warm-up", prompt: "Which part of a plant stands up tall and holds the rest of it up?", answer: "The stem. The stem holds the plant up.", hint: "It is the long part between the roots and the leaves." },
+      { level: "Warm-up", prompt: "Name one thing a plant needs to grow.", answer: "Water, light or warmth — any one of these is right.", hint: "There are three. A plant in a dark cupboard is missing one of them." },
+      { level: "Core", prompt: "A plant is kept in a dark cupboard and watered every day. Will it grow well? Why?", answer: "No, because a plant needs light as well as water.", hint: "Water is only one of the three things a plant needs." },
+      { level: "Core", prompt: "Which part of the plant is green and catches the sunlight?", answer: "The leaves. Leaves catch sunlight so the plant can make its food.", hint: "You can count them, and they are usually flat and green." },
+      { level: "Core", prompt: "You put a seed in the soil and water it. What will it grow into?", answer: "A new plant. A seed grows into a new plant.", hint: "Think what a mango seed becomes after many weeks." },
+      { level: "Challenge", prompt: "Name the four main parts of a plant.", answer: "Roots, stem, leaves and flower.", hint: "Start under the soil and work your way up to the top." },
+      { level: "Challenge", prompt: "Which part of the plant makes the seeds that grow into new plants?", answer: "The flower. The flower makes the seeds.", hint: "It is usually the brightest, most colourful part." },
+      { level: "Challenge", prompt: "A banana plant grows a little taller every week. What does that tell you about it?", answer: "It is living, because living things grow.", hint: "Growing is one of the signs of a living thing." },
+      { level: "Extension", prompt: "Your seed was planted two weeks ago and nothing has grown. Write one thing it might be missing.", answer: "Water, light or warmth — any one of these is right.", hint: "Check the three things every plant needs." },
+      { level: "Extension", prompt: "Why does a plant in a pot need you to water it, but a plant outside in the rain does not?", answer: "The rain waters the plant outside. A pot plant can only get water from you.", hint: "Where does the outside plant get its water from?" },
+      { level: "Extension", prompt: "Write one way you can care for a growing plant.", answer: "Water it, keep it in the light, and keep it safe from harm.", hint: "Think about the three things it needs, and about kindness." },
+    ],
     outcomes: [
       "Name the main parts of a plant: roots, stem, leaves and flower.",
       "Say what each part of a plant does.",
@@ -385,6 +428,20 @@ const GRADE1 = {
     ],
   },
   3: {
+    practice: [
+      { level: "Warm-up", prompt: "Which part of your body do you use to see?", answer: "The eyes. We see with our eyes.", hint: "You have two of them, and you close them when you sleep." },
+      { level: "Warm-up", prompt: "Which part of your body do you use to hear?", answer: "The ears. We hear with our ears.", hint: "You have one on each side of your head." },
+      { level: "Warm-up", prompt: "How many senses do we have?", answer: "Five senses.", hint: "Count them: seeing, hearing, smelling, tasting and touching." },
+      { level: "Core", prompt: "You smell smoke in the kitchen. Which sense warned you?", answer: "Smell. We smell with our nose.", hint: "Which part of your face did the warning come through?" },
+      { level: "Core", prompt: "You reach towards a sufuria and feel that it is hot. Which sense told you?", answer: "Touch. We feel with our skin and hands.", hint: "You did not see it or hear it — you felt it." },
+      { level: "Core", prompt: "Which part of your body do you use to taste your food?", answer: "The tongue. We taste with our tongue.", hint: "It is inside your mouth." },
+      { level: "Challenge", prompt: "Name the five senses.", answer: "Sight, hearing, smell, taste and touch.", hint: "One for the eyes, ears, nose, tongue and skin." },
+      { level: "Challenge", prompt: "Write one way a sense keeps you safe.", answer: "Smelling smoke, hearing a car coming, or seeing a hole in the path.", hint: "Think of something your body warns you about before you get hurt." },
+      { level: "Challenge", prompt: "Why should you wash your hands before you eat?", answer: "To wash off dirt and germs so you stay healthy.", hint: "You cannot see what is on your hands, but it can make you ill." },
+      { level: "Extension", prompt: "Your friend has curly hair and you have straight hair. Are you both still children?", answer: "Yes. People are the same in some ways and different in others.", hint: "Being different does not make someone a different kind of living thing." },
+      { level: "Extension", prompt: "Name two parts of your face.", answer: "Eyes, ears, nose or mouth — any two are right.", hint: "Touch your face and name what you find." },
+      { level: "Extension", prompt: "Write one way to keep your body healthy.", answer: "Wash, eat good food, drink clean water, sleep well and play.", hint: "Think about what you do each morning and each night." },
+    ],
     outcomes: [
       "Point to and name parts of the body: head, arms, legs, hands and feet.",
       "Point to and name parts of the face: eyes, ears, nose and mouth.",
@@ -420,6 +477,20 @@ const GRADE1 = {
     ],
   },
   4: {
+    practice: [
+      { level: "Warm-up", prompt: "A cooking sufuria is made from which material?", answer: "Metal. A sufuria is made from metal.", hint: "It is hard, shiny and it does not burn on the fire." },
+      { level: "Warm-up", prompt: "Is a stone hard or soft?", answer: "Hard. A stone is hard.", hint: "Press it with your finger. Does it squash?" },
+      { level: "Warm-up", prompt: "Name one thing in your home that is made from wood.", answer: "A spoon, a chair, a table or a door.", hint: "Look for something that came from a tree." },
+      { level: "Core", prompt: "Why are windows made from glass and not from wood?", answer: "Glass is see-through, so the light can come in.", hint: "What would the room be like if the window were wood?" },
+      { level: "Core", prompt: "A dress is made from which material?", answer: "Cloth. A dress is made from cloth.", hint: "It is soft and bendy, and it can be folded." },
+      { level: "Core", prompt: "Is a pillow hard or soft? Why is that good for a pillow?", answer: "Soft, so it is comfortable to rest your head on.", hint: "Imagine resting your head on a stone instead." },
+      { level: "Challenge", prompt: "Why is a raincoat made from plastic and not from cloth?", answer: "Plastic keeps the water out. Cloth soaks the water up.", hint: "Think what happens to a cloth shirt in heavy rain." },
+      { level: "Challenge", prompt: "Sort these by their material: a wooden spoon, a metal key, a plastic cup.", answer: "Wood: the spoon. Metal: the key. Plastic: the cup.", hint: "Say what each one is made from, one at a time." },
+      { level: "Challenge", prompt: "Why do we make a knife from metal and not from cloth?", answer: "Metal is hard and stiff, so it can cut. Cloth is soft and bendy.", hint: "Which material keeps its shape when you press it?" },
+      { level: "Extension", prompt: "Would a paper cup be a good choice for hot soup? Say why.", answer: "No. Paper goes soft and wet, so the soup would leak out.", hint: "Think what happens to paper when it gets wet." },
+      { level: "Extension", prompt: "Name a material that bends easily.", answer: "Cloth, rubber or plastic — any bendy material is right.", hint: "Which things in your home can you fold or squash?" },
+      { level: "Extension", prompt: "Write one word that describes how a smooth stone feels.", answer: "Smooth. It is not rough or bumpy.", hint: "Rub your finger over it and say what you feel." },
+    ],
     outcomes: [
       "Name the material an everyday object is made from.",
       "Describe materials using words like hard, soft, rough, smooth, bendy and stiff.",
@@ -448,6 +519,20 @@ const GRADE1 = {
     ],
   },
   5: {
+    practice: [
+      { level: "Warm-up", prompt: "You open a door by moving it away from you. Is that a push or a pull?", answer: "A push. A push moves something away from you.", hint: "Which way did the door go — away from you or towards you?" },
+      { level: "Warm-up", prompt: "You pull a rope towards you. Does the rope come nearer or go further away?", answer: "Nearer. A pull brings something towards you.", hint: "Say the word 'pull' and think which way your hands move." },
+      { level: "Warm-up", prompt: "What do we call a push or a pull?", answer: "A force. A push and a pull are both forces.", hint: "It is the science word for both of them together." },
+      { level: "Core", prompt: "A ball is rolling across the floor. What could you do to make it stop?", answer: "Push it the other way, or hold it. A force can stop it.", hint: "It takes a force to start something moving, and a force to stop it." },
+      { level: "Core", prompt: "You push a toy car harder than before. Does it go faster or slower?", answer: "Faster. A bigger push makes it go faster.", hint: "Think about pushing a swing gently and then hard." },
+      { level: "Core", prompt: "Name one push you do at home.", answer: "Pushing a door, a swing, a chair or a cart.", hint: "Look for something you move away from you." },
+      { level: "Challenge", prompt: "Is opening a drawer a push or a pull?", answer: "A pull. You bring the drawer towards you.", hint: "Which way does the drawer travel when it opens?" },
+      { level: "Challenge", prompt: "A ball rolls towards a wall, hits it, and comes back. What changed about the ball?", answer: "Its direction. A force changed the way it was moving.", hint: "It was going one way, and then it went another." },
+      { level: "Challenge", prompt: "Why does a ball roll but a box slides?", answer: "A ball is round, so it rolls. A box has flat sides, so it slides.", hint: "Look at the shape of each one." },
+      { level: "Extension", prompt: "Name one pull you do at home.", answer: "Pulling a door, a rope, a drawer or a zip.", hint: "Look for something you bring towards you." },
+      { level: "Extension", prompt: "You give a heavy box and a light box the same push. Which one moves further?", answer: "The light box. The same push moves a light thing more.", hint: "Which is easier to move, a full sack or an empty one?" },
+      { level: "Extension", prompt: "Write one way to make a moving toy slow down.", answer: "Push it the other way, or let it rub along the ground.", hint: "Slowing down needs a force too." },
+    ],
     outcomes: [
       "Recognise a push and a pull as forces.",
       "Make an object move by pushing or pulling it.",
@@ -476,6 +561,20 @@ const GRADE1 = {
     ],
   },
   6: {
+    practice: [
+      { level: "Warm-up", prompt: "Which part of your body do you use to hear?", answer: "The ear. We hear with our ears.", hint: "You have one on each side of your head." },
+      { level: "Warm-up", prompt: "A drum being hit makes a very big sound. Is that sound loud or quiet?", answer: "Loud. A drum makes a loud sound.", hint: "Would you cover your ears, or lean in to listen?" },
+      { level: "Warm-up", prompt: "When something makes a sound, what is it doing?", answer: "Shaking, or vibrating. Sounds are made when things vibrate.", hint: "Touch a drum skin just after it is hit and feel it." },
+      { level: "Core", prompt: "Put your hand on your throat and hum. What can you feel?", answer: "A shaking, or vibration. Your voice makes your throat vibrate.", hint: "It tickles your fingers a little." },
+      { level: "Core", prompt: "Is a whisper loud or quiet?", answer: "Quiet. A whisper is a quiet sound.", hint: "Think how close you must be to hear one." },
+      { level: "Core", prompt: "Name one loud sound you hear near your home.", answer: "A car horn, a drum, thunder or a cockerel.", hint: "Think of a sound you can hear from far away." },
+      { level: "Challenge", prompt: "A drum only makes a sound when you hit it. Why?", answer: "Hitting it makes the skin shake, and shaking makes the sound.", hint: "No shaking means no sound." },
+      { level: "Challenge", prompt: "Name one quiet sound.", answer: "A whisper, a leaf moving, or someone breathing.", hint: "Think of a sound you must be close to hear." },
+      { level: "Challenge", prompt: "Why should you never push anything into your ear?", answer: "It can hurt your ear, and you need your ears to hear.", hint: "Ears are delicate and they do not mend easily." },
+      { level: "Extension", prompt: "How does the sound of a drum reach your ear?", answer: "It travels through the air to your ear.", hint: "There is something between the drum and you, even though you cannot see it." },
+      { level: "Extension", prompt: "Why do we cover our ears when a sound is very loud?", answer: "To keep our ears safe. Very loud sounds can hurt them.", hint: "What does your body want to do near a very loud noise?" },
+      { level: "Extension", prompt: "Write one sound you hear in the morning.", answer: "A cockerel, birds, a car, or people talking.", hint: "Listen tomorrow morning and remember the first sound you hear." },
+    ],
     outcomes: [
       "Say that sounds are made when things shake or vibrate.",
       "Name the ear as the body part we use to hear.",
@@ -1327,7 +1426,19 @@ function buildGrade(grade) {
       reference.terms = override.vocabulary;
     }
     const experiments = experimentsData(experimentsDoc.blocks.length ? experimentsDoc : activitiesDoc);
-    const { items: practice, mcqs: rawMcqs } = practiceData(practiceDoc, activitiesDoc, (reference.terms || []).map((pair) => pair[0]));
+    let { items: practice, mcqs: rawMcqs } = practiceData(practiceDoc, activitiesDoc, (reference.terms || []).map((pair) => pair[0]));
+    // Authored practice replaces the extracted set outright where a unit has it.
+    // Merging would keep the page furniture the extractor picked up, and there
+    // is no answer to write for a horizontal rule or a table column heading.
+    if (override && override.practice) {
+      practice = override.practice.map((item, index) => ({
+        id: `p${String(index + 1).padStart(2, "0")}`,
+        level: item.level,
+        prompt: item.prompt,
+        answer: item.answer,
+        hint: item.hint,
+      }));
+    }
     const mcqs = override && override.quiz ? override.quiz.map((entry) => ({ ...entry })) : rawMcqs;
     let concepts = conceptList(lesson, title);
     if (grade === 1 && GRADE1_CONCEPTS[unitNo]) {

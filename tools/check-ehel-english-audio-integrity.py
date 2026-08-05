@@ -65,6 +65,10 @@ EXPECTED_GENERATOR_PATTERNS = [
     r'.replace(/🤖|💡|📚|✨|[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}]/gu, "")',
     r'.replace(/\(\s*Ask your AI Tutor[^)]*\)/gi, "")',
     r'.replace(/\s+/g, " ")',
+    # The overview panels are composed, not copied from one field, so the
+    # composition is part of the transform this check mirrors below.
+    r'.split(". ").slice(0, 2).join(". ")',
+    r'Ready: you move straight on to Unit 1.',
 ]
 
 
@@ -140,12 +144,56 @@ def account(grade, cat, desc, text, where):
                 f'{where} {len(script)}ch/{seconds:.1f}s={rate:.0f}ch/s')
 
 
+def overview_panels(unit):
+    """Mirror of overviewPanels() in generate-ehel-english-audio.js."""
+    u = unit.get('unit') or {}
+    overview = str(u.get('unitOverview') or '')
+    return [
+        ('intro', '. '.join(overview.split('. ')[:2])),
+        ('outcomes', ' '.join(o['learningOutcome'] for o in unit.get('outcomes', [])
+                              if o.get('learningOutcome'))),
+        ('path', ' '.join(line.strip() for line in str(u.get('learningPath') or '').split('\n')
+                          if line.strip())),
+    ]
+
+
+PLACEMENT_PATH_TEXT = (
+    'Ready: you move straight on to Unit 1. '
+    'Ready with review: you start Unit 1 and warm up with a few review lessons. '
+    'Build strong roots first: we suggest the best course to grow from — '
+    'a grown-up or teacher can help you choose.'
+)
+
+
+def placement_panels(exam):
+    """Mirror of placementPanels() in generate-ehel-english-audio.js."""
+    return [
+        ('intro', str(exam.get('description') or '')),
+        ('sections', ' '.join(f"{s['title']}. {s['description']}" for s in exam.get('sections', []))),
+        ('path', PLACEMENT_PATH_TEXT),
+    ]
+
+
+def account_overview(grade, holder, panels, where):
+    """Overview clips, one per panel, measured against the panel's own script."""
+    audio = holder.get('overviewAudio') or {}
+    for key, text in panels:
+        if not narration(text):
+            continue
+        account(grade, 'overview', audio.get(key), text, f'{where}-overview-{key}')
+
+
 def walk_other(node, grade, name, path=''):
     """Audio descriptors in quiz/capstone/assessment/lecture files, wherever they sit."""
     if isinstance(node, dict):
         if isinstance(node.get('source'), str) and node['source'].endswith('.mp3'):
             account(grade, f'other:{name}', node, '', f'g{grade} {name}{path}')
         for key, value in node.items():
+            # account_overview() already measured these against their real script;
+            # counting them again here would both double the total and hide a
+            # truncated clip behind a second entry that carries no text to check.
+            if key == 'overviewAudio':
+                continue
             walk_other(value, grade, name, f'{path}.{key}')
     elif isinstance(node, list):
         for i, value in enumerate(node):
@@ -177,6 +225,8 @@ def main():
             for a in unit.get('activities', []):
                 account(grade, 'activities', a.get('audio'), a.get('instructionsAndItems'),
                         f"g{grade} {a['activityId']}")
+            account_overview(grade, unit, overview_panels(unit),
+                             f"g{grade} {unit['unit']['unitId']}")
             for v in unit.get('dictionaryLinks', []):
                 sentence_audio = v.get('sentenceAudio') or []
                 for i, sentence in enumerate(v.get('practiceSentences') or []):
@@ -191,13 +241,21 @@ def main():
             account(grade, 'dict words', entry.get('audio'), entry.get('displayWord'),
                     f"g{grade} dict {entry['displayWord']}")
 
+        # The Prerequisite unit's overview: no units/unit-*.json, so its three
+        # panels are read from placement-exam.json the way the page reads them.
+        placement = os.path.join(E, f'grade-{grade}', 'data', 'placement-exam.json')
+        if os.path.exists(placement):
+            exam = json.load(open(placement, encoding='utf-8'))
+            account_overview(grade, exam, placement_panels(exam),
+                             f"g{grade} {exam.get('assessmentId', 'placement')}")
+
         for other in sorted(glob.glob(os.path.join(E, f'grade-{grade}', 'data', '*.json'))):
             if os.path.basename(other).startswith('master-dictionary'):
                 continue
             walk_other(json.load(open(other, encoding='utf-8')), grade, os.path.basename(other))
 
     cats = ['readings', 'grammar', 'practice', 'speaking', 'writing', 'activities',
-            'sentences', 'meanings', 'dict words']
+            'sentences', 'meanings', 'dict words', 'overview']
     print('LIVE (available:true and verified) per grade')
     print(f"{'grade':>5} " + ' '.join(f'{c[:9]:>10}' for c in cats))
     for grade in range(1, 9):

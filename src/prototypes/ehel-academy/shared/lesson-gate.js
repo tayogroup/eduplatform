@@ -12,8 +12,17 @@
 //   * skipped where requestFullscreen does not exist (e.g. iPhone Safari), so a
 //     child is never gated for nothing
 //   * dismiss-once, so it does not reappear on every route change
-//   * a gesture stays primed, so re-entry after Esc is a single tap
 //   * Escape is suppressed and Keyboard Lock taken WHILE fullscreen
+//
+// NOT ported: PreQuraan's primed first gesture, which armed a capture-phase
+// pointerdown on the document so that ANY click re-entered fullscreen. That
+// suits a single-screen lesson; it does not suit a course shell whose topbar
+// carries a grade picker and a unit picker. Here it meant opening the unit
+// dropdown threw the learner into fullscreen — and, once the shell coupled
+// fullscreen to its focus-mode layout, hid the very picker being opened. In
+// this app fullscreen has exactly two deliberate entry points: the gate's own
+// tile, and a left-nav route click (course-app.js :: enterFocusMode). Re-entry
+// after Escape is therefore one nav click, not one stray tap.
 //
 // Shared by every subject. Unrecognised keys fall back to English (see
 // mountLessonGate below), which is why computing and intensive-english
@@ -55,7 +64,7 @@ const CSS = `
 // it. This exists because three fixes here "changed nothing" for a tester
 // whose dev server was silently serving an out-of-date worktree copy — the
 // only visible artefact was the gate itself, and it carried no provenance.
-const LG_VERSION = "lg3";
+const LG_VERSION = "lg4";
 
 // "Already started" must survive the app's own reload (it reloads itself once
 // after boot) and any later fullscreen exits — otherwise ESC mid-lesson lands
@@ -75,7 +84,6 @@ const lgSid = (() => {
 const LG_KEY = "lg-dismissed:" + lgSid;
 let dismissed = (() => { try { return sessionStorage.getItem(LG_KEY) === "1"; } catch { return false; } })();
 const setDismissed = () => { dismissed = true; try { sessionStorage.setItem(LG_KEY, "1"); } catch {} };
-let armed = false;
 let escBound = false;
 
 const isChromeless = () => !!document.fullscreenElement
@@ -97,21 +105,6 @@ function goFullscreen() {
   } catch { /* refused — the lesson still works */ }
 }
 
-// Keep a gesture primed so the lesson is always one tap from real fullscreen —
-// covers first load and re-entry after the child presses Esc.
-function armFullscreenOnFirstGesture() {
-  if (armed || document.fullscreenElement) return;
-  armed = true;
-  const enter = () => {
-    document.removeEventListener("pointerdown", enter, true);
-    document.removeEventListener("keydown", enter, true);
-    armed = false;
-    goFullscreen();
-  };
-  document.addEventListener("pointerdown", enter, true);
-  document.addEventListener("keydown", enter, true);
-}
-
 // Escape suppression + Keyboard Lock. Capture phase and stopImmediatePropagation
 // so this beats any listener the lesson itself registers. Keyboard Lock only
 // works WHILE fullscreen, so it is taken and released on fullscreenchange.
@@ -128,7 +121,6 @@ function bindEscapeLock() {
       try { navigator.keyboard?.lock?.(["Escape"])?.catch?.(() => {}); } catch { /* unsupported */ }
     } else {
       try { navigator.keyboard?.unlock?.(); } catch { /* unsupported */ }
-      armFullscreenOnFirstGesture();
     }
   });
 }
@@ -147,7 +139,6 @@ export function mountLessonGate(opts = {}) {
   try { console.info(`[lesson-gate] ${diag}`); } catch { /* consoleless embedder */ }
 
   bindEscapeLock();
-  armFullscreenOnFirstGesture();
 
   if (!document.getElementById("lg-gate-style")) {
     const style = document.createElement("style");

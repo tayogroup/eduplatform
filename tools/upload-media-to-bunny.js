@@ -82,7 +82,9 @@ function buildList() {
       // writing/, activities/ and quiz/ are newer trees; grammar practice clips are
       // named {grammarId}-practice.mp3 and live in grammar/, so they need no entry here.
       // quiz/ holds the course-level final assessment read-aloud, one clip per question.
-      for (const cat of ["readings", "grammar", "speaking", "vocabulary", "dictionary", "writing", "activities", "quiz"]) {
+      // overview/ holds the unit overview page, one clip per panel, including the
+      // Prerequisite unit's overview built from placement-exam.json.
+      for (const cat of ["readings", "grammar", "speaking", "vocabulary", "dictionary", "writing", "activities", "quiz", "overview"]) {
         const d = path.join(base, `grade-${g}`, cat);
         if (!fs.existsSync(d)) continue;
         for (const f of fs.readdirSync(d)) if (f.endsWith(".mp3"))

@@ -332,34 +332,51 @@ export function createCourseApp(config) {
     }
     if (config.onNavRendered) config.onNavRendered();
   }
-  // --- focus mode: a nav click shows the section content full-screen --------
+  // --- focus mode: the lesson content owns the whole screen -----------------
   // (topbar + sidebar hidden via body.focus-mode; the floating Menu button or
   // Escape restores the navigation without changing the route).
+  //
+  // Focus mode is entered by a LEFT-NAV CLICK and nothing else. Not by the
+  // lesson gate's Start tile, which lands the learner on the overview where
+  // the grade and unit pickers still need to be reachable — the gate takes
+  // the browser fullscreen, this layout waits for the learner to choose a
+  // section. (The reverse coupling is real: leaving fullscreen always drops
+  // focus mode, so the two can never strand the learner in a page with no
+  // navigation and no browser chrome.)
   function exitFocusMode() {
     document.body.classList.remove("focus-mode");
     if (document.fullscreenElement) document.exitFullscreen?.().catch(() => {});
   }
+  // The Menu button is the only way back while the lesson gate's Keyboard Lock
+  // is swallowing Escape, so it has to exist before the navigation disappears.
+  function ensureFocusChrome() {
+    if (document.getElementById("focus-exit")) return;
+    const exitButton = document.createElement("button");
+    exitButton.id = "focus-exit";
+    exitButton.className = "focus-exit";
+    exitButton.type = "button";
+    exitButton.setAttribute("aria-label", "Show the menu and unit navigation");
+    exitButton.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg><span>Menu</span>';
+    exitButton.addEventListener("click", exitFocusMode);
+    document.body.appendChild(exitButton);
+    document.addEventListener("keydown", (event) => { if (event.key === "Escape") exitFocusMode(); });
+  }
   function enterFocusMode() {
-    if (!document.getElementById("focus-exit")) {
-      const exitButton = document.createElement("button");
-      exitButton.id = "focus-exit";
-      exitButton.className = "focus-exit";
-      exitButton.type = "button";
-      exitButton.setAttribute("aria-label", "Show the menu and unit navigation");
-      exitButton.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg><span>Menu</span>';
-      exitButton.addEventListener("click", exitFocusMode);
-      document.body.appendChild(exitButton);
-      document.addEventListener("keydown", (event) => { if (event.key === "Escape") exitFocusMode(); });
-      // Leaving browser fullscreen (Esc, browser UI) restores the navigation
-      // too, so the two states never drift apart.
-      document.addEventListener("fullscreenchange", () => { if (!document.fullscreenElement) document.body.classList.remove("focus-mode"); });
-    }
+    ensureFocusChrome();
     document.body.classList.add("focus-mode");
     // True fullscreen: the nav click is a user gesture, so the request is
     // allowed. Browsers that refuse (e.g. iPhone Safari) keep the CSS-only
     // full-viewport mode — the catch is deliberate.
     if (!document.fullscreenElement) document.documentElement.requestFullscreen?.().catch(() => {});
   }
+  // Leaving browser fullscreen (the gate's Escape, browser UI, F11) restores
+  // the navigation, so the two states never drift apart. Bound once at boot,
+  // not lazily on first entry into focus mode: fullscreen can begin at the
+  // gate, long before any nav click, and a listener registered afterwards
+  // would have missed the exit that mattered.
+  document.addEventListener("fullscreenchange", () => {
+    if (!document.fullscreenElement) document.body.classList.remove("focus-mode");
+  });
   function navigate(next) {
     if (config.onNavigate) config.onNavigate();
     stopVoice(); route = next; location.hash = next;
@@ -399,11 +416,14 @@ export function createCourseApp(config) {
     background:var(--surface,#fff);color:inherit;box-shadow:-8px 0 30px rgba(15,23,42,.22);border-left:1px solid rgba(15,23,42,.12)}
   .wehel-drawer-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 16px;
     border-bottom:1px solid rgba(15,23,42,.12)}
-  .wehel-drawer-head h2{margin:0;font-size:1.02rem;line-height:1.25}
-  .wehel-drawer-head small{display:block;font-weight:400;opacity:.7;font-size:.8rem}
+  .wehel-drawer-head h2{margin:0;font-size:calc(1.02rem - 1px);line-height:1.25}
+  .wehel-drawer-head small{display:block;font-weight:400;opacity:.7;font-size:calc(.8rem - 1px)}
   .wehel-drawer-close{border:0;background:transparent;color:inherit;font-size:1.5rem;line-height:1;cursor:pointer;padding:4px 8px;border-radius:8px}
   .wehel-drawer-close:hover{background:rgba(15,23,42,.08)}
-  .wehel-drawer-body{flex:1;overflow-y:auto;padding:14px 16px}
+  .wehel-drawer-body{flex:1;overflow-y:auto;padding:14px 16px;font-size:calc(1rem - 1px)}
+  .wehel-drawer-body button,.wehel-drawer-body input{font:inherit}
+  .wehel-drawer-body .ai-prompts button{font-size:13px}
+  .wehel-drawer-body .ai-message strong{font-size:12px}
   @media (max-width:640px){
     .wehel-drawer{width:100vw;top:auto;height:88vh;border-left:0;border-top-left-radius:16px;border-top-right-radius:16px}
     .wehel-dock-button span{display:none}

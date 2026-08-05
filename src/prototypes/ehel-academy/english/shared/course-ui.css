@@ -218,6 +218,22 @@ body.focus-mode .focus-exit:hover { background: #1d4360; }
 .gc-arrow.prev { left: -8px; } .gc-arrow.next { right: -8px; }
 .gc-arrow:hover:not([disabled]) { background: #f2c14e; transform: translateY(-50%) scale(1.08); }
 .gc-arrow[disabled] { opacity: .32; cursor: default; }
+/* Vocabulary deck: the parts a word slide has and a grammar slide does not —
+   the sentence it lives in, and the tools that narrow a 13-70 word deck. */
+/* The word's picture, sized to be the first thing a young reader sees — it sits
+   above the word, not beside the definition, so word and image read as one. */
+.wc-picture { font-size: 76px; line-height: 1; margin-bottom: -4px; }
+@media (max-width: 640px) { .wc-picture { font-size: 60px; } }
+.wc-sentence { width: 100%; max-width: 520px; background: #eef4fa; border-radius: 14px; padding: 14px 16px; display: grid; gap: 8px; }
+.wc-sentence small { color: #5a6f88; letter-spacing: .04em; text-transform: uppercase; font-size: 12px; }
+.wc-sentence p { margin: 0; font-size: 18px; line-height: 1.5; color: #17324d; }
+.wc-sentence-controls { display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; }
+.gc-btn.small { font-size: 15px; padding: 10px 18px; }
+.gc-btn.small svg { width: 17px; height: 17px; }
+/* Sits below the dots, not in .gc-top: the full-bleed rules hide .gc-top, and
+   search is how a learner reaches a word in a seventy-word unit. */
+.wc-tools { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; margin-top: 16px; }
+.wc-tools .search-box { min-width: 240px; }
 .gc-dots { display: flex; gap: 9px; justify-content: center; margin-top: 18px; }
 .gc-dot { width: 13px; height: 13px; border-radius: 50%; border: none; background: #cdd8e8; cursor: pointer; padding: 0; transition: transform .16s, background .16s; }
 .gc-dot.active { background: #2a6cb0; transform: scale(1.35); }
@@ -310,6 +326,29 @@ body.focus-mode.gc-full .gc-dots { position: fixed; left: 0; right: 0; bottom: 1
 .lecture-layout { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(260px, .7fr); gap: 20px; }
 .video-shell { padding: 0; overflow: hidden; background: #0c2335; }
 .video-shell video { display: block; width: 100%; aspect-ratio: 16/9; }
+/* Slide arrows, sitting on the slide itself. Transparent: the slide artwork is
+   the lesson, so the control is just the chevron and a shadow to keep it legible
+   over both the dark headers and the bright photography. Centred vertically and
+   kept clear of the bottom strip, where the native controls live. */
+.lecture-stage { position: relative; }
+.lecture-nav { position: absolute; top: calc(50% - 20px); transform: translateY(-50%); z-index: 2;
+  display: grid; place-items: center; width: 56px; height: 56px; padding: 0; border: 0; border-radius: 999px;
+  background: transparent; color: #fff; cursor: pointer;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, .75)); transition: background .15s, opacity .15s; }
+.lecture-nav svg { width: 34px; height: 34px; stroke-width: 2.6; }
+.lecture-nav.prev { left: 6px; }
+.lecture-nav.next { right: 6px; }
+.lecture-nav:hover:not(:disabled), .lecture-nav:focus-visible { background: rgba(9, 24, 36, .38); }
+.lecture-nav:disabled { opacity: .28; cursor: default; }
+@media (max-width: 640px) { .lecture-nav { width: 46px; height: 46px; } .lecture-nav svg { width: 28px; height: 28px; } }
+/* Lecture captions. The cue box is drawn by the browser, so only the handful of
+   properties ::cue supports can be set here — where the box sits is the VTT's
+   business, and how much text is in it is the caption writer's
+   (tools/lib/ehel_lecture_captions.py, which cuts a cue to about two lines).
+   With that fixed, this is legibility only: a solid dark backing so the words
+   hold up against the bright slide artwork, and slightly smaller than the
+   browser default so two lines stay two lines on a narrow screen. */
+.video-shell video::cue { background-color: rgba(9, 24, 36, .82); color: #fff; font-size: 86%; line-height: 1.4; text-shadow: 0 1px 3px rgba(0, 0, 0, .55); }
 .video-footer { color: white; padding: 16px 18px; display: flex; justify-content: space-between; align-items: center; gap: 14px; }
 .video-footer p { margin: 0; color: #c7d9e3; font-size: 14px; }
 .stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 16px; }

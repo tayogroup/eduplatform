@@ -8,7 +8,13 @@
 //
 // Usage:
 //   node tools/generate-ehel-english-audio.js <category> [grade ...] [--dry] [--limit N] [--force]
-//   category = readings | grammar | speaking | vocabulary | dictionary
+//   category = readings | grammar | speaking | vocabulary | dictionary | overview
+//   overview = the unit overview page, ONE CLIP PER PANEL (intro, outcomes,
+//   path) rather than one per page, so rewording an outcome re-buys the
+//   outcomes clip alone. Also narrates the Prerequisite unit's overview from
+//   placement-exam.json. Panels that are counts, compliance notes or
+//   progress-dependent text carry no clip -- see renderOverview() in
+//   shell/subjects/english.js, which is the definition of what is on screen.
 //   vocabulary = one clip per dictionaryLinks practice sentence (add --meanings
 //   to also narrate each childMeaning -- off by default, see below); rewrites each
 //   sentenceAudio descriptor to the resolver-compatible media/audio/grade-N/
@@ -35,11 +41,19 @@ const MODEL_ID = "eleven_multilingual_v2";
 
 // --- args ---
 const args = process.argv.slice(2);
-const category = args.find((a) => /^(readings|grammar-practice|grammar|speaking|vocabulary|dictionary|writing|activities|final-quiz)$/.test(a)) || "readings";
-const grades = args.filter((a) => /^[1-8]$/.test(a)).map(Number);
+const category = args.find((a) => /^(readings|grammar-practice|grammar|speaking|vocabulary|dictionary|writing|activities|final-quiz|overview)$/.test(a)) || "readings";
+// A bare 1-8 selects a grade — but only when it is not the VALUE of a flag.
+// `--limit 5` used to add grade 5 to the run: the number is a positional match,
+// so a run meant to cap itself at five clips quietly widened to a second grade
+// and billed for it. Flag values are consumed here rather than filtered later,
+// so a new flag with a numeric argument gets the same protection by listing it.
+const FLAGS_WITH_VALUES = new Set(["--limit", "--only"]);
+const grades = args
+  .filter((a, i) => /^[1-8]$/.test(a) && !FLAGS_WITH_VALUES.has(args[i - 1]))
+  .map(Number);
 const gradeList = grades.length ? grades : [1, 2, 3, 4, 5, 6, 7, 8];
 const dry = args.includes("--dry");
-const force = args.includes("--force");
+const force = args.includes("--force") || args.includes("--only-file");
 const limitArg = args.indexOf("--limit");
 const limit = limitArg >= 0 ? Number(args[limitArg + 1]) : Infinity;
 // --only <substring>[,<substring>...]: narrate just the item ids containing one
@@ -48,6 +62,21 @@ const limit = limitArg >= 0 ? Number(args[limitArg + 1]) : Infinity;
 // clips is one run instead of one run per clip.
 const onlyArg = args.indexOf("--only");
 const only = onlyArg >= 0 ? args[onlyArg + 1].split(",").map((s) => s.trim()).filter(Boolean) : null;
+// --only-file <path>: the same targeting, read from the JSON the audit writes
+// ({"3": ["u1-g1-1-family-sentence-1", …]}), keyed by grade. A repair list can
+// run to a thousand ids; pasting that onto a command line risks the shell
+// truncating it, which would regenerate SOME of the clips and look like success.
+// Reading the file also means the audit and the repair cannot disagree about
+// which clips were stale. Implies --force: the only reason to name specific
+// clips is to redo them, and without it the generator would find each file
+// already on disk and reuse it.
+const onlyFileArg = args.indexOf("--only-file");
+const onlyFile = onlyFileArg >= 0 ? JSON.parse(fs.readFileSync(args[onlyFileArg + 1], "utf8")) : null;
+function targetsFor(grade) {
+  if (only) return only;
+  if (!onlyFile) return null;
+  return Array.isArray(onlyFile) ? onlyFile : (onlyFile[String(grade)] || []);
+}
 // Vocabulary childMeaning clips are opt-in: the descriptors exist in the data but
 // no player reads meaningAudio, so narrating them by default just bills for audio
 // nothing can play (~50k characters a grade).
@@ -160,6 +189,70 @@ function quizItems(quiz, grade) {
   });
 }
 
+// The unit overview page, panel by panel. Each entry is [key, text] where the
+// key matches the data-overview-audio attribute renderOverview() emits, and the
+// text is EXACTLY what that panel puts on screen -- the banner shows the first
+// two sentences of unitOverview (the page header shows the same two), so that
+// is what the clip says. A learner following the words must not hear a
+// different sentence from the one they are reading.
+function overviewPanels(unit) {
+  const shown = String((unit.unit || {}).unitOverview || "").split(". ").slice(0, 2).join(". ");
+  return [
+    ["intro", shown],
+    ["outcomes", (unit.outcomes || []).map((o) => o.learningOutcome).filter(Boolean).join(" ")],
+    ["path", String((unit.unit || {}).learningPath || "").split("\n").map((line) => line.trim()).filter(Boolean).join(" ")],
+  ];
+}
+
+// The Prerequisite unit (unit -1) has no units/unit-*.json: its overview is
+// rendered by renderPrereqOverview() from placement-exam.json. The third panel
+// is worded in the page rather than in the data, so those three lines are
+// repeated here -- renderPrereqOverview() remains the source of truth, and a
+// reword there has to be mirrored here or the clip narrates the old wording.
+const PLACEMENT_PATH_TEXT = "Ready: you move straight on to Unit 1. "
+  + "Ready with review: you start Unit 1 and warm up with a few review lessons. "
+  + "Build strong roots first: we suggest the best course to grow from — a grown-up or teacher can help you choose.";
+
+function placementPanels(exam) {
+  return [
+    ["intro", String(exam.description || "")],
+    ["sections", (exam.sections || []).map((s) => `${s.title}. ${s.description}`).join(" ")],
+    ["path", PLACEMENT_PATH_TEXT],
+  ];
+}
+
+// Shared descriptor builder for both overview holders: the unit JSON root and
+// placement-exam.json carry the clips under the same `overviewAudio` key, which
+// is what shell/subjects/english.js reads for either page.
+function overviewItems(holder, panels, idPrefix, grade) {
+  const dir = `media/audio/grade-${grade}/overview`;
+  return panels.filter(([, text]) => narration(text)).map(([key, text]) => {
+    const id = `${idPrefix}-overview-${key}`;
+    const source = `./${dir}/${id}.mp3`;
+    return {
+      id, ref: holder, title: key,
+      text: narration(text),
+      source,
+      output: path.join(ENGLISH, dir, `${id}.mp3`),
+      done: holder.overviewAudio?.[key]?.available === true && holder.overviewAudio?.[key]?.source === source,
+      apply() {
+        const prev = holder.overviewAudio?.[key] || {};
+        holder.overviewAudio = holder.overviewAudio || {};
+        holder.overviewAudio[key] = {
+          ...prev, source, normal: source, slow: source,
+          provider: "ElevenLabs", voiceId: VOICE_ID, model: MODEL_ID,
+          slowPlaybackRate: prev.slowPlaybackRate ?? 0.76,
+          available: true, status: "Generated",
+        };
+      },
+    };
+  });
+}
+
+function placementFile(grade) {
+  return path.join(ENGLISH, `grade-${grade}`, "data", "placement-exam.json");
+}
+
 // What to narrate for each category.
 function itemsForUnit(unit, grade) {
   const gid = String(grade).padStart(2, "0");
@@ -167,6 +260,9 @@ function itemsForUnit(unit, grade) {
   // rather than a directory of their own, so no new media category has to be wired
   // into upload-media-to-bunny.js or the CDN layout.
   const dir = `media/audio/grade-${grade}/${category === "grammar-practice" ? "grammar" : category}`;
+  if (category === "overview") {
+    return overviewItems(unit, overviewPanels(unit), (unit.unit || {}).unitId, grade);
+  }
   if (category === "readings") {
     return (unit.readings || []).map((r) => ({
       id: r.readingId, ref: r, title: r.title,
@@ -369,8 +465,40 @@ function writeMerged(filePath, pristine, mutated) {
   return { written: true, changes: applied, rebased };
 }
 
+// --- what each clip was actually made from ------------------------------------
+// English clips are named by id ({vocabularyId}-sentence-3.mp3), not by a hash
+// of their text the way Science, Global Perspectives and Computing name theirs.
+// That makes the name stable, and it makes text drift SILENT: edit a sentence
+// and this generator finds the old file already on disk, reuses it, and leaves
+// the descriptor saying available:true. An audit of Grade 1 found every sampled
+// vocabulary clip speaking the pre-rewrite sentence — the page said "Sami has a
+// red apple", the voice said "This is an apple".
+//
+// So the text each file was made from is recorded here. A clip whose text has
+// moved since is re-narrated instead of reused; a clip with no record is reused
+// and counted, because "we do not know" must not silently re-bill every clip in
+// the course. tools/audit-ehel-english-sentence-audio.py is what establishes the
+// truth for those, by listening to them.
+const NARRATION_INDEX = path.join(ENGLISH, "media", "audio", ".narration-index.json");
+
+function loadNarrationIndex() {
+  try { return JSON.parse(fs.readFileSync(NARRATION_INDEX, "utf8")); }
+  catch { return {}; }
+}
+
+function textFingerprint(text) {
+  return require("crypto").createHash("sha1").update(String(text)).digest("hex").slice(0, 16);
+}
+
+function indexKey(output) {
+  return path.relative(ENGLISH, output).replace(/\\/g, "/");
+}
+
 async function main() {
   let charsSent = 0, generated = 0, reused = 0, skipped = 0, charsTotal = 0, count = 0;
+  let restaled = 0, unverified = 0;
+  const failures = [];
+  const narrationIndex = loadNarrationIndex();
   // filePath -> { pristine, mutated }. A run holds these for as long as it takes
   // to narrate a grade, so the file on disk can move underneath us; keeping the
   // as-read copy lets writeMerged() put back only what this run actually changed.
@@ -378,15 +506,27 @@ async function main() {
 
   // Narrate one item; returns true when its descriptor needs writing back.
   async function processItem(item, grade) {
-    if (only && !only.some((needle) => String(item.id).includes(needle))) return false;
+    const targets = targetsFor(grade);
+    if (targets && !targets.some((needle) => String(item.id).includes(needle))) return false;
     if (!item.text || item.text.length < (item.minChars ?? 8)) { skipped += 1; return false; }
     charsTotal += item.text.length;
     if (count >= limit) return false;
 
-    const exists = fs.existsSync(item.output) && fs.statSync(item.output).size > 1000;
+    const key = indexKey(item.output);
+    const fingerprint = textFingerprint(item.text);
+    const onFile = fs.existsSync(item.output) && fs.statSync(item.output).size > 1000;
+    // A clip we have a record for, whose text has since changed, is not a clip:
+    // it is a recording of a sentence that is no longer on the page.
+    const stale = onFile && narrationIndex[key] && narrationIndex[key] !== fingerprint;
+    if (stale) restaled += 1;
+    const exists = onFile && !stale;
     if (dry) { count += 1; return false; }
     if (exists && !force) {
       reused += 1;
+      // Counted only on the path that actually keeps the old file. Counting it
+      // before the decision made a run that re-narrated all 1,830 clips still
+      // report all 1,830 as unverified, which reads as "nothing was fixed".
+      if (!narrationIndex[key]) unverified += 1;
       if (item.apply) {
         if (!item.done) { item.apply(); return true; }
       } else if (item.ref.audio?.source !== item.source || item.ref.audio?.available !== true) {
@@ -409,6 +549,7 @@ async function main() {
         const buf = await tts(item.text);
         fs.writeFileSync(item.output, buf);
         charsSent += item.text.length; generated += 1; count += 1; ok = true;
+        narrationIndex[key] = fingerprint;
         if (item.apply) item.apply();
         else item.ref.audio = { source: item.source, provider: "ElevenLabs", voiceId: VOICE_ID, available: true };
         changed = true;
@@ -416,7 +557,10 @@ async function main() {
       } catch (e) {
         console.log(`retry ${attempt}: ${e.message.slice(0, 80)}`);
         await sleep(1500 * attempt);
-        if (attempt === 3) { console.log(`  FAILED ${item.id}`); }
+        // A failure is not neutral: the OLD file stays on disk with no record of
+        // what it says, so a later run reuses it and the clip is stale forever.
+        // Collected here and printed as a ready-to-paste repair at the end.
+        if (attempt === 3) { console.log(`  FAILED ${item.id}`); failures.push(item.id); }
       }
     }
     await sleep(350); // gentle rate limit
@@ -450,6 +594,23 @@ async function main() {
       continue;
     }
 
+    // The Prerequisite unit's overview lives outside units/, so it needs its own
+    // read — but it is part of the same run rather than a category of its own:
+    // "the overview page of every unit" includes unit -1.
+    if (category === "overview") {
+      const filePath = placementFile(grade);
+      if (fs.existsSync(filePath)) {
+        const examText = fs.readFileSync(filePath, "utf8");
+        const exam = JSON.parse(examText);
+        const idPrefix = exam.assessmentId || `eng-g${String(grade).padStart(2, "0")}-placement`;
+        let changed = false;
+        for (const item of overviewItems(exam, placementPanels(exam), idPrefix, grade)) {
+          if (await processItem(item, grade)) changed = true;
+        }
+        if (changed) dirtyFiles.set(filePath, { pristine: JSON.parse(examText), mutated: exam });
+      }
+    }
+
     const unitsDir = path.join(ENGLISH, `grade-${grade}`, "data", "units");
     if (!fs.existsSync(unitsDir)) continue;
     for (const file of fs.readdirSync(unitsDir).filter((f) => f.endsWith(".json")).sort()) {
@@ -472,8 +633,17 @@ async function main() {
     console.log(`merged ${changes} descriptor change(s) into ${path.basename(filePath)} (changed on disk during this run)`);
   }
 
+  if (!dry && generated) {
+    fs.mkdirSync(path.dirname(NARRATION_INDEX), { recursive: true });
+    fs.writeFileSync(NARRATION_INDEX, `${JSON.stringify(narrationIndex, null, 2)}\n`);
+  }
+
   console.log("\n──────── summary ────────");
   console.log(`category: ${category} | grades: ${gradeList.join(",")}${dry ? " (DRY RUN)" : ""}`);
+  if (onlyFile) {
+    const listed = gradeList.map((g) => `g${g}:${(targetsFor(g) || []).length}`).join(" ");
+    console.log(`targeting the repair list in ${args[onlyFileArg + 1]} (${listed}) — --force implied`);
+  }
   if (dry) {
     console.log(`items to narrate: ${count} | total characters: ${charsTotal.toLocaleString()}`);
     console.log(`(ElevenLabs bills per character; ~${charsTotal.toLocaleString()} credits for a full run)`);
@@ -481,6 +651,15 @@ async function main() {
     console.log(`generated: ${generated} | reused: ${reused} | skipped(too short): ${skipped}`);
     console.log(`characters sent this run: ${charsSent.toLocaleString()}`);
     console.log(`data files updated: ${dirtyFiles.size}${rebasedFiles ? ` (${rebasedFiles} merged onto concurrent edits)` : ""}`);
+  }
+  if (failures.length) {
+    console.log(`\nFAILED (still holding their previous audio): ${failures.length}`);
+    console.log(`  node tools/generate-ehel-english-audio.js ${category} ${gradeList.join(" ")} --force --only ${failures.join(",")}`);
+  }
+  if (restaled) console.log(`re-narrated because the text had changed since: ${restaled}`);
+  if (unverified) {
+    console.log(`clips with no record of what they were made from: ${unverified}`);
+    console.log("  (reused this run — listen to them with tools/audit-ehel-english-sentence-audio.py)");
   }
 }
 

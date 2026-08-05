@@ -5,11 +5,15 @@ import json
 import os
 import shutil
 import subprocess
+import sys
 import urllib.error
 import urllib.request
 from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageEnhance, ImageFont
+
+sys.path.insert(0, str(Path(__file__).resolve().parent / "lib"))
+from ehel_lecture_captions import caption_cues, render_vtt  # noqa: E402
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -281,13 +285,27 @@ def create_lecture(grade: int, unit_number: int) -> None:
         "-vf", "fps=12,format=yuv420p", "-c:v", "libx264", "-preset", "veryfast", "-crf", "23",
         "-c:a", "aac", "-b:a", "160k", "-ar", "48000", "-shortest", "-movflags", "+faststart", str(video),
     ], check=True, capture_output=True)
-    captions = ["WEBVTT", ""]
+    # One cue per SENTENCE, not one per slide. A slide's narration is a whole
+    # paragraph, and a cue is rendered in full for its entire duration, so the
+    # old one-cue-per-slide form put 585 characters over the video for 44
+    # seconds. ehel_lecture_captions shares the slide's span out between the
+    # sentences; recut-ehel-lecture-captions.py applies the same split to the
+    # lectures rendered before this fix.
+    cues: list[tuple[float, float, str]] = []
+    slide_times: list[dict] = []
     cursor = 0.0
-    for index, (slide, clip_duration) in enumerate(zip(slides, durations), start=1):
-        captions.extend([str(index), f"{vtt_time(cursor)} --> {vtt_time(cursor + clip_duration - 0.08)}", slide["narration"], ""])
+    for slide, clip_duration in zip(slides, durations):
+        cues.extend(caption_cues(slide["narration"], cursor, cursor + clip_duration))
+        # Recorded, not thrown away: the player pauses at each slide, and these
+        # times are not recoverable afterwards — reproducing them by word-count
+        # weighting misses some lectures by over five seconds (see
+        # backfill-ehel-lecture-slides.py, which had to read them back out of
+        # the caption file for the lectures rendered before this).
+        slide_times.append({"start": round(cursor, 3), "end": round(cursor + clip_duration, 3),
+                            "title": slide.get("title", "")})
         cursor += clip_duration
     caption_path = output_dir / "teacher-lecture.vtt"
-    caption_path.write_text("\n".join(captions), encoding="utf-8")
+    caption_path.write_text(render_vtt(cues), encoding="utf-8")
     (output_dir / "teacher-lecture-script.json").write_text(json.dumps({"voiceId": VOICE_ID, "modelId": MODEL_ID, "slides": slides}, indent=2) + "\n", encoding="utf-8")
     lecture_manifest_path = grade_root / "data" / "lecture-media.json"
     lecture_manifest = json.loads(lecture_manifest_path.read_text(encoding="utf-8")) if lecture_manifest_path.exists() else {
@@ -298,6 +316,7 @@ def create_lecture(grade: int, unit_number: int) -> None:
         "lectureVideo": f"./media/unit-{unit_number}/teacher-lecture.mp4",
         "lecturePoster": f"./media/unit-{unit_number}/teacher-lecture-poster.jpg",
         "lectureCaptions": f"./media/unit-{unit_number}/teacher-lecture.vtt",
+        "lectureSlides": slide_times,
         "lectureProvider": "ElevenLabs",
         "lectureVoiceId": VOICE_ID,
         "lectureVersion": f"g{grade}-u{unit_number}-teacher-lecture-v1",

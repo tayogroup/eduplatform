@@ -9,6 +9,7 @@
 import { escapeHtml as sharedEscapeHtml, icon as sharedIcon, pageHeader as sharedPageHeader } from "../../shared/course-shell.js?v=20260721a";
 import { grammarDiagram, phonicsDiagram } from "../../english/shared/grammar-visuals.js?v=english-20260723a";
 import { createCourseApp } from "../course-app.js?v=t2";
+import { wordPicture } from "./word-pictures.js?v=pictures-1";
 import { askWehel, outlineFromManifest, unitFetcher, browserSpeechSupported, speakBrowser, speechRateForGrade, stopBrowserSpeech, speechRecognitionCtor, recognizeSpeech, wehelIcon } from "../wehel.js?v=wehel-1";
 
 const $ = (selector, root = document) => root.querySelector(selector);
@@ -850,6 +851,31 @@ function gradeLocation(nextGrade) {
 }
 
 
+// --- overview narration ------------------------------------------------------
+// One clip per panel, not one per page. The banner, the outcomes and the
+// recommended path are authored independently, and ElevenLabs bills per
+// character: a reworded outcome must re-buy the outcomes clip alone. The panels
+// that are counts ("Your unit at a glance"), compliance notes (the Cambridge
+// approval banner) or progress-dependent ("Keep going" reads "You have
+// completed 3 learning sections") carry no button — the last of those cannot be
+// pre-rendered at all, since the text differs per learner.
+//
+// Descriptors are written by `node tools/generate-ehel-english-audio.js
+// overview <grade>`; a panel whose clip has not been generated renders no
+// button, so the page degrades quietly rather than offering silence.
+function overviewAudioButton(holder, key, label) {
+  const descriptor = holder?.overviewAudio?.[key];
+  return descriptor?.available
+    ? `<button class="button secondary" data-overview-audio="${escapeHtml(key)}" type="button">${icon("volume-2")} ${escapeHtml(label)}</button>`
+    : "";
+}
+function bindOverviewAudio(holder) {
+  $$("[data-overview-audio]").forEach((button) => button.addEventListener("click", () => {
+    const descriptor = holder?.overviewAudio?.[button.dataset.overviewAudio];
+    if (descriptor?.source) playAudio(descriptor.source, { rate: AI_NARRATION_RATE, button });
+  }));
+}
+
 function renderOverview() {
   const learningPath = course.unit.learningPath.split("\n").filter(Boolean);
   $("#app").innerHTML = `${pageHeader(`${course.grade.label} · ${course.term.label} · Unit ${course.unit.unitNo}`, course.unit.unitTitle, course.unit.unitOverview.split(". ").slice(0, 2).join(". "))}
@@ -857,20 +883,21 @@ function renderOverview() {
       <div class="section-stack">
         <section class="unit-banner">
           <img src="${course.visual.image}" alt="${escapeHtml(course.visual.alt)}">
-          <div class="banner-copy"><span>Your learning journey</span><h2>Explore ${escapeHtml(course.unit.unitTitle)}</h2><p>${escapeHtml(course.unit.unitOverview.split(". ").slice(0, 2).join(". "))}</p><button class="button gold" data-go="lecture" type="button">${icon("play")} ${unitNumber === 10 ? "Launch my capstone" : "Start with Teacher Musa"}</button></div>
+          <div class="banner-copy"><span>Your learning journey</span><h2>Explore ${escapeHtml(course.unit.unitTitle)}</h2><p>${escapeHtml(course.unit.unitOverview.split(". ").slice(0, 2).join(". "))}</p><button class="button gold" data-go="lecture" type="button">${icon("play")} ${unitNumber === 10 ? "Launch my capstone" : "Start with Teacher Musa"}</button>${overviewAudioButton(course, "intro", "Hear the overview")}</div>
         </section>
-        <section class="panel"><h2>What you will learn</h2><div class="outcome-list">${course.outcomes.map((outcome) => `<div class="outcome"><span>${outcome.sequence}</span><p>${escapeHtml(outcome.learningOutcome)}</p></div>`).join("")}</div></section>
+        <section class="panel"><h2>What you will learn</h2><div class="outcome-list">${course.outcomes.map((outcome) => `<div class="outcome"><span>${outcome.sequence}</span><p>${escapeHtml(outcome.learningOutcome)}</p></div>`).join("")}</div>${overviewAudioButton(course, "outcomes", "Hear what you will learn")}</section>
       </div>
       <div class="section-stack">
         <section class="panel approval-banner"><span class="eyebrow">${escapeHtml(cambridgeFramework(gradeNumber).level)} ${cambridgeFramework(gradeNumber).code}</span><h3>Aligned to ${escapeHtml(cambridgeLabel(gradeNumber))}</h3><p>Unit ${course.unit.unitNo} is structured from the ${escapeHtml(cambridgeLabel(gradeNumber))} content package. AI-assisted content review complete — human curriculum sign-off pending.</p></section>
         <section class="panel"><h3>Your unit at a glance</h3><div class="stat-row"><div class="stat"><strong>${course.dictionaryLinks.length}</strong><small>words</small></div><div class="stat"><strong>${course.readings.length}</strong><small>texts</small></div><div class="stat"><strong>${course.quizzes.length}</strong><small>quiz points</small></div></div></section>
-        <section class="panel"><h3>Recommended path</h3><ol class="path-list">${learningPath.map((item) => `<li>${icon("circle-check-big")}<span>${escapeHtml(item)}</span></li>`).join("")}</ol></section>
+        <section class="panel"><h3>Recommended path</h3><ol class="path-list">${learningPath.map((item) => `<li>${icon("circle-check-big")}<span>${escapeHtml(item)}</span></li>`).join("")}</ol>${overviewAudioButton(course, "path", "Hear the recommended path")}</section>
         <section class="panel"><h3>Keep going</h3><p>${progress.completed.length ? `You have completed ${progress.completed.length} learning sections. Pick up where you left off.` : "Your progress will save on this device as you learn."}</p><button class="button primary" data-go="${progress.completed.includes("lecture") ? "dictionary" : "lecture"}" type="button">Continue ${icon("arrow-right")}</button></section>
         ${unitNumber === defaultUnit && !placementProgress.completed ? `<section class="panel final-quiz-callout"><span class="eyebrow">New to ${gradeLabel}?</span><h3>Prerequisite: placement exam</h3><p>A short exam over your earlier English finds your perfect starting point and suggests review lessons if you need them.</p><a class="button gold" href="${courseLocation(PREREQ_UNIT, "placement")}">Take the placement exam ${icon("arrow-right")}</a></section>` : ""}
         ${unitNumber === 10 ? `<section class="panel final-quiz-callout"><span class="eyebrow">After your capstone</span><h3>Final course quiz</h3><p>Complete 30 questions across words, reading, grammar, speaking and writing. Your answers save as you work.</p><button class="button gold" data-go="final-quiz" type="button">${finalQuizProgress.completed ? "View my results" : "Open final quiz"} ${icon("arrow-right")}</button></section>` : ""}
       </div>
     </div>`;
   $$('[data-go]').forEach((button) => button.addEventListener("click", () => navigate(button.dataset.go)));
+  bindOverviewAudio(course);
 }
 
 function renderLecture() {
@@ -895,9 +922,18 @@ function renderLecture() {
     $("#to-dictionary").addEventListener("click", () => navigate("dictionary"));
     return;
   }
-  $("#app").innerHTML = `${pageHeader("Begin here", "Teacher audiovisual lecture", "Watch and listen before you begin the independent lesson. Captions are available in the player.")}
+  // Slide-by-slide playback. The lecture is one rendered video of consecutive
+  // slides, so the slide times come from the manifest (lecture-media.json ::
+  // lectureSlides, written by the lecture renderer and backfilled for the
+  // lectures that predate it). Without them the player behaves exactly as it
+  // always did — plays straight through — so a lecture whose times are missing
+  // degrades to the old lecture rather than to a broken one.
+  const lectureSlides = Array.isArray(course.visual.lectureSlides) ? course.visual.lectureSlides : [];
+  $("#app").innerHTML = `${pageHeader("Begin here", "Teacher audiovisual lecture", lectureSlides.length > 1
+    ? "One slide at a time. Each slide reads itself aloud and then waits — use the arrows to move on when you are ready."
+    : "Watch and listen before you begin the independent lesson. Captions are available in the player.")}
     <div class="lecture-layout">
-      <section class="panel video-shell"><video id="lecture-video" controls preload="metadata" poster="${course.visual.lecturePoster}"><source src="${course.visual.lectureVideo}" type="video/mp4"><track kind="captions" src="${course.visual.lectureCaptions}" srclang="en" label="English" default></video><div class="video-footer"><p id="video-status">Teacher Musa · Unit ${course.unit.unitNo} lecture</p><button class="button gold" id="lecture-done" type="button" ${progress.completed.includes("lecture") ? "" : "disabled"}>${progress.completed.includes("lecture") ? icon("check") + " Lecture complete" : icon("play") + " Watch to complete"}</button></div></section>
+      <section class="panel video-shell"><div class="lecture-stage"><video id="lecture-video" controls preload="metadata" poster="${course.visual.lecturePoster}"><source src="${course.visual.lectureVideo}" type="video/mp4"><track kind="captions" src="${course.visual.lectureCaptions}" srclang="en" label="English" default></video>${lectureSlides.length > 1 ? `<button class="lecture-nav prev" id="slide-prev" type="button" aria-label="Previous slide">${icon("chevron-left")}</button><button class="lecture-nav next" id="slide-next" type="button" aria-label="Next slide">${icon("chevron-right")}</button>` : ""}</div><div class="video-footer"><p id="video-status">Teacher Musa · Unit ${course.unit.unitNo} lecture</p><button class="button gold" id="lecture-done" type="button" ${progress.completed.includes("lecture") ? "" : "disabled"}>${progress.completed.includes("lecture") ? icon("check") + " Lecture complete" : icon("play") + " Watch to complete"}</button></div></section>
       <div class="section-stack"><section class="panel"><span class="eyebrow">Before you learn</span><h2>Listen, look and repeat</h2><p>Teacher Musa introduces ${escapeHtml(groups)}.</p><ul class="checklist"><li>${icon("ear")} Hear the approved ElevenLabs teacher voice</li><li>${icon("captions")} Read along with captions</li><li>${icon("message-circle")} Pause, take notes and repeat key language</li></ul></section><section class="panel"><h3>Ready after the video?</h3><p>Complete the lecture before continuing to the vocabulary dictionary.</p><button class="button primary" id="to-dictionary" type="button" ${progress.completed.includes("lecture") ? "" : "disabled"}>Open vocabulary ${icon("arrow-right")}</button></section></div>
     </div>`;
   $("#to-dictionary").addEventListener("click", () => navigate("dictionary"));
@@ -906,22 +942,106 @@ function renderLecture() {
   lectureVideo.defaultPlaybackRate = AI_NARRATION_RATE;
   lectureVideo.playbackRate = AI_NARRATION_RATE;
   attachCaptions(lectureVideo);
-  lectureVideo.addEventListener("loadedmetadata", () => {
-    const minutes = Math.max(1, Math.round(lectureVideo.duration / 60));
-    $("#video-status").textContent = `Teacher Musa · ${minutes}-minute audiovisual lecture`;
-  });
-  lectureVideo.addEventListener("error", () => {
-    $("#video-status").textContent = "Lecture video could not be loaded.";
-    toast("The lecture video is unavailable. Please refresh and try again.");
-  });
-  lectureVideo.addEventListener("ended", () => {
+  let slideIndex = 0;
+  let lectureLength = "";
+  const finishLecture = () => {
+    if (progress.completed.includes("lecture")) return;
     lectureDone.disabled = false;
     $("#to-dictionary").disabled = false;
     lectureDone.innerHTML = `${icon("check")} Lecture complete`;
     complete("lecture", "Lecture complete. Your vocabulary lesson is ready.");
     icons();
+  };
+  lectureVideo.addEventListener("loadedmetadata", () => {
+    const minutes = Math.max(1, Math.round(lectureVideo.duration / 60));
+    lectureLength = `${minutes}-minute audiovisual lecture`;
+    showStatus();
   });
+  lectureVideo.addEventListener("error", () => {
+    $("#video-status").textContent = "Lecture video could not be loaded.";
+    toast("The lecture video is unavailable. Please refresh and try again.");
+  });
+  // Playing to the very end still completes: a learner who scrubs or lets the
+  // last slide run out arrives here rather than at the boundary pause below.
+  lectureVideo.addEventListener("ended", finishLecture);
   lectureDone.addEventListener("click", () => navigate("dictionary"));
+
+  // --- one slide at a time -------------------------------------------------
+  // The video is not stopped from playing on: it is paused the moment it
+  // reaches the end of the slide being watched. So a slide reads itself aloud
+  // and then waits, and the arrows are what move the lecture forward.
+  function showStatus() {
+    if (!lectureSlides.length) {
+      $("#video-status").textContent = `Teacher Musa · ${lectureLength || `Unit ${course.unit.unitNo} lecture`}`;
+      return;
+    }
+    const slide = lectureSlides[slideIndex];
+    const title = slide.title ? ` · ${slide.title}` : "";
+    $("#video-status").textContent = `Slide ${slideIndex + 1} of ${lectureSlides.length}${title}`;
+  }
+  if (lectureSlides.length > 1) {
+    const prev = $("#slide-prev");
+    const next = $("#slide-next");
+    // The slide being watched is authoritative; it is only re-derived from the
+    // clock when the learner moves the clock themselves. Deriving it on every
+    // timeupdate looked tidier and was wrong: the moment playback crossed into
+    // the next slide the boundary check started testing the NEXT slide's end,
+    // so the stop was silently skipped. It survived only while the slides had a
+    // gap between them wide enough for a timeupdate to land in.
+    const slideAt = (time) => {
+      let found = 0;
+      lectureSlides.forEach((slide, index) => { if (time >= slide.start - 0.02) found = index; });
+      return found;
+    };
+    const syncNav = () => {
+      prev.disabled = slideIndex === 0;
+      next.disabled = slideIndex === lectureSlides.length - 1;
+      showStatus();
+    };
+    // Parked a frame short of the change, never on it: at the boundary itself
+    // the video already shows the next slide, and the label would follow.
+    const PARK_BEFORE_END = 0.05;
+    let parking = false;
+    const goToSlide = (index) => {
+      slideIndex = Math.max(0, Math.min(lectureSlides.length - 1, index));
+      parking = true;
+      lectureVideo.currentTime = lectureSlides[slideIndex].start;
+      syncNav();
+      // A click is a user gesture, so this play() is always allowed — which is
+      // what makes "arrive at a slide and it reads itself" possible at all.
+      lectureVideo.play().catch(() => { /* the learner can press play */ });
+    };
+    prev.addEventListener("click", () => goToSlide(slideIndex - 1));
+    next.addEventListener("click", () => goToSlide(slideIndex + 1));
+    // Pressing play while parked at the end of a slide means "carry on", so the
+    // next slide becomes the one being watched — otherwise it would stop again
+    // immediately on the boundary it is already sitting on.
+    lectureVideo.addEventListener("play", () => {
+      const slide = lectureSlides[slideIndex];
+      if (slideIndex < lectureSlides.length - 1 && lectureVideo.currentTime >= slide.end - 0.15) {
+        slideIndex += 1;
+        syncNav();
+      }
+    });
+    lectureVideo.addEventListener("timeupdate", () => {
+      if (lectureVideo.paused) return;
+      const slide = lectureSlides[slideIndex];
+      if (lectureVideo.currentTime >= slide.end - PARK_BEFORE_END) {
+        lectureVideo.pause();
+        parking = true;
+        lectureVideo.currentTime = slide.end - PARK_BEFORE_END;
+        if (slideIndex === lectureSlides.length - 1) finishLecture();
+      }
+    });
+    lectureVideo.addEventListener("seeked", () => {
+      // Our own parking seek must not be read as the learner jumping somewhere.
+      if (parking) { parking = false; return; }
+      slideIndex = slideAt(lectureVideo.currentTime);
+      syncNav();
+    });
+    syncNav();
+  }
+  showStatus();
 }
 
 function linkedWords() {
@@ -929,6 +1049,10 @@ function linkedWords() {
 }
 
 function renderDictionary() {
+  // Grades 1-4 meet one word at a time on the same slide design the Grade 1
+  // grammar patterns use. From Grade 5 the searchable two-column lab stays:
+  // by then a learner is looking words UP, and a unit can carry 70 of them.
+  if (gradeNumber <= 4) return renderWordCarousel();
   const words = linkedWords();
   activeWordId = activeWordId || words[0].vocabularyId;
   $("#app").innerHTML = `${pageHeader("Linked master dictionary", "Vocabulary lab", `Search the ${gradeLabel} sub-dictionary. Every word links to one reusable master entry and approved pronunciation.`, `${dictionary.entryCount} master entries`)}
@@ -991,6 +1115,205 @@ function renderDictionary() {
   $("#word-search").addEventListener("input", drawList);
   $("#group-filter").addEventListener("change", drawList);
   drawList(); drawWord();
+}
+
+// Vocabulary as a slide deck, on the Grade 1 grammar carousel's design (gc-*):
+// one word per vivid slide, big Hear buttons, side arrows, dots, swipe.
+//
+// Everything the two-column lab shows is preserved — the word, part of speech
+// and its definition, the child-facing meaning, all five practice sentences with
+// their own audio, the spelling practice, the write-your-own-sentence check and
+// "I know this word" — only the layout changes. What does NOT carry over from
+// grammar is the assumption of six items: a unit holds 13-70 words, so the
+// search and group filter come with it and narrow the deck itself. They sit
+// under the dots rather than in .gc-top, which the full-bleed CSS hides.
+function renderWordCarousel() {
+  const allWords = linkedWords();
+  const esc = escapeHtml;
+  // One sentence position per word: in a deck each word keeps its own place,
+  // where the lab had a single cursor because only one word was ever on screen.
+  const sentenceAt = new Map();
+  let deck = allWords;
+  let slide = 0;
+
+  const wordSlide = (item, index) => {
+    const sentences = item.practiceSentences?.length ? item.practiceSentences : [item.exampleSentence].filter(Boolean);
+    const position = Math.min(sentenceAt.get(item.vocabularyId) || 0, Math.max(0, sentences.length - 1));
+    const known = progress.knownWords.includes(item.vocabularyId);
+    const sentenceAudio = item.sentenceAudio?.[position];
+    // The lemma, not the displayed form: "feet" and "foot" are one entry, and a
+    // word with no honest picture shows none rather than a decorative stand-in.
+    const picture = wordPicture(item.master.lemma) || wordPicture(item.master.displayWord);
+    return `<section class="gc-slide gc-v${index % 5}" data-slide="${esc(item.vocabularyId)}"><div class="gc-inner">
+      <span class="gc-eyebrow">Word ${index + 1} of ${deck.length} · ${esc(item.master.partOfSpeech)}${item.groupTitle ? ` · ${esc(item.groupTitle)}` : ""}</span>
+      ${picture ? `<div class="wc-picture" aria-hidden="true">${picture}</div>` : ""}
+      <div class="gc-pattern" lang="en">${esc(item.master.displayWord)}</div>
+      <p class="gc-lead">${esc(item.childMeaning)}</p>
+      <div class="gc-actions">
+        <button class="gc-btn play" type="button" data-word-audio="${esc(item.vocabularyId)}">${icon("volume-2")} Hear it</button>
+        <button class="gc-btn ghost" type="button" data-word-audio="${esc(item.vocabularyId)}">${icon("rotate-ccw")} Again</button>
+        ${item.meaningAudio?.available ? `<button class="gc-btn ghost" type="button" data-meaning-audio="${esc(item.vocabularyId)}">${icon("volume-2")} Meaning</button>` : ""}
+      </div>
+      <small class="gc-source">ElevenLabs · approved Ehel voice · 0.90x</small>
+      ${sentences.length ? `<div class="wc-sentence">
+        <small>In a sentence · ${position + 1} of ${sentences.length}</small>
+        <p>${esc(sentences[position])}</p>
+        <div class="wc-sentence-controls">
+          <button class="icon-button" type="button" data-sentence-step="-1" data-word="${esc(item.vocabularyId)}" aria-label="Previous sentence" ${sentences.length < 2 ? "disabled" : ""}>${icon("arrow-left")}</button>
+          <div class="sentence-dots">${sentences.map((_, i) => `<button class="sentence-dot ${i === position ? "active" : ""}" type="button" data-sentence-dot="${i}" data-word="${esc(item.vocabularyId)}" aria-label="Sentence ${i + 1}"></button>`).join("")}</div>
+          <button class="gc-btn ghost small" type="button" data-sentence-audio="${esc(item.vocabularyId)}" ${sentenceAudio?.available ? "" : "disabled"}>${icon("volume-2")} Hear sentence</button>
+          <button class="icon-button" type="button" data-sentence-step="1" data-word="${esc(item.vocabularyId)}" aria-label="Next sentence" ${sentences.length < 2 ? "disabled" : ""}>${icon("arrow-right")}</button>
+        </div>
+      </div>` : ""}
+      ${item.spellingPractice ? `<p class="gc-note"><span class="field-label">Spelling:</span> ${esc(item.spellingPractice)}</p>` : ""}
+      <details class="gc-practice"><summary>Write your own sentence</summary>
+        <div class="practice-box"><input data-write="${esc(item.vocabularyId)}" maxlength="180" placeholder="${esc(item.sentenceStarter || "")}…" aria-label="Write your own sentence using ${esc(item.master.displayWord)}"><button class="button primary" type="button" data-check="${esc(item.vocabularyId)}">Check sentence</button></div>
+        <div data-feedback="${esc(item.vocabularyId)}" role="status" aria-live="polite" aria-atomic="true"></div>
+      </details>
+      <button class="gc-btn ${known ? "done" : "ghost"}" type="button" data-know="${esc(item.vocabularyId)}">${known ? `${icon("check-circle")} Learned` : `${icon("bookmark-plus")} I know this word`}</button>
+      ${index === deck.length - 1 ? `<button class="gc-btn done" id="dictionary-done" type="button">${icon("check")} I have learned these words</button>` : ""}
+    </div></section>`;
+  };
+
+  $("#app").innerHTML = `
+    <div class="gc-wrap">
+      <div class="gc-top"><h2 class="gc-heading">Say the words</h2><span class="gc-count" id="wc-count"></span></div>
+      <div class="gc-carousel">
+        <button class="gc-arrow prev" type="button" aria-label="Previous word">${icon("chevron-left")}</button>
+        <div class="gc-viewport"><div class="gc-track" id="wc-track"></div></div>
+        <button class="gc-arrow next" type="button" aria-label="Next word">${icon("chevron-right")}</button>
+      </div>
+      <div class="gc-dots" id="wc-dots"></div>
+      <div class="wc-tools">
+        <label class="search-box">${icon("search")}<input id="word-search" type="search" placeholder="Search words or meanings" aria-label="Search vocabulary"></label>
+        <select id="group-filter" aria-label="Filter vocabulary group"><option value="all">All vocabulary groups</option>${course.vocabularyGroups.map((group) => `<option value="${group.id}">${esc(group.title)}</option>`).join("")}</select>
+        <span class="status-chip" id="wc-known">${progress.knownWords.length} learned</span>
+      </div>
+    </div>`;
+  document.body.classList.add("gc-full");
+
+  const track = $("#wc-track");
+  const dotsRow = $("#wc-dots");
+  const prevArrow = $(".gc-arrow.prev");
+  const nextArrow = $(".gc-arrow.next");
+
+  const wordFor = (id) => deck.find((item) => item.vocabularyId === id);
+  const sentencesFor = (item) => (item.practiceSentences?.length ? item.practiceSentences : [item.exampleSentence].filter(Boolean));
+
+  // Repaint one slide in place. Re-rendering the whole deck would snap the
+  // carousel back to the first word every time a sentence or a Learned mark
+  // changed, which is exactly what the learner is in the middle of doing.
+  const redrawSlide = (id) => {
+    const index = deck.findIndex((item) => item.vocabularyId === id);
+    const node = track.querySelector(`[data-slide="${CSS.escape(id)}"]`);
+    if (index < 0 || !node) return;
+    node.outerHTML = wordSlide(deck[index], index);
+    icons();
+  };
+
+  const goToSlide = (next) => {
+    slide = Math.max(0, Math.min(deck.length - 1, next));
+    track.style.transform = `translateX(-${slide * 100}%)`;
+    dotsRow.querySelectorAll("[data-dot]").forEach((dot, i) => dot.classList.toggle("active", i === slide));
+    prevArrow.disabled = slide === 0;
+    nextArrow.disabled = slide === deck.length - 1;
+    $("#wc-count").textContent = deck.length ? `Word ${slide + 1} of ${deck.length}` : "No words";
+    stopAudio();
+    activeWordId = deck[slide]?.vocabularyId || activeWordId;
+  };
+
+  const drawDeck = () => {
+    const query = $("#word-search").value.trim().toLowerCase();
+    const group = $("#group-filter").value;
+    deck = allWords.filter((item) => (group === "all" || item.groupId === group)
+      && (!query || `${item.master.displayWord} ${item.childMeaning}`.toLowerCase().includes(query)));
+    if (!deck.length) {
+      track.innerHTML = `<section class="gc-slide gc-v0"><div class="gc-inner"><p class="gc-lead">No matching words. Clear the search to see them all.</p></div></section>`;
+      dotsRow.innerHTML = "";
+      prevArrow.disabled = nextArrow.disabled = true;
+      $("#wc-count").textContent = "No words";
+      icons();
+      return;
+    }
+    track.innerHTML = deck.map(wordSlide).join("");
+    dotsRow.innerHTML = deck.map((item, i) => `<button class="gc-dot" type="button" data-dot="${i}" aria-label="Word ${i + 1} of ${deck.length}"></button>`).join("");
+    dotsRow.querySelectorAll("[data-dot]").forEach((dot) => dot.addEventListener("click", () => goToSlide(Number(dot.dataset.dot))));
+    goToSlide(0);
+    icons();
+  };
+
+  // One delegated listener for the whole deck: slides are repainted as the
+  // learner works, and rebinding every control on every repaint is how a dead
+  // button appears three interactions later.
+  $(".gc-wrap").addEventListener("click", (event) => {
+    const target = event.target.closest("[data-word-audio], [data-meaning-audio], [data-sentence-audio], [data-sentence-step], [data-sentence-dot], [data-check], [data-know], #dictionary-done");
+    if (!target) return;
+    const id = target.dataset.word || target.dataset.wordAudio || target.dataset.meaningAudio
+      || target.dataset.sentenceAudio || target.dataset.check || target.dataset.know;
+    const item = wordFor(id);
+
+    if (target.id === "dictionary-done") return complete("dictionary", "Vocabulary complete. Well done!");
+    if (!item) return;
+    if (target.dataset.wordAudio) {
+      return playAudio(item.master.audio.normal, { rate: AI_NARRATION_RATE, start: item.master.audio.cueStart, end: item.master.audio.cueEnd, button: target });
+    }
+    if (target.dataset.meaningAudio) {
+      return playAudio(item.meaningAudio.source, { rate: AI_NARRATION_RATE, start: item.meaningAudio.cueStart, end: item.meaningAudio.cueEnd, button: target });
+    }
+    if (target.dataset.sentenceAudio) {
+      const descriptor = item.sentenceAudio?.[sentenceAt.get(id) || 0];
+      if (!descriptor?.available) return toast("This sentence recording is not available yet.");
+      return playAudio(descriptor.source, { rate: AI_NARRATION_RATE, start: descriptor.cueStart, end: descriptor.cueEnd, button: target });
+    }
+    if (target.dataset.sentenceStep || target.dataset.sentenceDot !== undefined) {
+      const total = sentencesFor(item).length;
+      const current = sentenceAt.get(id) || 0;
+      const next = target.dataset.sentenceDot !== undefined
+        ? Number(target.dataset.sentenceDot)
+        : (current + Number(target.dataset.sentenceStep) + total) % total;
+      sentenceAt.set(id, next);
+      return redrawSlide(id);
+    }
+    if (target.dataset.check) {
+      const value = ($(`[data-write="${CSS.escape(id)}"]`)?.value || "").trim();
+      const usesWord = value.toLowerCase().includes(item.master.displayWord.toLowerCase());
+      const finished = value.length >= 8 && /[.!?]$/.test(value);
+      const box = $(`[data-feedback="${CSS.escape(id)}"]`);
+      if (box) {
+        box.innerHTML = `<p class="feedback ${usesWord && finished ? "good" : "try"}">${usesWord && finished
+          ? "Strong sentence: you used the word and end punctuation."
+          : `Try a complete sentence using “${escapeHtml(item.master.displayWord)}” and finish with punctuation.`}</p>`;
+      }
+      return undefined;
+    }
+    if (target.dataset.know) {
+      if (!progress.knownWords.includes(id)) progress.knownWords.push(id);
+      // Same rule as the lab: the section completes at 80% of the unit's words,
+      // counted over every word in the unit, not just the filtered deck.
+      if (progress.knownWords.length >= Math.ceil(allWords.length * 0.8)) complete("dictionary"); else saveProgress();
+      $("#wc-known").textContent = `${progress.knownWords.length} learned`;
+      redrawSlide(id);
+      toast(`${item.master.displayWord} added to My Word Book.`);
+    }
+    return undefined;
+  });
+
+  prevArrow.addEventListener("click", () => goToSlide(slide - 1));
+  nextArrow.addEventListener("click", () => goToSlide(slide + 1));
+  $("#word-search").addEventListener("input", drawDeck);
+  $("#group-filter").addEventListener("change", drawDeck);
+
+  const viewport = $(".gc-viewport");
+  let startX = null;
+  viewport.addEventListener("touchstart", (event) => { startX = event.touches[0].clientX; }, { passive: true });
+  viewport.addEventListener("touchend", (event) => {
+    if (startX === null) return;
+    const dx = event.changedTouches[0].clientX - startX;
+    if (Math.abs(dx) > 45) goToSlide(slide + (dx < 0 ? 1 : -1));
+    startX = null;
+  }, { passive: true });
+
+  drawDeck();
 }
 
 function setAudioButton(button, playing) {
@@ -1977,15 +2300,18 @@ function renderPrereqOverview() {
       ${bandInfo
         ? `<div class="audio-actions"><button class="button gold" data-go="placement" type="button">${icon("chart-no-axes-column-increasing")} View my placement report</button><a class="button secondary" href="${courseLocation(defaultUnit)}">Go to Unit 1 ${icon("arrow-right")}</a></div>`
         : `<div class="audio-actions"><button class="button gold" data-go="placement" type="button">${isReadiness ? "Start readiness check" : "Start placement exam"} ${icon("arrow-right")}</button><a class="button secondary" href="${courseLocation(defaultUnit)}">Skip for now — open Unit 1</a></div>`}
+      ${overviewAudioButton(placementExam, "intro", "Hear the overview")}
       </section>
       <div class="final-section-grid">${placementExam.sections.map((section) => `<article class="panel final-section-card"><span>${String(section.sequence).padStart(2, "0")}</span><h3>${escapeHtml(section.title)}</h3><p>${escapeHtml(section.description)}</p><small>${section.questionCount} questions</small></article>`).join("")}</div>
+      ${overviewAudioButton(placementExam, "sections", "Hear what the exam covers")}
       <section class="panel"><h3>How placement works</h3><ol class="path-list">
         <li>${icon("circle-check-big")}<span><strong>Ready:</strong> you move straight on to Unit 1.</span></li>
         <li>${icon("book-open")}<span><strong>Ready with review:</strong> you start Unit 1 and warm up with a few review lessons.</span></li>
         <li>${icon("sprout")}<span><strong>Build strong roots first:</strong> we suggest the best course to grow from — a grown-up or teacher can help you choose.</span></li>
-      </ol></section>
+      </ol>${overviewAudioButton(placementExam, "path", "Hear how placement works")}</section>
     </div>`;
   $$('[data-go]').forEach((button) => button.addEventListener("click", () => navigate(button.dataset.go)));
+  bindOverviewAudio(placementExam);
   icons();
 }
 

@@ -235,10 +235,43 @@ if (uiHash && genHash) {
   }
 }
 
-// The UI normalises a button's text before hashing; the generator must match.
-const uiClean = runtime.match(/const staticVoiceKey = [^\n]*/);
-if (uiClean && !uiClean[0].includes('replace(/\\s+/g, " ").trim()')) {
-  fail(`staticVoiceKey no longer normalises with /\\s+/ → " " + trim: ${uiClean[0]}`);
+// What has to agree is the clip's NAME, not the hash function alone. Both sides
+// normalise a button's text before hashing it - the generator through clean() in
+// the hash lib, the UI inside staticVoiceKey - and the normalisation is the half
+// that can silently diverge, because cyrb53 is copied deliberately while a
+// whitespace rule gets edited in passing.
+//
+// The old probes could not have caught that: every one of them was a single
+// line with no leading, trailing or repeated whitespace, so it hashes the same
+// whether or not it is normalised at all. The probes here carry the whitespace
+// real content has - a Science reasoning model answer is written with a blank
+// line between its paragraphs. Compare the finished name, end to end.
+const fnFrom = (source, pattern, name, label, ...deps) => {
+  const declaration = source.match(pattern);
+  if (!declaration) { fail(`${label}: no ${name} found`); return null; }
+  try { return new Function(...deps.map(([n]) => n), `${declaration[0]}\nreturn ${name};`)(...deps.map(([, v]) => v)); }
+  catch (e) { fail(`${label}: ${name} will not evaluate — ${e.message}`); return null; }
+};
+const uiKey = uiHash && fnFrom(runtime, /const staticVoiceKey = [^\n]*/, "staticVoiceKey",
+  path.relative(ROOT, RUNTIME), ["cyrb53", uiHash]);
+const genClean = fnFrom(fs.readFileSync(HASH_LIB, "utf8"), /const clean = [^\n]*/, "clean",
+  "lib/ehel-narration-hash.js");
+if (uiKey && genHash && genClean) {
+  const probes = [
+    "hello world",
+    "Safety First: Use ONLY a 1.5 V battery.",
+    "Now for two new ideas you can feel.\n\nThe first one is a push.",
+    "  leading and trailing spaces  ",
+    "double  spaced and\ttabbed",
+    "a line\nbreak in the middle",
+  ];
+  const differing = probes.filter((probe) => uiKey(probe) !== genHash(genClean(probe)));
+  if (differing.length) {
+    fail(`${path.relative(ROOT, RUNTIME)} and lib/ehel-narration-hash.js normalise text differently `
+       + `before hashing it, so a clip is written under one name and requested under another `
+       + `(e.g. ${JSON.stringify(differing[0].slice(0, 40))}). `
+       + `staticVoiceKey and clean() must agree character for character.`);
+  }
 }
 
 if (failures.length) {

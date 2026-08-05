@@ -40,7 +40,18 @@ const STAGES = fs.readdirSync(COMPUTING)
   .filter(Boolean)
   .map((m) => Number(m[1]))
   .sort((a, b) => a - b);
-const grades = args.filter((a) => /^\d+$/.test(a)).map(Number);
+// --budget's VALUE is skipped here. Every bare integer was being read as a
+// stage, so `--budget 900` asked for stage 900 and the run refused to start —
+// which is the command this file's own usage line and CLAUDE.md both give for
+// proving the pipeline cheaply. Worse than the refusal is the near miss: a
+// plausible budget like `--budget 5` matched a real stage, so the run silently
+// covered stage 5 as well, with no budget applied to it. This is the same skip
+// tools/generate-ehel-global-perspectives-audio.js already makes.
+// -1, not indexOf + 1, when --budget is absent: indexOf returns -1 there, and
+// -1 + 1 is 0, which would silently drop a stage passed as the FIRST argument
+// and quietly widen `… 1` into every stage on disk.
+const budgetValueAt = args.includes("--budget") ? args.indexOf("--budget") + 1 : -1;
+const grades = args.filter((a, i) => /^\d+$/.test(a) && i !== budgetValueAt).map(Number);
 const unknown = grades.filter((g) => !STAGES.includes(g));
 if (unknown.length) {
   console.error(`No content package for stage(s) ${unknown.join(", ")}. Available: ${STAGES.join(", ")}.`);
@@ -57,6 +68,24 @@ const force = args.includes("--force");
 // stage's clips as orphaned.
 const orphansOnly = args.includes("--orphans");
 const prune = args.includes("--prune");
+
+// An argument that is neither a category, a stage nor a flag is almost always a
+// typo — and silently ignoring it means generating the DEFAULT set (every
+// category of every stage) when the caller asked for one slice. "activitiez"
+// instead of "activities" was a 106-clip run instead of an 88-clip one here.
+// ElevenLabs bills per character, so the mistake stops at the door. The same
+// guard tools/generate-ehel-global-perspectives-audio.js already has.
+const knownArgs = new Set([...ALL_CATS, "--dry", "--force", "--budget", "--orphans", "--prune"]);
+const strays = args.filter((a, i) => {
+  if (knownArgs.has(a) || (/^\d+$/.test(a) && i !== budgetValueAt)) return false;
+  return i !== budgetValueAt;
+});
+if (strays.length) {
+  console.error(`unknown argument(s): ${strays.join(", ")}`);
+  console.error(`categories: ${ALL_CATS.join(", ")}`);
+  console.error(`stages: ${STAGES.join(", ")} | flags: --dry --force --budget N --orphans --prune`);
+  process.exit(2);
+}
 const budgetArg = args.indexOf("--budget");
 const budget = budgetArg >= 0 ? Number(args[budgetArg + 1]) : Infinity;
 
@@ -76,15 +105,32 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 // tools/lib/ehel-computing-narration.js so the pruner agrees with what is bought.
 const { cyrb53, clean, spokenText, textsForUnit, textsForCapstone } = narration;
 
+// A credential failure is not a transient error, so it must not go through the
+// retry loop. Every one of a run's clips fails identically, three times each
+// with a backoff between — a stage-1 run spends sixteen minutes proving the same
+// key is still wrong. With stdout piped (`| tail`), Node buffers it all until
+// exit, so those sixteen minutes are completely silent and read as a hang. This
+// class is thrown past the retry and stops the run on the first clip.
+class FatalTtsError extends Error {}
+
 async function tts(text) {
   const key = process.env.ELEVENLABS_API_KEY;
-  if (!key) throw new Error("ELEVENLABS_API_KEY is not set (check .env).");
+  if (!key) throw new FatalTtsError("ELEVENLABS_API_KEY is not set (check .env).");
   const r = await fetch(`${API_BASE}/text-to-speech/${VOICE_ID}?output_format=mp3_44100_128`, {
     method: "POST",
     headers: { "Content-Type": "application/json", "xi-api-key": key },
     body: JSON.stringify({ text, model_id: MODEL_ID, voice_settings: { stability: 0.62, similarity_boost: 0.82, style: 0.18, use_speaker_boost: true } }),
   });
-  if (!r.ok) throw new Error(`ElevenLabs ${r.status}: ${(await r.text()).slice(0, 300)}`);
+  if (!r.ok) {
+    const body = (await r.text()).slice(0, 300);
+    // 401 is the documented auth status, but a rejected key can also come back
+    // as 400 with an authentication_error body — which is exactly what an
+    // old-format key (one not starting "sk_") returns. Matching on status alone
+    // would send that one back round the retry loop.
+    const isAuth = r.status === 401 || r.status === 403 || /authentication_error|invalid_api_key/.test(body);
+    const Err = isAuth ? FatalTtsError : Error;
+    throw new Err(`ElevenLabs ${r.status}: ${body}`);
+  }
   return Buffer.from(await r.arrayBuffer());
 }
 
@@ -158,7 +204,16 @@ async function tts(text) {
         fs.writeFileSync(out, await tts(item.text));
         sent += item.chars; made += 1; ok = true;
         console.log("ok");
-      } catch (e) { console.log(`retry ${attempt}: ${e.message.slice(0, 70)}`); await sleep(1500 * attempt); }
+      } catch (e) {
+        if (e instanceof FatalTtsError) {
+          console.log("failed");
+          console.error(`\n${e.message}\n\nNothing was generated and nothing was billed. Fix the credential and re-run.`);
+          process.exitCode = 2;
+          return;
+        }
+        console.log(`retry ${attempt}: ${e.message.slice(0, 70)}`);
+        await sleep(1500 * attempt);
+      }
     }
     await sleep(350);
   }

@@ -318,3 +318,76 @@
 .field-label { font-weight: var(--weight-normal); }
 /* Status lines and correctness feedback: colour carries the meaning, not weight. */
 .status-note { font-weight: var(--weight-normal); }
+
+/* ── Stage 1 slide decks (gc-*) ──────────────────────────────────────────────
+   The deck's own layout is English's, imported at the top of this file; what is
+   here is the Computing skin plus the few things a computing slide holds that
+   no English slide does — a labelled model, a numbered method, a step list and
+   a code listing.
+
+   The accent moves from English blue to the course teal, so a learner who moves
+   between subjects still knows which one they are in. */
+.gc-eyebrow, .gc-practice summary { color: var(--teal-dark); }
+.gc-btn { background: var(--teal); }
+.gc-btn.is-playing { background: var(--teal-dark); }
+.gc-dot.active { background: var(--teal); }
+.gc-inner .feedback.good { color: var(--teal-dark); }
+
+/* A slide is a 600px centred column, so a diagram sized for a two-column grid
+   card has to be re-fitted rather than inherited. The WebGL stage is shorter
+   here than in the grid: the model shares the slide with the prose that explains
+   it, and both have to be on screen together. */
+.gc-inner .computing-visual { margin: 0; width: 100%; max-width: 520px; }
+.gc-inner .geometry-stage { min-height: 0; }
+.gc-inner .computing-webgl { height: 170px; }
+.gc-inner .cmp-diagram { max-height: 180px; }
+.gc-inner figcaption { text-align: left; }
+.gc-inner .geometry-labels, .gc-inner .geometry-controls { justify-content: center; }
+
+/* Teaching prose, worked solutions and reveals: several paragraphs, read left to
+   right, inside a card whose default is centred. */
+.cmp-gc-prose { width: 100%; max-width: 520px; text-align: left; display: grid; gap: 10px; }
+.cmp-gc-prose .gc-lead, .cmp-gc-prose .gc-note { max-width: none; }
+
+/* The discovery's model box — the grid's .discovery-model, restated for a slide
+   so it does not depend on the exploration layout it used to sit in. */
+.cmp-gc-model { width: 100%; max-width: 520px; text-align: left; padding: 13px 15px; border-radius: 12px; background: var(--teal-soft); border-left: 4px solid var(--teal); display: grid; gap: 5px; }
+.cmp-gc-model strong { color: var(--teal-dark); font-size: 13px; text-transform: uppercase; letter-spacing: .08em; font-weight: var(--weight-medium); }
+.cmp-gc-model span { color: #33465e; font-size: 15px; line-height: 1.55; }
+
+/* Where a model is used: the three concept cards a Visual Models slide carries.
+   The grid stood them in three columns beside the model; a slide stacks them
+   under it, which is also what the grid's own narrow breakpoint did. */
+.cmp-gc-cards { width: 100%; max-width: 520px; margin: 0; display: grid; gap: 9px; text-align: left; grid-template-columns: 1fr; }
+.cmp-gc-cards article { min-height: 0; padding: 11px 13px; border: 1px solid var(--line); border-radius: 9px; background: #f6fbfa; display: grid; gap: 3px; }
+.cmp-gc-cards strong { color: var(--teal-dark); font-size: 14px; }
+.cmp-gc-cards span { color: #40616f; font-size: 14px; line-height: 1.5; }
+
+/* A method's steps, revealed one at a time. A step that has not been reached is
+   dimmed rather than hidden, so the learner can see how far there is to go —
+   which is what the grid's .method-step did. */
+.cmp-gc-steps { width: 100%; max-width: 520px; margin: 0; padding: 0; list-style: none; display: grid; gap: 9px; text-align: left; }
+.cmp-gc-step { display: grid; grid-template-columns: 32px 1fr; gap: 11px; align-items: start; padding: 11px 13px; border: 1px solid var(--line); border-radius: 11px; background: #fff; opacity: .38; transition: opacity .2s, border-color .2s; }
+.cmp-gc-step.active { opacity: 1; border-color: var(--teal); background: #f6fbfa; }
+.cmp-gc-step > span { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: var(--teal-soft); color: var(--teal-dark); font-weight: var(--weight-medium); }
+.cmp-gc-step strong { display: block; color: var(--teal-dark); font-size: 13px; text-transform: uppercase; letter-spacing: .06em; font-weight: var(--weight-medium); }
+.cmp-gc-step p { margin: 4px 0 8px; font-size: 15px; line-height: 1.55; color: #33465e; }
+
+/* An activity's numbered steps, and the debugging rule — a plain ordered list,
+   left-aligned. */
+.cmp-gc-list { width: 100%; max-width: 520px; margin: 0; padding-left: 22px; text-align: left; display: grid; gap: 7px; color: #33465e; font-size: 15px; line-height: 1.55; }
+
+/* The problem's context glyph, in place of the grid's .problem-icon. */
+.cmp-gc-badge { width: 58px; height: 58px; display: grid; place-items: center; border-radius: 16px; background: var(--teal-soft); color: var(--teal-dark); font-size: 27px; }
+
+/* A code listing is the one thing on a slide that is never reflowed to fit:
+   indentation and line breaks are part of what is being taught, so it keeps its
+   own sideways scroll inside the slide's column. */
+.gc-inner .code-block { width: 100%; max-width: 520px; margin: 0; text-align: left; max-height: 260px; overflow: auto; }
+
+/* Work a learner does ON a computing slide. English sizes the deck's textareas;
+   these sections ask for single-line answers too, which no English deck does. */
+.gc-inner input[type="search"] { border: 0; padding-left: 12px; }
+.gc-inner .wc-sentence input, .gc-inner .practice-box input { width: 100%; border: 1px solid var(--line); border-radius: 8px; padding: 11px 12px; background: #fff; font: inherit; }
+.gc-inner .practice-box { width: 100%; display: grid; gap: 9px; justify-items: center; }
+.gc-inner .checklist { width: 100%; margin: 0; }

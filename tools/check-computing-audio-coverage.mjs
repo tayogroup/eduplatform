@@ -125,6 +125,16 @@ const EXPECTED = new Map([
   ["item.prompt", "explorationQuestions/practice/realProblems/reasoning"],
   ["item.question", "assessment"],
   ["item.modelAnswer", "reasoning"],
+  // The Stage 1 slide deck's spellings of texts the grid already narrates. The
+  // rendered string — and so the clip hash — is identical; only the local names
+  // differ, because the deck walks a filtered list (`entry` of {entry, index})
+  // where the grid held one selected item (`current`). They are listed rather
+  // than renamed away: matching this file by variable name is a coincidence to
+  // rely on, and a rename to satisfy a checker is how the next reader learns the
+  // wrong lesson about why the name was chosen.
+  ["`${entry.term}. ${entry.meaning}`", "words"],
+  ["entry.example", "words"],
+  ["`Step ${position + 1}. ${text}`", "methodSteps"],
   // Not pre-generatable: written by the learner or by the tutor at runtime.
   // (The AI tutor's own bubbles moved to shell/wehel.js when the canned panel
   // became Wehel; their text is conversational and never pre-generated.)
@@ -132,7 +142,15 @@ const EXPECTED = new Map([
   ["button.hasAttribute(\"data-page-voice\") ? collectPageNarration() : button.dataset.speak", null],
 ]);
 
-const found = new Set([...callArguments(ui, "voiceButton"), ...callArguments(ui, "speakText")]);
+// deckVoice/deckVoiceSmall are the Stage 1 slide deck's own Listen buttons. They
+// emit the same data-speak contract voiceButton does, in the deck's shape, and
+// were invisible to this check while it scanned only the two original names —
+// which is precisely the silent gap this file exists to close: with Stage 1 on
+// the deck, those ARE that stage's buttons, and a gate that cannot see them
+// would report a course whose narration had drifted as clean. A subject that
+// adds a third button helper must add it here too.
+const VOICE_HELPERS = ["voiceButton", "speakText", "deckVoice", "deckVoiceSmall"];
+const found = new Set(VOICE_HELPERS.flatMap((helper) => callArguments(ui, helper)));
 for (const argument of found) {
   if (!EXPECTED.has(argument)) {
     fail(`course-ui.js narrates a text the generator does not know about: ${argument}\n`

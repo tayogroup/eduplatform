@@ -8,6 +8,7 @@
 import { initComputingWebGL } from "../../computing/shared/computing-webgl.js";
 import { unitTopic, computingDiagram } from "../../computing/shared/computing-visuals.js";
 import { createCourseApp } from "../course-app.js";
+import { createDeck, deckIcon } from "../deck.js?v=deck-1";
 import { createPlacementUnit, placementCallout, placementCourseShell, PREREQ_UNIT } from "../placement.js?v=placement-1";
 import { mountWehelChat, outlineFromManifest, unitFetcher } from "../wehel.js?v=wehel-1";
 
@@ -28,12 +29,12 @@ let placement;
 // Shell-provided bindings (populated by bind(ctx)).
 let $, $$, escapeHtml, icon, voiceButton, pageHeader, toast;
 let complete, completeGradeSection, saveProgress, saveGradeProgress, navigate, emitProgress;
-let bindVoiceControls, updateVoiceUI, renderNav, unitSectionIds, stageNumber, STAGE_STORAGE_KEY, speakText;
+let bindVoiceControls, updateVoiceUI, stopVoice, renderNav, unitSectionIds, stageNumber, STAGE_STORAGE_KEY, speakText;
 let course, progress, gradeProgress, manifest, gradeCapstone, dataRootUrl;
 function bind(ctx) {
   ({ $, $$, escapeHtml, icon, voiceButton, pageHeader, toast, complete, completeGradeSection,
      saveProgress, saveGradeProgress, navigate, emitProgress, bindVoiceControls, updateVoiceUI,
-     renderNav, unitSectionIds, stageNumber, STAGE_STORAGE_KEY, speakText } = ctx);
+     stopVoice, renderNav, unitSectionIds, stageNumber, STAGE_STORAGE_KEY, speakText } = ctx);
   course = ctx.course; progress = ctx.progress; gradeProgress = ctx.gradeProgress;
   manifest = ctx.manifest; gradeCapstone = ctx.gradeCapstone; dataRootUrl = ctx.dataRootUrl;
   if (isPrereqUnit) {
@@ -120,6 +121,89 @@ function cambridgeLabel(stage) {
   return `${fw.level} ${fw.code} — Stage ${stage}`;
 }
 
+// ── The gc-* slide deck, for the youngest stages ─────────────────────────────
+// How a Stage 1 learner meets a section: one item per full-screen slide, a big
+// Listen button, side arrows, dots and swipe, instead of a grid of cards or a
+// row of tabs above a panel. The plumbing is ../deck.js, shared with English,
+// Science and Mathematics — see the note there.
+//
+// Only the layout changes. Every field a section showed is still on the slide,
+// and every completion rule, progress key and answer check below is the grid
+// renderer's own, moved rather than rewritten. The sections that already show
+// one thing at a time (Fluency, the Unit Challenge, the games) keep their own
+// designs — a deck would wrap a second carousel around a single question. Tools
+// & Setup and Quick Reference keep theirs too: those are the two pages a learner
+// consults rather than works through, and a glossary dealt out one row per slide
+// is worse to use than a table.
+//
+// DECK_MAX_STAGE is the gate. Stage 1 first, on its own; Stages 2-4 follow this
+// same line once Stage 1 is confirmed with learners, and Stage 5 and up keep the
+// grids, where a learner scans rather than being walked through.
+const DECK_MAX_STAGE = 1;
+const deckStage = () => stageNumber <= DECK_MAX_STAGE;
+
+// Computing never loads the lucide runtime (it is one of the four shell-voice
+// subjects), so the deck draws inline SVG. The subject helpers are passed as
+// wrappers, not values: bind(ctx) fills them in after this module is evaluated.
+const { mountDeck, deckFinish } = createDeck({
+  $: (selector, root) => $(selector, root),
+  escapeHtml: (value) => escapeHtml(value),
+  icon: deckIcon,
+  // A slide change silences the narration the previous slide started.
+  stopAudio: () => stopVoice(),
+  // Scoped to what actually changed: a one-slide redraw must not re-initialise
+  // the WebGL models on the slides either side of it, which would leave two
+  // animation loops running on one canvas.
+  afterPaint: (scope) => { bindVoiceControls(); updateVoiceUI(); initComputingWebGL(scope); },
+});
+
+// The deck's own Listen button: the shell's voiceButton renders a `.button
+// secondary` with a lucide glyph that never draws here. Same contract —
+// data-speak, bound by bindVoiceControls, marked .is-playing while it speaks —
+// in the deck's shape and size.
+//
+// The text is passed through untouched, exactly as voiceButton passes it. Every
+// narration clip is looked up by cyrb53 of this string, so a deck button that
+// normalised its text even slightly would ask for a file that was never
+// generated and fall back to the paid runtime voice. Callers therefore hand
+// these the SAME expressions the grid renderers hand voiceButton, and the two
+// designs resolve to the same pre-rendered clip.
+//
+// For the same reason the deck adds no Listen button the grid did not have. Four
+// slides could plainly use one — an activity's steps, a code listing, the
+// debugging rule, and what to do when something online goes wrong — but each
+// would be a text with no clip behind it, narrated by the paid runtime endpoint
+// on every press. Giving those a voice is a narration-library change and a
+// billed generation run, not a layout change, so it is left out of this one.
+function deckVoice(text, label = "Listen") {
+  return `<button class="gc-btn play" type="button" data-speak="${escapeHtml(text)}" aria-label="${escapeHtml(label)}">${deckIcon("volume-2")} ${escapeHtml(label)}</button>`;
+}
+function deckVoiceSmall(text, label = "Listen") {
+  return `<button class="gc-btn ghost small" type="button" data-speak="${escapeHtml(text)}" aria-label="${escapeHtml(label)}">${deckIcon("volume-2")} ${escapeHtml(label)}</button>`;
+}
+
+// Answer checking is the grids' rule, unchanged and in one place: a response
+// counts when it matches the reviewed answer, or either contains the other.
+function answerMatches(response, expected) {
+  const given = String(response || "").trim().toLowerCase().replace(/\s+/g, " ");
+  const answer = String(expected || "").toLowerCase();
+  return Boolean(given) && (given === answer || answer.includes(given) || given.includes(answer));
+}
+
+// Feedback and reveals are written into the slide's own box rather than by
+// repainting the slide: a repaint would throw away the answer the learner just
+// typed, and on a slide carrying a WebGL model it would also swap the canvas out
+// from under a running animation loop.
+const setSlideBox = (key, html) => { const box = $(`[data-feedback="${CSS.escape(key)}"]`); if (box) box.innerHTML = html; };
+const slideValue = (key) => ($(`[data-response="${CSS.escape(key)}"]`)?.value || "").trim();
+// A reveal — a worked solution, a bug's cause, a model explanation — swaps its
+// own button out for the answer, so a slide never shows both.
+const revealSlideBox = (key, button) => {
+  const panel = $(`[data-reveal="${CSS.escape(key)}"]`);
+  if (panel) panel.hidden = false;
+  button.hidden = true;
+};
+
 let assessmentIndex = 0;
 let assessmentScore = 0;
 let assessmentLocked = false;
@@ -186,6 +270,7 @@ function renderCodeExamples() {
     $$('[data-go]').forEach((button) => button.addEventListener("click", () => navigate(button.dataset.go)));
     return;
   }
+  if (deckStage()) return renderCodeExamplesDeck(examples);
   const copied = new Set(progress.codeCopied || []);
   const draw = () => {
     $("#app").innerHTML = `${pageHeader("Read it, then type it", "Code Examples", `Study each listing one line at a time. Say out loud what a line does before you type it — that is how you learn to read code, not just copy it.`)}
@@ -212,12 +297,124 @@ function renderCodeExamples() {
   draw();
 }
 
+// Code Examples as a deck: one listing per slide, big enough to read a line at a
+// time. The listing keeps its own line breaks and its own scroll — indentation
+// and block order are part of what is being taught, so the code is the one thing
+// on a slide that is never reflowed to fit.
+function renderCodeExamplesDeck(examples) {
+  const esc = escapeHtml;
+  const copied = new Set(progress.codeCopied || []);
+  const slides = examples.map((example, index) => `<section class="gc-slide gc-v${index % 5}"><div class="gc-inner">
+      <span class="gc-eyebrow">Listing ${index + 1} of ${examples.length} · ${esc(example.language)}</span>
+      <h3 class="gc-title">${esc(example.title)}</h3>
+      ${example.intro ? `<p class="gc-lead">${esc(example.intro)}</p>` : ""}
+      <pre class="code-block" aria-label="${esc(example.language)} listing"><code>${example.lines.map((line) => esc(line)).join("\n")}</code></pre>
+      <p class="gc-note">${esc(example.explanation)}</p>
+      <div class="gc-actions">
+        <button class="gc-btn ghost small" type="button" data-copy-code="${index}">${deckIcon("pencil")} Copy the code</button>
+      </div>
+      <button class="gc-btn ${copied.has(example.id) ? "done" : "ghost"}" type="button" data-code-done="${esc(example.id)}">${deckIcon("check")} ${copied.has(example.id) ? "Typed it in" : "I typed this in"}</button>
+      ${index === examples.length - 1 ? deckFinish("code", "I worked through the code") : ""}
+    </div></section>`);
+
+  mountDeck({
+    heading: "Read it, then type it",
+    label: "Listing",
+    slides,
+    onClick: async (event) => {
+      const target = event.target.closest("[data-copy-code], [data-code-done], [data-deck-finish]");
+      if (!target) return;
+      if (target.dataset.deckFinish) { complete("code", "All code examples worked through."); return; }
+      if (target.dataset.copyCode) {
+        const example = examples[Number(target.dataset.copyCode)];
+        try {
+          await navigator.clipboard.writeText(example.lines.join("\n"));
+          toast("Code copied — now paste it into your editor.");
+        } catch {
+          // Clipboard access is blocked in some embedded contexts; the listing is
+          // on screen either way, so say so rather than failing silently.
+          toast("Copying is blocked here — type the lines in from the screen.");
+        }
+        return;
+      }
+      copied.add(target.dataset.codeDone);
+      progress.codeCopied = [...copied];
+      saveProgress();
+      target.classList.remove("ghost");
+      target.classList.add("done");
+      target.innerHTML = `${deckIcon("check")} Typed it in`;
+      if (copied.size === examples.length) complete("code", "All code examples worked through.");
+    },
+  });
+}
+
 // Debugging is a taught skill in this subject, not an error state. The card
 // shows the symptom first — that is what a learner actually has in front of
 // them — and keeps the cause and the fix behind a reveal so they get a chance
 // to diagnose it themselves.
+// Debug It as a deck: one bug per slide. The symptom is what a learner actually
+// has in front of them, so it is the whole slide until they ask for the cause —
+// the reveal is the point of the section, and a grid puts five of them on one
+// page where the next card's answer is already in view.
+//
+// "The rule that always works" is the last slide rather than a panel below the
+// grid: it is what a learner should leave the section holding, and on a deck the
+// last slide is the one they arrive at.
+function renderDebuggingDeck(bugs) {
+  const esc = escapeHtml;
+  const solved = new Set(progress.bugsSolved || []);
+  const RULE = [
+    "Read the error or watch exactly what the program does.",
+    "Say what you expected it to do instead.",
+    "Find the first line where those two part company.",
+    "Change one thing. Only one.",
+    "Run it again and see whether that one change helped.",
+  ];
+  const slides = bugs.map((bug, index) => `<section class="gc-slide gc-v${index % 5}"><div class="gc-inner">
+      <span class="gc-eyebrow">Bug ${index + 1} of ${bugs.length}</span>
+      <h3 class="gc-title">${esc(bug.symptom)}</h3>
+      <p class="gc-lead">What do you think is causing this? Say your answer out loud before you look.</p>
+      <div class="gc-actions">
+        ${deckVoice(`${bug.symptom}. Cause: ${bug.cause}. Fix: ${bug.fix}`, "Listen to bug")}
+        <button class="gc-btn ghost small" type="button" data-show-bug="${index}">${deckIcon("eye")} Show the cause and the fix</button>
+      </div>
+      <div class="cmp-gc-prose" data-reveal="bug-${index}" hidden>
+        <p class="gc-note gc-mistake"><span class="field-label">Cause:</span> ${esc(bug.cause)}</p>
+        <p class="gc-note gc-try"><span class="field-label">Fix:</span> ${esc(bug.fix)}</p>
+      </div>
+      <button class="gc-btn ${solved.has(String(index)) ? "done" : "ghost"}" type="button" data-bug-done="${index}">${deckIcon("check")} I can fix this one</button>
+    </div></section>`);
+  slides.push(`<section class="gc-slide gc-v${bugs.length % 5}"><div class="gc-inner">
+      <span class="gc-eyebrow">Every programmer does this</span>
+      <h3 class="gc-title">The rule that always works</h3>
+      <ol class="cmp-gc-list">${RULE.map((step) => `<li>${esc(step)}</li>`).join("")}</ol>
+      ${deckFinish("debug", "I practised debugging")}
+    </div></section>`);
+
+  mountDeck({
+    heading: "Every programmer does this",
+    // "Slide", not "Bug": the deck ends on the rule rather than on a bug, so a
+    // counter reading "Bug 6 of 6" would contradict the eyebrow on every slide
+    // above it, which counts the five bugs the unit actually has.
+    label: "Slide",
+    slides,
+    onClick: (event) => {
+      const target = event.target.closest("[data-show-bug], [data-bug-done], [data-deck-finish]");
+      if (!target) return;
+      if (target.dataset.deckFinish) { complete("debug", "Debugging practised."); navigate("games"); return; }
+      if (target.dataset.showBug) return revealSlideBox(`bug-${target.dataset.showBug}`, target);
+      solved.add(target.dataset.bugDone);
+      progress.bugsSolved = [...solved];
+      saveProgress();
+      target.classList.remove("ghost");
+      target.classList.add("done");
+    },
+  });
+}
+
 function renderDebugging() {
   const bugs = course.debugging || [];
+  if (deckStage()) return renderDebuggingDeck(bugs);
   const solved = new Set(progress.bugsSolved || []);
   const draw = () => {
     $("#app").innerHTML = `${pageHeader("Every programmer does this", "Debug It", "A bug is not a failure — finding one is the job. Read the symptom, work out the cause yourself, then check.")}
@@ -236,8 +433,42 @@ function renderDebugging() {
   draw();
 }
 
+// Stay Safe Online as a deck: one rule per slide, so each is read on its own
+// rather than skimmed as a row of three cards. "If something goes wrong" is the
+// last slide — it is the one a frightened child has to be able to find, and on a
+// deck the last slide is where the section ends.
+function renderSafetyDeck(items) {
+  const esc = escapeHtml;
+  const WRONG = "If anything online upsets you, frightens you, or asks you for personal information, you have not done anything wrong. Stop, close the page, and tell an adult you trust straight away. Telling someone is always the right move.";
+  const slides = items.map((item, index) => `<section class="gc-slide gc-v${index % 5}"><div class="gc-inner">
+      <span class="gc-eyebrow">Rule ${index + 1} of ${items.length}</span>
+      <h3 class="gc-title">${esc(item.title)}</h3>
+      <p class="gc-lead">${esc(item.text)}</p>
+      <div class="gc-actions">${deckVoice(`${item.title}. ${item.text}`, "Listen to this rule")}</div>
+    </div></section>`);
+  slides.push(`<section class="gc-slide gc-v${items.length % 5}"><div class="gc-inner">
+      <span class="gc-eyebrow">Being safe and kind online</span>
+      <h3 class="gc-title">If something goes wrong</h3>
+      <p class="gc-lead">${esc(WRONG)}</p>
+      ${deckFinish("safety", "I know these rules")}
+    </div></section>`);
+  mountDeck({
+    heading: "Being safe and kind online",
+    // "Slide" for the same reason as Debug It: the deck ends on what to do when
+    // something goes wrong, which is not one of the unit's numbered rules.
+    label: "Slide",
+    slides,
+    onClick: (event) => {
+      if (!event.target.closest("[data-deck-finish]")) return;
+      complete("safety", "Online safety rules reviewed.");
+      navigate("explain");
+    },
+  });
+}
+
 function renderSafety() {
   const items = course.esafety || [];
+  if (deckStage()) return renderSafetyDeck(items);
   $("#app").innerHTML = `${pageHeader("Being safe and kind online", "Stay Safe Online", "These rules matter in every unit, not just this one. Read them, then say each one back in your own words.")}
     <div class="task-grid">${items.map((item, index) => `<article class="panel task-card"><span class="eyebrow">Rule ${index + 1}</span><h2>${escapeHtml(item.title)}</h2><p>${escapeHtml(item.text)}</p>${voiceButton(`${item.title}. ${item.text}`, "Listen to this rule")}</article>`).join("")}</div>
     <section class="panel"><h3>If something goes wrong</h3><p>If anything online upsets you, frightens you, or asks you for personal information, you have not done anything wrong. Stop, close the page, and tell an adult you trust straight away. Telling someone is always the right move.</p></section>
@@ -276,6 +507,87 @@ function renderProject() {
   draw();
 }
 
+// Computing Words as a deck, on the design English vocabulary already uses: one
+// word per vivid slide, a big Listen button, side arrows, dots, swipe.
+//
+// Everything the two-column lab showed is preserved — the word, its meaning, the
+// example from the lesson, the write-your-own-sentence check and the learned
+// toggle. The search comes with it and narrows the deck itself, sitting under
+// the dots rather than in .gc-top, which the full-bleed CSS hides.
+//
+// A word's identity is its position in the unit's list (`w3`), which is the id
+// the lab wrote into progress.knownWords — so a learner who marked words on the
+// grid finds them still marked here. That means the deck has to carry the
+// ORIGINAL index on every slide: filtering moves a word's position under it.
+function renderComputingWordsDeck(vocab) {
+  const esc = escapeHtml;
+  const known = new Set(progress.knownWords || []);
+  const idFor = (index) => `w${index}`;
+  let shown = vocab.map((entry, index) => ({ entry, index }));
+
+  const wordSlide = ({ entry, index }, position) => `<section class="gc-slide gc-v${position % 5}"><div class="gc-inner">
+      <span class="gc-eyebrow">Word ${position + 1} of ${shown.length} · Computing word</span>
+      <div class="gc-pattern" lang="en">${esc(entry.term)}</div>
+      <p class="gc-lead">${esc(entry.meaning)}</p>
+      <div class="gc-actions">${deckVoice(`${entry.term}. ${entry.meaning}`, `Listen to ${entry.term}`)}</div>
+      ${entry.example ? `<div class="wc-sentence">
+        <small>Used in the lesson</small>
+        <p>“${esc(entry.example)}”</p>
+        <div class="wc-sentence-controls">${deckVoiceSmall(entry.example, "Hear the example")}</div>
+      </div>` : ""}
+      <details class="gc-practice"><summary>Write your own sentence</summary>
+        <div class="practice-box"><input data-response="word-${index}" maxlength="180" placeholder="Write your own sentence using ${esc(entry.term.toLowerCase())}…" aria-label="Write your own sentence using ${esc(entry.term)}"><button class="button primary" type="button" data-check-word="${index}">Check sentence</button></div>
+        <div data-feedback="word-${index}" role="status" aria-live="polite" aria-atomic="true"></div>
+      </details>
+      <button class="gc-btn ${known.has(idFor(index)) ? "done" : "ghost"}" type="button" data-know="${index}">${known.has(idFor(index)) ? `${deckIcon("check-circle")} Learned` : `${deckIcon("check")} I know this word`}</button>
+      ${position === shown.length - 1 ? deckFinish("words", "I explored the computing words") : ""}
+    </div></section>`;
+
+  const deck = mountDeck({
+    heading: "Language for computing",
+    label: "Word",
+    emptyMessage: "No matching words. Clear the search to see them all.",
+    tools: `<div class="wc-tools">
+        <label class="search-box"><input id="word-search" type="search" placeholder="Search words or meanings" aria-label="Search computing words"></label>
+        <span class="status-chip" id="wc-known">${known.size} of ${vocab.length} learned</span>
+      </div>`,
+    onClick: (event) => {
+      const target = event.target.closest("[data-check-word], [data-know], [data-deck-finish]");
+      if (!target) return;
+      if (target.dataset.deckFinish) { complete("words", "Computing words explored."); navigate("explore"); return; }
+      const index = Number(target.dataset.checkWord ?? target.dataset.know);
+      const entry = vocab[index];
+      if (target.dataset.checkWord !== undefined) {
+        const written = slideValue(`word-${index}`).toLowerCase();
+        const head = entry.term.toLowerCase().split(/[\/,]/)[0].trim();
+        const ok = written.length > 10 && written.includes(head.split(" ")[0]);
+        setSlideBox(`word-${index}`, `<p class="feedback ${ok ? "good" : "try"}"><span class="status-note">${ok ? "Great sentence!" : "Try again."}</span> ${ok ? "You used the word in a full idea." : `Write a full sentence that uses “${esc(entry.term)}”.`}</p>`);
+        return;
+      }
+      // Marking a word repaints only its own slide, so the deck stays where the
+      // learner left it — and the sentence they were writing on a neighbouring
+      // slide is not in the repainted markup at all.
+      const id = idFor(index);
+      if (known.has(id)) known.delete(id); else known.add(id);
+      progress.knownWords = [...known];
+      saveProgress();
+      if (known.size === vocab.length) complete("words", "All computing words learned.");
+      $("#wc-known").textContent = `${known.size} of ${vocab.length} learned`;
+      const position = shown.findIndex((item) => item.index === index);
+      if (position >= 0) deck.redrawSlide(position, wordSlide(shown[position], position));
+    },
+  });
+
+  const drawDeck = () => {
+    const query = ($("#word-search")?.value || "").trim().toLowerCase();
+    shown = vocab.map((entry, index) => ({ entry, index }))
+      .filter(({ entry }) => !query || `${entry.term} ${entry.meaning}`.toLowerCase().includes(query));
+    deck.setSlides(shown.map(wordSlide));
+  };
+  $("#word-search").addEventListener("input", drawDeck);
+  drawDeck();
+}
+
 function renderComputingWords() {
   // Rich vocabulary lab: searchable word list + a detail card with meaning,
   // a source example sentence, audio and a learned toggle.
@@ -283,6 +595,7 @@ function renderComputingWords() {
     ? course.reference.vocabulary
     : (course.reference.terms || []).map(([term, meaning]) => ({ term, meaning, example: "", letter: (term[0] || "?").toUpperCase() }));
   if (!vocab.length) { $("#app").innerHTML = `${pageHeader("Language for computing", "Computing Words", "No key words were provided for this unit.")}`; return; }
+  if (deckStage()) return renderComputingWordsDeck(vocab);
   const known = new Set(progress.knownWords || []);
   let query = "";
   let activeIndex = 0;
@@ -331,7 +644,70 @@ function renderComputingWords() {
   draw();
 }
 
+// Explore as a deck: one discovery per slide — the model, the situation it comes
+// from, and the question about it, with nothing else on screen competing for a
+// five-year-old's turn. The discovery tabs become the dots.
+//
+// The progress panel does not survive as a panel: a slide has no room for a
+// column beside the question. Its count moves under the dots, where the deck
+// already keeps a section's tools, and it is updated in place as discoveries
+// are solved.
+function renderExploreConceptDeck() {
+  const esc = escapeHtml;
+  const topic = courseTopic();
+  const items = course.explorations;
+  const completed = new Set(progress.explorations || []);
+  const countLabel = () => `${completed.size} of ${items.length} discovered`;
+
+  const slides = items.map((item, index) => `<section class="gc-slide gc-v${index % 5}"><div class="gc-inner">
+      <span class="gc-eyebrow">Discovery ${index + 1} of ${items.length} · ${esc(item.difficulty)}</span>
+      <h3 class="gc-title">${esc(item.title)}</h3>
+      ${computingDiagram(topic, index)}
+      <p class="gc-lead">${esc(item.context)}</p>
+      <div class="gc-actions">${deckVoice(`${item.title}. ${item.context}. ${item.explanation}`, "Listen to discovery")}</div>
+      <div class="cmp-gc-model ${esc(item.modelType)}"><strong>${esc(item.modelType.replaceAll("-", " "))}</strong><span>${esc(item.explanation)}</span></div>
+      <div class="wc-sentence">
+        <small>Discovery question</small>
+        <p>${esc(item.prompt)}</p>
+        <div class="wc-sentence-controls">${deckVoiceSmall(item.prompt, "Listen to question")}</div>
+        <input data-response="${esc(item.id)}" aria-label="Your answer to discovery ${index + 1}">
+      </div>
+      <div class="gc-actions">
+        <button class="gc-btn" type="button" data-check-explore="${esc(item.id)}">${deckIcon("list-checks")} Check my idea</button>
+        <button class="gc-btn ghost small" type="button" data-hint-explore="${esc(item.id)}">${deckIcon("lightbulb")} Hint</button>
+      </div>
+      <div data-feedback="${esc(item.id)}" role="status" aria-live="polite" aria-atomic="true"></div>
+    </div></section>`);
+
+  mountDeck({
+    heading: "Familiar discoveries",
+    label: "Discovery",
+    slides,
+    emptyMessage: "This unit has no concept discoveries yet.",
+    tools: `<div class="wc-tools"><span class="status-chip" id="explore-count">${countLabel()}</span></div>`,
+    onClick: (event) => {
+      const target = event.target.closest("[data-check-explore], [data-hint-explore]");
+      if (!target) return;
+      const id = target.dataset.checkExplore || target.dataset.hintExplore;
+      const item = items.find((candidate) => candidate.id === id);
+      if (target.dataset.hintExplore) {
+        setSlideBox(id, `<p class="feedback try"><span class="field-label">Hint:</span> ${esc(item.hint)}</p>`);
+        return;
+      }
+      const correct = answerMatches(slideValue(id), item.answer);
+      setSlideBox(id, `<p class="feedback ${correct ? "good" : "try"}"><span class="status-note">${correct ? "Exactly!" : "Look again."}</span> ${esc(correct ? item.explanation : item.hint)}</p>`);
+      if (!correct) return;
+      completed.add(item.id);
+      progress.explorations = [...completed];
+      saveProgress();
+      $("#explore-count").textContent = countLabel();
+      if (completed.size === items.length) complete("explore", "All concept discoveries complete.");
+    },
+  });
+}
+
 function renderExploreConcept() {
+  if (deckStage()) return renderExploreConceptDeck();
   let active = 0;
   const completed = new Set(progress.explorations || []);
   const draw = () => {
@@ -353,7 +729,38 @@ function renderExploreConcept() {
   draw();
 }
 
+// Visual Models as a deck: one model per slide, its tab now a dot. The three
+// concept cards the grid showed beside every model come with it, restacked into
+// a column — on a slide they sit under the model they illustrate rather than
+// beside it.
+function renderVisualModelsDeck() {
+  const esc = escapeHtml;
+  const topic = courseTopic();
+  const models = course.visualModels;
+  const slides = models.map((model, index) => `<section class="gc-slide gc-v${index % 5}"><div class="gc-inner">
+      <span class="gc-eyebrow">Model ${index + 1} of ${models.length}${model.outcomeId ? ` · ${esc(model.outcomeId)}` : ""}</span>
+      <h3 class="gc-title">${esc(model.title)}</h3>
+      ${computingDiagram(topic, index)}
+      <p class="gc-lead">${esc(model.purpose)}</p>
+      <div class="gc-actions">${deckVoice(`${model.title}. ${model.purpose}`, "Listen to model")}</div>
+      <div class="cmp-gc-cards">${course.concepts.slice(0, 3).map((concept) => `<article><strong>${esc(concept.title)}</strong><span>${esc(concept.example)}</span></article>`).join("")}</div>
+      ${index === models.length - 1 ? deckFinish("visuals", "I explored the models") : ""}
+    </div></section>`);
+  mountDeck({
+    heading: "Ways to see the computing",
+    label: "Model",
+    slides,
+    emptyMessage: "This unit has no visual models yet.",
+    onClick: (event) => {
+      if (!event.target.closest("[data-deck-finish]")) return;
+      complete("visuals", "Visual models explored.");
+      navigate("method");
+    },
+  });
+}
+
 function renderVisualModels() {
+  if (deckStage()) return renderVisualModelsDeck();
   let active = 0;
   const draw = () => {
     const model = course.visualModels[active];
@@ -365,7 +772,55 @@ function renderVisualModels() {
   draw();
 }
 
+// Learn the Method as a deck: one procedure per slide, its steps still revealed
+// one at a time. The reveal is the teaching — a learner who can see step four
+// before doing step one has not been taught a procedure — so it survives the
+// move, done by adding a class rather than repainting, because each slide keeps
+// its own place in its own steps.
+function renderLearnMethodDeck() {
+  const esc = escapeHtml;
+  const methods = course.methods;
+  const completed = new Set(progress.methods || []);
+  const slides = methods.map((method, index) => `<section class="gc-slide gc-v${index % 5}"><div class="gc-inner">
+      <span class="gc-eyebrow">Method ${index + 1} of ${methods.length} · ${esc(method.difficulty)}</span>
+      <h3 class="gc-title">${esc(method.title)}</h3>
+      <div class="gc-pattern" lang="en">${esc(method.example)}</div>
+      <div class="gc-actions">${deckVoice(`${method.title}. Example: ${method.example}. ${method.steps.join(" ")}`, "Listen to method")}</div>
+      <ol class="cmp-gc-steps" data-method-steps="${esc(method.id)}" data-step="0">
+        ${method.steps.map((text, position) => `<li class="cmp-gc-step ${position === 0 ? "active" : ""}"><span>${position + 1}</span><div><strong>Step ${position + 1}</strong><p>${esc(text)}</p>${deckVoiceSmall(`Step ${position + 1}. ${text}`, "Listen to step")}</div></li>`).join("")}
+      </ol>
+      <button class="gc-btn" type="button" data-next-step="${esc(method.id)}">${deckIcon("arrow-right")} Show me the next step</button>
+      ${index === methods.length - 1 ? deckFinish("method", "I learned every method") : ""}
+    </div></section>`);
+
+  mountDeck({
+    heading: "Short procedures",
+    label: "Method",
+    slides,
+    emptyMessage: "This unit has no methods yet.",
+    onClick: (event) => {
+      const target = event.target.closest("[data-next-step], [data-deck-finish]");
+      if (!target) return;
+      if (target.dataset.deckFinish) { complete("method", "All methods learned."); return; }
+      const id = target.dataset.nextStep;
+      const method = methods.find((candidate) => candidate.id === id);
+      const list = $(`[data-method-steps="${CSS.escape(id)}"]`);
+      if (!list) return;
+      const step = Math.min(method.steps.length - 1, Number(list.dataset.step || 0) + 1);
+      list.dataset.step = String(step);
+      list.querySelectorAll(".cmp-gc-step").forEach((node, position) => node.classList.toggle("active", position <= step));
+      if (step < method.steps.length - 1) return;
+      target.textContent = "Method complete ✓";
+      completed.add(id);
+      progress.methods = [...completed];
+      saveProgress();
+      if (completed.size === methods.length) complete("method", "All methods learned.");
+    },
+  });
+}
+
 function renderLearnMethod() {
+  if (deckStage()) return renderLearnMethodDeck();
   let methodIndex=0;
   const completed=new Set(progress.methods||[]);
   const draw=()=>{
@@ -382,7 +837,39 @@ function renderLearnMethod() {
 
 const courseTopic = () => unitTopic(course.unit.unitTitle, course.concepts);
 
+// The lesson as a deck: one concept per slide, its diagram above the prose it
+// explains. `checkYourself` comes with it — on the grid it was the field the
+// card had no room for and dropped; here the slide ends on the question the
+// learner is meant to be able to answer before swiping on.
+function renderLessonDeck() {
+  const topic = courseTopic();
+  const esc = escapeHtml;
+  const concepts = course.concepts;
+  const slides = concepts.map((concept, index) => `<section class="gc-slide gc-v${index % 5}"><div class="gc-inner">
+      <span class="gc-eyebrow">Concept ${index + 1} of ${concepts.length}</span>
+      <h3 class="gc-title">${esc(concept.title)}</h3>
+      ${computingDiagram(topic, index)}
+      <div class="cmp-gc-prose">${richText(concept.explanation, "gc-lead")}</div>
+      <p class="gc-note"><span class="field-label">Example:</span> ${esc(concept.example)}</p>
+      ${concept.checkYourself ? `<p class="gc-note gc-try">${esc(concept.checkYourself)}</p>` : ""}
+      <div class="gc-actions">${deckVoice(`${concept.title}. ${spokenText(concept.explanation)}. Example: ${concept.example}`, "Listen to concept")}</div>
+      ${index === concepts.length - 1 ? deckFinish("lesson", "I studied the concepts") : ""}
+    </div></section>`);
+  mountDeck({
+    heading: "The lesson",
+    label: "Concept",
+    slides,
+    emptyMessage: "This unit has no concept explainers yet.",
+    onClick: (event) => {
+      if (!event.target.closest("[data-deck-finish]")) return;
+      complete("lesson", "Lesson marked studied.");
+      navigate("ai");
+    },
+  });
+}
+
 function renderLesson() {
+  if (deckStage()) return renderLessonDeck();
   const topic = courseTopic();
   const concepts = course.concepts.map((concept, index) => `<article class="panel concept-card"><span class="eyebrow">Concept ${index + 1}</span><h2>${escapeHtml(concept.title)}</h2>${computingDiagram(topic, index)}<div class="concept-body">${richText(concept.explanation)}</div><p class="example"><span class="field-label">Example:</span> ${escapeHtml(concept.example)}</p>${voiceButton(`${concept.title}. ${spokenText(concept.explanation)}. Example: ${concept.example}`, "Listen to concept")}</article>`).join("");
   $("#app").innerHTML = `${pageHeader("The lesson", course.unit.unitTitle, "Every idea in this unit, explained in full with a diagram for each. Read it, listen to it, or both — you do not need anyone else to work through this.")}
@@ -392,7 +879,60 @@ function renderLesson() {
   $("#lesson-done").addEventListener("click", () => { complete("lesson", "Lesson marked studied."); navigate("ai"); });
 }
 
+// Worked Examples as a deck: one example per slide, its level subtabs now the
+// filter under the dots — the same place vocabulary puts its search.
+function renderExamplesDeck() {
+  const esc = escapeHtml;
+  const all = course.workedExamples;
+  const levels = ["Basic", "Intermediate", "Challenge"].filter((level) => all.some((item) => item.difficulty === level));
+  const viewed = new Set(progress.examplesViewed || []);
+  let shown = all;
+  const countLabel = () => `${viewed.size} of ${all.length} solutions opened`;
+
+  const exampleSlide = (item, index) => `<section class="gc-slide gc-v${index % 5}"><div class="gc-inner">
+      <span class="gc-eyebrow">Example ${index + 1} of ${shown.length} · ${esc(item.difficulty)}${item.outcomeId ? ` · ${esc(item.outcomeId)}` : ""}</span>
+      <h3 class="gc-title">${esc(item.title)}</h3>
+      <p class="gc-note gc-try">${esc(item.prompt)}</p>
+      <div class="gc-actions">${deckVoice(`${item.title}. ${item.prompt}. Solution: ${spokenText(item.solution)}`, "Listen to example")}</div>
+      <details class="gc-practice" data-example="${esc(item.id)}"><summary>Show worked solution</summary><div class="cmp-gc-prose">${richText(item.solution, "gc-note")}</div></details>
+    </div></section>`;
+
+  const deck = mountDeck({
+    heading: "Worked examples, one at a time",
+    label: "Example",
+    emptyMessage: "No worked examples at this level.",
+    tools: `<div class="wc-tools">
+        <select id="example-level" aria-label="Filter worked examples by level"><option value="all">All levels</option>${levels.map((level) => `<option value="${esc(level)}">${esc(level)} · ${all.filter((example) => example.difficulty === level).length}</option>`).join("")}</select>
+        <span class="status-chip" id="example-count">${countLabel()}</span>
+      </div>`,
+    // <details> fires `toggle`, which does not bubble, so the delegated click
+    // listener watches the summary instead. The element's own open state has not
+    // flipped yet at click time — what matters is that it is about to.
+    onClick: (event) => {
+      const summary = event.target.closest("details[data-example] > summary");
+      if (!summary) return;
+      const details = summary.parentElement;
+      if (details.open) return;
+      viewed.add(details.dataset.example);
+      progress.examplesViewed = [...viewed];
+      saveProgress();
+      const counter = $("#example-count");
+      if (counter) counter.textContent = countLabel();
+      if (viewed.size === all.length) complete("examples", `All ${all.length} worked examples reviewed.`);
+    },
+  });
+
+  const drawDeck = () => {
+    const level = $("#example-level")?.value || "all";
+    shown = level === "all" ? all : all.filter((example) => example.difficulty === level);
+    deck.setSlides(shown.map(exampleSlide));
+  };
+  $("#example-level").addEventListener("change", drawDeck);
+  drawDeck();
+}
+
 function renderExamples() {
+  if (deckStage()) return renderExamplesDeck();
   let level="Basic";
   const viewed=new Set(progress.examplesViewed||[]);
   const draw=()=>{
@@ -407,7 +947,64 @@ function renderExamples() {
   draw();
 }
 
+// Guided Practice as a deck: one question per slide, so a Stage 1 learner faces
+// the question they are answering rather than three level headings and a wall of
+// six. The level rides on the slide instead of grouping the page.
+//
+// The three-step hint escalation is the grid's, kept per question rather than
+// per button: on a deck a learner can leave a question and come back to it, and
+// a hint counter that lives on the button resets when they do.
+function renderPracticeDeck() {
+  const esc = escapeHtml;
+  const items = course.practice;
+  const hintsUsed = new Map();
+  const slides = items.map((item, index) => `<section class="gc-slide gc-v${index % 5}"><div class="gc-inner">
+      <span class="gc-eyebrow">Question ${index + 1} of ${items.length} · ${esc(item.level)}</span>
+      <h3 class="gc-title">${esc(item.prompt)}</h3>
+      <div class="gc-actions">${deckVoice(item.prompt, "Listen to question")}</div>
+      <div class="wc-sentence">
+        <small>Your answer</small>
+        <input data-response="${esc(item.id)}" autocomplete="off" placeholder="Type your answer or working notes" aria-label="Your answer to question ${index + 1}">
+      </div>
+      <div class="gc-actions">
+        <button class="gc-btn" type="button" data-check="${esc(item.id)}">${deckIcon("list-checks")} Check my answer</button>
+        <button class="gc-btn ghost small" type="button" data-hint="${esc(item.id)}">${deckIcon("lightbulb")} Hint</button>
+        <button class="gc-btn ghost small" type="button" data-answer="${esc(item.id)}">${deckIcon("arrow-right")} Next step</button>
+      </div>
+      <div data-feedback="${esc(item.id)}" role="status" aria-live="polite" aria-atomic="true"></div>
+    </div></section>`);
+
+  mountDeck({
+    heading: "Support that adapts",
+    label: "Question",
+    slides,
+    emptyMessage: "This unit has no guided practice yet.",
+    onClick: (event) => {
+      const target = event.target.closest("[data-check], [data-hint], [data-answer]");
+      if (!target) return;
+      const id = target.dataset.check || target.dataset.hint || target.dataset.answer;
+      const item = items.find((candidate) => candidate.id === id);
+      if (target.dataset.answer) {
+        setSlideBox(id, `<p class="feedback try"><span class="field-label">Next step:</span> ${esc(item.hint)} Do that step, then check your answer again.</p>`);
+        return;
+      }
+      if (target.dataset.hint) {
+        const used = (hintsUsed.get(id) || 0) + 1;
+        hintsUsed.set(id, used);
+        const hints = [item.hint, `Use a diagram, familiar object, table, number line or other model that fits ${course.unit.unitTitle}.`, `The reviewed guidance is ${item.answer}. Explain why it fits before moving on.`];
+        setSlideBox(id, `<p class="feedback try"><span class="field-label">Hint ${Math.min(used, 3)}:</span> ${esc(hints[Math.min(used - 1, 2)])}</p>`);
+        return;
+      }
+      const correct = answerMatches(slideValue(id), item.answer);
+      setSlideBox(id, `<p class="feedback ${correct ? "good" : "try"}"><span class="status-note">${correct ? "Correct reasoning!" : "Not yet."}</span> ${correct ? esc(item.answer) : `Your response does not match the reviewed guidance yet. ${esc(item.hint)} Try representing the idea in a simpler way first.`}</p>`);
+      if (correct && !progress.practiceOpened.includes(item.id)) { progress.practiceOpened.push(item.id); saveProgress(); }
+      if (progress.practiceOpened.length === items.length) complete("guided", "Guided Practice complete.");
+    },
+  });
+}
+
 function renderPractice() {
+  if (deckStage()) return renderPracticeDeck();
   const levels = [...new Set(course.practice.map((item) => item.level))];
   $("#app").innerHTML = `${pageHeader("Support that adapts", "Guided Practice", "Answer with support. Check your idea, ask for a progressive hint or reveal only the next scientific step.")}
     <section class="panel support-strip"><span>Immediate feedback</span><span>Progressive hints</span><span>Next-step support</span><span>Error explanations</span><span>Easier retry</span></section>
@@ -434,7 +1031,53 @@ function renderPractice() {
   }));
 }
 
+// Build It as a deck: one activity per slide — what you need, the steps, and the
+// space to write down what happened, with the model above them.
+//
+// Per-activity Mark complete marks without repainting, so the note the learner
+// has just typed stays where they left it. The unit's finish still requires
+// every activity marked, counted over the buttons on the deck.
+function renderActivitiesDeck() {
+  const esc = escapeHtml;
+  const topic = courseTopic();
+  const activities = course.activities;
+  const slides = activities.map((activity, index) => `<section class="gc-slide gc-v${index % 5}"><div class="gc-inner">
+      <span class="gc-eyebrow">Activity ${index + 1} of ${activities.length} · Hands-on</span>
+      <h3 class="gc-title">${esc(activity.title)}</h3>
+      ${computingDiagram(topic, index)}
+      <p class="gc-note"><span class="field-label">You need:</span> ${esc(activity.materials)}</p>
+      <ol class="cmp-gc-list">${activity.steps.map((step) => `<li>${esc(step)}</li>`).join("")}</ol>
+      <div class="wc-sentence">
+        <small>What you did and noticed</small>
+        <textarea class="activity-response" rows="4" placeholder="Record your answer or what you noticed…" aria-label="Notes for ${esc(activity.title)}"></textarea>
+      </div>
+      <button class="gc-btn ghost" type="button" data-activity-done="${index}">${deckIcon("check")} Mark complete</button>
+      ${index === activities.length - 1 ? deckFinish("activities", "Finish activities") : ""}
+    </div></section>`);
+
+  mountDeck({
+    heading: "Learn by doing",
+    label: "Activity",
+    slides,
+    emptyMessage: "This unit has no build activities yet.",
+    onClick: (event) => {
+      const target = event.target.closest("[data-activity-done], [data-deck-finish]");
+      if (!target) return;
+      if (target.dataset.activityDone) {
+        target.disabled = true;
+        target.classList.remove("ghost");
+        target.classList.add("done");
+        target.innerHTML = `${deckIcon("check")} Complete`;
+        return;
+      }
+      if (!$$('[data-activity-done]').every((button) => button.disabled)) return toast("Mark each activity complete first.");
+      complete("activities", "Unit activities complete.");
+    },
+  });
+}
+
 function renderActivities() {
+  if (deckStage()) return renderActivitiesDeck();
   const topic = courseTopic();
   $("#app").innerHTML = `${pageHeader("Learn by doing", "Build It", `Work through the ${escapeHtml(course.unit.unitTitle)} activities. Each one can be done on a computer or, where it says so, with paper and things you already have.`)}
     <div class="task-grid">${course.activities.map((activity, index) => `<article class="panel task-card"><span class="eyebrow">Activity ${index + 1} · Hands-on</span><h2>${escapeHtml(activity.title)}</h2>${computingDiagram(topic, index)}<p class="rule-box"><span class="field-label">You need:</span> ${escapeHtml(activity.materials)}</p><ol class="agenda">${activity.steps.map((step) => `<li>${escapeHtml(step)}</li>`).join("")}</ol><textarea class="activity-response" rows="4" placeholder="Record your answer or what you noticed…" aria-label="Notes for ${escapeHtml(activity.title)}"></textarea><button class="button secondary" data-activity-done="${index}" type="button">✓ Mark complete</button></article>`).join("")}</div>
@@ -688,7 +1331,55 @@ function renderFluency() {
   draw();
 }
 
+// Solve Real Problems as a deck: one situation per slide. A correct answer locks
+// its own Check button, exactly as the grid did, and the section completes when
+// every problem is locked — counted over the deck's buttons, which are all in
+// the DOM at once.
+function renderRealProblemsDeck() {
+  const esc = escapeHtml;
+  const problems = course.realProblems;
+  const ICONS = ["⌂", "◫", "🚌", "▦", "◇", "✦"];
+  const slides = problems.map((item, index) => `<section class="gc-slide gc-v${index % 5}"><div class="gc-inner">
+      <span class="gc-eyebrow">Problem ${index + 1} of ${problems.length} · ${esc(item.context)} · ${esc(item.difficulty)}</span>
+      <div class="cmp-gc-badge" aria-hidden="true">${ICONS[index] || "#"}</div>
+      <h3 class="gc-title">${esc(item.prompt)}</h3>
+      <div class="gc-actions">${deckVoice(item.prompt, "Listen to problem")}</div>
+      <div class="wc-sentence">
+        <small>Your working and answer</small>
+        <textarea data-response="${esc(item.id)}" rows="4" placeholder="Show your calculation and answer…" aria-label="Your answer to problem ${index + 1}"></textarea>
+      </div>
+      <div class="gc-actions">
+        <button class="gc-btn" type="button" data-check-problem="${esc(item.id)}">${deckIcon("list-checks")} Check answer</button>
+        <button class="gc-btn ghost small" type="button" data-hint-problem="${esc(item.id)}">${deckIcon("lightbulb")} Hint</button>
+      </div>
+      <div data-feedback="${esc(item.id)}" role="status" aria-live="polite" aria-atomic="true"></div>
+    </div></section>`);
+
+  mountDeck({
+    heading: "Computing in daily life",
+    label: "Problem",
+    slides,
+    emptyMessage: "This unit has no real-world problems yet.",
+    onClick: (event) => {
+      const target = event.target.closest("[data-check-problem], [data-hint-problem]");
+      if (!target) return;
+      const id = target.dataset.checkProblem || target.dataset.hintProblem;
+      const item = problems.find((candidate) => candidate.id === id);
+      if (target.dataset.hintProblem) {
+        setSlideBox(id, `<p class="feedback try"><span class="field-label">Hint:</span> ${esc(item.hint)}</p>`);
+        return;
+      }
+      const correct = answerMatches(slideValue(id), item.answer);
+      setSlideBox(id, `<p class="feedback ${correct ? "good" : "try"}"><span class="status-note">${correct ? "Applied correctly!" : "Check the situation."}</span> ${esc(correct ? item.answer : item.hint)}</p>`);
+      if (!correct) return;
+      target.disabled = true;
+      if ($$('[data-check-problem]').every((button) => button.disabled)) complete("problems", "Real-world problems complete.");
+    },
+  });
+}
+
 function renderRealProblems() {
+  if (deckStage()) return renderRealProblemsDeck();
   const problems = course.realProblems;
   $("#app").innerHTML = `${pageHeader("Computing in daily life", "Solve Real Problems", `Apply ${escapeHtml(course.unit.unitTitle)} to home, school, markets, travel and the wider community.`)}
     <div class="problem-grid">${problems.map((item,index)=>`<article class="panel real-problem"><div class="problem-icon">${["⌂","◫","🚌","▦","◇","✦"][index]||"#"}</div><span class="eyebrow">${escapeHtml(item.context)} · ${escapeHtml(item.difficulty)}</span><h2>${escapeHtml(item.prompt)}</h2>${voiceButton(item.prompt, "Listen to problem")}<textarea id="problem-${item.id}" placeholder="Show your calculation and answer…"></textarea><div class="question-actions"><button class="button primary" data-check-problem="${item.id}" type="button">Check answer</button><button class="button secondary" data-problem-hint="${item.id}" type="button">Hint</button></div><div id="problem-feedback-${item.id}"></div></article>`).join("")}</div>`;
@@ -696,7 +1387,63 @@ function renderRealProblems() {
   $$('[data-problem-hint]').forEach(button=>button.addEventListener("click",()=>{const item=problems.find(candidate=>candidate.id===button.dataset.problemHint);$(`#problem-feedback-${item.id}`).innerHTML=`<p class="feedback try"><span class="field-label">Hint:</span> ${escapeHtml(item.hint)}</p>`;}));
 }
 
+// Explain Your Thinking as a deck: one prompt per slide, the writing space the
+// centre of it. The key ideas stay visible beside the prompt — they are the
+// scaffolding the check marks against, not a hint — and the model explanation
+// stays behind a reveal so it cannot be copied before an attempt.
+//
+// Slides are never repainted here, so an explanation written on slide 2 is still
+// there when the learner swipes back to it.
+function renderExplainThinkingDeck() {
+  const esc = escapeHtml;
+  const prompts = course.reasoningPrompts;
+  const completed = new Set(progress.reasoning || []);
+  const slides = prompts.map((item, index) => `<section class="gc-slide gc-v${index % 5}"><div class="gc-inner">
+      <span class="gc-eyebrow">Prompt ${index + 1} of ${prompts.length} · ${esc(item.difficulty)}</span>
+      <h3 class="gc-title">${esc(item.prompt)}</h3>
+      <div class="gc-actions">${deckVoice(item.prompt, "Listen to prompt")}</div>
+      <div class="wc-sentence">
+        <small>Your explanation</small>
+        <textarea data-response="${esc(item.id)}" rows="6" placeholder="Explain what you know, what rule you used and why your conclusion makes sense…" aria-label="Your explanation for prompt ${index + 1}"></textarea>
+      </div>
+      <ul class="checklist">${item.keyIdeas.map((idea) => `<li>${esc(idea)}</li>`).join("")}</ul>
+      <div class="gc-actions">
+        <button class="gc-btn" type="button" data-check-reasoning="${esc(item.id)}">${deckIcon("list-checks")} Check my ideas</button>
+        <button class="gc-btn ghost small" type="button" data-show-model="${esc(item.id)}">${deckIcon("eye")} Show model explanation</button>
+      </div>
+      <div class="cmp-gc-prose" data-reveal="${esc(item.id)}" hidden>
+        <p class="gc-note">${esc(item.modelAnswer)}</p>
+        ${deckVoiceSmall(item.modelAnswer, "Listen to model answer")}
+      </div>
+      <div data-feedback="${esc(item.id)}" role="status" aria-live="polite" aria-atomic="true"></div>
+    </div></section>`);
+
+  mountDeck({
+    heading: "Reasoning matters",
+    label: "Prompt",
+    slides,
+    emptyMessage: "This unit has no reasoning prompts yet.",
+    onClick: (event) => {
+      const target = event.target.closest("[data-check-reasoning], [data-show-model]");
+      if (!target) return;
+      const id = target.dataset.checkReasoning || target.dataset.showModel;
+      const item = prompts.find((candidate) => candidate.id === id);
+      if (target.dataset.showModel) return revealSlideBox(id, target);
+      const text = slideValue(id).toLowerCase();
+      const hits = item.keyIdeas.filter((idea) => idea.toLowerCase().split(/\s+/).some((word) => word.length > 2 && text.includes(word))).length;
+      const secure = text.length > 30 && (hits > 0 || item.keyIdeas.length === 0);
+      setSlideBox(id, `<p class="feedback ${secure ? "good" : "try"}"><span class="status-note">${secure ? "Your explanation includes real evidence." : "Add more evidence."}</span> ${secure ? esc(item.modelAnswer) : `Use these ideas: ${esc(item.keyIdeas.join(", "))}.`}</p>`);
+      if (!secure) return;
+      completed.add(item.id);
+      progress.reasoning = [...completed];
+      saveProgress();
+      if (completed.size === prompts.length) complete("explain", "Reasoning explanations complete.");
+    },
+  });
+}
+
 function renderExplainThinking() {
+  if (deckStage()) return renderExplainThinkingDeck();
   let active=0;
   const completed=new Set(progress.reasoning||[]);
   const draw=()=>{const item=course.reasoningPrompts[active];$("#app").innerHTML=`${pageHeader("Reasoning matters", "Explain Your Thinking", `Explain the ideas in ${escapeHtml(course.unit.unitTitle)} using scientific evidence, not only a final answer.`)}<div class="reasoning-tabs">${course.reasoningPrompts.map((entry,index)=>`<button class="${index===active?'active':''} ${completed.has(entry.id)?'done':''}" data-reasoning-index="${index}" type="button"><span>${index+1}</span>${escapeHtml(entry.difficulty)}</button>`).join('')}</div><div class="explain-layout"><section class="panel"><span class="eyebrow">Reasoning prompt</span><h2>${escapeHtml(item.prompt)}</h2>${voiceButton(item.prompt,"Listen to prompt")}<textarea id="reasoning-text" rows="9" placeholder="Explain what you know, what rule you used and why your conclusion makes sense…"></textarea><button class="button primary" id="check-reasoning-text" type="button">Check scientific ideas</button><div id="reasoning-text-feedback"></div></section><section class="panel"><h3>Key ideas</h3><ul class="checklist">${item.keyIdeas.map((idea)=>`<li>${escapeHtml(idea)}</li>`).join('')}</ul><details><summary>Show model explanation</summary><p>${escapeHtml(item.modelAnswer)}</p>${voiceButton(item.modelAnswer,"Listen to model answer")}</details></section></div>`;$$('[data-reasoning-index]').forEach((button)=>button.addEventListener('click',()=>{active=Number(button.dataset.reasoningIndex);draw();}));$("#check-reasoning-text").addEventListener('click',()=>{const text=$("#reasoning-text").value.toLowerCase();const hits=item.keyIdeas.filter((idea)=>idea.toLowerCase().split(/\s+/).some((word)=>word.length>2&&text.includes(word))).length;const secure=text.length>30&&(hits>0||item.keyIdeas.length===0);$("#reasoning-text-feedback").innerHTML=`<p class="feedback ${secure?'good':'try'}"><span class="status-note">${secure?'Your explanation includes scientific evidence.':'Add more scientific evidence.'}</span> ${secure?escapeHtml(item.modelAnswer):`Use these ideas: ${escapeHtml(item.keyIdeas.join(', '))}.`}</p>`;if(secure){completed.add(item.id);progress.reasoning=[...completed];saveProgress();if(completed.size===course.reasoningPrompts.length)complete('explain','Reasoning explanations complete.');}});};
@@ -937,6 +1684,10 @@ const config = {
   },
   bind,
   wehelOptions,
+  // A deck goes full-bleed by putting gc-full on the body. Leaving the section
+  // has to take it off again, or the next page renders inside a shell that has
+  // had its padding, its max-width and its page header stripped out.
+  onBeforeRender: () => { document.body.classList.remove("gc-full"); },
   async load(ctx) {
     const s = ctx.stageNumber, u = ctx.unitNumber;
     if (isPrereqUnit) {

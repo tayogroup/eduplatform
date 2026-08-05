@@ -23,9 +23,6 @@ const path = require("path");
 
 const ROOT = path.resolve(__dirname, "..");
 const EHEL = path.join(ROOT, "src", "prototypes", "ehel-academy");
-const API_BASE = "https://api.elevenlabs.io/v1";
-const VOICE_ID = "XfNU2rGpBa01ckF309OY";
-const MODEL_ID = "eleven_multilingual_v2";
 
 const { CLIP_SUBJECTS, phraseHashes } = require("./lib/ehel-wehel-phrases");
 
@@ -60,17 +57,12 @@ function loadDotEnv() {
 loadDotEnv();
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-async function tts(text) {
-  const key = process.env.ELEVENLABS_API_KEY;
-  if (!key) throw new Error("ELEVENLABS_API_KEY is not set (check .env).");
-  const r = await fetch(`${API_BASE}/text-to-speech/${VOICE_ID}?output_format=mp3_44100_128`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json", "xi-api-key": key },
-    body: JSON.stringify({ text, model_id: MODEL_ID, voice_settings: { stability: 0.62, similarity_boost: 0.82, style: 0.18, use_speaker_boost: true } }),
-  });
-  if (!r.ok) throw new Error(`ElevenLabs ${r.status}: ${(await r.text()).slice(0, 300)}`);
-  return Buffer.from(await r.arrayBuffer());
-}
+// One definition of how this project talks to ElevenLabs, shared with the other
+// generators: the voice, the model, the request timeout, and which of the three
+// kinds a failure is — fatal (the credential or the account, stop the run),
+// permanent (this text, one attempt) or transient (retry). See
+// tools/lib/ehel-tts.js.
+const { tts, FatalTtsError, PermanentTtsError } = require("./lib/ehel-tts");
 
 (async () => {
   // hash -> { text, targets: [file, ...] } across every requested subject, so

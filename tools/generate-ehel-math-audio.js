@@ -25,9 +25,6 @@ const narration = require("./lib/ehel-math-narration");
 const ROOT = path.resolve(__dirname, "..");
 const MATH = path.join(ROOT, "src", "prototypes", "ehel-academy", "mathematics");
 const OUT_DIR = path.join(MATH, "media", "audio", "tts");
-const API_BASE = "https://api.elevenlabs.io/v1";
-const VOICE_ID = "XfNU2rGpBa01ckF309OY";
-const MODEL_ID = "eleven_multilingual_v2";
 
 const ALL_CATS = narration.CATEGORIES;
 const args = process.argv.slice(2);
@@ -57,42 +54,12 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 // used to carry: 5,626 shared-category strings, zero differences.
 const { cyrb53, clean, textsForUnit, textsForCapstone } = narration;
 
-// Not every failure is worth retrying, and treating them all alike is how a run
-// with a stale key spent twenty-two minutes failing: 136 clips × 3 attempts ×
-// backoff, each one certain to fail for the same reason, with the answer sitting
-// in the very first response body. `--budget` could not stop it either, since it
-// counts characters SENT and a failing run sends none.
-//
-//   fatal      — the credential or the account is the problem. Every remaining
-//                clip will fail identically, so the run stops on the first one
-//                and prints what the API actually said.
-//   permanent  — this text will never be accepted (a malformed request). One
-//                attempt, record it, move to the next clip.
-//   transient  — rate limits, gateway errors, a dropped connection. Retry.
-class FatalApiError extends Error {}
-class PermanentClipError extends Error {}
-
-async function tts(text) {
-  const key = process.env.ELEVENLABS_API_KEY;
-  if (!key) throw new FatalApiError("ELEVENLABS_API_KEY is not set (check .env).");
-  const r = await fetch(`${API_BASE}/text-to-speech/${VOICE_ID}?output_format=mp3_44100_128`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json", "xi-api-key": key },
-    body: JSON.stringify({ text, model_id: MODEL_ID, voice_settings: { stability: 0.62, similarity_boost: 0.82, style: 0.18, use_speaker_boost: true } }),
-  });
-  if (r.ok) return Buffer.from(await r.arrayBuffer());
-  const body = (await r.text()).slice(0, 300);
-  const message = `ElevenLabs ${r.status}: ${body}`;
-  // ElevenLabs reports a bad or missing key as 400 with an authentication_error
-  // payload, not only as 401 — a stale key reads as "Bad Request" unless the
-  // body is looked at. Quota exhaustion arrives the same way.
-  const isAuth = r.status === 401 || r.status === 403
-    || /authentication_error|invalid_api_key|quota_exceeded|missing_permissions/.test(body);
-  if (isAuth) throw new FatalApiError(message);
-  if (r.status === 429 || r.status >= 500) throw new Error(message);
-  if (r.status >= 400) throw new PermanentClipError(message);
-  throw new Error(message);
-}
+// One definition of how this project talks to ElevenLabs, shared with the other
+// generators: the voice, the model, the request timeout, and which of the three
+// kinds a failure is — fatal (the credential or the account, stop the run),
+// permanent (this text, one attempt) or transient (retry). See
+// tools/lib/ehel-tts.js.
+const { tts, FatalTtsError, PermanentTtsError } = require("./lib/ehel-tts");
 
 (async () => {
   fs.mkdirSync(OUT_DIR, { recursive: true });
@@ -155,8 +122,8 @@ async function tts(text) {
       } catch (e) {
         // The credential or the account: every remaining clip fails the same
         // way, so there is nothing to learn from trying them.
-        if (e instanceof FatalApiError) { stoppedEarly = e.message; break; }
-        if (e instanceof PermanentClipError) { say(`${item.key}: ${e.message.slice(0, 120)}`); break; }
+        if (e instanceof FatalTtsError) { stoppedEarly = e.message; break; }
+        if (e instanceof PermanentTtsError) { say(`${item.key}: ${e.message.slice(0, 120)}`); break; }
         say(`${item.key} retry ${attempt}: ${e.message.slice(0, 70)}`);
         if (attempt < 3) await sleep(1500 * attempt);
       }

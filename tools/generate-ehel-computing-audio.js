@@ -23,9 +23,6 @@ const path = require("path");
 const ROOT = path.resolve(__dirname, "..");
 const COMPUTING = path.join(ROOT, "src", "prototypes", "ehel-academy", "computing");
 const OUT_DIR = path.join(COMPUTING, "media", "audio", "tts");
-const API_BASE = "https://api.elevenlabs.io/v1";
-const VOICE_ID = "XfNU2rGpBa01ckF309OY";
-const MODEL_ID = "eleven_multilingual_v2";
 
 const narration = require("./lib/ehel-computing-narration");
 const ALL_CATS = narration.CATEGORIES;
@@ -105,34 +102,12 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 // tools/lib/ehel-computing-narration.js so the pruner agrees with what is bought.
 const { cyrb53, clean, spokenText, textsForUnit, textsForCapstone } = narration;
 
-// A credential failure is not a transient error, so it must not go through the
-// retry loop. Every one of a run's clips fails identically, three times each
-// with a backoff between — a stage-1 run spends sixteen minutes proving the same
-// key is still wrong. With stdout piped (`| tail`), Node buffers it all until
-// exit, so those sixteen minutes are completely silent and read as a hang. This
-// class is thrown past the retry and stops the run on the first clip.
-class FatalTtsError extends Error {}
-
-async function tts(text) {
-  const key = process.env.ELEVENLABS_API_KEY;
-  if (!key) throw new FatalTtsError("ELEVENLABS_API_KEY is not set (check .env).");
-  const r = await fetch(`${API_BASE}/text-to-speech/${VOICE_ID}?output_format=mp3_44100_128`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json", "xi-api-key": key },
-    body: JSON.stringify({ text, model_id: MODEL_ID, voice_settings: { stability: 0.62, similarity_boost: 0.82, style: 0.18, use_speaker_boost: true } }),
-  });
-  if (!r.ok) {
-    const body = (await r.text()).slice(0, 300);
-    // 401 is the documented auth status, but a rejected key can also come back
-    // as 400 with an authentication_error body — which is exactly what an
-    // old-format key (one not starting "sk_") returns. Matching on status alone
-    // would send that one back round the retry loop.
-    const isAuth = r.status === 401 || r.status === 403 || /authentication_error|invalid_api_key/.test(body);
-    const Err = isAuth ? FatalTtsError : Error;
-    throw new Err(`ElevenLabs ${r.status}: ${body}`);
-  }
-  return Buffer.from(await r.arrayBuffer());
-}
+// One definition of how this project talks to ElevenLabs, shared with the other
+// generators: the voice, the model, the request timeout, and which of the three
+// kinds a failure is — fatal (the credential or the account, stop the run),
+// permanent (this text, one attempt) or transient (retry). See
+// tools/lib/ehel-tts.js.
+const { tts, FatalTtsError, PermanentTtsError } = require("./lib/ehel-tts");
 
 (async () => {
   fs.mkdirSync(OUT_DIR, { recursive: true });
@@ -224,8 +199,11 @@ async function tts(text) {
           process.exitCode = 2;
           return;
         }
+        // A 4xx about this text specifically: it will be refused again, so this
+        // clip is skipped rather than attempted three times.
+        if (e instanceof PermanentTtsError) { console.log(`skipped: ${e.message.slice(0, 120)}`); break; }
         console.log(`retry ${attempt}: ${e.message.slice(0, 70)}`);
-        await sleep(1500 * attempt);
+        if (attempt < 3) await sleep(1500 * attempt);
       }
     }
     await sleep(350);

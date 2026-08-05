@@ -18,9 +18,6 @@ const path = require("path");
 const ROOT = path.resolve(__dirname, "..");
 const MATH = path.join(ROOT, "src", "prototypes", "ehel-academy", "science");
 const OUT_DIR = path.join(MATH, "media", "audio", "tts");
-const API_BASE = "https://api.elevenlabs.io/v1";
-const VOICE_ID = "XfNU2rGpBa01ckF309OY";
-const MODEL_ID = "eleven_multilingual_v2";
 
 const narration = require("./lib/ehel-science-narration");
 const ALL_CATS = narration.CATEGORIES;
@@ -51,17 +48,12 @@ const { cyrb53, clean } = narration;
 // tools/lib/ehel-science-narration.js so the uploader and pruner agree.
 const { textsForUnit, textsForCapstone } = narration;
 
-async function tts(text) {
-  const key = process.env.ELEVENLABS_API_KEY;
-  if (!key) throw new Error("ELEVENLABS_API_KEY is not set (check .env).");
-  const r = await fetch(`${API_BASE}/text-to-speech/${VOICE_ID}?output_format=mp3_44100_128`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json", "xi-api-key": key },
-    body: JSON.stringify({ text, model_id: MODEL_ID, voice_settings: { stability: 0.62, similarity_boost: 0.82, style: 0.18, use_speaker_boost: true } }),
-  });
-  if (!r.ok) throw new Error(`ElevenLabs ${r.status}: ${(await r.text()).slice(0, 300)}`);
-  return Buffer.from(await r.arrayBuffer());
-}
+// One definition of how this project talks to ElevenLabs, shared with the other
+// generators: the voice, the model, the request timeout, and which of the three
+// kinds a failure is — fatal (the credential or the account, stop the run),
+// permanent (this text, one attempt) or transient (retry). See
+// tools/lib/ehel-tts.js.
+const { tts, FatalTtsError, PermanentTtsError } = require("./lib/ehel-tts");
 
 (async () => {
   fs.mkdirSync(OUT_DIR, { recursive: true });
@@ -94,7 +86,16 @@ async function tts(text) {
   console.log(`unique clips: ${queue.length} | total characters: ${totalChars.toLocaleString()}${dry ? " (DRY RUN)" : ""}`);
   if (dry) return;
 
-  let sent = 0, made = 0, reused = 0;
+  let sent = 0, made = 0, reused = 0, failed = 0;
+  // Set by a FatalTtsError: the credential or the account, so every remaining
+  // clip would fail the same way.
+  let fatal = null;
+  // Nothing has succeeded and clips keep failing: the run is broken in a way the
+  // per-clip classification did not catch. Stop rather than walking the whole
+  // queue to prove it — a 422 storm used to skip all 492 clips in three minutes
+  // and still exit 0, reporting success for a run that generated nothing.
+  const GIVE_UP_AFTER = 5;
+  let consecutiveFailures = 0;
   for (const item of queue) {
     const out = path.join(OUT_DIR, `${item.key}.mp3`);
     if (!force && fs.existsSync(out) && fs.statSync(out).size > 1000) { reused += 1; continue; }
@@ -106,10 +107,37 @@ async function tts(text) {
         fs.writeFileSync(out, await tts(item.text));
         sent += item.chars; made += 1; ok = true;
         console.log("ok");
-      } catch (e) { console.log(`retry ${attempt}: ${e.message.slice(0, 70)}`); await sleep(1500 * attempt); }
+      } catch (e) {
+        // The three kinds the shared helper distinguishes. Retrying a stale key
+        // or a rejected text just spends wall-clock proving the same answer.
+        if (e instanceof FatalTtsError) { fatal = e.message; break; }
+        if (e instanceof PermanentTtsError) { console.log(`skipped: ${e.message.slice(0, 120)}`); break; }
+        console.log(`retry ${attempt}: ${e.message.slice(0, 70)}`);
+        if (attempt < 3) await sleep(1500 * attempt);
+      }
+    }
+    if (fatal) break;
+    if (ok) consecutiveFailures = 0;
+    else {
+      failed += 1;
+      consecutiveFailures += 1;
+      if (consecutiveFailures >= GIVE_UP_AFTER && made === 0) {
+        fatal = `${GIVE_UP_AFTER} clips failed in a row and none has succeeded.`;
+        break;
+      }
     }
     await sleep(350);
   }
   console.log("\n──────── summary ────────");
-  console.log(`generated: ${made} | reused: ${reused} | characters sent: ${sent.toLocaleString()}`);
+  console.log(`generated: ${made} | reused: ${reused} | failed: ${failed} | characters sent: ${sent.toLocaleString()}`);
+  if (fatal) {
+    console.error(`\nSTOPPED: ${fatal}`);
+    console.error("   Fix the cause and re-run — this is idempotent, so nothing already written is paid for twice.");
+    process.exitCode = 1;
+  } else if (failed) {
+    // A clip that failed is simply absent afterwards, and the file is named by a
+    // hash, so nothing downstream can tell it from one that was never queued.
+    console.error(`\n${failed} clip(s) failed — re-run to fill the gaps.`);
+    process.exitCode = 1;
+  }
 })();

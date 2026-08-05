@@ -23,9 +23,13 @@ const CATEGORIES = ["concepts", "explorations", "explorationQuestions", "visualM
 // The grid designs Stage 5 and up keep have no Listen button on the words page
 // or on an activity — a learner who can read does not need one — so generating
 // those clips for a stage that never asks for them is money spent on files the
-// app will not request, and the pruner would then report them as orphans. The
-// gate is the unit's own stage, and it is DECK_MAX_STAGE in
-// shell/subjects/mathematics.js: raise one and raise the other.
+// app will not request, and the pruner would then report them as orphans.
+//
+// This is 4 because DECK_MAX_STAGE in shell/subjects/mathematics.js is 4, and
+// that one is settled: Stages 5-8 keep their grids permanently (2026-08-06).
+// The number is here as well because the generator cannot import a browser
+// module — if the UI gate ever does move, move this with it, and never ahead of
+// it: raising this alone buys clips no button asks for.
 const DECK_MAX_STAGE = 4;
 const DECK_ONLY = new Set(["words", "symbols", "activities"]);
 const stageOf = (unit) => Number(String((unit.stage || unit.grade || {}).id || "").replace(/\D/g, "")) || 0;

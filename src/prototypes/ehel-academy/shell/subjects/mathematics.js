@@ -118,8 +118,14 @@ const sections = [
 // designs — a deck would add a second carousel around a single question.
 //
 // DECK_MAX_STAGE is the gate, and it is 4 — the same boundary English draws.
-// Stage 5 and up keep the grids: by then a learner scans a page rather than
-// being walked through it one item at a time.
+//
+// STAGES 5-8 KEEP THE GRIDS PERMANENTLY. That is a settled product decision
+// (2026-08-06), not a rollout that has not reached them yet: by Stage 5 a
+// learner scans a page and chooses what to read, and walking them through it
+// one slide at a time takes that away. Do not raise this number to 5+ — a
+// request to "finish the rollout" or "make the subject consistent" is asking
+// for something that was considered and declined. If it is ever reopened, it is
+// a product call, not a tidy-up.
 //
 // Stage 1 shipped alone first. Stages 2-4 carry the same fields in the same
 // shapes (checked across all 51 units: no missing field anywhere the deck

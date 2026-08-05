@@ -136,10 +136,20 @@ function cambridgeLabel(stage) {
 // consults rather than works through, and a glossary dealt out one row per slide
 // is worse to use than a table.
 //
-// DECK_MAX_STAGE is the gate. Stage 1 first, on its own; Stages 2-4 follow this
-// same line once Stage 1 is confirmed with learners, and Stage 5 and up keep the
-// grids, where a learner scans rather than being walked through.
-const DECK_MAX_STAGE = 1;
+// DECK_MAX_STAGE is the gate, and 4 is where the packs themselves divide:
+// Stages 1-4 ship as Teacher & Parent Guides rewritten into learner voice, and
+// Stage 5 up ships student lesson books carried across as written. A learner
+// handed a lesson book is reading; one being read to is being walked through.
+// So Stage 5 and up keep the grids, where a learner scans a page rather than
+// swiping it — the same line English draws between its Grade 4 and Grade 5.
+//
+// Nothing below is per-stage. Stages 2-4 carry the same sections at the same
+// sizes as Stage 1 (five concepts, six discoveries, five models and methods,
+// eight activities), so extending the design was this number and nothing else.
+// The two fields that are not universal — a concept's `checkYourself` and a
+// word's `example`, both absent from parts of Stages 2-3 — were already
+// conditional on the slides that show them.
+const DECK_MAX_STAGE = 4;
 const deckStage = () => stageNumber <= DECK_MAX_STAGE;
 
 // Computing never loads the lucide runtime (it is one of the four shell-voice

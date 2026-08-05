@@ -100,6 +100,74 @@
 .project-step { counter-increment: gpstep; }
 .project-step h3::before { content: counter(gpstep) ". "; color: var(--gp); font-weight: var(--weight-medium); }
 
+/* ── The slide deck, in this subject's colours ─────────────────────────────
+   Stage 1 meets its teaching sections as a full-screen carousel (shell/deck.js,
+   shared with English and Mathematics). The layout comes from the design system
+   unchanged; what is re-pointed here is the accent, for the same reason --teal
+   is re-pointed above — the gc-* rules were written with English's blue spelled
+   out, so a purple course would otherwise open a blue deck. */
+.gc-eyebrow { color: var(--gp-dark); }
+.gc-btn { background: var(--gp); }
+.gc-btn:not(.ghost):not(.done):hover { background: var(--gp-dark); }
+.gc-btn.ghost { background: var(--gp-soft); color: var(--gp-dark); }
+.gc-btn.done { background: var(--gp-dark); }
+.gc-dot.active { background: var(--gp); }
+.gc-practice summary { color: var(--gp-dark); }
+.gc-arrow { color: var(--gp-dark); }
+.gc-arrow:hover:not([disabled]) { background: var(--gp-amber); }
+
+/* Teaching prose ON a slide. .gc-inner centres what it holds, which is right
+   for a word card and wrong for three paragraphs of explanation: a centred
+   ragged-both block is what a five-year-old loses their line in. The prose,
+   bullets and source tables are therefore set left inside their centred card;
+   the eyebrow, heading and buttons stay centred. */
+.gc-inner .gc-prose,
+.gc-inner .gc-bullets,
+.gc-inner .gp-table-wrap,
+.gc-inner .gp-box { width: 100%; text-align: left; }
+.gc-inner .gp-box { margin: 0; }
+.gc-inner .gc-prose { margin: 0; font-size: 17px; line-height: 1.65; color: #33465e; }
+.gc-inner .gc-bullets { margin: 0; padding-left: 21px; color: #33465e; line-height: 1.6; }
+.gc-inner .gc-bullets li { margin-bottom: 7px; }
+.gc-inner .gc-bullets li:last-child { margin-bottom: 0; }
+.gc-inner .gp-table { font-size: 13.5px; }
+.gc-inner .gc-practice p { text-align: left; }
+
+/* The shell's Listen button is a .button.secondary, sized for a panel. On a
+   slide it is the control a Stage 1 learner reaches for first, so it takes the
+   deck's own button size — .gc-btn's rules, applied to the markup the shell
+   emits, rather than a second button the narration tools would have to learn.
+   Its lucide <i> is empty here (this course never loads the lucide runtime), so
+   the speaker is masked in from an inline shape instead. */
+.gc-inner .voice-button {
+  --gc-speaker: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolygon points='11 5 6 9 2 9 2 15 6 15 11 19 11 5'/%3E%3Cpath d='M15.54 8.46a5 5 0 0 1 0 7.07'/%3E%3Cpath d='M19.07 4.93a10 10 0 0 1 0 14.14'/%3E%3C/svg%3E");
+  display: inline-flex; align-items: center; gap: 8px;
+  font-weight: var(--weight-medium); font-size: 15px; line-height: 1;
+  padding: 10px 18px;
+  border: none; border-radius: 999px; cursor: pointer;
+  background: var(--gp); color: #fff; box-shadow: 0 6px 16px #17324d33;
+  transition: transform .16s, box-shadow .16s, background .16s;
+}
+/* The slide's OWN Listen button is the control a young learner reaches for
+   first, so it takes the deck's full button size. A button belonging to a
+   callout box nested inside the slide keeps the compact size above — an
+   activity carrying four boxes would otherwise be four full-size pills. */
+.gc-inner > .voice-button { gap: 9px; font-size: 18px; padding: 15px 26px; }
+.gc-inner .voice-button::before {
+  content: ""; flex: none; width: 20px; height: 20px; background: currentColor;
+  -webkit-mask: var(--gc-speaker) center / contain no-repeat;
+  mask: var(--gc-speaker) center / contain no-repeat;
+}
+.gc-inner .voice-button i[data-lucide] { display: none; }
+.gc-inner .voice-button:hover:not([disabled]) { background: var(--gp-dark); transform: translateY(-2px); box-shadow: 0 9px 20px #17324d40; }
+.gc-inner .voice-button:active:not([disabled]) { transform: translateY(0) scale(.97); }
+.gc-inner .voice-button.is-playing { background: var(--gp-dark); }
+.gc-inner .voice-button[disabled] { opacity: .4; cursor: default; box-shadow: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .gc-inner .voice-button:hover:not([disabled]) { transform: none; }
+}
+
 @media (max-width: 900px) {
   .reference-grid, .goal-columns { grid-template-columns: 1fr; }
 }

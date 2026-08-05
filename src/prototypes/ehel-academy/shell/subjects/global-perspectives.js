@@ -17,6 +17,7 @@
 // that skill as a chip. `pageHeader` is therefore deliberately absent from the
 // bind list below.
 import { createCourseApp } from "../course-app.js";
+import { createDeck, deckIcon } from "../deck.js";
 import { createPlacementUnit, placementCallout, placementCourseShell, PREREQ_UNIT } from "../placement.js?v=placement-1";
 import { mountWehelChat, outlineFromManifest, unitFetcher } from "../wehel.js?v=wehel-1";
 
@@ -38,11 +39,11 @@ let placement;
 // Shell-provided bindings (populated by bind(ctx)).
 let $, $$, escapeHtml, icon, voiceButton, toast;
 let complete, saveProgress, navigate, emitProgress;
-let bindVoiceControls, updateVoiceUI, renderNav, unitSectionIds, stageNumber;
+let bindVoiceControls, updateVoiceUI, stopVoice, renderNav, unitSectionIds, stageNumber;
 let course, progress, manifest, dataRootUrl;
 function bind(ctx) {
   ({ $, $$, escapeHtml, icon, voiceButton, toast, complete, saveProgress, navigate,
-     emitProgress, bindVoiceControls, updateVoiceUI, renderNav, unitSectionIds,
+     emitProgress, bindVoiceControls, updateVoiceUI, stopVoice, renderNav, unitSectionIds,
      stageNumber } = ctx);
   course = ctx.course; progress = ctx.progress; manifest = ctx.manifest; dataRootUrl = ctx.dataRootUrl;
   if (isPrereqUnit) {
@@ -149,6 +150,373 @@ function pageHeader(kicker, title, description) {
 function doneButton(section, label = "Mark this section done") {
   const already = progress.completed.includes(section);
   return `<div class="page-actions" style="margin-top:22px"><button class="button primary" type="button" data-done="${escapeHtml(section)}" ${already ? "disabled" : ""}>${icon("check")} ${already ? "Done" : escapeHtml(label)}</button></div>`;
+}
+
+// --- the slide deck ---------------------------------------------------------
+// How the youngest stages meet a teaching section, the same way English Grades
+// 1-4 do: one item per full-screen slide, a big Listen button, side arrows,
+// dots and swipe, instead of a page they must scroll. The plumbing is
+// shell/deck.js — shared with English and Mathematics so the arrows, dots and
+// stop-audio-on-slide-change cannot drift between subjects.
+//
+// Stages 1-4, matching English. Stage 5 and up are left on their pages: by then
+// a learner scans a grid rather than being walked through it, and a Stage 6
+// toolkit is genuinely a reference to dip into.
+//
+// The boundary falls INSIDE this subject's two pack shapes rather than along
+// them. Stages 1-3 are the guided packs and carry six sections between them;
+// Stage 4 is the first self-study pack and adds another six (toolkit, skill
+// words, challenge, activities, practice and the quiz), which is why there are
+// twelve deck renderers below and not six.
+const DECK_MAX_STAGE = 4;
+const isDeckStage = () => stageNumber <= DECK_MAX_STAGE;
+
+// The deck cannot be built at module load: it closes over $ and escapeHtml,
+// which the shell hands us in bind(). Built once on first use instead.
+let deckApi = null;
+function deck() {
+  if (!deckApi) {
+    deckApi = createDeck({
+      $,
+      escapeHtml,
+      // Not the shell's icon(): that emits <i data-lucide>, and this course
+      // never loads the lucide runtime, so a deck's arrows would be two empty
+      // 28px circles. deckIcon draws the same shapes inline.
+      icon: deckIcon,
+      // A slide change silences the narration for the slide being left. The
+      // shell owns the ElevenLabs player, so it owns the stop.
+      stopAudio: () => stopVoice?.(),
+      // Slides carry the shell's own Listen buttons, and a re-deck or a redraw
+      // replaces them with unbound copies. Re-binding is idempotent — the shell
+      // marks a bound button with data-voiceBound — so this is safe to call on
+      // every paint.
+      afterPaint: () => { bindVoiceControls(); updateVoiceUI(); },
+    });
+  }
+  return deckApi;
+}
+
+// Reaching the end of a deck and pressing its finish button marks the section
+// done, exactly as the page's "Mark this section done" does. The page's button
+// is handled by the delegated [data-done] listener further down; a deck's is
+// inside the deck's own root, so it is handled here.
+function finishedInDeck(event, message = "Nice work — that section is marked done.") {
+  const target = event.target.closest("[data-deck-finish]");
+  if (!target || target.disabled) return false;
+  complete(target.dataset.deckFinish, message);
+  target.disabled = true;
+  target.innerHTML = `${deckIcon("check")} Done`;
+  return true;
+}
+
+// Decoration only, and aria-hidden: a Stage 1 slide that is three paragraphs of
+// prose needs something to look at above the text.
+const DECK_EMOJI = ["🌍", "🔎", "💭", "🤝", "🌱", "⭐", "🧭", "💬"];
+
+// The lesson: one explainer per slide. Every field the page shows is kept —
+// title, the full prose body, the bullets, the tables and the Listen button —
+// only the layout changes.
+function renderLessonDeck() {
+  const { mountDeck, deckFinish } = deck();
+  const explainers = course.explainers;
+  const slides = explainers.map((explainer, index) => `<section class="gc-slide gc-v${index % 5}"><div class="gc-inner">
+      <span class="gc-eyebrow">Part ${index + 1} of ${explainers.length}</span>
+      <h3 class="gc-title"><span class="gc-emoji" aria-hidden="true">${DECK_EMOJI[index % DECK_EMOJI.length]}</span> ${escapeHtml(explainer.title)}</h3>
+      ${richText(explainer.body, "gc-prose")}
+      ${list(explainer.bullets, "gc-bullets")}
+      ${(explainer.tables || []).map(table).join("")}
+      ${explainer.body ? voiceButton(explainer.body, "Listen to this part") : ""}
+      ${index === explainers.length - 1 ? deckFinish("lesson", "I have read the lesson") : ""}
+    </div></section>`);
+  mountDeck({
+    heading: course.unit.unitTitle,
+    label: "Part",
+    slides,
+    emptyMessage: "This unit has no lesson pages yet.",
+    onClick: (event) => finishedInDeck(event, "Lesson finished — well done."),
+  });
+}
+
+// Big Ideas, Worked Examples, the teacher session and the speaking prompts are
+// all callout boxes on the page. One box per slide here.
+//
+// `spoken` is computed exactly as box() computes it, so the narration hash is
+// the same file the page already asks for: the heading is on screen right above
+// the button, so the clip reads the lines and falls back to the title only when
+// a box has no lines of its own.
+function renderBoxDeck({ section, items, label, heading, finishLabel }) {
+  const { mountDeck, deckFinish } = deck();
+  const slides = items.map(({ item, role }, index) => {
+    const spoken = item.lines?.length ? item.lines.join(" ") : item.title;
+    return `<section class="gc-slide gc-v${index % 5}"><div class="gc-inner">
+      <span class="gc-eyebrow">${escapeHtml(label)} ${index + 1} of ${items.length}</span>
+      <h3 class="gc-title"><span class="gc-emoji" aria-hidden="true">${MARKER[role] || "•"}</span> ${escapeHtml(item.title)}</h3>
+      ${list(item.lines, "gc-bullets")}
+      ${voiceButton(spoken)}
+      ${index === items.length - 1 ? deckFinish(section, finishLabel) : ""}
+    </div></section>`;
+  });
+  mountDeck({ heading, label, slides, onClick: (event) => finishedInDeck(event) });
+}
+
+// The mini-project: its own introduction, then one step per slide. The steps
+// are numbered by the page's CSS counter, which a slide has no equivalent for,
+// so the number is written into the eyebrow instead.
+function renderProjectDeck() {
+  const { mountDeck, deckFinish } = deck();
+  const project = course.project;
+  const steps = project.steps;
+  const intro = `<section class="gc-slide gc-v0"><div class="gc-inner">
+      <span class="gc-eyebrow">Mini-Project</span>
+      <h3 class="gc-title"><span class="gc-emoji" aria-hidden="true">🔨</span> ${escapeHtml(project.title)}</h3>
+      ${richText(project.intro, "gc-prose")}
+      <p class="gc-note">This is the big one. Take your time and enjoy it.</p>
+    </div></section>`;
+  const slides = [intro, ...steps.map((step, index) => `<section class="gc-slide gc-v${(index + 1) % 5}"><div class="gc-inner">
+      <span class="gc-eyebrow">Step ${index + 1} of ${steps.length}</span>
+      <h3 class="gc-title">${escapeHtml(step.title)}</h3>
+      ${richText(step.intro, "gc-prose")}
+      ${list(step.items, "gc-bullets")}
+      ${(step.tables || []).map(table).join("")}
+      ${index === steps.length - 1 ? deckFinish("project", "I finished my project") : ""}
+    </div></section>`)];
+  mountDeck({
+    heading: project.title,
+    // "Slide", not "Step": the introduction is the first card but is not a step,
+    // so a deck labelled Step would count "Step 1 of 6" over a five-step project
+    // and disagree with the eyebrow on the very next card.
+    label: "Slide",
+    slides,
+    onClick: (event) => finishedInDeck(event, "Mini-project marked done. That was a big piece of work."),
+  });
+}
+
+// Reflection: one prompt per slide, with the learner's own thinking written on
+// the slide it belongs to. The textarea keeps `data-reflect`, because the
+// delegated change listener at the bottom of this file is what saves it — the
+// deck does not touch storage. The self-assessment grid, which is a chart
+// rather than a question, stays whole on a final slide.
+function renderReflectDeck() {
+  const { mountDeck, deckFinish } = deck();
+  const prompts = course.reflection || [];
+  const self = course.selfAssessment || [];
+  const slides = prompts.map((item, index) => `<section class="gc-slide gc-v${index % 5}"><div class="gc-inner">
+      <span class="gc-eyebrow">Question ${index + 1} of ${prompts.length}</span>
+      <h3 class="gc-title"><span class="gc-emoji" aria-hidden="true">🪞</span> ${escapeHtml(item.prompt)}</h3>
+      <div class="wc-sentence">
+        <small>Your thinking</small>
+        <textarea rows="4" data-reflect="${escapeHtml(item.id)}" aria-label="Your thinking about question ${index + 1}">${escapeHtml(progress.reflection[item.id] || "")}</textarea>
+      </div>
+      ${item.modelAnswer ? `<details class="gc-practice"><summary>One way to answer</summary><p class="gc-note">${escapeHtml(item.modelAnswer)}</p></details>` : ""}
+      ${!self.length && index === prompts.length - 1 ? deckFinish("reflect", "I have finished reflecting") : ""}
+    </div></section>`);
+  if (self.length) {
+    slides.push(`<section class="gc-slide gc-v${prompts.length % 5}"><div class="gc-inner">
+      <span class="gc-eyebrow">How am I doing?</span>
+      <h3 class="gc-title"><span class="gc-emoji" aria-hidden="true">⭐</span> Tick what you can do</h3>
+      ${table({ headers: ["I can…", "Not yet", "Yes"], rows: self.map((item) => [item.statement, "", ""]) })}
+      ${deckFinish("reflect", "I have finished reflecting")}
+    </div></section>`);
+  }
+  mountDeck({
+    heading: "Thinking about how I learn",
+    label: "Question",
+    slides,
+    emptyMessage: "This unit has no reflection questions yet.",
+    onClick: (event) => finishedInDeck(event, "Reflection marked done."),
+  });
+}
+
+// The teacher session and the speaking prompts are one deck: both are things to
+// bring to the live session, and at Stage 1 a unit carries a handful of each at
+// most. Each keeps its own marker, so a learner can still tell them apart.
+function renderTeacherDeck() {
+  return renderBoxDeck({
+    section: "teacher",
+    label: "Card",
+    heading: "Bring this to your live session",
+    finishLabel: "I am ready for my session",
+    items: [
+      ...(course.teacherSessions || []).map((item) => ({ item, role: "teacher" })),
+      ...(course.speakingPrompts || []).map((item) => ({ item, role: "speak" })),
+    ],
+  });
+}
+
+// The Skills Toolkit: one card per slide, checklists first exactly as the page
+// orders them — a checklist is what a learner reaches for mid-task, and the
+// explaining cards are what they read once.
+function renderToolkitDeck() {
+  const { mountDeck, deckFinish } = deck();
+  const cards = [...(course.checklists || []), ...(course.toolkit || [])];
+  const slides = cards.map((card, index) => `<section class="gc-slide gc-v${index % 5}"><div class="gc-inner">
+      <span class="gc-eyebrow">Card ${index + 1} of ${cards.length}</span>
+      <h3 class="gc-title"><span class="gc-emoji" aria-hidden="true">🧰</span> ${escapeHtml(card.title)}</h3>
+      ${richText(card.intro, "gc-prose")}
+      ${list(card.items, "gc-bullets")}
+      ${(card.tables || []).map(table).join("")}
+      ${index === cards.length - 1 ? deckFinish("toolkit", "I know what is in my toolkit") : ""}
+    </div></section>`);
+  mountDeck({
+    heading: "Your quick reference",
+    label: "Card",
+    slides,
+    onClick: (event) => finishedInDeck(event),
+  });
+}
+
+// Skill Words: one word per slide, the term set large like a vocabulary card
+// and the meaning read aloud beneath it.
+//
+// No search box, unlike English's vocabulary deck. That exists because an
+// English unit holds 13-70 words and swiping is not a way to reach the
+// fifty-first; a Global Perspectives unit holds about twenty, which the dot
+// strip already gives random access to. If a later stage's glossary grows, the
+// wc-tools search is the thing to add.
+//
+// The wrap-up slide is always last, whatever the glossary holds: it carries the
+// common-mistakes list the page shows below the grid, and it is where the
+// section is marked done.
+function renderWordsDeck() {
+  const { mountDeck, deckFinish } = deck();
+  const words = course.reference?.vocabulary || [];
+  const mistakes = course.reference?.mistakes || [];
+  const slides = words.map((word, index) => `<section class="gc-slide gc-v${index % 5}"><div class="gc-inner">
+      <span class="gc-eyebrow">Word ${index + 1} of ${words.length}</span>
+      <div class="gc-pattern" lang="en">${escapeHtml(word.term)}</div>
+      <p class="gc-lead">${escapeHtml(word.meaning)}</p>
+      ${/* The term is the card's heading, so the clip reads the meaning only. */ ""}
+      ${voiceButton(word.meaning)}
+    </div></section>`);
+  slides.push(`<section class="gc-slide gc-v${words.length % 5}"><div class="gc-inner">
+      <span class="gc-eyebrow">Before you go</span>
+      <h3 class="gc-title"><span class="gc-emoji" aria-hidden="true">⚠️</span> ${mistakes.length ? "Common mistakes to avoid" : "That is every word"}</h3>
+      ${mistakes.length ? list(mistakes, "gc-bullets") : `<p class="gc-lead">Come back to these whenever a word stops making sense.</p>`}
+      ${deckFinish("words", "I know these words")}
+    </div></section>`);
+  mountDeck({ heading: "The words you need", label: "Word", slides, onClick: (event) => finishedInDeck(event) });
+}
+
+// My Challenge is not a list of items but three short blocks — what the
+// challenge is, topics to choose from, and the checkpoint. One block per slide,
+// and a block the unit does not carry simply has no slide.
+function renderChallengeDeck() {
+  const { mountDeck, deckFinish } = deck();
+  const challenge = course.challenge || {};
+  const cards = [];
+  if (challenge.intro) cards.push({ emoji: "🚩", title: "The project that runs through the unit", body: challenge.intro });
+  if (challenge.topics?.length) cards.push({ emoji: "💡", title: "Ideas you could choose", items: challenge.topics });
+  if (challenge.checkpoints?.length) cards.push({ emoji: "📍", title: "Your checkpoint", items: challenge.checkpoints });
+  const slides = cards.map((card, index) => `<section class="gc-slide gc-v${index % 5}"><div class="gc-inner">
+      <span class="gc-eyebrow">My Challenge · ${index + 1} of ${cards.length}</span>
+      <h3 class="gc-title"><span class="gc-emoji" aria-hidden="true">${card.emoji}</span> ${escapeHtml(card.title)}</h3>
+      ${card.body ? richText(card.body, "gc-prose") : ""}
+      ${list(card.items, "gc-bullets")}
+      ${index === cards.length - 1 ? deckFinish("challenge", "I have chosen my challenge") : ""}
+    </div></section>`);
+  mountDeck({
+    heading: "Choose something you care about",
+    label: "Card",
+    slides,
+    onClick: (event) => finishedInDeck(event),
+  });
+}
+
+// Activities: one activity per slide, with the callout boxes it carries kept
+// inside it. Those boxes have Listen buttons of their own, which is why the
+// deck re-binds voice controls after every paint.
+function renderActivitiesDeck() {
+  const { mountDeck, deckFinish } = deck();
+  const activities = course.activities || [];
+  const slides = activities.map((activity, index) => `<section class="gc-slide gc-v${index % 5}"><div class="gc-inner">
+      <span class="gc-eyebrow">Activity ${index + 1} of ${activities.length}</span>
+      <h3 class="gc-title">${escapeHtml(activity.label || activity.title)}</h3>
+      ${richText(activity.intro, "gc-prose")}
+      ${list(activity.steps, "gc-bullets")}
+      ${(activity.tables || []).map(table).join("")}
+      ${(activity.boxes || []).map((item) => box(item, item.role || "note")).join("")}
+      ${index === activities.length - 1 ? deckFinish("activities", "I finished the activities") : ""}
+    </div></section>`);
+  mountDeck({
+    heading: course.unit.unitTitle,
+    label: "Activity",
+    slides,
+    onClick: (event) => finishedInDeck(event),
+  });
+}
+
+// Practice: one question per slide. A Stage 4 unit carries twenty-five of them
+// in two or three named parts, so the part becomes the filter under the dots —
+// the same place vocabulary and comprehension put theirs in English.
+//
+// The reveal keeps `data-answer`, because the capture-phase toggle listener at
+// the bottom of this file is what records that an answer was seen; the deck
+// does not touch storage.
+function renderPracticeDeck() {
+  const { mountDeck, deckFinish } = deck();
+  const all = course.practice || [];
+  const parts = [...new Set(all.map((item) => item.partTitle).filter(Boolean))];
+  let items = all;
+
+  const slide = (item, index) => {
+    const seen = progress.answersSeen.includes(item.id);
+    return `<section class="gc-slide gc-v${index % 5}"><div class="gc-inner">
+      <span class="gc-eyebrow">Question ${index + 1} of ${items.length}${item.partTitle ? ` · ${escapeHtml(item.partTitle)}` : ""}</span>
+      ${item.intro ? `<p class="gc-note">${escapeHtml(item.intro)}</p>` : ""}
+      <h3 class="gc-title">${escapeHtml(item.prompt)}</h3>
+      ${list(item.options, "gc-bullets")}
+      ${item.answer
+        ? `<details class="gc-practice" data-answer="${escapeHtml(item.id)}" ${seen ? "open" : ""}>
+             <summary>Show the answer</summary><p class="gc-note">${escapeHtml(item.answer)}</p>
+           </details>`
+        : `<p class="gc-note">This one is yours to set. There is no right answer.</p>`}
+      ${index === items.length - 1 ? deckFinish("practice", "I have finished practising") : ""}
+    </div></section>`;
+  };
+
+  const mounted = mountDeck({
+    heading: "Practice",
+    label: "Question",
+    emptyMessage: "No practice questions in this part yet.",
+    tools: parts.length > 1 ? `<div class="wc-tools">
+        <select id="part-filter" aria-label="Filter practice by part"><option value="all">All parts</option>${parts.map((part) => `<option value="${escapeHtml(part)}">${escapeHtml(part)}</option>`).join("")}</select>
+        <span class="status-chip" id="practice-count">${all.length} questions</span>
+      </div>` : "",
+    onClick: (event) => finishedInDeck(event),
+  });
+
+  const drawDeck = () => {
+    const part = $("#part-filter")?.value || "all";
+    items = part === "all" ? all : all.filter((item) => item.partTitle === part);
+    mounted.setSlides(items.map(slide));
+    const counter = $("#practice-count");
+    if (counter) counter.textContent = `${items.length} question${items.length === 1 ? "" : "s"}`;
+  };
+  $("#part-filter")?.addEventListener("change", drawDeck);
+  drawDeck();
+}
+
+// The unit quiz: one question per slide, written first and compared after. The
+// textarea keeps `data-quiz` for the delegated change listener that saves it.
+function renderQuizDeck() {
+  const { mountDeck, deckFinish } = deck();
+  const questions = course.assessment.questions;
+  const slides = questions.map((question, index) => `<section class="gc-slide gc-v${index % 5}"><div class="gc-inner">
+      <span class="gc-eyebrow">Question ${index + 1} of ${questions.length}</span>
+      <h3 class="gc-title">${escapeHtml(question.prompt)}</h3>
+      <div class="wc-sentence">
+        <small>Your answer</small>
+        <textarea rows="4" data-quiz="${escapeHtml(question.id)}" aria-label="Your answer to question ${index + 1}">${escapeHtml(progress.quiz[question.id] || "")}</textarea>
+      </div>
+      <details class="gc-practice"><summary>Compare with a model answer</summary><p class="gc-note">${escapeHtml(question.modelAnswer)}</p></details>
+      ${index === questions.length - 1 ? deckFinish("quiz", "I have finished the quiz") : ""}
+    </div></section>`);
+  mountDeck({
+    heading: "Write your answer first, then compare",
+    label: "Question",
+    slides,
+    onClick: (event) => finishedInDeck(event, "Quiz finished — well done."),
+  });
 }
 
 // --- sections ---------------------------------------------------------------
@@ -468,6 +836,17 @@ const paint = (id, fn) => () => {
   app.scrollTop = 0;
 };
 
+// A deck writes to #app itself rather than returning a string, so it cannot go
+// through paint(). The availability guard is the same one — a hand-typed #hash
+// for a section this pack does not carry falls back to the overview — and the
+// stage gate is checked here rather than in the renderers map, which is built
+// at module load, before bind() knows what stage this is.
+const routeTo = (id, deckRenderer, pageRenderer) => () => {
+  if (!isDeckStage()) return paint(id, pageRenderer)();
+  if (!availableSections().some(([sectionId]) => sectionId === id)) return paint("overview", renderOverview)();
+  return deckRenderer();
+};
+
 // Delegated events the shell does not provide: the other subjects bind their
 // controls inline inside each renderer, but these renderers return strings and
 // never touch the DOM, so the handlers live at document level exactly as they
@@ -527,23 +906,37 @@ const config = {
   renderers: {
     overview: isPrereqUnit ? () => placement.renderOverview() : paint("overview", renderOverview),
     placement: isPrereqUnit ? () => placement.renderExam() : paint("overview", renderOverview),
-    lesson: paint("lesson", renderLesson),
-    bigideas: paint("bigideas", () => renderBoxes("bigideas", "bigIdea", course.bigIdeas, "Big Ideas", "Ideas to hold on to", "The few things worth remembering from this unit.")),
-    models: paint("models", () => renderBoxes("models", "model", course.models, "Worked Examples", "See the skill in action", "Follow someone else doing it, then do the same with your own topic.")),
+    // Every teaching section takes the slide deck at DECK_MAX_STAGE and below.
+    // Four stay as pages on purpose: the overview and My Progress are summaries
+    // rather than a sequence to walk through, My Learning Goals is a
+    // three-column chart that a one-item-per-slide deck would take apart, the
+    // tutor is a live conversation, and For the Grown-Up is the one section
+    // written for an adult reading it on their own.
+    lesson: routeTo("lesson", renderLessonDeck, renderLesson),
+    bigideas: routeTo("bigideas",
+      () => renderBoxDeck({ section: "bigideas", label: "Big idea", heading: "Ideas to hold on to", finishLabel: "I will remember these", items: course.bigIdeas.map((item) => ({ item, role: "bigIdea" })) }),
+      () => renderBoxes("bigideas", "bigIdea", course.bigIdeas, "Big Ideas", "Ideas to hold on to", "The few things worth remembering from this unit.")),
+    models: routeTo("models",
+      () => renderBoxDeck({ section: "models", label: "Example", heading: "See the skill in action", finishLabel: "I have seen the examples", items: course.models.map((item) => ({ item, role: "model" })) }),
+      () => renderBoxes("models", "model", course.models, "Worked Examples", "See the skill in action", "Follow someone else doing it, then do the same with your own topic.")),
     goals: paint("goals", renderGoals),
-    toolkit: paint("toolkit", renderToolkit),
-    words: paint("words", renderWords),
-    challenge: paint("challenge", renderChallenge),
-    activities: paint("activities", renderActivities),
-    project: paint("project", renderProject),
+    toolkit: routeTo("toolkit", renderToolkitDeck, renderToolkit),
+    words: routeTo("words", renderWordsDeck, renderWords),
+    challenge: routeTo("challenge", renderChallengeDeck, renderChallenge),
+    activities: routeTo("activities", renderActivitiesDeck, renderActivities),
+    project: routeTo("project", renderProjectDeck, renderProject),
     tutor: renderTutor,
-    practice: paint("practice", renderPractice),
-    quiz: paint("quiz", renderQuiz),
-    reflect: paint("reflect", renderReflect),
-    teacher: paint("teacher", renderTeacher),
+    practice: routeTo("practice", renderPracticeDeck, renderPractice),
+    quiz: routeTo("quiz", renderQuizDeck, renderQuiz),
+    reflect: routeTo("reflect", renderReflectDeck, renderReflect),
+    teacher: routeTo("teacher", renderTeacherDeck, renderTeacher),
     grownup: paint("grownup", renderGrownUp),
     progress: paint("progress", renderProgressPage),
   },
+  // The deck is full-bleed via a class on <body>; leaving the section has to
+  // take it off, or the next page renders inside a viewport still sized for a
+  // carousel.
+  onBeforeRender: () => { document.body.classList.remove("gc-full"); },
   bind,
   wehelOptions,
   async load(ctx) {

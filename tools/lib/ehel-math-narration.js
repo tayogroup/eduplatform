@@ -26,7 +26,7 @@ const CATEGORIES = ["concepts", "explorations", "explorationQuestions", "visualM
 // app will not request, and the pruner would then report them as orphans. The
 // gate is the unit's own stage, and it is DECK_MAX_STAGE in
 // shell/subjects/mathematics.js: raise one and raise the other.
-const DECK_MAX_STAGE = 1;
+const DECK_MAX_STAGE = 4;
 const DECK_ONLY = new Set(["words", "symbols", "activities"]);
 const stageOf = (unit) => Number(String((unit.stage || unit.grade || {}).id || "").replace(/\D/g, "")) || 0;
 

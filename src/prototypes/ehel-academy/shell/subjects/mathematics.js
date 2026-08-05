@@ -117,10 +117,16 @@ const sections = [
 // one-thing-at-a-time (Fluency, the Unit Challenge, the games) keep their own
 // designs — a deck would add a second carousel around a single question.
 //
-// DECK_MAX_STAGE is the gate. Stage 1 first, on its own; Stages 2-4 follow this
-// same line once Stage 1 is confirmed with learners, and Stage 5 and up keep the
-// grids, where a learner scans rather than being walked through.
-const DECK_MAX_STAGE = 1;
+// DECK_MAX_STAGE is the gate, and it is 4 — the same boundary English draws.
+// Stage 5 and up keep the grids: by then a learner scans a page rather than
+// being walked through it one item at a time.
+//
+// Stage 1 shipped alone first. Stages 2-4 carry the same fields in the same
+// shapes (checked across all 51 units: no missing field anywhere the deck
+// reads), and the one structural difference is that they hold six activities
+// where Stage 1 holds one — which the deck already handles, since the
+// mark-each-complete gate was written for the grid's six.
+const DECK_MAX_STAGE = 4;
 const deckStage = () => stageNumber <= DECK_MAX_STAGE;
 
 // Mathematics never loads the lucide runtime (it is one of the four shell-voice

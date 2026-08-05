@@ -29,12 +29,27 @@ from __future__ import annotations
 
 import argparse
 import difflib
+import functools
 import json
 import re
+import sys
 import warnings
 from pathlib import Path
 
 warnings.filterwarnings("ignore")
+
+# A sweep runs for hours and prints only as it finds things, so the output is
+# the only window into it. Piped into a log or a pipeline, Python block-buffers
+# stdout, and that window goes stale: four audits an hour into their run still
+# showed the counts from whenever the buffer last filled, which reads as "not
+# progressing" and is wrong. Flush every line so the log is the truth.
+print = functools.partial(print, flush=True)  # noqa: A001 - deliberate shadow
+# Also unbuffer the stream itself, for anything that writes around this print
+# (warnings, tracebacks, the transcriber's own output).
+try:
+    sys.stdout.reconfigure(line_buffering=True)
+except AttributeError:  # pragma: no cover - very old interpreters
+    pass
 ROOT = Path(__file__).resolve().parents[1]
 ENGLISH = ROOT / "src" / "prototypes" / "ehel-academy" / "english"
 # Whisper mishears the odd proper noun, so this is a similarity floor, not an
@@ -85,7 +100,19 @@ def main() -> None:
     parser.add_argument("--sample", type=int, help="check only the first N clips of each grade")
     parser.add_argument("--model", default="base")
     parser.add_argument("--out", help="write the stale clip ids here as JSON")
+    # Verifying a repair only needs the clips that were repaired: the rest were
+    # listened to on the first pass and found correct, and re-listening to them
+    # costs three times the CPU to re-answer a question already answered. Takes
+    # the same JSON the audit writes and the generator repairs from, so the
+    # three steps cannot disagree about which clips were in scope.
+    parser.add_argument("--only-file", dest="only_file",
+                        help="check only the clip ids in this JSON (as written by --out)")
     args = parser.parse_args()
+
+    targeted = {}
+    if args.only_file:
+        raw = json.loads(Path(args.only_file).read_text(encoding="utf-8"))
+        targeted = {grade: set(ids) for grade, ids in raw.items()}
 
     import whisper
     model = whisper.load_model(args.model)
@@ -104,9 +131,12 @@ def main() -> None:
         for grade in args.grades:
             checked = missing = bad = broken = 0
             ids: list[str] = []
+            wanted = targeted.get(str(grade)) if targeted else None
             for unit_name, vocabulary_id, index, sentence, mp3 in clips_for_grade(grade):
                 if args.sample and checked >= args.sample:
                     break
+                if wanted is not None and f"{vocabulary_id}-sentence-{index + 1}" not in wanted:
+                    continue
                 if not mp3.exists():
                     missing += 1
                     print(f"g{grade} {unit_name} {mp3.name}: FILE MISSING (descriptor says available)")

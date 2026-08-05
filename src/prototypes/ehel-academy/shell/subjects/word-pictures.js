@@ -160,6 +160,30 @@ export const WORD_PICTURES = {
   restaurant: "🍽️", office: "🏢", factories: "🏭", neighbourhood: "🏘️",
   entrance: "🚪", elevator: "🛗", customer: "🛒", arrive: "🛬",
   horizon: "🌅", equator: "🌐", teaching: "🧑‍🏫", helping: "🤝",
+
+  // === Grades 3-4, second pass ============================================
+  // The concrete words the first pass missed, plus the abstract ones where a
+  // picture is genuinely the idea rather than a decoration for it: "purpose"
+  // is a target, "attract" is a magnet, "peace" is the peace sign. Words like
+  // careless, similar, quantity-as-a-concept, priority and comma are left
+  // bare on purpose — there is no picture of them, only a picture of
+  // something nearby, which is what this file exists to avoid.
+  parent: "👨‍👩‍👦", student: "🧑‍🎓", author: "✍️", "(december)": "📅",
+  respect: "🙇", honour: "🏅", private: "🔒", public: "👥", border: "🛂",
+  discuss: "💬", complete: "✅", kind: "🤗", kindness: "🤗", able: "💪",
+  tough: "🦾", rough: "🪨", favourite: "⭐", extra: "➕", straight: "📏",
+  meter: "📏", purpose: "🎯", thoughtful: "💭", suggest: "💡",
+  enjoy: "😄", enjoyable: "😄", soon: "⏳",
+
+  agree: "🤝", continue: "➡️", gain: "📈", effort: "💪", maintain: "🔧",
+  daily: "📆", cancel: "❌", leave: "🚪", peace: "☮️", moisture: "💧",
+  roam: "🚶", fresh: "🥬", chewy: "🍬", deadly: "☠️", gather: "🧺",
+  labor: "🛠️", laborer: "🧑‍🏭", pesticide: "🧪", chemicals: "⚗️",
+  service: "🛎️", information: "ℹ️", challenge: "🧗", location: "📍",
+  quantity: "🔢", erase: "🧽", divorce: "💔", rate: "📊", squeeze: "🤏",
+  suffer: "😣", excite: "🎉", prevent: "🛑", doubtful: "🤨", evil: "😈",
+  attract: "🧲", risky: "⚠️", frequent: "🔁", plastic: "🧴", rental: "🔑",
+  tourism: "🧳",
 };
 
 /** The picture for a word, or "" when there is no honest one. */

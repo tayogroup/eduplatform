@@ -486,6 +486,27 @@ function loadNarrationIndex() {
   catch { return {}; }
 }
 
+// One file, and any English audio run rewrites it. Writing back the whole
+// in-memory copy means a run that started an hour ago overwrites everything
+// another session recorded in the meantime — the fingerprints survive, the
+// other session's do not, and nothing reports the loss. So only the entries
+// THIS run made are laid over whatever is on disk at the moment of writing,
+// the same rebasing writeMerged() does for the unit descriptors.
+//
+// Written through a temp file and renamed, because a reader that opens this
+// mid-write gets a truncated JSON and silently falls back to "no records at
+// all" — which would make every clip in the course look unverified.
+function saveNarrationIndex(mine) {
+  if (!mine.size) return 0;
+  const onDisk = loadNarrationIndex();
+  for (const [key, fingerprint] of mine) onDisk[key] = fingerprint;
+  fs.mkdirSync(path.dirname(NARRATION_INDEX), { recursive: true });
+  const temp = `${NARRATION_INDEX}.${process.pid}.tmp`;
+  fs.writeFileSync(temp, `${JSON.stringify(onDisk, null, 2)}\n`);
+  fs.renameSync(temp, NARRATION_INDEX);
+  return Object.keys(onDisk).length;
+}
+
 function textFingerprint(text) {
   return require("crypto").createHash("sha1").update(String(text)).digest("hex").slice(0, 16);
 }
@@ -499,6 +520,12 @@ async function main() {
   let restaled = 0, unverified = 0;
   const failures = [];
   const narrationIndex = loadNarrationIndex();
+  // What THIS run recorded, kept apart from the snapshot it read at startup.
+  const myFingerprints = new Map();
+  // Flushed periodically as well as at the end: a run of 1,830 clips that dies
+  // on the last one used to lose every fingerprint it had earned, and those
+  // clips then look unverified forever.
+  const FLUSH_EVERY = 100;
   // filePath -> { pristine, mutated }. A run holds these for as long as it takes
   // to narrate a grade, so the file on disk can move underneath us; keeping the
   // as-read copy lets writeMerged() put back only what this run actually changed.
@@ -550,6 +577,8 @@ async function main() {
         fs.writeFileSync(item.output, buf);
         charsSent += item.text.length; generated += 1; count += 1; ok = true;
         narrationIndex[key] = fingerprint;
+        myFingerprints.set(key, fingerprint);
+        if (myFingerprints.size % FLUSH_EVERY === 0) saveNarrationIndex(myFingerprints);
         if (item.apply) item.apply();
         else item.ref.audio = { source: item.source, provider: "ElevenLabs", voiceId: VOICE_ID, available: true };
         changed = true;
@@ -633,10 +662,8 @@ async function main() {
     console.log(`merged ${changes} descriptor change(s) into ${path.basename(filePath)} (changed on disk during this run)`);
   }
 
-  if (!dry && generated) {
-    fs.mkdirSync(path.dirname(NARRATION_INDEX), { recursive: true });
-    fs.writeFileSync(NARRATION_INDEX, `${JSON.stringify(narrationIndex, null, 2)}\n`);
-  }
+  let indexTotal = 0;
+  if (!dry && generated) indexTotal = saveNarrationIndex(myFingerprints);
 
   console.log("\n──────── summary ────────");
   console.log(`category: ${category} | grades: ${gradeList.join(",")}${dry ? " (DRY RUN)" : ""}`);
@@ -656,6 +683,7 @@ async function main() {
     console.log(`\nFAILED (still holding their previous audio): ${failures.length}`);
     console.log(`  node tools/generate-ehel-english-audio.js ${category} ${gradeList.join(" ")} --force --only ${failures.join(",")}`);
   }
+  if (indexTotal) console.log(`narration index: ${myFingerprints.size} recorded this run, ${indexTotal} in the file`);
   if (restaled) console.log(`re-narrated because the text had changed since: ${restaled}`);
   if (unverified) {
     console.log(`clips with no record of what they were made from: ${unverified}`);

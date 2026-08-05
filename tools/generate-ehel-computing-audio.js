@@ -166,7 +166,20 @@ async function tts(text) {
       process.exitCode = 2;
       return;
     }
-    const wanted = new Set(queue.map((q) => q.key));
+    // The narration lib's own claim map, NOT this run's queue. The queue is
+    // built from textsForUnit/textsForCapstone alone, which leaves out Wehel's
+    // stock tutor phrases — they are claimed in hashesForGrade, because the
+    // tutor speaks them on every stage and no unit owns them. Reporting orphans
+    // from the queue therefore listed all 77 of those live clips as dead, and
+    // --prune would have deleted them: the tutor drops to the paid runtime voice
+    // on every stock phrase, for every learner, and the files are gitignored so
+    // nothing brings them back but paying again.
+    //
+    // tools/prune-ehel-course-audio.mjs already reads the claim map and already
+    // said 0. Two tools answering "what can nothing reach?" differently is the
+    // drift tools/lib/ehel-computing-narration.js exists to prevent, so this one
+    // now asks the same question of the same definition.
+    const wanted = new Set(narration.hashGradeMap(COMPUTING).keys());
     const onDisk = fs.readdirSync(OUT_DIR).filter((f) => f.endsWith(".mp3"));
     const orphans = onDisk.filter((f) => !wanted.has(path.basename(f, ".mp3")));
     const bytes = orphans.reduce((s, f) => s + fs.statSync(path.join(OUT_DIR, f)).size, 0);

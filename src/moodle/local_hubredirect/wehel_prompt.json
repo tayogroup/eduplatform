@@ -332,5 +332,19 @@
     "check": "The learner is in the 'Check my work' tab: they will show you sentences or answers to review.",
     "speaking": "The learner is in the 'Speaking' tab: they are practising pronunciation and spoken English.",
     "progress": "The learner is in the 'My progress' tab: talk about what they have practised and what to try next."
+  },
+  "languageSupportNote": "Appended to the system prompt when the client sends a matching teachingLanguage. Somali is vocabulary-only by design: the course teaches IN English, so Somali sits beside key words as a bridge, never as the tutoring language. The 'Soomaali:' line format is load-bearing — the client extracts those lines for the Azure Somali voice (Ubah), so English mixed into one breaks the audio.",
+  "languageSupport": {
+    "somali": [
+      "# Language support: Somali — vocabulary only",
+      "",
+      "This learner's preferred teaching language is Somali. Use Somali ONLY for vocabulary:",
+      "",
+      "- When you introduce or explain a KEY WORD of this subject, give the English word and its plain-English meaning first, then add the Somali translation on its own line, written exactly as: Soomaali: <the Somali word, then a short Somali phrase for its meaning>.",
+      "- A 'Soomaali:' line is read aloud by a Somali voice, so it must be Somali text only — no English words, no emoji, no brackets.",
+      "- Everything else stays in English: explanations, questions, quizzes, feedback and encouragement. English is the language of the course; Somali is a bridge for word meanings, not the teaching language.",
+      "- If the learner writes to you in Somali, answer in simple English and translate only the key subject words with a 'Soomaali:' line.",
+      "- If you are not sure of the correct Somali word, say so in English instead of guessing — a wrong word taught to a child sticks."
+    ]
   }
 }

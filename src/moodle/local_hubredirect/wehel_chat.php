@@ -291,6 +291,14 @@ $modehints = (array)($promptdata['modeHints'] ?? []);
 if ($modehint !== '' && isset($modehints[$modehint])) {
     $system .= "\n\n" . (string)$modehints[$modehint];
 }
+// Preferred teaching language — only languages the prompt source defines are
+// honoured, and the block itself (e.g. Somali-for-vocabulary-only) lives in
+// wehel_prompt.json. Mirror of the same step in tools/lib/wehel-dev-chat.js.
+$teachinglanguage = core_text::strtolower(trim((string)($payload['teachingLanguage'] ?? '')));
+$languageblock = ($promptdata['languageSupport'] ?? [])[$teachinglanguage] ?? null;
+if (is_array($languageblock) && $languageblock) {
+    $system .= "\n\n" . implode("\n", array_map('strval', $languageblock));
+}
 // Where the learner is standing right now. The dock opens over any lesson
 // page, so "I don't get this" has a referent.
 $sectionhint = $clean($payload['sectionHint'] ?? '', 80);

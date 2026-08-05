@@ -136,6 +136,14 @@ const handleWehelChat = createWehelChatHandler({
   model: () => process.env.WEHEL_MODEL
 });
 
+// Somali vocabulary audio (Azure "Ubax"/Ubah voice) — the same shared handler
+// vite.config.js mounts at the production path /local/hubredirect/somali_tts.php.
+const { createSomaliTtsHandler } = require(path.join(__dirname, 'lib', 'azure-somali-tts.js'));
+const handleSomaliTts = createSomaliTtsHandler({
+  apiKey: () => process.env.AZURE_SPEECH_KEY,
+  region: () => process.env.AZURE_SPEECH_REGION
+});
+
 // Local twin of local_hubredirect/quiz_stt.php so Wehel's mic works in dev.
 async function handleElevenLabsStt(req, res) {
   let body = '';
@@ -167,7 +175,8 @@ async function handleElevenLabsStt(req, res) {
 const apiRoutes = {
   '/api/elevenlabs-tts': handleElevenLabs,
   '/api/elevenlabs-stt': handleElevenLabsStt,
-  '/api/wehel-chat': handleWehelChat
+  '/api/wehel-chat': handleWehelChat,
+  '/api/somali-tts': handleSomaliTts
 };
 
 const server = http.createServer(async (req, res) => {

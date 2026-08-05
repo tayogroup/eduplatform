@@ -52,7 +52,10 @@ if (!promptData.template.some((line) => line.includes("{{STOCK_PHRASES}}"))) {
 //    produced is not the sentence the player hashes.
 const SPLITTER = "(?<=[.!?…])\\s+";
 for (const [file, label] of [
-  [path.join(ROOT, "tools", "serve-src-preview.js"), "dev endpoint canonicaliser"],
+  // The dev canonicaliser moved into the shared handler both dev servers
+  // mount (serve-src-preview at /api/wehel-chat, vite at the production
+  // path), so that is the file to hold to the splitter.
+  [path.join(ROOT, "tools", "lib", "wehel-dev-chat.js"), "dev endpoint canonicaliser"],
   [path.join(ROOT, "src", "moodle", "local_hubredirect", "wehel_chat.php"), "production canonicaliser"],
   [path.join(EHEL, "shell", "course-app.js"), "shell sentence playback"],
 ]) {
@@ -68,9 +71,13 @@ const php = fs.readFileSync(path.join(ROOT, "src", "moodle", "local_hubredirect"
 if (!php.includes("[^a-z0-9\\s]")) {
   failures.push("wehel_chat.php normaliser lost its [^a-z0-9\\s] strip — it no longer mirrors ehel-wehel-phrases.js.");
 }
+const devHandler = fs.readFileSync(path.join(ROOT, "tools", "lib", "wehel-dev-chat.js"), "utf8");
+if (!devHandler.includes("ehel-wehel-phrases")) {
+  failures.push("lib/wehel-dev-chat.js no longer uses lib/ehel-wehel-phrases.js — its canonicaliser can drift.");
+}
 const devServer = fs.readFileSync(path.join(ROOT, "tools", "serve-src-preview.js"), "utf8");
-if (!devServer.includes("ehel-wehel-phrases")) {
-  failures.push("serve-src-preview.js no longer uses lib/ehel-wehel-phrases.js — its canonicaliser can drift.");
+if (!devServer.includes("wehel-dev-chat")) {
+  failures.push("serve-src-preview.js no longer mounts lib/wehel-dev-chat.js — its Wehel endpoint can drift from vite's.");
 }
 
 // 5. Clip coverage per subject.

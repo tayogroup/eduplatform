@@ -103,6 +103,11 @@ function createWehelChatHandler({ apiKey, model: modelOverride = () => undefined
       let system = promptData.template.join("\n").replace(/\{\{[A-Z_]+\}\}/g, (token) => replacements[token] ?? token);
       const modeHint = (promptData.modeHints || {})[String(payload.mode || "")];
       if (modeHint) system += `\n\n${modeHint}`;
+      // Preferred teaching language — only languages the prompt source defines
+      // are honoured, and the block itself (e.g. Somali-for-vocabulary-only)
+      // lives in wehel_prompt.json. Mirrored in wehel_chat.php.
+      const languageBlock = (promptData.languageSupport || {})[String(payload.teachingLanguage || "").toLowerCase()];
+      if (Array.isArray(languageBlock)) system += `\n\n${languageBlock.join("\n")}`;
       // Where the learner is standing right now. The dock opens over any
       // lesson page, so "I don't get this" has a referent.
       const sectionHint = clean(payload.sectionHint, 80);

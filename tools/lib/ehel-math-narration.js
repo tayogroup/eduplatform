@@ -16,7 +16,23 @@ const { cyrb53, clean, MIN_CHARS } = require("./ehel-narration-hash");
 
 const CATEGORIES = ["concepts", "explorations", "explorationQuestions", "visualModels", "methods",
   "methodSteps", "workedExamples", "practice", "realProblems", "reasoning", "assessment",
-  "games", "capstone"];
+  "games", "capstone", "words", "symbols", "activities"];
+
+// Three categories exist only where the Stage 1-4 slide deck is mounted.
+//
+// The grid designs Stage 5 and up keep have no Listen button on the words page
+// or on an activity — a learner who can read does not need one — so generating
+// those clips for a stage that never asks for them is money spent on files the
+// app will not request, and the pruner would then report them as orphans. The
+// gate is the unit's own stage, and it is DECK_MAX_STAGE in
+// shell/subjects/mathematics.js: raise one and raise the other.
+const DECK_MAX_STAGE = 1;
+const DECK_ONLY = new Set(["words", "symbols", "activities"]);
+const stageOf = (unit) => Number(String((unit.stage || unit.grade || {}).id || "").replace(/\D/g, "")) || 0;
+
+// The five signs the deck introduces in every unit, from the same list the UI
+// holds. They do not vary by unit; the hash set collapses the repeats.
+const SYMBOLS = [["+", "combine or add", "Use when quantities join"], ["−", "find a difference", "Use when quantities separate"], ["=", "has the same value", "Both sides balance"], ["<", "is less than", "The smaller value"], [">", "is greater than", "The larger value"]];
 
 // The exact strings each Listen button narrates — must match course-ui.js. A
 // difference of one character means a different hash, so the app looks for a
@@ -25,6 +41,7 @@ const CATEGORIES = ["concepts", "explorations", "explorationQuestions", "visualM
 // absent on purpose, as is the AI tutor, whose text does not exist until a
 // learner types.
 function textsForUnit(unit, category) {
+  if (DECK_ONLY.has(category) && stageOf(unit) > DECK_MAX_STAGE) return [];
   switch (category) {
     case "concepts": return (unit.concepts || []).map((c) => `${c.title}. ${c.explanation}. Example: ${c.example}`);
     case "explorations": return (unit.explorations || []).map((e) => `${e.title}. ${e.context}. ${e.explanation}`);
@@ -40,6 +57,10 @@ function textsForUnit(unit, category) {
     case "reasoning": return (unit.reasoningPrompts || []).flatMap((r) => [r.prompt, r.modelAnswer]);
     case "assessment": return ((unit.assessment || {}).questions || []).map((q) => q.question);
     case "games": return (((unit.games || {}).games) || []).flatMap((g) => (g.rounds || []).map((r) => `${r.prompt}. ${r.clue}`));
+    // Slide-deck only (see DECK_ONLY above).
+    case "words": return (((unit.reference || {}).terms) || []).map(([term, meaning]) => `${term}. ${meaning}.`);
+    case "symbols": return SYMBOLS.map(([symbol, meaning, example]) => `The sign ${symbol} means ${meaning}. ${example}.`);
+    case "activities": return (unit.activities || []).map((a) => `${a.title}. You need: ${a.materials}. ${(a.steps || []).join(" ")}`);
     default: return [];
   }
 }

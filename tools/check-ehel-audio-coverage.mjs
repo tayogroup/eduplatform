@@ -149,9 +149,17 @@ const WORD_CARDS = [
   ["`${current.term}. ${current.meaning}`", "words"],
   ["current.example", "words"],
 ];
+// Mathematics alone has the Stage 1-4 slide deck, which narrates three things
+// its grid designs never did: a key word, a symbol, and an activity's
+// instructions. Every other button on a slide re-uses a grid template above.
+const MATH_DECK = [
+  ["`${card.title}. ${card.body}.`", "words"],
+  ["`The sign ${card.title} means ${card.body}. ${card.note}.`", "symbols"],
+  ["`${activity.title}. You need: ${activity.materials}. ${activity.steps.join(\" \")}`", "activities"],
+];
 const EXPECTED = new Map(subject === "science"
   ? SHARED
-  : SHARED.filter(([argument]) => !WORD_CARDS.some(([w]) => w === argument)));
+  : [...SHARED.filter(([argument]) => !WORD_CARDS.some(([w]) => w === argument)), ...MATH_DECK]);
 
 // Buttons live in two places once a subject is on the shell: the renderers are
 // in the subject module, but the generic ones — the page-narration handler and
@@ -165,7 +173,13 @@ for (const file of COMPONENTS) {
 }
 const componentSources = COMPONENTS.filter((f) => fs.existsSync(f)).map((f) => fs.readFileSync(f, "utf8"));
 const sources = [ui, ...(RUNTIME === UI ? [] : [runtime]), ...componentSources];
-const found = new Set(sources.flatMap((src) => [...callArguments(src, "voiceButton"), ...callArguments(src, "speakText")]));
+// deckVoice/deckVoiceSmall are the slide deck's own Listen buttons. They emit
+// the same data-speak contract voiceButton does, in the deck's shape, and were
+// invisible to this check while it scanned only the two original names — which
+// is precisely the silent gap this file exists to close. A subject that adds a
+// third button helper must add it here too.
+const VOICE_HELPERS = ["voiceButton", "speakText", "deckVoice", "deckVoiceSmall"];
+const found = new Set(sources.flatMap((src) => VOICE_HELPERS.flatMap((helper) => callArguments(src, helper))));
 for (const argument of found) {
   if (!EXPECTED.has(argument)) {
     fail(`course-ui.js narrates a text the generator does not know about: ${argument}\n`

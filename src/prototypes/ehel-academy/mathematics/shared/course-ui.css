@@ -264,3 +264,59 @@
 .field-label { font-weight: var(--weight-normal); }
 /* Status lines and correctness feedback: colour carries the meaning, not weight. */
 .status-note { font-weight: var(--weight-normal); }
+
+/* ===== Stage 1-4 slide deck =====
+   The gc-* deck itself is inherited from the English stylesheet through the
+   @import at the top of this file, so the carousel, the slides, the dots and the
+   full-bleed focus rules are the same object in both subjects. What is here is
+   only what a mathematics slide holds and an English one does not: a diagram, a
+   worked prompt, a run of method steps, and the inputs those need.
+
+   Everything is scoped under .gc-inner so the grid designs Stage 5 and up keep
+   are untouched. */
+/* A term is not a symbol: "Total / altogether" at the .gc-pattern size wraps to
+   three lines on a phone. Same weight and colour, one step down. */
+.gc-term { font: var(--weight-bold) 34px/1.2 inherit; color: #12263a; }
+/* Teaching prose reads left-aligned even on a centred slide — a five-line
+   explainer centred is a ragged block a beginning reader has to re-find the
+   start of on every line. */
+.gc-prose { width: 100%; max-width: 520px; text-align: left; color: #33465e; }
+.gc-prose > p { margin: 0 0 11px; font-size: 16px; line-height: 1.65; }
+.gc-prose > p:last-child { margin-bottom: 0; }
+/* The diagram is the slide's picture: sized like the English word picture, above
+   the prose rather than beside it. */
+.gc-inner .math-visual, .gc-inner .geometry-visual { width: 100%; max-width: 480px; margin: 0; }
+.gc-inner .math-webgl, .gc-inner .geometry-webgl { height: 170px; }
+.gc-inner .geometry-stage { min-height: 170px; }
+.gc-inner .geometry-labels { justify-content: center; }
+/* A worked prompt is often symbols and emoji ("★ 🔴🔴🔴 → ____ dates"), which
+   the .gc-pattern size sets far too large to fit; it wraps here instead of
+   overflowing the card. */
+.gc-inner .gc-pattern { font-size: 32px; line-height: 1.35; word-break: break-word; max-width: 100%; }
+/* A method's example is the worked line, and at Stage 1 it is a whole sentence
+   ("Count 7 dates by touching each one as you say its number…"), not the short
+   expression the 70px .method-example banner was built for. It keeps the banner's
+   dark card and its role as the thing to read first, at a size a sentence fits. */
+.gc-worked { width: 100%; max-width: 520px; padding: 16px 18px; border-radius: 12px; color: #fff; background: linear-gradient(145deg,#142d52,#2457a7); font: var(--weight-medium) 20px/1.45 var(--font-serif); }
+.gc-inner .math-input, .gc-inner input[type="text"], .gc-inner input:not([type]) {
+  width: 100%; min-height: 44px; padding: 10px 12px; border: 1px solid var(--line);
+  border-radius: 8px; font: inherit; background: #fff;
+}
+.gc-inner .method-steps { width: 100%; max-width: 520px; text-align: left; }
+.gc-inner .method-step { padding: 12px; }
+.gc-inner .agenda, .gc-inner .checklist { width: 100%; max-width: 520px; text-align: left; }
+.gc-inner .model-concept-cards { grid-template-columns: 1fr; margin-top: 4px; max-width: 520px; }
+.gc-inner .discovery-model { width: 100%; max-width: 520px; text-align: left; display: grid; gap: 6px; padding: 13px 15px; border-radius: 12px; background: var(--teal-soft); color: var(--teal-dark); }
+.gc-inner .discovery-model strong { text-transform: capitalize; font-weight: var(--weight-medium); }
+.gc-inner .discovery-model span { color: #33465e; font-size: 15px; line-height: 1.5; }
+.gc-inner .feedback { width: 100%; max-width: 520px; }
+/* The deck's own Listen button carries the subject colour, so it reads as the
+   mathematics course rather than the English one it borrows its shape from. */
+.gc-btn { background: var(--teal); }
+.gc-btn.ghost { background: #eef4fa; color: #17324d; }
+.gc-btn.is-playing { background: var(--teal-dark); }
+.gc-dot.active { background: var(--teal); }
+@media (max-width: 720px) {
+  .gc-term { font-size: 27px; }
+  .gc-inner .gc-pattern { font-size: 25px; }
+}

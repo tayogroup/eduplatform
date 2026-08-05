@@ -9,6 +9,7 @@
 import { escapeHtml as sharedEscapeHtml, icon as sharedIcon, pageHeader as sharedPageHeader } from "../../shared/course-shell.js?v=20260721a";
 import { grammarDiagram, phonicsDiagram } from "../../english/shared/grammar-visuals.js?v=english-20260723a";
 import { createCourseApp } from "../course-app.js?v=t2";
+import { createDeck } from "../deck.js?v=deck-1";
 import { wordPicture } from "./word-pictures.js?v=pictures-1";
 import { askWehel, outlineFromManifest, unitFetcher, browserSpeechSupported, speakBrowser, speechRateForGrade, stopBrowserSpeech, speechRecognitionCtor, recognizeSpeech, wehelIcon } from "../wehel.js?v=wehel-1";
 
@@ -1119,112 +1120,11 @@ function renderDictionary() {
 
 // ── The gc-* slide deck ──────────────────────────────────────────────────────
 // How Grades 1-4 meet a section: one item per full-screen slide, big audio
-// buttons, side arrows, a dot strip, swipe. The plumbing — track transform, dot
-// state, arrow disabling, stop-audio-on-slide-change, touch — is defined once
-// here. It existed twice already (Grade 1 grammar, then vocabulary, written by
-// copying it), and six sections on this design would otherwise have meant six
-// copies of the same fifteen lines to keep in step.
-//
-// A section supplies only its slides. `setSlides` re-decks in place (vocabulary
-// filters its own deck; comprehension filters by reading section), and
-// `redrawSlide` repaints one slide without snapping the carousel back to the
-// first — which is exactly what the learner is in the middle of when a Learned
-// mark or a sentence position changes.
-function mountDeck({ heading, label = "Slide", slides = [], tools = "", emptyMessage = "", onSlide = null, onClick = null }) {
-  const lower = label.toLowerCase();
-  $("#app").innerHTML = `
-    <div class="gc-wrap">
-      <div class="gc-top"><h2 class="gc-heading">${escapeHtml(heading)}</h2><span class="gc-count" id="gc-count"></span></div>
-      <div class="gc-carousel">
-        <button class="gc-arrow prev" type="button" aria-label="Previous ${lower}">${icon("chevron-left")}</button>
-        <div class="gc-viewport"><div class="gc-track" id="gc-track"></div></div>
-        <button class="gc-arrow next" type="button" aria-label="Next ${lower}">${icon("chevron-right")}</button>
-      </div>
-      <div class="gc-dots" id="gc-dots"></div>
-      ${tools}
-    </div>`;
-  // Full-bleed: the deck fills the whole viewport (paired with focus mode, which
-  // already hides the topbar/sidebar and requests browser fullscreen on the nav
-  // click). Cleared in onBeforeRender when leaving the section.
-  document.body.classList.add("gc-full");
-
-  const root = $(".gc-wrap");
-  const track = $("#gc-track");
-  const dotsRow = $("#gc-dots");
-  const prevArrow = $(".gc-arrow.prev");
-  const nextArrow = $(".gc-arrow.next");
-  const countLabel = $("#gc-count");
-  let items = [];
-  let index = 0;
-
-  const goTo = (next) => {
-    if (!items.length) return;
-    index = Math.max(0, Math.min(items.length - 1, next));
-    track.style.transform = `translateX(-${index * 100}%)`;
-    dotsRow.querySelectorAll("[data-dot]").forEach((dot, position) => dot.classList.toggle("active", position === index));
-    prevArrow.disabled = index === 0;
-    nextArrow.disabled = index === items.length - 1;
-    countLabel.textContent = `${label} ${index + 1} of ${items.length}`;
-    stopAudio();
-    onSlide?.(index, deck);
-  };
-
-  const setSlides = (next, { at = 0 } = {}) => {
-    items = [...next];
-    if (!items.length) {
-      track.innerHTML = `<section class="gc-slide gc-v0"><div class="gc-inner"><p class="gc-lead">${escapeHtml(emptyMessage || "Nothing to show here yet.")}</p></div></section>`;
-      dotsRow.innerHTML = "";
-      prevArrow.disabled = true;
-      nextArrow.disabled = true;
-      countLabel.textContent = `No ${lower}s`;
-      index = 0;
-      icons();
-      return;
-    }
-    track.innerHTML = items.join("");
-    dotsRow.innerHTML = items.map((_, position) => `<button class="gc-dot" type="button" data-dot="${position}" aria-label="${label} ${position + 1} of ${items.length}"></button>`).join("");
-    dotsRow.querySelectorAll("[data-dot]").forEach((dot) => dot.addEventListener("click", () => goTo(Number(dot.dataset.dot))));
-    index = 0;
-    goTo(Math.max(0, Math.min(items.length - 1, at)));
-    icons();
-  };
-
-  const redrawSlide = (position, html) => {
-    const node = track.children[position];
-    if (!node) return;
-    items[position] = html;
-    node.outerHTML = html;
-    icons();
-  };
-
-  const deck = { root, goTo, setSlides, redrawSlide, get index() { return index; }, get count() { return items.length; } };
-
-  // One delegated listener for the whole deck: slides are repainted as the
-  // learner works, and rebinding every control on every repaint is how a dead
-  // button appears three interactions later.
-  if (onClick) root.addEventListener("click", (event) => onClick(event, deck));
-  prevArrow.addEventListener("click", () => goTo(index - 1));
-  nextArrow.addEventListener("click", () => goTo(index + 1));
-
-  const viewport = $(".gc-viewport");
-  let startX = null;
-  viewport.addEventListener("touchstart", (event) => { startX = event.touches[0].clientX; }, { passive: true });
-  viewport.addEventListener("touchend", (event) => {
-    if (startX === null) return;
-    const dx = event.changedTouches[0].clientX - startX;
-    if (Math.abs(dx) > 45) goTo(index + (dx < 0 ? 1 : -1));
-    startX = null;
-  }, { passive: true });
-
-  setSlides(slides);
-  return deck;
-}
-
-// The completion button a deck's last slide carries, so a learner who has swiped
-// to the end can finish the section without leaving the carousel.
-function deckFinish(action, labelText) {
-  return `<button class="gc-btn done" type="button" data-deck-finish="${escapeHtml(action)}">${icon("check")} ${escapeHtml(labelText)}</button>`;
-}
+// buttons, side arrows, a dot strip, swipe. The plumbing now lives in
+// ../deck.js, shared with Mathematics, which meets a Stage 1 learner the same
+// way. English keeps its own audio player and its lucide icons; the deck is told
+// what to silence on a slide change and what to re-bind after a repaint.
+const { mountDeck, deckFinish } = createDeck({ $, escapeHtml, icon, stopAudio, afterPaint: icons });
 
 // Vocabulary as a slide deck, on the Grade 1 grammar carousel's design (gc-*):
 // one word per vivid slide, big Hear buttons, side arrows, dots, swipe.

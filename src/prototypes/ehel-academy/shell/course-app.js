@@ -513,7 +513,10 @@ export function createCourseApp(config) {
     // which made science's Science Words listen button a ReferenceError in
     // every shell release since v110 — it worked in the standalone copy only
     // because speakText was a module-scope function there.
-    navigate, emitProgress, bindVoiceControls, updateVoiceUI, renderNav, renderRoute, speakText,
+    // stopVoice: a slide deck silences the current narration when the learner
+    // swipes to the next slide. navigate() already does this on a route change,
+    // but a deck changes what is on screen without changing route.
+    navigate, emitProgress, bindVoiceControls, updateVoiceUI, renderNav, renderRoute, speakText, stopVoice,
     unitSectionIds, updateProgress, stageNumber, unitNumber, params, dataRootUrl,
     STORAGE_KEY, STAGE_STORAGE_KEY, PROGRESS_UNIT,
     progress, gradeProgress,

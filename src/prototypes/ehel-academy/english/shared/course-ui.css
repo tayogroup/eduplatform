@@ -216,7 +216,14 @@ body.focus-mode .focus-exit:hover { background: #1d4360; }
    stops a flick at the end of the card from scrolling the page behind it. */
 .gc-inner { position: relative; z-index: 1; width: 100%; max-width: 600px; max-height: 100%; overflow-y: auto; overscroll-behavior: contain; text-align: center; display: grid; gap: 15px; justify-items: center; background: #fff; border-radius: 22px; padding: 28px 26px; box-shadow: 0 12px 30px #0000002e; }
 .gc-eyebrow { text-transform: uppercase; letter-spacing: .12em; font-weight: var(--weight-medium); font-size: 13px; color: #2a6cb0; }
-.gc-pattern { font: var(--weight-bold) 46px/1.1 inherit; color: #12263a; letter-spacing: .5px; }
+/* `font: inherit` on its own line, then the longhands — NOT
+   `font: <weight> <size>/<lh> inherit`. A CSS-wide keyword is only legal as a
+   property's WHOLE value, so `inherit` in the family slot makes the shorthand
+   invalid and the browser drops the entire declaration. That is what happened
+   here: the deck's word card fell back to 16px body text on desktop, while the
+   720px media query below — a longhand, so valid — set it to 34px. The big
+   word was smaller on a laptop than on a phone. */
+.gc-pattern { font: inherit; font-weight: var(--weight-bold); font-size: 46px; line-height: 1.1; color: #12263a; letter-spacing: .5px; }
 .gc-lead { margin: 0; font-size: 19px; line-height: 1.5; color: #33465e; font-weight: var(--weight-normal); }
 .gc-emoji { font-size: 26px; line-height: 1; }
 .gc-title { margin: 0; font-size: 21px; color: #12263a; }
@@ -228,7 +235,10 @@ body.focus-mode .focus-exit:hover { background: #1d4360; }
 .gc-practice { max-width: 520px; }
 .gc-practice summary { cursor: pointer; font-weight: var(--weight-medium); color: #2a6cb0; font-size: 14px; }
 .gc-actions { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
-.gc-btn { display: inline-flex; align-items: center; gap: 9px; font: var(--weight-medium) 18px/1 inherit; padding: 15px 26px; border-radius: 999px; border: none; cursor: pointer; background: #2a6cb0; color: #fff; box-shadow: 0 6px 16px #17324d33; transition: transform .16s, box-shadow .16s; }
+/* Same shorthand rule as .gc-pattern above: the family slot cannot be
+   `inherit`. This one had no media query to rescue it, so the deck's "big audio
+   button" has been rendering at 16px on every screen since it was written. */
+.gc-btn { display: inline-flex; align-items: center; gap: 9px; font: inherit; font-weight: var(--weight-medium); font-size: 18px; line-height: 1; padding: 15px 26px; border-radius: 999px; border: none; cursor: pointer; background: #2a6cb0; color: #fff; box-shadow: 0 6px 16px #17324d33; transition: transform .16s, box-shadow .16s; }
 .gc-btn:hover { transform: translateY(-2px); box-shadow: 0 9px 20px #17324d40; }
 .gc-btn:active { transform: translateY(0) scale(.97); }
 .gc-btn.ghost { background: #eef4fa; color: #17324d; box-shadow: none; }

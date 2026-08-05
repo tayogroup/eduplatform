@@ -275,8 +275,13 @@
    Everything is scoped under .gc-inner so the grid designs Stage 5 and up keep
    are untouched. */
 /* A term is not a symbol: "Total / altogether" at the .gc-pattern size wraps to
-   three lines on a phone. Same weight and colour, one step down. */
-.gc-term { font: var(--weight-bold) 34px/1.2 inherit; color: #12263a; }
+   three lines on a phone. Same weight and colour, one step down.
+
+   `font: inherit` then longhands, because `inherit` is not legal in the
+   shorthand's family slot — see the note on .gc-pattern in the English
+   stylesheet this file imports. Written as a shorthand, this rule was dropped
+   whole and a term rendered at 16px body text. */
+.gc-term { font: inherit; font-weight: var(--weight-bold); font-size: 34px; line-height: 1.2; color: #12263a; }
 /* Teaching prose reads left-aligned even on a centred slide — a five-line
    explainer centred is a ragged block a beginning reader has to re-find the
    start of on every line. */

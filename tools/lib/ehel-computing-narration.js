@@ -42,11 +42,26 @@ const DEBUG_RULE = [
 ];
 const SAFETY_HELP = "If anything online upsets you, frightens you, or asks you for personal information, you have not done anything wrong. Stop, close the page, and tell an adult you trust straight away. Telling someone is always the right move.";
 
+// Four categories exist only on the slide deck, and the deck is Stages 1-4 —
+// DECK_MAX_STAGE in shell/subjects/computing.js. Stage 5 up keeps the grids,
+// whose activity cards, code listings, debugging rule and safety help carry no
+// Listen button at all, so nothing there can ever request these clips.
+//
+// Without this gate they were claimed for every stage: 213 clips and 101,133
+// characters of Stages 5-8 that the generator would buy, the pruner would keep
+// as wanted, and the uploader would ship — for a button that does not exist.
+// That is the exact inverse of the drift these libraries guard against, and it
+// bills the same either way.
+const DECK_ONLY = new Set(["activities", "codeExamples", "debuggingRule", "esafetyHelp"]);
+const DECK_MAX_STAGE = 4;
+const stageOf = (unit) => Number(String((unit.stage || unit.grade || {}).id || "").replace(/\D/g, "")) || 0;
+
 // The exact strings each Listen button narrates — must match the UI. A
 // difference of one character means a different cyrb53 hash. Categories with no
 // Listen button (fluency, the AI tutor's typed replies) are absent on purpose.
 // Line references are into computing/shared/course-ui.js.
 function textsForUnit(unit, category) {
+  if (DECK_ONLY.has(category) && stageOf(unit) > DECK_MAX_STAGE) return [];
   switch (category) {
     // renderLesson: `${title}. ${spokenText(explanation)}. Example: ${example}`
     case "concepts": return (unit.concepts || []).map((c) => `${c.title}. ${spokenText(c.explanation)}. Example: ${c.example}`);

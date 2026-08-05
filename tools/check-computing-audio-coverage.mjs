@@ -97,8 +97,12 @@ function callArguments(source, name) {
 // Concatenated, not just the first: a subject's buttons can be split between
 // its own module and the shared shell core.
 const ui = UI_SOURCES.map((file) => fs.readFileSync(file, "utf8")).join("\n");
+// Read on its own as well as concatenated: the two hand-written texts are
+// compared against the narration library specifically, and finding them
+// anywhere in the concatenation would also match the generator's own copy.
+const narrationSource = fs.existsSync(NARRATION) ? fs.readFileSync(NARRATION, "utf8") : "";
 const gen = fs.readFileSync(GEN, "utf8")
-  + (fs.existsSync(NARRATION) ? fs.readFileSync(NARRATION, "utf8") : "")
+  + narrationSource
   + (fs.existsSync(HASH_LIB) ? fs.readFileSync(HASH_LIB, "utf8") : "");
 
 // What the UI is expected to narrate. Each entry is a button's argument as it
@@ -125,6 +129,13 @@ const EXPECTED = new Map([
   ["item.prompt", "explorationQuestions/practice/realProblems/reasoning"],
   ["item.question", "assessment"],
   ["item.modelAnswer", "reasoning"],
+  // The four the slide deck narrates that no grid design ever did.
+  ["`${activity.title}. You need: ${activity.materials}. ${activity.steps.join(\" \")}`", "activities"],
+  ["`${example.title}. ${example.intro || \"\"} ${example.explanation}`", "codeExamples"],
+  // Not templates: the UI's own words, checked against the narration library
+  // below rather than by the template comparison, which only reads slots.
+  ["DEBUG_RULE_NARRATION", "debuggingRule"],
+  ["SAFETY_HELP_NARRATION", "esafetyHelp"],
   // The Stage 1 slide deck's spellings of texts the grid already narrates. The
   // rendered string — and so the clip hash — is identical; only the local names
   // differ, because the deck walks a filtered list (`entry` of {entry, index})
@@ -190,6 +201,37 @@ for (const [argument, category] of EXPECTED) {
   const theirs = skeleton(argument.slice(1, -1));
   if (mine !== theirs) {
     fail(`${category}: generator builds "${mine}" but course-ui.js narrates "${theirs}"`);
+  }
+}
+
+// The two texts the UI writes itself — the debugging rule and the online-safety
+// help. Every other narration in this subject is derived from the unit JSON, so
+// a template comparison covers it; these are literals living in two files at
+// once, which is the one shape that can drift without either side looking wrong.
+// A single edited word here means a hash nothing was ever generated for, and a
+// clip bought again at the runtime endpoint on every press.
+const literalsOf = (source, name) => {
+  const match = source.match(new RegExp(`const ${name} = (\\[[\\s\\S]*?\\]|"[^"]*")`));
+  if (!match) { fail(`${name}: not found — it must be a const array or double-quoted string in both the UI and the narration library.`); return null; }
+  return (match[1].match(/"[^"]*"/g) || []).map((literal) => literal.slice(1, -1));
+};
+for (const name of ["DEBUG_RULE", "SAFETY_HELP"]) {
+  const mine = literalsOf(ui, name);
+  const theirs = literalsOf(narrationSource, name);
+  if (!mine || !theirs) continue;
+  if (mine.length !== theirs.length) {
+    fail(`${name} has drifted: the UI has ${mine.length} line(s), tools/lib/ehel-computing-narration.js has ${theirs.length}.`);
+    continue;
+  }
+  // The first line that differs, not a fixed-length prefix of the whole thing:
+  // these texts agree for their first hundred characters, so a truncated dump
+  // of both sides prints two identical-looking strings under the word "drifted"
+  // and tells the reader nothing about what to change.
+  const at = mine.findIndex((line, index) => line !== theirs[index]);
+  if (at >= 0) {
+    fail(`${name} has drifted at line ${at + 1}:\n`
+       + `      UI: "${mine[at]}"\n`
+       + `     lib: "${theirs[at]}"`);
   }
 }
 

@@ -19,14 +19,33 @@ const { cyrb53, clean, MIN_CHARS } = require("./ehel-narration-hash");
 const spokenText = (value = "") => String(value).split(/\n{2,}/).map((p) => p.trim()).filter(Boolean).join(" ");
 
 const CATEGORIES = ["concepts", "toolkit", "explorations", "explorationQuestions", "visualModels",
-  "methods", "methodSteps", "workedExamples", "practice", "debugging", "esafety", "project",
-  "realProblems", "reasoning", "assessment", "games", "words", "capstone"];
+  "methods", "methodSteps", "workedExamples", "practice", "debugging", "debuggingRule", "esafety",
+  "esafetyHelp", "project", "realProblems", "reasoning", "assessment", "games", "words",
+  "activities", "codeExamples", "capstone"];
 
-// The exact strings each Listen button narrates — must match course-ui.js. A
+// The debugging rule and the online-safety help are the UI's own words, not any
+// unit's — identical on every unit of every stage. Every other text here is
+// derived from the unit JSON, so these two are the only ones held as a literal
+// in two files at once, and the only ones that can drift apart silently. The
+// copies in shell/subjects/computing.js are the originals;
+// check-computing-audio-coverage.mjs compares the two character for character.
+//
+// They are returned per unit rather than once per grade so that every consumer
+// which walks units — the generator, the pruner — picks them up with no special
+// case. All three de-duplicate by hash, so the repetition costs nothing.
+const DEBUG_RULE = [
+  "Read the error or watch exactly what the program does.",
+  "Say what you expected it to do instead.",
+  "Find the first line where those two part company.",
+  "Change one thing. Only one.",
+  "Run it again and see whether that one change helped.",
+];
+const SAFETY_HELP = "If anything online upsets you, frightens you, or asks you for personal information, you have not done anything wrong. Stop, close the page, and tell an adult you trust straight away. Telling someone is always the right move.";
+
+// The exact strings each Listen button narrates — must match the UI. A
 // difference of one character means a different cyrb53 hash. Categories with no
-// Listen button (fluency, activities, code listings, the AI tutor's typed
-// replies) are absent on purpose. Line references are into
-// computing/shared/course-ui.js.
+// Listen button (fluency, the AI tutor's typed replies) are absent on purpose.
+// Line references are into computing/shared/course-ui.js.
 function textsForUnit(unit, category) {
   switch (category) {
     // renderLesson: `${title}. ${spokenText(explanation)}. Example: ${example}`
@@ -46,6 +65,16 @@ function textsForUnit(unit, category) {
     case "debugging": return (unit.debugging || []).map((d) => `${d.symptom}. Cause: ${d.cause}. Fix: ${d.fix}`);
     // renderSafety: `${title}. ${text}`
     case "esafety": return (unit.esafety || []).map((s) => `${s.title}. ${s.text}`);
+    // The deck's two closing slides. Each opens with its own heading, the way an
+    // e-safety card's clip opens with its title.
+    case "debuggingRule": return [`The rule that always works. ${DEBUG_RULE.join(" ")}`];
+    case "esafetyHelp": return [`If something goes wrong. ${SAFETY_HELP}`];
+    // renderActivitiesDeck / renderCodeExamplesDeck: the two sections the grid
+    // designs never narrated. A code listing reads its title, its introduction
+    // and its explanation — never the lines themselves, which are for typing in,
+    // not for hearing.
+    case "activities": return (unit.activities || []).map((a) => `${a.title}. You need: ${a.materials}. ${(a.steps || []).join(" ")}`);
+    case "codeExamples": return (unit.codeExamples || []).map((c) => `${c.title}. ${c.intro || ""} ${c.explanation}`);
     // renderProject: `${title}. ${brief} ${steps.join(" ")}`
     // Kept to one line so check-computing-audio-coverage.mjs can read the
     // template out of this source and compare it with the UI's.

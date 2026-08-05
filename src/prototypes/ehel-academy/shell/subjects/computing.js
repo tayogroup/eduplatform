@@ -167,6 +167,27 @@ const { mountDeck, deckFinish } = createDeck({
   afterPaint: (scope) => { bindVoiceControls(); updateVoiceUI(); initComputingWebGL(scope); },
 });
 
+// The debugging rule and the online-safety help are the UI's own words, not any
+// unit's — identical on every unit of every stage. Hoisted here so the grid and
+// the deck read one definition instead of each holding its own copy of the
+// paragraph, and mirrored in tools/lib/ehel-computing-narration.js so the clips
+// are generated at all. Those two copies are the only narration in this subject
+// not derived from the unit JSON, which makes them the only ones that can drift
+// silently — so check-computing-audio-coverage.mjs compares them character for
+// character rather than trusting this comment.
+const DEBUG_RULE = [
+  "Read the error or watch exactly what the program does.",
+  "Say what you expected it to do instead.",
+  "Find the first line where those two part company.",
+  "Change one thing. Only one.",
+  "Run it again and see whether that one change helped.",
+];
+const SAFETY_HELP = "If anything online upsets you, frightens you, or asks you for personal information, you have not done anything wrong. Stop, close the page, and tell an adult you trust straight away. Telling someone is always the right move.";
+// Each opens with its own heading, the way an e-safety card's clip opens with
+// its title: a learner who presses Listen is told what they are hearing.
+const DEBUG_RULE_NARRATION = `The rule that always works. ${DEBUG_RULE.join(" ")}`;
+const SAFETY_HELP_NARRATION = `If something goes wrong. ${SAFETY_HELP}`;
+
 // The deck's own Listen button: the shell's voiceButton renders a `.button
 // secondary` with a lucide glyph that never draws here. Same contract —
 // data-speak, bound by bindVoiceControls, marked .is-playing while it speaks —
@@ -179,12 +200,13 @@ const { mountDeck, deckFinish } = createDeck({
 // these the SAME expressions the grid renderers hand voiceButton, and the two
 // designs resolve to the same pre-rendered clip.
 //
-// For the same reason the deck adds no Listen button the grid did not have. Four
-// slides could plainly use one — an activity's steps, a code listing, the
-// debugging rule, and what to do when something online goes wrong — but each
-// would be a text with no clip behind it, narrated by the paid runtime endpoint
-// on every press. Giving those a voice is a narration-library change and a
-// billed generation run, not a layout change, so it is left out of this one.
+// Four of these buttons narrate text the grid never spoke — an activity's steps,
+// a code listing, the debugging rule and the online-safety help. They are the
+// slides a learner who cannot yet read most needs read to them, and each is now
+// a category in tools/lib/ehel-computing-narration.js, so the clips are
+// generated, uploaded and kept rather than falling to the paid runtime voice on
+// every press. Adding a Listen button to this file alone would have been the
+// expensive kind of improvement.
 function deckVoice(text, label = "Listen") {
   return `<button class="gc-btn play" type="button" data-speak="${escapeHtml(text)}" aria-label="${escapeHtml(label)}">${deckIcon("volume-2")} ${escapeHtml(label)}</button>`;
 }
@@ -321,6 +343,7 @@ function renderCodeExamplesDeck(examples) {
       <pre class="code-block" aria-label="${esc(example.language)} listing"><code>${example.lines.map((line) => esc(line)).join("\n")}</code></pre>
       <p class="gc-note">${esc(example.explanation)}</p>
       <div class="gc-actions">
+        ${deckVoice(`${example.title}. ${example.intro || ""} ${example.explanation}`, "Listen to listing")}
         <button class="gc-btn ghost small" type="button" data-copy-code="${index}">${deckIcon("pencil")} Copy the code</button>
       </div>
       <button class="gc-btn ${copied.has(example.id) ? "done" : "ghost"}" type="button" data-code-done="${esc(example.id)}">${deckIcon("check")} ${copied.has(example.id) ? "Typed it in" : "I typed this in"}</button>
@@ -373,13 +396,6 @@ function renderCodeExamplesDeck(examples) {
 function renderDebuggingDeck(bugs) {
   const esc = escapeHtml;
   const solved = new Set(progress.bugsSolved || []);
-  const RULE = [
-    "Read the error or watch exactly what the program does.",
-    "Say what you expected it to do instead.",
-    "Find the first line where those two part company.",
-    "Change one thing. Only one.",
-    "Run it again and see whether that one change helped.",
-  ];
   const slides = bugs.map((bug, index) => `<section class="gc-slide gc-v${index % 5}"><div class="gc-inner">
       <span class="gc-eyebrow">Bug ${index + 1} of ${bugs.length}</span>
       <h3 class="gc-title">${esc(bug.symptom)}</h3>
@@ -397,7 +413,8 @@ function renderDebuggingDeck(bugs) {
   slides.push(`<section class="gc-slide gc-v${bugs.length % 5}"><div class="gc-inner">
       <span class="gc-eyebrow">Every programmer does this</span>
       <h3 class="gc-title">The rule that always works</h3>
-      <ol class="cmp-gc-list">${RULE.map((step) => `<li>${esc(step)}</li>`).join("")}</ol>
+      <ol class="cmp-gc-list">${DEBUG_RULE.map((step) => `<li>${esc(step)}</li>`).join("")}</ol>
+      <div class="gc-actions">${deckVoice(DEBUG_RULE_NARRATION, "Listen to the rule")}</div>
       ${deckFinish("debug", "I practised debugging")}
     </div></section>`);
 
@@ -430,7 +447,7 @@ function renderDebugging() {
     $("#app").innerHTML = `${pageHeader("Every programmer does this", "Debug It", "A bug is not a failure — finding one is the job. Read the symptom, work out the cause yourself, then check.")}
       <section class="panel support-strip"><span>Read the symptom</span><span>Predict the cause</span><span>Check yourself</span><span>Apply the fix</span><span>Test again</span></section>
       <div class="task-grid">${bugs.map((bug, index) => `<article class="panel question-card"><span class="eyebrow">Bug ${index + 1}</span><h3>${escapeHtml(bug.symptom)}</h3><p>What do you think is causing this? Say your answer out loud before you open the reveal.</p><details data-bug="${index}"><summary>Show the cause and the fix</summary><p class="rule-box"><span class="field-label">Cause:</span> ${escapeHtml(bug.cause)}</p><p class="example"><span class="field-label">Fix:</span> ${escapeHtml(bug.fix)}</p></details>${voiceButton(`${bug.symptom}. Cause: ${bug.cause}. Fix: ${bug.fix}`, "Listen to this bug")}<button class="button secondary" data-bug-done="${index}" type="button">${solved.has(String(index)) ? "✓ I can fix this one" : "I can fix this one"}</button></article>`).join("")}</div>
-      <section class="panel"><h3>The rule that always works</h3><ol class="path-list"><li><span>1</span><span>Read the error or watch exactly what the program does.</span></li><li><span>2</span><span>Say what you expected it to do instead.</span></li><li><span>3</span><span>Find the first line where those two part company.</span></li><li><span>4</span><span>Change one thing. Only one.</span></li><li><span>5</span><span>Run it again and see whether that one change helped.</span></li></ol></section>
+      <section class="panel"><h3>The rule that always works</h3><ol class="path-list">${DEBUG_RULE.map((step, index) => `<li><span>${index + 1}</span><span>${escapeHtml(step)}</span></li>`).join("")}</ol></section>
       <p><button class="button primary" id="debug-done" type="button">I practised debugging ✓</button></p>`;
     $$('[data-bug-done]').forEach((button) => button.addEventListener("click", () => {
       solved.add(button.dataset.bugDone);
@@ -449,7 +466,6 @@ function renderDebugging() {
 // deck the last slide is where the section ends.
 function renderSafetyDeck(items) {
   const esc = escapeHtml;
-  const WRONG = "If anything online upsets you, frightens you, or asks you for personal information, you have not done anything wrong. Stop, close the page, and tell an adult you trust straight away. Telling someone is always the right move.";
   const slides = items.map((item, index) => `<section class="gc-slide gc-v${index % 5}"><div class="gc-inner">
       <span class="gc-eyebrow">Rule ${index + 1} of ${items.length}</span>
       <h3 class="gc-title">${esc(item.title)}</h3>
@@ -459,7 +475,8 @@ function renderSafetyDeck(items) {
   slides.push(`<section class="gc-slide gc-v${items.length % 5}"><div class="gc-inner">
       <span class="gc-eyebrow">Being safe and kind online</span>
       <h3 class="gc-title">If something goes wrong</h3>
-      <p class="gc-lead">${esc(WRONG)}</p>
+      <p class="gc-lead">${esc(SAFETY_HELP)}</p>
+      <div class="gc-actions">${deckVoice(SAFETY_HELP_NARRATION, "Listen to this")}</div>
       ${deckFinish("safety", "I know these rules")}
     </div></section>`);
   mountDeck({
@@ -481,7 +498,7 @@ function renderSafety() {
   if (deckStage()) return renderSafetyDeck(items);
   $("#app").innerHTML = `${pageHeader("Being safe and kind online", "Stay Safe Online", "These rules matter in every unit, not just this one. Read them, then say each one back in your own words.")}
     <div class="task-grid">${items.map((item, index) => `<article class="panel task-card"><span class="eyebrow">Rule ${index + 1}</span><h2>${escapeHtml(item.title)}</h2><p>${escapeHtml(item.text)}</p>${voiceButton(`${item.title}. ${item.text}`, "Listen to this rule")}</article>`).join("")}</div>
-    <section class="panel"><h3>If something goes wrong</h3><p>If anything online upsets you, frightens you, or asks you for personal information, you have not done anything wrong. Stop, close the page, and tell an adult you trust straight away. Telling someone is always the right move.</p></section>
+    <section class="panel"><h3>If something goes wrong</h3><p>${escapeHtml(SAFETY_HELP)}</p></section>
     <p><button class="button primary" id="safety-done" type="button">I know these rules ✓</button></p>`;
   $("#safety-done").addEventListener("click", () => { complete("safety", "Online safety rules reviewed."); navigate("explain"); });
 }
@@ -1057,6 +1074,7 @@ function renderActivitiesDeck() {
       ${computingDiagram(topic, index)}
       <p class="gc-note"><span class="field-label">You need:</span> ${esc(activity.materials)}</p>
       <ol class="cmp-gc-list">${activity.steps.map((step) => `<li>${esc(step)}</li>`).join("")}</ol>
+      <div class="gc-actions">${deckVoice(`${activity.title}. You need: ${activity.materials}. ${activity.steps.join(" ")}`, "Listen to activity")}</div>
       <div class="wc-sentence">
         <small>What you did and noticed</small>
         <textarea class="activity-response" rows="4" placeholder="Record your answer or what you noticed…" aria-label="Notes for ${esc(activity.title)}"></textarea>

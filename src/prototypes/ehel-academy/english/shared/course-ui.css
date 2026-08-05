@@ -176,14 +176,29 @@ body.focus-mode .focus-exit:hover { background: #1d4360; }
 .focus-exit svg { width: 18px; height: 18px; }
 /* Grade 1 grammar carousel — kid-friendly full-screen slides, one language
    pattern at a time (modelled on the Arabic Alphabet unit's Learn section). */
-.gc-wrap { max-width: 960px; margin: 0 auto; }
+/* The deck fills the page and no more, so the slide's height is whatever is left
+   after the heading, the dots and the tools row have taken theirs — measured by
+   the layout, not by a constant per deck shape. Only --gc-page-chrome is a
+   number (the topbar above and the content area's bottom padding below); the
+   rows inside are sized by flexbox, which is what makes a wrapped tools row on a
+   narrow phone come out right without a breakpoint of its own. */
+.gc-wrap { --gc-page-chrome: 172px; max-width: 960px; margin: 0 auto; display: flex; flex-direction: column; height: calc(100vh - var(--gc-page-chrome)); min-height: 360px; }
 .gc-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; flex-wrap: wrap; }
 .gc-heading { margin: 0; font-size: 22px; }
 .gc-count { color: #64748b; font-size: 14px; font-weight: var(--weight-medium); }
-.gc-carousel { position: relative; }
-.gc-viewport { overflow: hidden; border-radius: 24px; box-shadow: 0 14px 34px #17324d22; touch-action: pan-y; }
-.gc-track { display: flex; transition: transform .42s cubic-bezier(.2,.8,.2,1); }
-.gc-slide { position: relative; overflow: hidden; flex: 0 0 100%; min-height: 62vh; padding: 34px 26px; display: grid; place-items: center; }
+/* min-height: 0 on both, or a flex item refuses to shrink below its content and
+   the deck grows the page again — the default min-height:auto is exactly the
+   behaviour being fixed here. */
+.gc-carousel { position: relative; flex: 1; min-height: 0; display: flex; }
+.gc-viewport { flex: 1; min-height: 0; overflow: hidden; border-radius: 24px; box-shadow: 0 14px 34px #17324d22; touch-action: pan-y; }
+.gc-track { display: flex; height: 100%; transition: transform .42s cubic-bezier(.2,.8,.2,1); }
+/* A slide takes the track's height and no more. It used to grow with its
+   content, and since the slides are flex siblings every slide grew to the
+   tallest one — a Grade 4 writing task with its checklist open pushed the dots
+   and the tools row below the fold on every slide of the deck. The overflow now
+   scrolls inside the card (see .gc-inner), which is what full-bleed already did
+   with the whole viewport. */
+.gc-slide { position: relative; overflow: hidden; flex: 0 0 100%; height: 100%; padding: 34px 26px; display: grid; place-items: center; }
 .gc-slide::before, .gc-slide::after { content: ""; position: absolute; border-radius: 50%; pointer-events: none; }
 .gc-slide::before { width: 210px; height: 210px; top: -64px; left: -54px; background: #ffffff45; }
 .gc-slide::after { width: 150px; height: 150px; bottom: -44px; right: -32px; background: #ffffff30; }
@@ -192,7 +207,14 @@ body.focus-mode .focus-exit:hover { background: #1d4360; }
 .gc-v2 { background: linear-gradient(155deg, #5fc7ff 0%, #5b8def 55%, #8a6bf0 100%); }
 .gc-v3 { background: linear-gradient(155deg, #bd8cff 0%, #9a6cff 50%, #d86bd0 100%); }
 .gc-v4 { background: linear-gradient(155deg, #ffb36b 0%, #ff7aa0 55%, #ff6fae 100%); }
-.gc-inner { position: relative; z-index: 1; width: 100%; max-width: 600px; text-align: center; display: grid; gap: 15px; justify-items: center; background: #fff; border-radius: 22px; padding: 28px 26px; box-shadow: 0 12px 30px #0000002e; }
+/* The card is the scroller, not the slide. Scrolling the slide would work too,
+   but the decorative circles hang past its edges by design, and inside a scroll
+   container the bottom one adds its own 44px of scrollable height — every slide,
+   even one whose content fits, would offer a short pointless scroll. Capping the
+   card instead keeps the gradient and the circles still while the teaching text
+   moves, and a slide that fits never scrolls at all. `overscroll-behavior`
+   stops a flick at the end of the card from scrolling the page behind it. */
+.gc-inner { position: relative; z-index: 1; width: 100%; max-width: 600px; max-height: 100%; overflow-y: auto; overscroll-behavior: contain; text-align: center; display: grid; gap: 15px; justify-items: center; background: #fff; border-radius: 22px; padding: 28px 26px; box-shadow: 0 12px 30px #0000002e; }
 .gc-eyebrow { text-transform: uppercase; letter-spacing: .12em; font-weight: var(--weight-medium); font-size: 13px; color: #2a6cb0; }
 .gc-pattern { font: var(--weight-bold) 46px/1.1 inherit; color: #12263a; letter-spacing: .5px; }
 .gc-lead { margin: 0; font-size: 19px; line-height: 1.5; color: #33465e; font-weight: var(--weight-normal); }
@@ -257,18 +279,21 @@ body.focus-mode .focus-exit:hover { background: #1d4360; }
 body.focus-mode.gc-full { overflow: hidden; }
 body.focus-mode.gc-full .content { padding: 0; }
 body.focus-mode.gc-full #app { max-width: none; margin: 0; }
-body.focus-mode.gc-full .gc-wrap { max-width: none; }
+body.focus-mode.gc-full .gc-wrap { max-width: none; height: 100vh; }
 body.focus-mode.gc-full .gc-top { display: none; }
 body.focus-mode.gc-full .gc-carousel { height: 100vh; }
 body.focus-mode.gc-full .gc-viewport { border-radius: 0; height: 100vh; box-shadow: none; }
-/* Each slide fills the screen; if its content is taller (small screens), the
-   slide scrolls internally so the page itself never gains a scrollbar gutter. */
-body.focus-mode.gc-full .gc-slide { min-height: 100vh; height: 100vh; overflow-y: auto; align-content: center; }
+/* Each slide fills the screen; content taller than it scrolls inside the card,
+   as in the padded layout, so the page itself never gains a scrollbar gutter. */
+body.focus-mode.gc-full .gc-slide { min-height: 100vh; height: 100vh; }
 body.focus-mode.gc-full .gc-dots { position: fixed; left: 0; right: 0; bottom: 16px; margin: 0; z-index: 55; }
 @media (max-width: 720px) {
   .gc-arrow { width: 46px; height: 46px; }
   .gc-pattern { font-size: 34px; }
-  .gc-slide { min-height: 66vh; padding: 22px 12px; }
+  /* The phone topbar is shorter and the content padding tighter than the
+     desktop's; the rows inside the deck still measure themselves. */
+  .gc-wrap { --gc-page-chrome: 178px; }
+  .gc-slide { padding: 22px 12px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .gc-track { transition: none; }

@@ -507,6 +507,13 @@ function renderLearnMethod() {
 // `method` and the `(text, index)` step pair are the names the narration gate
 // expects: the whole method reads as `${method.title}. Example: ${method.example}.
 // ${method.steps.join(" ")}` and each step as `Step ${index+1}. ${text}`.
+//
+// The worked example is prose in a box, NOT the deck's big .gc-pattern display
+// that vocabulary uses for a word. It is only called an "example": in Science it
+// carries the whole investigation — a median of 233 characters at Stage 2 and one
+// of 1,557 — where Mathematics, which this section's markup came from, puts
+// "24 + 8" there. It is also why the grid's `.method-example > strong` renders at
+// 70px serif in Stages 5-8, which is a Mathematics size Science inherited.
 function renderLearnMethodDeck() {
   const esc = escapeHtml;
   const methods = course.methods;
@@ -516,8 +523,8 @@ function renderLearnMethodDeck() {
   const methodSlide = (method, position) => `<section class="gc-slide gc-v${position % 5}" data-method-slide="${esc(method.id)}"><div class="gc-inner">
       <span class="gc-eyebrow">Method ${position + 1} of ${methods.length} · ${esc(method.difficulty)}</span>
       <h3 class="gc-title">${esc(method.title)}</h3>
-      <div class="gc-pattern" lang="en">${esc(method.example)}</div>
       <div class="gc-actions">${deckVoice(`${method.title}. Example: ${method.example}. ${method.steps.join(" ")}`, "Listen to method")}</div>
+      <div class="wc-sentence"><small>Worked example</small><div class="sci-gc-prose">${richText(method.example, "gc-note")}</div></div>
       <ol class="sci-gc-steps">${method.steps.map((text, index) => `<li class="sci-gc-step ${index === 0 ? "active" : ""}" data-method-step="${index}"><span>${index + 1}</span><div><strong>Step ${index + 1}</strong><p>${esc(text)}</p>${deckVoiceSmall(`Step ${index+1}. ${text}`, "Listen to step")}</div></li>`).join("")}</ol>
       <button class="gc-btn" type="button" data-next-step="${esc(method.id)}">${completed.has(method.id) ? "Method complete ✓" : "Show me the next step →"}</button>
     </div></section>`;

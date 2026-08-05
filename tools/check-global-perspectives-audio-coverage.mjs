@@ -25,17 +25,40 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-// The runtime carries a dated filename, because the pull zone ignores query
-// strings and serves it max-age=2592000 — a new name is the only reliable
+// The renderers moved into the shell: global-perspectives/shared/course-ui.js is
+// now a 21-line loader that imports ../../shell/subjects/global-perspectives.js.
+// This check kept reading the loader, found no Listen buttons in it, and
+// reported every expected button as "no longer exists" — six failures against a
+// course whose narration was fine, on every run since the subject moved. Prefer
+// the shell module; the dated shared file is the fallback for a subject not yet
+// moved.
+const SHARED = path.join(ROOT, "src", "prototypes", "ehel-academy", "global-perspectives", "shared");
+// The deployed runtime carries a dated filename, because the pull zone ignores
+// query strings and serves it max-age=2592000 — a new name is the only reliable
 // cache-bust. Resolve whichever one is present rather than hard-coding a date,
 // so minting the next one does not silently skip this whole check.
-const SHARED = path.join(ROOT, "src", "prototypes", "ehel-academy", "global-perspectives", "shared");
 const uiCandidates = fs.readdirSync(SHARED).filter((f) => /^course-ui(?:-\d{8}[a-z])?\.js$/.test(f)).sort();
 if (uiCandidates.length !== 1) {
   console.error(`expected exactly one course-ui*.js in ${SHARED}, found: ${uiCandidates.join(", ") || "none"}`);
   process.exit(1);
 }
-const UI = path.join(SHARED, uiCandidates[uiCandidates.length - 1]);
+const SHELL_UI = path.join(ROOT, "src", "prototypes", "ehel-academy", "shell", "subjects", "global-perspectives.js");
+const UI = fs.existsSync(SHELL_UI) ? SHELL_UI : path.join(SHARED, uiCandidates[uiCandidates.length - 1]);
+// cyrb53, staticVoiceKey and the page-narration button live in the shell core
+// once a subject has moved, not in the subject module. Scan both, or the core's
+// pair reads as "a button that no longer exists" and its cyrb53 as missing.
+const SHELL_CORE = path.join(ROOT, "src", "prototypes", "ehel-academy", "shell", "course-app.js");
+const RUNTIME = UI === SHELL_UI && fs.existsSync(SHELL_CORE) ? SHELL_CORE : UI;
+// Buttons also live in the shell components the module imports — the Wehel chat
+// panel renders one per message. Found by reading the module's own imports
+// rather than by listing filenames here, so a component added later is scanned
+// without this file being updated. Only siblings under shell/ count;
+// ../course-app.js is already read as RUNTIME.
+const COMPONENTS = UI !== SHELL_UI ? [] : [...fs.readFileSync(SHELL_UI, "utf8")
+  .matchAll(/^import\s[^"']*["']\.\.\/([A-Za-z0-9_-]+\.js)(?:\?[^"']*)?["']/gm)]
+  .map((m) => m[1])
+  .filter((name) => name !== "course-app.js")
+  .map((name) => path.join(ROOT, "src", "prototypes", "ehel-academy", "shell", name));
 const GEN = path.join(ROOT, "tools", "lib", "ehel-global-perspectives-narration.js");
 const HASH_LIB = path.join(ROOT, "tools", "lib", "ehel-narration-hash.js");
 
@@ -93,7 +116,26 @@ function callArguments(source, name) {
 }
 
 const ui = fs.readFileSync(UI, "utf8");
+const runtime = RUNTIME === UI ? ui : fs.readFileSync(RUNTIME, "utf8");
 const gen = fs.readFileSync(GEN, "utf8");
+
+// A check that finds nothing must not pass quietly — nor fail in a way that
+// blames the course. Reading a file with no Listen buttons in it is the shape of
+// a check pointed at the wrong file, not of a course that lost its narration, so
+// say that instead of listing every expected button as missing.
+if (!/voiceButton\s*\(/.test(ui)) {
+  console.error(`✗ ${path.relative(ROOT, UI)} contains no voiceButton calls — this check is reading the wrong file.`);
+  console.error("   The renderers live in shell/subjects/global-perspectives.js; point UI there.");
+  process.exit(1);
+}
+
+// A component the module imports but that is not on disk would break the app at
+// load, so say so here rather than silently scanning one file fewer and then
+// reporting its buttons as missing.
+for (const file of COMPONENTS) {
+  if (!fs.existsSync(file)) fail(`${path.relative(ROOT, UI)} imports ${path.relative(ROOT, file)}, which does not exist`);
+}
+const componentSources = COMPONENTS.filter((f) => fs.existsSync(f)).map((f) => fs.readFileSync(f, "utf8"));
 
 // What the UI narrates. Each entry is a button's first argument as it appears
 // in course-ui.js, mapped to the narration category that reproduces it, or to
@@ -106,11 +148,20 @@ const EXPECTED = new Map([
   // prompts and the boxes nested inside an activity all go through it.
   ["spoken", "boxes"],
   ["word.meaning", "words"],
-  // The declaration of voiceButton itself, not a call site.
+  // Not pre-generatable, and not call sites a category could reproduce: the
+  // declaration of speakText in the shell core, and the page-narration button,
+  // whose text is collected from whatever page the learner is on.
   ["text", null],
+  ["button.hasAttribute(\"data-page-voice\") ? collectPageNarration() : button.dataset.speak", null],
 ]);
 
-const found = new Set(callArguments(ui, "voiceButton"));
+// deckVoice/deckVoiceSmall are the slide deck's own Listen buttons, emitting the
+// same data-speak contract voiceButton does. Global Perspectives narrates
+// through voiceButton today, but a deck that switches to them must not go
+// invisible to this check the way the whole subject just did.
+const VOICE_HELPERS = ["voiceButton", "speakText", "deckVoice", "deckVoiceSmall"];
+const sources = [ui, ...(RUNTIME === UI ? [] : [runtime]), ...componentSources];
+const found = new Set(sources.flatMap((src) => VOICE_HELPERS.flatMap((helper) => callArguments(src, helper))));
 for (const argument of found) {
   if (!EXPECTED.has(argument)) {
     fail(`course-ui.js narrates a text the narration lib does not know about: ${argument}\n`
@@ -173,21 +224,46 @@ for (const [argument, category] of EXPECTED) {
   }
 }
 
-// Both files carry their own copy of cyrb53; they must agree exactly.
-const hashOf = (source, label) => {
-  const body = source.match(/function cyrb53\([\s\S]*?\n\}/);
-  if (!body) { fail(`${label}: no cyrb53 found`); return null; }
-  return body[0].replace(/\s+/g, " ");
+// Both files carry their own copy of cyrb53; they must name the same text the
+// same way.
+//
+// Compared by what it computes, not by how it is written. Matching source text
+// up to the first "\n}" stops at whichever nested brace comes first, so two
+// identical implementations formatted differently compare unequal — which is
+// what happened the moment this check started reading the shell core instead of
+// a copy that had been pasted from the lib. Braces are matched properly, the
+// function is evaluated, and the two are run against the same probes.
+const cyrb53Of = (source, label) => {
+  const start = source.indexOf("function cyrb53(");
+  if (start < 0) { fail(`${label}: no cyrb53 found`); return null; }
+  let depth = 0, end = start;
+  for (let i = source.indexOf("{", start); i < source.length; i += 1) {
+    if (source[i] === "{") depth += 1;
+    else if (source[i] === "}") { depth -= 1; if (depth === 0) { end = i + 1; break; } }
+  }
+  try { return new Function(`${source.slice(start, end)}\nreturn cyrb53;`)(); }
+  catch (e) { fail(`${label}: cyrb53 will not evaluate — ${e.message}`); return null; }
 };
-const uiHash = hashOf(ui, "course-ui.js");
-const libHash = hashOf(fs.readFileSync(HASH_LIB, "utf8"), "lib/ehel-narration-hash.js");
-if (uiHash && libHash && uiHash !== libHash) {
-  fail("cyrb53 differs between global-perspectives/course-ui.js and lib/ehel-narration-hash.js — "
-    + "every pre-generated clip would be looked up under the wrong name.");
+const uiHash = cyrb53Of(runtime, path.relative(ROOT, RUNTIME));
+const libHash = cyrb53Of(fs.readFileSync(HASH_LIB, "utf8"), "lib/ehel-narration-hash.js");
+if (uiHash && libHash) {
+  const probes = ["", "a", "hello world", "How research feeds the other five skills",
+    "Ask your grown-up which way they travelled to school.", "Fact: something you can check."];
+  // Running it is part of the test: a cyrb53 that parses but throws names no
+  // clip at all, and an uncaught error here would report as a crashed tool
+  // rather than as the broken narration it is.
+  const differing = probes.filter((p) => {
+    try { return uiHash(p) !== libHash(p); }
+    catch (e) { fail(`cyrb53 throws on ${JSON.stringify(p.slice(0, 30))} — ${e.message}`); return false; }
+  });
+  if (differing.length) {
+    fail(`cyrb53 differs between ${path.relative(ROOT, RUNTIME)} and lib/ehel-narration-hash.js — `
+      + `every pre-generated clip would be looked up under the wrong name (e.g. "${differing[0].slice(0, 30)}").`);
+  }
 }
 
 // The UI normalises a button's text before hashing; the lib must match.
-const uiClean = ui.match(/const staticVoiceKey = [^\n]*/);
+const uiClean = runtime.match(/const staticVoiceKey = [^\n]*/);
 if (uiClean && !uiClean[0].includes('replace(/\\s+/g, " ").trim()')) {
   fail(`staticVoiceKey no longer normalises with /\\s+/ → " " + trim: ${uiClean[0]}`);
 }

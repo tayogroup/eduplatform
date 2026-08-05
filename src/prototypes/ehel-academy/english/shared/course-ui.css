@@ -234,6 +234,19 @@ body.focus-mode .focus-exit:hover { background: #1d4360; }
    search is how a learner reaches a word in a seventy-word unit. */
 .wc-tools { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; margin-top: 16px; }
 .wc-tools .search-box { min-width: 240px; }
+/* Work a learner does ON a slide — comprehension answers, writing drafts,
+   activity notes, the speaking recorder. The grid layouts these came from sized
+   their own textareas (.question textarea, .task-card textarea); a slide is a
+   centred column, so the writing surface is sized here instead of inheriting a
+   width from a card it is no longer inside. */
+.gc-inner textarea { width: 100%; border: 1px solid var(--line); border-radius: 8px; padding: 11px 12px; line-height: 1.55; resize: vertical; background: #fff; }
+.gc-inner .wc-sentence textarea { min-height: 92px; }
+.gc-inner .recorder { width: 100%; max-width: 520px; text-align: left; }
+.gc-inner audio { width: 100%; max-width: 520px; }
+.gc-inner .checklist, .gc-inner .model, .gc-inner .feedback { text-align: left; }
+.gc-inner .model { margin: 0; }
+.gc-inner .gc-practice { width: 100%; }
+.gc-inner .gc-practice summary { text-align: center; }
 .gc-dots { display: flex; gap: 9px; justify-content: center; margin-top: 18px; }
 .gc-dot { width: 13px; height: 13px; border-radius: 50%; border: none; background: #cdd8e8; cursor: pointer; padding: 0; transition: transform .16s, background .16s; }
 .gc-dot.active { background: #2a6cb0; transform: scale(1.35); }

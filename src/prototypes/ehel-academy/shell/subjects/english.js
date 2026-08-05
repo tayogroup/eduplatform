@@ -1117,6 +1117,115 @@ function renderDictionary() {
   drawList(); drawWord();
 }
 
+// ── The gc-* slide deck ──────────────────────────────────────────────────────
+// How Grades 1-4 meet a section: one item per full-screen slide, big audio
+// buttons, side arrows, a dot strip, swipe. The plumbing — track transform, dot
+// state, arrow disabling, stop-audio-on-slide-change, touch — is defined once
+// here. It existed twice already (Grade 1 grammar, then vocabulary, written by
+// copying it), and six sections on this design would otherwise have meant six
+// copies of the same fifteen lines to keep in step.
+//
+// A section supplies only its slides. `setSlides` re-decks in place (vocabulary
+// filters its own deck; comprehension filters by reading section), and
+// `redrawSlide` repaints one slide without snapping the carousel back to the
+// first — which is exactly what the learner is in the middle of when a Learned
+// mark or a sentence position changes.
+function mountDeck({ heading, label = "Slide", slides = [], tools = "", emptyMessage = "", onSlide = null, onClick = null }) {
+  const lower = label.toLowerCase();
+  $("#app").innerHTML = `
+    <div class="gc-wrap">
+      <div class="gc-top"><h2 class="gc-heading">${escapeHtml(heading)}</h2><span class="gc-count" id="gc-count"></span></div>
+      <div class="gc-carousel">
+        <button class="gc-arrow prev" type="button" aria-label="Previous ${lower}">${icon("chevron-left")}</button>
+        <div class="gc-viewport"><div class="gc-track" id="gc-track"></div></div>
+        <button class="gc-arrow next" type="button" aria-label="Next ${lower}">${icon("chevron-right")}</button>
+      </div>
+      <div class="gc-dots" id="gc-dots"></div>
+      ${tools}
+    </div>`;
+  // Full-bleed: the deck fills the whole viewport (paired with focus mode, which
+  // already hides the topbar/sidebar and requests browser fullscreen on the nav
+  // click). Cleared in onBeforeRender when leaving the section.
+  document.body.classList.add("gc-full");
+
+  const root = $(".gc-wrap");
+  const track = $("#gc-track");
+  const dotsRow = $("#gc-dots");
+  const prevArrow = $(".gc-arrow.prev");
+  const nextArrow = $(".gc-arrow.next");
+  const countLabel = $("#gc-count");
+  let items = [];
+  let index = 0;
+
+  const goTo = (next) => {
+    if (!items.length) return;
+    index = Math.max(0, Math.min(items.length - 1, next));
+    track.style.transform = `translateX(-${index * 100}%)`;
+    dotsRow.querySelectorAll("[data-dot]").forEach((dot, position) => dot.classList.toggle("active", position === index));
+    prevArrow.disabled = index === 0;
+    nextArrow.disabled = index === items.length - 1;
+    countLabel.textContent = `${label} ${index + 1} of ${items.length}`;
+    stopAudio();
+    onSlide?.(index, deck);
+  };
+
+  const setSlides = (next, { at = 0 } = {}) => {
+    items = [...next];
+    if (!items.length) {
+      track.innerHTML = `<section class="gc-slide gc-v0"><div class="gc-inner"><p class="gc-lead">${escapeHtml(emptyMessage || "Nothing to show here yet.")}</p></div></section>`;
+      dotsRow.innerHTML = "";
+      prevArrow.disabled = true;
+      nextArrow.disabled = true;
+      countLabel.textContent = `No ${lower}s`;
+      index = 0;
+      icons();
+      return;
+    }
+    track.innerHTML = items.join("");
+    dotsRow.innerHTML = items.map((_, position) => `<button class="gc-dot" type="button" data-dot="${position}" aria-label="${label} ${position + 1} of ${items.length}"></button>`).join("");
+    dotsRow.querySelectorAll("[data-dot]").forEach((dot) => dot.addEventListener("click", () => goTo(Number(dot.dataset.dot))));
+    index = 0;
+    goTo(Math.max(0, Math.min(items.length - 1, at)));
+    icons();
+  };
+
+  const redrawSlide = (position, html) => {
+    const node = track.children[position];
+    if (!node) return;
+    items[position] = html;
+    node.outerHTML = html;
+    icons();
+  };
+
+  const deck = { root, goTo, setSlides, redrawSlide, get index() { return index; }, get count() { return items.length; } };
+
+  // One delegated listener for the whole deck: slides are repainted as the
+  // learner works, and rebinding every control on every repaint is how a dead
+  // button appears three interactions later.
+  if (onClick) root.addEventListener("click", (event) => onClick(event, deck));
+  prevArrow.addEventListener("click", () => goTo(index - 1));
+  nextArrow.addEventListener("click", () => goTo(index + 1));
+
+  const viewport = $(".gc-viewport");
+  let startX = null;
+  viewport.addEventListener("touchstart", (event) => { startX = event.touches[0].clientX; }, { passive: true });
+  viewport.addEventListener("touchend", (event) => {
+    if (startX === null) return;
+    const dx = event.changedTouches[0].clientX - startX;
+    if (Math.abs(dx) > 45) goTo(index + (dx < 0 ? 1 : -1));
+    startX = null;
+  }, { passive: true });
+
+  setSlides(slides);
+  return deck;
+}
+
+// The completion button a deck's last slide carries, so a learner who has swiped
+// to the end can finish the section without leaving the carousel.
+function deckFinish(action, labelText) {
+  return `<button class="gc-btn done" type="button" data-deck-finish="${escapeHtml(action)}">${icon("check")} ${escapeHtml(labelText)}</button>`;
+}
+
 // Vocabulary as a slide deck, on the Grade 1 grammar carousel's design (gc-*):
 // one word per vivid slide, big Hear buttons, side arrows, dots, swipe.
 //
@@ -1133,8 +1242,7 @@ function renderWordCarousel() {
   // One sentence position per word: in a deck each word keeps its own place,
   // where the lab had a single cursor because only one word was ever on screen.
   const sentenceAt = new Map();
-  let deck = allWords;
-  let slide = 0;
+  let words = allWords;
 
   const wordSlide = (item, index) => {
     const sentences = item.practiceSentences?.length ? item.practiceSentences : [item.exampleSentence].filter(Boolean);
@@ -1145,7 +1253,7 @@ function renderWordCarousel() {
     // word with no honest picture shows none rather than a decorative stand-in.
     const picture = wordPicture(item.master.lemma) || wordPicture(item.master.displayWord);
     return `<section class="gc-slide gc-v${index % 5}" data-slide="${esc(item.vocabularyId)}"><div class="gc-inner">
-      <span class="gc-eyebrow">Word ${index + 1} of ${deck.length} · ${esc(item.master.partOfSpeech)}${item.groupTitle ? ` · ${esc(item.groupTitle)}` : ""}</span>
+      <span class="gc-eyebrow">Word ${index + 1} of ${words.length} · ${esc(item.master.partOfSpeech)}${item.groupTitle ? ` · ${esc(item.groupTitle)}` : ""}</span>
       ${picture ? `<div class="wc-picture" aria-hidden="true">${picture}</div>` : ""}
       <div class="gc-pattern" lang="en">${esc(item.master.displayWord)}</div>
       <p class="gc-lead">${esc(item.childMeaning)}</p>
@@ -1171,148 +1279,95 @@ function renderWordCarousel() {
         <div data-feedback="${esc(item.vocabularyId)}" role="status" aria-live="polite" aria-atomic="true"></div>
       </details>
       <button class="gc-btn ${known ? "done" : "ghost"}" type="button" data-know="${esc(item.vocabularyId)}">${known ? `${icon("check-circle")} Learned` : `${icon("bookmark-plus")} I know this word`}</button>
-      ${index === deck.length - 1 ? `<button class="gc-btn done" id="dictionary-done" type="button">${icon("check")} I have learned these words</button>` : ""}
+      ${index === words.length - 1 ? deckFinish("dictionary", "I have learned these words") : ""}
     </div></section>`;
   };
 
-  $("#app").innerHTML = `
-    <div class="gc-wrap">
-      <div class="gc-top"><h2 class="gc-heading">Say the words</h2><span class="gc-count" id="wc-count"></span></div>
-      <div class="gc-carousel">
-        <button class="gc-arrow prev" type="button" aria-label="Previous word">${icon("chevron-left")}</button>
-        <div class="gc-viewport"><div class="gc-track" id="wc-track"></div></div>
-        <button class="gc-arrow next" type="button" aria-label="Next word">${icon("chevron-right")}</button>
-      </div>
-      <div class="gc-dots" id="wc-dots"></div>
-      <div class="wc-tools">
+  const wordFor = (id) => words.find((item) => item.vocabularyId === id);
+  const sentencesFor = (item) => (item.practiceSentences?.length ? item.practiceSentences : [item.exampleSentence].filter(Boolean));
+  // Repaint one slide in place, addressed by word rather than by position: the
+  // deck is filtered, so a word's index moves under it.
+  const redrawWord = (id) => {
+    const position = words.findIndex((item) => item.vocabularyId === id);
+    if (position < 0) return;
+    deck.redrawSlide(position, wordSlide(words[position], position));
+  };
+
+  const deck = mountDeck({
+    heading: "Say the words",
+    label: "Word",
+    emptyMessage: "No matching words. Clear the search to see them all.",
+    // Sits below the dots, not in .gc-top, which the full-bleed CSS hides. A unit
+    // holds 13-70 words, so the deck itself is what the search narrows.
+    tools: `<div class="wc-tools">
         <label class="search-box">${icon("search")}<input id="word-search" type="search" placeholder="Search words or meanings" aria-label="Search vocabulary"></label>
         <select id="group-filter" aria-label="Filter vocabulary group"><option value="all">All vocabulary groups</option>${course.vocabularyGroups.map((group) => `<option value="${group.id}">${esc(group.title)}</option>`).join("")}</select>
         <span class="status-chip" id="wc-known">${progress.knownWords.length} learned</span>
-      </div>
-    </div>`;
-  document.body.classList.add("gc-full");
+      </div>`,
+    onSlide: (position) => { activeWordId = words[position]?.vocabularyId || activeWordId; },
+    onClick: (event) => {
+      const target = event.target.closest("[data-word-audio], [data-meaning-audio], [data-sentence-audio], [data-sentence-step], [data-sentence-dot], [data-check], [data-know], [data-deck-finish]");
+      if (!target) return undefined;
+      const id = target.dataset.word || target.dataset.wordAudio || target.dataset.meaningAudio
+        || target.dataset.sentenceAudio || target.dataset.check || target.dataset.know;
+      const item = wordFor(id);
 
-  const track = $("#wc-track");
-  const dotsRow = $("#wc-dots");
-  const prevArrow = $(".gc-arrow.prev");
-  const nextArrow = $(".gc-arrow.next");
-
-  const wordFor = (id) => deck.find((item) => item.vocabularyId === id);
-  const sentencesFor = (item) => (item.practiceSentences?.length ? item.practiceSentences : [item.exampleSentence].filter(Boolean));
-
-  // Repaint one slide in place. Re-rendering the whole deck would snap the
-  // carousel back to the first word every time a sentence or a Learned mark
-  // changed, which is exactly what the learner is in the middle of doing.
-  const redrawSlide = (id) => {
-    const index = deck.findIndex((item) => item.vocabularyId === id);
-    const node = track.querySelector(`[data-slide="${CSS.escape(id)}"]`);
-    if (index < 0 || !node) return;
-    node.outerHTML = wordSlide(deck[index], index);
-    icons();
-  };
-
-  const goToSlide = (next) => {
-    slide = Math.max(0, Math.min(deck.length - 1, next));
-    track.style.transform = `translateX(-${slide * 100}%)`;
-    dotsRow.querySelectorAll("[data-dot]").forEach((dot, i) => dot.classList.toggle("active", i === slide));
-    prevArrow.disabled = slide === 0;
-    nextArrow.disabled = slide === deck.length - 1;
-    $("#wc-count").textContent = deck.length ? `Word ${slide + 1} of ${deck.length}` : "No words";
-    stopAudio();
-    activeWordId = deck[slide]?.vocabularyId || activeWordId;
-  };
+      if (target.dataset.deckFinish) return complete("dictionary", "Vocabulary complete. Well done!");
+      if (!item) return undefined;
+      if (target.dataset.wordAudio) {
+        return playAudio(item.master.audio.normal, { rate: AI_NARRATION_RATE, start: item.master.audio.cueStart, end: item.master.audio.cueEnd, button: target });
+      }
+      if (target.dataset.meaningAudio) {
+        return playAudio(item.meaningAudio.source, { rate: AI_NARRATION_RATE, start: item.meaningAudio.cueStart, end: item.meaningAudio.cueEnd, button: target });
+      }
+      if (target.dataset.sentenceAudio) {
+        const descriptor = item.sentenceAudio?.[sentenceAt.get(id) || 0];
+        if (!descriptor?.available) return toast("This sentence recording is not available yet.");
+        return playAudio(descriptor.source, { rate: AI_NARRATION_RATE, start: descriptor.cueStart, end: descriptor.cueEnd, button: target });
+      }
+      if (target.dataset.sentenceStep || target.dataset.sentenceDot !== undefined) {
+        const total = sentencesFor(item).length;
+        const current = sentenceAt.get(id) || 0;
+        const next = target.dataset.sentenceDot !== undefined
+          ? Number(target.dataset.sentenceDot)
+          : (current + Number(target.dataset.sentenceStep) + total) % total;
+        sentenceAt.set(id, next);
+        return redrawWord(id);
+      }
+      if (target.dataset.check) {
+        const value = ($(`[data-write="${CSS.escape(id)}"]`)?.value || "").trim();
+        const usesWord = value.toLowerCase().includes(item.master.displayWord.toLowerCase());
+        const finished = value.length >= 8 && /[.!?]$/.test(value);
+        const box = $(`[data-feedback="${CSS.escape(id)}"]`);
+        if (box) {
+          box.innerHTML = `<p class="feedback ${usesWord && finished ? "good" : "try"}">${usesWord && finished
+            ? "Strong sentence: you used the word and end punctuation."
+            : `Try a complete sentence using “${escapeHtml(item.master.displayWord)}” and finish with punctuation.`}</p>`;
+        }
+        return undefined;
+      }
+      if (target.dataset.know) {
+        if (!progress.knownWords.includes(id)) progress.knownWords.push(id);
+        // Same rule as the lab: the section completes at 80% of the unit's words,
+        // counted over every word in the unit, not just the filtered deck.
+        if (progress.knownWords.length >= Math.ceil(allWords.length * 0.8)) complete("dictionary"); else saveProgress();
+        $("#wc-known").textContent = `${progress.knownWords.length} learned`;
+        redrawWord(id);
+        toast(`${item.master.displayWord} added to My Word Book.`);
+      }
+      return undefined;
+    },
+  });
 
   const drawDeck = () => {
     const query = $("#word-search").value.trim().toLowerCase();
     const group = $("#group-filter").value;
-    deck = allWords.filter((item) => (group === "all" || item.groupId === group)
+    words = allWords.filter((item) => (group === "all" || item.groupId === group)
       && (!query || `${item.master.displayWord} ${item.childMeaning}`.toLowerCase().includes(query)));
-    if (!deck.length) {
-      track.innerHTML = `<section class="gc-slide gc-v0"><div class="gc-inner"><p class="gc-lead">No matching words. Clear the search to see them all.</p></div></section>`;
-      dotsRow.innerHTML = "";
-      prevArrow.disabled = nextArrow.disabled = true;
-      $("#wc-count").textContent = "No words";
-      icons();
-      return;
-    }
-    track.innerHTML = deck.map(wordSlide).join("");
-    dotsRow.innerHTML = deck.map((item, i) => `<button class="gc-dot" type="button" data-dot="${i}" aria-label="Word ${i + 1} of ${deck.length}"></button>`).join("");
-    dotsRow.querySelectorAll("[data-dot]").forEach((dot) => dot.addEventListener("click", () => goToSlide(Number(dot.dataset.dot))));
-    goToSlide(0);
-    icons();
+    deck.setSlides(words.map(wordSlide));
   };
-
-  // One delegated listener for the whole deck: slides are repainted as the
-  // learner works, and rebinding every control on every repaint is how a dead
-  // button appears three interactions later.
-  $(".gc-wrap").addEventListener("click", (event) => {
-    const target = event.target.closest("[data-word-audio], [data-meaning-audio], [data-sentence-audio], [data-sentence-step], [data-sentence-dot], [data-check], [data-know], #dictionary-done");
-    if (!target) return;
-    const id = target.dataset.word || target.dataset.wordAudio || target.dataset.meaningAudio
-      || target.dataset.sentenceAudio || target.dataset.check || target.dataset.know;
-    const item = wordFor(id);
-
-    if (target.id === "dictionary-done") return complete("dictionary", "Vocabulary complete. Well done!");
-    if (!item) return;
-    if (target.dataset.wordAudio) {
-      return playAudio(item.master.audio.normal, { rate: AI_NARRATION_RATE, start: item.master.audio.cueStart, end: item.master.audio.cueEnd, button: target });
-    }
-    if (target.dataset.meaningAudio) {
-      return playAudio(item.meaningAudio.source, { rate: AI_NARRATION_RATE, start: item.meaningAudio.cueStart, end: item.meaningAudio.cueEnd, button: target });
-    }
-    if (target.dataset.sentenceAudio) {
-      const descriptor = item.sentenceAudio?.[sentenceAt.get(id) || 0];
-      if (!descriptor?.available) return toast("This sentence recording is not available yet.");
-      return playAudio(descriptor.source, { rate: AI_NARRATION_RATE, start: descriptor.cueStart, end: descriptor.cueEnd, button: target });
-    }
-    if (target.dataset.sentenceStep || target.dataset.sentenceDot !== undefined) {
-      const total = sentencesFor(item).length;
-      const current = sentenceAt.get(id) || 0;
-      const next = target.dataset.sentenceDot !== undefined
-        ? Number(target.dataset.sentenceDot)
-        : (current + Number(target.dataset.sentenceStep) + total) % total;
-      sentenceAt.set(id, next);
-      return redrawSlide(id);
-    }
-    if (target.dataset.check) {
-      const value = ($(`[data-write="${CSS.escape(id)}"]`)?.value || "").trim();
-      const usesWord = value.toLowerCase().includes(item.master.displayWord.toLowerCase());
-      const finished = value.length >= 8 && /[.!?]$/.test(value);
-      const box = $(`[data-feedback="${CSS.escape(id)}"]`);
-      if (box) {
-        box.innerHTML = `<p class="feedback ${usesWord && finished ? "good" : "try"}">${usesWord && finished
-          ? "Strong sentence: you used the word and end punctuation."
-          : `Try a complete sentence using “${escapeHtml(item.master.displayWord)}” and finish with punctuation.`}</p>`;
-      }
-      return undefined;
-    }
-    if (target.dataset.know) {
-      if (!progress.knownWords.includes(id)) progress.knownWords.push(id);
-      // Same rule as the lab: the section completes at 80% of the unit's words,
-      // counted over every word in the unit, not just the filtered deck.
-      if (progress.knownWords.length >= Math.ceil(allWords.length * 0.8)) complete("dictionary"); else saveProgress();
-      $("#wc-known").textContent = `${progress.knownWords.length} learned`;
-      redrawSlide(id);
-      toast(`${item.master.displayWord} added to My Word Book.`);
-    }
-    return undefined;
-  });
-
-  prevArrow.addEventListener("click", () => goToSlide(slide - 1));
-  nextArrow.addEventListener("click", () => goToSlide(slide + 1));
   $("#word-search").addEventListener("input", drawDeck);
   $("#group-filter").addEventListener("change", drawDeck);
-
-  const viewport = $(".gc-viewport");
-  let startX = null;
-  viewport.addEventListener("touchstart", (event) => { startX = event.touches[0].clientX; }, { passive: true });
-  viewport.addEventListener("touchend", (event) => {
-    if (startX === null) return;
-    const dx = event.changedTouches[0].clientX - startX;
-    if (Math.abs(dx) > 45) goToSlide(slide + (dx < 0 ? 1 : -1));
-    startX = null;
-  }, { passive: true });
-
   drawDeck();
 }
 
@@ -1610,6 +1665,7 @@ function renderReading() {
 }
 
 function renderComprehension() {
+  if (gradeNumber <= 4) return renderComprehensionCarousel();
   const groups = [...new Set(course.comprehension.map((question) => question.section))];
   let active = groups[0];
   const draw = () => {
@@ -1627,11 +1683,75 @@ function renderComprehension() {
   draw();
 }
 
+// Comprehension as a deck: one question per slide, so a Grade 1-4 learner faces
+// the question they are answering rather than a wall of twelve.
+//
+// The subtabs become the group filter under the dots — same job (a unit's
+// questions are grouped by the reading they belong to), same place the
+// vocabulary deck puts its filter, and the section a question belongs to also
+// rides on the slide so nobody has to remember which text this is about. Answer,
+// guidance-on-request and the write-first rule are unchanged: guidance only
+// appears once the learner has written something of their own.
+function renderComprehensionCarousel() {
+  const esc = escapeHtml;
+  const all = course.comprehension;
+  const groups = [...new Set(all.map((question) => question.section))];
+  let questions = all;
+
+  const questionSlide = (question, index) => `<section class="gc-slide gc-v${index % 5}"><div class="gc-inner">
+      <span class="gc-eyebrow">Question ${index + 1} of ${questions.length} · ${esc(question.questionType)}</span>
+      ${question.section ? `<small class="gc-source">${esc(question.section)}</small>` : ""}
+      <h3 class="gc-title">${esc(question.question)}</h3>
+      <div class="wc-sentence">
+        <small>Your answer · ${question.marks} mark${Number(question.marks) === 1 ? "" : "s"}${question.difficulty ? ` · ${esc(question.difficulty)}` : ""}</small>
+        <textarea data-answer="${esc(question.questionId)}" rows="4" placeholder="Write a complete answer…" aria-label="Your answer to question ${index + 1}"></textarea>
+      </div>
+      <div class="gc-actions"><button class="gc-btn" type="button" data-check-answer="${esc(question.questionId)}">${icon("list-checks")} Check guidance</button></div>
+      <div data-feedback="${esc(question.questionId)}" role="status" aria-live="polite" aria-atomic="true"></div>
+      ${index === questions.length - 1 ? deckFinish("comprehension", "Finish comprehension") : ""}
+    </div></section>`;
+
+  const deck = mountDeck({
+    heading: "Think about the text",
+    label: "Question",
+    emptyMessage: "No questions in this section yet.",
+    tools: groups.length > 1 ? `<div class="wc-tools">
+        <select id="section-filter" aria-label="Filter questions by text"><option value="all">All texts</option>${groups.map((group) => `<option value="${esc(group)}">${esc(group)}</option>`).join("")}</select>
+        <span class="status-chip" id="cq-count">${all.length} questions</span>
+      </div>` : "",
+    onClick: (event) => {
+      const target = event.target.closest("[data-check-answer], [data-deck-finish]");
+      if (!target) return undefined;
+      if (target.dataset.deckFinish) return complete("comprehension", "Comprehension practice complete.");
+      const question = all.find((item) => item.questionId === target.dataset.checkAnswer);
+      const value = ($(`[data-answer="${CSS.escape(question.questionId)}"]`)?.value || "").trim();
+      const box = $(`[data-feedback="${CSS.escape(question.questionId)}"]`);
+      if (box) {
+        box.innerHTML = value.length < 4
+          ? `<p class="feedback try">Write your own answer before viewing the guidance.</p>`
+          : `<p class="feedback good"><span class="field-label">Reviewed guidance:</span> ${esc(question.correctAnswer)}</p>`;
+      }
+      return undefined;
+    },
+  });
+
+  const drawDeck = () => {
+    const group = $("#section-filter")?.value || "all";
+    questions = group === "all" ? all : all.filter((question) => question.section === group);
+    deck.setSlides(questions.map(questionSlide));
+    const counter = $("#cq-count");
+    if (counter) counter.textContent = `${questions.length} question${questions.length === 1 ? "" : "s"}`;
+  };
+  $("#section-filter")?.addEventListener("change", drawDeck);
+  drawDeck();
+}
+
 function renderGrammar() {
-  // Grade 1 gets the kid-friendly full-screen carousel (one pattern at a time),
-  // modelled on the Arabic Alphabet unit's Learn section. Older grades keep the
-  // grid workshop.
-  if (gradeNumber === 1) return renderGrammarCarousel();
+  // Grades 1-4 get the kid-friendly full-screen carousel (one pattern at a time),
+  // modelled on the Arabic Alphabet unit's Learn section. Grade 5 and up keep the
+  // grid workshop: by then a learner scans six cards rather than being walked
+  // through them one at a time.
+  if (gradeNumber <= 4) return renderGrammarCarousel();
   $("#app").innerHTML = `${pageHeader("Language focus", "Grammar workshop", "Complete six practices: guided recognition followed by independent language use.")}<div class="grammar-grid">${course.grammar.map((lesson) => `<article class="panel grammar-card"><div class="word-card-head"><span class="lesson-number">${lesson.sequence}</span><span class="word-type">${escapeHtml(lesson.practiceType)}</span></div><h3>${escapeHtml(lesson.title)}</h3>${grammarDiagram(lesson.title, lesson.explanation)}<p>${escapeHtml(lesson.explanation)}</p>${lesson.ruleAndExamples ? `<div class="rule-box">${escapeHtml(lesson.ruleAndExamples)}</div>` : ""}${lesson.commonMistake ? `<p class="mistake">${escapeHtml(lesson.commonMistake)}</p>` : ""}${lesson.memoryTip ? `<p><span class="field-label">Memory tip:</span> ${escapeHtml(lesson.memoryTip)}</p>` : ""}<details><summary>Show practice</summary><p class="rule-box">${escapeHtml(lesson.practice)}</p>${lesson.practiceAudio?.available ? `<button class="button secondary" data-practice-audio="${lesson.grammarId}" type="button">${icon("volume-2")} Hear the practice</button>` : ""}</details>${lesson.audio?.available ? `<div class="audio-actions"><button class="button secondary" data-grammar-audio="${lesson.grammarId}" data-rate="${AI_NARRATION_RATE}" type="button">${icon("volume-2")} Listen</button><button class="button secondary" data-grammar-audio="${lesson.grammarId}" data-rate="${AI_NARRATION_RATE}" type="button">${icon("rotate-ccw")} Replay</button></div><small class="audio-source">ElevenLabs · approved Ehel voice · 0.90x</small>` : `<span class="audio-pending">${icon("clock-3")} ElevenLabs audio pending</span>`}</article>`).join("")}</div><p><button class="button primary" id="grammar-done" type="button">I practised all six lessons ${icon("check")}</button></p>`;
   $$('[data-grammar-audio]').forEach((button) => button.addEventListener("click", () => {
     const lesson = course.grammar.find((item) => item.grammarId === button.dataset.grammarAudio);
@@ -1645,9 +1765,9 @@ function renderGrammar() {
   $("#grammar-done").addEventListener("click", () => complete("grammar", "Grammar workshop complete."));
 }
 
-// Grade 1 grammar as a full-screen slide carousel (Arabic-Alphabet Learn style):
-// one language pattern per vibrant slide, big "Hear it" button, side arrows,
-// dots, swipe. Reaching the last slide completes the section.
+// Grades 1-4 grammar as a full-screen slide carousel (Arabic-Alphabet Learn
+// style): one language pattern per vibrant slide, big "Hear it" button, side
+// arrows, dots, swipe. Reaching the last slide completes the section.
 const GC_EMOJI = ["🔤", "👂", "🧩", "🗣️", "👀", "⭐", "🌈", "🎈"];
 function renderGrammarCarousel() {
   const lessons = course.grammar;
@@ -1655,12 +1775,17 @@ function renderGrammarCarousel() {
   // Every field the grid workshop shows is preserved — only the layout changes:
   // title, the S/V/O diagram, explanation, the rule (ruleAndExamples), the
   // common-mistake teacher note, the memory tip, the practice, audio + source.
+  //
+  // Each grade keeps its own visual: Grade 1 is phonics, so its diagram is built
+  // from the rule ("A says /a/"); Grades 2-4 teach sentence structure, which is
+  // what grammarDiagram draws — the same picture the grid workshop gave them
+  // before, not a phonics strip that would have nothing to show.
   const slides = lessons.map((lesson, i) => {
     const emoji = GC_EMOJI[i % GC_EMOJI.length];
     return `<section class="gc-slide gc-v${i % 5}"><div class="gc-inner">
       <span class="gc-eyebrow">Pattern ${lesson.sequence} of ${lessons.length} · ${esc(lesson.practiceType)}</span>
       <h3 class="gc-title">${esc(lesson.title)}</h3>
-      ${phonicsDiagram(lesson.ruleAndExamples)}
+      ${gradeNumber === 1 ? phonicsDiagram(lesson.ruleAndExamples) : grammarDiagram(lesson.title, lesson.explanation)}
       <p class="gc-lead"><span class="gc-emoji" aria-hidden="true">${emoji}</span> ${esc(lesson.explanation)}</p>
       ${lesson.ruleAndExamples ? `<div class="gc-pattern" lang="en">${esc(lesson.ruleAndExamples)}</div>` : ""}
       <div class="gc-actions">
@@ -1673,71 +1798,36 @@ function renderGrammarCarousel() {
       ${lesson.commonMistake ? `<p class="gc-note gc-mistake">${esc(lesson.commonMistake)}</p>` : ""}
       ${lesson.memoryTip ? `<p class="gc-note"><span class="field-label">Memory tip:</span> ${esc(lesson.memoryTip)}</p>` : ""}
       ${lesson.practice ? `<details class="gc-practice"><summary>Show practice</summary><p class="gc-note gc-try">${esc(lesson.practice)}</p>${lesson.practiceAudio?.available ? `<button class="gc-btn" data-practice-audio="${lesson.grammarId}" type="button">${icon("volume-2")} Hear the practice</button>` : ""}</details>` : ""}
-      ${i === lessons.length - 1 ? `<button class="gc-btn done" id="grammar-done" type="button">${icon("check")} I practised all six lessons</button>` : ""}
+      ${i === lessons.length - 1 ? deckFinish("grammar", `I practised all ${lessons.length} lessons`) : ""}
     </div></section>`;
-  }).join("");
+  });
 
-  const count = lessons.length;
-  $("#app").innerHTML = `
-    <div class="gc-wrap">
-      <div class="gc-top"><h2 class="gc-heading">Say the patterns</h2><span class="gc-count" id="gc-count">Pattern 1 of ${count}</span></div>
-      <div class="gc-carousel">
-        <button class="gc-arrow prev" type="button" aria-label="Previous pattern">${icon("chevron-left")}</button>
-        <div class="gc-viewport"><div class="gc-track">${slides}</div></div>
-        <button class="gc-arrow next" type="button" aria-label="Next pattern">${icon("chevron-right")}</button>
-      </div>
-      <div class="gc-dots">${lessons.map((_, i) => `<button class="gc-dot" type="button" data-dot="${i}" aria-label="Pattern ${i + 1} of ${count}"></button>`).join("")}</div>
-    </div>`;
-
-  // Full-bleed: the carousel fills the whole viewport (paired with focus mode,
-  // which already hides the topbar/sidebar and requests browser fullscreen on
-  // the nav click). Cleared in onBeforeRender when leaving grammar.
-  document.body.classList.add("gc-full");
-
-  const track = $(".gc-track");
-  const dots = $$("[data-dot]");
-  const prevArrow = $(".gc-arrow.prev");
-  const nextArrow = $(".gc-arrow.next");
-  const countLabel = $("#gc-count");
-  let slide = 0;
-  const goToSlide = (n) => {
-    slide = Math.max(0, Math.min(count - 1, n));
-    track.style.transform = `translateX(-${slide * 100}%)`;
-    dots.forEach((d, i) => d.classList.toggle("active", i === slide));
-    prevArrow.disabled = slide === 0;
-    nextArrow.disabled = slide === count - 1;
-    countLabel.textContent = `Pattern ${slide + 1} of ${count}`;
-    stopAudio();
-    if (slide === count - 1 && !progress.completed.includes("grammar")) complete("grammar", "Grammar patterns complete. Well done!");
-  };
-  prevArrow.addEventListener("click", () => goToSlide(slide - 1));
-  nextArrow.addEventListener("click", () => goToSlide(slide + 1));
-  dots.forEach((dot) => dot.addEventListener("click", () => goToSlide(Number(dot.dataset.dot))));
-  $$('[data-grammar-audio]').forEach((button) => button.addEventListener("click", () => {
-    const lesson = lessons.find((item) => item.grammarId === button.dataset.grammarAudio);
-    playAudio(lesson.audio.source, { rate: Number(button.dataset.rate), button });
-  }));
-  // The practice task read aloud, separate from the explanation above it, so a
-  // learner working alone can hear what they are being asked to do.
-  $$('[data-practice-audio]').forEach((button) => button.addEventListener("click", () => {
-    const lesson = lessons.find((item) => item.grammarId === button.dataset.practiceAudio);
-    playAudio(lesson.practiceAudio.source, { rate: AI_NARRATION_RATE, button });
-  }));
-  $("#grammar-done")?.addEventListener("click", () => complete("grammar", "Grammar patterns complete. Well done!"));
-  // Swipe (touch) support.
-  const viewport = $(".gc-viewport");
-  let startX = null;
-  viewport.addEventListener("touchstart", (e) => { startX = e.touches[0].clientX; }, { passive: true });
-  viewport.addEventListener("touchend", (e) => {
-    if (startX === null) return;
-    const dx = e.changedTouches[0].clientX - startX;
-    if (Math.abs(dx) > 45) goToSlide(slide + (dx < 0 ? 1 : -1));
-    startX = null;
-  }, { passive: true });
-  goToSlide(0);
+  const finish = () => { if (!progress.completed.includes("grammar")) complete("grammar", "Grammar patterns complete. Well done!"); };
+  mountDeck({
+    heading: "Say the patterns",
+    label: "Pattern",
+    slides,
+    // Reaching the last slide is the completion: a learner who swiped through
+    // every pattern has done the section, button or no button.
+    onSlide: (index) => { if (index === slides.length - 1) finish(); },
+    onClick: (event) => {
+      const target = event.target.closest("[data-grammar-audio], [data-practice-audio], [data-deck-finish]");
+      if (!target) return undefined;
+      if (target.dataset.deckFinish) return finish();
+      if (target.dataset.grammarAudio) {
+        const lesson = lessons.find((item) => item.grammarId === target.dataset.grammarAudio);
+        return playAudio(lesson.audio.source, { rate: Number(target.dataset.rate), button: target });
+      }
+      // The practice task read aloud, separate from the explanation above it, so
+      // a learner working alone can hear what they are being asked to do.
+      const lesson = lessons.find((item) => item.grammarId === target.dataset.practiceAudio);
+      return playAudio(lesson.practiceAudio.source, { rate: AI_NARRATION_RATE, button: target });
+    },
+  });
 }
 
 function renderSpeaking() {
+  if (gradeNumber <= 4) return renderSpeakingCarousel();
   $("#app").innerHTML = `${pageHeader("Use your voice", "Dialogue & speaking", "Complete six speaking practices. Rehearse, record, and listen back.")}<div class="task-grid">${course.speaking.map((task) => `<article class="panel task-card"><span class="eyebrow">Practice ${task.sequence} · ${escapeHtml(task.activityType)}</span><h3>${escapeHtml(task.title)}</h3><p class="rule-box">${escapeHtml(task.instructionsAndModelLines)}</p>${task.audio?.available ? `<div class="audio-actions"><button class="button secondary" data-model="${task.speakingId}" data-rate="${AI_NARRATION_RATE}" type="button">${icon("volume-2")} Hear model</button><button class="button secondary" data-model="${task.speakingId}" data-rate="${AI_NARRATION_RATE}" type="button">${icon("rotate-ccw")} Replay</button></div><small class="audio-source">ElevenLabs · approved Ehel voice · 0.90x</small>` : `<span class="audio-pending">${icon("clock-3")} ElevenLabs model audio pending</span>`}${task.recordingRequired ? `<div class="recorder"><button class="record-button" data-record="${task.speakingId}" type="button" aria-label="Start recording for ${escapeHtml(task.title)}">${icon("mic")}</button><div><strong data-record-status="${task.speakingId}">Ready to record</strong><small> Your recording stays on this device.</small></div></div><audio data-playback="${task.speakingId}" controls hidden></audio>` : ""}</article>`).join("")}</div><p><button class="button primary" id="speaking-done" type="button">Finish six speaking practices ${icon("check")}</button></p>`;
   $$('[data-model]').forEach((button) => button.addEventListener("click", () => {
     const task = course.speaking.find((item) => item.speakingId === button.dataset.model);
@@ -1745,6 +1835,51 @@ function renderSpeaking() {
   }));
   $$('[data-record]').forEach((button) => button.addEventListener("click", () => toggleRecording(button.dataset.record, button)));
   $("#speaking-done").addEventListener("click", () => complete("speaking", "Speaking practice complete."));
+}
+
+// Speaking as a deck: one practice per slide — hear the model, then record
+// yourself, with nothing else on screen competing for a young learner's turn.
+//
+// The recorder keeps the same data-record / data-record-status / data-playback
+// attributes the card grid used, because toggleRecording() addresses them by
+// selector from outside the renderer. Slides are never repainted here, so a
+// recording made on slide 3 is still attached to its player when the learner
+// swipes back to it.
+function renderSpeakingCarousel() {
+  const esc = escapeHtml;
+  const tasks = course.speaking;
+  const slides = tasks.map((task, index) => `<section class="gc-slide gc-v${index % 5}"><div class="gc-inner">
+      <span class="gc-eyebrow">Practice ${task.sequence} of ${tasks.length} · ${esc(task.activityType)}</span>
+      <h3 class="gc-title">${esc(task.title)}</h3>
+      <p class="gc-note gc-try">${esc(task.instructionsAndModelLines)}</p>
+      ${task.audio?.available
+        ? `<div class="gc-actions">
+             <button class="gc-btn play" type="button" data-model="${esc(task.speakingId)}" data-rate="${AI_NARRATION_RATE}">${icon("volume-2")} Hear model</button>
+             <button class="gc-btn ghost" type="button" data-model="${esc(task.speakingId)}" data-rate="${AI_NARRATION_RATE}">${icon("rotate-ccw")} Replay</button>
+           </div>
+           <small class="gc-source">ElevenLabs · approved Ehel voice · 0.90x</small>`
+        : `<span class="audio-pending">${icon("clock-3")} ElevenLabs model audio pending</span>`}
+      ${task.recordingRequired ? `<div class="recorder">
+          <button class="record-button" data-record="${esc(task.speakingId)}" type="button" aria-label="Start recording for ${esc(task.title)}">${icon("mic")}</button>
+          <div><strong data-record-status="${esc(task.speakingId)}" role="status" aria-live="polite" aria-atomic="true">Ready to record</strong><small> Your recording stays on this device.</small></div>
+        </div>
+        <audio data-playback="${esc(task.speakingId)}" controls hidden></audio>` : ""}
+      ${index === tasks.length - 1 ? deckFinish("speaking", `I finished all ${tasks.length} speaking practices`) : ""}
+    </div></section>`);
+
+  mountDeck({
+    heading: "Use your voice",
+    label: "Practice",
+    slides,
+    onClick: (event) => {
+      const target = event.target.closest("[data-model], [data-record], [data-deck-finish]");
+      if (!target) return undefined;
+      if (target.dataset.deckFinish) return complete("speaking", "Speaking practice complete.");
+      if (target.dataset.record) return toggleRecording(target.dataset.record, target);
+      const task = tasks.find((item) => item.speakingId === target.dataset.model);
+      return playAudio(task.audio.source, { rate: Number(target.dataset.rate), button: target });
+    },
+  });
 }
 
 async function toggleRecording(taskId, button) {
@@ -1788,6 +1923,7 @@ async function toggleRecording(taskId, button) {
 }
 
 function renderWriting() {
+  if (gradeNumber <= 4) return renderWritingCarousel();
   let active = course.writing[0].writingId;
   const draw = () => {
     const task = course.writing.find((item) => item.writingId === active);
@@ -1810,7 +1946,84 @@ function renderWriting() {
   draw();
 }
 
+// Writing as a deck: one task per slide, the draft box the centre of it.
+//
+// The studio's side panel does not survive as a panel — a slide has no room for
+// a column beside the writing space, and a Grade 1-4 writer should be looking at
+// what they are writing. The checklist, the support note and the challenge fold
+// into <details> on the task's own slide, next to the draft they belong to,
+// rather than becoming a second slide the learner has to leave their draft for.
+//
+// Each slide owns its textarea and its save line, so all drafts are live at once
+// and swiping between tasks neither loses a draft nor re-renders the deck. The
+// autosave, its 350 ms debounce, the ProgressClient event and the eight-word
+// submit gate are the studio's, unchanged.
+function renderWritingCarousel() {
+  const esc = escapeHtml;
+  const tasks = course.writing;
+  const slides = tasks.map((task, index) => {
+    const saved = progress.writing[task.writingId] || "";
+    return `<section class="gc-slide gc-v${index % 5}"><div class="gc-inner">
+      <span class="gc-eyebrow">Writing ${task.sequence} of ${tasks.length}${task.practiceType ? ` · ${esc(task.practiceType)}` : ""}</span>
+      <h3 class="gc-title">${esc(task.title)}</h3>
+      <p class="gc-note gc-try">${esc(task.promptAndInstructions)}</p>
+      ${task.audio?.available ? `<div class="gc-actions"><button class="gc-btn play" type="button" data-writing-audio="${esc(task.writingId)}">${icon("volume-2")} Hear the task</button></div>` : ""}
+      <p class="gc-note"><span class="field-label">Expected:</span> ${esc(task.expectedLength)}</p>
+      <div class="wc-sentence">
+        <small>Your draft</small>
+        <textarea data-draft="${esc(task.writingId)}" rows="7" placeholder="${esc(task.sentenceStarter)}" aria-label="Writing draft for ${esc(task.title)}">${esc(saved)}</textarea>
+        <small data-save-status="${esc(task.writingId)}" role="status" aria-live="polite" aria-atomic="true">${saved ? "Draft restored" : "Start writing when you are ready"}</small>
+      </div>
+      <details class="gc-practice"><summary>Writer's checklist</summary>
+        <ul class="checklist">${task.successCriteria.split(";").map((criterion, position) => `<li><label><input type="checkbox" data-writing-check="${esc(task.writingId)}-${position}"><span>${esc(criterion.trim())}</span></label></li>`).join("")}</ul>
+      </details>
+      <details class="gc-practice"><summary>View model text</summary><p class="model">${esc(task.modelText)}</p></details>
+      <details class="gc-practice"><summary>Support and challenge</summary>
+        <p class="gc-note"><span class="field-label">Support:</span> ${esc(task.support)}</p>
+        <p class="gc-note"><span class="field-label">Challenge:</span> ${esc(task.extension)}</p>
+      </details>
+      <button class="gc-btn done" type="button" data-writing-submit="${esc(task.writingId)}">${icon("send")} Submit this draft</button>
+    </div></section>`;
+  });
+
+  const deck = mountDeck({
+    heading: "Plan, write and improve",
+    label: "Task",
+    slides,
+    onClick: (event) => {
+      const target = event.target.closest("[data-writing-audio], [data-writing-submit]");
+      if (!target) return undefined;
+      if (target.dataset.writingAudio) {
+        const task = tasks.find((item) => item.writingId === target.dataset.writingAudio);
+        return playAudio(task.audio.source, { rate: AI_NARRATION_RATE, button: target });
+      }
+      const id = target.dataset.writingSubmit;
+      const draft = ($(`[data-draft="${CSS.escape(id)}"]`)?.value || "").trim();
+      if (draft.split(/\s+/).filter(Boolean).length < 8) return toast("Add a little more to your draft before submitting.");
+      progress.writing[id] = draft;
+      return complete("writing", "Writing draft saved to your learning portfolio.");
+    },
+  });
+
+  const saveTimers = new Map();
+  deck.root.addEventListener("input", (event) => {
+    const field = event.target.closest("[data-draft]");
+    if (!field) return;
+    const id = field.dataset.draft;
+    const status = $(`[data-save-status="${CSS.escape(id)}"]`);
+    clearTimeout(saveTimers.get(id));
+    if (status) status.textContent = "Saving…";
+    saveTimers.set(id, setTimeout(() => {
+      progress.writing[id] = field.value;
+      saveProgress();
+      emitProgress({ type: "draft.saved", unit: PROGRESS_UNIT, section: `writing:${id}`, text: field.value, words: field.value.trim().split(/\s+/).filter(Boolean).length });
+      if (status) status.textContent = "Draft saved";
+    }, 350));
+  });
+}
+
 function renderActivities() {
+  if (gradeNumber <= 4) return renderActivitiesCarousel();
   $("#app").innerHTML = `${pageHeader("Learn by doing", "Activities", `Complete six practical ${escapeHtml(course.unit.unitTitle)} challenges.`)}<div class="task-grid">${course.activities.map((activity) => `<article class="panel task-card"><span class="eyebrow">Activity ${activity.sequence} · ${escapeHtml(activity.activityType)}</span><h3>${escapeHtml(activity.title)}</h3><p class="rule-box">${escapeHtml(activity.instructionsAndItems)}</p>${activity.audio?.available ? `<button class="button secondary" data-activity-audio="${activity.activityId}" type="button">${icon("volume-2")} Hear the instructions</button>` : ""}<textarea class="activity-response" rows="4" placeholder="Record your answer or notes…" aria-label="Response for ${escapeHtml(activity.title)}"></textarea><button class="button secondary" data-activity-done="${activity.activityId}" type="button">${icon("check")} Mark complete</button></article>`).join("")}</div><p><button class="button primary" id="activities-done" type="button">Finish activities ${icon("check")}</button></p>`;
   $$('[data-activity-done]').forEach((button) => button.addEventListener("click", () => { button.disabled = true; button.innerHTML = `${icon("check-circle")} Complete`; icons(); }));
   $$('[data-activity-audio]').forEach((button) => button.addEventListener("click", () => {
@@ -1818,6 +2031,48 @@ function renderActivities() {
     playAudio(item.audio.source, { rate: AI_NARRATION_RATE, button });
   }));
   $("#activities-done").addEventListener("click", () => complete("activities", "Unit activities complete."));
+}
+
+// Activities as a deck: one challenge per slide — instructions, the voice that
+// reads them, and the box to answer in. The per-activity "Mark complete" is kept
+// (it is how a learner tracks six separate challenges) and marks its own slide
+// without repainting it, so the note they just typed stays where they left it.
+function renderActivitiesCarousel() {
+  const esc = escapeHtml;
+  const activities = course.activities;
+  const slides = activities.map((activity, index) => `<section class="gc-slide gc-v${index % 5}"><div class="gc-inner">
+      <span class="gc-eyebrow">Activity ${activity.sequence} of ${activities.length} · ${esc(activity.activityType)}</span>
+      <h3 class="gc-title">${esc(activity.title)}</h3>
+      <p class="gc-note gc-try">${esc(activity.instructionsAndItems)}</p>
+      ${activity.audio?.available ? `<div class="gc-actions"><button class="gc-btn play" type="button" data-activity-audio="${esc(activity.activityId)}">${icon("volume-2")} Hear the instructions</button></div>` : ""}
+      <div class="wc-sentence">
+        <small>Your answer or notes</small>
+        <textarea data-activity-response="${esc(activity.activityId)}" rows="5" placeholder="Record your answer or notes…" aria-label="Response for ${esc(activity.title)}"></textarea>
+      </div>
+      <button class="gc-btn ghost" type="button" data-activity-done="${esc(activity.activityId)}">${icon("check")} Mark complete</button>
+      ${index === activities.length - 1 ? deckFinish("activities", "Finish activities") : ""}
+    </div></section>`);
+
+  mountDeck({
+    heading: "Learn by doing",
+    label: "Activity",
+    slides,
+    onClick: (event) => {
+      const target = event.target.closest("[data-activity-audio], [data-activity-done], [data-deck-finish]");
+      if (!target) return undefined;
+      if (target.dataset.deckFinish) return complete("activities", "Unit activities complete.");
+      if (target.dataset.activityDone) {
+        target.disabled = true;
+        target.classList.remove("ghost");
+        target.classList.add("done");
+        target.innerHTML = `${icon("check-circle")} Complete`;
+        icons();
+        return undefined;
+      }
+      const activity = activities.find((item) => item.activityId === target.dataset.activityAudio);
+      return playAudio(activity.audio.source, { rate: AI_NARRATION_RATE, button: target });
+    },
+  });
 }
 
 async function playGameInstruction(text, button) {

@@ -287,6 +287,14 @@ body.focus-mode.gc-full .gc-viewport { border-radius: 0; height: 100vh; box-shad
    as in the padded layout, so the page itself never gains a scrollbar gutter. */
 body.focus-mode.gc-full .gc-slide { min-height: 100vh; height: 100vh; }
 body.focus-mode.gc-full .gc-dots { position: fixed; left: 0; right: 0; bottom: 16px; margin: 0; z-index: 55; }
+/* The tools row has to be lifted for the same reason the dots are. The carousel
+   is 100vh in focus mode, so anything still in normal flow after it starts below
+   the fold; the dots escaped that by going fixed, and the row that follows them
+   was left sitting under the fixed strip — the vocabulary search, the deck's
+   only way to reach a word in a seventy-word unit, was behind the dots. Pinning
+   it above them needs no condition: a deck with no tools row has nothing here to
+   place, and one with a row gets the row above the dots either way. */
+body.focus-mode.gc-full .wc-tools { position: fixed; left: 0; right: 0; bottom: 58px; margin: 0; padding: 0 16px; z-index: 55; }
 @media (max-width: 720px) {
   .gc-arrow { width: 46px; height: 46px; }
   .gc-pattern { font-size: 34px; }

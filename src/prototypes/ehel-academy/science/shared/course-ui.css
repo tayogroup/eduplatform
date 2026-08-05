@@ -285,3 +285,73 @@
 .field-label { font-weight: var(--weight-normal); }
 /* Status lines and correctness feedback: colour carries the meaning, not weight. */
 .status-note { font-weight: var(--weight-normal); }
+
+/* ── The Stage 1 slide deck (gc-*) ────────────────────────────────────────────
+   The deck's own layout is English's, imported at the top of this file; what is
+   here is the Science skin plus the few things a science slide holds that no
+   English slide does — a labelled model, a numbered method, a step list.
+
+   The accent moves from English blue to the course teal, so a learner who moves
+   between subjects still knows which one they are in. */
+.gc-eyebrow, .gc-practice summary { color: var(--teal-dark); }
+.gc-btn { background: var(--teal); }
+.gc-btn.is-playing { background: var(--teal-dark); }
+.gc-dot.active { background: var(--teal); }
+.gc-inner .feedback.good { color: var(--teal-dark); }
+
+/* A slide is a 600px centred column, so a diagram sized for a two-column grid
+   card has to be re-fitted rather than inherited. The WebGL stage is shorter
+   here than in the grid: the model shares the slide with the prose that explains
+   it, and both have to be on screen together. */
+.gc-inner .science-visual { margin: 0; width: 100%; max-width: 520px; }
+.gc-inner .geometry-stage { min-height: 0; }
+.gc-inner .science-webgl { height: 170px; }
+.gc-inner figcaption { text-align: left; }
+.gc-inner .geometry-labels { justify-content: center; }
+
+/* Teaching prose and worked solutions: several paragraphs, read left to right,
+   inside a card whose default is centred. */
+.sci-gc-prose { width: 100%; text-align: left; display: grid; gap: 10px; }
+.sci-gc-prose .gc-lead, .sci-gc-prose .gc-note { max-width: none; }
+
+/* The discovery's model box — the grid's .discovery-model, restated for a slide
+   so it does not depend on the exploration layout it used to sit in. */
+.sci-gc-model { width: 100%; max-width: 520px; text-align: left; padding: 13px 15px; border-radius: 12px; background: var(--teal-soft); border-left: 4px solid var(--teal); display: grid; gap: 5px; }
+.sci-gc-model strong { color: var(--teal-dark); font-size: 13px; text-transform: uppercase; letter-spacing: .08em; font-weight: var(--weight-medium); }
+.sci-gc-model span { color: #33465e; font-size: 15px; line-height: 1.55; }
+
+/* Where a model is used: the three concept cards a Visual Models slide carries. */
+.sci-gc-cards { width: 100%; max-width: 520px; display: grid; gap: 9px; text-align: left; }
+.sci-gc-cards article { padding: 11px 13px; border: 1px solid var(--line); border-radius: 9px; background: #f6fbfa; display: grid; gap: 3px; }
+.sci-gc-cards strong { color: var(--teal-dark); font-size: 14px; }
+.sci-gc-cards span { color: #40616f; font-size: 14px; line-height: 1.5; }
+
+/* A method's steps, revealed one at a time. A step that has not been reached is
+   dimmed rather than hidden, so the learner can see how far there is to go —
+   which is what the grid's .method-step did. */
+.sci-gc-steps { width: 100%; max-width: 520px; margin: 0; padding: 0; list-style: none; display: grid; gap: 9px; text-align: left; }
+.sci-gc-step { display: grid; grid-template-columns: 32px 1fr; gap: 11px; align-items: start; padding: 11px 13px; border: 1px solid var(--line); border-radius: 11px; background: #fff; opacity: .38; transition: opacity .2s, border-color .2s; }
+.sci-gc-step.active { opacity: 1; border-color: var(--teal); background: #f6fbfa; }
+.sci-gc-step > span { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: var(--teal-soft); color: var(--teal-dark); font-weight: var(--weight-medium); }
+.sci-gc-step strong { display: block; color: var(--teal-dark); font-size: 13px; text-transform: uppercase; letter-spacing: .06em; font-weight: var(--weight-medium); }
+.sci-gc-step p { margin: 4px 0 8px; font-size: 15px; line-height: 1.55; color: #33465e; }
+
+/* An investigation's numbered steps — a plain ordered list, left-aligned. */
+.sci-gc-list { width: 100%; max-width: 520px; margin: 0; padding-left: 22px; text-align: left; display: grid; gap: 7px; color: #33465e; font-size: 15px; line-height: 1.55; }
+
+/* The icon a real-world problem is introduced by, as its tile carried in the grid. */
+.sci-gc-badge { width: 58px; height: 58px; display: grid; place-items: center; border-radius: 16px; background: var(--teal-soft); color: var(--teal-dark); font-size: 27px; }
+
+/* Work a learner does ON a science slide. English sizes the deck's textareas;
+   these sections ask for single-line answers too, which no English deck does.
+   The write-your-own box is one column here, not the shared two-column
+   .practice-box: a slide is 520px wide, and an input beside a "Check sentence"
+   button leaves the input too narrow to read a sentence back in. */
+.gc-inner .wc-sentence input, .gc-inner .practice-box input { width: 100%; border: 1px solid var(--line); border-radius: 8px; padding: 11px 12px; background: #fff; font: inherit; }
+.gc-inner .practice-box { width: 100%; display: grid; grid-template-columns: 1fr; gap: 9px; justify-items: center; }
+.gc-inner .checklist { width: 100%; margin: 0; }
+/* .search-box reserves a 40px gutter for the magnifier icon it is normally
+   given. The four shell-voice subjects have no lucide runtime to draw one and
+   the deck's inline set has no magnifier, so an empty gutter would just push the
+   placeholder off-centre — the science deck's search takes the space back. */
+.wc-tools .search-box input { padding-left: 12px; }

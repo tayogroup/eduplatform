@@ -286,6 +286,34 @@
 /* Status lines and correctness feedback: colour carries the meaning, not weight. */
 .status-note { font-weight: var(--weight-normal); }
 
+/* ── The Stage 1 grid half (.classic-design) ─────────────────────────────────
+   Everything here is scoped to .classic-design, which exists ONLY on a
+   both-designs page — today that is Stage 1 alone. None of it can match a
+   Stage 5-8 page, which keeps its grid exactly as it is, these defects included.
+
+   Bringing the grid back at Stage 1 brought three pieces of Mathematics styling
+   with it, and they read very differently under a six-year-old's section than
+   under a Stage 7 one. */
+
+/* A Science method's "example" is the whole investigation — "What you need: Safe
+   everyday materials from home" — not the "24 + 8" this 70px serif was sized
+   for. At Stage 1 it filled half the page. Prose, left-aligned, in the page
+   family. */
+/* Longhands, not `font: … inherit` — a CSS-wide keyword is only legal as a
+   property's whole value, so the shorthand form is invalid and the browser drops
+   the entire declaration. Written that way first here, and it silently fell back
+   to 16px body text; the same mistake is why .gc-pattern and .gc-btn spent weeks
+   rendering at 16px. */
+.classic-design .method-example > strong { font: inherit; font-weight: var(--weight-medium); font-size: 19px; line-height: 1.55; text-align: left; }
+
+/* The tab's number is a <span> and its title a bare text node beside it, so they
+   render welded together — "1Watch a Seed Grow". */
+.classic-design .method-selector button > span { margin-right: 8px; }
+
+/* .method-steps is a grid, so a button in it stretches to the full column and
+   reads as a slab rather than something to press. */
+.classic-design #next-method-step { justify-self: start; }
+
 /* ── The Stage 1 slide deck (gc-*) ────────────────────────────────────────────
    The deck's own layout is English's, imported at the top of this file; what is
    here is the Science skin plus the few things a science slide holds that no

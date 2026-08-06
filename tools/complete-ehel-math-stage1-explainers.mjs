@@ -165,6 +165,107 @@ const FIXES = new Map([
   // outside their own explainer.
   ["which children love to notice", "which is an easy thing to notice"],
   ["which children love, and both can sit still", "which is easy to spot, and both can sit still"],
+
+  // ── "Correct this by …" ────────────────────────────────────────────────────
+  // Eighteen errorFeedback lines start in the learner's voice and then turn to
+  // the adult: "You might say 'false', thinking any two pieces count as halves.
+  // Correct this by folding a shape and showing that…". errorFeedback is what a
+  // learner is shown the moment they get something wrong, so the half that
+  // matters most is addressed to somebody else.
+  //
+  // The correction becomes something the learner does. Nothing is dropped: the
+  // folding, the dealing, the side-by-side comparison are all the check that
+  // proves the answer, and they are what the learner needs.
+  ["Correct this by folding a shape and showing that only matching folds count as equal halves.",
+   "Check by folding a shape: only matching folds make equal halves."],
+  ["Correct this by placing the two rope pieces side by side to show one is clearly longer.",
+   "Place the two rope pieces side by side and you will see one is clearly longer."],
+  ["Correct this by folding along each line and comparing the two resulting parts.",
+   "Fold along each line and compare the two parts you get."],
+  ["Correct this by demonstrating that any line through the centre of a circle makes two equal halves.",
+   "Any line through the centre of a circle makes two equal halves — try a few and see."],
+  ["Correct this by checking the curved edges line up all the way around when the halves are joined.",
+   "Check that the curved edges line up all the way around when you join the halves."],
+  ["Correct this by dealing one at a time so both children end up with the same number.",
+   "Deal them one at a time instead, so both plates end up with the same number."],
+  ["Correct this by dealing 6 counters one at a time onto two plates and counting each plate: 3 and 3.",
+   "Deal 6 counters one at a time onto two plates and count each plate: 3 and 3."],
+  ["Correct this by connecting the symbol to a real half, such as half an orange, every time it appears.",
+   "Connect the symbol to a real half — half an orange — every time you see it."],
+  ["Correct this by reminding them that equal size is what makes parts halves, not just having two pieces.",
+   "Equal size is what makes parts halves, not just having two pieces."],
+  ["Correct this by reminding them the original apple was the whole, and each equal piece is now a half of it.",
+   "The original apple was the whole, and each equal piece is now a half of it."],
+  ["Correct this by dealing 2 counters one at a time onto two plates: 1 and 1.",
+   "Deal 2 counters one at a time onto two plates: 1 and 1."],
+  ["Correct this by folding to find the middle before cutting, so both halves match.",
+   "Fold to find the middle before cutting, so both halves match."],
+  ["A buyer, or child, might accept any two pieces as 'halves' just because there are two. Correct this by comparing the two pieces side by side to check they truly match.",
+   "A buyer might accept any two pieces as 'halves' just because there are two. Compare the two pieces side by side to check they truly match."],
+  ["Correct this by pouring carefully and checking the water level in each cup matches before calling them equal.",
+   "Pour carefully and check the water level in each cup matches before calling them equal."],
+  ["Correct this by reminding them the loaf was one whole first, so each equal piece is a half of it.",
+   "The loaf was one whole first, so each equal piece is a half of it."],
+  ["Correct this by showing a clock: halfway between the 4 and the 5 is 'half past four'.",
+   "Look at a clock: halfway between the 4 and the 5 is 'half past four'."],
+  ["Correct this by dealing one at a time, back and forth, until all 10 are shared equally.",
+   "Deal one at a time, back and forth, until all 10 are shared equally."],
+  ["Demonstrate physically sliding the two cut halves back together to show it recreates the same whole circle.",
+   "Slide the two cut halves back together and you will see it makes the same whole circle again."],
+
+  // ── "Praise …" ─────────────────────────────────────────────────────────────
+  // Four notes tell the adult how to encourage the learner. A learner cannot
+  // praise themselves, so these are not repointed but recast as what the
+  // estimate is actually worth — which is the teaching the note was carrying.
+  ["Praise sensible guesses, not just correct ones – the goal is a thoughtful guess, not a lucky one.",
+   "A thoughtful guess is worth more than a lucky one — the goal is to be close, not exactly right."],
+  ["Praise thoughtful guesses, not just correct ones.",
+   "A thoughtful guess is worth more than a lucky one."],
+  ["Praise a sensible guess even when it is not exact, and after counting, compare the estimate with the real total so you see estimating as a useful first step, not a test to pass or fail.",
+   "A sensible guess counts even when it is not exact. After counting, compare your estimate with the real total — estimating is a useful first step, not a test to pass or fail."],
+  ["Praise a thoughtful guess, not just a lucky correct one — the aim is a sensible estimate in the right neighbourhood, such as ‘about fifteen’.",
+   "A thoughtful guess is worth more than a lucky correct one — the aim is a sensible estimate in the right neighbourhood, such as ‘about fifteen’."],
+
+  // Two more of the same defect in a different phrasing — "remind them" rather
+  // than "Correct this by". Both describe the learner in the third person and
+  // then tell somebody else what to say to them.
+  ["Children often stop at 4 because they only count the sides they can see from one angle — remind them to turn the cube and count the hidden top and bottom faces too.",
+   "It is easy to stop at 4, because those are the sides you can see from one angle. Turn the cube and count the hidden top and bottom faces too."],
+  ["The tricky part for children is that at half past, the short hand sits between two numbers rather than on one — remind them to say the smaller of the two, the hour that has already passed, not the one it is moving towards.",
+   "The tricky part is that at half past, the short hand sits between two numbers rather than on one. Say the smaller of the two — the hour that has already passed, not the one it is moving towards."],
+
+  // ── "Children often …" ─────────────────────────────────────────────────────
+  // Thirteen more of the same defect, in the phrasing the earlier patterns
+  // missed. A learner reading "Children often stop at 4" is being described to
+  // somebody else, in the third person, in the feedback they get for their own
+  // wrong answer. Every one becomes what it is telling them: "it is easy to",
+  // "you might", and then the check they can do themselves.
+  ["Children often muddle them, so use them out loud many times a day in real situations.",
+   "They are easy to muddle, so say them out loud many times a day in real situations."],
+  ["Children often stop at 4 because they only count the sides they can see from one angle",
+   "It is easy to stop at 4, counting only the sides you can see from one angle"],
+  ["Children often write only 'STACK' because they usually see pots standing upright. Remind them to also test laying the pot on its side.",
+   "It is easy to write only 'STACK', because you usually see pots standing upright. Test laying the pot on its side too."],
+  ["Children often forget to count all four sides of the scarf if it is folded. Remind them to unfold it fully before counting.",
+   "It is easy to miss sides of the scarf while it is folded. Unfold it fully before you count."],
+  ["Children often draw a half that is too big or too small compared with the first half. Have them check both halves match by folding or measuring before finishing.",
+   "It is easy to draw a half that is too big or too small next to the first one. Check both halves match, by folding or by measuring, before you finish."],
+  ["Children often guess a line without folding first, making one part bigger than the other. Always fold to find the true middle before drawing the line.",
+   "Guessing a line without folding first usually makes one part bigger than the other. Always fold to find the true middle before you draw the line."],
+  ["Children often skip an event when counting order. Say each action aloud while holding up a finger for every step so the count matches the actions.",
+   "It is easy to skip an event when counting order. Say each action aloud and hold up a finger for every step, so the count matches the actions."],
+  ["Children often skip an event when counting order",
+   "It is easy to skip an event when counting order"],
+  ["Children often keep saying 'on' out of habit even after the object has moved. Ask them to point to where the object is now before naming the position word.",
+   "It is easy to keep saying 'on' out of habit after the object has moved. Point to where the object is now before you name the position word."],
+  ["Children often judge front/behind only from their own position, not the building's entrance. Show the door first, then decide front and behind from there.",
+   "It is easy to judge front and behind from where you are standing rather than from the building's entrance. Find the door first, then decide front and behind from there."],
+  ["Children often confuse '3rd in line' with '3 people in front'. Show the line physically and count only the people before Fatima, not including her.",
+   "It is easy to confuse '3rd in line' with '3 people in front'. Lay the line out and count only the people before Fatima, not Fatima herself."],
+  ["since children often reverse the digits (writing 31 for 13) if the writing is not tied to the spoken order",
+   "since the digits are easy to reverse (writing 31 for 13) if the writing is not tied to the spoken order"],
+  ["Children often hesitate or skip a number around fifteen or sixteen. Practise slowly, pointing to each number on a number track.",
+   "It is easy to hesitate or skip a number around fifteen or sixteen. Practise slowly, pointing to each number on a number track."],
   ["you start at the bigger number and counts backward by the amount being taken away",
    "you start at the bigger number and count backward by the amount being taken away"],
   ["You compare two objects and says which is heavier", "You compare two objects and say which is heavier"],

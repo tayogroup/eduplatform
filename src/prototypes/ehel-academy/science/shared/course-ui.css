@@ -304,15 +304,22 @@
    the entire declaration. Written that way first here, and it silently fell back
    to 16px body text; the same mistake is why .gc-pattern and .gc-btn spent weeks
    rendering at 16px. */
-.classic-design .method-example > strong { font: inherit; font-weight: var(--weight-medium); font-size: 19px; line-height: 1.55; text-align: left; }
+/* Normal weight, and the column scrolls. 19px was measured against Stage 1's
+   48-character example and looked settled; the same field at Stage 2 is 1,557
+   characters, which at weight 600 was a 1,030px wall of semibold white — taller
+   than the viewport, dwarfing the two steps beside it. Prose means the weight
+   too, and a field whose length varies 30-fold has to be allowed to scroll
+   rather than set the height of the page. */
+.classic-design .method-example > strong { font: inherit; font-weight: var(--weight-normal); font-size: 18px; line-height: 1.6; text-align: left; display: block; max-height: 46vh; overflow-y: auto; overscroll-behavior: contain; }
 
 /* The tab's number is a <span> and its title a bare text node beside it, so they
    render welded together — "1Watch a Seed Grow". */
 .classic-design .method-selector button > span { margin-right: 8px; }
 
-/* .method-steps is a grid, so a button in it stretches to the full column and
-   reads as a slab rather than something to press. */
-.classic-design #next-method-step { justify-self: start; }
+/* .method-steps is a grid, so a button in it stretches on BOTH axes. justify-self
+   alone fixed the width and left the height, which showed up only where the row
+   is tall: 224x42 at Stage 1, 224x338 at Stage 2. A grid item needs both. */
+.classic-design #next-method-step { justify-self: start; align-self: start; }
 
 /* ── The Stage 1 slide deck (gc-*) ────────────────────────────────────────────
    The deck's own layout is English's, imported at the top of this file; what is

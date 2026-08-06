@@ -42,7 +42,7 @@ Real uploads are `npm run deploy:integration|staging|production`. **Never run a 
 
 ## Hard rules
 
-- **Grades/Stages 5-8 keep their design**: the full-screen slide deck (`gc-*`, `shell/deck.js`) is for Grades/Stages 1-4 only. By Grade 5 a learner scans a page rather than being walked through it one item at a time, so the grids, tabs and two-column labs there are the intended design, not a backlog waiting to be converted. Gate on stage number (`DECK_MAX_STAGE = 4`), never per section; keep every grid renderer byte-identical and give it only a one-line early return; scope deck CSS to deck-only classes (`.gc-*`, `.wc-*`, `.<subject>-gc-*`) so no rule can match an upper-stage page. Verify at an upper stage in the browser — zero `gc-*` nodes and `body.gc-full` never set — not just by reading the diff. The upper stages carry known cosmetic defects that look like invitations (Science's `.method-example > strong` is 70px serif, a Mathematics size for `24 + 8`, applied to a whole investigation): flag them, never fix them in passing.
+- **Grades/Stages 5-8 keep their design**: the full-screen slide deck (`gc-*`, `shell/deck.js`) is for Grades/Stages 1-4 only. By Grade 5 a learner scans a page rather than being walked through it one item at a time, so the grids, tabs and two-column labs there are the intended design, not a backlog waiting to be converted. Gate on stage number, in ONE constant per subject, never per section — the name differs by subject — `DECK_MAX_STAGE` in Science, Mathematics and Global Perspectives, `BOTH_DESIGNS_MAX_STAGE` in Computing, `BOTH_DESIGNS` in English (a boolean, `gradeNumber <= 4`) — but the line is 4 in every one of them; keep every grid renderer byte-identical and give it only a one-line early return (Computing is the exception and says why below: showing both designs at once forced its originals to query inside a region, so they moved into `…Classic` functions behind a dispatcher — the upper stages still reach them unchanged); scope deck CSS to deck-only classes (`.gc-*`, `.wc-*`, `.<subject>-gc-*`) so no rule can match an upper-stage page. Verify at an upper stage in the browser — zero `gc-*` nodes and `body.gc-full` never set — not just by reading the diff. The upper stages carry known cosmetic defects that look like invitations (Science's `.method-example > strong` is 70px serif, a Mathematics size for `24 + 8`, applied to a whole investigation): flag them, never fix them in passing.
 - **Generated bundle**: never edit `runtime.bundle.js` directly (`docs/generated-bundle-policy.md`).
 - **Stable filenames**: active JS/CSS filenames never contain versions, dates, or `locked`. Versions live in git tags (`alphabet-v1.0.0`, `shared-v1.0.0`) and manifests (`docs/naming-versioning.md`).
 - **Unit config schema**: `unit.config.js` must pass `npm run validate:units`; schema documented in `docs/unit-config-schema.md`.
@@ -77,6 +77,40 @@ npm run extract:computing-content && npm run build:computing && npm run check:co
 All three subjects export from Google Drive as `Year <n>-<UTC stamp>-<part>.zip`, so a Downloads folder holds three subjects under indistinguishable filenames. The Computing and Global Perspectives extractors classify each archive by what its documents say and accept only their own. The science extractor still picks by name alone, so **check which subject a `Year N` zip actually contains before running `extract:science-content`.**
 
 Computing spans Stages 1-7 (Cambridge Primary Computing 0672, Lower Secondary 0868). Stages 1-4 ship as Teacher & Parent Guides, so the builder rewrites their prose into learner-facing explainers (`learnerVoice`); Stages 5-7 ship student lesson books carried across as written. `check:computing` is the gate on that conversion — it fails on adult-addressed text, classroom staging, truncated explainers and modules duplicated across units.
+
+#### Computing Stages 1-4 show BOTH designs
+
+Every section that has a deck renders the original page first and the same
+content as an inline deck under it — thirteen sections, gated by
+`BOTH_DESIGNS_MAX_STAGE` in `shell/subjects/computing.js`. There is no
+deck-instead-of-original stage: a stage either has both or has the original
+alone. The pack division is the reason 4 is the line, the same one Cambridge
+draws — Guides below it, student lesson books above.
+
+Two things follow, and both are load-bearing:
+
+- **Each half queries inside its own region.** Both designs draw the same
+  section, so both carry `#word-search`, `[data-check]`, `[data-hint]`,
+  `[data-activity-done]` and thirty-odd writes to `#app`. The original paints
+  first, so a document-wide lookup from either half reaches the other's
+  controls. The original uses `c$`/`c$$`/`cRoot()`, the deck uses `d$`/`d$$`,
+  and both region variables are cleared in `onBeforeRender` — they point into
+  the page being replaced. A new control added to either half must use its
+  half's helpers, or it will silently drive the other design.
+- **A deck slide draws its diagram flat** (`deckDiagram`, `interactive: false`).
+  The original above it already builds the interactive WebGL model, and Build It
+  at Stage 4 has eight activities: interactive on both halves was sixteen live
+  contexts on one page, against a browser cap of about sixteen.
+
+Word cards carry a picture from `computing/shared/computing-word-pictures.js` —
+Computing's OWN map, deliberately not English's `shell/subjects/word-pictures.js`.
+This subject redefines ordinary words (a mouse is a pointing device, a key is
+part of a keyboard, a table is rows and columns, a bug is a mistake in a
+program), so one shared map would put an animal beside "mouse" in one subject or
+a computer part beside it in the other. Same rule as English's file: the picture
+must BE the word, and a word with no honest picture shows none — which is most
+of this vocabulary, because most of it is abstract. About a third of cards are
+pictured.
 
 ### Global Perspectives
 
@@ -178,6 +212,25 @@ node tools/generate-ehel-computing-audio.js --orphans --prune
 Any content change under an already-generated set — a builder fix, a returned review — moves the text, so its hash moves too and the old clip is orphaned. Re-running the generator fills the new hashes (it is idempotent, so nothing already correct is paid for twice); `--orphans` finds the dead files left behind. It refuses a narrowed run, because with a category or grade filter every other stage's clips would look orphaned.
 
 Clips land in `computing/media/audio/tts/<hash>.mp3`, which is where the app looks in local dev; the Bunny build remaps it to the per-stage `media/computing/gNN/` tree. Stage 1 alone is ~1,030 clips / ~201k characters, and ElevenLabs bills per character — always `--dry` first.
+
+**Ask the claim map what is reachable, never a run's own queue.** `--orphans`
+built its set from `textsForUnit`/`textsForCapstone`, which leave out Wehel's
+stock tutor phrases — no unit owns them, because the tutor speaks them on every
+stage, so they are claimed in `hashesForGrade`. All 77 were reported as dead,
+and `--prune` would have deleted them: the tutor drops to the paid runtime voice
+on every stock phrase, and computing's clip directory is gitignored, so nothing
+brings them back but paying again. `prune-ehel-course-audio.mjs` read the claim
+map all along and had been answering 0 the whole time. When two tools disagree
+about what is reachable, the one using `hashGradeMap` is right.
+
+**`.bunny-upload-manifest.json` is a local cache, not a record of the CDN.**
+"already uploaded: N" is a claim; nothing verifies it against storage, and
+anything it wrongly records is skipped forever. 630 Computing clips — the 77
+tutor phrases on every stage — sat generated-but-undeployed behind it, and a
+later run still skipped 14 it wrongly believed were up. To check reality, list
+`media/<subject>/gNN/audio/tts/` on storage and compare against
+`hashesForGrade`; to repair, delete the wrong entries from the manifest and
+re-run the uploader.
 
 ### Science narration audio
 

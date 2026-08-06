@@ -165,10 +165,18 @@ function unitIsComplete(unit) {
   const done = unitSectionsDone(unit);
   return countableSectionIds().every((id) => done.includes(id));
 }
+// EVERY earlier unit, not just the one immediately before. Testing only the
+// predecessor left holes: a learner carrying progress from before the gate —
+// or from a unit they were sent straight to — could have Unit 5 finished and
+// Units 1-4 not, which opened Unit 6 while Units 2-5 stayed shut. A sequence
+// with gaps in it is not a sequence, and it reads as a bug on the page.
 function unitIsUnlocked(unit) {
   const number = Number(unit);
   if (!UNIT_GATE_ENABLED || number === PREREQ_UNIT || number <= defaultUnit) return true;
-  return unitIsComplete(number - 1);
+  for (let earlier = defaultUnit; earlier < number; earlier += 1) {
+    if (!unitIsComplete(earlier)) return false;
+  }
+  return true;
 }
 // The unit the learner is actually up to: the first one they have not finished.
 // Always unlocked by construction, so it is the safe place to send anyone who
@@ -215,7 +223,12 @@ function sectionUnlocked(id) {
   const index = chain.indexOf(id);
   if (index <= 0) return true; // not a step, or the first one
   if (progress.completed.includes(id)) return true; // already done — revisiting is free
-  return progress.completed.includes(chain[index - 1]);
+  // EVERY earlier step, not just the one before. Testing only the predecessor
+  // opened holes in the sidebar wherever progress arrived out of order — a
+  // learner who had finished Grammar before the gate existed saw Speaking open
+  // while Vocabulary, Reading and Comprehension above it stayed locked. That is
+  // not a sequence, and on the page it reads as the lock being broken.
+  return chain.slice(0, index).every((step) => progress.completed.includes(step));
 }
 // Where the learner is up to: the first step they have not finished.
 function nextOpenSection() {

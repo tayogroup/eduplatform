@@ -289,6 +289,11 @@ export function createCourseApp(config) {
     toggle.setAttribute("aria-label", voiceSupported ? (voiceEnabled ? "Turn ElevenLabs Voice Guide off" : "Turn ElevenLabs Voice Guide on") : "ElevenLabs Voice Guide unavailable");
     toggle.title = voiceSupported ? (voiceEnabled ? "ElevenLabs Voice Guide is on" : "ElevenLabs Voice Guide is off") : "ElevenLabs Voice Guide unavailable";
     $$('[data-page-voice], [data-speak]').forEach((button) => { button.disabled = !voiceSupported || !voiceEnabled; });
+    // This button rewrites its own icon on every toggle, outside any render, so
+    // it needs its own sweep — it was the one <i data-lucide> still surviving in
+    // the topbar of all four shell-voice subjects after renderRoute and
+    // renderNav had already run.
+    paintIcons();
   }
 
   const pageHeader = (kicker, title, description, status = "Approved content") => {
@@ -331,6 +336,9 @@ export function createCourseApp(config) {
       if (!teacherSwitch.dataset.bound) { teacherSwitch.dataset.bound = "true"; teacherSwitch.addEventListener("click", () => navigate("teacher")); }
     }
     if (config.onNavRendered) config.onNavRendered();
+    // The nav repaints on its own — completing a section calls renderNav()
+    // without a route change — so it cannot rely on renderRoute's sweep.
+    paintIcons();
   }
   // --- focus mode: the lesson content owns the whole screen -----------------
   // (topbar + sidebar hidden via body.focus-mode; the floating Menu button or
@@ -385,12 +393,25 @@ export function createCourseApp(config) {
     $("#content")?.focus({ preventScroll: true });
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
+  // shared/course-shell.js :: icon() emits <i data-lucide> for EVERY subject, and
+  // the runtime replaces those elements in place — so it has to run after
+  // anything that paints, and a subject that never calls it shows blank icons
+  // wherever the shell drew one. English called it from its own module and the
+  // other four never did, which is why their sidebars and page headers were
+  // empty. Calling it here covers whatever the shell renders, for every subject;
+  // English's own sweep still runs and is harmless, since createIcons only ever
+  // converts what is still an <i>.
+  // A declaration, not a const: renderNav() sweeps too, and it is defined and
+  // reachable earlier in this closure than this line runs.
+  function paintIcons() { window.lucide?.createIcons({ attrs: { "stroke-width": 2.2 } }); }
+
   function renderRoute() {
     if (config.onBeforeRender) config.onBeforeRender();
     $("#app").innerHTML = "";
     (config.renderers[route] || config.renderers.overview)();
     if (!config.disableShellVoice) bindVoiceControls();
     if (config.onAfterRender) config.onAfterRender();
+    paintIcons();
   }
 
   // --- Wehel dock ----------------------------------------------------------

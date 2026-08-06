@@ -2596,15 +2596,31 @@ function renderGames() {
   }
   if (activeGameId) return renderActiveGame();
   const mastered = gamePack.games.filter((game) => gameProgress(game.id).bestScore >= gamePack.masteryScore).length;
+  // Games is the one section with no deck, so it had no "I have finished this"
+  // control of its own — mastering every game was the only way through, and
+  // with the section gate that made one game a learner cannot beat into a wall
+  // across the rest of the unit. Every other section has a way to say "I did
+  // this": the word deck, the reading deck, the comprehension deck. This is the
+  // same thing, and it is not a skip — every game has to have been PLAYED.
+  // Mastery keeps its own path and its own celebration.
+  const played = gamePack.games.filter((game) => gameProgress(game.id).attempts > 0).length;
+  const gamesDone = progress.completed.includes("games");
+  const canFinish = !gamesDone && played === gamePack.games.length;
   const xp = gamePack.games.reduce((total, game) => total + gameProgress(game.id).xp, 0);
   $("#app").innerHTML = `${pageHeader("Play, practise, master", "Game zone", `${gamePack.games.length} short learning games turn ${escapeHtml(course.unit.unitTitle)} vocabulary, reading, grammar, sentences and speaking into active practice.`, `${gradeLabel} games`)}
-    <section class="games-hero"><img src="${course.visual.image}" alt="${escapeHtml(course.visual.alt)}"><div><span class="eyebrow">Unit ${course.unit.unitNo} · ${escapeHtml(course.unit.unitTitle)}</span><h2>Choose your next challenge</h2><p>Earn stars by showing what you know. Hints and retries are always available.</p><div class="game-hero-stats"><strong>${mastered}/${gamePack.games.length} mastered</strong><strong>${xp} XP earned</strong></div></div></section>
+    <section class="games-hero"><img src="${course.visual.image}" alt="${escapeHtml(course.visual.alt)}"><div><span class="eyebrow">Unit ${course.unit.unitNo} · ${escapeHtml(course.unit.unitTitle)}</span><h2>Choose your next challenge</h2><p>Earn stars by showing what you know. Hints and retries are always available.</p><div class="game-hero-stats"><strong>${mastered}/${gamePack.games.length} mastered</strong><strong>${played}/${gamePack.games.length} played</strong><strong>${xp} XP earned</strong></div>${canFinish
+      ? `<button class="button gold" id="games-done" type="button">${icon("check")} I have played them all</button>`
+      : gamesDone ? "" : `<p class="gc-note">Play every game once and you can finish this part — you do not have to master them all.</p>`}</div></section>
     <div class="game-grid">${gamePack.games.map((game, index) => {
       const saved = gameProgress(game.id);
       const passed = saved.bestScore >= gamePack.masteryScore;
       return `<article class="game-card ${passed ? "mastered" : ""}"><div class="game-card-top"><span class="game-icon">${icon(game.icon)}</span><span class="game-number">${index + 1}</span></div><span class="eyebrow">${escapeHtml(game.skill)}</span><h2>${escapeHtml(game.title)}</h2><p>${escapeHtml(game.description)}</p><div class="game-stars" aria-label="Best score ${saved.bestScore} out of ${game.rounds.length}">${game.rounds.map((_, star) => `<span class="${star < saved.bestScore ? "earned" : ""}">★</span>`).join("")}</div><button class="button ${passed ? "secondary" : "primary"}" data-start-game="${game.id}" type="button">${passed ? icon("rotate-ccw") + " Play again" : icon("play") + " Start game"}</button></article>`;
     }).join("")}</div>`;
   $$('[data-start-game]').forEach((button) => button.addEventListener("click", () => startGame(button.dataset.startGame)));
+  // Re-render after completing, so the button gives way to the finished state
+  // rather than sitting there inviting a second press. complete() repaints the
+  // nav on its own, which is what opens the next section.
+  $("#games-done")?.addEventListener("click", () => { complete("games", `All ${gamePack.games.length} games played. Well done!`); renderGames(); });
   icons();
 }
 

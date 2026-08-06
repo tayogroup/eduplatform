@@ -1235,12 +1235,34 @@ function renderLecture() {
   return renderLectureClassic();
 }
 
-// The lecture's journey as a deck: one step per slide, for a learner who is
-// being told what the unit will ask of them before any of it starts.
+// The lecture as a deck. It mirrors the ORIGINAL above it, and for a video
+// lecture the original walks the lecture's own beats — the seven the player
+// counts "1 / 7" — not the three viewing tips in the panel beside it.
+//
+// It used to build from journey.steps, which for a video unit is that tip list:
+// "hear the voice, read the captions, pause and repeat". So the deck counted
+// "Step 1 of 3" against the video's "1 / 7" under a heading promising the same
+// steps, one at a time, and showed a different panel. Every other section's deck
+// mirrors its original — one card per word, one card per page — and this was the
+// one that did not.
+//
+// A lecture with no slide times keeps the journey deck: the capstone launch has
+// four real milestones and a finish control, the guided launch four steps, and
+// neither has beats to mirror. That is also the fallback for a video whose times
+// were never written, where the original itself falls back to plain playback.
 function renderLectureCarousel() {
   const journey = lectureJourney();
   const esc = escapeHtml;
-  const slides = journey.steps.map(([name, text], index) => `<section class="gc-slide gc-v${index % 5}"><div class="gc-inner">
+  const beats = Array.isArray(course.visual.lectureSlides) ? course.visual.lectureSlides : [];
+  const seconds = (beat) => Math.max(1, Math.round(Number(beat.end) - Number(beat.start)));
+  const slides = beats.length > 1
+    ? beats.map((beat, index) => `<section class="gc-slide gc-v${index % 5}"><div class="gc-inner">
+      <span class="gc-eyebrow">Step ${index + 1} of ${beats.length} · ${esc(journey.eyebrow)}</span>
+      <div class="lc-step-mark" aria-hidden="true">${icon("play-square")}</div>
+      <p class="gc-lead">${esc(beat.title)}</p>
+      <p class="gc-note">About ${seconds(beat)} seconds of the lecture above.</p>
+    </div></section>`)
+    : journey.steps.map(([name, text], index) => `<section class="gc-slide gc-v${index % 5}"><div class="gc-inner">
       <span class="gc-eyebrow">Step ${index + 1} of ${journey.steps.length} · ${esc(journey.eyebrow)}</span>
       <div class="lc-step-mark" aria-hidden="true">${icon(name)}</div>
       <p class="gc-lead">${esc(text)}</p>

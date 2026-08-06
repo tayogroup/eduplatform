@@ -334,6 +334,17 @@ body.focus-mode.gc-full .wc-tools { position: fixed; left: 0; right: 0; bottom: 
 .deck-design .gc-wrap { height: auto; }
 .deck-design .gc-carousel { flex: none; height: min(68vh, 620px); }
 @media (max-width: 720px) { .deck-design .gc-carousel { height: 78vh; } }
+/* A page of the story. Ranged left and larger than the deck's other prose: this
+   is text to be read, not a caption under a picture, and a centred story is
+   harder for a young reader to find the start of each line in. */
+.deck-design .rd-page { width: 100%; max-width: 560px; text-align: left; display: grid; gap: 13px; }
+.deck-design .rd-page p { margin: 0; font-size: 20px; line-height: 1.65; color: #17324d; }
+.deck-design .rd-page .ebook-subheading { margin: 0; font-size: 17px; color: #2a6cb0; }
+.deck-design .reading-filter, .deck-design .wc-tools select { max-width: 320px; }
+/* The lecture step's icon, sized like the vocabulary deck's picture so a step
+   reads as one idea with a mark above it rather than a bullet in a list. */
+.deck-design .lc-step-mark { display: grid; place-items: center; width: 84px; height: 84px; border-radius: 50%; background: #eef4fa; color: #2a6cb0; }
+.deck-design .lc-step-mark svg, .deck-design .lc-step-mark i { width: 40px; height: 40px; }
 @media (max-width: 720px) {
   .gc-arrow { width: 46px; height: 46px; }
   .gc-pattern { font-size: 34px; }

@@ -904,24 +904,119 @@ function renderOverview() {
   bindOverviewAudio(course);
 }
 
-function renderLecture() {
-  const groups = course.vocabularyGroups.map((group) => group.title.toLowerCase()).join(", ");
+// The lecture's journey: the steps a learner is walked through before the
+// independent lesson. Defined once because two designs draw it now — the launch
+// page as a list, the deck one step per slide — and a step that existed in only
+// one of them would be a step some learners never see.
+//
+// `finish` is deliberately not uniform. The capstone launch completes the
+// section on a button; a guided launch REFUSES to (completion waits for the
+// video, and the original only toasts to say so); a video unit completes by
+// being watched to the end. The deck inherits each of those exactly, so it
+// cannot hand out a completion the original design withholds.
+function lectureJourney() {
   if (course.visual.lectureMode === "capstone-launch") {
-    $("#app").innerHTML = `${pageHeader("Capstone launch", "Welcome to My English World", "See the whole project before you begin. Your teacher will guide each stage during six live sessions.")}
+    return {
+      list: "path-list",
+      eyebrow: "Four milestones",
+      heading: "Your capstone journey",
+      finish: { action: "complete", label: "I have seen the whole project", message: "Capstone launched. Your review vocabulary is ready." },
+      steps: [
+        ["folder-heart", "Choose and explain your strongest portfolio work."],
+        ["book-open", "Create, review and improve your final product."],
+        ["mic-2", "Present clearly and respond to a question."],
+        ["sparkles", "Reflect on your growth and set a next-grade goal."],
+      ],
+    };
+  }
+  if (course.visual.lectureMode === "guided-launch" || !course.visual.lectureVideo) {
+    return {
+      list: "path-list",
+      eyebrow: "How to learn",
+      heading: "Use language with purpose",
+      finish: { action: "toast", label: "I have previewed this unit", message: "Unit preview opened. Teacher lecture completion awaits the video." },
+      steps: [
+        ["eye", "Preview the unit goals and connect them to what you know."],
+        ["ear", "Listen, read and notice how English works in context."],
+        ["message-circle", "Discuss, explain and support ideas clearly."],
+        ["pencil", "Practise, check feedback and improve your response."],
+      ],
+    };
+  }
+  return {
+    list: "checklist",
+    eyebrow: "Before you learn",
+    heading: "Listen, look and repeat",
+    // No finish control: the video above is what completes this section, and a
+    // button here would let a learner skip the lecture by swiping past it.
+    finish: null,
+    steps: [
+      ["ear", "Hear the approved ElevenLabs teacher voice"],
+      ["captions", "Read along with captions"],
+      ["message-circle", "Pause, take notes and repeat key language"],
+    ],
+  };
+}
+
+// The two list shapes the launch page already used, kept apart because they are
+// different elements: an ordered path of steps, and a checklist of what to do
+// while the video plays.
+function lectureJourneyList(journey) {
+  return journey.list === "path-list"
+    ? `<ol class="path-list">${journey.steps.map(([name, text]) => `<li>${icon(name)}<span>${escapeHtml(text)}</span></li>`).join("")}</ol>`
+    : `<ul class="checklist">${journey.steps.map(([name, text]) => `<li>${icon(name)} ${escapeHtml(text)}</li>`).join("")}</ul>`;
+}
+
+function renderLecture() {
+  if (BOTH_DESIGNS) return renderBothDesigns(renderLectureClassic, renderLectureCarousel, "The same steps, one at a time.");
+  return renderLectureClassic();
+}
+
+// The lecture's journey as a deck: one step per slide, for a learner who is
+// being told what the unit will ask of them before any of it starts.
+function renderLectureCarousel() {
+  const journey = lectureJourney();
+  const esc = escapeHtml;
+  const slides = journey.steps.map(([name, text], index) => `<section class="gc-slide gc-v${index % 5}"><div class="gc-inner">
+      <span class="gc-eyebrow">Step ${index + 1} of ${journey.steps.length} · ${esc(journey.eyebrow)}</span>
+      <div class="lc-step-mark" aria-hidden="true">${icon(name)}</div>
+      <p class="gc-lead">${esc(text)}</p>
+      ${index === journey.steps.length - 1 && journey.finish ? deckFinish("lecture", journey.finish.label) : ""}
+    </div></section>`);
+
+  mountDeck({
+    heading: journey.heading,
+    label: "Step",
+    slides,
+    onClick: (event) => {
+      const target = event.target.closest("[data-deck-finish]");
+      if (!target || !journey.finish) return undefined;
+      if (journey.finish.action === "complete") return complete("lecture", journey.finish.message);
+      return toast(journey.finish.message);
+    },
+  });
+}
+
+function renderLectureClassic() {
+  const { paint, $ } = classicScope();
+  const groups = course.vocabularyGroups.map((group) => group.title.toLowerCase()).join(", ");
+  const journey = lectureJourney();
+  if (course.visual.lectureMode === "capstone-launch") {
+    paint(`${pageHeader("Capstone launch", "Welcome to My English World", "See the whole project before you begin. Your teacher will guide each stage during six live sessions.")}
       <div class="lecture-layout">
         <section class="unit-banner capstone-launch"><img src="${course.visual.image}" alt="${escapeHtml(course.visual.alt)}"><div class="banner-copy"><span>Your final ${gradeLabel} project</span><h2>Choose. Create. Present. Reflect.</h2><p>Bring together your strongest English work, create a purposeful final product and present it with confidence.</p><button class="button gold" id="capstone-launch-done" type="button">${icon("flag")} Begin my capstone</button></div></section>
-        <div class="section-stack"><section class="panel"><span class="eyebrow">Four milestones</span><h2>Your capstone journey</h2><ol class="path-list"><li>${icon("folder-heart")}<span>Choose and explain your strongest portfolio work.</span></li><li>${icon("book-open")}<span>Create, review and improve your final product.</span></li><li>${icon("mic-2")}<span>Present clearly and respond to a question.</span></li><li>${icon("sparkles")}<span>Reflect on your growth and set a next-grade goal.</span></li></ol></section><section class="panel"><h3>Start with your review words</h3><p>The capstone dictionary brings together useful words selected across the course.</p><button class="button primary" id="to-dictionary" type="button">Open review vocabulary ${icon("arrow-right")}</button></section></div>
-      </div>`;
+        <div class="section-stack"><section class="panel"><span class="eyebrow">${escapeHtml(journey.eyebrow)}</span><h2>${escapeHtml(journey.heading)}</h2>${lectureJourneyList(journey)}</section><section class="panel"><h3>Start with your review words</h3><p>The capstone dictionary brings together useful words selected across the course.</p><button class="button primary" id="to-dictionary" type="button">Open review vocabulary ${icon("arrow-right")}</button></section></div>
+      </div>`);
     $("#capstone-launch-done").addEventListener("click", () => complete("lecture", "Capstone launched. Your review vocabulary is ready."));
     $("#to-dictionary").addEventListener("click", () => { complete("lecture"); navigate("dictionary"); });
     return;
   }
   if (course.visual.lectureMode === "guided-launch" || !course.visual.lectureVideo) {
-    $("#app").innerHTML = `${pageHeader("Lecture media pending", "Teacher lecture", "Preview the unit purpose while the audiovisual teacher lecture is being prepared.", "Video pending")}
+    paint(`${pageHeader("Lecture media pending", "Teacher lecture", "Preview the unit purpose while the audiovisual teacher lecture is being prepared.", "Video pending")}
       <div class="lecture-layout">
         <section class="unit-banner"><img src="${course.visual.image}" alt="${escapeHtml(course.visual.alt)}"><div class="banner-copy"><span>${gradeLabel} unit preview</span><h2>Explore. Practise. Apply. Improve.</h2><p>${escapeHtml(course.unit.unitOverview.split(". ").slice(0, 2).join(". "))}</p><button class="button gold" id="guided-launch-done" type="button">${icon("eye")} Preview this unit</button></div></section>
-        <div class="section-stack"><section class="panel"><span class="eyebrow">How to learn</span><h2>Use language with purpose</h2><ol class="path-list"><li>${icon("eye")}<span>Preview the unit goals and connect them to what you know.</span></li><li>${icon("ear")}<span>Listen, read and notice how English works in context.</span></li><li>${icon("message-circle")}<span>Discuss, explain and support ideas clearly.</span></li><li>${icon("pencil")}<span>Practise, check feedback and improve your response.</span></li></ol></section><section class="panel"><h3>Words in this unit</h3><p>Explore ${escapeHtml(groups)} in the linked ${gradeLabel} dictionary.</p><button class="button primary" id="to-dictionary" type="button">Open vocabulary ${icon("arrow-right")}</button></section></div>
-      </div>`;
+        <div class="section-stack"><section class="panel"><span class="eyebrow">${escapeHtml(journey.eyebrow)}</span><h2>${escapeHtml(journey.heading)}</h2>${lectureJourneyList(journey)}</section><section class="panel"><h3>Words in this unit</h3><p>Explore ${escapeHtml(groups)} in the linked ${gradeLabel} dictionary.</p><button class="button primary" id="to-dictionary" type="button">Open vocabulary ${icon("arrow-right")}</button></section></div>
+      </div>`);
     $("#guided-launch-done").addEventListener("click", () => toast("Unit preview opened. Teacher lecture completion awaits the video."));
     $("#to-dictionary").addEventListener("click", () => navigate("dictionary"));
     return;
@@ -933,13 +1028,13 @@ function renderLecture() {
   // always did — plays straight through — so a lecture whose times are missing
   // degrades to the old lecture rather than to a broken one.
   const lectureSlides = Array.isArray(course.visual.lectureSlides) ? course.visual.lectureSlides : [];
-  $("#app").innerHTML = `${pageHeader("Begin here", "Teacher audiovisual lecture", lectureSlides.length > 1
+  paint(`${pageHeader("Begin here", "Teacher audiovisual lecture", lectureSlides.length > 1
     ? "One slide at a time. Each slide reads itself aloud and then waits — use the arrows to move on when you are ready."
     : "Watch and listen before you begin the independent lesson. Captions are available in the player.")}
     <div class="lecture-layout">
       <section class="panel video-shell"><div class="lecture-stage"><video id="lecture-video" controls preload="metadata" poster="${course.visual.lecturePoster}"><source src="${course.visual.lectureVideo}" type="video/mp4"><track kind="captions" src="${course.visual.lectureCaptions}" srclang="en" label="English" default></video>${lectureSlides.length > 1 ? `<button class="lecture-nav prev" id="slide-prev" type="button" aria-label="Previous slide">${icon("chevron-left")}</button><button class="lecture-nav next" id="slide-next" type="button" aria-label="Next slide">${icon("chevron-right")}</button>` : ""}</div><div class="video-footer"><p id="video-status">Teacher Musa · Unit ${course.unit.unitNo} lecture</p><button class="button gold" id="lecture-done" type="button" ${progress.completed.includes("lecture") ? "" : "disabled"}>${progress.completed.includes("lecture") ? icon("check") + " Lecture complete" : icon("play") + " Watch to complete"}</button></div></section>
-      <div class="section-stack"><section class="panel"><span class="eyebrow">Before you learn</span><h2>Listen, look and repeat</h2><p>Teacher Musa introduces ${escapeHtml(groups)}.</p><ul class="checklist"><li>${icon("ear")} Hear the approved ElevenLabs teacher voice</li><li>${icon("captions")} Read along with captions</li><li>${icon("message-circle")} Pause, take notes and repeat key language</li></ul></section><section class="panel"><h3>Ready after the video?</h3><p>Complete the lecture before continuing to the vocabulary dictionary.</p><button class="button primary" id="to-dictionary" type="button" ${progress.completed.includes("lecture") ? "" : "disabled"}>Open vocabulary ${icon("arrow-right")}</button></section></div>
-    </div>`;
+      <div class="section-stack"><section class="panel"><span class="eyebrow">${escapeHtml(journey.eyebrow)}</span><h2>${escapeHtml(journey.heading)}</h2><p>Teacher Musa introduces ${escapeHtml(groups)}.</p>${lectureJourneyList(journey)}</section><section class="panel"><h3>Ready after the video?</h3><p>Complete the lecture before continuing to the vocabulary dictionary.</p><button class="button primary" id="to-dictionary" type="button" ${progress.completed.includes("lecture") ? "" : "disabled"}>Open vocabulary ${icon("arrow-right")}</button></section></div>
+    </div>`);
   $("#to-dictionary").addEventListener("click", () => navigate("dictionary"));
   const lectureVideo = $("#lecture-video");
   const lectureDone = $("#lecture-done");
@@ -1586,22 +1681,61 @@ $("#word-audio").addEventListener("ended", () => {
   if (!pageNarrationActive) stopAudio();
 });
 
-function readingBodyHtml(value) {
+// A passage broken into the blocks the reader draws: subheadings, and paragraphs
+// (long ones split into groups of three sentences). Split out of
+// readingBodyHtml so the page deck can group the SAME blocks into pages — a
+// second splitter would eventually disagree with the reader about where a
+// paragraph starts, and the two designs are showing one story.
+function readingBlocks(value) {
   const lines = String(value || "").replace(/\r\n?/g, "\n").split(/\n+/).map((line) => line.trim()).filter(Boolean);
   const blocks = [];
   for (const line of lines) {
     const isHeading = line.length <= 72 && (!/[.!?]$/.test(line) || /:$/.test(line));
     if (isHeading) {
-      blocks.push(`<h3 class="ebook-subheading">${escapeHtml(line.replace(/:$/, ""))}</h3>`);
+      blocks.push({ heading: true, words: 0, html: `<h3 class="ebook-subheading">${escapeHtml(line.replace(/:$/, ""))}</h3>` });
       continue;
     }
     const sentences = line.match(/[^.!?]+[.!?]+|[^.!?]+$/g) || [line];
     const groups = line.length > 320
       ? Array.from({ length: Math.ceil(sentences.length / 3) }, (_, index) => sentences.slice(index * 3, index * 3 + 3).join(" ").trim())
       : [line];
-    groups.filter(Boolean).forEach((paragraph) => blocks.push(`<p>${escapeHtml(paragraph)}</p>`));
+    groups.filter(Boolean).forEach((paragraph) => blocks.push({ heading: false, words: readingWordCount(paragraph), html: `<p>${escapeHtml(paragraph)}</p>` }));
   }
-  return blocks.join("");
+  return blocks;
+}
+
+function readingBodyHtml(value) {
+  return readingBlocks(value).map((block) => block.html).join("");
+}
+
+// The same blocks gathered into pages for the deck. A paragraph is never split
+// across a page boundary — it is already at most three sentences — so a page
+// runs over budget rather than cutting a sentence group in half, and a page
+// always holds at least one paragraph however long that paragraph is. A
+// subheading opens the page it introduces instead of ending the one before it.
+const READING_PAGE_WORDS = gradeNumber <= 2 ? 60 : 110;
+function readingPages(value, budget = READING_PAGE_WORDS) {
+  const pages = [];
+  let page = [];
+  let words = 0;
+  const flush = () => { if (page.length) pages.push(page.join("")); page = []; words = 0; };
+  for (const block of readingBlocks(value)) {
+    // A subheading opens the page it introduces — but only once the page it is
+    // leaving carries some story. Breaking on every heading gave the Grade 1
+    // lesson-plan texts pages holding a title and one line, which reads as a
+    // bug rather than as a page.
+    if (block.heading) { if (words >= budget / 3) flush(); page.push(block.html); continue; }
+    if (words && words + block.words > budget) flush();
+    page.push(block.html);
+    words += block.words;
+  }
+  flush();
+  // A page of nothing but a subheading has no story on it; fold it forward.
+  return pages.reduce((kept, html) => {
+    if (kept.length && !/<p>/.test(kept[kept.length - 1])) kept[kept.length - 1] += html;
+    else kept.push(html);
+    return kept;
+  }, []);
 }
 
 function readingWordCount(value) {
@@ -1609,8 +1743,64 @@ function readingWordCount(value) {
 }
 
 function renderReading() {
+  if (BOTH_DESIGNS) return renderBothDesigns(renderReadingClassic, renderReadingCarousel, "The same text, one page at a time.");
+  return renderReadingClassic();
+}
+
+// Reading as a deck: one PAGE of the story per slide, not one text. A text runs
+// 160-666 words, so a slide per text would be the wall of words the deck exists
+// to break up; the pages come from readingPages, which groups the reader's own
+// paragraphs to a word budget that is tighter for Grades 1-2 than 3-4.
+//
+// The one thing the deck does NOT carry is the narration. A reading clip is one
+// recording of the whole text — there is no per-page audio — so a Listen button
+// on page four would start the story from page one. The e-book above keeps the
+// player, and this stays a deck for reading with your eyes.
+function renderReadingCarousel() {
+  const esc = escapeHtml;
+  const texts = course.readings;
+  let reading = texts[0];
+  let pages = [];
+
+  const pageSlide = (html, index) => `<section class="gc-slide gc-v${index % 5}"><div class="gc-inner">
+      <span class="gc-eyebrow">${esc(reading.type)} · Page ${index + 1} of ${pages.length}</span>
+      ${index === 0 ? `<h3 class="gc-title">${esc(reading.title)}</h3>${reading.setting ? `<small class="gc-source">${esc(reading.setting)}</small>` : ""}` : ""}
+      <div class="rd-page">${html}</div>
+      ${index === pages.length - 1 ? deckFinish("reading", "I have read this text") : ""}
+    </div></section>`;
+
+  const deck = mountDeck({
+    heading: "Read, listen and imagine",
+    label: "Page",
+    emptyMessage: "This text has no pages yet.",
+    // A unit holds four to six texts, so the deck needs a way to reach them —
+    // the same job the shelf does in the e-book above, in the place every other
+    // deck puts its filter.
+    tools: `<div class="wc-tools">
+        <select id="reading-filter" aria-label="Choose a text">${texts.map((text, index) => `<option value="${esc(text.readingId)}">${index + 1}. ${esc(text.title)}</option>`).join("")}</select>
+        <span class="status-chip" id="rd-pages"></span>
+      </div>`,
+    onClick: (event) => {
+      if (!event.target.closest("[data-deck-finish]")) return undefined;
+      return complete("reading", `${reading.title} marked as read.`);
+    },
+  });
+
+  const inDeck = (selector) => deck.root.querySelector(selector);
+  const drawDeck = () => {
+    reading = texts.find((text) => text.readingId === inDeck("#reading-filter").value) || texts[0];
+    pages = readingPages(reading.passageScript);
+    deck.setSlides(pages.map(pageSlide));
+    inDeck("#rd-pages").textContent = `${pages.length} page${pages.length === 1 ? "" : "s"}`;
+  };
+  inDeck("#reading-filter").addEventListener("change", drawDeck);
+  drawDeck();
+}
+
+function renderReadingClassic() {
+  const { paint, $, $$ } = classicScope();
   let selected = course.readings[0].readingId;
-  $("#app").innerHTML = `${pageHeader("Read, listen and imagine", "Reading & story", "Open a text, listen to the narration, and enjoy it like your own digital book.")}<div class="reading-layout ebook-layout"><nav class="reading-list ebook-library" id="reading-list" aria-label="Reading library"></nav><article class="ebook-reader" id="reading-panel"></article></div>`;
+  paint(`${pageHeader("Read, listen and imagine", "Reading & story", "Open a text, listen to the narration, and enjoy it like your own digital book.")}<div class="reading-layout ebook-layout"><nav class="reading-list ebook-library" id="reading-list" aria-label="Reading library"></nav><article class="ebook-reader" id="reading-panel"></article></div>`);
   const draw = () => {
     $("#reading-list").innerHTML = `<div class="ebook-library-title"><span>${icon("library-big")}</span><div><strong>My reading shelf</strong><small>${course.readings.length} texts in this unit</small></div></div>${course.readings.map((reading, index) => `<button class="reading-button ebook-spine ${selected === reading.readingId ? "active" : ""}" data-reading="${reading.readingId}" type="button" aria-current="${selected === reading.readingId ? "page" : "false"}"><span>${index + 1}</span><div><strong>${escapeHtml(reading.title)}</strong><small>${escapeHtml(reading.type)}</small></div>${icon("chevron-right")}</button>`).join("")}`;
     const reading = course.readings.find((item) => item.readingId === selected);

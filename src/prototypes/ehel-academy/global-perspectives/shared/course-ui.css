@@ -134,13 +134,10 @@
 .gc-inner .gc-practice p { text-align: left; }
 
 /* The shell's Listen button is a .button.secondary, sized for a panel. On a
-   slide it is the control a Stage 1 learner reaches for first, so it takes the
+   slide it is the control a young learner reaches for first, so it takes the
    deck's own button size — .gc-btn's rules, applied to the markup the shell
-   emits, rather than a second button the narration tools would have to learn.
-   Its lucide <i> is empty here (this course never loads the lucide runtime), so
-   the speaker is masked in from an inline shape instead. */
+   emits, rather than a second button the narration tools would have to learn. */
 .gc-inner .voice-button {
-  --gc-speaker: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolygon points='11 5 6 9 2 9 2 15 6 15 11 19 11 5'/%3E%3Cpath d='M15.54 8.46a5 5 0 0 1 0 7.07'/%3E%3Cpath d='M19.07 4.93a10 10 0 0 1 0 14.14'/%3E%3C/svg%3E");
   display: inline-flex; align-items: center; gap: 8px;
   font-weight: var(--weight-medium); font-size: 15px; line-height: 1;
   padding: 10px 18px;
@@ -153,12 +150,15 @@
    callout box nested inside the slide keeps the compact size above — an
    activity carrying four boxes would otherwise be four full-size pills. */
 .gc-inner > .voice-button { gap: 9px; font-size: 18px; padding: 15px 26px; }
-.gc-inner .voice-button::before {
-  content: ""; flex: none; width: 20px; height: 20px; background: currentColor;
-  -webkit-mask: var(--gc-speaker) center / contain no-repeat;
-  mask: var(--gc-speaker) center / contain no-repeat;
-}
-.gc-inner .voice-button i[data-lucide] { display: none; }
+/* The speaker is lucide's, sized to the button.
+   It was drawn here as a CSS mask instead, because this course did not load the
+   lucide runtime and the <i data-lucide> the shell emits rendered as nothing.
+   It loads now, and lucide REPLACES that <i> with an <svg> — so the rule that
+   hid the <i> stopped matching and the button drew two speakers, the real one
+   beside the mask. Sizing lucide's own is what the rest of the design system
+   does (.gc-btn svg), and it leaves nothing to drift. */
+.gc-inner .voice-button svg, .gc-inner .voice-button i { flex: none; width: 17px; height: 17px; }
+.gc-inner > .voice-button svg, .gc-inner > .voice-button i { width: 20px; height: 20px; }
 .gc-inner .voice-button:hover:not([disabled]) { background: var(--gp-dark); transform: translateY(-2px); box-shadow: 0 9px 20px #17324d40; }
 .gc-inner .voice-button:active:not([disabled]) { transform: translateY(0) scale(.97); }
 .gc-inner .voice-button.is-playing { background: var(--gp-dark); }

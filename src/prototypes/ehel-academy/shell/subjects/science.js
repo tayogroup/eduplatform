@@ -617,7 +617,7 @@ function renderLearnMethodDeck() {
       <h3 class="gc-title">${esc(method.title)}</h3>
       <div class="gc-actions">${deckVoice(`${method.title}. Example: ${method.example}. ${method.steps.join(" ")}`, "Listen to method")}</div>
       <ol class="sci-gc-steps">${method.steps.map((text, index) => `<li class="sci-gc-step ${index === 0 ? "active" : ""}" data-method-step="${index}"><span>${index + 1}</span><div><strong>Step ${index + 1}</strong><p>${esc(text)}</p>${deckVoiceSmall(`Step ${index+1}. ${text}`, "Listen to step")}</div></li>`).join("")}</ol>
-      <button class="gc-btn" type="button" data-next-step="${esc(method.id)}">${completed.has(method.id) ? "Method complete ✓" : "Show me the next step →"}</button>
+      <div class="sci-gc-advance"><button class="gc-btn" type="button" data-next-step="${esc(method.id)}">${completed.has(method.id) ? "Method complete ✓" : "Show me the next step →"}</button></div>
       <details class="gc-practice"><summary>Show the worked example</summary><div class="sci-gc-prose">${richText(method.example, "gc-note")}</div></details>
     </div></section>`;
 

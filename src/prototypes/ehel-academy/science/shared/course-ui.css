@@ -375,9 +375,15 @@
    method has up to five steps and they are dimmed rather than hidden, so the
    learner can see how far there is to go — but with long steps that puts the
    control that advances them off the bottom of the card, and the learner is
-   left reading step one with no visible way forward. The white spread shadow is
-   a shelf: without it the step text shows through the gap around the pill. */
-.gc-inner [data-next-step] { position: sticky; bottom: 0; z-index: 3; box-shadow: 0 0 0 9px #fff, 0 6px 16px #17324d33; }
+   left reading step one with no visible way forward.
+
+   What sticks is a full-width band, not the pill. The pill alone was given a
+   white spread shadow as a shelf, and that only masks what is directly behind
+   it: the button is centred and ~250px wide, so at five steps a sentence ran
+   out either side of it and the control looked dropped on top of the text. A
+   band the width of the card has no sides to leak through, and the upward white
+   shadow fades the text into it instead of cutting it off mid-line. */
+.gc-inner .sci-gc-advance { position: sticky; bottom: -1px; z-index: 3; width: 100%; display: grid; justify-items: center; padding: 12px 0 4px; background: #fff; box-shadow: 0 -10px 14px 6px #fff; }
 
 /* An investigation's numbered steps — a plain ordered list, left-aligned. */
 .sci-gc-list { width: 100%; max-width: 520px; margin: 0; padding-left: 22px; text-align: left; display: grid; gap: 7px; color: #33465e; font-size: 15px; line-height: 1.55; }

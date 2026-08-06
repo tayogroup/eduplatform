@@ -130,11 +130,15 @@ const DECK_MAX_STAGE = 4;
 const deckStage = () => stageNumber <= DECK_MAX_STAGE;
 
 // ── Both designs, at Stage 1 only ────────────────────────────────────────────
-// Stage 1 does not choose between the grid and the deck: it shows the original
-// section, then the same content again as slides beneath it. Stages 2-4 stay deck
-// only, Stages 5-8 grid only. English does this at Grades 1-4; Science is Stage 1
-// for now, so this is its own flag rather than a reuse of deckStage().
-const BOTH_DESIGNS = () => stageNumber === 1;
+// Stages 1-4 do not choose between the grid and the deck: each section shows the
+// original design, then the same content again as slides beneath it. Stages 5-8
+// stay grid only. Stage 1 shipped this way first, alone, and 2-4 followed once it
+// was confirmed — which is why this reads as its own name rather than deckStage()
+// even though the two now cover the same stages. They answer different questions:
+// deckStage() is "is there a deck here at all", BOTH_DESIGNS is "is the grid
+// above it". Keep them separate, or dropping one design later means untangling
+// which of the two a given call site meant.
+const BOTH_DESIGNS = () => stageNumber <= DECK_MAX_STAGE;
 
 // Where the original renderers draw, and where the deck mounts, when both share a
 // page. Both are null everywhere else, and classicScope() falls back to the
@@ -250,8 +254,7 @@ function renderOverview() {
   $$('[data-go]').forEach((button) => button.addEventListener("click", () => navigate(button.dataset.go)));
 }
 
-// Stage 1 shows the grid and the deck, in that order; Stages 2-4 the deck
-// alone; Stages 5-8 the grid alone.
+// Stages 1-4 show the grid and the deck, in that order; Stages 5-8 the grid alone.
 function renderScienceWords() {
   if (BOTH_DESIGNS()) return renderBothDesigns(renderScienceWordsClassic, renderScienceWordsDeck, "The same words, one at a time.");
   if (deckStage()) return renderScienceWordsDeck();
@@ -407,8 +410,7 @@ function renderScienceWordsDeck() {
   drawDeck();
 }
 
-// Stage 1 shows the grid and the deck, in that order; Stages 2-4 the deck
-// alone; Stages 5-8 the grid alone.
+// Stages 1-4 show the grid and the deck, in that order; Stages 5-8 the grid alone.
 function renderExploreConcept() {
   if (BOTH_DESIGNS()) return renderBothDesigns(renderExploreConceptClassic, renderExploreConceptDeck, "The same discoveries, one at a time.");
   if (deckStage()) return renderExploreConceptDeck();
@@ -505,8 +507,7 @@ function renderExploreConceptDeck() {
   });
 }
 
-// Stage 1 shows the grid and the deck, in that order; Stages 2-4 the deck
-// alone; Stages 5-8 the grid alone.
+// Stages 1-4 show the grid and the deck, in that order; Stages 5-8 the grid alone.
 function renderVisualModels() {
   if (BOTH_DESIGNS()) return renderBothDesigns(renderVisualModelsClassic, renderVisualModelsDeck, "The same models, one at a time.");
   if (deckStage()) return renderVisualModelsDeck();
@@ -556,8 +557,7 @@ function renderVisualModelsDeck() {
   });
 }
 
-// Stage 1 shows the grid and the deck, in that order; Stages 2-4 the deck
-// alone; Stages 5-8 the grid alone.
+// Stages 1-4 show the grid and the deck, in that order; Stages 5-8 the grid alone.
 function renderLearnMethod() {
   if (BOTH_DESIGNS()) return renderBothDesigns(renderLearnMethodClassic, renderLearnMethodDeck, "The same methods, one at a time.");
   if (deckStage()) return renderLearnMethodDeck();
@@ -648,8 +648,7 @@ function renderLearnMethodDeck() {
 
 const courseTopic = () => unitTopic(course.unit.unitTitle, course.concepts);
 
-// Stage 1 shows the grid and the deck, in that order; Stages 2-4 the deck
-// alone; Stages 5-8 the grid alone.
+// Stages 1-4 show the grid and the deck, in that order; Stages 5-8 the grid alone.
 function renderLesson() {
   if (BOTH_DESIGNS()) return renderBothDesigns(renderLessonClassic, renderLessonDeck, "The same concepts, one at a time.");
   if (deckStage()) return renderLessonDeck();
@@ -701,8 +700,7 @@ function renderLessonDeck() {
   });
 }
 
-// Stage 1 shows the grid and the deck, in that order; Stages 2-4 the deck
-// alone; Stages 5-8 the grid alone.
+// Stages 1-4 show the grid and the deck, in that order; Stages 5-8 the grid alone.
 function renderExamples() {
   if (BOTH_DESIGNS()) return renderBothDesigns(renderExamplesClassic, renderExamplesDeck, "The same examples, one at a time.");
   if (deckStage()) return renderExamplesDeck();
@@ -786,8 +784,7 @@ function renderExamplesDeck() {
   drawDeck();
 }
 
-// Stage 1 shows the grid and the deck, in that order; Stages 2-4 the deck
-// alone; Stages 5-8 the grid alone.
+// Stages 1-4 show the grid and the deck, in that order; Stages 5-8 the grid alone.
 function renderPractice() {
   if (BOTH_DESIGNS()) return renderBothDesigns(renderPracticeClassic, renderPracticeDeck, "The same questions, one at a time.");
   if (deckStage()) return renderPracticeDeck();
@@ -891,8 +888,7 @@ function renderPracticeDeck() {
   });
 }
 
-// Stage 1 shows the grid and the deck, in that order; Stages 2-4 the deck
-// alone; Stages 5-8 the grid alone.
+// Stages 1-4 show the grid and the deck, in that order; Stages 5-8 the grid alone.
 function renderActivities() {
   if (BOTH_DESIGNS()) return renderBothDesigns(renderActivitiesClassic, renderActivitiesDeck, "The same investigations, one at a time.");
   if (deckStage()) return renderActivitiesDeck();
@@ -1205,8 +1201,7 @@ function renderFluency() {
   draw();
 }
 
-// Stage 1 shows the grid and the deck, in that order; Stages 2-4 the deck
-// alone; Stages 5-8 the grid alone.
+// Stages 1-4 show the grid and the deck, in that order; Stages 5-8 the grid alone.
 function renderRealProblems() {
   if (BOTH_DESIGNS()) return renderBothDesigns(renderRealProblemsClassic, renderRealProblemsDeck, "The same problems, one at a time.");
   if (deckStage()) return renderRealProblemsDeck();
@@ -1272,8 +1267,7 @@ function renderRealProblemsDeck() {
   });
 }
 
-// Stage 1 shows the grid and the deck, in that order; Stages 2-4 the deck
-// alone; Stages 5-8 the grid alone.
+// Stages 1-4 show the grid and the deck, in that order; Stages 5-8 the grid alone.
 function renderExplainThinking() {
   if (BOTH_DESIGNS()) return renderBothDesigns(renderExplainThinkingClassic, renderExplainThinkingDeck, "The same prompts, one at a time.");
   if (deckStage()) return renderExplainThinkingDeck();

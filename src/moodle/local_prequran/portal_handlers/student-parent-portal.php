@@ -267,6 +267,10 @@ if ($progressrows) {
         $total = max($total, $counts['done'], 1);
         $courseprogress[] = array_merge([
             'coursekey' => $key,
+            // Subject and stage stay for anything reading the parts; `title` is
+            // the one the page prints, because subject+stage alone cannot tell
+            // Intensive English apart from Primary English at the same stage.
+            'title' => pqpr_course_title($key, $courselabels),
             'subject' => $map ? $map['subject'] : $key,
             'stage' => $map ? $map['stage'] : 0,
             'units_completed' => $counts['done'],

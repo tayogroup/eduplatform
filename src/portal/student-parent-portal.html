@@ -190,7 +190,9 @@
     }));
 
     $("#courseprogress").innerHTML = (d.courseprogress || []).map((c) => {
-      const label = esc(c.subject) + (Number(c.stage) > 0 ? " · Stage " + esc(c.stage) : "");
+      // `title` already carries subject, stage and any distinguishing level;
+      // the subject/stage build is the fallback for an older payload.
+      const label = esc(c.title || (String(c.subject ?? "") + (Number(c.stage) > 0 ? " · Stage " + c.stage : "")));
       const pct = Math.max(0, Math.min(100, Number(c.percent) || 0));
       // Quiz checkpoints for this course: score, pass/fail, and the attempt
       // number when the child had more than one go at it.

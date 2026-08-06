@@ -29,6 +29,12 @@ const PQPR_NON_PERCENT_SECTIONS = ['games'];
  */
 const PQPR_SUPPORT_THRESHOLD = 70;
 
+/**
+ * Level values that say nothing the stage does not already say, so they are
+ * left out of a course title. Compared lowercase. See pqpr_course_title().
+ */
+const PQPR_GENERIC_LEVELS = ['primary', 'lower secondary', 'upper secondary'];
+
 /** `u03` -> `Unit 3`; the fixed unit keys keep their own names. */
 function pqpr_unit_label(string $unit): string {
     if (preg_match('/^u(\d+)$/', $unit, $m)) {
@@ -232,9 +238,9 @@ function pqpr_progress_rows(array $userids, int $limit = 5000): array {
 }
 
 /**
- * coursekey => ['subject' => …, 'stage' => int, 'unitcount' => int] from the
- * curriculum map, in one query instead of one per course. Unmapped keys are
- * absent; callers fall back to the raw key.
+ * coursekey => ['subject' => …, 'stage' => int, 'level' => …, 'unitcount' => int]
+ * from the curriculum map, in one query instead of one per course. Unmapped
+ * keys are absent; callers fall back to the raw key.
  */
 function pqpr_course_labels(array $coursekeys): array {
     global $DB;
@@ -244,21 +250,50 @@ function pqpr_course_labels(array $coursekeys): array {
     }
     [$insql, $inparams] = $DB->get_in_or_equal($coursekeys, SQL_PARAMS_NAMED, 'ck');
     $rows = $DB->get_records_select('local_prequran_curriculum_map',
-        "idnumber $insql", $inparams, '', 'id,idnumber,subject,stage,unitcount');
+        "idnumber $insql", $inparams, '', 'id,idnumber,subject,stage,level,unitcount');
     $out = [];
     foreach ($rows as $row) {
         $out[(string)$row->idnumber] = [
             'subject' => (string)$row->subject !== '' ? (string)$row->subject : (string)$row->idnumber,
             'stage' => (int)$row->stage,
+            'level' => trim((string)$row->level),
             'unitcount' => (int)$row->unitcount,
         ];
     }
     return $out;
 }
 
-/** "Science · Stage 3" for a coursekey, falling back to the key itself. */
+/**
+ * "Science · Stage 3" for a coursekey, falling back to the key itself.
+ *
+ * Subject and stage alone are not unique: the catalog files Intensive English
+ * under subject "English" at stages 1-2, exactly where Primary English already
+ * sits, so both courses came out as "English · Stage 1" and a family could not
+ * tell which child's course was which. `level` is the field that separates
+ * them — but only when it names a distinct programme. The school phases carry
+ * nothing the stage does not already say, and the Quran catalog stores a bare
+ * `0`, so both are ignored. Where the level already contains the subject
+ * ("Intensive English"), it replaces the subject rather than trailing after it.
+ */
 function pqpr_course_title(string $coursekey, array $labels): string {
     $map = $labels[$coursekey] ?? null;
-    $subject = $map ? $map['subject'] : $coursekey;
-    return $map && $map['stage'] > 0 ? $subject . ' · Stage ' . $map['stage'] : $subject;
+    if (!$map) {
+        return $coursekey;
+    }
+    $subject = $map['subject'];
+    $level = (string)($map['level'] ?? '');
+    $generic = $level === ''
+        || is_numeric($level)
+        || in_array(core_text::strtolower($level), PQPR_GENERIC_LEVELS, true);
+
+    $name = $subject;
+    $qualifier = '';
+    if (!$generic) {
+        if (core_text::strpos(core_text::strtolower($level), core_text::strtolower($subject)) !== false) {
+            $name = $level;
+        } else {
+            $qualifier = ' · ' . $level;
+        }
+    }
+    return $name . ($map['stage'] > 0 ? ' · Stage ' . $map['stage'] : '') . $qualifier;
 }

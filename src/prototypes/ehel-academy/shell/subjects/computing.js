@@ -136,12 +136,17 @@ function cambridgeLabel(stage) {
 // consults rather than works through, and a glossary dealt out one row per slide
 // is worse to use than a table.
 //
-// DECK_MAX_STAGE is the gate, and 4 is where the packs themselves divide:
-// Stages 1-4 ship as Teacher & Parent Guides rewritten into learner voice, and
-// Stage 5 up ships student lesson books carried across as written. A learner
-// handed a lesson book is reading; one being read to is being walked through.
-// So Stage 5 and up keep the grids, where a learner scans a page rather than
-// swiping it — the same line English draws between its Grade 4 and Grade 5.
+// ── Both designs on one page (Stages 1-4) ────────────────────────────────────
+// Stages 1-4 get the original section AND the same content as a deck under it,
+// in that order — the arrangement English Grades 1-4 use. Stages 5-8 get the
+// original alone.
+//
+// 4 is where the packs themselves divide: Stages 1-4 ship as Teacher & Parent
+// Guides rewritten into learner voice, and Stage 5 up ships student lesson books
+// carried across as written. A learner handed a lesson book is reading; one
+// being read to is being walked through. So Stage 5 and up keep the grids alone,
+// where a learner scans a page rather than swiping it — the same line English
+// draws between its Grade 4 and Grade 5.
 //
 // Nothing below is per-stage. Stages 2-4 carry the same sections at the same
 // sizes as Stage 1 (five concepts, six discoveries, five models and methods,
@@ -149,15 +154,11 @@ function cambridgeLabel(stage) {
 // The two fields that are not universal — a concept's `checkYourself` and a
 // word's `example`, both absent from parts of Stages 2-3 — were already
 // conditional on the slides that show them.
-const DECK_MAX_STAGE = 4;
-const deckStage = () => stageNumber <= DECK_MAX_STAGE;
-
-// ── Both designs on one page (Stage 1) ───────────────────────────────────────
-// Stage 1 gets the original section AND the same content as a deck under it, in
-// that order — the arrangement English Grades 1-4 use. Stages 2-4 keep the deck
-// INSTEAD of the original; Stages 5-8 keep the original alone. Raising this to 4
-// is what gives the other primary stages both, once Stage 1 has been looked at.
-const BOTH_DESIGNS_MAX_STAGE = 1;
+//
+// There is no longer a "deck instead of the original" stage: the deck-only gate
+// this replaces covered exactly Stages 1-4, so every dispatcher's second branch
+// became unreachable the moment this number reached 4, and it went with it.
+const BOTH_DESIGNS_MAX_STAGE = 4;
 const bothDesigns = () => stageNumber <= BOTH_DESIGNS_MAX_STAGE;
 
 // Both halves draw the SAME section, so both carry the same hooks: #word-search,
@@ -272,6 +273,15 @@ function deckVoiceSmall(text, label = "Listen") {
   return `<button class="gc-btn ghost small" type="button" data-speak="${escapeHtml(text)}" aria-label="${escapeHtml(label)}">${deckIcon("volume-2")} ${escapeHtml(label)}</button>`;
 }
 
+// A slide's diagram, drawn flat. The deck now always sits directly below the
+// original, which draws the same model interactively — so building a second live
+// WebGL context for it puts the identical spinning model on the page twice and
+// doubles the cost of it. Build It at Stage 4 has eight of them: sixteen live
+// contexts on one page, and browsers cap out around sixteen, so the models were
+// one device-limit away from dropping to their static fallback. The learner
+// loses nothing — the model they can drag is a few centimetres up the page.
+const deckDiagram = (topic, index) => computingDiagram(topic, index, { interactive: false });
+
 // Answer checking is the grids' rule, unchanged and in one place: a response
 // counts when it matches the reviewed answer, or either contains the other.
 function answerMatches(response, expected) {
@@ -361,7 +371,6 @@ function renderCodeExamples() {
     return;
   }
   if (bothDesigns()) return bothDesignsPage(() => renderCodeExamplesClassic(examples), () => renderCodeExamplesDeck(examples));
-  if (deckStage()) return renderCodeExamplesDeck(examples);
   return renderCodeExamplesClassic(examples);
 }
 
@@ -505,7 +514,6 @@ function renderDebuggingDeck(bugs) {
 function renderDebugging() {
   const bugs = course.debugging || [];
   if (bothDesigns()) return bothDesignsPage(() => renderDebuggingClassic(bugs), () => renderDebuggingDeck(bugs));
-  if (deckStage()) return renderDebuggingDeck(bugs);
   return renderDebuggingClassic(bugs);
 }
 
@@ -564,7 +572,6 @@ function renderSafetyDeck(items) {
 function renderSafety() {
   const items = course.esafety || [];
   if (bothDesigns()) return bothDesignsPage(() => renderSafetyClassic(items), () => renderSafetyDeck(items));
-  if (deckStage()) return renderSafetyDeck(items);
   return renderSafetyClassic(items);
 }
 
@@ -696,7 +703,6 @@ function renderComputingWords() {
     : (course.reference.terms || []).map(([term, meaning]) => ({ term, meaning, example: "", letter: (term[0] || "?").toUpperCase() }));
   if (!vocab.length) { cRoot().innerHTML = `${pageHeader("Language for computing", "Computing Words", "No key words were provided for this unit.")}`; return; }
   if (bothDesigns()) return bothDesignsPage(() => renderComputingWordsClassic(vocab), () => renderComputingWordsDeck(vocab));
-  if (deckStage()) return renderComputingWordsDeck(vocab);
   return renderComputingWordsClassic(vocab);
 }
 
@@ -767,7 +773,7 @@ function renderExploreConceptDeck() {
   const slides = items.map((item, index) => `<section class="gc-slide gc-v${index % 5}"><div class="gc-inner">
       <span class="gc-eyebrow">Discovery ${index + 1} of ${items.length} · ${esc(item.difficulty)}</span>
       <h3 class="gc-title">${esc(item.title)}</h3>
-      ${computingDiagram(topic, index)}
+      ${deckDiagram(topic, index)}
       <p class="gc-lead">${esc(item.context)}</p>
       <div class="gc-actions">${deckVoice(`${item.title}. ${item.context}. ${item.explanation}`, "Listen to discovery")}</div>
       <div class="cmp-gc-model ${esc(item.modelType)}"><strong>${esc(item.modelType.replaceAll("-", " "))}</strong><span>${esc(item.explanation)}</span></div>
@@ -813,7 +819,6 @@ function renderExploreConceptDeck() {
 
 function renderExploreConcept() {
   if (bothDesigns()) return bothDesignsPage(() => renderExploreConceptClassic(), () => renderExploreConceptDeck());
-  if (deckStage()) return renderExploreConceptDeck();
   return renderExploreConceptClassic();
 }
 
@@ -850,7 +855,7 @@ function renderVisualModelsDeck() {
   const slides = models.map((model, index) => `<section class="gc-slide gc-v${index % 5}"><div class="gc-inner">
       <span class="gc-eyebrow">Model ${index + 1} of ${models.length}${model.outcomeId ? ` · ${esc(model.outcomeId)}` : ""}</span>
       <h3 class="gc-title">${esc(model.title)}</h3>
-      ${computingDiagram(topic, index)}
+      ${deckDiagram(topic, index)}
       <p class="gc-lead">${esc(model.purpose)}</p>
       <div class="gc-actions">${deckVoice(`${model.title}. ${model.purpose}`, "Listen to model")}</div>
       <div class="cmp-gc-cards">${course.concepts.slice(0, 3).map((concept) => `<article><strong>${esc(concept.title)}</strong><span>${esc(concept.example)}</span></article>`).join("")}</div>
@@ -871,7 +876,6 @@ function renderVisualModelsDeck() {
 
 function renderVisualModels() {
   if (bothDesigns()) return bothDesignsPage(() => renderVisualModelsClassic(), () => renderVisualModelsDeck());
-  if (deckStage()) return renderVisualModelsDeck();
   return renderVisualModelsClassic();
 }
 
@@ -936,7 +940,6 @@ function renderLearnMethodDeck() {
 
 function renderLearnMethod() {
   if (bothDesigns()) return bothDesignsPage(() => renderLearnMethodClassic(), () => renderLearnMethodDeck());
-  if (deckStage()) return renderLearnMethodDeck();
   return renderLearnMethodClassic();
 }
 
@@ -968,7 +971,7 @@ function renderLessonDeck() {
   const slides = concepts.map((concept, index) => `<section class="gc-slide gc-v${index % 5}"><div class="gc-inner">
       <span class="gc-eyebrow">Concept ${index + 1} of ${concepts.length}</span>
       <h3 class="gc-title">${esc(concept.title)}</h3>
-      ${computingDiagram(topic, index)}
+      ${deckDiagram(topic, index)}
       <div class="cmp-gc-prose">${richText(concept.explanation, "gc-lead")}</div>
       <p class="gc-note"><span class="field-label">Example:</span> ${esc(concept.example)}</p>
       ${concept.checkYourself ? `<p class="gc-note gc-try">${esc(concept.checkYourself)}</p>` : ""}
@@ -990,7 +993,6 @@ function renderLessonDeck() {
 
 function renderLesson() {
   if (bothDesigns()) return bothDesignsPage(() => renderLessonClassic(), () => renderLessonDeck());
-  if (deckStage()) return renderLessonDeck();
   return renderLessonClassic();
 }
 
@@ -1058,7 +1060,6 @@ function renderExamplesDeck() {
 
 function renderExamples() {
   if (bothDesigns()) return bothDesignsPage(() => renderExamplesClassic(), () => renderExamplesDeck());
-  if (deckStage()) return renderExamplesDeck();
   return renderExamplesClassic();
 }
 
@@ -1135,7 +1136,6 @@ function renderPracticeDeck() {
 
 function renderPractice() {
   if (bothDesigns()) return bothDesignsPage(() => renderPracticeClassic(), () => renderPracticeDeck());
-  if (deckStage()) return renderPracticeDeck();
   return renderPracticeClassic();
 }
 
@@ -1179,7 +1179,7 @@ function renderActivitiesDeck() {
   const slides = activities.map((activity, index) => `<section class="gc-slide gc-v${index % 5}"><div class="gc-inner">
       <span class="gc-eyebrow">Activity ${index + 1} of ${activities.length} · Hands-on</span>
       <h3 class="gc-title">${esc(activity.title)}</h3>
-      ${computingDiagram(topic, index)}
+      ${deckDiagram(topic, index)}
       <p class="gc-note"><span class="field-label">You need:</span> ${esc(activity.materials)}</p>
       <ol class="cmp-gc-list">${activity.steps.map((step) => `<li>${esc(step)}</li>`).join("")}</ol>
       <div class="gc-actions">${deckVoice(`${activity.title}. You need: ${activity.materials}. ${activity.steps.join(" ")}`, "Listen to activity")}</div>
@@ -1214,7 +1214,6 @@ function renderActivitiesDeck() {
 
 function renderActivities() {
   if (bothDesigns()) return bothDesignsPage(() => renderActivitiesClassic(), () => renderActivitiesDeck());
-  if (deckStage()) return renderActivitiesDeck();
   return renderActivitiesClassic();
 }
 
@@ -1521,7 +1520,6 @@ function renderRealProblemsDeck() {
 
 function renderRealProblems() {
   if (bothDesigns()) return bothDesignsPage(() => renderRealProblemsClassic(), () => renderRealProblemsDeck());
-  if (deckStage()) return renderRealProblemsDeck();
   return renderRealProblemsClassic();
 }
 
@@ -1590,7 +1588,6 @@ function renderExplainThinkingDeck() {
 
 function renderExplainThinking() {
   if (bothDesigns()) return bothDesignsPage(() => renderExplainThinkingClassic(), () => renderExplainThinkingDeck());
-  if (deckStage()) return renderExplainThinkingDeck();
   return renderExplainThinkingClassic();
 }
 

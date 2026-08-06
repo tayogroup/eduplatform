@@ -43,7 +43,8 @@ const DEBUG_RULE = [
 const SAFETY_HELP = "If anything online upsets you, frightens you, or asks you for personal information, you have not done anything wrong. Stop, close the page, and tell an adult you trust straight away. Telling someone is always the right move.";
 
 // Four categories exist only on the slide deck, and the deck is Stages 1-4 —
-// DECK_MAX_STAGE in shell/subjects/computing.js. Stage 5 up keeps the grids,
+// BOTH_DESIGNS_MAX_STAGE in shell/subjects/computing.js. Stage 5 up keeps the
+// original design alone,
 // whose activity cards, code listings, debugging rule and safety help carry no
 // Listen button at all, so nothing there can ever request these clips.
 //

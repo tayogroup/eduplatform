@@ -176,6 +176,33 @@ function answerMatches(response, expected) {
 
 const feedbackHtml = (tone, note, body) => `<p class="feedback ${tone}"><span class="status-note">${escapeHtml(note)}</span> ${escapeHtml(body)}</p>`;
 
+// The Example clause a concept narrates, when it has one. 30 Stage 1 concepts
+// no longer do: their `example` was the grown-up's You:/Child: dialogue and
+// moved to `grownUpGuide`, and "…Example: ." is not a sentence.
+//
+// Kept as a helper so the narration template stays flat — it must match
+// tools/lib/ehel-math-narration.js character for character, and the check that
+// holds them together reads both with a regex that a nested template literal
+// cuts in half.
+const exampleClause = (concept) => (concept.example ? `. Example: ${concept.example}` : "");
+
+// The grown-up's half of a Stage 1 concept — "How to teach it: Place 5 dates in
+// a row…", and the You:/Child: dialogue that goes with it.
+//
+// It used to be joined onto the end of the explanation, so the slide read it to
+// the learner as if it were their lesson. It now lives in its own field
+// (tools/split-ehel-math-grownup-guide.mjs) and is rendered here: closed by
+// default, addressed to the person it is written for, and never narrated. The
+// Listen button reads the learner's text only — narrating a script that says
+// "take the child's finger in yours" to the child is the same defect as showing
+// it to them, and it would be paid for by the character.
+function grownUpGuide(item) {
+  if (!item.grownUpGuide) return "";
+  return `<details class="gc-practice gc-grownup"><summary>${deckIcon("eye")} For the grown-up</summary>
+      <div class="gc-prose">${richText(item.grownUpGuide)}</div>
+    </details>`;
+}
+
 // ===================== section renderers (verbatim) =====================
 function renderOverview() {
   $("#app").innerHTML = `${pageHeader(`${(course.stage || course.grade).label} · ${course.term.label} · Unit ${course.unit.unitNo}`, course.unit.unitTitle, course.unit.unitOverview)}
@@ -322,6 +349,7 @@ function renderExploreConceptDeck() {
         <button class="gc-btn ghost" type="button" data-hint-discovery="${esc(item.id)}">${deckIcon("lightbulb")} Hint</button>
       </div>
       <div data-discovery-feedback="${esc(item.id)}" role="status" aria-live="polite" aria-atomic="true"></div>
+      ${grownUpGuide(item)}
     </div></section>`);
 
   mountDeck({
@@ -378,7 +406,8 @@ function renderVisualModelsDeck() {
       ${mathDiagram(topic, index)}
       <p class="gc-lead">${esc(model.purpose)}</p>
       <div class="gc-actions">${deckVoice(`${model.title}. ${model.purpose}`, "Listen to model")}</div>
-      <div class="model-concept-cards">${course.concepts.slice(0, 3).map((concept) => `<article><strong>${esc(concept.title)}</strong><span>${esc(concept.example)}</span></article>`).join("")}</div>
+      <div class="model-concept-cards">${course.concepts.slice(0, 3).filter((concept) => concept.example).map((concept) => `<article><strong>${esc(concept.title)}</strong><span>${esc(concept.example)}</span></article>`).join("")}</div>
+      ${grownUpGuide(model)}
       ${index === models.length - 1 ? deckFinish("visuals", "I explored the models") : ""}
     </div></section>`);
 
@@ -535,9 +564,10 @@ function renderLessonDeck() {
       <span class="gc-eyebrow">Concept ${index + 1} of ${concepts.length}</span>
       <h3 class="gc-title">${esc(concept.title)}</h3>
       ${mathDiagram(topic, index)}
-      <div class="gc-actions">${deckVoice(`${concept.title}. ${spokenText(concept.explanation)}. Example: ${concept.example}`, "Listen to concept")}</div>
+      <div class="gc-actions">${deckVoice(`${concept.title}. ${spokenText(concept.explanation)}${exampleClause(concept)}`, "Listen to concept")}</div>
       <div class="gc-prose">${richText(concept.explanation)}</div>
-      <p class="gc-note gc-try"><span class="field-label">Example:</span> ${esc(concept.example)}</p>
+      ${concept.example ? `<p class="gc-note gc-try"><span class="field-label">Example:</span> ${esc(concept.example)}</p>` : ""}
+      ${grownUpGuide(concept)}
       ${index === concepts.length - 1 ? deckFinish("lesson", "I studied the concepts") : ""}
     </div></section>`);
 
@@ -556,7 +586,7 @@ function renderLessonDeck() {
 function renderLesson() {
   if (deckStage()) return renderLessonDeck();
   const topic = courseTopic();
-  const concepts = course.concepts.map((concept, index) => `<article class="panel concept-card"><span class="eyebrow">Concept ${index + 1}</span><h2>${escapeHtml(concept.title)}</h2>${mathDiagram(topic, index)}<div class="concept-body">${richText(concept.explanation)}</div><p class="example"><span class="field-label">Example:</span> ${escapeHtml(concept.example)}</p>${voiceButton(`${concept.title}. ${spokenText(concept.explanation)}. Example: ${concept.example}`, "Listen to concept")}</article>`).join("");
+  const concepts = course.concepts.map((concept, index) => `<article class="panel concept-card"><span class="eyebrow">Concept ${index + 1}</span><h2>${escapeHtml(concept.title)}</h2>${mathDiagram(topic, index)}<div class="concept-body">${richText(concept.explanation)}</div>${concept.example ? `<p class="example"><span class="field-label">Example:</span> ${escapeHtml(concept.example)}</p>` : ""}${voiceButton(`${concept.title}. ${spokenText(concept.explanation)}${exampleClause(concept)}`, "Listen to concept")}${grownUpGuide(concept)}</article>`).join("");
   $("#app").innerHTML = `${pageHeader("Teacher lesson", course.unit.unitTitle, "Read the source-grounded concepts with a labelled diagram for each, and follow the complete ElevenLabs narration.")}
     <div class="concept-grid">${concepts}</div>
     <p><button class="button primary" id="lesson-done" type="button">I studied the concepts ✓</button></p>`;
@@ -1100,6 +1130,7 @@ function renderExplainThinkingDeck() {
       <div data-reasoning-feedback="${esc(item.id)}" role="status" aria-live="polite" aria-atomic="true"></div>
       <details class="gc-practice"><summary>Key ideas</summary><ul class="checklist">${item.keyIdeas.map((idea) => `<li>${esc(idea)}</li>`).join("")}</ul></details>
       <details class="gc-practice"><summary>Show model explanation</summary><p class="gc-note">${esc(item.modelAnswer)}</p><div class="gc-actions">${deckVoiceSmall(item.modelAnswer, "Listen to model answer")}</div></details>
+      ${grownUpGuide(item)}
     </div></section>`);
 
   mountDeck({

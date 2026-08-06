@@ -44,10 +44,21 @@ const SYMBOLS = [["+", "combine or add", "Use when quantities join"], ["−", "f
 // Categories with no Listen button (fluency, the reference rule cards) are
 // absent on purpose, as is the AI tutor, whose text does not exist until a
 // learner types.
+// The Example clause is conditional because 30 Stage 1 concepts no longer have
+// one: their `example` was the grown-up's You:/Child: dialogue, which moved to
+// `grownUpGuide`. Appending it unconditionally would narrate "…Example: ." and
+// buy a clip under a hash the app never asks for.
+//
+// It is a helper rather than a ternary inside the template so that the template
+// stays flat. check-ehel-audio-coverage.mjs reads these templates with a regex
+// that stops at the first backtick, and a nested `${x ? `…` : ""}` cuts it in
+// half — the comparison then fails against a UI string that is in fact correct.
+const exampleClause = (concept) => (concept.example ? `. Example: ${concept.example}` : "");
+
 function textsForUnit(unit, category) {
   if (DECK_ONLY.has(category) && stageOf(unit) > DECK_MAX_STAGE) return [];
   switch (category) {
-    case "concepts": return (unit.concepts || []).map((c) => `${c.title}. ${c.explanation}. Example: ${c.example}`);
+    case "concepts": return (unit.concepts || []).map((c) => `${c.title}. ${c.explanation}${exampleClause(c)}`);
     case "explorations": return (unit.explorations || []).map((e) => `${e.title}. ${e.context}. ${e.explanation}`);
     case "explorationQuestions": return (unit.explorations || []).map((e) => e.prompt);
     case "visualModels": return (unit.visualModels || []).map((m) => `${m.title}. ${m.purpose}`);

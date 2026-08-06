@@ -121,7 +121,10 @@ if (!/voiceButton\s*\(/.test(ui)) {
 // appears in course-ui.js, mapped to the generator category that reproduces it,
 // or to null where the text cannot exist ahead of time.
 const SHARED = [
-  ["`${concept.title}. ${spokenText(concept.explanation)}. Example: ${concept.example}`", "concepts"],
+  // Concepts are listed per subject below, not here: Mathematics narrates its
+  // Example clause conditionally (30 Stage 1 concepts have no example any more,
+  // their dialogue having moved to the grown-up's guide) and Science still
+  // appends it unconditionally. One shared entry cannot describe both.
   ["`${item.title}. ${item.context}. ${item.explanation}`", "explorations"],
   ["`${model.title}. ${model.purpose}`", "visualModels"],
   ["`${method.title}. Example: ${method.example}. ${method.steps.join(\" \")}`", "methods"],
@@ -157,9 +160,13 @@ const MATH_DECK = [
   ["`The sign ${card.title} means ${card.body}. ${card.note}.`", "symbols"],
   ["`${activity.title}. You need: ${activity.materials}. ${activity.steps.join(\" \")}`", "activities"],
 ];
+const CONCEPTS = {
+  science: [["`${concept.title}. ${spokenText(concept.explanation)}. Example: ${concept.example}`", "concepts"]],
+  mathematics: [["`${concept.title}. ${spokenText(concept.explanation)}${exampleClause(concept)}`", "concepts"]],
+};
 const EXPECTED = new Map(subject === "science"
-  ? SHARED
-  : [...SHARED.filter(([argument]) => !WORD_CARDS.some(([w]) => w === argument)), ...MATH_DECK]);
+  ? [...SHARED, ...CONCEPTS.science]
+  : [...SHARED.filter(([argument]) => !WORD_CARDS.some(([w]) => w === argument)), ...CONCEPTS.mathematics, ...MATH_DECK]);
 
 // Buttons live in two places once a subject is on the shell: the renderers are
 // in the subject module, but the generic ones — the page-narration handler and

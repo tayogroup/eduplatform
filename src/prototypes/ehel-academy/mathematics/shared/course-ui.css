@@ -315,6 +315,16 @@
 .gc-inner .discovery-model strong { text-transform: capitalize; font-weight: var(--weight-medium); }
 .gc-inner .discovery-model span { color: #33465e; font-size: 15px; line-height: 1.5; }
 .gc-inner .feedback { width: 100%; max-width: 520px; }
+/* The grown-up's guide, closed by default. It is deliberately quieter than the
+   learner's own text and marked in a different colour, so nobody mistakes it for
+   part of the lesson — it is the one thing on the slide not addressed to the
+   child sitting in front of it. */
+.gc-grownup > summary { color: #6b7f90; }
+.gc-grownup .gc-prose { border-left: 3px solid #cfdae3; padding-left: 13px; color: #52627a; }
+.gc-grownup .gc-prose > p { font-size: 15px; }
+/* Same treatment where the grid design shows it (Stage 2+ carries no guide
+   today, but the renderer is shared and would show one if a pack ever had it). */
+.concept-card details.gc-grownup { margin-top: 12px; }
 /* The deck's own Listen button carries the subject colour, so it reads as the
    mathematics course rather than the English one it borrows its shape from. */
 .gc-btn { background: var(--teal); }

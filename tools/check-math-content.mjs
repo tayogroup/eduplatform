@@ -15,24 +15,46 @@ import { fileURLToPath } from "node:url";
 const here = path.dirname(fileURLToPath(import.meta.url));
 const mathRoot = path.join(here, "..", "src", "prototypes", "ehel-academy", "mathematics");
 
+// How much learner-facing teaching a concept must carry.
+//
+// 300 was calibrated when a Stage 1 explanation still had the grown-up's script
+// joined onto the end of it ("How to teach it: Place 5 dates in a row. Take the
+// child's finger in yours…"), so the gate was counting the adult's words as the
+// learner's lesson and passing on that basis. Since that text moved to
+// `grownUpGuide`, the number it measures is the real one — and at Stage 1 the
+// real one is smaller, because a complete explanation for a five-year-old is
+// two or three sentences, not seven.
+//
+// 150 is a FLOOR, not a target: below it an explainer is one short sentence,
+// which cannot teach a concept at any age. The shortest Stage 1 explainer today
+// is 153 characters and the median is 289, so this gate is deliberately quiet
+// on current content — it is here to catch a regression, not to grade prose.
 const MIN_EXPLANATION = 300;
+const MIN_EXPLANATION_BY_GRADE = { "grade-1": 150 };
+const minExplanation = (gradeDir) => MIN_EXPLANATION_BY_GRADE[gradeDir] ?? MIN_EXPLANATION;
 const MAX_PARAGRAPHS = 40;
 
 // Text written to whoever is sitting with the learner, not to the learner.
 // "the child" is deliberately absent: Stage 3 word problems legitimately say
 // "the child with 8 collected 8/30", and flagging those would be wrong.
 //
-// Year 1 is exempt (ADULT_VOICE_EXEMPT below). A five-year-old cannot read a
-// course, so Stage 1 is a parent-led one by design: it is sourced from a parent
-// guide and keeps its "How to teach it:" sections and "🗣 Suggested dialogue
-// You: / Child:" blocks, which only make sense addressed to the adult. Holding
-// it to the solo-learner rule produced prose that addressed the learner in the
-// explainer and the parent in the dialogue two lines later.
+// Stage 1 used to be exempt. A five-year-old cannot read a course alone, so its
+// pack is a parent-led one by design, and it kept the guide's "How to teach it:"
+// sections and "🗣 Suggested dialogue You: / Child:" blocks inline — which only
+// make sense addressed to the adult, and which the slide deck then put on the
+// learner's own slide.
+//
+// The exemption is gone because the premise is: the adult's script now lives in
+// its own `grownUpGuide` field (tools/split-ehel-math-grownup-guide.mjs), read
+// by the grown-up who at five and six is in the room by design, and everything
+// left in a learner field is written to the learner. So Stage 1 is held to the
+// same rule as every other stage, and `grownUpGuide` is the one field exempt
+// from it — adult voice is what it is for.
 const ADULT_ADDRESSED = /\byour child\b|\b(?:let|ask|encourage|remind|tell|watch|guide) (?:the|your) child\b|the child'?s own work|read alone by the child|taught with you|teaches? (?:the child|children) that|helps? the child|many young children|the child'?s first|children learn [^.]*best|this guide is written for/i;
 const TEACHER_REQUIRED = /\bhand (?:it )?in to your teacher\b|\bask your teacher to mark\b|\bwait for your teacher\b|\byour teacher will tell you\b|explain each step to your teacher or tutor\.$/i;
 const SOURCE_MARKER = /\[(?:Star|Tip|Fact|Look|Safety|Note|Warning|Key|!)\]/;
 // Grades whose course is led by an adult rather than read solo.
-const ADULT_VOICE_EXEMPT = new Set(["grade-1"]);
+const ADULT_VOICE_EXEMPT = new Set();
 
 // Sections the app renders unconditionally; an empty one is a blank screen.
 const REQUIRED_SECTIONS = ["outcomes", "concepts", "practice", "fluency", "realProblems",
@@ -64,10 +86,19 @@ const warnings = [];
 const fail = (unit, message) => failures.push(`${unit}: ${message}`);
 const warn = (unit, message) => warnings.push(`${unit}: ${message}`);
 
+// `grownUpGuide` is skipped by key: it is the grown-up's own script, kept in the
+// grown-up's own voice on purpose, and the app never shows it to a learner. Every
+// other string in the unit is something a learner can read.
+const LEARNER_EXEMPT_KEYS = new Set(["grownUpGuide"]);
 const walk = (value, visit) => {
   if (typeof value === "string") visit(value);
   else if (Array.isArray(value)) value.forEach((item) => walk(item, visit));
-  else if (value && typeof value === "object") Object.values(value).forEach((item) => walk(item, visit));
+  else if (value && typeof value === "object") {
+    for (const [key, item] of Object.entries(value)) {
+      if (LEARNER_EXEMPT_KEYS.has(key)) continue;
+      walk(item, visit);
+    }
+  }
 };
 
 let unitCount = 0, conceptCount = 0, questionCount = 0, teachingChars = 0;
@@ -85,7 +116,7 @@ for (const gradeDir of fs.readdirSync(mathRoot).filter((n) => /^grade-\d+$/.test
       conceptCount += 1;
       const explanation = String(concept.explanation || "");
       teachingChars += explanation.length + String(concept.example || "").length;
-      if (explanation.length < MIN_EXPLANATION) fail(label, `concept "${concept.title}" explanation is ${explanation.length} chars — too thin to teach unaided`);
+      if (explanation.length < minExplanation(gradeDir)) fail(label, `concept "${concept.title}" explanation is ${explanation.length} chars — too thin to teach unaided`);
       // A trailing ellipsis is only damage when it cuts a word off. After a
       // digit it is the author continuing a sequence on purpose — "count on in
       // threes: 0, 3, 6, 9, 12, 15, 18…" is complete as written.

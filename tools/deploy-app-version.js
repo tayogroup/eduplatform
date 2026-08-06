@@ -185,7 +185,12 @@ function shellSubjectModule(subject) {
     // uploads. The entry module would fail to import and the whole course would
     // render blank, not merely lose its tutor. Matching the filename shape keeps
     // this true for the next component without another rule here.
-    .replace(/\.\.\/([A-Za-z0-9_-]+\.js)(\?v=[^"']*)?/g, "./$1");
+    .replace(/\.\.\/([A-Za-z0-9_-]+\.js)(\?v=[^"']*)?/g, "./$1")
+    // A subjects/ sibling is already written `./x.js`, but keeps its ?v= — and
+    // shellCore() strips the query on its side, so the same file would arrive
+    // under two URLs and be instantiated twice. Inside v{TAG}/ the immutable
+    // path is what guarantees freshness; the query is redundant either way.
+    .replace(/\.\/([A-Za-z0-9_-]+\.js)\?v=[^"']*/g, "./$1");
 }
 
 // The shell/ siblings a subject module imports, course-app.js aside — it is
@@ -193,9 +198,17 @@ function shellSubjectModule(subject) {
 // a component added later ships without this file changing.
 function shellComponents(subject) {
   const src = fs.readFileSync(path.join(EHEL, "shell", "subjects", `${subject}.js`), "utf8");
-  return [...src.matchAll(/^import\s[^"']*["']\.\.\/([A-Za-z0-9_-]+\.js)(?:\?[^"']*)?["']/gm)]
-    .map((m) => m[1])
-    .filter((name) => name !== "course-app.js");
+  // BOTH sibling shapes a subject module uses: `../x.js` is a file in shell/,
+  // `./x.js` one in shell/subjects/ — english's word-pictures.js. Only `../`
+  // was matched, so word-pictures.js was never carried into v{TAG}/, the entry
+  // module 404ed on its own import, and the course never booted at all: no
+  // console error the app could show, just "Preparing your English lesson…"
+  // forever. The self-containment check passed because `./word-pictures.js`
+  // does not reach outside the version path — it only pointed at a file the
+  // release had not put there.
+  return [...src.matchAll(/^import\s[^"']*["'](\.\.?)\/([A-Za-z0-9_-]+\.js)(?:\?[^"']*)?["']/gm)]
+    .map((m) => ({ name: m[2], from: `${m[1]}/${m[2]}`, src: path.join(EHEL, "shell", m[1] === ".." ? "." : "subjects", m[2]) }))
+    .filter((item) => item.name !== "course-app.js");
 }
 function shellCore() {
   return fs.readFileSync(path.join(EHEL, "shell", "course-app.js"), "utf8")
@@ -254,10 +267,9 @@ function buildItems() {
       // Throw rather than skip: a component the module imports but that never
       // reaches v{TAG}/ is a bundle that cannot load at all. buildItems() runs
       // before the first upload, so failing here leaves the live release intact.
-      for (const name of shellComponents(subject)) {
-        const src = path.join(EHEL, "shell", name);
+      for (const { name, from, src } of shellComponents(subject)) {
         if (!fs.existsSync(src)) {
-          throw new Error(`shell/subjects/${subject}.js imports ../${name}, which is not in the working tree — `
+          throw new Error(`shell/subjects/${subject}.js imports ${from}, which is not in the working tree — `
             + "the release would ship an entry module that cannot resolve it.");
         }
         items.push({ remote: `app/${subject}/${TAG}/${name}`, buf: fs.readFileSync(src) });

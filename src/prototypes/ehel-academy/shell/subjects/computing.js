@@ -152,6 +152,64 @@ function cambridgeLabel(stage) {
 const DECK_MAX_STAGE = 4;
 const deckStage = () => stageNumber <= DECK_MAX_STAGE;
 
+// ── Both designs on one page (Stage 1) ───────────────────────────────────────
+// Stage 1 gets the original section AND the same content as a deck under it, in
+// that order — the arrangement English Grades 1-4 use. Stages 2-4 keep the deck
+// INSTEAD of the original; Stages 5-8 keep the original alone. Raising this to 4
+// is what gives the other primary stages both, once Stage 1 has been looked at.
+const BOTH_DESIGNS_MAX_STAGE = 1;
+const bothDesigns = () => stageNumber <= BOTH_DESIGNS_MAX_STAGE;
+
+// Both halves draw the SAME section, so both carry the same hooks: #word-search,
+// [data-check], [data-hint], [data-answer], [data-activity-done], [data-example]
+// and thirty-odd writes to #app all exist twice on a both-designs page. The
+// original paints first, so a document-wide lookup from either half reaches the
+// other's controls — the deck would filter itself by the lab's search box, and
+// the original's [data-check] binding would capture the deck's buttons too.
+//
+// So each design owns a region and queries inside it. Both variables are null on
+// every other page, where these helpers fall back to the document and behave
+// exactly as $ and $$ did — which is why Stages 2-8 are unaffected by the switch.
+let classicRegion = null;
+let deckRegion = null;
+// The original renderers assign to their root's innerHTML. On a both-designs
+// page that root is the classic region, not #app — otherwise the first redraw
+// from a subtab or a Learned mark erases the deck mounted below.
+const cRoot = () => classicRegion || $("#app");
+const c$ = (selector) => (classicRegion || document).querySelector(selector);
+const c$$ = (selector) => [...(classicRegion || document).querySelectorAll(selector)];
+const d$ = (selector) => (deckRegion || document).querySelector(selector);
+const d$$ = (selector) => [...(deckRegion || document).querySelectorAll(selector)];
+
+// The page: original first, deck second, each in its own region. The deck mounts
+// with fullBleed off so it sits IN the page rather than being the page — no
+// body.gc-full, because the original above it still needs the normal chrome.
+function bothDesignsPage(renderClassic, renderDeck) {
+  $("#app").innerHTML = `<div class="both-designs">
+      <div class="classic-design" id="classic-design"></div>
+      <div class="deck-design" id="deck-design">
+        <div class="deck-design-head"><span class="eyebrow">The same section, one card at a time</span><p>Swipe or use the arrows. Everything above is here too.</p></div>
+        <div id="deck-host"></div>
+      </div>
+    </div>`;
+  classicRegion = $("#classic-design");
+  deckRegion = null;
+  renderClassic();
+  // Only now: the deck's own mount must not resolve through the classic region,
+  // and its controls must not be found by the original's still-live listeners.
+  deckRegion = $("#deck-design");
+  renderDeck();
+}
+
+// Every deck renderer mounts through this, so where a deck goes is decided once.
+// On a both-designs page it mounts into the host below the original, with
+// full-bleed off — body.gc-full would strip the padding and hide the page header
+// belonging to the original still sitting above it. Everywhere else this is
+// mountDeck's own default and nothing changes.
+const mountSectionDeck = (options) => (bothDesigns()
+  ? mountDeck({ ...options, mount: d$("#deck-host"), fullBleed: false })
+  : mountDeck(options));
+
 // Computing never loads the lucide runtime (it is one of the four shell-voice
 // subjects), so the deck draws inline SVG. The subject helpers are passed as
 // wrappers, not values: bind(ctx) fills them in after this module is evaluated.
@@ -297,17 +355,22 @@ function renderToolkit() {
 function renderCodeExamples() {
   const examples = course.codeExamples || [];
   if (!examples.length) {
-    $("#app").innerHTML = `${pageHeader("Read it, then type it", "Code Examples", "This unit teaches without written code — work through the concepts, activities and project instead.")}
+    cRoot().innerHTML = `${pageHeader("Read it, then type it", "Code Examples", "This unit teaches without written code — work through the concepts, activities and project instead.")}
       <section class="panel"><h2>Nothing to type in this unit</h2><p>The ideas here are taught with words, pictures and things you do by hand. Head to <strong>Build It</strong> to put them into practice.</p><button class="button primary" data-go="activities" type="button">Go to Build It →</button></section>`;
-    $$('[data-go]').forEach((button) => button.addEventListener("click", () => navigate(button.dataset.go)));
+    c$$('[data-go]').forEach((button) => button.addEventListener("click", () => navigate(button.dataset.go)));
     return;
   }
+  if (bothDesigns()) return bothDesignsPage(() => renderCodeExamplesClassic(examples), () => renderCodeExamplesDeck(examples));
   if (deckStage()) return renderCodeExamplesDeck(examples);
+  return renderCodeExamplesClassic(examples);
+}
+
+function renderCodeExamplesClassic(examples) {
   const copied = new Set(progress.codeCopied || []);
   const draw = () => {
-    $("#app").innerHTML = `${pageHeader("Read it, then type it", "Code Examples", `Study each listing one line at a time. Say out loud what a line does before you type it — that is how you learn to read code, not just copy it.`)}
+    cRoot().innerHTML = `${pageHeader("Read it, then type it", "Code Examples", `Study each listing one line at a time. Say out loud what a line does before you type it — that is how you learn to read code, not just copy it.`)}
       <div class="task-grid">${examples.map((example, index) => `<article class="panel task-card"><span class="eyebrow">Listing ${index + 1} · ${escapeHtml(example.language)}</span><h2>${escapeHtml(example.title)}</h2>${example.intro ? `<p>${escapeHtml(example.intro)}</p>` : ""}<pre class="code-block" aria-label="${escapeHtml(example.language)} listing"><code>${example.lines.map((line) => escapeHtml(line)).join("\n")}</code></pre><p class="example">${escapeHtml(example.explanation)}</p><div class="question-actions"><button class="button secondary" data-copy-code="${index}" type="button">Copy the code</button><button class="button primary ${copied.has(example.id) ? "" : ""}" data-code-done="${example.id}" type="button">${copied.has(example.id) ? "✓ Typed it in" : "I typed this in ✓"}</button></div></article>`).join("")}</div>`;
-    $$('[data-copy-code]').forEach((button) => button.addEventListener("click", async () => {
+    c$$('[data-copy-code]').forEach((button) => button.addEventListener("click", async () => {
       const example = examples[Number(button.dataset.copyCode)];
       try {
         await navigator.clipboard.writeText(example.lines.join("\n"));
@@ -318,7 +381,7 @@ function renderCodeExamples() {
         toast("Copying is blocked here — type the lines in from the screen.");
       }
     }));
-    $$('[data-code-done]').forEach((button) => button.addEventListener("click", () => {
+    c$$('[data-code-done]').forEach((button) => button.addEventListener("click", () => {
       copied.add(button.dataset.codeDone);
       progress.codeCopied = [...copied];
       saveProgress();
@@ -350,7 +413,7 @@ function renderCodeExamplesDeck(examples) {
       ${index === examples.length - 1 ? deckFinish("code", "I worked through the code") : ""}
     </div></section>`);
 
-  mountDeck({
+  mountSectionDeck({
     heading: "Read it, then type it",
     label: "Listing",
     slides,
@@ -418,7 +481,7 @@ function renderDebuggingDeck(bugs) {
       ${deckFinish("debug", "I practised debugging")}
     </div></section>`);
 
-  mountDeck({
+  mountSectionDeck({
     heading: "Every programmer does this",
     // "Slide", not "Bug": the deck ends on the rule rather than on a bug, so a
     // counter reading "Bug 6 of 6" would contradict the eyebrow on every slide
@@ -441,21 +504,26 @@ function renderDebuggingDeck(bugs) {
 
 function renderDebugging() {
   const bugs = course.debugging || [];
+  if (bothDesigns()) return bothDesignsPage(() => renderDebuggingClassic(bugs), () => renderDebuggingDeck(bugs));
   if (deckStage()) return renderDebuggingDeck(bugs);
+  return renderDebuggingClassic(bugs);
+}
+
+function renderDebuggingClassic(bugs) {
   const solved = new Set(progress.bugsSolved || []);
   const draw = () => {
-    $("#app").innerHTML = `${pageHeader("Every programmer does this", "Debug It", "A bug is not a failure — finding one is the job. Read the symptom, work out the cause yourself, then check.")}
+    cRoot().innerHTML = `${pageHeader("Every programmer does this", "Debug It", "A bug is not a failure — finding one is the job. Read the symptom, work out the cause yourself, then check.")}
       <section class="panel support-strip"><span>Read the symptom</span><span>Predict the cause</span><span>Check yourself</span><span>Apply the fix</span><span>Test again</span></section>
       <div class="task-grid">${bugs.map((bug, index) => `<article class="panel question-card"><span class="eyebrow">Bug ${index + 1}</span><h3>${escapeHtml(bug.symptom)}</h3><p>What do you think is causing this? Say your answer out loud before you open the reveal.</p><details data-bug="${index}"><summary>Show the cause and the fix</summary><p class="rule-box"><span class="field-label">Cause:</span> ${escapeHtml(bug.cause)}</p><p class="example"><span class="field-label">Fix:</span> ${escapeHtml(bug.fix)}</p></details>${voiceButton(`${bug.symptom}. Cause: ${bug.cause}. Fix: ${bug.fix}`, "Listen to this bug")}<button class="button secondary" data-bug-done="${index}" type="button">${solved.has(String(index)) ? "✓ I can fix this one" : "I can fix this one"}</button></article>`).join("")}</div>
       <section class="panel"><h3>The rule that always works</h3><ol class="path-list">${DEBUG_RULE.map((step, index) => `<li><span>${index + 1}</span><span>${escapeHtml(step)}</span></li>`).join("")}</ol></section>
       <p><button class="button primary" id="debug-done" type="button">I practised debugging ✓</button></p>`;
-    $$('[data-bug-done]').forEach((button) => button.addEventListener("click", () => {
+    c$$('[data-bug-done]').forEach((button) => button.addEventListener("click", () => {
       solved.add(button.dataset.bugDone);
       progress.bugsSolved = [...solved];
       saveProgress();
       draw();
     }));
-    $("#debug-done").addEventListener("click", () => { complete("debug", "Debugging practised."); navigate("games"); });
+    c$("#debug-done").addEventListener("click", () => { complete("debug", "Debugging practised."); navigate("games"); });
   };
   draw();
 }
@@ -479,7 +547,7 @@ function renderSafetyDeck(items) {
       <div class="gc-actions">${deckVoice(SAFETY_HELP_NARRATION, "Listen to this")}</div>
       ${deckFinish("safety", "I know these rules")}
     </div></section>`);
-  mountDeck({
+  mountSectionDeck({
     heading: "Being safe and kind online",
     // "Slide" for the same reason as Debug It: the deck ends on what to do when
     // something goes wrong, which is not one of the unit's numbered rules.
@@ -495,12 +563,17 @@ function renderSafetyDeck(items) {
 
 function renderSafety() {
   const items = course.esafety || [];
+  if (bothDesigns()) return bothDesignsPage(() => renderSafetyClassic(items), () => renderSafetyDeck(items));
   if (deckStage()) return renderSafetyDeck(items);
-  $("#app").innerHTML = `${pageHeader("Being safe and kind online", "Stay Safe Online", "These rules matter in every unit, not just this one. Read them, then say each one back in your own words.")}
+  return renderSafetyClassic(items);
+}
+
+function renderSafetyClassic(items) {
+  cRoot().innerHTML = `${pageHeader("Being safe and kind online", "Stay Safe Online", "These rules matter in every unit, not just this one. Read them, then say each one back in your own words.")}
     <div class="task-grid">${items.map((item, index) => `<article class="panel task-card"><span class="eyebrow">Rule ${index + 1}</span><h2>${escapeHtml(item.title)}</h2><p>${escapeHtml(item.text)}</p>${voiceButton(`${item.title}. ${item.text}`, "Listen to this rule")}</article>`).join("")}</div>
     <section class="panel"><h3>If something goes wrong</h3><p>${escapeHtml(SAFETY_HELP)}</p></section>
     <p><button class="button primary" id="safety-done" type="button">I know these rules ✓</button></p>`;
-  $("#safety-done").addEventListener("click", () => { complete("safety", "Online safety rules reviewed."); navigate("explain"); });
+  c$("#safety-done").addEventListener("click", () => { complete("safety", "Online safety rules reviewed."); navigate("explain"); });
 }
 
 function renderProject() {
@@ -570,7 +643,7 @@ function renderComputingWordsDeck(vocab) {
       ${position === shown.length - 1 ? deckFinish("words", "I explored the computing words") : ""}
     </div></section>`;
 
-  const deck = mountDeck({
+  const deck = mountSectionDeck({
     heading: "Language for computing",
     label: "Word",
     emptyMessage: "No matching words. Clear the search to see them all.",
@@ -599,19 +672,19 @@ function renderComputingWordsDeck(vocab) {
       progress.knownWords = [...known];
       saveProgress();
       if (known.size === vocab.length) complete("words", "All computing words learned.");
-      $("#wc-known").textContent = `${known.size} of ${vocab.length} learned`;
+      d$("#wc-known").textContent = `${known.size} of ${vocab.length} learned`;
       const position = shown.findIndex((item) => item.index === index);
       if (position >= 0) deck.redrawSlide(position, wordSlide(shown[position], position));
     },
   });
 
   const drawDeck = () => {
-    const query = ($("#word-search")?.value || "").trim().toLowerCase();
+    const query = (d$("#word-search")?.value || "").trim().toLowerCase();
     shown = vocab.map((entry, index) => ({ entry, index }))
       .filter(({ entry }) => !query || `${entry.term} ${entry.meaning}`.toLowerCase().includes(query));
     deck.setSlides(shown.map(wordSlide));
   };
-  $("#word-search").addEventListener("input", drawDeck);
+  d$("#word-search").addEventListener("input", drawDeck);
   drawDeck();
 }
 
@@ -621,8 +694,13 @@ function renderComputingWords() {
   const vocab = (course.reference.vocabulary && course.reference.vocabulary.length)
     ? course.reference.vocabulary
     : (course.reference.terms || []).map(([term, meaning]) => ({ term, meaning, example: "", letter: (term[0] || "?").toUpperCase() }));
-  if (!vocab.length) { $("#app").innerHTML = `${pageHeader("Language for computing", "Computing Words", "No key words were provided for this unit.")}`; return; }
+  if (!vocab.length) { cRoot().innerHTML = `${pageHeader("Language for computing", "Computing Words", "No key words were provided for this unit.")}`; return; }
+  if (bothDesigns()) return bothDesignsPage(() => renderComputingWordsClassic(vocab), () => renderComputingWordsDeck(vocab));
   if (deckStage()) return renderComputingWordsDeck(vocab);
+  return renderComputingWordsClassic(vocab);
+}
+
+function renderComputingWordsClassic(vocab) {
   const known = new Set(progress.knownWords || []);
   let query = "";
   let activeIndex = 0;
@@ -633,7 +711,7 @@ function renderComputingWords() {
       .filter(({ entry }) => !query || `${entry.term} ${entry.meaning}`.toLowerCase().includes(query));
     if (!filtered.some(({ index }) => index === activeIndex) && filtered.length) activeIndex = filtered[0].index;
     const current = vocab[activeIndex];
-    $("#app").innerHTML = `${pageHeader("Language for computing", "Computing Words", `Learn and explore the key words for ${escapeHtml(course.unit.unitTitle)}. ${known.size} of ${vocab.length} marked learned.`)}
+    cRoot().innerHTML = `${pageHeader("Language for computing", "Computing Words", `Learn and explore the key words for ${escapeHtml(course.unit.unitTitle)}. ${known.size} of ${vocab.length} marked learned.`)}
       <div class="dictionary-layout">
         <section class="panel word-list">
           <label class="search-box">${icon("search")}<input id="word-search" type="search" placeholder="Search words or meanings" aria-label="Search computing words" value="${escapeHtml(query)}"></label>
@@ -649,24 +727,24 @@ function renderComputingWords() {
         </section>
       </div>
       <p style="margin-top:16px"><button class="button primary" id="words-done" type="button">I explored the computing words ✓</button></p>`;
-    const search = $("#word-search");
-    search.addEventListener("input", () => { query = search.value.trim().toLowerCase(); const pos = search.selectionStart; draw(); const s = $("#word-search"); s.focus(); s.setSelectionRange(pos, pos); });
-    $$('[data-word]').forEach((button) => button.addEventListener("click", () => { activeIndex = Number(button.dataset.word); draw(); }));
-    $("#listen-word").addEventListener("click", (event) => speakText(`${current.term}. ${current.meaning}`, event.currentTarget));
-    $("#check-word-sentence").addEventListener("click", () => {
-      const written = $("#word-sentence").value.trim().toLowerCase();
+    const search = c$("#word-search");
+    search.addEventListener("input", () => { query = search.value.trim().toLowerCase(); const pos = search.selectionStart; draw(); const s = c$("#word-search"); s.focus(); s.setSelectionRange(pos, pos); });
+    c$$('[data-word]').forEach((button) => button.addEventListener("click", () => { activeIndex = Number(button.dataset.word); draw(); }));
+    c$("#listen-word").addEventListener("click", (event) => speakText(`${current.term}. ${current.meaning}`, event.currentTarget));
+    c$("#check-word-sentence").addEventListener("click", () => {
+      const written = c$("#word-sentence").value.trim().toLowerCase();
       const head = current.term.toLowerCase().split(/[\/,]/)[0].trim();
       const ok = written.length > 10 && written.includes(head.split(" ")[0]);
-      $("#word-feedback").innerHTML = `<p class="feedback ${ok ? "good" : "try"}"><span class="status-note">${ok ? "Great sentence!" : "Try again."}</span> ${ok ? "You used the word in a full idea." : `Write a full sentence that uses “${escapeHtml(current.term)}”.`}</p>`;
+      c$("#word-feedback").innerHTML = `<p class="feedback ${ok ? "good" : "try"}"><span class="status-note">${ok ? "Great sentence!" : "Try again."}</span> ${ok ? "You used the word in a full idea." : `Write a full sentence that uses “${escapeHtml(current.term)}”.`}</p>`;
     });
-    $("#know-word").addEventListener("click", () => {
+    c$("#know-word").addEventListener("click", () => {
       const id = idFor(activeIndex);
       if (known.has(id)) known.delete(id); else known.add(id);
       progress.knownWords = [...known]; saveProgress();
       if (known.size === vocab.length) complete("words", "All computing words learned.");
       draw();
     });
-    $("#words-done").addEventListener("click", () => { complete("words", "Computing words explored."); navigate("explore"); });
+    c$("#words-done").addEventListener("click", () => { complete("words", "Computing words explored."); navigate("explore"); });
   };
   draw();
 }
@@ -706,7 +784,7 @@ function renderExploreConceptDeck() {
       <div data-feedback="${esc(item.id)}" role="status" aria-live="polite" aria-atomic="true"></div>
     </div></section>`);
 
-  mountDeck({
+  mountSectionDeck({
     heading: "Familiar discoveries",
     label: "Discovery",
     slides,
@@ -727,29 +805,34 @@ function renderExploreConceptDeck() {
       completed.add(item.id);
       progress.explorations = [...completed];
       saveProgress();
-      $("#explore-count").textContent = countLabel();
+      d$("#explore-count").textContent = countLabel();
       if (completed.size === items.length) complete("explore", "All concept discoveries complete.");
     },
   });
 }
 
 function renderExploreConcept() {
+  if (bothDesigns()) return bothDesignsPage(() => renderExploreConceptClassic(), () => renderExploreConceptDeck());
   if (deckStage()) return renderExploreConceptDeck();
+  return renderExploreConceptClassic();
+}
+
+function renderExploreConceptClassic() {
   let active = 0;
   const completed = new Set(progress.explorations || []);
   const draw = () => {
     const item = course.explorations[active];
-    $("#app").innerHTML = `${pageHeader("Familiar discoveries", "Explore the Concept", "Discover each idea through a labelled model and a real investigation you can try.")}
+    cRoot().innerHTML = `${pageHeader("Familiar discoveries", "Explore the Concept", "Discover each idea through a labelled model and a real investigation you can try.")}
       <div class="exploration-tabs">${course.explorations.map((entry,index)=>`<button class="exploration-tab ${index===active?'active':''} ${completed.has(entry.id)?'done':''}" data-exploration="${index}" type="button"><span>${index+1}</span>${escapeHtml(entry.title)}</button>`).join("")}</div>
       <div class="story-layout"><section class="panel story-scene"><span class="eyebrow">Discovery ${active+1} · ${escapeHtml(item.difficulty)}</span><h2>${escapeHtml(item.title)}</h2>${computingDiagram(courseTopic(), active)}<p>${escapeHtml(item.context)}</p>${voiceButton(`${item.title}. ${item.context}. ${item.explanation}`, "Listen to discovery")}<div class="discovery-model ${escapeHtml(item.modelType)}"><strong>${escapeHtml(item.modelType.replaceAll('-',' '))}</strong><span>${escapeHtml(item.explanation)}</span></div></section><aside class="section-stack"><section class="panel"><h3>Discovery question</h3><p>${escapeHtml(item.prompt)}</p>${voiceButton(item.prompt, "Listen to question")}<input id="discovery-answer" class="math-input" aria-label="Discovery answer"><div class="question-actions"><button class="button primary" id="check-discovery" type="button">Check my idea</button><button class="button secondary" id="hint-discovery" type="button">Hint</button></div><div id="discovery-feedback"></div></section><section class="panel"><h3>Progress</h3><p><strong>${completed.size} of ${course.explorations.length}</strong> discoveries complete.</p><div class="progress-track"><span style="width:${completed.size/course.explorations.length*100}%"></span></div></section></aside></div>`;
-    initComputingWebGL($("#app"));
-    $$('[data-exploration]').forEach(button=>button.addEventListener("click",()=>{active=Number(button.dataset.exploration);draw();}));
-    $("#hint-discovery").addEventListener("click",()=>{$("#discovery-feedback").innerHTML=`<p class="feedback try"><span class="field-label">Hint:</span> ${escapeHtml(item.hint)}</p>`;});
-    $("#check-discovery").addEventListener("click",()=>{
-      const response=$("#discovery-answer").value.trim().toLowerCase().replace(/\s+/g," ");
+    initComputingWebGL(cRoot());
+    c$$('[data-exploration]').forEach(button=>button.addEventListener("click",()=>{active=Number(button.dataset.exploration);draw();}));
+    c$("#hint-discovery").addEventListener("click",()=>{c$("#discovery-feedback").innerHTML=`<p class="feedback try"><span class="field-label">Hint:</span> ${escapeHtml(item.hint)}</p>`;});
+    c$("#check-discovery").addEventListener("click",()=>{
+      const response=c$("#discovery-answer").value.trim().toLowerCase().replace(/\s+/g," ");
       const answer=item.answer.toLowerCase();
       const correct=response && (response===answer || answer.includes(response) || response.includes(answer));
-      $("#discovery-feedback").innerHTML=`<p class="feedback ${correct?'good':'try'}"><span class="status-note">${correct?'Exactly!':'Look again.'}</span> ${escapeHtml(correct?item.explanation:item.hint)}</p>`;
+      c$("#discovery-feedback").innerHTML=`<p class="feedback ${correct?'good':'try'}"><span class="status-note">${correct?'Exactly!':'Look again.'}</span> ${escapeHtml(correct?item.explanation:item.hint)}</p>`;
       if(correct){completed.add(item.id);progress.explorations=[...completed];saveProgress();if(completed.size===course.explorations.length)complete("explore","All six concept discoveries complete.");}
     });
   };
@@ -773,7 +856,7 @@ function renderVisualModelsDeck() {
       <div class="cmp-gc-cards">${course.concepts.slice(0, 3).map((concept) => `<article><strong>${esc(concept.title)}</strong><span>${esc(concept.example)}</span></article>`).join("")}</div>
       ${index === models.length - 1 ? deckFinish("visuals", "I explored the models") : ""}
     </div></section>`);
-  mountDeck({
+  mountSectionDeck({
     heading: "Ways to see the computing",
     label: "Model",
     slides,
@@ -787,14 +870,19 @@ function renderVisualModelsDeck() {
 }
 
 function renderVisualModels() {
+  if (bothDesigns()) return bothDesignsPage(() => renderVisualModelsClassic(), () => renderVisualModelsDeck());
   if (deckStage()) return renderVisualModelsDeck();
+  return renderVisualModelsClassic();
+}
+
+function renderVisualModelsClassic() {
   let active = 0;
   const draw = () => {
     const model = course.visualModels[active];
-    $("#app").innerHTML = `${pageHeader("Ways to see the computing", "Visual Models", `Explore labelled models that make ${escapeHtml(course.unit.unitTitle)} visible and easier to explain.`)}<div class="model-tabs">${course.visualModels.map((item,index)=>`<button class="subtab ${index===active?'active':''}" data-model-index="${index}" type="button">${escapeHtml(item.title)}</button>`).join('')}</div><section class="panel model-stage generic-model-stage"><span class="eyebrow">${escapeHtml(model.outcomeId || `Model ${active+1}`)}</span><h2>${escapeHtml(model.title)}</h2>${computingDiagram(courseTopic(), active)}<p>${escapeHtml(model.purpose)}</p>${voiceButton(`${model.title}. ${model.purpose}`, "Listen to model")}<div class="model-concept-cards">${course.concepts.slice(0,3).map((concept)=>`<article><strong>${escapeHtml(concept.title)}</strong><span>${escapeHtml(concept.example)}</span></article>`).join('')}</div></section><p><button class="button primary" id="visuals-done" type="button">I explored the models ✓</button></p>`;
-    initComputingWebGL($("#app"));
-    $$('[data-model-index]').forEach((button)=>button.addEventListener('click',()=>{active=Number(button.dataset.modelIndex);draw();}));
-    $("#visuals-done").addEventListener("click", () => { complete("visuals", "Visual models explored."); navigate("method"); });
+    cRoot().innerHTML = `${pageHeader("Ways to see the computing", "Visual Models", `Explore labelled models that make ${escapeHtml(course.unit.unitTitle)} visible and easier to explain.`)}<div class="model-tabs">${course.visualModels.map((item,index)=>`<button class="subtab ${index===active?'active':''}" data-model-index="${index}" type="button">${escapeHtml(item.title)}</button>`).join('')}</div><section class="panel model-stage generic-model-stage"><span class="eyebrow">${escapeHtml(model.outcomeId || `Model ${active+1}`)}</span><h2>${escapeHtml(model.title)}</h2>${computingDiagram(courseTopic(), active)}<p>${escapeHtml(model.purpose)}</p>${voiceButton(`${model.title}. ${model.purpose}`, "Listen to model")}<div class="model-concept-cards">${course.concepts.slice(0,3).map((concept)=>`<article><strong>${escapeHtml(concept.title)}</strong><span>${escapeHtml(concept.example)}</span></article>`).join('')}</div></section><p><button class="button primary" id="visuals-done" type="button">I explored the models ✓</button></p>`;
+    initComputingWebGL(cRoot());
+    c$$('[data-model-index]').forEach((button)=>button.addEventListener('click',()=>{active=Number(button.dataset.modelIndex);draw();}));
+    c$("#visuals-done").addEventListener("click", () => { complete("visuals", "Visual models explored."); navigate("method"); });
   };
   draw();
 }
@@ -820,7 +908,7 @@ function renderLearnMethodDeck() {
       ${index === methods.length - 1 ? deckFinish("method", "I learned every method") : ""}
     </div></section>`);
 
-  mountDeck({
+  mountSectionDeck({
     heading: "Short procedures",
     label: "Method",
     slides,
@@ -831,7 +919,7 @@ function renderLearnMethodDeck() {
       if (target.dataset.deckFinish) { complete("method", "All methods learned."); return; }
       const id = target.dataset.nextStep;
       const method = methods.find((candidate) => candidate.id === id);
-      const list = $(`[data-method-steps="${CSS.escape(id)}"]`);
+      const list = d$(`[data-method-steps="${CSS.escape(id)}"]`);
       if (!list) return;
       const step = Math.min(method.steps.length - 1, Number(list.dataset.step || 0) + 1);
       list.dataset.step = String(step);
@@ -847,17 +935,22 @@ function renderLearnMethodDeck() {
 }
 
 function renderLearnMethod() {
+  if (bothDesigns()) return bothDesignsPage(() => renderLearnMethodClassic(), () => renderLearnMethodDeck());
   if (deckStage()) return renderLearnMethodDeck();
+  return renderLearnMethodClassic();
+}
+
+function renderLearnMethodClassic() {
   let methodIndex=0;
   const completed=new Set(progress.methods||[]);
   const draw=()=>{
     const method=course.methods[methodIndex];
-    $("#app").innerHTML=`${pageHeader("Six short procedures", "Learn the Method", "Select a method, reveal each step and practise the procedure before moving on.")}
+    cRoot().innerHTML=`${pageHeader("Six short procedures", "Learn the Method", "Select a method, reveal each step and practise the procedure before moving on.")}
       <div class="method-selector">${course.methods.map((item,index)=>`<button class="${index===methodIndex?'active':''} ${completed.has(item.id)?'done':''}" data-method="${index}" type="button"><span>${index+1}</span>${escapeHtml(item.title)}</button>`).join('')}</div>
       <section class="panel method-player"><div class="method-example"><span>${escapeHtml(method.difficulty)} method</span><strong class="method-example-text">${escapeHtml(method.example)}</strong><p>${escapeHtml(method.title)}</p>${voiceButton(`${method.title}. Example: ${method.example}. ${method.steps.join(" ")}`, "Listen to method")}</div><div class="method-steps">${method.steps.map((text,index)=>`<article class="method-step ${index===0?'active':''}" data-method-step="${index}"><span>${index+1}</span><div><h3>Step ${index+1}</h3><p>${escapeHtml(text)}</p>${voiceButton(`Step ${index+1}. ${text}`, "Listen to step")}</div></article>`).join('')}<button class="button primary" id="next-method-step" type="button">Show me the next step →</button></div></section>`;
     let step=0;
-    $$('[data-method]').forEach(button=>button.addEventListener('click',()=>{methodIndex=Number(button.dataset.method);draw();}));
-    $("#next-method-step").addEventListener('click',()=>{step=Math.min(method.steps.length-1,step+1);$$('[data-method-step]').forEach((item,index)=>item.classList.toggle('active',index<=step));if(step===method.steps.length-1){completed.add(method.id);progress.methods=[...completed];saveProgress();$("#next-method-step").textContent='Method complete ✓';if(completed.size===course.methods.length)complete('method','All six methods learned.');}});
+    c$$('[data-method]').forEach(button=>button.addEventListener('click',()=>{methodIndex=Number(button.dataset.method);draw();}));
+    c$("#next-method-step").addEventListener('click',()=>{step=Math.min(method.steps.length-1,step+1);c$$('[data-method-step]').forEach((item,index)=>item.classList.toggle('active',index<=step));if(step===method.steps.length-1){completed.add(method.id);progress.methods=[...completed];saveProgress();c$("#next-method-step").textContent='Method complete ✓';if(completed.size===course.methods.length)complete('method','All six methods learned.');}});
   };
   draw();
 }
@@ -882,7 +975,7 @@ function renderLessonDeck() {
       <div class="gc-actions">${deckVoice(`${concept.title}. ${spokenText(concept.explanation)}. Example: ${concept.example}`, "Listen to concept")}</div>
       ${index === concepts.length - 1 ? deckFinish("lesson", "I studied the concepts") : ""}
     </div></section>`);
-  mountDeck({
+  mountSectionDeck({
     heading: "The lesson",
     label: "Concept",
     slides,
@@ -896,14 +989,19 @@ function renderLessonDeck() {
 }
 
 function renderLesson() {
+  if (bothDesigns()) return bothDesignsPage(() => renderLessonClassic(), () => renderLessonDeck());
   if (deckStage()) return renderLessonDeck();
+  return renderLessonClassic();
+}
+
+function renderLessonClassic() {
   const topic = courseTopic();
   const concepts = course.concepts.map((concept, index) => `<article class="panel concept-card"><span class="eyebrow">Concept ${index + 1}</span><h2>${escapeHtml(concept.title)}</h2>${computingDiagram(topic, index)}<div class="concept-body">${richText(concept.explanation)}</div><p class="example"><span class="field-label">Example:</span> ${escapeHtml(concept.example)}</p>${voiceButton(`${concept.title}. ${spokenText(concept.explanation)}. Example: ${concept.example}`, "Listen to concept")}</article>`).join("");
-  $("#app").innerHTML = `${pageHeader("The lesson", course.unit.unitTitle, "Every idea in this unit, explained in full with a diagram for each. Read it, listen to it, or both — you do not need anyone else to work through this.")}
+  cRoot().innerHTML = `${pageHeader("The lesson", course.unit.unitTitle, "Every idea in this unit, explained in full with a diagram for each. Read it, listen to it, or both — you do not need anyone else to work through this.")}
     <div class="concept-grid">${concepts}</div>
     <p><button class="button primary" id="lesson-done" type="button">I studied the concepts ✓</button></p>`;
-  initComputingWebGL($("#app"));
-  $("#lesson-done").addEventListener("click", () => { complete("lesson", "Lesson marked studied."); navigate("ai"); });
+  initComputingWebGL(cRoot());
+  c$("#lesson-done").addEventListener("click", () => { complete("lesson", "Lesson marked studied."); navigate("ai"); });
 }
 
 // Worked Examples as a deck: one example per slide, its level subtabs now the
@@ -924,7 +1022,7 @@ function renderExamplesDeck() {
       <details class="gc-practice" data-example="${esc(item.id)}"><summary>Show worked solution</summary><div class="cmp-gc-prose">${richText(item.solution, "gc-note")}</div></details>
     </div></section>`;
 
-  const deck = mountDeck({
+  const deck = mountSectionDeck({
     heading: "Worked examples, one at a time",
     label: "Example",
     emptyMessage: "No worked examples at this level.",
@@ -943,33 +1041,38 @@ function renderExamplesDeck() {
       viewed.add(details.dataset.example);
       progress.examplesViewed = [...viewed];
       saveProgress();
-      const counter = $("#example-count");
+      const counter = d$("#example-count");
       if (counter) counter.textContent = countLabel();
       if (viewed.size === all.length) complete("examples", `All ${all.length} worked examples reviewed.`);
     },
   });
 
   const drawDeck = () => {
-    const level = $("#example-level")?.value || "all";
+    const level = d$("#example-level")?.value || "all";
     shown = level === "all" ? all : all.filter((example) => example.difficulty === level);
     deck.setSlides(shown.map(exampleSlide));
   };
-  $("#example-level").addEventListener("change", drawDeck);
+  d$("#example-level").addEventListener("change", drawDeck);
   drawDeck();
 }
 
 function renderExamples() {
+  if (bothDesigns()) return bothDesignsPage(() => renderExamplesClassic(), () => renderExamplesDeck());
   if (deckStage()) return renderExamplesDeck();
+  return renderExamplesClassic();
+}
+
+function renderExamplesClassic() {
   let level="Basic";
   const viewed=new Set(progress.examplesViewed||[]);
   const draw=()=>{
     const items=course.workedExamples.filter(item=>item.difficulty===level);
-    $("#app").innerHTML = `${pageHeader("Twelve examples · three levels", "Worked Examples", "Study four Basic, four Intermediate and four Challenge examples. Each solution explains why the step works.")}
+    cRoot().innerHTML = `${pageHeader("Twelve examples · three levels", "Worked Examples", "Study four Basic, four Intermediate and four Challenge examples. Each solution explains why the step works.")}
       <div class="subtabs">${["Basic","Intermediate","Challenge"].map(item=>`<button class="subtab ${item===level?'active':''}" data-example-level="${item}" type="button">${item} · ${course.workedExamples.filter(example=>example.difficulty===item).length}</button>`).join('')}</div>
       <div class="task-grid">${items.map((item) => `<article class="panel"><span class="eyebrow">${escapeHtml(item.difficulty)} · ${escapeHtml(item.outcomeId)}</span><h3>${escapeHtml(item.title)}</h3><p class="rule-box">${escapeHtml(item.prompt)}</p>${voiceButton(`${item.title}. ${item.prompt}. Solution: ${spokenText(item.solution)}`, "Listen to example")}<details data-example="${item.id}"><summary>Show worked solution</summary>${richText(item.solution)}</details></article>`).join("")}</div>
       <section class="panel examples-progress"><strong>${viewed.size}/12</strong><span>solutions opened</span><div class="progress-track"><span style="width:${viewed.size/12*100}%"></span></div></section>`;
-    $$('[data-example-level]').forEach(button=>button.addEventListener('click',()=>{level=button.dataset.exampleLevel;draw();}));
-    $$('[data-example]').forEach(details=>details.addEventListener('toggle',()=>{if(details.open){viewed.add(details.dataset.example);progress.examplesViewed=[...viewed];saveProgress();if(viewed.size===course.workedExamples.length)complete('examples','All twelve worked examples reviewed.');}}));
+    c$$('[data-example-level]').forEach(button=>button.addEventListener('click',()=>{level=button.dataset.exampleLevel;draw();}));
+    c$$('[data-example]').forEach(details=>details.addEventListener('toggle',()=>{if(details.open){viewed.add(details.dataset.example);progress.examplesViewed=[...viewed];saveProgress();if(viewed.size===course.workedExamples.length)complete('examples','All twelve worked examples reviewed.');}}));
   };
   draw();
 }
@@ -1001,7 +1104,7 @@ function renderPracticeDeck() {
       <div data-feedback="${esc(item.id)}" role="status" aria-live="polite" aria-atomic="true"></div>
     </div></section>`);
 
-  mountDeck({
+  mountSectionDeck({
     heading: "Support that adapts",
     label: "Question",
     slides,
@@ -1031,30 +1134,35 @@ function renderPracticeDeck() {
 }
 
 function renderPractice() {
+  if (bothDesigns()) return bothDesignsPage(() => renderPracticeClassic(), () => renderPracticeDeck());
   if (deckStage()) return renderPracticeDeck();
+  return renderPracticeClassic();
+}
+
+function renderPracticeClassic() {
   const levels = [...new Set(course.practice.map((item) => item.level))];
-  $("#app").innerHTML = `${pageHeader("Support that adapts", "Guided Practice", "Answer with support. Check your idea, ask for a progressive hint or reveal only the next scientific step.")}
+  cRoot().innerHTML = `${pageHeader("Support that adapts", "Guided Practice", "Answer with support. Check your idea, ask for a progressive hint or reveal only the next scientific step.")}
     <section class="panel support-strip"><span>Immediate feedback</span><span>Progressive hints</span><span>Next-step support</span><span>Error explanations</span><span>Easier retry</span></section>
     ${levels.map((level) => `<section class="section-stack" style="margin-bottom:24px"><h2>${escapeHtml(level)}</h2><div class="task-grid">${course.practice.filter((item) => item.level === level).map((item) => `<article class="panel question-card"><label for="answer-${item.id}">${escapeHtml(item.prompt)}</label>${voiceButton(item.prompt, "Listen to question")}<input id="answer-${item.id}" autocomplete="off" placeholder="Type your answer or working notes"><div class="question-actions"><button class="button primary" data-check="${item.id}" type="button">Check my answer</button><button class="button secondary" data-hint="${item.id}" type="button">Give me a hint</button><button class="button secondary" data-answer="${item.id}" type="button">Show next step</button></div><div id="feedback-${item.id}" aria-live="polite"></div></article>`).join("")}</div></section>`).join("")}`;
-  $$('[data-check]').forEach((button) => button.addEventListener("click", () => {
+  c$$('[data-check]').forEach((button) => button.addEventListener("click", () => {
     const item = course.practice.find((candidate) => candidate.id === button.dataset.check);
-    const response = $(`#answer-${item.id}`).value.trim().toLowerCase().replace(/\s+/g," ");
+    const response = c$(`#answer-${item.id}`).value.trim().toLowerCase().replace(/\s+/g," ");
     const expected = item.answer.toLowerCase();
     const correct = response && (expected.includes(response) || response.includes(expected));
-    $(`#feedback-${item.id}`).innerHTML = `<p class="feedback ${correct ? "good" : "try"}"><span class="status-note">${correct ? "Correct reasoning!" : "Not yet."}</span> ${correct ? escapeHtml(item.answer) : `Your response does not match the reviewed guidance yet. ${escapeHtml(item.hint)} Try representing the idea in a simpler way first.`}</p>`;
+    c$(`#feedback-${item.id}`).innerHTML = `<p class="feedback ${correct ? "good" : "try"}"><span class="status-note">${correct ? "Correct reasoning!" : "Not yet."}</span> ${correct ? escapeHtml(item.answer) : `Your response does not match the reviewed guidance yet. ${escapeHtml(item.hint)} Try representing the idea in a simpler way first.`}</p>`;
     if (correct && !progress.practiceOpened.includes(item.id)) { progress.practiceOpened.push(item.id); saveProgress(); }
     if (progress.practiceOpened.length === course.practice.length) complete("guided", "Guided Practice complete.");
   }));
-  $$('[data-hint]').forEach((button) => button.addEventListener("click", () => {
+  c$$('[data-hint]').forEach((button) => button.addEventListener("click", () => {
     const item = course.practice.find((candidate) => candidate.id === button.dataset.hint);
     const used = Number(button.dataset.used || 0) + 1;
     button.dataset.used = String(used);
     const hints = [item.hint, `Use a diagram, familiar object, table, number line or other model that fits ${course.unit.unitTitle}.`, `The reviewed guidance is ${item.answer}. Explain why it fits before moving on.`];
-    $(`#feedback-${item.id}`).innerHTML = `<p class="feedback try"><span class="field-label">Hint ${Math.min(used,3)}:</span> ${escapeHtml(hints[Math.min(used-1,2)])}</p>`;
+    c$(`#feedback-${item.id}`).innerHTML = `<p class="feedback try"><span class="field-label">Hint ${Math.min(used,3)}:</span> ${escapeHtml(hints[Math.min(used-1,2)])}</p>`;
   }));
-  $$('[data-answer]').forEach((button) => button.addEventListener("click", () => {
+  c$$('[data-answer]').forEach((button) => button.addEventListener("click", () => {
     const item = course.practice.find((candidate) => candidate.id === button.dataset.answer);
-    $(`#feedback-${item.id}`).innerHTML = `<p class="feedback try"><span class="field-label">Next step:</span> ${escapeHtml(item.hint)} Do that step, then check your answer again.</p>`;
+    c$(`#feedback-${item.id}`).innerHTML = `<p class="feedback try"><span class="field-label">Next step:</span> ${escapeHtml(item.hint)} Do that step, then check your answer again.</p>`;
   }));
 }
 
@@ -1083,7 +1191,7 @@ function renderActivitiesDeck() {
       ${index === activities.length - 1 ? deckFinish("activities", "Finish activities") : ""}
     </div></section>`);
 
-  mountDeck({
+  mountSectionDeck({
     heading: "Learn by doing",
     label: "Activity",
     slides,
@@ -1098,22 +1206,27 @@ function renderActivitiesDeck() {
         target.innerHTML = `${deckIcon("check")} Complete`;
         return;
       }
-      if (!$$('[data-activity-done]').every((button) => button.disabled)) return toast("Mark each activity complete first.");
+      if (!d$$('[data-activity-done]').every((button) => button.disabled)) return toast("Mark each activity complete first.");
       complete("activities", "Unit activities complete.");
     },
   });
 }
 
 function renderActivities() {
+  if (bothDesigns()) return bothDesignsPage(() => renderActivitiesClassic(), () => renderActivitiesDeck());
   if (deckStage()) return renderActivitiesDeck();
+  return renderActivitiesClassic();
+}
+
+function renderActivitiesClassic() {
   const topic = courseTopic();
-  $("#app").innerHTML = `${pageHeader("Learn by doing", "Build It", `Work through the ${escapeHtml(course.unit.unitTitle)} activities. Each one can be done on a computer or, where it says so, with paper and things you already have.`)}
+  cRoot().innerHTML = `${pageHeader("Learn by doing", "Build It", `Work through the ${escapeHtml(course.unit.unitTitle)} activities. Each one can be done on a computer or, where it says so, with paper and things you already have.`)}
     <div class="task-grid">${course.activities.map((activity, index) => `<article class="panel task-card"><span class="eyebrow">Activity ${index + 1} · Hands-on</span><h2>${escapeHtml(activity.title)}</h2>${computingDiagram(topic, index)}<p class="rule-box"><span class="field-label">You need:</span> ${escapeHtml(activity.materials)}</p><ol class="agenda">${activity.steps.map((step) => `<li>${escapeHtml(step)}</li>`).join("")}</ol><textarea class="activity-response" rows="4" placeholder="Record your answer or what you noticed…" aria-label="Notes for ${escapeHtml(activity.title)}"></textarea><button class="button secondary" data-activity-done="${index}" type="button">✓ Mark complete</button></article>`).join("")}</div>
     <p><button class="button primary" id="activities-done" type="button">Finish activities ✓</button></p>`;
-  initComputingWebGL($("#app"));
-  $$('[data-activity-done]').forEach((button) => button.addEventListener("click", () => { button.disabled = true; button.textContent = "✓ Complete"; }));
-  $("#activities-done").addEventListener("click", () => {
-    if (!$$('[data-activity-done]').every((button) => button.disabled)) return toast("Mark each activity complete first.");
+  initComputingWebGL(cRoot());
+  c$$('[data-activity-done]').forEach((button) => button.addEventListener("click", () => { button.disabled = true; button.textContent = "✓ Complete"; }));
+  c$("#activities-done").addEventListener("click", () => {
+    if (!c$$('[data-activity-done]').every((button) => button.disabled)) return toast("Mark each activity complete first.");
     complete("activities", "Unit activities complete.");
   });
 }
@@ -1383,7 +1496,7 @@ function renderRealProblemsDeck() {
       <div data-feedback="${esc(item.id)}" role="status" aria-live="polite" aria-atomic="true"></div>
     </div></section>`);
 
-  mountDeck({
+  mountSectionDeck({
     heading: "Computing in daily life",
     label: "Problem",
     slides,
@@ -1401,18 +1514,23 @@ function renderRealProblemsDeck() {
       setSlideBox(id, `<p class="feedback ${correct ? "good" : "try"}"><span class="status-note">${correct ? "Applied correctly!" : "Check the situation."}</span> ${esc(correct ? item.answer : item.hint)}</p>`);
       if (!correct) return;
       target.disabled = true;
-      if ($$('[data-check-problem]').every((button) => button.disabled)) complete("problems", "Real-world problems complete.");
+      if (d$$('[data-check-problem]').every((button) => button.disabled)) complete("problems", "Real-world problems complete.");
     },
   });
 }
 
 function renderRealProblems() {
+  if (bothDesigns()) return bothDesignsPage(() => renderRealProblemsClassic(), () => renderRealProblemsDeck());
   if (deckStage()) return renderRealProblemsDeck();
+  return renderRealProblemsClassic();
+}
+
+function renderRealProblemsClassic() {
   const problems = course.realProblems;
-  $("#app").innerHTML = `${pageHeader("Computing in daily life", "Solve Real Problems", `Apply ${escapeHtml(course.unit.unitTitle)} to home, school, markets, travel and the wider community.`)}
+  cRoot().innerHTML = `${pageHeader("Computing in daily life", "Solve Real Problems", `Apply ${escapeHtml(course.unit.unitTitle)} to home, school, markets, travel and the wider community.`)}
     <div class="problem-grid">${problems.map((item,index)=>`<article class="panel real-problem"><div class="problem-icon">${["⌂","◫","🚌","▦","◇","✦"][index]||"#"}</div><span class="eyebrow">${escapeHtml(item.context)} · ${escapeHtml(item.difficulty)}</span><h2>${escapeHtml(item.prompt)}</h2>${voiceButton(item.prompt, "Listen to problem")}<textarea id="problem-${item.id}" placeholder="Show your calculation and answer…"></textarea><div class="question-actions"><button class="button primary" data-check-problem="${item.id}" type="button">Check answer</button><button class="button secondary" data-problem-hint="${item.id}" type="button">Hint</button></div><div id="problem-feedback-${item.id}"></div></article>`).join("")}</div>`;
-  $$('[data-check-problem]').forEach(button=>button.addEventListener("click",()=>{const item=problems.find(candidate=>candidate.id===button.dataset.checkProblem);const response=$(`#problem-${item.id}`).value.trim().toLowerCase();const expected=item.answer.toLowerCase();const correct=response&&(response===expected||expected.includes(response)||response.includes(expected));$(`#problem-feedback-${item.id}`).innerHTML=`<p class="feedback ${correct?'good':'try'}"><span class="status-note">${correct?'Applied correctly!':'Check the situation.'}</span> ${escapeHtml(correct?item.answer:item.hint)}</p>`;if(correct)button.disabled=true;if($$('[data-check-problem]').every(itemButton=>itemButton.disabled))complete("problems","Real-world problems complete.");}));
-  $$('[data-problem-hint]').forEach(button=>button.addEventListener("click",()=>{const item=problems.find(candidate=>candidate.id===button.dataset.problemHint);$(`#problem-feedback-${item.id}`).innerHTML=`<p class="feedback try"><span class="field-label">Hint:</span> ${escapeHtml(item.hint)}</p>`;}));
+  c$$('[data-check-problem]').forEach(button=>button.addEventListener("click",()=>{const item=problems.find(candidate=>candidate.id===button.dataset.checkProblem);const response=c$(`#problem-${item.id}`).value.trim().toLowerCase();const expected=item.answer.toLowerCase();const correct=response&&(response===expected||expected.includes(response)||response.includes(expected));c$(`#problem-feedback-${item.id}`).innerHTML=`<p class="feedback ${correct?'good':'try'}"><span class="status-note">${correct?'Applied correctly!':'Check the situation.'}</span> ${escapeHtml(correct?item.answer:item.hint)}</p>`;if(correct)button.disabled=true;if(c$$('[data-check-problem]').every(itemButton=>itemButton.disabled))complete("problems","Real-world problems complete.");}));
+  c$$('[data-problem-hint]').forEach(button=>button.addEventListener("click",()=>{const item=problems.find(candidate=>candidate.id===button.dataset.problemHint);c$(`#problem-feedback-${item.id}`).innerHTML=`<p class="feedback try"><span class="field-label">Hint:</span> ${escapeHtml(item.hint)}</p>`;}));
 }
 
 // Explain Your Thinking as a deck: one prompt per slide, the writing space the
@@ -1446,7 +1564,7 @@ function renderExplainThinkingDeck() {
       <div data-feedback="${esc(item.id)}" role="status" aria-live="polite" aria-atomic="true"></div>
     </div></section>`);
 
-  mountDeck({
+  mountSectionDeck({
     heading: "Reasoning matters",
     label: "Prompt",
     slides,
@@ -1471,10 +1589,15 @@ function renderExplainThinkingDeck() {
 }
 
 function renderExplainThinking() {
+  if (bothDesigns()) return bothDesignsPage(() => renderExplainThinkingClassic(), () => renderExplainThinkingDeck());
   if (deckStage()) return renderExplainThinkingDeck();
+  return renderExplainThinkingClassic();
+}
+
+function renderExplainThinkingClassic() {
   let active=0;
   const completed=new Set(progress.reasoning||[]);
-  const draw=()=>{const item=course.reasoningPrompts[active];$("#app").innerHTML=`${pageHeader("Reasoning matters", "Explain Your Thinking", `Explain the ideas in ${escapeHtml(course.unit.unitTitle)} using scientific evidence, not only a final answer.`)}<div class="reasoning-tabs">${course.reasoningPrompts.map((entry,index)=>`<button class="${index===active?'active':''} ${completed.has(entry.id)?'done':''}" data-reasoning-index="${index}" type="button"><span>${index+1}</span>${escapeHtml(entry.difficulty)}</button>`).join('')}</div><div class="explain-layout"><section class="panel"><span class="eyebrow">Reasoning prompt</span><h2>${escapeHtml(item.prompt)}</h2>${voiceButton(item.prompt,"Listen to prompt")}<textarea id="reasoning-text" rows="9" placeholder="Explain what you know, what rule you used and why your conclusion makes sense…"></textarea><button class="button primary" id="check-reasoning-text" type="button">Check scientific ideas</button><div id="reasoning-text-feedback"></div></section><section class="panel"><h3>Key ideas</h3><ul class="checklist">${item.keyIdeas.map((idea)=>`<li>${escapeHtml(idea)}</li>`).join('')}</ul><details><summary>Show model explanation</summary><p>${escapeHtml(item.modelAnswer)}</p>${voiceButton(item.modelAnswer,"Listen to model answer")}</details></section></div>`;$$('[data-reasoning-index]').forEach((button)=>button.addEventListener('click',()=>{active=Number(button.dataset.reasoningIndex);draw();}));$("#check-reasoning-text").addEventListener('click',()=>{const text=$("#reasoning-text").value.toLowerCase();const hits=item.keyIdeas.filter((idea)=>idea.toLowerCase().split(/\s+/).some((word)=>word.length>2&&text.includes(word))).length;const secure=text.length>30&&(hits>0||item.keyIdeas.length===0);$("#reasoning-text-feedback").innerHTML=`<p class="feedback ${secure?'good':'try'}"><span class="status-note">${secure?'Your explanation includes scientific evidence.':'Add more scientific evidence.'}</span> ${secure?escapeHtml(item.modelAnswer):`Use these ideas: ${escapeHtml(item.keyIdeas.join(', '))}.`}</p>`;if(secure){completed.add(item.id);progress.reasoning=[...completed];saveProgress();if(completed.size===course.reasoningPrompts.length)complete('explain','Reasoning explanations complete.');}});};
+  const draw=()=>{const item=course.reasoningPrompts[active];cRoot().innerHTML=`${pageHeader("Reasoning matters", "Explain Your Thinking", `Explain the ideas in ${escapeHtml(course.unit.unitTitle)} using scientific evidence, not only a final answer.`)}<div class="reasoning-tabs">${course.reasoningPrompts.map((entry,index)=>`<button class="${index===active?'active':''} ${completed.has(entry.id)?'done':''}" data-reasoning-index="${index}" type="button"><span>${index+1}</span>${escapeHtml(entry.difficulty)}</button>`).join('')}</div><div class="explain-layout"><section class="panel"><span class="eyebrow">Reasoning prompt</span><h2>${escapeHtml(item.prompt)}</h2>${voiceButton(item.prompt,"Listen to prompt")}<textarea id="reasoning-text" rows="9" placeholder="Explain what you know, what rule you used and why your conclusion makes sense…"></textarea><button class="button primary" id="check-reasoning-text" type="button">Check scientific ideas</button><div id="reasoning-text-feedback"></div></section><section class="panel"><h3>Key ideas</h3><ul class="checklist">${item.keyIdeas.map((idea)=>`<li>${escapeHtml(idea)}</li>`).join('')}</ul><details><summary>Show model explanation</summary><p>${escapeHtml(item.modelAnswer)}</p>${voiceButton(item.modelAnswer,"Listen to model answer")}</details></section></div>`;c$$('[data-reasoning-index]').forEach((button)=>button.addEventListener('click',()=>{active=Number(button.dataset.reasoningIndex);draw();}));c$("#check-reasoning-text").addEventListener('click',()=>{const text=c$("#reasoning-text").value.toLowerCase();const hits=item.keyIdeas.filter((idea)=>idea.toLowerCase().split(/\s+/).some((word)=>word.length>2&&text.includes(word))).length;const secure=text.length>30&&(hits>0||item.keyIdeas.length===0);c$("#reasoning-text-feedback").innerHTML=`<p class="feedback ${secure?'good':'try'}"><span class="status-note">${secure?'Your explanation includes scientific evidence.':'Add more scientific evidence.'}</span> ${secure?escapeHtml(item.modelAnswer):`Use these ideas: ${escapeHtml(item.keyIdeas.join(', '))}.`}</p>`;if(secure){completed.add(item.id);progress.reasoning=[...completed];saveProgress();if(completed.size===course.reasoningPrompts.length)complete('explain','Reasoning explanations complete.');}});};
   draw();
 }
 
@@ -1715,7 +1838,16 @@ const config = {
   // A deck goes full-bleed by putting gc-full on the body. Leaving the section
   // has to take it off again, or the next page renders inside a shell that has
   // had its padding, its max-width and its page header stripped out.
-  onBeforeRender: () => { document.body.classList.remove("gc-full"); },
+  //
+  // The two regions are cleared with it. They point at nodes inside the page
+  // being replaced, so carrying them into the next render would leave c$ and d$
+  // searching a detached subtree — every lookup silently null, on a page that
+  // has no regions at all.
+  onBeforeRender: () => {
+    document.body.classList.remove("gc-full");
+    classicRegion = null;
+    deckRegion = null;
+  },
   async load(ctx) {
     const s = ctx.stageNumber, u = ctx.unitNumber;
     if (isPrereqUnit) {

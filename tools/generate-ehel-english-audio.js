@@ -35,9 +35,19 @@ const path = require("path");
 
 const ROOT = path.resolve(__dirname, "..");
 const ENGLISH = path.join(ROOT, "src", "prototypes", "ehel-academy", "english");
-const API_BASE = "https://api.elevenlabs.io/v1";
-const VOICE_ID = "XfNU2rGpBa01ckF309OY";
-const MODEL_ID = "eleven_multilingual_v2";
+
+// One definition of how this project talks to ElevenLabs, shared with the other
+// generators: the voice, the model, the request timeout, and which of the three
+// kinds a failure is — fatal (the credential or the account, stop the run),
+// permanent (this text, one attempt) or transient (retry). See
+// tools/lib/ehel-tts.js.
+//
+// VOICE_ID and MODEL_ID come from there too. Unlike the other five generators,
+// this one records them in the manifest it writes (`provider: "ElevenLabs",
+// voiceId, model`), so the clip's own metadata names the voice that made it —
+// which means the constant a run reads and the constant it writes down can
+// never disagree.
+const { tts, FatalTtsError, PermanentTtsError, VOICE_ID, MODEL_ID } = require("./lib/ehel-tts");
 
 // --- args ---
 const args = process.argv.slice(2);
@@ -393,27 +403,13 @@ function itemsForUnit(unit, grade) {
   }));
 }
 
-// A request that never answers used to hang the whole run: fetch has no default
-// timeout, so the promise never settled, the retry loop below never fired, and the
-// process sat there indefinitely. Two runs stalled mid-clip for over 40 minutes and
-// looked identical to slow progress, because a hung request produces no output at
-// all. Abort instead, so it surfaces as a normal retryable failure.
-const TTS_TIMEOUT_MS = 120000;
-
-async function tts(text) {
-  const key = process.env.ELEVENLABS_API_KEY;
-  if (!key) throw new Error("ELEVENLABS_API_KEY is not set (check .env).");
-  const r = await fetch(`${API_BASE}/text-to-speech/${VOICE_ID}?output_format=mp3_44100_128`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json", "xi-api-key": key },
-    body: JSON.stringify({ text, model_id: MODEL_ID, voice_settings: { stability: 0.62, similarity_boost: 0.82, style: 0.18, use_speaker_boost: true } }),
-    signal: AbortSignal.timeout(TTS_TIMEOUT_MS),
-  });
-  if (!r.ok) throw new Error(`ElevenLabs ${r.status}: ${(await r.text()).slice(0, 300)}`);
-  // The same signal also aborts the response stream, so a stalled download rejects
-  // here rather than hanging — no separate guard needed.
-  return Buffer.from(await r.arrayBuffer());
-}
+// The request timeout this file used to own is now in the shared helper, and it
+// is there BECAUSE of what happened here: fetch has no default timeout, so a
+// request that never answered never settled, the retry loop below never fired,
+// and the process sat there indefinitely. Two runs stalled mid-clip for over 40
+// minutes and looked identical to slow progress, because a hung request produces
+// no output at all. English was the only generator that had learned this; the
+// other five inherited it when tts() was collapsed into one definition.
 
 // Every leaf this run changed, as [path, value] pairs, by comparing the copy we
 // read against the copy we mutated. Anything the run did not touch is absent,
@@ -520,6 +516,20 @@ async function main() {
   let restaled = 0, unverified = 0;
   const failures = [];
   const blanked = [];
+  // Set by a FatalTtsError: the credential or the account, so every remaining
+  // clip would fail the same way. Checked between items, so the run stops
+  // instead of walking the rest of the queue to prove it — and stops with its
+  // narration index and its edited descriptors written, not thrown away.
+  let fatal = null;
+  // The same stop for a failure the per-clip classification did not catch. A
+  // 500 or a 422 storm is not fatal to any single clip, so without this the run
+  // works through all 1,830 of them at three attempts each — measured at over
+  // ten minutes before it was abandoned, with nothing generated and no way to
+  // tell it from slow progress. It cannot fire on a run that is working: a
+  // success resets the counter, and it also requires that nothing has been
+  // generated at all.
+  const GIVE_UP_AFTER = 5;
+  let consecutiveFailures = 0;
   const narrationIndex = loadNarrationIndex();
   // What THIS run recorded, kept apart from the snapshot it read at startup.
   const myFingerprints = new Map();
@@ -534,6 +544,11 @@ async function main() {
 
   // Narrate one item; returns true when its descriptor needs writing back.
   async function processItem(item, grade) {
+    // Once the credential is the problem, every remaining clip fails the same
+    // way. Returning here rather than breaking out of four separate loops keeps
+    // the run walking to its normal end, which is what writes the narration
+    // index and the descriptors this run already earned.
+    if (fatal) return false;
     const targets = targetsFor(grade);
     if (targets && !targets.some((needle) => String(item.id).includes(needle))) return false;
     if (!item.text || item.text.length < (item.minChars ?? 8)) { skipped += 1; return false; }
@@ -595,12 +610,34 @@ async function main() {
         changed = true;
         console.log(`ok ${(buf.length / 1024).toFixed(0)} KB`);
       } catch (e) {
-        console.log(`retry ${attempt}: ${e.message.slice(0, 80)}`);
-        await sleep(1500 * attempt);
         // A failure is not neutral: the OLD file stays on disk with no record of
         // what it says, so a later run reuses it and the clip is stale forever.
         // Collected here and printed as a ready-to-paste repair at the end.
+        //
+        // The three kinds the shared helper distinguishes. Retrying a stale key
+        // or a rejected text only spends wall-clock proving the same answer, and
+        // this run has 383 clips to walk before it would notice.
+        if (e instanceof FatalTtsError) {
+          console.log(`fatal`);
+          fatal = e.message;
+          failures.push(item.id);
+          break;
+        }
+        if (e instanceof PermanentTtsError) {
+          console.log(`skipped: ${e.message.slice(0, 100)}`);
+          failures.push(item.id);
+          break;
+        }
+        console.log(`retry ${attempt}: ${e.message.slice(0, 80)}`);
+        if (attempt < 3) await sleep(1500 * attempt);
         if (attempt === 3) { console.log(`  FAILED ${item.id}`); failures.push(item.id); }
+      }
+    }
+    if (ok) consecutiveFailures = 0;
+    else if (!fatal) {
+      consecutiveFailures += 1;
+      if (consecutiveFailures >= GIVE_UP_AFTER && generated === 0) {
+        fatal = `${GIVE_UP_AFTER} clips failed in a row and none has succeeded.`;
       }
     }
     await sleep(350); // gentle rate limit
@@ -689,6 +726,11 @@ async function main() {
     console.log(`generated: ${generated} | reused: ${reused} | skipped(too short): ${skipped}`);
     console.log(`characters sent this run: ${charsSent.toLocaleString()}`);
     console.log(`data files updated: ${dirtyFiles.size}${rebasedFiles ? ` (${rebasedFiles} merged onto concurrent edits)` : ""}`);
+  }
+  if (fatal) {
+    console.error(`\nSTOPPED: ${fatal}`);
+    console.error("   The rest of the run was not attempted. Fix the cause and re-run — anything already written is reused, not paid for twice.");
+    process.exitCode = 1;
   }
   if (failures.length) {
     console.log(`\nFAILED (still holding their previous audio): ${failures.length}`);

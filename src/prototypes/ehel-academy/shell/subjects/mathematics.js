@@ -127,18 +127,20 @@ const sections = [
 // for something that was considered and declined. If it is ever reopened, it is
 // a product call, not a tidy-up.
 //
-// Stage 1 shipped alone first. Stages 2-4 carry the same fields in the same
-// shapes (checked across all 51 units: no missing field anywhere the deck
-// reads), and the one structural difference is that they hold six activities
-// where Stage 1 holds one — which the deck already handles, since the
-// mark-each-complete gate was written for the grid's six.
-const DECK_MAX_STAGE = 4;
-const deckStage = () => stageNumber <= DECK_MAX_STAGE;
-
+// Stage 1 shipped alone first, both as a deck and then as both designs. Stages
+// 2-4 carry the same fields in the same shapes (checked across all 51 units: no
+// missing field anywhere the deck reads), and the one structural difference is
+// that they hold six activities where Stage 1 holds one — which the deck
+// already handles, since the mark-each-complete gate was written for the grid's
+// six.
+//
 // ── Both designs on one page ────────────────────────────────────────────────
-// Stage 1 shows the ORIGINAL section first and the same content as an inline
-// deck under it, which is what English Grades 1-4 do. Stages 2-4 are still
-// deck-instead-of-original, and follow this line when Stage 1 is confirmed.
+// A deck stage shows the ORIGINAL section first and the same content as an
+// inline deck under it, which is what English Grades 1-4 do. There is no
+// deck-instead-of-original stage any more: Stage 1 had one for a while, Stages
+// 2-4 had one until they joined it, and the branch that served them is gone
+// because DECK_MAX_STAGE now decides both questions at once — which stages get
+// a deck, and which show it under the original.
 //
 // Both designs draw the same section, so both carry the same hooks — the
 // explore page and the explore deck each own a discovery answer box, the
@@ -149,10 +151,13 @@ const deckStage = () => stageNumber <= DECK_MAX_STAGE;
 //
 // So each design gets a region: the original paints into .classic-design and
 // queries inside it (classicScope), the deck mounts into .deck-design with
-// full-bleed off. Above Stage 1 both fall back to #app and the document, so
+// full-bleed off. Above Stage 4 both fall back to #app and the document, so
 // those stages run exactly the code they ran before.
-const BOTH_DESIGNS_MAX_STAGE = 1;
-const bothDesigns = () => stageNumber <= BOTH_DESIGNS_MAX_STAGE;
+//
+// tools/lib/ehel-math-narration.js carries this number too, for the three
+// categories only a deck narrates. Raise one and raise the other.
+const DECK_MAX_STAGE = 4;
+const bothDesigns = () => stageNumber <= DECK_MAX_STAGE;
 let classicRegion = null;
 let deckMount = null;
 
@@ -288,7 +293,6 @@ const MATH_SYMBOLS = [["+", "combine or add", "Use when quantities join"], ["−
 
 function renderMathWords() {
   if (bothDesigns()) return renderBothDesigns(renderMathWordsClassic, renderMathWordsDeck, "The same words and signs, one at a time.");
-  if (deckStage()) return renderMathWordsDeck();
   return renderMathWordsClassic();
 }
 
@@ -360,7 +364,6 @@ function renderMathWordsDeck() {
 
 function renderExploreConcept() {
   if (bothDesigns()) return renderBothDesigns(renderExploreConceptClassic, renderExploreConceptDeck, "The same discoveries, one at a time.");
-  if (deckStage()) return renderExploreConceptDeck();
   return renderExploreConceptClassic();
 }
 
@@ -457,7 +460,6 @@ function renderExploreConceptDeck() {
 
 function renderVisualModels() {
   if (bothDesigns()) return renderBothDesigns(renderVisualModelsClassic, renderVisualModelsDeck, "The same models, one at a time.");
-  if (deckStage()) return renderVisualModelsDeck();
   return renderVisualModelsClassic();
 }
 
@@ -507,7 +509,6 @@ function renderVisualModelsDeck() {
 
 function renderLearnMethod() {
   if (bothDesigns()) return renderBothDesigns(renderLearnMethodClassic, renderLearnMethodDeck, "The same methods, one at a time.");
-  if (deckStage()) return renderLearnMethodDeck();
   return renderLearnMethodClassic();
 }
 
@@ -675,7 +676,6 @@ function renderLessonDeck() {
 
 function renderLesson() {
   if (bothDesigns()) return renderBothDesigns(renderLessonClassic, renderLessonDeck, "The same concepts, one at a time.");
-  if (deckStage()) return renderLessonDeck();
   return renderLessonClassic();
 }
 
@@ -751,7 +751,6 @@ function renderExamplesDeck() {
 
 function renderExamples() {
   if (bothDesigns()) return renderBothDesigns(renderExamplesClassic, renderExamplesDeck, "The same examples, one at a time.");
-  if (deckStage()) return renderExamplesDeck();
   return renderExamplesClassic();
 }
 
@@ -833,7 +832,6 @@ function renderPracticeDeck() {
 
 function renderPractice() {
   if (bothDesigns()) return renderBothDesigns(renderPracticeClassic, renderPracticeDeck, "The same questions, one at a time.");
-  if (deckStage()) return renderPracticeDeck();
   return renderPracticeClassic();
 }
 
@@ -910,7 +908,6 @@ function renderActivitiesDeck() {
 
 function renderActivities() {
   if (bothDesigns()) return renderBothDesigns(renderActivitiesClassic, renderActivitiesDeck, "The same activities, one at a time.");
-  if (deckStage()) return renderActivitiesDeck();
   return renderActivitiesClassic();
 }
 
@@ -1217,7 +1214,6 @@ function renderRealProblemsDeck() {
 
 function renderRealProblems() {
   if (bothDesigns()) return renderBothDesigns(renderRealProblemsClassic, renderRealProblemsDeck, "The same problems, one at a time.");
-  if (deckStage()) return renderRealProblemsDeck();
   return renderRealProblemsClassic();
 }
 
@@ -1288,7 +1284,6 @@ function renderExplainThinkingDeck() {
 
 function renderExplainThinking() {
   if (bothDesigns()) return renderBothDesigns(renderExplainThinkingClassic, renderExplainThinkingDeck, "The same prompts, one at a time.");
-  if (deckStage()) return renderExplainThinkingDeck();
   return renderExplainThinkingClassic();
 }
 

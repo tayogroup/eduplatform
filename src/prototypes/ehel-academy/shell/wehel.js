@@ -545,6 +545,9 @@ export async function transcribeForWehel(blob) {
 // the lucide runtime, so a data-lucide placeholder renders as an empty element
 // there — inline SVG draws everywhere, emoji-font quirks included.
 const ICON_PATHS = {
+  sparkle: '<path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M18.4 5.6l-2.8 2.8M8.4 15.6l-2.8 2.8"/>',
+  user: '<path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',
+  send: '<path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4Z"/>',
   mic: '<path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/>',
   volume: '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>',
   volumeOff: '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="22" x2="16" y1="9" y2="15"/><line x1="16" x2="22" y1="9" y2="15"/>',
@@ -552,6 +555,129 @@ const ICON_PATHS = {
 };
 export function wehelIcon(name) {
   return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="16" height="16" style="vertical-align:-3px">${ICON_PATHS[name] || ""}</svg>`;
+}
+
+// --- panel skin ---------------------------------------------------------------
+// The chat panel's own stylesheet, injected once by this module rather than
+// added to any subject's course-ui.css. Two reasons that matter:
+//
+//   * english/shared/course-ui.css is @imported by Global Perspectives, so a
+//     rule added there lands in a second subject on that file's cache schedule.
+//     Shipping the skin with the component keeps it where the markup is.
+//   * every rule is prefixed .wehel-panel, which only ever exists on a container
+//     this module rendered into. No selector here can reach a lesson page — the
+//     same containment the deck CSS uses, for the same reason.
+//
+// The look is warm and rounded for a young learner, but deliberately stops short
+// of babyish: intensive-english mounts this identical panel for ADULT beginners,
+// and a Grade 8 student is not a small child either. Friendly, not cartoonish.
+const PANEL_STYLE_ID = "wehel-panel-style";
+const PANEL_STYLE = `
+.wehel-panel{--w-ink:#17324d;--w-teal:#0f766e;--w-teal-soft:#e8f5f2;--w-warm:#f8b34a;
+  --w-line:rgba(15,23,42,.12);--w-radius:20px;color:var(--w-ink)}
+.wehel-panel *{box-sizing:border-box}
+/* .sr-only is only defined in english/shared/course-ui.css, which four of the
+   six subjects never load — so the panel carries its own copy rather than
+   letting the compose label and the thinking text render visibly there. */
+.wehel-panel .sr-only{position:absolute!important;width:1px!important;height:1px!important;
+  padding:0!important;margin:-1px!important;overflow:hidden!important;
+  clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+
+/* toolbar — voice, focus and language, compact so it never outweighs the talk */
+.wehel-panel .ai-voice-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  padding:8px;margin-bottom:12px;border:1px solid var(--w-line);border-radius:14px;
+  background:linear-gradient(180deg,rgba(232,245,242,.75),rgba(232,245,242,.35))}
+.wehel-panel .ai-voice-row label{display:inline-flex;align-items:center;gap:6px;
+  font-size:12.5px;font-weight:650;letter-spacing:.01em;opacity:.8}
+.wehel-panel .ai-voice-row select{font:inherit;font-size:13px;padding:6px 10px;
+  border:1px solid var(--w-line);border-radius:999px;background:#fff;color:inherit;
+  cursor:pointer;max-width:min(46vw,190px)}
+.wehel-panel .ai-voice-row select:hover{border-color:var(--w-teal)}
+.wehel-panel #wehel-voice-toggle{border-radius:999px;padding:6px 14px;font-size:13px;font-weight:700}
+
+/* conversation */
+.wehel-panel .ai-conversation{display:flex;flex-direction:column;gap:14px;
+  padding:4px 2px 8px;max-height:min(56vh,520px);overflow-y:auto;scroll-behavior:smooth}
+.wehel-panel .ai-message{display:grid;grid-template-columns:auto 1fr;gap:10px;
+  align-items:start;border:0;padding:0;margin:0;background:none;animation:wehel-rise .22s ease both}
+.wehel-panel .ai-message.user{grid-template-columns:1fr auto;justify-items:end}
+.wehel-panel .w-avatar{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;
+  flex:none;color:#fff;background:linear-gradient(140deg,var(--w-teal),#12a594);
+  box-shadow:0 2px 8px rgba(15,118,110,.28)}
+.wehel-panel .ai-message.user .w-avatar{background:linear-gradient(140deg,#5b7cfa,#7f6ef0);
+  box-shadow:0 2px 8px rgba(91,124,250,.28);order:2}
+.wehel-panel .w-body{min-width:0;max-width:min(88%,52ch)}
+.wehel-panel .ai-message.user .w-body{order:1;text-align:left}
+.wehel-panel .w-who{display:block;margin:0 0 4px;font-size:11.5px;font-weight:800;
+  letter-spacing:.05em;text-transform:uppercase;opacity:.55}
+.wehel-panel .w-text{margin:0;padding:12px 15px;border-radius:var(--w-radius);
+  font-size:15.5px;line-height:1.55;white-space:pre-wrap;overflow-wrap:anywhere;
+  background:#fff;border:1px solid var(--w-line);border-top-left-radius:6px;
+  box-shadow:0 1px 2px rgba(15,23,42,.05)}
+.wehel-panel .ai-message.user .w-text{background:linear-gradient(160deg,#eef2ff,#e7ecff);
+  border-color:rgba(91,124,250,.28);border-top-left-radius:var(--w-radius);border-top-right-radius:6px}
+.wehel-panel .ai-message.assistant .w-text{background:linear-gradient(170deg,#fff,var(--w-teal-soft))}
+.wehel-panel .w-tools{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
+.wehel-panel .w-tools .button{border-radius:999px;padding:5px 12px;font-size:12.5px;font-weight:700}
+.wehel-panel .voice-button.is-playing{background:var(--w-warm);border-color:var(--w-warm);color:#4a3208}
+
+/* thinking — three dots instead of a sentence that reads like a reply */
+.wehel-panel .is-thinking .w-text{display:inline-flex;gap:5px;align-items:center;padding:14px 16px}
+.wehel-panel .w-dot{width:7px;height:7px;border-radius:50%;background:var(--w-teal);opacity:.45;
+  animation:wehel-bounce 1.1s infinite ease-in-out}
+.wehel-panel .w-dot:nth-child(2){animation-delay:.15s}
+.wehel-panel .w-dot:nth-child(3){animation-delay:.3s}
+
+/* quick prompts — tappable chips, big enough for a small finger */
+.wehel-panel .ai-prompts{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 12px}
+.wehel-panel .ai-prompts button{min-height:38px;padding:8px 15px;border-radius:999px;
+  border:1.5px solid rgba(15,118,110,.28);background:#fff;color:var(--w-teal);
+  font:inherit;font-size:13.5px;font-weight:700;cursor:pointer;
+  transition:transform .12s ease,background .12s ease,box-shadow .12s ease}
+.wehel-panel .ai-prompts button:hover:not(:disabled){background:var(--w-teal-soft);
+  transform:translateY(-1px);box-shadow:0 3px 10px rgba(15,118,110,.15)}
+.wehel-panel .ai-prompts button:disabled{opacity:.5;cursor:default}
+
+/* compose */
+.wehel-panel .ai-compose{display:flex;align-items:center;gap:8px;padding:7px 7px 7px 8px;
+  border:1.5px solid var(--w-line);border-radius:999px;background:#fff;
+  transition:border-color .15s ease,box-shadow .15s ease}
+.wehel-panel .ai-compose:focus-within{border-color:var(--w-teal);
+  box-shadow:0 0 0 4px rgba(15,118,110,.13)}
+.wehel-panel .ai-compose input{flex:1;min-width:0;border:0;outline:none;background:none;
+  font:inherit;font-size:15.5px;padding:8px 8px 8px 10px;color:inherit}
+.wehel-panel .ai-compose input::placeholder{color:rgba(23,50,77,.45)}
+/* width:auto is load-bearing. Subject stylesheets give .ai-compose .button a
+   full-width basis (it was a stacked form there), so flex:none alone pinned the
+   Send button at 285px and starved the input to 18px at phone width. */
+.wehel-panel .ai-compose .button{flex:0 0 auto;width:auto;min-height:42px;
+  border-radius:999px;font-weight:750;white-space:nowrap}
+.wehel-panel #wehel-mic{width:42px;padding:0;display:grid;place-items:center}
+.wehel-panel #wehel-mic.is-recording{background:#e4572e;border-color:#e4572e;color:#fff;
+  animation:wehel-pulse 1.3s infinite}
+.wehel-panel .ai-compose button[type=submit]{padding:0 18px;display:inline-flex;align-items:center;gap:7px;
+  background:linear-gradient(140deg,var(--w-teal),#12a594);border-color:transparent;color:#fff}
+
+@keyframes wehel-rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@keyframes wehel-bounce{0%,80%,100%{transform:translateY(0);opacity:.4}40%{transform:translateY(-5px);opacity:1}}
+@keyframes wehel-pulse{0%,100%{box-shadow:0 0 0 0 rgba(228,87,46,.45)}50%{box-shadow:0 0 0 7px rgba(228,87,46,0)}}
+@media (prefers-reduced-motion:reduce){
+  .wehel-panel .ai-message,.wehel-panel .w-dot,.wehel-panel #wehel-mic.is-recording{animation:none}
+  .wehel-panel .ai-conversation{scroll-behavior:auto}
+  .wehel-panel .ai-prompts button:hover:not(:disabled){transform:none}
+}
+@media (max-width:640px){
+  .wehel-panel .w-body{max-width:100%}
+  .wehel-panel .w-text{font-size:15px}
+  .wehel-panel .ai-voice-row label{font-size:12px}
+}`;
+
+function ensurePanelStyle() {
+  if (typeof document === "undefined" || document.getElementById(PANEL_STYLE_ID)) return;
+  const style = document.createElement("style");
+  style.id = PANEL_STYLE_ID;
+  style.textContent = PANEL_STYLE;
+  document.head.appendChild(style);
 }
 
 // mountWehelChat renders the conversation into `container` and owns the whole
@@ -580,6 +706,10 @@ export function wehelIcon(name) {
 //   onSaved        — persist the store (called after every append)
 export function mountWehelChat(options) {
   const { container, meta, store, ui } = options;
+  // Skin: one class on the container is what every rule in PANEL_STYLE hangs
+  // off, so the stylesheet cannot reach anything this module did not render.
+  ensurePanelStyle();
+  container.classList.add("wehel-panel");
   const key = options.key || "aiMessages";
   const escapeHtml = ui.escapeHtml;
   const tutorLabel = options.tutorLabel || "Wehel Tutor";
@@ -622,7 +752,17 @@ export function mountWehelChat(options) {
     const somali = item.role === "assistant" && preferredTeachingLanguage() === "somali" && somaliLines(item.text).length
       ? `<button class="button secondary voice-button${somaliPlaying ? " is-playing" : ""}" data-wehel-somali="${index}" type="button" aria-label="${somaliPlaying ? "Stop the Somali voice" : "Listen in Somali (Ubah)"}">${somaliPlaying ? `${wehelIcon("stop")} Jooji` : `${wehelIcon("volume")} Soomaali`}</button>`
       : "";
-    return `<article class="ai-message ${item.role}"><strong>${escapeHtml(label)}</strong>${escapeHtml(item.text)}${speak}${somali}</article>`;
+    // Structure only: the article keeps its .ai-message/.user/.assistant classes
+    // and both buttons keep their exact classes, data attributes and wording —
+    // the handlers and the audio-coverage checks read those.
+    const avatar = item.role === "user" ? "You" : tutorLabel;
+    const tools = speak || somali
+      ? `<div class="w-tools">${speak}${somali}</div>`
+      : "";
+    return `<article class="ai-message ${item.role}">`
+      + `<span class="w-avatar" role="img" aria-label="${escapeHtml(avatar)}">${wehelIcon(item.role === "user" ? "user" : "sparkle")}</span>`
+      + `<div class="w-body"><strong class="w-who">${escapeHtml(label)}</strong>`
+      + `<p class="w-text">${escapeHtml(item.text)}</p>${tools}</div></article>`;
   };
 
   // Speak one stored reply aloud; index -1 marks the greeting bubble. The
@@ -655,16 +795,16 @@ export function mountWehelChat(options) {
         : "Teach me this unit's key words and give the Somali translation for each one." });
     }
     container.innerHTML = `
-      <div class="ai-voice-row" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+      <div class="ai-voice-row">
         ${browserSpeechSupported ? `<button class="button secondary" id="wehel-voice-toggle" type="button" aria-pressed="${speakReplies}" title="${speakReplies ? `${escapeHtml(tutorLabel)} reads replies aloud` : "Replies are silent"}">${speakReplies ? `${wehelIcon("volume")} Voice on` : `${wehelIcon("volumeOff")} Voice off`}</button>` : ""}
-        ${modules.length ? `<label style="display:inline-flex;align-items:center;gap:6px;font-size:13px;opacity:.85">Focus
-          <select id="wehel-focus" style="font:inherit;padding:4px 8px;border:1px solid rgba(15,23,42,.25);border-radius:6px;background:#fff;color:inherit">
+        ${modules.length ? `<label for="wehel-focus">Focus
+          <select id="wehel-focus">
             <option value="">Whole unit</option>
             ${modules.map((module) => `<option value="${escapeHtml(module.id)}"${focus && focus.id === module.id ? " selected" : ""}>${escapeHtml(module.label)}</option>`).join("")}
           </select>
         </label>` : ""}
-        <label style="margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:13px;opacity:.85">Teaching language
-          <select id="wehel-language" style="font:inherit;padding:4px 8px;border:1px solid rgba(15,23,42,.25);border-radius:6px;background:#fff;color:inherit">
+        <label for="wehel-language" style="margin-left:auto">Teaching language
+          <select id="wehel-language">
             <option value="english"${teachingLanguage === "english" ? " selected" : ""}>English</option>
             <option value="somali"${teachingLanguage === "somali" ? " selected" : ""}>Soomaali (erayada)</option>
           </select>
@@ -672,14 +812,14 @@ export function mountWehelChat(options) {
       </div>
       <div class="ai-conversation" id="wehel-conversation" aria-live="polite">
         ${messages.length ? messages.map(bubble).join("") : bubble({ role: "assistant", text: greeting }, -1)}
-        ${busy ? `<article class="ai-message assistant is-thinking"><strong>${escapeHtml(tutorLabel)}</strong><em>is thinking…</em></article>` : ""}
+        ${busy ? `<article class="ai-message assistant is-thinking"><span class="w-avatar" role="img" aria-label="${escapeHtml(tutorLabel)}">${wehelIcon("sparkle")}</span><div class="w-body"><strong class="w-who">${escapeHtml(tutorLabel)}</strong><p class="w-text"><span class="w-dot"></span><span class="w-dot"></span><span class="w-dot"></span><span class="sr-only">is thinking…</span></p></div></article>` : ""}
       </div>
       <div class="ai-prompts">${prompts.map((prompt) => `<button data-wehel-prompt="${escapeHtml(prompt.message)}" data-wehel-mode="${escapeHtml(prompt.mode || "")}" type="button" ${busy ? "disabled" : ""}>${escapeHtml(prompt.label)}</button>`).join("")}</div>
       <form class="ai-compose" id="wehel-form">
         <label class="sr-only" for="wehel-input">Ask ${escapeHtml(tutorLabel)}</label>
         <input id="wehel-input" maxlength="500" placeholder="${escapeHtml(focus ? `Ask about ${focus.label}…` : (options.placeholder || `Ask about ${meta.unitTitle}…`))}" ${busy ? "disabled" : ""} autocomplete="off">
         ${micSupported ? `<button class="button secondary" id="wehel-mic" type="button" aria-label="Ask by voice" title="Ask by voice" ${busy ? "disabled" : ""}>${wehelIcon("mic")}</button>` : ""}
-        <button class="button primary" type="submit" ${busy ? "disabled" : ""}>Send</button>
+        <button class="button primary" type="submit" ${busy ? "disabled" : ""}>${wehelIcon("send")} Send</button>
       </form>`;
     if (ui.bindVoiceControls) ui.bindVoiceControls();
     const voiceToggle = container.querySelector("#wehel-voice-toggle");

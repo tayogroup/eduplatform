@@ -171,6 +171,24 @@ function doneButton(section, label = "Mark this section done") {
 const DECK_MAX_STAGE = 4;
 const isDeckStage = () => stageNumber <= DECK_MAX_STAGE;
 
+// BOTH designs, the way English Grades 1-4 show a unit module: the original
+// section first, then the same content again as an inline deck under it — not
+// the deck INSTEAD of the page, which is what this subject shipped first and
+// what English itself moved away from.
+//
+// Stages 1-4, matching English. This is now the same boundary as
+// DECK_MAX_STAGE, which makes the deck-instead-of-the-page branch in routeTo
+// unreachable — it is kept only because Stage 5+ still resolves through the
+// same helper, and the branch costs one line.
+const BOTH_MAX_STAGE = 4;
+const isBothStage = () => stageNumber <= BOTH_MAX_STAGE;
+
+// Where the next deck lands. A both-designs page sets it, and every deck
+// renderer below mounts inline under the original section without knowing about
+// it. Null means the deck owns the page, which is what Stages 2-4 still do.
+// Cleared by onBeforeRender, so it can never leak into the next section.
+let deckMount = null;
+
 // The deck cannot be built at module load: it closes over $ and escapeHtml,
 // which the shell hands us in bind(). Built once on first use instead.
 let deckApi = null;
@@ -193,7 +211,54 @@ function deck() {
       afterPaint: () => { bindVoiceControls(); updateVoiceUI(); },
     });
   }
-  return deckApi;
+  // Where a deck lands is decided by whoever is rendering, not by the eleven
+  // deck renderers below: on a both-designs page deckMount is set and every one
+  // of them mounts inline under the original section, bounded rather than
+  // full-bleed, without carrying a parameter for it.
+  return {
+    ...deckApi,
+    mountDeck: (options) => deckApi.mountDeck(deckMount ? { ...options, mount: deckMount, fullBleed: false } : options),
+  };
+}
+
+// The original section, then the same content as a deck below it.
+//
+// Simpler here than in English, and for one reason: every renderer in this file
+// RETURNS its HTML rather than painting and then querying the document. English
+// had to give its originals a scoped paint/$/$$ because a subtab redraw
+// reassigned #app.innerHTML and would have erased the deck below. Nothing here
+// repaints — the only in-place change a page makes is disabling its own done
+// button — so the original half can simply be dropped into the region.
+function renderBothDesigns(classic, deckRenderer, intro) {
+  const app = $("#app");
+  app.innerHTML = `<div class="both-designs">
+      <div class="classic-design" id="classic-design">${classic()}</div>
+      <section class="deck-design">
+        <div class="deck-design-head"><span class="eyebrow">Slides</span><p>${escapeHtml(intro)}</p></div>
+        <div id="deck-design"></div>
+      </section>
+    </div>`;
+  app.scrollTop = 0;
+  deckMount = "#deck-design";
+  deckRenderer();
+  deckMount = null;
+  // The original half's Listen buttons were written as a string just now, so
+  // they are not bound yet — the deck binds its own through afterPaint, and the
+  // shell binds after a renderer returns, but this renderer painted twice.
+  bindVoiceControls();
+  updateVoiceUI();
+}
+
+// A section is now marked done from two places — the page's "Mark this section
+// done" and the deck's finish button on its last slide. Pressing either has to
+// settle both, or a learner who finished on the page scrolls down to a deck
+// still asking them to finish it.
+function markSectionDone(section, message) {
+  complete(section, message);
+  for (const button of $$(`[data-done="${CSS.escape(section)}"], [data-deck-finish="${CSS.escape(section)}"]`)) {
+    button.disabled = true;
+    button.innerHTML = `${button.hasAttribute("data-deck-finish") ? deckIcon("check") : icon("check")} Done`;
+  }
 }
 
 // Reaching the end of a deck and pressing its finish button marks the section
@@ -203,9 +268,7 @@ function deck() {
 function finishedInDeck(event, message = "Nice work — that section is marked done.") {
   const target = event.target.closest("[data-deck-finish]");
   if (!target || target.disabled) return false;
-  complete(target.dataset.deckFinish, message);
-  target.disabled = true;
-  target.innerHTML = `${deckIcon("check")} Done`;
+  markSectionDone(target.dataset.deckFinish, message);
   return true;
 }
 
@@ -485,14 +548,20 @@ function renderPracticeDeck() {
     onClick: (event) => finishedInDeck(event),
   });
 
+  // Found inside the deck, not across the document. On a both-designs page the
+  // original practice section sits above this one, and while it happens to
+  // carry no filter of its own today, a document-wide lookup for the deck's own
+  // controls is the bug English hit when its vocabulary lab and deck each
+  // rendered #word-search — the deck filtered itself by the page's box.
+  const inDeck = (selector) => mounted.root.querySelector(selector);
   const drawDeck = () => {
-    const part = $("#part-filter")?.value || "all";
+    const part = inDeck("#part-filter")?.value || "all";
     items = part === "all" ? all : all.filter((item) => item.partTitle === part);
     mounted.setSlides(items.map(slide));
-    const counter = $("#practice-count");
+    const counter = inDeck("#practice-count");
     if (counter) counter.textContent = `${items.length} question${items.length === 1 ? "" : "s"}`;
   };
-  $("#part-filter")?.addEventListener("change", drawDeck);
+  inDeck("#part-filter")?.addEventListener("change", drawDeck);
   drawDeck();
 }
 
@@ -841,9 +910,12 @@ const paint = (id, fn) => () => {
 // for a section this pack does not carry falls back to the overview — and the
 // stage gate is checked here rather than in the renderers map, which is built
 // at module load, before bind() knows what stage this is.
-const routeTo = (id, deckRenderer, pageRenderer) => () => {
+const routeTo = (id, deckRenderer, pageRenderer, slidesIntro) => () => {
   if (!isDeckStage()) return paint(id, pageRenderer)();
   if (!availableSections().some(([sectionId]) => sectionId === id)) return paint("overview", renderOverview)();
+  // Stage 1 gets the original section AND the deck; Stages 2-4 are still on the
+  // deck alone until this is widened.
+  if (isBothStage()) return renderBothDesigns(pageRenderer, deckRenderer, slidesIntro);
   return deckRenderer();
 };
 
@@ -856,9 +928,9 @@ const routeTo = (id, deckRenderer, pageRenderer) => () => {
 document.addEventListener("click", (event) => {
   const doneTarget = event.target.closest("[data-done]");
   if (!doneTarget) return;
-  complete(doneTarget.dataset.done, "Nice work — that section is marked done.");
-  doneTarget.disabled = true;
-  doneTarget.innerHTML = `${icon("check")} Done`;
+  // Settles the deck's finish button below as well as this one — on a
+  // both-designs page the section can be completed from either half.
+  markSectionDone(doneTarget.dataset.done, "Nice work — that section is marked done.");
 });
 
 // Capture phase: `toggle` does not bubble.
@@ -870,11 +942,32 @@ document.addEventListener("toggle", (event) => {
   }
 }, true);
 
+// On a both-designs page the same question is on screen twice — once on the
+// original page, once on its slide — under the same data-reflect/data-quiz id.
+// Saving already worked from either, because the handler reads the element that
+// changed. What did not was the OTHER copy: a learner who wrote their answer
+// above and then scrolled down to the deck found the box empty, which reads as
+// having lost the answer. The twin is filled in from the same value.
+function mirrorAnswer(attribute, source) {
+  for (const twin of $$(`[${attribute}="${CSS.escape(source.dataset[attribute === "data-reflect" ? "reflect" : "quiz"])}"]`)) {
+    if (twin !== source) twin.value = source.value;
+  }
+}
+
 document.addEventListener("change", (event) => {
   const reflect = event.target.closest("[data-reflect]");
-  if (reflect) { progress.reflection[reflect.dataset.reflect] = reflect.value; saveProgress(); return; }
+  if (reflect) {
+    progress.reflection[reflect.dataset.reflect] = reflect.value;
+    mirrorAnswer("data-reflect", reflect);
+    saveProgress();
+    return;
+  }
   const quiz = event.target.closest("[data-quiz]");
-  if (quiz) { progress.quiz[quiz.dataset.quiz] = quiz.value; saveProgress(); }
+  if (quiz) {
+    progress.quiz[quiz.dataset.quiz] = quiz.value;
+    mirrorAnswer("data-quiz", quiz);
+    saveProgress();
+  }
 });
 
 // ===================== config + boot =====================
@@ -912,31 +1005,36 @@ const config = {
     // three-column chart that a one-item-per-slide deck would take apart, the
     // tutor is a live conversation, and For the Grown-Up is the one section
     // written for an adult reading it on their own.
-    lesson: routeTo("lesson", renderLessonDeck, renderLesson),
+    lesson: routeTo("lesson", renderLessonDeck, renderLesson, "The same lesson, one part at a time."),
     bigideas: routeTo("bigideas",
       () => renderBoxDeck({ section: "bigideas", label: "Big idea", heading: "Ideas to hold on to", finishLabel: "I will remember these", items: course.bigIdeas.map((item) => ({ item, role: "bigIdea" })) }),
-      () => renderBoxes("bigideas", "bigIdea", course.bigIdeas, "Big Ideas", "Ideas to hold on to", "The few things worth remembering from this unit.")),
+      () => renderBoxes("bigideas", "bigIdea", course.bigIdeas, "Big Ideas", "Ideas to hold on to", "The few things worth remembering from this unit."),
+      "The same ideas, one at a time."),
     models: routeTo("models",
       () => renderBoxDeck({ section: "models", label: "Example", heading: "See the skill in action", finishLabel: "I have seen the examples", items: course.models.map((item) => ({ item, role: "model" })) }),
-      () => renderBoxes("models", "model", course.models, "Worked Examples", "See the skill in action", "Follow someone else doing it, then do the same with your own topic.")),
+      () => renderBoxes("models", "model", course.models, "Worked Examples", "See the skill in action", "Follow someone else doing it, then do the same with your own topic."),
+      "The same examples, one at a time."),
     goals: paint("goals", renderGoals),
-    toolkit: routeTo("toolkit", renderToolkitDeck, renderToolkit),
-    words: routeTo("words", renderWordsDeck, renderWords),
-    challenge: routeTo("challenge", renderChallengeDeck, renderChallenge),
-    activities: routeTo("activities", renderActivitiesDeck, renderActivities),
-    project: routeTo("project", renderProjectDeck, renderProject),
+    toolkit: routeTo("toolkit", renderToolkitDeck, renderToolkit, "The same toolkit, one card at a time."),
+    words: routeTo("words", renderWordsDeck, renderWords, "The same words, one at a time."),
+    challenge: routeTo("challenge", renderChallengeDeck, renderChallenge, "The same challenge, one step at a time."),
+    activities: routeTo("activities", renderActivitiesDeck, renderActivities, "The same activities, one at a time."),
+    project: routeTo("project", renderProjectDeck, renderProject, "The same project, one step at a time."),
     tutor: renderTutor,
-    practice: routeTo("practice", renderPracticeDeck, renderPractice),
-    quiz: routeTo("quiz", renderQuizDeck, renderQuiz),
-    reflect: routeTo("reflect", renderReflectDeck, renderReflect),
-    teacher: routeTo("teacher", renderTeacherDeck, renderTeacher),
+    practice: routeTo("practice", renderPracticeDeck, renderPractice, "The same questions, one at a time."),
+    quiz: routeTo("quiz", renderQuizDeck, renderQuiz, "The same questions, one at a time."),
+    reflect: routeTo("reflect", renderReflectDeck, renderReflect, "The same questions, one at a time."),
+    teacher: routeTo("teacher", renderTeacherDeck, renderTeacher, "The same cards, one at a time."),
     grownup: paint("grownup", renderGrownUp),
     progress: paint("progress", renderProgressPage),
   },
   // The deck is full-bleed via a class on <body>; leaving the section has to
   // take it off, or the next page renders inside a viewport still sized for a
   // carousel.
-  onBeforeRender: () => { document.body.classList.remove("gc-full"); },
+  // deckMount is per-render state: a both-designs page sets it around its deck
+  // and clears it again, but a renderer that throws part-way would leave it set
+  // and mount the NEXT section's deck into a region that no longer exists.
+  onBeforeRender: () => { document.body.classList.remove("gc-full"); deckMount = null; },
   bind,
   wehelOptions,
   async load(ctx) {

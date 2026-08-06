@@ -17,21 +17,20 @@ const mathRoot = path.join(here, "..", "src", "prototypes", "ehel-academy", "mat
 
 // How much learner-facing teaching a concept must carry.
 //
-// 300 was calibrated when a Stage 1 explanation still had the grown-up's script
-// joined onto the end of it ("How to teach it: Place 5 dates in a row. Take the
-// child's finger in yours…"), so the gate was counting the adult's words as the
-// learner's lesson and passing on that basis. Since that text moved to
-// `grownUpGuide`, the number it measures is the real one — and at Stage 1 the
-// real one is smaller, because a complete explanation for a five-year-old is
-// two or three sentences, not seven.
+// This was briefly stage-aware, and the story is worth keeping. 300 had been
+// calibrated when a Stage 1 explanation still had the grown-up's script joined
+// onto the end of it ("How to teach it: Place 5 dates in a row. Take the child's
+// finger in yours…"), so the gate was counting the adult's words as the
+// learner's lesson. Moving that text to `grownUpGuide` made the number honest
+// and 49 of 91 Stage 1 concepts fell under the floor — they had never carried
+// 300 characters of their own teaching.
 //
-// 150 is a FLOOR, not a target: below it an explainer is one short sentence,
-// which cannot teach a concept at any age. The shortest Stage 1 explainer today
-// is 153 characters and the median is 289, so this gate is deliberately quiet
-// on current content — it is here to catch a regression, not to grade prose.
+// Stage 1 was given a lower floor while that was true, and then the 49 were
+// finished from the material in their own guides
+// (tools/complete-ehel-math-stage1-explainers.mjs). The shortest Stage 1
+// explainer is now exactly 300 and the median is 439, so the exception is gone
+// and every stage is held to the same number again.
 const MIN_EXPLANATION = 300;
-const MIN_EXPLANATION_BY_GRADE = { "grade-1": 150 };
-const minExplanation = (gradeDir) => MIN_EXPLANATION_BY_GRADE[gradeDir] ?? MIN_EXPLANATION;
 const MAX_PARAGRAPHS = 40;
 
 // Text written to whoever is sitting with the learner, not to the learner.
@@ -116,7 +115,7 @@ for (const gradeDir of fs.readdirSync(mathRoot).filter((n) => /^grade-\d+$/.test
       conceptCount += 1;
       const explanation = String(concept.explanation || "");
       teachingChars += explanation.length + String(concept.example || "").length;
-      if (explanation.length < minExplanation(gradeDir)) fail(label, `concept "${concept.title}" explanation is ${explanation.length} chars — too thin to teach unaided`);
+      if (explanation.length < MIN_EXPLANATION) fail(label, `concept "${concept.title}" explanation is ${explanation.length} chars — too thin to teach unaided`);
       // A trailing ellipsis is only damage when it cuts a word off. After a
       // digit it is the author continuing a sequence on purpose — "count on in
       // threes: 0, 3, 6, 9, 12, 15, 18…" is complete as written.

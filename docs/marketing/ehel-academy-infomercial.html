@@ -1,0 +1,1330 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Ehel Academy — 2:00 Infomercial</title>
+<style>
+/* ============================================================
+   EHEL ACADEMY — 120-second infomercial
+   1920x1080. Self-contained. Screen-record the stage to export.
+   Timeline lives in the SCENES array at the bottom of this file.
+   ============================================================ */
+
+:root{
+  --navy-deep:#081a35;
+  --navy:#12315e;
+  --navy-mid:#1b4380;
+  --blue:#2f6fd0;
+  --blue-lt:#79b0f7;
+  --gold:#f0b429;
+  --gold-lt:#ffd978;
+  --paper:#ffffff;
+  --ink:#17324d;
+  --muted:rgba(255,255,255,.62);
+  --sans:"Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+  --serif:"Iowan Old Style","Palatino Linotype",Georgia,"Times New Roman",serif;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  background:#000;font-family:var(--sans);color:#fff;
+  display:flex;align-items:center;justify-content:center;overflow:hidden;
+}
+
+/* ---- the 1920x1080 stage, scaled to fit whatever window it's in ---- */
+#fit{position:relative;width:100vw;height:100vh;display:flex;align-items:center;justify-content:center}
+#stage{
+  position:relative;width:1920px;height:1080px;flex:none;
+  transform-origin:center center;
+  background:var(--navy-deep);overflow:hidden;
+  box-shadow:0 40px 120px rgba(0,0,0,.7);
+}
+
+/* ---- shared scene chrome ---- */
+.scene{
+  position:absolute;inset:0;opacity:0;visibility:hidden;
+  display:flex;align-items:center;justify-content:center;
+  /* reserve the burned-in caption band so a two-line subtitle can never
+     land on top of a scene's lowest element. Released when CC is off. */
+  padding-bottom:130px;
+}
+body.no-caps .scene{padding-bottom:0}
+.scene.on{opacity:1;visibility:visible}
+
+/* ambient backdrops */
+.bg{position:absolute;inset:0;pointer-events:none}
+.bg.grad-night{background:
+  radial-gradient(1200px 800px at 50% 40%, #10294f 0%, #07152b 60%, #04101f 100%);}
+.bg.grad-day{background:
+  radial-gradient(1400px 900px at 20% 15%, #1b4380 0%, #12315e 45%, #0a1d3a 100%);}
+.bg.grad-gold{background:
+  radial-gradient(1200px 900px at 50% 110%, #2a4d86 0%, #12315e 45%, #071528 100%);}
+
+/* drifting star field for the darker scenes */
+.stars{position:absolute;inset:0;opacity:.5}
+.stars i{
+  position:absolute;width:2px;height:2px;border-radius:50%;
+  background:#cfe2ff;opacity:.0;
+}
+.on .stars i{animation:twinkle 4.5s ease-in-out infinite}
+@keyframes twinkle{0%,100%{opacity:.05;transform:scale(.6)}50%{opacity:.85;transform:scale(1.15)}}
+
+/* a slow vignette + grain so flat colour doesn't read as a slide deck */
+#stage::after{
+  content:"";position:absolute;inset:0;pointer-events:none;z-index:60;
+  background:radial-gradient(ellipse at center, rgba(0,0,0,0) 55%, rgba(0,0,0,.55) 100%);
+}
+
+/* =========================================================
+   SCENE 1 — COLD OPEN : the question
+   ========================================================= */
+#s1 .q-wrap{position:relative;text-align:center;max-width:1300px;padding:0 80px}
+#s1 .whisper{
+  font:600 26px/1 var(--sans);letter-spacing:.42em;text-transform:uppercase;
+  color:rgba(255,255,255,.32);margin-bottom:52px;opacity:0;
+}
+.on#s1 .whisper{animation:fadeUp 1.4s .5s both cubic-bezier(.2,.7,.3,1)}
+#s1 .question{
+  font:400 82px/1.28 var(--serif);color:#eaf3ff;
+  text-shadow:0 6px 60px rgba(80,150,255,.35);
+}
+#s1 .question span{display:inline-block;opacity:0;transform:translateY(28px) rotate(2deg)}
+.on#s1 .question span{animation:wordIn .9s both cubic-bezier(.16,1,.3,1)}
+#s1 .caret{
+  display:inline-block;width:4px;height:74px;background:var(--gold);
+  vertical-align:-14px;margin-left:14px;opacity:0;
+}
+.on#s1 .caret{animation:blink 1s 3.4s steps(1) 8, fadeIn .3s 3.4s both}
+@keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+#s1 .beat{
+  position:absolute;left:50%;bottom:206px;transform:translateX(-50%);
+  font:500 30px/1 var(--sans);letter-spacing:.06em;color:rgba(255,255,255,.5);opacity:0;
+}
+.on#s1 .beat{animation:fadeUp 1.2s 7.6s both}
+
+/* =========================================================
+   SCENE 2 — THE PROBLEM : one teacher, thirty-four children
+   ========================================================= */
+#s2 .prob{display:flex;align-items:center;gap:120px}
+#s2 .dots{display:grid;grid-template-columns:repeat(9,1fr);gap:26px}
+#s2 .dots b{
+  display:block;width:56px;height:56px;border-radius:50%;
+  background:rgba(255,255,255,.13);opacity:0;transform:scale(.3);
+}
+.on#s2 .dots b{animation:popIn .5s both cubic-bezier(.2,1.4,.4,1)}
+#s2 .dots b.gold{background:var(--gold);box-shadow:0 0 0 0 rgba(240,180,41,.6)}
+.on#s2 .dots b.gold{animation:popIn .5s both cubic-bezier(.2,1.4,.4,1), pulseGold 2s 1.6s ease-out infinite}
+@keyframes pulseGold{0%{box-shadow:0 0 0 0 rgba(240,180,41,.55)}100%{box-shadow:0 0 0 42px rgba(240,180,41,0)}}
+#s2 .stat{max-width:640px}
+#s2 .stat .line{
+  font:800 96px/1.06 var(--sans);letter-spacing:-.03em;color:#fff;opacity:0;
+}
+#s2 .stat .line.dim{color:rgba(255,255,255,.42);font-weight:700}
+#s2 .stat .line em{font-style:normal;color:var(--gold)}
+.on#s2 .stat .line{animation:slideIn .8s both cubic-bezier(.16,1,.3,1)}
+#s2 .clock{
+  margin-top:44px;font:700 44px/1 ui-monospace,"Consolas",monospace;
+  color:rgba(255,255,255,.55);letter-spacing:.08em;opacity:0;
+}
+.on#s2 .clock{animation:fadeUp .8s 3.4s both}
+#s2 .maths{
+  margin-top:22px;font:700 40px/1.2 var(--sans);color:rgba(255,255,255,.5);opacity:0;
+}
+#s2 .maths em{font-style:normal;color:#ff9d9d}
+.on#s2 .maths{animation:fadeUp .9s 6.4s both}
+#s2 .verdict{
+  position:absolute;left:50%;bottom:200px;transform:translateX(-50%);
+  font:600 42px/1 var(--sans);color:#ff9d9d;letter-spacing:.01em;opacity:0;white-space:nowrap;
+}
+.on#s2 .verdict{animation:fadeUp 1s 8.8s both}
+
+/* =========================================================
+   SCENE 3 — LOGO REVEAL
+   ========================================================= */
+#s3 .reveal{text-align:center;position:relative}
+#s3 .rays{
+  position:absolute;left:50%;top:210px;width:1400px;height:1400px;
+  transform:translate(-50%,-50%);opacity:0;
+  background:conic-gradient(from 0deg,
+     rgba(121,176,247,.16) 0deg 6deg, transparent 6deg 30deg,
+     rgba(240,180,41,.13) 30deg 36deg, transparent 36deg 60deg);
+}
+.on#s3 .rays{animation:fadeIn 2s .6s both, spin 60s linear infinite}
+@keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+#s3 .crest{
+  width:340px;height:340px;object-fit:contain;
+  filter:drop-shadow(0 24px 60px rgba(0,0,0,.55));
+  opacity:0;transform:scale(.6) translateY(30px);position:relative;
+  background:#fff;border-radius:50%;padding:14px;
+}
+.on#s3 .crest{animation:crestIn 1.5s .25s both cubic-bezier(.16,1,.3,1)}
+@keyframes crestIn{
+  0%{opacity:0;transform:scale(.55) translateY(40px) rotate(-6deg)}
+  60%{opacity:1}
+  100%{opacity:1;transform:scale(1) translateY(0) rotate(0)}
+}
+#s3 .wordmark{
+  margin-top:56px;font:800 132px/1 var(--sans);letter-spacing:.22em;
+  text-indent:.22em;color:#fff;opacity:0;
+}
+.on#s3 .wordmark{animation:letterIn 1.4s 1.1s both cubic-bezier(.16,1,.3,1)}
+@keyframes letterIn{
+  0%{opacity:0;letter-spacing:.62em;filter:blur(14px)}
+  100%{opacity:1;letter-spacing:.22em;filter:blur(0)}
+}
+#s3 .rule{
+  width:0;height:2px;margin:38px auto 0;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+.on#s3 .rule{animation:ruleOut 1.2s 1.9s both cubic-bezier(.16,1,.3,1)}
+@keyframes ruleOut{to{width:620px}}
+#s3 .tag{
+  margin-top:34px;font:400 44px/1 var(--serif);font-style:italic;
+  color:var(--gold-lt);opacity:0;
+}
+.on#s3 .tag{animation:fadeUp 1.2s 2.3s both}
+
+/* =========================================================
+   SCENE 4 — THE CURRICULUM
+   ========================================================= */
+#s4 .curr{width:1600px}
+#s4 .eyebrow{
+  text-align:center;font:700 24px/1 var(--sans);letter-spacing:.4em;
+  text-transform:uppercase;color:var(--blue-lt);opacity:0;
+}
+.on#s4 .eyebrow{animation:fadeUp .9s .15s both}
+#s4 h2{
+  text-align:center;font:800 78px/1.12 var(--sans);letter-spacing:-.02em;
+  margin:24px 0 62px;opacity:0;
+}
+#s4 h2 em{font-style:normal;color:var(--gold)}
+.on#s4 h2{animation:fadeUp 1s .45s both}
+#s4 .cards{display:grid;grid-template-columns:repeat(5,1fr);gap:26px}
+#s4 .card{
+  background:linear-gradient(160deg,rgba(255,255,255,.11),rgba(255,255,255,.035));
+  border:1px solid rgba(255,255,255,.15);border-radius:22px;
+  padding:38px 26px 32px;text-align:center;
+  opacity:0;transform:translateY(46px);
+  backdrop-filter:blur(6px);
+}
+.on#s4 .card{animation:cardIn .95s both cubic-bezier(.16,1,.3,1)}
+@keyframes cardIn{to{opacity:1;transform:translateY(0)}}
+#s4 .card .ic{
+  width:88px;height:88px;margin:0 auto 24px;border-radius:24px;
+  display:grid;place-items:center;
+  background:linear-gradient(150deg,var(--blue),var(--navy-mid));
+  box-shadow:0 14px 34px rgba(0,0,0,.42), inset 0 1px 0 rgba(255,255,255,.28);
+}
+#s4 .card .ic svg{width:46px;height:46px;stroke:#fff;stroke-width:1.9;fill:none;
+  stroke-linecap:round;stroke-linejoin:round}
+#s4 .card h3{font:700 34px/1.15 var(--sans);margin-bottom:12px}
+#s4 .card p{font:500 20px/1.45 var(--sans);color:var(--muted)}
+#s4 .card .code{
+  display:inline-block;margin-top:18px;padding:7px 15px;border-radius:999px;
+  background:rgba(240,180,41,.14);border:1px solid rgba(240,180,41,.4);
+  font:700 17px/1 ui-monospace,Consolas,monospace;color:var(--gold-lt);letter-spacing:.06em;
+}
+#s4 .metrics{
+  display:flex;justify-content:center;gap:110px;margin-top:54px;
+  opacity:0;
+}
+#s4 .plus{
+  text-align:center;margin-top:30px;font:500 26px/1.3 var(--sans);
+  color:rgba(255,255,255,.55);opacity:0;
+}
+.on#s4 .plus{animation:fadeUp 1s 4.6s both}
+.on#s4 .metrics{animation:fadeUp 1s 2.9s both}
+#s4 .metric{text-align:center}
+#s4 .metric b{
+  display:block;font:800 94px/1 var(--sans);letter-spacing:-.03em;
+  color:#fff;font-variant-numeric:tabular-nums;
+}
+#s4 .metric span{
+  display:block;margin-top:14px;font:600 21px/1 var(--sans);
+  letter-spacing:.24em;text-transform:uppercase;color:var(--blue-lt);
+}
+
+/* =========================================================
+   SCENE 5 — WEHEL, THE AI TUTOR
+   ========================================================= */
+#s5 .split{display:flex;align-items:center;gap:130px;width:1620px}
+#s5 .copy{flex:1}
+#s5 .copy .eyebrow{
+  font:700 24px/1 var(--sans);letter-spacing:.4em;text-transform:uppercase;
+  color:var(--gold);opacity:0;
+}
+.on#s5 .copy .eyebrow{animation:fadeUp .9s .2s both}
+#s5 .copy h2{
+  font:800 92px/1.06 var(--sans);letter-spacing:-.03em;margin:26px 0 30px;opacity:0;
+}
+.on#s5 .copy h2{animation:slideIn 1s .45s both cubic-bezier(.16,1,.3,1)}
+#s5 .copy p{font:400 34px/1.5 var(--sans);color:var(--muted);max-width:620px;opacity:0}
+.on#s5 .copy p{animation:fadeUp 1s .8s both}
+#s5 .copy .kicker{
+  margin-top:36px;font:700 34px/1.35 var(--sans);color:var(--gold-lt);opacity:0;
+}
+.on#s5 .copy .kicker{animation:fadeUp 1s 6.6s both}
+
+.phone{
+  width:620px;flex:none;border-radius:38px;padding:26px;
+  background:linear-gradient(165deg,rgba(255,255,255,.14),rgba(255,255,255,.05));
+  border:1px solid rgba(255,255,255,.2);
+  box-shadow:0 40px 90px rgba(0,0,0,.5);
+  opacity:0;transform:translateY(50px) rotate(1.5deg);
+}
+.on#s5 .phone{animation:cardIn 1.1s .5s both cubic-bezier(.16,1,.3,1)}
+.phone .hdr{display:flex;align-items:center;gap:16px;padding:0 8px 22px;
+  border-bottom:1px solid rgba(255,255,255,.13);margin-bottom:26px}
+.phone .avatar{
+  width:56px;height:56px;border-radius:50%;display:grid;place-items:center;
+  background:linear-gradient(150deg,var(--gold),#d98f0a);
+  font:800 24px/1 var(--sans);color:#3a2600;
+}
+.phone .who b{display:block;font:700 26px/1.2 var(--sans)}
+.phone .who span{font:500 18px/1.2 var(--sans);color:#8ef0a8}
+.bub{
+  max-width:86%;padding:22px 26px;border-radius:22px;
+  font:500 26px/1.45 var(--sans);margin-bottom:20px;
+  opacity:0;transform:translateY(18px);
+}
+.bub.me{margin-left:auto;background:var(--blue);border-bottom-right-radius:6px}
+.bub.ai{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.14);
+  border-bottom-left-radius:6px;min-height:74px}
+.bub.show{animation:bubIn .55s both cubic-bezier(.2,1.3,.4,1)}
+@keyframes bubIn{to{opacity:1;transform:translateY(0)}}
+.typing{display:inline-flex;gap:8px;align-items:center;height:28px}
+.typing i{width:11px;height:11px;border-radius:50%;background:rgba(255,255,255,.55);
+  animation:bounce 1.15s infinite}
+.typing i:nth-child(2){animation-delay:.16s}
+.typing i:nth-child(3){animation-delay:.32s}
+@keyframes bounce{0%,60%,100%{transform:translateY(0);opacity:.45}30%{transform:translateY(-9px);opacity:1}}
+.cursor-blink{display:inline-block;width:3px;height:26px;background:var(--gold);
+  vertical-align:-4px;margin-left:3px;animation:blink .8s steps(1) infinite}
+
+/* =========================================================
+   SCENE 6 — HEARD, NOT JUST READ
+   ========================================================= */
+#s6 .voice{text-align:center;width:1500px}
+#s6 h2{font:800 88px/1.1 var(--sans);letter-spacing:-.03em;opacity:0}
+#s6 h2 em{font-style:normal;color:var(--gold)}
+.on#s6 h2{animation:fadeUp 1s .2s both}
+#s6 .listen{
+  display:inline-flex;align-items:center;gap:20px;margin:52px 0 46px;
+  padding:22px 44px;border-radius:999px;
+  background:linear-gradient(150deg,var(--blue),var(--navy-mid));
+  border:1px solid rgba(255,255,255,.24);
+  box-shadow:0 22px 54px rgba(0,0,0,.45);
+  font:700 34px/1 var(--sans);opacity:0;
+}
+.on#s6 .listen{animation:popIn .8s .8s both cubic-bezier(.2,1.3,.4,1)}
+#s6 .listen .play{
+  width:46px;height:46px;border-radius:50%;background:var(--gold);
+  display:grid;place-items:center;color:#3a2600;font-size:20px;
+}
+#s6 .wave{display:flex;align-items:center;justify-content:center;gap:9px;height:150px;opacity:0}
+.on#s6 .wave{animation:fadeIn .8s 1.3s both}
+#s6 .wave i{
+  width:9px;border-radius:6px;height:20px;
+  background:linear-gradient(180deg,var(--blue-lt),var(--blue));
+}
+.on#s6 .wave i{animation:wave 1.1s ease-in-out infinite alternate}
+@keyframes wave{to{height:var(--h);}}
+#s6 .langs{display:flex;justify-content:center;gap:26px;margin-top:56px}
+#s6 .chip{
+  padding:20px 42px;border-radius:999px;font:700 34px/1 var(--sans);
+  background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.2);
+  opacity:0;transform:translateY(28px) scale(.9);
+}
+.on#s6 .chip{animation:popIn .7s both cubic-bezier(.2,1.35,.4,1)}
+#s6 .chip.hi{background:linear-gradient(150deg,var(--gold),#d98f0a);color:#3a2600;
+  border-color:transparent}
+#s6 .note{margin-top:46px;font:400 32px/1.4 var(--serif);font-style:italic;
+  color:var(--muted);opacity:0}
+.on#s6 .note{animation:fadeUp 1s 4.4s both}
+
+/* =========================================================
+   SCENE 7 — PLACED, NOT GUESSED  +  PROGRESS
+   ========================================================= */
+#s7 .split{display:flex;align-items:center;gap:110px;width:1660px}
+#s7 .copy{width:560px;flex:none}
+#s7 .eyebrow{font:700 24px/1 var(--sans);letter-spacing:.4em;text-transform:uppercase;
+  color:var(--blue-lt);opacity:0}
+.on#s7 .eyebrow{animation:fadeUp .9s .2s both}
+#s7 h2{font:800 84px/1.08 var(--sans);letter-spacing:-.03em;margin:26px 0 28px;opacity:0}
+.on#s7 h2{animation:slideIn 1s .45s both cubic-bezier(.16,1,.3,1)}
+#s7 p{font:400 32px/1.5 var(--sans);color:var(--muted);opacity:0}
+.on#s7 p{animation:fadeUp 1s .85s both}
+.panel{
+  flex:1;background:linear-gradient(160deg,rgba(255,255,255,.12),rgba(255,255,255,.04));
+  border:1px solid rgba(255,255,255,.16);border-radius:28px;padding:44px 46px;
+  box-shadow:0 40px 90px rgba(0,0,0,.45);opacity:0;transform:translateY(46px);
+}
+.on#s7 .panel{animation:cardIn 1.1s .6s both cubic-bezier(.16,1,.3,1)}
+.panel .ptitle{display:flex;justify-content:space-between;align-items:baseline;
+  margin-bottom:34px}
+.panel .ptitle b{font:700 32px/1 var(--sans)}
+.panel .ptitle span{font:600 20px/1 var(--sans);color:#8ef0a8;letter-spacing:.1em;
+  text-transform:uppercase}
+.row{margin-bottom:26px}
+.row .lbl{display:flex;justify-content:space-between;margin-bottom:12px;
+  font:600 24px/1 var(--sans);color:rgba(255,255,255,.85)}
+.row .lbl i{font-style:normal;color:var(--gold-lt);font-variant-numeric:tabular-nums}
+.track{height:16px;border-radius:99px;background:rgba(255,255,255,.11);overflow:hidden}
+.track b{display:block;height:100%;width:0;border-radius:99px;
+  background:linear-gradient(90deg,var(--blue),var(--blue-lt));
+  box-shadow:0 0 22px rgba(121,176,247,.55)}
+.on#s7 .track b{animation:fill 1.9s 1.3s both cubic-bezier(.16,1,.3,1)}
+@keyframes fill{to{width:var(--w)}}
+.panel .stamp{
+  margin-top:36px;padding-top:28px;border-top:1px solid rgba(255,255,255,.13);
+  display:flex;align-items:center;gap:16px;font:600 24px/1.3 var(--sans);
+  color:rgba(255,255,255,.72);opacity:0;
+}
+.on#s7 .stamp{animation:fadeUp .9s 3.5s both}
+.tick{width:40px;height:40px;border-radius:50%;background:#1f9d55;display:grid;
+  place-items:center;flex:none;font-size:20px}
+
+/* =========================================================
+   SCENE 8 — THE PLATFORM UNDERNEATH (EduPlatform)
+   ========================================================= */
+#sp .plat{width:1620px;text-align:center}
+#sp .eyebrow{font:700 24px/1 var(--sans);letter-spacing:.4em;text-transform:uppercase;
+  color:var(--blue-lt);opacity:0}
+.on#sp .eyebrow{animation:fadeUp .9s .15s both}
+#sp h2{font:800 74px/1.1 var(--sans);letter-spacing:-.03em;margin:20px 0 12px;opacity:0}
+#sp h2 em{font-style:normal;color:var(--gold)}
+.on#sp h2{animation:fadeUp 1s .4s both}
+#sp .sub{font:400 30px/1.4 var(--sans);color:var(--muted);opacity:0;margin-bottom:40px}
+.on#sp .sub{animation:fadeUp 1s .7s both}
+
+#sp .live{
+  display:flex;align-items:center;gap:34px;width:960px;margin:0 auto 34px;
+  padding:24px 32px;border-radius:24px;text-align:left;
+  background:linear-gradient(150deg,rgba(255,255,255,.13),rgba(255,255,255,.04));
+  border:1px solid rgba(255,255,255,.18);
+  box-shadow:0 34px 80px rgba(0,0,0,.45);
+  opacity:0;transform:translateY(40px);
+}
+.on#sp .live{animation:cardIn 1s 1.1s both cubic-bezier(.16,1,.3,1)}
+#sp .live .cam{
+  width:150px;height:104px;border-radius:16px;flex:none;position:relative;
+  background:linear-gradient(150deg,var(--navy-mid),var(--navy-deep));
+  border:1px solid rgba(255,255,255,.16);display:grid;place-items:center;
+  font:700 34px/1 var(--sans);color:rgba(255,255,255,.55);
+}
+#sp .live .dot{
+  position:absolute;top:10px;left:10px;display:flex;align-items:center;gap:7px;
+  font:800 13px/1 var(--sans);letter-spacing:.14em;color:#fff;
+}
+#sp .live .dot i{width:9px;height:9px;border-radius:50%;background:#ff4d4d}
+.on#sp .live .dot i{animation:livePulse 1.4s ease-out infinite}
+@keyframes livePulse{0%{box-shadow:0 0 0 0 rgba(255,77,77,.7)}100%{box-shadow:0 0 0 14px rgba(255,77,77,0)}}
+#sp .live .meta b{display:block;font:700 34px/1.25 var(--sans);margin-bottom:8px}
+#sp .live .meta span{font:500 23px/1.3 var(--sans);color:var(--muted)}
+#sp .live .join{
+  margin-left:auto;flex:none;padding:20px 38px;border-radius:999px;
+  background:linear-gradient(150deg,var(--gold),#d98f0a);color:#33230a;
+  font:800 27px/1 var(--sans);box-shadow:0 16px 40px rgba(240,180,41,.3);
+}
+
+#sp .roles{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;width:1300px;margin:0 auto}
+#sp .role{
+  padding:30px 22px;border-radius:20px;
+  background:linear-gradient(160deg,rgba(255,255,255,.1),rgba(255,255,255,.03));
+  border:1px solid rgba(255,255,255,.14);
+  opacity:0;transform:translateY(36px);
+}
+.on#sp .role{animation:cardIn .85s both cubic-bezier(.16,1,.3,1)}
+#sp .role .g{font-size:44px;line-height:1;margin-bottom:16px;display:block}
+#sp .role b{display:block;font:700 30px/1.2 var(--sans);margin-bottom:8px}
+#sp .role span{font:500 20px/1.4 var(--sans);color:var(--muted)}
+#sp .oneline{
+  margin-top:34px;font:600 32px/1 var(--sans);color:var(--gold-lt);opacity:0;
+}
+.on#sp .oneline{animation:fadeUp 1s 5.4s both}
+
+/* =========================================================
+   SCENE 9 — QURAAN ACADEMY
+   ========================================================= */
+#s8 .quraan{text-align:center;width:1500px}
+#s8 .eyebrow{font:700 24px/1 var(--sans);letter-spacing:.4em;text-transform:uppercase;
+  color:var(--gold);opacity:0}
+.on#s8 .eyebrow{animation:fadeUp .9s .15s both}
+#s8 h2{font:800 84px/1.1 var(--sans);letter-spacing:-.03em;margin:24px 0 56px;opacity:0}
+.on#s8 h2{animation:fadeUp 1s .4s both}
+#s8 .letters{display:flex;justify-content:center;gap:34px;margin-bottom:60px}
+#s8 .letters b{
+  width:150px;height:150px;border-radius:28px;display:grid;place-items:center;
+  font:400 84px/1 var(--serif);
+  background:linear-gradient(160deg,rgba(255,255,255,.13),rgba(255,255,255,.04));
+  border:1px solid rgba(255,255,255,.2);
+  opacity:0;transform:translateY(40px) scale(.8);
+}
+.on#s8 .letters b{animation:popIn .8s both cubic-bezier(.2,1.3,.4,1)}
+#s8 .ayah{
+  direction:rtl;font:400 100px/1.7 var(--serif);
+  opacity:0;letter-spacing:.02em;
+}
+.on#s8 .ayah{animation:fadeUp 1.4s 2.1s both}
+#s8 .ayah .r{color:#ff9a6b}
+#s8 .ayah .g{color:#8ef0a8}
+#s8 .ayah .b{color:var(--blue-lt)}
+#s8 .legend{margin-top:34px;font:600 26px/1 var(--sans);color:var(--muted);opacity:0;
+  letter-spacing:.06em}
+.on#s8 .legend{animation:fadeUp 1s 3.4s both}
+
+/* =========================================================
+   SCENE 9 — CLOSE / CTA
+   ========================================================= */
+#s9 .close{text-align:center}
+#s9 .crest{
+  width:230px;height:230px;object-fit:contain;background:#fff;border-radius:50%;
+  padding:12px;opacity:0;transform:scale(.7);
+  filter:drop-shadow(0 22px 60px rgba(0,0,0,.6));
+}
+.on#s9 .crest{animation:popIn 1.1s .1s both cubic-bezier(.2,1.25,.4,1)}
+#s9 h2{font:800 116px/1.06 var(--sans);letter-spacing:-.03em;margin:44px 0 22px;opacity:0}
+.on#s9 h2{animation:letterIn 1.3s .5s both}
+#s9 .tag{font:400 46px/1 var(--serif);font-style:italic;color:var(--gold-lt);opacity:0}
+.on#s9 .tag{animation:fadeUp 1.1s 1s both}
+#s9 .cta{
+  display:inline-block;margin-top:60px;padding:30px 76px;border-radius:999px;
+  background:linear-gradient(150deg,var(--gold),#d98f0a);color:#33230a;
+  font:800 44px/1 var(--sans);letter-spacing:.02em;
+  box-shadow:0 26px 70px rgba(240,180,41,.35);opacity:0;transform:translateY(30px);
+}
+.on#s9 .cta{animation:cardIn 1s 1.5s both cubic-bezier(.2,1.25,.4,1),
+                       ctaPulse 2.4s 2.6s ease-in-out infinite}
+@keyframes ctaPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.035)}}
+#s9 .url{margin-top:44px;font:600 34px/1 var(--sans);letter-spacing:.22em;
+  color:rgba(255,255,255,.65);opacity:0}
+.on#s9 .url{animation:fadeUp 1s 2s both}
+
+/* =========================================================
+   SHARED KEYFRAMES
+   ========================================================= */
+@keyframes fadeIn{to{opacity:1}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes slideIn{from{opacity:0;transform:translateX(-44px)}to{opacity:1;transform:translateX(0)}}
+@keyframes wordIn{to{opacity:1;transform:translateY(0) rotate(0)}}
+@keyframes popIn{to{opacity:1;transform:translateY(0) scale(1)}}
+
+/* =========================================================
+   BURNED-IN CAPTION  (the VO line, doubles as a subtitle)
+   ========================================================= */
+#caption{
+  position:absolute;left:50%;bottom:56px;transform:translateX(-50%);
+  z-index:70;max-width:1500px;text-align:center;
+  font:600 34px/1.4 var(--sans);color:rgba(255,255,255,.9);
+  text-shadow:0 3px 22px rgba(0,0,0,.9);
+  opacity:0;transition:opacity .35s;pointer-events:none;
+}
+#caption.show{opacity:1}
+body.no-caps #caption{display:none}
+
+/* progress hairline along the very bottom of the frame */
+#progress{position:absolute;left:0;bottom:0;height:5px;width:0;z-index:80;
+  background:linear-gradient(90deg,var(--blue),var(--gold));box-shadow:0 0 16px rgba(240,180,41,.5)}
+body.recording #progress{display:none}
+
+/* =========================================================
+   OPERATOR UI (hidden in record mode)
+   ========================================================= */
+#ui{
+  position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:200;
+  display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:16px;
+  background:rgba(10,20,38,.9);border:1px solid rgba(255,255,255,.16);
+  backdrop-filter:blur(14px);box-shadow:0 18px 50px rgba(0,0,0,.6);
+  font:600 14px/1 var(--sans);
+}
+body.recording #ui{opacity:0;pointer-events:none}
+#ui button{
+  font:600 14px/1 var(--sans);color:#fff;background:rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.18);border-radius:10px;padding:10px 14px;cursor:pointer;
+}
+#ui button:hover{background:rgba(255,255,255,.2)}
+#ui button.pri{background:var(--gold);color:#33230a;border-color:transparent}
+#ui .tc{font:600 14px/1 ui-monospace,Consolas,monospace;color:var(--gold-lt);
+  min-width:96px;text-align:center}
+#ui select{font:600 13px/1 var(--sans);background:rgba(255,255,255,.1);color:#fff;
+  border:1px solid rgba(255,255,255,.18);border-radius:10px;padding:9px 10px}
+#ui select option{background:#0b1e3d}
+#hint{position:fixed;top:18px;left:50%;transform:translateX(-50%);z-index:200;
+  font:500 13px/1 var(--sans);color:rgba(255,255,255,.4);letter-spacing:.06em}
+body.recording #hint{display:none}
+</style>
+</head>
+<body>
+
+<div id="fit">
+<div id="stage">
+
+  <!-- ══════════ 1 · COLD OPEN ══════════ -->
+  <section class="scene" id="s1">
+    <div class="bg grad-night"></div>
+    <div class="stars" data-stars="70"></div>
+    <div class="q-wrap">
+      <div class="whisper">8:14 on a Tuesday morning</div>
+      <div class="question" data-split>But how does the sun know when to come up?</div><span class="caret"></span>
+      <div class="beat">She is nine. Nobody is free to answer.</div>
+    </div>
+  </section>
+
+  <!-- ══════════ 2 · THE PROBLEM ══════════ -->
+  <section class="scene" id="s2">
+    <div class="bg grad-night"></div>
+    <div class="prob">
+      <div class="dots" id="dots"></div>
+      <div class="stat">
+        <div class="line dim">One teacher.</div>
+        <div class="line"><em>Thirty-four</em> children.</div>
+        <div class="line dim">Forty minutes.</div>
+        <div class="clock" id="clock">40:00</div>
+        <div class="maths">= <em>70 seconds</em> of attention each.</div>
+      </div>
+    </div>
+    <div class="verdict">So the question goes home unanswered — and stays there.</div>
+  </section>
+
+  <!-- ══════════ 3 · LOGO REVEAL ══════════ -->
+  <section class="scene" id="s3">
+    <div class="bg grad-gold"></div>
+    <div class="stars" data-stars="50"></div>
+    <div class="reveal">
+      <div class="rays"></div>
+      <img class="crest" src="ehel-academy-logo.png" alt="Ehel Academy crest">
+      <div class="wordmark">EHEL ACADEMY</div>
+      <div class="rule"></div>
+      <div class="tag">One community at a time.</div>
+    </div>
+  </section>
+
+  <!-- ══════════ 4 · THE CURRICULUM ══════════ -->
+  <section class="scene" id="s4">
+    <div class="bg grad-day"></div>
+    <div class="curr">
+      <div class="eyebrow">A complete school, Stage 1 to Stage 8</div>
+      <h2>Cambridge-aligned. <em>Every single objective.</em></h2>
+      <div class="cards">
+        <div class="card">
+          <div class="ic"><svg viewBox="0 0 24 24"><path d="M4 8.5h7M7.5 5v7"/><path d="M14 9h6M14 13.5h6"/><path d="M5 18.5h6"/></svg></div>
+          <h3>Mathematics</h3><p>133 units</p><span class="code">0096 · 0862</span>
+        </div>
+        <div class="card">
+          <div class="ic"><svg viewBox="0 0 24 24"><path d="M9.5 3h5M10.5 3v6.2L5.6 18.6A1.4 1.4 0 0 0 6.9 20.7h10.2a1.4 1.4 0 0 0 1.3-2.1L13.5 9.2V3"/><path d="M8.2 15h7.6"/></svg></div>
+          <h3>Science</h3><p>53 units</p><span class="code">0846 · 0893</span>
+        </div>
+        <div class="card">
+          <div class="ic"><svg viewBox="0 0 24 24"><path d="M3.5 4.5h17v11.5H9.5l-6 4.5V4.5z"/><path d="M7.5 9h9M7.5 12.5h5.5"/></svg></div>
+          <h3>English</h3><p>81 units</p><span class="code">0058 · 0861</span>
+        </div>
+        <div class="card">
+          <div class="ic"><svg viewBox="0 0 24 24"><path d="M9 7.5 4.5 12 9 16.5M15 7.5 19.5 12 15 16.5"/></svg></div>
+          <h3>Computing</h3><p>64 units</p><span class="code">0672 · 0868</span>
+        </div>
+        <div class="card">
+          <div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.4"/><path d="M3.6 12h16.8"/><path d="M12 3.6a13 13 0 0 1 0 16.8a13 13 0 0 1 0-16.8"/></svg></div>
+          <h3>Global<br>Perspectives</h3><p>39 units</p><span class="code">0838 · 1129</span>
+        </div>
+      </div>
+      <div class="metrics">
+        <div class="metric"><b data-count="42">0</b><span>Courses</span></div>
+        <div class="metric"><b data-count="410">0</b><span>Units</span></div>
+        <div class="metric"><b data-count="8" data-prefix="1–">0</b><span>Stages</span></div>
+      </div>
+      <div class="plus">plus Intensive English — 40 more units, for a learner arriving in a new language</div>
+    </div>
+  </section>
+
+  <!-- ══════════ 5 · WEHEL ══════════ -->
+  <section class="scene" id="s5">
+    <div class="bg grad-night"></div>
+    <div class="split">
+      <div class="copy">
+        <div class="eyebrow">Meet Wehel</div>
+        <h2>The tutor that<br>refuses to just<br>tell her.</h2>
+        <p>Built into every lesson, at every stage. Wehel asks what she already
+           thinks — then walks her the rest of the way herself.</p>
+        <div class="kicker">Available the second she gets stuck. Including 8:14 on a Tuesday.</div>
+      </div>
+      <div class="phone">
+        <div class="hdr">
+          <div class="avatar">W</div>
+          <div class="who"><b>Wehel</b><span>● online</span></div>
+        </div>
+        <div class="bub me" id="b1">Why does ice float?</div>
+        <div class="bub ai" id="b2"><span class="typing"><i></i><i></i><i></i></span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ 6 · HEARD, NOT JUST READ ══════════ -->
+  <section class="scene" id="s6">
+    <div class="bg grad-day"></div>
+    <div class="voice">
+      <h2>Every explanation can be <em>heard</em>,<br>not only read.</h2>
+      <div class="listen"><span class="play">▶</span> Listen to this page</div>
+      <div class="wave" id="wave"></div>
+      <div class="langs">
+        <div class="chip hi">English</div>
+        <div class="chip">العربية</div>
+        <div class="chip">Soomaali</div>
+      </div>
+      <div class="note">Because no child should have to leave their own language at the door.</div>
+    </div>
+  </section>
+
+  <!-- ══════════ 7 · PLACEMENT & PROGRESS ══════════ -->
+  <section class="scene" id="s7">
+    <div class="bg grad-night"></div>
+    <div class="split">
+      <div class="copy">
+        <div class="eyebrow">Placed, not guessed</div>
+        <h2>She starts where she actually is.</h2>
+        <p>A placement check on day one puts her in the right stage — not the one
+           her birthday says. Then you watch every unit land, the moment it lands.</p>
+      </div>
+      <div class="panel">
+        <div class="ptitle"><b>Amina · Stage 4</b><span>This term</span></div>
+        <div class="row"><div class="lbl"><span>Mathematics</span><i>14 / 17</i></div>
+          <div class="track"><b style="--w:82%"></b></div></div>
+        <div class="row"><div class="lbl"><span>Science</span><i>9 / 12</i></div>
+          <div class="track"><b style="--w:75%"></b></div></div>
+        <div class="row"><div class="lbl"><span>English</span><i>11 / 11</i></div>
+          <div class="track"><b style="--w:100%"></b></div></div>
+        <div class="row"><div class="lbl"><span>Computing</span><i>6 / 11</i></div>
+          <div class="track"><b style="--w:55%"></b></div></div>
+        <div class="stamp"><span class="tick">✓</span>
+          <span>Unit 11 · “The Big Sky” completed — 14 minutes ago</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ 8 · THE PLATFORM UNDERNEATH ══════════ -->
+  <section class="scene" id="sp">
+    <div class="bg grad-day"></div>
+    <div class="plat">
+      <div class="eyebrow">Running on EduPlatform</div>
+      <h2>A curriculum is not a school. <em>This is the rest of it.</em></h2>
+      <div class="sub">Live classes, real teachers, and one login for everybody who cares about her.</div>
+
+      <div class="live">
+        <div class="cam"><span class="dot"><i></i>LIVE</span>👩🏽‍🏫</div>
+        <div class="meta">
+          <b>Stage 4 Science · Materials That Change</b>
+          <span>Ms. Nuur · 18 learners in the room · started 4 minutes ago</span>
+        </div>
+        <div class="join">Join class</div>
+      </div>
+
+      <div class="roles">
+        <div class="role"><span class="g">🎒</span><b>Learner</b><span>Lessons, tutor, live class — one place.</span></div>
+        <div class="role"><span class="g">👩🏽‍🏫</span><b>Teacher</b><span>Who is stuck, on which unit, right now.</span></div>
+        <div class="role"><span class="g">👨🏾‍👧</span><b>Parent</b><span>Her real progress, not an end-of-term guess.</span></div>
+        <div class="role"><span class="g">🏫</span><b>School</b><span>Enrol, timetable and report a whole cohort.</span></div>
+      </div>
+
+      <div class="oneline">One platform. Four people. The same child.</div>
+    </div>
+  </section>
+
+  <!-- ══════════ 9 · QURAAN ACADEMY ══════════ -->
+  <section class="scene" id="s8">
+    <div class="bg grad-gold"></div>
+    <div class="stars" data-stars="45"></div>
+    <div class="quraan">
+      <div class="eyebrow">And alongside all of it</div>
+      <h2>Quraan Academy</h2>
+      <div class="letters"><b>ا</b><b>ب</b><b>ت</b><b>ث</b><b>ج</b></div>
+      <div class="ayah"><span class="b">بِسْمِ</span> <span class="g">اللَّهِ</span> <span class="r">الرَّحْمَٰنِ</span> <span class="g">الرَّحِيمِ</span></div>
+      <div class="legend">The alphabet, then tajweed — colour-coded, letter by letter, at her own pace.</div>
+    </div>
+  </section>
+
+  <!-- ══════════ 9 · CLOSE ══════════ -->
+  <section class="scene" id="s9">
+    <div class="bg grad-gold"></div>
+    <div class="stars" data-stars="60"></div>
+    <div class="close">
+      <img class="crest" src="ehel-academy-logo.png" alt="Ehel Academy crest">
+      <h2>EHEL ACADEMY</h2>
+      <div class="tag">One community at a time.</div>
+      <div class="cta">Enrolment is open</div>
+      <div class="url">EHELACADEMY.ORG &nbsp;·&nbsp; POWERED BY EDUPLATFORM</div>
+    </div>
+  </section>
+
+  <div id="caption"></div>
+  <div id="progress"></div>
+</div>
+</div>
+
+<div id="hint">SPACE play / pause · R restart · H hide controls (record mode) · C captions · M mute</div>
+
+<div id="ui">
+  <button class="pri" id="play">▶ Play</button>
+  <button id="restart">↺ Restart</button>
+  <span class="tc" id="tc">0:00 / 2:00</span>
+  <select id="jump"></select>
+  <button id="capsBtn">CC on</button>
+  <button id="sndBtn">🎵 Sound on</button>
+  <button id="voBtn">🔇 VO off</button>
+  <button id="recBtn">● Record mode</button>
+</div>
+
+<script>
+/* ============================================================
+   TIMELINE — every timing in the film is in this one array.
+   `in` is the second the scene takes over; the next scene's
+   `in` is its out-point. Total runtime = END.
+   ============================================================ */
+const END = 120;
+const SCENES = [
+  {id:'s1', in:0,   name:'1 · Cold open'},
+  {id:'s2', in:10,  name:'2 · The problem'},
+  {id:'s3', in:22,  name:'3 · Logo reveal'},
+  {id:'s4', in:31,  name:'4 · The curriculum'},
+  {id:'s5', in:48,  name:'5 · Wehel, the tutor'},
+  {id:'s6', in:63,  name:'6 · Heard, not read'},
+  {id:'s7', in:75,  name:'7 · Placement & progress'},
+  {id:'sp', in:87,  name:'8 · EduPlatform'},
+  {id:'s8', in:99,  name:'9 · Quraan Academy'},
+  {id:'s9', in:109, name:'10 · Close'}
+];
+
+/* Voice-over script. `t` = the second the line appears.
+   These double as burned-in captions and as the browser-TTS scratch track. */
+const VO = [
+  {t:1.2,  d:5.6,  s:"At 8:14 on a Tuesday morning, a nine-year-old asks the best question of her life."},
+  {t:7.2,  d:3.4,  s:"And there is nobody free to answer it."},
+  {t:10.6, d:5.0,  s:"One teacher. Thirty-four children. Forty minutes."},
+  {t:16.0, d:3.2,  s:"The question loses. It always loses."},
+  {t:19.4, d:3.4,  s:"So we built the school around the question."},
+  {t:23.0, d:3.8,  s:"Ehel Academy. Kindergarten through grade 12, online."},
+  {t:27.2, d:3.2,  s:"One community at a time."},
+  {t:31.6, d:6.2,  s:"Five Cambridge-aligned subjects — Mathematics, Science, English, Computing and Global Perspectives."},
+  {t:38.2, d:4.8,  s:"Stage one through Stage eight. Forty-two courses. Four hundred and ten units."},
+  {t:43.4, d:4.2,  s:"Every unit mapped to a published Cambridge objective. Every single one."},
+  {t:48.6, d:5.2,  s:"And in every lesson, Wehel is waiting — our AI tutor, built for exactly this."},
+  {t:54.2, d:5.2,  s:"Wehel will not simply hand her the answer. It asks her what she thinks first."},
+  {t:59.8, d:2.8,  s:"Available the second she gets stuck."},
+  {t:63.6, d:5.0,  s:"Every explanation can be heard, not only read — narrated, word for word."},
+  {t:69.0, d:6.4,  s:"With vocabulary in Arabic and Somali — because no child should leave her language at the door."},
+  {t:75.6, d:4.8,  s:"She starts with a placement check, not a guess about her age."},
+  {t:80.8, d:6.4,  s:"And you see every unit she finishes — the moment she finishes it, on your phone."},
+  {t:87.6, d:5.0,  s:"Because a curriculum is not a school. EduPlatform is the rest of it."},
+  {t:93.0, d:6.4,  s:"Live classes with real teachers. One login for the learner, the teacher, the parent and the school."},
+  {t:99.6, d:4.6,  s:"Alongside all of it, Quraan Academy: the Arabic alphabet, then tajweed."},
+  {t:104.6,d:3.6,  s:"Colour-coded, letter by letter, at her own pace."},
+  {t:109.6,d:5.0,  s:"Ehel Academy, on EduPlatform. A whole school, built around one child at a time."},
+  {t:115.0,d:3.8,  s:"Enrolment is open now."}
+];
+
+/* ---------- build the pieces that are easier made than typed ---------- */
+
+// split the cold-open question into per-word spans so it can type itself in
+document.querySelectorAll('[data-split]').forEach(el=>{
+  const words = el.textContent.trim().split(' ');
+  el.innerHTML = words.map((w,i)=>
+    `<span style="animation-delay:${(1.5 + i*0.16).toFixed(2)}s">${w}</span>`).join(' ');
+});
+
+// star fields
+document.querySelectorAll('.stars').forEach(f=>{
+  const n = +f.dataset.stars, out=[];
+  for(let i=0;i<n;i++){
+    // deterministic scatter — no Math.random, so every render is identical
+    const x=(i*137.508)%100, y=(i*61.803)%100, d=((i*7)%45)/10, s=1+((i*3)%3);
+    out.push(`<i style="left:${x.toFixed(2)}%;top:${y.toFixed(2)}%;width:${s}px;height:${s}px;animation-delay:${d}s"></i>`);
+  }
+  f.innerHTML = out.join('');
+});
+
+// 34 children, one of them ours
+(function(){
+  const box=document.getElementById('dots'); let html='';
+  for(let i=0;i<34;i++){
+    html+=`<b class="${i===21?'gold':''}" style="animation-delay:${(0.25+i*0.045).toFixed(2)}s"></b>`;
+  }
+  box.innerHTML=html;
+})();
+
+// subject cards cascade
+document.querySelectorAll('#s4 .card').forEach((c,i)=>{
+  c.style.animationDelay = (0.95 + i*0.16).toFixed(2)+'s';
+});
+
+// waveform bars
+(function(){
+  const w=document.getElementById('wave'); let html='';
+  const heights=[26,54,96,140,72,110,38,86,128,60,102,44,118,78,30,90,134,58,100,36,
+                 82,124,50,94,140,66,108,42,86,28];
+  heights.forEach((h,i)=>{
+    html+=`<i style="--h:${h}px;animation-delay:${(i*0.055).toFixed(2)}s;animation-duration:${(0.75+(i%5)*0.11).toFixed(2)}s"></i>`;
+  });
+  w.innerHTML=html;
+})();
+
+// language chips
+document.querySelectorAll('#s6 .chip').forEach((c,i)=>{
+  c.style.animationDelay = (2.6 + i*0.28).toFixed(2)+'s';
+});
+
+// EduPlatform role tiles
+document.querySelectorAll('#sp .role').forEach((r,i)=>{
+  r.style.animationDelay = (3.0 + i*0.22).toFixed(2)+'s';
+});
+
+// arabic letters
+document.querySelectorAll('#s8 .letters b').forEach((b,i)=>{
+  b.style.animationDelay = (1.0 + i*0.17).toFixed(2)+'s';
+});
+
+// scene jump menu
+(function(){
+  const sel=document.getElementById('jump');
+  sel.innerHTML = SCENES.map(s=>`<option value="${s.in}">${s.name}</option>`).join('');
+  sel.onchange = ()=>seek(+sel.value + 0.01);
+})();
+
+/* ============================================================
+   THE CLOCK
+   ============================================================ */
+let t = 0, playing = false, last = 0;
+let capsOn = true, voOn = false;
+const $ = s=>document.querySelector(s);
+const stage=$('#stage'), caption=$('#caption'), bar=$('#progress');
+
+function fit(){
+  const s = Math.min(innerWidth/1920, innerHeight/1080);
+  stage.style.transform = `scale(${s})`;
+  $('#fit').style.height = '100vh';
+}
+addEventListener('resize', fit); fit();
+
+/* Scenes are driven by an .on class. Adding it (re)starts every CSS
+   animation inside, so a scene always plays from its own frame zero. */
+let currentScene = null;
+function setScene(i){
+  if(currentScene === i) return;
+  SCENES.forEach(s=>document.getElementById(s.id).classList.remove('on'));
+  const sc = SCENES[i];
+  if(sc){
+    const el = document.getElementById(sc.id);
+    void el.offsetWidth;            // force reflow so animations restart
+    el.classList.add('on');
+    if(sc.id==='s2') runClock();
+    if(sc.id==='s4') runCounters();
+    if(sc.id==='s5') runChat();
+  }
+  currentScene = i;
+  $('#jump').value = sc ? sc.in : 0;
+}
+
+function sceneIndexAt(time){
+  let idx = 0;
+  for(let i=0;i<SCENES.length;i++) if(time >= SCENES[i].in) idx = i;
+  return idx;
+}
+
+/* ---- scene 2: the forty minutes running out ---- */
+let clockTimer=null;
+function runClock(){
+  clearInterval(clockTimer);
+  const el=$('#clock'); let m=40;
+  setTimeout(()=>{
+    clockTimer=setInterval(()=>{
+      m -= 1.1;
+      if(m<=0){ m=0; clearInterval(clockTimer); el.style.color='#ff9d9d'; }
+      const mm=Math.floor(m), ss=Math.floor((m-mm)*60);
+      el.textContent = `${String(mm).padStart(2,'0')}:${String(ss).padStart(2,'0')}`;
+    }, 90);
+  }, 3600);
+}
+
+/* ---- scene 4: the numbers counting up ---- */
+let counterTimers=[];
+function runCounters(){
+  counterTimers.forEach(clearInterval); counterTimers=[];
+  document.querySelectorAll('#s4 [data-count]').forEach(el=>{
+    const target=+el.dataset.count, prefix=el.dataset.prefix||'';
+    let v=0; el.textContent = prefix+'0';
+    setTimeout(()=>{
+      const id=setInterval(()=>{
+        v += Math.max(1, Math.round((target-v)*0.14));
+        if(v>=target){ v=target; clearInterval(id); }
+        el.textContent = prefix + v;
+      }, 34);
+      counterTimers.push(id);
+    }, 3100);
+  });
+}
+
+/* ---- scene 5: Wehel typing back ---- */
+let chatTimers=[];
+function runChat(){
+  chatTimers.forEach(clearTimeout); chatTimers=[];
+  const b1=$('#b1'), b2=$('#b2');
+  b1.classList.remove('show'); b2.classList.remove('show');
+  b2.innerHTML = '<span class="typing"><i></i><i></i><i></i></span>';
+
+  chatTimers.push(setTimeout(()=>{ b1.style.animationDelay='0s'; b1.classList.add('show'); }, 1400));
+  chatTimers.push(setTimeout(()=>{ b2.style.animationDelay='0s'; b2.classList.add('show'); }, 2600));
+  chatTimers.push(setTimeout(()=>{
+    const line = "Good question — and you already know half of it. What happens to a bottle of water you leave in the freezer overnight?";
+    b2.innerHTML = '<span id="typed"></span><span class="cursor-blink"></span>';
+    const out=$('#typed'); let i=0;
+    const id=setInterval(()=>{
+      out.textContent = line.slice(0, ++i);
+      if(i%3===0) sfxKey();                    // one key click every third letter
+      if(i>=line.length) clearInterval(id);
+    }, 26);
+    chatTimers.push(id);
+  }, 4300));
+}
+
+/* ---- captions + the optional browser-TTS scratch VO ---- */
+let spokenIdx = -1;
+function updateCaption(time){
+  let cur = null;
+  for(const v of VO) if(time >= v.t && time < v.t + v.d) cur = v;
+  if(cur){
+    if(caption.textContent !== cur.s) caption.textContent = cur.s;
+    caption.classList.add('show');
+  } else {
+    caption.classList.remove('show');
+  }
+  if(voOn && cur){
+    const i = VO.indexOf(cur);
+    if(i !== spokenIdx){
+      spokenIdx = i;
+      speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(cur.s);
+      u.rate = 0.96; u.pitch = 0.95;
+      speechSynthesis.speak(u);
+    }
+  }
+}
+
+function fmt(x){
+  const m=Math.floor(x/60), s=Math.floor(x%60);
+  return m+':'+String(s).padStart(2,'0');
+}
+
+function frame(now){
+  const prevT = t;
+  if(playing){
+    // clamp: a backgrounded tab stops firing rAF entirely, and without this
+    // the first frame back would jump the clock by however long it was hidden.
+    const dt = Math.min(0.25, (now - last)/1000); last = now;
+    t = Math.min(END, t + dt);
+    if(t >= END){ playing = false; $('#play').textContent='▶ Play'; }
+  } else {
+    last = now;
+  }
+  setScene(sceneIndexAt(t));
+  updateCaption(t);
+  audioFrame(prevT, t);
+  bar.style.width = (t/END*100)+'%';
+  $('#tc').textContent = fmt(t)+' / '+fmt(END);
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(n=>{ last=n; frame(n); });
+
+/* ============================================================
+   SOUND
+   Every note and effect below is synthesised live by the Web Audio
+   API. There are no .mp3 files, so the film stays one portable page
+   you can email to a producer and have it still play.
+
+   Music is a step sequencer locked to the master clock, so scrubbing
+   the film scrubs the score with it. SFX are one-shot cues on a
+   timeline of their own.
+   ============================================================ */
+let AC=null, musicBus, sfxBus, revSend, noiseBuf;
+let audioOn = true;
+
+function initAudio(){
+  if(AC) return;
+  const Ctx = window.AudioContext || window.webkitAudioContext;
+  if(!Ctx) return;
+  AC = new Ctx();
+
+  const comp = AC.createDynamicsCompressor();
+  comp.threshold.value=-16; comp.ratio.value=3.2; comp.attack.value=.006; comp.release.value=.22;
+  comp.connect(AC.destination);
+
+  const master = AC.createGain(); master.gain.value=.85; master.connect(comp);
+  musicBus = AC.createGain(); musicBus.gain.value=.5;  musicBus.connect(master);
+  sfxBus   = AC.createGain(); sfxBus.gain.value=.62;  sfxBus.connect(master);
+
+  // a small hall so nothing sounds like it was recorded in a cupboard
+  const conv = AC.createConvolver();
+  const len = AC.sampleRate*2.4, buf = AC.createBuffer(2, len, AC.sampleRate);
+  for(let c=0;c<2;c++){
+    const d = buf.getChannelData(c);
+    for(let i=0;i<len;i++){
+      const n = Math.sin(i*12.9898 + c*78.233)*43758.5453;   // deterministic noise
+      d[i] = ((n - Math.floor(n))*2 - 1) * Math.pow(1 - i/len, 2.6);
+    }
+  }
+  conv.buffer = buf;
+  const revGain = AC.createGain(); revGain.gain.value=.9; conv.connect(revGain); revGain.connect(master);
+  revSend = AC.createGain(); revSend.gain.value=.22; revSend.connect(conv);
+
+  // one noise buffer, reused by every percussive voice
+  noiseBuf = AC.createBuffer(1, AC.sampleRate*2, AC.sampleRate);
+  const nd = noiseBuf.getChannelData(0);
+  for(let i=0;i<nd.length;i++){
+    const n = Math.sin(i*4.111 + 1.37)*29483.1913;
+    nd[i] = (n - Math.floor(n))*2 - 1;
+  }
+}
+function resumeAudio(){ initAudio(); if(AC && AC.state==='suspended') AC.resume(); }
+
+/* ---------- voices ---------- */
+function vPad(freqs, when, dur, gain){
+  freqs.forEach((f,i)=>{
+    const o=AC.createOscillator(), g=AC.createGain(), lp=AC.createBiquadFilter();
+    o.type='sawtooth'; o.frequency.value=f; o.detune.value = i%2 ? 7 : -7;
+    lp.type='lowpass'; lp.frequency.value=760; lp.Q.value=.4;
+    g.gain.setValueAtTime(0,when);
+    g.gain.linearRampToValueAtTime(gain,when+dur*.4);
+    g.gain.linearRampToValueAtTime(0,when+dur);
+    o.connect(lp); lp.connect(g); g.connect(musicBus); g.connect(revSend);
+    o.start(when); o.stop(when+dur+.06);
+  });
+}
+function vPluck(f, when, dur, gain, type){
+  const o=AC.createOscillator(), g=AC.createGain();
+  o.type=type||'triangle'; o.frequency.value=f;
+  g.gain.setValueAtTime(0,when);
+  g.gain.linearRampToValueAtTime(gain,when+.012);
+  g.gain.exponentialRampToValueAtTime(.0001,when+dur);
+  o.connect(g); g.connect(musicBus); g.connect(revSend);
+  o.start(when); o.stop(when+dur+.03);
+}
+function vKick(when, gain){
+  const o=AC.createOscillator(), g=AC.createGain();
+  o.type='sine';
+  o.frequency.setValueAtTime(150,when);
+  o.frequency.exponentialRampToValueAtTime(44,when+.11);
+  g.gain.setValueAtTime(gain,when);
+  g.gain.exponentialRampToValueAtTime(.0001,when+.3);
+  o.connect(g); g.connect(musicBus);
+  o.start(when); o.stop(when+.32);
+}
+function vNoise(when, dur, gain, hp, bus){
+  const s=AC.createBufferSource(), g=AC.createGain(), f=AC.createBiquadFilter();
+  s.buffer=noiseBuf; s.loop=true;
+  f.type='highpass'; f.frequency.value=hp;
+  g.gain.setValueAtTime(gain,when);
+  g.gain.exponentialRampToValueAtTime(.0001,when+dur);
+  s.connect(f); f.connect(g); g.connect(bus||musicBus);
+  s.start(when); s.stop(when+dur+.02);
+}
+function vChime(f, when, gain, dur){
+  [1,2.01,3.02].forEach((m,i)=>{
+    const o=AC.createOscillator(), g=AC.createGain();
+    o.type='sine'; o.frequency.value=f*m;
+    g.gain.setValueAtTime(0,when);
+    g.gain.linearRampToValueAtTime(gain/(i+1.6),when+.008);
+    g.gain.exponentialRampToValueAtTime(.0001,when+(dur||1.6));
+    o.connect(g); g.connect(sfxBus); g.connect(revSend);
+    o.start(when); o.stop(when+(dur||1.6)+.05);
+  });
+}
+function sfxTick(when){                       // the classroom clock
+  const o=AC.createOscillator(), g=AC.createGain();
+  o.type='square'; o.frequency.value=2100;
+  g.gain.setValueAtTime(.05,when);
+  g.gain.exponentialRampToValueAtTime(.0001,when+.035);
+  o.connect(g); g.connect(sfxBus);
+  o.start(when); o.stop(when+.05);
+}
+function sfxBlip(when, f){                    // UI / card / bubble
+  const o=AC.createOscillator(), g=AC.createGain();
+  o.type='sine'; o.frequency.setValueAtTime(f||880,when);
+  o.frequency.exponentialRampToValueAtTime((f||880)*1.5,when+.07);
+  g.gain.setValueAtTime(0,when);
+  g.gain.linearRampToValueAtTime(.11,when+.006);
+  g.gain.exponentialRampToValueAtTime(.0001,when+.16);
+  o.connect(g); g.connect(sfxBus); g.connect(revSend);
+  o.start(when); o.stop(when+.18);
+}
+function sfxKey(){                            // typewriter, fired live
+  if(!AC||!audioOn) return;
+  const w=AC.currentTime+.005;
+  vNoise(w,.022,.045,3200,sfxBus);
+}
+function sfxRiser(when, dur, gain){           // whoosh into a reveal
+  const s=AC.createBufferSource(), g=AC.createGain(), f=AC.createBiquadFilter();
+  s.buffer=noiseBuf; s.loop=true;
+  f.type='bandpass'; f.Q.value=1.1;
+  f.frequency.setValueAtTime(220,when);
+  f.frequency.exponentialRampToValueAtTime(5200,when+dur);
+  g.gain.setValueAtTime(.0001,when);
+  g.gain.exponentialRampToValueAtTime(gain||.16,when+dur*.85);
+  g.gain.exponentialRampToValueAtTime(.0001,when+dur+.18);
+  s.connect(f); f.connect(g); g.connect(sfxBus); g.connect(revSend);
+  s.start(when); s.stop(when+dur+.25);
+}
+function sfxBoom(when, gain){                 // the crest landing
+  const o=AC.createOscillator(), g=AC.createGain();
+  o.type='sine';
+  o.frequency.setValueAtTime(92,when);
+  o.frequency.exponentialRampToValueAtTime(34,when+.7);
+  g.gain.setValueAtTime(gain||.5,when);
+  g.gain.exponentialRampToValueAtTime(.0001,when+1.5);
+  o.connect(g); g.connect(musicBus); g.connect(revSend);
+  o.start(when); o.stop(when+1.6);
+  vNoise(when,.5,.13,600,sfxBus);
+}
+
+/* ---------- the score ----------
+   Chord voicings in D minor / F major. Each section says what the
+   rhythm section is doing; the film's emotional shape is here. */
+const CH = {
+  Dm:{pad:[146.83,220.00,349.23], arp:[293.66,349.23,440.00,587.33]},
+  Bb:{pad:[116.54,233.08,349.23], arp:[233.08,293.66,349.23,466.16]},
+  F :{pad:[174.61,261.63,349.23], arp:[261.63,349.23,440.00,523.25]},
+  C :{pad:[130.81,196.00,329.63], arp:[261.63,329.63,392.00,523.25]}
+};
+const K=[1,0,0,0,1,0,0,0], K2=[1,0,0,1,1,0,0,0], NOK=[0,0,0,0,0,0,0,0];
+const H=[0,1,0,1,0,1,0,1], NOH=[0,0,0,0,0,0,0,0];
+
+const SECTIONS = [
+  // t,   chord progression,   kick,  hat,  arp,  padGain, lead
+  {at:0,   prog:['Dm'],              kick:NOK, hat:NOH, arp:0, pad:.075},
+  {at:10,  prog:['Dm','Bb'],         kick:K,   hat:H,   arp:0, pad:.10 },
+  {at:21,  prog:['Dm'],              kick:NOK, hat:NOH, arp:0, pad:0   },  // the silence before the crest
+  {at:22,  prog:['Bb','F'],          kick:NOK, hat:NOH, arp:0, pad:.16 },
+  {at:31,  prog:['F','C','Dm','Bb'], kick:K2,  hat:H,   arp:1, pad:.13 },
+  {at:48,  prog:['Dm','Bb','F','C'], kick:K,   hat:NOH, arp:1, pad:.12 },
+  {at:63,  prog:['F','C','Dm','Bb'], kick:K,   hat:NOH, arp:0, pad:.13, lead:1},
+  {at:75,  prog:['F','C','Dm','Bb'], kick:K2,  hat:H,   arp:1, pad:.12 },
+  {at:87,  prog:['C','F','C','F'],   kick:K2,  hat:H,   arp:1, pad:.13 },
+  {at:99,  prog:['Dm','Bb'],         kick:NOK, hat:NOH, arp:0, pad:.15, lead:1},  // Quraan: no percussion
+  {at:109, prog:['Bb','F','C','F'],  kick:K2,  hat:H,   arp:1, pad:.16 },
+  {at:118.6,prog:['F'],              kick:NOK, hat:NOH, arp:0, pad:.18 }   // resolve and hold
+];
+function sectionAt(x){
+  let s=SECTIONS[0];
+  for(const k of SECTIONS) if(x>=k.at) s=k;
+  return s;
+}
+// a simple counter-melody, used where the score thins out
+const LEAD=[587.33,523.25,440.00,523.25, 466.16,440.00,349.23,392.00];
+
+const STEP = 0.3125;                     // 8th note at 96bpm
+let lastStep = -1;
+
+function musicStep(time){
+  const step = Math.floor(time/STEP);
+  if(step === lastStep) return;
+  const jumped = Math.abs(step - lastStep) > 2;   // a seek, not playback
+  lastStep = step;
+
+  const s = sectionAt(time);
+  const when = AC.currentTime + .03;
+  const bar = Math.floor(step/8), b = step % 8;
+  const ch = CH[s.prog[bar % s.prog.length]];
+
+  if(b===0 && s.pad>0) vPad(ch.pad, when, STEP*8*1.05, s.pad);
+  if(jumped) return;                              // don't machine-gun after a scrub
+  if(s.kick[b]) vKick(when, .42);
+  if(s.hat[b])  vNoise(when,.045,.028,7000);
+  if(s.arp)     vPluck(ch.arp[(step*3)%ch.arp.length], when, .42, .085, 'triangle');
+  if(s.lead && b%2===0) vPluck(LEAD[(step/2)%LEAD.length|0], when, 1.1, .075, 'sine');
+}
+
+/* ---------- one-shot cues, in film time ---------- */
+const CUES = [
+  {t:1.0,  f:w=>sfxRiser(w,1.6,.05)},
+  {t:7.4,  f:w=>vChime(392,w,.06,2.4)},
+  {t:10.2, f:w=>sfxBoom(w,.34)},
+  // the classroom clock, running out
+  ...Array.from({length:15},(_,i)=>({t:13.6+i*.5, f:w=>sfxTick(w)})),
+  {t:21.0, f:w=>sfxRiser(w,1.1,.2)},
+  {t:22.15,f:w=>{ sfxBoom(w,.55); vChime(523.25,w+.05,.10,3.2); }},
+  // scene 4: five subject cards
+  ...Array.from({length:5},(_,i)=>({t:31.95+i*.16, f:w=>sfxBlip(w,760+i*90)})),
+  {t:35.9, f:w=>vChime(659.25,w,.07,1.8)},
+  {t:35.6, f:w=>sfxRiser(w,.5,.06)},
+  // scene 5: the exchange
+  {t:49.4, f:w=>sfxBlip(w,660)},
+  {t:50.6, f:w=>sfxBlip(w,990)},
+  // scene 6: listen button + waveform
+  {t:63.8, f:w=>{ sfxBlip(w,880); sfxRiser(w,.7,.07); }},
+  ...Array.from({length:3},(_,i)=>({t:65.6+i*.28, f:w=>sfxBlip(w,700+i*160)})),
+  // scene 7: bars filling, then the completion stamp
+  {t:76.3, f:w=>sfxRiser(w,1.2,.07)},
+  {t:78.5, f:w=>vChime(783.99,w,.10,2.2)},
+  // scene 8: live class
+  {t:88.1, f:w=>{ sfxRiser(w,.8,.13); sfxBlip(w+.8,1046) }},
+  ...Array.from({length:4},(_,i)=>({t:90.0+i*.22, f:w=>sfxBlip(w,620+i*110)})),
+  // scene 9: the letters, then the ayah
+  ...Array.from({length:5},(_,i)=>({t:100.0+i*.17, f:w=>sfxBlip(w,880+i*70)})),
+  {t:101.1,f:w=>vChime(587.33,w,.08,3.0)},
+  // close
+  {t:109.1,f:w=>sfxBoom(w,.42)},
+  {t:110.5,f:w=>vChime(523.25,w,.10,2.6)},
+  {t:118.6,f:w=>{ sfxBoom(w,.5); vChime(698.46,w,.11,3.6); }}
+].sort((a,b)=>a.t-b.t);
+
+function audioFrame(prev, cur){
+  if(!AC || !audioOn || !playing) return;
+  musicStep(cur);
+  if(cur < prev) return;                       // scrubbed backwards
+  for(const c of CUES){
+    if(c.t > prev && c.t <= cur) c.f(AC.currentTime + .02);
+  }
+}
+
+/* ---- transport ---- */
+// Browsers refuse to make sound until the user has interacted, so the
+// context is created on the first press of Play rather than at load.
+function play(){ resumeAudio(); playing=true; $('#play').textContent='❚❚ Pause'; }
+function pause(){ playing=false; $('#play').textContent='▶ Play'; speechSynthesis.cancel(); }
+function toggle(){ playing ? pause() : play(); }
+function seek(x){
+  t = Math.max(0, Math.min(END, x));
+  currentScene = null; spokenIdx = -1; lastStep = -1;
+  speechSynthesis.cancel();
+}
+function restart(){ seek(0); play(); }
+
+$('#play').onclick = toggle;
+$('#restart').onclick = restart;
+$('#capsBtn').onclick = e=>{
+  capsOn = !capsOn;
+  document.body.classList.toggle('no-caps', !capsOn);
+  e.target.textContent = capsOn ? 'CC on' : 'CC off';
+};
+$('#sndBtn').onclick = e=>{
+  audioOn = !audioOn;
+  if(audioOn) resumeAudio();
+  e.target.textContent = audioOn ? '🎵 Sound on' : '🔇 Sound off';
+};
+$('#voBtn').onclick = e=>{
+  voOn = !voOn; spokenIdx = -1;
+  if(!voOn) speechSynthesis.cancel();
+  e.target.textContent = voOn ? '🔊 VO on' : '🔇 VO off';
+};
+$('#recBtn').onclick = ()=>document.body.classList.toggle('recording');
+
+addEventListener('keydown', e=>{
+  if(e.code==='Space'){ e.preventDefault(); toggle(); }
+  if(e.key==='r'||e.key==='R') restart();
+  if(e.key==='h'||e.key==='H') document.body.classList.toggle('recording');
+  if(e.key==='c'||e.key==='C') $('#capsBtn').click();
+  if(e.key==='m'||e.key==='M') $('#sndBtn').click();
+  if(e.key==='ArrowRight') seek(t+5);
+  if(e.key==='ArrowLeft')  seek(t-5);
+});
+
+setScene(0);
+</script>
+</body>
+</html>

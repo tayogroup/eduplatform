@@ -11,7 +11,7 @@ import { grammarDiagram, phonicsDiagram } from "../../english/shared/grammar-vis
 import { createCourseApp } from "../course-app.js?v=t2";
 import { createDeck } from "../deck.js?v=deck-1";
 import { wordPicture } from "./word-pictures.js?v=pictures-1";
-import { askWehel, outlineFromManifest, unitFetcher, browserSpeechSupported, speakBrowser, speechRateForGrade, stopBrowserSpeech, speechRecognitionCtor, recognizeSpeech, wehelIcon } from "../wehel.js?v=wehel-1";
+import { askWehel, focusModule, modulesFromSections, outlineFromManifest, unitFetcher, browserSpeechSupported, speakBrowser, speechRateForGrade, stopBrowserSpeech, speechRecognitionCtor, recognizeSpeech, wehelIcon } from "../wehel.js?v=wehel-1";
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
@@ -113,6 +113,86 @@ const sections = [
   ["live", "video", "Live sessions"],
   ["reflect", "sparkles", "My progress"],
 ];
+
+// --- unit gate: one unit at a time -------------------------------------------
+// Grade 1 is a first year of English, so its units are walked in order rather
+// than browsed. Unit 0 is open from the start; every later unit opens when the
+// one before it is finished, up to and including the Unit 10 capstone.
+//
+// "Finished" is the shell's own definition — every countable section done, the
+// same thing that drives the progress bar to 100% and emits `unit.completed`
+// (course-app.js :: updateProgress). Inventing a second rule here would let the
+// lock, the bar and the Moodle event disagree about the same unit.
+//
+// Grade 1 only, deliberately. Whether a unit CAN reach 100% depends on it
+// carrying every section: a grade whose Unit 3 ships no eBook could never
+// complete `ebooks`, and the gate would shut the learner out for good. Grade 1
+// units 0-10 each have a game pack and at least one eBook — checked, not
+// assumed. Widening this to another grade means checking that grade first, not
+// just changing the comparison.
+const UNIT_GATE_ENABLED = gradeNumber === 1;
+const CAPSTONE_UNIT = 10;
+// The Teacher view is a preview, not a lesson: a teacher or parent planning
+// ahead has to be able to open Unit 6 in week one. This is no weaker than what
+// is already there — #teacher has never been gated — and a learner who lands on
+// it gets the teacher's page, not the lesson.
+const TEACHER_PREVIEW = location.hash.slice(1) === "teacher";
+const unitProgressKey = (unit) => `ehel-english-g${gradeNumber}-u${unit}-progress-v1`;
+// Everything the shell counts toward 100%: the section list minus the two it
+// never counts. `final-quiz` is nonCountable too, but it is never in `sections`
+// — it is appended to the nav for Unit 10 alone.
+const countableSectionIds = () => sections.filter(([id]) => !["overview", "live"].includes(id)).map(([id]) => id);
+function unitSectionsDone(unit) {
+  try {
+    const stored = JSON.parse(localStorage.getItem(unitProgressKey(unit)) || "{}");
+    return Array.isArray(stored.completed) ? stored.completed : [];
+  } catch {
+    return [];
+  }
+}
+function unitIsComplete(unit) {
+  const done = unitSectionsDone(unit);
+  return countableSectionIds().every((id) => done.includes(id));
+}
+function unitIsUnlocked(unit) {
+  const number = Number(unit);
+  if (!UNIT_GATE_ENABLED || number === PREREQ_UNIT || number <= defaultUnit) return true;
+  return unitIsComplete(number - 1);
+}
+// The unit the learner is actually up to: the first one they have not finished.
+// Always unlocked by construction, so it is the safe place to send anyone who
+// arrives at a locked one.
+function currentOpenUnit() {
+  let unit = defaultUnit;
+  while (unit < CAPSTONE_UNIT && unitIsComplete(unit)) unit += 1;
+  return unit;
+}
+const unitLocked = !isPrereqUnit && !TEACHER_PREVIEW && !unitIsUnlocked(unitNumber);
+
+// The pickers are repainted on every nav render, not only at boot: finishing the
+// last section of Unit 6 opens Unit 7 with no reload, and a picker that only
+// knew the state at boot would still show it locked — the learner would have
+// done the work and watched nothing open.
+let announcedOpenUnit = null;
+function renderUnitPickers() {
+  if (!manifest) return;
+  const options = [
+    `<option value="${PREREQ_UNIT}" ${isPrereqUnit ? "selected" : ""}>Prerequisite: Placement exam</option>`,
+    ...manifest.units.map((unit) => {
+      const locked = !TEACHER_PREVIEW && !unitIsUnlocked(unit.number);
+      const label = `Unit ${unit.number}: ${escapeHtml(unit.title)}`;
+      return `<option value="${unit.number}" ${unit.number === unitNumber ? "selected" : ""} ${locked ? "disabled" : ""}>${locked ? `🔒 ${label} (locked)` : label}</option>`;
+    }),
+  ].join("");
+  for (const picker of [$("#unit-select"), $("#top-unit-select")]) {
+    if (picker) picker.innerHTML = options;
+  }
+  if (!UNIT_GATE_ENABLED) return;
+  const open = currentOpenUnit();
+  // First paint records where the learner stands; only a later advance is news.
+  if (announcedOpenUnit !== null && open > announcedOpenUnit) toast(`Unit ${open} is open now. Great work!`);
+  announcedOpenUnit = open;
+}
 
 const ebookCatalog = [
   {
@@ -690,6 +770,10 @@ function savePlacementProgress() {
 }
 
 function visibleSections() {
+  // A locked unit has one page, so it offers one nav entry. This also empties
+  // the countable list the shell divides by, which is what keeps the progress
+  // bar at 0% instead of reporting on a unit nobody has opened.
+  if (unitLocked) return [["overview", "lock", "Locked"]];
   if (isPrereqUnit) {
     return [
       ["overview", "layout-dashboard", "Overview"],
@@ -878,6 +962,46 @@ function bindOverviewAudio(holder) {
     const descriptor = holder?.overviewAudio?.[button.dataset.overviewAudio];
     if (descriptor?.source) playAudio(descriptor.source, { rate: AI_NARRATION_RATE, button });
   }));
+}
+
+// The locked page. It is the ONLY renderer registered while a unit is locked,
+// and the shell falls back to `overview` for any route it does not know — so a
+// bookmarked ?unit=7#reading lands here too rather than opening a lesson the
+// learner has not reached. The picker is the polite gate; this is the real one.
+//
+// It names the work rather than just refusing: which unit is in the way, what
+// is still unticked in it, and one button back to where the learner actually is.
+function renderLockedUnit() {
+  const previous = unitNumber - 1;
+  const previousTitle = manifest.units.find((unit) => Number(unit.number) === previous)?.title || `Unit ${previous}`;
+  const open = currentOpenUnit();
+  const openTitle = manifest.units.find((unit) => Number(unit.number) === open)?.title || `Unit ${open}`;
+  const done = unitSectionsDone(previous);
+  const remaining = sections.filter(([id]) => !["overview", "live"].includes(id) && !done.includes(id)).map(([, , label]) => label);
+  $("#app").innerHTML = `${pageHeader(
+    `${escapeHtml(course.grade.label)} · Unit ${unitNumber}`,
+    `${escapeHtml(course.unit.unitTitle)} is not open yet`,
+    `Finish Unit ${previous}: ${escapeHtml(previousTitle)} and this unit opens by itself.`,
+    "Locked",
+  )}
+    <div class="overview-grid">
+      <div class="section-stack">
+        <section class="panel">
+          <h2>${icon("lock")} Unit ${unitNumber} opens after Unit ${previous}</h2>
+          <p>You learn one unit at a time, in order. When every part of <strong>Unit ${previous}: ${escapeHtml(previousTitle)}</strong> has a tick, Unit ${unitNumber} opens on its own — nobody has to unlock it for you.</p>
+          <p>You are working on <strong>Unit ${open}: ${escapeHtml(openTitle)}</strong> right now.</p>
+          <a class="button gold" href="${courseLocation(open)}">Go to Unit ${open}: ${escapeHtml(openTitle)} ${icon("arrow-right")}</a>
+        </section>
+      </div>
+      <div class="section-stack">
+        <section class="panel">
+          <h3>Still to finish in Unit ${previous}</h3>
+          ${remaining.length
+            ? `<ol class="path-list">${remaining.map((label) => `<li>${icon("circle")}<span>${escapeHtml(label)}</span></li>`).join("")}</ol>`
+            : `<p>Open Unit ${previous} to see what is left.</p>`}
+        </section>
+      </div>
+    </div>`;
 }
 
 function renderOverview() {
@@ -3068,6 +3192,14 @@ function wehelOptions() {
       cambridgeCode: cambridgeLabel(gradeNumber),
       unitNo: course.unit.unitNo, unitTitle: course.unit.unitTitle,
       courseOutline: outlineFromManifest(manifest), unit: course,
+      // What the Focus control offers: the unit's teaching pages, from the same
+      // filter the nav uses. Read by the shared panel the shell's dock mounts;
+      // this course's own tutor page has its own mode tabs and no picker, but
+      // it honours the same setting (see the askWehel call below).
+      // "reflect" is this course's progress report, not a module — it cannot be
+      // dropped by the shared list, where the same id is Global Perspectives'
+      // real Reflection teaching.
+      modules: modulesFromSections(visibleSections().filter(([id]) => id !== "reflect")),
     },
     store: aiState,
     key: "messages",
@@ -3181,15 +3313,16 @@ async function submitAIMessage(message) {
   renderAIEnglish();
   icons();
   try {
+    // One meta for both surfaces. This page and the shell's dock were building
+    // the same object twice; sharing wehelOptions' copy is what keeps the two
+    // from drifting, and is how a Focus set in the drawer is honoured here —
+    // this page has its own mode tabs rather than a picker of its own.
+    const meta = wehelOptions().meta;
     pending.text = await askWehel({
-      meta: {
-        subject: "english", subjectLabel: "English", grade: gradeNumber,
-        cambridgeCode: cambridgeLabel(gradeNumber),
-        unitNo: course.unit.unitNo, unitTitle: course.unit.unitTitle,
-        courseOutline: outlineFromManifest(manifest), unit: course,
-      },
+      meta,
       messages: aiState.messages.filter((item) => item !== pending),
       mode: aiState.mode,
+      focus: focusModule(meta, meta.modules),
       fetchUnit: unitFetcher(manifest, dataRootUrl),
     });
   } catch (error) {
@@ -3600,8 +3733,12 @@ const config = {
   // paint into a region the previous section left behind.
   onBeforeRender: () => { route = shellCtx.route; stopAudio(); document.body.classList.remove("gc-full"); classicRegion = null; deckMount = null; $("#app").setAttribute("aria-busy", "true"); },
   onAfterRender: () => { $("#app").setAttribute("aria-busy", "false"); prepareScreenReaderView(); icons(); },
-  onNavRendered: () => icons(),
-  renderers: {
+  onNavRendered: () => { renderUnitPickers(); icons(); },
+  // Only `overview` while a unit is locked. The shell falls back to it for any
+  // route it cannot find (course-app.js :: renderRoute), so #reading, #quiz and
+  // #final-quiz all land on the lock screen — the gate does not depend on
+  // rewriting the hash, which would race the first render.
+  renderers: unitLocked ? { overview: () => renderLockedUnit() } : {
     overview: () => (isPrereqUnit ? renderPrereqOverview() : renderOverview()),
     placement: () => renderPlacementExam(),
     lecture: () => renderLecture(),
@@ -3624,6 +3761,24 @@ const config = {
   bind,
   wehelOptions,
   async load(ctx) {
+    // A locked unit loads its manifest entry and nothing else. Fetching the
+    // unit, dictionary, games and lecture media would be paying for content the
+    // learner is not going to be shown, and it is the one honest way to be sure
+    // no renderer can reach a locked unit's material.
+    if (unitLocked) {
+      const manifestResponse = await fetch(new URL("course-manifest.json", ctx.dataRootUrl));
+      if (!manifestResponse.ok) throw new Error(`Course data could not be loaded (${manifestResponse.status} ${manifestResponse.url}).`);
+      manifest = await manifestResponse.json();
+      const entry = manifest.units.find((unit) => Number(unit.number) === unitNumber);
+      course = {
+        grade: manifest.grade,
+        subject: manifest.subject,
+        term: { label: "Not open yet" },
+        unit: { unitNo: unitNumber, unitTitle: entry?.title || `Unit ${unitNumber}` },
+        visual: {},
+      };
+      return { manifest, course };
+    }
     if (isPrereqUnit) {
       const [manifestResponse, placementResponse] = await Promise.all([
         fetch(new URL("course-manifest.json", ctx.dataRootUrl)),
@@ -3679,19 +3834,26 @@ const config = {
     if (location.hash.slice(1) === "games" && !gamePack) location.hash = "overview";
     if (isPrereqUnit && !["overview", "placement", "teacher"].includes(location.hash.slice(1))) location.hash = "overview";
     if (!isPrereqUnit && location.hash.slice(1) === "placement") location.hash = "overview";
+    // Cosmetic only — the lock screen renders whatever the hash says. This just
+    // stops the nav highlighting a section that is no longer on the page.
+    if (unitLocked && location.hash.slice(1) !== "overview") location.hash = "overview";
     document.title = isPrereqUnit
       ? `${gradeLabel} English | Prerequisite: ${placementExam.title}`
-      : `${gradeLabel} English | Unit ${course.unit.unitNo}: ${course.unit.unitTitle}`;
+      : unitLocked
+        ? `${gradeLabel} English | Unit ${unitNumber} is locked`
+        : `${gradeLabel} English | Unit ${course.unit.unitNo}: ${course.unit.unitTitle}`;
     $("#course-label").textContent = `${course.grade.label} · ${course.subject} · ${course.term.label}`;
     $("#unit-title").textContent = course.unit.unitTitle;
     $("#grade-select").innerHTML = Array.from({ length: 8 }, (_, index) => index + 1).map((grade) => `<option value="${grade}" ${grade === gradeNumber ? "selected" : ""}>Grade ${grade}</option>`).join("");
     $("#grade-select").addEventListener("change", (event) => { location.href = gradeLocation(event.target.value); });
-    const unitOptions = [
-      `<option value="${PREREQ_UNIT}" ${isPrereqUnit ? "selected" : ""}>Prerequisite: Placement exam</option>`,
-      ...manifest.units.map((unit) => `<option value="${unit.number}" ${unit.number === unitNumber ? "selected" : ""}>Unit ${unit.number}: ${escapeHtml(unit.title)}</option>`),
-    ].join("");
+    // The options are painted by renderUnitPickers, which runs again on every
+    // nav render so a unit opened mid-session appears without a reload. The
+    // listener is on the <select>, not the options, so it survives the repaint —
+    // and is bound once, or a repaint would stack a second navigation on it.
+    renderUnitPickers();
     for (const picker of [$("#unit-select"), $("#top-unit-select")]) {
-      picker.innerHTML = unitOptions;
+      if (picker.dataset.unitPickerBound) continue;
+      picker.dataset.unitPickerBound = "true";
       picker.addEventListener("change", (event) => { location.href = courseLocation(event.target.value); });
     }
     // English-only listeners (the shell handles teacher-switch + hashchange).

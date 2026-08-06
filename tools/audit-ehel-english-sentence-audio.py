@@ -28,6 +28,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import collections
 import difflib
 import functools
 import json
@@ -44,10 +45,15 @@ warnings.filterwarnings("ignore")
 # showed the counts from whenever the buffer last filled, which reads as "not
 # progressing" and is wrong. Flush every line so the log is the truth.
 print = functools.partial(print, flush=True)  # noqa: A001 - deliberate shadow
-# Also unbuffer the stream itself, for anything that writes around this print
-# (warnings, tracebacks, the transcriber's own output).
+# UTF-8, and unbuffered. Both matter, for reasons this tool learned the hard way:
+#   * A transcript can contain anything the speech model produces — the readings
+#     sweep died on a "ī" because Windows hands Python a cp1252 stdout, and the
+#     crash landed in the print, OUTSIDE the per-clip guard, so it took the whole
+#     run with it after 200 clips.
+#   * Piped into a log, Python block-buffers, and a four-hour audit shows counts
+#     from whenever the buffer last filled — which reads as a stalled job.
 try:
-    sys.stdout.reconfigure(line_buffering=True)
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace", line_buffering=True)
 except AttributeError:  # pragma: no cover - very old interpreters
     pass
 ROOT = Path(__file__).resolve().parents[1]
@@ -76,22 +82,97 @@ def normalise(text: str) -> str:
     return " ".join(NUMBER_WORDS.get(word, word) for word in flat.split())
 
 
-def clips_for_grade(grade: int):
-    """(unit file, vocabularyId, index, sentence, mp3 path) for every live clip."""
+# Every narrated category in the course, and where each one's text and its
+# descriptor live. The vocabulary sentences were audited first because that is
+# where the drift was reported, but every category is named by id and reused if
+# the file exists, so every category can drift the same way.
+#
+# "meanings" is included because the word carousel added a Meaning button in
+# grades 1-4; before that nothing played those clips and auditing them would
+# have been checking audio no learner could hear.
+CATEGORIES = (
+    "sentences", "meanings", "words", "readings", "grammar",
+    "grammar-practice", "speaking", "writing", "activities", "quiz",
+)
+
+
+def _live(descriptor):
+    return bool(descriptor) and descriptor.get("available") is True
+
+
+def _mp3(descriptor):
+    return ENGLISH / str(descriptor.get("source") or descriptor.get("normal") or "").replace("./", "")
+
+
+def clips_for_grade(grade: int, categories=("sentences",)):
+    """(category, unit name, clip id, script, mp3 path) for every live clip.
+
+    The clip id is the one the generator's --only matches on, so a repair list
+    written from this audit feeds straight back into the generator.
+    """
+    wanted = set(categories)
     units = ENGLISH / f"grade-{grade}" / "data" / "units"
-    if not units.exists():
-        return
-    for unit_path in sorted(units.glob("unit-*.json"), key=lambda p: int(re.findall(r"\d+", p.stem)[0])):
-        unit = json.loads(unit_path.read_text(encoding="utf-8"))
-        for link in unit.get("dictionaryLinks", []):
-            audio = link.get("sentenceAudio") or []
-            for index, sentence in enumerate(link.get("practiceSentences") or []):
-                descriptor = audio[index] if index < len(audio) else None
-                if not descriptor or descriptor.get("available") is not True:
-                    continue
-                source = descriptor.get("source") or descriptor.get("normal") or ""
-                mp3 = ENGLISH / source.replace("./", "")
-                yield unit_path.stem, link["vocabularyId"], index, sentence, mp3
+    if units.exists():
+        for unit_path in sorted(units.glob("unit-*.json"), key=lambda p: int(re.findall(r"\d+", p.stem)[0])):
+            unit = json.loads(unit_path.read_text(encoding="utf-8"))
+            name = unit_path.stem
+
+            for link in unit.get("dictionaryLinks", []):
+                if "sentences" in wanted:
+                    audio = link.get("sentenceAudio") or []
+                    for index, sentence in enumerate(link.get("practiceSentences") or []):
+                        descriptor = audio[index] if index < len(audio) else None
+                        if _live(descriptor):
+                            yield ("sentences", name, f'{link["vocabularyId"]}-sentence-{index + 1}',
+                                   sentence, _mp3(descriptor))
+                if "meanings" in wanted and _live(link.get("meaningAudio")):
+                    yield ("meanings", name, f'{link["vocabularyId"]}-meaning',
+                           link.get("childMeaning"), _mp3(link["meaningAudio"]))
+
+            if "readings" in wanted:
+                for item in unit.get("readings", []):
+                    if _live(item.get("audio")):
+                        yield ("readings", name, item["readingId"], item.get("passageScript"), _mp3(item["audio"]))
+            for item in unit.get("grammar", []):
+                if "grammar" in wanted and _live(item.get("audio")):
+                    yield ("grammar", name, item["grammarId"],
+                           f"{item.get('explanation')} {item.get('ruleAndExamples', '')}", _mp3(item["audio"]))
+                if "grammar-practice" in wanted and _live(item.get("practiceAudio")):
+                    yield ("grammar-practice", name, f'{item["grammarId"]}-practice',
+                           item.get("practice"), _mp3(item["practiceAudio"]))
+            if "speaking" in wanted:
+                for item in unit.get("speaking", []):
+                    if _live(item.get("audio")):
+                        yield ("speaking", name, item["speakingId"],
+                               item.get("instructionsAndModelLines"), _mp3(item["audio"]))
+            if "writing" in wanted:
+                for item in unit.get("writing", []):
+                    if _live(item.get("audio")):
+                        yield ("writing", name, item["writingId"],
+                               item.get("promptAndInstructions"), _mp3(item["audio"]))
+            if "activities" in wanted:
+                for item in unit.get("activities", []):
+                    if _live(item.get("audio")):
+                        yield ("activities", name, item["activityId"],
+                               item.get("instructionsAndItems"), _mp3(item["audio"]))
+
+    # The word pronunciations and the final quiz live outside units/, the way
+    # the generator's own dictionary and final-quiz branches read them.
+    if "words" in wanted:
+        master = ENGLISH / f"grade-{grade}" / "data" / f"master-dictionary.grade{grade}.json"
+        if master.exists():
+            for entry in json.loads(master.read_text(encoding="utf-8")).get("entries", []):
+                if _live(entry.get("audio")):
+                    yield ("words", "master-dictionary",
+                           re.sub(r"[^a-z0-9]+", "-", str(entry.get("lemma") or entry["displayWord"]).lower()).strip("-"),
+                           entry["displayWord"], _mp3(entry["audio"]))
+    if "quiz" in wanted:
+        quiz = ENGLISH / f"grade-{grade}" / "data" / "course-final-quiz.json"
+        if quiz.exists():
+            for question in json.loads(quiz.read_text(encoding="utf-8")).get("questions", []):
+                if _live(question.get("audio")):
+                    yield ("quiz", "course-final-quiz", question["questionId"],
+                           question.get("question"), _mp3(question["audio"]))
 
 
 def main() -> None:
@@ -107,7 +188,14 @@ def main() -> None:
     # three steps cannot disagree about which clips were in scope.
     parser.add_argument("--only-file", dest="only_file",
                         help="check only the clip ids in this JSON (as written by --out)")
+    parser.add_argument("--categories", nargs="*", default=["sentences"],
+                        help=f"which narrated categories to check; one or more of {', '.join(CATEGORIES)}, or 'all'")
     args = parser.parse_args()
+
+    categories = list(CATEGORIES) if "all" in args.categories else args.categories
+    unknown = [c for c in categories if c not in CATEGORIES]
+    if unknown:
+        raise SystemExit(f"unknown category: {', '.join(unknown)} (known: {', '.join(CATEGORIES)})")
 
     targeted = {}
     if args.only_file:
@@ -132,10 +220,13 @@ def main() -> None:
             checked = missing = bad = broken = 0
             ids: list[str] = []
             wanted = targeted.get(str(grade)) if targeted else None
-            for unit_name, vocabulary_id, index, sentence, mp3 in clips_for_grade(grade):
+            per_category = collections.Counter()
+            for category, unit_name, clip_id, sentence, mp3 in clips_for_grade(grade, categories):
                 if args.sample and checked >= args.sample:
                     break
-                if wanted is not None and f"{vocabulary_id}-sentence-{index + 1}" not in wanted:
+                if wanted is not None and clip_id not in wanted:
+                    continue
+                if not str(sentence or "").strip():
                     continue
                 if not mp3.exists():
                     missing += 1
@@ -155,14 +246,29 @@ def main() -> None:
                     continue
                 ratio = difflib.SequenceMatcher(None, normalise(sentence), normalise(heard)).ratio()
                 checked += 1
+                per_category[category] += 1
                 if ratio >= MATCH_FLOOR:
                     continue
                 bad += 1
-                ids.append(f"{vocabulary_id}-sentence-{index + 1}")
-                print(f"g{grade} {unit_name} {mp3.name}  similarity {ratio:.2f}")
-                print(f"      printed: {sentence}")
-                print(f"      spoken : {heard.strip()}")
+                per_category[f"{category}!"] += 1
+                ids.append(clip_id)
+                # Belt as well as braces: the finding is already recorded above,
+                # so a stream that cannot render some character must not cost us
+                # the clip — let alone the rest of the sweep.
+                try:
+                    print(f"g{grade} {category} {unit_name} {mp3.name}  similarity {ratio:.2f}")
+                    print(f"      printed: {str(sentence)[:300]}")
+                    print(f"      spoken : {heard.strip()[:300]}")
+                except UnicodeError:
+                    print(f"g{grade} {category} {unit_name} {mp3.name}  similarity {ratio:.2f}"
+                          " (text omitted: unprintable characters)")
             totals[grade] = (checked, bad, missing, broken)
+            if len(categories) > 1 and per_category:
+                for cat in categories:
+                    if per_category[cat]:
+                        flagged = per_category[f"{cat}!"]
+                        print(f"  g{grade} {cat}: {per_category[cat]} checked, {flagged} flagged"
+                              f" ({100 * flagged / per_category[cat]:.0f}%)")
             if ids:
                 stale[str(grade)] = ids
             # Written per grade, not once at the end: an interrupted run still

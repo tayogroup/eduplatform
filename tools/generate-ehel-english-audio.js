@@ -519,6 +519,7 @@ async function main() {
   let charsSent = 0, generated = 0, reused = 0, skipped = 0, charsTotal = 0, count = 0;
   let restaled = 0, unverified = 0;
   const failures = [];
+  const blanked = [];
   const narrationIndex = loadNarrationIndex();
   // What THIS run recorded, kept apart from the snapshot it read at startup.
   const myFingerprints = new Map();
@@ -536,6 +537,16 @@ async function main() {
     const targets = targetsFor(grade);
     if (targets && !targets.some((needle) => String(item.id).includes(needle))) return false;
     if (!item.text || item.text.length < (item.minChars ?? 8)) { skipped += 1; return false; }
+    // A fill-in-the-blank frame is not a script. Handed "This is a ___.",
+    // ElevenLabs improvises: a Grade 1 reading came back saying "This is a
+    // dirisan dog… I am making bomb bomb", and a Grade 1 pattern page came back
+    // in invented syllables. 500 clips across the course were generated from
+    // scripts like these, every one of them unusable and every one paid for.
+    //
+    // Refused rather than narrated, because regenerating cannot fix it — the
+    // blank is in the source text. These items need a spoken form of the frame
+    // written for the ear before they can carry a Listen button at all.
+    if (/_{2,}/.test(item.text)) { blanked.push(item.id); return false; }
     charsTotal += item.text.length;
     if (count >= limit) return false;
 
@@ -685,6 +696,11 @@ async function main() {
   }
   if (indexTotal) console.log(`narration index: ${myFingerprints.size} recorded this run, ${indexTotal} in the file`);
   if (restaled) console.log(`re-narrated because the text had changed since: ${restaled}`);
+  if (blanked.length) {
+    console.log(`\nREFUSED — the script is a fill-in-the-blank frame, not something that can be read aloud: ${blanked.length}`);
+    console.log(`  ${blanked.slice(0, 6).join(", ")}${blanked.length > 6 ? " …" : ""}`);
+    console.log("  These need a spoken form of the frame before they can carry a Listen button.");
+  }
   if (unverified) {
     console.log(`clips with no record of what they were made from: ${unverified}`);
     console.log("  (reused this run — listen to them with tools/audit-ehel-english-sentence-audio.py)");

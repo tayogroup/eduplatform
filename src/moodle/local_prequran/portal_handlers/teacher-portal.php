@@ -19,6 +19,7 @@ global $CFG, $DB, $USER;
 require_once($CFG->dirroot . '/local/hubredirect/accesslib.php');
 require_once($CFG->dirroot . '/local/hubredirect/gradebook_progresslib.php');
 require_once($CFG->dirroot . '/local/prequran/notificationlib.php');
+require_once($CFG->dirroot . '/local/hubredirect/progress_rolluplib.php');
 require_once($CFG->dirroot . '/local/hubredirect/teacher_portal_portallib.php');
 
 $userid = (int)($claims['sub'] ?? 0);
@@ -278,14 +279,48 @@ foreach ($sessions as $session) {
         'roster_count' => (int)$session->roster_count,
     ];
 }
+// Quiz checkpoints from the learner apps, per roster student. The teacher could
+// see the grades they typed in themselves but nothing the child actually did in
+// the app, so a quiz sat in {local_prequran_progress} unread until someone
+// opened the family's portal. Scope is the roster query above (this teacher's
+// own active students) — no wider read than the page already performs.
+$rosterids = array_map(static function ($student): int {
+    return (int)$student->studentid;
+}, $roster);
+$quizbystudent = [];
+$progressrows = pqpr_progress_rows($rosterids);
+if ($progressrows) {
+    $courselabels = pqpr_course_labels(array_map(static function ($row): string {
+        return (string)$row->coursekey;
+    }, $progressrows));
+    foreach ($progressrows as $row) {
+        $state = json_decode((string)$row->statejson, true);
+        if (!is_array($state)) {
+            continue;
+        }
+        $course = pqpr_course_title((string)$row->coursekey, $courselabels);
+        foreach (pqpr_checkpoints_from_state($state, (string)$row->unit, (int)$row->timemodified) as $cp) {
+            $cp['course'] = $course;
+            $quizbystudent[(int)$row->userid][] = $cp;
+        }
+    }
+}
 $rosterout = [];
 foreach ($roster as $student) {
-    $rosterout[] = [
-        'studentid' => (int)$student->studentid,
+    $studentid = (int)$student->studentid;
+    $checkpoints = pqpr_sort_checkpoints($quizbystudent[$studentid] ?? []);
+    $summary = pqpr_summarise($checkpoints);
+    $rosterout[] = array_merge([
+        'studentid' => $studentid,
         'name' => fullname($student),
         'email' => (string)$student->email,
-        'profileurl' => (new moodle_url('/local/hubredirect/workspace_student.php', ['workspaceid' => $workspaceid, 'studentid' => (int)$student->studentid]))->out(false),
-    ];
+        'profileurl' => (new moodle_url('/local/hubredirect/workspace_student.php', ['workspaceid' => $workspaceid, 'studentid' => $studentid]))->out(false),
+    ], $summary, [
+        // 70 is the threshold this page's own low-score parent alert already
+        // uses for a published grade; app quizzes are flagged the same way.
+        'needs_support' => $summary['average_score'] !== null && $summary['average_score'] < 70,
+        'recent_quizzes' => array_slice($checkpoints, 0, 5),
+    ]);
 }
 $assessmentsout = [];
 foreach ($assessments as $assessment) {

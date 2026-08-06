@@ -42,6 +42,10 @@
   th,td{border-bottom:1px solid var(--line);padding:8px;text-align:left;vertical-align:top;font-size:13px}
   th{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.4px}
   .pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:900;background:var(--sky);color:var(--blue2)}
+  .pill.good{background:#e4f4ea;color:#1c7a41}
+  .pill.bad{background:var(--red-bg);color:var(--red)}
+  .pill.warn{background:var(--amber-bg);color:var(--amber)}
+  .quiz-line{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:5px;font-size:12px}
   a.btn{display:inline-block;border:1px solid var(--line);border-radius:8px;padding:6px 11px;background:var(--sky);color:var(--blue);text-decoration:none;font-weight:800;font-size:12px}
   a.btn:hover{border-color:var(--blue2);color:var(--blue2)}
 </style>
@@ -117,7 +121,7 @@
         <h3>Today's Classes</h3>
         <table><thead><tr><th>Class</th><th>Time</th><th>Roster</th></tr></thead><tbody id="sessions-body"></tbody></table>
         <h3>Student Roster</h3>
-        <table><thead><tr><th>Student</th><th>Actions</th></tr></thead><tbody id="roster-body"></tbody></table>
+        <table><thead><tr><th>Student</th><th>App quizzes</th><th>Actions</th></tr></thead><tbody id="roster-body"></tbody></table>
       </div>
     </section>
   </div>
@@ -162,6 +166,26 @@
     });
   }
 
+  // What the child scored in the learner app: the headline, then the five most
+  // recent quizzes (newest unit first) with course, attempt and pass/fail.
+  function quizCell(s) {
+    const taken = Number(s.quizzes_taken) || 0;
+    if (taken < 1) return `<span class="muted">No app quizzes yet</span>`;
+    const avg = (s.average_score === null || s.average_score === undefined) ? null : Number(s.average_score);
+    const head = `<span class="pill ${s.needs_support ? "warn" : "good"}">`
+      + esc(taken + (taken === 1 ? " quiz" : " quizzes") + " · " + (Number(s.quizzes_passed) || 0) + " passed"
+        + (avg === null ? "" : " · avg " + avg + "%")) + `</span>`
+      + (s.needs_support ? ` <span class="pill warn">Needs support</span>` : "");
+    const rows = (s.recent_quizzes || []).map((q) => {
+      const score = Number(q.score);
+      const attempt = Number(q.attempt) || 1;
+      return `<div class="quiz-line"><span class="pill ${q.passed ? "good" : "bad"}">${esc(Number.isFinite(score) ? score + "%" : "—")}</span>`
+        + `<span>${esc(q.label || "Checkpoint")}</span>`
+        + `<span class="muted">${esc((q.course || "") + (attempt > 1 ? " · attempt " + attempt : ""))}</span></div>`;
+    }).join("");
+    return head + rows;
+  }
+
   function render(d) {
     $("#subtitle").textContent = (d.workspace && d.workspace.name ? d.workspace.name + " — " : "") +
       "today's classes, roster, attendance, grade entry, notes, homework, and progress updates.";
@@ -177,8 +201,8 @@
     ).join("") || `<tr><td colspan="3" class="muted">No classes scheduled today.</td></tr>`;
 
     $("#roster-body").innerHTML = (d.roster || []).map((s) =>
-      `<tr><td><strong>${esc(s.name)}</strong><div class="muted">${esc(s.email)}</div></td><td><a class="btn" href="${esc(s.profileurl)}">Profile</a></td></tr>`
-    ).join("") || `<tr><td colspan="2" class="muted">No assigned students found.</td></tr>`;
+      `<tr><td><strong>${esc(s.name)}</strong><div class="muted">${esc(s.email)}</div></td><td>${quizCell(s)}</td><td><a class="btn" href="${esc(s.profileurl)}">Profile</a></td></tr>`
+    ).join("") || `<tr><td colspan="3" class="muted">No assigned students found.</td></tr>`;
 
     $("#content").hidden = false;
     $("#status").hidden = true;

@@ -39,6 +39,7 @@
   .status.error{background:var(--red-bg);color:var(--red)}
   .pqsp-bar{height:8px;max-width:240px;margin-top:6px;border-radius:999px;background:var(--sky);overflow:hidden}
   .pqsp-bar-fill{height:100%;border-radius:999px;background:var(--blue2)}
+  .pqsp-quiz{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:6px;font-size:12px}
   .field{margin-bottom:10px}
   .field label{display:block;font-size:12px;font-weight:800;color:var(--ink2);margin-bottom:3px}
   .field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:7px;padding:8px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
@@ -191,7 +192,23 @@
     $("#courseprogress").innerHTML = (d.courseprogress || []).map((c) => {
       const label = esc(c.subject) + (Number(c.stage) > 0 ? " · Stage " + esc(c.stage) : "");
       const pct = Math.max(0, Math.min(100, Number(c.percent) || 0));
-      return `<tr><td><strong>${label}</strong><div class="pqsp-bar"><div class="pqsp-bar-fill" style="width:${pct}%"></div></div></td><td class="muted">${esc((c.units_completed ?? 0) + " / " + (c.units_total ?? 0) + " units · " + pct + "%")}</td></tr>`;
+      // Quiz checkpoints for this course: score, pass/fail, and the attempt
+      // number when the child had more than one go at it.
+      const quizzes = (c.checkpoints || []).map((q) => {
+        const score = Number(q.score);
+        const attempt = Number(q.attempt) || 1;
+        const retry = attempt > 1 ? ` · attempt ${attempt}` : "";
+        return `<div class="pqsp-quiz"><span class="pill ${q.passed ? "good" : "bad"}">${esc(Number.isFinite(score) ? score + "%" : "—")}</span>`
+          + `<span>${esc(q.label || "Checkpoint")}</span>`
+          + `<span class="muted">${esc((q.passed ? "passed" : "not passed") + retry)}</span></div>`;
+      }).join("");
+      const taken = Number(c.quizzes_taken) || 0;
+      const quizsummary = taken > 0
+        ? esc(taken + (taken === 1 ? " quiz · " : " quizzes · ") + (Number(c.quizzes_passed) || 0) + " passed"
+            + (c.average_score === null || c.average_score === undefined ? "" : " · avg " + Number(c.average_score) + "%"))
+        : "No quizzes yet";
+      return `<tr><td><strong>${label}</strong><div class="pqsp-bar"><div class="pqsp-bar-fill" style="width:${pct}%"></div></div>${quizzes}</td>`
+        + `<td class="muted">${esc((c.units_completed ?? 0) + " / " + (c.units_total ?? 0) + " units · " + pct + "%")}<div class="muted">${quizsummary}</div></td></tr>`;
     }).join("") || emptyRow(2, "No course progress recorded yet.");
 
     const reportcards = d.reportcards || [];

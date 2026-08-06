@@ -24,6 +24,7 @@ defined('MOODLE_INTERNAL') || die();
 global $CFG, $DB, $USER;
 require_once($CFG->dirroot . '/local/hubredirect/accesslib.php');
 require_once($CFG->dirroot . '/local/hubredirect/workflow_documentlib.php');
+require_once($CFG->dirroot . '/local/hubredirect/progress_rolluplib.php');
 require_once($CFG->dirroot . '/local/hubredirect/student_parent_portallib.php');
 
 $userid = (int)($claims['sub'] ?? 0);
@@ -229,10 +230,14 @@ $documents = pqh_table_exists_safe('local_prequran_document') ? array_values($DB
 // service were never aggregated or shown to families (they stayed inside the
 // app hydrate document). Compute % units complete per course, joined to the
 // curriculum map for the unit total + a friendly subject/stage label.
+// Quiz checkpoints ride along: every `checkpoint.result` the learner apps emit
+// is reduced into the unit state's `checkpoints` map (score, passed, attempt).
+// The rollup only ever read `completed`, so a family saw "3 / 12 units" and
+// nothing about how the quizzes actually went. Labelling and aggregation come
+// from progress_rolluplib (pqpr_*), shared with the teacher portal.
 $courseprogress = [];
-if (pqh_table_exists_safe('local_prequran_progress')) {
-    $progressrows = $DB->get_records('local_prequran_progress',
-        ['environment' => 'production', 'userid' => $studentid], '', 'id,coursekey,unit,statejson');
+$progressrows = pqpr_progress_rows([$studentid]);
+if ($progressrows) {
     $bycourse = [];
     foreach ($progressrows as $row) {
         $key = (string)$row->coursekey;
@@ -240,38 +245,37 @@ if (pqh_table_exists_safe('local_prequran_progress')) {
             continue;
         }
         if (!isset($bycourse[$key])) {
-            $bycourse[$key] = ['done' => 0, 'seen' => 0];
+            $bycourse[$key] = ['done' => 0, 'seen' => 0, 'checkpoints' => []];
         }
         $bycourse[$key]['seen']++;
         $state = json_decode((string)$row->statejson, true);
-        if (is_array($state) && !empty($state['completed'])) {
+        if (!is_array($state)) {
+            continue;
+        }
+        if (!empty($state['completed'])) {
             $bycourse[$key]['done']++;
         }
+        $bycourse[$key]['checkpoints'] = array_merge(
+            $bycourse[$key]['checkpoints'],
+            pqpr_checkpoints_from_state($state, (string)$row->unit, (int)$row->timemodified)
+        );
     }
-    $hascurriculum = pqh_table_exists_safe('local_prequran_curriculum_map');
+    $courselabels = pqpr_course_labels(array_keys($bycourse));
     foreach ($bycourse as $key => $counts) {
-        $total = $counts['seen'];
-        $subject = $key;
-        $stage = 0;
-        if ($hascurriculum) {
-            $map = $DB->get_record('local_prequran_curriculum_map', ['idnumber' => $key], 'subject,stage,unitcount', IGNORE_MISSING);
-            if ($map) {
-                if ((int)$map->unitcount > 0) {
-                    $total = (int)$map->unitcount;
-                }
-                $subject = (string)$map->subject !== '' ? (string)$map->subject : $key;
-                $stage = (int)$map->stage;
-            }
-        }
+        $map = $courselabels[$key] ?? null;
+        $total = $map && $map['unitcount'] > 0 ? $map['unitcount'] : $counts['seen'];
         $total = max($total, $counts['done'], 1);
-        $courseprogress[] = [
+        $courseprogress[] = array_merge([
             'coursekey' => $key,
-            'subject' => $subject,
-            'stage' => $stage,
+            'subject' => $map ? $map['subject'] : $key,
+            'stage' => $map ? $map['stage'] : 0,
             'units_completed' => $counts['done'],
             'units_total' => $total,
             'percent' => (int)round(100 * $counts['done'] / $total),
-        ];
+        ], pqpr_summarise($counts['checkpoints']), [
+            // Capped so a long course cannot balloon the family's payload.
+            'checkpoints' => array_slice(pqpr_sort_checkpoints($counts['checkpoints']), 0, 40),
+        ]);
     }
 }
 

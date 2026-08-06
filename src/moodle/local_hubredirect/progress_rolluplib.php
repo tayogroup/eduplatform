@@ -22,6 +22,13 @@ const PQPR_ENVIRONMENT = 'production';
 /** A checkpoint section that is NOT a score out of 100. See pqpr_checkpoints_from_state(). */
 const PQPR_NON_PERCENT_SECTIONS = ['games'];
 
+/**
+ * Below this average, a learner or a quiz is flagged as needing support. Same
+ * number the teacher portal's low-score parent alert already uses for a
+ * published grade, so the two do not disagree about what "low" means.
+ */
+const PQPR_SUPPORT_THRESHOLD = 70;
+
 /** `u03` -> `Unit 3`; the fixed unit keys keep their own names. */
 function pqpr_unit_label(string $unit): string {
     if (preg_match('/^u(\d+)$/', $unit, $m)) {
@@ -95,6 +102,66 @@ function pqpr_summarise(array $checkpoints): array {
         'quizzes_passed' => $passed,
         'average_score' => $taken > 0 ? (int)round($total / $taken) : null,
     ];
+}
+
+/**
+ * The other way round: checkpoints indexed per learner, regrouped into one row
+ * per quiz with everybody who sat it — so a class can be read down a column
+ * instead of student by student.
+ *
+ * $bystudent is studentid => checkpoint rows (each carrying `coursekey` and
+ * `course` on top of what pqpr_checkpoints_from_state() returns); $names is
+ * studentid => display name. A learner holds at most one checkpoint per
+ * (course, unit, section), so nobody can appear twice in one quiz.
+ */
+function pqpr_class_quizzes(array $bystudent, array $names, int $limit = 40): array {
+    $index = [];
+    foreach ($bystudent as $studentid => $checkpoints) {
+        $studentid = (int)$studentid;
+        foreach ($checkpoints as $cp) {
+            $key = ($cp['coursekey'] ?? '') . '|' . $cp['unit'] . '|' . $cp['section'];
+            if (!isset($index[$key])) {
+                $index[$key] = [
+                    'coursekey' => (string)($cp['coursekey'] ?? ''),
+                    'course' => (string)($cp['course'] ?? ''),
+                    'label' => (string)$cp['label'],
+                    'unit' => (string)$cp['unit'],
+                    'section' => (string)$cp['section'],
+                    'last_activity' => 0,
+                    'results' => [],
+                ];
+            }
+            $index[$key]['last_activity'] = max($index[$key]['last_activity'], (int)$cp['unit_updated']);
+            $index[$key]['results'][] = [
+                'studentid' => $studentid,
+                'name' => $names[$studentid] ?? ('Student #' . $studentid),
+                'score' => (int)$cp['score'],
+                'passed' => !empty($cp['passed']),
+                'attempt' => (int)$cp['attempt'],
+            ];
+        }
+    }
+
+    $out = [];
+    foreach ($index as $quiz) {
+        // Lowest score first — whoever is stuck is the teacher's next move.
+        // Ties fall back to name so the order is stable between loads.
+        usort($quiz['results'], static function (array $a, array $b): int {
+            return [$a['score'], $a['name']] <=> [$b['score'], $b['name']];
+        });
+        $summary = pqpr_summarise($quiz['results']);
+        $quiz['attempts'] = $summary['quizzes_taken'];
+        $quiz['passed'] = $summary['quizzes_passed'];
+        $quiz['average_score'] = $summary['average_score'];
+        $quiz['needs_support'] = $summary['average_score'] !== null && $summary['average_score'] < PQPR_SUPPORT_THRESHOLD;
+        $out[] = $quiz;
+    }
+    // Most recently active quiz first, then a stable course/unit/section order.
+    usort($out, static function (array $a, array $b): int {
+        return [$b['last_activity'], $a['course'], $a['unit'], $a['section']]
+            <=> [$a['last_activity'], $b['course'], $b['unit'], $b['section']];
+    });
+    return array_slice($out, 0, $limit);
 }
 
 /**

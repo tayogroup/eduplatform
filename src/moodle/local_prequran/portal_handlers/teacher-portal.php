@@ -298,8 +298,10 @@ if ($progressrows) {
         if (!is_array($state)) {
             continue;
         }
-        $course = pqpr_course_title((string)$row->coursekey, $courselabels);
+        $coursekey = (string)$row->coursekey;
+        $course = pqpr_course_title($coursekey, $courselabels);
         foreach (pqpr_checkpoints_from_state($state, (string)$row->unit, (int)$row->timemodified) as $cp) {
+            $cp['coursekey'] = $coursekey;
             $cp['course'] = $course;
             $quizbystudent[(int)$row->userid][] = $cp;
         }
@@ -316,12 +318,18 @@ foreach ($roster as $student) {
         'email' => (string)$student->email,
         'profileurl' => (new moodle_url('/local/hubredirect/workspace_student.php', ['workspaceid' => $workspaceid, 'studentid' => $studentid]))->out(false),
     ], $summary, [
-        // 70 is the threshold this page's own low-score parent alert already
-        // uses for a published grade; app quizzes are flagged the same way.
-        'needs_support' => $summary['average_score'] !== null && $summary['average_score'] < 70,
+        'needs_support' => $summary['average_score'] !== null && $summary['average_score'] < PQPR_SUPPORT_THRESHOLD,
         'recent_quizzes' => array_slice($checkpoints, 0, 5),
     ]);
 }
+// Class-level cut of the same checkpoints: one row per quiz, every roster
+// student who sat it. Only this teacher's own students went into the index, so
+// a quiz shows this class's results — not the whole cohort's.
+$rosternames = [];
+foreach ($rosterout as $entry) {
+    $rosternames[(int)$entry['studentid']] = (string)$entry['name'];
+}
+$classquizzes = pqpr_class_quizzes($quizbystudent, $rosternames);
 $assessmentsout = [];
 foreach ($assessments as $assessment) {
     $assessmentsout[] = [
@@ -348,6 +356,7 @@ echo json_encode([
     'workspace' => ['id' => $workspaceid, 'name' => (string)$workspace->name],
     'sessions' => $sessionsout,
     'roster' => $rosterout,
+    'classquizzes' => $classquizzes,
     'assessments' => $assessmentsout,
     'links' => $links,
 ], JSON_UNESCAPED_SLASHES);

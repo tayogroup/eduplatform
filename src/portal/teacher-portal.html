@@ -123,6 +123,11 @@
         <h3>Student Roster</h3>
         <table><thead><tr><th>Student</th><th>App quizzes</th><th>Actions</th></tr></thead><tbody id="roster-body"></tbody></table>
       </div>
+      <div class="card">
+        <h3>App Quizzes By Class</h3>
+        <p class="muted" id="classquizzes-note">One row per quiz, lowest score first.</p>
+        <table><thead><tr><th>Quiz</th><th>Class</th></tr></thead><tbody id="classquizzes-body"></tbody></table>
+      </div>
     </section>
   </div>
 </main>
@@ -186,6 +191,26 @@
     return head + rows;
   }
 
+  // The same checkpoints read down a column: one quiz, every roster student who
+  // sat it. Collapsed to the headline until the teacher opens it.
+  function classQuizRow(q) {
+    const avg = (q.average_score === null || q.average_score === undefined) ? null : Number(q.average_score);
+    const attempts = Number(q.attempts) || 0;
+    const head = `<span class="pill ${q.needs_support ? "warn" : "good"}">`
+      + esc(attempts + (attempts === 1 ? " result" : " results") + " · " + (Number(q.passed) || 0) + " passed"
+        + (avg === null ? "" : " · avg " + avg + "%")) + `</span>`;
+    const results = (q.results || []).map((r) => {
+      const score = Number(r.score);
+      const attempt = Number(r.attempt) || 1;
+      return `<div class="quiz-line"><span class="pill ${r.passed ? "good" : "bad"}">${esc(Number.isFinite(score) ? score + "%" : "—")}</span>`
+        + `<span>${esc(r.name)}</span>`
+        + (attempt > 1 ? `<span class="muted">${esc("attempt " + attempt)}</span>` : "") + `</div>`;
+    }).join("");
+    return `<tr><td><strong>${esc(q.label || "Checkpoint")}</strong><div class="muted">${esc(q.course || "")}</div>`
+      + `<div class="muted">${esc(q.last_activity ? "last activity " + when(q.last_activity) : "")}</div></td>`
+      + `<td>${head}<details><summary class="muted">Show every result</summary>${results}</details></td></tr>`;
+  }
+
   function render(d) {
     $("#subtitle").textContent = (d.workspace && d.workspace.name ? d.workspace.name + " — " : "") +
       "today's classes, roster, attendance, grade entry, notes, homework, and progress updates.";
@@ -203,6 +228,13 @@
     $("#roster-body").innerHTML = (d.roster || []).map((s) =>
       `<tr><td><strong>${esc(s.name)}</strong><div class="muted">${esc(s.email)}</div></td><td>${quizCell(s)}</td><td><a class="btn" href="${esc(s.profileurl)}">Profile</a></td></tr>`
     ).join("") || `<tr><td colspan="3" class="muted">No assigned students found.</td></tr>`;
+
+    const classquizzes = d.classquizzes || [];
+    $("#classquizzes-body").innerHTML = classquizzes.map(classQuizRow).join("")
+      || `<tr><td colspan="2" class="muted">No app quizzes sat by this roster yet.</td></tr>`;
+    $("#classquizzes-note").textContent = classquizzes.length
+      ? "One row per quiz, lowest score first. Only students on your roster are counted."
+      : "Quizzes appear here once a student on your roster sits one in the learner app.";
 
     $("#content").hidden = false;
     $("#status").hidden = true;

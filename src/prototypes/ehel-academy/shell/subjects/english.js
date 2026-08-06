@@ -197,7 +197,14 @@ let unitLocked = !isPrereqUnit && !TEACHER_PREVIEW && !unitIsUnlocked(unitNumber
 //   live     — a scheduled class happens when it is scheduled.
 // `ai` still counts toward finishing the unit; it is available throughout
 // rather than at one point in the line.
-const SECTION_CHAIN = ["lecture", "dictionary", "reading", "comprehension", "grammar", "speaking", "writing", "activities", "games", "quiz", "ebooks", "reflect", "final-quiz"];
+// Overview is step ONE, not scenery: a learner meets what the unit is about
+// before Teacher Musa starts teaching it. It is the one step with no "done" of
+// its own, so pressing a button that leads out of it — "Start with Teacher
+// Musa", or Continue — is what finishes it (see renderOverview). Auto-finishing
+// it on sight was the alternative and is worthless: Overview is the route the
+// app lands on, so the lecture would unlock before the page had been read.
+// It stays nonCountable, so completing it adds nothing to the unit's 100%.
+const SECTION_CHAIN = ["overview", "lecture", "dictionary", "reading", "comprehension", "grammar", "speaking", "writing", "activities", "games", "quiz", "ebooks", "reflect", "final-quiz"];
 // Built against what this unit actually shows: a unit with no game pack has no
 // Games entry, and a chain that still demanded it would stall the learner at
 // the Quiz forever. `final-quiz` only exists on Unit 10, and comes last there.
@@ -1051,7 +1058,9 @@ function renderLockedSection(id) {
   $("#app").innerHTML = `${pageHeader(
     `${escapeHtml(course.grade.label)} · Unit ${course.unit.unitNo}`,
     `${escapeHtml(sectionLabel(id))} is not open yet`,
-    `Finish ${escapeHtml(sectionLabel(previous))} and this part opens by itself.`,
+    previous === "overview"
+      ? "Start from the unit's Overview page and this part opens."
+      : `Finish ${escapeHtml(sectionLabel(previous))} and this part opens by itself.`,
     "Locked",
   )}
     <div class="overview-grid">
@@ -1133,7 +1142,15 @@ function renderOverview() {
         ${unitNumber === 10 ? `<section class="panel final-quiz-callout"><span class="eyebrow">After your capstone</span><h3>Final course quiz</h3><p>Complete 30 questions across words, reading, grammar, speaking and writing. Your answers save as you work.</p><button class="button gold" data-go="final-quiz" type="button">${finalQuizProgress.completed ? "View my results" : "Open final quiz"} ${icon("arrow-right")}</button></section>` : ""}
       </div>
     </div>`;
-  $$('[data-go]').forEach((button) => button.addEventListener("click", () => navigate(button.dataset.go)));
+  // Leaving the Overview by one of its own buttons is what completes it — the
+  // page has no other "done", and it is the first step of the unit chain, so
+  // Teacher lecture stays locked until the learner has actually started here.
+  // complete() before navigate(), or the section being opened is still locked
+  // at the moment we ask for it.
+  $$('[data-go]').forEach((button) => button.addEventListener("click", () => {
+    if (!progress.completed.includes("overview")) complete("overview");
+    navigate(button.dataset.go);
+  }));
   bindOverviewAudio(course);
 }
 

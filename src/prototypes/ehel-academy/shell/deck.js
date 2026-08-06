@@ -33,9 +33,16 @@ export function createDeck({ $, escapeHtml, icon, stopAudio = () => {}, afterPai
   // level), and `redrawSlide` repaints one slide without snapping the carousel
   // back to the first — which is exactly what the learner is in the middle of
   // when a Learned mark or a sentence position changes.
-  function mountDeck({ heading, label = "Slide", slides = [], tools = "", emptyMessage = "", onSlide = null, onClick = null }) {
+  // `mount` and `fullBleed` are what let a deck sit inside a page instead of
+  // being the page. Every subject but English Grade 1 mounts exactly one deck
+  // into #app and lets it own the screen, which is the default. English Grade 1
+  // keeps the original section above the deck, so it passes its own container
+  // and turns full-bleed off: the body class — and the 100vh slide CSS it
+  // switches on — would swallow the page the deck is meant to sit under.
+  function mountDeck({ heading, label = "Slide", slides = [], tools = "", emptyMessage = "", onSlide = null, onClick = null, mount = "#app", fullBleed = true }) {
     const lower = label.toLowerCase();
-    $("#app").innerHTML = `
+    const host = typeof mount === "string" ? $(mount) : mount;
+    host.innerHTML = `
     <div class="gc-wrap">
       <div class="gc-top"><h2 class="gc-heading">${escapeHtml(heading)}</h2><span class="gc-count" id="gc-count"></span></div>
       <div class="gc-carousel">
@@ -49,14 +56,19 @@ export function createDeck({ $, escapeHtml, icon, stopAudio = () => {}, afterPai
     // Full-bleed: the deck fills the whole viewport (paired with focus mode, which
     // already hides the topbar/sidebar and requests browser fullscreen on the nav
     // click). Cleared in onBeforeRender when leaving the section.
-    document.body.classList.add("gc-full");
+    if (fullBleed) document.body.classList.add("gc-full");
 
-    const root = $(".gc-wrap");
-    const track = $("#gc-track");
-    const dotsRow = $("#gc-dots");
-    const prevArrow = $(".gc-arrow.prev");
-    const nextArrow = $(".gc-arrow.next");
-    const countLabel = $("#gc-count");
+    // Found inside the host, not across the document: on a page that also shows
+    // another design of the same section, #gc-track and #gc-count are no longer
+    // guaranteed unique, and a document-wide lookup would wire this deck's arrows
+    // to the first markup that happened to match.
+    const find = (selector) => host.querySelector(selector);
+    const root = find(".gc-wrap");
+    const track = find("#gc-track");
+    const dotsRow = find("#gc-dots");
+    const prevArrow = find(".gc-arrow.prev");
+    const nextArrow = find(".gc-arrow.next");
+    const countLabel = find("#gc-count");
     let items = [];
     let index = 0;
 
@@ -109,7 +121,7 @@ export function createDeck({ $, escapeHtml, icon, stopAudio = () => {}, afterPai
     prevArrow.addEventListener("click", () => goTo(index - 1));
     nextArrow.addEventListener("click", () => goTo(index + 1));
 
-    const viewport = $(".gc-viewport");
+    const viewport = find(".gc-viewport");
     let startX = null;
     viewport.addEventListener("touchstart", (event) => { startX = event.touches[0].clientX; }, { passive: true });
     viewport.addEventListener("touchend", (event) => {

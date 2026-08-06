@@ -753,7 +753,10 @@ function prepareNarrationText(value) {
 }
 
 function collectPageNarration() {
-  const source = $("#app");
+  // On the Grade 1 both-designs page the deck below repeats the section word for
+  // word, so "read this page" reads the original half only. Narrating #app there
+  // would say everything twice.
+  const source = $("#g1-classic") || $("#app");
   if (!source) return currentPageNarration;
   const copy = source.cloneNode(true);
   copy.querySelectorAll("button, .audio-source, .status-chip, script, style, [hidden], [aria-hidden='true'], details:not([open]) > *:not(summary)").forEach((element) => element.remove());
@@ -1049,16 +1052,76 @@ function linkedWords() {
   return course.dictionaryLinks.map((link) => ({ ...link, master: dictionary.entries.find((entry) => entry.dictionaryEntryId === link.dictionaryEntryId) }));
 }
 
+// ── Grade 1: the original design AND the slide deck ──────────────────────────
+// Grades 2-4 meet a unit module as a slide deck INSTEAD of the original page.
+// Grade 1 gets both, in that order: the original section first, then the same
+// content as an inline deck under it. Grades 5-8 are untouched — they never had
+// a deck.
+//
+// Two things make this more than an extra function call. Both designs draw the
+// same section, so both carry the same hooks: #word-search and #group-filter,
+// data-word, data-check-answer, data-writing-audio, data-record. A
+// document-wide querySelector would hand the vocabulary lab the deck's search
+// box, and the recorder the wrong <audio>. And the original renderers paint by
+// assigning to #app.innerHTML, which would erase a deck mounted below them the
+// moment a subtab or a filter redrew.
+//
+// So each design gets its own region. The original renderer paints into
+// .g1-classic and queries inside it (classicScope), and the deck mounts into
+// .g1-deck with full-bleed off. Outside Grade 1 both helpers fall back to #app
+// and the document, so every other grade runs exactly the code it ran before.
+const BOTH_DESIGNS = gradeNumber === 1;
+let classicRegion = null;
+let deckMount = null;
+
+// Called once at the top of an original renderer. It captures the region THEN,
+// so the redraws a subtab or a search box triggers keep painting into the same
+// half of the page rather than over the whole app.
+function classicScope() {
+  const region = classicRegion;
+  const scope = region || document;
+  return {
+    paint: (html) => { (region || $("#app")).innerHTML = html; },
+    $: (selector) => scope.querySelector(selector),
+    $$: (selector) => [...scope.querySelectorAll(selector)],
+  };
+}
+
+function renderBothDesigns(classic, carousel, intro) {
+  $("#app").innerHTML = `<div class="g1-both">
+      <div class="g1-classic" id="g1-classic"></div>
+      <section class="g1-deck">
+        <div class="g1-deck-head"><span class="eyebrow">Slides</span><p>${escapeHtml(intro)}</p></div>
+        <div id="g1-deck"></div>
+      </section>
+    </div>`;
+  classicRegion = $("#g1-classic");
+  classic();
+  // The deck is mounted second and left mounted: the region survives the
+  // original's own redraws, which now stop at .g1-classic. Both flags are
+  // cleared by onBeforeRender before the next section draws.
+  deckMount = "#g1-deck";
+  carousel();
+  deckMount = null;
+}
+
 function renderDictionary() {
   // Grades 1-4 meet one word at a time on the same slide design the Grade 1
   // grammar patterns use. From Grade 5 the searchable two-column lab stays:
   // by then a learner is looking words UP, and a unit can carry 70 of them.
+  // Grade 1 gets the lab as well, above the deck.
+  if (BOTH_DESIGNS) return renderBothDesigns(renderDictionaryClassic, renderWordCarousel, "The same words, one at a time.");
   if (gradeNumber <= 4) return renderWordCarousel();
+  return renderDictionaryClassic();
+}
+
+function renderDictionaryClassic() {
+  const { paint, $, $$ } = classicScope();
   const words = linkedWords();
   activeWordId = activeWordId || words[0].vocabularyId;
-  $("#app").innerHTML = `${pageHeader("Linked master dictionary", "Vocabulary lab", `Search the ${gradeLabel} sub-dictionary. Every word links to one reusable master entry and approved pronunciation.`, `${dictionary.entryCount} master entries`)}
+  paint(`${pageHeader("Linked master dictionary", "Vocabulary lab", `Search the ${gradeLabel} sub-dictionary. Every word links to one reusable master entry and approved pronunciation.`, `${dictionary.entryCount} master entries`)}
     <div class="toolbar"><label class="search-box">${icon("search")}<input id="word-search" type="search" placeholder="Search words or meanings" aria-label="Search dictionary"></label><select id="group-filter" aria-label="Filter vocabulary group"><option value="all">All vocabulary groups</option>${course.vocabularyGroups.map((group) => `<option value="${group.id}">${escapeHtml(group.title)}</option>`).join("")}</select><span id="dictionary-count" class="status-chip">${words.length} words</span></div>
-    <div class="dictionary-layout"><section class="panel word-list" id="word-list"></section><section class="panel word-card" id="word-card"></section></div>`;
+    <div class="dictionary-layout"><section class="panel word-list" id="word-list"></section><section class="panel word-card" id="word-card"></section></div>`);
   const drawList = () => {
     const query = $("#word-search").value.trim().toLowerCase();
     const group = $("#group-filter").value;
@@ -1124,7 +1187,13 @@ function renderDictionary() {
 // ../deck.js, shared with Mathematics, which meets a Stage 1 learner the same
 // way. English keeps its own audio player and its lucide icons; the deck is told
 // what to silence on a slide change and what to re-bind after a repaint.
-const { mountDeck, deckFinish } = createDeck({ $, escapeHtml, icon, stopAudio, afterPaint: icons });
+const baseDeck = createDeck({ $, escapeHtml, icon, stopAudio, afterPaint: icons });
+const { deckFinish } = baseDeck;
+// Where a deck lands is decided by whoever is rendering, not by the six
+// carousels: a Grade 1 both-designs page sets deckMount and every carousel below
+// mounts inline under the original section without knowing about it. Everywhere
+// else deckMount is null and the deck takes over #app exactly as before.
+const mountDeck = (options) => baseDeck.mountDeck(deckMount ? { ...options, mount: deckMount, fullBleed: false } : options);
 
 // Vocabulary as a slide deck, on the Grade 1 grammar carousel's design (gc-*):
 // one word per vivid slide, big Hear buttons, side arrows, dots, swipe.
@@ -1235,10 +1304,10 @@ function renderWordCarousel() {
         return redrawWord(id);
       }
       if (target.dataset.check) {
-        const value = ($(`[data-write="${CSS.escape(id)}"]`)?.value || "").trim();
+        const value = (inDeck(`[data-write="${CSS.escape(id)}"]`)?.value || "").trim();
         const usesWord = value.toLowerCase().includes(item.master.displayWord.toLowerCase());
         const finished = value.length >= 8 && /[.!?]$/.test(value);
-        const box = $(`[data-feedback="${CSS.escape(id)}"]`);
+        const box = inDeck(`[data-feedback="${CSS.escape(id)}"]`);
         if (box) {
           box.innerHTML = `<p class="feedback ${usesWord && finished ? "good" : "try"}">${usesWord && finished
             ? "Strong sentence: you used the word and end punctuation."
@@ -1251,7 +1320,7 @@ function renderWordCarousel() {
         // Same rule as the lab: the section completes at 80% of the unit's words,
         // counted over every word in the unit, not just the filtered deck.
         if (progress.knownWords.length >= Math.ceil(allWords.length * 0.8)) complete("dictionary"); else saveProgress();
-        $("#wc-known").textContent = `${progress.knownWords.length} learned`;
+        inDeck("#wc-known").textContent = `${progress.knownWords.length} learned`;
         redrawWord(id);
         toast(`${item.master.displayWord} added to My Word Book.`);
       }
@@ -1259,15 +1328,20 @@ function renderWordCarousel() {
     },
   });
 
+  // The deck's own controls, found inside the deck. At Grade 1 the vocabulary lab
+  // is on the same page with a search box and a group filter under the very same
+  // ids, and it is painted first — a document-wide lookup would leave the deck
+  // filtering itself by whatever the lab's box said.
+  const inDeck = (selector) => deck.root.querySelector(selector);
   const drawDeck = () => {
-    const query = $("#word-search").value.trim().toLowerCase();
-    const group = $("#group-filter").value;
+    const query = inDeck("#word-search").value.trim().toLowerCase();
+    const group = inDeck("#group-filter").value;
     words = allWords.filter((item) => (group === "all" || item.groupId === group)
       && (!query || `${item.master.displayWord} ${item.childMeaning}`.toLowerCase().includes(query)));
     deck.setSlides(words.map(wordSlide));
   };
-  $("#word-search").addEventListener("input", drawDeck);
-  $("#group-filter").addEventListener("change", drawDeck);
+  inDeck("#word-search").addEventListener("input", drawDeck);
+  inDeck("#group-filter").addEventListener("change", drawDeck);
   drawDeck();
 }
 
@@ -1565,12 +1639,18 @@ function renderReading() {
 }
 
 function renderComprehension() {
+  if (BOTH_DESIGNS) return renderBothDesigns(renderComprehensionClassic, renderComprehensionCarousel, "The same questions, one at a time.");
   if (gradeNumber <= 4) return renderComprehensionCarousel();
+  return renderComprehensionClassic();
+}
+
+function renderComprehensionClassic() {
+  const { paint, $, $$ } = classicScope();
   const groups = [...new Set(course.comprehension.map((question) => question.section))];
   let active = groups[0];
   const draw = () => {
     const questions = course.comprehension.filter((question) => question.section === active);
-    $("#app").innerHTML = `${pageHeader("Think about the text", "Comprehension", "Write your answer first. Then reveal the reviewed guidance and improve your response.")}<div class="subtabs">${groups.map((group) => `<button class="subtab ${group === active ? "active" : ""}" data-group="${escapeHtml(group)}" type="button">${escapeHtml(group)}</button>`).join("")}</div><section class="panel"><div class="question-list">${questions.map((question) => `<div class="question"><label for="answer-${question.questionId}">${question.sequence}. ${escapeHtml(question.question)}</label><textarea id="answer-${question.questionId}" data-answer-input="${question.questionId}" placeholder="Write a complete answer…"></textarea><button class="button secondary" data-check-answer="${question.questionId}" type="button">Check guidance</button><div id="feedback-${question.questionId}" role="status" aria-live="polite" aria-atomic="true"></div></div>`).join("")}</div><button class="button primary" id="comprehension-done" type="button">Finish comprehension ${icon("check")}</button></section>`;
+    paint(`${pageHeader("Think about the text", "Comprehension", "Write your answer first. Then reveal the reviewed guidance and improve your response.")}<div class="subtabs">${groups.map((group) => `<button class="subtab ${group === active ? "active" : ""}" data-group="${escapeHtml(group)}" type="button">${escapeHtml(group)}</button>`).join("")}</div><section class="panel"><div class="question-list">${questions.map((question) => `<div class="question"><label for="answer-${question.questionId}">${question.sequence}. ${escapeHtml(question.question)}</label><textarea id="answer-${question.questionId}" data-answer-input="${question.questionId}" placeholder="Write a complete answer…"></textarea><button class="button secondary" data-check-answer="${question.questionId}" type="button">Check guidance</button><div id="feedback-${question.questionId}" role="status" aria-live="polite" aria-atomic="true"></div></div>`).join("")}</div><button class="button primary" id="comprehension-done" type="button">Finish comprehension ${icon("check")}</button></section>`);
     $$('[data-group]').forEach((button) => button.addEventListener("click", () => { active = button.dataset.group; draw(); }));
     $$('[data-check-answer]').forEach((button) => button.addEventListener("click", () => {
       const question = course.comprehension.find((item) => item.questionId === button.dataset.checkAnswer);
@@ -1624,8 +1704,8 @@ function renderComprehensionCarousel() {
       if (!target) return undefined;
       if (target.dataset.deckFinish) return complete("comprehension", "Comprehension practice complete.");
       const question = all.find((item) => item.questionId === target.dataset.checkAnswer);
-      const value = ($(`[data-answer="${CSS.escape(question.questionId)}"]`)?.value || "").trim();
-      const box = $(`[data-feedback="${CSS.escape(question.questionId)}"]`);
+      const value = (inDeck(`[data-answer="${CSS.escape(question.questionId)}"]`)?.value || "").trim();
+      const box = inDeck(`[data-feedback="${CSS.escape(question.questionId)}"]`);
       if (box) {
         box.innerHTML = value.length < 4
           ? `<p class="feedback try">Write your own answer before viewing the guidance.</p>`
@@ -1635,14 +1715,15 @@ function renderComprehensionCarousel() {
     },
   });
 
+  const inDeck = (selector) => deck.root.querySelector(selector);
   const drawDeck = () => {
-    const group = $("#section-filter")?.value || "all";
+    const group = inDeck("#section-filter")?.value || "all";
     questions = group === "all" ? all : all.filter((question) => question.section === group);
     deck.setSlides(questions.map(questionSlide));
-    const counter = $("#cq-count");
+    const counter = inDeck("#cq-count");
     if (counter) counter.textContent = `${questions.length} question${questions.length === 1 ? "" : "s"}`;
   };
-  $("#section-filter")?.addEventListener("change", drawDeck);
+  inDeck("#section-filter")?.addEventListener("change", drawDeck);
   drawDeck();
 }
 
@@ -1650,9 +1731,22 @@ function renderGrammar() {
   // Grades 1-4 get the kid-friendly full-screen carousel (one pattern at a time),
   // modelled on the Arabic Alphabet unit's Learn section. Grade 5 and up keep the
   // grid workshop: by then a learner scans six cards rather than being walked
-  // through them one at a time.
+  // through them one at a time. Grade 1 keeps the workshop too, above the deck.
+  if (BOTH_DESIGNS) return renderBothDesigns(renderGrammarClassic, renderGrammarCarousel, "The same patterns, one at a time.");
   if (gradeNumber <= 4) return renderGrammarCarousel();
-  $("#app").innerHTML = `${pageHeader("Language focus", "Grammar workshop", "Complete six practices: guided recognition followed by independent language use.")}<div class="grammar-grid">${course.grammar.map((lesson) => `<article class="panel grammar-card"><div class="word-card-head"><span class="lesson-number">${lesson.sequence}</span><span class="word-type">${escapeHtml(lesson.practiceType)}</span></div><h3>${escapeHtml(lesson.title)}</h3>${grammarDiagram(lesson.title, lesson.explanation)}<p>${escapeHtml(lesson.explanation)}</p>${lesson.ruleAndExamples ? `<div class="rule-box">${escapeHtml(lesson.ruleAndExamples)}</div>` : ""}${lesson.commonMistake ? `<p class="mistake">${escapeHtml(lesson.commonMistake)}</p>` : ""}${lesson.memoryTip ? `<p><span class="field-label">Memory tip:</span> ${escapeHtml(lesson.memoryTip)}</p>` : ""}<details><summary>Show practice</summary><p class="rule-box">${escapeHtml(lesson.practice)}</p>${lesson.practiceAudio?.available ? `<button class="button secondary" data-practice-audio="${lesson.grammarId}" type="button">${icon("volume-2")} Hear the practice</button>` : ""}</details>${lesson.audio?.available ? `<div class="audio-actions"><button class="button secondary" data-grammar-audio="${lesson.grammarId}" data-rate="${AI_NARRATION_RATE}" type="button">${icon("volume-2")} Listen</button><button class="button secondary" data-grammar-audio="${lesson.grammarId}" data-rate="${AI_NARRATION_RATE}" type="button">${icon("rotate-ccw")} Replay</button></div><small class="audio-source">ElevenLabs · approved Ehel voice · 0.90x</small>` : `<span class="audio-pending">${icon("clock-3")} ElevenLabs audio pending</span>`}</article>`).join("")}</div><p><button class="button primary" id="grammar-done" type="button">I practised all six lessons ${icon("check")}</button></p>`;
+  return renderGrammarClassic();
+}
+
+function renderGrammarClassic() {
+  const { paint, $, $$ } = classicScope();
+  // Each grade keeps its own visual, the same rule the deck follows: Grade 1 is
+  // phonics, so its picture is built from the rule ("A says /a/"), while Grades 5
+  // and up teach sentence structure, which is what grammarDiagram draws. The two
+  // halves of a Grade 1 page would otherwise disagree — a subject/verb/object
+  // strip on the card and a letter-to-sound strip on the slide beneath it, for
+  // one and the same lesson. phonicsDiagram returns "" for a rule that is not a
+  // phonics shape, and the card then shows no diagram, exactly as its slide does.
+  paint(`${pageHeader("Language focus", "Grammar workshop", "Complete six practices: guided recognition followed by independent language use.")}<div class="grammar-grid">${course.grammar.map((lesson) => `<article class="panel grammar-card"><div class="word-card-head"><span class="lesson-number">${lesson.sequence}</span><span class="word-type">${escapeHtml(lesson.practiceType)}</span></div><h3>${escapeHtml(lesson.title)}</h3>${gradeNumber === 1 ? phonicsDiagram(lesson.ruleAndExamples) : grammarDiagram(lesson.title, lesson.explanation)}<p>${escapeHtml(lesson.explanation)}</p>${lesson.ruleAndExamples ? `<div class="rule-box">${escapeHtml(lesson.ruleAndExamples)}</div>` : ""}${lesson.commonMistake ? `<p class="mistake">${escapeHtml(lesson.commonMistake)}</p>` : ""}${lesson.memoryTip ? `<p><span class="field-label">Memory tip:</span> ${escapeHtml(lesson.memoryTip)}</p>` : ""}<details><summary>Show practice</summary><p class="rule-box">${escapeHtml(lesson.practice)}</p>${lesson.practiceAudio?.available ? `<button class="button secondary" data-practice-audio="${lesson.grammarId}" type="button">${icon("volume-2")} Hear the practice</button>` : ""}</details>${lesson.audio?.available ? `<div class="audio-actions"><button class="button secondary" data-grammar-audio="${lesson.grammarId}" data-rate="${AI_NARRATION_RATE}" type="button">${icon("volume-2")} Listen</button><button class="button secondary" data-grammar-audio="${lesson.grammarId}" data-rate="${AI_NARRATION_RATE}" type="button">${icon("rotate-ccw")} Replay</button></div><small class="audio-source">ElevenLabs · approved Ehel voice · 0.90x</small>` : `<span class="audio-pending">${icon("clock-3")} ElevenLabs audio pending</span>`}</article>`).join("")}</div><p><button class="button primary" id="grammar-done" type="button">I practised all six lessons ${icon("check")}</button></p>`);
   $$('[data-grammar-audio]').forEach((button) => button.addEventListener("click", () => {
     const lesson = course.grammar.find((item) => item.grammarId === button.dataset.grammarAudio);
     playAudio(lesson.audio.source, { rate: Number(button.dataset.rate), button });
@@ -1727,8 +1821,14 @@ function renderGrammarCarousel() {
 }
 
 function renderSpeaking() {
+  if (BOTH_DESIGNS) return renderBothDesigns(renderSpeakingClassic, renderSpeakingCarousel, "The same practices, one at a time.");
   if (gradeNumber <= 4) return renderSpeakingCarousel();
-  $("#app").innerHTML = `${pageHeader("Use your voice", "Dialogue & speaking", "Complete six speaking practices. Rehearse, record, and listen back.")}<div class="task-grid">${course.speaking.map((task) => `<article class="panel task-card"><span class="eyebrow">Practice ${task.sequence} · ${escapeHtml(task.activityType)}</span><h3>${escapeHtml(task.title)}</h3><p class="rule-box">${escapeHtml(task.instructionsAndModelLines)}</p>${task.audio?.available ? `<div class="audio-actions"><button class="button secondary" data-model="${task.speakingId}" data-rate="${AI_NARRATION_RATE}" type="button">${icon("volume-2")} Hear model</button><button class="button secondary" data-model="${task.speakingId}" data-rate="${AI_NARRATION_RATE}" type="button">${icon("rotate-ccw")} Replay</button></div><small class="audio-source">ElevenLabs · approved Ehel voice · 0.90x</small>` : `<span class="audio-pending">${icon("clock-3")} ElevenLabs model audio pending</span>`}${task.recordingRequired ? `<div class="recorder"><button class="record-button" data-record="${task.speakingId}" type="button" aria-label="Start recording for ${escapeHtml(task.title)}">${icon("mic")}</button><div><strong data-record-status="${task.speakingId}">Ready to record</strong><small> Your recording stays on this device.</small></div></div><audio data-playback="${task.speakingId}" controls hidden></audio>` : ""}</article>`).join("")}</div><p><button class="button primary" id="speaking-done" type="button">Finish six speaking practices ${icon("check")}</button></p>`;
+  return renderSpeakingClassic();
+}
+
+function renderSpeakingClassic() {
+  const { paint, $, $$ } = classicScope();
+  paint(`${pageHeader("Use your voice", "Dialogue & speaking", "Complete six speaking practices. Rehearse, record, and listen back.")}<div class="task-grid">${course.speaking.map((task) => `<article class="panel task-card"><span class="eyebrow">Practice ${task.sequence} · ${escapeHtml(task.activityType)}</span><h3>${escapeHtml(task.title)}</h3><p class="rule-box">${escapeHtml(task.instructionsAndModelLines)}</p>${task.audio?.available ? `<div class="audio-actions"><button class="button secondary" data-model="${task.speakingId}" data-rate="${AI_NARRATION_RATE}" type="button">${icon("volume-2")} Hear model</button><button class="button secondary" data-model="${task.speakingId}" data-rate="${AI_NARRATION_RATE}" type="button">${icon("rotate-ccw")} Replay</button></div><small class="audio-source">ElevenLabs · approved Ehel voice · 0.90x</small>` : `<span class="audio-pending">${icon("clock-3")} ElevenLabs model audio pending</span>`}${task.recordingRequired ? `<div class="recorder"><button class="record-button" data-record="${task.speakingId}" type="button" aria-label="Start recording for ${escapeHtml(task.title)}">${icon("mic")}</button><div><strong data-record-status="${task.speakingId}">Ready to record</strong><small> Your recording stays on this device.</small></div></div><audio data-playback="${task.speakingId}" controls hidden></audio>` : ""}</article>`).join("")}</div><p><button class="button primary" id="speaking-done" type="button">Finish six speaking practices ${icon("check")}</button></p>`);
   $$('[data-model]').forEach((button) => button.addEventListener("click", () => {
     const task = course.speaking.find((item) => item.speakingId === button.dataset.model);
     playAudio(task.audio.source, { rate: Number(button.dataset.rate), button });
@@ -1788,6 +1888,13 @@ async function toggleRecording(taskId, button) {
     return;
   }
   if (!navigator.mediaDevices?.getUserMedia || !window.MediaRecorder) return toast("Audio recording is not supported in this browser.");
+  // The recorder belongs to the half of the page the learner pressed. At Grade 1
+  // the card grid and the deck are both on screen carrying the same data-record,
+  // data-record-status and data-playback ids, so the status line and the <audio>
+  // are found from the button's own region — a document-wide lookup would put
+  // the recording into the other design's player and leave this one silent.
+  const region = button.closest(".gc-wrap, .g1-classic") || document;
+  const find = (selector) => region.querySelector(selector);
   try {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
     activeRecordingId = taskId;
@@ -1795,7 +1902,7 @@ async function toggleRecording(taskId, button) {
     mediaRecorder = new MediaRecorder(stream);
     mediaRecorder.addEventListener("dataavailable", (event) => { if (event.data.size) recordedChunks.push(event.data); });
     mediaRecorder.addEventListener("stop", () => {
-      const audio = $(`[data-playback="${activeRecordingId}"]`);
+      const audio = find(`[data-playback="${activeRecordingId}"]`);
       const previous = recordings.get(activeRecordingId);
       if (previous?.url) URL.revokeObjectURL(previous.url);
       const blob = new Blob(recordedChunks, { type: mediaRecorder.mimeType });
@@ -1804,8 +1911,8 @@ async function toggleRecording(taskId, button) {
       speakingReviewState.set(activeRecordingId, { listened: false, feedback: null });
       audio.src = url;
       audio.hidden = false;
-      $(`[data-record-status="${activeRecordingId}"]`).textContent = "Recording ready. Listen back.";
-      const activeButton = $(`[data-record="${activeRecordingId}"]`);
+      find(`[data-record-status="${activeRecordingId}"]`).textContent = "Recording ready. Listen back.";
+      const activeButton = find(`[data-record="${activeRecordingId}"]`);
       activeButton.classList.remove("recording");
       activeButton.innerHTML = icon("mic");
       stream.getTracks().forEach((track) => track.stop());
@@ -1813,7 +1920,7 @@ async function toggleRecording(taskId, button) {
       icons();
     });
     mediaRecorder.start();
-    $(`[data-record-status="${taskId}"]`).textContent = "Recording… tap to stop";
+    find(`[data-record-status="${taskId}"]`).textContent = "Recording… tap to stop";
     button.classList.add("recording");
     button.innerHTML = icon("square");
     icons();
@@ -1823,12 +1930,18 @@ async function toggleRecording(taskId, button) {
 }
 
 function renderWriting() {
+  if (BOTH_DESIGNS) return renderBothDesigns(renderWritingClassic, renderWritingCarousel, "The same writing tasks, one at a time.");
   if (gradeNumber <= 4) return renderWritingCarousel();
+  return renderWritingClassic();
+}
+
+function renderWritingClassic() {
+  const { paint, $, $$ } = classicScope();
   let active = course.writing[0].writingId;
   const draw = () => {
     const task = course.writing.find((item) => item.writingId === active);
     const saved = progress.writing[active] || "";
-    $("#app").innerHTML = `${pageHeader("Plan, write and improve", "Writing studio", "Choose a task. Your draft saves automatically on this device.")}<div class="subtabs">${course.writing.map((item) => `<button class="subtab ${active === item.writingId ? "active" : ""}" data-writing="${item.writingId}" type="button">Writing ${item.sequence}</button>`).join("")}</div><div class="task-grid"><section class="panel"><h2>${escapeHtml(task.title)}</h2><p class="rule-box">${escapeHtml(task.promptAndInstructions)}</p>${task.audio?.available ? `<button class="button secondary" data-writing-audio="${task.writingId}" type="button">${icon("volume-2")} Hear the task</button>` : ""}<details><summary>View model text</summary><p class="model">${escapeHtml(task.modelText)}</p></details><p><span class="field-label">Expected:</span> ${escapeHtml(task.expectedLength)}</p><textarea id="writing-draft" placeholder="${escapeHtml(task.sentenceStarter)}">${escapeHtml(saved)}</textarea><p id="save-status"><small>${saved ? "Draft restored" : "Start writing when you are ready"}</small></p></section><aside class="panel"><h3>Writer's checklist</h3><ul class="checklist">${task.successCriteria.split(";").map((criterion, index) => `<li><label><input type="checkbox" data-writing-check="${index}"><span>${escapeHtml(criterion.trim())}</span></label></li>`).join("")}</ul><h3>Support</h3><p>${escapeHtml(task.support)}</p><h3>Challenge</h3><p>${escapeHtml(task.extension)}</p><button class="button primary" id="writing-done" type="button">Submit this draft ${icon("send")}</button></aside></div>`;
+    paint(`${pageHeader("Plan, write and improve", "Writing studio", "Choose a task. Your draft saves automatically on this device.")}<div class="subtabs">${course.writing.map((item) => `<button class="subtab ${active === item.writingId ? "active" : ""}" data-writing="${item.writingId}" type="button">Writing ${item.sequence}</button>`).join("")}</div><div class="task-grid"><section class="panel"><h2>${escapeHtml(task.title)}</h2><p class="rule-box">${escapeHtml(task.promptAndInstructions)}</p>${task.audio?.available ? `<button class="button secondary" data-writing-audio="${task.writingId}" type="button">${icon("volume-2")} Hear the task</button>` : ""}<details><summary>View model text</summary><p class="model">${escapeHtml(task.modelText)}</p></details><p><span class="field-label">Expected:</span> ${escapeHtml(task.expectedLength)}</p><textarea id="writing-draft" placeholder="${escapeHtml(task.sentenceStarter)}">${escapeHtml(saved)}</textarea><p id="save-status"><small>${saved ? "Draft restored" : "Start writing when you are ready"}</small></p></section><aside class="panel"><h3>Writer's checklist</h3><ul class="checklist">${task.successCriteria.split(";").map((criterion, index) => `<li><label><input type="checkbox" data-writing-check="${index}"><span>${escapeHtml(criterion.trim())}</span></label></li>`).join("")}</ul><h3>Support</h3><p>${escapeHtml(task.support)}</p><h3>Challenge</h3><p>${escapeHtml(task.extension)}</p><button class="button primary" id="writing-done" type="button">Submit this draft ${icon("send")}</button></aside></div>`);
     $$('[data-writing]').forEach((button) => button.addEventListener("click", () => { active = button.dataset.writing; draw(); }));
     $$('[data-writing-audio]').forEach((button) => button.addEventListener("click", () => {
       const item = course.writing.find((w) => w.writingId === button.dataset.writingAudio);
@@ -1898,7 +2011,7 @@ function renderWritingCarousel() {
         return playAudio(task.audio.source, { rate: AI_NARRATION_RATE, button: target });
       }
       const id = target.dataset.writingSubmit;
-      const draft = ($(`[data-draft="${CSS.escape(id)}"]`)?.value || "").trim();
+      const draft = (deck.root.querySelector(`[data-draft="${CSS.escape(id)}"]`)?.value || "").trim();
       if (draft.split(/\s+/).filter(Boolean).length < 8) return toast("Add a little more to your draft before submitting.");
       progress.writing[id] = draft;
       return complete("writing", "Writing draft saved to your learning portfolio.");
@@ -1910,7 +2023,7 @@ function renderWritingCarousel() {
     const field = event.target.closest("[data-draft]");
     if (!field) return;
     const id = field.dataset.draft;
-    const status = $(`[data-save-status="${CSS.escape(id)}"]`);
+    const status = deck.root.querySelector(`[data-save-status="${CSS.escape(id)}"]`);
     clearTimeout(saveTimers.get(id));
     if (status) status.textContent = "Saving…";
     saveTimers.set(id, setTimeout(() => {
@@ -1923,8 +2036,14 @@ function renderWritingCarousel() {
 }
 
 function renderActivities() {
+  if (BOTH_DESIGNS) return renderBothDesigns(renderActivitiesClassic, renderActivitiesCarousel, "The same activities, one at a time.");
   if (gradeNumber <= 4) return renderActivitiesCarousel();
-  $("#app").innerHTML = `${pageHeader("Learn by doing", "Activities", `Complete six practical ${escapeHtml(course.unit.unitTitle)} challenges.`)}<div class="task-grid">${course.activities.map((activity) => `<article class="panel task-card"><span class="eyebrow">Activity ${activity.sequence} · ${escapeHtml(activity.activityType)}</span><h3>${escapeHtml(activity.title)}</h3><p class="rule-box">${escapeHtml(activity.instructionsAndItems)}</p>${activity.audio?.available ? `<button class="button secondary" data-activity-audio="${activity.activityId}" type="button">${icon("volume-2")} Hear the instructions</button>` : ""}<textarea class="activity-response" rows="4" placeholder="Record your answer or notes…" aria-label="Response for ${escapeHtml(activity.title)}"></textarea><button class="button secondary" data-activity-done="${activity.activityId}" type="button">${icon("check")} Mark complete</button></article>`).join("")}</div><p><button class="button primary" id="activities-done" type="button">Finish activities ${icon("check")}</button></p>`;
+  return renderActivitiesClassic();
+}
+
+function renderActivitiesClassic() {
+  const { paint, $, $$ } = classicScope();
+  paint(`${pageHeader("Learn by doing", "Activities", `Complete six practical ${escapeHtml(course.unit.unitTitle)} challenges.`)}<div class="task-grid">${course.activities.map((activity) => `<article class="panel task-card"><span class="eyebrow">Activity ${activity.sequence} · ${escapeHtml(activity.activityType)}</span><h3>${escapeHtml(activity.title)}</h3><p class="rule-box">${escapeHtml(activity.instructionsAndItems)}</p>${activity.audio?.available ? `<button class="button secondary" data-activity-audio="${activity.activityId}" type="button">${icon("volume-2")} Hear the instructions</button>` : ""}<textarea class="activity-response" rows="4" placeholder="Record your answer or notes…" aria-label="Response for ${escapeHtml(activity.title)}"></textarea><button class="button secondary" data-activity-done="${activity.activityId}" type="button">${icon("check")} Mark complete</button></article>`).join("")}</div><p><button class="button primary" id="activities-done" type="button">Finish activities ${icon("check")}</button></p>`);
   $$('[data-activity-done]').forEach((button) => button.addEventListener("click", () => { button.disabled = true; button.innerHTML = `${icon("check-circle")} Complete`; icons(); }));
   $$('[data-activity-audio]').forEach((button) => button.addEventListener("click", () => {
     const item = course.activities.find((a) => a.activityId === button.dataset.activityAudio);
@@ -3282,7 +3401,10 @@ const config = {
   visibleSections: () => visibleSections().map(([id, ic, lb]) => (id === "lecture" && unitNumber === 10 ? [id, ic, "Capstone launch"] : [id, ic, lb])),
   isSectionDone: (id) => (id === "final-quiz" ? finalQuizProgress.completed : id === "placement" ? placementProgress.completed : progress.completed.includes(id)),
   onNavigate: () => stopAudio(),
-  onBeforeRender: () => { route = shellCtx.route; stopAudio(); document.body.classList.remove("gc-full"); $("#app").setAttribute("aria-busy", "true"); },
+  // classicRegion and deckMount are per-render state: a section that draws both
+  // designs sets them, and every other section must find them clear or it would
+  // paint into a region the previous section left behind.
+  onBeforeRender: () => { route = shellCtx.route; stopAudio(); document.body.classList.remove("gc-full"); classicRegion = null; deckMount = null; $("#app").setAttribute("aria-busy", "true"); },
   onAfterRender: () => { $("#app").setAttribute("aria-busy", "false"); prepareScreenReaderView(); icons(); },
   onNavRendered: () => icons(),
   renderers: {

@@ -142,13 +142,24 @@ const unitProgressKey = (unit) => `ehel-english-g${gradeNumber}-u${unit}-progres
 // never counts. `final-quiz` is nonCountable too, but it is never in `sections`
 // — it is appended to the nav for Unit 10 alone.
 const countableSectionIds = () => sections.filter(([id]) => !["overview", "live"].includes(id)).map(([id]) => id);
+// The server's view of every unit, handed over by the shell before load() and
+// null on a per-device launch. localStorage alone made this gate a per-device
+// gate: a learner who finished Units 0-6 at school opened the course at home,
+// where nothing is stored, and found the whole year locked again. The two are
+// merged rather than swapped — a section finished on THIS device but not yet
+// flushed to the gateway still counts.
+let remoteUnits = null;
+const remoteUnitKey = (unit) => `u${String(unit).padStart(2, "0")}`;
 function unitSectionsDone(unit) {
+  let local = [];
   try {
     const stored = JSON.parse(localStorage.getItem(unitProgressKey(unit)) || "{}");
-    return Array.isArray(stored.completed) ? stored.completed : [];
+    if (Array.isArray(stored.completed)) local = stored.completed;
   } catch {
-    return [];
+    local = [];
   }
+  const remote = remoteUnits?.[remoteUnitKey(unit)]?.sectionsDone;
+  return Array.isArray(remote) ? [...new Set([...local, ...remote])] : local;
 }
 function unitIsComplete(unit) {
   const done = unitSectionsDone(unit);
@@ -167,7 +178,10 @@ function currentOpenUnit() {
   while (unit < CAPSTONE_UNIT && unitIsComplete(unit)) unit += 1;
   return unit;
 }
-const unitLocked = !isPrereqUnit && !TEACHER_PREVIEW && !unitIsUnlocked(unitNumber);
+// Not final until load() has seen the server's progress: this module is
+// evaluated long before the gateway answers, so the value here is only the
+// per-device guess. Everything that reads it does so at render time or later.
+let unitLocked = !isPrereqUnit && !TEACHER_PREVIEW && !unitIsUnlocked(unitNumber);
 
 // The pickers are repainted on every nav render, not only at boot: finishing the
 // last section of Unit 6 opens Unit 7 with no reload, and a picker that only
@@ -964,7 +978,13 @@ function bindOverviewAudio(holder) {
   }));
 }
 
-// The locked page. It is the ONLY renderer registered while a unit is locked,
+// Wraps a renderer map so each entry re-checks the gate at the moment it runs,
+// rather than the map being chosen once while the module is still evaluating.
+function gated(renderers) {
+  return Object.fromEntries(Object.entries(renderers).map(([id, render]) => [id, () => (unitLocked ? renderLockedUnit() : render())]));
+}
+
+// The locked page. It is the page every route draws while a unit is locked,
 // and the shell falls back to `overview` for any route it does not know — so a
 // bookmarked ?unit=7#reading lands here too rather than opening a lesson the
 // learner has not reached. The picker is the polite gate; this is the real one.
@@ -3734,11 +3754,14 @@ const config = {
   onBeforeRender: () => { route = shellCtx.route; stopAudio(); document.body.classList.remove("gc-full"); classicRegion = null; deckMount = null; $("#app").setAttribute("aria-busy", "true"); },
   onAfterRender: () => { $("#app").setAttribute("aria-busy", "false"); prepareScreenReaderView(); icons(); },
   onNavRendered: () => { renderUnitPickers(); icons(); },
-  // Only `overview` while a unit is locked. The shell falls back to it for any
-  // route it cannot find (course-app.js :: renderRoute), so #reading, #quiz and
-  // #final-quiz all land on the lock screen — the gate does not depend on
-  // rewriting the hash, which would race the first render.
-  renderers: unitLocked ? { overview: () => renderLockedUnit() } : {
+  // Every route draws the locked page while a unit is locked. The check is
+  // inside each entry, not a swapped-out map: `unitLocked` is not settled until
+  // load() has heard from the progress gateway, and this object is built while
+  // the module is still being evaluated. The shell also falls back to `overview`
+  // for any route it cannot find (course-app.js :: renderRoute), so a route that
+  // isn't in this map is covered by the same guard rather than by rewriting the
+  // hash, which would race the first render.
+  renderers: gated({
     overview: () => (isPrereqUnit ? renderPrereqOverview() : renderOverview()),
     placement: () => renderPlacementExam(),
     lecture: () => renderLecture(),
@@ -3757,10 +3780,17 @@ const config = {
     reflect: () => renderReflect(),
     "final-quiz": () => renderFinalQuiz(),
     teacher: () => (isPrereqUnit ? renderPrereqTeacher() : renderTeacher()),
-  },
+  }),
   bind,
   wehelOptions,
   async load(ctx) {
+    // The shell has hydrated the gateway by now, so this is where the gate is
+    // settled: the learner's units as the SERVER knows them, merged with this
+    // device's. A learner who finished Units 0-6 at school opens the course at
+    // home to Unit 7, not to a locked year. Offline, or on a per-device launch,
+    // ctx.remoteUnits is null and the answer is the local one, unchanged.
+    remoteUnits = ctx.remoteUnits || null;
+    unitLocked = !isPrereqUnit && !TEACHER_PREVIEW && !unitIsUnlocked(unitNumber);
     // A locked unit loads its manifest entry and nothing else. Fetching the
     // unit, dictionary, games and lecture media would be paying for content the
     // learner is not going to be shown, and it is the one honest way to be sure

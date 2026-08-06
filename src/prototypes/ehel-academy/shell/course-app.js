@@ -545,6 +545,13 @@ export function createCourseApp(config) {
     STORAGE_KEY, STAGE_STORAGE_KEY, PROGRESS_UNIT,
     progress, gradeProgress,
     manifest: undefined, course: undefined, gradeCapstone: undefined,
+    // Every unit the server knows about, keyed as `u00`…`u10`, or null when the
+    // course is running per-device. The resume below only needs the unit being
+    // opened; a subject that gates on whether EARLIER units are finished needs
+    // them all, and localStorage cannot answer that on a device the learner has
+    // not used before. Populated before config.load() so a subject can decide
+    // what to fetch from it.
+    remoteUnits: null,
     get route() { return route; },
   };
 
@@ -557,6 +564,11 @@ export function createCourseApp(config) {
     if (progressWS.backend !== "remote") return;
     try {
       const doc = await progressWS.hydrate();
+      // Published before the early return below. A learner opening a unit they
+      // have never touched has no record for it, and that is exactly the case a
+      // unit gate has to reason about — bailing here would hand the subject
+      // nothing precisely when it needs the other units most.
+      ctx.remoteUnits = (doc && doc.units) || null;
       const unit = doc && doc.units && doc.units[PROGRESS_UNIT];
       if (!unit) return;
       let changed = false;
@@ -579,10 +591,16 @@ export function createCourseApp(config) {
 
   async function init() {
     try {
+      // Hydration runs BEFORE the data load, not after. It reads nothing the
+      // load produces (progressWS, the progress store and PROGRESS_UNIT are all
+      // ready at boot), and load() is the point where a subject decides what to
+      // fetch — english's Grade 1 unit gate skips a locked unit's data
+      // entirely, so it has to know the server's answer first. Both were
+      // already awaited before the first render, so the order costs no time.
+      await hydrateRemoteResume();
       const loaded = await config.load(ctx); // { manifest, course, gradeCapstone? }
       manifest = loaded.manifest; course = loaded.course; gradeCapstone = loaded.gradeCapstone;
       ctx.manifest = manifest; ctx.course = course; ctx.gradeCapstone = gradeCapstone; // concrete refs for renderers
-      await hydrateRemoteResume();
       config.bind(ctx);
       await config.onReady(ctx); // title, pickers
       $("#loading")?.remove();

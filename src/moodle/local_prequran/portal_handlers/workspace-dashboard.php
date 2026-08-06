@@ -17,6 +17,7 @@ defined('MOODLE_INTERNAL') || die();
 
 global $CFG, $DB, $USER;
 require_once($CFG->dirroot . '/local/hubredirect/accesslib.php');
+require_once($CFG->dirroot . '/local/hubredirect/progress_rolluplib.php');
 require_once($CFG->dirroot . '/local/hubredirect/workspace_dashboard_portallib.php');
 
 $userid = (int)($claims['sub'] ?? 0);
@@ -253,6 +254,45 @@ if ($pqwdstudentids) {
     $pqwdinactive = (int)$DB->count_records_select('user', "id $pqwdinsql AND deleted = 0 AND lastaccess < :cutoff", $pqwdinparams);
 }
 
+// ---- App quiz results (progress_rolluplib) ----------------------------------
+// The learner apps' own quizzes, over the students this viewer can already see
+// ($pqwdstudentids is post-scoping, so a teacher's dashboard covers their own
+// students and a manager's covers the workspace). Live per workspace like the
+// analytics above, and bounded the same way: the most recently updated units
+// only. Hitting that bound is reported rather than hidden — a silently
+// truncated average reads as fact.
+$pqwdprogresslimit = 4000;
+$pqwdquizbystudent = [];
+$pqwdprogressrows = pqpr_progress_rows(array_values($pqwdstudentids), $pqwdprogresslimit);
+if ($pqwdprogressrows) {
+    $pqwdcourselabels = pqpr_course_labels(array_map(static function ($row): string {
+        return (string)$row->coursekey;
+    }, $pqwdprogressrows));
+    foreach ($pqwdprogressrows as $pqwdrow) {
+        $pqwdstate = json_decode((string)$pqwdrow->statejson, true);
+        if (!is_array($pqwdstate)) {
+            continue;
+        }
+        $pqwdcoursekey = (string)$pqwdrow->coursekey;
+        $pqwdcourse = pqpr_course_title($pqwdcoursekey, $pqwdcourselabels);
+        foreach (pqpr_checkpoints_from_state($pqwdstate, (string)$pqwdrow->unit, (int)$pqwdrow->timemodified) as $pqwdcp) {
+            $pqwdcp['coursekey'] = $pqwdcoursekey;
+            $pqwdcp['course'] = $pqwdcourse;
+            $pqwdquizbystudent[(int)$pqwdrow->userid][] = $pqwdcp;
+        }
+    }
+}
+$pqwdstudentnames = [];
+foreach ($students as $pqwdstudent) {
+    $pqwdstudentnames[(int)($pqwdstudent['studentid'] ?? 0)] = (string)($pqwdstudent['name'] ?? '');
+}
+$pqwdquizmetrics = pqpr_cohort_summary($pqwdquizbystudent);
+$pqwdquizmetrics['truncated'] = count($pqwdprogressrows) >= $pqwdprogresslimit;
+$pqwdquizmetrics['row_limit'] = $pqwdprogresslimit;
+// The dashboard's cut is where the cohort is struggling, not every result — the
+// per-student and per-class detail is the teacher portal's job.
+$pqwdquizattention = pqpr_lowest_average(pqpr_class_quizzes($pqwdquizbystudent, $pqwdstudentnames));
+
 // ---- Decorate for the client (labels the page computes inline while
 // rendering: teacher names, join/start action labels, member names). ----------
 $nameids = [];
@@ -334,6 +374,8 @@ echo json_encode([
     'inactive14' => $pqwdinactive,
     'week' => $pqwdweek,
     'weekmax' => $pqwdweekmax,
+    'quizmetrics' => $pqwdquizmetrics,
+    'quizattention' => $pqwdquizattention,
     'students' => $students,
     'studentteachers' => $studentteachersout,
     'studentcourses' => $studentcoursesout,

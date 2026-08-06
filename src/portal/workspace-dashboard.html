@@ -54,6 +54,7 @@
   .pill{display:inline-block;padding:2px 9px;border-radius:999px;font-size:10.5px;font-weight:900;vertical-align:1px}
   .pill.portal{background:#e1f2ff;color:var(--blue2)}
   .pill.role{background:var(--sky);color:var(--ink2)}
+  .pill.risk{background:var(--red-bg);color:var(--red)}
   .pill.domain{background:var(--sky);color:var(--ink2);font-size:11px;padding:3px 10px}
   .code{display:inline-block;margin-top:6px;padding:4px 8px;border-radius:6px;background:var(--sky);color:var(--blue);font-size:12px;font-weight:800;overflow-wrap:anywhere}
   .public{display:grid;grid-template-columns:minmax(260px,.85fr) minmax(320px,1.15fr);gap:18px;align-items:start}
@@ -114,6 +115,7 @@
     <div class="cardlinks" id="cardlinks"></div>
   </div>
   <div class="panel scroll" id="students-panel" hidden><h2>Students</h2><div id="students"></div></div>
+  <div class="panel scroll" id="quizzes-panel" hidden><h2>App Quizzes Needing Attention</h2><div class="muted" id="quizzes-note"></div><div id="quizzes"></div></div>
   <div class="panel scroll" id="sessions-panel" hidden>
     <div class="head" style="margin-bottom:8px"><h2 style="margin:0">Upcoming Sessions</h2><a class="btn ghost" id="sessions-cta" href="#" hidden></a></div>
     <div id="sessions"></div>
@@ -309,15 +311,18 @@
       $("#public-panel").hidden = false;
     }
 
-    // KPI strip (same tiles as the legacy metrics band).
+    // KPI strip (the legacy metrics band, plus the learner apps' own quizzes).
     const m = d.metrics;
+    const qm = d.quizmetrics || {};
     $("#kpis").innerHTML =
       kpi(m.students, "students") + kpi(m.teachers, "teachers") + kpi(m.admins, "admins") +
       kpi(m.groups, "class groups") + kpi(m.sessions, "upcoming sessions") + kpi(m.offerings, "course offerings") +
       kpi(m.pending_enrollments, "pending enrollments") +
       kpi(d.attrate !== null && d.attrate !== undefined ? d.attrate + "%" : "—", "attendance · 30d") +
       kpi(d.held30, "sessions held · 30d") +
-      kpi(d.inactive14, "inactive students · 14d", d.inactive14 > 0);
+      kpi(d.inactive14, "inactive students · 14d", d.inactive14 > 0) +
+      kpi(qm.average_score === null || qm.average_score === undefined ? "—" : qm.average_score + "%", "app quiz average") +
+      kpi(qm.needs_support || 0, "learners under 70%", (qm.needs_support || 0) > 0);
     $("#kpis").hidden = false;
 
     // 7-day bars.
@@ -362,6 +367,27 @@
             </tr>`;
           }).join("") + "</tbody></table>";
       $("#students-panel").hidden = false;
+
+      // App quizzes the cohort is finding hardest — lowest class average first.
+      // Per-student and per-class detail lives in the teacher portal.
+      const quizzes = d.quizattention || [];
+      $("#quizzes").innerHTML = !quizzes.length
+        ? '<div class="muted">No app quiz results recorded for these students yet.</div>'
+        : `<table><thead><tr><th>Quiz</th><th>Course</th><th>Results</th><th>Class average</th></tr></thead><tbody>` +
+          quizzes.map((q) => {
+            const avg = Number(q.average_score);
+            const attempts = Number(q.attempts) || 0;
+            return `<tr>
+              <td><span class="name">${esc(q.label || "Checkpoint")}</span><span class="muted">last activity ${esc(when(q.last_activity))}</span></td>
+              <td>${esc(q.course || "")}</td>
+              <td><span class="name">${attempts} ${esc(attempts === 1 ? "result" : "results")}</span><span class="muted">${Number(q.passed) || 0} passed</span></td>
+              <td><span class="pill ${q.needs_support ? "risk" : "role"}">${esc(Number.isFinite(avg) ? avg + "%" : "—")}</span></td>
+            </tr>`;
+          }).join("") + "</tbody></table>";
+      $("#quizzes-note").textContent = qm.truncated
+        ? "Showing the " + (qm.row_limit || 0) + " most recently updated units only — averages exclude older activity."
+        : (quizzes.length ? (qm.quizzes_sat || 0) + " results from " + (qm.learners || 0) + " learners." : "");
+      $("#quizzes-panel").hidden = false;
 
       // Upcoming sessions.
       const cta = $("#sessions-cta");

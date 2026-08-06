@@ -165,6 +165,53 @@ function pqpr_class_quizzes(array $bystudent, array $names, int $limit = 40): ar
 }
 
 /**
+ * The quizzes a cohort is finding hardest: lowest class average first. A low
+ * average across twelve learners outranks the same average across one, so
+ * attempts break the tie before the label does. Quizzes nobody has a score for
+ * are left out — there is nothing to rank them by.
+ */
+function pqpr_lowest_average(array $classquizzes, int $limit = 6): array {
+    $ranked = array_values(array_filter($classquizzes, static function (array $quiz): bool {
+        return $quiz['average_score'] !== null;
+    }));
+    usort($ranked, static function (array $a, array $b): int {
+        return [$a['average_score'], $b['attempts'], $a['course'], $a['label']]
+            <=> [$b['average_score'], $a['attempts'], $b['course'], $b['label']];
+    });
+    return array_slice($ranked, 0, $limit);
+}
+
+/**
+ * How a whole group is doing across every quiz its learners have sat:
+ * learners with a score, results counted, the average over all of them, and how
+ * many learners are averaging below the support threshold.
+ */
+function pqpr_cohort_summary(array $bystudent): array {
+    $results = [];
+    $needssupport = 0;
+    $learners = 0;
+    foreach ($bystudent as $checkpoints) {
+        if (!$checkpoints) {
+            continue;
+        }
+        $learners++;
+        $summary = pqpr_summarise($checkpoints);
+        if ($summary['average_score'] !== null && $summary['average_score'] < PQPR_SUPPORT_THRESHOLD) {
+            $needssupport++;
+        }
+        $results = array_merge($results, $checkpoints);
+    }
+    $overall = pqpr_summarise($results);
+    return [
+        'learners' => $learners,
+        'quizzes_sat' => $overall['quizzes_taken'],
+        'quizzes_passed' => $overall['quizzes_passed'],
+        'average_score' => $overall['average_score'],
+        'needs_support' => $needssupport,
+    ];
+}
+
+/**
  * Production progress rows for these learners, in one query. Returns [] when
  * the schema is not installed, so callers need no table guard of their own.
  */

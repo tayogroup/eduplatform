@@ -8,6 +8,9 @@
 //
 // Usage:
 //   node tools/generate-ehel-english-audio.js <category> [grade ...] [--dry] [--limit N] [--force]
+//   [--sandbox <dir>] sends every write into <dir> instead of the repo, for
+//   exercising the generator against a mock without touching a clip, a
+//   descriptor or the narration index.
 //   category = readings | grammar | speaking | vocabulary | dictionary | overview
 //   overview = the unit overview page, ONE CLIP PER PANEL (intro, outcomes,
 //   path) rather than one per page, so rewording an outcome re-buys the
@@ -447,6 +450,34 @@ function setPath(target, trail, value) {
   return true;
 }
 
+// --- sandbox -----------------------------------------------------------------
+// `--sandbox <dir>` sends every WRITE into <dir> and leaves every read where it
+// was. The run then behaves exactly as it would for real — same items, same
+// reuse and skip decisions, same retries — without touching a clip, a
+// descriptor or the narration index.
+//
+// It exists because one behaviour could not be tested honestly without it: the
+// flaky case, where a request fails twice and succeeds on the third attempt.
+// Proving that needs a SUCCESS, and a success here writes an mp3, rewrites a
+// unit descriptor and records a fingerprint. Against the real tree that is a
+// test which damages the thing it is testing, so the path went unverified and
+// was described as such rather than claimed.
+//
+// Paths are mapped by their position under the repo root, so the sandbox comes
+// out as a mirror of the tree and it is obvious what a run would have written.
+const sandboxArg = args.indexOf("--sandbox");
+const SANDBOX = sandboxArg >= 0 && args[sandboxArg + 1] ? path.resolve(args[sandboxArg + 1]) : null;
+function writePath(realPath) {
+  if (!SANDBOX) return realPath;
+  const relative = path.relative(ROOT, realPath);
+  // A path outside the repo would escape the sandbox through "..", so it is
+  // flattened into the sandbox rather than followed.
+  const inside = relative.startsWith("..") ? path.basename(realPath) : relative;
+  const mapped = path.join(SANDBOX, inside);
+  fs.mkdirSync(path.dirname(mapped), { recursive: true });
+  return mapped;
+}
+
 // Re-read the file and lay this run's changes over whatever is on disk now,
 // instead of overwriting it with a snapshot taken before the narration started.
 function writeMerged(filePath, pristine, mutated) {
@@ -457,7 +488,7 @@ function writeMerged(filePath, pristine, mutated) {
   const target = JSON.parse(onDisk);
   let applied = 0;
   for (const [trail, value] of changes) if (setPath(target, trail, value)) applied += 1;
-  fs.writeFileSync(filePath, `${JSON.stringify(target, null, 2)}\n`);
+  fs.writeFileSync(writePath(filePath), `${JSON.stringify(target, null, 2)}\n`);
   return { written: true, changes: applied, rebased };
 }
 
@@ -496,10 +527,13 @@ function saveNarrationIndex(mine) {
   if (!mine.size) return 0;
   const onDisk = loadNarrationIndex();
   for (const [key, fingerprint] of mine) onDisk[key] = fingerprint;
-  fs.mkdirSync(path.dirname(NARRATION_INDEX), { recursive: true });
-  const temp = `${NARRATION_INDEX}.${process.pid}.tmp`;
+  // Read from the real index above, write to wherever writePath says: a
+  // sandboxed run makes the same reuse decisions as a real one.
+  const target = writePath(NARRATION_INDEX);
+  fs.mkdirSync(path.dirname(target), { recursive: true });
+  const temp = `${target}.${process.pid}.tmp`;
   fs.writeFileSync(temp, `${JSON.stringify(onDisk, null, 2)}\n`);
-  fs.renameSync(temp, NARRATION_INDEX);
+  fs.renameSync(temp, target);
   return Object.keys(onDisk).length;
 }
 
@@ -593,14 +627,17 @@ async function main() {
       }
       return false;
     }
-    fs.mkdirSync(path.dirname(item.output), { recursive: true });
+    // writePath makes its own directory, so the sandboxed run does not need
+    // the real one to exist.
+    const clipOutput = writePath(item.output);
+    fs.mkdirSync(path.dirname(clipOutput), { recursive: true });
     let changed = false;
     let ok = false;
     for (let attempt = 1; attempt <= 3 && !ok; attempt += 1) {
       try {
         process.stdout.write(`g${grade} ${category} ${item.id} (${item.text.length} chars)… `);
         const buf = await tts(item.text);
-        fs.writeFileSync(item.output, buf);
+        fs.writeFileSync(clipOutput, buf);
         charsSent += item.text.length; generated += 1; count += 1; ok = true;
         narrationIndex[key] = fingerprint;
         myFingerprints.set(key, fingerprint);

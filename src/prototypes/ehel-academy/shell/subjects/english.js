@@ -183,6 +183,58 @@ function currentOpenUnit() {
 // per-device guess. Everything that reads it does so at render time or later.
 let unitLocked = !isPrereqUnit && !TEACHER_PREVIEW && !unitIsUnlocked(unitNumber);
 
+// --- section gate: the sidebar walked in order -------------------------------
+// The same chain one level down. Inside an open unit the teaching sections come
+// one at a time — the lecture, then the words, then the story — and a finished
+// section stays open, because going back over Reading is not a step backwards.
+//
+// Three sidebar entries are deliberately NOT steps:
+//   overview — the landing page, and the route every guard falls back to.
+//   ai       — Wehel Tutor is the help. Locking a stuck learner out of the tutor
+//              is the opposite of what it is for, and the floating dock puts the
+//              same chat on every page anyway, so locking the nav entry would
+//              only be a lie about where help lives.
+//   live     — a scheduled class happens when it is scheduled.
+// `ai` still counts toward finishing the unit; it is available throughout
+// rather than at one point in the line.
+const SECTION_CHAIN = ["lecture", "dictionary", "reading", "comprehension", "grammar", "speaking", "writing", "activities", "games", "quiz", "ebooks", "reflect", "final-quiz"];
+// Built against what this unit actually shows: a unit with no game pack has no
+// Games entry, and a chain that still demanded it would stall the learner at
+// the Quiz forever. `final-quiz` only exists on Unit 10, and comes last there.
+const sectionChain = () => SECTION_CHAIN.filter((id) => visibleSections().some(([visible]) => visible === id));
+function sectionUnlocked(id) {
+  if (!UNIT_GATE_ENABLED || isPrereqUnit || TEACHER_PREVIEW) return true;
+  const chain = sectionChain();
+  const index = chain.indexOf(id);
+  if (index <= 0) return true; // not a step, or the first one
+  if (progress.completed.includes(id)) return true; // already done — revisiting is free
+  return progress.completed.includes(chain[index - 1]);
+}
+// Where the learner is up to: the first step they have not finished.
+function nextOpenSection() {
+  const chain = sectionChain();
+  return chain.find((id) => !progress.completed.includes(id)) || chain[chain.length - 1];
+}
+const sectionLabel = (id) => (sections.find(([sid]) => sid === id) || [null, null, id])[2];
+
+// The shell renders the nav from one shared template that has no idea about
+// locking, so the locks are painted on afterwards, on every nav render. Only
+// locked buttons are touched: the shell rebuilds the markup each time, so an
+// unlocked one is already clean, and rewriting its label here would drop the
+// ", completed" the shell puts there for a screen reader.
+function paintSectionLocks() {
+  if (!UNIT_GATE_ENABLED || unitLocked) return;
+  for (const button of $$("#section-nav [data-route]")) {
+    if (sectionUnlocked(button.dataset.route)) continue;
+    button.disabled = true; // a disabled button fires no click, so this IS the block
+    button.style.opacity = ".55";
+    button.style.cursor = "not-allowed";
+    button.setAttribute("aria-label", `${button.getAttribute("title") || button.dataset.route}, locked`);
+    const state = button.querySelector(".nav-state");
+    if (state) { state.classList.remove("done"); state.textContent = "🔒"; }
+  }
+}
+
 // The pickers are repainted on every nav render, not only at boot: finishing the
 // last section of Unit 6 opens Unit 7 with no reload, and a picker that only
 // knew the state at boot would still show it locked — the learner would have
@@ -978,10 +1030,47 @@ function bindOverviewAudio(holder) {
   }));
 }
 
-// Wraps a renderer map so each entry re-checks the gate at the moment it runs,
+// Wraps a renderer map so each entry re-checks both gates at the moment it runs,
 // rather than the map being chosen once while the module is still evaluating.
+// The greyed-out nav button is the polite half of the section gate; this is the
+// half a typed #quiz cannot walk around.
 function gated(renderers) {
-  return Object.fromEntries(Object.entries(renderers).map(([id, render]) => [id, () => (unitLocked ? renderLockedUnit() : render())]));
+  return Object.fromEntries(Object.entries(renderers).map(([id, render]) => [id, () => {
+    if (unitLocked) return renderLockedUnit();
+    if (!sectionUnlocked(id)) return renderLockedSection(id);
+    return render();
+  }]));
+}
+
+// The locked-section page. Same job as the locked-unit page one level down:
+// name the one thing standing in the way, and offer the way to it.
+function renderLockedSection(id) {
+  const open = nextOpenSection();
+  const chain = sectionChain();
+  const previous = chain[chain.indexOf(id) - 1];
+  $("#app").innerHTML = `${pageHeader(
+    `${escapeHtml(course.grade.label)} · Unit ${course.unit.unitNo}`,
+    `${escapeHtml(sectionLabel(id))} is not open yet`,
+    `Finish ${escapeHtml(sectionLabel(previous))} and this part opens by itself.`,
+    "Locked",
+  )}
+    <div class="overview-grid">
+      <div class="section-stack">
+        <section class="panel">
+          <h2>${icon("lock")} One part at a time</h2>
+          <p>You learn this unit in order, so every part gets your full attention. <strong>${escapeHtml(sectionLabel(id))}</strong> opens as soon as <strong>${escapeHtml(sectionLabel(previous))}</strong> has its tick.</p>
+          <p>You are up to <strong>${escapeHtml(sectionLabel(open))}</strong>.</p>
+          <button class="button gold" data-go="${escapeHtml(open)}" type="button">Go to ${escapeHtml(sectionLabel(open))} ${icon("arrow-right")}</button>
+        </section>
+      </div>
+      <div class="section-stack">
+        <section class="panel">
+          <h3>Your order for this unit</h3>
+          <ol class="path-list">${chain.map((step) => `<li>${icon(progress.completed.includes(step) ? "circle-check-big" : sectionUnlocked(step) ? "circle-dot" : "lock")}<span>${escapeHtml(sectionLabel(step))}</span></li>`).join("")}</ol>
+        </section>
+      </div>
+    </div>`;
+  $$("[data-go]").forEach((button) => button.addEventListener("click", () => navigate(button.dataset.go)));
 }
 
 // The locked page. It is the page every route draws while a unit is locked,
@@ -3789,7 +3878,7 @@ const config = {
   // paint into a region the previous section left behind.
   onBeforeRender: () => { route = shellCtx.route; stopAudio(); document.body.classList.remove("gc-full"); classicRegion = null; deckMount = null; $("#app").setAttribute("aria-busy", "true"); },
   onAfterRender: () => { $("#app").setAttribute("aria-busy", "false"); prepareScreenReaderView(); icons(); },
-  onNavRendered: () => { renderUnitPickers(); icons(); },
+  onNavRendered: () => { renderUnitPickers(); paintSectionLocks(); icons(); },
   // Every route draws the locked page while a unit is locked. The check is
   // inside each entry, not a swapped-out map: `unitLocked` is not settled until
   // load() has heard from the progress gateway, and this object is built while

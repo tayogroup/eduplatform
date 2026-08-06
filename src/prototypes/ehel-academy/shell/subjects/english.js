@@ -998,25 +998,25 @@ function renderLectureCarousel() {
 }
 
 function renderLectureClassic() {
-  const { paint, $ } = classicScope();
+  const { $ } = classicScope();
   const groups = course.vocabularyGroups.map((group) => group.title.toLowerCase()).join(", ");
   const journey = lectureJourney();
   if (course.visual.lectureMode === "capstone-launch") {
-    paint(`${pageHeader("Capstone launch", "Welcome to My English World", "See the whole project before you begin. Your teacher will guide each stage during six live sessions.")}
+    $("#app").innerHTML = `${pageHeader("Capstone launch", "Welcome to My English World", "See the whole project before you begin. Your teacher will guide each stage during six live sessions.")}
       <div class="lecture-layout">
         <section class="unit-banner capstone-launch"><img src="${course.visual.image}" alt="${escapeHtml(course.visual.alt)}"><div class="banner-copy"><span>Your final ${gradeLabel} project</span><h2>Choose. Create. Present. Reflect.</h2><p>Bring together your strongest English work, create a purposeful final product and present it with confidence.</p><button class="button gold" id="capstone-launch-done" type="button">${icon("flag")} Begin my capstone</button></div></section>
         <div class="section-stack"><section class="panel"><span class="eyebrow">${escapeHtml(journey.eyebrow)}</span><h2>${escapeHtml(journey.heading)}</h2>${lectureJourneyList(journey)}</section><section class="panel"><h3>Start with your review words</h3><p>The capstone dictionary brings together useful words selected across the course.</p><button class="button primary" id="to-dictionary" type="button">Open review vocabulary ${icon("arrow-right")}</button></section></div>
-      </div>`);
+      </div>`;
     $("#capstone-launch-done").addEventListener("click", () => complete("lecture", "Capstone launched. Your review vocabulary is ready."));
     $("#to-dictionary").addEventListener("click", () => { complete("lecture"); navigate("dictionary"); });
     return;
   }
   if (course.visual.lectureMode === "guided-launch" || !course.visual.lectureVideo) {
-    paint(`${pageHeader("Lecture media pending", "Teacher lecture", "Preview the unit purpose while the audiovisual teacher lecture is being prepared.", "Video pending")}
+    $("#app").innerHTML = `${pageHeader("Lecture media pending", "Teacher lecture", "Preview the unit purpose while the audiovisual teacher lecture is being prepared.", "Video pending")}
       <div class="lecture-layout">
         <section class="unit-banner"><img src="${course.visual.image}" alt="${escapeHtml(course.visual.alt)}"><div class="banner-copy"><span>${gradeLabel} unit preview</span><h2>Explore. Practise. Apply. Improve.</h2><p>${escapeHtml(course.unit.unitOverview.split(". ").slice(0, 2).join(". "))}</p><button class="button gold" id="guided-launch-done" type="button">${icon("eye")} Preview this unit</button></div></section>
         <div class="section-stack"><section class="panel"><span class="eyebrow">${escapeHtml(journey.eyebrow)}</span><h2>${escapeHtml(journey.heading)}</h2>${lectureJourneyList(journey)}</section><section class="panel"><h3>Words in this unit</h3><p>Explore ${escapeHtml(groups)} in the linked ${gradeLabel} dictionary.</p><button class="button primary" id="to-dictionary" type="button">Open vocabulary ${icon("arrow-right")}</button></section></div>
-      </div>`);
+      </div>`;
     $("#guided-launch-done").addEventListener("click", () => toast("Unit preview opened. Teacher lecture completion awaits the video."));
     $("#to-dictionary").addEventListener("click", () => navigate("dictionary"));
     return;
@@ -1028,13 +1028,13 @@ function renderLectureClassic() {
   // always did — plays straight through — so a lecture whose times are missing
   // degrades to the old lecture rather than to a broken one.
   const lectureSlides = Array.isArray(course.visual.lectureSlides) ? course.visual.lectureSlides : [];
-  paint(`${pageHeader("Begin here", "Teacher audiovisual lecture", lectureSlides.length > 1
+  $("#app").innerHTML = `${pageHeader("Begin here", "Teacher audiovisual lecture", lectureSlides.length > 1
     ? "One slide at a time. Each slide reads itself aloud and then waits — use the arrows to move on when you are ready."
     : "Watch and listen before you begin the independent lesson. Captions are available in the player.")}
     <div class="lecture-layout">
       <section class="panel video-shell"><div class="lecture-stage"><video id="lecture-video" controls preload="metadata" poster="${course.visual.lecturePoster}"><source src="${course.visual.lectureVideo}" type="video/mp4"><track kind="captions" src="${course.visual.lectureCaptions}" srclang="en" label="English" default></video>${lectureSlides.length > 1 ? `<button class="lecture-nav prev" id="slide-prev" type="button" aria-label="Previous slide">${icon("chevron-left")}</button><button class="lecture-nav next" id="slide-next" type="button" aria-label="Next slide">${icon("chevron-right")}</button>` : ""}</div><div class="video-footer"><p id="video-status">Teacher Musa · Unit ${course.unit.unitNo} lecture</p><button class="button gold" id="lecture-done" type="button" ${progress.completed.includes("lecture") ? "" : "disabled"}>${progress.completed.includes("lecture") ? icon("check") + " Lecture complete" : icon("play") + " Watch to complete"}</button></div></section>
       <div class="section-stack"><section class="panel"><span class="eyebrow">${escapeHtml(journey.eyebrow)}</span><h2>${escapeHtml(journey.heading)}</h2><p>Teacher Musa introduces ${escapeHtml(groups)}.</p>${lectureJourneyList(journey)}</section><section class="panel"><h3>Ready after the video?</h3><p>Complete the lecture before continuing to the vocabulary dictionary.</p><button class="button primary" id="to-dictionary" type="button" ${progress.completed.includes("lecture") ? "" : "disabled"}>Open vocabulary ${icon("arrow-right")}</button></section></div>
-    </div>`);
+    </div>`;
   $("#to-dictionary").addEventListener("click", () => navigate("dictionary"));
   const lectureVideo = $("#lecture-video");
   const lectureDone = $("#lecture-done");
@@ -1163,10 +1163,12 @@ function linkedWords() {
 // assigning to #app.innerHTML, which would erase a deck mounted below them the
 // moment a subtab or a filter redrew.
 //
-// So each design gets its own region. The original renderer paints into
-// .classic-design and queries inside it (classicScope), and the deck mounts into
-// .deck-design with full-bleed off. At Grades 5-8 both helpers fall back to #app
-// and the document, so those grades run exactly the code they ran before.
+// So each design gets its own region. The original renderer queries through
+// classicScope, whose "#app" IS that region — so it keeps writing the line it
+// always wrote and lands in .classic-design instead of over the whole page — and
+// the deck mounts into .deck-design with full-bleed off. At Grades 5-8 the
+// region is null, "#app" is the page root again and the document is the scope,
+// so those grades run exactly the code they ran before.
 const BOTH_DESIGNS = gradeNumber <= 4;
 let classicRegion = null;
 let deckMount = null;
@@ -1174,12 +1176,17 @@ let deckMount = null;
 // Called once at the top of an original renderer. It captures the region THEN,
 // so the redraws a subtab or a search box triggers keep painting into the same
 // half of the page rather than over the whole app.
+//
+// "#app" resolves to the region rather than to the page root, which is what lets
+// the original renderers keep the line they always had — `$("#app").innerHTML =
+// …` — and paint into their half of a both-designs page without being rewritten.
+// Same form Mathematics uses (shell/subjects/mathematics.js :: classicScope);
+// the two subjects do the same thing and should not do it two ways.
 function classicScope() {
   const region = classicRegion;
   const scope = region || document;
   return {
-    paint: (html) => { (region || $("#app")).innerHTML = html; },
-    $: (selector) => scope.querySelector(selector),
+    $: (selector) => (selector === "#app" ? (region || document.querySelector("#app")) : scope.querySelector(selector)),
     $$: (selector) => [...scope.querySelectorAll(selector)],
   };
 }
@@ -1211,12 +1218,12 @@ function renderDictionary() {
 }
 
 function renderDictionaryClassic() {
-  const { paint, $, $$ } = classicScope();
+  const { $, $$ } = classicScope();
   const words = linkedWords();
   activeWordId = activeWordId || words[0].vocabularyId;
-  paint(`${pageHeader("Linked master dictionary", "Vocabulary lab", `Search the ${gradeLabel} sub-dictionary. Every word links to one reusable master entry and approved pronunciation.`, `${dictionary.entryCount} master entries`)}
+  $("#app").innerHTML = `${pageHeader("Linked master dictionary", "Vocabulary lab", `Search the ${gradeLabel} sub-dictionary. Every word links to one reusable master entry and approved pronunciation.`, `${dictionary.entryCount} master entries`)}
     <div class="toolbar"><label class="search-box">${icon("search")}<input id="word-search" type="search" placeholder="Search words or meanings" aria-label="Search dictionary"></label><select id="group-filter" aria-label="Filter vocabulary group"><option value="all">All vocabulary groups</option>${course.vocabularyGroups.map((group) => `<option value="${group.id}">${escapeHtml(group.title)}</option>`).join("")}</select><span id="dictionary-count" class="status-chip">${words.length} words</span></div>
-    <div class="dictionary-layout"><section class="panel word-list" id="word-list"></section><section class="panel word-card" id="word-card"></section></div>`);
+    <div class="dictionary-layout"><section class="panel word-list" id="word-list"></section><section class="panel word-card" id="word-card"></section></div>`;
   const drawList = () => {
     const query = $("#word-search").value.trim().toLowerCase();
     const group = $("#group-filter").value;
@@ -1798,9 +1805,9 @@ function renderReadingCarousel() {
 }
 
 function renderReadingClassic() {
-  const { paint, $, $$ } = classicScope();
+  const { $, $$ } = classicScope();
   let selected = course.readings[0].readingId;
-  paint(`${pageHeader("Read, listen and imagine", "Reading & story", "Open a text, listen to the narration, and enjoy it like your own digital book.")}<div class="reading-layout ebook-layout"><nav class="reading-list ebook-library" id="reading-list" aria-label="Reading library"></nav><article class="ebook-reader" id="reading-panel"></article></div>`);
+  $("#app").innerHTML = `${pageHeader("Read, listen and imagine", "Reading & story", "Open a text, listen to the narration, and enjoy it like your own digital book.")}<div class="reading-layout ebook-layout"><nav class="reading-list ebook-library" id="reading-list" aria-label="Reading library"></nav><article class="ebook-reader" id="reading-panel"></article></div>`;
   const draw = () => {
     $("#reading-list").innerHTML = `<div class="ebook-library-title"><span>${icon("library-big")}</span><div><strong>My reading shelf</strong><small>${course.readings.length} texts in this unit</small></div></div>${course.readings.map((reading, index) => `<button class="reading-button ebook-spine ${selected === reading.readingId ? "active" : ""}" data-reading="${reading.readingId}" type="button" aria-current="${selected === reading.readingId ? "page" : "false"}"><span>${index + 1}</span><div><strong>${escapeHtml(reading.title)}</strong><small>${escapeHtml(reading.type)}</small></div>${icon("chevron-right")}</button>`).join("")}`;
     const reading = course.readings.find((item) => item.readingId === selected);
@@ -1836,12 +1843,12 @@ function renderComprehension() {
 }
 
 function renderComprehensionClassic() {
-  const { paint, $, $$ } = classicScope();
+  const { $, $$ } = classicScope();
   const groups = [...new Set(course.comprehension.map((question) => question.section))];
   let active = groups[0];
   const draw = () => {
     const questions = course.comprehension.filter((question) => question.section === active);
-    paint(`${pageHeader("Think about the text", "Comprehension", "Write your answer first. Then reveal the reviewed guidance and improve your response.")}<div class="subtabs">${groups.map((group) => `<button class="subtab ${group === active ? "active" : ""}" data-group="${escapeHtml(group)}" type="button">${escapeHtml(group)}</button>`).join("")}</div><section class="panel"><div class="question-list">${questions.map((question) => `<div class="question"><label for="answer-${question.questionId}">${question.sequence}. ${escapeHtml(question.question)}</label><textarea id="answer-${question.questionId}" data-answer-input="${question.questionId}" placeholder="Write a complete answer…"></textarea><button class="button secondary" data-check-answer="${question.questionId}" type="button">Check guidance</button><div id="feedback-${question.questionId}" role="status" aria-live="polite" aria-atomic="true"></div></div>`).join("")}</div><button class="button primary" id="comprehension-done" type="button">Finish comprehension ${icon("check")}</button></section>`);
+    $("#app").innerHTML = `${pageHeader("Think about the text", "Comprehension", "Write your answer first. Then reveal the reviewed guidance and improve your response.")}<div class="subtabs">${groups.map((group) => `<button class="subtab ${group === active ? "active" : ""}" data-group="${escapeHtml(group)}" type="button">${escapeHtml(group)}</button>`).join("")}</div><section class="panel"><div class="question-list">${questions.map((question) => `<div class="question"><label for="answer-${question.questionId}">${question.sequence}. ${escapeHtml(question.question)}</label><textarea id="answer-${question.questionId}" data-answer-input="${question.questionId}" placeholder="Write a complete answer…"></textarea><button class="button secondary" data-check-answer="${question.questionId}" type="button">Check guidance</button><div id="feedback-${question.questionId}" role="status" aria-live="polite" aria-atomic="true"></div></div>`).join("")}</div><button class="button primary" id="comprehension-done" type="button">Finish comprehension ${icon("check")}</button></section>`;
     $$('[data-group]').forEach((button) => button.addEventListener("click", () => { active = button.dataset.group; draw(); }));
     $$('[data-check-answer]').forEach((button) => button.addEventListener("click", () => {
       const question = course.comprehension.find((item) => item.questionId === button.dataset.checkAnswer);
@@ -1927,7 +1934,7 @@ function renderGrammar() {
 }
 
 function renderGrammarClassic() {
-  const { paint, $, $$ } = classicScope();
+  const { $, $$ } = classicScope();
   // Each grade keeps its own visual, the same rule the deck follows: Grade 1 is
   // phonics, so its picture is built from the rule ("A says /a/"), while Grades 5
   // and up teach sentence structure, which is what grammarDiagram draws. The two
@@ -1935,7 +1942,7 @@ function renderGrammarClassic() {
   // strip on the card and a letter-to-sound strip on the slide beneath it, for
   // one and the same lesson. phonicsDiagram returns "" for a rule that is not a
   // phonics shape, and the card then shows no diagram, exactly as its slide does.
-  paint(`${pageHeader("Language focus", "Grammar workshop", "Complete six practices: guided recognition followed by independent language use.")}<div class="grammar-grid">${course.grammar.map((lesson) => `<article class="panel grammar-card"><div class="word-card-head"><span class="lesson-number">${lesson.sequence}</span><span class="word-type">${escapeHtml(lesson.practiceType)}</span></div><h3>${escapeHtml(lesson.title)}</h3>${gradeNumber === 1 ? phonicsDiagram(lesson.ruleAndExamples) : grammarDiagram(lesson.title, lesson.explanation)}<p>${escapeHtml(lesson.explanation)}</p>${lesson.ruleAndExamples ? `<div class="rule-box">${escapeHtml(lesson.ruleAndExamples)}</div>` : ""}${lesson.commonMistake ? `<p class="mistake">${escapeHtml(lesson.commonMistake)}</p>` : ""}${lesson.memoryTip ? `<p><span class="field-label">Memory tip:</span> ${escapeHtml(lesson.memoryTip)}</p>` : ""}<details><summary>Show practice</summary><p class="rule-box">${escapeHtml(lesson.practice)}</p>${lesson.practiceAudio?.available ? `<button class="button secondary" data-practice-audio="${lesson.grammarId}" type="button">${icon("volume-2")} Hear the practice</button>` : ""}</details>${lesson.audio?.available ? `<div class="audio-actions"><button class="button secondary" data-grammar-audio="${lesson.grammarId}" data-rate="${AI_NARRATION_RATE}" type="button">${icon("volume-2")} Listen</button><button class="button secondary" data-grammar-audio="${lesson.grammarId}" data-rate="${AI_NARRATION_RATE}" type="button">${icon("rotate-ccw")} Replay</button></div><small class="audio-source">ElevenLabs · approved Ehel voice · 0.90x</small>` : `<span class="audio-pending">${icon("clock-3")} ElevenLabs audio pending</span>`}</article>`).join("")}</div><p><button class="button primary" id="grammar-done" type="button">I practised all six lessons ${icon("check")}</button></p>`);
+  $("#app").innerHTML = `${pageHeader("Language focus", "Grammar workshop", "Complete six practices: guided recognition followed by independent language use.")}<div class="grammar-grid">${course.grammar.map((lesson) => `<article class="panel grammar-card"><div class="word-card-head"><span class="lesson-number">${lesson.sequence}</span><span class="word-type">${escapeHtml(lesson.practiceType)}</span></div><h3>${escapeHtml(lesson.title)}</h3>${gradeNumber === 1 ? phonicsDiagram(lesson.ruleAndExamples) : grammarDiagram(lesson.title, lesson.explanation)}<p>${escapeHtml(lesson.explanation)}</p>${lesson.ruleAndExamples ? `<div class="rule-box">${escapeHtml(lesson.ruleAndExamples)}</div>` : ""}${lesson.commonMistake ? `<p class="mistake">${escapeHtml(lesson.commonMistake)}</p>` : ""}${lesson.memoryTip ? `<p><span class="field-label">Memory tip:</span> ${escapeHtml(lesson.memoryTip)}</p>` : ""}<details><summary>Show practice</summary><p class="rule-box">${escapeHtml(lesson.practice)}</p>${lesson.practiceAudio?.available ? `<button class="button secondary" data-practice-audio="${lesson.grammarId}" type="button">${icon("volume-2")} Hear the practice</button>` : ""}</details>${lesson.audio?.available ? `<div class="audio-actions"><button class="button secondary" data-grammar-audio="${lesson.grammarId}" data-rate="${AI_NARRATION_RATE}" type="button">${icon("volume-2")} Listen</button><button class="button secondary" data-grammar-audio="${lesson.grammarId}" data-rate="${AI_NARRATION_RATE}" type="button">${icon("rotate-ccw")} Replay</button></div><small class="audio-source">ElevenLabs · approved Ehel voice · 0.90x</small>` : `<span class="audio-pending">${icon("clock-3")} ElevenLabs audio pending</span>`}</article>`).join("")}</div><p><button class="button primary" id="grammar-done" type="button">I practised all six lessons ${icon("check")}</button></p>`;
   $$('[data-grammar-audio]').forEach((button) => button.addEventListener("click", () => {
     const lesson = course.grammar.find((item) => item.grammarId === button.dataset.grammarAudio);
     playAudio(lesson.audio.source, { rate: Number(button.dataset.rate), button });
@@ -2015,8 +2022,8 @@ function renderSpeaking() {
 }
 
 function renderSpeakingClassic() {
-  const { paint, $, $$ } = classicScope();
-  paint(`${pageHeader("Use your voice", "Dialogue & speaking", "Complete six speaking practices. Rehearse, record, and listen back.")}<div class="task-grid">${course.speaking.map((task) => `<article class="panel task-card"><span class="eyebrow">Practice ${task.sequence} · ${escapeHtml(task.activityType)}</span><h3>${escapeHtml(task.title)}</h3><p class="rule-box">${escapeHtml(task.instructionsAndModelLines)}</p>${task.audio?.available ? `<div class="audio-actions"><button class="button secondary" data-model="${task.speakingId}" data-rate="${AI_NARRATION_RATE}" type="button">${icon("volume-2")} Hear model</button><button class="button secondary" data-model="${task.speakingId}" data-rate="${AI_NARRATION_RATE}" type="button">${icon("rotate-ccw")} Replay</button></div><small class="audio-source">ElevenLabs · approved Ehel voice · 0.90x</small>` : `<span class="audio-pending">${icon("clock-3")} ElevenLabs model audio pending</span>`}${task.recordingRequired ? `<div class="recorder"><button class="record-button" data-record="${task.speakingId}" type="button" aria-label="Start recording for ${escapeHtml(task.title)}">${icon("mic")}</button><div><strong data-record-status="${task.speakingId}">Ready to record</strong><small> Your recording stays on this device.</small></div></div><audio data-playback="${task.speakingId}" controls hidden></audio>` : ""}</article>`).join("")}</div><p><button class="button primary" id="speaking-done" type="button">Finish six speaking practices ${icon("check")}</button></p>`);
+  const { $, $$ } = classicScope();
+  $("#app").innerHTML = `${pageHeader("Use your voice", "Dialogue & speaking", "Complete six speaking practices. Rehearse, record, and listen back.")}<div class="task-grid">${course.speaking.map((task) => `<article class="panel task-card"><span class="eyebrow">Practice ${task.sequence} · ${escapeHtml(task.activityType)}</span><h3>${escapeHtml(task.title)}</h3><p class="rule-box">${escapeHtml(task.instructionsAndModelLines)}</p>${task.audio?.available ? `<div class="audio-actions"><button class="button secondary" data-model="${task.speakingId}" data-rate="${AI_NARRATION_RATE}" type="button">${icon("volume-2")} Hear model</button><button class="button secondary" data-model="${task.speakingId}" data-rate="${AI_NARRATION_RATE}" type="button">${icon("rotate-ccw")} Replay</button></div><small class="audio-source">ElevenLabs · approved Ehel voice · 0.90x</small>` : `<span class="audio-pending">${icon("clock-3")} ElevenLabs model audio pending</span>`}${task.recordingRequired ? `<div class="recorder"><button class="record-button" data-record="${task.speakingId}" type="button" aria-label="Start recording for ${escapeHtml(task.title)}">${icon("mic")}</button><div><strong data-record-status="${task.speakingId}">Ready to record</strong><small> Your recording stays on this device.</small></div></div><audio data-playback="${task.speakingId}" controls hidden></audio>` : ""}</article>`).join("")}</div><p><button class="button primary" id="speaking-done" type="button">Finish six speaking practices ${icon("check")}</button></p>`;
   $$('[data-model]').forEach((button) => button.addEventListener("click", () => {
     const task = course.speaking.find((item) => item.speakingId === button.dataset.model);
     playAudio(task.audio.source, { rate: Number(button.dataset.rate), button });
@@ -2124,12 +2131,12 @@ function renderWriting() {
 }
 
 function renderWritingClassic() {
-  const { paint, $, $$ } = classicScope();
+  const { $, $$ } = classicScope();
   let active = course.writing[0].writingId;
   const draw = () => {
     const task = course.writing.find((item) => item.writingId === active);
     const saved = progress.writing[active] || "";
-    paint(`${pageHeader("Plan, write and improve", "Writing studio", "Choose a task. Your draft saves automatically on this device.")}<div class="subtabs">${course.writing.map((item) => `<button class="subtab ${active === item.writingId ? "active" : ""}" data-writing="${item.writingId}" type="button">Writing ${item.sequence}</button>`).join("")}</div><div class="task-grid"><section class="panel"><h2>${escapeHtml(task.title)}</h2><p class="rule-box">${escapeHtml(task.promptAndInstructions)}</p>${task.audio?.available ? `<button class="button secondary" data-writing-audio="${task.writingId}" type="button">${icon("volume-2")} Hear the task</button>` : ""}<details><summary>View model text</summary><p class="model">${escapeHtml(task.modelText)}</p></details><p><span class="field-label">Expected:</span> ${escapeHtml(task.expectedLength)}</p><textarea id="writing-draft" placeholder="${escapeHtml(task.sentenceStarter)}">${escapeHtml(saved)}</textarea><p id="save-status"><small>${saved ? "Draft restored" : "Start writing when you are ready"}</small></p></section><aside class="panel"><h3>Writer's checklist</h3><ul class="checklist">${task.successCriteria.split(";").map((criterion, index) => `<li><label><input type="checkbox" data-writing-check="${index}"><span>${escapeHtml(criterion.trim())}</span></label></li>`).join("")}</ul><h3>Support</h3><p>${escapeHtml(task.support)}</p><h3>Challenge</h3><p>${escapeHtml(task.extension)}</p><button class="button primary" id="writing-done" type="button">Submit this draft ${icon("send")}</button></aside></div>`);
+    $("#app").innerHTML = `${pageHeader("Plan, write and improve", "Writing studio", "Choose a task. Your draft saves automatically on this device.")}<div class="subtabs">${course.writing.map((item) => `<button class="subtab ${active === item.writingId ? "active" : ""}" data-writing="${item.writingId}" type="button">Writing ${item.sequence}</button>`).join("")}</div><div class="task-grid"><section class="panel"><h2>${escapeHtml(task.title)}</h2><p class="rule-box">${escapeHtml(task.promptAndInstructions)}</p>${task.audio?.available ? `<button class="button secondary" data-writing-audio="${task.writingId}" type="button">${icon("volume-2")} Hear the task</button>` : ""}<details><summary>View model text</summary><p class="model">${escapeHtml(task.modelText)}</p></details><p><span class="field-label">Expected:</span> ${escapeHtml(task.expectedLength)}</p><textarea id="writing-draft" placeholder="${escapeHtml(task.sentenceStarter)}">${escapeHtml(saved)}</textarea><p id="save-status"><small>${saved ? "Draft restored" : "Start writing when you are ready"}</small></p></section><aside class="panel"><h3>Writer's checklist</h3><ul class="checklist">${task.successCriteria.split(";").map((criterion, index) => `<li><label><input type="checkbox" data-writing-check="${index}"><span>${escapeHtml(criterion.trim())}</span></label></li>`).join("")}</ul><h3>Support</h3><p>${escapeHtml(task.support)}</p><h3>Challenge</h3><p>${escapeHtml(task.extension)}</p><button class="button primary" id="writing-done" type="button">Submit this draft ${icon("send")}</button></aside></div>`;
     $$('[data-writing]').forEach((button) => button.addEventListener("click", () => { active = button.dataset.writing; draw(); }));
     $$('[data-writing-audio]').forEach((button) => button.addEventListener("click", () => {
       const item = course.writing.find((w) => w.writingId === button.dataset.writingAudio);
@@ -2229,8 +2236,8 @@ function renderActivities() {
 }
 
 function renderActivitiesClassic() {
-  const { paint, $, $$ } = classicScope();
-  paint(`${pageHeader("Learn by doing", "Activities", `Complete six practical ${escapeHtml(course.unit.unitTitle)} challenges.`)}<div class="task-grid">${course.activities.map((activity) => `<article class="panel task-card"><span class="eyebrow">Activity ${activity.sequence} · ${escapeHtml(activity.activityType)}</span><h3>${escapeHtml(activity.title)}</h3><p class="rule-box">${escapeHtml(activity.instructionsAndItems)}</p>${activity.audio?.available ? `<button class="button secondary" data-activity-audio="${activity.activityId}" type="button">${icon("volume-2")} Hear the instructions</button>` : ""}<textarea class="activity-response" rows="4" placeholder="Record your answer or notes…" aria-label="Response for ${escapeHtml(activity.title)}"></textarea><button class="button secondary" data-activity-done="${activity.activityId}" type="button">${icon("check")} Mark complete</button></article>`).join("")}</div><p><button class="button primary" id="activities-done" type="button">Finish activities ${icon("check")}</button></p>`);
+  const { $, $$ } = classicScope();
+  $("#app").innerHTML = `${pageHeader("Learn by doing", "Activities", `Complete six practical ${escapeHtml(course.unit.unitTitle)} challenges.`)}<div class="task-grid">${course.activities.map((activity) => `<article class="panel task-card"><span class="eyebrow">Activity ${activity.sequence} · ${escapeHtml(activity.activityType)}</span><h3>${escapeHtml(activity.title)}</h3><p class="rule-box">${escapeHtml(activity.instructionsAndItems)}</p>${activity.audio?.available ? `<button class="button secondary" data-activity-audio="${activity.activityId}" type="button">${icon("volume-2")} Hear the instructions</button>` : ""}<textarea class="activity-response" rows="4" placeholder="Record your answer or notes…" aria-label="Response for ${escapeHtml(activity.title)}"></textarea><button class="button secondary" data-activity-done="${activity.activityId}" type="button">${icon("check")} Mark complete</button></article>`).join("")}</div><p><button class="button primary" id="activities-done" type="button">Finish activities ${icon("check")}</button></p>`;
   $$('[data-activity-done]').forEach((button) => button.addEventListener("click", () => { button.disabled = true; button.innerHTML = `${icon("check-circle")} Complete`; icons(); }));
   $$('[data-activity-audio]').forEach((button) => button.addEventListener("click", () => {
     const item = course.activities.find((a) => a.activityId === button.dataset.activityAudio);

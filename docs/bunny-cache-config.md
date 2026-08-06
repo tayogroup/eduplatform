@@ -160,6 +160,62 @@ need opposite fixes:
 - **not in storage** → nothing ever uploaded it. Usually a file untracked in
   git, which a clean checkout silently has nothing to send for.
 
+### ⚠ `app/{subject}/` and `app/{subject}/index.html` are two different objects
+
+The release pointer is `index.html`, and Edge Rule #2 gives **that filename** a
+5-minute TTL. A request for the **directory** — `app/{subject}/` — is a different
+URL, so it does not match that rule and falls to the default **30-day** tier,
+even though Bunny serves the same `index.html` bytes for it.
+
+`grade-redirect.js` sends every learner to the directory form:
+
+```js
+const target = new URL("../", location.href);   // → app/{subject}/?stage=…
+```
+
+so the directory copy is the one that matters, and the short-cached `index.html`
+almost nobody requests is the one the deploy verifies. Measured on 2026-08-06,
+minutes after science v124 shipped:
+
+| URL | serves | `Cache-Control` |
+|---|---|---|
+| `app/science/index.html` | v124 | `max-age=300` |
+| `app/science/` (+ any query) | **v123** | `max-age=2592000` |
+
+Query strings do not help: they are not part of the cache key (see §3), so
+`?stage=1&unit=1&probe=$RANDOM` returns the same pinned object.
+
+**Whoever requests the directory URL first after a deploy pins that release for
+30 days.** On 2026-08-06 that was the post-deploy check for v123 itself — a
+browser run against `app/science/?stage=1&unit=1`, which cached v123 at 04:56 and
+made v124 unreachable for a month an hour later. Same failure shape as the
+`v{N}` 404 above: a verification step that changes what it is verifying.
+
+**Detect it** — compare the pair after every release. They must match:
+
+```bash
+for s in science mathematics english computing global-perspectives; do
+  a=$(curl -s "https://ehelacademy.b-cdn.net/Ehel%20Primary/app/$s/index.html" | grep -oE 'v[0-9]+/course-ui\.js' | head -1)
+  b=$(curl -s "https://ehelacademy.b-cdn.net/Ehel%20Primary/app/$s/"           | grep -oE 'v[0-9]+/course-ui\.js' | head -1)
+  printf '%-22s index.html=%-8s dir=%s\n' "$s" "${a:-?}" "${b:-?}"
+done
+```
+
+**Bumping the tag does NOT recover this one.** Unlike a poisoned `v{N}/` path,
+the stale object is at a *stable* URL, so the next release inherits exactly the
+same pin. The only fixes are:
+
+- **Purge the one URL** `Ehel Primary/app/{subject}/` from the Bunny dashboard.
+  Needs the account API key or a dashboard login; the storage key in `.env`
+  cannot do it.
+- **Add the general `*/app/*` rule** §2 already recommends. That puts the
+  directory URL on the short tier with `index.html` and ends this permanently —
+  it also unsticks `current.json` and `grade-redirect.js`, which are on the same
+  30-day tier for the same reason.
+
+Until that rule exists, treat a release as **not live** until the directory URL
+shows the new tag, and expect to purge one URL per subject on each deploy.
+
 ### The invariant: a version bundle must be self-contained
 
 Path versioning only busts the cache for what is **inside** `v{N}/`. Anything a

@@ -1313,7 +1313,32 @@ function renderLectureClassic() {
   // Playing to the very end still completes: a learner who scrubs or lets the
   // last slide run out arrives here rather than at the boundary pause below.
   lectureVideo.addEventListener("ended", finishLecture);
-  lectureDone.addEventListener("click", () => navigate("dictionary"));
+  // Reaching the end of the lecture ARMS the button; the video finishing by
+  // itself still completes without one. Both exist because the video is now the
+  // only door into the rest of the unit — Vocabulary and everything after it
+  // wait on this section — and "watched to the end" is not the same event as
+  // "listened to the end". A stalled buffer, a player that never fires `ended`,
+  // or a learner who stops half a second early all leave somebody who did the
+  // work with no way to say so, and nothing else in the unit reachable.
+  //
+  // It cannot be used to skip: it stays disabled until the learner is ON the
+  // final slide (or within a second of the end of a lecture with no slides),
+  // which is the guarantee the no-finish-control rule was protecting.
+  const armFinish = () => {
+    if (progress.completed.includes("lecture") || !lectureDone.disabled) return;
+    lectureDone.disabled = false;
+    lectureDone.innerHTML = `${icon("check")} I have listened`;
+    icons();
+  };
+  lectureDone.addEventListener("click", () => {
+    if (!progress.completed.includes("lecture")) finishLecture();
+    navigate("dictionary");
+  });
+  // Covers a lecture with no slide times, where the boundary check below never
+  // runs and `ended` was the only path.
+  lectureVideo.addEventListener("timeupdate", () => {
+    if (lectureVideo.duration && lectureVideo.duration - lectureVideo.currentTime <= 1) armFinish();
+  });
 
   // --- one slide at a time -------------------------------------------------
   // The video is not stopped from playing on: it is paused the moment it
@@ -1345,6 +1370,9 @@ function renderLectureClassic() {
     const syncNav = () => {
       prev.disabled = slideIndex === 0;
       next.disabled = slideIndex === lectureSlides.length - 1;
+      // On the last slide the lecture has been walked to its end, so the finish
+      // button becomes pressable — whether or not the clock reaches the end.
+      if (slideIndex === lectureSlides.length - 1) armFinish();
       showStatus();
     };
     // Parked a frame short of the change, never on it: at the boundary itself

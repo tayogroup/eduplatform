@@ -8,15 +8,20 @@
 // The slide deck put the whole thing on the learner's slide, so a six-year-old
 // scrolled through instructions about themselves, in the third person.
 //
-// THE ADULT TEXT IS NOT REWRITTEN INTO LEARNER VOICE. That was tried — see
-// tools/repair-ehel-math-adult-voice.mjs, whose second-person transform turns
-// "Give the child one position clue at a time and watch them act it out" into
-// "Give you one position clue at a time and watch them act it out". The same
-// thing was tried and abandoned in Global Perspectives, for the same reason: a
-// letter to the parent is not lesson text with an adult frame around it, and
-// pronoun-swapping it produces broken prose. So it is moved whole, in its own
-// voice, into `grownUpGuide` — where the app shows it to the grown-up who, at
-// five and six, is in the room by design.
+// THE ADULT TEXT IS NOT REWRITTEN INTO LEARNER VOICE.
+//
+// That was tried, by a tool that applied a blanket "the child" → "you" across
+// Year 1. It ran, and it produced "Give you an egg carton", "Take your finger in
+// yours" and "the counting you already knows" — a second tool,
+// repair-ehel-math-grade1-parent-voice.mjs, exists only to undo that damage. The
+// broken transform was deleted along with this change; the repo history has it
+// if the detail is ever wanted.
+//
+// Global Perspectives tried the same thing and abandoned it for the same reason:
+// a letter to the parent is not lesson text with an adult frame around it, and
+// pronoun-swapping it produces prose nobody can read. So the script is moved
+// whole, in its own voice, into `grownUpGuide` — where the app shows it to the
+// grown-up who, at five and six, is in the room by design.
 //
 //   node tools/split-ehel-math-grownup-guide.mjs [--write] [--stage N]
 //

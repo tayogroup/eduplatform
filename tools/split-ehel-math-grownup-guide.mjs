@@ -12,10 +12,9 @@
 //
 // That was tried, by a tool that applied a blanket "the child" → "you" across
 // Year 1. It ran, and it produced "Give you an egg carton", "Take your finger in
-// yours" and "the counting you already knows" — a second tool,
-// repair-ehel-math-grade1-parent-voice.mjs, exists only to undo that damage. The
-// broken transform was deleted along with this change; the repo history has it
-// if the detail is ever wanted.
+// yours" and "the counting you already knows" — damage a second tool then had to
+// undo. Both are deleted; the repo history holds them if the detail is ever
+// wanted (repair-ehel-math-adult-voice.mjs and its counterpart).
 //
 // Global Perspectives tried the same thing and abandoned it for the same reason:
 // a letter to the parent is not lesson text with an adult frame around it, and

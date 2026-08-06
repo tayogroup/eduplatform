@@ -80,7 +80,6 @@ const SECTIONS = [
   ["challenge", "flag", "My Challenge", (c) => c.challenge?.intro || c.challenge?.topics?.length],
   ["activities", "blocks", "Activities", (c) => c.activities?.length],
   ["project", "hammer", "Mini-Project", (c) => c.project?.steps?.length],
-  ["tutor", "sparkles", "Wehel Tutor", () => true],
   ["practice", "list-checks", "Practice", (c) => c.practice?.length],
   ["quiz", "circle-help", "Unit Quiz", (c) => c.assessment?.questions?.length],
   ["reflect", "messages-square", "Reflection", (c) => c.reflection?.length || c.selfAssessment?.length],

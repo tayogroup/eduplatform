@@ -67,7 +67,6 @@ const sections = [
   ["speaking", "mic-2", "Speaking"],
   ["writing", "pencil-line", "Writing"],
   ["activities", "shapes", "Practice"],
-  ["tutor", "sparkles", "Wehel Tutor"],
   ["quiz", "badge-check", "Quiz"],
   ["answers", "list-checks", "Answers"],
   ["reflect", "trending-up", "My progress"],

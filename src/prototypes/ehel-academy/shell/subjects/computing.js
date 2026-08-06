@@ -66,7 +66,6 @@ const sections = [
   ["overview", "layout-dashboard", "Unit Overview"],
   ["tools", "wrench", "Tools & Setup"],
   ["lesson", "book-open", "The Lesson"],
-  ["ai", "sparkles", "Wehel Tutor"],
   ["words", "braces", "Computing Words"],
   ["explore", "scan-search", "Explore the Concept"],
   ["visuals", "shapes", "Visual Models"],

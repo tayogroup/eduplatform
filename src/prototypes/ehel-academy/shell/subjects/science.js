@@ -83,7 +83,6 @@ let capstoneQuizIndex = 0, capstoneQuizScore = 0, capstoneQuizLocked = false;
 const sections = [
   ["overview", "layout-dashboard", "Unit Overview"],
   ["lesson", "book-open", "Teacher Lesson"],
-  ["ai", "sparkles", "Wehel Tutor"],
   ["words", "braces", "Science Words"],
   ["explore", "scan-search", "Explore the Concept"],
   ["visuals", "shapes", "Visual Models"],

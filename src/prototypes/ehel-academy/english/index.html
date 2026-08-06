@@ -6,6 +6,15 @@
   <meta name="theme-color" content="#17324d">
   <title>Ehel Academy English</title>
   <link rel="stylesheet" href="./shared/course-ui.css">
+  <!-- The lucide runtime. shared/course-shell.js :: icon() emits <i data-lucide>
+       and this module's icons() calls window.lucide.createIcons() to replace
+       them; without the runtime every icon on the page is an empty <i>. The only
+       page that ever loaded it was the standalone vocabulary app, from unpkg,
+       and that app was retired in 8e74751a8 — taking the runtime with it. Served
+       from our own tree rather than a CDN so dev works offline and production
+       gains no third-party dependency; app/shared/ is uploaded whole by
+       upload-app-to-bunny.js, so this ships with the app. -->
+  <script src="../shared/lucide.min.js" defer></script>
   <script src="../shared/brand-fx.js" defer></script>
 </head>
 <body>

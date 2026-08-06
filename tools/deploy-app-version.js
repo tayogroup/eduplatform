@@ -116,7 +116,11 @@ function versionIndexHtml(html, subject) {
     // brand-fx.js is loaded straight from app/shared/ by computing's entry. That
     // path is max-age=2592000 and unversioned, so it outlives the release that
     // introduced it; pull it into v{TAG}/ with everything else.
-    .replace(/\.\.\/shared\/brand-fx\.js(?:\?v=[^"']*)?/g, `${TAG}/brand-fx.js`);
+    .replace(/\.\.\/shared\/brand-fx\.js(?:\?v=[^"']*)?/g, `${TAG}/brand-fx.js`)
+    // Same shape, same reason: english/index.html loads the lucide runtime from
+    // app/shared/. Left alone it would point at a path this release never
+    // uploads, and every icon in the release would be an empty <i data-lucide>.
+    .replace(/\.\.\/shared\/lucide\.min\.js(?:\?v=[^"']*)?/g, `${TAG}/lucide.min.js`);
 
   // Fail rather than ship an unversioned pointer. Before this guard, a subject
   // whose entry did not match these patterns — GP's dated course-ui-20260802a.js
@@ -145,7 +149,12 @@ function versionIndexHtml(html, subject) {
 // bundle. It resolves from the working tree today, but a fresh clone would not
 // have it — so a missing module is reported and skipped rather than throwing
 // part-way through a release. Committing it is the real fix.
-const SHARED_MODULES = ["course-shell.js", "progress-client.js", "seb-session.js", "lesson-gate.js", "brand-fx.js"];
+// lucide.min.js rides along for the same reason brand-fx.js does — English's
+// entry loads it straight from app/shared/, which this release does not upload
+// and which is served max-age=2592000. Unlike the others it is vendored
+// upstream (lucide 0.468.0, unmodified) and IS tracked in git, so it never hits
+// the skip path below.
+const SHARED_MODULES = ["course-shell.js", "progress-client.js", "seb-session.js", "lesson-gate.js", "brand-fx.js", "lucide.min.js"];
 const sharedModuleItems = (subject) => SHARED_MODULES.flatMap((name) => {
   const src = path.join(EHEL, "shared", name);
   if (!fs.existsSync(src)) { console.log(`  (skip ${name}: not in the working tree)`); return []; }

@@ -127,7 +127,12 @@
 .ten-frame span.filled { background: var(--teal); }
 .method-player { display: grid; grid-template-columns: minmax(300px,.85fr) minmax(0,1.15fr); gap: 26px; }
 .method-example { padding: 24px; border-radius: 10px; color: white; background: linear-gradient(145deg,#142d52,#2457a7); text-align: center; }
-.method-example > strong { display: block; font: var(--weight-medium) 70px var(--font-serif); }
+/* A method's example is PROSE in this subject — 18 to 260 characters, median
+   117 at Stage 1 and 254 at Stage 8 — not the short sum this size was inherited
+   from when Computing was cloned from Mathematics. At 70px a 257-character
+   example rendered 2,838px tall in a 720px viewport: four screens of serif for
+   one sentence. Sized for a sentence instead. */
+.method-example > strong { display: block; font: var(--weight-medium) 22px/1.55 var(--font-serif); }
 .method-example .place-value > div { border-color: rgba(255,255,255,.3); }
 .method-example .place-value strong, .method-example .place-value span { color: white; }
 .method-example .math-display { color: var(--ink); }

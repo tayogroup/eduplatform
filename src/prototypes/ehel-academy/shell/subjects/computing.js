@@ -840,7 +840,7 @@ function renderExploreConceptClassic() {
       const answer=item.answer.toLowerCase();
       const correct=response && (response===answer || answer.includes(response) || response.includes(answer));
       c$("#discovery-feedback").innerHTML=`<p class="feedback ${correct?'good':'try'}"><span class="status-note">${correct?'Exactly!':'Look again.'}</span> ${escapeHtml(correct?item.explanation:item.hint)}</p>`;
-      if(correct){completed.add(item.id);progress.explorations=[...completed];saveProgress();if(completed.size===course.explorations.length)complete("explore","All six concept discoveries complete.");}
+      if(correct){completed.add(item.id);progress.explorations=[...completed];saveProgress();if(completed.size===course.explorations.length)complete("explore",`All ${course.explorations.length} concept discoveries complete.`);}
     });
   };
   draw();
@@ -905,7 +905,10 @@ function renderLearnMethodDeck() {
   const slides = methods.map((method, index) => `<section class="gc-slide gc-v${index % 5}"><div class="gc-inner">
       <span class="gc-eyebrow">Method ${index + 1} of ${methods.length} · ${esc(method.difficulty)}</span>
       <h3 class="gc-title">${esc(method.title)}</h3>
-      <div class="gc-pattern" lang="en">${esc(method.example)}</div>
+      <!-- .gc-note, not .gc-pattern: a method's example is a sentence, often a
+           long one, and .gc-pattern is the 46px display size for a single word
+           or a short pattern. The classic half had the same mistake at 70px. -->
+      <p class="gc-note gc-try">${esc(method.example)}</p>
       <div class="gc-actions">${deckVoice(`${method.title}. Example: ${method.example}. ${method.steps.join(" ")}`, "Listen to method")}</div>
       <ol class="cmp-gc-steps" data-method-steps="${esc(method.id)}" data-step="0">
         ${method.steps.map((text, position) => `<li class="cmp-gc-step ${position === 0 ? "active" : ""}"><span>${position + 1}</span><div><strong>Step ${position + 1}</strong><p>${esc(text)}</p>${deckVoiceSmall(`Step ${position + 1}. ${text}`, "Listen to step")}</div></li>`).join("")}
@@ -950,12 +953,12 @@ function renderLearnMethodClassic() {
   const completed=new Set(progress.methods||[]);
   const draw=()=>{
     const method=course.methods[methodIndex];
-    cRoot().innerHTML=`${pageHeader("Six short procedures", "Learn the Method", "Select a method, reveal each step and practise the procedure before moving on.")}
+    cRoot().innerHTML=`${pageHeader(`${course.methods.length} short procedures`, "Learn the Method", "Select a method, reveal each step and practise the procedure before moving on.")}
       <div class="method-selector">${course.methods.map((item,index)=>`<button class="${index===methodIndex?'active':''} ${completed.has(item.id)?'done':''}" data-method="${index}" type="button"><span>${index+1}</span>${escapeHtml(item.title)}</button>`).join('')}</div>
       <section class="panel method-player"><div class="method-example"><span>${escapeHtml(method.difficulty)} method</span><strong class="method-example-text">${escapeHtml(method.example)}</strong><p>${escapeHtml(method.title)}</p>${voiceButton(`${method.title}. Example: ${method.example}. ${method.steps.join(" ")}`, "Listen to method")}</div><div class="method-steps">${method.steps.map((text,index)=>`<article class="method-step ${index===0?'active':''}" data-method-step="${index}"><span>${index+1}</span><div><h3>Step ${index+1}</h3><p>${escapeHtml(text)}</p>${voiceButton(`Step ${index+1}. ${text}`, "Listen to step")}</div></article>`).join('')}<button class="button primary" id="next-method-step" type="button">Show me the next step →</button></div></section>`;
     let step=0;
     c$$('[data-method]').forEach(button=>button.addEventListener('click',()=>{methodIndex=Number(button.dataset.method);draw();}));
-    c$("#next-method-step").addEventListener('click',()=>{step=Math.min(method.steps.length-1,step+1);c$$('[data-method-step]').forEach((item,index)=>item.classList.toggle('active',index<=step));if(step===method.steps.length-1){completed.add(method.id);progress.methods=[...completed];saveProgress();c$("#next-method-step").textContent='Method complete ✓';if(completed.size===course.methods.length)complete('method','All six methods learned.');}});
+    c$("#next-method-step").addEventListener('click',()=>{step=Math.min(method.steps.length-1,step+1);c$$('[data-method-step]').forEach((item,index)=>item.classList.toggle('active',index<=step));if(step===method.steps.length-1){completed.add(method.id);progress.methods=[...completed];saveProgress();c$("#next-method-step").textContent='Method complete ✓';if(completed.size===course.methods.length)complete('method',`All ${course.methods.length} methods learned.`);}});
   };
   draw();
 }
@@ -1068,14 +1071,22 @@ function renderExamples() {
 function renderExamplesClassic() {
   let level="Basic";
   const viewed=new Set(progress.examplesViewed||[]);
+  // Counted from the unit, never written into the sentence. Every page here said
+  // "Twelve examples" and "/12" while the units hold ten at Stages 5-8 and six
+  // or seven at Stages 1-4, so a learner who opened every solution was shown
+  // "10/12" and a bar stuck at 83% — on a section the completion check had
+  // already marked done, because that check reads workedExamples.length.
+  const LEVELS = ["Basic", "Intermediate", "Challenge"];
+  const total = course.workedExamples.length;
+  const atLevel = (name) => course.workedExamples.filter((example) => example.difficulty === name).length;
   const draw=()=>{
     const items=course.workedExamples.filter(item=>item.difficulty===level);
-    cRoot().innerHTML = `${pageHeader("Twelve examples · three levels", "Worked Examples", "Study four Basic, four Intermediate and four Challenge examples. Each solution explains why the step works.")}
-      <div class="subtabs">${["Basic","Intermediate","Challenge"].map(item=>`<button class="subtab ${item===level?'active':''}" data-example-level="${item}" type="button">${item} · ${course.workedExamples.filter(example=>example.difficulty===item).length}</button>`).join('')}</div>
+    cRoot().innerHTML = `${pageHeader(`${total} examples · ${LEVELS.length} levels`, "Worked Examples", `Study ${LEVELS.map((name) => `${atLevel(name)} ${name}`).join(", ")} examples. Each solution explains why the step works.`)}
+      <div class="subtabs">${LEVELS.map(item=>`<button class="subtab ${item===level?'active':''}" data-example-level="${item}" type="button">${item} · ${atLevel(item)}</button>`).join('')}</div>
       <div class="task-grid">${items.map((item) => `<article class="panel"><span class="eyebrow">${escapeHtml(item.difficulty)} · ${escapeHtml(item.outcomeId)}</span><h3>${escapeHtml(item.title)}</h3><p class="rule-box">${escapeHtml(item.prompt)}</p>${voiceButton(`${item.title}. ${item.prompt}. Solution: ${spokenText(item.solution)}`, "Listen to example")}<details data-example="${item.id}"><summary>Show worked solution</summary>${richText(item.solution)}</details></article>`).join("")}</div>
-      <section class="panel examples-progress"><strong>${viewed.size}/12</strong><span>solutions opened</span><div class="progress-track"><span style="width:${viewed.size/12*100}%"></span></div></section>`;
+      <section class="panel examples-progress"><strong>${viewed.size}/${total}</strong><span>solutions opened</span><div class="progress-track"><span style="width:${total?viewed.size/total*100:0}%"></span></div></section>`;
     c$$('[data-example-level]').forEach(button=>button.addEventListener('click',()=>{level=button.dataset.exampleLevel;draw();}));
-    c$$('[data-example]').forEach(details=>details.addEventListener('toggle',()=>{if(details.open){viewed.add(details.dataset.example);progress.examplesViewed=[...viewed];saveProgress();if(viewed.size===course.workedExamples.length)complete('examples','All twelve worked examples reviewed.');}}));
+    c$$('[data-example]').forEach(details=>details.addEventListener('toggle',()=>{if(details.open){viewed.add(details.dataset.example);progress.examplesViewed=[...viewed];saveProgress();if(viewed.size===course.workedExamples.length)complete('examples',`All ${total} worked examples reviewed.`);}}));
   };
   draw();
 }

@@ -114,7 +114,14 @@
 .ten-frame span.filled { background: var(--teal); }
 .method-player { display: grid; grid-template-columns: minmax(300px,.85fr) minmax(0,1.15fr); gap: 26px; }
 .method-example { padding: 24px; border-radius: 10px; color: white; background: linear-gradient(145deg,#142d52,#2457a7); text-align: center; }
-.method-example > strong { display: block; font: var(--weight-medium) 70px var(--font-serif); }
+/* This is the subject the 70px was drawn for: "24 + 8" as display type, and the
+   shortest examples here really are 14 characters. But the field is mixed —
+   14 to 239 characters, median 56-82 — and at 70px, 48% of Mathematics'
+   examples filled more than a 720px screen, the longest rendering 2,494px tall.
+   28px keeps a short sum reading as display type while capping a long one at
+   roughly a third of a screen. Science and Computing carry prose in this field,
+   not sums, so they sit at 22px. */
+.method-example > strong { display: block; font: var(--weight-medium) 28px/1.45 var(--font-serif); }
 .method-example .place-value > div { border-color: rgba(255,255,255,.3); }
 .method-example .place-value strong, .method-example .place-value span { color: white; }
 .method-example .math-display { color: var(--ink); }

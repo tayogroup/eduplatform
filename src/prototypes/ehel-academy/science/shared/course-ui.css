@@ -114,7 +114,14 @@
 .ten-frame span.filled { background: var(--teal); }
 .method-player { display: grid; grid-template-columns: minmax(300px,.85fr) minmax(0,1.15fr); gap: 26px; }
 .method-example { padding: 24px; border-radius: 10px; color: white; background: linear-gradient(145deg,#142d52,#2457a7); text-align: center; }
-.method-example > strong { display: block; font: var(--weight-medium) 70px var(--font-serif); }
+/* A method's example is PROSE in this subject — median 109 characters, longest
+   1,660 — not the short sum this 70px was inherited from when Science was
+   cloned from Mathematics. Measured at 70px, 239 characters rendered 2,494px
+   tall in a 720px viewport, so 87% of Science's examples filled more than a
+   screen and the longest ran to roughly twenty. Sized for a sentence instead.
+   Mathematics keeps a larger size, because half of ITS examples really are the
+   short numeric expression this design was drawn for. */
+.method-example > strong { display: block; font: var(--weight-medium) 22px/1.55 var(--font-serif); }
 .method-example .place-value > div { border-color: rgba(255,255,255,.3); }
 .method-example .place-value strong, .method-example .place-value span { color: white; }
 .method-example .math-display { color: var(--ink); }

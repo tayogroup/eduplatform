@@ -11,7 +11,7 @@ import { computingWordPicture } from "../../computing/shared/computing-word-pict
 import { createCourseApp } from "../course-app.js";
 import { createDeck, deckIcon } from "../deck.js?v=deck-1";
 import { createPlacementUnit, placementCallout, placementCourseShell, PREREQ_UNIT } from "../placement.js?v=placement-1";
-import { mountWehelChat, outlineFromManifest, unitFetcher } from "../wehel.js?v=wehel-1";
+import { mountWehelChat, modulesFromSections, outlineFromManifest, unitFetcher } from "../wehel.js?v=wehel-1";
 
 const pad2 = (n) => String(n).padStart(2, "0");
 
@@ -1742,7 +1742,10 @@ function buildTutorReply(message) {
 function wehelOptions() {
   const fw = cambridgeFramework(stageNumber);
   return {
-    meta: { subject: "computing", subjectLabel: "Computing", grade: stageNumber, cambridgeCode: `${fw.level} ${fw.code}`, unitNo: course.unit.unitNo, unitTitle: course.unit.unitTitle, courseOutline: outlineFromManifest(manifest), unit: course },
+    // modules: what the Focus control offers — this unit's teaching pages, from
+    // the same list the nav is built from. A prerequisite unit is the placement
+    // exam, which has no modules to focus.
+    meta: { subject: "computing", subjectLabel: "Computing", grade: stageNumber, cambridgeCode: `${fw.level} ${fw.code}`, unitNo: course.unit.unitNo, unitTitle: course.unit.unitTitle, courseOutline: outlineFromManifest(manifest), unit: course, modules: modulesFromSections(isPrereqUnit ? [] : sections) },
     store: progress,
     ui: { escapeHtml, toast, voiceButton, bindVoiceControls },
     tutorLabel: "Wehel Tutor",

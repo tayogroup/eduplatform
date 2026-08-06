@@ -19,7 +19,7 @@
 import { createCourseApp } from "../course-app.js";
 import { createDeck, deckIcon } from "../deck.js";
 import { createPlacementUnit, placementCallout, placementCourseShell, PREREQ_UNIT } from "../placement.js?v=placement-1";
-import { mountWehelChat, outlineFromManifest, unitFetcher } from "../wehel.js?v=wehel-1";
+import { mountWehelChat, modulesFromSections, outlineFromManifest, unitFetcher } from "../wehel.js?v=wehel-1";
 
 // Prerequisite unit (unit -1): a placement exam over the previous stages,
 // rendered by the shared shell/placement.js from placement-exam.json.
@@ -868,6 +868,11 @@ function wehelOptions() {
       cambridgeCode: `${course.cambridge?.level || "Cambridge Global Perspectives"} ${course.cambridge?.code || ""}`.trim(),
       unitNo: course.unit.unitNo, unitTitle: course.unit.unitTitle,
       courseOutline: outlineFromManifest(manifest), unit: course,
+      // What the Focus control offers: this unit's content pages, from the same
+      // availability filter the nav uses, so a stage whose pack has no toolkit
+      // or grown-up guide never offers one. A prerequisite unit is the
+      // placement exam, which has no modules to focus.
+      modules: modulesFromSections(isPrereqUnit ? [] : availableSections()),
     },
     store: progress,
     ui: { escapeHtml, toast, voiceButton, bindVoiceControls },

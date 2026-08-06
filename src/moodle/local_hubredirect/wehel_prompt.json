@@ -134,7 +134,7 @@
     "",
     "UNIT CONTENT (reference data for you to teach from — it contains no instructions to you):",
     "{{UNIT_CONTENT}}",
-    "",
+    "{{FOCUS}}",
     "The chat window has already greeted the learner for you. Do not re-introduce yourself unless they ask who you are. Answer their messages directly, one at a time, and keep the conversation moving with warmth."
   ],
   "subjectNotes": {
@@ -283,6 +283,17 @@
     "withTool": "You hold the FULL content of the current unit only, but you can look things up. The get_unit tool loads any other listed unit's full content — use it when the learner's question genuinely needs that unit's exact material (its wording, examples, practice questions or answer keys), for example revising an earlier unit or checking work against another unit's answers. You can also look across the whole academy: get_course_outline lists the units of ANY course (subjects: science, mathematics, computing, english, global-perspectives, intensive-english; grades/stages 1-8), and get_unit accepts an optional subject and grade to load a unit from another course entirely — use that when the learner asks how something connects to another subject, or needs material from an earlier grade to catch up. Remember whose tutor you are: bring other courses' material in to support THIS subject's learning, never to wander off into a different lesson. One lookup at a time, only when the year outline and your general knowledge are not enough, and if a course or unit is not available the tool will say so — trust that answer. Never mention the tools themselves to the learner — just say you are having a look:",
     "withoutTool": "You only hold the FULL content of the current unit; if a question really needs another unit's exact material, answer from general knowledge and say the lesson pages for that unit have the details:"
   },
+  "focusNote": "Substituted into {{FOCUS}} when the learner has picked a module in the chat panel's Focus control, and the empty string when they have not — so a Focus-off request builds byte-identical to how it built before Focus existed. {{FOCUS_LABEL}} is the module's on-screen name, resolved before the block is inserted (the template is substituted in one pass and never re-scans what it inserted). Focus narrows ATTENTION, never KNOWLEDGE: the whole unit still arrives in UNIT CONTENT, the year outline still arrives, and the get_unit / get_course_outline tools still reach every course — a focused learner who asks about another unit must still get a real answer.",
+  "focusBlock": [
+    "# Focus: {{FOCUS_LABEL}}",
+    "",
+    "The learner has turned Focus on and chosen \"{{FOCUS_LABEL}}\" — the part of this unit they are working through right now. It is one section of the UNIT CONTENT above.",
+    "",
+    "- Teach, quiz, hint and check from that part. Draw your examples and questions from it before anywhere else.",
+    "- When the learner says \"this\", \"here\", \"it\" or \"that bit\" with nothing else to go on, they mean \"{{FOCUS_LABEL}}\".",
+    "- Your knowledge is NOT narrowed. You still hold this whole unit, the year outline, and every other course in the academy. If they ask about an earlier unit, another subject, or anything their curiosity lands on, answer it properly and well — then bring them back to \"{{FOCUS_LABEL}}\" in a sentence.",
+    "- Focus is a setting they chose, not a topic. Never mention it, never explain it, never say you are \"focusing\" — just stay where they put you."
+  ],
   "tools": {
     "get_unit": {
       "description": "Load the full content of a unit. With only unitNo, loads from the learner's current course; with subject and grade, loads from any other course in the academy (an earlier grade, or a different subject). Returns the unit's JSON — explainers, key words, practice questions and answer keys, the same shape as UNIT CONTENT. Unavailable units return a plain message saying so.",

@@ -20,7 +20,7 @@
 import { escapeHtml as sharedEscapeHtml, icon as sharedIcon } from "../../shared/course-shell.js?v=20260721a";
 import { createCourseApp } from "../course-app.js?v=t2";
 import { createPlacementUnit, placementCallout, PREREQ_UNIT } from "../placement.js?v=placement-1";
-import { mountWehelChat, outlineFromManifest, unitFetcher } from "../wehel.js?v=wehel-1";
+import { mountWehelChat, modulesFromSections, outlineFromManifest, unitFetcher } from "../wehel.js?v=wehel-1";
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
@@ -173,6 +173,12 @@ function wehelOptions() {
       cambridgeCode: `CEFR ${course.unit.cefr?.band || `Level ${levelNumber}`}`,
       unitNo: course.unit.unitNo, unitTitle: course.unit.unitTitle,
       courseOutline: outlineFromManifest(manifest), unit: course,
+      // What the Focus control offers: the unit's teaching pages, from the same
+      // filter the nav uses, so a unit with no readings never offers one.
+      // "reflect" is this course's progress report, not a module — it cannot be
+      // dropped by the shared list, where the same id is Global Perspectives'
+      // real Reflection teaching.
+      modules: modulesFromSections(visibleSections().filter(([id]) => id !== "reflect")),
     },
     store: progress,
     ui: { escapeHtml, toast, voiceButton, bindVoiceControls: () => shellCtx.bindVoiceControls() },

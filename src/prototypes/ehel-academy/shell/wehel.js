@@ -33,6 +33,67 @@ export function setPreferredTeachingLanguage(value) {
   catch { /* private mode — the choice just won't persist */ }
 }
 
+// --- focus -------------------------------------------------------------------
+// Focus narrows Wehel's ATTENTION, never its knowledge. The full unit still
+// travels as UNIT CONTENT, the year outline still travels, and the get_unit /
+// get_course_outline tools still reach every course at every stage — a focused
+// learner who asks "is this like Unit 2?" gets the same real answer as before.
+// All Focus does is name the module they are working through, so "explain this"
+// has a referent and a quiz stays on the page they are actually on.
+//
+// Stored per subject AND per unit: a module label from Unit 2 means nothing in
+// Unit 3. Read back through the unit's own module list rather than trusted, so
+// a section that has been renamed, or that this unit's data does not carry,
+// falls back to the whole unit instead of pointing Wehel at a page that is not
+// there.
+const focusStorageKey = (meta) => `ehel-wehel-focus-${meta.subject}-u${meta.unitNo}`;
+
+export function focusModule(meta, modules) {
+  const list = Array.isArray(modules) ? modules : [];
+  if (!list.length) return null;
+  try { return list.find((module) => module.id === localStorage.getItem(focusStorageKey(meta))) || null; }
+  catch { return null; }
+}
+export function setFocusModule(meta, id) {
+  try {
+    if (id) localStorage.setItem(focusStorageKey(meta), id);
+    else localStorage.removeItem(focusStorageKey(meta));
+  } catch { /* private mode — the choice just won't persist */ }
+}
+
+// Turn a subject's section list — [id, icon, label] rows, the same shape the
+// nav is built from — into the modules the Focus control offers.
+//
+// What is dropped is everything that is not part of THIS unit's teaching: the
+// tutor panel itself, the progress report, the live-class link, the placement
+// exam, and the two capstone pages, which belong to the stage rather than to
+// the unit and whose content is not in the unit JSON Wehel holds. Focusing any
+// of them would point the tutor at a page it cannot read.
+const NON_MODULE_SECTIONS = ["ai", "tutor", "progress", "live", "placement", "capstone", "capstonequiz"];
+
+export function modulesFromSections(sections) {
+  const modules = (Array.isArray(sections) ? sections : [])
+    .filter((section) => Array.isArray(section) && section[0] && section[2] && !NON_MODULE_SECTIONS.includes(section[0]))
+    .map(([id, , label]) => ({ id, label }));
+  // One module is not a choice. A prerequisite unit reduces to its overview
+  // alone, and a control offering "Whole unit" or the only thing in it is
+  // clutter — so the caller gets nothing and the control does not render.
+  return modules.length > 1 ? modules : [];
+}
+
+// The three things a learner wants once they have narrowed to one module. Each
+// carries a mode as well as a message, so the button reaches the teaching the
+// system prompt already defines (its EXPLAIN and QUIZ ME playbooks, and the
+// teach/practice/help modeHints) instead of depending on the learner happening
+// to type the right words.
+export function focusPrompts(label) {
+  return [
+    { label: "Teach me", mode: "teach", message: `Teach me "${label}" from this unit, step by step, starting from the beginning.` },
+    { label: "Quiz me", mode: "practice", message: `Quiz me on "${label}" from this unit, one question at a time.` },
+    { label: "Explain", mode: "help", message: `Explain "${label}" from this unit a different way from the way the lesson explains it.` },
+  ];
+}
+
 // "Soomaali:" lines are the prompt's contract for Somali vocabulary: the only
 // part of a reply the Somali voice reads, and the part the English browser
 // voice must skip. Tolerates the bullets/bold the model sometimes adds even
@@ -385,7 +446,7 @@ function syncPanels(source) {
   }
 }
 
-export async function askWehel({ meta, messages, channel = "text", mode = "", sectionHint = "", fetchUnit = null }) {
+export async function askWehel({ meta, messages, channel = "text", mode = "", sectionHint = "", focus = null, fetchUnit = null }) {
   const wstoken = new URLSearchParams(location.search).get("wstoken") || undefined;
   const post = async (conversation) => {
     const response = await fetch(WEHEL_CHAT_ENDPOINT, {
@@ -406,6 +467,9 @@ export async function askWehel({ meta, messages, channel = "text", mode = "", se
         channel,
         mode: mode || undefined,
         sectionHint: sectionHint || undefined,
+        // Label only — the endpoints name the module in the prompt, and the
+        // unit's own content is already there for the model to find it in.
+        focus: focus?.label ? { label: focus.label } : undefined,
         wstoken,
         tools: fetchUnit ? ["get_unit", "get_course_outline"] : [],
         messages: conversation,
@@ -480,7 +544,10 @@ export function wehelIcon(name) {
 // options:
 //   container      — element to render into
 //   meta           — { subject, subjectLabel, grade, cambridgeCode, unitNo,
-//                      unitTitle, unit, learnerName? }
+//                      unitTitle, unit, learnerName?, modules? }
+//                    modules is [{ id, label }] for this unit's content pages
+//                    and is what the Focus control offers; omit it and the
+//                    control does not render at all.
 //   store          — object whose `key` array holds {role, text, offline?}
 //   key            — property name on store (default "aiMessages")
 //   ui             — { $, escapeHtml, toast, voiceButton?, bindVoiceControls? }
@@ -498,7 +565,14 @@ export function mountWehelChat(options) {
   const key = options.key || "aiMessages";
   const escapeHtml = ui.escapeHtml;
   const tutorLabel = options.tutorLabel || "Wehel Tutor";
-  const greeting = options.greeting || `Hi! I am ${tutorLabel}, your ${meta.subjectLabel} companion. What would you like to do with Unit ${meta.unitNo}: ${meta.unitTitle}?`;
+  const baseGreeting = options.greeting || `Hi! I am ${tutorLabel}, your ${meta.subjectLabel} companion. What would you like to do with Unit ${meta.unitNo}: ${meta.unitTitle}?`;
+  // A focused learner is greeted by where they are, and offered the same three
+  // things the focused quick prompts do — the greeting is the first place the
+  // setting has to be visible, or Focus looks like it did nothing.
+  const greetingFor = (focus) => (focus
+    ? `Hi! I am ${tutorLabel}. We are on "${focus.label}" in Unit ${meta.unitNo}: ${meta.unitTitle}. Shall I teach it, quiz you on it, or explain it a different way?`
+    : baseGreeting);
+  const modules = (Array.isArray(meta.modules) ? meta.modules : []).filter((module) => module && module.id && module.label);
   if (!Array.isArray(store[key])) store[key] = [];
   const messages = store[key];
   const micSupported = Boolean(speechRecognitionCtor())
@@ -546,15 +620,31 @@ export function mountWehelChat(options) {
 
   function render() {
     const teachingLanguage = preferredTeachingLanguage();
+    // Read at render time, not at mount: the drawer and the Tutor page can both
+    // be live over one store, and syncPanels repaints the sibling — so changing
+    // Focus in either is immediately true in both.
+    const focus = focusModule(meta, modules);
+    const greeting = greetingFor(focus);
+    // Focused, the subject's own quick prompts step aside for the three the
+    // learner asked for. Unfocused, nothing about this changes.
+    const prompts = focus ? focusPrompts(focus.label) : [...(options.quickPrompts || [])];
     // The Somali option is vocabulary-only, so the extra quick prompt asks for
-    // exactly that — key words with their Somali translations.
-    const prompts = [...(options.quickPrompts || [])];
+    // exactly that — key words with their Somali translations, from the focused
+    // module when there is one.
     if (teachingLanguage === "somali") {
-      prompts.push({ label: "Erayada af-Soomaali", message: "Teach me this unit's key words and give the Somali translation for each one." });
+      prompts.push({ label: "Erayada af-Soomaali", message: focus
+        ? `Teach me the key words in "${focus.label}" and give the Somali translation for each one.`
+        : "Teach me this unit's key words and give the Somali translation for each one." });
     }
     container.innerHTML = `
       <div class="ai-voice-row" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
         ${browserSpeechSupported ? `<button class="button secondary" id="wehel-voice-toggle" type="button" aria-pressed="${speakReplies}" title="${speakReplies ? `${escapeHtml(tutorLabel)} reads replies aloud` : "Replies are silent"}">${speakReplies ? `${wehelIcon("volume")} Voice on` : `${wehelIcon("volumeOff")} Voice off`}</button>` : ""}
+        ${modules.length ? `<label style="display:inline-flex;align-items:center;gap:6px;font-size:13px;opacity:.85">Focus
+          <select id="wehel-focus" style="font:inherit;padding:4px 8px;border:1px solid rgba(15,23,42,.25);border-radius:6px;background:#fff;color:inherit">
+            <option value="">Whole unit</option>
+            ${modules.map((module) => `<option value="${escapeHtml(module.id)}"${focus && focus.id === module.id ? " selected" : ""}>${escapeHtml(module.label)}</option>`).join("")}
+          </select>
+        </label>` : ""}
         <label style="margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:13px;opacity:.85">Teaching language
           <select id="wehel-language" style="font:inherit;padding:4px 8px;border:1px solid rgba(15,23,42,.25);border-radius:6px;background:#fff;color:inherit">
             <option value="english"${teachingLanguage === "english" ? " selected" : ""}>English</option>
@@ -566,10 +656,10 @@ export function mountWehelChat(options) {
         ${messages.length ? messages.map(bubble).join("") : bubble({ role: "assistant", text: greeting }, -1)}
         ${busy ? `<article class="ai-message assistant is-thinking"><strong>${escapeHtml(tutorLabel)}</strong><em>is thinking…</em></article>` : ""}
       </div>
-      <div class="ai-prompts">${prompts.map((prompt) => `<button data-wehel-prompt="${escapeHtml(prompt.message)}" type="button" ${busy ? "disabled" : ""}>${escapeHtml(prompt.label)}</button>`).join("")}</div>
+      <div class="ai-prompts">${prompts.map((prompt) => `<button data-wehel-prompt="${escapeHtml(prompt.message)}" data-wehel-mode="${escapeHtml(prompt.mode || "")}" type="button" ${busy ? "disabled" : ""}>${escapeHtml(prompt.label)}</button>`).join("")}</div>
       <form class="ai-compose" id="wehel-form">
         <label class="sr-only" for="wehel-input">Ask ${escapeHtml(tutorLabel)}</label>
-        <input id="wehel-input" maxlength="500" placeholder="${escapeHtml(options.placeholder || `Ask about ${meta.unitTitle}…`)}" ${busy ? "disabled" : ""} autocomplete="off">
+        <input id="wehel-input" maxlength="500" placeholder="${escapeHtml(focus ? `Ask about ${focus.label}…` : (options.placeholder || `Ask about ${meta.unitTitle}…`))}" ${busy ? "disabled" : ""} autocomplete="off">
         ${micSupported ? `<button class="button secondary" id="wehel-mic" type="button" aria-label="Ask by voice" title="Ask by voice" ${busy ? "disabled" : ""}>${wehelIcon("mic")}</button>` : ""}
         <button class="button primary" type="submit" ${busy ? "disabled" : ""}>Send</button>
       </form>`;
@@ -615,7 +705,17 @@ export function mountWehelChat(options) {
         ? "Wehel will add Somali for key words — erayada oo af-Soomaali ah."
         : "Wehel will use English only.");
     });
-    container.querySelectorAll("[data-wehel-prompt]").forEach((button) => button.addEventListener("click", () => submit(button.dataset.wehelPrompt, "text")));
+    const focusSelect = container.querySelector("#wehel-focus");
+    if (focusSelect) focusSelect.addEventListener("change", () => {
+      setFocusModule(meta, focusSelect.value);
+      render();
+      syncPanels(panel);
+      const chosen = modules.find((module) => module.id === focusSelect.value);
+      if (ui.toast) ui.toast(chosen
+        ? `${tutorLabel} is staying on ${chosen.label} — still happy to answer anything else.`
+        : `${tutorLabel} is back to the whole unit.`);
+    });
+    container.querySelectorAll("[data-wehel-prompt]").forEach((button) => button.addEventListener("click", () => submit(button.dataset.wehelPrompt, "text", button.dataset.wehelMode || "")));
     container.querySelector("#wehel-form").addEventListener("submit", (event) => {
       event.preventDefault();
       const input = container.querySelector("#wehel-input");
@@ -634,7 +734,9 @@ export function mountWehelChat(options) {
     syncPanels(panel);
   }
 
-  async function submit(text, channel) {
+  // modeHint: a focused quick prompt names its own mode ("teach", "practice",
+  // "help"); a typed message falls back to the panel's mode as before.
+  async function submit(text, channel, modeHint = "") {
     if (busy) return;
     stopBrowserSpeech();
     speakingIndex = null;
@@ -645,8 +747,9 @@ export function mountWehelChat(options) {
     let reply;
     let offline = false;
     try {
-      reply = await askWehel({ meta, messages, channel, mode: options.mode,
+      reply = await askWehel({ meta, messages, channel, mode: modeHint || options.mode,
         sectionHint: typeof options.sectionHint === "function" ? options.sectionHint() : options.sectionHint,
+        focus: focusModule(meta, modules),
         fetchUnit: options.fetchUnit || null });
     } catch (error) {
       offline = true;

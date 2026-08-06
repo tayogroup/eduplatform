@@ -84,6 +84,16 @@ function createWehelChatHandler({ apiKey, model: modelOverride = () => undefined
         unitContent = "(The unit content was not provided. Teach from the unit title and general Cambridge knowledge for this grade, and say when you are unsure what the lesson on screen shows.)";
       }
 
+      // Focus — the module of this unit the learner picked in the chat panel.
+      // It narrows the tutor's attention only: UNIT CONTENT, the year outline
+      // and the tools all still travel. Unset, the replacement is the empty
+      // string, so the prompt builds exactly as it did before Focus existed.
+      // Mirrored in wehel_chat.php.
+      const focusLabel = clean(payload.focus && payload.focus.label, 80);
+      const focusBlock = focusLabel && Array.isArray(promptData.focusBlock) && promptData.focusBlock.length
+        ? `\n${promptData.focusBlock.join("\n").split("{{FOCUS_LABEL}}").join(focusLabel)}\n`
+        : "";
+
       const replacements = {
         "{{LEARNER_NAME}}": clean(payload.learnerName, 40) || "the learner",
         "{{SUBJECT}}": clean(payload.subjectLabel, 60) || subject,
@@ -99,6 +109,7 @@ function createWehelChatHandler({ apiKey, model: modelOverride = () => undefined
         "{{COURSE_OUTLINE}}": String(payload.courseOutline || "").replace(/[^\S\n]+/g, " ").trim().slice(0, 4000)
           || "(The course outline was not provided; you know only the current unit.)",
         "{{UNIT_CONTENT}}": unitContent,
+        "{{FOCUS}}": focusBlock,
       };
       let system = promptData.template.join("\n").replace(/\{\{[A-Z_]+\}\}/g, (token) => replacements[token] ?? token);
       const modeHint = (promptData.modeHints || {})[String(payload.mode || "")];

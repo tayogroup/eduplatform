@@ -271,6 +271,19 @@ $bands = $promptdata['stageBands'] ?? [];
 $band = (string)($bands[(string)$grade] ?? 'upper-primary');
 $subjectnotes = implode("\n", (array)$promptdata['subjectNotes'][$subject]);
 
+// Focus — the module of this unit the learner picked in the chat panel. It
+// narrows the tutor's attention only: UNIT CONTENT, the year outline and the
+// tools all still travel. Unset, the replacement is the empty string, so the
+// prompt builds exactly as it did before Focus existed. Mirror of the same step
+// in tools/lib/wehel-dev-chat.js.
+$focuslabel = $clean(is_array($payload['focus'] ?? null) ? ($payload['focus']['label'] ?? '') : '', 80);
+$focusblock = '';
+if ($focuslabel !== '' && !empty($promptdata['focusBlock'])) {
+    $focusblock = "\n" . strtr(implode("\n", array_map('strval', (array)$promptdata['focusBlock'])), [
+        '{{FOCUS_LABEL}}' => $focuslabel,
+    ]) . "\n";
+}
+
 $system = implode("\n", (array)$promptdata['template']);
 $system = strtr($system, [
     '{{LEARNER_NAME}}' => $learnername !== '' ? $learnername : 'the learner',
@@ -286,6 +299,7 @@ $system = strtr($system, [
     '{{OTHER_UNITS_NOTE}}' => (string)(($promptdata['otherUnitsNotes'] ?? [])[$usetool ? 'withTool' : 'withoutTool'] ?? ''),
     '{{COURSE_OUTLINE}}' => $courseoutline,
     '{{UNIT_CONTENT}}' => $unitcontent,
+    '{{FOCUS}}' => $focusblock,
 ]);
 $modehints = (array)($promptdata['modeHints'] ?? []);
 if ($modehint !== '' && isset($modehints[$modehint])) {

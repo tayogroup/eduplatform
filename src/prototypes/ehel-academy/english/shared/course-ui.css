@@ -310,18 +310,19 @@ body.focus-mode.gc-full .gc-dots { position: fixed; left: 0; right: 0; bottom: 1
    the count chip was pushed out to the far corner, nowhere near the deck it
    belongs to. max-width + auto margins put it back under the card. */
 body.focus-mode.gc-full .wc-tools { position: fixed; left: 0; right: 0; bottom: 58px; max-width: 640px; margin: 0 auto; padding: 0 16px; z-index: 55; }
-/* ── Grade 1: the original design with the slide deck under it ───────────────
-   Grade 1 keeps both designs on a unit module, so its deck cannot take the
-   screen the way the Grade 2-4 deck does: it is mounted with full-bleed off,
-   into .g1-deck, below the original page. Every rule here hangs off a .g1-*
-   ancestor on purpose — the .gc-* rules above are shared with Mathematics,
-   Science, Computing and Global Perspectives (whose dated stylesheet @imports
-   this file on the CDN), and none of them has a both-designs page to style. */
-.g1-both { display: grid; gap: 30px; }
-.g1-deck { border-top: 2px dashed var(--line); padding-top: 24px; }
-.g1-deck-head { max-width: 960px; margin: 0 auto 16px; text-align: center; }
-.g1-deck-head .eyebrow { display: block; }
-.g1-deck-head p { margin: 5px 0 0; color: #64748b; font-size: 15px; }
+/* ── Grades 1-4: the original design with the slide deck under it ────────────
+   A unit module at Grades 1-4 keeps both designs, so its deck cannot take the
+   screen the way it did when it replaced the original page: it is mounted with
+   full-bleed off, into .deck-design, below the original. Every rule here hangs
+   off a both-designs ancestor on purpose — the .gc-* rules above are shared with
+   Mathematics, Science, Computing and Global Perspectives (whose dated
+   stylesheet @imports this file on the CDN), and none of them has a
+   both-designs page to style. */
+.both-designs { display: grid; gap: 30px; }
+.deck-design { border-top: 2px dashed var(--line); padding-top: 24px; }
+.deck-design-head { max-width: 960px; margin: 0 auto 16px; text-align: center; }
+.deck-design-head .eyebrow { display: block; }
+.deck-design-head p { margin: 5px 0 0; color: #64748b; font-size: 15px; }
 /* The deck measures itself against the viewport when it owns the page. Here it
    has a page above it, so it takes a bounded height instead — the learner
    scrolls down to a deck that is whole, rather than past a 100vh one.
@@ -330,9 +331,9 @@ body.focus-mode.gc-full .wc-tools { position: fixed; left: 0; right: 0; bottom: 
    and the deck grows to its tallest slide — measured at 845px on Writing and
    varying section to section. Fixed, the overflow goes back where the full-bleed
    deck already puts it: inside .gc-inner, which scrolls. */
-.g1-deck .gc-wrap { height: auto; }
-.g1-deck .gc-carousel { flex: none; height: min(68vh, 620px); }
-@media (max-width: 720px) { .g1-deck .gc-carousel { height: 78vh; } }
+.deck-design .gc-wrap { height: auto; }
+.deck-design .gc-carousel { flex: none; height: min(68vh, 620px); }
+@media (max-width: 720px) { .deck-design .gc-carousel { height: 78vh; } }
 @media (max-width: 720px) {
   .gc-arrow { width: 46px; height: 46px; }
   .gc-pattern { font-size: 34px; }

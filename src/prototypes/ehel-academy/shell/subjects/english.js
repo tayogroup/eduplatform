@@ -753,10 +753,10 @@ function prepareNarrationText(value) {
 }
 
 function collectPageNarration() {
-  // On the Grade 1 both-designs page the deck below repeats the section word for
-  // word, so "read this page" reads the original half only. Narrating #app there
-  // would say everything twice.
-  const source = $("#g1-classic") || $("#app");
+  // On a both-designs page the deck below repeats the section word for word, so
+  // "read this page" reads the original half only. Narrating #app there would say
+  // everything twice.
+  const source = $("#classic-design") || $("#app");
   if (!source) return currentPageNarration;
   const copy = source.cloneNode(true);
   copy.querySelectorAll("button, .audio-source, .status-chip, script, style, [hidden], [aria-hidden='true'], details:not([open]) > *:not(summary)").forEach((element) => element.remove());
@@ -1052,11 +1052,13 @@ function linkedWords() {
   return course.dictionaryLinks.map((link) => ({ ...link, master: dictionary.entries.find((entry) => entry.dictionaryEntryId === link.dictionaryEntryId) }));
 }
 
-// ── Grade 1: the original design AND the slide deck ──────────────────────────
-// Grades 2-4 meet a unit module as a slide deck INSTEAD of the original page.
-// Grade 1 gets both, in that order: the original section first, then the same
-// content as an inline deck under it. Grades 5-8 are untouched — they never had
-// a deck.
+// ── Grades 1-4: the original design AND the slide deck ───────────────────────
+// A unit module at Grades 1-4 shows both designs, in this order: the original
+// section first, then the same content as an inline deck under it. The deck used
+// to REPLACE the original page here; now it joins it. Grades 5-8 are untouched —
+// they never had a deck, and the boundary is still 4 (see DECK_MAX_STAGE in the
+// other subjects: by Grade 5 a learner scans a page rather than being walked
+// through it one item at a time).
 //
 // Two things make this more than an extra function call. Both designs draw the
 // same section, so both carry the same hooks: #word-search and #group-filter,
@@ -1067,10 +1069,10 @@ function linkedWords() {
 // moment a subtab or a filter redrew.
 //
 // So each design gets its own region. The original renderer paints into
-// .g1-classic and queries inside it (classicScope), and the deck mounts into
-// .g1-deck with full-bleed off. Outside Grade 1 both helpers fall back to #app
-// and the document, so every other grade runs exactly the code it ran before.
-const BOTH_DESIGNS = gradeNumber === 1;
+// .classic-design and queries inside it (classicScope), and the deck mounts into
+// .deck-design with full-bleed off. At Grades 5-8 both helpers fall back to #app
+// and the document, so those grades run exactly the code they ran before.
+const BOTH_DESIGNS = gradeNumber <= 4;
 let classicRegion = null;
 let deckMount = null;
 
@@ -1088,30 +1090,28 @@ function classicScope() {
 }
 
 function renderBothDesigns(classic, carousel, intro) {
-  $("#app").innerHTML = `<div class="g1-both">
-      <div class="g1-classic" id="g1-classic"></div>
-      <section class="g1-deck">
-        <div class="g1-deck-head"><span class="eyebrow">Slides</span><p>${escapeHtml(intro)}</p></div>
-        <div id="g1-deck"></div>
+  $("#app").innerHTML = `<div class="both-designs">
+      <div class="classic-design" id="classic-design"></div>
+      <section class="deck-design">
+        <div class="deck-design-head"><span class="eyebrow">Slides</span><p>${escapeHtml(intro)}</p></div>
+        <div id="deck-design"></div>
       </section>
     </div>`;
-  classicRegion = $("#g1-classic");
+  classicRegion = $("#classic-design");
   classic();
   // The deck is mounted second and left mounted: the region survives the
-  // original's own redraws, which now stop at .g1-classic. Both flags are
+  // original's own redraws, which now stop at .classic-design. Both flags are
   // cleared by onBeforeRender before the next section draws.
-  deckMount = "#g1-deck";
+  deckMount = "#deck-design";
   carousel();
   deckMount = null;
 }
 
 function renderDictionary() {
-  // Grades 1-4 meet one word at a time on the same slide design the Grade 1
-  // grammar patterns use. From Grade 5 the searchable two-column lab stays:
-  // by then a learner is looking words UP, and a unit can carry 70 of them.
-  // Grade 1 gets the lab as well, above the deck.
+  // Grades 1-4 meet one word at a time in the deck, and keep the searchable
+  // two-column lab above it. From Grade 5 the lab is the whole section: by then
+  // a learner is looking words UP, and a unit can carry 70 of them.
   if (BOTH_DESIGNS) return renderBothDesigns(renderDictionaryClassic, renderWordCarousel, "The same words, one at a time.");
-  if (gradeNumber <= 4) return renderWordCarousel();
   return renderDictionaryClassic();
 }
 
@@ -1190,9 +1190,11 @@ function renderDictionaryClassic() {
 const baseDeck = createDeck({ $, escapeHtml, icon, stopAudio, afterPaint: icons });
 const { deckFinish } = baseDeck;
 // Where a deck lands is decided by whoever is rendering, not by the six
-// carousels: a Grade 1 both-designs page sets deckMount and every carousel below
-// mounts inline under the original section without knowing about it. Everywhere
-// else deckMount is null and the deck takes over #app exactly as before.
+// carousels: a both-designs page sets deckMount and every carousel below mounts
+// inline under the original section without knowing about it. Every English deck
+// arrives that way now — the unset branch is what a carousel would get if it were
+// ever mounted as a section on its own again, which is how Grades 1-4 worked
+// before the original designs were restored above them.
 const mountDeck = (options) => baseDeck.mountDeck(deckMount ? { ...options, mount: deckMount, fullBleed: false } : options);
 
 // Vocabulary as a slide deck, on the Grade 1 grammar carousel's design (gc-*):
@@ -1204,7 +1206,7 @@ const mountDeck = (options) => baseDeck.mountDeck(deckMount ? { ...options, moun
 // "I know this word" — only the layout changes. What does NOT carry over from
 // grammar is the assumption of six items: a unit holds 13-70 words, so the
 // search and group filter come with it and narrow the deck itself. They sit
-// under the dots rather than in .gc-top, which the full-bleed CSS hides.
+// under the dots rather than in .gc-top, which the full-bleed CSS hid.
 function renderWordCarousel() {
   const allWords = linkedWords();
   const esc = escapeHtml;
@@ -1640,7 +1642,6 @@ function renderReading() {
 
 function renderComprehension() {
   if (BOTH_DESIGNS) return renderBothDesigns(renderComprehensionClassic, renderComprehensionCarousel, "The same questions, one at a time.");
-  if (gradeNumber <= 4) return renderComprehensionCarousel();
   return renderComprehensionClassic();
 }
 
@@ -1728,12 +1729,10 @@ function renderComprehensionCarousel() {
 }
 
 function renderGrammar() {
-  // Grades 1-4 get the kid-friendly full-screen carousel (one pattern at a time),
-  // modelled on the Arabic Alphabet unit's Learn section. Grade 5 and up keep the
-  // grid workshop: by then a learner scans six cards rather than being walked
-  // through them one at a time. Grade 1 keeps the workshop too, above the deck.
+  // Grades 1-4 get the kid-friendly carousel (one pattern at a time), modelled on
+  // the Arabic Alphabet unit's Learn section, with the grid workshop kept above
+  // it. Grade 5 and up are the workshop alone.
   if (BOTH_DESIGNS) return renderBothDesigns(renderGrammarClassic, renderGrammarCarousel, "The same patterns, one at a time.");
-  if (gradeNumber <= 4) return renderGrammarCarousel();
   return renderGrammarClassic();
 }
 
@@ -1822,7 +1821,6 @@ function renderGrammarCarousel() {
 
 function renderSpeaking() {
   if (BOTH_DESIGNS) return renderBothDesigns(renderSpeakingClassic, renderSpeakingCarousel, "The same practices, one at a time.");
-  if (gradeNumber <= 4) return renderSpeakingCarousel();
   return renderSpeakingClassic();
 }
 
@@ -1888,12 +1886,13 @@ async function toggleRecording(taskId, button) {
     return;
   }
   if (!navigator.mediaDevices?.getUserMedia || !window.MediaRecorder) return toast("Audio recording is not supported in this browser.");
-  // The recorder belongs to the half of the page the learner pressed. At Grade 1
-  // the card grid and the deck are both on screen carrying the same data-record,
-  // data-record-status and data-playback ids, so the status line and the <audio>
-  // are found from the button's own region — a document-wide lookup would put
-  // the recording into the other design's player and leave this one silent.
-  const region = button.closest(".gc-wrap, .g1-classic") || document;
+  // The recorder belongs to the half of the page the learner pressed. At Grades
+  // 1-4 the card grid and the deck are both on screen carrying the same
+  // data-record, data-record-status and data-playback ids, so the status line and
+  // the <audio> are found from the button's own region — a document-wide lookup
+  // would put the recording into the other design's player and leave this one
+  // silent.
+  const region = button.closest(".gc-wrap, .classic-design") || document;
   const find = (selector) => region.querySelector(selector);
   try {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -1931,7 +1930,6 @@ async function toggleRecording(taskId, button) {
 
 function renderWriting() {
   if (BOTH_DESIGNS) return renderBothDesigns(renderWritingClassic, renderWritingCarousel, "The same writing tasks, one at a time.");
-  if (gradeNumber <= 4) return renderWritingCarousel();
   return renderWritingClassic();
 }
 
@@ -2037,7 +2035,6 @@ function renderWritingCarousel() {
 
 function renderActivities() {
   if (BOTH_DESIGNS) return renderBothDesigns(renderActivitiesClassic, renderActivitiesCarousel, "The same activities, one at a time.");
-  if (gradeNumber <= 4) return renderActivitiesCarousel();
   return renderActivitiesClassic();
 }
 

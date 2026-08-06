@@ -7,6 +7,7 @@
 // Safe Online, Unit Project and Computing Words.
 import { initComputingWebGL } from "../../computing/shared/computing-webgl.js";
 import { unitTopic, computingDiagram } from "../../computing/shared/computing-visuals.js";
+import { computingWordPicture } from "../../computing/shared/computing-word-pictures.js?v=cmp-pictures-1";
 import { createCourseApp } from "../course-app.js";
 import { createDeck, deckIcon } from "../deck.js?v=deck-1";
 import { createPlacementUnit, placementCallout, placementCourseShell, PREREQ_UNIT } from "../placement.js?v=placement-1";
@@ -634,6 +635,7 @@ function renderComputingWordsDeck(vocab) {
 
   const wordSlide = ({ entry, index }, position) => `<section class="gc-slide gc-v${position % 5}"><div class="gc-inner">
       <span class="gc-eyebrow">Word ${position + 1} of ${shown.length} · Computing word</span>
+      ${computingWordPicture(entry.term) ? `<div class="wc-picture" aria-hidden="true">${computingWordPicture(entry.term)}</div>` : ""}
       <div class="gc-pattern" lang="en">${esc(entry.term)}</div>
       <p class="gc-lead">${esc(entry.meaning)}</p>
       <div class="gc-actions">${deckVoice(`${entry.term}. ${entry.meaning}`, `Listen to ${entry.term}`)}</div>

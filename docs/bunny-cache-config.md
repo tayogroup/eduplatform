@@ -167,15 +167,28 @@ The release pointer is `index.html`, and Edge Rule #2 gives **that filename** a
 URL, so it does not match that rule and falls to the default **30-day** tier,
 even though Bunny serves the same `index.html` bytes for it.
 
-`grade-redirect.js` sends every learner to the directory form:
+**Who actually lands on which form matters, and it is not obvious.** The Moodle
+launch URL — how a learner really arrives — is built in
+`local_prequran/progress_gatewaylib.php` and already names the file:
 
-```js
-const target = new URL("../", location.href);   // → app/{subject}/?stage=…
+```php
+'appurl' => 'https://…/app/' . $subjectdir . '/index.html',   // short-cached ✅
 ```
 
-so the directory copy is the one that matters, and the short-cached `index.html`
-almost nobody requests is the one the deploy verifies. Measured on 2026-08-06,
-minutes after science v124 shipped:
+So a launched learner gets the 5-minute pointer and sees a release immediately.
+The directory form is reached only by the paths that skip Moodle:
+
+- a typed or bookmarked `…/app/{subject}/`
+- the per-grade path `…/app/{subject}/grade-N/`, whose `grade-redirect.js` does
+  `new URL("../", location.href)` and lands on the directory
+
+Those get the month-old copy. That makes this a **stale-for-some-entry-points**
+bug, not a delivery outage — worth fixing, not worth a panic. (An earlier version
+of this section claimed every learner hit the directory form. That was wrong: it
+was written without tracing the launch URL, and it turned a cosmetic problem into
+four rounds of dashboard purging during the science v124 release.)
+
+Measured on 2026-08-06, minutes after science v124 shipped:
 
 | URL | serves | `Cache-Control` |
 |---|---|---|
@@ -213,8 +226,15 @@ same pin. The only fixes are:
   it also unsticks `current.json` and `grade-redirect.js`, which are on the same
   30-day tier for the same reason.
 
-Until that rule exists, treat a release as **not live** until the directory URL
-shows the new tag, and expect to purge one URL per subject on each deploy.
+Until that rule exists: a release is live for **launched learners** as soon as
+`index.html` flips, and stale for direct and per-grade links until the directory
+object is purged or expires. Check the pair, then decide whether the gap is worth
+a purge — on 2026-08-06 it was not, and the release stood.
+
+**Before treating any of this as urgent, confirm who is actually affected.**
+`pqpg_ehel_app_base()` is the single source of truth for the launch URL; read it
+rather than assuming which form learners get. That one check is the difference
+between a note in the release log and an afternoon in the purge dialog.
 
 ### The invariant: a version bundle must be self-contained
 

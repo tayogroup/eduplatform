@@ -54,11 +54,29 @@ export function focusModule(meta, modules) {
   try { return list.find((module) => module.id === localStorage.getItem(focusStorageKey(meta))) || null; }
   catch { return null; }
 }
+// Focus is read from storage at render time, so every surface showing it has to
+// be told when it moves. syncPanels only reaches panels this module mounted —
+// English draws its own tutor page — and a picker still showing the old module
+// while storage holds the new one is a UI that lies about what the tutor is
+// doing. So setFocusModule is the one notification point: whoever changes it,
+// everyone hears.
+const focusListeners = new Set();
+
+/** Watch for Focus changes. Returns an unsubscribe function. */
+export function onFocusChange(listener) {
+  focusListeners.add(listener);
+  return () => focusListeners.delete(listener);
+}
+
 export function setFocusModule(meta, id) {
   try {
     if (id) localStorage.setItem(focusStorageKey(meta), id);
     else localStorage.removeItem(focusStorageKey(meta));
   } catch { /* private mode — the choice just won't persist */ }
+  // A listener that throws must not stop the others hearing about it.
+  for (const listener of [...focusListeners]) {
+    try { listener(); } catch { /* a dead surface is not this one's problem */ }
+  }
 }
 
 // Turn a subject's section list — [id, icon, label] rows, the same shape the
@@ -707,9 +725,9 @@ export function mountWehelChat(options) {
     });
     const focusSelect = container.querySelector("#wehel-focus");
     if (focusSelect) focusSelect.addEventListener("change", () => {
+      // No render()/syncPanels here: setFocusModule notifies every surface,
+      // this panel included, so repainting again would be a double render.
       setFocusModule(meta, focusSelect.value);
-      render();
-      syncPanels(panel);
       const chosen = modules.find((module) => module.id === focusSelect.value);
       if (ui.toast) ui.toast(chosen
         ? `${tutorLabel} is staying on ${chosen.label} — still happy to answer anything else.`
@@ -833,5 +851,12 @@ export function mountWehelChat(options) {
   render();
   panel = { container, render, submit };
   livePanels.add(panel);
+  // Repaint when Focus moves anywhere — the sibling panel, or a subject's own
+  // tutor page. Self-unsubscribing, the way syncPanels drops panels whose
+  // container has left the DOM, so a closed drawer stops listening.
+  const stopFocusWatch = onFocusChange(() => {
+    if (!container.isConnected) { stopFocusWatch(); return; }
+    render();
+  });
   return panel;
 }

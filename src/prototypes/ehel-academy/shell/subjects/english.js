@@ -11,7 +11,7 @@ import { grammarDiagram, phonicsDiagram } from "../../english/shared/grammar-vis
 import { createCourseApp } from "../course-app.js?v=t2";
 import { createDeck } from "../deck.js?v=deck-1";
 import { wordPicture } from "./word-pictures.js?v=pictures-1";
-import { askWehel, focusModule, modulesFromSections, outlineFromManifest, unitFetcher, browserSpeechSupported, speakBrowser, speechRateForGrade, stopBrowserSpeech, speechRecognitionCtor, recognizeSpeech, wehelIcon } from "../wehel.js?v=wehel-1";
+import { askWehel, focusModule, setFocusModule, onFocusChange, modulesFromSections, outlineFromManifest, unitFetcher, browserSpeechSupported, speakBrowser, speechRateForGrade, stopBrowserSpeech, speechRecognitionCtor, recognizeSpeech, wehelIcon } from "../wehel.js?v=wehel-1";
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
@@ -3241,8 +3241,24 @@ function wehelOptions() {
   };
 }
 
+// Focus can be changed from the shell's drawer as well as from this page's own
+// picker, and this page is not one of the panels syncPanels repaints. Registered
+// once at module scope; `route` is read at call time, so a change made from the
+// drawer over some other section repaints nothing here until the learner is
+// actually on the tutor page.
+onFocusChange(() => { if (route === "ai") { renderAIEnglish(); icons(); } });
+
 function renderAIEnglish() {
   if (!aiState.messages.length) aiState.messages.push({ role: "assistant", text: `Hello! I am Wehel Tutor, your AI English teacher and tutor for Unit ${course.unit.unitNo}. Choose Teach me for a lesson or Help me when you are stuck.` });
+  // Focus — the same setting, the same storage, the same module list the shell's
+  // drawer offers, so the picker here and the one there are one control seen
+  // twice. What this page does NOT do is swap its quick prompts for the shared
+  // three: its mode tabs already ARE teach / quiz / explain, and the per-mode
+  // prompts carry the speaking and check-my-work affordances that make this
+  // page worth having. Here Focus sets the scope; the tabs keep the actions.
+  const wehelMeta = wehelOptions().meta;
+  const focusModules = wehelMeta.modules || [];
+  const focus = focusModule(wehelMeta, focusModules);
   const prompts = aiQuickPrompts(aiState.mode);
   const speakingTask = currentSpeakingTask();
   const speakingTarget = speakingModelText(speakingTask);
@@ -3261,10 +3277,18 @@ function renderAIEnglish() {
     <div class="ai-layout">
       <section class="ai-main panel">
         <div class="ai-modes" role="tablist" aria-label="Choose AI English mode">${aiModes.map(([id, modeIcon, label]) => `<button class="ai-mode ${aiState.mode === id ? "active" : ""}" data-ai-mode="${id}" type="button" role="tab" aria-selected="${aiState.mode === id}">${icon(modeIcon)}<span>${label}</span></button>`).join("")}</div>
+        ${focusModules.length ? `<div class="wehel-focus-row" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:10px 0 2px">
+          <label for="ai-focus" style="font-size:13px;opacity:.85">Focus</label>
+          <select id="ai-focus" style="font:inherit;padding:4px 8px;border:1px solid rgba(15,23,42,.25);border-radius:6px;background:#fff;color:inherit">
+            <option value="">Whole unit</option>
+            ${focusModules.map((module) => `<option value="${escapeHtml(module.id)}"${focus && focus.id === module.id ? " selected" : ""}>${escapeHtml(module.label)}</option>`).join("")}
+          </select>
+          ${focus ? `<small style="opacity:.7">Wehel is staying on ${escapeHtml(focus.label)}</small>` : ""}
+        </div>` : ""}
         <div class="ai-conversation" id="ai-conversation" aria-live="polite">${aiState.messages.map((item, index) => `<article class="ai-message ${item.role}"><span>${item.role === "assistant" ? (item.offline ? "Wehel Tutor (offline hint)" : "Wehel Tutor") : "You"}</span><p>${escapeHtml(item.text)}</p><div class="ai-message-tools"><button data-ai-listen="${index}" type="button" aria-label="Listen to ${item.role === "assistant" ? "Wehel Tutor's answer" : "your question"} with ElevenLabs">${icon("volume-2")} Listen</button>${item.role === "assistant" ? `<small>${icon("book-check")} ${gradeLabel} Unit ${course.unit.unitNo}</small>` : ""}</div></article>`).join("")}</div>
         <div class="ai-prompts">${prompts.map((prompt) => `<button data-ai-prompt="${escapeHtml(prompt)}" type="button">${escapeHtml(prompt)}</button>`).join("")}</div>
         ${speakingTools}
-        <form class="ai-compose" id="ai-form"><label class="sr-only" for="ai-input">Ask Wehel Tutor</label><textarea id="ai-input" rows="2" maxlength="500" placeholder="Type your question or your sentence..."></textarea>${speechRecognitionCtor() ? `<button class="button secondary" id="ai-mic" type="button" aria-label="Ask by voice" title="Ask by voice">${wehelIcon("mic")}</button>` : ""}<button class="button primary" type="submit">${icon("send")} Send</button></form>
+        <form class="ai-compose" id="ai-form"><label class="sr-only" for="ai-input">Ask Wehel Tutor</label><textarea id="ai-input" rows="2" maxlength="500" placeholder="${focus ? `Ask about ${escapeHtml(focus.label)}...` : "Type your question or your sentence..."}"></textarea>${speechRecognitionCtor() ? `<button class="button secondary" id="ai-mic" type="button" aria-label="Ask by voice" title="Ask by voice">${wehelIcon("mic")}</button>` : ""}<button class="button primary" type="submit">${icon("send")} Send</button></form>
       </section>
       <aside class="ai-side section-stack">
         <section class="panel ai-focus"><span class="eyebrow">Today’s focus</span><h2>${escapeHtml(course.outcomes[0]?.learningOutcome || course.unit.unitTitle)}</h2><p><strong>${course.dictionaryLinks.length}</strong> unit words · <strong>${course.readings.length}</strong> texts · <strong>${course.grammar.length}</strong> grammar practices</p></section>
@@ -3273,6 +3297,18 @@ function renderAIEnglish() {
       </aside>
     </div>`;
   $$('[data-ai-mode]').forEach((button) => button.addEventListener("click", () => { aiState.mode = button.dataset.aiMode; saveAIState(); renderAIEnglish(); icons(); }));
+  // Focus lives in its own storage, not in aiState — the shell's drawer reads
+  // the same key, so setting it here is already set there and vice versa.
+  const focusSelect = $("#ai-focus");
+  if (focusSelect) focusSelect.addEventListener("change", () => {
+    // No renderAIEnglish() here: setFocusModule notifies every surface, and the
+    // module-scope watcher below repaints this page.
+    const chosen = focusModules.find((module) => module.id === focusSelect.value);
+    setFocusModule(wehelMeta, focusSelect.value);
+    toast(chosen
+      ? `Wehel Tutor is staying on ${chosen.label} — still happy to answer anything else.`
+      : "Wehel Tutor is back to the whole unit.");
+  });
   $$('[data-ai-prompt]').forEach((button) => button.addEventListener("click", () => submitAIMessage(button.dataset.aiPrompt)));
   $$('[data-ai-listen]').forEach((button) => button.addEventListener("click", () => playAIMessage(Number(button.dataset.aiListen), button)));
   $("#ai-form").addEventListener("submit", (event) => { event.preventDefault(); const input = $("#ai-input"); if (input.value.trim()) submitAIMessage(input.value); });

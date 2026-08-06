@@ -709,16 +709,43 @@ function renderExamples() {
 
 function renderExamplesClassic() {
   const { $, $$ } = classicScope();
-  let level="Basic";
+  // Stages 1-4 describe the unit they are actually in. This page was written for
+  // a twelve-example, three-level unit that Science does not have: Stage 4 Unit 2
+  // carries 8 examples as 1 Basic, 7 Intermediate and 0 Challenge, and the page
+  // still announced "Twelve examples", "four Basic, four Intermediate and four
+  // Challenge", a "0/12" counter that could never fill, and a Challenge tab that
+  // opened onto nothing.
+  //
+  // Stages 5-8 keep every one of those strings. They are wrong there too, but
+  // this is what the page SAYS rather than how it looks — .classic-design cannot
+  // scope a template literal — so changing it for them would be changing their
+  // design, which is not this change's to make.
+  const counted = BOTH_DESIGNS();
+  const all = course.workedExamples;
+  const LEVELS = ["Basic", "Intermediate", "Challenge"];
+  const countOf = (name) => all.filter((example) => example.difficulty === name).length;
+  const levels = counted ? LEVELS.filter((name) => countOf(name)) : LEVELS;
+  const total = counted ? all.length : 12;
+  const kicker = counted
+    ? `${all.length} example${all.length === 1 ? "" : "s"} · ${levels.length} level${levels.length === 1 ? "" : "s"}`
+    : "Twelve examples · three levels";
+  const blurb = counted
+    ? `Study ${levels.map((name) => `${countOf(name)} ${name}`).join(", ").replace(/, ([^,]*)$/, " and $1")} example${all.length === 1 ? "" : "s"}. Each solution explains why the step works.`
+    : "Study four Basic, four Intermediate and four Challenge examples. Each solution explains why the step works.";
+  let level = levels[0] || "Basic";
   const viewed=new Set(progress.examplesViewed||[]);
   const draw=()=>{
     const items=course.workedExamples.filter(item=>item.difficulty===level);
-    $("#app").innerHTML = `${pageHeader("Twelve examples · three levels", "Worked Examples", "Study four Basic, four Intermediate and four Challenge examples. Each solution explains why the step works.")}
-      <div class="subtabs">${["Basic","Intermediate","Challenge"].map(item=>`<button class="subtab ${item===level?'active':''}" data-example-level="${item}" type="button">${item} · ${course.workedExamples.filter(example=>example.difficulty===item).length}</button>`).join('')}</div>
+    // The counter is built here rather than above because viewed.size moves.
+    const opened = counted
+      ? `<strong>${viewed.size} of ${total}</strong> <span>solutions opened</span>`
+      : `<strong>${viewed.size}/12</strong><span>solutions opened</span>`;
+    $("#app").innerHTML = `${pageHeader(kicker, "Worked Examples", blurb)}
+      <div class="subtabs">${levels.map(item=>`<button class="subtab ${item===level?'active':''}" data-example-level="${item}" type="button">${item} · ${countOf(item)}</button>`).join('')}</div>
       <div class="task-grid">${items.map((item) => `<article class="panel"><span class="eyebrow">${escapeHtml(item.difficulty)} · ${escapeHtml(item.outcomeId)}</span><h3>${escapeHtml(item.title)}</h3><p class="rule-box">${escapeHtml(item.prompt)}</p>${voiceButton(`${item.title}. ${item.prompt}. Solution: ${spokenText(item.solution)}`, "Listen to example")}<details data-example="${item.id}"><summary>Show worked solution</summary>${richText(item.solution)}</details></article>`).join("")}</div>
-      <section class="panel examples-progress"><strong>${viewed.size}/12</strong><span>solutions opened</span><div class="progress-track"><span style="width:${viewed.size/12*100}%"></span></div></section>`;
+      <section class="panel examples-progress">${opened}<div class="progress-track"><span style="width:${viewed.size/total*100}%"></span></div></section>`;
     $$('[data-example-level]').forEach(button=>button.addEventListener('click',()=>{level=button.dataset.exampleLevel;draw();}));
-    $$('[data-example]').forEach(details=>details.addEventListener('toggle',()=>{if(details.open){viewed.add(details.dataset.example);progress.examplesViewed=[...viewed];saveProgress();if(viewed.size===course.workedExamples.length)complete('examples','All twelve worked examples reviewed.');}}));
+    $$('[data-example]').forEach(details=>details.addEventListener('toggle',()=>{if(details.open){viewed.add(details.dataset.example);progress.examplesViewed=[...viewed];saveProgress();if(viewed.size===course.workedExamples.length)complete('examples',counted?`All ${all.length} worked examples reviewed.`:'All twelve worked examples reviewed.');}}));
   };
   draw();
 }

@@ -11,7 +11,7 @@ import { computingWordPicture } from "../../computing/shared/computing-word-pict
 import { createCourseApp } from "../course-app.js";
 import { createDeck, deckIcon } from "../deck.js?v=deck-1";
 import { createPlacementUnit, placementCallout, placementCourseShell, PREREQ_UNIT } from "../placement.js?v=placement-1";
-import { mountWehelChat, modulesFromSections, outlineFromManifest, unitFetcher } from "../wehel.js?v=wehel-1";
+import { mountWehelChat, modulesFromSections, outlineFromManifest, unitFetcher } from "../wehel.js?v=wehel-2";
 
 const pad2 = (n) => String(n).padStart(2, "0");
 

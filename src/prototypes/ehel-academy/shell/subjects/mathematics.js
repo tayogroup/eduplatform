@@ -10,7 +10,7 @@ import { unitTopic, mathDiagram } from "../../mathematics/shared/math-visuals.js
 import { createCourseApp } from "../course-app.js?v=t2";
 import { createDeck, deckIcon } from "../deck.js?v=deck-1";
 import { createPlacementUnit, placementCallout, placementCourseShell, PREREQ_UNIT } from "../placement.js?v=placement-1";
-import { mountWehelChat, modulesFromSections, outlineFromManifest, unitFetcher } from "../wehel.js?v=wehel-1";
+import { mountWehelChat, modulesFromSections, outlineFromManifest, unitFetcher } from "../wehel.js?v=wehel-2";
 
 const pad2 = (n) => String(n).padStart(2, "0");
 

@@ -199,7 +199,17 @@ function shellComponents(subject) {
 }
 function shellCore() {
   return fs.readFileSync(path.join(EHEL, "shell", "course-app.js"), "utf8")
-    .replace(/\.\.\/shared\/(course-shell|progress-client|seb-session|lesson-gate)\.js(\?v=[^"']*)?/g, "./$1.js");
+    .replace(/\.\.\/shared\/(course-shell|progress-client|seb-session|lesson-gate)\.js(\?v=[^"']*)?/g, "./$1.js")
+    // The shell/ siblings course-app.js imports by name — wehel.js today. The
+    // subject module imports the SAME file, and shellSubjectModule drops the
+    // ?v= when it rewrites `../wehel.js?v=…` to `./wehel.js`. Leaving the query
+    // here gave the bundle two URLs for one file, so the browser instantiated
+    // the module twice: the dock's chat panel and the subject's own tutor page
+    // then held separate livePanels sets and separate Focus listeners, and
+    // stopped seeing each other's changes. Strip on this side too — inside vN
+    // the immutable version path is what guarantees freshness, so the query is
+    // redundant, and both sides must agree for the module to be one instance.
+    .replace(/\.\/([A-Za-z0-9_-]+\.js)\?v=[^"']*/g, "./$1");
 }
 
 // Build the deploy list. Each item is {remote, buf, always?} — always-upload items

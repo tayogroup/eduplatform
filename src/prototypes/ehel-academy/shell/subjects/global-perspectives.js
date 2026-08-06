@@ -19,7 +19,7 @@
 import { createCourseApp } from "../course-app.js";
 import { createDeck, deckIcon } from "../deck.js";
 import { createPlacementUnit, placementCallout, placementCourseShell, PREREQ_UNIT } from "../placement.js?v=placement-1";
-import { mountWehelChat, modulesFromSections, outlineFromManifest, unitFetcher } from "../wehel.js?v=wehel-1";
+import { mountWehelChat, modulesFromSections, outlineFromManifest, unitFetcher } from "../wehel.js?v=wehel-2";
 
 // Prerequisite unit (unit -1): a placement exam over the previous stages,
 // rendered by the shared shell/placement.js from placement-exam.json.

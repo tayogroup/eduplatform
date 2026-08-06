@@ -129,10 +129,56 @@ const sections = [
 const DECK_MAX_STAGE = 4;
 const deckStage = () => stageNumber <= DECK_MAX_STAGE;
 
+// ── Both designs, at Stage 1 only ────────────────────────────────────────────
+// Stage 1 does not choose between the grid and the deck: it shows the original
+// section, then the same content again as slides beneath it. Stages 2-4 stay deck
+// only, Stages 5-8 grid only. English does this at Grades 1-4; Science is Stage 1
+// for now, so this is its own flag rather than a reuse of deckStage().
+const BOTH_DESIGNS = () => stageNumber === 1;
+
+// Where the original renderers draw, and where the deck mounts, when both share a
+// page. Both are null everywhere else, and classicScope() falls back to the
+// document and the real #app when they are — so a grid renderer behaves exactly
+// as it did before at every stage that does not use this. Cleared in onBeforeRender.
+let classicRegion = null;
+let deckMount = null;
+// `$("#app")` resolves to the region rather than the page. That one mapping is
+// what lets the ten grid renderers move into a half-page untouched: they keep
+// writing `$("#app").innerHTML = …` and keep querying with $ / $$, and both now
+// mean "my half". Rewriting those statements instead was tried and mangled the
+// template literals they are built from.
+function classicScope() {
+  const region = classicRegion;
+  const scope = region || document;
+  return {
+    $: (selector) => (selector === "#app" ? (region || document.querySelector("#app")) : scope.querySelector(selector)),
+    $$: (selector) => [...scope.querySelectorAll(selector)],
+  };
+}
+
+function renderBothDesigns(classic, deck, intro) {
+  $("#app").innerHTML = `<div class="both-designs">
+      <div class="classic-design" id="classic-design"></div>
+      <section class="deck-design">
+        <div class="deck-design-head"><span class="eyebrow">Slides</span><p>${escapeHtml(intro)}</p></div>
+        <div id="deck-design"></div>
+      </section>
+    </div>`;
+  classicRegion = $("#classic-design");
+  classic();
+  // classicRegion stays set past this point on purpose: a grid renderer's redraw
+  // closures run later, on the learner's clicks, and must still find the region.
+  // Clearing it here would send that repaint to #app and wipe both designs.
+  deckMount = "#deck-design";
+  deck();
+  deckMount = null;
+}
+
+
 // Science never loads the lucide runtime (it is one of the four shell-voice
 // subjects), so the deck draws inline SVG. The subject helpers are passed as
 // wrappers, not values: bind(ctx) fills them in after this module is evaluated.
-const { mountDeck, deckFinish } = createDeck({
+const { mountDeck: baseMountDeck, deckFinish } = createDeck({
   $: (selector, root) => $(selector, root),
   escapeHtml: (value) => escapeHtml(value),
   icon: deckIcon,
@@ -143,6 +189,12 @@ const { mountDeck, deckFinish } = createDeck({
   // animation loops running on one canvas.
   afterPaint: (scope) => { bindVoiceControls(); updateVoiceUI(); initScienceWebGL(scope); },
 });
+
+// Mounted into #app owning the screen by default; into the both-designs region,
+// with full-bleed off, when the grid is sitting above it. `fullBleed` is what
+// stops the deck adding body.gc-full, which would hide the topbar and stretch
+// the page the grid is still in.
+const mountDeck = (options) => baseMountDeck(deckMount ? { ...options, mount: deckMount, fullBleed: false } : options);
 
 // The deck's own Listen button: the shell's voiceButton renders a `.button
 // secondary` with a lucide glyph that never draws here. Same contract —
@@ -198,8 +250,16 @@ function renderOverview() {
   $$('[data-go]').forEach((button) => button.addEventListener("click", () => navigate(button.dataset.go)));
 }
 
+// Stage 1 shows the grid and the deck, in that order; Stages 2-4 the deck
+// alone; Stages 5-8 the grid alone.
 function renderScienceWords() {
+  if (BOTH_DESIGNS()) return renderBothDesigns(renderScienceWordsClassic, renderScienceWordsDeck, "The same words, one at a time.");
   if (deckStage()) return renderScienceWordsDeck();
+  return renderScienceWordsClassic();
+}
+
+function renderScienceWordsClassic() {
+  const { $, $$ } = classicScope();
   // Rich vocabulary lab: searchable word list + a detail card with meaning,
   // a source example sentence, audio and a learned toggle.
   const vocab = (course.reference.vocabulary && course.reference.vocabulary.length)
@@ -309,7 +369,7 @@ function renderScienceWordsDeck() {
     label: "Word",
     emptyMessage: "No matching words. Clear the search to see them all.",
     tools: `<div class="wc-tools">
-        <label class="search-box"><input id="word-search" type="search" placeholder="Search words or meanings" aria-label="Search science words"></label>
+        <label class="search-box"><input id="sci-deck-search" type="search" placeholder="Search words or meanings" aria-label="Search science words"></label>
         <span class="status-chip" id="wc-known">${known.size} of ${vocab.length} learned</span>
       </div>`,
     onClick: (event) => {
@@ -337,18 +397,26 @@ function renderScienceWordsDeck() {
   });
 
   const drawDeck = () => {
-    const query = ($("#word-search")?.value || "").trim().toLowerCase();
+    const query = ($("#sci-deck-search")?.value || "").trim().toLowerCase();
     shown = query ? entries.filter(({ current }) => `${current.term} ${current.meaning}`.toLowerCase().includes(query)) : entries;
     deck.setSlides(shown.map(wordSlide));
   };
   // Re-decking replaces the track, not the tools row, so the search keeps focus
   // and the caret where the learner left it — no selection restore needed.
-  $("#word-search").addEventListener("input", drawDeck);
+  $("#sci-deck-search").addEventListener("input", drawDeck);
   drawDeck();
 }
 
+// Stage 1 shows the grid and the deck, in that order; Stages 2-4 the deck
+// alone; Stages 5-8 the grid alone.
 function renderExploreConcept() {
+  if (BOTH_DESIGNS()) return renderBothDesigns(renderExploreConceptClassic, renderExploreConceptDeck, "The same discoveries, one at a time.");
   if (deckStage()) return renderExploreConceptDeck();
+  return renderExploreConceptClassic();
+}
+
+function renderExploreConceptClassic() {
+  const { $, $$ } = classicScope();
   let active = 0;
   const completed = new Set(progress.explorations || []);
   const draw = () => {
@@ -437,8 +505,16 @@ function renderExploreConceptDeck() {
   });
 }
 
+// Stage 1 shows the grid and the deck, in that order; Stages 2-4 the deck
+// alone; Stages 5-8 the grid alone.
 function renderVisualModels() {
+  if (BOTH_DESIGNS()) return renderBothDesigns(renderVisualModelsClassic, renderVisualModelsDeck, "The same models, one at a time.");
   if (deckStage()) return renderVisualModelsDeck();
+  return renderVisualModelsClassic();
+}
+
+function renderVisualModelsClassic() {
+  const { $, $$ } = classicScope();
   let active = 0;
   const draw = () => {
     const model = course.visualModels[active];
@@ -480,8 +556,16 @@ function renderVisualModelsDeck() {
   });
 }
 
+// Stage 1 shows the grid and the deck, in that order; Stages 2-4 the deck
+// alone; Stages 5-8 the grid alone.
 function renderLearnMethod() {
+  if (BOTH_DESIGNS()) return renderBothDesigns(renderLearnMethodClassic, renderLearnMethodDeck, "The same methods, one at a time.");
   if (deckStage()) return renderLearnMethodDeck();
+  return renderLearnMethodClassic();
+}
+
+function renderLearnMethodClassic() {
+  const { $, $$ } = classicScope();
   let methodIndex=0;
   const completed=new Set(progress.methods||[]);
   const draw=()=>{
@@ -564,8 +648,16 @@ function renderLearnMethodDeck() {
 
 const courseTopic = () => unitTopic(course.unit.unitTitle, course.concepts);
 
+// Stage 1 shows the grid and the deck, in that order; Stages 2-4 the deck
+// alone; Stages 5-8 the grid alone.
 function renderLesson() {
+  if (BOTH_DESIGNS()) return renderBothDesigns(renderLessonClassic, renderLessonDeck, "The same concepts, one at a time.");
   if (deckStage()) return renderLessonDeck();
+  return renderLessonClassic();
+}
+
+function renderLessonClassic() {
+  const { $, $$ } = classicScope();
   const topic = courseTopic();
   const concepts = course.concepts.map((concept, index) => `<article class="panel concept-card"><span class="eyebrow">Concept ${index + 1}</span><h2>${escapeHtml(concept.title)}</h2>${scienceDiagram(topic, index)}<div class="concept-body">${richText(concept.explanation)}</div><p class="example"><span class="field-label">Example:</span> ${escapeHtml(concept.example)}</p>${voiceButton(`${concept.title}. ${spokenText(concept.explanation)}. Example: ${concept.example}`, "Listen to concept")}</article>`).join("");
   $("#app").innerHTML = `${pageHeader("Teacher lesson", course.unit.unitTitle, "Read the source-grounded concepts with a labelled diagram for each, and follow the complete ElevenLabs narration.")}
@@ -609,8 +701,16 @@ function renderLessonDeck() {
   });
 }
 
+// Stage 1 shows the grid and the deck, in that order; Stages 2-4 the deck
+// alone; Stages 5-8 the grid alone.
 function renderExamples() {
+  if (BOTH_DESIGNS()) return renderBothDesigns(renderExamplesClassic, renderExamplesDeck, "The same examples, one at a time.");
   if (deckStage()) return renderExamplesDeck();
+  return renderExamplesClassic();
+}
+
+function renderExamplesClassic() {
+  const { $, $$ } = classicScope();
   let level="Basic";
   const viewed=new Set(progress.examplesViewed||[]);
   const draw=()=>{
@@ -686,8 +786,16 @@ function renderExamplesDeck() {
   drawDeck();
 }
 
+// Stage 1 shows the grid and the deck, in that order; Stages 2-4 the deck
+// alone; Stages 5-8 the grid alone.
 function renderPractice() {
+  if (BOTH_DESIGNS()) return renderBothDesigns(renderPracticeClassic, renderPracticeDeck, "The same questions, one at a time.");
   if (deckStage()) return renderPracticeDeck();
+  return renderPracticeClassic();
+}
+
+function renderPracticeClassic() {
+  const { $, $$ } = classicScope();
   const levels = [...new Set(course.practice.map((item) => item.level))];
   $("#app").innerHTML = `${pageHeader("Support that adapts", "Guided Practice", "Answer with support. Check your idea, ask for a progressive hint or reveal only the next scientific step.")}
     <section class="panel support-strip"><span>Immediate feedback</span><span>Progressive hints</span><span>Next-step support</span><span>Error explanations</span><span>Easier retry</span></section>
@@ -783,8 +891,16 @@ function renderPracticeDeck() {
   });
 }
 
+// Stage 1 shows the grid and the deck, in that order; Stages 2-4 the deck
+// alone; Stages 5-8 the grid alone.
 function renderActivities() {
+  if (BOTH_DESIGNS()) return renderBothDesigns(renderActivitiesClassic, renderActivitiesDeck, "The same investigations, one at a time.");
   if (deckStage()) return renderActivitiesDeck();
+  return renderActivitiesClassic();
+}
+
+function renderActivitiesClassic() {
+  const { $, $$ } = classicScope();
   const topic = courseTopic();
   $("#app").innerHTML = `${pageHeader("Learn by doing", "Experiments", `Complete practical ${escapeHtml(course.unit.unitTitle)} investigations using familiar materials.`)}
     <div class="task-grid">${course.activities.map((activity, index) => `<article class="panel task-card"><span class="eyebrow">Investigation ${index + 1} · Hands-on</span><h2>${escapeHtml(activity.title)}</h2>${scienceDiagram(topic, index)}<p class="rule-box"><span class="field-label">You need:</span> ${escapeHtml(activity.materials)}</p><ol class="agenda">${activity.steps.map((step) => `<li>${escapeHtml(step)}</li>`).join("")}</ol><textarea class="activity-response" rows="4" placeholder="Record your answer or what you noticed…" aria-label="Notes for ${escapeHtml(activity.title)}"></textarea><button class="button secondary" data-activity-done="${index}" type="button">✓ Mark complete</button></article>`).join("")}</div>
@@ -828,11 +944,15 @@ function renderActivitiesDeck() {
     label: "Investigation",
     slides,
     emptyMessage: "No investigations in this unit yet.",
-    onClick: (event) => {
+    onClick: (event, deck) => {
       const target = event.target.closest("[data-activity-done], [data-deck-finish]");
       if (!target) return undefined;
       if (target.dataset.deckFinish) {
-        if (!$$('[data-activity-done]').every((button) => button.disabled)) return toast("Mark each activity complete first.");
+        // Scoped to the deck, not the document: with both designs on one page the
+        // grid above has its own [data-activity-done] buttons, and a document-wide
+        // query would demand those be marked too — the deck's finish could never
+        // unlock however much the learner did in the deck.
+        if (![...deck.root.querySelectorAll("[data-activity-done]")].every((button) => button.disabled)) return toast("Mark each activity complete first.");
         return complete("activities", "Unit experiments complete.");
       }
       target.disabled = true;
@@ -1085,8 +1205,16 @@ function renderFluency() {
   draw();
 }
 
+// Stage 1 shows the grid and the deck, in that order; Stages 2-4 the deck
+// alone; Stages 5-8 the grid alone.
 function renderRealProblems() {
+  if (BOTH_DESIGNS()) return renderBothDesigns(renderRealProblemsClassic, renderRealProblemsDeck, "The same problems, one at a time.");
   if (deckStage()) return renderRealProblemsDeck();
+  return renderRealProblemsClassic();
+}
+
+function renderRealProblemsClassic() {
+  const { $, $$ } = classicScope();
   const problems = course.realProblems;
   $("#app").innerHTML = `${pageHeader("Science in daily life", "Solve Real Problems", `Apply ${escapeHtml(course.unit.unitTitle)} to home, school, markets, travel and the wider community.`)}
     <div class="problem-grid">${problems.map((item,index)=>`<article class="panel real-problem"><div class="problem-icon">${["⌂","◫","🚌","▦","◇","✦"][index]||"#"}</div><span class="eyebrow">${escapeHtml(item.context)} · ${escapeHtml(item.difficulty)}</span><h2>${escapeHtml(item.prompt)}</h2>${voiceButton(item.prompt, "Listen to problem")}<textarea id="problem-${item.id}" placeholder="Show your calculation and answer…"></textarea><div class="question-actions"><button class="button primary" data-check-problem="${item.id}" type="button">Check answer</button><button class="button secondary" data-problem-hint="${item.id}" type="button">Hint</button></div><div id="problem-feedback-${item.id}"></div></article>`).join("")}</div>`;
@@ -1144,8 +1272,16 @@ function renderRealProblemsDeck() {
   });
 }
 
+// Stage 1 shows the grid and the deck, in that order; Stages 2-4 the deck
+// alone; Stages 5-8 the grid alone.
 function renderExplainThinking() {
+  if (BOTH_DESIGNS()) return renderBothDesigns(renderExplainThinkingClassic, renderExplainThinkingDeck, "The same prompts, one at a time.");
   if (deckStage()) return renderExplainThinkingDeck();
+  return renderExplainThinkingClassic();
+}
+
+function renderExplainThinkingClassic() {
+  const { $, $$ } = classicScope();
   let active=0;
   const completed=new Set(progress.reasoning||[]);
   const draw=()=>{const item=course.reasoningPrompts[active];$("#app").innerHTML=`${pageHeader("Reasoning matters", "Explain Your Thinking", `Explain the ideas in ${escapeHtml(course.unit.unitTitle)} using scientific evidence, not only a final answer.`)}<div class="reasoning-tabs">${course.reasoningPrompts.map((entry,index)=>`<button class="${index===active?'active':''} ${completed.has(entry.id)?'done':''}" data-reasoning-index="${index}" type="button"><span>${index+1}</span>${escapeHtml(entry.difficulty)}</button>`).join('')}</div><div class="explain-layout"><section class="panel"><span class="eyebrow">Reasoning prompt</span><h2>${escapeHtml(item.prompt)}</h2>${voiceButton(item.prompt,"Listen to prompt")}<textarea id="reasoning-text" rows="9" placeholder="Explain what you know, what rule you used and why your conclusion makes sense…"></textarea><button class="button primary" id="check-reasoning-text" type="button">Check scientific ideas</button><div id="reasoning-text-feedback"></div></section><section class="panel"><h3>Key ideas</h3><ul class="checklist">${item.keyIdeas.map((idea)=>`<li>${escapeHtml(idea)}</li>`).join('')}</ul><details><summary>Show model explanation</summary><p>${escapeHtml(item.modelAnswer)}</p>${voiceButton(item.modelAnswer,"Listen to model answer")}</details></section></div>`;$$('[data-reasoning-index]').forEach((button)=>button.addEventListener('click',()=>{active=Number(button.dataset.reasoningIndex);draw();}));$("#check-reasoning-text").addEventListener('click',()=>{const text=$("#reasoning-text").value.toLowerCase();const hits=item.keyIdeas.filter((idea)=>idea.toLowerCase().split(/\s+/).some((word)=>word.length>2&&text.includes(word))).length;const secure=text.length>30&&(hits>0||item.keyIdeas.length===0);$("#reasoning-text-feedback").innerHTML=`<p class="feedback ${secure?'good':'try'}"><span class="status-note">${secure?'Your explanation includes scientific evidence.':'Add more scientific evidence.'}</span> ${secure?escapeHtml(item.modelAnswer):`Use these ideas: ${escapeHtml(item.keyIdeas.join(', '))}.`}</p>`;if(secure){completed.add(item.id);progress.reasoning=[...completed];saveProgress();if(completed.size===course.reasoningPrompts.length)complete('explain','Reasoning explanations complete.');}});};
@@ -1432,7 +1568,7 @@ const config = {
   wehelOptions,
   // A deck takes the whole viewport while it is mounted; leaving the section has
   // to give it back, or the next page renders inside a full-bleed shell.
-  onBeforeRender: () => { document.body.classList.remove("gc-full"); },
+  onBeforeRender: () => { document.body.classList.remove("gc-full"); classicRegion = null; deckMount = null; },
   async load(ctx) {
     const s = ctx.stageNumber, u = ctx.unitNumber;
     if (isPrereqUnit) {

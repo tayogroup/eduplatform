@@ -508,12 +508,20 @@ function renderLearnMethod() {
 // expects: the whole method reads as `${method.title}. Example: ${method.example}.
 // ${method.steps.join(" ")}` and each step as `Step ${index+1}. ${text}`.
 //
-// The worked example is prose in a box, NOT the deck's big .gc-pattern display
-// that vocabulary uses for a word. It is only called an "example": in Science it
-// carries the whole investigation — a median of 233 characters at Stage 2 and one
-// of 1,557 — where Mathematics, which this section's markup came from, puts
-// "24 + 8" there. It is also why the grid's `.method-example > strong` renders at
-// 70px serif in Stages 5-8, which is a Mathematics size Science inherited.
+// The worked example is a disclosure BELOW the steps, not the headline its name
+// suggests. It is only called an "example": in Science it carries the whole
+// investigation — a median of 233 characters at Stage 2 and one of 1,557 — where
+// Mathematics, which this section's markup came from, puts "24 + 8" there. (It is
+// also why the grid's `.method-example > strong` renders at 70px serif in Stages
+// 5-8: a Mathematics size Science inherited.)
+//
+// Two goes at this, both caught by looking at the running page. First it was
+// .gc-pattern, the display style vocabulary gives a single word, which set an
+// entire investigation in 46px. Then it was prose in an open box above the steps
+// — right type, wrong place: it filled the card, so Learn the Method opened on a
+// wall of text with the steps and the button that advances them below the fold,
+// and nothing on screen to say they existed. The steps ARE the section; the
+// example is reference material. Lead with the steps.
 function renderLearnMethodDeck() {
   const esc = escapeHtml;
   const methods = course.methods;
@@ -524,9 +532,9 @@ function renderLearnMethodDeck() {
       <span class="gc-eyebrow">Method ${position + 1} of ${methods.length} · ${esc(method.difficulty)}</span>
       <h3 class="gc-title">${esc(method.title)}</h3>
       <div class="gc-actions">${deckVoice(`${method.title}. Example: ${method.example}. ${method.steps.join(" ")}`, "Listen to method")}</div>
-      <div class="wc-sentence"><small>Worked example</small><div class="sci-gc-prose">${richText(method.example, "gc-note")}</div></div>
       <ol class="sci-gc-steps">${method.steps.map((text, index) => `<li class="sci-gc-step ${index === 0 ? "active" : ""}" data-method-step="${index}"><span>${index + 1}</span><div><strong>Step ${index + 1}</strong><p>${esc(text)}</p>${deckVoiceSmall(`Step ${index+1}. ${text}`, "Listen to step")}</div></li>`).join("")}</ol>
       <button class="gc-btn" type="button" data-next-step="${esc(method.id)}">${completed.has(method.id) ? "Method complete ✓" : "Show me the next step →"}</button>
+      <details class="gc-practice"><summary>Show the worked example</summary><div class="sci-gc-prose">${richText(method.example, "gc-note")}</div></details>
     </div></section>`;
 
   mountDeck({

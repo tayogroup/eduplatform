@@ -336,6 +336,14 @@
 .sci-gc-step strong { display: block; color: var(--teal-dark); font-size: 13px; text-transform: uppercase; letter-spacing: .06em; font-weight: var(--weight-medium); }
 .sci-gc-step p { margin: 4px 0 8px; font-size: 15px; line-height: 1.55; color: #33465e; }
 
+/* The button that reveals the next step sticks to the bottom of the card. A
+   method has up to five steps and they are dimmed rather than hidden, so the
+   learner can see how far there is to go — but with long steps that puts the
+   control that advances them off the bottom of the card, and the learner is
+   left reading step one with no visible way forward. The white spread shadow is
+   a shelf: without it the step text shows through the gap around the pill. */
+.gc-inner [data-next-step] { position: sticky; bottom: 0; z-index: 3; box-shadow: 0 0 0 9px #fff, 0 6px 16px #17324d33; }
+
 /* An investigation's numbered steps — a plain ordered list, left-aligned. */
 .sci-gc-list { width: 100%; max-width: 520px; margin: 0; padding-left: 22px; text-align: left; display: grid; gap: 7px; color: #33465e; font-size: 15px; line-height: 1.55; }
 

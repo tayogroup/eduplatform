@@ -135,6 +135,67 @@ const sections = [
 const DECK_MAX_STAGE = 4;
 const deckStage = () => stageNumber <= DECK_MAX_STAGE;
 
+// ── Both designs on one page ────────────────────────────────────────────────
+// Stage 1 shows the ORIGINAL section first and the same content as an inline
+// deck under it, which is what English Grades 1-4 do. Stages 2-4 are still
+// deck-instead-of-original, and follow this line when Stage 1 is confirmed.
+//
+// Both designs draw the same section, so both carry the same hooks — the
+// explore page and the explore deck each own a discovery answer box, the
+// practice grid and the practice deck each own a feedback slot. A
+// document-wide querySelector would hand one design the other's controls. The
+// original renderers also paint by assigning to #app.innerHTML, which would
+// erase a deck mounted below them the moment a tab or a filter redrew.
+//
+// So each design gets a region: the original paints into .classic-design and
+// queries inside it (classicScope), the deck mounts into .deck-design with
+// full-bleed off. Above Stage 1 both fall back to #app and the document, so
+// those stages run exactly the code they ran before.
+const BOTH_DESIGNS_MAX_STAGE = 1;
+const bothDesigns = () => stageNumber <= BOTH_DESIGNS_MAX_STAGE;
+let classicRegion = null;
+let deckMount = null;
+
+// Called at the top of an original renderer, which then shadows the module's
+// own $ and $$ with these. It captures the region THEN, so the redraws a tab or
+// a filter triggers keep painting into the same half of the page rather than
+// over the whole app.
+//
+// `$("#app")` resolves to the region rather than to #app itself. Every original
+// renderer paints by assigning to it — 22 sites — and remapping the one selector
+// they all share leaves those statements untouched, where rewriting each into a
+// paint() call would mean editing 22 multi-line template literals by hand.
+function classicScope() {
+  const region = classicRegion;
+  const scope = region || document;
+  return {
+    $: (selector) => (selector === "#app" ? (region || document.querySelector("#app")) : scope.querySelector(selector)),
+    $$: (selector) => [...scope.querySelectorAll(selector)],
+  };
+}
+
+function renderBothDesigns(classic, carousel, intro) {
+  $("#app").innerHTML = `<div class="both-designs">
+      <div class="classic-design" id="classic-design"></div>
+      <section class="deck-design">
+        <div class="deck-design-head"><span class="eyebrow">Slides</span><p>${escapeHtml(intro)}</p></div>
+        <div id="deck-design"></div>
+      </section>
+    </div>`;
+  classicRegion = $("#classic-design");
+  classic();
+  // The deck is mounted second and left mounted: its region survives the
+  // original's own redraws, which now stop at .classic-design. Both flags are
+  // cleared by onBeforeRender before the next section draws.
+  deckMount = "#deck-design";
+  carousel();
+  deckMount = null;
+}
+
+// Every deck passes these, so one call site decides whether a deck owns the
+// screen or sits in the lower half of a page.
+const deckPlacement = () => (deckMount ? { mount: deckMount, fullBleed: false } : {});
+
 // Mathematics never loads the lucide runtime (it is one of the four shell-voice
 // subjects), so the deck draws inline SVG. The subject helpers are passed as
 // wrappers, not values: bind(ctx) fills them in after this module is evaluated.
@@ -226,7 +287,13 @@ function renderOverview() {
 const MATH_SYMBOLS = [["+", "combine or add", "Use when quantities join"], ["−", "find a difference", "Use when quantities separate"], ["=", "has the same value", "Both sides balance"], ["<", "is less than", "The smaller value"], [">", "is greater than", "The larger value"]];
 
 function renderMathWords() {
+  if (bothDesigns()) return renderBothDesigns(renderMathWordsClassic, renderMathWordsDeck, "The same words and signs, one at a time.");
   if (deckStage()) return renderMathWordsDeck();
+  return renderMathWordsClassic();
+}
+
+function renderMathWordsClassic() {
+  const { $, $$ } = classicScope();
   const symbols = MATH_SYMBOLS;
   const terms = course.reference.terms.map(([term, meaning]) => `<article class="word-tile"><span>${escapeHtml(term.slice(0, 1))}</span><div><h3>${escapeHtml(term)}</h3><p>${escapeHtml(meaning)}</p></div></article>`).join("");
   $("#app").innerHTML = `${pageHeader("Language for mathematics", "Math Words & Symbols", `Learn the words and signs needed to discuss and explain ${escapeHtml(course.unit.unitTitle)}.`)}
@@ -265,6 +332,7 @@ function renderMathWordsDeck() {
     </div></section>`;
 
   const deck = mountDeck({
+    ...deckPlacement(),
     heading: "Language for mathematics",
     label: "Card",
     emptyMessage: "No words or symbols in this unit yet.",
@@ -291,7 +359,13 @@ function renderMathWordsDeck() {
 }
 
 function renderExploreConcept() {
+  if (bothDesigns()) return renderBothDesigns(renderExploreConceptClassic, renderExploreConceptDeck, "The same discoveries, one at a time.");
   if (deckStage()) return renderExploreConceptDeck();
+  return renderExploreConceptClassic();
+}
+
+function renderExploreConceptClassic() {
+  const { $, $$ } = classicScope();
   let active = 0;
   const completed = new Set(progress.explorations || []);
   const draw = () => {
@@ -353,6 +427,7 @@ function renderExploreConceptDeck() {
     </div></section>`);
 
   mountDeck({
+    ...deckPlacement(),
     heading: "Six familiar discoveries",
     label: "Discovery",
     slides,
@@ -381,7 +456,13 @@ function renderExploreConceptDeck() {
 }
 
 function renderVisualModels() {
+  if (bothDesigns()) return renderBothDesigns(renderVisualModelsClassic, renderVisualModelsDeck, "The same models, one at a time.");
   if (deckStage()) return renderVisualModelsDeck();
+  return renderVisualModelsClassic();
+}
+
+function renderVisualModelsClassic() {
+  const { $, $$ } = classicScope();
   let active = 0;
   const draw = () => {
     const model = course.visualModels[active];
@@ -412,6 +493,7 @@ function renderVisualModelsDeck() {
     </div></section>`);
 
   mountDeck({
+    ...deckPlacement(),
     heading: "Ways to see the mathematics",
     label: "Model",
     slides,
@@ -424,7 +506,13 @@ function renderVisualModelsDeck() {
 }
 
 function renderLearnMethod() {
+  if (bothDesigns()) return renderBothDesigns(renderLearnMethodClassic, renderLearnMethodDeck, "The same methods, one at a time.");
   if (deckStage()) return renderLearnMethodDeck();
+  return renderLearnMethodClassic();
+}
+
+function renderLearnMethodClassic() {
+  const { $, $$ } = classicScope();
   let methodIndex=0;
   const completed=new Set(progress.methods||[]);
   const draw=()=>{
@@ -465,6 +553,7 @@ function renderLearnMethodDeck() {
     </div></section>`);
 
   mountDeck({
+    ...deckPlacement(),
     heading: "Six short procedures",
     label: "Method",
     slides,
@@ -572,6 +661,7 @@ function renderLessonDeck() {
     </div></section>`);
 
   mountDeck({
+    ...deckPlacement(),
     heading: course.unit.unitTitle,
     label: "Concept",
     slides,
@@ -584,7 +674,13 @@ function renderLessonDeck() {
 }
 
 function renderLesson() {
+  if (bothDesigns()) return renderBothDesigns(renderLessonClassic, renderLessonDeck, "The same concepts, one at a time.");
   if (deckStage()) return renderLessonDeck();
+  return renderLessonClassic();
+}
+
+function renderLessonClassic() {
+  const { $, $$ } = classicScope();
   const topic = courseTopic();
   const concepts = course.concepts.map((concept, index) => `<article class="panel concept-card"><span class="eyebrow">Concept ${index + 1}</span><h2>${escapeHtml(concept.title)}</h2>${mathDiagram(topic, index)}<div class="concept-body">${richText(concept.explanation)}</div>${concept.example ? `<p class="example"><span class="field-label">Example:</span> ${escapeHtml(concept.example)}</p>` : ""}${voiceButton(`${concept.title}. ${spokenText(concept.explanation)}${exampleClause(concept)}`, "Listen to concept")}${grownUpGuide(concept)}</article>`).join("");
   $("#app").innerHTML = `${pageHeader("Teacher lesson", course.unit.unitTitle, "Read the source-grounded concepts with a labelled diagram for each, and follow the complete ElevenLabs narration.")}
@@ -619,6 +715,7 @@ function renderExamplesDeck() {
     </div></section>`;
 
   const deck = mountDeck({
+    ...deckPlacement(),
     heading: "Twelve examples · three levels",
     label: "Example",
     emptyMessage: "No examples at this level yet.",
@@ -653,7 +750,13 @@ function renderExamplesDeck() {
 }
 
 function renderExamples() {
+  if (bothDesigns()) return renderBothDesigns(renderExamplesClassic, renderExamplesDeck, "The same examples, one at a time.");
   if (deckStage()) return renderExamplesDeck();
+  return renderExamplesClassic();
+}
+
+function renderExamplesClassic() {
+  const { $, $$ } = classicScope();
   let level="Basic";
   const viewed=new Set(progress.examplesViewed||[]);
   const draw=()=>{
@@ -695,6 +798,7 @@ function renderPracticeDeck() {
     </div></section>`);
 
   mountDeck({
+    ...deckPlacement(),
     heading: "Support that adapts",
     label: "Question",
     slides,
@@ -728,7 +832,13 @@ function renderPracticeDeck() {
 }
 
 function renderPractice() {
+  if (bothDesigns()) return renderBothDesigns(renderPracticeClassic, renderPracticeDeck, "The same questions, one at a time.");
   if (deckStage()) return renderPracticeDeck();
+  return renderPracticeClassic();
+}
+
+function renderPracticeClassic() {
+  const { $, $$ } = classicScope();
   const levels = [...new Set(course.practice.map((item) => item.level))];
   $("#app").innerHTML = `${pageHeader("Support that adapts", "Guided Practice", "Answer with support. Check your idea, ask for a progressive hint or reveal only the next mathematical step.")}
     <section class="panel support-strip"><span>Immediate feedback</span><span>Progressive hints</span><span>Next-step support</span><span>Error explanations</span><span>Easier retry</span></section>
@@ -777,6 +887,7 @@ function renderActivitiesDeck() {
     </div></section>`);
 
   mountDeck({
+    ...deckPlacement(),
     heading: "Learn by doing",
     label: "Activity",
     slides,
@@ -798,7 +909,13 @@ function renderActivitiesDeck() {
 }
 
 function renderActivities() {
+  if (bothDesigns()) return renderBothDesigns(renderActivitiesClassic, renderActivitiesDeck, "The same activities, one at a time.");
   if (deckStage()) return renderActivitiesDeck();
+  return renderActivitiesClassic();
+}
+
+function renderActivitiesClassic() {
+  const { $, $$ } = classicScope();
   $("#app").innerHTML = `${pageHeader("Learn by doing", "Activities", `Complete six practical ${escapeHtml(course.unit.unitTitle)} investigations using familiar materials.`)}
     <div class="task-grid">${course.activities.map((activity, index) => `<article class="panel task-card"><span class="eyebrow">Activity ${index + 1} · Hands-on investigation</span><h2>${escapeHtml(activity.title)}</h2><p class="rule-box"><span class="field-label">You need:</span> ${escapeHtml(activity.materials)}</p><ol class="agenda">${activity.steps.map((step) => `<li>${escapeHtml(step)}</li>`).join("")}</ol><textarea class="activity-response" rows="4" placeholder="Record your answer or what you noticed…" aria-label="Notes for ${escapeHtml(activity.title)}"></textarea><button class="button secondary" data-activity-done="${index}" type="button">✓ Mark complete</button></article>`).join("")}</div>
     <p><button class="button primary" id="activities-done" type="button">Finish activities ✓</button></p>`;
@@ -1074,6 +1191,7 @@ function renderRealProblemsDeck() {
     </div></section>`);
 
   mountDeck({
+    ...deckPlacement(),
     heading: "Mathematics in daily life",
     label: "Problem",
     slides,
@@ -1098,7 +1216,13 @@ function renderRealProblemsDeck() {
 }
 
 function renderRealProblems() {
+  if (bothDesigns()) return renderBothDesigns(renderRealProblemsClassic, renderRealProblemsDeck, "The same problems, one at a time.");
   if (deckStage()) return renderRealProblemsDeck();
+  return renderRealProblemsClassic();
+}
+
+function renderRealProblemsClassic() {
+  const { $, $$ } = classicScope();
   const problems = course.realProblems;
   $("#app").innerHTML = `${pageHeader("Mathematics in daily life", "Solve Real Problems", `Apply ${escapeHtml(course.unit.unitTitle)} to home, school, markets, travel and the wider community.`)}
     <div class="problem-grid">${problems.map((item,index)=>`<article class="panel real-problem"><div class="problem-icon">${["⌂","◫","🚌","▦","◇","✦"][index]||"#"}</div><span class="eyebrow">${escapeHtml(item.context)} · ${escapeHtml(item.difficulty)}</span><h2>${escapeHtml(item.prompt)}</h2>${voiceButton(item.prompt, "Listen to problem")}<textarea id="problem-${item.id}" placeholder="Show your calculation and answer…"></textarea><div class="question-actions"><button class="button primary" data-check-problem="${item.id}" type="button">Check answer</button><button class="button secondary" data-problem-hint="${item.id}" type="button">Hint</button></div><div id="problem-feedback-${item.id}"></div></article>`).join("")}</div>`;
@@ -1134,6 +1258,7 @@ function renderExplainThinkingDeck() {
     </div></section>`);
 
   mountDeck({
+    ...deckPlacement(),
     heading: "Reasoning matters",
     label: "Prompt",
     slides,
@@ -1162,7 +1287,13 @@ function renderExplainThinkingDeck() {
 }
 
 function renderExplainThinking() {
+  if (bothDesigns()) return renderBothDesigns(renderExplainThinkingClassic, renderExplainThinkingDeck, "The same prompts, one at a time.");
   if (deckStage()) return renderExplainThinkingDeck();
+  return renderExplainThinkingClassic();
+}
+
+function renderExplainThinkingClassic() {
+  const { $, $$ } = classicScope();
   let active=0;
   const completed=new Set(progress.reasoning||[]);
   const draw=()=>{const item=course.reasoningPrompts[active];$("#app").innerHTML=`${pageHeader("Reasoning matters", "Explain Your Thinking", `Explain the ideas in ${escapeHtml(course.unit.unitTitle)} using mathematical evidence, not only a final answer.`)}<div class="reasoning-tabs">${course.reasoningPrompts.map((entry,index)=>`<button class="${index===active?'active':''} ${completed.has(entry.id)?'done':''}" data-reasoning-index="${index}" type="button"><span>${index+1}</span>${escapeHtml(entry.difficulty)}</button>`).join('')}</div><div class="explain-layout"><section class="panel"><span class="eyebrow">Reasoning prompt</span><h2>${escapeHtml(item.prompt)}</h2>${voiceButton(item.prompt,"Listen to prompt")}<textarea id="reasoning-text" rows="9" placeholder="Explain what you know, what rule you used and why your conclusion makes sense…"></textarea><button class="button primary" id="check-reasoning-text" type="button">Check mathematical ideas</button><div id="reasoning-text-feedback"></div></section><section class="panel"><h3>Key ideas</h3><ul class="checklist">${item.keyIdeas.map((idea)=>`<li>${escapeHtml(idea)}</li>`).join('')}</ul><details><summary>Show model explanation</summary><p>${escapeHtml(item.modelAnswer)}</p>${voiceButton(item.modelAnswer,"Listen to model answer")}</details></section></div>`;$$('[data-reasoning-index]').forEach((button)=>button.addEventListener('click',()=>{active=Number(button.dataset.reasoningIndex);draw();}));$("#check-reasoning-text").addEventListener('click',()=>{const text=$("#reasoning-text").value.toLowerCase();const hits=item.keyIdeas.filter((idea)=>idea.toLowerCase().split(/\s+/).some((word)=>word.length>2&&text.includes(word))).length;const secure=text.length>30&&(hits>0||item.keyIdeas.length===0);$("#reasoning-text-feedback").innerHTML=`<p class="feedback ${secure?'good':'try'}"><span class="status-note">${secure?'Your explanation includes mathematical evidence.':'Add more mathematical evidence.'}</span> ${secure?escapeHtml(item.modelAnswer):`Use these ideas: ${escapeHtml(item.keyIdeas.join(', '))}.`}</p>`;if(secure){completed.add(item.id);progress.reasoning=[...completed];saveProgress();if(completed.size===course.reasoningPrompts.length)complete('explain','Reasoning explanations complete.');}});};
@@ -1383,7 +1514,14 @@ const config = {
   // A deck takes the whole viewport while it is mounted; the next route has to
   // get the padded layout back, and whatever the last slide was saying has to
   // stop before its page is replaced.
-  onBeforeRender: () => { stopVoice(); document.body.classList.remove("gc-full"); },
+  onBeforeRender: () => {
+    stopVoice();
+    document.body.classList.remove("gc-full");
+    // Both-designs regions belong to the section being left. Cleared here so a
+    // renderer that runs on its own paints into #app as it always did.
+    classicRegion = null;
+    deckMount = null;
+  },
   async load(ctx) {
     const s = ctx.stageNumber, u = ctx.unitNumber;
     if (isPrereqUnit) {

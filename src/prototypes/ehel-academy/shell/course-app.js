@@ -182,7 +182,10 @@ export function createCourseApp(config) {
     return chunks;
   }
   function collectPageNarration() {
-    const source = $("#app");
+    // On a both-designs page the deck below repeats the section word for word,
+    // so reading #app would say the whole thing twice. The original half is the
+    // page; the deck is a second view of it.
+    const source = $("#classic-design") || $("#app");
     if (!source) return currentPageNarration;
     const copy = source.cloneNode(true);
     copy.querySelectorAll(".voice-button, .audio-source, .status-chip, script, style, [hidden], [aria-hidden='true'], details:not([open]) > *:not(summary)").forEach((el) => el.remove());

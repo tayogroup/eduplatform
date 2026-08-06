@@ -31,6 +31,8 @@ const MATH = path.join(here, "..", "src", "prototypes", "ehel-academy", "mathema
 const write = process.argv.includes("--write");
 const stageAt = process.argv.indexOf("--stage");
 const stages = stageAt >= 0 ? [Number(process.argv[stageAt + 1])] : [1];
+// --stage 3 reaches the one Stage 3 fluency line found by the Stages 2-8 sweep;
+// the tool is otherwise a Stage 1 one, and says so.
 
 // Where the adult's script begins. Verified across all 15 Stage 1 units: the
 // dialogue never precedes "How to teach it", so the FIRST match of either marker
@@ -52,7 +54,20 @@ const FIELDS = [
   ["explorations", "explanation"],
   ["visualModels", "purpose"],
   ["methods", "steps"],
+  ["methods", "example"],
+  ["fluency", "errorFeedback"],
 ];
+
+// Text that says "the child" and is RIGHT to. A word problem about children is
+// about children — rewriting "the child with 8 collected 8/30" into second
+// person would corrupt the question, and a probability question about a teacher
+// picking a name is a question about a teacher. Listed exactly, so the gate
+// below keeps its teeth on everything else.
+const WORD_PROBLEMS = new Set([
+  "Aisha shares sweets among 5 friends who collects: 6, 4, 7, 5, 8. How many sweets in total, and what fraction did the child with 8 collect?",
+  "Total = 6 + 4 + 7 + 5 + 8 = 30 sweets; the child with 8 collected 8/30.",
+]);
+const isWordProblem = (text) => [...WORD_PROBLEMS].some((known) => String(text).includes(known.slice(0, 60)));
 
 // Nine sentences address the adult from inside the learner's own paragraphs,
 // with no "How to teach it" ahead of them, so the section split cannot reach
@@ -104,6 +119,18 @@ const REWRITE = new Map([
    "Tying each o'clock time to something you already do — school, lunch, bedtime — makes the number mean something rather than being just a fact to recall."],
   ["Walk through your own day in the order it actually happens, naming each part as you go, so the words attach to routines the child already knows rather than to an abstract idea.",
    "Walk through your own day in the order it actually happens, naming each part as you go, so the words attach to what you already do rather than to an abstract idea."],
+  // Found by sweeping Stages 2-8. Only three things turned up in seven stages,
+  // and two of them are here.
+  //
+  // Stage 3's is the one that mattered: errorFeedback is shown to the learner
+  // when they get a fluency item wrong, and it was telling somebody else what to
+  // remind them of.
+  ["If the child rounded 285 down to 200 instead of up to 300, remind them: 285 is closer to 300 than to 200, so it rounds up.",
+   "If you rounded 285 down to 200 instead of up to 300, remember: 285 is closer to 300 than to 200, so it rounds up."],
+  // A perspective example, where naming a parent as the second person makes no
+  // sense to a learner working through it alone.
+  ["A toy goat facing you, then facing the parent from across the table",
+   "A toy goat facing you, then facing someone sitting across the table"],
 ]);
 // Moved to the guide where the sentence is genuinely TO the adult — an
 // instruction to them, or a report on the learner's progress. Rewriting these
@@ -190,6 +217,15 @@ const RULES = new Map([
     title: "Two Overlapping Circles and 'Both'",
     text: "Start with objects that clearly fit only one circle — a blue car is a toy but not red, an apple is red but not a toy. Then try a red teddy: it is a toy AND it is red. The overlapping middle is where something that belongs to both goes.",
   }],
+  // Already half-converted, and broken by it: "Be the teacher" addresses the
+  // learner, "telling you their rule" addresses the adult about the learner, and
+  // the title names them in the third person. All in eleven words. This is what
+  // a pattern-based voice transform leaves behind, and the reason this file
+  // lists its sentences instead of matching them.
+  ["unit-2.json|Child as Teacher: Sorting in Reverse", {
+    title: "Be the Teacher: Sorting in Reverse",
+    text: "Be the teacher: sort a pile of objects yourself, then tell someone else what your rule was and see if they can follow it.",
+  }],
 ]);
 
 // What must not survive in text a learner reads. Checked after every transform;
@@ -250,7 +286,7 @@ for (const stage of stages) {
             if (next !== step) { value[at2] = next; stats.sentences += 1; touched = true; collect(file, collection, `${field}[${at2}]`, next, "(rewritten in place)"); }
             else stats.unchanged += 1;
             for (const [pattern, label] of ADULT_VOICE) {
-              if (!pattern.test(value[at2])) continue;
+              if (!pattern.test(value[at2]) || isWordProblem(value[at2])) continue;
               unhandled.push(`  ${file} ${collection}.${field}[${at2}] — ${label} (a step must be rewritten, not moved)\n     …${value[at2].slice(0, 130)}…`);
             }
           });
@@ -299,7 +335,7 @@ for (const stage of stages) {
         // Nothing addressed to the adult may reach a learner. A sentence this
         // file has no rule for stops the run rather than shipping.
         for (const [pattern, label] of ADULT_VOICE) {
-          if (!pattern.test(learner)) continue;
+          if (!pattern.test(learner) || isWordProblem(learner)) continue;
           const at2 = learner.search(pattern);
           unhandled.push(`  ${file} ${collection}.${field} — ${label}\n     …${learner.slice(Math.max(0, at2 - 60), at2 + 110)}…`);
         }
@@ -311,6 +347,10 @@ for (const stage of stages) {
     // replaced from RULES, with the original kept on the rule itself.
     for (const rule of unit.reference?.rules || []) {
       const replacement = RULES.get(`${file}|${rule.title}`);
+      // Two replacements keep the original title, so the key still matches on a
+      // re-run. Without this the rule would be replaced with itself and its
+      // original appended to the guide again on every pass.
+      if (replacement && rule.text === replacement.text) continue;
       if (replacement) {
         addGuide(rule, [rule.title, rule.text].filter(Boolean).join("\n\n"));
         rule.title = replacement.title;

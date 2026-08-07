@@ -73,24 +73,61 @@ const mathNarration = require("./lib/ehel-math-narration");
 // Science and Computing, so it needs no special case beyond its own narration
 // definition.
 const globalPerspectivesNarration = require("./lib/ehel-global-perspectives-narration");
+
+// English still needs its own branch below — its clips are content-named and
+// live per category rather than in a flat tts/ dir — but the question of WHICH
+// clips exist is now answered by a narration module like everyone else's, so
+// this file no longer carries a second opinion about it.
+const englishNarration = require("./lib/ehel-english-narration");
 // Build the [{local, remote}] upload list.
 function buildList() {
   const list = [];
   if (subjectList.includes("english")) {
-    const base = path.join(EHEL, "english", "media", "audio");
-    for (let g = 1; g <= 12; g += 1) {
-      // writing/, activities/ and quiz/ are newer trees; grammar practice clips are
-      // named {grammarId}-practice.mp3 and live in grammar/, so they need no entry here.
-      // quiz/ holds the course-level final assessment read-aloud, one clip per question.
-      // overview/ holds the unit overview page, one clip per panel, including the
-      // Prerequisite unit's overview built from placement-exam.json.
-      for (const cat of ["readings", "grammar", "speaking", "vocabulary", "dictionary", "writing", "activities", "quiz", "overview"]) {
-        const d = path.join(base, `grade-${g}`, cat);
-        if (!fs.existsSync(d)) continue;
-        for (const f of fs.readdirSync(d)) if (f.endsWith(".mp3"))
-          list.push({ local: path.join(d, f), remote: `media/english/g${String(g).padStart(2, "0")}/audio/${cat}/${f}` });
+    // This used to walk the local tree against a hard-coded category list, which
+    // said something subtly different from what the app asks for: it shipped
+    // whatever sat on disk, so a clip whose descriptor had been withdrawn went
+    // up anyway, and a category nobody thought to add to the list would have
+    // been skipped in silence. The claim map is the same source the deployment
+    // auditor reads, so the two can no longer disagree about what English
+    // narration is.
+    const courseRoot = path.join(EHEL, "english");
+    const claimed = englishNarration.clipGradeMap(courseRoot);
+    const uploadable = new Set();
+    let absent = 0;
+    for (const [clip, grades] of claimed) {
+      for (const g of grades) {
+        const local = englishNarration.localFor(courseRoot, g, clip);
+        // A claim with no file cannot be uploaded, and means the app will ask
+        // for something that is not there — a content bug, not an upload one.
+        // Say so rather than passing over it.
+        if (!fs.existsSync(local)) { absent += 1; continue; }
+        uploadable.add(`${g}|${clip}`);
+        list.push({ local, remote: englishNarration.remoteFor(g, clip) });
       }
     }
+    if (absent) console.log(`  english: ${absent} claimed clip(s) missing locally — cannot upload; see npm run verify:audio-deployed english`);
+
+    // Files on disk no live descriptor claims. The withdrawn fill-in-the-blank
+    // clips were exactly this and the old walk shipped them. Left local and
+    // named, never uploaded — the same treatment the hash subjects give an
+    // unreachable clip.
+    const base = path.join(courseRoot, "media", "audio");
+    let unclaimed = 0;
+    if (fs.existsSync(base)) {
+      for (const entry of fs.readdirSync(base)) {
+        const m = entry.match(/^grade-(\d+)$/);
+        if (!m) continue;
+        const gdir = path.join(base, entry);
+        for (const cat of fs.readdirSync(gdir)) {
+          const d = path.join(gdir, cat);
+          if (!fs.statSync(d).isDirectory()) continue;
+          for (const f of fs.readdirSync(d)) {
+            if (f.endsWith(".mp3") && !uploadable.has(`${Number(m[1])}|${cat}/${f}`)) unclaimed += 1;
+          }
+        }
+      }
+    }
+    if (unclaimed) console.log(`  english: ${unclaimed} local clip(s) no descriptor claims — skipped`);
   }
   // Each subject's own narration module owns the mapping — a lookup rather
   // than a chain of ternaries, so adding a course is one line here and cannot

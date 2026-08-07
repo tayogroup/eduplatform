@@ -24,6 +24,9 @@ require_once($CFG->libdir . '/clilib.php');
 require_once($CFG->libdir . '/filelib.php'); // Moodle's \curl lives here.
 require_once($CFG->dirroot . '/local/hubredirect/accesslib.php');
 require_once($CFG->dirroot . '/local/hubredirect/content_authoring_portallib.php');
+// For pqpg_ehel_app_base — the one definition of which course keys are EHEL
+// courses and which content directory each maps to.
+require_once($CFG->dirroot . '/local/prequran/progress_gatewaylib.php');
 
 [$options] = cli_get_params([
     'help' => false,
@@ -36,7 +39,7 @@ require_once($CFG->dirroot . '/local/hubredirect/content_authoring_portallib.php
 if ($options['help'] || (int)$options['workspaceid'] <= 0) {
     cli_writeln("Import learning objectives from the content tree into Moodle.");
     cli_writeln("  --workspaceid=N   REQUIRED. The workspace these courses belong to.");
-    cli_writeln("  --course=IDNUM    Just this course (default: every ehel-*-gNN course).");
+    cli_writeln("  --course=IDNUM    Just this course (default: every EHEL catalog course).");
     cli_writeln("  --base=URL        Content root (default: the Ehel Bunny pull zone).");
     cli_writeln("  --dry-run         Report what would be imported, write nothing.");
     exit((int)$options['workspaceid'] > 0 ? 0 : 1);
@@ -46,14 +49,17 @@ $workspaceid = (int)$options['workspaceid'];
 $dryrun = !empty($options['dry-run']);
 $base = rtrim((string)$options['base'], '/');
 
-$subjectdirs = ['eng' => 'english', 'math' => 'mathematics', 'sci' => 'science'];
-
 // Which courses? Either the one named, or every catalog course on this site.
+// The pattern is deliberately just 'ehel-%': it used to be 'ehel-%-g%', which
+// cannot match Intensive English's ehel-intensive-eng-lNN and so silently
+// imported no objectives for that subject at all. Anything the pattern over-
+// fetches (a unit idnumber, say) is rejected by pqpg_ehel_app_base below, so
+// the wider net costs a few discarded rows and nothing else.
 if (trim((string)$options['course']) !== '') {
     $courses = $DB->get_records('course', ['idnumber' => trim((string)$options['course'])], '', 'id,idnumber,fullname');
 } else {
     $courses = $DB->get_records_select('course',
-        $DB->sql_like('idnumber', ':pat'), ['pat' => 'ehel-%-g%'], 'idnumber ASC', 'id,idnumber,fullname');
+        $DB->sql_like('idnumber', ':pat'), ['pat' => 'ehel-%'], 'idnumber ASC', 'id,idnumber,fullname');
 }
 if (!$courses) {
     cli_error('No matching courses found.');
@@ -74,15 +80,26 @@ function pqio_fetch_json(string $url): ?array {
 $totalcourses = 0;
 $totalunits = 0;
 $totalobjectives = 0;
+$unreadable = 0;
 $skipped = [];
 
 foreach ($courses as $course) {
     $idnumber = (string)$course->idnumber;
-    if (!preg_match('/^ehel-(eng|math|sci)-g(\d{2})$/', $idnumber, $m)) {
+    // One definition of what an EHEL course key is, shared with the launch
+    // path. This used to be a regex naming English, Mathematics and Science,
+    // which is why Computing, Global Perspectives and Intensive English had no
+    // objectives in the syllabus or coverage reports — they were skipped here
+    // without a word, indistinguishable from having none authored.
+    $pqio_base = pqpg_ehel_app_base($idnumber);
+    if ($pqio_base === null) {
         continue;
     }
-    $subject = $subjectdirs[$m[1]];
-    $gradedir = 'g' . $m[2];
+    $subject = $pqio_base['subjectdir'];
+    // Always 'g' + two digits, for every subject. Intensive English keeps its
+    // stages in level-N/ locally, but upload-content-to-bunny.js publishes it
+    // to content/intensive-english/gNN/ like all the others, so the REMOTE
+    // directory is g-prefixed even where the local one is not.
+    $gradedir = 'g' . str_pad((string)$pqio_base['stage'], 2, '0', STR_PAD_LEFT);
     $courseroot = $base . '/' . $subject . '/' . $gradedir;
 
     $manifest = pqio_fetch_json($courseroot . '/course-manifest.json');
@@ -126,9 +143,16 @@ foreach ($courses as $course) {
         $seq = 0;
         foreach ($outcomes as $outcome) {
             $seq++;
-            // Two shapes in the wild: English authored rich objects, while
-            // Maths and Science carry the outcome as a bare string. Support
-            // both rather than silently importing nothing.
+            // THREE shapes in the wild, and every one of them is authored, not
+            // a mistake to normalise away:
+            //   * English and Intensive English — rich objects carrying their
+            //     own globally unique outcomeId.
+            //   * Maths, Science and Computing — a bare string, no id at all.
+            //   * Global Perspectives — {id, text}, where the id is only
+            //     'lo01'.. and RESTARTS IN EVERY UNIT.
+            // Support all three rather than silently importing nothing: a shape
+            // this loop does not recognise still counts toward the "N outcomes"
+            // the run prints, so an unhandled one reads as success.
             if (is_string($outcome)) {
                 $text = trim($outcome);
                 // No id in the source, so synthesise a stable one from position.
@@ -137,6 +161,19 @@ foreach ($courses as $course) {
                 $code = $idnumber . '-u' . str_pad((string)$unitno, 2, '0', STR_PAD_LEFT)
                     . '-lo' . str_pad((string)$seq, 2, '0', STR_PAD_LEFT);
                 $outcome = ['sequence' => $seq];
+            } else if (is_array($outcome) && isset($outcome['text'])) {
+                // Global Perspectives. The id is unit-local ('lo01' in unit 1
+                // AND unit 2 AND every other), so it MUST be qualified by the
+                // unit before it can key anything: objectives upsert by
+                // (courseid, objective_code), so the raw id would collapse a
+                // whole course into seven rows, each overwritten by the next
+                // unit. Same synthesised shape the bare-string branch uses.
+                $rawid = trim((string)($outcome['id'] ?? ''));
+                if ($rawid === '') {
+                    $rawid = 'lo' . str_pad((string)$seq, 2, '0', STR_PAD_LEFT);
+                }
+                $code = $idnumber . '-u' . str_pad((string)$unitno, 2, '0', STR_PAD_LEFT) . '-' . $rawid;
+                $text = trim((string)$outcome['text']);
             } else if (is_array($outcome)) {
                 $code = trim((string)($outcome['outcomeId'] ?? ''));
                 $text = trim((string)($outcome['learningOutcome'] ?? ''));
@@ -144,6 +181,11 @@ foreach ($courses as $course) {
                 continue;
             }
             if ($code === '' || $text === '') {
+                // Counted and reported, never dropped in silence. An outcome
+                // shape nobody has taught this loop about lands here, and
+                // without the count the run prints "N outcome(s)" per unit and
+                // "0 objectives" at the end while looking like it worked.
+                $unreadable++;
                 continue;
             }
             if (!$dryrun) {
@@ -174,6 +216,11 @@ foreach ($courses as $course) {
 cli_writeln('');
 cli_writeln('Courses: ' . $totalcourses . ' · units with outcomes: ' . $totalunits
     . ' · objectives: ' . $totalobjectives . ($dryrun ? '  [DRY RUN — nothing written]' : ''));
+if ($unreadable > 0) {
+    cli_writeln('WARNING: ' . $unreadable . ' outcome(s) were read but could not be imported —'
+        . ' no usable code or text. That usually means a subject authors a shape this'
+        . ' importer does not know yet; check its units/unit-*.json before trusting the count above.');
+}
 foreach ($skipped as $s) {
     cli_writeln('skipped: ' . $s);
 }

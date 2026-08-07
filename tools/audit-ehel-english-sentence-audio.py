@@ -66,20 +66,115 @@ MATCH_FLOOR = 0.85
 # Whisper writes numbers as digits ("Yes, 5 is easy") where the sentence spells
 # them out ("Yes, five is easy!"), which scored four perfectly good Grade 1 clips
 # as mismatches. Both sides are reduced to digits so a number is a number.
-NUMBER_WORDS = {
-    "zero": "0", "one": "1", "two": "2", "three": "3", "four": "4", "five": "5",
-    "six": "6", "seven": "7", "eight": "8", "nine": "9", "ten": "10",
-    "eleven": "11", "twelve": "12", "thirteen": "13", "fourteen": "14",
-    "fifteen": "15", "sixteen": "16", "seventeen": "17", "eighteen": "18",
-    "nineteen": "19", "twenty": "20", "thirty": "30", "forty": "40",
-    "fifty": "50", "sixty": "60", "seventy": "70", "eighty": "80", "ninety": "90",
-    "hundred": "100",
+#
+# Cardinals alone were not enough, and the gap was not academic: a sweep of
+# Grade 2 flagged 21 clips and Grade 3 one, and every one of the 22 was a
+# correct recording of a number. Two things were missing.
+#
+# ORDINALS. Whisper writes a spoken ordinal as "11th", "21st"; the script spells
+# "eleventh", "twenty-first". Neither was in the map, so they could never agree
+# — and this lands hardest exactly where it matters least, because Grade 2
+# unit-1 TEACHES ordinal numbers, so nearly every clip in the unit tripped.
+#
+# COMPOUNDS. "twenty-eight" had its hyphen deleted rather than split, welding it
+# into "twentyeight" — a token the map cannot reach even though both halves are
+# in it. Splitting alone still gives "20 8" against Whisper's "28", so the parts
+# have to be composed, not just separated.
+#
+# Both sides therefore fold to one canonical form, and that form is WORDS, not
+# digits. Digits look like the obvious choice and quietly break the comparison:
+# the score is a character ratio, so collapsing "twelfth" and "second" to "12o"
+# and "2o" shrinks the differing region until a genuinely wrong number scores
+# above the floor. Two deliberately-wrong pairs scored 0.88 that way. Spelling
+# both sides out keeps a wrong number as expensive as it should be, and leaves
+# a right one exactly equal.
+UNITS = {
+    "zero": 0, "one": 1, "two": 2, "three": 3, "four": 4, "five": 5,
+    "six": 6, "seven": 7, "eight": 8, "nine": 9,
 }
+TEENS = {
+    "ten": 10, "eleven": 11, "twelve": 12, "thirteen": 13, "fourteen": 14,
+    "fifteen": 15, "sixteen": 16, "seventeen": 17, "eighteen": 18, "nineteen": 19,
+}
+TENS = {
+    "twenty": 20, "thirty": 30, "forty": 40, "fifty": 50,
+    "sixty": 60, "seventy": 70, "eighty": 80, "ninety": 90,
+}
+CARDINAL_WORDS = {**UNITS, **TEENS, **TENS, "hundred": 100}
+UNIT_ORDINALS = {
+    "first": 1, "second": 2, "third": 3, "fourth": 4, "fifth": 5,
+    "sixth": 6, "seventh": 7, "eighth": 8, "ninth": 9,
+}
+ORDINAL_WORDS = {
+    **UNIT_ORDINALS,
+    "tenth": 10, "eleventh": 11, "twelfth": 12, "thirteenth": 13,
+    "fourteenth": 14, "fifteenth": 15, "sixteenth": 16, "seventeenth": 17,
+    "eighteenth": 18, "nineteenth": 19, "twentieth": 20, "thirtieth": 30,
+    "fortieth": 40, "fiftieth": 50, "sixtieth": 60, "seventieth": 70,
+    "eightieth": 80, "ninetieth": 90, "hundredth": 100,
+}
+_DIGITS = re.compile(r"(\d+)(st|nd|rd|th)?$")
+_CARDINAL_OF = {v: k for k, v in {**UNITS, **TEENS, **TENS}.items()}
+_ORDINAL_OF = {v: k for k, v in ORDINAL_WORDS.items()}
+
+
+def _spell(value: int, ordinal: bool) -> str:
+    """The one spelling of a number that both sides fold onto."""
+    table = _ORDINAL_OF if ordinal else _CARDINAL_OF
+    if value in table:
+        return table[value]
+    tens, unit = divmod(value, 10)
+    if 2 <= tens <= 9 and unit:
+        # "twenty first", "twenty eight" — the tens part stays cardinal in both.
+        return f"{_CARDINAL_OF[tens * 10]} {(_ORDINAL_OF if ordinal else _CARDINAL_OF)[unit]}"
+    return f"{value}{'th' if ordinal else ''}"  # out of range: leave it recognisable
+
+
+def _fold_numbers(tokens: list[str]) -> list[str]:
+    """Collapse every way of writing a number onto one spelling.
+
+    A tens word is read together with the word after it, so "twenty eight" and
+    "28" both become "twenty eight", and "twenty-first" and "21st" both become
+    "twenty first".
+    """
+    out: list[str] = []
+    i = 0
+    while i < len(tokens):
+        token = tokens[i]
+        digits = _DIGITS.fullmatch(token)
+        if digits:
+            out.append(_spell(int(digits.group(1)), bool(digits.group(2))))
+            i += 1
+            continue
+        if token in TENS and i + 1 < len(tokens):
+            nxt = tokens[i + 1]
+            if nxt in UNIT_ORDINALS:
+                out.append(_spell(TENS[token] + UNIT_ORDINALS[nxt], True))
+                i += 2
+                continue
+            if nxt in UNITS and UNITS[nxt]:  # "twenty zero" is not a number
+                out.append(_spell(TENS[token] + UNITS[nxt], False))
+                i += 2
+                continue
+        if token in ORDINAL_WORDS:
+            out.append(_spell(ORDINAL_WORDS[token], True))
+            i += 1
+            continue
+        if token in CARDINAL_WORDS:
+            out.append(_spell(CARDINAL_WORDS[token], False))
+            i += 1
+            continue
+        out.append(token)
+        i += 1
+    return out
 
 
 def normalise(text: str) -> str:
-    flat = re.sub(r"[^a-z0-9 ]", "", re.sub(r"\s+", " ", str(text).lower())).strip()
-    return " ".join(NUMBER_WORDS.get(word, word) for word in flat.split())
+    # Separators become spaces rather than vanishing, so "twenty-eight" arrives
+    # as two tokens to compose. Both sides pass through here, so the treatment of
+    # apostrophes and the rest stays symmetric whatever it is.
+    flat = re.sub(r"[^a-z0-9]+", " ", str(text).lower()).strip()
+    return " ".join(_fold_numbers(flat.split()))
 
 
 # Every narrated category in the course, and where each one's text and its

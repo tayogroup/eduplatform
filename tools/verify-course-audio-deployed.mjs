@@ -115,14 +115,15 @@ function expectedFromClaimMap(subject) {
 }
 
 // English is not hash-named, so its claim map is read out of the course data,
-// which records each clip's path explicitly. tools/lib/ehel-english-narration.js
-// owns that; see it for why the data is a sound source.
+// where each clip sits in a descriptor holding its path and an `available` flag.
+// tools/lib/ehel-english-narration.js owns that, including the rule that a
+// descriptor with available:false is not a claim — it names a clip that was
+// deliberately withdrawn and whose Listen button is not drawn.
 //
-// This branch used to list the local tree instead, which was wrong in both
-// directions: it reported 36 clips genuinely missing from the CDN (right) and
-// 562 as unclaimed extras (wrong — the data claims all 562, they are on the CDN,
-// and the local tree is simply the incomplete copy). Pruning on that advice
-// would have silenced narration in production.
+// That distinction is the entire value of this branch. Listing the local tree
+// instead got the missing count right and the extra count right for the wrong
+// reason; reading the paths without `available` got the extras exactly backwards
+// and made 562 discarded clips look load-bearing. Only the descriptor knows.
 function expectedFromEnglishData() {
   const courseRoot = path.join(EHEL, "english");
   if (!fs.existsSync(path.join(courseRoot, "media", "audio"))) return null;
@@ -153,6 +154,7 @@ for (const subject of subjectList) {
   console.log(`\n${subject}`);
   let totExpected = 0, totMissing = 0, totExtra = 0;
   const missingExamples = [];
+  const extras = []; // "gNN/<category>/<file>" for the per-subject note below
 
   for (const g of [...spec.byGrade.keys()].sort((a, b) => a - b)) {
     const gg = String(g).padStart(2, "0");
@@ -170,7 +172,9 @@ for (const subject of subjectList) {
       const missing = [...u.files].filter((f) => !have.has(f));
       gExpected += u.files.size;
       gMissing += missing.length;
-      gExtra += [...have].filter((f) => !u.files.has(f)).length;
+      const surplus = [...have].filter((f) => !u.files.has(f));
+      gExtra += surplus.length;
+      for (const f of surplus) extras.push(`g${gg}${u.label ? "/" + u.label : ""}/${f}`);
       gStorage += have.size;
       for (const f of missing) if (missingExamples.length < 5) missingExamples.push(`g${gg}${u.label ? "/" + u.label : ""}/${f}`);
     }
@@ -187,7 +191,26 @@ for (const subject of subjectList) {
   }
   // "extra" is a file on storage nothing claims: already bought, unreachable.
   // Not a failure — deleting costs money to undo — but worth naming.
-  if (totExtra) console.log(`  note: ${totExtra} file(s) on storage that nothing claims (see tools/prune-ehel-course-audio.mjs)`);
+  //
+  // For English, say WHY it is unclaimed where the data knows. A clip whose
+  // descriptor was withdrawn is a decision someone made and recorded; a clip no
+  // descriptor mentions at all is genuinely stale. Reporting one number for both
+  // is how the 562 withdrawn clips got mistaken for live ones.
+  if (totExtra) {
+    if (subject === "english") {
+      const withdrawn = new Set(
+        require("./lib/ehel-english-narration.js")
+          .suppressed(path.join(EHEL, "english"))
+          .map((s) => `g${String(s.grade).padStart(2, "0")}/${s.clip}`)
+      );
+      const known = extras.filter((f) => withdrawn.has(f)).length;
+      console.log(`  note: ${totExtra} file(s) on storage that nothing claims`);
+      if (known) console.log(`        ${known} of them are withdrawn descriptors (deliberate — narration still owed, see c21fa23c9)`);
+      if (totExtra - known) console.log(`        ${totExtra - known} unaccounted for (see tools/prune-ehel-course-audio.mjs)`);
+    } else {
+      console.log(`  note: ${totExtra} file(s) on storage that nothing claims (see tools/prune-ehel-course-audio.mjs)`);
+    }
+  }
 }
 
 console.log(

@@ -6,24 +6,38 @@
 // (eng-g01-t01-u01-read02.mp3), they live in media/audio/grade-N/<category>/
 // rather than a flat tts/ dir, and no rule derives the name from the text.
 //
-// So the claim map is read out of the course data, which records each clip's
-// path explicitly. That is a real claim map, not a guess: the data is what the
-// app loads, so a path in the data is a clip the app will request. Verified in
-// both directions on 2026-08-07 — 17,515 claimed across eight grades, and zero
-// files on disk that no data file mentions.
+// So the claim map is read out of the course data, which records each clip in a
+// descriptor holding its path. That is a real claim map: the data is what the
+// app loads, so a live descriptor is a clip the app will request.
 //
-// Why this module had to exist: without it, "what should be deployed" was
-// answered by listing the local tree, and that answer is wrong in both
-// directions. It reported 36 real clips missing from the CDN (true), and 562
-// files as unclaimed extras (false — see below).
+// A DESCRIPTOR IS ONLY A CLAIM IF available !== false. This is the whole
+// subtlety of the file. c21fa23c9 deleted 562 clips that ElevenLabs had
+// improvised from fill-in-the-blank frames — handed "This is a ___.", it
+// invented syllables, and children pressing Listen heard gibberish. The clips
+// were deleted and their descriptors marked
 //
-// THE 562. Every grade claims clips that are not in the local tree: 562 of them,
-// all present on the CDN. They are not orphans and must not be pruned — the app
-// requests them, and deleting them from storage would silence narration in
-// production for content that currently works. The local tree, not the CDN, is
-// the incomplete copy. Anything reasoning about English narration has to compare
-// against this claim map; comparing against the local tree reads those 562 as
-// garbage.
+//     "available": false,
+//     "status": "Refused - the script is a fill-in-the-blank frame; …"
+//
+// but the descriptors were deliberately KEPT, because narration is still owed
+// there: when someone writes a spoken form of the frame, the descriptor is where
+// that work resumes. The renderers read `available` to decide whether to draw a
+// Listen button at all, so a suppressed descriptor is not a claim — no button
+// exists and the app never requests the file.
+//
+// Reading the path without reading `available` therefore over-claims by exactly
+// those 562, which inverts the meaning of an audit: the copies still sitting on
+// the CDN look load-bearing when they are the discarded gibberish. An earlier
+// draft of this module did exactly that. Honouring `available` reconciles the
+// claim map against the local tree exactly — 16,953 clips, zero unclaimed files
+// on disk, zero claims without a file — in all eight grades.
+//
+// The test is `available !== false`, not `=== true`, on purpose. Both give the
+// same answer today (every descriptor carries an explicit boolean). If a future
+// descriptor omits the field, the permissive form claims it, and an unuploaded
+// clip is then reported as missing — loud and wrong-way-safe. The strict form
+// would drop it silently, which is the exact failure class the deployment
+// auditor exists to catch.
 //
 // Deliberately not exported: cyrb53, clean, textsForUnit. They are meaningless
 // here, and a module that exported them would invite a caller to treat English
@@ -32,15 +46,11 @@
 const fs = require("fs");
 const path = require("path");
 
-// The data writes clip paths relative to the course root, under several
-// different keys (source, normal, slow, and any future one). Matching the path
-// shape rather than the key names is what makes this complete: a new field
-// holding a clip path is caught without this file being touched.
-//
-// The grade comes from the path itself, not from which grade's folder the JSON
-// sits in, so a cross-grade reference is claimed where the file actually
-// deploys. None exist today; this costs nothing and cannot be got wrong later.
-const CLIP_RE = /\.\/media\/audio\/grade-(\d+)\/([a-z0-9-]+)\/([^"'\\]+\.mp3)/g;
+// A descriptor writes its path relative to the course root. The grade is taken
+// from the path itself rather than from which grade's folder the JSON sits in,
+// so a cross-grade reference is claimed where the file actually deploys. None
+// exist today; this costs nothing and cannot be got wrong later.
+const CLIP_RE = /^\.\/media\/audio\/grade-(\d+)\/([a-z0-9-]+)\/(.+\.mp3)$/;
 
 function walkJson(dir, out = []) {
   if (!fs.existsSync(dir)) return out;
@@ -64,21 +74,73 @@ function dataDirs(courseRoot) {
     .filter((d) => fs.existsSync(d));
 }
 
+// A descriptor is any object holding at least one clip path. Its `available`
+// governs every path it holds: a vocabulary descriptor carries source, normal
+// and slow, which are the same recording at different speeds and are drawn (or
+// not drawn) together.
+//
+// The structure is walked rather than the text regexed. Text matching cannot see
+// which object a path belongs to, so it cannot see the `available` that governs
+// it — which is precisely how the 562 came to be miscounted.
+function eachDescriptor(node, visit) {
+  if (Array.isArray(node)) {
+    for (const v of node) eachDescriptor(v, visit);
+    return;
+  }
+  if (!node || typeof node !== "object") return;
+  const clips = [];
+  for (const v of Object.values(node)) {
+    if (typeof v !== "string") continue;
+    const m = CLIP_RE.exec(v);
+    if (m) clips.push({ grade: Number(m[1]), clip: `${m[2]}/${m[3]}` });
+  }
+  if (clips.length) visit(node, clips);
+  for (const v of Object.values(node)) eachDescriptor(v, visit);
+}
+
 // Map of "<category>/<file>.mp3" -> [grade, …], the same shape the hash-named
 // subjects' hashGradeMap returns, so callers can treat the two alike.
 function clipGradeMap(courseRoot) {
   const map = new Map();
   for (const dir of dataDirs(courseRoot)) {
     for (const file of walkJson(dir)) {
-      for (const m of fs.readFileSync(file, "utf8").matchAll(CLIP_RE)) {
-        const grade = Number(m[1]);
-        const clip = `${m[2]}/${m[3]}`;
-        if (!map.has(clip)) map.set(clip, new Set());
-        map.get(clip).add(grade);
-      }
+      let data;
+      try { data = JSON.parse(fs.readFileSync(file, "utf8")); }
+      catch (e) { throw new Error(`${path.relative(courseRoot, file)}: ${e.message}`); }
+      eachDescriptor(data, (descriptor, clips) => {
+        if (descriptor.available === false) return; // suppressed: no Listen button is drawn
+        for (const { grade, clip } of clips) {
+          if (!map.has(clip)) map.set(clip, new Set());
+          map.get(clip).add(grade);
+        }
+      });
     }
   }
   return new Map([...map].map(([clip, grades]) => [clip, [...grades].sort((a, b) => a - b)]));
+}
+
+// Descriptors that name a clip the app will not play, with the reason recorded.
+// Not orphans to be swept: they are where narration resumes when a spoken form
+// of each frame is written. Exposed so an auditor can tell "owed" from "stale"
+// instead of guessing from a filename.
+// Deduplicated by (grade, clip): a descriptor names the same recording under
+// source, normal and slow, so the raw walk yields 1,398 entries for 562 clips
+// and any count taken off it would be inflated nearly threefold.
+function suppressed(courseRoot) {
+  const seen = new Map();
+  for (const dir of dataDirs(courseRoot)) {
+    for (const file of walkJson(dir)) {
+      const data = JSON.parse(fs.readFileSync(file, "utf8"));
+      eachDescriptor(data, (descriptor, clips) => {
+        if (descriptor.available !== false) return;
+        for (const { grade, clip } of clips) {
+          const key = `${grade}:${clip}`;
+          if (!seen.has(key)) seen.set(key, { grade, clip, status: descriptor.status ?? null });
+        }
+      });
+    }
+  }
+  return [...seen.values()];
 }
 
 function clipsForGrade(courseRoot, grade) {
@@ -110,4 +172,4 @@ function localFor(courseRoot, grade, clip) {
   return path.join(courseRoot, "media", "audio", `grade-${grade}`, ...clip.split("/"));
 }
 
-module.exports = { clipGradeMap, clipsForGrade, gradesPresent, categories, remoteFor, localFor };
+module.exports = { clipGradeMap, clipsForGrade, suppressed, gradesPresent, categories, remoteFor, localFor };

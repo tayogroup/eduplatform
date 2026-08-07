@@ -261,5 +261,33 @@ A content rebuild renames every clip whose text changed, orphaning the old file.
 ## Verification before committing
 
 1. `npm run validate:units` and `npm run check:alphabet` must pass.
-2. If build output matters: `npm run env:local-dev`, then spot-check via `npm run preview:bunny:production`.
-3. Playwright e2e only runs against a configured Moodle instance — don't treat missing `EDUPLATFORM_*` env as a code failure.
+2. **If you touched any PHP: `npm run check:php` must pass.** Not in `npm test` because it spawns a parser per file (~23s for 610 files) and most changes here are JS or content — so it is on you to run it when you edit `src/moodle`.
+3. If build output matters: `npm run env:local-dev`, then spot-check via `npm run preview:bunny:production`.
+4. Playwright e2e only runs against a configured Moodle instance — don't treat missing `EDUPLATFORM_*` env as a code failure.
+
+### The PHP gate, and the corruption it exists for
+
+`src/moodle` is the source of truth for the Moodle plugins, but until this gate
+existed nothing in the npm workflow ever parsed it — PHP was first executed on a
+server. `sql_tools.php` sat on `main` broken through several commits, and
+`deploy/bbb-live-corrupted-q-files-rescue-20260624-v01.zip` records the same
+damage being cleaned up once before that.
+
+The damage is always one shape: a botched global replace turns every lowercase
+`p` into `q`, so `<?php` becomes `<?qhq`, `strict_types` becomes `strict_tyqes`.
+In a large file it is invisible to diff review.
+
+**`php -l` alone does not catch it.** With `short_open_tag=Off` — the normal
+production setting — `<?qhq` is not a PHP tag, so the file is inline HTML, lints
+perfectly clean, and PHP *serves the source instead of running it*. Nothing
+executes, `require_login()` included, so the file goes to whoever requests the
+URL. That is why `check:php` does two things: it asserts every file opens with
+`<?php` (ini-independent, instant), and it runs `php -l` with
+`-d short_open_tag=1` pinned so the parser can see the corruption too. Removing
+either check makes the gate blind to the one bug it was written for.
+
+PHP is found via `PHP_BINARY`, then `PATH`, then the winget package directory —
+a freshly winget-installed PHP updates the persistent user PATH but not
+already-running shells. If no PHP is found the gate **fails** rather than
+skipping: a gate that passes without running is worse than none. Install with
+`winget install --id PHP.PHP.8.4 --scope user` (the 8.3 manifest currently 404s).

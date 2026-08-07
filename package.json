@@ -170,6 +170,8 @@
     "build:intensive": "node tools/build-intensive-units.js",
     "check:intensive": "node tools/build-intensive-units.js && node tools/check-intensive-audio-coverage.mjs",
     "check:courses": "node tools/check-science-content.mjs && node tools/check-science-webgl-scenes.mjs && node tools/check-math-content.mjs && node tools/check-computing-content.mjs && node tools/check-computing-webgl-scenes.mjs",
+    "check:php": "node tools/check-php-syntax.mjs",
+    "lint:php": "node tools/check-php-syntax.mjs",
     "fix:verb-agreement": "node tools/fix-ehel-verb-agreement.mjs"
   },
   "devDependencies": {

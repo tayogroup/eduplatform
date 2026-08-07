@@ -28,7 +28,7 @@ $token = pqpg_mint_token($target, $course, $env);
 $endpoint = $CFG->wwwroot . '/local/prequran/progress_gateway.php';
 $launchparams = 'pwsEndpoint=' . urlencode($endpoint) . '&pwsToken=' . urlencode($token) . '&studentid=' . $target;
 
-// Build the ready-to-click app URL from the course key (ehel-{eng|math|sci}-gNN).
+// Build the ready-to-click app URL from the course key (ehel-<subject>-{g|l}NN).
 // Uses the shared decomposition so course_launch.php and this endpoint agree.
 $launchurl = '';
 $pqbase = pqpg_ehel_app_base($course);

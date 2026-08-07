@@ -38,6 +38,11 @@ export function mountSebSession() {
   const locked = p.get("lockOn") === "1";
   const learnAfter = Math.max(0, Number(p.get("learnAfter") || 0));
   const exitAfter = Math.max(0, Number(p.get("exitAfter") || 0));
+  // A placement exam is not a lesson, and the copy has to say so: "2:00:00 of
+  // learning left" is the wrong thing to tell a child sitting an exam. The exam
+  // carries no learning target at all (learnAfter=0), so the only clock it
+  // shows is the hard cap.
+  const isExam = p.get("sessionKind") === "exam";
 
   // Survive reloads inside a lesson: pin the deadlines once per LAUNCH rather
   // than restarting the clock every time the page reloads. The pins are keyed
@@ -84,7 +89,7 @@ export function mountSebSession() {
   if (hasExit) {
     btn = document.createElement("button");
     btn.type = "button";
-    btn.textContent = "Finish lesson";
+    btn.textContent = isExam ? "Finish exam" : "Finish lesson";
     btn.style.cssText = [
       "border:0", "cursor:pointer", "padding:7px 14px", "border-radius:999px",
       "background:#f0f4f9", "color:#17324a", "font:600 14px/1 inherit",
@@ -109,7 +114,13 @@ export function mountSebSession() {
     // learner how much work is left, which is useful whether or not the exit
     // is locked. Locking only changes whether Finish is refused before time.
     if (!releaseAt) {
-      label.textContent = "Lesson in progress";
+      // An exam shows the cap counting down instead — it is the only deadline
+      // it has, and a learner sitting an exam should be able to see the time.
+      if (isExam && capAt) {
+        label.textContent = `${formatLeft((capAt - now) / 1000)} left`;
+        return;
+      }
+      label.textContent = isExam ? "Exam in progress" : "Lesson in progress";
       return;
     }
     const left = (releaseAt - now) / 1000;

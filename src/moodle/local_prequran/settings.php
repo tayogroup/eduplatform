@@ -901,6 +901,37 @@ if ($hassiteconfig) {
         PARAM_INT
     ));
 
+    $settings->add(new admin_setting_configselect(
+        'local_prequran/placement_seb_launch_mode',
+        'Launch the Prerequisite unit in Safe Exam Browser',
+        'Enabled: the placement exam in every course\'s Prerequisite unit (unit -1) opens inside Safe Exam Browser under the EXAM profile — URL filtering on and a quit password, so a learner cannot leave mid-exam. '
+        . 'This is stricter than the course setting above, which deliberately lets learners quit a lesson freely. '
+        . 'Off: the Prerequisite opens like any other unit. '
+        . 'Learners whose device cannot run Safe Exam Browser (there is no Android build) fall back to focus mode automatically, so nobody is left unable to be placed. '
+        . 'The exam always ends on whichever comes first: the learner submitting it, or the hard cap below.',
+        'enabled',
+        ['' => 'Off (open like any unit)', 'enabled' => 'Enabled (open in SEB)']
+    ));
+
+    $settings->add(new admin_setting_configtext(
+        'local_prequran/placement_seb_quit_password',
+        'Placement exam quit password',
+        'Quit password for placement sessions, so staff can always release a learner. '
+        . 'Unlike the course password above, leaving this blank does NOT mean "no password" — a placement exam is an exam. '
+        . 'Blank falls back to the course quit password, and if that is blank too a random per-site password is generated and stored. '
+        . 'Site admins and accounts flagged with the SEB exit override never get a password at all, so nobody testing this can be locked in.',
+        '',
+        PARAM_RAW_TRIMMED
+    ));
+
+    $settings->add(new admin_setting_configtext(
+        'local_prequran/placement_seb_max_minutes',
+        'Placement exam hard cap (minutes)',
+        'The safety net for placement: Safe Exam Browser closes by this point whether or not the exam reports itself finished, so a crashed page cannot trap a child in a browser they cannot quit. Default 90, clamped to 15–240.',
+        '90',
+        PARAM_INT
+    ));
+
     $settings->add(new admin_setting_configtext(
         'local_prequran/seb_proctor_retention_days',
         'Proctor snapshot retention (days)',

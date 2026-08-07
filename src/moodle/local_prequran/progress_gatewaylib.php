@@ -65,21 +65,55 @@ function pqpg_mint_token(int $userid, string $coursekey, string $env = '', int $
 }
 
 /**
- * Decompose an EHEL catalog course key (ehel-{eng|math|sci}-gNN) into the Bunny
+ * Decompose an EHEL catalog course key (ehel-<subject>-{g|l}NN) into the Bunny
  * app routing parts, or null if it is not an EHEL course. Single source of truth
- * for the app subdir, the grade/stage value, and which query param carries it
- * (English routes by ?grade=, math/science by ?stage=). Shared by
- * progress_token.php and course_launch.php.
+ * for the app subdir, the grade/stage/level value, and which query param carries
+ * it. Shared by progress_token.php, course_launch.php, seb_config.php,
+ * seb_release.php and placement_launch.php — all of which used to carry their
+ * own copy of a three-subject regex and so disagreed with the catalog. Returning
+ * non-null here is what makes a course launchable AND gives it a placement exam,
+ * so adding a subject is this one edit.
  */
 function pqpg_ehel_app_base(string $coursekey): ?array {
-    if (!preg_match('/^ehel-(eng|math|sci)-g(\d{2})$/', $coursekey, $m)) {
+    // slug => [app directory, the URL param that carries the level, the letter
+    // the course key numbers with]. The app directory matches the Bunny deploy
+    // target in tools/upload-app-to-bunny.js (app/<dir>), and the param matches
+    // that subject's `param:` in shell/subjects/<dir>.js — English routes by
+    // ?grade=, Intensive English by ?level=, everything else by ?stage=. Get
+    // either wrong and the app opens on its default stage instead of the
+    // learner's, which looks like working software.
+    $subjects = [
+        'eng'  => ['english', 'grade', 'g'],
+        'math' => ['mathematics', 'stage', 'g'],
+        'sci'  => ['science', 'stage', 'g'],
+        'comp' => ['computing', 'stage', 'g'],
+        'gp'   => ['global-perspectives', 'stage', 'g'],
+        // Intensive English is published by the catalog as ehel-intensive-eng-lNN
+        // and that is the canonical form, because this function is looked up by
+        // a Moodle course idnumber and that is what catalog_sync writes. The
+        // app's own courseKey() emits ehel-ien-lNN instead — a known, deliberate
+        // mismatch that is an open data decision, NOT a typo to correct here.
+        // Both are accepted so a launch resolves whichever form reaches it;
+        // resolving the mismatch is a separate call about the catalog.
+        'intensive-eng' => ['intensive-english', 'level', 'l'],
+        'ien'  => ['intensive-english', 'level', 'l'],
+    ];
+    if (!preg_match('/^ehel-([a-z-]+)-([gl])(\d{2})$/', $coursekey, $m)) {
         return null;
     }
-    $subjectdir = ['eng' => 'english', 'math' => 'mathematics', 'sci' => 'science'][$m[1]];
+    if (!isset($subjects[$m[1]])) {
+        return null;
+    }
+    [$subjectdir, $levelparam, $letter] = $subjects[$m[1]];
+    // The letter is part of the subject's identity, not decoration: accepting
+    // ehel-eng-l01 would resolve a level to a grade and launch the wrong thing.
+    if ($m[2] !== $letter) {
+        return null;
+    }
     return [
         'subjectdir' => $subjectdir,
-        'stage' => (int)$m[2],
-        'levelparam' => $m[1] === 'eng' ? 'grade' : 'stage',
+        'stage' => (int)$m[3],
+        'levelparam' => $levelparam,
         'appurl' => 'https://ehelacademy.b-cdn.net/Ehel%20Primary/app/' . $subjectdir . '/index.html',
     ];
 }
@@ -87,8 +121,13 @@ function pqpg_ehel_app_base(string $coursekey): ?array {
 /**
  * Full grade-aware Bunny launch URL for an EHEL course, with a freshly minted
  * progress token bound to $userid appended, or '' if $coursekey is not EHEL.
+ *
+ * $unit selects which unit the app opens on. It defaults to 1 (the first
+ * teaching unit) because that is what an ordinary course launch wants; the
+ * placement launch passes -1, the Prerequisite unit. Nothing else is a
+ * meaningful entry point, so callers are not expected to pass anything else.
  */
-function pqpg_ehel_launch_url(int $userid, string $coursekey, string $env, string $wwwroot): string {
+function pqpg_ehel_launch_url(int $userid, string $coursekey, string $env, string $wwwroot, int $unit = 1): string {
     $base = pqpg_ehel_app_base($coursekey);
     if ($base === null) {
         return '';
@@ -96,7 +135,8 @@ function pqpg_ehel_launch_url(int $userid, string $coursekey, string $env, strin
     $token = pqpg_mint_token($userid, $coursekey, $env);
     $endpoint = rtrim($wwwroot, '/') . '/local/prequran/progress_gateway.php';
     $launchparams = 'pwsEndpoint=' . urlencode($endpoint) . '&pwsToken=' . urlencode($token) . '&studentid=' . $userid;
-    return $base['appurl'] . '?' . $base['levelparam'] . '=' . $base['stage'] . '&unit=1&' . $launchparams;
+    return $base['appurl'] . '?' . $base['levelparam'] . '=' . $base['stage']
+        . '&unit=' . $unit . '&' . $launchparams;
 }
 
 /** Revoke every unexpired token minted for a user. Returns the count revoked. */

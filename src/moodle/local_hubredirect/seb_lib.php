@@ -483,6 +483,142 @@ function pqh_seb_course_config_xml(string $coursekey, string $starturl, string $
 }
 
 // ---------------------------------------------------------------------------
+// Placement exams — the Prerequisite unit (unit -1) of every course.
+//
+// A placement exam decides which stage a learner enters, so it is launched
+// under the EXAM profile, not the free-exit lesson profile a course launch
+// uses: URL filtering on, and a quit password so the learner cannot leave
+// mid-exam. That is a deliberate lock on a child, and the two things that keep
+// it safe are non-negotiable rather than configurable — release the moment the
+// exam is submitted, and a hard cap that releases regardless. Neither can be
+// switched off, only retimed.
+// ---------------------------------------------------------------------------
+
+/**
+ * The ticket subject for a placement launch of $coursekey.
+ *
+ * Placement and course launches share the ticket functions but must not share
+ * tickets: a course ticket hands out the free-exit lesson config, so letting it
+ * fetch a placement config (or the reverse) would swap the profile silently.
+ * The prefix keeps them distinct. It uses `~` and NOT `:` because the ticket
+ * payload is colon-delimited and verify() requires exactly three fields — a
+ * colon here would make every placement ticket fail to parse.
+ */
+function pqh_seb_placement_ticket_key(string $coursekey): string {
+    return 'placement~' . $coursekey;
+}
+
+/** Is the Prerequisite unit gated behind Safe Exam Browser? */
+function pqh_seb_placement_enabled(): bool {
+    return trim((string)get_config('local_prequran', 'placement_seb_launch_mode')) === 'enabled';
+}
+
+/**
+ * Quit password for a placement session. Falls back to the course quit
+ * password, then to a per-site generated secret — an exam profile without a
+ * password is not an exam profile at all, so unlike the lesson lock this one
+ * never silently degrades to "no password". Staff can read the effective value
+ * off the settings page.
+ */
+function pqh_seb_placement_quit_password(): string {
+    $pw = trim((string)get_config('local_prequran', 'placement_seb_quit_password'));
+    if ($pw !== '') {
+        return $pw;
+    }
+    $pw = pqh_seb_course_quit_password();
+    if ($pw !== '') {
+        return $pw;
+    }
+    $generated = (string)get_config('local_prequran', 'placement_seb_quit_generated');
+    if ($generated === '') {
+        $generated = bin2hex(random_bytes(6));
+        set_config('placement_seb_quit_generated', $generated, 'local_prequran');
+    }
+    return $generated;
+}
+
+/**
+ * Hard cap on a placement session, in minutes. The safety net: SEB releases at
+ * this point whatever the app has or has not said, so a crashed tab or a
+ * mis-sent claim cannot hold a child in a browser they cannot quit. Floor of 15
+ * minutes so a mistyped setting cannot make the exam impossible to finish.
+ */
+function pqh_seb_placement_cap_minutes(): int {
+    $v = (int)get_config('local_prequran', 'placement_seb_max_minutes');
+    $cap = $v > 0 ? min($v, 240) : 90;
+    return max($cap, 15);
+}
+
+/** Stamp the start of a placement session. Kept separate from the lesson clock. */
+function pqh_seb_placement_mark_start(int $userid): void {
+    set_user_preference('local_prequran_seb_placement_started', (string)time(), $userid);
+}
+
+/** Seconds elapsed in the current placement session (0 if never stamped). */
+function pqh_seb_placement_elapsed(int $userid): int {
+    $start = (int)get_user_preferences('local_prequran_seb_placement_started', 0, $userid);
+    return $start > 0 ? max(0, time() - $start) : 0;
+}
+
+/**
+ * Should this learner be let out of the placement exam? Returns
+ * [bool $release, string $reason, int $secondsleft].
+ *
+ * Released when the app reports the exam submitted ($done), at the hard cap, or
+ * for staff and flagged testers. There is no "keep going" condition of the kind
+ * lessons have: an exam ends when it ends.
+ */
+function pqh_seb_placement_release_decision(int $userid, bool $done): array {
+    if (pqh_seb_exit_override($userid)) {
+        return [true, 'override', 0];
+    }
+    if ($done) {
+        return [true, 'submitted', 0];
+    }
+    $cap = pqh_seb_placement_cap_minutes() * 60;
+    $elapsed = pqh_seb_placement_elapsed($userid);
+    // Never stamped: we have no idea how long they have been in, so let them
+    // out rather than hold them on a clock that does not exist.
+    if ($elapsed <= 0) {
+        return [true, 'nosession', 0];
+    }
+    if ($elapsed >= $cap) {
+        return [true, 'cap', 0];
+    }
+    return [false, 'inprogress', $cap - $elapsed];
+}
+
+/**
+ * A .seb config for a placement exam. Exam-grade: URL filtering on and a quit
+ * password always present, unlike pqh_seb_course_config_xml which deliberately
+ * omits the password so a lesson can be left freely.
+ */
+function pqh_seb_placement_config_xml(string $starturl, string $quiturl, int $userid = 0): string {
+    $config = [
+        'originatorVersion' => 'EduPlatform_SEB_2.0',
+        'startURL' => $starturl,
+        'sendBrowserExamKey' => true,
+        'quitURL' => $quiturl,
+        'quitURLConfirm' => false,
+        'allowQuit' => true,
+        // Filtering ON, as for exams: an exam should not be able to reach
+        // anything but the app it is served from.
+        'URLFilterEnable' => true,
+        'URLFilterEnableContentFilter' => false,
+        'URLFilterRules' => pqh_seb_filter_rules(pqh_seb_default_allow_expressions()),
+        'browserWindowAllowReload' => true,
+        'showReloadButton' => true,
+        'showTime' => true,
+    ];
+    // Staff and flagged testers get no quit password, so nobody debugging this
+    // can be locked into it. Everyone else is held until submit or the cap.
+    if (!pqh_seb_exit_override($userid)) {
+        $config['hashedQuitPassword'] = hash('sha256', pqh_seb_placement_quit_password());
+    }
+    return pqh_seb_plist_document($config);
+}
+
+// ---------------------------------------------------------------------------
 // One-click handoff tickets. A `sebs://` link makes SEB fetch the .seb config
 // itself over HTTPS — but SEB has no Moodle session cookie, so the config
 // endpoint cannot use require_login for that fetch. These short-lived signed

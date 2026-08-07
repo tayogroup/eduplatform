@@ -11,6 +11,7 @@ import { grammarDiagram, phonicsDiagram } from "../../english/shared/grammar-vis
 import { createCourseApp } from "../course-app.js?v=t2";
 import { createDeck } from "../deck.js?v=deck-1";
 import { wordPicture } from "./word-pictures.js?v=pictures-1";
+import { requireExamLockdown, finishExamSession } from "../../shared/exam-lockdown.js?v=20260808a";
 import { askWehel, focusModule, setFocusModule, onFocusChange, modulesFromSections, outlineFromManifest, unitFetcher, browserSpeechSupported, speakBrowser, speechRateForGrade, stopBrowserSpeech, speechRecognitionCtor, recognizeSpeech, wehelIcon } from "../wehel.js?v=wehel-2";
 
 const $ = (selector, root = document) => root.querySelector(selector);
@@ -3052,6 +3053,9 @@ function finalizePlacement() {
   complete("placement");
   emitProgress({ type: "checkpoint.result", unit: "prereq", section: "placement-exam", score: results.percent, passed: results.band !== "notReady", attempt: placementProgress.attempts.length });
   renderPlacementResults(results);
+  // In SEB the exam is over — release the learner once the report has painted
+  // and the score is away to Moodle.
+  finishExamSession();
 }
 
 function renderPrereqOverview() {
@@ -3082,6 +3086,14 @@ function renderPrereqOverview() {
 function renderPlacementExam() {
   if (!isPrereqUnit) return navigate("overview");
   if (placementProgress.submitted) return renderPlacementResults(calculatePlacementResults());
+  // Exam-grade lockdown — the same gate the shared shell/placement.js applies,
+  // from the same module. English keeps its own placement UI, not its own rule.
+  if (!requireExamLockdown({
+    mount: $("#app"),
+    stageLabel: gradeLabel,
+    examTitle: placementExam.title,
+    backHref: courseLocation(defaultUnit),
+  })) return icons();
   const hasStarted = Object.keys(placementProgress.answers).length > 0 || placementProgress.startedAt;
   if (!hasStarted) {
     placementProgress.startedAt = new Date().toISOString();

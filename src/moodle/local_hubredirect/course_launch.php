@@ -107,29 +107,36 @@ function pqcl_course_main_menu_url(string $env, int $targetuserid, bool $managed
     return $base . '?' . http_build_query($params, '', '&', PHP_QUERY_RFC3986);
 }
 
-// EHEL grade-aware Bunny launch (English/Math/Science per-grade catalog courses).
+// EHEL level-aware Bunny launch (per-grade/stage/level catalog courses).
 // These are real Moodle courses created by catalog_sync (idnumber ehel-eng-gNN);
 // the dashboard links them as course=moodle_<courseid> (or the idnumber directly).
 // They are NOT in pqh_course_catalog(), so without this they would be rejected
 // below. When the course resolves to an EHEL key and the learner is enrolled, we
-// mint a progress token and redirect straight to the grade-aware Bunny app.
+// mint a progress token and redirect straight to the level-aware Bunny app.
 // (Wires the launch flow the code previously deferred as "P1.8".)
+//
+// Which keys qualify is pqpg_ehel_app_base's answer. It used to be a regex
+// naming English, Mathematics and Science, which is why Computing, Global
+// Perspectives and Intensive English could not be launched into the app at all
+// even after they were in the catalog. Asking the map means a subject added
+// there becomes launchable here without a second edit — the two must never
+// disagree about what an EHEL course is.
+require_once($CFG->dirroot . '/local/prequran/progress_gatewaylib.php');
 $pqcl_rawcourse = optional_param('course', '', PARAM_ALPHANUMEXT);
 $pqcl_ehelkey = '';
 $pqcl_ehelcourseid = 0;
-if (preg_match('/^ehel-(?:eng|math|sci)-g\d{2}$/', $pqcl_rawcourse)) {
+if (pqpg_ehel_app_base($pqcl_rawcourse) !== null) {
     $pqcl_ehelkey = $pqcl_rawcourse;
     $pqcl_ehelcourseid = (int)$DB->get_field('course', 'id', ['idnumber' => $pqcl_ehelkey]);
 } else if (preg_match('/^moodle_(\d+)$/', $pqcl_rawcourse, $pqcl_mm)) {
     $pqcl_cid = (int)$pqcl_mm[1];
     $pqcl_idn = (string)$DB->get_field('course', 'idnumber', ['id' => $pqcl_cid]);
-    if (preg_match('/^ehel-(?:eng|math|sci)-g\d{2}$/', $pqcl_idn)) {
+    if (pqpg_ehel_app_base($pqcl_idn) !== null) {
         $pqcl_ehelkey = $pqcl_idn;
         $pqcl_ehelcourseid = $pqcl_cid;
     }
 }
 if ($pqcl_ehelkey !== '' && $pqcl_ehelcourseid > 0) {
-    require_once($CFG->dirroot . '/local/prequran/progress_gatewaylib.php');
     $pqcl_target = optional_param('studentid', 0, PARAM_INT);
     $pqcl_target = $pqcl_target > 0 ? $pqcl_target : (int)$USER->id;
     $pqcl_ctx = context_course::instance($pqcl_ehelcourseid, IGNORE_MISSING);

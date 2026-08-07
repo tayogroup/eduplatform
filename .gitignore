@@ -62,3 +62,10 @@ src/prototypes/ehel-academy/mathematics/media/audio/tts/
 # localhost. The CDN is the store; a fresh clone regenerates or re-uploads
 # rather than re-buying, since the clips are already live.
 src/prototypes/ehel-academy/intensive-english/media/audio/tts/
+
+# Rendered marketing video. The 15 MB infomercial is a build of
+# docs/marketing/ehel-academy-infomercial.html and its script, both of which are
+# tracked — the render is reproducible from them, and every re-render would add
+# its full size to history permanently rather than replacing the last one.
+# Distribute the finished video from the CDN, not from a clone.
+docs/marketing/*.mp4

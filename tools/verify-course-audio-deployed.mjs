@@ -114,47 +114,37 @@ function expectedFromClaimMap(subject) {
   return { byGrade, dirFor: (g) => `${ROOT_FOLDER}/media/${subject}/g${String(g).padStart(2, "0")}/audio/tts/` };
 }
 
-// English has no claim map and no flat tts/ dir: its clips are named for their
-// content, live in media/audio/grade-N/<category>/, and the uploader walks that
-// tree directly. So the local tree is the only available statement of what
-// should be deployed.
+// English is not hash-named, so its claim map is read out of the course data,
+// which records each clip's path explicitly. tools/lib/ehel-english-narration.js
+// owns that; see it for why the data is a sound source.
 //
-// Be clear about what that does and does not prove. It catches the failure this
-// tool exists for — a clip on disk that never reached the CDN. It cannot prove
-// the app requests the clip, the way a claim map does, so an English pass is a
-// weaker guarantee than the other five. Fixing that means giving English a
-// narration module; until then this is the honest best.
-//
-// The categories are read from disk rather than copied from the uploader's
-// list. A copied list is the drift this repo keeps getting bitten by, and
-// reading the tree turns a category the uploader does not know about into a
-// visible pile of missing files instead of silence.
-function expectedFromLocalTree() {
-  const base = path.join(EHEL, "english", "media", "audio");
-  if (!fs.existsSync(base)) return null;
+// This branch used to list the local tree instead, which was wrong in both
+// directions: it reported 36 clips genuinely missing from the CDN (right) and
+// 562 as unclaimed extras (wrong — the data claims all 562, they are on the CDN,
+// and the local tree is simply the incomplete copy). Pruning on that advice
+// would have silenced narration in production.
+function expectedFromEnglishData() {
+  const courseRoot = path.join(EHEL, "english");
+  if (!fs.existsSync(path.join(courseRoot, "media", "audio"))) return null;
+  const lib = require("./lib/ehel-english-narration.js");
   const byGrade = new Map();
-  const catsFor = new Map();
-  for (const entry of fs.readdirSync(base)) {
-    const m = entry.match(/^grade-(\d+)$/);
-    if (!m) continue;
-    const g = Number(m[1]);
-    const cats = new Map();
-    for (const cat of fs.readdirSync(path.join(base, entry))) {
-      const d = path.join(base, entry, cat);
-      if (!fs.statSync(d).isDirectory()) continue;
-      const files = new Set(fs.readdirSync(d).filter((f) => f.endsWith(".mp3")));
-      if (files.size) cats.set(cat, files);
+  for (const [clip, grades] of lib.clipGradeMap(courseRoot)) {
+    for (const g of grades) {
+      if (!byGrade.has(g)) byGrade.set(g, new Map());
+      const cat = clip.split("/")[0];
+      const file = clip.slice(cat.length + 1);
+      if (!byGrade.get(g).has(cat)) byGrade.get(g).set(cat, new Set());
+      byGrade.get(g).get(cat).add(file);
     }
-    if (cats.size) { byGrade.set(g, cats); catsFor.set(g, cats); }
   }
-  return { byGrade: catsFor, perCategory: true };
+  return { byGrade, perCategory: true };
 }
 
 let anyMissing = 0;
 let failed = false;
 
 for (const subject of subjectList) {
-  const spec = subject === "english" ? expectedFromLocalTree() : expectedFromClaimMap(subject);
+  const spec = subject === "english" ? expectedFromEnglishData() : expectedFromClaimMap(subject);
   if (!spec) {
     console.log(`\n${subject}: no local narration cache — nothing generated yet, nothing to verify.`);
     continue;

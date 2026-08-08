@@ -60,12 +60,19 @@ const category = args.find((a) => /^(readings|grammar-practice|grammar|speaking|
 // so a run meant to cap itself at five clips quietly widened to a second grade
 // and billed for it. Flag values are consumed here rather than filtered later,
 // so a new flag with a numeric argument gets the same protection by listing it.
-const FLAGS_WITH_VALUES = new Set(["--limit", "--only"]);
+const FLAGS_WITH_VALUES = new Set(["--limit", "--only", "--emit-scripts"]);
 const grades = args
   .filter((a, i) => /^[1-8]$/.test(a) && !FLAGS_WITH_VALUES.has(args[i - 1]))
   .map(Number);
 const gradeList = grades.length ? grades : [1, 2, 3, 4, 5, 6, 7, 8];
 const dry = args.includes("--dry");
+// --emit-scripts <path>: write {clipId: script} for the selected category and
+// grades, then stop. Sends nothing and costs nothing; it exists so an auditor
+// can compare a recording against the text this file actually narrates rather
+// than a second guess at how that text is composed.
+const emitScriptsArg = args.indexOf("--emit-scripts");
+const emitScripts = emitScriptsArg >= 0 ? args[emitScriptsArg + 1] : null;
+const emitted = {};
 const force = args.includes("--force") || args.includes("--only-file");
 const limitArg = args.indexOf("--limit");
 const limit = limitArg >= 0 ? Number(args[limitArg + 1]) : Infinity;
@@ -595,6 +602,20 @@ async function main() {
     // Refused rather than narrated, because regenerating cannot fix it — the
     // blank is in the source text. These items need a spoken form of the frame
     // written for the ear before they can carry a Listen button at all.
+    // --emit-scripts: hand the audit tools the exact text this generator
+    // composes, and send nothing. The alternative is for each auditor to rebuild
+    // the script from the data, and this file composes some of them — overview
+    // panels are the first two sentences of unitOverview, the joined outcomes,
+    // the flattened learning path, and one panel whose wording lives only here.
+    // A second copy of that would drift, which is how the grammar audit ended up
+    // comparing against text no recording says.
+    //
+    // Emitted BEFORE the blank refusal below, deliberately. Refusing first hides
+    // exactly the items worth looking at: five Grade 1 overview clips were
+    // recorded from blank frames before that rule existed, and are still live and
+    // still saying "my name is Taken Seat". Skipping them here would have left
+    // the audit reporting 31 clips clean and never mentioning the other five.
+    if (emitScripts) { emitted[item.id] = item.text; return false; }
     if (/_{2,}/.test(item.text)) { blanked.push(item.id); return false; }
     charsTotal += item.text.length;
     if (count >= limit) return false;
@@ -745,6 +766,12 @@ async function main() {
     if (!rebased) continue;
     rebasedFiles += 1;
     console.log(`merged ${changes} descriptor change(s) into ${path.basename(filePath)} (changed on disk during this run)`);
+  }
+
+  if (emitScripts) {
+    fs.writeFileSync(emitScripts, JSON.stringify(emitted, null, 1));
+    console.log(`\nwrote ${Object.keys(emitted).length} script(s) to ${emitScripts} — nothing sent`);
+    return;
   }
 
   let indexTotal = 0;

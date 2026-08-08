@@ -339,7 +339,44 @@ def missing_names(script: str, heard: str) -> list:
 CATEGORIES = (
     "sentences", "meanings", "words", "readings", "grammar",
     "grammar-practice", "speaking", "writing", "activities", "quiz",
+    "overview",
 )
+
+
+def overview_clips(grade: int):
+    """Overview panels, with their scripts taken from the generator itself.
+
+    These were the last category no audit could reach, and the reason is that
+    their text is not a field: a panel is the first two sentences of
+    unitOverview, or the outcomes joined, or the learning path flattened, and
+    one panel's wording exists only inside the generator. Rebuilding that here
+    would be a second copy of a composition rule, which is exactly how the
+    grammar audit ended up comparing recordings against text nothing narrates.
+
+    So the generator is asked. `--emit-scripts` writes what it would narrate and
+    sends nothing, so the two cannot disagree about the script even when the
+    composition changes.
+    """
+    import subprocess
+    import tempfile
+
+    with tempfile.TemporaryDirectory() as tmp:
+        out = Path(tmp) / "overview.json"
+        result = subprocess.run(
+            [sys.executable and "node", "tools/generate-ehel-english-audio.js",
+             "overview", str(grade), "--emit-scripts", str(out)],
+            cwd=ROOT, capture_output=True, text=True, encoding="utf-8", errors="replace")
+        if not out.exists():
+            print(f"  overview g{grade}: generator emitted nothing "
+                  f"({result.stderr.strip()[:120] or 'no error reported'})")
+            return
+        scripts = json.loads(out.read_text(encoding="utf-8"))
+
+    directory = ENGLISH / "media" / "audio" / f"grade-{grade}" / "overview"
+    for clip_id, script in sorted(scripts.items()):
+        mp3 = directory / f"{clip_id}.mp3"
+        if mp3.exists():
+            yield ("overview", "overview", clip_id, script, mp3)
 
 
 def _live(descriptor):
@@ -404,6 +441,9 @@ def clips_for_grade(grade: int, categories=("sentences",)):
 
     # The word pronunciations and the final quiz live outside units/, the way
     # the generator's own dictionary and final-quiz branches read them.
+    if "overview" in wanted:
+        yield from overview_clips(grade)
+
     if "words" in wanted:
         master = ENGLISH / f"grade-{grade}" / "data" / f"master-dictionary.grade{grade}.json"
         if master.exists():

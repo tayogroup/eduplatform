@@ -50,6 +50,25 @@ SHAPES = [
 ]
 ID_KEYS = ("readingId", "speakingId", "writingId", "activityId", "grammarId")
 
+# The overview panels, which SHAPES cannot reach and which therefore survived the
+# original sweep. Every shape above is a descriptor on an item in a LIST; an
+# overview panel is a key on `unit.overviewAudio`, and its script is composed
+# from elsewhere in the unit rather than read from one field. Five Grade 1 clips
+# were still live because of that gap, still narrating "Say 'My name is ___.'"
+# as "my name is Taken Seat. I am, mom, years old."
+#
+# The composition mirrors overviewPanels() in generate-ehel-english-audio.js.
+# It cannot be taken from that file's --emit-scripts here, because the point is
+# to catch scripts the generator refuses — asking it would return everything
+# except the items this tool exists to find.
+OVERVIEW_PANELS = {
+    "intro": lambda u: ". ".join(str((u.get("unit") or {}).get("unitOverview") or "").split(". ")[:2]),
+    "outcomes": lambda u: " ".join(
+        o.get("learningOutcome") for o in (u.get("outcomes") or []) if o.get("learningOutcome")),
+    "path": lambda u: " ".join(
+        line.strip() for line in str((u.get("unit") or {}).get("learningPath") or "").split("\n") if line.strip()),
+}
+
 
 def item_id(item, descriptor_key):
     for key in ID_KEYS:
@@ -94,6 +113,26 @@ def main() -> None:
                         descriptor["available"] = False
                         descriptor["status"] = REASON
                     changed = True
+            for panel, script_of in OVERVIEW_PANELS.items():
+                descriptor = (unit.get("overviewAudio") or {}).get(panel)
+                if not descriptor or descriptor.get("available") is not True:
+                    continue
+                if not BLANK.search(script_of(unit)):
+                    continue
+                found[f"g{grade} overview-{panel}"] += 1
+                source = descriptor.get("source") or descriptor.get("normal") or ""
+                mp3 = ENGLISH / source.replace("./", "")
+                if mp3.exists():
+                    deleted += 1
+                    if not args.dry:
+                        mp3.unlink()
+                else:
+                    missing += 1
+                if not args.dry:
+                    descriptor["available"] = False
+                    descriptor["status"] = REASON
+                changed = True
+
             if changed and not args.dry:
                 unit_path.write_text(json.dumps(unit, indent=2) + "\n", encoding="utf-8")
                 touched_files += 1

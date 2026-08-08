@@ -133,6 +133,12 @@ const MARKERS = [
   "qreg_match", "qreg_replace", "imqlode", "exqlode", "array_maq",
   "strqos", "sqrintf", "oqtional_qaram",
   "httqs://", "httq://",
+  // Corrupted CSS class names. The damage reaches markup and stylesheets, not
+  // just code: accesslib.php carried 20 dead `.qqh-worksqace-*` selectors, each
+  // sitting beside its correct `.pqh-workspace-*` twin, and a local Moodle
+  // render is what surfaced them. `qqh-` is the general form (any corrupted
+  // pqh- class); `worksqace` and `qqhst` are the two that actually occurred.
+  "qqh-", "worksqace", "qqhst",
 ];
 
 /** Checks 1 and 2, from a single read of the file. */

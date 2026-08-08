@@ -554,6 +554,15 @@ function pqh_seb_placement_mark_start(int $userid): void {
     set_user_preference('local_prequran_seb_placement_started', (string)time(), $userid);
 }
 
+/**
+ * The raw start stamp for a placement session, or 0 if there is none.
+ * Callers deciding whether a session EXISTS must use this rather than the
+ * elapsed seconds, which are also 0 for a session that started this second.
+ */
+function pqh_seb_placement_started_at(int $userid): int {
+    return (int)get_user_preferences('local_prequran_seb_placement_started', 0, $userid);
+}
+
 /** Seconds elapsed in the current placement session (0 if never stamped). */
 function pqh_seb_placement_elapsed(int $userid): int {
     $start = (int)get_user_preferences('local_prequran_seb_placement_started', 0, $userid);
@@ -576,12 +585,16 @@ function pqh_seb_placement_release_decision(int $userid, bool $done): array {
         return [true, 'submitted', 0];
     }
     $cap = pqh_seb_placement_cap_minutes() * 60;
-    $elapsed = pqh_seb_placement_elapsed($userid);
-    // Never stamped: we have no idea how long they have been in, so let them
-    // out rather than hold them on a clock that does not exist.
-    if ($elapsed <= 0) {
+    // Test the RAW STAMP, not the elapsed seconds. Elapsed is 0 in two very
+    // different situations — never stamped, and stamped this same second — and
+    // reading 0 as "never stamped" released anyone who pressed Finish within a
+    // second of the exam opening, which is precisely the learner the lock is
+    // for. Only an absent stamp means there is no clock to hold them on.
+    $startedat = pqh_seb_placement_started_at($userid);
+    if ($startedat <= 0) {
         return [true, 'nosession', 0];
     }
+    $elapsed = max(0, time() - $startedat);
     if ($elapsed >= $cap) {
         return [true, 'cap', 0];
     }

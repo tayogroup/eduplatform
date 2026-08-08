@@ -148,7 +148,16 @@ function dictionaryItems(dictionary, grade) {
     const prev = entry.audio || {};
     return {
       id, ref: entry, title: entry.displayWord,
-      text: narration(entry.displayWord),
+      // `speechSpelling` is what to SAY when the spelling on screen is not what
+      // the voice reads. "toe" comes back as "two" — a fresh render from the
+      // correct text reproduces it exactly, so it is the voice, not a stale or
+      // corrupted clip, and regenerating cannot help. A respelling that sounds
+      // the same can. The learner still sees `displayWord`; only the text sent
+      // to ElevenLabs changes, and the entry records why.
+      //
+      // Use it only where a render has been shown to be wrong. It is a way to
+      // make the voice say the printed word, not a way to change the word.
+      text: narration(entry.speechSpelling || entry.displayWord),
       minChars: 1, // a single word is the whole point here
       source,
       output: path.join(ENGLISH, dir, `${id}.mp3`),

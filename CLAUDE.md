@@ -301,9 +301,9 @@ delays a deploy, but for a re-recorded one it preserves the wrong audio forever.
 
 #### The defect no check here can catch: the voice says the wrong word
 
-`toe` in the Grade 2 dictionary is narrated as "two". The entry is right, the
-script is right, the dates match, and re-recording reproduces it exactly — a
-fresh render from the correct text still transcribes as "2" and still ranks
+`toe` in the Grade 2 dictionary was narrated as "two". The entry was right, the
+script was right, the dates matched, and re-recording reproduced it exactly — a
+fresh render from the correct text still transcribed as "2" and still ranked
 `two` (-0.95) far above `toe` (-5.66). ElevenLabs simply mispronounces the word
 with this voice.
 
@@ -313,9 +313,21 @@ upstream of the text. Only the word check caught it, and only because a
 one-word clip gives the error nowhere to hide: the same mispronunciation inside
 a sentence is one word in two hundred and scores ~0.99.
 
-It needs a pronunciation intervention rather than a re-run — SSML phonemes, a
-spelling hint, or a different voice for that entry. Do not "fix" it by
-regenerating; that has been tried and costs money to learn nothing.
+**The fix is `speechSpelling` on the dictionary entry**, which changes only the
+text sent to ElevenLabs — the learner still sees `displayWord`. `toe` now sends
+`tow`, a homophone the voice reads correctly: the clip transcribes as "Toe" and
+the word check passes Grade 2 clean. `speechSpellingReason` records why, beside
+the data rather than in a commit message.
+
+Find the respelling by testing, never by reasoning about it. What the voice does
+with a spelling is not predictable from the spelling, which is the whole defect:
+of six candidates, `toh` came back as "So", `toe.` and `Toe` were no better than
+the bare word, and only `tow` worked. Each render is three characters, so a
+search costs less than one sentence — generate the candidate, rank it with
+`check-english-word-audio.py`, keep what ranks the printed word first.
+
+Use it only where a render has been shown to be wrong. It is a way to make the
+voice say the printed word, not a way to change the word.
 
 ## Git
 

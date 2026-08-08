@@ -56,12 +56,10 @@ if ($coursekey !== '') {
     }
     $idnumber = (string)$DB->get_field('course', 'idnumber', ['id' => $courseid]);
 
-    // Build URLs against the host the learner actually reached us on, NOT
-    // $CFG->wwwroot: this install is served on several consumer hosts and the
-    // canonical wwwroot may not be the one they can use.
-    $scheme = (!empty($_SERVER['HTTPS']) && strtolower((string)$_SERVER['HTTPS']) !== 'off') ? 'https://' : 'http://';
-    $reqhost = (string)($_SERVER['HTTP_HOST'] ?? '');
-    $base = preg_match('/^[A-Za-z0-9.\-]+(:\d+)?$/', $reqhost) ? $scheme . $reqhost : rtrim((string)$CFG->wwwroot, '/');
+    // Host from the request (several consumer hosts front this install and the
+    // canonical wwwroot may not be the one they can use), path and scheme from
+    // wwwroot. See pqh_seb_request_base().
+    $base = pqh_seb_request_base();
 
     // Start SEB straight on the learning app with a freshly minted progress
     // token. Starting on a Moodle page instead would open a clean SEB browser
@@ -140,13 +138,8 @@ if ($pqsc_placementkey !== '') {
         pqh_access_denied('You are not enrolled in this course.', $dashboardurl, 'Not enrolled');
     }
 
-    // Same host derivation as course mode: several consumer hosts front this
-    // install and $CFG->wwwroot may not be the one this learner can reach.
-    $pqsc_scheme = (!empty($_SERVER['HTTPS']) && strtolower((string)$_SERVER['HTTPS']) !== 'off') ? 'https://' : 'http://';
-    $pqsc_reqhost = (string)($_SERVER['HTTP_HOST'] ?? '');
-    $pqsc_pbase = preg_match('/^[A-Za-z0-9.\-]+(:\d+)?$/', $pqsc_reqhost)
-        ? $pqsc_scheme . $pqsc_reqhost
-        : rtrim((string)$CFG->wwwroot, '/');
+    // Same derivation as course mode. See pqh_seb_request_base().
+    $pqsc_pbase = pqh_seb_request_base();
 
     $pqsc_pstart = pqpg_ehel_launch_url($pqsc_learnerid, $pqsc_placementkey, '', $pqsc_pbase, -1);
     if ($pqsc_pstart === '') {

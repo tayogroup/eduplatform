@@ -64,13 +64,11 @@ if (!is_enrolled(context_course::instance($courseid), $learnerid, '', true) && !
     pqh_access_denied('You are not enrolled in this course.', $dashboardurl, 'Not enrolled');
 }
 
-// Build against the host the learner actually reached us on: several consumer
-// hosts front this install and $CFG->wwwroot may not be one they can use.
-$host = (string)($_SERVER['HTTP_HOST'] ?? '');
-if (!preg_match('/^[A-Za-z0-9.\-]+(:\d+)?$/', $host)) {
-    $host = (string)parse_url((string)$CFG->wwwroot, PHP_URL_HOST);
-}
-$base = 'https://' . $host;
+// Host from the request, path and scheme from wwwroot. See
+// pqh_seb_request_base() — building this by hand as scheme . HTTP_HOST dropped
+// wwwroot's path, so a subdirectory install got release URLs that 404'd.
+$base = pqh_seb_request_base();
+$authority = pqh_seb_request_authority();   // host+path, for the sebs:// handoff
 
 // NOTE: there is deliberately NO "already inside SEB, so let them through"
 // shortcut here. A course launch also opens SEB, under the free-exit lesson
@@ -137,8 +135,11 @@ if ($fallback === 'focus' || $pref !== 'seb') {
 $ticket = pqh_seb_course_ticket($learnerid, pqh_seb_placement_ticket_key($coursekey));
 $path = '/local/hubredirect/seb_config.php?placement=' . rawurlencode($coursekey)
     . '&k=' . rawurlencode($ticket);
-$sebs = 'sebs://' . $host . $path;
-$download = 'https://' . $host . $path;
+// $authority is host+path, so both of these keep wwwroot's subdirectory. The
+// download link reuses $base rather than hardcoding https:// — on a plain-HTTP
+// dev install a hardcoded scheme makes the fallback unreachable.
+$sebs = 'sebs://' . $authority . $path;
+$download = $base . $path;
 $focusurl = $base . '/local/hubredirect/placement_launch.php?fallback=focus'
     . ($token !== '' ? '&token=' . rawurlencode($token) : '&course=' . rawurlencode($coursekey));
 

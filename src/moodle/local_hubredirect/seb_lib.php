@@ -385,6 +385,42 @@ function pqh_seb_exam_allow_expressions(stdClass $exam): array {
     return array_values(array_unique(array_merge(pqh_seb_default_allow_expressions(), $extra)));
 }
 
+/**
+ * Base URL to build links SEB and the learning app will follow: the host the
+ * learner actually reached us on, plus the path $CFG->wwwroot is installed at.
+ *
+ * The host has to come from the request because several consumer hosts front
+ * this install and the canonical wwwroot may not be the one this learner can
+ * use. But the PATH has to come from wwwroot, and that half used to be dropped:
+ * every caller built `scheme . HTTP_HOST` and nothing else, so a Moodle in a
+ * subdirectory produced links missing it — /local/hubredirect/... instead of
+ * /moodle/local/hubredirect/... — and the release endpoint 404'd. Production is
+ * a root install, where wwwroot's path is empty and this returns exactly what
+ * the old code did, so nothing changes there.
+ *
+ * The SCHEME comes from wwwroot too, not from $_SERVER['HTTPS'], which is unset
+ * behind a TLS-terminating proxy and would silently emit http:// links.
+ *
+ * Returns with no trailing slash, e.g. "https://app.ehelacademy.org" or
+ * "http://localhost:8082/moodle".
+ */
+function pqh_seb_request_base(): string {
+    global $CFG;
+    $wwwroot = rtrim((string)$CFG->wwwroot, '/');
+    $host = (string)($_SERVER['HTTP_HOST'] ?? '');
+    if (!preg_match('/^[A-Za-z0-9.\-]+(:\d+)?$/', $host)) {
+        return $wwwroot;
+    }
+    $scheme = (string)(parse_url($wwwroot, PHP_URL_SCHEME) ?: 'https');
+    $path = rtrim((string)(parse_url($wwwroot, PHP_URL_PATH) ?: ''), '/');
+    return $scheme . '://' . $host . $path;
+}
+
+/** Host-and-path for a `sebs://` handoff — the same base without the scheme. */
+function pqh_seb_request_authority(): string {
+    return preg_replace('#^[a-z]+://#i', '', pqh_seb_request_base());
+}
+
 /** True when the current request is coming from inside Safe Exam Browser. */
 function pqh_seb_request_is_seb(): bool {
     if (pqh_seb_header_hash() !== '') {
@@ -687,12 +723,8 @@ function pqh_seb_course_ticket_verify(string $ticket): ?array {
  * for that one course.
  */
 function pqh_seb_course_handoff_url(string $coursekey, int $userid, int $ttl = 7200): string {
-    global $CFG;
-    $host = (string)($_SERVER['HTTP_HOST'] ?? '');
-    if (!preg_match('/^[A-Za-z0-9.\-]+(:\d+)?$/', $host)) {
-        $host = (string)parse_url((string)$CFG->wwwroot, PHP_URL_HOST);
-    }
-    return 'sebs://' . $host . '/local/hubredirect/seb_config.php?course=' . rawurlencode($coursekey)
+    return 'sebs://' . pqh_seb_request_authority()
+        . '/local/hubredirect/seb_config.php?course=' . rawurlencode($coursekey)
         . '&k=' . rawurlencode(pqh_seb_course_ticket($userid, $coursekey, $ttl));
 }
 

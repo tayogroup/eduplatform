@@ -163,21 +163,21 @@ if ($pqcl_ehelkey !== '' && $pqcl_ehelcourseid > 0) {
         // (it has no Moodle session of its own). The .seb download is kept as
         // a visible fallback for devices where the handler is not registered.
         $pqcl_ticket = pqh_seb_course_ticket($pqcl_target, $pqcl_ehelkey);
-        $pqcl_host = (string)($_SERVER['HTTP_HOST'] ?? '');
-        if (!preg_match('/^[A-Za-z0-9.\-]+(:\d+)?$/', $pqcl_host)) {
-            $pqcl_host = (string)parse_url((string)$CFG->wwwroot, PHP_URL_HOST);
-        }
+        // host+path from pqh_seb_request_authority(): building this as bare
+        // HTTP_HOST dropped wwwroot's subdirectory, so a non-root install
+        // handed SEB a config URL that does not exist.
+        $pqcl_authority = pqh_seb_request_authority();
         $pqcl_path = '/local/hubredirect/seb_config.php?course=' . rawurlencode($pqcl_ehelkey)
             . '&k=' . rawurlencode($pqcl_ticket);
-        $pqcl_sebs = 'sebs://' . $pqcl_host . $pqcl_path;
-        $pqcl_dl = 'https://' . $pqcl_host . $pqcl_path;
+        $pqcl_sebs = 'sebs://' . $pqcl_authority . $pqcl_path;
+        $pqcl_dl = pqh_seb_request_base() . $pqcl_path;
 
         // Where this tab goes once SEB has been handed the launch: back to the
         // dashboard, so closing SEB returns the learner somewhere useful rather
         // than to this hand-off page. location.replace keeps it out of history,
         // so Back does not land here either.
         $pqcl_slug = trim((string)($pqcl_consumercontext->consumerslug ?? ''));
-        $pqcl_dash = 'https://' . $pqcl_host . '/local/hubredirect/student_dashboard.php'
+        $pqcl_dash = pqh_seb_request_base() . '/local/hubredirect/student_dashboard.php'
             . ($pqcl_slug !== '' ? '?consumer=' . rawurlencode($pqcl_slug) : '');
 
         header('Content-Type: text/html; charset=utf-8');
@@ -213,12 +213,9 @@ if ($pqcl_ehelkey !== '' && $pqcl_ehelcourseid > 0) {
     }
 
     $pqcl_env = optional_param('pq_env', '', PARAM_ALPHANUMEXT);
-    // Build against the host the learner actually reached us on, not wwwroot.
-    $pqcl_lhost = (string)($_SERVER['HTTP_HOST'] ?? '');
-    if (!preg_match('/^[A-Za-z0-9.\-]+(:\d+)?$/', $pqcl_lhost)) {
-        $pqcl_lhost = (string)parse_url((string)$CFG->wwwroot, PHP_URL_HOST);
-    }
-    $pqcl_base = 'https://' . $pqcl_lhost;
+    // Host from the request, path and scheme from wwwroot. See
+    // pqh_seb_request_base().
+    $pqcl_base = pqh_seb_request_base();
     $pqcl_url = pqpg_ehel_launch_url($pqcl_target, $pqcl_ehelkey, $pqcl_env, $pqcl_base);
     if ($pqcl_url !== '') {
         // Focus mode: ordinary tab, but the app requests fullscreen and reports

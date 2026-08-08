@@ -61,6 +61,9 @@ ENGLISH = ROOT / "src" / "prototypes" / "ehel-academy" / "english"
 # Whisper mishears the odd proper noun, so this is a similarity floor, not an
 # equality test: a stale clip is a DIFFERENT sentence and scores far below it.
 MATCH_FLOOR = 0.85
+# Above this the recording plainly says the script, so the proper-noun check is
+# not consulted — see where it is used for why it cannot be trusted on its own.
+NAME_TRUST = 0.95
 
 
 # Whisper writes numbers as digits ("Yes, 5 is easy") where the sentence spells
@@ -123,6 +126,12 @@ def _spell(value: int, ordinal: bool) -> str:
     table = _ORDINAL_OF if ordinal else _CARDINAL_OF
     if value in table:
         return table[value]
+    # Hundreds. Left out of the first version, so "one hundred centimetres"
+    # normalised to "one 100 …" and could never meet Whisper's "100 cm".
+    if 100 <= value < 1000:
+        hundreds, rest = divmod(value, 100)
+        head = f"{_CARDINAL_OF[hundreds]} hundred"
+        return head if not rest else f"{head} {_spell(rest, ordinal)}"
     tens, unit = divmod(value, 10)
     if 2 <= tens <= 9 and unit:
         # "twenty first", "twenty eight" — the tens part stays cardinal in both.
@@ -145,6 +154,28 @@ def _fold_numbers(tokens: list[str]) -> list[str]:
         if digits:
             out.append(_spell(int(digits.group(1)), bool(digits.group(2))))
             i += 1
+            continue
+        # "one hundred", "three hundred and twenty" — read the multiplier with
+        # the word after it, or "one hundred" folds to "one" + "one hundred".
+        if token in UNITS and UNITS[token] and i + 1 < len(tokens) and tokens[i + 1] == "hundred":
+            value = UNITS[token] * 100
+            j = i + 2
+            if j < len(tokens) and tokens[j] == "and":
+                j += 1
+            if j < len(tokens) and tokens[j] in TENS:
+                value += TENS[tokens[j]]
+                j += 1
+                if j < len(tokens) and tokens[j] in UNITS and UNITS[tokens[j]]:
+                    value += UNITS[tokens[j]]
+                    j += 1
+            elif j < len(tokens) and tokens[j] in TEENS:
+                value += TEENS[tokens[j]]
+                j += 1
+            elif j < len(tokens) and tokens[j] in UNITS and UNITS[tokens[j]]:
+                value += UNITS[tokens[j]]
+                j += 1
+            out.append(_spell(value, False))
+            i = j
             continue
         if token in TENS and i + 1 < len(tokens):
             nxt = tokens[i + 1]
@@ -169,12 +200,132 @@ def _fold_numbers(tokens: list[str]) -> list[str]:
     return out
 
 
+# Whisper transcribes in American spelling; the course is written in British.
+# Every occurrence costs similarity, and a passage repeats its topic word — a
+# Grade 2 reading says "neighbourhood" five times and scored 0.20 against its
+# own correct recording, transcribed as "neighborhood". 41 of the 201 re-recorded
+# readings still flagged for this and nothing else.
+#
+# Rules rather than a word list, because the list is unbounded. Applied to BOTH
+# sides, so the risk is asymmetric in the safe direction: a wrong merge can only
+# make two spellings agree that should have differed (practise/practice), never
+# make a correct clip look wrong. The exceptions are words where the suffix is
+# not a British ending at all — "four", "hour", "your" must not become "for",
+# "hor", "yor".
+_OUR_KEEP = {"four", "hour", "your", "our", "pour", "tour", "sour", "flour",
+             "scour", "devour", "detour", "contour", "velour", "amour"}
+_RE_KEEP = {"are", "here", "there", "where", "more", "sure", "pure", "core",
+            "score", "store", "before", "care", "share", "share", "square",
+            "figure", "future", "nature", "picture", "capture", "measure"}
+
+
+def _anglicise(word: str) -> str:
+    """Fold a British spelling onto its American form (one canonical side)."""
+    if len(word) > 4 and word.endswith("our") and word not in _OUR_KEEP:
+        return word[:-3] + "or"                       # colour -> color
+    if len(word) > 6 and word.endswith("ours") and word[:-1] not in _OUR_KEEP:
+        return word[:-4] + "ors"
+    if len(word) > 6 and "ourhood" in word:
+        return word.replace("ourhood", "orhood")      # neighbourhood
+    if len(word) > 5 and word.endswith(("ise", "ised", "ising", "isation")):
+        for suf, rep in (("isation", "ization"), ("ising", "izing"),
+                         ("ised", "ized"), ("ise", "ize")):
+            if word.endswith(suf):
+                return word[: -len(suf)] + rep        # realise -> realize
+    if len(word) > 4 and word.endswith("re") and word not in _RE_KEEP:
+        return word[:-2] + "er"                       # centre -> center
+    if len(word) > 5 and word.endswith(("lled", "ller", "lling")):
+        for suf, rep in (("lling", "ling"), ("ller", "ler"), ("lled", "led")):
+            if word.endswith(suf):
+                return word[: -len(suf)] + rep        # traveller -> traveler
+    if len(word) > 5 and word.endswith(("ence",)) and word[:-4].endswith(("def", "pret", "off")):
+        return word[:-4] + "ense"                     # defence -> defense
+    return word
+
+
 def normalise(text: str) -> str:
     # Separators become spaces rather than vanishing, so "twenty-eight" arrives
     # as two tokens to compose. Both sides pass through here, so the treatment of
     # apostrophes and the rest stays symmetric whatever it is.
     flat = re.sub(r"[^a-z0-9]+", " ", str(text).lower()).strip()
-    return " ".join(_fold_numbers(flat.split()))
+    return " ".join(_anglicise(w) for w in _fold_numbers(flat.split()))
+
+
+def similarity(script: str, heard: str) -> float:
+    """How much of the script the recording actually says, compared by WORD.
+
+    This was a character comparison, and on long text that is not a weaker
+    measure but a wrong one. difflib aligns by finding the longest matching
+    block and recursing; a few early differences in a thousand-character string
+    stop it realigning, and it never recovers. A Grade 4 reading whose recording
+    differs by SEVEN WORDS out of 189 — "favourite"/"favorite", "Amal" heard as
+    "a mall" — matched 477 of 992 characters across 7 fragmented blocks and
+    scored 0.48. Word-level scores the same pair 0.98.
+
+    That single choice produced most of this tool's false positives, and they
+    rose with grade level because the texts get longer: 0% of Grade 1 readings
+    against 43% of Grade 8's, all of them correct recordings. It also explains
+    the 62 grammar flags in grades whose files postdate every rewrite, where
+    drift was impossible.
+
+    Words are the right unit anyway: a wrong recording says different WORDS, and
+    Whisper's errors are word-shaped (a homophone, a split name), not
+    character-shaped.
+    """
+    return difflib.SequenceMatcher(None, normalise(script).split(), normalise(heard).split()).ratio()
+
+
+def missing_names(script: str, heard: str) -> list:
+    """Recurring proper nouns in the script that the recording never says.
+
+    Word-level similarity alone is not enough, and the gap is precisely the
+    defect this course actually had. When f1248b10c renamed characters across
+    all 8 grades, the stale recordings differed from their scripts by a handful
+    of names in a long passage — "Amal" for "Sarah", "Teacher Yasmin" for
+    "Teacher Nadia" — and nothing else. That scores 0.93 by word, comfortably
+    inside the floor. A tool that only measured overall similarity would have
+    called those 201 readings clean.
+
+    So names are checked directly. Only names the script says at least TWICE
+    count: a name mentioned once and split by the transcriber ("Amal" heard as
+    "a mall") is a transcription artefact, while a character named throughout a
+    story and absent from the recording is drift. Sentence-initial words are
+    skipped, since capitalisation there says nothing about proper nouns.
+
+    A name also counts as spoken when the transcriber merely broke it up.
+    Whisper splits unfamiliar names — "Kalimani" comes back as "Kali Mani",
+    "Amal" as "a mall" — so a word-set lookup alone reported three correct Grade
+    5 and 6 readings as missing their characters, at similarity 0.97-0.99. The
+    despaced check finds the name across the split, and the fuzzy pass catches a
+    near-miss spelling ("Kalembo"/"Kalembe").
+    """
+    # Sentence-initial words are NOT skipped. Doing so looked like protection
+    # against ordinary capitalised words and silently dropped real names: "Idris
+    # begged… Idris waited." puts the character at the start of every sentence,
+    # so both mentions vanished and the check saw nothing to look for. The
+    # protection is not needed, because a word only matters here when the
+    # recording never says it — and an ordinary word like "Then" or "Every" is
+    # in the transcript regardless of case, so it can never reach the report.
+    words = re.findall(r"\b[A-Z][a-z]{2,}\b", str(script))
+    counts = collections.Counter(w.lower() for w in words)
+    heard_words = normalise(heard).split()
+    spoken = set(heard_words)
+    despaced = "".join(heard_words)
+
+    def said(name: str) -> bool:
+        if name in spoken or name in despaced:
+            return True
+        # The fuzzy bar has to scale with length, because one substituted letter
+        # is a far bigger fraction of a short name. "Kian" comes back as "Kean"
+        # and scores 0.75 — flagged as never spoken on an otherwise 0.97 match —
+        # while the same single change in "Kalimani"/"Kalamani" scores 0.88. A
+        # flat threshold has to be either blind to Kean or deaf to real renames;
+        # a name-length one is neither, since Amal/Sarah and Yasmin/Nadia differ
+        # in most of their letters, not one.
+        bar = 0.70 if len(name) <= 5 else 0.80
+        return any(difflib.SequenceMatcher(None, name, w).ratio() >= bar for w in heard_words)
+
+    return sorted({w for w, n in counts.items() if n >= 2 and not said(w)})
 
 
 # Every narrated category in the course, and where each one's text and its
@@ -339,7 +490,32 @@ def main() -> None:
                     unreadable.setdefault(str(grade), []).append(mp3.name)
                     print(f"g{grade} {unit_name} {mp3.name}: UNREADABLE ({type(error).__name__}: {error})")
                     continue
-                ratio = difflib.SequenceMatcher(None, normalise(sentence), normalise(heard)).ratio()
+                ratio = similarity(sentence, heard)
+                # Names are REPORTED, never used to fail a clip. The check was
+                # written to gate, and the data says it cannot: Whisper renders
+                # unfamiliar names phonetically and unpredictably — "Tariq" as
+                # "Tareek", "Kalembo" as "Colombo" — at 0.5-0.6 orthographic
+                # similarity, below any fuzzy bar that would not also match
+                # unrelated names. It reported nine correct readings as missing
+                # their characters.
+                #
+                # Gating it behind a similarity threshold does not rescue it
+                # either. Name-only drift scores about 0.90-0.96 because names
+                # are a small share of the words; a correct recording with a
+                # mistranscribed name scores 0.96-0.99. Those overlap, so any
+                # threshold between them decides the overlapping cases by luck,
+                # and shipping that would trade a loud false positive for a
+                # silent false negative.
+                #
+                # Printing it still earns its place: on a clip that failed for
+                # some other reason, "names never spoken: amal" tells you at a
+                # glance that a rename is the cause.
+                #
+                # Rename drift has a better detector that owes nothing to
+                # transcription: compare a clip's file date against the commit
+                # that renamed the characters. It is deterministic, free, and it
+                # is what actually found the 201 stale readings.
+                gone = missing_names(sentence, heard) if ratio < NAME_TRUST else []
                 checked += 1
                 per_category[category] += 1
                 if ratio >= MATCH_FLOOR:
@@ -351,7 +527,10 @@ def main() -> None:
                 # so a stream that cannot render some character must not cost us
                 # the clip — let alone the rest of the sweep.
                 try:
-                    print(f"g{grade} {category} {unit_name} {mp3.name}  similarity {ratio:.2f}")
+                    why = f"similarity {ratio:.2f}"
+                    if gone:
+                        why += f" | names never spoken: {', '.join(gone)}"
+                    print(f"g{grade} {category} {unit_name} {mp3.name}  {why}")
                     print(f"      printed: {str(sentence)[:300]}")
                     print(f"      spoken : {heard.strip()[:300]}")
                 except UnicodeError:

@@ -4420,7 +4420,17 @@ function xmldb_local_prequran_ensure_grouping_schema(): void {
             new xmldb_key('preqstudprof_user_uix', XMLDB_KEY_UNIQUE, ['userid']),
         ],
         [
-            new xmldb_index('preqstudprof_match_ix', XMLDB_INDEX_NOTUNIQUE, ['status', 'timezone', 'language', 'current_level']),
+            // 'current_level' is deliberately NOT in this index. status(40) +
+            // timezone(100) + language(100) + current_level(100) = 340 chars,
+            // over the 333-char limit MySQL/MariaDB allow for an index, so
+            // add_index() threw a coding_exception and local_prequran could not
+            // install on a fresh database OR upgrade an existing one — the
+            // helper adds missing indexes to existing tables too, and does not
+            // catch. Because that call always threw, no environment can already
+            // hold the four-column version, so nothing loses an index here.
+            // Widening is not the fix: shrinking a column would give new
+            // installs a different table shape from existing ones.
+            new xmldb_index('preqstudprof_match_ix', XMLDB_INDEX_NOTUNIQUE, ['status', 'timezone', 'language']),
             new xmldb_index('preqstudprof_course_ix', XMLDB_INDEX_NOTUNIQUE, ['course_type', 'status']),
             new xmldb_index('preqstudprof_parent_ix', XMLDB_INDEX_NOTUNIQUE, ['parent_email']),
             new xmldb_index('preqstudprof_cons_ix', XMLDB_INDEX_NOTUNIQUE, ['live_class_consent', 'recording_consent']),
@@ -4496,7 +4506,8 @@ function xmldb_local_prequran_ensure_grouping_schema(): void {
         [
             new xmldb_index('preqclassgrp_pool_ix', XMLDB_INDEX_NOTUNIQUE, ['poolid', 'status']),
             new xmldb_index('preqclassgrp_teacher_ix', XMLDB_INDEX_NOTUNIQUE, ['teacherid', 'status']),
-            new xmldb_index('preqclassgrp_match_ix', XMLDB_INDEX_NOTUNIQUE, ['status', 'timezone', 'language', 'current_level']),
+            // Same 340-char overflow as preqstudprof_match_ix above, same fix.
+            new xmldb_index('preqclassgrp_match_ix', XMLDB_INDEX_NOTUNIQUE, ['status', 'timezone', 'language']),
             new xmldb_index('preqclassgrp_course_ix', XMLDB_INDEX_NOTUNIQUE, ['course_type', 'status']),
             new xmldb_index('preqclassgrp_place_ix', XMLDB_INDEX_NOTUNIQUE, ['country', 'city']),
         ]

@@ -112,19 +112,37 @@ def file_at(commit: str, path: str) -> str:
     return git("show", f"{commit}:{path}")
 
 
-def clip_objects(node, found=None):
-    """Every object that names a clip id, keyed by that id."""
+def clip_objects(node, parent=None, found=None):
+    """Every clip in the file, keyed by its mp3 filename, mapped to the object
+    that holds its text.
+
+    Keyed by FILENAME, not by an id field, and that is the whole point. The
+    first version indexed on readingId/speakingId/grammarId and friends, which
+    silently limited it to items that carry one: it checked 1,898 clips and
+    reported English clean, while English has 16,950. The 10,355 vocabulary
+    sentences, 2,211 meanings and 1,889 dictionary words are bare audio
+    descriptors nested inside their parent item with no id of their own, so 85%
+    of the course was never examined — including a Grade 5 sentence still saying
+    "Miss Rahma" a fortnight after the text became "Teacher Yasmin".
+
+    Every clip has a source path by definition, so nothing can hide from this.
+    The basename also matches the id the audit tool uses, so the two agree on
+    what a clip is called without either being told.
+    """
     found = {} if found is None else found
     if isinstance(node, list):
         for item in node:
-            clip_objects(item, found)
+            clip_objects(item, parent, found)
     elif isinstance(node, dict):
-        for key in ID_KEYS:
-            if isinstance(node.get(key), str):
-                found[node[key]] = node
-                break
+        source = node.get("source") or node.get("normal")
+        if isinstance(source, str) and source.endswith(".mp3"):
+            # The descriptor names the clip; the object AROUND it carries the
+            # text. For a reading that parent is the reading; for a practice
+            # sentence it is the sentence.
+            found[source.rsplit("/", 1)[-1][:-4]] = (
+                parent if isinstance(parent, dict) else node, node)
         for value in node.values():
-            clip_objects(value, found)
+            clip_objects(value, node, found)
     return found
 
 
@@ -149,8 +167,38 @@ def narrated_fields(obj: dict, script: str) -> list:
         if key in NOT_SCRIPT or key in ID_KEYS or not isinstance(value, str):
             continue
         text = re.sub(r"\s+", " ", value).strip()
-        if len(text) >= 12 and text in flat:
-            out.append(key)
+        if not text:
+            continue
+        # Containment needs length behind it or short strings match anything —
+        # "a" is inside every script. But a short script is exactly what a
+        # dictionary word or a one-line meaning IS, and requiring 12 characters
+        # skipped 1,455 clips in Grade 5 alone, reporting them as unidentifiable
+        # rather than checking them. So a short field has to match the script
+        # outright instead.
+        if text == flat or (len(text) >= 12 and text in flat):
+            out.append((key, None))
+
+    # Practice sentences keep their text in a LIST beside a parallel list of
+    # audio descriptors, so the clip's script is one element rather than a
+    # field. Considering only string fields skipped every one of them: 1,234
+    # clips in Grade 5 alone were reported as unidentifiable and silently not
+    # checked, which is how a sentence still saying "Miss Rahma" survived.
+    #
+    # The element is found by matching the audit's script for THIS clip, so the
+    # right index is identified by content rather than by parsing "-sentence-4"
+    # out of the id and trusting the numbering to line up.
+    if not out:
+        for key, value in obj.items():
+            if key in NOT_SCRIPT or key in ID_KEYS or not isinstance(value, list):
+                continue
+            for index, element in enumerate(value):
+                if not isinstance(element, str):
+                    continue
+                if re.sub(r"\s+", " ", element).strip() == flat:
+                    out.append((key, index))
+                    break
+            if out:
+                break
     return out
 
 
@@ -161,10 +209,13 @@ def script_of(obj: dict, fields: list) -> str:
     the file and changes nothing a listener could hear, and reporting it as
     stale would spend money re-recording an identical clip.
     """
-    return "\n".join(
-        "{}={}".format(key, re.sub(r"\s+", " ", str(obj.get(key, ""))).strip())
-        for key in sorted(fields)
-    )
+    parts = []
+    for key, index in sorted(fields, key=lambda f: (f[0], f[1] if f[1] is not None else -1)):
+        value = obj.get(key, "")
+        if index is not None:
+            value = value[index] if isinstance(value, list) and index < len(value) else ""
+        parts.append("{}[{}]={}".format(key, index, re.sub(r"\s+", " ", str(value)).strip()))
+    return "\n".join(parts)
 
 
 def main() -> None:
@@ -199,8 +250,7 @@ def main() -> None:
             now = clip_objects(current)
             if not now:
                 continue
-            for clip_id, obj in now.items():
-                descriptor = obj.get("audio") or {}
+            for clip_id, (obj, descriptor) in now.items():
                 source = descriptor.get("source") or descriptor.get("normal")
                 if descriptor.get("available") is not True or not source:
                     continue
@@ -214,11 +264,12 @@ def main() -> None:
                 if not was:
                     continue  # the data file did not exist then; nothing to compare
                 try:
-                    then = clip_objects(json.loads(was)).get(clip_id)
+                    was_pair = clip_objects(json.loads(was)).get(clip_id)
                 except json.JSONDecodeError:
                     continue
-                if then is None:
+                if was_pair is None:
                     continue
+                then = was_pair[0]
                 fields = narrated_fields(obj, scripts.get(clip_id, ""))
                 if not fields:
                     unmapped += 1

@@ -13,12 +13,22 @@
 // lowercase "p" into "q", so `<?php` becomes `<?qhq`. It is invisible in a diff
 // review of a large file, which is what makes a mechanical check worth having.
 //
-// TWO CHECKS, AND WHY THE FIRST ONE IS NOT REDUNDANT
+// THREE CHECKS, AND WHY NONE OF THEM IS REDUNDANT
 //
 //  1. Opening tag — every file must begin with `<?php` (or a shebang).
-//  2. `php -l` — the real parser.
+//  2. Corruption markers — p->q damage anywhere in the body.
+//  3. `php -l` — the real parser.
 //
-// Check 1 exists because check 2 CANNOT be relied on to catch `<?qhq` alone.
+// Check 2 exists because the damage is not always whole-file. a2fd7041d was a
+// PARTIAL corruption: some lines were mangled, others were not. A file can keep
+// a valid `<?php` opening AND parse cleanly while still being broken, because
+// the damage landed inside a string:
+//
+//     require_once(__DIR__ . "/config.qhq");   // lints clean, fatals at runtime
+//
+// Checks 1 and 3 both pass that. Only a content scan catches it.
+//
+// Check 1 exists because check 3 CANNOT be relied on to catch `<?qhq` alone.
 // With short_open_tag=Off — the normal production setting — `<?qhq` is not a
 // PHP tag at all, so the whole file is inline HTML, it lints perfectly clean,
 // and PHP serves the source instead of running it. That is worse than a fatal:
@@ -100,18 +110,57 @@ async function collect(dir, found = []) {
   return found;
 }
 
-/** Check 1: the file starts with a real PHP open tag. */
-async function openingTag(file) {
+/**
+ * Strings that cannot occur in correct PHP but DO occur when p->q damage lands
+ * mid-file. Every one was verified zero-hit across all 610 files before being
+ * added; a marker that fires on good code would train people to ignore this
+ * gate, which is worse than not having it.
+ *
+ * Two words are deliberately ABSENT:
+ *
+ *   "qhq" on its own — dashboard.php legitimately contains $pqhq and
+ *   $pqhplatquiet, both built from the pqh_ prefix. It would false-positive.
+ *
+ *   "exqort" — live_leadership.php and live_teacher_profile.php contain
+ *   `optional_param('export', optional_param('exqort', ...))` ON PURPOSE. That
+ *   is a compatibility shim from the June 2026 incident: corrupted pages went
+ *   live and emitted ?exqort= links, so both spellings are still accepted.
+ *   Flagging it would be flagging the fix, not the bug.
+ */
+const MARKERS = [
+  "<?qhq", ".qhq", "strict_tyqes",
+  "qublic ", "qrivate ", "qrotected ", "qarent::",
+  "qreg_match", "qreg_replace", "imqlode", "exqlode", "array_maq",
+  "strqos", "sqrintf", "oqtional_qaram",
+  "httqs://", "httq://",
+];
+
+/** Checks 1 and 2, from a single read of the file. */
+async function inspect(file) {
   const fh = await open(file, "r");
+  let text;
   try {
-    const { buffer, bytesRead } = await fh.read(Buffer.alloc(5), 0, 5, 0);
-    const head = buffer.subarray(0, bytesRead).toString("latin1");
-    if (head === "<?php" || head.startsWith("#!")) return null;
-    return `does not begin with <?php (starts "${head.replace(/[\r\n]/g, "\\n")}")`
-      + (head.startsWith("<?") ? " — looks like the p->q corruption" : "");
+    text = (await fh.readFile()).toString("latin1");
   } finally {
     await fh.close();
   }
+  const problems = [];
+
+  const head = text.slice(0, 5);
+  if (head !== "<?php" && !text.startsWith("#!")) {
+    problems.push(`does not begin with <?php (starts "${head.replace(/[\r\n]/g, "\\n")}")`
+      + (head.startsWith("<?") ? " — looks like the p->q corruption" : ""));
+  }
+
+  for (const marker of MARKERS) {
+    let at = text.indexOf(marker);
+    while (at !== -1) {
+      const line = text.slice(0, at).split("\n").length;
+      problems.push(`line ${line}: ${JSON.stringify(marker)} — p->q corruption`);
+      at = text.indexOf(marker, at + marker.length);
+    }
+  }
+  return problems;
 }
 
 const files = [];
@@ -129,13 +178,14 @@ if (process.argv.includes("--list")) {
 
 const failures = [];
 
-// --- check 1: opening tags (instant, needs no PHP) -------------------------
+// --- checks 1 + 2: opening tag and markers (instant, needs no PHP) ---------
 for (const f of files) {
-  const problem = await openingTag(f);
-  if (problem) failures.push({ file: path.relative(ROOT, f), out: problem });
+  for (const problem of await inspect(f)) {
+    failures.push({ file: path.relative(ROOT, f), out: problem });
+  }
 }
 
-// --- check 2: the real parser ----------------------------------------------
+// --- check 3: the real parser ----------------------------------------------
 const php = await findPhp();
 if (!php) {
   // A gate that passes because it did not run is worse than no gate: it would
@@ -178,4 +228,4 @@ if (failures.length) {
   console.error(`\n${new Set(failures.map((f) => f.file)).size} of ${files.length} file(s) failed.`);
   process.exit(1);
 }
-console.log(`All ${files.length} PHP file(s) open correctly and parse.`);
+console.log(`All ${files.length} PHP file(s) open correctly, carry no p->q markers, and parse.`);

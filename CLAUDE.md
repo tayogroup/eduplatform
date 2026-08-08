@@ -277,14 +277,30 @@ The damage is always one shape: a botched global replace turns every lowercase
 `p` into `q`, so `<?php` becomes `<?qhq`, `strict_types` becomes `strict_tyqes`.
 In a large file it is invisible to diff review.
 
-**`php -l` alone does not catch it.** With `short_open_tag=Off` — the normal
-production setting — `<?qhq` is not a PHP tag, so the file is inline HTML, lints
-perfectly clean, and PHP *serves the source instead of running it*. Nothing
-executes, `require_login()` included, so the file goes to whoever requests the
-URL. That is why `check:php` does two things: it asserts every file opens with
-`<?php` (ini-independent, instant), and it runs `php -l` with
-`-d short_open_tag=1` pinned so the parser can see the corruption too. Removing
-either check makes the gate blind to the one bug it was written for.
+**`php -l` alone does not catch it**, twice over — which is why `check:php` runs
+three checks and none is redundant:
+
+1. **Every file opens with `<?php`.** Ini-independent and instant. Needed because
+   with `short_open_tag=Off` — the normal production setting — `<?qhq` is not a
+   PHP tag at all, so the file is inline HTML, lints perfectly clean, and PHP
+   *serves the source instead of running it*. Nothing executes, `require_login()`
+   included, so the file goes to whoever requests the URL.
+2. **No p→q markers in the body.** Needed because the damage is not always
+   whole-file: `a2fd7041d` was partial. `require_once(__DIR__ . "/config.qhq")`
+   keeps a valid opening tag *and* parses cleanly, then fatals at runtime.
+   Checks 1 and 3 both pass it.
+3. **`php -l` with `-d short_open_tag=1` pinned**, so the parser can see the
+   corruption too whatever the local ini says.
+
+Every marker was verified zero-hit across all 610 files before being added. Two
+words are deliberately **not** markers: bare `qhq` (`dashboard.php` legitimately
+has `$pqhq`, `$pqhplatquiet`) and `exqort` — `live_leadership.php` and
+`live_teacher_profile.php` accept `?exqort=` on purpose, a compatibility shim
+left over from the June 2026 incident when corrupted pages went live and emitted
+those links. Flagging it would be flagging the fix rather than the bug.
+
+Removing any of the three checks makes the gate blind to a real shape of the bug
+it was written for.
 
 PHP is found via `PHP_BINARY`, then `PATH`, then the winget package directory —
 a freshly winget-installed PHP updates the persistent user PATH but not

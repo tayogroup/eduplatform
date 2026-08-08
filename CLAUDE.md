@@ -252,6 +252,71 @@ Two paths, one cache: the course reads `./media/audio/tts/<hash>.mp3` in local d
 
 A content rebuild renames every clip whose text changed, orphaning the old file. Run the pruner after `build:science`, and note the orphans are only free to delete while git still has them.
 
+### English narration audio
+
+English is the exception to everything above. Its clips are named for their
+content (`eng-g05-t01-u03-read01.mp3`), not for a hash of their text, and
+`generate-ehel-english-audio.js` reuses any mp3 over 1 KB that already exists.
+So editing a sentence leaves the old recording in place, still `available:true`,
+and nothing notices. Every other subject orphans the clip automatically because
+a changed text mints a new filename. This one cost 306 stale clips.
+
+Four checks cover it, and each is blind to something the next one sees. Run them
+together or you are only covering a third of the failure surface.
+
+```bash
+python tools/check-ehel-english-audio-integrity.py   # descriptors, files, format, duration
+python tools/check-english-audio-staleness.py        # git: text edited since the recording?
+python tools/audit-ehel-english-sentence-audio.py --grades 1 --categories all
+python tools/check-english-word-audio.py             # the single-word clips
+```
+
+- **Integrity** reads file size and frame headers, needs no model, and runs in
+  seconds. It catches a missing file, an HTML error body written to an `.mp3`
+  path, and gross truncation. It cannot tell whether a clip says the right
+  words: it reported 0 problems across 16,955 clips while five Grade 1 overviews
+  were saying "my name is Taken Seat".
+- **Staleness** asks git whether the narrated text changed since the commit that
+  wrote the mp3. Deterministic, free, no transcription noise, and the right tool
+  for a rename — a story that differs only in who it is about scores ~0.93 by
+  word and slips past the audit. Note it compares *commits*, so a freshly
+  regenerated clip reads as stale until committed; that answer is correct, since
+  the CDN still has the old one.
+- **The transcription audit** compares the recording to its script by WORD.
+  Never by character: difflib cannot realign after a few early differences in a
+  long passage, and a Grade 4 reading differing by seven words in 189 scored
+  0.48. It reports proper nouns the recording never says, but never fails a clip
+  for them — Whisper renders unfamiliar names unpredictably ("Tariq" as
+  "Tareek"), and that overlaps the range real drift occupies.
+- **The word check** never transcribes. On 0.6 seconds of audio Whisper
+  hallucinates ("mouth" comes back as "Please subscribe"), so it asks whether
+  the audio ranks the right word above its rivals instead. Homophones are
+  undecidable by anything that listens, so a clip passes within a margin.
+
+**A re-recorded clip keeps its filename, so `.bunny-upload-manifest.json` still
+lists it as uploaded and the uploader will skip it** — reporting success while
+leaving the old audio live. Drop those entries before uploading a repair. This
+bit three separate repairs in one session; for a *new* clip the manifest merely
+delays a deploy, but for a re-recorded one it preserves the wrong audio forever.
+
+#### The defect no check here can catch: the voice says the wrong word
+
+`toe` in the Grade 2 dictionary is narrated as "two". The entry is right, the
+script is right, the dates match, and re-recording reproduces it exactly — a
+fresh render from the correct text still transcribes as "2" and still ranks
+`two` (-0.95) far above `toe` (-5.66). ElevenLabs simply mispronounces the word
+with this voice.
+
+Nothing above finds that. Staleness sees matching dates; the audit sees a
+recording that faithfully matches its script, because it does — the error is
+upstream of the text. Only the word check caught it, and only because a
+one-word clip gives the error nowhere to hide: the same mispronunciation inside
+a sentence is one word in two hundred and scores ~0.99.
+
+It needs a pronunciation intervention rather than a re-run — SSML phonemes, a
+spelling hint, or a different voice for that entry. Do not "fix" it by
+regenerating; that has been tried and costs money to learn nothing.
+
 ## Git
 
 - Work on `main` (or feature branches off it). History before 2026-07-16 lived on `codex/*` branches, now merged and deleted.

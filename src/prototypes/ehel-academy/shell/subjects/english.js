@@ -128,7 +128,7 @@ const sections = [
 // demands: a grade whose Unit 3 ships no lecture video could never complete
 // `lecture`, and the gate would shut the learner out for good.
 //
-// Grades 1 to 3, each checked before being added — never widened by editing the
+// Grades 1 to 4, each checked before being added — never widened by editing the
 // number alone. What has to hold is that every section the chain demands can
 // actually be finished in every unit of that grade:
 //   Grade 1 — all 11 units carry a game pack, a lecture video (Unit 10 is the
@@ -138,9 +138,11 @@ const sections = [
 //             drops Books where a unit has none, exactly as it drops Games.
 //   Grade 3 — same shape as Grade 2: 10 units, every game pack present, lecture
 //             videos on disk for Units 1-9, Unit 10 the capstone launch.
-// Grades 4-8 are not gated: their lecture coverage has not been checked, and an
+//   Grade 4 — same again: 10 units, all game packs, videos for Units 1-9, Unit
+//             10 the capstone.
+// Grades 5-8 are not gated: their lecture coverage has not been checked, and an
 // uncompletable step locks a learner out permanently.
-const UNIT_GATE_ENABLED = gradeNumber <= 3;
+const UNIT_GATE_ENABLED = gradeNumber <= 4;
 const CAPSTONE_UNIT = 10;
 // The Teacher view is a preview, not a lesson: a teacher or parent planning
 // ahead has to be able to open Unit 6 in week one. This is no weaker than what

@@ -125,6 +125,22 @@ const grades = fs.readdirSync(root)
   .filter((name) => /^grade-\d+$/.test(name))
   .sort((a, b) => Number(a.slice(6)) - Number(b.slice(6)));
 
+// ── skill coverage ──────────────────────────────────────────────────────────
+// From Stage 4 this subject is one unit per transferable skill, so a self-study
+// stage missing a skill is missing a sixth of the course. Nothing noticed that
+// until now: Stage 5 has shipped Research and Analysis alone — two of six — and
+// every check here passed green, because each unit it DOES have is fine. The
+// hole is in what is absent, and absence is invisible to a per-unit check.
+//
+// A gap the source manifest documents is reported loudly and allowed, because
+// no code change can close it and a permanently red build gets ignored or
+// deleted. A gap nobody has written down fails, because that is a regression.
+const ALL_SKILLS = ["Research", "Analysis", "Evaluation", "Reflection", "Collaboration", "Communication"];
+const sourceManifestPath = path.join(here, "..", "inputs", "ehel-global-perspectives-source", "source-manifest.json");
+const knownGaps = fs.existsSync(sourceManifestPath) ? (readJson(sourceManifestPath).knownGaps || {}) : {};
+const skillsByGrade = new Map();   // "5" -> Set of skills present
+const selfStudyGrades = new Set(); // grades whose units are self-study
+
 let unitCount = 0;
 let explainerCount = 0;
 let questionCount = 0;
@@ -165,6 +181,18 @@ for (const gradeDir of grades) {
     const label = `${gradeDir}/${file}`;
     unitCount += 1;
     const guided = unit.unit?.packShape === "guided";
+
+    // Record which skill this unit teaches, for the coverage check after the
+    // loop. Guided stages carry no skill label — that starts at Stage 4 — so
+    // only self-study grades are held to the six.
+    if (!guided) {
+      const gradeKey = gradeDir.slice(6);
+      selfStudyGrades.add(gradeKey);
+      if (!skillsByGrade.has(gradeKey)) skillsByGrade.set(gradeKey, new Set());
+      const skill = String(unit.unit?.skill || "").trim();
+      if (skill) skillsByGrade.get(gradeKey).add(skill);
+      else fail(label, "self-study unit has no skill label, so its stage's skill coverage cannot be checked");
+    }
 
     // ── the unit says what it is about ──────────────────────────────────────
     const overview = String(unit.unit?.unitOverview || "");
@@ -327,6 +355,28 @@ for (const gradeDir of grades) {
   }
 }
 
+// ── skill coverage, after every unit has been read ──────────────────────────
+const coverageLines = [];
+for (const gradeKey of [...selfStudyGrades].sort((a, b) => Number(a) - Number(b))) {
+  const present = skillsByGrade.get(gradeKey) || new Set();
+  const missing = ALL_SKILLS.filter((skill) => !present.has(skill));
+  if (!missing.length) continue;
+
+  const gap = knownGaps[gradeKey];
+  const documented = gap ? (gap.missingSkills || []) : [];
+  const undocumented = missing.filter((skill) => !documented.includes(skill));
+
+  if (undocumented.length) {
+    fail(`grade-${gradeKey}`, `teaches ${present.size} of ${ALL_SKILLS.length} skills — missing ${undocumented.join(", ")}`
+      + `, which no known gap in inputs/ehel-global-perspectives-source/source-manifest.json accounts for`);
+  }
+  const allowed = missing.filter((skill) => documented.includes(skill));
+  if (allowed.length) {
+    coverageLines.push(`grade-${gradeKey} teaches ${present.size} of ${ALL_SKILLS.length} skills. `
+      + `Missing (known gap): ${allowed.join(", ")}. ${gap.closes || ""}`);
+  }
+}
+
 const gradeList = grades.map((g) => g.slice(6)).join(", ");
 console.log(
   `global perspectives content: ${unitCount} units across grades ${gradeList}, `
@@ -338,6 +388,13 @@ if (repeatedAcrossGrades.size) {
   note(`${repeatedAcrossGrades.size} explainer(s) are restated word for word in a later grade `
     + `(${[...repeatedAcrossGrades].slice(0, 3).join("; ")}${repeatedAcrossGrades.size > 3 ? "; …" : ""}) `
     + "— expected for a spiral curriculum, worth an eye if a stage should have deepened the wording");
+}
+
+// Printed above the notes and in its own block: an incomplete stage is not a
+// wording nit, and it should be the first thing read after the summary line.
+if (coverageLines.length) {
+  console.log("\nIncomplete stages (known gaps — content missing, not a code fault):");
+  for (const line of coverageLines) console.log(`   GAP   ${line}`);
 }
 
 if (notes.length) {

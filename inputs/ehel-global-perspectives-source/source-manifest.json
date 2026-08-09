@@ -11,5 +11,15 @@
     "7": "Year 7-20260801T192312Z-1-001.zip",
     "8": "Year 8-20260801T192316Z-1-001.zip"
   },
-  "knownGap": "Year 5 holds Units 1-2 only (Research, Analysis). Evaluation, Reflection, Collaboration and Communication were never in the export and need re-exporting from Google Drive."
+  "knownGap": "Year 5 holds Units 1-2 only (Research, Analysis). Evaluation, Reflection, Collaboration and Communication were never in the export and need re-exporting from Google Drive.",
+
+  "note_knownGaps": "The structured form of knownGap, read by tools/check-global-perspectives-content.mjs. A self-study stage is expected to teach all six skills; one missing from here is a build failure, one listed here is reported loudly and allowed. Delete a stage's entry the moment its export arrives, so the gate starts guarding it again.",
+  "knownGaps": {
+    "5": {
+      "missingSkills": ["Evaluation", "Reflection", "Collaboration", "Communication"],
+      "reason": "Never present in the Google Drive export. The Year 5 archive was exported successfully and contained Units 1-2 only; every other year exported its full complement.",
+      "closes": "A re-export of Year 5 from Google Drive containing Units 3-6. No code change can close it — the content does not exist in this repository or in ~/Downloads (the Year 5 zip there is Science: its documents are Lesson/Experiments/Practice/Reference, not Global Perspectives' Lesson/Skills Toolkit/Activities & Discussion/Practice & Reflection).",
+      "downstream": "The Stage 6 placement exam spends 20 of its 34 questions on Stage 5 skills, so a learner who came through Stage 5 at Ehel is placed against four skills they were never taught."
+    }
+  }
 }

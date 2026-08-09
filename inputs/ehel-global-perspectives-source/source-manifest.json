@@ -18,7 +18,22 @@
     "5": {
       "missingSkills": ["Evaluation", "Reflection", "Collaboration", "Communication"],
       "reason": "Never present in the Google Drive export. The Year 5 archive was exported successfully and contained Units 1-2 only; every other year exported its full complement.",
-      "closes": "A re-export of Year 5 from Google Drive containing Units 3-6. No code change can close it — the content does not exist in this repository or in ~/Downloads (the Year 5 zip there is Science: its documents are Lesson/Experiments/Practice/Reference, not Global Perspectives' Lesson/Skills Toolkit/Activities & Discussion/Practice & Reflection).",
+      "closes": "A re-export of Year 5 from Google Drive containing Units 3-6. No code change can close it, and the content is not on this machine — see searchedOn.",
+      "searchedOn": {
+        "date": "2026-08-09",
+        "conclusion": "Units 3-6 exist nowhere locally. Only a fresh Google Drive export can close the gap; if Drive lacks them too, they were never authored and it is a curriculum job.",
+        "checked": [
+          "inputs/ehel-global-perspectives-source/Year 5 — Units 1-2 only, where every other year holds its full complement (4,4,5,6,-,6,6,6)",
+          "~/Downloads — one set of 'Year N' zips exists (20260720). Its Year 5 is SCIENCE, identified by its documents: Lesson/Experiments/Practice/Reference, where Global Perspectives uses Lesson/Skills Toolkit/Activities & Discussion/Practice & Reflection. Same-filename traps across three subjects are documented in CLAUDE.md.",
+          "outputs/global-perspectives-content/global-perspectives-content-model.json — the extractor's own run of 2026-08-05 against ~/Downloads recorded grade 5 as 2 units",
+          "OneDrive/Documents/Elevenlabs/ehel-global-perspectives-scripts-complete.xlsx and -reviewed_01082026.xlsx — Grade 5 sheet holds unit-1 (189 rows) and unit-2 (158 rows) and no others",
+          "OneDrive/Documents/eduplatform_codx/ehel-global-perspectives-grades-1-8-english-somali.xlsx — same two units",
+          "OneDrive/Documents/eduplatform_codx/global_perspectives_translation_batches{,_01082026} — keyed by sheet and row into those workbooks, so they inherit the same two units",
+          "filesystem sweep of Downloads, Documents, OneDrive and Desktop — no other Global Perspectives source anywhere",
+          "both git worktrees, and every Year 5 path ever committed — the same 8 documents, Units 1 and 2"
+        ],
+        "note": "The workbooks are exports OF built content, so they can never contain units that were never built. Do not expect them to close this."
+      },
       "downstream": "The Stage 6 placement exam spends 20 of its 34 questions on Stage 5 skills, so a learner who came through Stage 5 at Ehel is placed against four skills they were never taught."
     }
   }

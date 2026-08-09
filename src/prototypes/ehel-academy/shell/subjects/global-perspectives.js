@@ -168,6 +168,68 @@ function doneButton(section, label = "Mark this section done") {
 // words, challenge, activities, practice and the quiz), which is why there are
 // twelve deck renderers below and not six.
 const DECK_MAX_STAGE = 4;
+// --- withdrawn stages ---------------------------------------------------------
+// A stage listed here is not offered: it does not appear in the stage picker,
+// and arriving at it by any other route — a bookmark, a shared link, a
+// remediation link out of a later stage's placement report — draws a notice
+// instead of the course. Removing it from the picker alone would not be a
+// withdrawal, because every one of those routes bypasses the picker.
+//
+// Stage 5 is withdrawn because it teaches two of the subject's six skills.
+// Evaluation, Reflection, Collaboration and Communication were never in the
+// source export, and a re-export on 2026-08-09 returned the same two units byte
+// for byte, so this is not waiting on a rebuild. The gap and the hold are
+// recorded in inputs/ehel-global-perspectives-source/source-manifest.json, and
+// check:global-perspectives prints them on every run.
+//
+// To restore a stage: delete its entry here, delete the matching knownGaps
+// entry in the source manifest so the coverage gate guards it again, and lift
+// the hold on docs/ehel-global-perspectives-stage-5-syllabus.md.
+const WITHDRAWN_STAGES = {
+  5: {
+    since: "2026-08-09",
+    reason: "Stage 5 teaches two of the six Global Perspectives skills. Evaluation, Reflection, Collaboration and Communication are not built.",
+  },
+};
+// Takes the stage explicitly because the two callers see different worlds:
+// config.load() runs BEFORE config.bind(), so the module's `stageNumber` is
+// still undefined there and the check would silently pass. load() reads it off
+// ctx; everything after bind() can use the module binding.
+const withdrawalFor = (stage) => WITHDRAWN_STAGES[Number(stage)] || null;
+const withdrawal = () => withdrawalFor(stageNumber);
+
+// Enough of a course for the shell to mount without any unit data.
+function withdrawnCourseShell(info, stage) {
+  return {
+    grade: { id: `s0${stage}`, label: `Stage ${stage}` },
+    stage: { id: `s0${stage}`, label: `Stage ${stage}` },
+    subject: "Global Perspectives",
+    term: { label: "Not currently offered" },
+    unit: { unitNo: "—", unitTitle: "This stage is not available" },
+    visual: {},
+    withdrawn: info,
+  };
+}
+
+function renderWithdrawn() {
+  const info = withdrawal();
+  const esc = escapeHtml;
+  $("#app").innerHTML = `
+    <section class="panel">
+      <h2>Stage ${stageNumber} Global Perspectives is not available</h2>
+      <p>This stage has been withdrawn while its content is completed. It is not
+      part of the course offering at the moment, and no work should be started
+      in it.</p>
+      <p><strong>Why:</strong> ${esc(info.reason)}</p>
+      <p>If you were sent here by a placement report, or you had already begun
+      this stage, speak to your teacher — they can tell you what to do next and
+      whether any work you have done still counts.</p>
+      <p class="muted">Withdrawn ${esc(info.since)}.</p>
+      <p><a class="button" href="?stage=4&amp;unit=1#overview">Go to Stage 4</a>
+         <a class="button secondary" href="?stage=6&amp;unit=1#overview">Go to Stage 6</a></p>
+    </section>`;
+}
+
 const isDeckStage = () => stageNumber <= DECK_MAX_STAGE;
 
 // BOTH designs, the way English Grades 1-4 show a unit module: the original
@@ -990,9 +1052,11 @@ const config = {
   sections: SECTIONS,
   // Two pack shapes, one page: a section appears only where the unit carries
   // data for it. The Prerequisite unit shows only its own two pages.
-  visibleSections: () => (isPrereqUnit
-    ? [["overview", "layout-dashboard", "Unit Overview"], ["placement", "clipboard-check", "Placement exam"]]
-    : availableSections()),
+  visibleSections: () => (withdrawal()
+    ? [["overview", "alert-triangle", "Not available"]]
+    : isPrereqUnit
+      ? [["overview", "layout-dashboard", "Unit Overview"], ["placement", "clipboard-check", "Placement exam"]]
+      : availableSections()),
   // Everything available counts toward the bar except the progress page itself
   // — including the overview, which the other subjects exclude. In prereq mode
   // only the exam counts, so finishing it reads as a complete unit.
@@ -1001,8 +1065,11 @@ const config = {
   keys: (s, u) => ({ progress: `ehel-gp-s${s}-u${u}-progress-v1` }),
   courseKey: (s) => `ehel-gp-g${String(s).padStart(2, "0")}`,
   renderers: {
-    overview: isPrereqUnit ? () => placement.renderOverview() : paint("overview", renderOverview),
-    placement: isPrereqUnit ? () => placement.renderExam() : paint("overview", renderOverview),
+    // A withdrawn stage draws the notice on every route, not just overview —
+    // the shell falls back to `overview` for unknown routes, but `placement`
+    // and the teaching sections are real entries and would otherwise render.
+    overview: () => (withdrawal() ? renderWithdrawn() : isPrereqUnit ? placement.renderOverview() : paint("overview", renderOverview)()),
+    placement: () => (withdrawal() ? renderWithdrawn() : isPrereqUnit ? placement.renderExam() : paint("overview", renderOverview)()),
     // Every teaching section takes the slide deck at DECK_MAX_STAGE and below.
     // Four stay as pages on purpose: the overview and My Progress are summaries
     // rather than a sequence to walk through, My Learning Goals is a
@@ -1042,6 +1109,13 @@ const config = {
   bind,
   wehelOptions,
   async load(ctx) {
+    // Checked before any fetch: a withdrawn stage's data is still on disk, and
+    // loading it would put the course one render away from a learner. Read off
+    // ctx, not the module binding — bind() has not run yet.
+    const withdrawn = withdrawalFor(ctx.stageNumber);
+    if (withdrawn) {
+      return { manifest: { units: [] }, course: withdrawnCourseShell(withdrawn, ctx.stageNumber) };
+    }
     if (isPrereqUnit) {
       const [m, p] = await Promise.all([
         fetch(new URL("course-manifest.json", ctx.dataRootUrl)),
@@ -1070,6 +1144,14 @@ const config = {
     if (title) title.textContent = course.unit.unitTitle;
     for (const select of [ctx.$("#unit-select"), ctx.$("#top-unit-select")]) {
       if (!select) continue;
+      // A withdrawn stage has no units to offer, and its manifest here is the
+      // empty shell, so the picker would otherwise render a lone prerequisite
+      // entry that leads back into the course.
+      if (withdrawal()) {
+        select.innerHTML = `<option selected disabled>Not available</option>`;
+        select.disabled = true;
+        continue;
+      }
       select.innerHTML = [
         `<option value="${PREREQ_UNIT}" ${isPrereqUnit ? "selected" : ""}>Prerequisite — Placement exam</option>`,
         ...manifest.units
@@ -1084,8 +1166,16 @@ const config = {
     }
     const stageSelect = ctx.$("#stage-select");
     if (stageSelect) {
+      // A withdrawn stage is not offered, so it is not in the list. The one
+      // exception is the stage being viewed: a learner who arrived on a
+      // withdrawn stage would otherwise see the picker claim they are
+      // somewhere else, so it is shown, selected and disabled.
       stageSelect.innerHTML = [1, 2, 3, 4, 5, 6, 7, 8]
-        .map((stage) => `<option value="${stage}" ${stage === s ? "selected" : ""}>Stage ${stage}</option>`)
+        .filter((stage) => !WITHDRAWN_STAGES[stage] || stage === s)
+        .map((stage) => {
+          const gone = Boolean(WITHDRAWN_STAGES[stage]);
+          return `<option value="${stage}" ${stage === s ? "selected" : ""} ${gone ? "disabled" : ""}>Stage ${stage}${gone ? " — not available" : ""}</option>`;
+        })
         .join("");
       stageSelect.onchange = () => {
         const url = new URL(location.href);

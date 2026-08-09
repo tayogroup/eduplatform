@@ -1,6 +1,6 @@
 # Ehel Academy syllabuses — index and standing decisions
 
-Thirty-nine syllabus drafts, covering **370 units** and **3,052 learning
+Forty syllabus drafts, covering **370 units** and **3,052 learning
 outcomes** across five subjects. Each is narrative copy for the authoring form
 at `local/hubredirect/syllabus.php`, laid out field for field so it pastes box
 for box, with the schedule half deliberately left to `pqsyl_generated()`.
@@ -13,7 +13,7 @@ it row by row — 289 of 289 exact.
 
 | Subject | Stages | Units | Outcomes | Framework |
 |---|---|---|---|---|
-| [English](#english) | 1, 3–8 | 81 | 590 | Cambridge 0058 / 0861 |
+| [English](#english) | 1–8 | 81 | 590 | Cambridge 0058 / 0861 |
 | [Mathematics](#mathematics) | 1–8 | 133 | 1,199 | Cambridge 0096 / 0862 |
 | [Science](#science) | 1–8 | 53 | 494 | Cambridge 0846 / 0893 |
 | [Computing](#computing) | 1–8 | 64 | 504 | Cambridge 0672 / 0868 |
@@ -22,9 +22,17 @@ it row by row — 289 of 289 exact.
 ### English
 
 The only **taught** subject: live sessions, assignments handed in, and marks.
-Grade 2 was authored elsewhere and is not in this set.
 
-- [Grade 1](ehel-english-grade-1-syllabus.md) · [Grade 3](ehel-english-grade-3-syllabus.md) · [Grade 4](ehel-english-grade-4-syllabus.md) · [Grade 5](ehel-english-grade-5-syllabus.md) · [Grade 6](ehel-english-grade-6-syllabus.md) · [Grade 7](ehel-english-grade-7-syllabus.md) · [Grade 8](ehel-english-grade-8-syllabus.md)
+- [Grade 1](ehel-english-grade-1-syllabus.md) · [Grade 2](ehel-english-grade-2-syllabus.md) · [Grade 3](ehel-english-grade-3-syllabus.md) · [Grade 4](ehel-english-grade-4-syllabus.md) · [Grade 5](ehel-english-grade-5-syllabus.md) · [Grade 6](ehel-english-grade-6-syllabus.md) · [Grade 7](ehel-english-grade-7-syllabus.md) · [Grade 8](ehel-english-grade-8-syllabus.md)
+
+**Grade 2 is the reference implementation.** Its marks reconcile (two rubrics
+worth 32, assignments worth 32), its capstone is itemised to the mark
+(24 + 12 + 16 + 12 = 64), and its final quiz sets its own attempt rule instead
+of deferring to the school. Everything missing from Grades 5 to 8 is present
+here, so those gaps are omissions rather than anything inherent to the design.
+It also carries two marking rules no other grade states: **do not award marks
+for drawing skill or for the materials a family can afford**, and **accept
+scribed or recorded work where a learner needs it**.
 
 ### Mathematics
 
@@ -44,7 +52,7 @@ Grade 2 was authored elsewhere and is not in this set.
 
 ---
 
-## Decide once, not thirty-nine times
+## Decide once, not forty times
 
 Four things recur across the set. Settling each one resolves many syllabuses at
 a stroke.
@@ -122,6 +130,10 @@ change closes the gap.
 
 The consequence reaches Stage 6: its placement exam spends **20 of 34 questions
 on Stage 5 skills** a learner coming through Ehel was never taught.
+
+`check:global-perspectives` now reports the shortfall in its own block rather
+than passing silently, and fails outright on any missing skill the source
+manifest does not document.
 
 Separately: **Cambridge prints no objective codes for this subject.** The codes
 shown against each unit are assigned by Ehel's extractor and must not be

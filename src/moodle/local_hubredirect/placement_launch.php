@@ -143,7 +143,7 @@ $path = '/local/hubredirect/seb_config.php?placement=' . rawurlencode($coursekey
 // $authority is host+path, so both of these keep wwwroot's subdirectory. The
 // download link reuses $base rather than hardcoding https:// — on a plain-HTTP
 // dev install a hardcoded scheme makes the fallback unreachable.
-$sebs = 'sebs://' . $authority . $path;
+$sebs = pqh_seb_scheme() . $authority . $path;
 $download = $base . $path;
 $focusurl = $base . '/local/hubredirect/placement_launch.php?fallback=focus'
     . ($token !== '' ? '&token=' . rawurlencode($token) : '&course=' . rawurlencode($coursekey));

@@ -169,7 +169,7 @@ if ($pqcl_ehelkey !== '' && $pqcl_ehelcourseid > 0) {
         $pqcl_authority = pqh_seb_request_authority();
         $pqcl_path = '/local/hubredirect/seb_config.php?course=' . rawurlencode($pqcl_ehelkey)
             . '&k=' . rawurlencode($pqcl_ticket);
-        $pqcl_sebs = 'sebs://' . $pqcl_authority . $pqcl_path;
+        $pqcl_sebs = pqh_seb_scheme() . $pqcl_authority . $pqcl_path;
         $pqcl_dl = pqh_seb_request_base() . $pqcl_path;
 
         // Where this tab goes once SEB has been handed the launch: back to the

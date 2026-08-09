@@ -365,7 +365,19 @@ function pqh_seb_default_allow_expressions(): array {
     if ($host !== '') {
         array_unshift($rules, $host . '/*');
     }
-    return $rules;
+    // The host the learner actually reached us on, WITH its port. Only
+    // wwwroot's host was listed, and every URL handed to SEB — the release
+    // endpoint, the progress gateway — is built from the REQUEST host instead
+    // (several consumer hosts front this install). On any host that is not
+    // wwwroot's, the exam's own exit route was therefore outside the allow list:
+    // with URL filtering on, pressing Finish would be blocked and the learner
+    // held in a browser they cannot quit until the hard cap. parse_url drops
+    // the port, so an install on a non-default port lost its own rule too.
+    $reqhost = (string)($_SERVER['HTTP_HOST'] ?? '');
+    if (preg_match('/^[A-Za-z0-9.\-]+(:\d+)?$/', $reqhost) && !in_array($reqhost . '/*', $rules, true)) {
+        array_unshift($rules, $reqhost . '/*');
+    }
+    return array_values(array_unique($rules));
 }
 
 /**
@@ -416,9 +428,26 @@ function pqh_seb_request_base(): string {
     return $scheme . '://' . $host . $path;
 }
 
-/** Host-and-path for a `sebs://` handoff — the same base without the scheme. */
+/** Host-and-path for a SEB handoff — the same base without the scheme. */
 function pqh_seb_request_authority(): string {
     return preg_replace('#^[a-z]+://#i', '', pqh_seb_request_base());
+}
+
+/**
+ * The SEB protocol scheme for this install: `sebs://` when the site is HTTPS,
+ * `seb://` when it is not.
+ *
+ * SEB reads the scheme literally — sebs:// makes it fetch the .seb config over
+ * HTTPS. Hardcoding sebs:// therefore CANNOT work on a plain-HTTP install: SEB
+ * requests https://host/... , the connection fails, it gets no config, and it
+ * opens on a black screen with nothing to show. Production is HTTPS so this
+ * returns sebs:// there exactly as before; it is HTTP dev instances that were
+ * impossible to test on.
+ */
+function pqh_seb_scheme(): string {
+    global $CFG;
+    $scheme = (string)(parse_url(rtrim((string)$CFG->wwwroot, '/'), PHP_URL_SCHEME) ?: 'https');
+    return strtolower($scheme) === 'http' ? 'seb://' : 'sebs://';
 }
 
 /** True when the current request is coming from inside Safe Exam Browser. */
@@ -723,7 +752,7 @@ function pqh_seb_course_ticket_verify(string $ticket): ?array {
  * for that one course.
  */
 function pqh_seb_course_handoff_url(string $coursekey, int $userid, int $ttl = 7200): string {
-    return 'sebs://' . pqh_seb_request_authority()
+    return pqh_seb_scheme() . pqh_seb_request_authority()
         . '/local/hubredirect/seb_config.php?course=' . rawurlencode($coursekey)
         . '&k=' . rawurlencode(pqh_seb_course_ticket($userid, $coursekey, $ttl));
 }

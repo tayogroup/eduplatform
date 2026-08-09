@@ -32,6 +32,34 @@ function pqpg_secret(): string {
     return $secret;
 }
 
+/**
+ * Who is launching, as one of 'admin', 'teacher' or 'student'.
+ *
+ * Site admins first, then anyone who can edit a course anywhere they are
+ * enrolled — the app only needs the coarse answer, because the one thing it
+ * decides is whether staff-only chrome is drawn.
+ *
+ * Capability is read against the user's own enrolments rather than a course
+ * context, because the launch is for an EHEL course on the Bunny app, which has
+ * no Moodle course of its own to ask about.
+ */
+function pqpg_launch_role(int $userid): string {
+    if (is_siteadmin($userid)) {
+        return 'admin';
+    }
+    try {
+        foreach (enrol_get_all_users_courses($userid, true) as $course) {
+            if (has_capability('moodle/course:update', context_course::instance($course->id), $userid)) {
+                return 'teacher';
+            }
+        }
+    } catch (Throwable $e) {
+        // A role we cannot determine is a learner: the safe default is the one
+        // that shows the least.
+    }
+    return 'student';
+}
+
 /** Mint a launch token binding a learner to a course (and optionally an env). */
 function pqpg_mint_token(int $userid, string $coursekey, string $env = '', int $ttl = PQPG_TOKEN_TTL): string {
     global $DB;
@@ -41,8 +69,13 @@ function pqpg_mint_token(int $userid, string $coursekey, string $env = '', int $
     // tokens minted before the registry existed stay valid until expiry.
     $jti = bin2hex(random_bytes(8));
     $header = pqpg_b64url(json_encode(['alg' => 'HS256', 'typ' => 'JWT'], JSON_UNESCAPED_SLASHES));
+    // `role` rides in the signed payload so the app reads it from the token
+    // rather than from a query string a learner could edit. The app cannot
+    // VERIFY the signature — it has no secret — so this decides presentation
+    // only; anything that must actually be enforced is enforced at the gateway.
     $payload = pqpg_b64url(json_encode([
         'sub' => $userid, 'course' => $coursekey, 'env' => $env, 'iat' => $now, 'exp' => $now + $ttl, 'jti' => $jti,
+        'role' => pqpg_launch_role($userid),
     ], JSON_UNESCAPED_SLASHES));
     $signature = hash_hmac('sha256', "{$header}.{$payload}", pqpg_secret(), true);
     try {

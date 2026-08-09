@@ -95,6 +95,35 @@ function bind(ctx) {
   shellCtx = ctx;
 }
 
+// --- who is looking ----------------------------------------------------------
+// Moodle mints `role` into the signed launch token (progress_gatewaylib.php ::
+// pqpg_launch_role). It is READ here, never verified — the app holds no secret —
+// so it decides what is drawn and nothing else. That is the right weight for it:
+// the grade picker only rewrites ?grade=, which anyone can type, so hiding it
+// tidies a learner's chrome rather than restricting them. Anything that must be
+// enforced has to be enforced at the gateway, against the token's signature.
+//
+// No token at all means this is not a learner launch — local dev, a direct link,
+// QA — and the picker stays. A learner who strips their own token loses progress
+// sync to gain a control they could have reached by editing the URL.
+function launchRole() {
+  const token = routeParams.get("pwsToken") || "";
+  if (!token) return "staff";
+  const [, payload] = token.split(".");
+  try {
+    const base64 = payload.replace(/-/g, "+").replace(/_/g, "/").padEnd(Math.ceil(payload.length / 4) * 4, "=");
+    const role = JSON.parse(atob(base64)).role;
+    if (typeof role === "string" && role) return role;
+  } catch {
+    /* a token minted before `role` existed, or one we cannot read */
+  }
+  // Tokens predating the claim carry no role. Treating them as staff would show
+  // every learner the picker; treating them as students is the safer default and
+  // costs a teacher on an old token one refreshed launch.
+  return "student";
+}
+const IS_STAFF = ["admin", "teacher", "staff"].includes(launchRole());
+
 // ===================== english body (verbatim) =====================
 const sections = [
   ["overview", "layout-dashboard", "Overview"],
@@ -4151,8 +4180,18 @@ const config = {
         : `${gradeLabel} English | Unit ${course.unit.unitNo}: ${course.unit.unitTitle}`;
     $("#course-label").textContent = `${course.grade.label} · ${course.subject} · ${course.term.label}`;
     $("#unit-title").textContent = course.unit.unitTitle;
-    $("#grade-select").innerHTML = Array.from({ length: 8 }, (_, index) => index + 1).map((grade) => `<option value="${grade}" ${grade === gradeNumber ? "selected" : ""}>Grade ${grade}</option>`).join("");
-    $("#grade-select").addEventListener("change", (event) => { location.href = gradeLocation(event.target.value); });
+    // Staff only. A learner is in one grade; the picker offers them the other
+    // seven, which is chrome for somebody else's job. Hidden rather than
+    // removed so the markup stays identical across subjects, and hidden without
+    // being built at all — an option list nobody can see is work for nothing.
+    const gradePicker = $("#grade-select");
+    if (IS_STAFF) {
+      gradePicker.innerHTML = Array.from({ length: 8 }, (_, index) => index + 1).map((grade) => `<option value="${grade}" ${grade === gradeNumber ? "selected" : ""}>Grade ${grade}</option>`).join("");
+      gradePicker.addEventListener("change", (event) => { location.href = gradeLocation(event.target.value); });
+    } else {
+      gradePicker.hidden = true;
+      gradePicker.setAttribute("aria-hidden", "true");
+    }
     // The options are painted by renderUnitPickers, which runs again on every
     // nav render so a unit opened mid-session appears without a reload. The
     // listener is on the <select>, not the options, so it survives the repaint —

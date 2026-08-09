@@ -372,8 +372,10 @@ for (const gradeKey of [...selfStudyGrades].sort((a, b) => Number(a) - Number(b)
   }
   const allowed = missing.filter((skill) => documented.includes(skill));
   if (allowed.length) {
+    const held = String(gap.status || "").toUpperCase() === "HELD";
     coverageLines.push(`grade-${gradeKey} teaches ${present.size} of ${ALL_SKILLS.length} skills. `
-      + `Missing (known gap): ${allowed.join(", ")}. ${gap.closes || ""}`);
+      + `${held ? `HELD since ${gap.heldOn || "?"} — not for publication. ` : ""}`
+      + `Missing (known gap): ${allowed.join(", ")}. ${held ? gap.heldReason || "" : gap.closes || ""}`);
   }
 }
 

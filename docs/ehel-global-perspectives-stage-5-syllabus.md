@@ -1,4 +1,4 @@
-# Stage 5 Global Perspectives — course syllabus
+# Stage 5 Global Perspectives — course syllabus (HELD)
 
 Narrative copy for the syllabus authoring form at
 `local/hubredirect/syllabus.php`, for the Ehel Academy **Stage 5 Global
@@ -12,22 +12,49 @@ checking it against, not for pasting.
 
 Fields map 1:1 to the form. `{{...}}` marks what only the school can supply.
 
-## This course is incomplete — read this first
+## HELD — do not publish this syllabus
 
-Stage 5 teaches **2 of the subject's six skills**. Present: Research and Analysis.
-**Missing entirely: Evaluation, Reflection, Collaboration, Communication.**
+**Decision taken 2026-08-09: Stage 5 Global Perspectives is held until the full
+content is located.** This draft is not for approval, not for families, and not
+for the catalogue. It is kept so that the work is ready the day the missing
+units arrive.
 
-This is a content gap, not a rendering fault. The four missing skills were never
-in the source export, so they cannot be built from what the repository holds —
-closing it needs a fresh export from the source packs, not a code change.
+Stage 5 teaches **2 of the subject's six skills**. Present: Research and
+Analysis. **Missing entirely: Evaluation, Reflection, Collaboration,
+Communication.**
 
-A school has three honest options and should choose one before publishing:
-publish this syllabus describing a two-skill course and price it accordingly;
-hold the stage back until the export is complete; or run the missing skills from
-the Stage 4 or Stage 6 units and say so here.
-{{which option, and what a family is told}}
+**A re-export will not fix it.** That was the standing assumption and it has been
+tested: a fresh Google Drive export taken on 2026-08-09
+(`Year 5-20260809T155926Z-1-001.zip`) is the right subject, confirmed by pack
+shape, and contains Unit 1 and Unit 2 only — all eight files byte-for-byte
+identical to the copies already in the repository. The export is not dropping
+anything; the folder it exports from holds two units. Either the four units live
+somewhere else in Drive, or they were never authored.
 
-Everything below describes what actually exists.
+### What lifting the hold requires
+
+1. Units 3–6 located or written.
+2. `npm run extract:global-perspectives-content && npm run build:global-perspectives && npm run check:global-perspectives`.
+3. The `"5"` entry deleted from `knownGaps` in
+   `inputs/ehel-global-perspectives-source/source-manifest.json`, which puts the
+   stage back under the coverage gate rather than on its allowed list.
+4. This block replaced, and the unit spine below re-checked against the rebuilt
+   course.
+
+### Two things the hold does not settle
+
+**Stage 5 may still be running.** Holding the syllabus stops it being published;
+it does not by itself withdraw the course from the app or the catalogue. If a
+learner can still enrol in Stage 5, that is a separate decision:
+{{whether the course is withdrawn, and what enrolled learners are told}}.
+
+**Stage 6 still places against Stage 5.** Its placement exam spends 20 of its 34
+questions on Stage 5 skills, so a learner arriving from a two-skill Stage 5 is
+measured on four skills nobody taught them. That holds whether or not Stage 5 is
+published, and is described in the Stage 6 syllabus.
+
+Everything below describes what actually exists, and remains accurate for the
+two units that are built.
 
 ---
 
@@ -50,7 +77,7 @@ Everything below describes what actually exists.
 
 Stage 5 Global Perspectives teaches the same six skills as Stage 4 — in principle. It follows **Cambridge Primary Global Perspectives 0838, Stage 5**.
 
-**In practice this course currently holds two of them.** Research and Analysis are built and complete; Evaluation, Reflection, Collaboration and Communication are absent. See the note at the top of this syllabus, which is the first thing a school needs to decide about.
+**In practice this course holds two of them.** Research and Analysis are built and complete; Evaluation, Reflection, Collaboration and Communication are absent. That is why the stage is held — see the top of this syllabus.
 
 Across the year: **2 units**, one per skill — **32 explainers**,
 **16 big ideas**, **22 models**, **19 toolkit entries**, **44 practice
@@ -173,7 +200,11 @@ Source: `course-manifest.json` and `units/unit-*.json` under
 
 ## Before submitting for approval
 
-1. **Decide what to do about the four missing skills.** Nothing else here matters until that is settled.
+**Do not submit this for approval while the hold stands.** When it is lifted, work
+through the list below.
+
+1. Confirm the rebuilt course teaches all six skills — the coverage gate will say
+   so once the  entry is deleted.
 2. Settle who reads what a learner produces, and set the rhythm.
 3. Do not present the objective codes as Cambridge's own.
 4. Fill every remaining `{{...}}`, confirm term dates, save as **draft**, and

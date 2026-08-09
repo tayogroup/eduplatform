@@ -48,7 +48,7 @@ scribed or recorded work where a learner needs it**.
 
 ### Global Perspectives
 
-- [Stage 1](ehel-global-perspectives-stage-1-syllabus.md) · [2](ehel-global-perspectives-stage-2-syllabus.md) · [3](ehel-global-perspectives-stage-3-syllabus.md) · [4](ehel-global-perspectives-stage-4-syllabus.md) · [5](ehel-global-perspectives-stage-5-syllabus.md) · [6](ehel-global-perspectives-stage-6-syllabus.md) · [7](ehel-global-perspectives-stage-7-syllabus.md) · [8](ehel-global-perspectives-stage-8-syllabus.md)
+- [Stage 1](ehel-global-perspectives-stage-1-syllabus.md) · [2](ehel-global-perspectives-stage-2-syllabus.md) · [3](ehel-global-perspectives-stage-3-syllabus.md) · [4](ehel-global-perspectives-stage-4-syllabus.md) · [5 — HELD](ehel-global-perspectives-stage-5-syllabus.md) · [6](ehel-global-perspectives-stage-6-syllabus.md) · [7](ehel-global-perspectives-stage-7-syllabus.md) · [8](ehel-global-perspectives-stage-8-syllabus.md)
 
 ---
 
@@ -127,11 +127,15 @@ Global Perspectives 2,684; Computing commits none. A fresh checkout has no
 Computing audio, so whether a learner hears anything depends on which machine a
 deploy runs from.
 
-### Global Perspectives — Stage 5 is a third of a course
+### Global Perspectives — Stage 5 is HELD
 
-It holds **Research and Analysis and nothing else**. Evaluation, Reflection,
-Collaboration and Communication were never in the source export, so no code
-change closes the gap.
+**Held from publication 2026-08-09** until the full content is located. It holds
+**Research and Analysis and nothing else**.
+
+A re-export does not fix it, and that has been tested rather than assumed: a
+fresh Google Drive export taken on 2026-08-09 is the right subject and contains
+the same two units, byte for byte. The folder it exports from holds two units,
+so either the other four live elsewhere in Drive or they were never authored.
 
 The consequence reaches Stage 6: its placement exam spends **20 of 34 questions
 on Stage 5 skills** a learner coming through Ehel was never taught.

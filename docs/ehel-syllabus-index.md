@@ -99,13 +99,18 @@ course data, and neither can.
 
 ## Per-subject items that do not generalise
 
-### English — the marks do not add up in Lower Secondary
+### English — the Lower Secondary marks, now itemised
 
-Grades 7 and 8 supply two rubrics worth **32 marks** and award assignments out
-of **40** and a capstone out of **72**. That leaves **112 of 432 marks — 26% of
-each year — with no stated basis**. There is no third rubric in either grade.
-The readable intent is 16 writing + 16 speaking + 8 for the source annotation,
-but the course never says so, and the capstone's 40 cannot be inferred at all.
+**Resolved 2026-08-09.** Grades 7 and 8 supplied two rubrics worth **32 marks**
+and awarded assignments out of **40** and a capstone out of **72**, leaving
+**112 of 432 marks — 26% of each year — with no stated basis**. All twenty
+assignments across the two grades now publish their division: a unit assignment
+as writing 16 + speaking 16 + third piece 8, the capstone as 16 + 16 + 16 + 16 +
+8. Both builders emit it too, so a rebuild cannot reintroduce the gap.
+
+**The division is authored, not Cambridge-derived** — the source packs carry no
+mark scheme at all — so every touched assignment records that curriculum
+confirmation is pending. Confirming it is the remaining step.
 
 Related, and smaller: the Grade 5 and Grade 6 capstones are unitemised too, and
 per-task marking guidance thins out up the grades — 10 of 10 units in Grade 3,

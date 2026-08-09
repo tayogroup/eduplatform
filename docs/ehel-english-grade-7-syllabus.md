@@ -17,11 +17,11 @@ Secondary English 0861**, and the first year since Grade 3 whose mark scheme
 changes: 40 marks per unit assignment instead of 32, a 72-mark capstone instead
 of 64, **432 marks** across the year instead of 352.
 
-**One item needs resolving before this syllabus is published.** The course
-supplies two rubrics worth 32 marks in total, and marks its assignments out of
-40 and 72. **112 of the year's 432 marks — 26% — have no stated basis anywhere
-in the course data.** This is arithmetic, not interpretation, and it is set out
-under Assessment.
+**The marks now reconcile.** This year awards 40 for a unit assignment and 72
+for the capstone against two rubrics worth 32 — and until 2026-08-09 the extra
+112 marks, 26% of the year, had no stated basis anywhere. Every assignment now
+itemises its division. What remains is a confirmation rather than a gap; see
+Assessment.
 
 ---
 
@@ -156,27 +156,26 @@ on Ideas, Organization, Language and Conventions, and **Speaking** on Clarity,
 Vocabulary, Sentence accuracy and Interaction — four criteria each, four marks
 per criterion. **That is 32 marks.**
 
-> **The marks do not add up, and the school must resolve it before publishing.**
+> **Every mark is now accounted for.** Until 2026-08-09 this year awarded 40 and
+> 72 against two rubrics worth 32, leaving 112 of 432 marks — 26% — with no
+> stated basis. The assignments now itemise it:
 >
-> | | Marks awarded | Rubrics supplied | Unaccounted |
-> |---|---|---|---|
-> | Each of Units 1–9 | 40 | 32 | **8** |
-> | Unit 10 capstone | 72 | 32 | **40** |
-> | **Across the year** | **432** | | **112 (26%)** |
+> | | Marks | Divided as |
+> |---|---|---|
+> | Each of Units 1–9 | 40 | Writing 16 · Speaking 16 · third piece 8 |
+> | Unit 10 capstone | 72 | Inquiry product 16 · Oral defence 16 · Source record 16 · Portfolio 16 · Reflection 8 |
+> | **Across the year** | **432** | **fully itemised** |
 >
-> There is no third rubric in the course — every unit references
-> `rub-writing-v1` and `rub-speaking-v1` and nothing else — and no unit carries
-> marking guidance that would explain the difference.
+> The writing and speaking blocks are the two rubrics, four criteria at four
+> marks each. The third 8 covers the piece Grades 3–6 never asked for — the
+> source annotation, or the letter in Grade 7 Unit 1 — which is why this year
+> awards 40 where they award 32.
 >
-> The likely intent is readable from the task shape: each unit asks for three
-> pieces, so 16 writing + 16 speaking + 8 for the source annotation gives
-> exactly 40. **That is an inference, not something the course states**, and the
-> capstone's 40 unaccounted marks across four components cannot be inferred at
-> all.
->
-> Publish the division here before the year starts:
-> {{how the 40 marks divide in a unit assignment, and how the capstone's 72
-> divide across inquiry product, source record, portfolio and oral defence}}.
+> **The division is authored, not Cambridge-derived.** It is not in the source
+> packs, which carry no mark scheme at all; it was written to match the work
+> each task actually asks for, and every assignment's `reviewStatus` records
+> that curriculum confirmation is still pending. Confirm it before the year
+> starts: {{confirmed as published, or amended to}}.
 
 **What earns full marks** is also unstated. Grade 3 prints marking guidance in
 all ten units and Grades 4 and 5 in seven each; Grades 6 and 7 print none. The
@@ -263,8 +262,8 @@ Source: `course-manifest.json`, `units/unit-*.json`, `placement-exam.json`,
 
 ## Before submitting for approval
 
-1. **Resolve the 112 unaccounted marks first.** Everything else here is
-   fill-in-the-blank; that one is a real question about what the year is worth.
+1. **Confirm the mark division** — it is authored rather than Cambridge-derived,
+   and every assignment says so.
 2. Fill every remaining `{{...}}`, including how full marks are judged and the
    final-quiz attempt rule.
 3. Confirm term dates on the school's academic terms, not here.

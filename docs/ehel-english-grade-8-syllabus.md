@@ -17,9 +17,10 @@ Fields map 1:1 to the form. `{{...}}` marks what only the school can supply.
 reflection*. A family reading this syllabus will ask what comes next, and only
 the school can answer. That question is raised under Support.
 
-**It carries the same 112 unaccounted marks as Grade 7**, in exactly the same
-shape, which makes it a Lower Secondary pattern rather than a Grade 7 slip. Set
-out under Assessment.
+**Its marks reconcile, as Grade 7's now do.** Both Lower Secondary years awarded
+40 and 72 against rubrics worth 32 — 112 marks a year with no stated basis, in
+exactly the same shape, which made it a pattern rather than a slip. Both are now
+itemised. See Assessment.
 
 ---
 
@@ -151,24 +152,26 @@ and Conventions, and **Speaking** on Clarity, Vocabulary, Sentence accuracy and
 Interaction — four criteria each, four marks per criterion. **That is 32
 marks.**
 
-> **The marks do not add up, exactly as in Grade 7.**
+> **Every mark is now accounted for.** Until 2026-08-09 this year awarded 40 and
+> 72 against two rubrics worth 32, leaving 112 of 432 marks — 26% — with no
+> stated basis. The assignments now itemise it:
 >
-> | | Marks awarded | Rubrics supplied | Unaccounted |
-> |---|---|---|---|
-> | Each of Units 1–9 | 40 | 32 | **8** |
-> | Unit 10 capstone | 72 | 32 | **40** |
-> | **Across the year** | **432** | | **112 (26%)** |
+> | | Marks | Divided as |
+> |---|---|---|
+> | Each of Units 1–9 | 40 | Writing 16 · Speaking 16 · third piece 8 |
+> | Unit 10 capstone | 72 | Inquiry product 16 · Oral defence 16 · Source record 16 · Portfolio 16 · Reflection 8 |
+> | **Across the year** | **432** | **fully itemised** |
 >
-> Both Lower Secondary years carry the identical gap, so this is a pattern in
-> how the stage was authored rather than a slip in one grade — and one decision
-> can settle both.
+> The writing and speaking blocks are the two rubrics, four criteria at four
+> marks each. The third 8 covers the piece Grades 3–6 never asked for — the
+> source annotation, or the letter in Grade 7 Unit 1 — which is why this year
+> awards 40 where they award 32.
 >
-> The readable intent is 16 writing + 16 speaking + 8 for the source annotation,
-> which makes 40. **The course does not state it**, and the capstone's 40
-> unaccounted marks cannot be inferred at all.
->
-> {{how the 40 marks divide in a unit assignment, and how the capstone's 72
-> divide across inquiry product, source record, portfolio and oral defence}}
+> **The division is authored, not Cambridge-derived.** It is not in the source
+> packs, which carry no mark scheme at all; it was written to match the work
+> each task actually asks for, and every assignment's `reviewStatus` records
+> that curriculum confirmation is still pending. Confirm it before the year
+> starts: {{confirmed as published, or amended to}}.
 
 **What earns full marks** is stated in only two of the ten units. Across the
 series that guidance runs 10 of 10 in Grade 3, 7 in Grades 4 and 5, none in
@@ -259,9 +262,9 @@ Source: `course-manifest.json`, `units/unit-*.json`, `placement-exam.json`,
 
 ## Before submitting for approval
 
-1. **Settle the two Lower Secondary questions**: the 112 unaccounted marks, and
-   what a learner does after Grade 8. Neither is a blank to fill; both are
-   decisions.
+1. **Confirm the mark division, and settle what follows Grade 8.** The marks are
+   itemised now but authored rather than Cambridge-derived; what comes after this
+   course is still an open question.
 2. Fill every remaining `{{...}}`, including how full marks are judged and the
    final-quiz attempt rule.
 3. Confirm term dates on the school's academic terms, not here.

@@ -130,7 +130,17 @@ const sections = [
 // units 0-10 each have a game pack and at least one eBook — checked, not
 // assumed. Widening this to another grade means checking that grade first, not
 // just changing the comparison.
-const UNIT_GATE_ENABLED = gradeNumber === 1;
+// Grades 1 and 2, each checked before being added — never widened by editing
+// the number alone. What has to hold is that every section the chain demands can
+// actually be finished in every unit of that grade:
+//   Grade 1 — all 11 units carry a game pack, a lecture video (Unit 10 is the
+//             capstone launch, which completes on its button) and an eBook.
+//   Grade 2 — all 10 units carry a game pack and a lecture video (Unit 10 again
+//             the capstone). It has NO eBooks, which is why visibleSections()
+//             now drops Books where a unit has none, exactly as it drops Games.
+// Grades 3-8 are not gated: their lecture and eBook coverage has not been
+// checked, and an uncompletable step locks a learner out permanently.
+const UNIT_GATE_ENABLED = gradeNumber === 1 || gradeNumber === 2;
 const CAPSTONE_UNIT = 10;
 // The Teacher view is a preview, not a lesson: a teacher or parent planning
 // ahead has to be able to open Unit 6 in week one. This is no weaker than what
@@ -139,9 +149,20 @@ const CAPSTONE_UNIT = 10;
 const TEACHER_PREVIEW = location.hash.slice(1) === "teacher";
 const unitProgressKey = (unit) => `ehel-english-g${gradeNumber}-u${unit}-progress-v1`;
 // Everything the shell counts toward 100%: the section list minus the two it
-// never counts. `final-quiz` is nonCountable too, but it is never in `sections`
-// — it is appended to the nav for Unit 10 alone.
-const countableSectionIds = () => sections.filter(([id]) => !["overview", "live"].includes(id)).map(([id]) => id);
+// never counts, minus the two a unit can fail to offer. `final-quiz` is
+// nonCountable too, but it is never in `sections` — it is appended to the nav
+// for Unit 10 alone.
+//
+// The availability filter here must match visibleSections()'s, or the gate and
+// the progress bar count different things: with Books excluded from the nav but
+// still demanded here, a Grade 2 unit read 100% on the bar and stayed unfinished
+// to the gate, so the next unit never opened. It cannot simply CALL
+// visibleSections() — that reads `unitLocked`, which is initialised from this,
+// and the cycle throws before either exists.
+const countableSectionIds = () => sections
+  .filter(([id]) => !["overview", "live"].includes(id))
+  .filter(([id]) => (id !== "games" || gamePack) && (id !== "ebooks" || unitEbooks().length))
+  .map(([id]) => id);
 // The server's view of every unit, handed over by the shell before load() and
 // null on a per-device launch. localStorage alone made this gate a per-device
 // gate: a learner who finished Units 0-6 at school opened the course at home,
@@ -850,6 +871,14 @@ function loadPlacementProgress() {
   }
 }
 
+// The books this unit can actually offer. Defined once because two places ask
+// the question and they must not drift: the nav decides whether Books exists at
+// all, and the renderer decides what to draw. A book with no `units` belongs to
+// every unit of its grades.
+function unitEbooks() {
+  return ebookCatalog.filter((item) => item.grades.includes(gradeNumber) && (!item.units || item.units.includes(unitNumber)));
+}
+
 function savePlacementProgress() {
   localStorage.setItem(PLACEMENT_STORAGE_KEY, JSON.stringify(placementProgress));
   renderNav();
@@ -866,7 +895,14 @@ function visibleSections() {
       ["placement", "clipboard-check", placementExam?.kind === "readiness" ? "Readiness check" : "Placement exam"],
     ];
   }
-  const available = sections.filter(([id]) => id !== "games" || gamePack);
+  // Books drops out the same way Games does, and for the same reason: a section
+  // the unit cannot offer is not a section. Only Grade 1 has an approved eBook
+  // library, so at every other grade this entry could say one thing — "there are
+  // no approved eBooks for this unit yet" — while still counting toward the
+  // unit's 100%, which is why those grades' progress bars stopped at 92% and
+  // could never read complete. It is also what made the gate unsafe beyond
+  // Grade 1: an uncompletable step in the chain shuts the learner out for good.
+  const available = sections.filter(([id]) => (id !== "games" || gamePack) && (id !== "ebooks" || unitEbooks().length));
   return unitNumber === 10 ? [...available, ["final-quiz", "trophy", "Final course quiz"]] : available;
 }
 
@@ -3708,7 +3744,7 @@ function openEbookReadAloud(book) {
 function renderEbooks() {
   ebookWatchActive = false;
   ebookWatchToken += 1;
-  const gradeEbooks = ebookCatalog.filter((item) => item.grades.includes(gradeNumber) && (!item.units || item.units.includes(unitNumber)));
+  const gradeEbooks = unitEbooks();
   if (!gradeEbooks.length) {
     $("#app").innerHTML = `${pageHeader("Independent reading library", "Books", `Grade ${gradeNumber} illustrated books for this unit will appear here as they are approved.`, "Library being prepared")}
       <section class="panel empty-library"><span>${icon("library-big")}</span><h2>Your Unit ${unitNumber} shelf</h2><p>There are no approved eBooks for this unit yet. Each unit gets its own story - keep learning!</p></section>`;

@@ -115,32 +115,32 @@ const sections = [
 ];
 
 // --- unit gate: one unit at a time -------------------------------------------
-// Grade 1 is a first year of English, so its units are walked in order rather
-// than browsed. Unit 0 is open from the start; every later unit opens when the
-// one before it is finished, up to and including the Unit 10 capstone.
+// The early grades are walked in order rather than browsed. The first unit is
+// open from the start; every later one opens when the unit before it is
+// finished, up to and including the Unit 10 capstone.
 //
 // "Finished" is the shell's own definition — every countable section done, the
 // same thing that drives the progress bar to 100% and emits `unit.completed`
 // (course-app.js :: updateProgress). Inventing a second rule here would let the
 // lock, the bar and the Moodle event disagree about the same unit.
 //
-// Grade 1 only, deliberately. Whether a unit CAN reach 100% depends on it
-// carrying every section: a grade whose Unit 3 ships no eBook could never
-// complete `ebooks`, and the gate would shut the learner out for good. Grade 1
-// units 0-10 each have a game pack and at least one eBook — checked, not
-// assumed. Widening this to another grade means checking that grade first, not
-// just changing the comparison.
-// Grades 1 and 2, each checked before being added — never widened by editing
-// the number alone. What has to hold is that every section the chain demands can
+// Whether a unit CAN reach 100% depends on it carrying every section the chain
+// demands: a grade whose Unit 3 ships no lecture video could never complete
+// `lecture`, and the gate would shut the learner out for good.
+//
+// Grades 1 to 3, each checked before being added — never widened by editing the
+// number alone. What has to hold is that every section the chain demands can
 // actually be finished in every unit of that grade:
 //   Grade 1 — all 11 units carry a game pack, a lecture video (Unit 10 is the
 //             capstone launch, which completes on its button) and an eBook.
 //   Grade 2 — all 10 units carry a game pack and a lecture video (Unit 10 again
 //             the capstone). It has NO eBooks, which is why visibleSections()
-//             now drops Books where a unit has none, exactly as it drops Games.
-// Grades 3-8 are not gated: their lecture and eBook coverage has not been
-// checked, and an uncompletable step locks a learner out permanently.
-const UNIT_GATE_ENABLED = gradeNumber === 1 || gradeNumber === 2;
+//             drops Books where a unit has none, exactly as it drops Games.
+//   Grade 3 — same shape as Grade 2: 10 units, every game pack present, lecture
+//             videos on disk for Units 1-9, Unit 10 the capstone launch.
+// Grades 4-8 are not gated: their lecture coverage has not been checked, and an
+// uncompletable step locks a learner out permanently.
+const UNIT_GATE_ENABLED = gradeNumber <= 3;
 const CAPSTONE_UNIT = 10;
 // The Teacher view is a preview, not a lesson: a teacher or parent planning
 // ahead has to be able to open Unit 6 in week one. This is no weaker than what

@@ -11,8 +11,6 @@
 // The exam is read, not narrated: no voiceButton/data-speak markup is emitted
 // here, so the per-subject audio-coverage checks see no new Listen buttons.
 
-import { requireExamLockdown, finishExamSession } from "../shared/exam-lockdown.js?v=20260808a";
-
 export const PREREQ_UNIT = -1;
 
 export function loadPlacementStore(storageKey) {
@@ -109,11 +107,6 @@ export function createPlacementUnit(options) {
     ui.complete("placement");
     ui.emitProgress({ type: "checkpoint.result", unit: "prereq", section: "placement-exam", score: outcome.percent, passed: outcome.band !== "notReady", attempt: store.attempts.length });
     renderResults(outcome);
-    // In SEB the exam is over, so release the learner. Deliberately AFTER the
-    // report is painted and the progress write is away: finishExamSession waits
-    // before navigating, so the child sees their result and the score reaches
-    // Moodle before the locked browser closes.
-    finishExamSession();
   }
 
   function renderOverview() {
@@ -142,15 +135,6 @@ export function createPlacementUnit(options) {
     const ui = options.deps();
     const exam = options.exam();
     if (store.submitted) return renderResults(results());
-    // Exam-grade lockdown. The report and the overview stay reachable in an
-    // ordinary tab; only the questions require Safe Exam Browser (or the
-    // focus-mode fallback the server picks for devices that cannot run it).
-    if (!requireExamLockdown({
-      mount: ui.$("#app"),
-      stageLabel: options.stageLabel,
-      examTitle: exam.title,
-      backHref: options.defaultUnitHref("overview"),
-    })) return;
     const hasStarted = Object.keys(store.answers).length > 0 || store.startedAt;
     if (!hasStarted) {
       store.startedAt = new Date().toISOString();

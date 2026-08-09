@@ -154,20 +154,14 @@ function versionIndexHtml(html, subject) {
 // and which is served max-age=2592000. Unlike the others it is vendored
 // upstream (lucide 0.468.0, unmodified) and IS tracked in git, so it never hits
 // the skip path below.
-// exam-lockdown.js is imported by shell/placement.js (../shared/) AND by
-// shell/subjects/english.js (../../shared/), so it needs BOTH rewrite forms
-// below as well as a place here. Without this entry the release still built,
-// and --dry warned that v{TAG}/course-ui.js referenced ../../shared/
-// exam-lockdown.js — an unversioned, 30-day-cached path that was never
-// uploaded, so the module import would 404 and take the whole course app with it.
-const SHARED_MODULES = ["course-shell.js", "progress-client.js", "seb-session.js", "lesson-gate.js", "exam-lockdown.js", "brand-fx.js", "lucide.min.js"];
+const SHARED_MODULES = ["course-shell.js", "progress-client.js", "seb-session.js", "lesson-gate.js", "brand-fx.js", "lucide.min.js"];
 const sharedModuleItems = (subject) => SHARED_MODULES.flatMap((name) => {
   const src = path.join(EHEL, "shared", name);
   if (!fs.existsSync(src)) { console.log(`  (skip ${name}: not in the working tree)`); return []; }
   return [{ remote: `app/${subject}/${TAG}/${name}`, buf: fs.readFileSync(src) }];
 });
 const selfContainJs = (src) => src.replace(
-  /\.\.\/\.\.\/shared\/(course-shell|progress-client|seb-session|lesson-gate|exam-lockdown|brand-fx)\.js(\?v=[^"']*)?/g, "./$1.js");
+  /\.\.\/\.\.\/shared\/(course-shell|progress-client|seb-session|lesson-gate|brand-fx)\.js(\?v=[^"']*)?/g, "./$1.js");
 const selfContainCss = (src) => src.replace(
   /@import url\(["']\.\.\/\.\.\/english\/shared\/course-ui\.css["']\);/, '@import url("./design-system.css");');
 
@@ -184,7 +178,7 @@ const selfContainCss = (src) => src.replace(
 function shellSubjectModule(subject) {
   return fs.readFileSync(path.join(EHEL, "shell", "subjects", `${subject}.js`), "utf8")
     .replace(/\.\.\/\.\.\/(?:english|mathematics|science|computing|global-perspectives|intensive-english)\/shared\/([A-Za-z0-9_-]+\.js)(\?v=[^"']*)?/g, "./$1")
-    .replace(/\.\.\/\.\.\/shared\/(course-shell|progress-client|exam-lockdown)\.js(\?v=[^"']*)?/g, "./$1.js")
+    .replace(/\.\.\/\.\.\/shared\/(course-shell|progress-client)\.js(\?v=[^"']*)?/g, "./$1.js")
     // Every shell/ sibling the module imports, not just course-app.js. wehel.js
     // was the second one and had no rule, so a release rewrote course-app.js and
     // left `../wehel.js` pointing at app/{subject}/wehel.js — a path nothing
@@ -218,7 +212,7 @@ function shellComponents(subject) {
 }
 function shellCore() {
   return fs.readFileSync(path.join(EHEL, "shell", "course-app.js"), "utf8")
-    .replace(/\.\.\/shared\/(course-shell|progress-client|seb-session|lesson-gate|exam-lockdown)\.js(\?v=[^"']*)?/g, "./$1.js")
+    .replace(/\.\.\/shared\/(course-shell|progress-client|seb-session|lesson-gate)\.js(\?v=[^"']*)?/g, "./$1.js")
     // The shell/ siblings course-app.js imports by name — wehel.js today. The
     // subject module imports the SAME file, and shellSubjectModule drops the
     // ?v= when it rewrites `../wehel.js?v=…` to `./wehel.js`. Leaving the query

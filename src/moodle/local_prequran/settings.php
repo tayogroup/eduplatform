@@ -904,13 +904,12 @@ if ($hassiteconfig) {
     $settings->add(new admin_setting_configselect(
         'local_prequran/placement_seb_launch_mode',
         'Launch the Prerequisite unit in Safe Exam Browser',
-        'Enabled: the placement exam in every course\'s Prerequisite unit (unit -1) opens inside Safe Exam Browser under the EXAM profile — URL filtering on and a quit password, so a learner cannot leave mid-exam. '
-        . 'This is stricter than the course setting above, which deliberately lets learners quit a lesson freely. '
-        . 'Off: the Prerequisite opens like any other unit. '
-        . 'Learners whose device cannot run Safe Exam Browser (there is no Android build) fall back to focus mode automatically, so nobody is left unable to be placed. '
-        . 'The exam always ends on whichever comes first: the learner submitting it, or the hard cap below.',
-        'enabled',
-        ['' => 'Off (open like any unit)', 'enabled' => 'Enabled (open in SEB)']
+        'OFF (default, and recommended). The Prerequisite opens like any other unit, so a learner already in a Safe Exam Browser course session simply takes the exam inside it — the ordinary "Launch enrolled courses in Safe Exam Browser" setting above is what provides the locked browser. '
+        . 'Enabled: the Prerequisite gets its OWN exam-grade SEB handover instead (separate .seb config, quit password, hard cap). '
+        . 'That bespoke path was built and then withdrawn: it could not be made to open reliably on the production hosts, and the app-side gate it depends on is no longer shipped, so switching this on will not currently produce a working exam. '
+        . 'Leave it off unless that path is deliberately revived.',
+        '',
+        ['' => 'Off — use the ordinary course SEB launch (recommended)', 'enabled' => 'Enabled (bespoke exam handover — withdrawn, not working)']
     ));
 
     $settings->add(new admin_setting_configtext(

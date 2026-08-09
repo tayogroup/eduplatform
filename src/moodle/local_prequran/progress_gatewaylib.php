@@ -69,10 +69,10 @@ function pqpg_mint_token(int $userid, string $coursekey, string $env = '', int $
  * app routing parts, or null if it is not an EHEL course. Single source of truth
  * for the app subdir, the grade/stage/level value, and which query param carries
  * it. Shared by progress_token.php, course_launch.php, seb_config.php,
- * seb_release.php and placement_launch.php — all of which used to carry their
+ * and seb_release.php — all of which used to carry their
  * own copy of a three-subject regex and so disagreed with the catalog. Returning
- * non-null here is what makes a course launchable AND gives it a placement exam,
- * so adding a subject is this one edit.
+ * non-null here is what makes a course launchable, so adding a subject is
+ * this one edit.
  */
 function pqpg_ehel_app_base(string $coursekey): ?array {
     // slug => [app directory, the URL param that carries the level, the letter
@@ -122,10 +122,9 @@ function pqpg_ehel_app_base(string $coursekey): ?array {
  * Full grade-aware Bunny launch URL for an EHEL course, with a freshly minted
  * progress token bound to $userid appended, or '' if $coursekey is not EHEL.
  *
- * $unit selects which unit the app opens on. It defaults to 1 (the first
- * teaching unit) because that is what an ordinary course launch wants; the
- * placement launch passes -1, the Prerequisite unit. Nothing else is a
- * meaningful entry point, so callers are not expected to pass anything else.
+ * $unit selects which unit the app opens on, defaulting to 1 — the first
+ * teaching unit, which is what a course launch wants. Every current caller
+ * takes the default.
  */
 function pqpg_ehel_launch_url(int $userid, string $coursekey, string $env, string $wwwroot, int $unit = 1): string {
     $base = pqpg_ehel_app_base($coursekey);

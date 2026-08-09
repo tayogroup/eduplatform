@@ -106,69 +106,6 @@ if ($coursekey !== '') {
     exit;
 }
 
-// ---- Placement mode: the Prerequisite unit (unit -1) under the exam profile --
-// Same shape as course mode above, with three differences that matter: the app
-// opens on unit -1, the config carries a quit password (this is an exam), and
-// the only way out is submitting or the hard cap.
-$pqsc_placementkey = optional_param('placement', '', PARAM_ALPHANUMEXT);
-if ($pqsc_placementkey !== '') {
-    if (!pqh_seb_placement_enabled()) {
-        pqh_access_denied('Placement exams are not set to open in Safe Exam Browser.', $dashboardurl, 'Not enabled');
-    }
-    // Which keys are launchable is pqpg_ehel_app_base's answer, not a regex
-    // repeated here — a copy would silently exclude any subject added to the
-    // map later, which is exactly how Computing, Global Perspectives and
-    // Intensive English were left out of placement in the first place.
-    require_once($CFG->dirroot . '/local/prequran/progress_gatewaylib.php');
-    $pqsc_pcourseid = 0;
-    if (pqpg_ehel_app_base($pqsc_placementkey) !== null) {
-        $pqsc_pcourseid = (int)$DB->get_field('course', 'id', ['idnumber' => $pqsc_placementkey]);
-    }
-    if ($pqsc_pcourseid <= 0) {
-        pqh_access_denied('That course does not exist.', $dashboardurl, 'Course unavailable');
-    }
-    // A placement ticket is valid only for the placement exam of one course.
-    if ($pqsc_ticket !== '' && isset($pqsc_claims['course'])
-            && (string)$pqsc_claims['course'] !== pqh_seb_placement_ticket_key($pqsc_placementkey)) {
-        pqh_access_denied('That launch link is not valid for this exam.', $dashboardurl, 'Launch link invalid');
-    }
-    $pqsc_pctx = context_course::instance($pqsc_pcourseid);
-    if (!is_enrolled($pqsc_pctx, $pqsc_learnerid, '', true)
-            && !($pqsc_ticket === '' && is_siteadmin())) {
-        pqh_access_denied('You are not enrolled in this course.', $dashboardurl, 'Not enrolled');
-    }
-
-    // Same derivation as course mode. See pqh_seb_request_base().
-    $pqsc_pbase = pqh_seb_request_base();
-
-    $pqsc_pstart = pqpg_ehel_launch_url($pqsc_learnerid, $pqsc_placementkey, '', $pqsc_pbase, -1);
-    if ($pqsc_pstart === '') {
-        pqh_access_denied('This course has no placement exam app.', $dashboardurl, 'Exam unavailable');
-    }
-
-    // The release route. exitAfter is the hard cap and is what actually
-    // guarantees the learner gets out: seb-session.js navigates there on its
-    // own when the cap passes, so a child is released even if nothing is
-    // pressed and even if the exam never reports itself finished.
-    $pqsc_prel = $pqsc_pbase . '/local/hubredirect/seb_release.php?placement=1&course='
-        . rawurlencode($pqsc_placementkey) . '&k='
-        . rawurlencode(pqh_seb_course_ticket($pqsc_learnerid,
-            pqh_seb_placement_ticket_key($pqsc_placementkey), 8 * HOURSECS));
-    $pqsc_pstart .= '&sessionKind=exam'
-        . '&exitUrl=' . rawurlencode($pqsc_prel)
-        . '&exitAfter=' . (pqh_seb_placement_cap_minutes() * 60)
-        . '&learnAfter=0&lockOn=1';
-
-    // Start the cap clock. Without this the release decision has no elapsed
-    // time to measure and lets everyone straight out.
-    pqh_seb_placement_mark_start($pqsc_learnerid);
-
-    $pqsc_pxml = pqh_seb_placement_config_xml($pqsc_pstart,
-        $pqsc_pbase . '/local/hubredirect/seb_quit.php', $pqsc_learnerid);
-    pqh_seb_send_config($pqsc_pxml,
-        'placement-' . preg_replace('/[^A-Za-z0-9_-]/', '', $pqsc_placementkey) . '.seb');
-}
-
 // Exam mode always needs a real session — handoff tickets are scoped to course
 // launches only and must never stand in for login on the exam path.
 require_login();

@@ -901,46 +901,6 @@ if ($hassiteconfig) {
         PARAM_INT
     ));
 
-    $settings->add(new admin_setting_configselect(
-        'local_prequran/placement_seb_launch_mode',
-        'Launch the Prerequisite unit in Safe Exam Browser',
-        'OFF (default, and recommended). The Prerequisite opens like any other unit, so a learner already in a Safe Exam Browser course session simply takes the exam inside it — the ordinary "Launch enrolled courses in Safe Exam Browser" setting above is what provides the locked browser. '
-        . 'Enabled: the Prerequisite gets its OWN exam-grade SEB handover instead (separate .seb config, quit password, hard cap). '
-        . 'That bespoke path was built and then withdrawn: it could not be made to open reliably on the production hosts, and the app-side gate it depends on is no longer shipped, so switching this on will not currently produce a working exam. '
-        . 'Leave it off unless that path is deliberately revived.',
-        '',
-        ['' => 'Off — use the ordinary course SEB launch (recommended)', 'enabled' => 'Enabled (bespoke exam handover — withdrawn, not working)']
-    ));
-
-    $settings->add(new admin_setting_configtext(
-        'local_prequran/placement_seb_quit_password',
-        'Placement exam quit password',
-        'Quit password for placement sessions, so staff can always release a learner. '
-        . 'Unlike the course password above, leaving this blank does NOT mean "no password" — a placement exam is an exam. '
-        . 'Blank falls back to the course quit password, and if that is blank too a random per-site password is generated and stored. '
-        . 'Site admins and accounts flagged with the SEB exit override never get a password at all, so nobody testing this can be locked in.',
-        '',
-        PARAM_RAW_TRIMMED
-    ));
-
-    $settings->add(new admin_setting_configselect(
-        'local_prequran/placement_seb_url_filter',
-        'URL filtering during placement exams',
-        'Off (default): Safe Exam Browser may load any URL during the exam. Its kiosk mode is still the lockdown, and the exam still carries a quit password. '
-        . 'On: only the allow-listed hosts load. '
-        . 'This defaults to OFF because turning it on produced a BLACK SCREEN on every placement launch — the filter blocks the start page whenever no expression matches it, and the app is served from the Bunny CDN. '
-        . 'Only switch it on after confirming an expression set that matches the CDN start URL, and re-test a real launch before trusting it.',
-        '',
-        ['' => 'Off (no URL filtering)', 'on' => 'On (allow-list only)']
-    ));
-
-    $settings->add(new admin_setting_configtext(
-        'local_prequran/placement_seb_max_minutes',
-        'Placement exam hard cap (minutes)',
-        'The safety net for placement: Safe Exam Browser closes by this point whether or not the exam reports itself finished, so a crashed page cannot trap a child in a browser they cannot quit. Default 90, clamped to 15–240.',
-        '90',
-        PARAM_INT
-    ));
 
     $settings->add(new admin_setting_configtext(
         'local_prequran/seb_proctor_retention_days',

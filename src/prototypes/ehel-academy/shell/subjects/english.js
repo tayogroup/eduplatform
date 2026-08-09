@@ -157,7 +157,7 @@ const unitProgressKey = (unit) => `ehel-english-g${gradeNumber}-u${unit}-progres
 // the progress bar count different things: with Books excluded from the nav but
 // still demanded here, a Grade 2 unit read 100% on the bar and stayed unfinished
 // to the gate, so the next unit never opened. It cannot simply CALL
-// visibleSections() — that reads `unitLocked`, which is initialised from this,
+// visibleSections() — that reads unitIsLocked(), which resolves through this,
 // and the cycle throws before either exists.
 const countableSectionIds = () => sections
   .filter(([id]) => !["overview", "live"].includes(id))
@@ -208,9 +208,31 @@ function currentOpenUnit() {
   return unit;
 }
 // Not final until load() has seen the server's progress: this module is
-// evaluated long before the gateway answers, so the value here is only the
-// per-device guess. Everything that reads it does so at render time or later.
-let unitLocked = !isPrereqUnit && !TEACHER_PREVIEW && !unitIsUnlocked(unitNumber);
+// evaluated long before the gateway answers, so the first answer here is only
+// the per-device guess. Everything that reads it does so at render time or
+// later, and that is now load-bearing rather than incidental.
+//
+// COMPUTED ON FIRST READ, never at module scope. unitIsUnlocked() reaches
+// countableSectionIds(), which reads `gamePack` (`let`, declared ~500 lines
+// below) and `ebookCatalog` (`const`, declared below). Evaluating either
+// before its declaration is a temporal-dead-zone ReferenceError, and it threw
+// while the module was still initialising — so nothing rendered at all. Every
+// gated unit past its grade's first went blank: Grade 1 Units 1-10 and Grade 2
+// Units 2-10, a white page with `Cannot access 'gamePack' before
+// initialization` in the console. It hid from the obvious checks because
+// unitIsUnlocked() returns early for the prerequisite unit and for
+// `number <= defaultUnit`, so Grade 1 Unit 0, Grade 2 Unit 1 and every
+// ungated grade loaded perfectly.
+//
+// Reading it lazily is the fix rather than hoisting: `ebookCatalog` is a
+// 400-line literal, and moving that above the gate to satisfy an
+// initialisation order would bury the thing this file is actually about.
+const computeUnitLocked = () => !isPrereqUnit && !TEACHER_PREVIEW && !unitIsUnlocked(unitNumber);
+let unitLockedCache = null;
+function unitIsLocked() {
+  if (unitLockedCache === null) unitLockedCache = computeUnitLocked();
+  return unitLockedCache;
+}
 
 // --- section gate: the sidebar walked in order -------------------------------
 // The same chain one level down. Inside an open unit the teaching sections come
@@ -264,7 +286,7 @@ const sectionLabel = (id) => (sections.find(([sid]) => sid === id) || [null, nul
 // unlocked one is already clean, and rewriting its label here would drop the
 // ", completed" the shell puts there for a screen reader.
 function paintSectionLocks() {
-  if (!UNIT_GATE_ENABLED || unitLocked) return;
+  if (!UNIT_GATE_ENABLED || unitIsLocked()) return;
   for (const button of $$("#section-nav [data-route]")) {
     if (sectionUnlocked(button.dataset.route)) continue;
     button.disabled = true; // a disabled button fires no click, so this IS the block
@@ -888,7 +910,7 @@ function visibleSections() {
   // A locked unit has one page, so it offers one nav entry. This also empties
   // the countable list the shell divides by, which is what keeps the progress
   // bar at 0% instead of reporting on a unit nobody has opened.
-  if (unitLocked) return [["overview", "lock", "Locked"]];
+  if (unitIsLocked()) return [["overview", "lock", "Locked"]];
   if (isPrereqUnit) {
     return [
       ["overview", "layout-dashboard", "Overview"],
@@ -1092,7 +1114,7 @@ function bindOverviewAudio(holder) {
 // half a typed #quiz cannot walk around.
 function gated(renderers) {
   return Object.fromEntries(Object.entries(renderers).map(([id, render]) => [id, () => {
-    if (unitLocked) return renderLockedUnit();
+    if (unitIsLocked()) return renderLockedUnit();
     if (!sectionUnlocked(id)) return renderLockedSection(id);
     return render();
   }]));
@@ -3979,7 +4001,7 @@ const config = {
   onAfterRender: () => { $("#app").setAttribute("aria-busy", "false"); prepareScreenReaderView(); icons(); },
   onNavRendered: () => { renderUnitPickers(); paintSectionLocks(); icons(); },
   // Every route draws the locked page while a unit is locked. The check is
-  // inside each entry, not a swapped-out map: `unitLocked` is not settled until
+  // inside each entry, not a swapped-out map: the lock is not settled until
   // load() has heard from the progress gateway, and this object is built while
   // the module is still being evaluated. The shell also falls back to `overview`
   // for any route it cannot find (course-app.js :: renderRoute), so a route that
@@ -4014,12 +4036,14 @@ const config = {
     // home to Unit 7, not to a locked year. Offline, or on a per-device launch,
     // ctx.remoteUnits is null and the answer is the local one, unchanged.
     remoteUnits = ctx.remoteUnits || null;
-    unitLocked = !isPrereqUnit && !TEACHER_PREVIEW && !unitIsUnlocked(unitNumber);
+    // Recompute, don't just read: remoteUnits has only now arrived, and the
+    // cached answer above was taken from this device alone.
+    unitLockedCache = computeUnitLocked();
     // A locked unit loads its manifest entry and nothing else. Fetching the
     // unit, dictionary, games and lecture media would be paying for content the
     // learner is not going to be shown, and it is the one honest way to be sure
     // no renderer can reach a locked unit's material.
-    if (unitLocked) {
+    if (unitIsLocked()) {
       const manifestResponse = await fetch(new URL("course-manifest.json", ctx.dataRootUrl));
       if (!manifestResponse.ok) throw new Error(`Course data could not be loaded (${manifestResponse.status} ${manifestResponse.url}).`);
       manifest = await manifestResponse.json();
@@ -4090,10 +4114,10 @@ const config = {
     if (!isPrereqUnit && location.hash.slice(1) === "placement") location.hash = "overview";
     // Cosmetic only — the lock screen renders whatever the hash says. This just
     // stops the nav highlighting a section that is no longer on the page.
-    if (unitLocked && location.hash.slice(1) !== "overview") location.hash = "overview";
+    if (unitIsLocked() && location.hash.slice(1) !== "overview") location.hash = "overview";
     document.title = isPrereqUnit
       ? `${gradeLabel} English | Prerequisite: ${placementExam.title}`
-      : unitLocked
+      : unitIsLocked()
         ? `${gradeLabel} English | Unit ${unitNumber} is locked`
         : `${gradeLabel} English | Unit ${course.unit.unitNo}: ${course.unit.unitTitle}`;
     $("#course-label").textContent = `${course.grade.label} · ${course.subject} · ${course.term.label}`;

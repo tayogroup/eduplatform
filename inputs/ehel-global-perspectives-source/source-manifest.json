@@ -18,10 +18,17 @@
     "5": {
       "missingSkills": ["Evaluation", "Reflection", "Collaboration", "Communication"],
       "reason": "Never present in the Google Drive export. The Year 5 archive was exported successfully and contained Units 1-2 only; every other year exported its full complement.",
-      "closes": "A re-export of Year 5 from Google Drive containing Units 3-6. No code change can close it, and the content is not on this machine — see searchedOn.",
+      "closes": "Units 3-6 being authored, or found in a different Drive location. A re-export does NOT close it: one was taken on 2026-08-09 and contained the same two units, byte for byte. See searchedOn.",
+      "reExportRuledOut": {
+        "archive": "Year 5-20260809T155926Z-1-001.zip",
+        "takenOn": "2026-08-09",
+        "subject": "Global Perspectives — correct this time, verified by pack shape (Lesson / Skills Toolkit / Activities & Discussion / Practice & Reflection)",
+        "contents": "8 entries: Unit 1 and Unit 2 only, all eight files SHA-256 identical to the copies already in this tree",
+        "meaning": "The export is not dropping anything. The Drive folder it exports FROM holds two units. That moves this from an export problem, which a re-export fixes, to a source problem, which it cannot: either Units 3-6 live somewhere else in Drive, or they were never written."
+      },
       "searchedOn": {
         "date": "2026-08-09",
-        "conclusion": "Units 3-6 exist nowhere locally. Only a fresh Google Drive export can close the gap; if Drive lacks them too, they were never authored and it is a curriculum job.",
+        "conclusion": "Units 3-6 exist nowhere locally, and a same-day re-export produced the same two units. The next step is not another export — it is finding out whether these four units were ever authored.",
         "checked": [
           "inputs/ehel-global-perspectives-source/Year 5 — Units 1-2 only, where every other year holds its full complement (4,4,5,6,-,6,6,6)",
           "~/Downloads — one set of 'Year N' zips exists (20260720). Its Year 5 is SCIENCE, identified by its documents: Lesson/Experiments/Practice/Reference, where Global Perspectives uses Lesson/Skills Toolkit/Activities & Discussion/Practice & Reflection. Same-filename traps across three subjects are documented in CLAUDE.md.",

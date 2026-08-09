@@ -259,7 +259,8 @@ content (`eng-g05-t01-u03-read01.mp3`), not for a hash of their text, and
 `generate-ehel-english-audio.js` reuses any mp3 over 1 KB that already exists.
 So editing a sentence leaves the old recording in place, still `available:true`,
 and nothing notices. Every other subject orphans the clip automatically because
-a changed text mints a new filename. This one cost 306 stale clips.
+a changed text mints a new filename. This one cost 853 stale clips: 306 found
+by listening, and 547 more that only git could see.
 
 Four checks cover it, and each is blind to something the next one sees. Run them
 together or you are only covering a third of the failure surface.
@@ -277,11 +278,23 @@ python tools/check-english-word-audio.py             # the single-word clips
   words: it reported 0 problems across 16,955 clips while five Grade 1 overviews
   were saying "my name is Taken Seat".
 - **Staleness** asks git whether the narrated text changed since the commit that
-  wrote the mp3. Deterministic, free, no transcription noise, and the right tool
-  for a rename — a story that differs only in who it is about scores ~0.93 by
-  word and slips past the audit. Note it compares *commits*, so a freshly
-  regenerated clip reads as stale until committed; that answer is correct, since
-  the CDN still has the old one.
+  wrote the mp3. Deterministic, free, no transcription noise, and the only tool
+  that finds a rename: a sentence differing only in who it is about scores ~0.95
+  by word and sails through the audit. Measured, not guessed — two random
+  samples of 344 clips contained roughly 22 such defects between them and the
+  audit found one, so expect it to catch about 1 in 20.
+
+  **Check the clip count it reports.** It should say 16,948, and for one day it
+  said 1,898 while reporting zero stale, because it keyed clips by
+  `readingId`/`speakingId`/… and the 10,355 vocabulary sentences, 2,211 meanings
+  and 1,889 dictionary words are bare audio descriptors nested in their parent
+  item with no id of their own. 85% of the course went unexamined and 547 stale
+  clips sat behind that clean result. It counts what it cannot identify and
+  prints the number; a non-trivial figure there means it is skipping work, not
+  finding nothing.
+
+  It compares *commits*, so a freshly regenerated clip reads as stale until
+  committed. That answer is correct — the CDN still has the old one.
 - **The transcription audit** compares the recording to its script by WORD.
   Never by character: difflib cannot realign after a few early differences in a
   long passage, and a Grade 4 reading differing by seven words in 189 scored

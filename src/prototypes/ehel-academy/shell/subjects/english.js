@@ -147,6 +147,20 @@ const CAPSTONE_UNIT = 10;
 // is already there — #teacher has never been gated — and a learner who lands on
 // it gets the teacher's page, not the lesson.
 const TEACHER_PREVIEW = location.hash.slice(1) === "teacher";
+// A remediation visit. The placement exam is the one part of the course that
+// sends a learner BACKWARDS on purpose: fail a section and the report names the
+// earlier units that rebuild exactly what it tested. Those units are in an
+// earlier grade the learner has never walked, so the gate locked every one of
+// them that was not that grade's first — the exam offered "Grade 2, Unit 5:
+// Let's Measure" and the link landed on "finish Unit 4 first". Targeted
+// remediation is the whole point; a learner sent to rebuild measurement cannot
+// rebuild it in Welcome and Calendar.
+//
+// It opens ONE unit — the one the link names — and travels no further, because
+// courseLocation() and gradeLocation() strip it. Navigate anywhere from here
+// and the gate is back. Finishing this unit opens nothing either: unitIsUnlocked
+// still counts every earlier unit, and this learner has not done them.
+const REVIEW_VISIT = new URLSearchParams(location.search).get("review") === "1";
 const unitProgressKey = (unit) => `ehel-english-g${gradeNumber}-u${unit}-progress-v1`;
 // Everything the shell counts toward 100%: the section list minus the two it
 // never counts, minus the two a unit can fail to offer. `final-quiz` is
@@ -227,7 +241,7 @@ function currentOpenUnit() {
 // Reading it lazily is the fix rather than hoisting: `ebookCatalog` is a
 // 400-line literal, and moving that above the gate to satisfy an
 // initialisation order would bury the thing this file is actually about.
-const computeUnitLocked = () => !isPrereqUnit && !TEACHER_PREVIEW && !unitIsUnlocked(unitNumber);
+const computeUnitLocked = () => !isPrereqUnit && !TEACHER_PREVIEW && !REVIEW_VISIT && !unitIsUnlocked(unitNumber);
 let unitLockedCache = null;
 function unitIsLocked() {
   if (unitLockedCache === null) unitLockedCache = computeUnitLocked();
@@ -308,7 +322,10 @@ function renderUnitPickers() {
   const options = [
     `<option value="${PREREQ_UNIT}" ${isPrereqUnit ? "selected" : ""}>Prerequisite: Placement exam</option>`,
     ...manifest.units.map((unit) => {
-      const locked = !TEACHER_PREVIEW && !unitIsUnlocked(unit.number);
+      // The unit a remediation link opened is not drawn as locked, or the page
+      // contradicts itself: the lesson renders while its own picker calls it shut.
+      // Only that one — the rest of the grade stays locked in the list.
+      const locked = !TEACHER_PREVIEW && !(REVIEW_VISIT && unit.number === unitNumber) && !unitIsUnlocked(unit.number);
       const label = `Unit ${unit.number}: ${escapeHtml(unit.title)}`;
       return `<option value="${unit.number}" ${unit.number === unitNumber ? "selected" : ""} ${locked ? "disabled" : ""}>${locked ? `🔒 ${label} (locked)` : label}</option>`;
     }),
@@ -1066,10 +1083,14 @@ function prepareScreenReaderView() {
 }
 
 
+// Both of these clone the CURRENT url, so anything in it rides along. `review`
+// must not: it opens a locked unit, and a bypass that propagates through the
+// links on the page it unlocked is not a bypass, it is the gate switched off.
 function courseLocation(nextUnit, nextRoute = "overview") {
   const url = new URL(location.href);
   url.searchParams.set("grade", gradeNumber);
   url.searchParams.set("unit", nextUnit);
+  url.searchParams.delete("review");
   url.hash = nextRoute;
   return url.href;
 }
@@ -1078,6 +1099,7 @@ function gradeLocation(nextGrade) {
   const url = new URL(location.href);
   url.searchParams.set("grade", nextGrade);
   url.searchParams.set("unit", Number(nextGrade) === 1 ? 0 : 1);
+  url.searchParams.delete("review");
   url.hash = "overview";
   return url.href;
 }
@@ -3039,17 +3061,22 @@ function renderFinalQuizResults(results) {
 // remediation links) lives in grade-N/data/placement-exam.json — the UI only
 // applies it, so curriculum can retune bands without a code change.
 
-function placementLocation(targetGrade, targetUnit, nextRoute = "overview") {
+function placementLocation(targetGrade, targetUnit, nextRoute = "overview", { review = false } = {}) {
   const url = new URL(location.href);
   url.searchParams.set("grade", targetGrade);
   url.searchParams.set("unit", targetUnit ?? (Number(targetGrade) === 1 ? 0 : 1));
+  // Set for remediation, deleted for everything else. "Start Grade 2 English"
+  // is a course to begin at its first unit and walk in order, not a unit to
+  // reopen, so it must not inherit the marker from a url that carries one.
+  if (review) url.searchParams.set("review", "1");
+  else url.searchParams.delete("review");
   url.hash = nextRoute;
   return url.href;
 }
 
 function remediationHref(item) {
   if (item.href) return new URL(item.href, location.href).href;
-  return placementLocation(item.grade, item.unit);
+  return placementLocation(item.grade, item.unit, "overview", { review: true });
 }
 
 function remediationLabel(item) {

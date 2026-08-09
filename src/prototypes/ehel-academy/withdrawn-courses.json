@@ -1,0 +1,18 @@
+{
+  "note": "Courses that exist in the repository but are NOT offered. tools/generate-ehel-catalog.js reads this and leaves them out of catalog.json, so nothing downstream of the catalogue — the Moodle catalog_sync, the course browser, a family reading the prospectus — advertises a course a learner cannot take.",
+  "keptRatherThanDeleted": "The course data stays on disk so the work is not lost and the day the content lands the entry here is deleted and the course returns. Deleting the data instead would throw away everything already built.",
+  "alsoEnforcedIn": [
+    "src/prototypes/ehel-academy/shell/subjects/global-perspectives.js — WITHDRAWN_STAGES, which stops the app serving the stage on any route. A browser module cannot read this file at load time, so that list is a deliberate second copy; keep the two in step.",
+    "inputs/ehel-global-perspectives-source/source-manifest.json — knownGaps, which is what check:global-perspectives reads to report the shortfall.",
+    "docs/ehel-global-perspectives-stage-5-syllabus.md — the syllabus is marked HELD and is not for publication."
+  ],
+  "withdrawn": {
+    "ehel-gp-g05": {
+      "since": "2026-08-09",
+      "subject": "Global Perspectives",
+      "stage": 5,
+      "reason": "Teaches 2 of the subject's 6 skills. Evaluation, Reflection, Collaboration and Communication are not built, and a re-export on 2026-08-09 returned the same two units byte for byte, so this is not waiting on a rebuild.",
+      "restore": "Locate or author Units 3-6, run extract -> build -> check, then delete this entry, the WITHDRAWN_STAGES entry, and the knownGaps entry, and lift the hold on the syllabus."
+    }
+  }
+}

@@ -32,6 +32,18 @@ const SUBJECTS = {
   // 1129.
   "global-perspectives": { key: "gp", name: "Global Perspectives", code: { primary: "0838", lowersec: "1129" } },
 };
+// Courses that exist on disk but are not offered. The catalogue is what the
+// Moodle catalog_sync, the course browser and anything a family reads are built
+// from, so a withdrawn course has to be absent from here — withdrawing it in
+// the app alone leaves it advertised, which is where Global Perspectives Stage 5
+// sat: the app refused to serve it while the catalogue still listed it as
+// "Ehel Global Perspectives — Stage 5. 2 units."
+const WITHDRAWN_FILE = path.join(EHEL, "withdrawn-courses.json");
+const withdrawn = fs.existsSync(WITHDRAWN_FILE)
+  ? (JSON.parse(fs.readFileSync(WITHDRAWN_FILE, "utf8")).withdrawn || {})
+  : {};
+const withdrawnNotes = [];
+
 // Cambridge level by stage: Primary = Stages 1–6, Lower Secondary = Stages 7–9.
 const levelForStage = (n) => (n <= 6 ? "primary" : "lowersec");
 const levelName = (lvl) => (lvl === "primary" ? "Primary" : "Lower Secondary");
@@ -130,6 +142,10 @@ function buildCatalog() {
       const level = levelForStage(stage);
       const gg = pad2(stage);
       const idnumber = `ehel-${meta.key}-g${gg}`;
+      if (withdrawn[idnumber]) {
+        withdrawnNotes.push(`${idnumber} (${withdrawn[idnumber].reason || "withdrawn"})`);
+        continue;
+      }
       const label = (manifest.stage || manifest.grade || {}).label || `Stage ${stage}`;
       const categoryPath = ["Ehel Academy", levelName(level), meta.name];
       categorySet.set(categoryPath.join(" / "), { name: categoryPath[categoryPath.length - 1], path: categoryPath });
@@ -185,3 +201,9 @@ for (const c of catalog.courses) bySubjectKey.set(c.subjectKey, (bySubjectKey.ge
 console.log("by subject:", [...bySubjectKey].map(([k, n]) => `${k}=${n}`).join(" · "));
 const totalUnits = catalog.courses.reduce((n, c) => n + c.unitCount, 0);
 console.log(`total grade-item units: ${totalUnits}`);
+// Printed rather than silent: a course dropping out of the catalogue is exactly
+// the kind of change that should never happen without somebody noticing.
+if (withdrawnNotes.length) {
+  console.log(`withdrawn, not in the catalogue (${withdrawnNotes.length}):`);
+  for (const note of withdrawnNotes) console.log(`   ${note}`);
+}

@@ -1009,6 +1009,30 @@ function pqsi_placement_level_options(array $options): array {
     return $options['current_levels'] ?? [];
 }
 
+/**
+ * The parent/guardian step, as a function because primary education opens the
+ * wizard with it while every other institution type keeps it near the end --
+ * two positions, one copy of the markup.
+ */
+function pqsi_parent_guardian_section(array $form, array $fielderrors, array $options, bool $isprimaryeducation): string {
+    $note = $isprimaryeducation ? '(required for primary education)' : '(required only when the student is under 18)';
+    $html = '<h3>Parent / guardian <span class="pqsi-muted">' . $note . '</span></h3>';
+    $html .= '<div class="pqsi-grid">';
+    $html .= '<div class="pqsi-field' . pqsi_field_class($fielderrors, 'parent_name') . '" id="pqsi-parent_name"><label>Parent/guardian name</label><input class="pqsi-input" name="parent_name" value="' . s(pqsi_form_value($form, 'parent_name')) . '">' . pqsi_form_error($fielderrors, 'parent_name') . '</div>';
+    $html .= '<div class="pqsi-field' . pqsi_field_class($fielderrors, 'parent_relationship') . '" id="pqsi-parent_relationship"><label>Relationship to student</label>' . pqsi_select('parent_relationship', $options['parent_relationships'] ?? [], $form, $fielderrors) . '</div>';
+    $html .= '<div class="pqsi-field' . pqsi_field_class($fielderrors, 'parent_relationship_other') . '" id="pqsi-parent_relationship_other"><label>Describe relationship</label><input class="pqsi-input" name="parent_relationship_other" value="' . s(pqsi_form_value($form, 'parent_relationship_other')) . '">' . pqsi_form_error($fielderrors, 'parent_relationship_other') . '</div>';
+    $html .= '<div class="pqsi-field' . pqsi_field_class($fielderrors, 'parent_email') . '" id="pqsi-parent_email"><label>Parent/guardian email or phone</label><input class="pqsi-input" name="parent_email" value="' . s(pqsi_form_value($form, 'parent_email')) . '" placeholder="Email or phone number">' . pqsi_form_error($fielderrors, 'parent_email') . '</div>';
+    $html .= '<div class="pqsi-field' . pqsi_field_class($fielderrors, 'parent_phone') . '" id="pqsi-parent_phone"><label>Parent/guardian phone / WhatsApp</label><input class="pqsi-input" name="parent_phone" value="' . s(pqsi_form_value($form, 'parent_phone')) . '">' . pqsi_form_error($fielderrors, 'parent_phone') . '</div>';
+    $html .= '<div class="pqsi-field' . pqsi_field_class($fielderrors, 'emergency_contact_name') . '" id="pqsi-emergency_contact_name"><label>Emergency contact name</label><input class="pqsi-input" name="emergency_contact_name" value="' . s(pqsi_form_value($form, 'emergency_contact_name')) . '">' . pqsi_form_error($fielderrors, 'emergency_contact_name') . '</div>';
+    $html .= '<div class="pqsi-field' . pqsi_field_class($fielderrors, 'emergency_contact_phone') . '" id="pqsi-emergency_contact_phone"><label>Emergency contact phone</label><input class="pqsi-input" name="emergency_contact_phone" value="' . s(pqsi_form_value($form, 'emergency_contact_phone')) . '">' . pqsi_form_error($fielderrors, 'emergency_contact_phone') . '</div>';
+    $html .= '<div class="pqsi-field"><label>Parent username</label><div class="pqsi-input" style="background:#f5f8fb;color:#5e7280">Auto-generated: schoolslug.p&lt;account&nbsp;no.&gt;</div></div>';
+    $html .= '</div>';
+    $html .= '<label class="pqsi-checkrow"><input type="checkbox" name="parent_email_enabled" value="1"' . pqsi_checked($form, 'parent_email_enabled') . '><span>Send parent email notifications when the parent contact is a valid email address.</span></label>';
+    $html .= '<div class="pqsi-field"><label>Parent preferences</label><textarea class="pqsi-textarea" name="parent_preferences" placeholder="Teacher gender, language, schedule, sibling grouping">' . s(pqsi_form_value($form, 'parent_preferences')) . '</textarea></div>';
+
+    return $html;
+}
+
 function pqsi_valid_slots(array $slots, array $days, array $hours): array {
     $clean = [];
     foreach ($slots as $slot) {
@@ -2361,6 +2385,12 @@ body.pqh-student-intake-page #page,body.pqh-student-intake-page #page-content,bo
           <button type="button" class="pqsi-nav-arrow pqsi-nav-next" data-wizard-next aria-label="Next"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"></path></svg></button>
           <div class="pqsi-track" data-wizard-track>
           <div class="pqsi-page">
+          <?php // A K-12 intake is a parent's, so it opens with the parent block; every other
+                // institution type keeps it near the end, where it has always been. ?>
+          <?php if ($pqsiisprimaryeducation): ?>
+          <?php echo pqsi_parent_guardian_section($form, $fielderrors, $pqsioptions, $pqsiisprimaryeducation); ?>
+          </div><div class="pqsi-page">
+          <?php endif; ?>
           <h3>Student account</h3>
           <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'existing_studentid'); ?>" id="pqsi-existing_studentid"><label>Existing student ID</label><input class="pqsi-input" name="existing_studentid" type="number" min="0" value="<?php echo s(pqsi_form_value($form, 'existing_studentid')); ?>" placeholder="Optional: use only to add an intake profile to an already-created student"><?php echo pqsi_form_error($fielderrors, 'existing_studentid'); ?></div>
           <div class="pqsi-grid">
@@ -2372,6 +2402,16 @@ body.pqh-student-intake-page #page,body.pqh-student-intake-page #page-content,bo
             <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'student_email'); ?>" id="pqsi-student_email"><label>Student email or phone</label><input class="pqsi-input" name="student_email" value="<?php echo s(pqsi_form_value($form, 'student_email')); ?>" placeholder="Optional for children; email or phone required for adults"><?php echo pqsi_form_error($fielderrors, 'student_email'); ?></div>
             <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'student_access_type'); ?>" id="pqsi-student_access_type"><label>Student access type</label><?php echo pqsi_select('student_access_type', $pqsioptions['student_access_types'] ?? [], $form, $fielderrors); ?></div>
             <div class="pqsi-field" id="pqsi-student_photo"><label>Photo</label><input class="pqsi-input" name="student_photo" type="file" accept="image/jpeg,image/png,image/webp"><span class="pqsi-help">Optional. JPG, PNG, or WEBP, up to 5&nbsp;MB. Uploading a new photo replaces any existing one.</span></div>
+            <?php // K-12 records where the family is on this same step; every other institution
+                  // type keeps its own Location and language step further down. ?>
+            <?php if ($pqsiisprimaryeducation): ?>
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'country'); ?>" id="pqsi-country"><label>Country</label><?php echo pqsi_select('country', $pqsioptions['countries'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'city'); ?>" id="pqsi-city"><label>City</label><?php echo pqsi_select('city', $pqsioptions['cities'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field pqsi-city-other<?php echo pqsi_field_class($fielderrors, 'city_other'); ?>" id="pqsi-city_other"><label>City not listed</label><input class="pqsi-input" name="city_other" value="<?php echo s(pqsi_form_value($form, 'city_other')); ?>"><?php echo pqsi_form_error($fielderrors, 'city_other'); ?></div>
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'district'); ?>" id="pqsi-district"><label>District</label><input class="pqsi-input" name="district" value="<?php echo s(pqsi_form_value($form, 'district')); ?>"><?php echo pqsi_form_error($fielderrors, 'district'); ?></div>
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'division'); ?>" id="pqsi-division"><label>Division</label><input class="pqsi-input" name="division" value="<?php echo s(pqsi_form_value($form, 'division')); ?>"><?php echo pqsi_form_error($fielderrors, 'division'); ?></div>
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'estate'); ?>" id="pqsi-estate"><label>Estate</label><input class="pqsi-input" name="estate" value="<?php echo s(pqsi_form_value($form, 'estate')); ?>"><?php echo pqsi_form_error($fielderrors, 'estate'); ?></div>
+            <?php endif; ?>
           </div>
 
           <?php if ($pqsiisprimaryeducation): ?>
@@ -2530,28 +2570,25 @@ body.pqh-student-intake-page #page,body.pqh-student-intake-page #page-content,bo
             <div class="pqsi-field pqsi-field--full<?php echo pqsi_field_class($fielderrors, 'christian_notes'); ?>" id="pqsi-christian_notes"><label>Additional Christian studies notes</label><textarea class="pqsi-textarea" name="christian_notes"><?php echo s(pqsi_form_value($form, 'christian_notes')); ?></textarea><?php echo pqsi_form_error($fielderrors, 'christian_notes'); ?></div>
           <?php endif; ?>
 
+          <?php // K-12 collects its location on the Student account step and has no course,
+                // placement level or learning background, so both of the steps that used to
+                // stand here collapse into the five preferences below. ?>
+          <?php if (!$pqsiisprimaryeducation): ?>
           </div><div class="pqsi-page">
-          <?php // Primary education keeps only the location fields here: its languages moved
-                // to Preferences below, and it has no placement level or learning background. ?>
-          <h3><?php echo $pqsiisprimaryeducation ? 'Location' : 'Location and language'; ?></h3>
+          <h3>Location and language</h3>
           <div class="pqsi-grid">
             <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'country'); ?>" id="pqsi-country"><label>Country</label><?php echo pqsi_select('country', $pqsioptions['countries'] ?? [], $form, $fielderrors); ?></div>
             <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'city'); ?>" id="pqsi-city"><label>City</label><?php echo pqsi_select('city', $pqsioptions['cities'] ?? [], $form, $fielderrors); ?></div>
             <div class="pqsi-field pqsi-city-other<?php echo pqsi_field_class($fielderrors, 'city_other'); ?>" id="pqsi-city_other"><label>City not listed</label><input class="pqsi-input" name="city_other" value="<?php echo s(pqsi_form_value($form, 'city_other')); ?>"><?php echo pqsi_form_error($fielderrors, 'city_other'); ?></div>
-            <?php if ($pqsiisprimaryeducation): ?>
-              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'district'); ?>" id="pqsi-district"><label>District</label><input class="pqsi-input" name="district" value="<?php echo s(pqsi_form_value($form, 'district')); ?>"><?php echo pqsi_form_error($fielderrors, 'district'); ?></div>
-              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'division'); ?>" id="pqsi-division"><label>Division</label><input class="pqsi-input" name="division" value="<?php echo s(pqsi_form_value($form, 'division')); ?>"><?php echo pqsi_form_error($fielderrors, 'division'); ?></div>
-              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'estate'); ?>" id="pqsi-estate"><label>Estate</label><input class="pqsi-input" name="estate" value="<?php echo s(pqsi_form_value($form, 'estate')); ?>"><?php echo pqsi_form_error($fielderrors, 'estate'); ?></div>
-            <?php else: ?>
-              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'primary_language'); ?>" id="pqsi-primary_language"><label>Primary language</label><?php echo pqsi_select('primary_language', $pqsioptions['primary_languages'] ?? [], $form, $fielderrors); ?></div>
-              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'preferred_teaching_language'); ?>" id="pqsi-preferred_teaching_language"><label>Preferred teaching language</label><?php echo pqsi_select('preferred_teaching_language', $pqsioptions['primary_languages'] ?? [], $form, $fielderrors); ?></div>
-              <div class="pqsi-field" id="pqsi-other_languages"><label>Other languages</label><?php echo pqsi_multi_select('other_languages', $pqsioptions['other_languages'] ?? [], $form, $fielderrors, 5); ?></div>
-            <?php endif; ?>
+            <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'primary_language'); ?>" id="pqsi-primary_language"><label>Primary language</label><?php echo pqsi_select('primary_language', $pqsioptions['primary_languages'] ?? [], $form, $fielderrors); ?></div>
+            <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'preferred_teaching_language'); ?>" id="pqsi-preferred_teaching_language"><label>Preferred teaching language</label><?php echo pqsi_select('preferred_teaching_language', $pqsioptions['primary_languages'] ?? [], $form, $fielderrors); ?></div>
+            <div class="pqsi-field" id="pqsi-other_languages"><label>Other languages</label><?php echo pqsi_multi_select('other_languages', $pqsioptions['other_languages'] ?? [], $form, $fielderrors, 5); ?></div>
           </div>
+          <?php endif; ?>
 
           <?php if ($pqsiisprimaryeducation): ?>
           </div><div class="pqsi-page">
-          <h3>Preferences</h3>
+          <h3>Learning preferences</h3>
           <div class="pqsi-grid">
             <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'primary_language'); ?>" id="pqsi-primary_language"><label>Primary language</label><?php echo pqsi_select('primary_language', $pqsioptions['primary_languages'] ?? [], $form, $fielderrors); ?></div>
             <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'preferred_teaching_language'); ?>" id="pqsi-preferred_teaching_language"><label>Preferred teaching language</label><?php echo pqsi_select('preferred_teaching_language', $pqsioptions['primary_languages'] ?? [], $form, $fielderrors); ?></div>
@@ -2571,7 +2608,7 @@ body.pqh-student-intake-page #page,body.pqh-student-intake-page #page-content,bo
           <?php endif; ?>
 
           </div><div class="pqsi-page">
-          <h3><span class="pqsi-section-pill">Preferred weekly live-session number of sessions and hours</span></h3>
+          <h3><span class="pqsi-section-pill"><?php echo $pqsiisprimaryeducation ? 'Preferred weekly live-sessions' : 'Preferred weekly live-session number of sessions and hours'; ?></span></h3>
           <div class="pqsi-grid">
             <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'session_count'); ?>" id="pqsi-session_count"><label>Number of sessions</label><?php echo pqsi_select('session_count', $pqsioptions['session_counts'] ?? [], $form, $fielderrors); ?></div>
             <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'timezone'); ?>" id="pqsi-timezone"><label>Time zone</label><?php echo pqsi_select('timezone', $pqsioptions['timezones'] ?? [], $form, $fielderrors); ?></div>
@@ -2609,20 +2646,11 @@ body.pqh-student-intake-page #page,body.pqh-student-intake-page #page-content,bo
           </div>
           <div class="pqsi-field" id="pqsi-availability"><label>Availability notes</label><textarea class="pqsi-textarea" name="availability_summary" placeholder="Exact availability, restrictions, preferred days, breaks, or admin notes"><?php echo s(pqsi_form_value($form, 'availability')); ?></textarea></div>
 
+          <?php // Primary education already showed this as step 1; see the top of the wizard. ?>
+          <?php if (!$pqsiisprimaryeducation): ?>
           </div><div class="pqsi-page">
-          <h3>Parent / guardian <span class="pqsi-muted"><?php echo $pqsiisprimaryeducation ? '(required for primary education)' : '(required only when the student is under 18)'; ?></span></h3>
-          <div class="pqsi-grid">
-            <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'parent_name'); ?>" id="pqsi-parent_name"><label>Parent/guardian name</label><input class="pqsi-input" name="parent_name" value="<?php echo s(pqsi_form_value($form, 'parent_name')); ?>"><?php echo pqsi_form_error($fielderrors, 'parent_name'); ?></div>
-            <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'parent_relationship'); ?>" id="pqsi-parent_relationship"><label>Relationship to student</label><?php echo pqsi_select('parent_relationship', $pqsioptions['parent_relationships'] ?? [], $form, $fielderrors); ?></div>
-            <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'parent_relationship_other'); ?>" id="pqsi-parent_relationship_other"><label>Describe relationship</label><input class="pqsi-input" name="parent_relationship_other" value="<?php echo s(pqsi_form_value($form, 'parent_relationship_other')); ?>"><?php echo pqsi_form_error($fielderrors, 'parent_relationship_other'); ?></div>
-            <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'parent_email'); ?>" id="pqsi-parent_email"><label>Parent/guardian email or phone</label><input class="pqsi-input" name="parent_email" value="<?php echo s(pqsi_form_value($form, 'parent_email')); ?>" placeholder="Email or phone number"><?php echo pqsi_form_error($fielderrors, 'parent_email'); ?></div>
-            <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'parent_phone'); ?>" id="pqsi-parent_phone"><label>Parent/guardian phone / WhatsApp</label><input class="pqsi-input" name="parent_phone" value="<?php echo s(pqsi_form_value($form, 'parent_phone')); ?>"><?php echo pqsi_form_error($fielderrors, 'parent_phone'); ?></div>
-            <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'emergency_contact_name'); ?>" id="pqsi-emergency_contact_name"><label>Emergency contact name</label><input class="pqsi-input" name="emergency_contact_name" value="<?php echo s(pqsi_form_value($form, 'emergency_contact_name')); ?>"><?php echo pqsi_form_error($fielderrors, 'emergency_contact_name'); ?></div>
-            <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'emergency_contact_phone'); ?>" id="pqsi-emergency_contact_phone"><label>Emergency contact phone</label><input class="pqsi-input" name="emergency_contact_phone" value="<?php echo s(pqsi_form_value($form, 'emergency_contact_phone')); ?>"><?php echo pqsi_form_error($fielderrors, 'emergency_contact_phone'); ?></div>
-            <div class="pqsi-field"><label>Parent username</label><div class="pqsi-input" style="background:#f5f8fb;color:#5e7280">Auto-generated: schoolslug.p&lt;account&nbsp;no.&gt;</div></div>
-          </div>
-          <label class="pqsi-checkrow"><input type="checkbox" name="parent_email_enabled" value="1"<?php echo pqsi_checked($form, 'parent_email_enabled'); ?>><span>Send parent email notifications when the parent contact is a valid email address.</span></label>
-          <div class="pqsi-field"><label>Parent preferences</label><textarea class="pqsi-textarea" name="parent_preferences" placeholder="Teacher gender, language, schedule, sibling grouping"><?php echo s(pqsi_form_value($form, 'parent_preferences')); ?></textarea></div>
+          <?php echo pqsi_parent_guardian_section($form, $fielderrors, $pqsioptions, $pqsiisprimaryeducation); ?>
+          <?php endif; ?>
 
           </div><div class="pqsi-page">
           <h3>Referrer <span class="pqsi-muted">(optional, separate from parent/guardian access)</span></h3>

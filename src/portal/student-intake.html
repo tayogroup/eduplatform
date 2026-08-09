@@ -135,6 +135,25 @@
   };
   const gridOf = (specs) => `<div class="grid">${specs.map(field).join("")}</div>`;
 
+  // Two positions, one copy: K-12 opens the form with the parent block, every other
+  // institution type keeps it after the availability calendar where it has always been.
+  const parentGuardianSection = (inst) => {
+    let h = `<h3>Parent / guardian <span class="muted">${inst.is_primary_education ? "(required for primary education)" : "(required only when the student is under 18)"}</span></h3>`;
+    h += gridOf([
+      { name: "parent_name", label: "Parent/guardian name" },
+      { name: "parent_relationship", label: "Relationship to student", kind: "select", optkey: "parent_relationships" },
+      { name: "parent_relationship_other", label: "Describe relationship" },
+      { name: "parent_email", label: "Parent/guardian email or phone", ph: "Email or phone number" },
+      { name: "parent_phone", label: "Parent/guardian phone / WhatsApp" },
+      { name: "emergency_contact_name", label: "Emergency contact name" },
+      { name: "emergency_contact_phone", label: "Emergency contact phone" },
+      { name: "parent_username", label: "Parent username", ph: "Auto-generated if blank" },
+    ]);
+    h += `<label class="checkrow"><input type="checkbox" name="parent_email_enabled" value="1" checked><span>Send parent email notifications when the parent contact is a valid email address.</span></label>`;
+    h += field({ name: "parent_preferences", label: "Parent preferences", kind: "textarea", full: true, ph: "Teacher gender, language, schedule, sibling grouping" });
+    return h;
+  };
+
   const calendarHtml = () => {
     const days = (D.options || {}).availability_days || {};
     const hours = (D.options || {}).availability_time_windows || {};
@@ -157,6 +176,11 @@
     const f = $("#intake");
     let h = "";
 
+    // K-12 opens with the parent block and records location on this same section.
+    if (inst.is_primary_education) {
+      h += parentGuardianSection(inst);
+    }
+
     h += `<h3>Core student information</h3><h3>Student account</h3>`;
     h += field({ name: "existing_studentid", label: "Existing Moodle student ID", type: "number", min: 0, ph: "Optional: use only to add an intake profile to an already-created student", full: true });
     h += gridOf([
@@ -167,6 +191,11 @@
       { name: "student_username", label: "Username", ph: "Auto-generated if blank" },
       { name: "student_email", label: "Student email or phone", ph: "Optional for children; email or phone required for adults" },
       { name: "student_access_type", label: "Student access type", kind: "select", optkey: "student_access_types" },
+      ...(inst.is_primary_education ? [
+        { name: "country", label: "Country", kind: "select", optkey: "countries" },
+        { name: "city", label: "City", kind: "select", optkey: "cities" },
+        { name: "city_other", label: "City not listed", extraclass: "city-other" },
+      ] : []),
     ]);
 
     if (inst.is_primary_education) {
@@ -320,17 +349,10 @@
       h += field({ name: "christian_notes", label: "Additional Christian studies notes", kind: "textarea", full: true });
     }
 
-    // Primary education keeps only the location fields here: its languages move to
-    // Preferences, and it has no course, placement level or learning background.
+    // Primary education has no course, placement level or learning background, and
+    // its location sits on the Student account section, so only preferences remain.
     if (inst.is_primary_education) {
-      h += `<h3>Location</h3>`;
-      h += gridOf([
-        { name: "country", label: "Country", kind: "select", optkey: "countries" },
-        { name: "city", label: "City", kind: "select", optkey: "cities" },
-        { name: "city_other", label: "City not listed", extraclass: "city-other" },
-      ]);
-
-      h += `<h3>Preferences</h3>`;
+      h += `<h3>Learning preferences</h3>`;
       h += gridOf([
         { name: "primary_language", label: "Primary language", kind: "select", optkey: "primary_languages" },
         { name: "preferred_teaching_language", label: "Preferred teaching language", kind: "select", optkey: "primary_languages" },
@@ -358,7 +380,7 @@
       ]);
     }
 
-    h += `<h3><span class="section-pill">Preferred weekly live-session number of sessions and hours</span></h3>`;
+    h += `<h3><span class="section-pill">${inst.is_primary_education ? "Preferred weekly live-sessions" : "Preferred weekly live-session number of sessions and hours"}</span></h3>`;
     h += gridOf([
       { name: "session_count", label: "Number of sessions", kind: "select", optkey: "session_counts", noplaceholder: false },
       { name: "timezone", label: "Time zone", kind: "select", optkey: "timezones" },
@@ -366,19 +388,10 @@
     h += calendarHtml();
     h += field({ name: "availability_summary", label: "Availability notes", kind: "textarea", full: true, ph: "Exact availability, restrictions, preferred days, breaks, or admin notes" });
 
-    h += `<h3>Parent / guardian <span class="muted">${inst.is_primary_education ? "(required for primary education)" : "(required only when the student is under 18)"}</span></h3>`;
-    h += gridOf([
-      { name: "parent_name", label: "Parent/guardian name" },
-      { name: "parent_relationship", label: "Relationship to student", kind: "select", optkey: "parent_relationships" },
-      { name: "parent_relationship_other", label: "Describe relationship" },
-      { name: "parent_email", label: "Parent/guardian email or phone", ph: "Email or phone number" },
-      { name: "parent_phone", label: "Parent/guardian phone / WhatsApp" },
-      { name: "emergency_contact_name", label: "Emergency contact name" },
-      { name: "emergency_contact_phone", label: "Emergency contact phone" },
-      { name: "parent_username", label: "Parent username", ph: "Auto-generated if blank" },
-    ]);
-    h += `<label class="checkrow"><input type="checkbox" name="parent_email_enabled" value="1" checked><span>Send parent email notifications when the parent contact is a valid email address.</span></label>`;
-    h += field({ name: "parent_preferences", label: "Parent preferences", kind: "textarea", full: true, ph: "Teacher gender, language, schedule, sibling grouping" });
+    // Primary education already showed this as the opening section, above.
+    if (!inst.is_primary_education) {
+      h += parentGuardianSection(inst);
+    }
 
     h += `<h3>Referrer <span class="muted">(optional, separate from parent/guardian access)</span></h3>`;
     h += gridOf([

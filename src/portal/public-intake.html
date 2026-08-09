@@ -187,6 +187,13 @@
       h += `<div class="pref">Preferred teacher: ${esc(D.teacherpref.label)}</div>`;
     }
 
+    // K-12 opens with the parent block — the form is a parent's, and the parent
+    // fields are required for that type — and folds location into the learner step.
+    if (c.is_primary_education) {
+      h += `<h3>Parent / guardian</h3>`;
+      h += parentGuardianGrid();
+    }
+
     h += `<h3>Basic learner information</h3>`;
     h += gridOf([
       { name: "student_firstname", label: "First name" },
@@ -194,6 +201,11 @@
       { name: "student_lastname", label: "Last name" },
       { name: "student_display_name", label: "Preferred name" },
       { name: "student_email", label: "Email address or phone / WhatsApp" },
+      ...(c.is_primary_education ? [
+        { name: "country", label: "Country", kind: "select", optkey: "countries" },
+        { name: "city", label: "City", kind: "select", optkey: "cities" },
+        { name: "city_other", label: "City not listed", extraclass: "city-other" },
+      ] : []),
     ]);
 
     if (c.is_primary_education) {
@@ -211,8 +223,6 @@
         { name: "special_needs", label: "Special learning needs / accommodations", kind: "select", opts: { no: "No", yes: "Yes" } },
       ]);
       h += field({ name: "medical_safety_notes", label: "Medical/allergy/safety notes", kind: "textarea", full: true });
-      h += `<h3>Parent / guardian</h3>`;
-      h += parentGuardianGrid();
     } else {
       h += `<h3>Parent / guardian <span class="muted">(required only when the student is under 18)</span></h3>`;
       h += parentGuardianGrid();
@@ -351,15 +361,9 @@
     }
 
     // A K-12 school selects nothing program-shaped here: no course, no placement
-    // level, no learning background, and its languages move under Preferences.
+    // level, no learning background, and its location sits on the learner step.
     if (c.is_primary_education) {
-      h += `<h3>Location</h3>`;
-      h += gridOf([
-        { name: "country", label: "Country", kind: "select", optkey: "countries" },
-        { name: "city", label: "City", kind: "select", optkey: "cities" },
-        { name: "city_other", label: "City not listed", extraclass: "city-other" },
-      ]);
-      h += `<h3>Preferences</h3>`;
+      h += `<h3>Learning preferences</h3>`;
       h += gridOf([
         { name: "primary_language", label: "Primary language", kind: "select", optkey: "primary_languages" },
         { name: "preferred_teaching_language", label: "Preferred teaching language", kind: "select", optkey: "primary_languages" },
@@ -384,7 +388,7 @@
       ]);
     }
 
-    h += `<h3>Preferred weekly live-session number of sessions and hours</h3>`;
+    h += `<h3>${c.is_primary_education ? "Preferred weekly live-sessions" : "Preferred weekly live-session number of sessions and hours"}</h3>`;
     h += gridOf([
       { name: "session_count", label: "Number of sessions", kind: "select", optkey: "session_counts", value: "1" },
       { name: "timezone", label: "Time zone", kind: "select", optkey: "timezones", value: "Africa/Nairobi" },

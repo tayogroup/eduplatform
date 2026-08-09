@@ -141,6 +141,7 @@
     "verify:bunny:staging": "node tools/verify-bunny-output.js --base-path=/pre_quraan_staging/",
     "verify:audio-deployed": "node tools/verify-course-audio-deployed.mjs",
     "check:english-audio-stale": "python tools/check-english-audio-staleness.py",
+    "release:english-audio": "npm run check:english-audio-stale && node tools/upload-media-to-bunny.js english && npm run verify:audio-deployed -- english",
     "check:english-word-audio": "python tools/check-english-word-audio.py",
     "extract:science-frameworks": "python tools/extract-cambridge-science-framework.py --pdf \"$SCIENCE_0846_PDF\" --code 0846 --output src/curriculum/cambridge-science-0846.json && python tools/extract-cambridge-science-framework.py --pdf \"$SCIENCE_0893_PDF\" --code 0893 --output src/curriculum/cambridge-science-0893.json",
     "extract:science-content": "python tools/extract-ehel-science-content.py --output outputs/science-content/science-content-model.json",

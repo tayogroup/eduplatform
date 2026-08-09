@@ -162,7 +162,8 @@ if ($method === 'GET') {
         'adult_learning_format', 'adult_learning_pace', 'adult_class_arrangement', 'adult_childcare_impact',
         'adult_work_impact', 'adult_access_limitations', 'adult_learning_confidence', 'adult_support_needs',
         'adult_notes',
-        'course_type', 'country', 'city', 'city_other', 'timezone', 'primary_language',
+        'course_type', 'country', 'city', 'city_other', 'district', 'division', 'estate',
+        'timezone', 'primary_language',
         'preferred_teaching_language', 'other_languages', 'current_level', 'tajweed_sub_level', 'learning_base',
         'session_count', 'parent_preferences', 'parent_email_enabled', 'live_class_consent', 'consent_notes',
     ];
@@ -373,6 +374,11 @@ $form = [
     'country' => pqpirl_trim('country'),
     'city' => pqpirl_trim('city'),
     'city_other' => pqpirl_trim('city_other'),
+    // Same 120-char cap public_intake.php applies; primary education is the only
+    // type whose form renders these, but parsing them is harmless for the rest.
+    'district' => pqpirl_limit_text(pqpirl_trim('district'), 120),
+    'division' => pqpirl_limit_text(pqpirl_trim('division'), 120),
+    'estate' => pqpirl_limit_text(pqpirl_trim('estate'), 120),
     'timezone' => pqpirl_trim('timezone', 'Africa/Nairobi'),
     'primary_language' => pqpirl_trim('primary_language'),
     'preferred_teaching_language' => pqpirl_trim('preferred_teaching_language'),
@@ -900,6 +906,9 @@ foreach ([
     'adult_learning_confidence',
     'adult_support_needs',
     'adult_notes',
+    'district',
+    'division',
+    'estate',
 ] as $extrafield) {
     if (pqpirl_table_has_column('local_prequran_intake_request', $extrafield)) {
         $requestrecord->{$extrafield} = pqpirl_value($form, $extrafield);

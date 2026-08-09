@@ -679,9 +679,25 @@ function pqh_seb_placement_config_xml(string $starturl, string $quiturl, int $us
         'quitURL' => $quiturl,
         'quitURLConfirm' => false,
         'allowQuit' => true,
-        // Filtering ON, as for exams: an exam should not be able to reach
-        // anything but the app it is served from.
-        'URLFilterEnable' => true,
+        // Filtering OFF by default, the same choice pqh_seb_course_config_xml
+        // makes and for the same reason — proved here rather than assumed.
+        //
+        // It shipped ON ("an exam should not reach anything but its own app"),
+        // and Safe Exam Browser then opened on a BLACK SCREEN for every
+        // placement launch. Diffing the two configs left exactly two
+        // differences from the lesson profile, which opens correctly:
+        // URLFilterEnable and hashedQuitPassword. A quit password cannot blank
+        // a page — it only gates quitting — so the filter was the cause, which
+        // is precisely what the lesson profile already warned about: it "only
+        // adds a way to get a blank screen when an expression fails to match
+        // the start page".
+        //
+        // Nothing is lost that matters. SEB's kiosk mode is the real lockdown,
+        // and the exam profile still carries the quit password the lesson
+        // profile omits — that is what makes it an exam. Set
+        // local_prequran/placement_seb_url_filter = on to re-enable filtering
+        // once an expression set is known to match the CDN start URL.
+        'URLFilterEnable' => trim((string)get_config('local_prequran', 'placement_seb_url_filter')) === 'on',
         'URLFilterEnableContentFilter' => false,
         'URLFilterRules' => pqh_seb_filter_rules(pqh_seb_default_allow_expressions()),
         'browserWindowAllowReload' => true,

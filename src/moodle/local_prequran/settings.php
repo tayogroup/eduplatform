@@ -924,6 +924,17 @@ if ($hassiteconfig) {
         PARAM_RAW_TRIMMED
     ));
 
+    $settings->add(new admin_setting_configselect(
+        'local_prequran/placement_seb_url_filter',
+        'URL filtering during placement exams',
+        'Off (default): Safe Exam Browser may load any URL during the exam. Its kiosk mode is still the lockdown, and the exam still carries a quit password. '
+        . 'On: only the allow-listed hosts load. '
+        . 'This defaults to OFF because turning it on produced a BLACK SCREEN on every placement launch — the filter blocks the start page whenever no expression matches it, and the app is served from the Bunny CDN. '
+        . 'Only switch it on after confirming an expression set that matches the CDN start URL, and re-test a real launch before trusting it.',
+        '',
+        ['' => 'Off (no URL filtering)', 'on' => 'On (allow-list only)']
+    ));
+
     $settings->add(new admin_setting_configtext(
         'local_prequran/placement_seb_max_minutes',
         'Placement exam hard cap (minutes)',

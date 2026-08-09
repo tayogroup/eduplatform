@@ -646,7 +646,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
             if ((int)$data['live_class_consent'] !== 1) {
                 $fielderrors['live_class_consent'] = 'Live class consent is required before creating the student intake record.';
             }
-            foreach ([
+            $requiredfields = [
                 'course_type' => 'Course is required.',
                 'country' => 'Country is required.',
                 'city' => 'City is required.',
@@ -655,7 +655,13 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
                 'preferred_teaching_language' => 'Preferred teaching language is required.',
                 'current_level' => 'Placement level is required.',
                 'learning_base' => 'Learning background is required.',
-            ] as $field => $fieldmessage) {
+            ];
+            if ($pqsiisprimaryeducation) {
+                // Matches student_intake.php: a K-12 school places by grade, so the
+                // form drops the course, placement level and learning background.
+                unset($requiredfields['course_type'], $requiredfields['current_level'], $requiredfields['learning_base']);
+            }
+            foreach ($requiredfields as $field => $fieldmessage) {
                 if (($field === 'age_years' && (int)$data['age_years'] <= 0) || ($field !== 'age_years' && trim((string)$data[$field]) === '')) {
                     $fielderrors[$field] = $fieldmessage;
                 }
@@ -666,13 +672,13 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
             if (!array_key_exists((string)$data['student_access_type'], $pqsioptions['student_access_types'] ?? [])) {
                 $fielderrors['student_access_type'] = 'Select Managed Student or Unmanaged Student.';
             }
-            if (!array_key_exists((string)$data['course_type'], $pqsioptions['course_types'] ?? [])) {
+            if (!$pqsiisprimaryeducation && !array_key_exists((string)$data['course_type'], $pqsioptions['course_types'] ?? [])) {
                 $fielderrors['course_type'] = 'Select a valid course.';
             }
-            if (!array_key_exists((string)$data['current_level'], $pqsioptions['current_levels'] ?? [])) {
+            if (!$pqsiisprimaryeducation && !array_key_exists((string)$data['current_level'], $pqsioptions['current_levels'] ?? [])) {
                 $fielderrors['current_level'] = 'Select a valid placement level.';
             }
-            if ((string)$data['current_level'] === 'level_3' && !array_key_exists((string)$data['tajweed_sub_level'], $pqsioptions['tajweed_sub_levels'] ?? [])) {
+            if (!$pqsiisprimaryeducation && (string)$data['current_level'] === 'level_3' && !array_key_exists((string)$data['tajweed_sub_level'], $pqsioptions['tajweed_sub_levels'] ?? [])) {
                 $fielderrors['tajweed_sub_level'] = 'Select Beginner, Middle, or Advanced for Level 3.';
             }
             if (!array_key_exists((string)$data['preferred_teaching_language'], $pqsioptions['primary_languages'] ?? [])) {

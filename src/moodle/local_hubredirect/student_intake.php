@@ -765,10 +765,8 @@ function pqsi_form_value(array $form, string $name): string {
 }
 
 function pqsi_field_label(string $name): string {
-    global $pqsiisprimaryeducation;
-    if ($name === 'course_type' && !empty($pqsiisprimaryeducation)) {
-        return 'Grade level';
-    }
+    // No 'Grade level' alias for course_type any more: primary education does not
+    // render or validate that field, so the only reachable label is 'Course'.
     $labels = [
         'existing_studentid' => 'Existing student ID',
         'student_firstname' => 'First name',
@@ -1776,7 +1774,7 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
         if ((int)$data['live_class_consent'] !== 1) {
             $fielderrors['live_class_consent'] = 'Live class consent is required before creating the student intake record.';
         }
-        foreach ([
+        $requiredfields = [
             'country' => 'Country is required.',
             'city' => 'City is required.',
             'timezone' => 'Time zone is required.',
@@ -1784,13 +1782,21 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
             'preferred_teaching_language' => 'Preferred teaching language is required.',
             'current_level' => 'Placement level is required.',
             'learning_base' => 'Learning background is required.',
-        ] as $field => $fieldmessage) {
+        ];
+        if ($pqsiisprimaryeducation) {
+            // Matches public_intake.php: a K-12 school places by grade, and neither
+            // form asks for a placement level or a learning background any more.
+            unset($requiredfields['current_level'], $requiredfields['learning_base']);
+        }
+        foreach ($requiredfields as $field => $fieldmessage) {
             if (($field === 'age_years' && (int)$data['age_years'] <= 0) || ($field !== 'age_years' && trim((string)$data[$field]) === '')) {
                 $fielderrors[$field] = $fieldmessage;
             }
         }
-        if (trim((string)$data['course_type']) === '') {
-            $fielderrors['course_type'] = $pqsiisprimaryeducation ? 'Grade level is required.' : 'Course is required.';
+        // Primary education records the current grade/year instead of a course or a
+        // grade-applied-for selector, so course_type stays empty for that type.
+        if (!$pqsiisprimaryeducation && trim((string)$data['course_type']) === '') {
+            $fielderrors['course_type'] = 'Course is required.';
         }
         if (($pqsiisprimaryeducation || (string)$data['special_needs'] !== '') && !in_array((string)$data['special_needs'], ['yes', 'no'], true)) {
             $fielderrors['special_needs'] = 'Special Needs must be Yes or No.';
@@ -1798,14 +1804,10 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
         if (!array_key_exists((string)$data['student_access_type'], $pqsioptions['student_access_types'] ?? [])) {
             $fielderrors['student_access_type'] = 'Select Managed Student or Unmanaged Student.';
         }
-        if ($pqsiisprimaryeducation) {
-            if (!array_key_exists((string)$data['course_type'], $pqsioptions['primary_grade_selection_levels'] ?? [])) {
-                $fielderrors['course_type'] = 'Select a valid grade level.';
-            }
-        } else if (!array_key_exists((string)$data['course_type'], $pqsioptions['course_types'] ?? [])) {
+        if (!$pqsiisprimaryeducation && !array_key_exists((string)$data['course_type'], $pqsioptions['course_types'] ?? [])) {
             $fielderrors['course_type'] = 'Select a valid course.';
         }
-        if (!array_key_exists((string)$data['current_level'], $pqsioptions['current_levels'] ?? [])) {
+        if (!$pqsiisprimaryeducation && !array_key_exists((string)$data['current_level'], $pqsioptions['current_levels'] ?? [])) {
             $fielderrors['current_level'] = 'Select a valid placement level.';
         }
         if (!$pqsiisprimaryeducation && (string)$data['current_level'] === 'level_3' && !array_key_exists((string)$data['tajweed_sub_level'], $pqsioptions['tajweed_sub_levels'] ?? [])) {
@@ -2383,10 +2385,7 @@ body.pqh-student-intake-page #page,body.pqh-student-intake-page #page-content,bo
               <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'school_curriculum'); ?>" id="pqsi-school_curriculum"><label>School curriculum</label><?php echo pqsi_select('school_curriculum', $pqsioptions['primary_curricula'] ?? [], $form, $fielderrors); ?></div>
               <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'current_school_name'); ?>" id="pqsi-current_school_name"><label>Current school name</label><input class="pqsi-input" name="current_school_name" value="<?php echo s(pqsi_form_value($form, 'current_school_name')); ?>"><?php echo pqsi_form_error($fielderrors, 'current_school_name'); ?></div>
               <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'student_lives_with'); ?>" id="pqsi-student_lives_with"><label>Student lives with</label><?php echo pqsi_select('student_lives_with', $pqsioptions['student_lives_with_options'] ?? [], $form, $fielderrors); ?></div>
-              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'primary_learning_goal'); ?>" id="pqsi-primary_learning_goal"><label>Primary learning goal</label><input class="pqsi-input" name="primary_learning_goal" value="<?php echo s(pqsi_form_value($form, 'primary_learning_goal')); ?>"><?php echo pqsi_form_error($fielderrors, 'primary_learning_goal'); ?></div>
-              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'preferred_class_format'); ?>" id="pqsi-preferred_class_format"><label>Preferred class format</label><?php echo pqsi_select('preferred_class_format', $pqsioptions['primary_class_formats'] ?? [], $form, $fielderrors); ?></div>
-              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'preferred_group_size'); ?>" id="pqsi-preferred_group_size"><label>Preferred group size</label><?php echo pqsi_select('preferred_group_size', $pqsioptions['primary_group_sizes'] ?? [], $form, $fielderrors); ?></div>
-              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'preferred_teacher_gender'); ?>" id="pqsi-preferred_teacher_gender"><label>Preferred teacher gender</label><?php echo pqsi_select('preferred_teacher_gender', $pqsioptions['teacher_gender_preferences'] ?? [], $form, $fielderrors); ?></div>
+              <?php // Preferred class format / group size / teacher gender moved to the Preferences step below. ?>
               <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'school_term'); ?>" id="pqsi-school_term"><label>School term/admission year</label><input class="pqsi-input" name="school_term" value="<?php echo s(pqsi_form_value($form, 'school_term')); ?>"><?php echo pqsi_form_error($fielderrors, 'school_term'); ?></div>
               <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'special_needs'); ?>"><label>Special learning needs / accommodations</label><select class="pqsi-select" name="special_needs"><option value="">Select</option><option value="no"<?php echo pqsi_selected($form, 'special_needs', 'no'); ?>>No</option><option value="yes"<?php echo pqsi_selected($form, 'special_needs', 'yes'); ?>>Yes</option></select><?php echo pqsi_form_error($fielderrors, 'special_needs'); ?></div>
             </div>
@@ -2532,7 +2531,9 @@ body.pqh-student-intake-page #page,body.pqh-student-intake-page #page-content,bo
           <?php endif; ?>
 
           </div><div class="pqsi-page">
-          <h3>Location and language</h3>
+          <?php // Primary education keeps only the location fields here: its languages moved
+                // to Preferences below, and it has no placement level or learning background. ?>
+          <h3><?php echo $pqsiisprimaryeducation ? 'Location' : 'Location and language'; ?></h3>
           <div class="pqsi-grid">
             <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'country'); ?>" id="pqsi-country"><label>Country</label><?php echo pqsi_select('country', $pqsioptions['countries'] ?? [], $form, $fielderrors); ?></div>
             <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'city'); ?>" id="pqsi-city"><label>City</label><?php echo pqsi_select('city', $pqsioptions['cities'] ?? [], $form, $fielderrors); ?></div>
@@ -2541,26 +2542,33 @@ body.pqh-student-intake-page #page,body.pqh-student-intake-page #page-content,bo
               <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'district'); ?>" id="pqsi-district"><label>District</label><input class="pqsi-input" name="district" value="<?php echo s(pqsi_form_value($form, 'district')); ?>"><?php echo pqsi_form_error($fielderrors, 'district'); ?></div>
               <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'division'); ?>" id="pqsi-division"><label>Division</label><input class="pqsi-input" name="division" value="<?php echo s(pqsi_form_value($form, 'division')); ?>"><?php echo pqsi_form_error($fielderrors, 'division'); ?></div>
               <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'estate'); ?>" id="pqsi-estate"><label>Estate</label><input class="pqsi-input" name="estate" value="<?php echo s(pqsi_form_value($form, 'estate')); ?>"><?php echo pqsi_form_error($fielderrors, 'estate'); ?></div>
+            <?php else: ?>
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'primary_language'); ?>" id="pqsi-primary_language"><label>Primary language</label><?php echo pqsi_select('primary_language', $pqsioptions['primary_languages'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'preferred_teaching_language'); ?>" id="pqsi-preferred_teaching_language"><label>Preferred teaching language</label><?php echo pqsi_select('preferred_teaching_language', $pqsioptions['primary_languages'] ?? [], $form, $fielderrors); ?></div>
+              <div class="pqsi-field" id="pqsi-other_languages"><label>Other languages</label><?php echo pqsi_multi_select('other_languages', $pqsioptions['other_languages'] ?? [], $form, $fielderrors, 5); ?></div>
             <?php endif; ?>
-            <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'primary_language'); ?>" id="pqsi-primary_language"><label>Primary language</label><?php echo pqsi_select('primary_language', $pqsioptions['primary_languages'] ?? [], $form, $fielderrors); ?></div>
-            <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'preferred_teaching_language'); ?>" id="pqsi-preferred_teaching_language"><label>Preferred teaching language</label><?php echo pqsi_select('preferred_teaching_language', $pqsioptions['primary_languages'] ?? [], $form, $fielderrors); ?></div>
-            <div class="pqsi-field" id="pqsi-other_languages"><label>Other languages</label><?php echo pqsi_multi_select('other_languages', $pqsioptions['other_languages'] ?? [], $form, $fielderrors, 5); ?></div>
           </div>
 
+          <?php if ($pqsiisprimaryeducation): ?>
+          </div><div class="pqsi-page">
+          <h3>Preferences</h3>
+          <div class="pqsi-grid">
+            <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'primary_language'); ?>" id="pqsi-primary_language"><label>Primary language</label><?php echo pqsi_select('primary_language', $pqsioptions['primary_languages'] ?? [], $form, $fielderrors); ?></div>
+            <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'preferred_teaching_language'); ?>" id="pqsi-preferred_teaching_language"><label>Preferred teaching language</label><?php echo pqsi_select('preferred_teaching_language', $pqsioptions['primary_languages'] ?? [], $form, $fielderrors); ?></div>
+            <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'preferred_class_format'); ?>" id="pqsi-preferred_class_format"><label>Preferred class format</label><?php echo pqsi_select('preferred_class_format', $pqsioptions['primary_class_formats'] ?? [], $form, $fielderrors); ?></div>
+            <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'preferred_group_size'); ?>" id="pqsi-preferred_group_size"><label>Preferred group size</label><?php echo pqsi_select('preferred_group_size', $pqsioptions['primary_group_sizes'] ?? [], $form, $fielderrors); ?></div>
+            <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'preferred_teacher_gender'); ?>" id="pqsi-preferred_teacher_gender"><label>Preferred teacher gender</label><?php echo pqsi_select('preferred_teacher_gender', $pqsioptions['teacher_gender_preferences'] ?? [], $form, $fielderrors); ?></div>
+          </div>
+          <?php else: ?>
           </div><div class="pqsi-page">
           <h3>Learning placement</h3>
           <div class="pqsi-grid">
-            <?php if ($pqsiisprimaryeducation): ?>
-              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'course_type'); ?>" id="pqsi-course_type"><label>Grade level</label><?php echo pqsi_select('course_type', $pqsioptions['primary_grade_selection_levels'] ?? [], $form, $fielderrors); ?></div>
-            <?php else: ?>
-              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'course_type'); ?>" id="pqsi-course_type"><label>Course</label><?php echo pqsi_select('course_type', $pqsioptions['course_types'] ?? [], $form, $fielderrors); ?></div>
-            <?php endif; ?>
+            <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'course_type'); ?>" id="pqsi-course_type"><label>Course</label><?php echo pqsi_select('course_type', $pqsioptions['course_types'] ?? [], $form, $fielderrors); ?></div>
             <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'current_level'); ?>" id="pqsi-current_level"><label>Placement level</label><?php echo pqsi_select('current_level', pqsi_placement_level_options($pqsioptions), $form, $fielderrors); ?></div>
-            <?php if (!$pqsiisprimaryeducation): ?>
-              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'tajweed_sub_level'); ?>" id="pqsi-tajweed_sub_level"><label>Tajweed sub-level</label><?php echo pqsi_select('tajweed_sub_level', $pqsioptions['tajweed_sub_levels'] ?? [], $form, $fielderrors, 'Select when Level 3'); ?></div>
-            <?php endif; ?>
+            <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'tajweed_sub_level'); ?>" id="pqsi-tajweed_sub_level"><label>Tajweed sub-level</label><?php echo pqsi_select('tajweed_sub_level', $pqsioptions['tajweed_sub_levels'] ?? [], $form, $fielderrors, 'Select when Level 3'); ?></div>
             <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'learning_base'); ?>" id="pqsi-learning_base"><label>Learning background</label><?php echo pqsi_select('learning_base', $pqsioptions['learning_bases'] ?? [], $form, $fielderrors); ?></div>
           </div>
+          <?php endif; ?>
 
           </div><div class="pqsi-page">
           <h3><span class="pqsi-section-pill">Preferred weekly live-session number of sessions and hours</span></h3>

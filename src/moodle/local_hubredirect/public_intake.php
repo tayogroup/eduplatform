@@ -104,10 +104,8 @@ function pqpir_placement_level_options(array $options): array {
 }
 
 function pqpir_field_label(string $name): string {
-    global $isprimaryeducation;
-    if ($name === 'course_type' && !empty($isprimaryeducation)) {
-        return 'Grade level';
-    }
+    // No 'Grade level' alias for course_type any more: primary education does not
+    // render or validate that field, so the only reachable label is 'Course'.
     $labels = [
         'form_security' => 'Form security',
         'parent_name' => 'Parent/guardian name',
@@ -927,7 +925,7 @@ if ($ready && !$needsschoolselection && $_SERVER['REQUEST_METHOD'] === 'POST') {
         pqpir_security_audit('public_intake_blocked_session_rate');
     }
 
-    foreach ([
+    $requiredfields = [
         'student_firstname' => 'Please enter the student first name.',
         'student_middle_name' => 'Please enter the student middle name.',
         'student_lastname' => 'Please enter the student last name.',
@@ -939,13 +937,22 @@ if ($ready && !$needsschoolselection && $_SERVER['REQUEST_METHOD'] === 'POST') {
         'current_level' => 'Please select the placement level.',
         'learning_base' => 'Please select the learning background.',
         'session_count' => 'Please select the number of weekly sessions.',
-    ] as $field => $errormessage) {
+    ];
+    if ($isprimaryeducation) {
+        // A K-12 school places by grade, not by a Quran placement level, and the
+        // form no longer asks for either of these -- so they cannot be required.
+        unset($requiredfields['current_level'], $requiredfields['learning_base']);
+    }
+    foreach ($requiredfields as $field => $errormessage) {
         if (($field === 'age_years' && (int)$form[$field] <= 0) || ($field === 'session_count' && ((int)$form[$field] < 1 || (int)$form[$field] > 5)) || (!in_array($field, ['age_years', 'session_count'], true) && pqpir_value($form, $field) === '')) {
             $errors[$field] = $errormessage;
         }
     }
-    if (pqpir_value($form, 'course_type') === '') {
-        $errors['course_type'] = $isprimaryeducation ? 'Please select the grade level.' : 'Please select the course.';
+    // Primary education asks for the current grade/year instead of a course or a
+    // grade-applied-for selector, so course_type is left empty for that type --
+    // the same empty value create_ehel_k12_qa_accounts.php writes deliberately.
+    if (!$isprimaryeducation && pqpir_value($form, 'course_type') === '') {
+        $errors['course_type'] = 'Please select the course.';
     }
     if ($isprimaryeducation) {
         foreach ([
@@ -1166,17 +1173,13 @@ if ($ready && !$needsschoolselection && $_SERVER['REQUEST_METHOD'] === 'POST') {
     if (($isprimaryeducation || pqpir_value($form, 'special_needs') !== '') && !in_array(pqpir_value($form, 'special_needs'), ['yes', 'no'], true)) {
         $errors['special_needs'] = 'Please select Yes or No for Special Needs.';
     }
-    if ($isprimaryeducation) {
-        if (!array_key_exists(pqpir_value($form, 'course_type'), $options['primary_grade_selection_levels'] ?? [])) {
-            $errors['course_type'] = 'Please select a valid grade level.';
-        }
-    } else if (!array_key_exists(pqpir_value($form, 'course_type'), $options['course_types'] ?? [])) {
+    if (!$isprimaryeducation && !array_key_exists(pqpir_value($form, 'course_type'), $options['course_types'] ?? [])) {
         $errors['course_type'] = 'Please select a valid course.';
     }
     if (!array_key_exists(pqpir_value($form, 'student_access_type'), $options['student_access_types'] ?? [])) {
         $errors['student_access_type'] = 'Please select Managed Student or Unmanaged Student.';
     }
-    if (!array_key_exists(pqpir_value($form, 'current_level'), $options['current_levels'] ?? [])) {
+    if (!$isprimaryeducation && !array_key_exists(pqpir_value($form, 'current_level'), $options['current_levels'] ?? [])) {
         $errors['current_level'] = 'Please select a valid placement level.';
     }
     if (!array_key_exists(pqpir_value($form, 'preferred_teaching_language'), $options['primary_languages'] ?? [])) {
@@ -1609,10 +1612,7 @@ body.pqh-public-intake-page #page-wrapper,body.pqh-public-intake-page #page,body
               <div class="pqpir-field<?php echo isset($errors['school_curriculum']) ? ' pqpir-field--error' : ''; ?>"><label>School curriculum</label><?php echo pqpir_select('school_curriculum', $options['primary_curricula'] ?? [], $form, $errors); ?></div>
               <div class="pqpir-field<?php echo isset($errors['current_school_name']) ? ' pqpir-field--error' : ''; ?>"><label>Current school name</label><input class="pqpir-input" name="current_school_name" value="<?php echo s(pqpir_value($form, 'current_school_name')); ?>"><?php echo pqpir_error($errors, 'current_school_name'); ?></div>
               <div class="pqpir-field<?php echo isset($errors['student_lives_with']) ? ' pqpir-field--error' : ''; ?>"><label>Student lives with</label><?php echo pqpir_select('student_lives_with', $options['student_lives_with_options'] ?? [], $form, $errors); ?></div>
-              <div class="pqpir-field<?php echo isset($errors['primary_learning_goal']) ? ' pqpir-field--error' : ''; ?>"><label>Primary learning goal</label><input class="pqpir-input" name="primary_learning_goal" value="<?php echo s(pqpir_value($form, 'primary_learning_goal')); ?>"><?php echo pqpir_error($errors, 'primary_learning_goal'); ?></div>
-              <div class="pqpir-field<?php echo isset($errors['preferred_class_format']) ? ' pqpir-field--error' : ''; ?>"><label>Preferred class format</label><?php echo pqpir_select('preferred_class_format', $options['primary_class_formats'] ?? [], $form, $errors); ?></div>
-              <div class="pqpir-field<?php echo isset($errors['preferred_group_size']) ? ' pqpir-field--error' : ''; ?>"><label>Preferred group size</label><?php echo pqpir_select('preferred_group_size', $options['primary_group_sizes'] ?? [], $form, $errors); ?></div>
-              <div class="pqpir-field<?php echo isset($errors['preferred_teacher_gender']) ? ' pqpir-field--error' : ''; ?>"><label>Preferred teacher gender</label><?php echo pqpir_select('preferred_teacher_gender', $options['teacher_gender_preferences'] ?? [], $form, $errors); ?></div>
+              <?php // Preferred class format / group size / teacher gender moved to the Preferences step below. ?>
               <div class="pqpir-field<?php echo isset($errors['school_term']) ? ' pqpir-field--error' : ''; ?>"><label>School term/admission year</label><input class="pqpir-input" name="school_term" value="<?php echo s(pqpir_value($form, 'school_term')); ?>"><?php echo pqpir_error($errors, 'school_term'); ?></div>
               <div class="pqpir-field<?php echo isset($errors['special_needs']) ? ' pqpir-field--error' : ''; ?>"><label>Special learning needs / accommodations</label><select class="pqpir-input" name="special_needs"><option value="">Select</option><option value="no"<?php echo pqpir_selected($form, 'special_needs', 'no'); ?>>No</option><option value="yes"<?php echo pqpir_selected($form, 'special_needs', 'yes'); ?>>Yes</option></select><?php echo pqpir_error($errors, 'special_needs'); ?></div>
             </div>
@@ -1764,11 +1764,12 @@ body.pqh-public-intake-page #page-wrapper,body.pqh-public-intake-page #page,body
           <?php endif; ?>
 
           </div><div class="pqpir-page">
-          <h3>Program and learning preferences</h3>
+          <?php // A K-12 school selects nothing program-shaped here -- grade level, placement
+                // level, learning background and the language/format preferences are either
+                // dropped or moved to the Preferences step, leaving only where the family is. ?>
+          <h3><?php echo $isprimaryeducation ? 'Location' : 'Program and learning preferences'; ?></h3>
           <div class="pqpir-grid">
-            <?php if ($isprimaryeducation): ?>
-              <div class="pqpir-field<?php echo isset($errors['course_type']) ? ' pqpir-field--error' : ''; ?>"><label>Grade level</label><?php echo pqpir_select('course_type', $options['primary_grade_selection_levels'] ?? [], $form, $errors); ?></div>
-            <?php else: ?>
+            <?php if (!$isprimaryeducation): ?>
               <div class="pqpir-field<?php echo isset($errors['course_type']) ? ' pqpir-field--error' : ''; ?>"><label>Course</label><?php echo pqpir_select('course_type', $options['course_types'] ?? [], $form, $errors); ?><?php if (empty($options['course_types'])): ?><div class="pqpir-muted">No public courses are available for this institution yet.</div><?php endif; ?></div>
             <?php endif; ?>
             <div class="pqpir-field<?php echo isset($errors['country']) ? ' pqpir-field--error' : ''; ?>"><label>Country</label><?php echo pqpir_select('country', $options['countries'] ?? [], $form, $errors); ?></div>
@@ -1778,16 +1779,27 @@ body.pqh-public-intake-page #page-wrapper,body.pqh-public-intake-page #page,body
               <div class="pqpir-field<?php echo isset($errors['district']) ? ' pqpir-field--error' : ''; ?>"><label>District</label><input class="pqpir-input" name="district" value="<?php echo s(pqpir_value($form, 'district')); ?>"><?php echo pqpir_error($errors, 'district'); ?></div>
               <div class="pqpir-field<?php echo isset($errors['division']) ? ' pqpir-field--error' : ''; ?>"><label>Division</label><input class="pqpir-input" name="division" value="<?php echo s(pqpir_value($form, 'division')); ?>"><?php echo pqpir_error($errors, 'division'); ?></div>
               <div class="pqpir-field<?php echo isset($errors['estate']) ? ' pqpir-field--error' : ''; ?>"><label>Estate</label><input class="pqpir-input" name="estate" value="<?php echo s(pqpir_value($form, 'estate')); ?>"><?php echo pqpir_error($errors, 'estate'); ?></div>
+            <?php else: ?>
+              <div class="pqpir-field<?php echo isset($errors['primary_language']) ? ' pqpir-field--error' : ''; ?>"><label>Primary language</label><?php echo pqpir_select('primary_language', $options['primary_languages'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field<?php echo isset($errors['preferred_teaching_language']) ? ' pqpir-field--error' : ''; ?>"><label>Preferred teaching language</label><?php echo pqpir_select('preferred_teaching_language', $options['primary_languages'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field"><label>Other languages</label><?php echo pqpir_multi_select('other_languages', $options['other_languages'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field<?php echo isset($errors['current_level']) ? ' pqpir-field--error' : ''; ?>"><label>Placement level</label><?php echo pqpir_select('current_level', pqpir_placement_level_options($options), $form, $errors); ?></div>
+              <div class="pqpir-field<?php echo isset($errors['tajweed_sub_level']) ? ' pqpir-field--error' : ''; ?>"><label>Tajweed sub-level</label><?php echo pqpir_select('tajweed_sub_level', $options['tajweed_sub_levels'] ?? [], $form, $errors, 'Select when Level 3'); ?></div>
+              <div class="pqpir-field<?php echo isset($errors['learning_base']) ? ' pqpir-field--error' : ''; ?>"><label>Learning background</label><?php echo pqpir_select('learning_base', $options['learning_bases'] ?? [], $form, $errors); ?></div>
             <?php endif; ?>
+          </div>
+
+          <?php if ($isprimaryeducation): ?>
+          </div><div class="pqpir-page">
+          <h3>Preferences</h3>
+          <div class="pqpir-grid">
             <div class="pqpir-field<?php echo isset($errors['primary_language']) ? ' pqpir-field--error' : ''; ?>"><label>Primary language</label><?php echo pqpir_select('primary_language', $options['primary_languages'] ?? [], $form, $errors); ?></div>
             <div class="pqpir-field<?php echo isset($errors['preferred_teaching_language']) ? ' pqpir-field--error' : ''; ?>"><label>Preferred teaching language</label><?php echo pqpir_select('preferred_teaching_language', $options['primary_languages'] ?? [], $form, $errors); ?></div>
-            <div class="pqpir-field"><label>Other languages</label><?php echo pqpir_multi_select('other_languages', $options['other_languages'] ?? [], $form, $errors); ?></div>
-            <div class="pqpir-field<?php echo isset($errors['current_level']) ? ' pqpir-field--error' : ''; ?>"><label>Placement level</label><?php echo pqpir_select('current_level', pqpir_placement_level_options($options), $form, $errors); ?></div>
-            <?php if (!$isprimaryeducation): ?>
-              <div class="pqpir-field<?php echo isset($errors['tajweed_sub_level']) ? ' pqpir-field--error' : ''; ?>"><label>Tajweed sub-level</label><?php echo pqpir_select('tajweed_sub_level', $options['tajweed_sub_levels'] ?? [], $form, $errors, 'Select when Level 3'); ?></div>
-            <?php endif; ?>
-            <div class="pqpir-field<?php echo isset($errors['learning_base']) ? ' pqpir-field--error' : ''; ?>"><label>Learning background</label><?php echo pqpir_select('learning_base', $options['learning_bases'] ?? [], $form, $errors); ?></div>
+            <div class="pqpir-field<?php echo isset($errors['preferred_class_format']) ? ' pqpir-field--error' : ''; ?>"><label>Preferred class format</label><?php echo pqpir_select('preferred_class_format', $options['primary_class_formats'] ?? [], $form, $errors); ?></div>
+            <div class="pqpir-field<?php echo isset($errors['preferred_group_size']) ? ' pqpir-field--error' : ''; ?>"><label>Preferred group size</label><?php echo pqpir_select('preferred_group_size', $options['primary_group_sizes'] ?? [], $form, $errors); ?></div>
+            <div class="pqpir-field<?php echo isset($errors['preferred_teacher_gender']) ? ' pqpir-field--error' : ''; ?>"><label>Preferred teacher gender</label><?php echo pqpir_select('preferred_teacher_gender', $options['teacher_gender_preferences'] ?? [], $form, $errors); ?></div>
           </div>
+          <?php endif; ?>
 
           </div><div class="pqpir-page">
           <h3>Preferred weekly live-session number of sessions and hours</h3>

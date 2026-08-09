@@ -206,10 +206,7 @@
         { name: "school_curriculum", label: "School curriculum", kind: "select", optkey: "primary_curricula" },
         { name: "current_school_name", label: "Current school name" },
         { name: "student_lives_with", label: "Student lives with", kind: "select", optkey: "student_lives_with_options" },
-        { name: "primary_learning_goal", label: "Primary learning goal" },
-        { name: "preferred_class_format", label: "Preferred class format", kind: "select", optkey: "primary_class_formats" },
-        { name: "preferred_group_size", label: "Preferred group size", kind: "select", optkey: "primary_group_sizes" },
-        { name: "preferred_teacher_gender", label: "Preferred teacher gender", kind: "select", optkey: "teacher_gender_preferences" },
+        // Preferred class format / group size / teacher gender live under Preferences below.
         { name: "school_term", label: "School term/admission year" },
         { name: "special_needs", label: "Special learning needs / accommodations", kind: "select", opts: { no: "No", yes: "Yes" } },
       ]);
@@ -353,20 +350,39 @@
       h += field({ name: "christian_notes", label: "Additional Christian studies notes", kind: "textarea", full: true });
     }
 
-    h += `<h3>Program and learning preferences</h3>`;
-    h += gridOf([
-      { name: "course_type", label: "Course", kind: "select", optkey: "course_types",
-        note: Object.keys((D.options || {}).course_types || {}).length ? "" : "No public courses are available for this institution yet." },
-      { name: "country", label: "Country", kind: "select", optkey: "countries" },
-      { name: "city", label: "City", kind: "select", optkey: "cities" },
-      { name: "city_other", label: "City not listed", extraclass: "city-other" },
-      { name: "primary_language", label: "Primary language", kind: "select", optkey: "primary_languages" },
-      { name: "preferred_teaching_language", label: "Preferred teaching language", kind: "select", optkey: "primary_languages" },
-      { name: "other_languages", label: "Other languages", kind: "multi", optkey: "other_languages" },
-      { name: "current_level", label: "Placement level", kind: "select", optkey: "current_levels" },
-      { name: "tajweed_sub_level", label: "Tajweed sub-level", kind: "select", optkey: "tajweed_sub_levels", placeholder: "Select when Level 3" },
-      { name: "learning_base", label: "Learning background", kind: "select", optkey: "learning_bases" },
-    ]);
+    // A K-12 school selects nothing program-shaped here: no course, no placement
+    // level, no learning background, and its languages move under Preferences.
+    if (c.is_primary_education) {
+      h += `<h3>Location</h3>`;
+      h += gridOf([
+        { name: "country", label: "Country", kind: "select", optkey: "countries" },
+        { name: "city", label: "City", kind: "select", optkey: "cities" },
+        { name: "city_other", label: "City not listed", extraclass: "city-other" },
+      ]);
+      h += `<h3>Preferences</h3>`;
+      h += gridOf([
+        { name: "primary_language", label: "Primary language", kind: "select", optkey: "primary_languages" },
+        { name: "preferred_teaching_language", label: "Preferred teaching language", kind: "select", optkey: "primary_languages" },
+        { name: "preferred_class_format", label: "Preferred class format", kind: "select", optkey: "primary_class_formats" },
+        { name: "preferred_group_size", label: "Preferred group size", kind: "select", optkey: "primary_group_sizes" },
+        { name: "preferred_teacher_gender", label: "Preferred teacher gender", kind: "select", optkey: "teacher_gender_preferences" },
+      ]);
+    } else {
+      h += `<h3>Program and learning preferences</h3>`;
+      h += gridOf([
+        { name: "course_type", label: "Course", kind: "select", optkey: "course_types",
+          note: Object.keys((D.options || {}).course_types || {}).length ? "" : "No public courses are available for this institution yet." },
+        { name: "country", label: "Country", kind: "select", optkey: "countries" },
+        { name: "city", label: "City", kind: "select", optkey: "cities" },
+        { name: "city_other", label: "City not listed", extraclass: "city-other" },
+        { name: "primary_language", label: "Primary language", kind: "select", optkey: "primary_languages" },
+        { name: "preferred_teaching_language", label: "Preferred teaching language", kind: "select", optkey: "primary_languages" },
+        { name: "other_languages", label: "Other languages", kind: "multi", optkey: "other_languages" },
+        { name: "current_level", label: "Placement level", kind: "select", optkey: "current_levels" },
+        { name: "tajweed_sub_level", label: "Tajweed sub-level", kind: "select", optkey: "tajweed_sub_levels", placeholder: "Select when Level 3" },
+        { name: "learning_base", label: "Learning background", kind: "select", optkey: "learning_bases" },
+      ]);
+    }
 
     h += `<h3>Preferred weekly live-session number of sessions and hours</h3>`;
     h += gridOf([

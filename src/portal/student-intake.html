@@ -179,10 +179,7 @@
         { name: "school_curriculum", label: "School curriculum", kind: "select", optkey: "primary_curricula" },
         { name: "current_school_name", label: "Current school name" },
         { name: "student_lives_with", label: "Student lives with", kind: "select", optkey: "student_lives_with_options" },
-        { name: "primary_learning_goal", label: "Primary learning goal" },
-        { name: "preferred_class_format", label: "Preferred class format", kind: "select", optkey: "primary_class_formats" },
-        { name: "preferred_group_size", label: "Preferred group size", kind: "select", optkey: "primary_group_sizes" },
-        { name: "preferred_teacher_gender", label: "Preferred teacher gender", kind: "select", optkey: "teacher_gender_preferences" },
+        // Preferred class format / group size / teacher gender live under Preferences below.
         { name: "school_term", label: "School term/admission year" },
         { name: "special_needs", label: "Special learning needs / accommodations", kind: "select", opts: { no: "No", yes: "Yes" } },
       ]);
@@ -323,23 +320,43 @@
       h += field({ name: "christian_notes", label: "Additional Christian studies notes", kind: "textarea", full: true });
     }
 
-    h += `<h3>Location and language</h3>`;
-    h += gridOf([
-      { name: "country", label: "Country", kind: "select", optkey: "countries" },
-      { name: "city", label: "City", kind: "select", optkey: "cities" },
-      { name: "city_other", label: "City not listed", extraclass: "city-other" },
-      { name: "primary_language", label: "Primary language", kind: "select", optkey: "primary_languages" },
-      { name: "preferred_teaching_language", label: "Preferred teaching language", kind: "select", optkey: "primary_languages" },
-      { name: "other_languages", label: "Other languages", kind: "multi", optkey: "other_languages" },
-    ]);
+    // Primary education keeps only the location fields here: its languages move to
+    // Preferences, and it has no course, placement level or learning background.
+    if (inst.is_primary_education) {
+      h += `<h3>Location</h3>`;
+      h += gridOf([
+        { name: "country", label: "Country", kind: "select", optkey: "countries" },
+        { name: "city", label: "City", kind: "select", optkey: "cities" },
+        { name: "city_other", label: "City not listed", extraclass: "city-other" },
+      ]);
 
-    h += `<h3>Learning placement</h3>`;
-    h += gridOf([
-      { name: "course_type", label: "Course", kind: "select", optkey: "course_types" },
-      { name: "current_level", label: "Placement level", kind: "select", optkey: "current_levels" },
-      { name: "tajweed_sub_level", label: "Tajweed sub-level", kind: "select", optkey: "tajweed_sub_levels", placeholder: "Select when Level 3" },
-      { name: "learning_base", label: "Learning background", kind: "select", optkey: "learning_bases" },
-    ]);
+      h += `<h3>Preferences</h3>`;
+      h += gridOf([
+        { name: "primary_language", label: "Primary language", kind: "select", optkey: "primary_languages" },
+        { name: "preferred_teaching_language", label: "Preferred teaching language", kind: "select", optkey: "primary_languages" },
+        { name: "preferred_class_format", label: "Preferred class format", kind: "select", optkey: "primary_class_formats" },
+        { name: "preferred_group_size", label: "Preferred group size", kind: "select", optkey: "primary_group_sizes" },
+        { name: "preferred_teacher_gender", label: "Preferred teacher gender", kind: "select", optkey: "teacher_gender_preferences" },
+      ]);
+    } else {
+      h += `<h3>Location and language</h3>`;
+      h += gridOf([
+        { name: "country", label: "Country", kind: "select", optkey: "countries" },
+        { name: "city", label: "City", kind: "select", optkey: "cities" },
+        { name: "city_other", label: "City not listed", extraclass: "city-other" },
+        { name: "primary_language", label: "Primary language", kind: "select", optkey: "primary_languages" },
+        { name: "preferred_teaching_language", label: "Preferred teaching language", kind: "select", optkey: "primary_languages" },
+        { name: "other_languages", label: "Other languages", kind: "multi", optkey: "other_languages" },
+      ]);
+
+      h += `<h3>Learning placement</h3>`;
+      h += gridOf([
+        { name: "course_type", label: "Course", kind: "select", optkey: "course_types" },
+        { name: "current_level", label: "Placement level", kind: "select", optkey: "current_levels" },
+        { name: "tajweed_sub_level", label: "Tajweed sub-level", kind: "select", optkey: "tajweed_sub_levels", placeholder: "Select when Level 3" },
+        { name: "learning_base", label: "Learning background", kind: "select", optkey: "learning_bases" },
+      ]);
+    }
 
     h += `<h3><span class="section-pill">Preferred weekly live-session number of sessions and hours</span></h3>`;
     h += gridOf([
@@ -550,8 +567,15 @@
       current_level: "Placement level is required.",
       learning_base: "Learning background is required.",
     };
+    if (inst.is_primary_education) {
+      // A K-12 school places by grade and the form no longer renders any of these,
+      // so requiring them would block a submit on fields nobody can see or fill.
+      delete core.course_type;
+      delete core.current_level;
+      delete core.learning_base;
+    }
     for (const [k, m] of Object.entries(core)) if (!String(body[k] || "").trim()) errs[k] = m;
-    if (body.current_level === "level_3" && !body.tajweed_sub_level) errs.tajweed_sub_level = "Select Beginner, Middle, or Advanced for Level 3.";
+    if (!inst.is_primary_education && body.current_level === "level_3" && !body.tajweed_sub_level) errs.tajweed_sub_level = "Select Beginner, Middle, or Advanced for Level 3.";
     const sessions = parseInt(body.session_count || "1", 10) || 1;
     if (!body.slots.length) errs.slots = "Select at least one weekly time that could work.";
     else if (body.slots.length < sessions) errs.slots = "Select at least as many weekly time options as the requested number of sessions.";

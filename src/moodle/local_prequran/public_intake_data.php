@@ -428,7 +428,7 @@ if ($recentcount >= pqpirl_contact_window_limit()) {
 
 // e) full legacy validation block (verbatim, pqpir_ -> pqpirl_).
 $errors = [];
-foreach ([
+$requiredfields = [
     'student_firstname' => 'Please enter the student first name.',
     'student_middle_name' => 'Please enter the student middle name.',
     'student_lastname' => 'Please enter the student last name.',
@@ -441,7 +441,14 @@ foreach ([
     'current_level' => 'Please select the placement level.',
     'learning_base' => 'Please select the learning background.',
     'session_count' => 'Please select the number of weekly sessions.',
-] as $field => $errormessage) {
+];
+if ($isprimaryeducation) {
+    // Matches public_intake.php: a K-12 school places by grade, so the form asks
+    // for the current grade/year and drops the course, placement level and
+    // learning background -- none of the three can be required here either.
+    unset($requiredfields['course_type'], $requiredfields['current_level'], $requiredfields['learning_base']);
+}
+foreach ($requiredfields as $field => $errormessage) {
     if (($field === 'age_years' && (int)$form[$field] <= 0) || ($field === 'session_count' && ((int)$form[$field] < 1 || (int)$form[$field] > 5)) || (!in_array($field, ['age_years', 'session_count'], true) && pqpirl_value($form, $field) === '')) {
         $errors[$field] = $errormessage;
     }
@@ -665,19 +672,19 @@ foreach (['parent_email', 'parent_phone', 'student_email', 'emergency_contact_ph
 if (($isprimaryeducation || pqpirl_value($form, 'special_needs') !== '') && !in_array(pqpirl_value($form, 'special_needs'), ['yes', 'no'], true)) {
     $errors['special_needs'] = 'Please select Yes or No for Special Needs.';
 }
-if (!array_key_exists(pqpirl_value($form, 'course_type'), $options['course_types'] ?? [])) {
+if (!$isprimaryeducation && !array_key_exists(pqpirl_value($form, 'course_type'), $options['course_types'] ?? [])) {
     $errors['course_type'] = 'Please select a valid course.';
 }
 if (!array_key_exists(pqpirl_value($form, 'student_access_type'), $options['student_access_types'] ?? [])) {
     $errors['student_access_type'] = 'Please select Managed Student or Unmanaged Student.';
 }
-if (!array_key_exists(pqpirl_value($form, 'current_level'), $options['current_levels'] ?? [])) {
+if (!$isprimaryeducation && !array_key_exists(pqpirl_value($form, 'current_level'), $options['current_levels'] ?? [])) {
     $errors['current_level'] = 'Please select a valid placement level.';
 }
 if (!array_key_exists(pqpirl_value($form, 'preferred_teaching_language'), $options['primary_languages'] ?? [])) {
     $errors['preferred_teaching_language'] = 'Please select a valid preferred teaching language.';
 }
-if (pqpirl_value($form, 'current_level') === 'level_3' && !array_key_exists(pqpirl_value($form, 'tajweed_sub_level'), $options['tajweed_sub_levels'] ?? [])) {
+if (!$isprimaryeducation && pqpirl_value($form, 'current_level') === 'level_3' && !array_key_exists(pqpirl_value($form, 'tajweed_sub_level'), $options['tajweed_sub_levels'] ?? [])) {
     $errors['tajweed_sub_level'] = 'Please select Beginner, Middle, or Advanced for Level 3.';
 }
 if (!$form['slots']) {

@@ -63,10 +63,13 @@ return [
         'grade_8' => 'Grade 8',
         'other' => 'Other / not sure',
     ],
-    // Grade being applied/enrolled for at a K-12 (primary_education) institution --
-    // used in place of the Course selector for that institution type. Distinct
-    // from primary_grade_levels above, which describes the student's CURRENT
-    // grade at their prior school.
+    // Grade being applied/enrolled for at a K-12 (primary_education) institution.
+    // Distinct from primary_grade_levels above, which describes the student's
+    // CURRENT grade at their prior school -- and that is now the only grade either
+    // intake form asks for, so NOTHING reads this list: both public_intake.php and
+    // student_intake.php dropped the Grade level selector and leave course_type
+    // empty for primary education. Kept for the portal wizards, which still
+    // receive the whole option set.
     'primary_grade_selection_levels' => [
         'grade_1' => 'Grade 1',
         'grade_2' => 'Grade 2',
@@ -81,12 +84,13 @@ return [
         'grade_11' => 'Grade 11',
         'grade_12' => 'Grade 12',
     ],
+    // Cambridge leads because it is what the K-12 schools actually teach; British
+    // and Islamic studies / madrasa were dropped as choices. Records saved before
+    // that still hold 'british'/'islamic_studies' and will read back as unset.
     'primary_curricula' => [
+        'cambridge' => 'Cambridge curriculum',
         'national' => 'National curriculum',
-        'british' => 'British curriculum',
         'american' => 'American curriculum',
-        'cambridge' => 'Cambridge',
-        'islamic_studies' => 'Islamic studies / madrasa',
         'homeschool' => 'Homeschool',
         'other' => 'Other / not sure',
     ],
@@ -97,11 +101,13 @@ return [
         'guardian' => 'Guardian',
         'other' => 'Other',
     ],
+    // Every format on offer is online, so the choice is about how much live
+    // teaching comes with it. 'online_live' keeps its old key so requests saved
+    // under 'Online live class' still resolve; in-person/hybrid/not sure are gone.
     'primary_class_formats' => [
-        'online_live' => 'Online live class',
-        'in_person' => 'In-person class',
-        'hybrid' => 'Hybrid',
-        'not_sure' => 'Not sure',
+        'online_live' => 'Online live classes with live teachers',
+        'online_live_no_teacher' => 'Online live classes without live teachers',
+        'online_self_paced' => 'Online learning without live classes and teachers',
     ],
     'primary_group_sizes' => [
         'one_to_one' => 'One-to-one',

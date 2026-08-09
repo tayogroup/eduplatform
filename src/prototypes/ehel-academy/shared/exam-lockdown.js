@@ -95,10 +95,17 @@ export function examLaunchContext(search = (typeof location !== "undefined" ? lo
  */
 export function examEnvironment(ctx = examLaunchContext()) {
   if (ctx.seb && ctx.examSession) return "seb";
-  if (ctx.focusMode) return "focus";
+  // focusMode alone is NOT enough, for exactly the reason SEB alone is not: an
+  // ordinary COURSE launch also sets focusMode=1 for learners whose launch
+  // preference is focus, so a learner already in a focus-mode lesson arrived at
+  // unit -1 with the flag set, the gate waved them through, and the exam ran
+  // with no Safe Exam Browser handover ever offered. Only a session the
+  // placement launch itself opened carries sessionKind=exam.
+  if (ctx.focusMode && ctx.examSession) return "focus";
   if (ctx.exempt) return "exempt";
   if (!ctx.origin || !ctx.token) return "unlaunched";
   if (ctx.seb) return "seb-lesson";
+  if (ctx.focusMode) return "focus-lesson";
   return "open";
 }
 
@@ -127,14 +134,22 @@ const esc = (value) => String(value).replace(/[&<>"']/g, (c) => (
 export function requireExamLockdown({ mount, stageLabel = "", examTitle = "Placement exam", backHref = "" }) {
   const ctx = examLaunchContext();
   const environment = examEnvironment(ctx);
-  if (environment !== "open" && environment !== "seb-lesson") return true;
+  const BLOCKED = ["open", "seb-lesson", "focus-lesson"];
+  if (!BLOCKED.includes(environment)) return true;
   if (!mount) return true;
 
   const launch = placementLaunchUrl(ctx);
   const focusLaunch = placementLaunchUrl(ctx, { fallback: "focus" });
-  // Already in SEB, but on a lesson session: the button reconfigures SEB onto
-  // the exam profile rather than opening it, so say that instead.
-  const inLesson = environment === "seb-lesson";
+  // Arrived from an ordinary lesson session. In SEB that means reconfiguring
+  // onto the exam profile rather than opening it; in focus mode it means the
+  // lesson's fullscreen is not an exam session at all.
+  const inSebLesson = environment === "seb-lesson";
+  const inFocusLesson = environment === "focus-lesson";
+  const inLesson = inSebLesson || inFocusLesson;
+  // The install-free fallback is hidden only for a learner already running SEB,
+  // where it plainly works. A focus-mode learner is the one MOST likely to need
+  // it — they are usually in focus mode precisely because SEB will not install.
+  const offerFallback = !inSebLesson;
 
   mount.innerHTML = `
     <div class="final-quiz-intro">
@@ -142,15 +157,17 @@ export function requireExamLockdown({ mount, stageLabel = "", examTitle = "Place
         <span class="eyebrow">${esc(stageLabel)} · Prerequisite unit</span>
         <h2>${inLesson ? "This exam needs exam mode" : "This exam opens in Safe Exam Browser"}</h2>
         <p>${esc(examTitle)} decides which stage you start at, so it is taken in a locked
-        browser — the same way a real exam is.${inLesson
+        browser — the same way a real exam is.${inSebLesson
           ? " You are in Safe Exam Browser already, but in lesson mode, which you can leave freely. Starting the exam switches it into exam mode."
+          : inFocusLesson
+          ? " You are in your lesson at the moment, not an exam. Starting the exam opens it properly."
           : " Your device opens Safe Exam Browser, you answer the questions there, and it closes again when you finish."}</p>
         <div class="audio-actions">
           ${launch ? `<a class="button gold" href="${esc(launch)}">${inLesson ? "Start the exam in exam mode" : "Open the exam in Safe Exam Browser"} →</a>` : ""}
           ${backHref ? `<a class="button secondary" href="${esc(backHref)}">Not now — go back</a>` : ""}
         </div>
       </section>
-      ${inLesson ? "" : `
+      ${!offerFallback ? "" : `
       <section class="panel">
         <h3>If Safe Exam Browser will not open</h3>
         <p>It cannot be installed on every device — there is no Android version at all.

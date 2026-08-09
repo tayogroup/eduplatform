@@ -100,9 +100,14 @@ if (!pqh_seb_placement_enabled()) {
 // Chosen when the learner asked for it (their device cannot run SEB) or when
 // their saved launch preference is focus. The exam still runs; it is simply
 // honest about being weaker.
+// ONLY an explicit choice on the handover page sends a placement exam to focus
+// mode. It deliberately does NOT inherit pqh_seb_launch_pref(), the learner's
+// preference for how LESSONS open: a learner who set lessons to focus mode was
+// then never offered Safe Exam Browser for the exam at all, which is the
+// opposite of what an exam-grade gate is for. Safe Exam Browser is the way in;
+// focus mode is the escape hatch they take at the door, per exam.
 $fallback = optional_param('fallback', '', PARAM_ALPHA);
-$pref = pqh_seb_launch_pref($learnerid);
-if ($fallback === 'focus' || $pref !== 'seb') {
+if ($fallback === 'focus') {
     $url = pqpg_ehel_launch_url($learnerid, $coursekey, '', $base, -1);
     if ($url === '') {
         pqh_access_denied('This course has no placement exam app.', $dashboardurl, 'Exam unavailable');

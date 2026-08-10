@@ -19,7 +19,14 @@
       "status": "HELD",
       "heldOn": "2026-08-09",
       "heldReason": "Held by the school until the full content is located. The syllabus draft is not for approval, not for families and not for the catalogue. Lifting the hold: locate or author Units 3-6, run extract -> build -> check, delete this entry so the coverage gate guards the stage again, and replace the HELD block in docs/ehel-global-perspectives-stage-5-syllabus.md.",
-      "heldNotSettled": "The hold covers publication of the syllabus. It does not by itself withdraw the running course from the app or the catalogue, and it does not change Stage 6's placement exam, which still spends 20 of 34 questions on Stage 5 skills.",
+      "withdrawn": {
+        "on": "2026-08-09",
+        "app": "WITHDRAWN_STAGES in shell/subjects/global-perspectives.js — every route draws a notice, the stage picker disables it",
+        "catalogue": "ehel-gp-g05 removed from catalog.json; local_prequran/catalog_source_url repointed at the content-addressed catalog-<digest>.json so the change reached the sync instead of waiting behind a 30-day CDN cache",
+        "moodle": "course id 71 hidden — visible=0, visibleold=0. Hidden rather than deleted so the idnumber survives and the sync reattaches to the same course when Stage 5 returns.",
+        "learnerImpact": "None. The course had zero enrolments when it was withdrawn."
+      },
+      "stillNotSettled": "Stage 6's placement exam still spends 20 of its 34 questions on Stage 5 skills, so a learner arriving from a two-skill Stage 5 is measured on four skills nobody taught them. Withdrawing Stage 5 does not change that.",
       "missingSkills": ["Evaluation", "Reflection", "Collaboration", "Communication"],
       "reason": "Never present in the Google Drive export. The Year 5 archive was exported successfully and contained Units 1-2 only; every other year exported its full complement.",
       "closes": "Units 3-6 being authored, or found in a different Drive location. A re-export does NOT close it: one was taken on 2026-08-09 and contained the same two units, byte for byte. See searchedOn.",

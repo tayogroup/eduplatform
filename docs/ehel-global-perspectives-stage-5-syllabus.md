@@ -41,12 +41,25 @@ somewhere else in Drive, or they were never authored.
 4. This block replaced, and the unit spine below re-checked against the rebuilt
    course.
 
-### Two things the hold does not settle
+### The course is withdrawn as well as held
 
-**Stage 5 may still be running.** Holding the syllabus stops it being published;
-it does not by itself withdraw the course from the app or the catalogue. If a
-learner can still enrol in Stage 5, that is a separate decision:
-{{whether the course is withdrawn, and what enrolled learners are told}}.
+Settled 2026-08-09. The hold covers publication of this syllabus; the course
+itself has been withdrawn at every layer it was reachable from:
+
+- **The app** refuses it on every route — overview, placement and the teaching
+  sections — and the stage picker shows it disabled. A bookmark or a remediation
+  link out of Stage 6 draws a withdrawal notice, not the course.
+- **The catalogue** no longer lists `ehel-gp-g05`, and Moodle's
+  `catalog_source_url` was repointed at a content-addressed URL so the change
+  reached the sync rather than sitting behind a 30-day CDN cache.
+- **Moodle course 71** is hidden — `visible = 0`, `visibleold = 0`.
+
+**No learner was affected: the course had zero enrolments.** Nobody had work in
+it, so there was nothing to migrate and nobody to notify. Had anyone been
+enrolled, that would have been a different decision.
+
+It is hidden rather than deleted, so the `ehel-gp-g05` idnumber survives and the
+sync reattaches to the same course — with its history — the day Stage 5 returns.
 
 **Stage 6 still places against Stage 5.** Its placement exam spends 20 of its 34
 questions on Stage 5 skills, so a learner arriving from a two-skill Stage 5 is

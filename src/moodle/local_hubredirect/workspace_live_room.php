@@ -258,6 +258,7 @@ body.pqh-live-room-page #page.drawers{margin-top:0!important}
   .pqlroom.is-live-full .pqlroom-pane--live{display:grid}
 }
 </style>
+<style><?php echo pqh_openproject_skin_css('pqlroom', 'pqh-live-room-page'); ?></style>
 <main id="pqlroom" class="pqlroom">
   <header class="pqlroom-head">
     <div class="pqlroom-brand">

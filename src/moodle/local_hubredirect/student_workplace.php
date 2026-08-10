@@ -124,6 +124,7 @@ body.pqhsw-page #page,body.pqhsw-page #page-content,body.pqhsw-page #region-main
 .pqhsw-shell .pqh-appbar{background:linear-gradient(90deg,#cfe9ff 0%,#e3f4ff 50%,#f2fbff 100%)}
 .pqhsw-shell .pqh-gnav{background:none}
 </style>
+<style><?php echo pqh_openproject_skin_css('pqhsw', 'pqhsw-page'); ?></style>
 <main class="pqhsw-shell">
 <?php
 echo pqh_design_shell_html('pqhsw-shell', 'workspace', [

@@ -275,6 +275,7 @@ body.pqw-parent-page #page,body.pqw-parent-page #page-content,body.pqw-parent-pa
 .pqwp-empty{background:var(--pqh-surface);border:1px dashed var(--pqh-line);border-radius:var(--pqh-r);color:var(--pqh-muted);font-weight:550}
 <?php echo pqh_design_shell_css('.pqwp-shell'); ?>
 </style>
+<style><?php echo pqh_openproject_skin_css('pqwp', 'pqw-parent-page'); ?></style>
 <main class="pqwp-shell">
 <?php
 echo pqh_design_shell_html('pqwp-shell', 'workspace', [

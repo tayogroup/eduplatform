@@ -784,6 +784,7 @@ body.pqw-dashboard-page #page,body.pqw-dashboard-page #page-content,body.pqw-das
 .pqwd-todo__body span{display:block;color:var(--pqh-muted);font-size:11.5px;font-weight:500}
 <?php echo pqh_design_shell_css('.pqwd-shell'); ?>
 </style>
+<style><?php echo pqh_openproject_skin_css('pqwd', 'pqw-dashboard-page'); ?></style>
 <main class="pqwd-shell">
 <?php
 $pqwdshellextra = '<button type="button" onclick="window.history.back()">Back</button>';

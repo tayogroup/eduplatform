@@ -542,6 +542,7 @@ body.pqh-course-placeholder-page #page,body.pqh-course-placeholder-page #page-co
 .pqh-placeholder__btn--light{background:#f4fff0;color:#4d3522!important;border:1px solid rgba(111,78,50,.16)}
 <?php echo pqh_dashboard_header_css(); ?>
 </style>
+<style><?php echo pqh_openproject_skin_css(['pqh-course-main', 'pqh-placeholder'], '', '__'); ?></style>
 <main class="pqh-placeholder">
   <section class="pqh-placeholder__card">
     <div class="pqh-placeholder__mark">QA</div>

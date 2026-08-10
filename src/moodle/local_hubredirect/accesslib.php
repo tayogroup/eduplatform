@@ -2557,3 +2557,141 @@ function pqh_ip_rate_limited(string $bucket, int $max = 30, int $windowsecs = 60
         return false;
     }
 }
+
+/**
+ * The OpenProject skin, generated for one page's class prefix.
+ *
+ * Tokens are measured off openproject.org, not guessed: Lato, #1a67a3 primary
+ * (#134a81 hover), #1f1f1f ink over #707070 greys, #dfdfdf hairlines, 3px
+ * radii, #ebf3f7 tinted table heads, 400 body / 700 emphasis, and a #162b48
+ * header bar. course_offerings.php and course_catalog_browse.php were skinned
+ * by hand first; this is that same skin with the prefix pulled out, so the two
+ * reference pages and everything modelled on them cannot drift apart.
+ *
+ * Every hubredirect page names its components the same way -- <prefix>-btn,
+ * -panel, -table, -pill, -field, -muted and the rest -- while the prefix itself
+ * is unique per page (176 of them). So the prefix is the only variable, and
+ * one definition here replaces a hand-edited <style> block on every page.
+ *
+ * HOW TO CALL IT. Put it in its OWN <style> element immediately after the
+ * page's existing one:
+ *
+ *     </style>
+ *     <style><?php echo pqh_openproject_skin_css('pqwd', 'pqw-dashboard-page'); ?></style>
+ *
+ * A separate element, not appended inside the page's own block, for two
+ * reasons. The Lato @import has to be the first rule of the stylesheet it sits
+ * in, which it cannot be if the page's rules come first; and being a later
+ * stylesheet it still wins on source order, so the skin overrides the page
+ * without needing !important on every rule and without editing what is
+ * already there.
+ *
+ * WHAT IT DELIBERATELY DOES NOT TOUCH: layout. No grid-template-columns, no
+ * widths, no padding on the page shell. 27 pages lay themselves out in ways
+ * this function cannot see, and a skin that moves boxes around is a redesign
+ * of each one rather than a restyle. Colour, type, borders, radii and gaps
+ * only.
+ *
+ * @param string|string[] $prefixes the page's class prefix, e.g. 'pqwd'
+ * @param string $bodyclass the page's add_body_class() value, for the canvas
+ * @param string $sep prefix/component separator; '__' for the BEM pages
+ */
+function pqh_openproject_skin_css($prefixes, string $bodyclass = '', string $sep = '-'): string {
+    $prefixes = is_array($prefixes) ? $prefixes : [$prefixes];
+
+    // The @import must lead the stylesheet or the browser drops it. If Google
+    // Fonts is blocked the stack falls through to -apple-system/Segoe UI and
+    // only the typeface changes.
+    $css = "@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap');\n";
+    $css .= ':root{--op-font:"Lato",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans",Ubuntu,Cantarell,"Helvetica Neue",sans-serif;'
+        . '--op-primary:#1a67a3;--op-primary-hover:#134a81;--op-primary-subtle:#d1e1ed;--op-primary-border:#a3c2da;--op-primary-emphasis:#0a2941;'
+        . '--op-ink:#1f1f1f;--op-ink-muted:#555;--op-ink-soft:#707070;--op-ink-faint:#919191;'
+        . '--op-line:#dfdfdf;--op-line-strong:#ccc;'
+        . '--op-canvas:#f2f2f2;--op-surface:#fff;--op-surface-tint:#ebf3f7;--op-surface-soft:#f9f9f9;'
+        . '--op-ok-bg:#d1e7dd;--op-ok-line:#a3cfbb;--op-ok-ink:#0a3622;'
+        . '--op-warn-bg:#fff3cd;--op-warn-line:#ffe69c;--op-warn-ink:#664d03;'
+        . '--op-bad-bg:#f8d7da;--op-bad-line:#f1aeb5;--op-bad-ink:#58151c;'
+        . '--op-radius:3px;--op-radius-lg:.5rem;--op-pill:50rem;'
+        . '--op-focus:0 0 0 .25rem rgba(26,103,163,.25);--op-shadow-lg:0 1rem 3rem rgba(0,0,0,.175);'
+        . "--op-header-bg:#162b48;--op-header-ink:#fff;--op-header-ink-soft:rgba(255,255,255,.72)}\n";
+
+    if (trim($bodyclass) !== '') {
+        $bodyclass = trim($bodyclass);
+        $css .= "body.{$bodyclass}{background:var(--op-canvas)!important;font-family:var(--op-font)}\n";
+    }
+
+    foreach ($prefixes as $prefix) {
+        $p = preg_replace('/[^a-z0-9_-]/i', '', (string)$prefix);
+        if ($p === '') {
+            continue;
+        }
+        $s = $sep === '__' ? '__' : '-';
+        $css .= <<<CSS
+.{$p}{$s}shell{background:var(--op-canvas);color:var(--op-ink);font-family:var(--op-font);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.{$p}{$s}panel,.{$p}{$s}card{border:1px solid var(--op-line);border-radius:var(--op-radius);background:var(--op-surface);box-shadow:none}
+.{$p}{$s}panel h2,.{$p}{$s}card h2,.{$p}{$s}panel h3,.{$p}{$s}card h3{color:var(--op-ink);font-family:var(--op-font);font-weight:700;line-height:1.4}
+.{$p}{$s}panel h2,.{$p}{$s}panel h3{font-size:16px}
+.{$p}{$s}card h2,.{$p}{$s}card h3{font-size:18px}
+.{$p}{$s}grid,.{$p}{$s}stack{gap:16px}
+.{$p}{$s}actions{gap:8px}
+.{$p}{$s}btn{border:1px solid var(--op-primary);border-radius:var(--op-radius);background:var(--op-primary);color:#fff!important;font-family:var(--op-font);font-size:14px;font-weight:700;line-height:1.2;text-decoration:none;cursor:pointer;transition:background-color .15s ease,border-color .15s ease,color .15s ease}
+.{$p}{$s}btn:hover{background:var(--op-primary-hover);border-color:var(--op-primary-hover)}
+.{$p}{$s}btn:focus-visible{outline:0;box-shadow:var(--op-focus)}
+.{$p}{$s}btn[disabled],.{$p}{$s}btn:disabled{opacity:.55;cursor:not-allowed}
+.{$p}{$s}btn--light,.{$p}{$s}btn--secondary,.{$p}{$s}btn--ghost{background:var(--op-surface);border-color:var(--op-line-strong);color:var(--op-ink)!important}
+.{$p}{$s}btn--light:hover,.{$p}{$s}btn--secondary:hover,.{$p}{$s}btn--ghost:hover{background:var(--op-surface-soft);border-color:var(--op-ink-faint);color:var(--op-primary-hover)!important}
+.{$p}{$s}btn--danger{background:var(--op-bad-bg);border-color:var(--op-bad-line);color:var(--op-bad-ink)!important}
+.{$p}{$s}btn--danger:hover{background:#f1aeb5;border-color:#e08d97;color:var(--op-bad-ink)!important}
+.{$p}{$s}field label,.{$p}{$s}field>span{color:var(--op-ink-muted);font-size:13px;font-weight:700;letter-spacing:0;text-transform:none}
+.{$p}{$s}input,.{$p}{$s}select,.{$p}{$s}textarea{box-sizing:border-box;min-width:0;border:1px solid var(--op-line-strong);border-radius:var(--op-radius);background:var(--op-surface);color:var(--op-ink);font-family:var(--op-font);font-size:14px;font-weight:400;line-height:1.5}
+.{$p}{$s}input::placeholder,.{$p}{$s}textarea::placeholder{color:var(--op-ink-faint)}
+.{$p}{$s}input:focus,.{$p}{$s}select:focus,.{$p}{$s}textarea:focus{outline:0;border-color:#8db3d1;box-shadow:var(--op-focus)}
+.{$p}{$s}input:disabled,.{$p}{$s}select:disabled,.{$p}{$s}textarea:disabled{background:var(--op-surface-soft);color:var(--op-ink-soft)}
+.{$p}{$s}check{accent-color:var(--op-primary)}
+.{$p}{$s}table{border-collapse:separate;border-spacing:0;font-size:14px}
+.{$p}{$s}table thead th{border-top:1px solid var(--op-line);border-bottom:1px solid var(--op-line);background:var(--op-surface-tint);color:var(--op-ink-muted);font-size:12px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;vertical-align:middle}
+.{$p}{$s}table td{border-bottom:1px solid var(--op-line);color:var(--op-ink);font-size:14px;font-weight:400;vertical-align:top}
+.{$p}{$s}table tbody tr:hover td{background:var(--op-surface-soft)}
+.{$p}{$s}name{color:var(--op-ink);font-size:14px;font-weight:700}
+.{$p}{$s}muted,.{$p}{$s}help{color:var(--op-ink-soft);font-weight:400;line-height:1.45}
+.{$p}{$s}text{color:var(--op-ink-muted);font-size:14px;font-weight:400;line-height:1.6}
+.{$p}{$s}pill,.{$p}{$s}chip{border:1px solid var(--op-primary-border);border-radius:var(--op-pill);background:var(--op-primary-subtle);color:var(--op-primary-emphasis);font-size:12px;font-weight:700;line-height:1}
+.{$p}{$s}pill--ok,.{$p}{$s}pill--good{background:var(--op-ok-bg);border-color:var(--op-ok-line);color:var(--op-ok-ink)}
+.{$p}{$s}pill--warn{background:var(--op-warn-bg);border-color:var(--op-warn-line);color:var(--op-warn-ink)}
+.{$p}{$s}pill--bad,.{$p}{$s}pill--danger{background:var(--op-bad-bg);border-color:var(--op-bad-line);color:var(--op-bad-ink)}
+.{$p}{$s}alert,.{$p}{$s}notice{border:1px solid transparent;border-radius:var(--op-radius);font-size:14px;font-weight:400}
+.{$p}{$s}alert--ok,.{$p}{$s}notice--ok{background:var(--op-ok-bg);border-color:var(--op-ok-line);color:var(--op-ok-ink)}
+.{$p}{$s}alert--bad,.{$p}{$s}notice--bad,.{$p}{$s}error{background:var(--op-bad-bg);border-color:var(--op-bad-line);color:var(--op-bad-ink)}
+.{$p}{$s}alert--warn,.{$p}{$s}notice--warn{background:var(--op-warn-bg);border-color:var(--op-warn-line);color:var(--op-warn-ink)}
+.{$p}{$s}error{border:1px solid var(--op-bad-line);border-radius:var(--op-radius);font-size:14px;font-weight:400}
+.{$p}{$s}kicker{color:var(--op-ink-soft);font-size:12px;font-weight:700;letter-spacing:.4px;text-transform:uppercase}
+.{$p}{$s}pre,.{$p}{$s}code{border:1px solid var(--op-line);border-radius:var(--op-radius);background:var(--op-surface-soft);color:var(--op-ink);font-family:"Space Mono",Menlo,Consolas,"Courier New",monospace;font-size:13px}
+.{$p}{$s}empty{border:1px dashed var(--op-line-strong);border-radius:var(--op-radius);background:var(--op-surface-soft);color:var(--op-ink-soft);font-size:14px;font-weight:400;line-height:1.6}
+.{$p}{$s}detail{border:1px solid var(--op-line);border-radius:var(--op-radius);background:var(--op-surface-soft)}
+.{$p}{$s}detail strong{color:var(--op-ink-soft);font-size:12px;font-weight:700;letter-spacing:.4px;text-transform:uppercase}
+.{$p}{$s}metric,.{$p}{$s}tile{border:1px solid var(--op-line);border-radius:var(--op-radius);background:var(--op-surface);box-shadow:none;color:var(--op-ink)}
+.{$p}{$s}metrics{gap:12px}
+.{$p}{$s}meta{gap:6px}
+.{$p}{$s}modal-box{border:1px solid var(--op-line);border-radius:var(--op-radius-lg);background:var(--op-surface);box-shadow:var(--op-shadow-lg)}
+.{$p}{$s}close{border:1px solid var(--op-line-strong);border-radius:var(--op-radius);background:var(--op-surface);color:var(--op-ink)!important;font-family:var(--op-font);font-weight:700}
+.{$p}{$s}top{border:1px solid var(--op-header-bg);border-radius:var(--op-radius);background:var(--op-header-bg);color:var(--op-header-ink);box-shadow:none}
+.{$p}{$s}top .{$p}{$s}title,.{$p}{$s}top .pqh-workspace-title{color:var(--op-header-ink)!important;font-family:var(--op-font)!important;font-size:24px!important;font-weight:700!important;line-height:1.25!important;letter-spacing:0!important;text-shadow:none!important}
+.{$p}{$s}top .{$p}{$s}sub,.{$p}{$s}top .pqh-workspace-sub{color:var(--op-header-ink-soft)!important;font-size:14px!important;font-weight:400!important;opacity:1}
+.{$p}{$s}top .{$p}{$s}btn,.{$p}{$s}top .pqh-workspace-actions a,.{$p}{$s}top .pqh-workspace-actions button{border:1px solid rgba(255,255,255,.30)!important;border-radius:var(--op-radius)!important;background:rgba(255,255,255,.10)!important;color:var(--op-header-ink)!important;font-family:var(--op-font)!important;font-size:14px!important;font-weight:700!important;box-shadow:none!important}
+.{$p}{$s}top .{$p}{$s}btn:hover,.{$p}{$s}top .pqh-workspace-actions a:hover,.{$p}{$s}top .pqh-workspace-actions button:hover{background:rgba(255,255,255,.20)!important;border-color:rgba(255,255,255,.50)!important;color:var(--op-header-ink)!important}
+.{$p}{$s}top a.pqh-workspace-logout,.{$p}{$s}top .{$p}{$s}btn.pqh-workspace-logout{background:rgba(255,255,255,.18)!important;border-color:rgba(255,255,255,.60)!important;color:var(--op-header-ink)!important}
+.{$p}{$s}top a.pqh-workspace-logout:hover,.{$p}{$s}top .{$p}{$s}btn.pqh-workspace-logout:hover{background:var(--op-header-ink)!important;border-color:var(--op-header-ink)!important;color:var(--op-header-bg)!important}
+.{$p}{$s}top select{border:1px solid rgba(255,255,255,.30)!important;border-radius:var(--op-radius)!important;background:rgba(255,255,255,.10)!important;color:var(--op-header-ink)!important;font-family:var(--op-font)!important;font-size:14px!important;font-weight:400!important}
+.{$p}{$s}top .{$p}{$s}pill{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.34);color:var(--op-header-ink)}
+
+CSS;
+    }
+
+    // The shared workspace header ships a gradient, 950-weight type and a deep
+    // shadow with !important on every declaration. These are one class more
+    // specific and last in the sheet, so they land whatever the page inherits.
+    $css .= ".pqh-workspace-top{box-shadow:none!important;border-radius:var(--op-radius)!important;"
+        . "background:var(--op-header-bg)!important;border-color:var(--op-header-bg)!important;color:var(--op-header-ink)!important}\n";
+
+    return $css;
+}

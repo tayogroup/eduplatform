@@ -380,6 +380,7 @@ body.pqw-series-page #page,body.pqw-series-page #page-content,body.pqw-series-pa
 @media(max-width:980px){.pqwser-top,.pqwser-grid,.pqwser-metrics{grid-template-columns:1fr}.pqwser-actions{justify-content:flex-start}}
 <?php echo pqh_workspace_header_css(); ?>
 </style>
+<style><?php echo pqh_openproject_skin_css('pqwser', 'pqw-series-page'); ?></style>
 <main class="pqwser-shell">
   <div class="pqwser-wrap">
     <section class="pqwser-top pqh-workspace-top">

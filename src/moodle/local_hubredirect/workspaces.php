@@ -1021,6 +1021,7 @@ body.pqw-workspaces-page #page,body.pqw-workspaces-page #page-content,body.pqw-w
 @media(max-width:980px){.pqw-top,.pqw-grid,.pqw-org-grid,.pqw-inline,.pqw-checks,.pqw-kpis,.pqw-split{grid-template-columns:1fr}.pqw-actions{justify-content:flex-start}.pqw-table,.pqw-table tbody,.pqw-table tr,.pqw-table td{display:block;width:100%}.pqw-table thead{display:none}.pqw-table tr{border-bottom:1px solid rgba(23,48,68,.12)}.pqw-table td{border:0}.pqw-table td::before{content:attr(data-label);display:block;margin-bottom:4px;color:#5e7280;font-size:11px;font-weight:950;text-transform:uppercase}}
 <?php echo pqh_dashboard_header_css(); ?>
 </style>
+<style><?php echo pqh_openproject_skin_css('pqw', 'pqw-workspaces-page'); ?></style>
 <main class="pqw-shell">
   <div class="pqw-wrap">
     <section class="pqw-top pqh-workspace-top">

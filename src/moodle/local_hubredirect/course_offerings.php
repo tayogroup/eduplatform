@@ -1085,6 +1085,7 @@ body.pqco-admin-page{background:var(--op-canvas)!important;font-family:var(--op-
 .pqco-shell .pqco-table .pqco-input,.pqco-shell .pqco-table .pqco-select{min-height:28px;font-size:13px}
 .pqco-shell .pqco-table .pqco-field{margin-bottom:8px}
 </style>
+<style><?php echo pqh_openproject_skin_css('pqco', 'pqco-admin-page'); ?></style>
 <main class="pqco-shell">
   <div class="pqco-wrap">
     <section class="pqco-top pqh-workspace-top">

@@ -178,6 +178,7 @@ body.pqh-master-dashboard-page .main-inner{margin:0!important;padding:0!importan
 @media(max-width:900px){.pqm-top,.pqm-tools{grid-template-columns:1fr}.pqm-actions{justify-content:flex-start}.pqm-grid{grid-template-columns:1fr}.pqm-title{font-size:30px}}
 @media(max-width:560px){.pqm-shell{padding:20px 12px 42px}.pqm-link{grid-template-columns:1fr}.pqm-btn{width:100%}}
 </style>
+<style><?php echo pqh_openproject_skin_css('pqm', 'pqh-master-dashboard-page'); ?></style>
 <main class="pqm-shell">
   <div class="pqm-wrap">
     <section class="pqm-top">

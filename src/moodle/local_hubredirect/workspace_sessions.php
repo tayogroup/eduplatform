@@ -393,6 +393,7 @@ body.pqw-sessions-page #page,body.pqw-sessions-page #page-content,body.pqw-sessi
 @media(max-width:980px){.pqwls-top,.pqwls-grid,.pqwls-metrics{grid-template-columns:1fr}.pqwls-actions{justify-content:flex-start}.pqwls-checks{grid-template-columns:1fr}}
 <?php echo pqh_workspace_header_css(); ?>
 </style>
+<style><?php echo pqh_openproject_skin_css('pqwls', 'pqw-sessions-page'); ?></style>
 <main class="pqwls-shell">
   <div class="pqwls-wrap">
     <section class="pqwls-top pqh-workspace-top">

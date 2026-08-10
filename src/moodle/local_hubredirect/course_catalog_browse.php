@@ -402,6 +402,7 @@ body.pqcb-page{background:var(--op-canvas)!important;font-family:var(--op-font)}
 /* Controls inside a table row take OpenProject's small size. */
 .pqcb-shell .pqcb-table .pqcb-btn{min-height:28px!important;padding:0 10px!important;font-size:13px!important}
 </style>
+<style><?php echo pqh_openproject_skin_css('pqcb', 'pqcb-page'); ?></style>
 <main class="pqcb-shell">
   <div class="pqcb-wrap">
     <section class="pqcb-top pqh-workspace-top">

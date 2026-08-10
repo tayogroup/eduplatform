@@ -183,6 +183,7 @@ body.pqw-materials-page #page,body.pqw-materials-page #page-content,body.pqw-mat
 <?php echo pqh_design_system_css('.pqwm-shell'); ?>
 <?php echo pqh_design_shell_css('.pqwm-shell'); ?>
 </style>
+<style><?php echo pqh_openproject_skin_css('pqwm', 'pqw-materials-page'); ?></style>
 <main class="pqwm-shell">
 <?php echo pqh_design_shell_html('pqwm-shell'); ?>
   <div class="pqwm-wrap">

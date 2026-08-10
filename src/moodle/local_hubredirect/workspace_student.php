@@ -546,6 +546,7 @@ body.pqw-student-page #page,body.pqw-student-page #page-content,body.pqw-student
 .pqws-empty{background:var(--pqh-surface);border:1px dashed var(--pqh-line);border-radius:var(--pqh-r);color:var(--pqh-muted);font-weight:550}
 <?php echo pqh_design_shell_css('.pqws-shell'); ?>
 </style>
+<style><?php echo pqh_openproject_skin_css('pqws', 'pqw-student-page'); ?></style>
 <main class="pqws-shell">
 <?php
 echo pqh_design_shell_html('pqws-shell', 'workspace', [

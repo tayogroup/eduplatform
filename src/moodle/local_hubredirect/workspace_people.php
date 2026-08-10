@@ -745,6 +745,7 @@ body.pqw-people-page #page,body.pqw-people-page #page-content,body.pqw-people-pa
 @media(max-width:980px){.pqwp-top,.pqwp-grid,.pqwp-summary{grid-template-columns:1fr}.pqwp-actions{justify-content:flex-start}.pqwp-table,.pqwp-table tbody,.pqwp-table tr,.pqwp-table td{display:block;width:100%}.pqwp-table thead{display:none}.pqwp-table tr{border-bottom:1px solid rgba(23,48,68,.12)}.pqwp-table td{border:0}.pqwp-table td::before{content:attr(data-label);display:block;margin-bottom:4px;color:#5e7280;font-size:11px;font-weight:950;text-transform:uppercase}}
 <?php echo pqh_workspace_header_css(); ?>
 </style>
+<style><?php echo pqh_openproject_skin_css('pqwp', 'pqw-people-page'); ?></style>
 <main class="pqwp-shell">
   <div class="pqwp-wrap">
     <section class="pqwp-top pqh-workspace-top">

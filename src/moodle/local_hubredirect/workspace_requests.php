@@ -290,6 +290,7 @@ body.pqwr-page #page,body.pqwr-page #page-content,body.pqwr-page #region-main,bo
 .pqwr-row-hidden{display:none}
 <?php echo pqh_design_shell_css('.pqwr-shell'); ?>
 </style>
+<style><?php echo pqh_openproject_skin_css('pqwr', 'pqwr-page'); ?></style>
 <main class="pqwr-shell">
 <?php
 echo pqh_design_shell_html('pqwr-shell', 'workspace', [

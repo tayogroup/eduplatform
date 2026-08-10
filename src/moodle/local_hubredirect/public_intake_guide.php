@@ -21,12 +21,23 @@ require_once(__DIR__ . '/../../config.php');
 require_once(__DIR__ . '/accesslib.php');
 require_once(__DIR__ . '/public_pageslib.php');
 
-// Defaults point at the Bunny pull zone the rest of the platform serves from.
-// Either can be overridden without a code change or a plugin upgrade:
-//   php admin/cli/cfg.php --component=local_hubredirect \
-//       --name=intake_guide_video_en --set=https://.../file.mp4
-// Setting a URL to an empty string hides that language's player entirely, which
-// is how a language ships late without holding back the page.
+// Defaults point at the Bunny pull zone the rest of the platform serves from
+// and are correct as shipped -- there is nothing to configure for the normal
+// case. Overriding is for moving a file, and takes no code change or upgrade:
+//
+//   --set=<a real, complete URL>   point this language somewhere else
+//   --unset                        go back to the default below
+//   --set=''                       hide this language's button entirely,
+//                                  which is how one language ships late
+//
+// on `php admin/cli/cfg.php --component=local_hubredirect --name=intake_guide_video_en`.
+//
+// NO EXAMPLE URL IS WRITTEN HERE ON PURPOSE. A placeholder in a copy-pasteable
+// command is a live grenade: `https://your-url.mp4` was once pasted verbatim
+// from a deploy note, passed the http(s) check below, failed DNS in the
+// browser, and left the English guide as a dead black player while Somali --
+// never configured, so still on its default -- worked perfectly. Prefer
+// --unset over re-typing the URL, so it stays defined in one place.
 const PQIG_CDN_BASE = 'https://ehelacademy.b-cdn.net/platform/portal/video/';
 const PQIG_VIDEO_EN_DEFAULT = PQIG_CDN_BASE . 'ehel-intake-form-guide-english.mp4';
 const PQIG_VIDEO_SO_DEFAULT = PQIG_CDN_BASE . 'ehel-intake-form-guide-somali.mp4';

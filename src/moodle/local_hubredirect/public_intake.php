@@ -15,6 +15,9 @@ const PQPIR_MAX_FORM_SECONDS = 7200;
 const PQPIR_SESSION_COOLDOWN_SECONDS = 60;
 const PQPIR_CONTACT_WINDOW_SECONDS = 3600;
 const PQPIR_CONTACT_WINDOW_LIMIT = 3;
+// Consumer slug of the school shown first in "Which school is this for?" and
+// preselected when the visitor has not chosen one.
+const PQPIR_DEFAULT_SCHOOL_SLUG = 'ehel-k12';
 
 function pqpir_table_exists(string $table): bool {
     global $DB;
@@ -85,6 +88,30 @@ function pqpir_public_header(stdClass $consumercontext): string {
     $html .= '</span>';
 
     return $html;
+}
+
+/**
+ * Move the K-12 school to the head of the child-school picker, leaving the rest
+ * in their linked order. It is the school the public intake link is sent to
+ * families for, so it is both first and the preselected default.
+ *
+ * Returns the list untouched, losing no school, when the slug matches nothing.
+ * Note what that means for the caller: the preselected default then falls back
+ * to whichever school is linked first, so re-slugging the K-12 consumer would
+ * quietly start filing family requests against another school. The slug is the
+ * thing to keep stable, not this list.
+ */
+function pqpir_default_school_first(array $schools): array {
+    $preferred = [];
+    $rest = [];
+    foreach ($schools as $school) {
+        if ((string)($school->consumerslug ?? '') === PQPIR_DEFAULT_SCHOOL_SLUG) {
+            $preferred[] = $school;
+        } else {
+            $rest[] = $school;
+        }
+    }
+    return array_merge($preferred, $rest);
 }
 
 function pqpir_label(string $value, array $options): string {
@@ -537,11 +564,17 @@ if ($requestedworkspaceid > 0 && (int)($consumercontext->workspaceid ?? 0) !== $
 }
 
 // On a parent domain (e.g. the Ehel Academy umbrella site) that owns child
-// schools, the visitor must pick which actual school the request is for
-// before the rest of the form (course offerings, institution-specific
-// fields) can be scoped correctly.
+// schools, the request has to be scoped to one actual school before the rest
+// of the form (course offerings, institution-specific fields) can be built.
 $domainbasecontext = pqh_current_consumer_context();
 $childschoolchoices = pqh_org_group_child_schools((int)$domainbasecontext->consumerid);
+// The K-12 school leads the list and is preselected: it is the one the intake
+// link is sent to families for, and every other school was a scroll past it.
+// Ordered here rather than in pqh_org_group_child_schools(), whose gm.id order
+// is the link order and is also what public_teacher_intake.php renders.
+// Matched on the consumer slug, not the workspace id, so restoring the
+// workspace elsewhere cannot silently move the default to another school.
+$childschoolchoices = pqpir_default_school_first($childschoolchoices);
 $selectedchildworkspaceid = 0;
 if ($childschoolchoices) {
     foreach ($childschoolchoices as $childschool) {
@@ -549,6 +582,18 @@ if ($childschoolchoices) {
             $selectedchildworkspaceid = (int)$consumercontext->workspaceid;
             break;
         }
+    }
+}
+// Nothing chosen yet: adopt the school at the head of the list rather than
+// holding the form back. The context has to move with the radio button --
+// leaving it on the umbrella consumer would show a ticked school while
+// building the form, and filing the request, against a different one.
+if ($childschoolchoices && $selectedchildworkspaceid <= 0) {
+    $defaultschool = $childschoolchoices[0];
+    $defaultcontext = pqh_consumer_context_by_workspace((int)$defaultschool->workspaceid);
+    if ($defaultcontext) {
+        $consumercontext = $defaultcontext;
+        $selectedchildworkspaceid = (int)$defaultschool->workspaceid;
     }
 }
 $needsschoolselection = $childschoolchoices && $selectedchildworkspaceid <= 0;

@@ -109,19 +109,29 @@ const warnings = [];
 for (const file of files) {
   const md = fs.readFileSync(path.join(DOCS, file), "utf8");
 
-  // ehel-<subject>-(grade|stage)-<n>-syllabus.md
-  const m = file.match(/^ehel-(.+)-(?:grade|stage)-(\d+)-syllabus\.md$/);
+  // ehel-<subject>-(grade|stage|level)-<n>-syllabus.md
+  const m = file.match(/^ehel-(.+)-(grade|stage|level)-(\d+)-syllabus\.md$/);
   if (!m) { skipped.push(`${file}: filename does not carry a subject and number`); continue; }
-  const [, subjectDir, num] = m;
-  const key = SUBJECT_KEY[subjectDir];
-  if (!key) { skipped.push(`${file}: no catalogue subjectKey for "${subjectDir}"`); continue; }
+  const [, subjectDir, word, num] = m;
+
+  // Intensive English is its own family and breaks the ehel-<key>-g<NN> shape:
+  // it numbers CEFR levels, not Cambridge stages, so the catalogue publishes
+  // ehel-intensive-eng-l01. Matching generate-ehel-catalog.js exactly matters —
+  // the seeder finds courses by idnumber and a near-miss silently seeds nothing.
+  let idnumber;
+  if (subjectDir === "intensive-english") {
+    idnumber = `ehel-intensive-eng-l${String(num).padStart(2, "0")}`;
+  } else {
+    const key = SUBJECT_KEY[subjectDir];
+    if (!key) { skipped.push(`${file}: no catalogue subjectKey for "${subjectDir}"`); continue; }
+    idnumber = `ehel-${key}-g${String(num).padStart(2, "0")}`;
+  }
 
   if (/^#.*\(HELD\)/m.test(md) || /^## HELD/m.test(md)) {
     skipped.push(`${file}: marked HELD — not seeded`);
     continue;
   }
 
-  const idnumber = `ehel-${key}-g${String(num).padStart(2, "0")}`;
   const overview = section(md, "Overview", 2);
   const teacherIntro = section(md, "Teacher introduction", 2);
   const contact = section(md, "Contact", 2);

@@ -355,6 +355,45 @@ for (const gradeDir of grades) {
   }
 }
 
+// ── placement exams must not route into a withdrawn stage ───────────────────
+// A placement report's whole value is that it names the earlier unit to go and
+// rebuild. Pointing that at a stage the app refuses to serve sends the learner
+// who most needs help to a withdrawal notice, and nothing else would notice:
+// the exam is hand-authored, the withdrawal lives in the app, and no check
+// spanned the two. Stage 5's withdrawal left three sections across Stages 6, 7
+// and 8 aimed at it.
+const withdrawnFile = path.join(here, "..", "src", "prototypes", "ehel-academy", "withdrawn-courses.json");
+const withdrawnStages = new Set();
+if (fs.existsSync(withdrawnFile)) {
+  const reg = readJson(withdrawnFile).withdrawn || {};
+  for (const entry of Object.values(reg)) {
+    if (String(entry.subject || "").toLowerCase().includes("global perspectives") && entry.stage) {
+      withdrawnStages.add(Number(entry.stage));
+    }
+  }
+}
+const placementDir = path.join(root, "data", "placement");
+if (withdrawnStages.size && fs.existsSync(placementDir)) {
+  for (const file of fs.readdirSync(placementDir).filter((f) => f.endsWith(".json")).sort()) {
+    const stageOfExam = Number((file.match(/grade-(\d+)/) || [])[1]);
+    // The withdrawn stage's own exam is unreachable anyway — skip it.
+    if (withdrawnStages.has(stageOfExam)) continue;
+    const exam = readJson(path.join(placementDir, file));
+    for (const section of exam.sections || []) {
+      for (const item of section.remediation || []) {
+        if (withdrawnStages.has(Number(item.grade))) {
+          fail(`placement/${file}`, `section ${section.sectionId} sends a learner to Stage ${item.grade} Unit ${item.unit} `
+            + `(${item.title}), but Stage ${item.grade} is withdrawn — the link lands on a withdrawal notice`);
+        }
+      }
+    }
+    const rec = exam.banding?.notReady?.recommendation;
+    if (rec && withdrawnStages.has(Number(rec.grade))) {
+      fail(`placement/${file}`, `the lowest band recommends "${rec.label}", which is withdrawn`);
+    }
+  }
+}
+
 // ── skill coverage, after every unit has been read ──────────────────────────
 const coverageLines = [];
 for (const gradeKey of [...selfStudyGrades].sort((a, b) => Number(a) - Number(b))) {

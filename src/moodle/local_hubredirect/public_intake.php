@@ -597,12 +597,19 @@ if ($childschoolchoices && $selectedchildworkspaceid <= 0) {
     }
 }
 $needsschoolselection = $childschoolchoices && $selectedchildworkspaceid <= 0;
+// Parent is the default, and anything that is not one of the two known values
+// is treated as unanswered rather than left to fall through as neither: this
+// form is sent to families, and the school it now opens on requires the
+// parent/guardian block regardless of what this says.
 $respondentrole = optional_param('respondent_role', '', PARAM_ALPHA);
+if (!in_array($respondentrole, ['parent', 'student'], true)) {
+    $respondentrole = 'parent';
+}
 $overeighteenanswer = $respondentrole === 'student' ? optional_param('over18', '', PARAM_ALPHA) : '';
 // Parent/guardian is required and shown first when a parent is filling the
 // form or the student confirmed being under 18; it is skipped entirely once
-// the student confirms being an adult. Unanswered (no child-school picker
-// shown) falls back to the existing per-institution placement.
+// the student confirms being an adult. Defaulting to parent above only moves
+// the block to the first step -- it was already required when unanswered.
 $parentguardianfirst = $respondentrole === 'parent' || ($respondentrole === 'student' && $overeighteenanswer === 'no');
 $parentguardianrequired = !($respondentrole === 'student' && $overeighteenanswer === 'yes');
 
@@ -1584,14 +1591,16 @@ body.pqh-public-intake-page #page-wrapper,body.pqh-public-intake-page #page,body
           <input type="hidden" name="consumer" value="<?php echo s((string)$consumercontext->consumerslug); ?>">
           <?php if ((int)$consumercontext->workspaceid > 0): ?><input type="hidden" name="workspaceid" value="<?php echo (int)$consumercontext->workspaceid; ?>"><?php endif; ?>
           <?php if ($teacherpreference): ?><input type="hidden" name="teacherid" value="<?php echo (int)$teacherpreference->userid; ?>"><?php endif; ?>
-          <span class="pqpir-school-pick-question">Are you a student or a parent?</span>
-          <label class="pqpir-school-pick-option">
-            <input type="radio" name="respondent_role" value="student"<?php echo $respondentrole === 'student' ? ' checked' : ''; ?> onchange="this.form.submit();">
-            <span>Student</span>
-          </label>
+          <?php // Parent leads and is preselected -- the question follows that order
+                // rather than reading "student or a parent" above a Parent-first pair. ?>
+          <span class="pqpir-school-pick-question">Are you a parent or a student?</span>
           <label class="pqpir-school-pick-option">
             <input type="radio" name="respondent_role" value="parent"<?php echo $respondentrole === 'parent' ? ' checked' : ''; ?> onchange="this.form.submit();">
             <span>Parent</span>
+          </label>
+          <label class="pqpir-school-pick-option">
+            <input type="radio" name="respondent_role" value="student"<?php echo $respondentrole === 'student' ? ' checked' : ''; ?> onchange="this.form.submit();">
+            <span>Student</span>
           </label>
           <noscript><button type="submit" class="pqpir-btn">Continue</button></noscript>
         </form>

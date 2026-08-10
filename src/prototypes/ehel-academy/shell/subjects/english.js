@@ -351,15 +351,21 @@ function paintSectionLocks() {
     button.disabled = true; // a disabled button fires no click, so this IS the block
     button.style.opacity = ".55";
     button.style.cursor = "not-allowed";
-    // A finished section can now be locked — it is waiting for the steps above
-    // it, not for itself. Keep its tick: swapping the ✓ for a padlock would tell
-    // a learner they had not done work they had. The padlock is for the ones
-    // still to do.
+    // Locked looks locked, always — including a section already finished that is
+    // waiting for the steps above it. Keeping the ✓ on those was tried and
+    // reported as a bug twice: a padlocked list with green ticks scattered up it
+    // reads as the lock being broken, and the reader cannot tell a finished-but-
+    // waiting row from one that is simply open. One state, one icon.
+    //
+    // Nothing is lost. The completion is still stored, the tick returns the
+    // moment the section opens, and the label still says so for a screen reader
+    // — which is where "you have done this" belongs while the row is not
+    // actionable anyway.
     const done = progress.completed.includes(button.dataset.route);
     const label = button.getAttribute("title") || button.dataset.route;
     button.setAttribute("aria-label", done ? `${label}, completed, opens again in order` : `${label}, locked`);
     const state = button.querySelector(".nav-state");
-    if (state && !done) { state.classList.remove("done"); state.textContent = "🔒"; }
+    if (state) { state.classList.remove("done"); state.textContent = "🔒"; }
   }
 }
 

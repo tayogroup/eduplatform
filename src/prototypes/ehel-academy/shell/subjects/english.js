@@ -213,8 +213,13 @@ const unitProgressKey = (unit) => `ehel-english-g${gradeNumber}-u${unit}-progres
 // to the gate, so the next unit never opened. It cannot simply CALL
 // visibleSections() — that reads unitIsLocked(), which resolves through this,
 // and the cycle throws before either exists.
+//
+// The exclusion list must match config.nonCountable below, for the same reason:
+// `ai` was dropped there because Wehel Tutor is help rather than a lesson, and
+// leaving it demanded here would have made the bar read 100% while the gate held
+// the next unit shut.
 const countableSectionIds = () => sections
-  .filter(([id]) => !["overview", "live"].includes(id))
+  .filter(([id]) => !["overview", "ai", "live"].includes(id))
   .filter(([id]) => (id !== "games" || gamePack) && (id !== "ebooks" || unitEbooks().length))
   .map(([id]) => id);
 // The server's view of every unit, handed over by the shell before load() and
@@ -4068,7 +4073,12 @@ const config = {
   disableShellVoice: true, // English runs its own audio engine (file-based + TTS/STT)
   defaultUnit: (g) => (Number(g) === 1 ? 0 : 1),
   sections,
-  nonCountable: ["overview", "live", "final-quiz"],
+  // `ai` is here because Wehel Tutor is help, not a lesson. Counting it meant a
+  // learner who had done all twelve teaching sections but never chatted sat at
+  // 92% and could not open the next unit — a support tool gating progression.
+  // It stays in the nav and still ticks when used; it just no longer decides
+  // whether a unit is finished.
+  nonCountable: ["overview", "ai", "live", "final-quiz"],
   gradeSections: [],
   progressDefaults: { completed: [], knownWords: [], self: {}, writing: {}, games: {} },
   gradeDefaults: { completed: [] },

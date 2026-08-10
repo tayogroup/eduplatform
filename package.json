@@ -133,6 +133,7 @@
     "normalize:unit": "node tools/normalize-unit-config.js alphabet",
     "test": "npm run check:alphabet",
     "validate:curriculum-units": "node tools/validate-unit.mjs src/prototypes/ehel-academy/english/grade-*/data/units/*.json",
+    "export:syllabus-drafts": "node tools/export-syllabus-drafts.js",
     "validate:frameworks": "node tools/validate-curriculum-framework.mjs",
     "validate:units": "node tools/validate-unit-config.js",
     "verify:bunny": "node tools/verify-bunny-output.js",

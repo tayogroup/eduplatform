@@ -319,12 +319,17 @@ function sectionUnlocked(id) {
   const chain = sectionChain();
   const index = chain.indexOf(id);
   if (index <= 0) return true; // not a step, or the first one
-  if (progress.completed.includes(id)) return true; // already done — revisiting is free
-  // EVERY earlier step, not just the one before. Testing only the predecessor
-  // opened holes in the sidebar wherever progress arrived out of order — a
-  // learner who had finished Grammar before the gate existed saw Speaking open
-  // while Vocabulary, Reading and Comprehension above it stayed locked. That is
-  // not a sequence, and on the page it reads as the lock being broken.
+  // EVERY earlier step, and nothing else. A section being finished does NOT open
+  // it: that exemption was here as "revisiting is free" and it punched exactly
+  // the holes the rule above was written to close. A Grade 2 learner carrying a
+  // finished Grammar from before the gate existed saw it open and current with
+  // Vocabulary, Reading and Comprehension locked above it — a padlocked list
+  // with a live item in the middle, which reads as the lock being broken.
+  //
+  // Revisiting is not lost, it is ordered: once the steps above a finished
+  // section are done, its prefix is complete and it opens again. On the normal
+  // forward path that is always true, so a learner going back over their own
+  // work never meets a lock.
   return chain.slice(0, index).every((step) => progress.completed.includes(step));
 }
 // Where the learner is up to: the first step they have not finished.
@@ -346,9 +351,15 @@ function paintSectionLocks() {
     button.disabled = true; // a disabled button fires no click, so this IS the block
     button.style.opacity = ".55";
     button.style.cursor = "not-allowed";
-    button.setAttribute("aria-label", `${button.getAttribute("title") || button.dataset.route}, locked`);
+    // A finished section can now be locked — it is waiting for the steps above
+    // it, not for itself. Keep its tick: swapping the ✓ for a padlock would tell
+    // a learner they had not done work they had. The padlock is for the ones
+    // still to do.
+    const done = progress.completed.includes(button.dataset.route);
+    const label = button.getAttribute("title") || button.dataset.route;
+    button.setAttribute("aria-label", done ? `${label}, completed, opens again in order` : `${label}, locked`);
     const state = button.querySelector(".nav-state");
-    if (state) { state.classList.remove("done"); state.textContent = "🔒"; }
+    if (state && !done) { state.classList.remove("done"); state.textContent = "🔒"; }
   }
 }
 

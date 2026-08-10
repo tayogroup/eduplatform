@@ -61,7 +61,11 @@ const TREES = [
 // no tool actually shipped it, so it moved only when somebody remembered to
 // upload it by hand.
 const ROOT_FILES = [
-  { name: "catalog", src: path.join(EHEL, "catalog.json"), dest: "catalog.json" },
+  // `dated: true` also ships a content-addressed copy (catalog-<digest>.json).
+  // See the comment where the twin is built: the plain name is unpurgeable for
+  // thirty days, so the digest name is what Moodle should actually be pointed
+  // at. The plain copy stays for anything still reading it.
+  { name: "catalog", src: path.join(EHEL, "catalog.json"), dest: "catalog.json", dated: true },
 ];
 
 const names = [...TREES.map((t) => t.name), ...ROOT_FILES.map((f) => f.name)];
@@ -156,9 +160,43 @@ function buildList() {
   }
   for (const f of rootFiles) {
     if (!fs.existsSync(f.src)) { console.log(`  (skip ${f.name}: ${f.src} missing)`); continue; }
-    list.push({ local: f.src, remote: f.dest, hash: sha1(fs.readFileSync(f.src)) });
+    const buf = fs.readFileSync(f.src);
+    list.push({ local: f.src, remote: f.dest, hash: sha1(buf) });
+    // A content-addressed twin beside the plain name. The plain catalog.json is
+    // served with max-age=2592000 and query strings are ignored, so a change to
+    // it is invisible to the edge — and therefore to Moodle — for up to thirty
+    // days, with no way to purge short of an account API key. A new filename is
+    // a guaranteed cache miss, which is the same trick deploy-app-version.js
+    // uses for app code.
+    //
+    // Keyed on the CONTENT, not the date: identical content keeps the same URL,
+    // so re-running this changes nothing and nobody has to touch the Moodle
+    // setting. Only a real catalogue change mints a new name — and that is
+    // exactly when local_prequran/catalog_source_url has to be repointed.
+    if (f.dated) {
+      const digest = sha1(buf).slice(0, 10);
+      const dest = f.dest.replace(/\.json$/, `-${digest}.json`);
+      list.push({ local: f.src, remote: dest, hash: sha1(buf), datedFor: f.dest });
+    }
   }
   return list;
+}
+
+// The digest URL is useless if nobody learns it, and it is not guessable — so
+// it is printed on every run that ships one, whether or not the file changed.
+// A run that says nothing here has shipped a catalogue Moodle will not see.
+function reportDatedUrls(all) {
+  const dated = all.filter((x) => x.datedFor);
+  if (!dated.length) return;
+  console.log("\n──────── point Moodle at these ────────");
+  for (const item of dated) {
+    const url = `https://ehelacademy.b-cdn.net/` + encodeURI(`${ROOT_FOLDER}/${item.remote}`);
+    console.log(`  ${url}`);
+  }
+  console.log("  Site administration → Plugins → Local plugins → Pre-Quraan →");
+  console.log("  local_prequran/catalog_source_url  (one URL per line, one per school)");
+  console.log("  The digest is over the file's content: unchanged catalogue, unchanged URL,");
+  console.log("  nothing to update. A new digest means the catalogue really changed.");
 }
 
 async function put(remote, buf, ct) {
@@ -182,6 +220,7 @@ async function put(remote, buf, ct) {
     console.log(stray.length
       ? `\nWARNING — ${stray.length} release pointer(s) would be overwritten: ${stray.map((x) => x.remote).join(", ")}`
       : `\nNo release pointer is touched — index.html/current.json stay owned by deploy-app-version.js.`);
+    reportDatedUrls(all);
     console.log("\n(dry run — nothing uploaded)");
     return;
   }
@@ -202,4 +241,5 @@ async function put(remote, buf, ct) {
   await Promise.all(Array.from({ length: CONCURRENCY }, worker));
   save();
   console.log(`\n──────── done ──────── uploaded: ${done} | failed: ${failed} | manifest: ${Object.keys(manifest).length}`);
+  reportDatedUrls(all);
 })();

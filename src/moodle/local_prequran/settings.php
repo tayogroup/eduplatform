@@ -582,8 +582,13 @@ if ($hassiteconfig) {
     $settings->add(new admin_setting_configtextarea(
         'local_prequran/catalog_source_url',
         'Catalog URLs (one per school)',
-        'catalog.json URLs the catalog-sync task reads to create categories, courses (by idnumber) and grade items — ONE PER LINE, one per consumer school (Ehel Academy, Quraan Academy, …). Leave blank to disable the task.',
-        'https://ehelacademy.b-cdn.net/Ehel%20Primary/catalog.json',
+        'catalog.json URLs the catalog-sync task reads to create categories, courses (by idnumber) and grade items — ONE PER LINE, one per consumer school (Ehel Academy, Quraan Academy, …). Leave blank to disable the task.<br><br>'
+            . '<b>Use the content-addressed URL (catalog-&lt;digest&gt;.json), not the plain catalog.json.</b> '
+            . 'The plain name is served by the CDN with a 30-day max-age and query strings are ignored, so a catalogue change is invisible here for up to a month and cannot be purged without an account-level API key. '
+            . 'tools/upload-app-to-bunny.js ships a digest-named copy on every run and prints its URL; paste that here. '
+            . 'The digest is over the file content, so an unchanged catalogue keeps the same URL and needs no edit — a new digest means the catalogue really changed.<br><br>'
+            . '<b>Removing a course from the catalogue does not retire it.</b> catalog_sync is get-or-create with a light-touch update and has no reconciliation pass, so a course already created stays visible with its enrolments. Hide it in Moodle as well. The sync never writes <code>visible</code>, so hiding is not undone on the next run.',
+        'https://ehelacademy.b-cdn.net/Ehel%20Primary/catalog-5a4d81d7ed.json',
         PARAM_RAW_TRIMMED
     ));
 

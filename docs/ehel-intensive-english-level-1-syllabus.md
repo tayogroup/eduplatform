@@ -83,8 +83,9 @@ against. A learner who already has some English will find Unit 0 diagnostic
 rather than remedial: it asks which of the six hard sounds are hard for them,
 and the answer differs by first language.
 
-{{If the school screens applicants before enrolling — an interview, a written
-sample — say so here, since the course itself does not.}}
+There is no interview, no written sample and no entry test of any kind. If you
+want to take this course, you enrol — there is nothing to prepare for and
+nothing to pass first.
 
 ### Materials and equipment
 

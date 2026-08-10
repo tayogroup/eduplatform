@@ -20,8 +20,14 @@
  * edited — correct for a teacher revising their own work, catastrophic for a
  * bulk run, which would silently un-approve every syllabus a school had already
  * signed off. So a course whose syllabus is anything other than absent or
- * 'draft' is skipped and reported. --force is not offered: re-approving is a
- * human act, and a flag that undoes it in bulk should not exist.
+ * 'draft' is skipped and reported.
+ *
+ * --reopen lifts that refusal for a correction to an already-approved syllabus,
+ * and REQUIRES --courses naming the ones to touch. The pairing is the whole
+ * point: an unqualified --force would un-approve a school's entire catalogue in
+ * one keystroke, whereas naming two courses is a statement about two courses.
+ * Each reopened syllabus returns to draft and has to be approved again, which
+ * is stated at the end of the run so it cannot be forgotten.
  *
  * @package   local_prequran
  */
@@ -44,6 +50,8 @@ require_once($CFG->dirroot . '/local/hubredirect/syllabus_portallib.php');
     'file' => '',
     'workspaceid' => 0,
     'year' => 0,
+    'courses' => '',
+    'reopen' => false,
     'dry-run' => false,
     'help' => false,
 ], ['h' => 'help']);
@@ -53,6 +61,8 @@ if ($options['help'] || $unrecognised) {
     cli_writeln("  --file=<path>       payload from tools/export-syllabus-drafts.js (required)");
     cli_writeln("  --workspaceid=<id>  the school's workspace (required)");
     cli_writeln("  --year=<YYYY>       academic year, 2026 = 2026-27 (required)");
+    cli_writeln("  --courses=<ids>     comma-separated course idnumbers; only these are touched");
+    cli_writeln("  --reopen            also rewrite approved syllabuses (requires --courses)");
     cli_writeln("  --dry-run           report what would happen, write nothing");
     exit($unrecognised ? 1 : 0);
 }
@@ -61,6 +71,18 @@ $file = (string)$options['file'];
 $workspaceid = (int)$options['workspaceid'];
 $year = (int)$options['year'];
 $dryrun = (bool)$options['dry-run'];
+$reopen = (bool)$options['reopen'];
+
+$onlycourses = [];
+foreach (explode(',', (string)$options['courses']) as $one) {
+    $one = core_text::strtolower(trim($one));
+    if ($one !== '') { $onlycourses[$one] = true; }
+}
+$unmatched = $onlycourses;
+if ($reopen && !$onlycourses) {
+    cli_error('--reopen requires --courses. Reopening every approved syllabus in a workspace is not '
+        . 'a thing this script will do on one flag; name the courses you are correcting.');
+}
 
 if ($file === '' || !is_readable($file)) {
     cli_error("--file is required and must be readable: {$file}");
@@ -107,6 +129,7 @@ $created = 0;
 $updated = 0;
 $skipped = 0;
 $missing = 0;
+$reopened = [];
 
 foreach ($payload['entries'] as $entry) {
     $idnumber = (string)($entry['idnumber'] ?? '');
@@ -115,6 +138,13 @@ foreach ($payload['entries'] as $entry) {
         $skipped++;
         continue;
     }
+
+    if ($onlycourses && !isset($onlycourses[core_text::strtolower($idnumber)])) {
+        continue;
+    }
+    // Tracked separately: emptying $onlycourses would switch the filter off
+    // mid-loop and let every remaining entry through.
+    unset($unmatched[core_text::strtolower($idnumber)]);
 
     $course = $DB->get_record('course', ['idnumber' => $idnumber], 'id,fullname', IGNORE_MISSING);
     if (!$course) {
@@ -125,10 +155,14 @@ foreach ($payload['entries'] as $entry) {
 
     $existing = pqsyl_get($workspaceid, (int)$course->id, $year);
     $status = $existing ? (string)$existing->status : '';
-    if ($existing && $status !== 'draft') {
+    if ($existing && $status !== 'draft' && !$reopen) {
         cli_writeln(sprintf("  %-18s SKIP  already '%s' — refusing to reopen it", $idnumber, $status));
         $skipped++;
         continue;
+    }
+    if ($existing && $status !== 'draft') {
+        cli_writeln(sprintf("  %-18s REOPEN  was '%s' — pqsyl_save returns it to draft", $idnumber, $status));
+        $reopened[] = $idnumber;
     }
 
     $data = [
@@ -172,8 +206,16 @@ cli_writeln(sprintf(
     $skipped,
     $missing
 ));
+foreach (array_keys($unmatched) as $missed) {
+    cli_writeln("!! --courses named '{$missed}', which is not in the payload.");
+}
 if ($missing) {
     cli_writeln("A missing course means the catalogue has not been synced, or the idnumber differs. Check catalog_sync before re-running.");
+}
+if ($reopened) {
+    cli_writeln(sprintf('%d syllabus(es) were reopened and are back in draft: %s',
+        count($reopened), implode(', ', $reopened)));
+    cli_writeln('They are NOT approved any more. Re-run approve_syllabus_drafts.php, or families lose access to them.');
 }
 if (!$dryrun && ($created || $updated)) {
     cli_writeln("Every syllabus is a DRAFT. A school administrator still has to approve each one.");

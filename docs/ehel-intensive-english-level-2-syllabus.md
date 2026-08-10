@@ -82,8 +82,10 @@ Its lowest band does not soften the answer, and the wording is worth keeping:
 *"Your English will grow fastest on a strong foundation. Start with Level 1 — it
 moves at your pace, and this exam will be here whenever you are."*
 
-{{Whether the school accepts an external B1 certificate in place of the exam,
-and which ones.}}
+A certificate from elsewhere does not replace the exam. However strong your
+Cambridge, IELTS or other B1 award, you sit the placement exam like everyone
+else — it takes about half an hour, you can retake it as often as you like, and
+it decides only where you start, not whether you are admitted.
 
 ### Materials and equipment
 

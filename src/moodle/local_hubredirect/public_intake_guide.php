@@ -41,6 +41,14 @@ require_once(__DIR__ . '/public_pageslib.php');
 const PQIG_CDN_BASE = 'https://ehelacademy.b-cdn.net/platform/portal/video/';
 const PQIG_VIDEO_EN_DEFAULT = PQIG_CDN_BASE . 'ehel-intake-form-guide-english.mp4';
 const PQIG_VIDEO_SO_DEFAULT = PQIG_CDN_BASE . 'ehel-intake-form-guide-somali.mp4';
+// Posters come from the CDN beside the videos, NOT from local/hubredirect/pix.
+// They shipped as two JPEGs in that directory once and were skipped in the file
+// copy, so every player was a black rectangle until it started -- which reads as
+// a broken video rather than an unplayed one. A poster is decoration for a file
+// that already lives on the CDN; making the deploy carry binaries to earn it was
+// the wrong trade. This page now deploys as PHP only.
+const PQIG_POSTER_EN = PQIG_CDN_BASE . 'intake-guide-poster-en.jpg';
+const PQIG_POSTER_SO = PQIG_CDN_BASE . 'intake-guide-poster-so.jpg';
 
 function pqig_video_url(string $name, string $default): string {
     $configured = get_config('local_hubredirect', $name);
@@ -122,8 +130,8 @@ if (method_exists($PAGE, 'set_cacheable')) {
 @header('X-Robots-Tag: noindex, nofollow', true);
 @header('Referrer-Policy: strict-origin-when-cross-origin', true);
 
-$posteren = (new moodle_url('/local/hubredirect/pix/intake-guide-poster-en.jpg'))->out(false);
-$posterso = (new moodle_url('/local/hubredirect/pix/intake-guide-poster-so.jpg'))->out(false);
+$posteren = PQIG_POSTER_EN;
+$posterso = PQIG_POSTER_SO;
 
 echo $OUTPUT->header();
 echo ehp_styles();
@@ -163,6 +171,7 @@ echo ehp_styles();
 .pqig-foot .pqig-skip{width:100%}
 .pqig-muted{margin:14px 0 0;font-size:13.5px;line-height:1.55;color:var(--pq-muted)}
 </style>
+<style><?php echo pqh_openproject_skin_css('pqig', 'pqh-public-intake-page'); ?></style>
 <main class="pqig-shell">
   <div class="pqig-wrap">
     <div class="pqig-nav">

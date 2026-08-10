@@ -2821,5 +2821,40 @@ CSS;
             . "background:var(--op-header-bg)!important;border-color:var(--op-header-bg)!important;color:var(--op-header-ink)!important}\n";
     }
 
+    // The sidebar rail. Also prefix-independent, so once only.
+    //
+    // Written here rather than in pqh_design_shell_css() where the rail is
+    // defined, for the same reason nothing else in this skin edits a page's own
+    // CSS: the rail is on 41 pages, and editing it there would change all of
+    // them whether or not they carry a skin call. This way it follows the skin.
+    //
+    // The rail's own rules put !important on background and colour, so these
+    // double the class to (0,2,0) and re-declare -- the same trick the rest of
+    // the generator uses. .is-active is already (0,2,0) there, so the active
+    // rule needs all three classes to land.
+    //
+    // The redesign: items stop being filled chips (#f4f6f9 at 9px radius) and
+    // become flat rows the way OpenProject's own sidebar reads -- transparent
+    // until hovered, 3px corners, regular weight, bold only when active. The
+    // brand square loses its blue gradient and drop shadow for a flat primary
+    // tile. LAYOUT IS UNTOUCHED -- no width, position or padding -- so the
+    // 248px rail and its 72px collapsed state behave exactly as before.
+    if (!isset($emittedprefix['@railskin'])) {
+        $emittedprefix['@railskin'] = true;
+        $css .= <<<CSS
+.pqh-gnav.pqh-gnav{background:var(--op-surface);border-right-color:var(--op-line)}
+.pqh-gnav__name.pqh-gnav__name{color:var(--op-ink);font-family:var(--op-font);font-size:15px;font-weight:700;letter-spacing:0}
+.pqh-gnav__mark.pqh-gnav__mark{border-radius:var(--op-radius);background:var(--op-primary);color:#fff!important;font-family:var(--op-font);font-size:14px;font-weight:700;box-shadow:none}
+.pqh-gnav__mark--img.pqh-gnav__mark--img{background:var(--op-surface);box-shadow:none}
+.pqh-gnav__item.pqh-gnav__item{border-radius:var(--op-radius)!important;background:transparent!important;color:var(--op-ink-muted)!important;font-family:var(--op-font)!important;font-size:14px!important;font-weight:400!important;box-shadow:none!important}
+.pqh-gnav__item.pqh-gnav__item:hover{background:var(--op-canvas)!important;color:var(--op-ink)!important}
+.pqh-gnav__item.pqh-gnav__item.is-active{background:var(--op-primary-subtle)!important;color:var(--op-primary-emphasis)!important;font-weight:700!important}
+.pqh-gnav__foot.pqh-gnav__foot{border-top-color:var(--op-line)}
+.pqh-gnav__foot .pqh-gnav__item.pqh-gnav__item{color:var(--op-ink-soft)!important}
+.pqh-gnav__foot .pqh-gnav__item.pqh-gnav__item:hover{color:var(--op-ink)!important}
+
+CSS;
+    }
+
     return $css;
 }

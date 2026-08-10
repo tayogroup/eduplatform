@@ -302,6 +302,7 @@ body.pqhsd-page #page,body.pqhsd-page #page-content,body.pqhsd-page #region-main
 .pqhsd-shell .pqh-appbar{background:linear-gradient(90deg,#cfe9ff 0%,#e3f4ff 50%,#f2fbff 100%)}
 </style>
 <style><?php echo pqh_openproject_skin_css('pqhsd', 'pqhsd-page'); ?></style>
+<style><?php echo pqh_openproject_skin_css(['pqhsd-todo', 'pqhsd-ccard', 'pqhsd-feedback'], '', '__'); ?></style>
 <main class="pqhsd-shell">
 <?php
 echo pqh_design_shell_html('pqhsd-shell', 'dashboard', [

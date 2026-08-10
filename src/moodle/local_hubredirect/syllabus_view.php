@@ -80,15 +80,21 @@ if ($allowed && $course && $row) {
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title><?php echo s($title); ?></title>
 <style>
-  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#fff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa}
+  @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap');
+  /* OpenProject palette, mapped onto this page's own tokens rather than by
+     pulling in pqh_openproject_skin_css(). This is a standalone document with
+     unprefixed classes (.btn, .sheet, .top), so prefix-keyed rules have nothing
+     to bind to -- but every colour here already comes from :root, so retuning
+     these nine values is the whole job. */
+  :root{--ink:#1f1f1f;--ink2:#555;--muted:#707070;--line:#dfdfdf;--bg:#f2f2f2;--card:#fff;--blue:#162b48;--blue2:#1a67a3;--sky:#ebf3f7}
   *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 "Lato",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
   header.top{background:var(--blue);color:#fff;padding:16px 0}
   .wrap{width:min(880px,calc(100% - 32px));margin:0 auto}
   .brand{font-weight:800;font-size:18px}
-  .brand small{display:block;font-weight:600;font-size:12px;color:#b9cbdd;margin-top:2px}
+  .brand small{display:block;font-weight:400;font-size:12px;color:rgba(255,255,255,.72);margin-top:2px}
   main{padding:26px 0 60px}
-  .sheet{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:28px 32px}
+  .sheet{background:var(--card);border:1px solid var(--line);border-radius:3px;padding:28px 32px}
   h1{margin:0 0 4px;font-size:26px;line-height:1.25}
   h2{margin:26px 0 8px;font-size:18px;color:var(--blue)}
   h3{margin:14px 0 4px;font-size:15px}
@@ -98,13 +104,14 @@ if ($allowed && $course && $row) {
   table.kv th{width:190px;text-align:left;color:var(--ink2);font-size:13px;font-weight:700;padding:6px 8px 6px 0;vertical-align:top}
   table.kv td{padding:6px 0;font-size:14px}
   table.grid th,table.grid td{border-bottom:1px solid var(--line);padding:8px;text-align:left;font-size:14px}
-  table.grid th{font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2)}
+  table.grid th{background:var(--sky);font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2)}
   .unit{border-left:3px solid var(--sky);padding:2px 0 2px 14px;margin:10px 0}
   .unit ul{margin:6px 0 0;padding-left:20px}
   .unit li{margin-bottom:4px;font-size:15px}
-  .tag{display:inline-block;padding:2px 8px;border-radius:999px;background:var(--sky);color:var(--ink2);font-size:11px;font-weight:700}
+  .tag{display:inline-block;padding:2px 10px;border:1px solid #a3c2da;border-radius:50rem;background:#d1e1ed;color:#0a2941;font-size:11px;font-weight:700}
   .actions{margin-top:28px}
-  .btn{display:inline-block;padding:9px 16px;border:1px solid var(--line);border-radius:8px;background:var(--sky);color:var(--blue2);text-decoration:none;font-weight:700;font-size:14px;cursor:pointer;margin-right:6px}
+  .btn{display:inline-block;padding:8px 14px;border:1px solid #ccc;border-radius:3px;background:#fff;color:var(--ink);text-decoration:none;font-weight:700;font-size:14px;cursor:pointer;margin-right:6px}
+  .btn:hover{background:#f9f9f9;border-color:#919191;color:var(--blue2)}
   @media print{header.top{background:none;color:#000;padding:0 0 12px;border-bottom:1px solid #999}
     .brand small{color:#444}body{background:#fff}.sheet{border:0;padding:0}.actions{display:none}}
 </style>

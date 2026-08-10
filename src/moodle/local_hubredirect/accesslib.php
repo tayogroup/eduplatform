@@ -2641,18 +2641,52 @@ function pqh_openproject_skin_css($prefixes, string $bodyclass = '', string $sep
             continue;
         }
         $emittedprefix[$p . $s] = true;
+
+        // A BEM family (pqh-todo__item, pqhsd-ccard__body) is one component's
+        // parts, not a whole page: it has no -table, -textarea, -filter and
+        // never will. Emitting the full set for each would have put ~70KB of
+        // dead rules on dashboard.php alone, which carries fourteen families.
+        if ($s === '__') {
+            $css .= <<<CSS
+.{$p}{$s}card,.{$p}{$s}panel,.{$p}{$s}item{border-width:1px;border-style:solid;border-radius:var(--op-radius);box-shadow:none}
+.{$p}{$s}card:not([class*="{$s}card--"]),.{$p}{$s}panel:not([class*="{$s}panel--"]),.{$p}{$s}item:not([class*="{$s}item--"]){border-color:var(--op-line);background:var(--op-surface)}
+.{$p}{$s}head,.{$p}{$s}header{border-bottom:1px solid var(--op-line);color:var(--op-ink);font-family:var(--op-font);font-weight:700}
+.{$p}{$s}title,.{$p}{$s}name{color:var(--op-ink);font-family:var(--op-font);font-weight:700;line-height:1.35}
+.{$p}{$s}sub,.{$p}{$s}meta,.{$p}{$s}muted{color:var(--op-ink-soft);font-size:13px;font-weight:400;line-height:1.45}
+.{$p}{$s}body,.{$p}{$s}text{color:var(--op-ink-muted);font-family:var(--op-font);font-size:14px;font-weight:400;line-height:1.5}
+.{$p}{$s}kicker,.{$p}{$s}label{color:var(--op-ink-soft);font-size:12px;font-weight:700;letter-spacing:.4px;text-transform:uppercase}
+.{$p}{$s}num,.{$p}{$s}value,.{$p}{$s}count{color:var(--op-ink);font-family:var(--op-font);font-weight:700;letter-spacing:-.01em}
+.{$p}{$s}ico,.{$p}{$s}icon{color:var(--op-ink-soft)}
+.{$p}{$s}actions{gap:8px}
+.{$p}{$s}btn{border-width:1px;border-style:solid;border-radius:var(--op-radius);font-family:var(--op-font);font-size:14px;font-weight:700;line-height:1.2;text-decoration:none;cursor:pointer}
+.{$p}{$s}btn:not([class*="{$s}btn--"]),.{$p}{$s}btn--primary{border-color:var(--op-primary);background:var(--op-primary);color:#fff!important}
+.{$p}{$s}btn:not([class*="{$s}btn--"]):hover,.{$p}{$s}btn--primary:hover{background:var(--op-primary-hover);border-color:var(--op-primary-hover)}
+.{$p}{$s}btn--light,.{$p}{$s}btn--secondary,.{$p}{$s}btn--ghost{background:var(--op-surface);border-color:var(--op-line-strong);color:var(--op-ink)!important}
+.{$p}{$s}btn--light:hover,.{$p}{$s}btn--secondary:hover,.{$p}{$s}btn--ghost:hover{background:var(--op-surface-soft);border-color:var(--op-ink-faint);color:var(--op-primary-hover)!important}
+.{$p}{$s}pill,.{$p}{$s}tag,.{$p}{$s}chip{border-width:1px;border-style:solid;border-radius:var(--op-pill);font-size:12px;font-weight:700;line-height:1}
+.{$p}{$s}pill:not([class*="{$s}pill--"]),.{$p}{$s}tag:not([class*="{$s}tag--"]),.{$p}{$s}chip:not([class*="{$s}chip--"]){border-color:var(--op-primary-border);background:var(--op-primary-subtle);color:var(--op-primary-emphasis)}
+.{$p}{$s}empty{border:1px dashed var(--op-line-strong);border-radius:var(--op-radius);background:var(--op-surface-soft);color:var(--op-ink-soft);font-weight:400}
+.{$p}{$s}grid,.{$p}{$s}list{gap:16px}
+.{$p}{$s}top{border:1px solid var(--op-header-bg);border-radius:var(--op-radius);background:var(--op-header-bg);color:var(--op-header-ink)}
+.{$p}{$s}top .{$p}{$s}title{color:var(--op-header-ink)}
+.{$p}{$s}top .{$p}{$s}sub{color:var(--op-header-ink-soft)}
+
+CSS;
+            continue;
+        }
+
         $css .= <<<CSS
 .{$p}{$s}shell{background:var(--op-canvas);color:var(--op-ink);font-family:var(--op-font);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
-.{$p}{$s}panel,.{$p}{$s}card{border-width:1px;border-style:solid;border-radius:var(--op-radius);box-shadow:none}
-.{$p}{$s}panel:not([class*="{$s}panel--"]),.{$p}{$s}card:not([class*="{$s}card--"]){border-color:var(--op-line);background:var(--op-surface)}
+.{$p}{$s}panel,.{$p}{$s}card,.{$p}{$s}summary-card,.{$p}{$s}quick-card{border-width:1px;border-style:solid;border-radius:var(--op-radius);box-shadow:none}
+.{$p}{$s}panel:not([class*="{$s}panel--"]),.{$p}{$s}card:not([class*="{$s}card--"]),.{$p}{$s}summary-card,.{$p}{$s}quick-card{border-color:var(--op-line);background:var(--op-surface)}
 .{$p}{$s}panel h2,.{$p}{$s}card h2,.{$p}{$s}panel h3,.{$p}{$s}card h3{color:var(--op-ink);font-family:var(--op-font);font-weight:700;line-height:1.4}
 .{$p}{$s}panel h2,.{$p}{$s}panel h3{font-size:16px}
 .{$p}{$s}card h2,.{$p}{$s}card h3{font-size:18px}
 .{$p}{$s}grid,.{$p}{$s}stack{gap:16px}
-.{$p}{$s}actions{gap:8px}
+.{$p}{$s}actions,.{$p}{$s}card-actions,.{$p}{$s}row-actions{gap:8px}
 .{$p}{$s}btn{border-width:1px;border-style:solid;border-radius:var(--op-radius);font-family:var(--op-font);font-size:14px;font-weight:700;line-height:1.2;text-decoration:none;cursor:pointer;transition:background-color .15s ease,border-color .15s ease,color .15s ease}
-.{$p}{$s}btn:not([class*="{$s}btn--"]),.{$p}{$s}btn--primary,.{$p}{$s}btn--main{border-color:var(--op-primary);background:var(--op-primary);color:#fff!important}
-.{$p}{$s}btn:not([class*="{$s}btn--"]):hover,.{$p}{$s}btn--primary:hover,.{$p}{$s}btn--main:hover{background:var(--op-primary-hover);border-color:var(--op-primary-hover)}
+.{$p}{$s}btn:not([class*="{$s}btn--"]),.{$p}{$s}btn--primary,.{$p}{$s}btn--main,.{$p}{$s}btn--compact,.{$p}{$s}btn--mini,.{$p}{$s}btn--tiny,.{$p}{$s}btn--sm,.{$p}{$s}btn--small,.{$p}{$s}btn--lg,.{$p}{$s}btn--large,.{$p}{$s}btn--block{border-color:var(--op-primary);background:var(--op-primary);color:#fff!important}
+.{$p}{$s}btn:not([class*="{$s}btn--"]):hover,.{$p}{$s}btn--primary:hover,.{$p}{$s}btn--main:hover,.{$p}{$s}btn--compact:hover,.{$p}{$s}btn--mini:hover,.{$p}{$s}btn--tiny:hover{background:var(--op-primary-hover);border-color:var(--op-primary-hover)}
 .{$p}{$s}btn:focus-visible{outline:0;box-shadow:var(--op-focus)}
 .{$p}{$s}btn[disabled],.{$p}{$s}btn:disabled{opacity:.55;cursor:not-allowed}
 .{$p}{$s}btn--light,.{$p}{$s}btn--secondary,.{$p}{$s}btn--ghost{background:var(--op-surface);border-color:var(--op-line-strong);color:var(--op-ink)!important}
@@ -2689,8 +2723,26 @@ function pqh_openproject_skin_css($prefixes, string $bodyclass = '', string $sep
 .{$p}{$s}empty{border:1px dashed var(--op-line-strong);border-radius:var(--op-radius);background:var(--op-surface-soft);color:var(--op-ink-soft);font-size:14px;font-weight:400;line-height:1.6}
 .{$p}{$s}detail{border:1px solid var(--op-line);border-radius:var(--op-radius);background:var(--op-surface-soft)}
 .{$p}{$s}detail strong{color:var(--op-ink-soft);font-size:12px;font-weight:700;letter-spacing:.4px;text-transform:uppercase}
-.{$p}{$s}metric,.{$p}{$s}tile{border:1px solid var(--op-line);border-radius:var(--op-radius);background:var(--op-surface);box-shadow:none;color:var(--op-ink)}
-.{$p}{$s}metrics{gap:12px}
+.{$p}{$s}metric,.{$p}{$s}tile,.{$p}{$s}kpi,.{$p}{$s}stat,.{$p}{$s}mini-stat{border-width:1px;border-style:solid;border-radius:var(--op-radius);box-shadow:none}
+.{$p}{$s}metric:not([class*="{$s}metric--"]),.{$p}{$s}tile:not([class*="{$s}tile--"]),.{$p}{$s}kpi:not([class*="{$s}kpi--"]),.{$p}{$s}stat:not([class*="{$s}stat--"]),.{$p}{$s}mini-stat:not([class*="{$s}mini-stat--"]){border-color:var(--op-line);background:var(--op-surface);color:var(--op-ink)}
+.{$p}{$s}metrics,.{$p}{$s}kpis{gap:12px}
+.{$p}{$s}num,.{$p}{$s}count,.{$p}{$s}value{color:var(--op-ink);font-family:var(--op-font);font-weight:700;letter-spacing:-.01em}
+.{$p}{$s}label,.{$p}{$s}caption{color:var(--op-ink-soft);font-size:12px;font-weight:700;letter-spacing:.4px;text-transform:uppercase}
+.{$p}{$s}head,.{$p}{$s}panel-head,.{$p}{$s}card-head{color:var(--op-ink);font-family:var(--op-font);font-weight:700}
+.{$p}{$s}panel-head,.{$p}{$s}card-head{border-bottom-color:var(--op-line)}
+.{$p}{$s}toolbar{border:1px solid var(--op-line);border-radius:var(--op-radius);background:var(--op-surface-soft)}
+/* Colour only. -note is a bottom-bordered LIST ROW on workspace_parent and a
+   callout elsewhere; giving it a box would turn those rows into cards. Same
+   reasoning for -head above: recolour the rule a page already draws, never
+   add one. */
+.{$p}{$s}note,.{$p}{$s}summary{border-color:var(--op-line);color:var(--op-ink-muted)}
+.{$p}{$s}track,.{$p}{$s}bar{border-radius:var(--op-pill);background:var(--op-canvas)}
+.{$p}{$s}fill{border-radius:var(--op-pill);background:var(--op-primary)}
+.{$p}{$s}chart,.{$p}{$s}barbox{border:1px solid var(--op-line);border-radius:var(--op-radius);background:var(--op-surface)}
+.{$p}{$s}tag{border:1px solid var(--op-primary-border);border-radius:var(--op-pill);background:var(--op-primary-subtle);color:var(--op-primary-emphasis);font-size:12px;font-weight:700}
+.{$p}{$s}item{border-color:var(--op-line)}
+.{$p}{$s}body{color:var(--op-ink-muted);font-size:14px;line-height:1.5}
+.{$p}{$s}ico{color:var(--op-ink-soft)}
 .{$p}{$s}meta{gap:6px}
 .{$p}{$s}modal-box{border:1px solid var(--op-line);border-radius:var(--op-radius-lg);background:var(--op-surface);box-shadow:var(--op-shadow-lg)}
 .{$p}{$s}close{border:1px solid var(--op-line-strong);border-radius:var(--op-radius);background:var(--op-surface);color:var(--op-ink)!important;font-family:var(--op-font);font-weight:700}

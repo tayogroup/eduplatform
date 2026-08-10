@@ -74,12 +74,20 @@ function pqctx_pdf_html(array $payload, string $title, string $documentid, strin
     $issued = (int)($document['issuedat'] ?? ($header['generated_at'] ?? time()));
     $doclabel = $documentid !== '' ? $documentid : 'Unofficial live preview';
 
+    // OpenProject palette, hand-mapped rather than taken from
+    // pqh_openproject_skin_css(). This CSS is not read by a browser -- it goes
+    // to TCPDF::writeHTML() below, which supports only a small subset: no
+    // custom properties, no :not(), no attribute selectors, no @import. Passing
+    // the generated skin here would be ignored at best and garble the PDF at
+    // worst. dejavusans stays for the same reason Lato cannot be used: the font
+    // has to be one TCPDF has embedded, or non-Latin names in a transcript
+    // render as empty boxes.
     $html = '<style>
-        body{font-family:dejavusans,sans-serif;color:#173044;font-size:10pt}
-        h1{font-size:22pt;color:#221b22;margin:0 0 6px} h2{font-size:13pt;color:#221b22;margin:18px 0 8px}
-        .muted{color:#5e7280}.meta{width:100%;border-collapse:collapse;margin:12px 0}.meta td{border:1px solid #d9e2e7;padding:7px}
-        .lines{width:100%;border-collapse:collapse;margin-top:8px}.lines th{background:#eef4f6;color:#173044;font-weight:bold}.lines th,.lines td{border:1px solid #d9e2e7;padding:6px;vertical-align:top}
-        .note{margin-top:14px;padding:8px;border:1px solid #d9e2e7;background:#f7fafb}.small{font-size:8pt}
+        body{font-family:dejavusans,sans-serif;color:#1f1f1f;font-size:10pt}
+        h1{font-size:22pt;color:#1f1f1f;margin:0 0 6px} h2{font-size:13pt;color:#1f1f1f;margin:18px 0 8px}
+        .muted{color:#707070}.meta{width:100%;border-collapse:collapse;margin:12px 0}.meta td{border:1px solid #dfdfdf;padding:7px}
+        .lines{width:100%;border-collapse:collapse;margin-top:8px}.lines th{background:#ebf3f7;color:#555555;font-weight:bold}.lines th,.lines td{border:1px solid #dfdfdf;padding:6px;vertical-align:top}
+        .note{margin-top:14px;padding:8px;border:1px solid #dfdfdf;background:#f9f9f9}.small{font-size:8pt}
     </style>';
     $html .= '<h1>' . s($title) . '</h1>';
     $html .= '<div class="muted">' . s((string)($consumer['name'] ?? '')) . ' / ' . s((string)($workspace['name'] ?? '')) . '</div>';

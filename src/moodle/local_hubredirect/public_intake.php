@@ -597,22 +597,6 @@ if ($childschoolchoices && $selectedchildworkspaceid <= 0) {
     }
 }
 $needsschoolselection = $childschoolchoices && $selectedchildworkspaceid <= 0;
-// Parent is the default, and anything that is not one of the two known values
-// is treated as unanswered rather than left to fall through as neither: this
-// form is sent to families, and the school it now opens on requires the
-// parent/guardian block regardless of what this says.
-$respondentrole = optional_param('respondent_role', '', PARAM_ALPHA);
-if (!in_array($respondentrole, ['parent', 'student'], true)) {
-    $respondentrole = 'parent';
-}
-$overeighteenanswer = $respondentrole === 'student' ? optional_param('over18', '', PARAM_ALPHA) : '';
-// Parent/guardian is required and shown first when a parent is filling the
-// form or the student confirmed being under 18; it is skipped entirely once
-// the student confirms being an adult. Defaulting to parent above only moves
-// the block to the first step -- it was already required when unanswered.
-$parentguardianfirst = $respondentrole === 'parent' || ($respondentrole === 'student' && $overeighteenanswer === 'no');
-$parentguardianrequired = !($respondentrole === 'student' && $overeighteenanswer === 'yes');
-
 pqh_apply_consumer_embed_headers($consumercontext);
 $consumerparams = ['consumer' => (string)$consumercontext->consumerslug];
 if ((int)$consumercontext->workspaceid > 0) {
@@ -628,12 +612,30 @@ $isprofessionaldevelopment = $institutiontype === 'professional_development';
 $isadultlearning = $institutiontype === 'adult_learning';
 $isislamicstudies = $institutiontype === 'faith_based_education' && $faithsubcategory === 'islamic_studies';
 $ischristianstudies = $institutiontype === 'faith_based_education' && $faithsubcategory === 'christian_studies';
-// A K-12 intake is filled in by a parent and requires the parent block whatever
-// respondent_role said, so it always opens with it -- set here rather than beside
-// the other two flags because $isprimaryeducation is not resolved until now.
-if ($isprimaryeducation) {
-    $parentguardianfirst = true;
+// Who is filling this in. Parent is preselected for a K-12 intake only, which a
+// parent fills in by definition: the link goes to families, and the school
+// requires the parent block whatever this says, so the default costs that
+// school nothing. Every other institution type keeps the question genuinely
+// unanswered -- defaulting there would have an adult learner who never touched
+// the radio asked for a parent/guardian instead of their own email.
+//
+// Anything that is not one of the two known values is normalised the same way,
+// so a junk respondent_role cannot reach the branches below. All of it lives
+// here rather than beside the other request params because $isprimaryeducation
+// is not resolved until now.
+$respondentrole = optional_param('respondent_role', '', PARAM_ALPHA);
+if (!in_array($respondentrole, ['parent', 'student'], true)) {
+    $respondentrole = $isprimaryeducation ? 'parent' : '';
 }
+$overeighteenanswer = $respondentrole === 'student' ? optional_param('over18', '', PARAM_ALPHA) : '';
+// Parent/guardian is required and shown first when a parent is filling the form
+// or the student confirmed being under 18; it is skipped entirely once the
+// student confirms being an adult. A K-12 intake always opens with the block,
+// whatever the answer.
+$parentguardianfirst = $isprimaryeducation
+    || $respondentrole === 'parent'
+    || ($respondentrole === 'student' && $overeighteenanswer === 'no');
+$parentguardianrequired = !($respondentrole === 'student' && $overeighteenanswer === 'yes');
 $options['course_types'] = pqpir_public_course_options($consumercontext, $options['course_types'] ?? []);
 $requestedteacherid = optional_param('teacherid', 0, PARAM_INT);
 $teacherpreference = pqpir_teacher_preference($requestedteacherid, (int)$consumercontext->consumerid);

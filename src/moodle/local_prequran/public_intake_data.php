@@ -434,9 +434,11 @@ if ($recentcount >= pqpirl_contact_window_limit()) {
 
 // e) full legacy validation block (verbatim, pqpir_ -> pqpirl_).
 $errors = [];
+// Middle name is deliberately absent, matching public_intake.php: families
+// without one were forced to invent a placeholder. The two front ends run in
+// parallel over the same form and must agree on what blocks a submission.
 $requiredfields = [
     'student_firstname' => 'Please enter the student first name.',
-    'student_middle_name' => 'Please enter the student middle name.',
     'student_lastname' => 'Please enter the student last name.',
     'course_type' => 'Please select the course.',
     'country' => 'Please select the country.',
@@ -740,7 +742,9 @@ foreach ($form['slots'] as $slot) {
 }
 $displayname = pqpirl_value($form, 'student_display_name');
 if ($displayname === '') {
-    $displayname = trim(pqpirl_value($form, 'student_firstname') . ' ' . pqpirl_value($form, 'student_middle_name') . ' ' . pqpirl_value($form, 'student_lastname'));
+    // Collapse the gap an absent middle name leaves: it is optional now, so
+    // "Ayaan  Hassan" with a double space is a reachable display name.
+    $displayname = (string)preg_replace('/\s+/u', ' ', trim(pqpirl_value($form, 'student_firstname') . ' ' . pqpirl_value($form, 'student_middle_name') . ' ' . pqpirl_value($form, 'student_lastname')));
 }
 $city = pqpirl_value($form, 'city') === 'Other' ? pqpirl_value($form, 'city_other') : pqpirl_value($form, 'city');
 

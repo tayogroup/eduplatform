@@ -1327,7 +1327,9 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
         $firstname = pqsi_trim_param('student_firstname');
         $middlename = pqsi_trim_param('student_middle_name');
         $lastname = pqsi_trim_param('student_lastname');
-        $displayname = pqsi_trim_param('student_display_name', trim($firstname . ' ' . $middlename . ' ' . $lastname));
+        // Collapse the gap an absent middle name leaves -- it is optional now, so
+        // "Ayaan  Hassan" with a double space is a reachable display name.
+        $displayname = pqsi_trim_param('student_display_name', (string)preg_replace('/\s+/u', ' ', trim($firstname . ' ' . $middlename . ' ' . $lastname)));
         $studentemail = pqsi_email_param('student_email');
         $parentname = pqsi_trim_param('parent_name');
         $parentrelationship = pqsi_trim_param('parent_relationship');
@@ -1534,18 +1536,16 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
             $availabilityforsave = $availabilitynotes;
         }
 
-        if ($existingstudentid <= 0 && ($firstname === '' || $middlename === '' || $lastname === '')) {
+        // Middle name is not checked here: plenty of students have none, and it was
+        // required on both branches -- creating an account and editing one -- so staff
+        // had to invent a placeholder. Matches public_intake.php and public_intake_data.php.
+        if ($existingstudentid <= 0 && ($firstname === '' || $lastname === '')) {
             if ($firstname === '') {
                 $fielderrors['student_firstname'] = 'First name is required when creating a new student account.';
-            }
-            if ($middlename === '') {
-                $fielderrors['student_middle_name'] = 'Middle name is required.';
             }
             if ($lastname === '') {
                 $fielderrors['student_lastname'] = 'Last name is required when creating a new student account.';
             }
-        } else if ($middlename === '') {
-            $fielderrors['student_middle_name'] = 'Middle name is required.';
         }
         $ageyears = optional_param('age_years', 0, PARAM_INT);
         $isadultstudent = $ageyears >= 18;
@@ -2395,7 +2395,7 @@ body.pqh-student-intake-page #page,body.pqh-student-intake-page #page-content,bo
           <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'existing_studentid'); ?>" id="pqsi-existing_studentid"><label>Existing student ID</label><input class="pqsi-input" name="existing_studentid" type="number" min="0" value="<?php echo s(pqsi_form_value($form, 'existing_studentid')); ?>" placeholder="Optional: use only to add an intake profile to an already-created student"><?php echo pqsi_form_error($fielderrors, 'existing_studentid'); ?></div>
           <div class="pqsi-grid">
             <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'student_firstname'); ?>" id="pqsi-student_firstname"><label>First name</label><input class="pqsi-input" name="student_firstname" value="<?php echo s(pqsi_form_value($form, 'student_firstname')); ?>"><?php echo pqsi_form_error($fielderrors, 'student_firstname'); ?></div>
-            <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'student_middle_name'); ?>" id="pqsi-student_middle_name"><label>Middle name</label><input class="pqsi-input" name="student_middle_name" value="<?php echo s(pqsi_form_value($form, 'student_middle_name')); ?>" required><?php echo pqsi_form_error($fielderrors, 'student_middle_name'); ?></div>
+            <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'student_middle_name'); ?>" id="pqsi-student_middle_name"><label>Middle name</label><input class="pqsi-input" name="student_middle_name" value="<?php echo s(pqsi_form_value($form, 'student_middle_name')); ?>"><?php echo pqsi_form_error($fielderrors, 'student_middle_name'); ?></div>
             <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'student_lastname'); ?>" id="pqsi-student_lastname"><label>Last name</label><input class="pqsi-input" name="student_lastname" value="<?php echo s(pqsi_form_value($form, 'student_lastname')); ?>"><?php echo pqsi_form_error($fielderrors, 'student_lastname'); ?></div>
             <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'student_display_name'); ?>" id="pqsi-student_display_name"><label>Preferred name</label><input class="pqsi-input" name="student_display_name" value="<?php echo s(pqsi_form_value($form, 'student_display_name')); ?>" placeholder="Optional"><?php echo pqsi_form_error($fielderrors, 'student_display_name'); ?></div>
             <div class="pqsi-field" id="pqsi-student_username"><label>Username</label><div class="pqsi-input" style="background:#f5f8fb;color:#5e7280">Auto-generated: schoolslug.s&lt;account&nbsp;no.&gt;</div></div>

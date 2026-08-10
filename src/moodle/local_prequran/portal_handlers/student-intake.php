@@ -192,7 +192,9 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
             $firstname = $bodytrim('student_firstname');
             $middlename = $bodytrim('student_middle_name');
             $lastname = $bodytrim('student_lastname');
-            $displayname = $bodytrim('student_display_name', trim($firstname . ' ' . $middlename . ' ' . $lastname));
+            // Collapse the gap an absent middle name leaves -- it is optional now, so
+            // "Ayaan  Hassan" with a double space is a reachable display name.
+            $displayname = $bodytrim('student_display_name', (string)preg_replace('/\s+/u', ' ', trim($firstname . ' ' . $middlename . ' ' . $lastname)));
             $studentemail = $bodytrim('student_email');
             $parentname = $bodytrim('parent_name');
             $parentrelationship = $bodytrim('parent_relationship');
@@ -399,18 +401,16 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
                 $availabilityforsave = $availabilitynotes;
             }
 
-            if ($existingstudentid <= 0 && ($firstname === '' || $middlename === '' || $lastname === '')) {
+            // Middle name is not checked here: plenty of students have none, and it was
+            // required on both branches -- creating an account and editing one -- so staff
+            // had to invent a placeholder. Matches student_intake.php, which this mirrors.
+            if ($existingstudentid <= 0 && ($firstname === '' || $lastname === '')) {
                 if ($firstname === '') {
                     $fielderrors['student_firstname'] = 'First name is required when creating a new Moodle student account.';
-                }
-                if ($middlename === '') {
-                    $fielderrors['student_middle_name'] = 'Middle name is required.';
                 }
                 if ($lastname === '') {
                     $fielderrors['student_lastname'] = 'Last name is required when creating a new Moodle student account.';
                 }
-            } else if ($middlename === '') {
-                $fielderrors['student_middle_name'] = 'Middle name is required.';
             }
             $ageyears = $bodyint('age_years', 0);
             $isadultstudent = $ageyears >= 18;

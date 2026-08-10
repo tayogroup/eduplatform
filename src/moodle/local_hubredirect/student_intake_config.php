@@ -677,12 +677,18 @@ return [
         '21:00' => '9:00 PM',
         '22:00' => '10:00 PM',
     ],
+    // Stops at 5 because every path that reads this value enforces 5, and a 6th
+    // option was therefore unselectable: public_intake.php and
+    // public_intake_data.php reject >5 with the generic "Please select the number
+    // of weekly sessions", and student_intake.php and portal_handlers/student-intake.php
+    // silently clamp with min(5, ...) -- so picking 6 either failed with an error
+    // that named no cause or saved a number the parent never chose. Raising the
+    // real limit means changing those four call sites, not this list.
     'session_counts' => [
         '1' => '1 session per week',
         '2' => '2 sessions per week',
         '3' => '3 sessions per week',
         '4' => '4 sessions per week',
         '5' => '5 sessions per week',
-        '6' => '6 sessions per week',
     ],
 ];

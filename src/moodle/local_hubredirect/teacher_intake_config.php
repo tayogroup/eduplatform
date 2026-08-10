@@ -519,12 +519,14 @@ return [
         '20:00' => '22:00 PM',
         '22:00' => '24:00 PM',
     ],
+    // Stops at 5 for the same reason student_intake_config.php does: teacher_intake.php
+    // and portal_handlers/teacher-intake.php both reject anything above 5, so a 6th
+    // option could only ever fail. Raising the real limit means changing those two.
     'session_counts' => [
         '1' => '1 session per week',
         '2' => '2 sessions per week',
         '3' => '3 sessions per week',
         '4' => '4 sessions per week',
         '5' => '5 sessions per week',
-        '6' => '6 sessions per week',
     ],
 ];

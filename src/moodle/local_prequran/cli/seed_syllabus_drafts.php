@@ -30,6 +30,14 @@ define('CLI_SCRIPT', true);
 
 require(__DIR__ . '/../../../config.php');
 require_once($CFG->libdir . '/clilib.php');
+// accesslib BEFORE syllabus_portallib, and in that order: the syllabus library
+// says at the top that it requires accesslib, and pqsyl_ready() calls
+// pqh_table_exists_safe() from it on the very first line. Loading only the
+// syllabus library gives a script that starts, prints --help perfectly, and
+// dies the moment it does anything — which is exactly how it failed the first
+// time it was run for real. local/hubredirect/syllabus.php loads them in this
+// same order.
+require_once($CFG->dirroot . '/local/hubredirect/accesslib.php');
 require_once($CFG->dirroot . '/local/hubredirect/syllabus_portallib.php');
 
 [$options, $unrecognised] = cli_get_params([

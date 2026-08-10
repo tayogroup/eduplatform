@@ -157,21 +157,30 @@ const sections = [
 // demands: a grade whose Unit 3 ships no lecture video could never complete
 // `lecture`, and the gate would shut the learner out for good.
 //
-// Grades 1 to 4, each checked before being added — never widened by editing the
-// number alone. What has to hold is that every section the chain demands can
-// actually be finished in every unit of that grade:
-//   Grade 1 — all 11 units carry a game pack, a lecture video (Unit 10 is the
-//             capstone launch, which completes on its button) and an eBook.
-//   Grade 2 — all 10 units carry a game pack and a lecture video (Unit 10 again
-//             the capstone). It has NO eBooks, which is why visibleSections()
-//             drops Books where a unit has none, exactly as it drops Games.
-//   Grade 3 — same shape as Grade 2: 10 units, every game pack present, lecture
-//             videos on disk for Units 1-9, Unit 10 the capstone launch.
-//   Grade 4 — same again: 10 units, all game packs, videos for Units 1-9, Unit
-//             10 the capstone.
-// Grades 5-8 are not gated: their lecture coverage has not been checked, and an
-// uncompletable step locks a learner out permanently.
-const UNIT_GATE_ENABLED = gradeNumber <= 4;
+// Every grade, each one checked before being added — the flag was widened four
+// times and never by editing a number alone. What has to hold is that every
+// section the chain demands can actually be finished in every unit of that
+// grade, because an uncompletable step locks a learner out permanently:
+//   Grade 1  — 11 units, all game packs, lecture videos, and the only grade
+//              with an eBook library. Unit 10 is the capstone launch, which
+//              completes on its own button rather than on a video.
+//   Grades 2-8 — 10 units each, every game pack present, lecture videos on disk
+//              for Units 1-9, Unit 10 the capstone launch. None has eBooks,
+//              which is why visibleSections() drops Books where a unit has none,
+//              exactly as it drops Games.
+//
+// Grades 5-8 additionally needed a check Grades 1-4 did not. They are the
+// grades WITHOUT decks (BOTH_DESIGNS is gradeNumber <= 4), and at Grades 1-4
+// several sections can be finished from a deck's finish card. Every classic
+// renderer was confirmed to carry its own completion control first — walking all
+// eleven countable sections of Grade 5 Unit 1 in the browser, each one offering
+// a way to finish and no deck rendering — or gating them would have stranded
+// learners in sections with no way out.
+//
+// This is now true for every grade the app serves. Narrowing it later means
+// putting a grade test back here, not deleting the constant: everything that
+// reads it treats "not gated" as a real state.
+const UNIT_GATE_ENABLED = true;
 const CAPSTONE_UNIT = 10;
 // The Teacher view is a preview, not a lesson: a teacher or parent planning
 // ahead has to be able to open Unit 6 in week one. This is no weaker than what

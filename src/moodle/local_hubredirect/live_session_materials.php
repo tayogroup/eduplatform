@@ -426,6 +426,7 @@ echo $OUTPUT->header();
 body.pqlmat-page #page-footer,body.pqlmat-page footer,body.pqlmat-page [data-region="footer-container"],body.pqlmat-page .logininfo,body.pqlmat-page .tool_dataprivacy,body.pqlmat-page .homelink,body.pqlmat-page .mobilelink{display:none!important}
 @media(max-width:760px){.pqlmat-wrap{padding:12px}.pqlmat-top{display:block}.pqlmat-actions{justify-content:flex-start;margin-top:12px}.pqlmat-table,.pqlmat-table tbody,.pqlmat-table tr,.pqlmat-table td{display:block;width:100%}.pqlmat-table thead{display:none}.pqlmat-table td{border-bottom:0;padding:8px 12px}.pqlmat-table tr{border-bottom:1px solid rgba(23,48,68,.1);padding:8px 0}}
 </style>
+<style><?php echo pqh_openproject_skin_css('pqlmat', 'pqlmat-page'); ?></style>
 <main class="pqlmat-wrap<?php echo $compact ? ' pqlmat-wrap--compact' : ''; ?>">
   <?php if (!$compact): ?>
   <section class="pqlmat-top">

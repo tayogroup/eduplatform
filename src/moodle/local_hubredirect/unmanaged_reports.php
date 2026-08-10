@@ -337,6 +337,7 @@ body.pqh-unmanaged-report-page .main-inner{margin:0!important;padding:0!importan
 @media(max-width:560px){.pqur-shell{padding:18px 10px 42px}.pqur-title{font-size:24px}.pqur-btn{width:100%}}
 <?php echo pqh_dashboard_header_css(); ?>
 </style>
+<style><?php echo pqh_openproject_skin_css('pqur', 'pqh-unmanaged-report-page'); ?></style>
 <main class="pqur-shell">
   <div class="pqur-wrap">
     <section class="pqur-top pqh-workspace-top">

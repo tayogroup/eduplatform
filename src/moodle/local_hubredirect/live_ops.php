@@ -572,6 +572,7 @@ body.pqh-live-ops-page .main-inner{margin:0!important;padding:0!important;max-wi
 @media(max-width:620px){.pqlo-metrics{grid-template-columns:1fr}.pqlo-title{font-size:24px}}
 <?php echo pqh_dashboard_header_css(); ?>
 </style>
+<style><?php echo pqh_openproject_skin_css('pqlo', 'pqh-live-ops-page'); ?></style>
 <main class="pqlo-shell">
   <div class="pqlo-wrap">
     <section class="pqlo-top pqh-workspace-top">

@@ -413,6 +413,7 @@ body.pqh-live-teacher-directory-page .main-inner{margin:0!important;padding:0!im
 @media(max-width:620px){.pqltd-filters,.pqltd-metrics{grid-template-columns:1fr}.pqltd-title{font-size:24px}}
 <?php echo pqh_dashboard_header_css(); ?>
 </style>
+<style><?php echo pqh_openproject_skin_css('pqltd', 'pqh-live-teacher-directory-page'); ?></style>
 <main class="pqltd-shell">
   <div class="pqltd-wrap">
     <section class="pqltd-top pqh-workspace-top">

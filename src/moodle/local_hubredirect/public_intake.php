@@ -1562,6 +1562,7 @@ body.pqh-public-intake-page #page-wrapper,body.pqh-public-intake-page #page,body
 .pqpir-wizard-foot .pqpir-btn{min-width:112px}
 @media(max-width:760px){.pqpir-wizard-inner{padding:18px 18px 0}.pqpir-page{padding:2px 46px 4px}.pqpir-nav-arrow{width:34px;height:34px}.pqpir-nav-arrow svg{width:16px;height:16px}.pqpir-nav-back{left:4px}.pqpir-nav-next{right:4px}.pqpir-wizard-foot{padding:18px 18px 20px}.pqpir-wizard-foot .pqpir-btn{min-width:0;flex:1}}
 </style>
+<style><?php echo pqh_openproject_skin_css('pqpir', 'pqh-public-intake-page'); ?></style>
 <main class="pqpir-shell">
   <div class="pqpir-wrap">
     <section class="pqpir-hero pqh-workspace-top">

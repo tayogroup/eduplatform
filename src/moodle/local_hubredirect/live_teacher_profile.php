@@ -535,6 +535,7 @@ body.pqh-live-teacher-profile-page .main-inner{margin:0!important;padding:0!impo
 }
 <?php echo pqh_dashboard_header_css(); ?>
 </style>
+<style><?php echo pqh_openproject_skin_css('pqltp', 'pqh-live-teacher-profile-page'); ?></style>
 <main class="pqltp-shell">
   <div class="pqltp-wrap">
     <section class="pqltp-top pqh-workspace-top">

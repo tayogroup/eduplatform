@@ -491,6 +491,7 @@ body.pqh-live-series-schedule-page .main-inner{margin:0!important;padding:0!impo
 .pqlps-shell h1,.pqlps-shell h2,.pqlps-shell h3{color:var(--pqh-ink)}
 <?php echo pqh_design_shell_css('.pqlps-shell'); ?>
 </style>
+<style><?php echo pqh_openproject_skin_css('pqlps', 'pqh-live-series-schedule-page'); ?></style>
 <main class="pqlps-shell">
 <?php echo pqh_design_shell_html('pqlps-shell', 'live', pqh_live_page_shell_opts('Class Series Schedule', [], $childid)); ?><div class="pqlps-wrap">
   <section class="pqlps-top pqh-workspace-top">

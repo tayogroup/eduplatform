@@ -348,6 +348,7 @@ body.pqr-referrers-page #page,body.pqr-referrers-page #page-content,body.pqr-ref
 @media(max-width:900px){.pqr-top{display:block}.pqr-actions{margin-top:12px}.pqr-grid,.pqr-metrics{grid-template-columns:1fr}.pqr-table{display:block;overflow:auto}}
 <?php echo pqh_dashboard_header_css(); ?>
 </style>
+<style><?php echo pqh_openproject_skin_css('pqr', 'pqr-referrers-page'); ?></style>
 <main class="pqr-shell">
   <div class="pqr-wrap">
     <section class="pqr-top pqh-workspace-top">

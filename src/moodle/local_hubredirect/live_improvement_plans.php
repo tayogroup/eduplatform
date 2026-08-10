@@ -404,6 +404,7 @@ body.pqh-live-improvement-page .main-inner{margin:0!important;padding:0!importan
 @media(max-width:620px){.pqlip-filters,.pqlip-metrics,.pqlip-kv{grid-template-columns:1fr}.pqlip-title{font-size:24px}.pqlip-card-head{display:block}}
 <?php echo pqh_dashboard_header_css(); ?>
 </style>
+<style><?php echo pqh_openproject_skin_css('pqlip', 'pqh-live-improvement-page'); ?></style>
 <main class="pqlip-shell">
   <div class="pqlip-wrap">
     <section class="pqlip-top pqh-workspace-top">

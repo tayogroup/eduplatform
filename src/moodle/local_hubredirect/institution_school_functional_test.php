@@ -727,6 +727,7 @@ echo $OUTPUT->header();
 .pqisft-pill{display:inline-flex;min-height:24px;align-items:center;padding:0 8px;border-radius:999px;font-weight:900;font-size:12px}
 .pqisft-pass{background:#edf9ef;color:#245c35}.pqisft-fail{background:#fff0ed;color:#883526}
 </style>
+<style><?php echo pqh_openproject_skin_css('pqisft'); ?></style>
 <main class="pqisft">
   <section class="pqisft-card">
     <h1>Institution School Functional Test</h1>

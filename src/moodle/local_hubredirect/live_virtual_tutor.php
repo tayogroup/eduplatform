@@ -679,6 +679,7 @@ body{margin:0!important}
 .pqh-vt-voice-status{color:#60735f;font-size:12px;font-weight:850}
 <?php echo pqh_dashboard_header_css(); ?>
 </style>
+<style><?php echo pqh_openproject_skin_css('pqh-vt', 'pqh-live-virtual-tutor-page'); ?></style>
 <main class="pqh-vt-wrap">
   <section class="pqh-vt-card">
     <div class="pqh-vt-head pqh-workspace-top">

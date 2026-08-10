@@ -463,6 +463,7 @@ body.pqh-live-leadership-page .main-inner{margin:0!important;padding:0!important
 @media(max-width:620px){.pqll-filters,.pqll-metrics,.pqll-kv{grid-template-columns:1fr}.pqll-title{font-size:24px}.pqll-case-head{display:block}}
 <?php echo pqh_dashboard_header_css(); ?>
 </style>
+<style><?php echo pqh_openproject_skin_css('pqll', 'pqh-live-leadership-page'); ?></style>
 <main class="pqll-shell">
   <div class="pqll-wrap">
     <section class="pqll-top pqh-workspace-top">

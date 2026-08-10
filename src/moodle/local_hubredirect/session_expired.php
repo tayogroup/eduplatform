@@ -81,6 +81,7 @@ body.pqh-session-expired-page{background:#f4f7fb!important}
 @media(max-width:620px){.pqhs-shell{padding:24px 14px}.pqhs-card{padding:22px}.pqhs-title{font-size:26px}.pqhs-actions{display:grid}}
 <?php echo pqh_dashboard_header_css(); ?>
 </style>
+<style><?php echo pqh_openproject_skin_css('pqhs', 'pqh-session-expired-page'); ?></style>
 <main class="pqhs-shell">
   <div class="pqhs-wrap">
     <div class="pqhs-top pqh-workspace-top">

@@ -193,6 +193,7 @@ echo $OUTPUT->header();
 .pqsm-empty{border:1px dashed var(--pqh-line);border-radius:12px;padding:22px;text-align:center;color:var(--pqh-muted);font-weight:550}
 @media(max-width:960px){.pqsm-grid{grid-template-columns:1fr}}
 </style>
+<style><?php echo pqh_openproject_skin_css('pqsm', 'pqsm-page'); ?></style>
 <main class="pqsm-shell">
 <?php echo pqh_design_shell_html('pqsm-shell', '', ['title' => 'Exams']); ?>
   <div class="pqsm-wrap">

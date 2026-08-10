@@ -183,6 +183,7 @@ body.pqsy-page #page,body.pqsy-page #page-content,body.pqsy-page #region-main,bo
 .pqsy-table th{color:var(--pqh-faint,#8494a5);font-size:11px;font-weight:700;text-transform:uppercase}
 <?php echo pqh_design_shell_css('.pqsy-shell'); ?>
 </style>
+<style><?php echo pqh_openproject_skin_css('pqsy', 'pqsy-page'); ?></style>
 <main class="pqsy-shell">
 <?php
 echo pqh_design_shell_html('pqsy-shell', 'workspace', [

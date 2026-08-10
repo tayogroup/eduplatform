@@ -262,6 +262,7 @@ body.pqh-parent-trust-pack-page .main-inner{margin:0!important;padding:0!importa
 @media(max-width:620px){.pqlptrp-metrics{grid-template-columns:1fr}.pqlptrp-title{font-size:24px}.pqlptrp-form{display:grid}.pqlptrp-btn{width:100%}}
 <?php echo pqh_dashboard_header_css(); ?>
 </style>
+<style><?php echo pqh_openproject_skin_css('pqlptrp', 'pqh-parent-trust-pack-page'); ?></style>
 <main class="pqlptrp-shell">
   <div class="pqlptrp-wrap">
     <section class="pqlptrp-top pqh-workspace-top">

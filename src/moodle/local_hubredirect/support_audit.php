@@ -186,6 +186,7 @@ echo $OUTPUT->header();
 .pqsa-gate{display:grid;gap:5px}.pqsa-status{display:inline-flex;width:max-content;border-radius:999px;padding:3px 8px;font-size:12px;font-weight:900}.pqsa-status--pass{background:#e7f6ed;color:#17623b}.pqsa-status--warn{background:#fff4dd;color:#7b4a00}.pqsa-status--fail{background:#fde8e8;color:#9b1c1c}
 @media(max-width:820px){.pqsa-grid,.pqsa-filter{grid-template-columns:1fr}.pqsa-top{display:block}}
 </style>
+<style><?php echo pqh_openproject_skin_css('pqsa'); ?></style>
 <main class="pqsa-wrap">
   <div class="pqsa-top">
     <div>

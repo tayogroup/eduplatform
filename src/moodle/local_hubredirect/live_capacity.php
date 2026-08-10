@@ -505,6 +505,7 @@ body.pqh-live-capacity-page .main-inner{margin:0!important;padding:0!important;m
 @media(max-width:620px){.pqlcap-filters,.pqlcap-metrics{grid-template-columns:1fr}.pqlcap-title{font-size:24px}}
 <?php echo pqh_dashboard_header_css(); ?>
 </style>
+<style><?php echo pqh_openproject_skin_css('pqlcap', 'pqh-live-capacity-page'); ?></style>
 <main class="pqlcap-shell">
   <div class="pqlcap-wrap">
     <section class="pqlcap-top pqh-workspace-top">

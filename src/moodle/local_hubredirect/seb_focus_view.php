@@ -48,6 +48,7 @@ body.pqsx-page{margin:0;background:#f4f6f9}
 .pqfx-overlay .pqfx-btn{background:#fff;color:#17498f!important}
 .pqfx-note{padding:11px 13px;border-radius:11px;background:#fdf6e9;border:1px solid #f0e0bd;color:#8a6a1f;font-size:12.5px;font-weight:550;margin-bottom:16px}
 </style>
+<style><?php echo pqh_openproject_skin_css('pqfx'); ?></style>
 <div class="pqfx">
 <?php if ($finished): ?>
   <div class="pqfx-panel">

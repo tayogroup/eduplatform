@@ -119,6 +119,7 @@ body.pqh-teacher-marketplace-page #page,body.pqh-teacher-marketplace-page #page-
 @media(max-width:760px){.pqtm-top{display:block}.pqtm-actions{margin-top:12px}.pqtm-filter,.pqtm-grid{grid-template-columns:1fr}.pqtm-title{font-size:24px}}
 <?php echo pqh_dashboard_header_css(); ?>
 </style>
+<style><?php echo pqh_openproject_skin_css('pqtm', 'pqh-teacher-marketplace-page'); ?></style>
 <main class="pqtm-shell">
   <div class="pqtm-wrap">
     <section class="pqtm-top pqh-workspace-top">

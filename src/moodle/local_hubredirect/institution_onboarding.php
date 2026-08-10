@@ -158,6 +158,7 @@ body.pqhib-page #page,body.pqhib-page #page-content,body.pqhib-page #region-main
 @media(max-width:900px){.pqhib-top,.pqhib-grid,.pqhib-formgrid{grid-template-columns:1fr}.pqhib-actions{justify-content:flex-start}}
 <?php echo pqh_workspace_header_css(); ?>
 </style>
+<style><?php echo pqh_openproject_skin_css('pqhib', 'pqhib-page'); ?></style>
 <main class="pqhib-shell">
   <div class="pqhib-wrap">
     <section class="pqhib-top pqh-workspace-top">

@@ -2008,6 +2008,7 @@ body.pqh-live-page .main-inner{margin:0!important;padding:0!important;max-width:
 .pql-shell h1,.pql-shell h2,.pql-shell h3{color:var(--pqh-ink)}
 <?php echo pqh_design_shell_css('.pql-shell'); ?>
 </style>
+<style><?php echo pqh_openproject_skin_css('pql', 'pqh-live-page'); ?></style>
 <main class="pql-shell">
 <?php echo pqh_design_shell_html('pql-shell', 'live', pqh_live_page_shell_opts('Live Sessions', $urlparams)); ?>
   <div class="pql-wrap">

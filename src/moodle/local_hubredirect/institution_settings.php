@@ -165,6 +165,7 @@ body.pqhis-page #page,body.pqhis-page #page-content,body.pqhis-page #region-main
 @media(max-width:900px){.pqhis-top,.pqhis-grid,.pqhis-formgrid{grid-template-columns:1fr}.pqhis-actions{justify-content:flex-start}.pqhis-preview h2{font-size:32px}}
 <?php echo pqh_workspace_header_css($workspaceid); ?>
 </style>
+<style><?php echo pqh_openproject_skin_css('pqhis', 'pqhis-page'); ?></style>
 <main class="pqhis-shell">
   <div class="pqhis-wrap">
     <section class="pqhis-top pqh-workspace-top">

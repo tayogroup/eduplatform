@@ -172,6 +172,7 @@ echo $OUTPUT->header();
 .pqsr-table th{color:#536878;font-size:12px;text-transform:uppercase}
 @media(max-width:820px){.pqsr-grid,.pqsr-filter{grid-template-columns:1fr}.pqsr-top{display:block}}
 </style>
+<style><?php echo pqh_openproject_skin_css('pqsr'); ?></style>
 <main class="pqsr-wrap">
   <div class="pqsr-top">
     <div>

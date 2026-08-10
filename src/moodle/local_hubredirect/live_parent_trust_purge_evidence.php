@@ -275,6 +275,7 @@ body.pqh-parent-trust-purge-evidence-page .main-inner{margin:0!important;padding
 @media(max-width:620px){.pqlptpe-metrics{grid-template-columns:1fr}.pqlptpe-title{font-size:24px}.pqlptpe-btn{width:100%}}
 <?php echo pqh_dashboard_header_css(); ?>
 </style>
+<style><?php echo pqh_openproject_skin_css('pqlptpe', 'pqh-parent-trust-purge-evidence-page'); ?></style>
 <main class="pqlptpe-shell">
   <div class="pqlptpe-wrap">
     <section class="pqlptpe-top pqh-workspace-top">

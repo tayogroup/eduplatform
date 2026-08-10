@@ -421,6 +421,7 @@ body.pqh-live-quality-page .main-inner{margin:0!important;padding:0!important;ma
 @media(max-width:900px){.pqlq-top{display:block}.pqlq-actions{margin-top:12px}.pqlq-metrics,.pqlq-grid,.pqlq-checklist{grid-template-columns:1fr}}
 <?php echo pqh_dashboard_header_css(); ?>
 </style>
+<style><?php echo pqh_openproject_skin_css('pqlq', 'pqh-live-quality-page'); ?></style>
 <main class="pqlq-shell">
   <div class="pqlq-wrap">
     <section class="pqlq-top pqh-workspace-top">

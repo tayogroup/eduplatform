@@ -431,6 +431,7 @@ body.pqh-parent-links-page .main-inner{margin:0!important;padding:0!important;ma
 @media(max-width:760px){.pqlpl-linkform{grid-template-columns:1fr}.pqlpl-linkform .pqlpl-field--wide{grid-column:auto}}
 <?php echo pqh_dashboard_header_css(); ?>
 </style>
+<style><?php echo pqh_openproject_skin_css('pqlpl', 'pqh-parent-links-page'); ?></style>
 <main class="pqlpl-shell">
   <div class="pqlpl-wrap">
     <section class="pqlpl-top pqh-workspace-top">

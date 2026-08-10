@@ -47,6 +47,7 @@ body.pqh-platform-landing-page #page,body.pqh-platform-landing-page #page-conten
 @media(max-width:1040px){.pqpl-nav .pqpl-wrap{display:block;padding:14px 0}.pqpl-navlinks{margin-top:12px}.pqpl-hero .pqpl-wrap,.pqpl-split,.pqpl-cta .pqpl-wrap{grid-template-columns:1fr}.pqpl-feature-grid,.pqpl-suite-grid,.pqpl-path-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.pqpl-photo{min-height:300px}.pqpl-cta .pqpl-actions{margin-top:0}}
 @media(max-width:680px){.pqpl-topbar .pqpl-wrap{align-items:flex-start;flex-direction:column;padding:8px 0}.pqpl-topbar span{white-space:normal}.pqpl-feature-grid,.pqpl-suite-grid,.pqpl-path-grid{grid-template-columns:1fr}.pqpl-actions{flex-direction:column}.pqpl-btn{width:100%}.pqpl-section{padding:54px 0}.pqpl-login-panel{padding:18px}.pqpl-hero h1{font-size:42px}}
 </style>
+<style><?php echo pqh_openproject_skin_css('pqpl', 'pqh-platform-landing-page'); ?></style>
 <main class="pqpl-shell" id="home">
   <div class="pqpl-topbar" aria-label="Platform summary">
     <div class="pqpl-wrap">

@@ -74,6 +74,7 @@ echo $OUTPUT->header();
 .pqpr-empty{border:1px dashed var(--pqh-line);border-radius:12px;padding:20px;text-align:center;color:var(--pqh-muted);font-weight:550}
 .pqpr-note{padding:11px 13px;border-radius:11px;background:var(--pqh-tint);border:1px solid var(--pqh-tint-2);color:var(--pqh-primary-ink);font-size:12.5px;font-weight:550;margin-bottom:16px}
 </style>
+<style><?php echo pqh_openproject_skin_css('pqpr', 'pqpr-page'); ?></style>
 <main class="pqpr-shell">
 <?php echo pqh_design_shell_html('pqpr-shell', '', ['title' => 'Proctoring review']); ?>
   <div class="pqpr-wrap">

@@ -237,6 +237,7 @@ $PAGE->set_title('Institution Academic Isolation');
 $PAGE->set_heading('Institution Academic Isolation');
 echo $OUTPUT->header();
 echo '<style>.pqaai{max-width:1180px;margin:0 auto}.pqaai-card{border:1px solid #dfe7df;border-radius:8px;background:#fff;padding:16px;margin:14px 0}.pqaai-table{width:100%;border-collapse:collapse}.pqaai-table th,.pqaai-table td{border-bottom:1px solid #e7eee8;padding:9px;text-align:left;vertical-align:top}.pqaai-pill{display:inline-flex;padding:3px 8px;border-radius:999px;background:#eef7ee;font-weight:800}.pqaai-pill--bad{background:#fff0f0;color:#8a1f1f}.pqaai-btn{display:inline-flex;align-items:center;min-height:36px;padding:0 12px;border:0;border-radius:8px;background:#2f6b4f;color:#fff!important;font-weight:900;text-decoration:none}.pqaai-muted{color:#5d6f66;font-size:12px}.pqaai-error{padding:12px;border:1px solid #f1b4b4;background:#fff4f4;color:#8a1f1f;border-radius:8px}</style>';
+echo '<style>' . pqh_openproject_skin_css('pqaai') . '</style>';
 echo '<main class="pqaai"><h1>Institution Academic Isolation</h1><p class="pqaai-muted">Course offerings, resources, gradebook, attendance, transcripts, owned rollups, and franchise governance-only academic evidence.</p>';
 if ($error !== '') {
     echo '<div class="pqaai-error">' . s($error) . '</div>';

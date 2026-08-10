@@ -183,6 +183,7 @@ echo $OUTPUT->header();
   resize: vertical;
 }
 </style>
+<style><?php echo pqh_openproject_skin_css('pqh-support', 'pqh-support-page'); ?></style>
 <div class="pqh-support-shell">
   <section class="pqh-support-hero" aria-label="Support">
     <div>

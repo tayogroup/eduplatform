@@ -138,6 +138,7 @@ body.pqhsh-page header,body.pqhsh-page footer,body.pqhsh-page nav.navbar,body.pq
 <?php echo pqh_design_system_css('.pqhsh-shell'); ?>
 <?php echo pqh_design_shell_css('.pqhsh-shell'); ?>
 </style>
+<style><?php echo pqh_openproject_skin_css('pqhsh', 'pqhsh-page'); ?></style>
 <main class="pqhsh-shell">
 <?php echo pqh_design_shell_html('pqhsh-shell'); ?>
 <div class="pqhsh-wrap">

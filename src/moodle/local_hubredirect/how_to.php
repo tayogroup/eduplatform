@@ -117,6 +117,7 @@ body.pqht-page #page,body.pqht-page #page-content,body.pqht-page #region-main,bo
 .pqht-card p{margin:0;color:#5e7280;font-size:13px;font-weight:700;line-height:1.5}
 @media(max-width:720px){.pqht-grid{grid-template-columns:1fr}}
 </style>
+<style><?php echo pqh_openproject_skin_css('pqht', 'pqht-page'); ?></style>
 <main class="pqht-shell">
   <div class="pqht-wrap">
     <section class="pqht-top">

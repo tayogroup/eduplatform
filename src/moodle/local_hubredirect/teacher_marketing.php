@@ -411,6 +411,7 @@ body.pqh-teacher-marketing-page #page,body.pqh-teacher-marketing-page #page-cont
 @media(max-width:820px){.pqtmkt-top{display:block}.pqtmkt-actions{margin-top:12px}.pqtmkt-grid,.pqtmkt-fields{grid-template-columns:1fr}.pqtmkt-field--wide{grid-column:auto}.pqtmkt-title{font-size:24px}}
 <?php echo pqh_dashboard_header_css($workspaceid); ?>
 </style>
+<style><?php echo pqh_openproject_skin_css('pqtmkt', 'pqh-teacher-marketing-page'); ?></style>
 <main class="pqtmkt-shell">
   <div class="pqtmkt-wrap">
     <section class="pqtmkt-top pqh-workspace-top">

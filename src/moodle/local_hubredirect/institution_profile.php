@@ -99,6 +99,7 @@ body.pqip-page #page,body.pqip-page #page-content,body.pqip-page #region-main,bo
 .pqip-alert{margin-top:16px;padding:12px 14px;border-radius:8px;font-weight:850}.pqip-alert--ok{background:#edf9ef;color:#245c35}.pqip-alert--bad{background:#fff0ed;color:#883526}.pqip-form{display:grid;gap:10px}.pqip-field{display:grid;gap:5px}.pqip-field label{font-size:12px;font-weight:950;color:#415665;text-transform:uppercase}.pqip-input,.pqip-textarea{width:100%;border:1px solid rgba(23,48,68,.18);border-radius:8px;box-sizing:border-box;background:#fbfdff;color:#173044;font-size:14px;font-weight:760}.pqip-input{min-height:42px;padding:0 11px}.pqip-textarea{min-height:116px;padding:10px;line-height:1.45}.pqip-hidden{position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden}
 @media(max-width:760px){.pqip-nav,.pqip-grid{display:block}.pqip-actions{justify-content:flex-start;margin-top:12px}.pqip-hero{padding:34px 22px}.pqip-title{font-size:36px}.pqip-card{margin-top:14px}}
 </style>
+<style><?php echo pqh_openproject_skin_css('pqip', 'pqip-page'); ?></style>
 <main class="pqip-shell" style="--pqi-primary: <?php echo s($primary); ?>; --pqi-accent: <?php echo s($accent); ?>; --pqi-hero-image: url('<?php echo s($heroimage); ?>');">
   <div class="pqip-wrap">
     <nav class="pqip-nav">

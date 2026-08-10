@@ -1010,6 +1010,7 @@ body.pqh-public-teacher-intake-page #page-wrapper,body.pqh-public-teacher-intake
 .pqpti-btn[hidden]{display:none!important}
 @media(max-width:760px){.pqpti-wizard-inner{padding:18px 18px 0}.pqpti-page{padding:2px 46px 4px}.pqpti-nav-arrow{width:34px;height:34px}.pqpti-nav-arrow svg{width:16px;height:16px}.pqpti-nav-back{left:4px}.pqpti-nav-next{right:4px}.pqpti-wizard-foot{padding:18px 18px 20px}.pqpti-wizard-foot .pqpti-btn{min-width:0;flex:1}}
 </style>
+<style><?php echo pqh_openproject_skin_css('pqpti', 'pqh-public-teacher-intake-page'); ?></style>
 <main class="pqpti-shell">
   <div class="pqpti-wrap">
     <section class="pqpti-hero pqh-workspace-top">

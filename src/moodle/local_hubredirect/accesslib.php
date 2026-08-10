@@ -2597,13 +2597,25 @@ function pqh_ip_rate_limited(string $bucket, int $max = 30, int $windowsecs = 60
  * @param string $sep prefix/component separator; '__' for the BEM pages
  */
 function pqh_openproject_skin_css($prefixes, string $bodyclass = '', string $sep = '-'): string {
+    static $emittedtokens = false;
+    static $emittedprefix = [];
+
     $prefixes = is_array($prefixes) ? $prefixes : [$prefixes];
 
-    // The @import must lead the stylesheet or the browser drops it. If Google
-    // Fonts is blocked the stack falls through to -apple-system/Segoe UI and
-    // only the typeface changes.
-    $css = "@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap');\n";
-    $css .= ':root{--op-font:"Lato",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans",Ubuntu,Cantarell,"Helvetica Neue",sans-serif;'
+    // Idempotent within a request. A page that calls this twice -- directly and
+    // again through an included renderer -- should not ship the token block or
+    // a prefix's rules twice. Repeats are identical so a duplicate is only
+    // wasted bytes, but this page is already 200KB of inline CSS on the big
+    // dashboards and there is no reason to add to it.
+    if ($emittedtokens) {
+        $css = '';
+    } else {
+        $emittedtokens = true;
+        // The @import must lead the stylesheet or the browser drops it. If
+        // Google Fonts is blocked the stack falls through to
+        // -apple-system/Segoe UI and only the typeface changes.
+        $css = "@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap');\n";
+        $css .= ':root{--op-font:"Lato",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans",Ubuntu,Cantarell,"Helvetica Neue",sans-serif;'
         . '--op-primary:#1a67a3;--op-primary-hover:#134a81;--op-primary-subtle:#d1e1ed;--op-primary-border:#a3c2da;--op-primary-emphasis:#0a2941;'
         . '--op-ink:#1f1f1f;--op-ink-muted:#555;--op-ink-soft:#707070;--op-ink-faint:#919191;'
         . '--op-line:#dfdfdf;--op-line-strong:#ccc;'
@@ -2614,35 +2626,40 @@ function pqh_openproject_skin_css($prefixes, string $bodyclass = '', string $sep
         . '--op-radius:3px;--op-radius-lg:.5rem;--op-pill:50rem;'
         . '--op-focus:0 0 0 .25rem rgba(26,103,163,.25);--op-shadow-lg:0 1rem 3rem rgba(0,0,0,.175);'
         . "--op-header-bg:#162b48;--op-header-ink:#fff;--op-header-ink-soft:rgba(255,255,255,.72)}\n";
+    }
 
-    if (trim($bodyclass) !== '') {
-        $bodyclass = trim($bodyclass);
+    $bodyclass = trim($bodyclass);
+    if ($bodyclass !== '' && !isset($emittedprefix['body:' . $bodyclass])) {
+        $emittedprefix['body:' . $bodyclass] = true;
         $css .= "body.{$bodyclass}{background:var(--op-canvas)!important;font-family:var(--op-font)}\n";
     }
 
     foreach ($prefixes as $prefix) {
         $p = preg_replace('/[^a-z0-9_-]/i', '', (string)$prefix);
-        if ($p === '') {
+        $s = $sep === '__' ? '__' : '-';
+        if ($p === '' || isset($emittedprefix[$p . $s])) {
             continue;
         }
-        $s = $sep === '__' ? '__' : '-';
+        $emittedprefix[$p . $s] = true;
         $css .= <<<CSS
 .{$p}{$s}shell{background:var(--op-canvas);color:var(--op-ink);font-family:var(--op-font);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
-.{$p}{$s}panel,.{$p}{$s}card{border:1px solid var(--op-line);border-radius:var(--op-radius);background:var(--op-surface);box-shadow:none}
+.{$p}{$s}panel,.{$p}{$s}card{border-width:1px;border-style:solid;border-radius:var(--op-radius);box-shadow:none}
+.{$p}{$s}panel:not([class*="{$s}panel--"]),.{$p}{$s}card:not([class*="{$s}card--"]){border-color:var(--op-line);background:var(--op-surface)}
 .{$p}{$s}panel h2,.{$p}{$s}card h2,.{$p}{$s}panel h3,.{$p}{$s}card h3{color:var(--op-ink);font-family:var(--op-font);font-weight:700;line-height:1.4}
 .{$p}{$s}panel h2,.{$p}{$s}panel h3{font-size:16px}
 .{$p}{$s}card h2,.{$p}{$s}card h3{font-size:18px}
 .{$p}{$s}grid,.{$p}{$s}stack{gap:16px}
 .{$p}{$s}actions{gap:8px}
-.{$p}{$s}btn{border:1px solid var(--op-primary);border-radius:var(--op-radius);background:var(--op-primary);color:#fff!important;font-family:var(--op-font);font-size:14px;font-weight:700;line-height:1.2;text-decoration:none;cursor:pointer;transition:background-color .15s ease,border-color .15s ease,color .15s ease}
-.{$p}{$s}btn:hover{background:var(--op-primary-hover);border-color:var(--op-primary-hover)}
+.{$p}{$s}btn{border-width:1px;border-style:solid;border-radius:var(--op-radius);font-family:var(--op-font);font-size:14px;font-weight:700;line-height:1.2;text-decoration:none;cursor:pointer;transition:background-color .15s ease,border-color .15s ease,color .15s ease}
+.{$p}{$s}btn:not([class*="{$s}btn--"]),.{$p}{$s}btn--primary,.{$p}{$s}btn--main{border-color:var(--op-primary);background:var(--op-primary);color:#fff!important}
+.{$p}{$s}btn:not([class*="{$s}btn--"]):hover,.{$p}{$s}btn--primary:hover,.{$p}{$s}btn--main:hover{background:var(--op-primary-hover);border-color:var(--op-primary-hover)}
 .{$p}{$s}btn:focus-visible{outline:0;box-shadow:var(--op-focus)}
 .{$p}{$s}btn[disabled],.{$p}{$s}btn:disabled{opacity:.55;cursor:not-allowed}
 .{$p}{$s}btn--light,.{$p}{$s}btn--secondary,.{$p}{$s}btn--ghost{background:var(--op-surface);border-color:var(--op-line-strong);color:var(--op-ink)!important}
 .{$p}{$s}btn--light:hover,.{$p}{$s}btn--secondary:hover,.{$p}{$s}btn--ghost:hover{background:var(--op-surface-soft);border-color:var(--op-ink-faint);color:var(--op-primary-hover)!important}
 .{$p}{$s}btn--danger{background:var(--op-bad-bg);border-color:var(--op-bad-line);color:var(--op-bad-ink)!important}
 .{$p}{$s}btn--danger:hover{background:#f1aeb5;border-color:#e08d97;color:var(--op-bad-ink)!important}
-.{$p}{$s}field label,.{$p}{$s}field>span{color:var(--op-ink-muted);font-size:13px;font-weight:700;letter-spacing:0;text-transform:none}
+.{$p}{$s}field label,.{$p}{$s}field>span:first-child{color:var(--op-ink-muted);font-size:13px;font-weight:700;letter-spacing:0;text-transform:none}
 .{$p}{$s}input,.{$p}{$s}select,.{$p}{$s}textarea{box-sizing:border-box;min-width:0;border:1px solid var(--op-line-strong);border-radius:var(--op-radius);background:var(--op-surface);color:var(--op-ink);font-family:var(--op-font);font-size:14px;font-weight:400;line-height:1.5}
 .{$p}{$s}input::placeholder,.{$p}{$s}textarea::placeholder{color:var(--op-ink-faint)}
 .{$p}{$s}input:focus,.{$p}{$s}select:focus,.{$p}{$s}textarea:focus{outline:0;border-color:#8db3d1;box-shadow:var(--op-focus)}
@@ -2653,9 +2670,12 @@ function pqh_openproject_skin_css($prefixes, string $bodyclass = '', string $sep
 .{$p}{$s}table td{border-bottom:1px solid var(--op-line);color:var(--op-ink);font-size:14px;font-weight:400;vertical-align:top}
 .{$p}{$s}table tbody tr:hover td{background:var(--op-surface-soft)}
 .{$p}{$s}name{color:var(--op-ink);font-size:14px;font-weight:700}
-.{$p}{$s}muted,.{$p}{$s}help{color:var(--op-ink-soft);font-weight:400;line-height:1.45}
-.{$p}{$s}text{color:var(--op-ink-muted);font-size:14px;font-weight:400;line-height:1.6}
-.{$p}{$s}pill,.{$p}{$s}chip{border:1px solid var(--op-primary-border);border-radius:var(--op-pill);background:var(--op-primary-subtle);color:var(--op-primary-emphasis);font-size:12px;font-weight:700;line-height:1}
+.{$p}{$s}muted,.{$p}{$s}help{font-weight:400;line-height:1.45}
+.{$p}{$s}muted:not([class*="{$s}muted--"]),.{$p}{$s}help:not([class*="{$s}help--"]){color:var(--op-ink-soft)}
+.{$p}{$s}text{font-size:14px;font-weight:400;line-height:1.6}
+.{$p}{$s}text:not([class*="{$s}text--"]){color:var(--op-ink-muted)}
+.{$p}{$s}pill,.{$p}{$s}chip{border-width:1px;border-style:solid;border-radius:var(--op-pill);font-size:12px;font-weight:700;line-height:1}
+.{$p}{$s}pill:not([class*="{$s}pill--"]),.{$p}{$s}chip:not([class*="{$s}chip--"]){border-color:var(--op-primary-border);background:var(--op-primary-subtle);color:var(--op-primary-emphasis)}
 .{$p}{$s}pill--ok,.{$p}{$s}pill--good{background:var(--op-ok-bg);border-color:var(--op-ok-line);color:var(--op-ok-ink)}
 .{$p}{$s}pill--warn{background:var(--op-warn-bg);border-color:var(--op-warn-line);color:var(--op-warn-ink)}
 .{$p}{$s}pill--bad,.{$p}{$s}pill--danger{background:var(--op-bad-bg);border-color:var(--op-bad-line);color:var(--op-bad-ink)}
@@ -2687,11 +2707,67 @@ function pqh_openproject_skin_css($prefixes, string $bodyclass = '', string $sep
 CSS;
     }
 
+    // 109 of the 137 skinned pages force these same properties with !important
+    // in their own CSS -- .pql-shell [class*="-panel"]{border-color:...!important}
+    // and the like. !important beats any specificity, so without this the skin
+    // silently loses on the majority of pages and only appears to work on the
+    // handful that happen not to. Measured, not guessed: color x252,
+    // background x48, font-weight x33, border-color x26, border-radius x22,
+    // box-shadow x20, border x19, font-size x14.
+    //
+    // Forced on the LISTED properties only. Layout -- padding, display, gap,
+    // width -- is never forced, so a page keeps its own geometry (this is what
+    // lets .X-panel--wide and .X-panel--compact still work).
+    //
+    // The cost: a page's own colour MODIFIER on a base component loses too,
+    // because equal specificity plus later position wins. Only one exists
+    // across all 137 pages -- .pqlf-card--overdue in live_followups.php -- and
+    // it carries its own !important now so it still reads as overdue.
+    $css = preg_replace_callback(
+        '/(^|[;{])(\s*)(background|background-color|color|border|border-color|border-radius|box-shadow|'
+            . 'font-family|font-size|font-weight|letter-spacing|text-transform|text-shadow)(\s*:\s*)([^;{}]+?)(\s*)(?=[;}])/mi',
+        static function (array $m): string {
+            if (stripos($m[5], '!important') !== false) {
+                return $m[0];
+            }
+            return $m[1] . $m[2] . $m[3] . $m[4] . $m[5] . '!important' . $m[6];
+        },
+        $css
+    ) ?? $css;
+
+    // !important alone is not enough: between two !important declarations the
+    // MORE SPECIFIC one still wins. The live_* family -- the largest group here
+    // -- writes .pql-shell [class*="-panel"]{border-color:...!important}, which
+    // is (0,2,0) against a bare .pql-panel at (0,1,0), so the skin lost the
+    // border on every one of those pages while appearing to work everywhere
+    // else. Doubling the first class in each selector lifts the skin to (0,2,0)
+    // and later position carries the tie.
+    //
+    // Done here rather than by writing .x.x throughout the template above,
+    // which would treble its length and be silently wrong the moment somebody
+    // adds a rule and forgets the trick.
+    $css = implode("\n", array_map(static function (string $line): string {
+        $brace = strpos($line, '{');
+        if ($brace === false || $line === '' || $line[0] === '@' || strpos($line, ':root') === 0) {
+            return $line;
+        }
+        $selectors = explode(',', substr($line, 0, $brace));
+        foreach ($selectors as &$sel) {
+            // duplicate the first class token; +1 class of specificity, same match
+            $sel = preg_replace('/(\.[A-Za-z_][A-Za-z0-9_-]*)/', '$1$1', $sel, 1);
+        }
+        unset($sel);
+        return implode(',', $selectors) . substr($line, $brace);
+    }, explode("\n", $css)));
+
     // The shared workspace header ships a gradient, 950-weight type and a deep
-    // shadow with !important on every declaration. These are one class more
-    // specific and last in the sheet, so they land whatever the page inherits.
-    $css .= ".pqh-workspace-top{box-shadow:none!important;border-radius:var(--op-radius)!important;"
-        . "background:var(--op-header-bg)!important;border-color:var(--op-header-bg)!important;color:var(--op-header-ink)!important}\n";
+    // shadow with !important on every declaration. This is last in the sheet so
+    // it lands whatever the page inherits. Prefix-independent, so once only.
+    if (!isset($emittedprefix['@sharedheader'])) {
+        $emittedprefix['@sharedheader'] = true;
+        $css .= ".pqh-workspace-top{box-shadow:none!important;border-radius:var(--op-radius)!important;"
+            . "background:var(--op-header-bg)!important;border-color:var(--op-header-bg)!important;color:var(--op-header-ink)!important}\n";
+    }
 
     return $css;
 }

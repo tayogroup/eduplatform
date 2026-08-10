@@ -84,6 +84,7 @@ body.pqldp-page #page,body.pqldp-page #page-content,body.pqldp-page #region-main
 .pqldp-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
 .pqldp-empty{padding:18px;border:1px dashed #e4e9ef;border-radius:12px;color:#5b6b7c;font-weight:550}
 </style>
+<style><?php echo pqh_openproject_skin_css('pqldp', 'pqldp-page'); ?></style>
 <main class="pqldp-shell">
 <div class="pqldp-wrap">
   <div class="pqldp-card">

@@ -444,6 +444,7 @@ body.pqh-parent-trust-retention-page .main-inner{margin:0!important;padding:0!im
 @media(max-width:620px){.pqlptr-metrics{grid-template-columns:1fr}.pqlptr-title{font-size:24px}.pqlptr-form{display:grid}.pqlptr-btn{width:100%}}
 <?php echo pqh_dashboard_header_css(); ?>
 </style>
+<style><?php echo pqh_openproject_skin_css('pqlptr', 'pqh-parent-trust-retention-page'); ?></style>
 <main class="pqlptr-shell">
   <div class="pqlptr-wrap">
     <section class="pqlptr-top pqh-workspace-top">

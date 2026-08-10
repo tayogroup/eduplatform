@@ -108,6 +108,7 @@ body.pqh-agenda-editor-page .main-inner{margin:0!important;padding:0!important;m
 #pqh-onlyoffice-editor{width:100%!important;height:100%!important;min-height:0!important;overflow:hidden!important}
 .pqh-editor-empty{max-width:760px;margin:42px auto;padding:18px;background:#fff;border:1px solid rgba(23,48,68,.12);border-radius:10px;font-weight:850}
 </style>
+<style><?php echo pqh_openproject_skin_css('pqh-editor', 'pqh-agenda-editor-page'); ?></style>
 <main class="pqh-editor-shell">
   <section class="pqh-editor-top">
     <div>

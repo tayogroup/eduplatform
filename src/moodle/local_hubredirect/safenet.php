@@ -281,6 +281,7 @@ body.pqsn-page #page,body.pqsn-page #page-content,body.pqsn-page #region-main,bo
 <?php echo pqh_design_system_css('.pqsn-shell'); ?>
 <?php echo pqh_design_shell_css('.pqsn-shell'); ?>
 </style>
+<style><?php echo pqh_openproject_skin_css('pqsn', 'pqsn-page'); ?></style>
 <main class="pqsn-shell">
 <?php echo pqh_design_shell_html('pqsn-shell'); ?>
 <div class="pqsn-wrap">

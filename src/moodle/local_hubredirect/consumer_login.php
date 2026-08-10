@@ -127,6 +127,7 @@ body.pqh-consumer-login-page .main-inner{margin:0!important;padding:0!important;
 .pqhlogin-note{margin-top:22px;font-size:.76rem;line-height:1.7;color:rgba(15,43,71,.62);opacity:.85}
 @media(prefers-reduced-motion:reduce){.pqhlogin-card{animation:none}.pqhlogin-btn{transition:none}}
 </style>
+<style><?php echo pqh_openproject_skin_css('pqhlogin', 'pqh-consumer-login-page'); ?></style>
 <main class="pqhlogin-shell" style="--pqh-primary: <?php echo s($primarycolor); ?>; --pqh-accent: <?php echo s($accentcolor); ?>;">
   <div class="pqhlogin-card" aria-label="<?php echo s($brand); ?> login">
     <div class="pqhlogin-brand">

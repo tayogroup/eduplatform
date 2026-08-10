@@ -590,6 +590,7 @@ body.pqh-live-review-page .main-inner{margin:0!important;padding:0!important;max
 @media(max-width:980px){.pqlr-grid,.pqlr-checklist,.pqlr-lifecycle__forms,.pqlr-inline{grid-template-columns:1fr}.pqlr-top{display:block}.pqlr-actions{margin-top:12px}.pqlr-title{font-size:24px}}
 <?php echo pqh_dashboard_header_css(); ?>
 </style>
+<style><?php echo pqh_openproject_skin_css('pqlr', 'pqh-live-review-page'); ?></style>
 <main class="pqlr-shell">
   <div class="pqlr-wrap">
     <section class="pqlr-top pqh-workspace-top">

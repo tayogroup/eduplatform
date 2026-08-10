@@ -398,6 +398,7 @@ body.pqh-teacher-marketplace-profile-page #page,body.pqh-teacher-marketplace-pro
 @media(max-width:760px){.pqtmp-top{display:block}.pqtmp-actions{margin-top:12px}.pqtmp-grid{grid-template-columns:1fr}.pqtmp-title{font-size:24px}.pqtmp-social-row{grid-template-columns:1fr;gap:3px}}
 <?php echo pqh_dashboard_header_css(); ?>
 </style>
+<style><?php echo pqh_openproject_skin_css('pqtmp', 'pqh-teacher-marketplace-profile-page'); ?></style>
 <main class="pqtmp-shell">
   <div class="pqtmp-wrap">
     <section class="pqtmp-top pqh-workspace-top">

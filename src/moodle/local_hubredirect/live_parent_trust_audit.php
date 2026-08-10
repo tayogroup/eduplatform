@@ -335,6 +335,7 @@ body.pqh-parent-trust-audit-page .main-inner{margin:0!important;padding:0!import
 @media(max-width:620px){.pqlpta-metrics{grid-template-columns:1fr}.pqlpta-title{font-size:24px}.pqlpta-form{display:grid}.pqlpta-btn{width:100%}}
 <?php echo pqh_dashboard_header_css(); ?>
 </style>
+<style><?php echo pqh_openproject_skin_css('pqlpta', 'pqh-parent-trust-audit-page'); ?></style>
 <main class="pqlpta-shell">
   <div class="pqlpta-wrap">
     <section class="pqlpta-top pqh-workspace-top">

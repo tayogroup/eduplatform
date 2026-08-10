@@ -508,6 +508,7 @@ body.pqh-live-recordings-page .main-inner{margin:0!important;padding:0!important
 @media(max-width:900px){.pqlra-top{display:block}.pqlra-actions{margin-top:12px}.pqlra-table{display:block;overflow:auto}.pqlra-title{font-size:24px}.pqlra-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}
 <?php echo pqh_dashboard_header_css(); ?>
 </style>
+<style><?php echo pqh_openproject_skin_css('pqlra', 'pqh-live-recordings-page'); ?></style>
 <main class="pqlra-shell">
   <div class="pqlra-wrap">
     <section class="pqlra-top pqh-workspace-top">

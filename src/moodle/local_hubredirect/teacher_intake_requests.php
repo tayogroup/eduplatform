@@ -312,6 +312,7 @@ body.pqh-teacher-intake-requests-page #page,body.pqh-teacher-intake-requests-pag
 @media(max-width:980px){.pqtirq-top{display:block}.pqtirq-actions{margin-top:12px}.pqtirq-grid{grid-template-columns:1fr}.pqtirq-wide{grid-column:auto}.pqtirq-form{grid-template-columns:1fr}.pqtirq-btn{width:100%}}
 <?php echo pqh_dashboard_header_css(); ?>
 </style>
+<style><?php echo pqh_openproject_skin_css('pqtirq', 'pqh-teacher-intake-requests-page'); ?></style>
 <main class="pqtirq-shell">
   <div class="pqtirq-wrap">
     <section class="pqtirq-top pqh-workspace-top">

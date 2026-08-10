@@ -242,6 +242,7 @@ $PAGE->set_title('Institution Communications Isolation');
 $PAGE->set_heading('Institution Communications Isolation');
 echo $OUTPUT->header();
 echo '<style>.pqici{max-width:1180px;margin:0 auto}.pqici-card{border:1px solid #dfe7df;border-radius:8px;background:#fff;padding:16px;margin:14px 0}.pqici-table{width:100%;border-collapse:collapse}.pqici-table th,.pqici-table td{border-bottom:1px solid #e7eee8;padding:9px;text-align:left;vertical-align:top}.pqici-pill{display:inline-flex;padding:3px 8px;border-radius:999px;background:#eef7ee;font-weight:800}.pqici-pill--bad{background:#fff0f0;color:#8a1f1f}.pqici-btn{display:inline-flex;align-items:center;min-height:36px;padding:0 12px;border:0;border-radius:8px;background:#2f6b4f;color:#fff!important;font-weight:900;text-decoration:none}.pqici-muted{color:#5d6f66;font-size:12px}.pqici-error{padding:12px;border:1px solid #f1b4b4;background:#fff4f4;color:#8a1f1f;border-radius:8px}</style>';
+echo '<style>' . pqh_openproject_skin_css('pqici') . '</style>';
 echo '<main class="pqici"><h1>Institution Communications Isolation</h1><p class="pqici-muted">Announcements, messages, support cases, notifications, follow-up boundaries, and audit evidence.</p>';
 if ($error !== '') {
     echo '<div class="pqici-error">' . s($error) . '</div>';

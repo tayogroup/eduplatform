@@ -49,6 +49,7 @@ body.pqh-live-guide-page .main-inner{margin:0!important;padding:0!important;max-
 .pqh-guide-video video{display:block;width:100%;height:auto;max-height:calc(100vh - 170px);background:#0d1b2a}
 @media(max-width:760px){.pqh-guide-top{display:block}.pqh-guide-actions{justify-content:flex-start;margin-top:12px}.pqh-guide-title{font-size:24px}.pqh-guide-video video{max-height:none}}
 </style>
+<style><?php echo pqh_openproject_skin_css('pqh-guide', 'pqh-live-guide-page'); ?></style>
 <main class="pqh-guide-shell">
   <div class="pqh-guide-wrap">
     <section class="pqh-guide-top" aria-label="Live session guide controls">

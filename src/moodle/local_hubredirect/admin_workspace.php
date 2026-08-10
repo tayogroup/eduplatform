@@ -135,6 +135,7 @@ body.pqaw-page #page,body.pqaw-page #page-content,body.pqaw-page #region-main,bo
 .pqaw-shell .pqh-appbar{background:linear-gradient(90deg,#cfe9ff 0%,#e3f4ff 50%,#f2fbff 100%)}
 <?php echo pqh_design_shell_css('.pqaw-shell'); ?>
 </style>
+<style><?php echo pqh_openproject_skin_css('pqaw', 'pqaw-page'); ?></style>
 <main class="pqaw-shell">
 <?php
 $pqawnavitems = [];

@@ -777,6 +777,7 @@ body.pqh-teacher-marketplace-admin-page #page,body.pqh-teacher-marketplace-admin
 @media(max-width:860px){.pqtma-top{display:block}.pqtma-actions{margin-top:12px}.pqtma-table,.pqtma-table tbody,.pqtma-table tr,.pqtma-table td{display:block}.pqtma-table thead{display:none}.pqtma-table td{border-bottom:0}.pqtma-table tr{border-bottom:1px solid rgba(23,48,68,.12);padding:8px 0}}
 <?php echo pqh_dashboard_header_css(); ?>
 </style>
+<style><?php echo pqh_openproject_skin_css('pqtma', 'pqh-teacher-marketplace-admin-page'); ?></style>
 <main class="pqtma-shell">
   <div class="pqtma-wrap">
     <section class="pqtma-top pqh-workspace-top">

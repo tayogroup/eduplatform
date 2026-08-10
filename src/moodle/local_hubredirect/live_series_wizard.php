@@ -303,6 +303,7 @@ body.pqh-live-series-wizard-page #page,body.pqh-live-series-wizard-page #page-co
 <?php echo pqh_design_system_css('.pqlsw-shell'); ?>
 <?php echo pqh_design_shell_css('.pqlsw-shell'); ?>
 </style>
+<style><?php echo pqh_openproject_skin_css('pqlsw', 'pqh-live-series-wizard-page'); ?></style>
 <main class="pqlsw-shell">
 <?php echo pqh_design_shell_html('pqlsw-shell'); ?><div class="pqlsw-wrap">
   <section class="pqlsw-top pqh-workspace-top"><div><h1 class="pqlsw-title pqh-workspace-title">Guided Recurring Class Series Wizard</h1><p class="pqlsw-sub pqh-workspace-sub">Preview every generated class date before creating a recurring BBB live-session series.</p></div><div class="pqlsw-actions pqh-workspace-actions"><?php echo pqh_live_session_explainer_link(); ?><a class="pqlsw-btn pqlsw-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_create_wizard.php', $urlparams))->out(false); ?>">Single session wizard</a><?php if ($pqlswisadmin): ?><a class="pqlsw-btn pqlsw-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_capacity.php', $urlparams))->out(false); ?>">Capacity</a><?php endif; ?><a class="pqlsw-btn pqlsw-btn--light" href="<?php echo $dashboardurl->out(false); ?>">Dashboard</a><a class="pqlsw-btn" href="<?php echo (new moodle_url('/local/hubredirect/live_sessions.php', $urlparams))->out(false); ?>">Live sessions</a></div></section>

@@ -682,6 +682,7 @@ $PAGE->set_title('Institution Operations Isolation');
 $PAGE->set_heading('Institution Operations Isolation');
 echo $OUTPUT->header();
 echo '<style>.pqioi{max-width:1120px;margin:0 auto}.pqioi-card{border:1px solid #dfe7df;border-radius:8px;background:#fff;padding:16px;margin:14px 0}.pqioi-table{width:100%;border-collapse:collapse}.pqioi-table th,.pqioi-table td{border-bottom:1px solid #e7eee8;padding:9px;text-align:left;vertical-align:top}.pqioi-pill{display:inline-flex;padding:3px 8px;border-radius:999px;background:#eef7ee;font-weight:800}.pqioi-pill--bad{background:#fff0f0;color:#8a1f1f}.pqioi-btn{display:inline-flex;align-items:center;min-height:36px;padding:0 12px;border:0;border-radius:8px;background:#2f6b4f;color:#fff!important;font-weight:900;text-decoration:none}.pqioi-muted{color:#5d6f66;font-size:12px}.pqioi-error{padding:12px;border:1px solid #f1b4b4;background:#fff4f4;color:#8a1f1f;border-radius:8px}</style>';
+echo '<style>' . pqh_openproject_skin_css('pqioi') . '</style>';
 echo '<main class="pqioi"><h1>Institution Operations Isolation</h1><p class="pqioi-muted">' . s((string)($workspace->name ?? 'Workspace')) . ' / workspace #' . (int)$workspaceid . '</p>';
 if ($error !== '') {
     echo '<div class="pqioi-error">Institution operations isolation failed: ' . s($error) . '</div>';

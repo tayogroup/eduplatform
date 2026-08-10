@@ -460,6 +460,7 @@ echo $OUTPUT->header();
 <style>
 .pqfwc{max-width:1180px;margin:0 auto;padding:24px;color:#143044;font-family:system-ui,-apple-system,Segoe UI,Arial,sans-serif}.pqfwc-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:18px}.pqfwc h2{margin:0 0 6px;font-size:28px}.pqfwc-muted{color:#617286;font-size:14px}.pqfwc-btn{display:inline-flex;align-items:center;justify-content:center;border:1px solid #236454;background:#236454;color:#fff;border-radius:8px;padding:10px 14px;text-decoration:none;font-weight:700}.pqfwc-btn--light{background:#fff;color:#236454}.pqfwc-alert{border-radius:8px;padding:12px 14px;margin:12px 0}.pqfwc-error{background:#fee2e2;color:#991b1b;border:1px solid #fecaca}.pqfwc-panel{background:#fff;border:1px solid #d9e2ea;border-radius:8px;padding:16px;box-shadow:0 8px 24px rgba(15,23,42,.06)}.pqfwc-table{width:100%;border-collapse:collapse}.pqfwc-table th,.pqfwc-table td{border-bottom:1px solid #e6edf3;padding:10px;text-align:left;vertical-align:top}.pqfwc-pill{display:inline-flex;border-radius:999px;padding:4px 9px;font-size:12px;font-weight:800;background:#e7f8ee;color:#166534}.pqfwc-pill--check{background:#fef3c7;color:#92400e}.pqfwc-code{white-space:pre-wrap;background:#0f172a;color:#e2e8f0;border-radius:8px;padding:12px;overflow:auto;font-size:12px}
 </style>
+<style><?php echo pqh_openproject_skin_css('pqfwc'); ?></style>
 <div class="pqfwc">
   <div class="pqfwc-top">
     <div>

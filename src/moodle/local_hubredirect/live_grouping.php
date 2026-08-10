@@ -1138,6 +1138,7 @@ body.pqh-live-grouping-page #page,body.pqh-live-grouping-page #page-content,body
 @media(max-width:920px){.pqlgrp-top{display:block}.pqlgrp-actions{margin-top:12px}.pqlgrp-grid,.pqlgrp-formgrid,.pqlgrp-metrics{grid-template-columns:1fr}.pqlgrp-title{font-size:24px}}
 <?php echo pqh_dashboard_header_css(); ?>
 </style>
+<style><?php echo pqh_openproject_skin_css('pqlgrp', 'pqh-live-grouping-page'); ?></style>
 <main class="pqlgrp-shell">
   <div class="pqlgrp-wrap">
     <section class="pqlgrp-top pqh-workspace-top">

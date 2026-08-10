@@ -424,6 +424,7 @@ body.pqh-live-availability-page .main-inner{margin:0!important;padding:0!importa
 <?php echo pqh_design_system_css('.pqlav-shell'); ?>
 <?php echo pqh_design_shell_css('.pqlav-shell'); ?>
 </style>
+<style><?php echo pqh_openproject_skin_css('pqlav', 'pqh-live-availability-page'); ?></style>
 <main class="pqlav-shell">
 <?php echo pqh_design_shell_html('pqlav-shell'); ?>
   <div class="pqlav-wrap">

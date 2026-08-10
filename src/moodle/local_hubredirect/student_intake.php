@@ -2313,6 +2313,7 @@ body.pqh-student-intake-page #page,body.pqh-student-intake-page #page-content,bo
 .pqsi-wizard-foot .pqsi-btn{min-width:180px}
 @media(max-width:760px){.pqsi-wizard-inner{padding:18px 18px 0}.pqsi-page{padding:2px 46px 4px}.pqsi-nav-arrow{width:34px;height:34px}.pqsi-nav-arrow svg{width:16px;height:16px}.pqsi-nav-back{left:4px}.pqsi-nav-next{right:4px}.pqsi-wizard-foot{padding:18px 18px 20px}.pqsi-wizard-foot .pqsi-btn{min-width:0;flex:1}}
 </style>
+<style><?php echo pqh_openproject_skin_css('pqsi', 'pqh-student-intake-page'); ?></style>
 <main class="pqsi-shell">
   <div class="pqsi-wrap">
     <section class="pqsi-top pqh-workspace-top">

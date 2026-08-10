@@ -2148,6 +2148,7 @@ body.pqh-teacher-intake-page #page,body.pqh-teacher-intake-page #page-content,bo
 @media(max-width:560px){.pqti-checks{grid-template-columns:1fr}}
 <?php echo pqh_dashboard_header_css(); ?>
 </style>
+<style><?php echo pqh_openproject_skin_css('pqti', 'pqh-teacher-intake-page'); ?></style>
 <main class="pqti-shell">
   <div class="pqti-wrap">
     <section class="pqti-top pqh-workspace-top">

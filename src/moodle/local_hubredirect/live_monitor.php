@@ -471,6 +471,7 @@ body.pqh-live-monitor-page .main-inner{margin:0!important;padding:0!important;ma
 @media(max-width:560px){.pqlmon-grid,.pqlmon-live,.pqlmon-coach__grid{grid-template-columns:1fr}}
 <?php echo pqh_dashboard_header_css(); ?>
 </style>
+<style><?php echo pqh_openproject_skin_css('pqlmon', 'pqh-live-monitor-page'); ?></style>
 <main class="pqlmon-shell">
   <div class="pqlmon-wrap">
     <section class="pqlmon-top pqh-workspace-top">

@@ -478,6 +478,7 @@ body.pqh-quiz-report-page{background:#f5f8fb!important}
 <?php echo pqh_design_system_css('.pqqr-shell'); ?>
 <?php echo pqh_design_shell_css('.pqqr-shell'); ?>
 </style>
+<style><?php echo pqh_openproject_skin_css('pqqr', 'pqh-quiz-report-page'); ?></style>
 <main class="pqqr-shell">
 <?php echo pqh_design_shell_html('pqqr-shell'); ?>
   <div class="pqqr-top">

@@ -395,6 +395,7 @@ body.pqh-recordings-page{background:#f4f7fb!important}
 <?php echo pqh_design_system_css('.pqr-shell'); ?>
 <?php echo pqh_design_shell_css('.pqr-shell'); ?>
 </style>
+<style><?php echo pqh_openproject_skin_css('pqr', 'pqh-recordings-page'); ?></style>
 <main class="pqr-shell">
 <?php echo pqh_design_shell_html('pqr-shell'); ?>
   <div class="pqr-wrap">

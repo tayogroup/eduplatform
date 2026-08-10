@@ -552,6 +552,7 @@ body.pqh-intake-requests-page #page,body.pqh-intake-requests-page #page-content,
 @media(max-width:980px){.pqir-top{display:block}.pqir-actions{margin-top:12px}.pqir-filterbar,.pqir-grid,.pqir-suggestions{grid-template-columns:1fr}.pqir-form{grid-template-columns:1fr}.pqir-btn{width:100%}}
 <?php echo pqh_dashboard_header_css(); ?>
 </style>
+<style><?php echo pqh_openproject_skin_css('pqir', 'pqh-intake-requests-page'); ?></style>
 <main class="pqir-shell">
   <div class="pqir-wrap">
     <section class="pqir-top pqh-workspace-top">

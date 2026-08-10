@@ -255,6 +255,7 @@ body.pqh-live-admin-menu-page .main-inner{margin:0!important;padding:0!important
 @media(max-width:560px){.pqladm-title{font-size:24px}.pqladm-health,.pqladm-workflows{grid-template-columns:1fr}.pqladm-link{grid-template-columns:1fr}.pqladm-btn{width:100%}}
 <?php echo pqh_dashboard_header_css(); ?>
 </style>
+<style><?php echo pqh_openproject_skin_css('pqladm', 'pqh-live-admin-menu-page'); ?></style>
 <main class="pqladm-shell">
   <div class="pqladm-wrap">
     <section class="pqladm-top pqh-workspace-top">

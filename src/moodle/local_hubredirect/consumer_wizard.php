@@ -240,6 +240,7 @@ body.pqcwiz-page #page,body.pqcwiz-page #page-content,body.pqcwiz-page #region-m
 .pqcwiz-help{display:block;margin-top:4px;padding:4px 8px;border-radius:6px;background:var(--slate-soft);color:var(--ink-faint);font-size:14.5px;font-weight:500;line-height:1.4}
 @media(max-width:900px){.pqcwiz-top,.pqcwiz-grid,.pqcwiz-formgrid{grid-template-columns:1fr}.pqcwiz-actions{justify-content:flex-start}}
 </style>
+<style><?php echo pqh_openproject_skin_css('pqcwiz', 'pqcwiz-page'); ?></style>
 <main class="pqcwiz-shell">
   <div class="pqcwiz-wrap">
     <section class="pqcwiz-top">

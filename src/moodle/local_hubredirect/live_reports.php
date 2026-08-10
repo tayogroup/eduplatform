@@ -435,6 +435,7 @@ body.pqh-live-reports-page .main-inner{margin:0!important;padding:0!important;ma
 @media(max-width:620px){.pqlrep-filters,.pqlrep-metrics{grid-template-columns:1fr}.pqlrep-title{font-size:24px}}
 <?php echo pqh_dashboard_header_css(); ?>
 </style>
+<style><?php echo pqh_openproject_skin_css('pqlrep', 'pqh-live-reports-page'); ?></style>
 <main class="pqlrep-shell">
   <div class="pqlrep-wrap">
     <section class="pqlrep-top pqh-workspace-top">

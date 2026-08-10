@@ -499,6 +499,7 @@ echo $OUTPUT->header();
 .pqiml-fail{background:#fdecec;color:#a33a31}
 @media(max-width:720px){.pqiml-form{grid-template-columns:1fr}.pqiml-top{display:block}}
 </style>
+<style><?php echo pqh_openproject_skin_css('pqiml'); ?></style>
 <div class="pqiml">
   <div class="pqiml-top">
     <div>

@@ -600,6 +600,7 @@ function hub_render_lesson_iframe_wrapper(
       display:none;
     }
   </style>
+<style><?php echo pqh_openproject_skin_css('pqep', 'pqh-enrollment-pending-page'); ?></style>
 </head>
 <body>
   <div id="pqBootLoader" aria-live="polite">Loading lesson…</div>

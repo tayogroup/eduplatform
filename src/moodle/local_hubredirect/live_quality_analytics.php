@@ -416,6 +416,7 @@ body.pqh-live-qa-analytics-page .main-inner{margin:0!important;padding:0!importa
 @media(max-width:620px){.pqlqa-filters,.pqlqa-metrics{grid-template-columns:1fr}.pqlqa-title{font-size:24px}}
 <?php echo pqh_dashboard_header_css(); ?>
 </style>
+<style><?php echo pqh_openproject_skin_css('pqlqa', 'pqh-live-qa-analytics-page'); ?></style>
 <main class="pqlqa-shell">
   <div class="pqlqa-wrap">
     <section class="pqlqa-top pqh-workspace-top">

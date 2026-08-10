@@ -192,6 +192,7 @@ body.pqh-teacher-marketplace-requests-page #page,body.pqh-teacher-marketplace-re
 @media(max-width:760px){.pqtmr-top,.pqtmr-card-head{display:block}.pqtmr-actions,.pqtmr-card-actions{margin-top:12px}.pqtmr-title{font-size:24px}}
 <?php echo pqh_dashboard_header_css(); ?>
 </style>
+<style><?php echo pqh_openproject_skin_css('pqtmr', 'pqh-teacher-marketplace-requests-page'); ?></style>
 <main class="pqtmr-shell">
   <div class="pqtmr-wrap">
     <section class="pqtmr-top pqh-workspace-top">

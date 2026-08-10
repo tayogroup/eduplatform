@@ -73,16 +73,21 @@ Sections:
 - **Stage 4 skills** (8 questions)
 - **Foundations (Stages 1–3)** (6 questions)
 
-The lowest band recommends **Stage 5 Global Perspectives**.
+The lowest band recommends **Stage 4 Global Perspectives** — it named Stage 5
+until that stage was withdrawn on 2026-08-09.
 The check can be retaken at any point in the year.
 
-> **This exam has a problem the school should know about.** Its largest section,
-> worth 20 of 34 questions, tests **Stage 5 skills** — but Stage 5 currently
-> holds only Research and Analysis. A learner who took Stage 5 here was never
-> taught Evaluation, Reflection, Collaboration or Communication, and will be
-> placed against them anyway. Until the Stage 5 gap is closed, read this exam's
-> result with that in mind: {{how the school interprets a Stage 6 placement
-> result for a learner who came through Stage 5 at Ehel}}.
+> **This exam copes with the Stage 5 gap better than it first appears.** Its
+> largest section, 20 of 34 questions, tests **Research and Analysis** — the two
+> skills Stage 5 does teach. Evaluation, Reflection, Collaboration and
+> Communication are tested in a separate 8-question section that remediates
+> against **Stage 4**, which teaches all six. So a learner who never walked
+> Stage 5 is not measured against material nobody covered.
+>
+> What did need fixing was where it sent people. Its remediation and its lowest
+> band both named Stage 5, which is withdrawn — the worst-scoring learner would
+> have been sent to a withdrawal notice. Both now point at Stage 4, and a build
+> gate fails on any placement exam that routes into a withdrawn stage.
 
 ### Materials and equipment
 

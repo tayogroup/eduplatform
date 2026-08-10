@@ -137,8 +137,16 @@ fresh Google Drive export taken on 2026-08-09 is the right subject and contains
 the same two units, byte for byte. The folder it exports from holds two units,
 so either the other four live elsewhere in Drive or they were never authored.
 
-The consequence reaches Stage 6: its placement exam spends **20 of 34 questions
-on Stage 5 skills** a learner coming through Ehel was never taught.
+The later placement exams used to route here. Stages 6, 7 and 8 each named Stage
+5 units as the place to go and rebuild, which after the withdrawal sent the
+lowest-scoring learner to a withdrawal notice. All now point at **Stage 4**,
+which teaches the same six skills one per unit, and a build gate fails on any
+placement exam that routes into a withdrawn stage.
+
+*An earlier version of this index said the Stage 6 exam tested 20 of 34
+questions on skills Stage 5 never taught. That was wrong: those 20 questions are
+Research and Analysis, which Stage 5 does teach, and the other four skills are
+tested separately against Stage 4.*
 
 `check:global-perspectives` now reports the shortfall in its own block rather
 than passing silently, and fails outright on any missing skill the source

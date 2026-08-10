@@ -61,10 +61,12 @@ enrolled, that would have been a different decision.
 It is hidden rather than deleted, so the `ehel-gp-g05` idnumber survives and the
 sync reattaches to the same course — with its history — the day Stage 5 returns.
 
-**Stage 6 still places against Stage 5.** Its placement exam spends 20 of its 34
-questions on Stage 5 skills, so a learner arriving from a two-skill Stage 5 is
-measured on four skills nobody taught them. That holds whether or not Stage 5 is
-published, and is described in the Stage 6 syllabus.
+**The later placement exams no longer route here.** Stages 6, 7 and 8 each named
+Stage 5 units as the place to go and rebuild, which after the withdrawal meant
+sending the lowest-scoring learner to a withdrawal notice. All of them now point
+at Stage 4, which teaches the same six skills one per unit. A build gate fails
+on any placement exam that routes into a withdrawn stage, so this cannot come
+back quietly.
 
 Everything below describes what actually exists, and remains accurate for the
 two units that are built.

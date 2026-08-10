@@ -12,7 +12,6 @@
     "8": "Year 8-20260801T192316Z-1-001.zip"
   },
   "knownGap": "Year 5 holds Units 1-2 only (Research, Analysis). Evaluation, Reflection, Collaboration and Communication were never in the export and need re-exporting from Google Drive.",
-
   "note_knownGaps": "The structured form of knownGap, read by tools/check-global-perspectives-content.mjs. A self-study stage is expected to teach all six skills; one missing from here is a build failure, one listed here is reported loudly and allowed. Delete a stage's entry the moment its export arrives, so the gate starts guarding it again.",
   "knownGaps": {
     "5": {
@@ -26,8 +25,13 @@
         "moodle": "course id 71 hidden — visible=0, visibleold=0. Hidden rather than deleted so the idnumber survives and the sync reattaches to the same course when Stage 5 returns.",
         "learnerImpact": "None. The course had zero enrolments when it was withdrawn."
       },
-      "stillNotSettled": "Stage 6's placement exam still spends 20 of its 34 questions on Stage 5 skills, so a learner arriving from a two-skill Stage 5 is measured on four skills nobody taught them. Withdrawing Stage 5 does not change that.",
-      "missingSkills": ["Evaluation", "Reflection", "Collaboration", "Communication"],
+      "stillNotSettled": "Nothing outstanding downstream. Stages 6, 7 and 8 all routed their placement remediation at Stage 5 units and now point at Stage 4, which teaches the same six skills one per unit; check:global-perspectives fails on any placement exam that routes into a withdrawn stage.",
+      "missingSkills": [
+        "Evaluation",
+        "Reflection",
+        "Collaboration",
+        "Communication"
+      ],
       "reason": "Never present in the Google Drive export. The Year 5 archive was exported successfully and contained Units 1-2 only; every other year exported its full complement.",
       "closes": "Units 3-6 being authored, or found in a different Drive location. A re-export does NOT close it: one was taken on 2026-08-09 and contained the same two units, byte for byte. See searchedOn.",
       "reExportRuledOut": {
@@ -52,7 +56,7 @@
         ],
         "note": "The workbooks are exports OF built content, so they can never contain units that were never built. Do not expect them to close this."
       },
-      "downstream": "The Stage 6 placement exam spends 20 of its 34 questions on Stage 5 skills, so a learner who came through Stage 5 at Ehel is placed against four skills they were never taught."
+      "downstream": "CORRECTED 2026-08-09. An earlier note here claimed the Stage 6 placement exam spends 20 of its 34 questions on skills Stage 5 never taught. That was wrong: those 20 questions test Research and Analysis, which Stage 5 does teach, and Evaluation, Reflection, Collaboration and Communication are tested in a separate 8-question section that remediates against Stage 4. The real downstream defect was that the remediation links and the lowest band pointed at Stage 5 itself, which is withdrawn — fixed, and gated."
     }
   }
 }

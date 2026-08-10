@@ -128,7 +128,6 @@ const IS_STAFF = ["admin", "teacher", "staff"].includes(launchRole());
 const sections = [
   ["overview", "layout-dashboard", "Overview"],
   ["lecture", "play-square", "Teacher lecture"],
-  ["ai", "sparkles", "Wehel Tutor"],
   ["dictionary", "book-a", "Vocabulary"],
   ["reading", "book-open", "Reading & story"],
   ["comprehension", "list-checks", "Comprehension"],
@@ -219,7 +218,7 @@ const unitProgressKey = (unit) => `ehel-english-g${gradeNumber}-u${unit}-progres
 // leaving it demanded here would have made the bar read 100% while the gate held
 // the next unit shut.
 const countableSectionIds = () => sections
-  .filter(([id]) => !["overview", "ai", "live"].includes(id))
+  .filter(([id]) => !["overview", "live"].includes(id))
   .filter(([id]) => (id !== "games" || gamePack) && (id !== "ebooks" || unitEbooks().length))
   .map(([id]) => id);
 // The server's view of every unit, handed over by the shell before load() and
@@ -2443,14 +2442,49 @@ function renderSpeaking() {
   return renderSpeakingClassic();
 }
 
+// The record → listen → submit → feedback flow the speaking GAME already runs,
+// on the speaking practices themselves. It was wired only into the game and the
+// tutor page, so this section recorded a learner's voice and then did nothing
+// with it — "your recording stays on this device", and no way to find out
+// whether it was any good. Both callers go through the shared
+// submitSpeakingRecording, so this adds a third caller rather than a second
+// implementation, and the ids are per-task because Speaking shows six at once.
+function speakingCoachHtml(task) {
+  const id = task.speakingId;
+  const review = speakingReviewState.get(id);
+  const recorded = recordings.has(id);
+  return `<div class="recorder"><button class="record-button" data-record="${id}" type="button" aria-label="Start recording for ${escapeHtml(task.title)}">${icon("mic")}</button><div><strong data-record-status="${id}" role="status" aria-live="polite" aria-atomic="true">${recorded ? "Recording ready. Listen back." : "Ready to record"}</strong><small> Your recording stays on this device until you submit it.</small></div></div>
+    <audio data-playback="${id}" controls ${recorded ? "" : "hidden"} aria-label="Your recording for ${escapeHtml(task.title)}"></audio>
+    <div class="speaking-flow"><span class="flow-step active"><strong>1</strong> Record</span><span class="flow-step ${recorded ? "active" : ""}"><strong>2</strong> Listen</span><span class="flow-step ${review?.listened ? "active" : ""}"><strong>3</strong> Submit</span><span class="flow-step ${review?.feedback ? "active" : ""}"><strong>4</strong> Feedback</span></div>
+    <button class="button primary" data-speaking-submit="${id}" type="button" ${review?.listened ? "" : "disabled"}>${icon("send")} Submit for pronunciation check</button>
+    <div id="speaking-feedback-${id}" role="status" aria-live="polite" aria-atomic="true">${pronunciationFeedbackHtml(review?.feedback)}</div>`;
+}
+
 function renderSpeakingClassic() {
   const { $, $$ } = classicScope();
-  $("#app").innerHTML = `${pageHeader("Use your voice", "Dialogue & speaking", "Complete six speaking practices. Rehearse, record, and listen back.")}<div class="task-grid">${course.speaking.map((task) => `<article class="panel task-card"><span class="eyebrow">Practice ${task.sequence} · ${escapeHtml(task.activityType)}</span><h3>${escapeHtml(task.title)}</h3><p class="rule-box">${escapeHtml(task.instructionsAndModelLines)}</p>${task.audio?.available ? `<div class="audio-actions"><button class="button secondary" data-model="${task.speakingId}" data-rate="${AI_NARRATION_RATE}" type="button">${icon("volume-2")} Hear model</button><button class="button secondary" data-model="${task.speakingId}" data-rate="${AI_NARRATION_RATE}" type="button">${icon("rotate-ccw")} Replay</button></div><small class="audio-source">ElevenLabs · approved Ehel voice · 0.90x</small>` : `<span class="audio-pending">${icon("clock-3")} ElevenLabs model audio pending</span>`}${task.recordingRequired ? `<div class="recorder"><button class="record-button" data-record="${task.speakingId}" type="button" aria-label="Start recording for ${escapeHtml(task.title)}">${icon("mic")}</button><div><strong data-record-status="${task.speakingId}">Ready to record</strong><small> Your recording stays on this device.</small></div></div><audio data-playback="${task.speakingId}" controls hidden></audio>` : ""}</article>`).join("")}</div><p><button class="button primary" id="speaking-done" type="button">Finish six speaking practices ${icon("check")}</button></p>`;
+  $("#app").innerHTML = `${pageHeader("Use your voice", "Dialogue & speaking", "Complete six speaking practices. Rehearse, record, and listen back.")}<div class="task-grid">${course.speaking.map((task) => `<article class="panel task-card"><span class="eyebrow">Practice ${task.sequence} · ${escapeHtml(task.activityType)}</span><h3>${escapeHtml(task.title)}</h3><p class="rule-box">${escapeHtml(task.instructionsAndModelLines)}</p>${task.audio?.available ? `<div class="audio-actions"><button class="button secondary" data-model="${task.speakingId}" data-rate="${AI_NARRATION_RATE}" type="button">${icon("volume-2")} Hear model</button><button class="button secondary" data-model="${task.speakingId}" data-rate="${AI_NARRATION_RATE}" type="button">${icon("rotate-ccw")} Replay</button></div><small class="audio-source">ElevenLabs · approved Ehel voice · 0.90x</small>` : `<span class="audio-pending">${icon("clock-3")} ElevenLabs model audio pending</span>`}${task.recordingRequired ? speakingCoachHtml(task) : ""}</article>`).join("")}</div><p><button class="button primary" id="speaking-done" type="button">Finish six speaking practices ${icon("check")}</button></p>`;
   $$('[data-model]').forEach((button) => button.addEventListener("click", () => {
     const task = course.speaking.find((item) => item.speakingId === button.dataset.model);
     playAudio(task.audio.source, { rate: Number(button.dataset.rate), button });
   }));
   $$('[data-record]').forEach((button) => button.addEventListener("click", () => toggleRecording(button.dataset.record, button)));
+  // Listening all the way through is what arms Submit — the same gate the game
+  // uses. A learner who has not heard their own recording cannot judge the
+  // feedback they are about to be given.
+  $$('[data-playback]').forEach((audio) => audio.addEventListener("ended", () => {
+    const id = audio.dataset.playback;
+    const review = speakingReviewState.get(id) || { feedback: null };
+    review.listened = true;
+    speakingReviewState.set(id, review);
+    const submit = $(`[data-speaking-submit="${id}"]`);
+    if (submit) submit.disabled = false;
+    toast("You listened to the full recording. It is ready to submit.");
+  }));
+  $$('[data-speaking-submit]').forEach((button) => button.addEventListener("click", (event) => {
+    const id = button.dataset.speakingSubmit;
+    const task = course.speaking.find((item) => item.speakingId === id);
+    submitSpeakingRecording(id, speakingModelText(task), event.currentTarget, { feedbackSelector: `#speaking-feedback-${id}` });
+  }));
   $("#speaking-done").addEventListener("click", () => complete("speaking", "Speaking practice complete."));
 }
 
@@ -3301,7 +3335,7 @@ function renderPlacementResults(results) {
         ? `<p>These lessons rebuild exactly what each section tests. Do them in order, then try the exam again.</p><div class="review-list">${reviewSections.flatMap((item) => (item.remediation || []).map((entry) => `<a href="${remediationHref(entry)}"><span><strong>${escapeHtml(remediationLabel(entry))}</strong><small>Rebuilds: ${escapeHtml(item.label)} (${item.percent}%)</small></span>${icon("arrow-up-right")}</a>`)).join("")}</div>`
         : `<p>You met the target in every section. ${gradeLabel} is the right place for you.</p>`}
       </section>
-      <section class="panel"><h2>Need help understanding your report?</h2><p>Wehel Tutor can explain any question you found hard, and a grown-up or teacher can help you choose your path.</p><a class="button secondary" href="${courseLocation(defaultUnit, "ai")}">${icon("sparkles")} Ask Wehel Tutor</a></section>
+      <section class="panel"><h2>Need help understanding your report?</h2><p>Wehel Tutor can explain any question you found hard — open it with the <strong>Wehel Tutor</strong> button in the corner of any page. A grown-up or teacher can help you choose your path.</p></section>
     </div>`;
   $("#retry-placement")?.addEventListener("click", () => {
     placementProgress.answers = {};
@@ -3328,14 +3362,6 @@ function renderPrereqTeacher() {
     </div>`;
 }
 
-const aiModes = [
-  ["teach", "presentation", "Teach me"],
-  ["help", "life-buoy", "Help me"],
-  ["practice", "dumbbell", "Practise"],
-  ["check", "scan-check", "Check my work"],
-  ["speaking", "mic", "Speaking coach"],
-  ["progress", "chart-no-axes-column-increasing", "My progress"],
-];
 
 function unitVocabulary() {
   return course.dictionaryLinks.map((link) => ({ link, entry: dictionary.entries.find((entry) => entry.dictionaryEntryId === link.dictionaryEntryId) })).filter((item) => item.entry);
@@ -3405,16 +3431,6 @@ function buildAIReply(message, mode) {
   return `I am using ${gradeLabel} Unit ${course.unit.unitNo}: ${course.unit.unitTitle}. Ask me about a unit word, the story, grammar, speaking, or your writing. You can also choose a mode above for guided practice.`;
 }
 
-function aiQuickPrompts(mode) {
-  return ({
-    teach: ["Start today’s lesson", "Teach me three words", "What will I learn?"],
-    help: ["Explain a hard word", "Help me with the story", "Help me with grammar"],
-    practice: ["Give me a word challenge", "Quiz me with hints", "Let’s play I Spy"],
-    check: ["Check: My name is Samira.", "Help me improve a sentence", "Check my spelling"],
-    speaking: ["Give me a speaking task", "Help me introduce myself", "Practise questions with me"],
-    progress: ["Show my progress", "What should I practise next?", "What am I improving?"],
-  })[mode];
-}
 
 function currentSpeakingTask() {
   const index = Number(aiState.speakingTaskIndex || 0) % course.speaking.length;
@@ -3534,9 +3550,8 @@ function wehelOptions() {
     ],
     mode: aiState.mode,
     fallbackReply: (message) => buildAIReply(message, aiState.mode),
-    onExchange: () => { if (!progress.completed.includes("ai")) complete("ai"); },
     fetchUnit: unitFetcher(manifest, dataRootUrl),
-    onSaved: () => { saveAIState(); if (route === "ai") { renderAIEnglish(); icons(); } },
+    onSaved: () => saveAIState(),
   };
 }
 
@@ -3545,157 +3560,8 @@ function wehelOptions() {
 // once at module scope; `route` is read at call time, so a change made from the
 // drawer over some other section repaints nothing here until the learner is
 // actually on the tutor page.
-onFocusChange(() => { if (route === "ai") { renderAIEnglish(); icons(); } });
 
-function renderAIEnglish() {
-  if (!aiState.messages.length) aiState.messages.push({ role: "assistant", text: `Hello! I am Wehel Tutor, your AI English teacher and tutor for Unit ${course.unit.unitNo}. Choose Teach me for a lesson or Help me when you are stuck.` });
-  // Focus — the same setting, the same storage, the same module list the shell's
-  // drawer offers, so the picker here and the one there are one control seen
-  // twice. What this page does NOT do is swap its quick prompts for the shared
-  // three: its mode tabs already ARE teach / quiz / explain, and the per-mode
-  // prompts carry the speaking and check-my-work affordances that make this
-  // page worth having. Here Focus sets the scope; the tabs keep the actions.
-  const wehelMeta = wehelOptions().meta;
-  const focusModules = wehelMeta.modules || [];
-  const focus = focusModule(wehelMeta, focusModules);
-  const prompts = aiQuickPrompts(aiState.mode);
-  const speakingTask = currentSpeakingTask();
-  const speakingTarget = speakingModelText(speakingTask);
-  const speakingRecordingId = `ai-speaking-${speakingTask.speakingId}`;
-  const speakingReview = speakingReviewState.get(speakingRecordingId);
-  const speakingTools = aiState.mode === "speaking" ? `<section class="ai-speaking-coach">
-    <div class="ai-speaking-head"><div><span class="eyebrow">Pronunciation practice</span><h3>${escapeHtml(speakingTask.title)}</h3></div><label>Practice<select id="ai-speaking-task">${course.speaking.map((task, index) => `<option value="${index}" ${task.speakingId === speakingTask.speakingId ? "selected" : ""}>${index + 1} of ${course.speaking.length}</option>`).join("")}</select></label></div>
-    <div class="speaking-target"><span>Say this</span><p>${escapeHtml(speakingTarget)}</p>${speakingTask.audio?.available ? `<button class="button secondary" id="ai-speaking-model" type="button">${icon("volume-2")} Hear model</button>` : ""}</div>
-    <div class="speaking-flow"><span class="flow-step active"><strong>1</strong> Record</span><span class="flow-step ${speakingReview ? "active" : ""}"><strong>2</strong> Listen</span><span class="flow-step ${speakingReview?.listened ? "active" : ""}"><strong>3</strong> Submit</span><span class="flow-step ${speakingReview?.feedback ? "active" : ""}"><strong>4</strong> Feedback</span></div>
-    <div class="ai-recorder recorder"><button class="record-button" data-record="${speakingRecordingId}" type="button" aria-label="Start speaking coach recording">${icon("mic")}</button><div><strong data-record-status="${speakingRecordingId}">${recordings.has(speakingRecordingId) ? "Recording ready. Listen back." : "Ready to record"}</strong><small>Uploaded only when you submit.</small></div></div>
-    <audio data-playback="${speakingRecordingId}" controls ${recordings.has(speakingRecordingId) ? "" : "hidden"}></audio>
-    <button class="button primary ai-speaking-submit" id="ai-speaking-submit" type="button" ${speakingReview?.listened ? "" : "disabled"}>${icon("send")} Submit for pronunciation check</button>
-    <div id="ai-speaking-feedback" role="status" aria-live="polite" aria-atomic="true">${pronunciationFeedbackHtml(speakingReview?.feedback)}</div>
-  </section>` : "";
-  $("#app").innerHTML = `${pageHeader("Your AI subject expert", "Wehel Tutor — English", `Teacher and tutor support for Unit ${course.unit.unitNo}: ${escapeHtml(course.unit.unitTitle)}.`, "Wehel Tutor · Ehel Academy AI")}
-    <div class="ai-layout">
-      <section class="ai-main panel">
-        <div class="ai-modes" role="tablist" aria-label="Choose AI English mode">${aiModes.map(([id, modeIcon, label]) => `<button class="ai-mode ${aiState.mode === id ? "active" : ""}" data-ai-mode="${id}" type="button" role="tab" aria-selected="${aiState.mode === id}">${icon(modeIcon)}<span>${label}</span></button>`).join("")}</div>
-        ${focusModules.length ? `<div class="wehel-focus-row" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:10px 0 2px">
-          <label for="ai-focus" style="font-size:13px;opacity:.85">Focus</label>
-          <select id="ai-focus" style="font:inherit;padding:4px 8px;border:1px solid rgba(15,23,42,.25);border-radius:6px;background:#fff;color:inherit">
-            <option value="">Whole unit</option>
-            ${focusModules.map((module) => `<option value="${escapeHtml(module.id)}"${focus && focus.id === module.id ? " selected" : ""}>${escapeHtml(module.label)}</option>`).join("")}
-          </select>
-          ${focus ? `<small style="opacity:.7">Wehel is staying on ${escapeHtml(focus.label)}</small>` : ""}
-        </div>` : ""}
-        <div class="ai-conversation" id="ai-conversation" aria-live="polite">${aiState.messages.map((item, index) => `<article class="ai-message ${item.role}"><span>${item.role === "assistant" ? (item.offline ? "Wehel Tutor (offline hint)" : "Wehel Tutor") : "You"}</span><p>${escapeHtml(item.text)}</p><div class="ai-message-tools"><button data-ai-listen="${index}" type="button" aria-label="Listen to ${item.role === "assistant" ? "Wehel Tutor's answer" : "your question"} with ElevenLabs">${icon("volume-2")} Listen</button>${item.role === "assistant" ? `<small>${icon("book-check")} ${gradeLabel} Unit ${course.unit.unitNo}</small>` : ""}</div></article>`).join("")}</div>
-        <div class="ai-prompts">${prompts.map((prompt) => `<button data-ai-prompt="${escapeHtml(prompt)}" type="button">${escapeHtml(prompt)}</button>`).join("")}</div>
-        ${speakingTools}
-        <form class="ai-compose" id="ai-form"><label class="sr-only" for="ai-input">Ask Wehel Tutor</label><textarea id="ai-input" rows="2" maxlength="500" placeholder="${focus ? `Ask about ${escapeHtml(focus.label)}...` : "Type your question or your sentence..."}"></textarea>${speechRecognitionCtor() ? `<button class="button secondary" id="ai-mic" type="button" aria-label="Ask by voice" title="Ask by voice">${wehelIcon("mic")}</button>` : ""}<button class="button primary" type="submit">${icon("send")} Send</button></form>
-      </section>
-      <aside class="ai-side section-stack">
-        <section class="panel ai-focus"><span class="eyebrow">Today’s focus</span><h2>${escapeHtml(course.outcomes[0]?.learningOutcome || course.unit.unitTitle)}</h2><p><strong>${course.dictionaryLinks.length}</strong> unit words · <strong>${course.readings.length}</strong> texts · <strong>${course.grammar.length}</strong> grammar practices</p></section>
-        <section class="panel"><h3>Learning boundaries</h3><ul class="checklist"><li>${icon("lightbulb")} Hints before answers</li><li>${icon("book-check")} Approved unit content first</li><li>${icon("shield-check")} Quiz choices stay yours</li><li>${icon("user-round-check")} Teacher support when needed</li></ul></section>
-        <button class="button secondary" id="clear-ai" type="button">${icon("rotate-ccw")} Start a new conversation</button>
-      </aside>
-    </div>`;
-  $$('[data-ai-mode]').forEach((button) => button.addEventListener("click", () => { aiState.mode = button.dataset.aiMode; saveAIState(); renderAIEnglish(); icons(); }));
-  // Focus lives in its own storage, not in aiState — the shell's drawer reads
-  // the same key, so setting it here is already set there and vice versa.
-  const focusSelect = $("#ai-focus");
-  if (focusSelect) focusSelect.addEventListener("change", () => {
-    // No renderAIEnglish() here: setFocusModule notifies every surface, and the
-    // module-scope watcher below repaints this page.
-    const chosen = focusModules.find((module) => module.id === focusSelect.value);
-    setFocusModule(wehelMeta, focusSelect.value);
-    toast(chosen
-      ? `Wehel Tutor is staying on ${chosen.label} — still happy to answer anything else.`
-      : "Wehel Tutor is back to the whole unit.");
-  });
-  $$('[data-ai-prompt]').forEach((button) => button.addEventListener("click", () => submitAIMessage(button.dataset.aiPrompt)));
-  $$('[data-ai-listen]').forEach((button) => button.addEventListener("click", () => playAIMessage(Number(button.dataset.aiListen), button)));
-  $("#ai-form").addEventListener("submit", (event) => { event.preventDefault(); const input = $("#ai-input"); if (input.value.trim()) submitAIMessage(input.value); });
-  const aiMic = $("#ai-mic");
-  if (aiMic) aiMic.addEventListener("click", async () => {
-    if (aiMic.disabled) return;
-    stopBrowserSpeech(); // never transcribe the tutor's own voice
-    const input = $("#ai-input");
-    aiMic.disabled = true;
-    aiMic.classList.add("loading");
-    toast("Listening — speak now.");
-    try {
-      const text = await recognizeSpeech({ onInterim: (interim) => { input.value = interim; } });
-      if (text) { input.value = ""; submitAIMessage(text); }
-      else toast("I didn't hear anything — try again.");
-    } catch (error) {
-      toast(error.message === "not-allowed"
-        ? "The microphone is blocked for this page."
-        : "Voice input is unavailable right now — you can type instead.");
-    } finally {
-      aiMic.disabled = false;
-      aiMic.classList.remove("loading");
-    }
-  });
-  $("#clear-ai").addEventListener("click", () => { aiState.messages = []; aiState.interactions = 0; saveAIState(); renderAIEnglish(); icons(); });
-  const recordButton = $(`[data-record="${speakingRecordingId}"]`);
-  if (recordButton) {
-    const playback = $(`[data-playback="${speakingRecordingId}"]`);
-    const savedRecording = recordings.get(speakingRecordingId);
-    if (savedRecording) playback.src = savedRecording.url;
-    recordButton.addEventListener("click", () => toggleRecording(speakingRecordingId, recordButton));
-    playback.addEventListener("recordingready", () => {
-      $("#ai-speaking-submit").disabled = true;
-      $("#ai-speaking-feedback").innerHTML = "";
-    });
-    playback.addEventListener("ended", () => {
-      const review = speakingReviewState.get(speakingRecordingId) || { feedback: null };
-      review.listened = true;
-      speakingReviewState.set(speakingRecordingId, review);
-      $("#ai-speaking-submit").disabled = false;
-      toast("Recording reviewed. It is ready to submit.");
-    });
-    $("#ai-speaking-submit").addEventListener("click", (event) => submitSpeakingRecording(speakingRecordingId, speakingTarget, event.currentTarget));
-    $("#ai-speaking-task").addEventListener("change", (event) => { aiState.speakingTaskIndex = Number(event.target.value); saveAIState(); renderAIEnglish(); icons(); });
-    if (speakingTask.audio?.available) $("#ai-speaking-model").addEventListener("click", (event) => playAudio(speakingTask.audio.source, { rate: AI_NARRATION_RATE, button: event.currentTarget }));
-  }
-  requestAnimationFrame(() => { const conversation = $("#ai-conversation"); conversation.scrollTop = conversation.scrollHeight; });
-}
 
-async function submitAIMessage(message) {
-  aiState.messages.push({ role: "user", text: message.trim() });
-  aiState.interactions += 1;
-  // Wehel answers asynchronously; the placeholder bubble keeps the transcript
-  // shape stable so a mid-flight re-render or reload never loses the question.
-  const pending = { role: "assistant", text: "…thinking" };
-  aiState.messages.push(pending);
-  saveAIState();
-  renderAIEnglish();
-  icons();
-  try {
-    // One meta for both surfaces. This page and the shell's dock were building
-    // the same object twice; sharing wehelOptions' copy is what keeps the two
-    // from drifting, and is how a Focus set in the drawer is honoured here —
-    // this page has its own mode tabs rather than a picker of its own.
-    const meta = wehelOptions().meta;
-    pending.text = await askWehel({
-      meta,
-      messages: aiState.messages.filter((item) => item !== pending),
-      mode: aiState.mode,
-      focus: focusModule(meta, meta.modules),
-      fetchUnit: unitFetcher(manifest, dataRootUrl),
-    });
-  } catch (error) {
-    // Offline or unconfigured: fall back to the built-in unit guidance — and
-    // say so. An unlabelled canned reply reads as a very bad AI answer.
-    pending.text = buildAIReply(message, aiState.mode);
-    pending.offline = true;
-    toast("Wehel is offline right now — showing built-in unit guidance instead.");
-  }
-  saveAIState();
-  if (aiState.interactions >= 3 && !progress.completed.includes("ai")) complete("ai");
-  renderAIEnglish();
-  icons();
-  // Read the reply aloud with the browser voice while sound is on.
-  if (audioEnabled && browserSpeechSupported) {
-    speakBrowser(pending.text, { rate: speechRateForGrade(gradeNumber) });
-  }
-}
 
 function ebookAsset(book, filename) {
   const asset = new URL(`./ebooks/${book.id}/${filename}`, document.baseURI);
@@ -4078,7 +3944,7 @@ const config = {
   // 92% and could not open the next unit — a support tool gating progression.
   // It stays in the nav and still ticks when used; it just no longer decides
   // whether a unit is finished.
-  nonCountable: ["overview", "ai", "live", "final-quiz"],
+  nonCountable: ["overview", "live", "final-quiz"],
   gradeSections: [],
   progressDefaults: { completed: [], knownWords: [], self: {}, writing: {}, games: {} },
   gradeDefaults: { completed: [] },
@@ -4105,7 +3971,6 @@ const config = {
     overview: () => (isPrereqUnit ? renderPrereqOverview() : renderOverview()),
     placement: () => renderPlacementExam(),
     lecture: () => renderLecture(),
-    ai: () => renderAIEnglish(),
     dictionary: () => renderDictionary(),
     reading: () => renderReading(),
     comprehension: () => renderComprehension(),

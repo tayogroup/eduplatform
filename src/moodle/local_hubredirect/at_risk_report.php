@@ -323,6 +323,7 @@ body.pqh-atrisk-page #page,body.pqh-atrisk-page #page-content,body.pqh-atrisk-pa
 <?php echo pqh_design_system_css('.parr-shell'); ?>
 <?php echo pqh_design_shell_css('.parr-shell'); ?>
 </style>
+<style><?php echo pqh_openproject_skin_css('parr', 'pqh-atrisk-page'); ?></style>
 <main class="parr-shell">
 <?php echo pqh_design_shell_html('parr-shell', '', ['title' => 'At-Risk Students']); ?>
   <div class="parr-wrap">

@@ -725,6 +725,7 @@ body.pqh-comm-standalone-page .pq-comm-panel__close {
   }
 }
 </style>
+<style><?php echo pqh_openproject_skin_css(['pqh-comm-direct', 'pqh-comm-host'], 'pqh-comm-standalone-page', '__'); ?></style>
 <main class="pqh-comm-host">
   <div class="pqh-comm-host__bar">
     <h1 class="pqh-comm-host__title"><?php echo s($brandname); ?> Communications</h1>

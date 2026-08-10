@@ -194,6 +194,7 @@ $PAGE->set_title('Institution Readiness Rollup');
 $PAGE->set_heading('Institution Readiness Rollup');
 echo $OUTPUT->header();
 echo '<style>.pqirr{max-width:1180px;margin:0 auto}.pqirr-card{border:1px solid #dfe7df;border-radius:8px;background:#fff;padding:16px;margin:14px 0}.pqirr-table{width:100%;border-collapse:collapse}.pqirr-table th,.pqirr-table td{border-bottom:1px solid #e7eee8;padding:9px;text-align:left;vertical-align:top}.pqirr-pill{display:inline-flex;padding:3px 8px;border-radius:999px;background:#eef7ee;font-weight:800}.pqirr-pill--bad{background:#fff0f0;color:#8a1f1f}.pqirr-btn{display:inline-flex;align-items:center;min-height:36px;padding:0 12px;border:0;border-radius:8px;background:#2f6b4f;color:#fff!important;font-weight:900;text-decoration:none}.pqirr-muted{color:#5d6f66;font-size:12px}.pqirr-error{padding:12px;border:1px solid #f1b4b4;background:#fff4f4;color:#8a1f1f;border-radius:8px}</style>';
+echo '<style>' . pqh_openproject_skin_css('pqirr') . '</style>';
 echo '<main class="pqirr"><h1>Institution Readiness Rollup</h1><p class="pqirr-muted">Final institution school rollup across school models, isolation, reporting, mobility, security, communications, academic controls, fixture hygiene, and export evidence.</p>';
 if ($error !== '') {
     echo '<div class="pqirr-error">' . s($error) . '</div>';

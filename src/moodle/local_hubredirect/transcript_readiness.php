@@ -315,6 +315,7 @@ body.pqctr-page #page,body.pqctr-page #page-content,body.pqctr-page #region-main
 @media(max-width:1060px){.pqctr-top,.pqctr-filter{grid-template-columns:1fr}.pqctr-actions{justify-content:flex-start}.pqctr-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){.pqctr-shell{padding:18px 12px 42px}.pqctr-metrics{grid-template-columns:1fr}.pqctr-table{display:block;overflow-x:auto}}
 </style>
+<style><?php echo pqh_openproject_skin_css('pqctr', 'pqctr-page'); ?></style>
 <main class="pqctr-shell"><div class="pqctr-wrap">
   <section class="pqctr-top">
     <div>

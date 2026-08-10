@@ -57,6 +57,8 @@ require_once($CFG->dirroot . '/local/hubredirect/course_offeringlib.php');
     'currency' => 'USD',
     'capacity' => 0,
     'status' => 'draft',
+    'startdate' => '',
+    'enddate' => '',
     'dry-run' => false,
     'help' => false,
 ], ['h' => 'help']);
@@ -70,6 +72,8 @@ if ($options['help'] || $unrecognised) {
     cli_writeln("  --currency=<code>   default USD");
     cli_writeln("  --capacity=<n>      default 0 (unlimited)");
     cli_writeln("  --status=<state>    draft (default) or published");
+    cli_writeln("  --startdate=<date>  YYYY-MM-DD; overrides the workspace terms");
+    cli_writeln("  --enddate=<date>    YYYY-MM-DD; overrides the workspace terms");
     cli_writeln("  --dry-run           report what would happen, write nothing");
     exit($unrecognised ? 1 : 0);
 }
@@ -112,11 +116,50 @@ foreach ($terms as $term) {
     if ((int)$term->startdate > 0 && ($startdate === 0 || (int)$term->startdate < $startdate)) { $startdate = (int)$term->startdate; }
     if ((int)$term->enddate > $enddate) { $enddate = (int)$term->enddate; }
 }
+$datesource = 'the workspace terms';
+
+// Explicit dates win over the terms. Parsed strictly rather than with a bare
+// strtotime: "2026-13-01" and "next tuesday" both produce a timestamp from a
+// loose parse, and a silently wrong date on 40 offerings is worse than an
+// error. The end is taken as the END of its day, so an offering that runs to
+// 30 June covers 30 June rather than expiring as it begins.
+$parsedate = function (string $value, bool $endofday) {
+    if (!preg_match('/^(\d{4})-(\d{2})-(\d{2})$/', $value, $m)) {
+        cli_error("Could not read '{$value}' as a date. Use YYYY-MM-DD.");
+    }
+    [, $y, $mo, $d] = array_map('intval', $m);
+    if (!checkdate($mo, $d, $y)) {
+        cli_error("'{$value}' is not a real date.");
+    }
+    // make_timestamp() rather than DateTime: it is Moodle's own helper, present
+    // in every version this plugin runs on, and it applies the site timezone
+    // the same way the portal does when it stores a date from the form.
+    return $endofday
+        ? make_timestamp($y, $mo, $d, 23, 59, 59)
+        : make_timestamp($y, $mo, $d, 0, 0, 0);
+};
+
+$startraw = trim((string)$options['startdate']);
+$endraw = trim((string)$options['enddate']);
+if ($startraw !== '' || $endraw !== '') {
+    if ($startraw === '' || $endraw === '') {
+        cli_error('Pass both --startdate and --enddate, or neither.');
+    }
+    $startdate = $parsedate($startraw, false);
+    $enddate = $parsedate($endraw, true);
+    if ($enddate <= $startdate) {
+        cli_error('--enddate must be after --startdate.');
+    }
+    $datesource = 'the command line';
+}
+
 if ($startdate === 0 && $enddate === 0) {
-    cli_writeln('!! No academic terms found for this workspace — offerings will carry no dates.');
+    cli_writeln('!! No academic terms for this workspace and no --startdate/--enddate given.');
+    cli_writeln('!! Offerings will carry NO dates. Pass --startdate and --enddate, or create the');
+    cli_writeln('!! terms in the Academic Calendar first — the syllabus schedule reads them too.');
 } else {
-    cli_writeln(sprintf('Term span from %d term(s): %s to %s',
-        count($terms),
+    cli_writeln(sprintf('Dates from %s: %s to %s',
+        $datesource,
         $startdate ? userdate($startdate, '%e %B %Y') : '(none)',
         $enddate ? userdate($enddate, '%e %B %Y') : '(none)'));
 }

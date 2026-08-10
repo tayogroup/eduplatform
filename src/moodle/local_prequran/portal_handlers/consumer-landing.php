@@ -98,7 +98,17 @@ if ($workspaceid > 0) {
 
 // -- CTA target URLs: built with the same moodle_url paths as the legacy page so
 //    the marketing shell links exactly where the PHP page did. --
-$studenturl = new moodle_url('/local/hubredirect/public_intake.php', $workspaceparams);
+// Enroll CTAs go through the explainer guide first, matching consumer_landing.php
+// -- this is the guest-facing twin, so it is the one parents actually reach. The
+// guide offers the walkthrough video in English or Somali, hands the same scope
+// on to public_intake.php, and is skipped in one tap.
+//
+// Marketplace consumers keep the direct link: their CTA asks for teacher
+// services, and the guide is written for a parent enrolling a child.
+$studentintakepath = $ismarketplace
+    ? '/local/hubredirect/public_intake.php'
+    : '/local/hubredirect/public_intake_guide.php';
+$studenturl = new moodle_url($studentintakepath, $workspaceparams);
 $studenthref = $useexternalintake ? $externalwebsiteurl : $studenturl->out(false);
 $teacherurl = new moodle_url($ismarketplace ? '/local/hubredirect/public_teacher_intake.php' : '/local/hubredirect/teacher_intake.php', $workspaceparams);
 $marketurl = new moodle_url('/local/hubredirect/teacher_marketplace.php', $consumerparams);

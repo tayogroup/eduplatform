@@ -42,9 +42,29 @@ $catalog = pqh_course_catalog();
 $financepolicyinfo = pqfin_workspace_finance_policy($workspaceid, $consumercontext);
 $financepolicy = pqfin_normalize_policy($financepolicyinfo['policy']);
 $showpricing = pqfin_pricing_visible_for_role($financepolicy, $role);
-$coursefilter = pqh_normalize_course_key(optional_param('course', '', PARAM_ALPHANUMEXT));
-if ($coursefilter !== '' && !isset($catalog[$coursefilter])) {
-    $coursefilter = '';
+// The course-track list is built from the tracks THIS workspace actually
+// offers, not from pqh_course_catalog(). That catalogue is a hardcoded
+// six-entry array — Pre-Quraan, Tarbiyah Kids, Essential Arabic, Quran
+// Reading, Quran Tafsir, Quran Memorization — with no consumer or workspace
+// parameter, so every school saw Quraan Academy's subject taxonomy on its own
+// catalogue page. On Ehel it was worse than cosmetic: no Ehel offering carries
+// one of those keys, so every track a family could pick returned nothing.
+//
+// The catalogue is still the label source where a key matches it, so Quraan
+// Academy keeps its titles; a key it does not know is labelled from the
+// offerings themselves.
+$tracks = pqcb_available_tracks($workspaceid, $catalog, $ready);
+
+// Accept any track the workspace offers. The old line ran the parameter
+// through pqh_normalize_course_key(), which returns '' for anything outside
+// that hardcoded catalogue, and then discarded it — so a corrected dropdown
+// alone would still have had its own values thrown away here.
+$coursefilterraw = optional_param('course', '', PARAM_ALPHANUMEXT);
+$coursefilter = isset($tracks[$coursefilterraw]) ? $coursefilterraw : '';
+if ($coursefilter === '' && $coursefilterraw !== '') {
+    // Legacy links may carry an alias rather than the stored key.
+    $normalized = pqh_normalize_course_key($coursefilterraw);
+    $coursefilter = isset($tracks[$normalized]) ? $normalized : '';
 }
 $availableonly = optional_param('available_only', 0, PARAM_BOOL);
 
@@ -55,6 +75,61 @@ $PAGE->set_pagelayout('standard');
 $PAGE->set_title('Course Catalog');
 $PAGE->set_heading('Course Catalog');
 $PAGE->add_body_class('pqcb-page');
+
+/**
+ * The course tracks a workspace actually offers, as [key => label].
+ *
+ * Keys come from the offerings themselves. Labels prefer pqh_course_catalog()
+ * so a school using those tracks keeps its familiar titles, and fall back to
+ * the offering's own title — or a humanised key when several offerings share
+ * one track and no single title represents it.
+ *
+ * Learner-visible statuses only: a track whose every offering is a draft is not
+ * something a family can browse to, and listing it produces a filter that
+ * returns nothing.
+ */
+function pqcb_available_tracks(int $workspaceid, array $catalog, bool $ready): array {
+    global $DB;
+
+    if (!$ready || $workspaceid <= 0) {
+        return [];
+    }
+    [$statussql, $statusparams] = $DB->get_in_or_equal(pqco_learner_visible_statuses(), SQL_PARAMS_QM);
+    $rows = $DB->get_records_select(
+        'local_prequran_course_offering',
+        "workspaceid = ? AND status {$statussql}",
+        array_merge([$workspaceid], $statusparams),
+        'title ASC',
+        'id,course_key,title'
+    );
+
+    $labels = [];
+    $counts = [];
+    foreach ($rows as $row) {
+        $key = trim((string)$row->course_key);
+        if ($key === '') {
+            continue;
+        }
+        $counts[$key] = ($counts[$key] ?? 0) + 1;
+        if (!isset($labels[$key])) {
+            $labels[$key] = trim((string)$row->title);
+        }
+    }
+
+    $tracks = [];
+    foreach ($labels as $key => $title) {
+        if (isset($catalog[$key]['title'])) {
+            $tracks[$key] = (string)$catalog[$key]['title'];
+        } else if ($counts[$key] === 1 && $title !== '') {
+            $tracks[$key] = $title;
+        } else {
+            $tracks[$key] = ucwords(str_replace('_', ' ', $key));
+        }
+    }
+    natcasesort($tracks);
+
+    return $tracks;
+}
 
 function pqcb_filter_url_params(array $baseparams, string $coursefilter, bool $availableonly, array $extra = []): array {
     if ($coursefilter !== '') {
@@ -316,7 +391,7 @@ body.pqcb-page #page,body.pqcb-page #page-content,body.pqcb-page #region-main,bo
         <?php foreach ($urlparams as $key => $value): ?><input type="hidden" name="<?php echo s($key); ?>" value="<?php echo s((string)$value); ?>"><?php endforeach; ?>
         <div class="pqcb-field"><label>Course track</label><select class="pqcb-select" name="course">
           <option value="">All course tracks</option>
-          <?php foreach ($catalog as $key => $course): ?><option value="<?php echo s($key); ?>"<?php echo $coursefilter === $key ? ' selected' : ''; ?>><?php echo s((string)$course['title']); ?></option><?php endforeach; ?>
+          <?php foreach ($tracks as $key => $label): ?><option value="<?php echo s($key); ?>"<?php echo $coursefilter === $key ? ' selected' : ''; ?>><?php echo s($label); ?></option><?php endforeach; ?>
         </select></div>
         <label class="pqcb-field"><span>Available only</span><select class="pqcb-select" name="available_only"><option value="0"<?php echo !$availableonly ? ' selected' : ''; ?>>Show all visible</option><option value="1"<?php echo $availableonly ? ' selected' : ''; ?>>Only open seats</option></select></label>
         <button class="pqcb-btn" type="submit">Filter</button>
@@ -337,7 +412,7 @@ body.pqcb-page #page,body.pqcb-page #page-content,body.pqcb-page #region-main,bo
               <?php foreach ($myrequests as $request): ?>
                 <tr>
                   <td data-label="Student"><span class="pqcb-name"><?php echo s(fullname($request)); ?></span><span class="pqcb-muted"><?php echo s(pqh_account_no_label($request)); ?> / <?php echo s($request->email); ?></span></td>
-                  <td data-label="Course"><span class="pqcb-name"><?php echo s((string)$request->offering_title); ?></span><span class="pqcb-muted"><?php echo s($catalog[(string)$request->course_key]['title'] ?? (string)$request->course_key); ?></span></td>
+                  <td data-label="Course"><span class="pqcb-name"><?php echo s((string)$request->offering_title); ?></span><span class="pqcb-muted"><?php echo s($tracks[(string)$request->course_key] ?? $catalog[(string)$request->course_key]['title'] ?? (string)$request->course_key); ?></span></td>
                   <td data-label="Status"><span class="pqcb-pill"><?php echo s(pqco_request_status_label((string)$request->status)); ?></span><?php if (trim((string)$request->admin_notes) !== ''): ?><span class="pqcb-muted"><?php echo s((string)$request->admin_notes); ?></span><?php endif; ?></td>
                   <td data-label="Updated"><?php echo s(userdate((int)$request->timemodified, get_string('strftimedatetimeshort'))); ?></td>
                   <td data-label="Actions">

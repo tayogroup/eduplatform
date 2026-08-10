@@ -28,8 +28,15 @@
  * back to the course.
  *
  * SAFETY: an existing offering is only updated while it is still 'draft'.
- * Anything published or archived is reported and left alone — publishing is a
- * commercial act and a bulk run must not undo or overwrite one.
+ * Anything published is reported and left alone — publishing is a commercial
+ * act and a bulk run must not undo or overwrite one. ARCHIVED offerings are
+ * ignored entirely rather than treated as existing: an archived offering is
+ * retired, so it must not block a replacement from being created.
+ *
+ * An existing draft is UPDATED IN PLACE from this script's own defaults, which
+ * means a whole-workspace re-run will overwrite fees, dates and capacity that
+ * were set deliberately somewhere else — set_offering_fees.php's values among
+ * them. Use --courses to name the one course you mean.
  *
  * @package   local_prequran
  */
@@ -59,6 +66,7 @@ require_once($CFG->dirroot . '/local/hubredirect/course_offeringlib.php');
     'status' => 'draft',
     'startdate' => '',
     'enddate' => '',
+    'courses' => '',
     'dry-run' => false,
     'help' => false,
 ], ['h' => 'help']);
@@ -74,6 +82,7 @@ if ($options['help'] || $unrecognised) {
     cli_writeln("  --status=<state>    draft (default) or published");
     cli_writeln("  --startdate=<date>  YYYY-MM-DD; overrides the workspace terms");
     cli_writeln("  --enddate=<date>    YYYY-MM-DD; overrides the workspace terms");
+    cli_writeln("  --courses=<ids>     comma-separated course idnumbers; only these are touched");
     cli_writeln("  --dry-run           report what would happen, write nothing");
     exit($unrecognised ? 1 : 0);
 }
@@ -86,6 +95,18 @@ $currency = strtoupper(trim((string)$options['currency']));
 $capacity = max(0, (int)$options['capacity']);
 $status = trim((string)$options['status']);
 $dryrun = (bool)$options['dry-run'];
+
+// Restrict the run to named courses. Without this the only way to add one
+// missing offering is a run over every approved syllabus, and an existing draft
+// is UPDATED in place from this script's defaults — which would blank the fees,
+// dates and capacity that have since been set deliberately elsewhere. Matching
+// is case-insensitive because idnumbers are typed by hand.
+$onlycourses = [];
+foreach (explode(',', (string)$options['courses']) as $one) {
+    $one = core_text::strtolower(trim($one));
+    if ($one !== '') { $onlycourses[$one] = true; }
+}
+$unmatched = $onlycourses;
 
 if ($workspaceid <= 0) { cli_error('--workspaceid is required.'); }
 if ($year < 2000 || $year > 2100) { cli_error('--year is required (2026 = 2026-27).'); }
@@ -189,8 +210,21 @@ foreach ($syllabuses as $syl) {
     $label = (string)$course->idnumber;
     $slug = trim(preg_replace('/[^a-z0-9]+/', '_', strtolower($label)) ?? '', '_');
 
-    $existing = $DB->get_record('local_prequran_course_offering',
-        ['workspaceid' => $workspaceid, 'moodlecourseid' => (int)$course->id], '*', IGNORE_MISSING);
+    if ($onlycourses && !isset($onlycourses[core_text::strtolower($label)])) {
+        continue;
+    }
+    // Tracked separately: emptying $onlycourses would switch the filter off
+    // mid-loop and let every remaining course through.
+    unset($unmatched[core_text::strtolower($label)]);
+
+    // Archived offerings are retired, so one must not block a replacement being
+    // created. Excluded from the lookup rather than skipped afterwards: leaving
+    // it in would make this a get_record over two rows once a replacement
+    // exists, which returns whichever the database happens to order first.
+    $existing = $DB->get_record_select('local_prequran_course_offering',
+        'workspaceid = :ws AND moodlecourseid = :courseid AND status <> :archived',
+        ['ws' => $workspaceid, 'courseid' => (int)$course->id, 'archived' => 'archived'],
+        '*', IGNORE_MULTIPLE);
     if ($existing && (string)$existing->status !== 'draft') {
         cli_writeln(sprintf("  %-22s SKIP  offering already '%s' — not overwriting", $label, $existing->status));
         $skipped++;
@@ -270,6 +304,11 @@ foreach ($syllabuses as $syl) {
 }
 
 cli_writeln(str_repeat('-', 76));
+// A --courses value that matched nothing is silence otherwise: the run reports
+// "0 created" and reads like the work was already done.
+foreach (array_keys($unmatched) as $missed) {
+    cli_writeln("!! --courses named '{$missed}', which has no approved syllabus in this workspace and year.");
+}
 cli_writeln(sprintf('%s: %d created, %d updated, %d skipped, %d failed',
     $dryrun ? 'dry run' : 'done', $created, $updated, $skipped, $failed));
 if (!$dryrun && ($created || $updated) && $status === 'draft') {

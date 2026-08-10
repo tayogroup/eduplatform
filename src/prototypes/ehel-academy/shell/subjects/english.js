@@ -2449,15 +2449,21 @@ function renderSpeaking() {
 // whether it was any good. Both callers go through the shared
 // submitSpeakingRecording, so this adds a third caller rather than a second
 // implementation, and the ids are per-task because Speaking shows six at once.
-function speakingCoachHtml(task) {
+// Both halves at Grades 1-4 draw this, so it is written once. The recording id
+// is deliberately the SAME in both — toggleRecording resolves the status line
+// and the <audio> from the pressed button's own region, so one id is correct and
+// the two designs share a learner's recording rather than each holding half of
+// it. Only the feedback element takes a prefix, because that one is looked up by
+// id and a duplicate id would send the deck's result into the original above it.
+function speakingCoachHtml(task, { idPrefix = "", buttonClass = "button primary" } = {}) {
   const id = task.speakingId;
   const review = speakingReviewState.get(id);
   const recorded = recordings.has(id);
   return `<div class="recorder"><button class="record-button" data-record="${id}" type="button" aria-label="Start recording for ${escapeHtml(task.title)}">${icon("mic")}</button><div><strong data-record-status="${id}" role="status" aria-live="polite" aria-atomic="true">${recorded ? "Recording ready. Listen back." : "Ready to record"}</strong><small> Your recording stays on this device until you submit it.</small></div></div>
     <audio data-playback="${id}" controls ${recorded ? "" : "hidden"} aria-label="Your recording for ${escapeHtml(task.title)}"></audio>
     <div class="speaking-flow"><span class="flow-step active"><strong>1</strong> Record</span><span class="flow-step ${recorded ? "active" : ""}"><strong>2</strong> Listen</span><span class="flow-step ${review?.listened ? "active" : ""}"><strong>3</strong> Submit</span><span class="flow-step ${review?.feedback ? "active" : ""}"><strong>4</strong> Feedback</span></div>
-    <button class="button primary" data-speaking-submit="${id}" type="button" ${review?.listened ? "" : "disabled"}>${icon("send")} Submit for pronunciation check</button>
-    <div id="speaking-feedback-${id}" role="status" aria-live="polite" aria-atomic="true">${pronunciationFeedbackHtml(review?.feedback)}</div>`;
+    <button class="${buttonClass}" data-speaking-submit="${id}" type="button" ${review?.listened ? "" : "disabled"}>${icon("send")} Submit for pronunciation check</button>
+    <div id="${idPrefix}speaking-feedback-${id}" role="status" aria-live="polite" aria-atomic="true">${pronunciationFeedbackHtml(review?.feedback)}</div>`;
 }
 
 function renderSpeakingClassic() {
@@ -2510,11 +2516,7 @@ function renderSpeakingCarousel() {
            </div>
            <small class="gc-source">ElevenLabs · approved Ehel voice · 0.90x</small>`
         : `<span class="audio-pending">${icon("clock-3")} ElevenLabs model audio pending</span>`}
-      ${task.recordingRequired ? `<div class="recorder">
-          <button class="record-button" data-record="${esc(task.speakingId)}" type="button" aria-label="Start recording for ${esc(task.title)}">${icon("mic")}</button>
-          <div><strong data-record-status="${esc(task.speakingId)}" role="status" aria-live="polite" aria-atomic="true">Ready to record</strong><small> Your recording stays on this device.</small></div>
-        </div>
-        <audio data-playback="${esc(task.speakingId)}" controls hidden></audio>` : ""}
+      ${task.recordingRequired ? speakingCoachHtml(task, { idPrefix: "deck-", buttonClass: "gc-btn" }) : ""}
       ${index === tasks.length - 1 ? deckFinish("speaking", `I finished all ${tasks.length} speaking practices`) : ""}
     </div></section>`);
 
@@ -2523,13 +2525,36 @@ function renderSpeakingCarousel() {
     label: "Practice",
     slides,
     onClick: (event) => {
-      const target = event.target.closest("[data-model], [data-record], [data-deck-finish]");
+      const target = event.target.closest("[data-model], [data-record], [data-speaking-submit], [data-deck-finish]");
       if (!target) return undefined;
       if (target.dataset.deckFinish) return complete("speaking", "Speaking practice complete.");
       if (target.dataset.record) return toggleRecording(target.dataset.record, target);
+      if (target.dataset.speakingSubmit) {
+        const id = target.dataset.speakingSubmit;
+        const speaking = tasks.find((item) => item.speakingId === id);
+        // The deck's own feedback element, not the original's above it.
+        return submitSpeakingRecording(id, speakingModelText(speaking), target, { feedbackSelector: `#deck-speaking-feedback-${id}` });
+      }
       const task = tasks.find((item) => item.speakingId === target.dataset.model);
       return playAudio(task.audio.source, { rate: Number(target.dataset.rate), button: target });
     },
+  });
+
+  // "Listened to the end" is not a click, so it cannot come through the deck's
+  // delegated handler and has to be bound after the deck is mounted. Scoped to
+  // the deck's own region: the original above carries the same data-playback
+  // ids, and a document-wide bind would arm the wrong half's Submit.
+  const deckRegion = deckMount ? $(deckMount) : null;
+  (deckRegion ? [...deckRegion.querySelectorAll("[data-playback]")] : []).forEach((audio) => {
+    audio.addEventListener("ended", () => {
+      const id = audio.dataset.playback;
+      const review = speakingReviewState.get(id) || { feedback: null };
+      review.listened = true;
+      speakingReviewState.set(id, review);
+      const submit = deckRegion.querySelector(`[data-speaking-submit="${id}"]`);
+      if (submit) submit.disabled = false;
+      toast("You listened to the full recording. It is ready to submit.");
+    });
   });
 }
 

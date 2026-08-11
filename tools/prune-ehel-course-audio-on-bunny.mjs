@@ -33,7 +33,11 @@ const ROOT_FOLDER = "Ehel Primary";
 const STORAGE = "https://storage.bunnycdn.com";
 const MANIFEST = path.join(ROOT, ".bunny-upload-manifest.json");
 
-const SUBJECTS = ["science", "mathematics", "computing"];
+// intensive-english's stages are CEFR levels, not school grades, but the
+// uploader gives them the same gNN slot (upload-media-to-bunny.js builds
+// media/<subject>/gNN/audio/tts/<hash>.mp3 for every subject), so the expected
+// set below is built the same way for it as for the rest.
+const SUBJECTS = ["science", "mathematics", "computing", "intensive-english"];
 const subject = process.argv.slice(2).find((a) => SUBJECTS.includes(a));
 if (!subject) {
   console.error(`Usage: node tools/prune-ehel-course-audio-on-bunny.mjs <${SUBJECTS.join("|")}> [--delete]`);
@@ -53,7 +57,10 @@ loadDotEnv();
 const KEY = process.env.BUNNY_KEY;
 if (!KEY) { console.error("BUNNY_KEY not set (checked the environment and .env)"); process.exit(1); }
 
-const libName = `ehel-${subject === "mathematics" ? "math" : subject}-narration.js`;
+// Named for the course, not the directory: mathematics keeps
+// ehel-math-narration.js and intensive-english keeps ehel-intensive-narration.js.
+const NARRATION_LIB = { mathematics: "math", "intensive-english": "intensive" };
+const libName = `ehel-${NARRATION_LIB[subject] || subject}-narration.js`;
 const narration = createRequire(import.meta.url)(`./lib/${libName}`);
 
 // The exact remote paths the app can ask for.

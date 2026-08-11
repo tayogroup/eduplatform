@@ -14,8 +14,14 @@
 // this refuses to remove anything git cannot restore unless --force says
 // otherwise, and reports before it acts.
 //
+// english is deliberately absent: its clips are named for their content
+// (eng-g05-t01-u03-read01.mp3), not for a hash of their text, so editing a
+// sentence leaves the old recording in place under the same name rather than
+// stranding it under a dead one. Nothing here can see that — it is what
+// check-english-audio-staleness.py exists for.
+//
 // Usage:
-//   node tools/prune-ehel-course-audio.mjs <science|mathematics|computing> [--delete] [--force]
+//   node tools/prune-ehel-course-audio.mjs <subject> [--delete] [--force]
 
 import fs from "node:fs";
 import path from "node:path";
@@ -24,7 +30,7 @@ import { createRequire } from "node:module";
 import { fileURLToPath } from "node:url";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const SUBJECTS = ["science", "mathematics", "computing", "global-perspectives"];
+const SUBJECTS = ["science", "mathematics", "computing", "global-perspectives", "intensive-english"];
 const subject = process.argv.slice(2).find((a) => SUBJECTS.includes(a));
 if (!subject) {
   console.error(`Usage: node tools/prune-ehel-course-audio.mjs <${SUBJECTS.join("|")}> [--delete] [--force]`);
@@ -32,8 +38,13 @@ if (!subject) {
 }
 const SUBJECT_ROOT = path.join(ROOT, "src", "prototypes", "ehel-academy", subject);
 const TTS = path.join(SUBJECT_ROOT, "media", "audio", "tts");
+// A narration lib is named for its course, which is not always the directory
+// name — mathematics keeps ehel-math-narration.js and intensive-english keeps
+// ehel-intensive-narration.js. Two exceptions read better as a lookup than as
+// a nested ternary, and a third can be added without restructuring the line.
+const NARRATION_LIB = { mathematics: "math", "intensive-english": "intensive" };
 const narration =
-  createRequire(import.meta.url)(`./lib/ehel-${subject === "mathematics" ? "math" : subject}-narration.js`);
+  createRequire(import.meta.url)(`./lib/ehel-${NARRATION_LIB[subject] || subject}-narration.js`);
 
 const remove = process.argv.includes("--delete");
 const force = process.argv.includes("--force");

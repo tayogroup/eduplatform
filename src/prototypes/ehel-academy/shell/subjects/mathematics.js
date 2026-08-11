@@ -231,12 +231,97 @@ function deckVoiceSmall(text, label = "Listen") {
   return `<button class="gc-btn ghost small" type="button" data-speak="${escapeHtml(spokenText(text))}" aria-label="${escapeHtml(label)}">${deckIcon("volume-2")} ${escapeHtml(label)}</button>`;
 }
 
-// Answer checking is the grids' rule, unchanged and in one place: a response
-// counts when it matches the reviewed answer, or either contains the other.
+// Answer checking, in one place for every module that takes typed input.
+//
+// The rule used to be "either string contains the other", which accepted any
+// substring of the reviewed answer. 4,753 of the 4,788 free-text answers were
+// satisfied by a single wrong character — "." passed "a) 3, b) 8, c) 5." — so
+// a learner could clear Guided Practice, Fluency and Real Problems without
+// doing any mathematics, and the progress those modules recorded meant nothing.
+// It failed in the other direction too: a learner who typed "52, 81" was told
+// they were wrong, because the stored answer carries the whole method
+// ("a) 43 + 9 = 43 + 10 - 1 = 52, b) 62 + 19 = 62 + 20 - 1 = 81.").
+//
+// That second half is the reason this is not simply an equality test. The
+// stored `answer` is a model solution written for a person to read, not a key:
+// across the course only 3% are a bare number, 36% are labelled parts, 29%
+// carry working, and 11% are prose. So grading extracts what the answer is
+// actually asserting and checks the response carries it.
+const ANSWER_MINUS = /[−–—]/g;
+// A comma is a thousands separator between a digit and exactly three more, and
+// a list separator everywhere else. Getting that backwards read "1,058" as the
+// two numbers 1 and 58, so the value a Stage 5 long-multiplication answer
+// asserted was 1 — which both accepted "1" and REJECTED a learner who typed
+// 1058. The three-digit lookahead keeps "12, 24, 40" three separate values.
+const normaliseAnswer = (text) => String(text || "")
+  .toLowerCase()
+  .replace(ANSWER_MINUS, "-")
+  .replace(/(\d),(\d{3})(?!\d)/g, "$1$2")
+  .replace(/,/g, " ")
+  .replace(/\s+/g, " ")
+  .replace(/[.\s]+$/, "")
+  .trim();
+
+// "a) … b) … c) …" splits into its parts; anything else is one part.
+function answerParts(text) {
+  const found = String(text).split(/(?=\b[a-h]\)\s)/).map((part) => part.trim()).filter(Boolean);
+  return found.length > 1 ? found : [String(text)];
+}
+
+// The values an answer asserts — the numbers a learner has to arrive at.
+//
+// After an "=" only the FIRST number counts, because the working leads to the
+// result and prose often follows it: in "About 30 x 7 = 210; the exact 238 is
+// larger, because 34 was rounded down" the learner owes 210, not 210, 238 and
+// 34. A part with no "=" contributes all of its numbers, which is what makes
+// "7 and 9" and "Even: 12, 24, 40" checkable.
+function assertedValues(text) {
+  const values = [];
+  for (const part of answerParts(normaliseAnswer(text))) {
+    const at = part.lastIndexOf("=");
+    const tail = at === -1 ? part : part.slice(at + 1);
+    // "2d" and "3d" name a kind of shape; they are not a quantity the learner
+    // has to reach, and reading them as one let "3" answer "It is a 3D shape".
+    const numbers = tail.replace(/\b[23]\s?d\b/g, " ").match(/-?\d+(?:\.\d+)?/g) || [];
+    if (at === -1) values.push(...numbers.map(Number));
+    else if (numbers.length) values.push(Number(numbers[0]));
+  }
+  return values;
+}
+
+// Words that carry the answer when it has no numbers in it at all ("Clockwise",
+// "A right angle", "Group B"). Single letters are kept deliberately — "group a"
+// and "group b" differ only there, and dropping them marked one right when the
+// learner typed the other.
+const ANSWER_STOPWORDS = new Set(["the", "an", "of", "is", "are", "and", "or", "to", "in", "it", "that", "this",
+  "then", "so", "because", "you", "your", "each", "every", "by", "with", "for", "on", "at", "as", "be", "was",
+  "were", "will", "can", "if", "not", "there", "they", "them", "its", "from", "into", "than", "when", "which"]);
+const answerWords = (text) => normaliseAnswer(text)
+  .split(/[^a-z0-9°²³%]+/)
+  .filter((word) => word && !ANSWER_STOPWORDS.has(word));
+
 function answerMatches(response, expected) {
-  const given = String(response || "").trim().toLowerCase().replace(/\s+/g, " ");
-  const answer = String(expected || "").toLowerCase();
-  return Boolean(given) && (given === answer || answer.includes(given) || given.includes(answer));
+  const given = normaliseAnswer(response);
+  if (!given) return false;
+  if (given === normaliseAnswer(expected)) return true;
+
+  // Numeric answers are graded on their values, so working may be shown or not
+  // shown — "52 81", "a) 52 b) 81" and "43 + 10 - 1 = 52, 62 + 20 - 1 = 81" all
+  // pass, and every value has to be there, so answering half of a two-part
+  // question no longer counts.
+  const wanted = assertedValues(expected);
+  if (wanted.length) {
+    const got = new Set((given.match(/-?\d+(?:\.\d+)?/g) || []).map(Number));
+    return wanted.every((value) => got.has(value));
+  }
+
+  // Otherwise every word the answer depends on has to appear. Held as a set
+  // rather than a sequence so "a right angle" and "an angle that is right" both
+  // pass; what it will not accept is a fragment.
+  const needed = answerWords(expected);
+  if (!needed.length) return false;
+  const said = new Set(answerWords(given));
+  return needed.every((word) => said.has(word));
 }
 
 const feedbackHtml = (tone, note, body) => `<p class="feedback ${tone}"><span class="status-note">${escapeHtml(note)}</span> ${escapeHtml(body)}</p>`;
@@ -379,9 +464,7 @@ function renderExploreConceptClassic() {
     $$('[data-exploration]').forEach(button=>button.addEventListener("click",()=>{active=Number(button.dataset.exploration);draw();}));
     $("#hint-discovery").addEventListener("click",()=>{$("#discovery-feedback").innerHTML=`<p class="feedback try"><span class="field-label">Hint:</span> ${escapeHtml(item.hint)}</p>`;});
     $("#check-discovery").addEventListener("click",()=>{
-      const response=$("#discovery-answer").value.trim().toLowerCase().replace(/\s+/g," ");
-      const answer=item.answer.toLowerCase();
-      const correct=response && (response===answer || answer.includes(response) || response.includes(answer));
+      const correct=answerMatches($("#discovery-answer").value, item.answer);
       $("#discovery-feedback").innerHTML=`<p class="feedback ${correct?'good':'try'}"><span class="status-note">${correct?'Exactly!':'Look again.'}</span> ${escapeHtml(correct?item.explanation:item.hint)}</p>`;
       if(correct){completed.add(item.id);progress.explorations=[...completed];saveProgress();if(completed.size===course.explorations.length)complete("explore","All six concept discoveries complete.");}
     });
@@ -842,9 +925,7 @@ function renderPracticeClassic() {
     ${levels.map((level) => `<section class="section-stack" style="margin-bottom:24px"><h2>${escapeHtml(level)}</h2><div class="task-grid">${course.practice.filter((item) => item.level === level).map((item) => `<article class="panel question-card"><label for="answer-${item.id}">${escapeHtml(item.prompt)}</label>${voiceButton(item.prompt, "Listen to question")}<input id="answer-${item.id}" autocomplete="off" placeholder="Type your answer or working notes"><div class="question-actions"><button class="button primary" data-check="${item.id}" type="button">Check my answer</button><button class="button secondary" data-hint="${item.id}" type="button">Give me a hint</button><button class="button secondary" data-answer="${item.id}" type="button">Show next step</button></div><div id="feedback-${item.id}" aria-live="polite"></div></article>`).join("")}</div></section>`).join("")}`;
   $$('[data-check]').forEach((button) => button.addEventListener("click", () => {
     const item = course.practice.find((candidate) => candidate.id === button.dataset.check);
-    const response = $(`#answer-${item.id}`).value.trim().toLowerCase().replace(/\s+/g," ");
-    const expected = item.answer.toLowerCase();
-    const correct = response && (expected.includes(response) || response.includes(expected));
+    const correct = answerMatches($(`#answer-${item.id}`).value, item.answer);
     $(`#feedback-${item.id}`).innerHTML = `<p class="feedback ${correct ? "good" : "try"}"><span class="status-note">${correct ? "Correct reasoning!" : "Not yet."}</span> ${correct ? escapeHtml(item.answer) : `Your response does not match the reviewed guidance yet. ${escapeHtml(item.hint)} Try representing the idea in a simpler way first.`}</p>`;
     if (correct && !progress.practiceOpened.includes(item.id)) { progress.practiceOpened.push(item.id); saveProgress(); }
     if (progress.practiceOpened.length === course.practice.length) complete("guided", "Guided Practice complete.");
@@ -1144,9 +1225,7 @@ function renderFluency() {
   const draw = () => { $("#fluency-position").textContent=`${index+1}/${items.length}`; $("#fluency-question").textContent=items[index].prompt; $("#fluency-answer").value=""; $("#fluency-answer").focus(); };
   $("#check-fluency").addEventListener("click", () => {
     if (!startedAt) startedAt = Date.now();
-    const response = $("#fluency-answer").value.trim().toLowerCase();
-    const expected = items[index].answer.toLowerCase();
-    const correct = response && (response===expected || expected.includes(response) || response.includes(expected));
+    const correct = answerMatches($("#fluency-answer").value, items[index].answer);
     if (correct) score += 1;
     $("#fluency-score").textContent=score;
     $("#fluency-feedback").innerHTML=`<p class="feedback ${correct?'good':'try'}"><span class="status-note">${correct?'Correct!':'Review:'}</span> ${escapeHtml(correct?items[index].answer:items[index].hint)}</p>`;
@@ -1221,7 +1300,7 @@ function renderRealProblemsClassic() {
   const problems = course.realProblems;
   $("#app").innerHTML = `${pageHeader("Mathematics in daily life", "Solve Real Problems", `Apply ${escapeHtml(course.unit.unitTitle)} to home, school, markets, travel and the wider community.`)}
     <div class="problem-grid">${problems.map((item,index)=>`<article class="panel real-problem"><div class="problem-icon">${["⌂","◫","🚌","▦","◇","✦"][index]||"#"}</div><span class="eyebrow">${escapeHtml(item.context)} · ${escapeHtml(item.difficulty)}</span><h2>${escapeHtml(item.prompt)}</h2>${voiceButton(item.prompt, "Listen to problem")}<textarea id="problem-${item.id}" placeholder="Show your calculation and answer…"></textarea><div class="question-actions"><button class="button primary" data-check-problem="${item.id}" type="button">Check answer</button><button class="button secondary" data-problem-hint="${item.id}" type="button">Hint</button></div><div id="problem-feedback-${item.id}"></div></article>`).join("")}</div>`;
-  $$('[data-check-problem]').forEach(button=>button.addEventListener("click",()=>{const item=problems.find(candidate=>candidate.id===button.dataset.checkProblem);const response=$(`#problem-${item.id}`).value.trim().toLowerCase();const expected=item.answer.toLowerCase();const correct=response&&(response===expected||expected.includes(response)||response.includes(expected));$(`#problem-feedback-${item.id}`).innerHTML=`<p class="feedback ${correct?'good':'try'}"><span class="status-note">${correct?'Applied correctly!':'Check the situation.'}</span> ${escapeHtml(correct?item.answer:item.hint)}</p>`;if(correct)button.disabled=true;if($$('[data-check-problem]').every(itemButton=>itemButton.disabled))complete("problems","Real-world problems complete.");}));
+  $$('[data-check-problem]').forEach(button=>button.addEventListener("click",()=>{const item=problems.find(candidate=>candidate.id===button.dataset.checkProblem);const correct=answerMatches($(`#problem-${item.id}`).value,item.answer);$(`#problem-feedback-${item.id}`).innerHTML=`<p class="feedback ${correct?'good':'try'}"><span class="status-note">${correct?'Applied correctly!':'Check the situation.'}</span> ${escapeHtml(correct?item.answer:item.hint)}</p>`;if(correct)button.disabled=true;if($$('[data-check-problem]').every(itemButton=>itemButton.disabled))complete("problems","Real-world problems complete.");}));
   $$('[data-problem-hint]').forEach(button=>button.addEventListener("click",()=>{const item=problems.find(candidate=>candidate.id===button.dataset.problemHint);$(`#problem-feedback-${item.id}`).innerHTML=`<p class="feedback try"><span class="field-label">Hint:</span> ${escapeHtml(item.hint)}</p>`;}));
 }
 

@@ -140,6 +140,11 @@ const sourceManifestPath = path.join(here, "..", "inputs", "ehel-global-perspect
 const knownGaps = fs.existsSync(sourceManifestPath) ? (readJson(sourceManifestPath).knownGaps || {}) : {};
 const skillsByGrade = new Map();   // "5" -> Set of skills present
 const selfStudyGrades = new Set(); // grades whose units are self-study
+// stage -> { code, used: Set of objective codes some unit in that stage claims }
+// Feeds the coverage report below. Checking that a claimed objective is REAL
+// says nothing about how many of the stage's objectives anything claims, so a
+// stage mapped to a third of its framework passes every check above in silence.
+const objectivesByStage = new Map();
 
 let unitCount = 0;
 let explainerCount = 0;
@@ -319,6 +324,10 @@ for (const gradeDir of grades) {
     if (code === expected) {
       const stageObjectives = framework(code).objectivesByStage[String(stage)] || [];
       const valid = new Set(stageObjectives.map((o) => o.code));
+      if (!objectivesByStage.has(stage)) objectivesByStage.set(stage, { code, used: new Set() });
+      for (const objective of unit.cambridge?.objectives || []) {
+        objectivesByStage.get(stage).used.add(objective.code);
+      }
       for (const objective of unit.cambridge?.objectives || []) {
         if (!valid.has(objective.code)) {
           fail(label, `claims objective ${objective.code}, which does not exist in stage ${stage} of ${code}`);
@@ -436,6 +445,28 @@ if (repeatedAcrossGrades.size) {
 if (coverageLines.length) {
   console.log("\nIncomplete stages (known gaps — content missing, not a code fault):");
   for (const line of coverageLines) console.log(`   GAP   ${line}`);
+}
+
+// Cambridge objective coverage per stage. Reported, never failed: how much of a
+// framework a stage claims is a curriculum decision, not a defect, and the two
+// low stages here have known reasons (Stage 1's packs are topic-led rather than
+// skill-led; Stage 5 teaches two of six skills and is withdrawn). It is printed
+// because the checks above can only say that a CLAIMED objective is real — a
+// stage claiming a third of its framework passes all of them without a word,
+// which is how a thin mapping stays invisible. Sub-strands are listed where a
+// stage claims none of one, since that is the shape worth an editor's eye.
+if (objectivesByStage.size) {
+  console.log("\nCambridge objective coverage (reported, not gated):");
+  for (const stage of [...objectivesByStage.keys()].sort((a, b) => a - b)) {
+    const { code, used } = objectivesByStage.get(stage);
+    const all = framework(code).objectivesByStage[String(stage)] || [];
+    if (!all.length) continue;
+    const percent = Math.round((used.size / all.length) * 100);
+    const missedSubStrands = [...new Set(all.filter((o) => !used.has(o.code)).map((o) => o.subStrand))]
+      .filter((subStrand) => subStrand && all.filter((o) => o.subStrand === subStrand).every((o) => !used.has(o.code)));
+    console.log(`   stage ${stage} (${code})  ${String(used.size).padStart(3)}/${String(all.length).padEnd(3)} ${String(percent).padStart(3)}%`
+      + (missedSubStrands.length ? `   no objective claimed in: ${missedSubStrands.join(", ")}` : ""));
+  }
 }
 
 if (notes.length) {

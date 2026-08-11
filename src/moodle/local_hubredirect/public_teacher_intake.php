@@ -983,9 +983,9 @@ body.pqh-public-teacher-intake-page #page-wrapper,body.pqh-public-teacher-intake
 .pqpti-school-pick-form{display:flex;flex-wrap:wrap;align-items:center;gap:12px 24px}.pqpti-school-pick-option{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:14.5px;color:var(--pq-ink);cursor:pointer}.pqpti-school-pick-option input{width:18px;height:18px;accent-color:var(--pq-blue)}.pqpti-school-pick-hint{margin:10px 0 0}
 @media(max-width:760px){.pqpti-grid,.pqpti-choicegrid{grid-template-columns:1fr}.pqpti-title{font-size:24px}.pqpti-wrap{padding:12px 10px 0}.pqpti-hero{padding:20px 18px}.pqpti-panel{padding:18px}.pqpti-panel h3{font-size:19px;margin:4px 0 18px;padding:0 0 12px}.pqpti-sub{font-size:14px}}
 <?php echo pqh_dashboard_header_css(); ?>
-.pqpti-shell .pqh-workspace-top{background:var(--pq-hero-bg)!important;border:1px solid var(--pq-line)!important;box-shadow:0 2px 10px rgba(22,38,30,.06)!important;padding:28px 32px!important;border-radius:14px!important}
-.pqpti-shell .pqh-workspace-title{color:var(--pq-ink)!important;font-size:28px!important;font-weight:700!important;letter-spacing:0!important;text-shadow:none!important}
-.pqpti-shell .pqh-workspace-sub{color:var(--pq-muted)!important;font-size:14.5px!important;font-weight:400!important;opacity:1!important}
+.pqpti-shell .pqh-workspace-top{background:var(--op-header-bg,#162b48)!important;border:1px solid var(--op-header-bg,#162b48)!important;box-shadow:0 2px 10px rgba(22,38,30,.10)!important;padding:28px 32px!important;border-radius:14px!important}
+.pqpti-shell .pqh-workspace-title{color:var(--op-header-ink,#fff)!important;font-size:28px!important;font-weight:700!important;letter-spacing:0!important;text-shadow:none!important}
+.pqpti-shell .pqh-workspace-sub{color:var(--op-header-ink-soft,rgba(255,255,255,.72))!important;font-size:14.5px!important;font-weight:400!important;opacity:1!important}.pqpti-shell .pqh-workspace-top .pqpti-navbrand{color:var(--op-header-ink,#fff)!important}.pqpti-shell .pqh-workspace-top .pqpti-navname{color:var(--op-header-ink,#fff)}.pqpti-shell .pqh-workspace-top .pqpti-navmark{background:rgba(255,255,255,.16);color:var(--op-header-ink,#fff)}
 
 /* Multi-page horizontal wizard */
 .pqpti-wizard{padding:0;overflow:hidden}

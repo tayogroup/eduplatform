@@ -141,15 +141,21 @@ echo ehp_styles();
 .pqig-shell{--pq-green:#2f6f4e;--pq-green-dark:#1f5138;--pq-ink:#1c2b22;--pq-muted:#5c7267;--pq-line:#e3dcc8;--pq-line-strong:#c9bd9d;--pq-paper:#f7f4ec;--pq-card:#fffdf8;--pq-gold:#a5741e;--pq-gold-soft:#f4e6c8;--pq-serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;--pq-sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;position:fixed;inset:0;z-index:2147483000;overflow:auto;min-height:100vh;padding:0 0 56px;background:var(--pq-paper);font-family:var(--pq-sans);color:var(--pq-ink);-webkit-font-smoothing:antialiased}
 @media(prefers-color-scheme:dark){.pqig-shell{--pq-green:#7fc79e;--pq-green-dark:#63a883;--pq-ink:#e8e3d3;--pq-muted:#9fb0a4;--pq-line:#2a3a30;--pq-line-strong:#3a4c40;--pq-paper:#121d17;--pq-card:#16241c;--pq-gold:#dcaa54;--pq-gold-soft:#3a301a}}
 .pqig-wrap{width:min(760px,calc(100% - 32px));margin:0 auto}
-.pqig-nav{padding:18px 0 4px}
-.pqig-navbrand{display:inline-flex;align-items:center;gap:11px}
-.pqig-navmark{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:10px;background:var(--pq-green);color:#fff;font-weight:700;font-size:17px}
+/* The header band, matching public_intake.php and public_teacher_intake.php.
+   Colours come from the shared skin's own header tokens rather than a copied
+   hex, so all three public pages follow if that navy is ever retuned. */
+.pqig-hero{margin-top:18px;padding:28px 32px;border-radius:14px;background:var(--op-header-bg,#162b48);border:1px solid var(--op-header-bg,#162b48);color:var(--op-header-ink,#fff)}
+.pqig-shell .pqh-workspace-top{background:var(--op-header-bg,#162b48)!important;border-color:var(--op-header-bg,#162b48)!important;box-shadow:0 2px 10px rgba(22,38,30,.10)!important;border-radius:14px!important}
+.pqig-shell .pqh-workspace-title{color:var(--op-header-ink,#fff)!important;text-shadow:none!important}
+.pqig-shell .pqh-workspace-sub{color:var(--op-header-ink-soft,rgba(255,255,255,.72))!important;opacity:1!important}
+.pqig-navbrand{display:inline-flex;align-items:center;gap:11px;margin-bottom:14px;color:var(--op-header-ink,#fff)}
+.pqig-navmark{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,.16);color:var(--op-header-ink,#fff);font-weight:700;font-size:17px}
 .pqig-navmark--img{background:transparent;width:auto;height:38px}
 .pqig-navmark--img img{height:38px;width:auto;display:block}
-.pqig-navname{font-size:16px;font-weight:700;color:var(--pq-ink)}
+.pqig-navname{font-size:16px;font-weight:700;color:var(--op-header-ink,#fff)}
 .pqig-panel{margin-top:16px;padding:26px 24px;border-radius:14px;background:var(--pq-card);border:1px solid var(--pq-line)}
-.pqig-title{margin:0;font-family:var(--pq-serif);font-size:30px;line-height:1.15;font-weight:600;color:var(--pq-ink)}
-.pqig-lede{margin:12px 0 0;font-size:16px;line-height:1.6;color:var(--pq-muted)}
+.pqig-title{margin:0;font-family:var(--pq-serif);font-size:30px;line-height:1.15;font-weight:600;color:var(--op-header-ink,#fff)}
+.pqig-lede{margin:12px 0 0;font-size:16px;line-height:1.6;color:var(--op-header-ink-soft,rgba(255,255,255,.72))}
 /* The skip route sits with the watch buttons, not below the fold: a parent who
    does not want a video should not have to scroll past one to leave. */
 .pqig-choices{display:grid;gap:11px;margin-top:22px}
@@ -174,7 +180,11 @@ echo ehp_styles();
 <style><?php echo pqh_openproject_skin_css('pqig', 'pqh-public-intake-page'); ?></style>
 <main class="pqig-shell">
   <div class="pqig-wrap">
-    <div class="pqig-nav">
+    <?php // Same header shape as public_intake.php and public_teacher_intake.php:
+          // the brand row, title and lede live inside a .pqh-workspace-top band so
+          // the shared skin paints all three public pages identically. The choices
+          // move to their own panel below, as the form's do. ?>
+    <section class="pqig-hero pqh-workspace-top">
       <span class="pqig-navbrand">
         <?php if ($brandlogo !== ''): ?>
           <span class="pqig-navmark pqig-navmark--img"><img src="<?php echo s($brandlogo); ?>" alt="<?php echo s($brandname); ?>"></span>
@@ -183,15 +193,14 @@ echo ehp_styles();
         <?php endif; ?>
         <span class="pqig-navname"><?php echo s($brandname); ?></span>
       </span>
-    </div>
-
-    <section class="pqig-panel">
-      <h1 class="pqig-title">Before you start</h1>
-      <p class="pqig-lede">
+      <h1 class="pqig-title pqh-workspace-title">Before you start</h1>
+      <p class="pqig-lede pqh-workspace-sub">
         Requesting a place takes about 10 minutes and you can do it all on your phone.
         Watch the short guide if it helps, or go straight to the form — it is entirely up to you.
       </p>
+    </section>
 
+    <section class="pqig-panel">
       <div class="pqig-choices">
         <?php if ($videoen !== ''): ?>
           <button type="button" class="pqig-btn" data-guide-play="en" aria-pressed="false" aria-controls="pqig-player">Watch the guide (English)</button>

@@ -127,7 +127,12 @@ const CAMBRIDGE_OBJECTIVES = {
   "8-4": ["8TWSm.03"],
   "8-5": ["8Cm.04", "8Cp.01", "8Cp.02", "8Cc.05", "8TWSp.03", "8TWSa.05"],
   "8-6": ["8Ps.01", "8Ps.02", "8Ps.03", "8Ps.04", "8TWSc.04"],
-  "8-7": ["8Bp.01", "8Bp.02", "8Bp.03", "8TWSc.07", "8TWSa.05"],
+  // 8Bs.02-8Bs.04 are claimed on the passage CONCEPT_INSERTS continues concept 4
+  // with: blood components, the alveolar structure that makes gas exchange
+  // possible, and the diffusion of oxygen and carbon dioxide across it. 8Bs.01
+  // (joints and antagonistic muscles) is not claimed — nothing in Grade 8
+  // teaches it, and a digestion unit is not where it belongs.
+  "8-7": ["8Bp.01", "8Bp.02", "8Bp.03", "8Bs.02", "8Bs.03", "8Bs.04", "8TWSc.07", "8TWSa.05"],
   "8-8": ["8TWSc.01", "8TWSc.07", "8SIC.02"],
   // Both Planet Earth objectives are claimed on passages CONCEPT_INSERTS adds:
   // 8ESp.01 on concept 6, which attributes the Earth's field to its moving iron
@@ -198,7 +203,7 @@ function cambridgeObjectivesFor(grade, unitNo, code) {
 // unit to a new objective and the gap closes here on the next build. Only the
 // REASON is authored, and only where it has actually been established.
 const CAMBRIDGE_GAP_REASONS = {
-  "8-Structure and function": "No Grade 8 unit teaches human body structure. The course covers body systems at Grade 6 (6Bh1-6Bh4, Stage 6 depth) and does not revisit them at Lower Secondary depth, so joints and antagonistic muscles, the components of blood, the respiratory system and gas diffusion are taught nowhere. Unit 7 covers nutrition and digestion but never blood, lungs or joints — its only mentions of blood are a quiz distractor.",
+  "8-Structure and function": "Three of the four are now taught: Unit 7 continues its digestion arc into what blood is made of, how the alveoli are built for gas exchange, and how oxygen and carbon dioxide diffuse across that barrier (8Bs.02-8Bs.04). 8Bs.01 remains — joints and antagonistic muscles are taught nowhere in Grade 8, and a unit about food is not where they belong. The course teaches the skeleton at Grade 4 (4Bh1, vertebrates having internal backbones) and body systems at Grade 6 (6Bh1-6Bh4), neither at Lower Secondary depth, so closing 8Bs.01 needs movement and muscles written for Stage 8.",
   "8-Ecosystems": "No Grade 8 unit teaches ecology. The course covers ecosystems, food webs and human impact at Grade 6 (6Be1-6Be6, Stage 6 depth); bioaccumulation and invasive species are taught nowhere in the course.",
   "8-Cycles on Earth": "Climate is taught nowhere in the course. Grade 8's Rocks unit accounts for 96 apparent matches on \"weather\", but every one is \"weathering\" — the breakdown of rock — and its single use of \"climate\" is the incidental phrase \"in the climate of East Africa\". No unit distinguishes climate from weather, or covers climate cycles or atmospheric change.",
   "8-Earth in space": "No Grade 8 unit teaches astronomy. The course covers the Solar System at Grade 5 (5Pb1-5Pb3, Stage 5 depth); galaxies and asteroids are taught nowhere. Grade 8's apparent matches on \"star\" are all \"starch\", from Unit 7's food tests.",
@@ -223,6 +228,29 @@ const CAMBRIDGE_GAP_REASONS = {
 // it already uses, not an excuse to author Science content in the builder — a
 // whole missing topic (Stage 4 sound) is recorded as a commission instead.
 const CONCEPT_INSERTS = {
+  // Structure and function is the largest Stage 8 hole: 0893 publishes four
+  // objectives and no Grade 8 unit taught any of them. The course covers body
+  // systems at Grade 6 (6Bh1-6Bh4) at Stage 6 depth and never returns to them,
+  // so blood, lungs and gas exchange were taught once, to eleven-year-olds, and
+  // then examined at Stage 8.
+  //
+  // Three of the four have a genuine home here. Unit 7 ends its digestion arc on
+  // "absorbed into the blood, which carries the nutrients to every cell", which
+  // is the question "and what IS blood, and what else does it carry" left
+  // hanging — and the villi passage has just taught surface area as the reason
+  // absorption is efficient, which is the same idea alveoli exist for. The
+  // insert continues the concept rather than interrupting it, and reuses the
+  // unit's own Amina, whose cut finger it already used for tissue repair.
+  //
+  // 8Bs.01 is deliberately NOT covered. Joints and antagonistic muscles have no
+  // honest home in a unit about food, and bolting a skeleton onto a digestion
+  // concept to turn a number green is the kind of mapping this table exists to
+  // avoid. It stays recorded as a gap with its reason.
+  "8-7": [{
+    conceptId: "concept-4-the-journey-through-your-digestive-system",
+    after: "digested food is absorbed quickly and efficiently into the blood, which carries the nutrients to every cell in your body.",
+    text: "\n\nSo what is blood, and what else does it carry? A little over half of it is plasma, a straw-coloured liquid that carries the dissolved nutrients you have just absorbed, along with wastes and heat. Floating in that plasma are three kinds of cell, each with its own job. Red blood cells are packed with a red pigment called haemoglobin, which grips oxygen and carries it to every working cell. White blood cells are part of your defence against infection. Platelets are cell fragments that clump together to seal a cut — they are why Amina's finger stops bleeding.\n\nThe oxygen those red cells carry is collected in your lungs. Each lung divides into finer and finer tubes that end in millions of tiny air sacs called alveoli. The trick is the one the small intestine already showed you: an enormous surface area folded into a small space. The wall of an alveolus is a single cell thick and is wrapped in blood capillaries whose walls are also a single cell thick, so the air and the blood are separated by almost nothing.\n\nGases cross that thin barrier by diffusion, moving from where they are crowded to where they are not. The air in an alveolus is rich in oxygen and the blood arriving there is poor in it, so oxygen diffuses into the blood. Carbon dioxide, the waste your cells produce, is crowded in the arriving blood and scarce in the air, so it diffuses the other way and you breathe it out.",
+  }],
   "8-9": [{
     conceptId: "concept-6-magnets-and-magnetic-fields",
     after: "the Earth itself behaves like a giant magnet, with a magnetic field stretching all around it.",

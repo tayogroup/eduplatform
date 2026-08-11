@@ -64,7 +64,25 @@ const readJson = (file) => JSON.parse(fs.readFileSync(file, "utf8"));
 // story words — an English reader legitimately says "the children ran to the
 // gate". What is diagnostic is the learner as SOMEBODY ELSE'S CHARGE, or the
 // page addressing the adult directly.
-const ADULT_ADDRESSED = /\byour child\b|\bthe child (?:draws|writes|circles|points|says|will|can|needs|should)\b|\blet (?:the|your) child\b|\bhelp your child\b|\bnote for the teacher\b|\bteacher (?:lesson plan|guide|notes)\b|\bweekly objectives\b|\bchildren will (?:be able to|begin to)\b|\bby the end of week \d/i;
+const ADULT_ADDRESSED = /\byour child\b|\bthe child (?:draws|writes|circles|points|says|will|can|needs|should)\b|\blet (?:the|your) (?:child|learner)\b|\bhelp your child\b|\bnote for the teacher\b|\bteacher (?:lesson plan|guide|notes)\b|\bweekly objectives\b|\bchildren will (?:be able to|begin to)\b|\bby the end of week \d|(?:^|[.!?]\s+)(?:Model|Remind|Encourage|Prompt|Praise|Coach)\s+(?:the|them|your)\b|\bthe child's own\b/i;
+// The last two alternatives above were added after a browser pass found a
+// Grade 1 grammar card telling the five-year-old reading it to "Model the short
+// /a/ first, then let them copy" — teacher guidance rendered plainly at
+// display:block on the learner's own card, which every check here had missed.
+//
+// They are narrow on purpose, and three broader drafts were measured and thrown
+// away first. Anything keyed on "them" is undiagnosable: "ask them to guess your
+// shape" tells the LEARNER to ask a partner, and story dialogue is full of "we
+// let them usurp the truth" — 54 hits, almost all wrong. Keying on the learner
+// as a bare third-person noun is no better: "the children sang the alphabet
+// song" is a story, and Grade 1's comprehension questions use "the learner" as a
+// CHARACTER ("Which page does the learner like best?") — 322 hits.
+//
+// What survives is the learner as somebody else's charge ("the child's own
+// life", in a marker's note printed to the learner) and a teacher imperative
+// that opens a sentence ("Model the…", "Remind them…"). Requiring the
+// sentence-initial capital is what keeps "the model the story's country was
+// leaving" out. Measured: 10 hits across all 81 units, every one real.
 
 // Teacher notation for a sound. Correct in an adult's plan, wrong on a
 // five-year-old's screen — and ElevenLabs reads it as the LETTER NAME, so

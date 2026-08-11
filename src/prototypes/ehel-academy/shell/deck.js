@@ -44,8 +44,8 @@ export function createDeck({ $, escapeHtml, icon, stopAudio = () => {}, afterPai
     const host = typeof mount === "string" ? $(mount) : mount;
     host.innerHTML = `
     <div class="gc-wrap">
-      <div class="gc-top"><h2 class="gc-heading">${escapeHtml(heading)}</h2><span class="gc-count" id="gc-count"></span></div>
-      <div class="gc-carousel">
+      <div class="gc-top"><h2 class="gc-heading">${escapeHtml(heading)}</h2><span class="gc-count" id="gc-count" aria-live="polite" aria-atomic="true"></span></div>
+      <div class="gc-carousel" role="group" aria-roledescription="carousel" aria-label="${escapeHtml(heading)}">
         <button class="gc-arrow prev" type="button" aria-label="Previous ${lower}">${icon("chevron-left")}</button>
         <div class="gc-viewport"><div class="gc-track" id="gc-track"></div></div>
         <button class="gc-arrow next" type="button" aria-label="Next ${lower}">${icon("chevron-right")}</button>
@@ -82,9 +82,21 @@ export function createDeck({ $, escapeHtml, icon, stopAudio = () => {}, afterPai
     // out of the tab order AND out of the accessibility tree. It does not touch
     // rendering, so the neighbouring slide still animates into view during a
     // transition exactly as before.
+    //
+    // The same walk carries each slide's semantics. Subjects author slides as
+    // HTML strings, so a slide cannot describe itself without every subject
+    // repeating the attributes — and setSlides and redrawSlide would drop them
+    // on the next repaint anyway. Setting them here means they cannot be
+    // forgotten or lost. "slide" rather than the subject's own noun: `label` is
+    // already spoken in the aria-label ("Question 3 of 25"), and what
+    // aria-roledescription has to convey is what KIND of thing this is.
     const syncReachable = () => {
+      const total = track.children.length;
       for (const [position, slide] of [...track.children].entries()) {
         slide.inert = position !== index;
+        slide.setAttribute("role", "group");
+        slide.setAttribute("aria-roledescription", "slide");
+        slide.setAttribute("aria-label", `${label} ${position + 1} of ${total}`);
       }
     };
 
@@ -93,7 +105,17 @@ export function createDeck({ $, escapeHtml, icon, stopAudio = () => {}, afterPai
       index = Math.max(0, Math.min(items.length - 1, next));
       track.style.transform = `translateX(-${index * 100}%)`;
       syncReachable();
-      dotsRow.querySelectorAll("[data-dot]").forEach((dot, position) => dot.classList.toggle("active", position === index));
+      // The dots carried a label ("Part 3 of 6") but nothing said which one the
+      // learner is on, so the strip announced six identical-sounding choices.
+      // aria-current is the state for "this is the one you are viewing";
+      // aria-selected is not, outside a tab/listbox pattern these dots do not
+      // implement — they are plain buttons that move a carousel.
+      dotsRow.querySelectorAll("[data-dot]").forEach((dot, position) => {
+        const isCurrent = position === index;
+        dot.classList.toggle("active", isCurrent);
+        if (isCurrent) dot.setAttribute("aria-current", "true");
+        else dot.removeAttribute("aria-current");
+      });
       prevArrow.disabled = index === 0;
       nextArrow.disabled = index === items.length - 1;
       countLabel.textContent = `${label} ${index + 1} of ${items.length}`;

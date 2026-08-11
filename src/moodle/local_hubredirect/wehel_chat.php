@@ -41,7 +41,9 @@ function pqh_wehel_send_cors(): void {
         header('Access-Control-Allow-Credentials: true');
         header('Vary: Origin');
     }
-    header('Access-Control-Allow-Headers: Content-Type, Accept');
+    // Authorization carries the signed launch token. Without it here the
+    // preflight rejects the header and the real request is never sent.
+    header('Access-Control-Allow-Headers: Authorization, Content-Type, Accept');
     header('Access-Control-Allow-Methods: POST, OPTIONS');
 }
 
@@ -141,8 +143,17 @@ if (!is_array($payload)) {
 }
 
 $requesttoken = trim((string)($payload['wstoken'] ?? $payload['ws'] ?? optional_param('wstoken', '', PARAM_RAW_TRIMMED)));
+// Three credentials, tried cheapest first. The launch token is what a
+// CDN-hosted caller actually has: it is cross-origin, so no session cookie
+// reaches it (MoodleSessionep1 is issued with no SameSite, which browsers
+// treat as Lax, and Lax is not sent on a cross-site POST). Without this
+// branch require_login() answers the fetch with a 303 to /login/index.php.
+$pqh_apiuserid = 0;
 if (!pqh_wehel_valid_ws_token($requesttoken)) {
-    require_login();
+    $pqh_apiuserid = pqh_launch_token_userid(is_array($payload) ? $payload : null);
+    if ($pqh_apiuserid <= 0) {
+        require_login();
+    }
 }
 
 // --- validate the tutoring request -------------------------------------------
@@ -252,17 +263,27 @@ if ($unitcontent === '') {
 
 // --- rate limit (per Moodle session, mirrors quiz_tts.php) --------------------
 
-global $SESSION;
-$now = time();
-if (empty($SESSION->local_hubredirect_wehel_window) || !is_array($SESSION->local_hubredirect_wehel_window)) {
-    $SESSION->local_hubredirect_wehel_window = ['start' => $now, 'count' => 0];
-}
-if (($now - (int)$SESSION->local_hubredirect_wehel_window['start']) > 60) {
-    $SESSION->local_hubredirect_wehel_window = ['start' => $now, 'count' => 0];
-}
-$SESSION->local_hubredirect_wehel_window['count'] = (int)$SESSION->local_hubredirect_wehel_window['count'] + 1;
-if ($SESSION->local_hubredirect_wehel_window['count'] > 20) {
-    pqh_wehel_json(429, ['ok' => false, 'message' => 'Wehel needs a short break. Please wait a minute.']);
+// A token-authenticated caller sends no cookie, so it gets a fresh $SESSION on
+// every request and the counter below would read 1 every time — leaving a PAID
+// endpoint with no cap at all. Those callers are counted by user id in an
+// application cache; cookie callers keep the original counter untouched.
+if ($pqh_apiuserid > 0) {
+    if (!pqh_api_rate_limit_ok('wehel_chat', $pqh_apiuserid, 20)) {
+        pqh_wehel_json(429, ['ok' => false, 'message' => 'Wehel needs a short break. Please wait a minute.']);
+    }
+} else {
+    global $SESSION;
+    $now = time();
+    if (empty($SESSION->local_hubredirect_wehel_window) || !is_array($SESSION->local_hubredirect_wehel_window)) {
+        $SESSION->local_hubredirect_wehel_window = ['start' => $now, 'count' => 0];
+    }
+    if (($now - (int)$SESSION->local_hubredirect_wehel_window['start']) > 60) {
+        $SESSION->local_hubredirect_wehel_window = ['start' => $now, 'count' => 0];
+    }
+    $SESSION->local_hubredirect_wehel_window['count'] = (int)$SESSION->local_hubredirect_wehel_window['count'] + 1;
+    if ($SESSION->local_hubredirect_wehel_window['count'] > 20) {
+        pqh_wehel_json(429, ['ok' => false, 'message' => 'Wehel needs a short break. Please wait a minute.']);
+    }
 }
 
 // --- assemble the prompt ------------------------------------------------------

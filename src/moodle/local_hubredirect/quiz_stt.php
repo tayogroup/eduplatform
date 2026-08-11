@@ -57,7 +57,9 @@ function pqh_quiz_stt_send_cors(): void {
         header('Access-Control-Allow-Credentials: true');
         header('Vary: Origin');
     }
-    header('Access-Control-Allow-Headers: Content-Type, Accept');
+    // Authorization carries the signed launch token. Without it here the
+    // preflight rejects the header and the real request is never sent.
+    header('Access-Control-Allow-Headers: Authorization, Content-Type, Accept');
     header('Access-Control-Allow-Methods: POST, OPTIONS');
 }
 
@@ -79,8 +81,17 @@ if (!is_array($payload)) {
     pqh_quiz_stt_json(400, ['ok' => false, 'message' => 'Invalid JSON.']);
 }
 $requesttoken = trim((string)($payload['wstoken'] ?? $payload['ws'] ?? optional_param('wstoken', '', PARAM_RAW_TRIMMED)));
+// Three credentials, tried cheapest first. The launch token is what a
+// CDN-hosted caller actually has: it is cross-origin, so no session cookie
+// reaches it (MoodleSessionep1 is issued with no SameSite, which browsers
+// treat as Lax, and Lax is not sent on a cross-site POST). Without this
+// branch require_login() answers the fetch with a 303 to /login/index.php.
+$pqh_apiuserid = 0;
 if (!pqh_quiz_stt_valid_token($requesttoken)) {
-    require_login();
+    $pqh_apiuserid = pqh_launch_token_userid(is_array($payload) ? $payload : null);
+    if ($pqh_apiuserid <= 0) {
+        require_login();
+    }
 }
 
 $encoded = trim((string)($payload['audioBase64'] ?? ''));
@@ -89,16 +100,26 @@ if ($encoded === '' || $audio === false || strlen($audio) === 0 || strlen($audio
     pqh_quiz_stt_json(400, ['ok' => false, 'message' => 'The recording is empty or too large.']);
 }
 
-global $SESSION;
-$now = time();
-$window = $SESSION->local_hubredirect_quiz_stt_window ?? ['start' => $now, 'count' => 0];
-if (($now - (int)$window['start']) > 60) {
-    $window = ['start' => $now, 'count' => 0];
-}
-$window['count'] = (int)$window['count'] + 1;
-$SESSION->local_hubredirect_quiz_stt_window = $window;
-if ($window['count'] > 30) {
-    pqh_quiz_stt_json(429, ['ok' => false, 'message' => 'Too many speaking checks. Please slow down.']);
+// A token-authenticated caller sends no cookie, so it gets a fresh $SESSION on
+// every request and the counter below would read 1 every time — leaving a PAID
+// endpoint with no cap at all. Those callers are counted by user id in an
+// application cache; cookie callers keep the original counter untouched.
+if ($pqh_apiuserid > 0) {
+    if (!pqh_api_rate_limit_ok('quiz_stt', $pqh_apiuserid, 30)) {
+        pqh_quiz_stt_json(429, ['ok' => false, 'message' => 'Too many speaking checks. Please slow down.']);
+    }
+} else {
+    global $SESSION;
+    $now = time();
+    $window = $SESSION->local_hubredirect_quiz_stt_window ?? ['start' => $now, 'count' => 0];
+    if (($now - (int)$window['start']) > 60) {
+        $window = ['start' => $now, 'count' => 0];
+    }
+    $window['count'] = (int)$window['count'] + 1;
+    $SESSION->local_hubredirect_quiz_stt_window = $window;
+    if ($window['count'] > 30) {
+        pqh_quiz_stt_json(429, ['ok' => false, 'message' => 'Too many speaking checks. Please slow down.']);
+    }
 }
 
 $apikey = pqh_quiz_stt_config('elevenlabs_api_key', 'local_prequran_elevenlabs_api_key', 'ELEVENLABS_API_KEY');

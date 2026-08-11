@@ -50,6 +50,28 @@ export const PLATFORM_ORIGIN = platformOrigin();
 // The dev twins are served by the page's own origin, so they are never rebased.
 export const platformUrl = (path) => (DEV_API ? path : `${PLATFORM_ORIGIN}${path}`);
 
+// What proves who is calling, once the call is cross-origin.
+//
+// `credentials: "include"` is not enough and never was: MoodleSessionep1 is
+// issued with no SameSite attribute, which every current browser treats as
+// SameSite=Lax, and Lax cookies are not sent on a cross-site POST. Measured on
+// the live platform — an unauthenticated cross-origin POST to quiz_tts.php
+// answers 303 to /login/index.php with an HTML body, where the caller is
+// waiting for audio.
+//
+// So the same credential the progress gateway takes is sent here: the HS256
+// launch token from ?pwsToken, server-signed, carrying the user in `sub` and
+// expiring in 12 hours. The app cannot forge or read it meaningfully — it holds
+// no secret — it only presents it, and the server verifies
+// (accesslib.php :: pqh_launch_token_userid).
+//
+// credentials stays "include" alongside it: a same-origin or Moodle-hosted page
+// still has its cookie, and that path is unchanged.
+const LAUNCH_TOKEN = (new URLSearchParams(location.search).get("pwsToken") || "").replace(/[^A-Za-z0-9._-]/g, "");
+export function platformHeaders(extra = {}) {
+  return LAUNCH_TOKEN ? { ...extra, Authorization: `Bearer ${LAUNCH_TOKEN}` } : { ...extra };
+}
+
 export const WEHEL_CHAT_ENDPOINT = DEV_API ? "/api/wehel-chat" : platformUrl("/local/hubredirect/wehel_chat.php");
 export const WEHEL_STT_ENDPOINT = DEV_API ? "/api/elevenlabs-stt" : platformUrl("/local/hubredirect/quiz_stt.php");
 export const WEHEL_SOMALI_TTS_ENDPOINT = DEV_API ? "/api/somali-tts" : platformUrl("/local/hubredirect/somali_tts.php");
@@ -427,7 +449,7 @@ export async function speakSomali(text) {
     const response = await fetch(WEHEL_SOMALI_TTS_ENDPOINT, {
       method: "POST",
       credentials: DEV_API ? "same-origin" : "include",
-      headers: { Accept: "audio/mpeg", "Content-Type": "application/json" },
+      headers: platformHeaders({ Accept: "audio/mpeg", "Content-Type": "application/json" }),
       body: JSON.stringify({ text: clean, wstoken }),
     });
     if (!response.ok) {
@@ -518,7 +540,7 @@ export async function askWehel({ meta, messages, channel = "text", mode = "", se
     const response = await fetch(WEHEL_CHAT_ENDPOINT, {
       method: "POST",
       credentials: DEV_API ? "same-origin" : "include",
-      headers: { Accept: "application/json", "Content-Type": "application/json" },
+      headers: platformHeaders({ Accept: "application/json", "Content-Type": "application/json" }),
       body: JSON.stringify({
         subject: meta.subject,
         subjectLabel: meta.subjectLabel,
@@ -581,7 +603,7 @@ export async function transcribeForWehel(blob) {
   const response = await fetch(WEHEL_STT_ENDPOINT, {
     method: "POST",
     credentials: DEV_API ? "same-origin" : "include",
-    headers: { Accept: "application/json", "Content-Type": "application/json" },
+    headers: platformHeaders({ Accept: "application/json", "Content-Type": "application/json" }),
     body: JSON.stringify({ audioBase64, mimeType: blob.type || "audio/webm", purpose: "wehel", wstoken }),
   });
   const result = await response.json().catch(() => ({}));

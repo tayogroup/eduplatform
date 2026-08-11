@@ -11,7 +11,7 @@ import { grammarDiagram, phonicsDiagram } from "../../english/shared/grammar-vis
 import { createCourseApp } from "../course-app.js?v=t2";
 import { createDeck } from "../deck.js?v=deck-1";
 import { wordPicture } from "./word-pictures.js?v=pictures-1";
-import { askWehel, focusModule, setFocusModule, onFocusChange, modulesFromSections, outlineFromManifest, unitFetcher, browserSpeechSupported, speakBrowser, speechRateForGrade, stopBrowserSpeech, speechRecognitionCtor, recognizeSpeech, wehelIcon, platformUrl } from "../wehel.js?v=wehel-2";
+import { platformHeaders, askWehel, focusModule, setFocusModule, onFocusChange, modulesFromSections, outlineFromManifest, unitFetcher, browserSpeechSupported, speakBrowser, speechRateForGrade, stopBrowserSpeech, speechRecognitionCtor, recognizeSpeech, wehelIcon, platformUrl } from "../wehel.js?v=wehel-2";
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
@@ -1949,7 +1949,7 @@ async function aiVoiceUrl(text) {
   const pending = fetch(AI_TTS_ENDPOINT, {
     method: "POST",
     credentials: "include",
-    headers: { Accept: "audio/mpeg", "Content-Type": "application/json" },
+    headers: platformHeaders({ Accept: "audio/mpeg", "Content-Type": "application/json" }),
     body: JSON.stringify({ text: clean, purpose: "ehel_course_page", voiceId: AI_VOICE_ID }),
   }).then(async (response) => {
     if (!response.ok) {
@@ -3576,7 +3576,7 @@ async function submitSpeakingRecording(recordingId, target, button, { feedbackSe
     const response = await fetch(AI_STT_ENDPOINT, {
       method: "POST",
       credentials: "include",
-      headers: { Accept: "application/json", "Content-Type": "application/json" },
+      headers: platformHeaders({ Accept: "application/json", "Content-Type": "application/json" }),
       body: JSON.stringify({ audioBase64, mimeType: recording.blob.type || "audio/webm", purpose: "ehel_english" }),
     });
     const result = await response.json().catch(() => ({}));

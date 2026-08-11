@@ -37,7 +37,9 @@ function pqh_quiz_tts_send_cors(): void {
         header('Access-Control-Allow-Credentials: true');
         header('Vary: Origin');
     }
-    header('Access-Control-Allow-Headers: Content-Type, Accept');
+    // Authorization carries the signed launch token. Without it here the
+    // preflight rejects the header and the real request is never sent.
+    header('Access-Control-Allow-Headers: Authorization, Content-Type, Accept');
     header('Access-Control-Allow-Methods: POST, OPTIONS');
 }
 
@@ -111,8 +113,17 @@ function pqh_quiz_tts_valid_ws_token(string $token): bool {
 }
 
 $requesttoken = trim((string)($payload['wstoken'] ?? $payload['ws'] ?? optional_param('wstoken', '', PARAM_RAW_TRIMMED)));
+// Three credentials, tried cheapest first. The launch token is what a
+// CDN-hosted caller actually has: it is cross-origin, so no session cookie
+// reaches it (MoodleSessionep1 is issued with no SameSite, which browsers
+// treat as Lax, and Lax is not sent on a cross-site POST). Without this
+// branch require_login() answers the fetch with a 303 to /login/index.php.
+$pqh_apiuserid = 0;
 if (!pqh_quiz_tts_valid_ws_token($requesttoken)) {
-    require_login();
+    $pqh_apiuserid = pqh_launch_token_userid(is_array($payload) ? $payload : null);
+    if ($pqh_apiuserid <= 0) {
+        require_login();
+    }
 }
 
 $text = trim((string)($payload['text'] ?? ''));
@@ -124,19 +135,33 @@ if (core_text::strlen($text) > 5000) {
     pqh_quiz_tts_json_error(400, 'Text is too long.');
 }
 
-global $SESSION;
-$now = time();
+// Rate limit, per caller. ElevenLabs bills per character, so this is the only
+// thing between a runaway page and a bill.
+//
+// A token-authenticated caller sends no cookie, so it gets a BRAND NEW $SESSION
+// on every request: the counter below would read 1 every time and the cap would
+// never fire — an unmetered paid endpoint. Those callers are counted by user id
+// in an application cache instead, which survives across their requests.
+// Cookie-authenticated callers keep the original $SESSION counter unchanged.
 $window = 60;
 $limit = 70;
-if (empty($SESSION->local_hubredirect_quiz_tts_window) || !is_array($SESSION->local_hubredirect_quiz_tts_window)) {
-    $SESSION->local_hubredirect_quiz_tts_window = ['start' => $now, 'count' => 0];
-}
-if (($now - (int)$SESSION->local_hubredirect_quiz_tts_window['start']) > $window) {
-    $SESSION->local_hubredirect_quiz_tts_window = ['start' => $now, 'count' => 0];
-}
-$SESSION->local_hubredirect_quiz_tts_window['count'] = (int)$SESSION->local_hubredirect_quiz_tts_window['count'] + 1;
-if ($SESSION->local_hubredirect_quiz_tts_window['count'] > $limit) {
-    pqh_quiz_tts_json_error(429, 'Too many voice requests. Please slow down.');
+if ($pqh_apiuserid > 0) {
+    if (!pqh_api_rate_limit_ok('quiz_tts', $pqh_apiuserid, $limit, $window)) {
+        pqh_quiz_tts_json_error(429, 'Too many voice requests. Please slow down.');
+    }
+} else {
+    global $SESSION;
+    $now = time();
+    if (empty($SESSION->local_hubredirect_quiz_tts_window) || !is_array($SESSION->local_hubredirect_quiz_tts_window)) {
+        $SESSION->local_hubredirect_quiz_tts_window = ['start' => $now, 'count' => 0];
+    }
+    if (($now - (int)$SESSION->local_hubredirect_quiz_tts_window['start']) > $window) {
+        $SESSION->local_hubredirect_quiz_tts_window = ['start' => $now, 'count' => 0];
+    }
+    $SESSION->local_hubredirect_quiz_tts_window['count'] = (int)$SESSION->local_hubredirect_quiz_tts_window['count'] + 1;
+    if ($SESSION->local_hubredirect_quiz_tts_window['count'] > $limit) {
+        pqh_quiz_tts_json_error(429, 'Too many voice requests. Please slow down.');
+    }
 }
 
 $apikey = pqh_quiz_tts_config_value(

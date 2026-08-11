@@ -2155,12 +2155,128 @@ function pqh_is_known_resource_host(string $host): bool {
     return in_array($host, pqh_shared_resource_hosts(), true);
 }
 
+/**
+ * Every origin the static app may be served from, for CORS.
+ *
+ * This used to be pqh_shared_resource_hosts() alone, which is the CDN base
+ * currently RESOLVED for each environment — one host, whichever
+ * pqh_configured_shared_cdn_base_url() picks. With nothing configured that
+ * falls back to reset($fallbackhosts), i.e. quraanacademy.b-cdn.net, so
+ * ehelacademy.b-cdn.net — where the Ehel Academy app actually lives, and the
+ * origin course_launch.php redirects every K-12 learner to — was never in the
+ * allowlist. Measured on the live box: quiz_tts, quiz_stt, wehel_chat and
+ * somali_tts all answered a preflight from that origin with no
+ * Access-Control-Allow-Origin at all, so the browser dropped the response
+ * before any of them got as far as authenticating. The runtime voice, the
+ * pronunciation check and the Wehel tutor have never worked in production.
+ *
+ * The backward-compatible list is the set of hosts this platform is known to
+ * serve the app from, so it is the right source: an origin is allowed because
+ * we publish there, not because it happens to be the base URL today. Both
+ * remain locked to https and to the exact host.
+ */
 function pqh_resource_allowed_origins(): array {
     $origins = [];
     foreach (pqh_shared_resource_hosts() as $host) {
         $origins[] = 'https://' . $host;
     }
+    foreach (pqh_backward_compatible_shared_resource_hosts() as $host) {
+        $host = pqh_normalize_consumer_host($host);
+        if ($host !== '' && !pqh_is_legacy_quran_resource_host($host)) {
+            $origins[] = 'https://' . $host;
+        }
+    }
     return array_values(array_unique($origins));
+}
+
+/**
+ * Authenticate a cross-origin API call with the signed launch token.
+ *
+ * The app runs on the CDN, not on Moodle, so the session cookie is not
+ * available to it: MoodleSessionep1 is issued with no SameSite attribute, which
+ * every current browser treats as SameSite=Lax, and Lax is not sent on a
+ * cross-site POST. credentials:"include" therefore delivers nothing and
+ * require_login() redirects the fetch to /login/index.php — measured on the
+ * live box, which answers an unauthenticated cross-origin POST with 303 and an
+ * HTML login page where the caller expects audio.
+ *
+ * So these endpoints take the same proof progress_gateway.php takes: the HS256
+ * launch token minted by pqpg_mint_token() at course launch, which is
+ * server-signed, carries the user in `sub`, expires in 12 hours and can be
+ * revoked by jti. Read from the Authorization header, or from the body for
+ * callers that cannot set one.
+ *
+ * Returns the authenticated user id, or 0 when there is no usable token — the
+ * caller then falls back to require_login() exactly as before, so a
+ * same-origin page in a browser with a session is unaffected.
+ */
+function pqh_launch_token_userid(?array $payload = null): int {
+    global $CFG, $DB;
+
+    require_once($CFG->dirroot . '/local/prequran/progress_gatewaylib.php');
+
+    $auth = (string)($_SERVER['HTTP_AUTHORIZATION'] ?? ($_SERVER['REDIRECT_HTTP_AUTHORIZATION'] ?? ''));
+    $token = '';
+    if (preg_match('/Bearer\s+(\S+)/i', $auth, $matches)) {
+        $token = $matches[1];
+    }
+    if ($token === '' && is_array($payload)) {
+        // Same field names the gateway accepts, so one client helper can talk
+        // to both without knowing which is which.
+        $token = trim((string)($payload['pwsToken'] ?? $payload['token'] ?? ''));
+    }
+    if ($token === '') {
+        return 0;
+    }
+
+    $claims = pqpg_verify_token($token);
+    if ($claims === null) {
+        return 0;
+    }
+    $userid = (int)($claims['sub'] ?? 0);
+    if ($userid <= 0) {
+        return 0;
+    }
+    $user = $DB->get_record('user', ['id' => $userid, 'deleted' => 0, 'suspended' => 0]);
+    if (!$user) {
+        return 0;
+    }
+    // Establishes $USER for this request only. No session is created for the
+    // caller — the token is the credential, and it is presented again on the
+    // next call.
+    \core\session\manager::set_user($user);
+
+    return $userid;
+}
+
+/**
+ * Per-minute cap for one caller.
+ *
+ * The existing counters live in $SESSION, which is right for a logged-in page
+ * and useless for a token-authenticated one: that caller sends no cookie, so
+ * every request begins a fresh session, the counter is always 1, and the cap
+ * never fires. Keyed by user id in an application cache instead, so a launch
+ * token is limited across its whole run. Fails OPEN if the cache is
+ * unavailable — a rate limiter is not worth failing a lesson over.
+ */
+function pqh_api_rate_limit_ok(string $bucket, int $userid, int $limit, int $window = 60): bool {
+    if ($userid <= 0) {
+        return true;
+    }
+    try {
+        $cache = cache::make_from_params(cache_store::MODE_APPLICATION, 'local_hubredirect', 'apiratelimit');
+        $key = $bucket . ':' . $userid;
+        $now = time();
+        $entry = $cache->get($key);
+        if (!is_array($entry) || ($now - (int)($entry['start'] ?? 0)) > $window) {
+            $entry = ['start' => $now, 'count' => 0];
+        }
+        $entry['count'] = (int)$entry['count'] + 1;
+        $cache->set($key, $entry);
+        return $entry['count'] <= $limit;
+    } catch (Throwable $e) {
+        return true;
+    }
 }
 
 function pqh_bunny_cdn_base_url(): string {

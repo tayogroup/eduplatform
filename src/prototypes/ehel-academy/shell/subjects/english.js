@@ -2176,9 +2176,59 @@ function readingWordCount(value) {
   return String(value || "").trim().split(/\s+/).filter(Boolean).length;
 }
 
+// A unit whose texts are all written for the adult draws a grown-up panel here
+// instead of the learner's e-book. Grade 1 Unit 0 is the case that forced it:
+// all six of its "readings" are the weekly teacher plans — "Teacher Lesson
+// Plan", "a quick note for the teacher", "By the end of Week 1, children will
+// begin to" — and every one was narrated to a five-year-old.
+//
+// Marked, not moved. A section of their own is what Global Perspectives does
+// with `grownUpGuide`, and it cannot work here: this unit's twelve
+// comprehension questions ask about these documents ("The plan says q is
+// special") and all twelve carry a readingId, so emptying `readings` would
+// hard-fail validate-unit.mjs's comprehension.readingId cross-reference AND
+// break the unit gate — `reading` is countable, so Unit 0 would finish without
+// it while Unit 1 re-tests Unit 0 against a set that still demands it, and
+// Unit 2 would never open.
+//
+// So `reading` stays countable and completable everywhere, and only what is
+// DRAWN changes. No deck: a weekly plan is not something a child swipes
+// through, and the adult reading it wants the whole week on one page.
+const readingsAreForTheGrownUp = () => course.readings.length > 0
+  && course.readings.every((text) => text.audience === "adult");
+
 function renderReading() {
+  if (readingsAreForTheGrownUp()) return renderReadingGrownUp();
   if (BOTH_DESIGNS) return renderBothDesigns(renderReadingClassic, renderReadingCarousel, "The same text, one page at a time.");
   return renderReadingClassic();
+}
+
+// Deliberately no Listen button. The narration is switched off in the data for
+// these texts, and a weekly planning document is not something to read aloud to
+// the learner — the same line Global Perspectives draws, where the toolkit and
+// the grown-up guide are read rather than heard.
+function renderReadingGrownUp() {
+  const guide = course.grownUpGuide || {};
+  const texts = course.readings.map((text, index) => `
+    <article class="panel">
+      <span class="eyebrow">${escapeHtml(text.type || "Teacher plan")} · ${index + 1} of ${course.readings.length}</span>
+      <h2>${escapeHtml(text.title)}</h2>
+      <div class="reading-text">${readingBodyHtml(text.passageScript)}</div>
+    </article>`).join("");
+  $("#app").innerHTML = `${pageHeader(
+    "For the grown-up",
+    "This unit's texts are for you",
+    escapeHtml(guide.intro || "These texts are written for the parent or teacher, not for the learner to read alone."),
+    "Adult-audience text",
+  )}
+  <section class="panel grownup-guide">
+    <span class="grownup-flag">${icon("users")} ${escapeHtml(guide.label || "For the grown-up")}</span>
+    ${guide.notes?.length ? `<ul class="checklist">${guide.notes.map((note) => `<li>${escapeHtml(note)}</li>`).join("")}</ul>` : ""}
+  </section>
+  ${texts}
+  <p><button class="button primary" id="reading-done" type="button">We have been through this together ${icon("check")}</button></p>`;
+  $("#reading-done").addEventListener("click", () => complete("reading", "Grown-up guide marked as read."));
+  icons();
 }
 
 // Reading as a deck: one PAGE of the story per slide, not one text. A text runs

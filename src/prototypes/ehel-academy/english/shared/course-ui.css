@@ -985,3 +985,17 @@ body.focus-mode.gc-full .wc-tools { position: fixed; left: 0; right: 0; bottom: 
 .field-label { font-weight: var(--weight-normal); }
 /* Status lines and correctness feedback: colour carries the meaning, not weight. */
 .status-note { font-weight: var(--weight-normal); }
+
+/* ===== The grown-up panel =====
+   Grade 1 Unit 0's six "readings" are the weekly teacher plans, so its Reading
+   section draws these instead of the learner's e-book (english.js ::
+   renderReadingGrownUp). The dashed border and the flag exist to make the
+   change of audience unmissable at a glance — a parent should be able to tell
+   in a second that this page is theirs and not their child's.
+
+   Styled here rather than reusing Global Perspectives' identical-looking rule:
+   that stylesheet is a different subject's file and English never loads it, so
+   the class names only coincide. In this subject's colours, not GP's purple. */
+.grownup-guide { border: 2px dashed var(--line); border-radius: 12px; padding: 16px 18px; background: var(--canvas); }
+.grownup-guide .grownup-flag { display: inline-flex; align-items: center; gap: 7px; padding: 5px 12px; border-radius: 999px; background: var(--teal-dark); color: #fff; font-size: 14px; font-weight: var(--weight-medium); line-height: 1.4; }
+.grownup-guide .checklist { margin-top: 12px; }

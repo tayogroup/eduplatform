@@ -879,7 +879,17 @@ function pqhi_public_email_recipient(string $email, string $firstname, string $l
  * governs ongoing notices, while this is a transactional receipt for someone who
  * has just handed over their child's date of birth.
  */
-function pqhi_send_intake_receipt(?stdClass $consumer, string $toemail, string $parentname, string $studentname, int $requestid, int $submitted = 0): bool {
+/**
+ * Which language to write to a family in, from the intake form's own
+ * "Primary language" answer -- the language spoken at home. Anything other than
+ * Somali gets English, because those are the only two written, and a family is
+ * better served by a language they may read than by one nobody has translated.
+ */
+function pqhi_intake_language(string $primarylanguage): string {
+    return core_text::strtolower(trim($primarylanguage)) === 'somali' ? 'so' : 'en';
+}
+
+function pqhi_send_intake_receipt(?stdClass $consumer, string $toemail, string $parentname, string $studentname, int $requestid, int $submitted = 0, string $lang = 'en'): bool {
     $to = pqhi_public_email_recipient($toemail, $parentname);
     if (!$to) {
         return false;
@@ -888,35 +898,64 @@ function pqhi_send_intake_receipt(?stdClass $consumer, string $toemail, string $
     if ($brand === '') {
         $brand = 'Ehel Academy';
     }
-    $student = trim($studentname) !== '' ? trim($studentname) : 'your child';
-    $firstname = trim((string)preg_split('/\s+/', trim($studentname) !== '' ? trim($studentname) : 'your child')[0]);
     $submitted = $submitted > 0 ? $submitted : time();
+    $so = $lang === 'so';
+    $student = trim($studentname) !== '' ? trim($studentname) : ($so ? 'ilmahaaga' : 'your child');
+    $firstname = (string)preg_split('/\s+/', $student)[0];
 
-    $lines = [
-        'Assalamu alaykum ' . trim($parentname) . ',',
-        '',
-        'Thank you -- we have received your enrolment request for ' . $student . '.',
-        '',
-        '  Reference: ' . $requestid,
-        '  Submitted: ' . userdate($submitted),
-        '',
-        'Our team will review it and come back to you shortly. There is nothing you',
-        'need to do in the meantime.',
-        '',
-        'When we reply, it will come to this email address. Please keep an eye on',
-        'your inbox, and check your spam folder just in case.',
-        '',
-        'If something in your request has changed, or you have a question, simply',
-        'reply to this message -- it reaches our admissions team.',
-        '',
-        'Sending this form does not enrol ' . $firstname . ' yet, and it does not',
-        'commit you to anything.',
-        '',
-        'Thank you,',
-        $brand,
-    ];
-    $text = implode("\n", $lines);
-    return pqhi_send_consumer_email($to, $consumer, 'We have your enrolment request', $text);
+    if ($so) {
+        $subject = 'Waxaan helnay codsigaaga diiwaangelinta';
+        $lines = [
+            'Assalaamu calaykum ' . trim($parentname) . ',',
+            '',
+            'Waad ku mahadsan tahay -- waxaan helnay codsigaaga diiwaangelinta ee',
+            $student . '.',
+            '',
+            '  Tixraac:   ' . $requestid,
+            '  La diray:  ' . userdate($submitted),
+            '',
+            'Kooxdeennu way eegi doontaa, waxayna kuula soo laaban doontaa dhawaan.',
+            'Waxba kama baahnid inaad samayso inta u dhaxaysa.',
+            '',
+            'Marka aan kuu soo jawaabno, waxay ku iman doontaa cinwaankan iimaylka.',
+            'Fadlan sanduuqaaga iimaylka ka fiirso, oo sidoo kale eeg galka spam-ka.',
+            '',
+            'Haddii wax ka bedelmeen codsigaaga, ama aad su\'aal qabtid, kaliya ka',
+            'jawaab fariintan -- waxay gaadhaysaa kooxdeenna diiwaangelinta.',
+            '',
+            'Foomkan dirintiisu weli ma diiwaangelinayso ' . $firstname . ', waxbana',
+            'kuma khasbayo.',
+            '',
+            'Waad mahadsan tahay,',
+            $brand,
+        ];
+    } else {
+        $subject = 'We have your enrolment request';
+        $lines = [
+            'Assalamu alaykum ' . trim($parentname) . ',',
+            '',
+            'Thank you -- we have received your enrolment request for ' . $student . '.',
+            '',
+            '  Reference: ' . $requestid,
+            '  Submitted: ' . userdate($submitted),
+            '',
+            'Our team will review it and come back to you shortly. There is nothing you',
+            'need to do in the meantime.',
+            '',
+            'When we reply, it will come to this email address. Please keep an eye on',
+            'your inbox, and check your spam folder just in case.',
+            '',
+            'If something in your request has changed, or you have a question, simply',
+            'reply to this message -- it reaches our admissions team.',
+            '',
+            'Sending this form does not enrol ' . $firstname . ' yet, and it does not',
+            'commit you to anything.',
+            '',
+            'Thank you,',
+            $brand,
+        ];
+    }
+    return pqhi_send_consumer_email($to, $consumer, $subject, implode("\n", $lines));
 }
 
 /**
@@ -931,62 +970,114 @@ function pqhi_send_intake_receipt(?stdClass $consumer, string $toemail, string $
  * print an empty line where a password should be.
  */
 function pqhi_intake_welcome_message(array $vars): array {
+    // The interface itself is in English, so Course catalogue, Request enrolment,
+    // Parent Workspace and the usernames stay in English inside the Somali
+    // sentences -- same rule as the explainer videos. Translating a control's
+    // name would send a parent looking for words that are not on their screen.
+    $so = (string)($vars['lang'] ?? 'en') === 'so';
     $brand = trim((string)($vars['brand'] ?? '')) !== '' ? trim((string)$vars['brand']) : 'Ehel Academy';
-    $studentname = trim((string)($vars['studentname'] ?? '')) !== '' ? trim((string)$vars['studentname']) : 'your child';
+    $studentname = trim((string)($vars['studentname'] ?? ''));
+    if ($studentname === '') {
+        $studentname = $so ? 'ilmahaaga' : 'your child';
+    }
     $first = (string)preg_split('/\s+/', $studentname)[0];
     $loginurl = trim((string)($vars['loginurl'] ?? ''));
 
-    $block = static function (string $heading, string $username, string $password, string $loginurl): array {
+    $block = static function (string $heading, string $username, string $password, string $loginurl, bool $so): array {
         $out = [$heading];
         if ($loginurl !== '') {
-            $out[] = '  Sign in:   ' . $loginurl;
+            $out[] = ($so ? '  Gal:         ' : '  Sign in:   ') . $loginurl;
         }
-        $out[] = '  Username:  ' . $username;
-        $out[] = $password !== ''
-            ? '  Password:  ' . $password
-            : '  Password:  (unchanged -- this account already existed, so keep using the password you have)';
+        $out[] = ($so ? '  Isticmaale:  ' : '  Username:  ') . $username;
+        if ($password !== '') {
+            $out[] = ($so ? '  Furaha:      ' : '  Password:  ') . $password;
+        } else if ($so) {
+            $out[] = '  Furaha:      (isma bedelin -- akoonkani hore ayuu u jiray, sidaas';
+            $out[] = '               darteed sii isticmaal furaha aad hayso)';
+        } else {
+            $out[] = '  Password:  (unchanged -- this account already existed, so keep using the password you have)';
+        }
         $out[] = '';
         return $out;
     };
 
-    $lines = [
-        'Assalamu alaykum ' . trim((string)($vars['parentname'] ?? '')) . ',',
-        '',
-        'Good news -- ' . $studentname . '\'s enrolment request has been approved,',
-        'and your accounts are ready.',
-        '',
-        'You have two separate logins: one for you, and one for ' . $first . '.',
-        '',
-    ];
-    $lines = array_merge($lines, $block('YOUR PARENT ACCOUNT',
-        (string)($vars['parentusername'] ?? ''), (string)($vars['parentpassword'] ?? ''), $loginurl));
-    $lines = array_merge($lines, $block(core_text::strtoupper($first) . '\'S STUDENT ACCOUNT',
-        (string)($vars['studentusername'] ?? ''), (string)($vars['studentpassword'] ?? ''), $loginurl));
-    $lines = array_merge($lines, [
-        'Any temporary password above must be changed the first time you sign in.',
-        'Please keep ' . $first . '\'s login somewhere safe.',
-        '',
-        'WHAT TO DO NEXT',
-        '',
-        '  1. Sign in with your parent account using the link above.',
-        '  2. Open the course catalogue.',
-        '  3. Choose ' . $first . ' and the course you would like, then press',
-        '     Request enrolment.',
-        '  4. Our team confirms the place and the class times.',
-        '',
-        'From your Parent Workspace you can follow attendance, see assigned',
-        'materials and teacher notes, and watch approved class recordings.',
-        '',
-        'If a login does not work, or you get stuck anywhere, just reply to this',
-        'message -- it reaches our admissions team directly.',
-        '',
-        'Welcome to ' . $brand . '.',
-        '',
-        $brand,
-    ]);
+    if ($so) {
+        $subject = $studentname . ' meel buu helay -- akoonnadaadu way diyaar yihiin';
+        $lines = [
+            'Assalaamu calaykum ' . trim((string)($vars['parentname'] ?? '')) . ',',
+            '',
+            'War fiican -- codsiga diiwaangelinta ee ' . $studentname . ' waa la',
+            'ansixiyay, akoonnadaadiina way diyaar yihiin.',
+            '',
+            'Waxaad leedahay laba akoon oo kala duwan: mid adiga, midna ' . $first . '.',
+            '',
+        ];
+        $lines = array_merge($lines, $block('AKOONKAAGA WAALIDKA',
+            (string)($vars['parentusername'] ?? ''), (string)($vars['parentpassword'] ?? ''), $loginurl, true));
+        $lines = array_merge($lines, $block('AKOONKA ARDAYGA EE ' . core_text::strtoupper($first),
+            (string)($vars['studentusername'] ?? ''), (string)($vars['studentpassword'] ?? ''), $loginurl, true));
+        $lines = array_merge($lines, [
+            'Furaha kor ku qoran waa mid ku meel gaadh ah, waana in la bedelo markii',
+            'ugu horreysay ee aad gasho. Fadlan meel ammaan ah ku hay akoonka ' . $first . '.',
+            '',
+            'WAXA XIGA',
+            '',
+            '  1. Ku gal akoonkaaga waalidka adigoo isticmaalaya xiriirka kore.',
+            '  2. Fur kaydka koorsooyinka (Course catalogue).',
+            '  3. Dooro ' . $first . ' iyo koorsada aad rabto, kadibna riix',
+            '     Request enrolment.',
+            '  4. Kooxdeennu way xaqiijin doontaa meesha iyo wakhtiyada fasalka.',
+            '',
+            'Parent Workspace-kaaga waxaad kala socon kartaa xaadiriska, waxaad arki',
+            'kartaa qalabka la siiyay iyo qoraallada macallinka, waxaadna daawan',
+            'kartaa duubista fasallada la ogolaaday.',
+            '',
+            'Haddii galitaanku shaqayn waayo, ama aad meel ku istaagto, kaliya ka',
+            'jawaab fariintan -- waxay si toos ah u gaadhaysaa kooxdeenna',
+            'diiwaangelinta.',
+            '',
+            'Ku soo dhawoow ' . $brand . '.',
+            '',
+            $brand,
+        ]);
+    } else {
+        $subject = $studentname . ' has a place -- your accounts are ready';
+        $lines = [
+            'Assalamu alaykum ' . trim((string)($vars['parentname'] ?? '')) . ',',
+            '',
+            'Good news -- ' . $studentname . '\'s enrolment request has been approved,',
+            'and your accounts are ready.',
+            '',
+            'You have two separate logins: one for you, and one for ' . $first . '.',
+            '',
+        ];
+        $lines = array_merge($lines, $block('YOUR PARENT ACCOUNT',
+            (string)($vars['parentusername'] ?? ''), (string)($vars['parentpassword'] ?? ''), $loginurl, false));
+        $lines = array_merge($lines, $block(core_text::strtoupper($first) . '\'S STUDENT ACCOUNT',
+            (string)($vars['studentusername'] ?? ''), (string)($vars['studentpassword'] ?? ''), $loginurl, false));
+        $lines = array_merge($lines, [
+            'Any temporary password above must be changed the first time you sign in.',
+            'Please keep ' . $first . '\'s login somewhere safe.',
+            '',
+            'WHAT TO DO NEXT',
+            '',
+            '  1. Sign in with your parent account using the link above.',
+            '  2. Open the course catalogue.',
+            '  3. Choose ' . $first . ' and the course you would like, then press',
+            '     Request enrolment.',
+            '  4. Our team confirms the place and the class times.',
+            '',
+            'From your Parent Workspace you can follow attendance, see assigned',
+            'materials and teacher notes, and watch approved class recordings.',
+            '',
+            'If a login does not work, or you get stuck anywhere, just reply to this',
+            'message -- it reaches our admissions team directly.',
+            '',
+            'Welcome to ' . $brand . '.',
+            '',
+            $brand,
+        ]);
+    }
 
-    return [
-        'subject' => $studentname . ' has a place -- your accounts are ready',
-        'text' => implode("\n", $lines),
-    ];
+    return ['subject' => $subject, 'text' => implode("\n", $lines)];
 }

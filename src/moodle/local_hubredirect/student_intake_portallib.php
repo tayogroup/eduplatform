@@ -250,6 +250,7 @@ function pqsil_send_parent_intake_email(stdClass $parent, stdClass $student, str
         'studentname' => fullname($student),
         'brand' => $brandname,
         'loginurl' => $loginurl,
+        'lang' => (string)($credentials['lang'] ?? 'en'),
         'parentusername' => (string)($credentials['parentusername'] ?? $parent->username ?? ''),
         'parentpassword' => $parentcreated ? (string)($credentials['parentpassword'] ?? '') : '',
         'studentusername' => (string)($credentials['studentusername'] ?? $student->username ?? ''),

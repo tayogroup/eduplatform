@@ -276,6 +276,7 @@ function pqsi_send_parent_intake_email(stdClass $parent, stdClass $student, stri
         'studentname' => fullname($student),
         'brand' => $brandname,
         'loginurl' => $loginurl,
+        'lang' => (string)($credentials['lang'] ?? 'en'),
         'parentusername' => (string)($credentials['parentusername'] ?? $parent->username ?? ''),
         // Blank when the account already existed -- the shared builder prints
         // "keep using the password you have" rather than an empty line.
@@ -2239,6 +2240,9 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
                     'parentpassword' => $parentpassword ?? '',
                     'studentusername' => $studentusername ?? '',
                     'studentpassword' => $existingstudentid > 0 ? '' : ($studentpassword ?? ''),
+                    // The family's own language, from the intake form's Primary
+                    // language answer -- the same source the receipt used.
+                    'lang' => pqhi_intake_language((string)($data['primary_language'] ?? '')),
                 ]);
             }
             pqsi_audit('student_intake_parent_email', 'student', $studentid, [

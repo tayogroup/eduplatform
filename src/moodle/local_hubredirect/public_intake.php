@@ -1520,7 +1520,8 @@ if ($ready && !$needsschoolselection && $_SERVER['REQUEST_METHOD'] === 'POST') {
             pqpir_value($form, 'parent_name'),
             trim(pqpir_value($form, 'student_firstname') . ' ' . pqpir_value($form, 'student_lastname')),
             (int)$requestid,
-            $now
+            $now,
+            pqhi_intake_language(pqpir_value($form, 'primary_language'))
         );
         pqpir_security_audit('public_intake_submitted', [
             'requestid' => (int)$requestid,

@@ -1073,6 +1073,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
                         'parentpassword' => $parentpassword ?? '',
                         'studentusername' => $studentusername ?? '',
                         'studentpassword' => $existingstudentid > 0 ? '' : ($studentpassword ?? ''),
+                        'lang' => pqhi_intake_language((string)($data['primary_language'] ?? '')),
                     ]);
                 }
                 pqsil_audit('student_intake_parent_email', 'student', $studentid, [

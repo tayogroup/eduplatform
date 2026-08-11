@@ -935,7 +935,9 @@ $receiptsent = pqhi_send_intake_receipt(
     pqpirl_value($form, 'parent_email'),
     pqpirl_value($form, 'parent_name'),
     trim(pqpirl_value($form, 'student_firstname') . ' ' . pqpirl_value($form, 'student_lastname')),
-    (int)$requestid
+    (int)$requestid,
+    0,
+    pqhi_intake_language(pqpirl_value($form, 'primary_language'))
 );
 pqpirl_security_audit('public_intake_submitted', [
     'requestid' => (int)$requestid,

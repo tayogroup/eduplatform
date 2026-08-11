@@ -13,6 +13,21 @@
 //   node tools/repair-ehel-math-quiz-fields.mjs [--write]
 //
 // Runs as a dry run unless --write is passed.
+//
+// It repairs the GAMES too, and that is not an extra: it is the defect this
+// tool previously left behind. Games are not authored — build-ehel-math-runtime.js
+// copies each round out of an assessment question (`gameData`, one round per
+// question). An earlier run of this script walked `assessment.questions` alone,
+// so it un-shifted the questions and left the copies holding the pre-repair
+// rotation. 24 rounds in grade-4/unit-14 stayed unanswerable, with the clue
+// giving the answer away ("Count the whole squares and the more-than-half
+// squares together: 8 + 4 = 12 square units"), and check-math-content.mjs never
+// looked at games so nothing reported it.
+//
+// A round is repaired from its own fields, except the lost answer, which is
+// taken from the assessment question sharing its prompt — that question has
+// already been repaired here, so its answer is the reviewed one rather than a
+// second guess from the explanation.
 
 import fs from "node:fs";
 import path from "node:path";
@@ -81,6 +96,32 @@ for (const gradeDir of fs.readdirSync(mathRoot).filter((n) => /^grade-\d+$/.test
       question.hint = question.answer;
       question.answer = answer;
       changed += 1;
+    }
+
+    // The game rounds copied from those questions carry the same shift.
+    const answerFor = new Map();
+    for (const question of unit.assessment?.questions || []) {
+      if ((question.options || []).includes(question.answer)) answerFor.set(String(question.question), question.answer);
+    }
+    for (const game of unit.games?.games || []) {
+      for (const [index, round] of (game.rounds || []).entries()) {
+        const choices = round.choices || [];
+        if (!choices.length || choices.includes(round.answer)) continue;
+        if (round.explanation) {
+          unresolved.push(`${gradeDir}/${file} ${game.id}[${index}]: answer not in choices but explanation is present`);
+          continue;
+        }
+        const answer = answerFor.get(String(round.prompt));
+        if (!answer) {
+          unresolved.push(`${gradeDir}/${file} ${game.id}[${index}]: no repaired assessment question matches "${String(round.prompt).slice(0, 50)}"`);
+          continue;
+        }
+        repaired.push(`${gradeDir}/${file} ${game.id}[${index}]: answer -> "${answer}"  (${String(round.prompt).slice(0, 50)})`);
+        round.explanation = round.clue;
+        round.clue = round.answer;
+        round.answer = answer;
+        changed += 1;
+      }
     }
 
     if (changed) {

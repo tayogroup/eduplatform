@@ -193,10 +193,21 @@ function buildGrade(grade) {
     return methods.slice(0, 6);
   }
 
+  // A source answer block reads "Section 1: 1) 43, 45, 47. 2) a) 2 tens… 3) …",
+  // so the answers are split apart on their ordinals.
+  //
+  // The split must anchor at the start as well as on whitespace. Stripping the
+  // "Section N:" header leaves "1) 43, 45, 47." with the first ordinal at
+  // position 0, where `\s+` has nothing to match — so every OTHER answer was
+  // split cleanly and the first kept its "1) " prefix. The learner read it back
+  // as "1) a) 3, b) 8, c) 5." Only the first item of each section was affected,
+  // which is why it survived review: 1,634 strings across 117 units, all of them
+  // answers 1 of 4 sections, fanned out through practice, fluency, explorations,
+  // realProblems, workedExamples and reasoningPrompts.
   function answerGuidance(practice, sectionNumber) {
     const block = practice.blocks.find((item) => item.content_kind === "Answer guidance" && new RegExp(`^Section ${sectionNumber}:`, "i").test(tidy(item.text)));
     if (!block) return [];
-    return tidy(block.text).replace(new RegExp(`^Section ${sectionNumber}:\\s*`, "i"), "").split(/\s+\d+\)\s*/).filter(Boolean);
+    return tidy(block.text).replace(new RegExp(`^Section ${sectionNumber}:\\s*`, "i"), "").split(/(?:^|\s+)\d+\)\s*/).filter(Boolean);
   }
 
   // `unitWords` are this unit's own glossary terms. A hint that names them is

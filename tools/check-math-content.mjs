@@ -52,6 +52,19 @@ const MAX_PARAGRAPHS = 40;
 const ADULT_ADDRESSED = /\byour child\b|\b(?:let|ask|encourage|remind|tell|watch|guide) (?:the|your) child\b|the child'?s own work|read alone by the child|taught with you|teaches? (?:the child|children) that|helps? the child|many young children|the child'?s first|children learn [^.]*best|this guide is written for/i;
 const TEACHER_REQUIRED = /\bhand (?:it )?in to your teacher\b|\bask your teacher to mark\b|\bwait for your teacher\b|\byour teacher will tell you\b|explain each step to your teacher or tutor\.$/i;
 const SOURCE_MARKER = /\[(?:Star|Tip|Fact|Look|Safety|Note|Warning|Key|!)\]/;
+// The source answer blocks number their answers ("Section 1: 1) 43, 45, 47.
+// 2) …") and the builder splits them apart on those ordinals. Its split once
+// anchored on whitespace alone, which cannot match at position 0, so the FIRST
+// answer of every section kept its prefix and the learner was shown
+// "1) a) 3, b) 8, c) 5." — 1,634 strings across 117 units, because each answer
+// is copied into six modules. Fixed in build-ehel-math-runtime.js and repaired
+// by repair-ehel-math-answer-ordinals.mjs; this keeps it from coming back.
+const STRAY_ORDINAL = /^\s*1\)\s/;
+// An answer whose steps really are numbered continues at "2)" after sentence
+// punctuation, and grade-6/unit-17 has one. Both halves of that test matter: a
+// bare digit before ")" reads the closing paren of an expression as an ordinal
+// ("2 × (8 + 5) = 2 × 13" contains " 5) ") and would exempt four real defects.
+const NUMBERED_LIST = /[.;:]\s+2\)\s/;
 // Grades whose course is led by an adult rather than read solo.
 const ADULT_VOICE_EXEMPT = new Set();
 
@@ -144,6 +157,34 @@ for (const gradeDir of fs.readdirSync(mathRoot).filter((n) => /^grade-\d+$/.test
       if (!question.explanation) warn(label, `question ${question.id} has no explanation`);
     }
 
+    // The same question, asked again in the games — and until this ran, nobody
+    // asked it there.
+    //
+    // Game rounds are not authored: build-ehel-math-runtime.js copies each one
+    // out of an assessment question. So when repair-ehel-math-quiz-fields.mjs
+    // un-shifted the questions and walked no further, the copies kept the
+    // rotation (answer <- hint, clue <- explanation, explanation lost). 24
+    // rounds in grade-4/unit-14 marked every choice wrong while the clue stated
+    // the answer, and the quiz check above could not see them.
+    //
+    // Only answerability is asserted, not that a round still mirrors its source.
+    // Rounds legitimately drift — a later pass varied the quiz hints and left
+    // 2,697 rounds holding the older wording, with the answer and choices intact
+    // — so demanding a mirror would fail on 42% of the course and teach everyone
+    // to ignore this check.
+    for (const game of unit.games?.games || []) {
+      for (const [index, round] of (game.rounds || []).entries()) {
+        const choices = round.choices || [];
+        if (!choices.length) continue;
+        if (!choices.includes(round.answer)) {
+          fail(label, `game ${game.id}[${index}] answer "${String(round.answer).slice(0, 40)}" is not among its choices — every answer is marked wrong`);
+        }
+        // The rotation consumed the explanation, so its absence is the tell that
+        // survives even if a shifted answer happens to collide with a choice.
+        if (!round.explanation) fail(label, `game ${game.id}[${index}] has no explanation — its fields are shifted out of step`);
+      }
+    }
+
     for (const [mod, field] of VARIED_FIELDS) {
       for (const item of unit[mod] || []) {
         const value = item?.[field];
@@ -170,6 +211,9 @@ for (const gradeDir of fs.readdirSync(mathRoot).filter((n) => /^grade-\d+$/.test
       }
       if (TEACHER_REQUIRED.test(text)) fail(label, `text requires a teacher with no solo path: "${text.slice(0, 90)}"`);
       if (SOURCE_MARKER.test(text)) fail(label, `raw source markup reaches the learner: "${text.slice(0, 90)}"`);
+      if (STRAY_ORDINAL.test(text) && !NUMBERED_LIST.test(text)) {
+        fail(label, `an answer kept its source ordinal: "${text.slice(0, 90)}"`);
+      }
     });
 
     const stage = Number(unit.cambridge?.stage);

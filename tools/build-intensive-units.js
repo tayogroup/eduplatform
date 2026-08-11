@@ -183,6 +183,12 @@ function buildUnit(authored) {
   const readings = list("readings", "read", (item, n, rid) => ({
     readingId: rid, type: item.type, title: item.title, genre: item.genre || "", setting: item.setting || "",
     documentType: item.documentType || "", passageScript: item.passage, audioRequired: true,
+    // Carried only when authored. A real-world document — a registration form,
+    // an appointment card — prints blanks the learner fills in, and a voice
+    // given a run of underscores says nothing there or invents something. This
+    // is the spoken form of that passage and reaches ElevenLabs alone; the
+    // learner still reads `passageScript` with its blanks intact.
+    ...(item.passageSpeech ? { passageScriptSpeech: item.passageSpeech } : {}),
     audio: audio("readings", rid, level.number),
   }));
   if (!readings.some((reading) => reading.documentType)) {
@@ -217,6 +223,9 @@ function buildUnit(authored) {
   const speaking = list("speaking", "speak", (item, n, sid) => ({
     speakingId: sid, activityType: item.type || "Speaking practice", title: item.title,
     instructionsAndModelLines: item.instructions,
+    // Same spoken-form rule as readings: a model conversation with "My name is
+    // ______." is right on the page and unreadable aloud.
+    ...(item.instructionsSpeech ? { instructionsAndModelLinesSpeech: item.instructionsSpeech } : {}),
     recordingRequired: item.recording !== false, aiTutorPrompt: item.tutor,
     outcomeId: outcomeAt((item.outcome || 1) - 1), audio: audio("speaking", sid, level.number),
   }));

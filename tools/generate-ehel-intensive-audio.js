@@ -28,6 +28,21 @@ const MODEL_ID = "eleven_multilingual_v2";
 const narration = require("./lib/ehel-intensive-narration");
 const ALL_CATS = narration.CATEGORIES;
 
+// The key check below says "check .env" and nothing here read .env, so the
+// generator refused to run on a machine that was correctly configured — the
+// same loader every other tool in this pipeline already carries
+// (generate-ehel-english-audio.js, prune-ehel-course-audio-on-bunny.js).
+// An already-exported variable still wins, so a shell override behaves as before.
+function loadDotEnv() {
+  const file = path.join(ROOT, ".env");
+  if (!fs.existsSync(file)) return;
+  for (const line of fs.readFileSync(file, "utf8").split(/\r?\n/)) {
+    const m = line.trim().match(/^([A-Za-z_][A-Za-z0-9_]*)=(.*)$/);
+    if (m && !process.env[m[1]]) process.env[m[1]] = m[2].replace(/^['"]|['"]$/g, "");
+  }
+}
+loadDotEnv();
+
 const args = process.argv.slice(2);
 const cats = args.filter((a) => ALL_CATS.includes(a));
 const catList = cats.length ? cats : ALL_CATS;
@@ -75,11 +90,28 @@ function collect() {
   return [...byHash.values()];
 }
 
+// A run of underscores is a fill-in-the-blank frame. It is right on the page —
+// Level 1 teaches real forms, and "My name is ______." is exactly what the
+// learner is asked to complete — but a voice given it either says nothing where
+// the blank is or invents something. eng-g01 clips recorded from frames like
+// this said "my name is Taken Seat"; this course's own L1 U1 speaking clip said
+// "My name is Bai A'anmi", handing the learner a fabricated name in place of
+// their own.
+//
+// So the frame is refused rather than narrated, and the fix is a spoken form
+// beside the text (passageScriptSpeech / instructionsAndModelLinesSpeech in the
+// authored source), which changes only what is sent to ElevenLabs. Refusing
+// costs a Listen button; narrating costs money AND ships a clip that misteaches.
+const BLANK_FRAME = /_{2,}/;
+
 async function main() {
   fs.mkdirSync(OUT_DIR, { recursive: true });
   const all = collect();
 
-  const queue = force ? all : all.filter((c) => {
+  const blanked = all.filter((c) => BLANK_FRAME.test(c.text));
+  const speakable = all.filter((c) => !BLANK_FRAME.test(c.text));
+
+  const queue = force ? speakable : speakable.filter((c) => {
     const file = path.join(OUT_DIR, `${c.hash}.mp3`);
     // A truncated file from an interrupted run must not count as done.
     return !(fs.existsSync(file) && fs.statSync(file).size > 1000);
@@ -95,7 +127,7 @@ async function main() {
 
   console.log(`levels ${levelList.join(", ")} | categories: ${catList.join(", ")}`);
   console.log(`unique clips in course: ${all.length.toLocaleString()}`);
-  console.log(`already on disk:        ${(all.length - queue.length).toLocaleString()}`);
+  console.log(`already on disk:        ${(speakable.length - queue.length).toLocaleString()}`);
   console.log("");
   console.log("category         clips     characters");
   for (const cat of catList) {
@@ -104,6 +136,17 @@ async function main() {
   }
   console.log("  " + "-".repeat(36));
   console.log(`  ${"TO GENERATE".padEnd(14)} ${String(queue.length).padStart(6)}  ${totalChars.toLocaleString().padStart(12)}${dry ? "   (DRY RUN — nothing sent)" : ""}`);
+
+  // Named, never silent: a refusal that prints nothing is indistinguishable
+  // from a clip nobody wanted, and these are the ones worth looking at.
+  if (blanked.length) {
+    console.log(`\nREFUSED — a fill-in-the-blank frame cannot be read aloud: ${blanked.length}`);
+    for (const c of blanked) {
+      console.log(`  [${c.category}] ${c.text.replace(/\s+/g, " ").slice(0, 90)}`);
+    }
+    console.log("  Give each a spoken form (passageScriptSpeech / instructionsAndModelLinesSpeech)");
+    console.log("  in inputs/ehel-english-intensive-source/authored/, then rebuild and re-run.");
+  }
 
   if (dry) return;
   if (!queue.length) { console.log("\nNothing to generate."); return; }

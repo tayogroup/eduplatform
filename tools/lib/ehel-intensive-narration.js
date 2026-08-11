@@ -24,8 +24,15 @@ function textsForUnit(unit, category) {
       return script ? [script] : [];
     }
     // line 294: voiceButton(reading.passageScript)
+    //
+    // `passageScriptSpeech` is the spoken form, and the same trade
+    // speechSpelling makes for a dictionary word: it changes only what is SENT
+    // to ElevenLabs, never what the learner reads. Level 1's readings include
+    // real forms — a registration form, an appointment card — whose blanks are
+    // the point on the page and unreadable aloud. Use it only where a blank
+    // makes the text unspeakable, not to reword a passage.
     case "readings":
-      return (unit.readings || []).map((r) => r.passageScript);
+      return (unit.readings || []).map((r) => r.passageScriptSpeech || r.passageScript);
     // line 234: voiceButton(`${lesson.title}. ${lesson.explanation}`)
     // The title is spoken here even though the review stripped it from the
     // workbook's grammar rows — that row is a composite of explanation, rule,
@@ -34,8 +41,9 @@ function textsForUnit(unit, category) {
     case "grammar":
       return (unit.grammar || []).map((g) => `${g.title}. ${g.explanation}`);
     // line 348: voiceButton(task.instructionsAndModelLines)
+    // Same spoken-form rule as readings above.
     case "speaking":
-      return (unit.speaking || []).map((s) => s.instructionsAndModelLines);
+      return (unit.speaking || []).map((s) => s.instructionsAndModelLinesSpeech || s.instructionsAndModelLines);
     // line 179: voiceButton(item.displayWord)
     case "words":
       return (unit.dictionaryLinks || []).map((d) => d.displayWord);

@@ -224,11 +224,22 @@ function quizItems(quiz, grade) {
 // two sentences of unitOverview (the page header shows the same two), so that
 // is what the clip says. A learner following the words must not hear a
 // different sentence from the one they are reading.
+//
+// `learningOutcomeSpeech` is the one sanctioned exception, and the same trade
+// `speechSpelling` makes for dictionary words: it changes only what is SENT to
+// ElevenLabs, never what is displayed. Six Grade 1 outcomes are sentence frames
+// — Say "My name is ___. I am ___ years old." — which are right on the page and
+// unreadable aloud, because a voice given a run of underscores says nothing
+// where the blank is, or invents something. That is how five Grade 1 clips came
+// to say "my name is Taken Seat". The blank refusal below now catches those, so
+// without a spoken form the panel simply has no Listen button at all; with one,
+// the frame is voiced with an example and the learner still reads the frame.
+// Use it only where a blank makes the text unspeakable — not to reword a script.
 function overviewPanels(unit) {
   const shown = String((unit.unit || {}).unitOverview || "").split(". ").slice(0, 2).join(". ");
   return [
     ["intro", shown],
-    ["outcomes", (unit.outcomes || []).map((o) => o.learningOutcome).filter(Boolean).join(" ")],
+    ["outcomes", (unit.outcomes || []).map((o) => o.learningOutcomeSpeech || o.learningOutcome).filter(Boolean).join(" ")],
     ["path", String((unit.unit || {}).learningPath || "").split("\n").map((line) => line.trim()).filter(Boolean).join(" ")],
   ];
 }

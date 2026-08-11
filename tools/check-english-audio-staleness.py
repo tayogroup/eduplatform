@@ -24,10 +24,21 @@ recording with a mistranscribed name occupies, so no threshold separates them.
 Here it is not a judgement call: the text changed on 2026-07-24, the recording
 is from 2026-07-21, the clip is stale.
 
+Most clips carry their script in a field, and for those the comparison is a
+diff of that field across two commits. Overview panels do not: their text is
+composed by the generator, so no field holds it and the field-derivation below
+finds nothing. That silently skipped all 31 live overview clips — reported as
+"could not be identified" under an otherwise clean ok. They are now covered by
+running the generator itself against a checkout of the recording commit
+(composed_scripts_at), and any clip still unexamined is named BY CATEGORY, so
+the number cannot read as rounding error again.
+
 What it cannot see, so run the transcription audit as well: a recording that
 never matched its script in the first place. Grade 1's speaking clips said "My
 name is Nabe Gadao" the day they were made — the text and the audio have the
-same date, and only listening finds that.
+same date, and only listening finds that. It also holds the composition rule
+fixed at today's, so a change to how a panel is ASSEMBLED (rather than to the
+data it assembles) is invisible here.
 
     python tools/check-english-audio-staleness.py
     python tools/check-english-audio-staleness.py --grades 5 6 7 8
@@ -38,12 +49,15 @@ Exits non-zero when any clip is stale, so it can gate a release.
 from __future__ import annotations
 
 import argparse
+import atexit
 import collections
 import functools
 import json
 import re
+import shutil
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 print = functools.partial(print, flush=True)  # noqa: A001 - long runs, live log
@@ -110,6 +124,92 @@ def newest_commit_per_clip() -> dict:
 @functools.lru_cache(maxsize=4096)
 def file_at(commit: str, path: str) -> str:
     return git("show", f"{commit}:{path}")
+
+
+# --- composed scripts (the overview category) --------------------------------
+# An overview panel's text is not a field. It is the first two sentences of
+# unitOverview, or the outcomes joined, or the learning path flattened, and one
+# panel's wording exists only inside the generator. So narrated_fields() below
+# finds no field whose text is in the script, returns nothing, and the clip is
+# skipped — which is how all 31 live overview clips came to be counted as
+# "narrated field could not be identified" while the run still reported ok.
+#
+# Rebuilding the composition here would be the second copy of a rule the audit
+# tool's docstring already warns about. Instead the real generator is run twice:
+# once on the working tree and once on a checkout of the recording commit. Both
+# runs use --emit-scripts, which writes what it WOULD narrate and sends nothing,
+# so this costs no ElevenLabs characters.
+#
+# The generator resolves its own paths from __dirname, so running it inside a
+# worktree makes it read that commit's data — no path overrides needed. The
+# checkout is sparse (tools/ and the English unit data only); a full one would
+# materialise the ~1.4 GB media tree for a text comparison.
+_WORKTREES: dict = {}
+
+
+def _cleanup_worktrees() -> None:
+    for target in list(_WORKTREES.values()):
+        if target is None:
+            continue
+        git("worktree", "remove", "--force", str(target))
+        shutil.rmtree(target.parent, ignore_errors=True)
+
+
+atexit.register(_cleanup_worktrees)
+
+
+def _worktree_at(commit: str):
+    """A sparse checkout of `commit`, deep enough to run the generator in."""
+    if commit in _WORKTREES:
+        return _WORKTREES[commit]
+    holder = Path(tempfile.mkdtemp(prefix="ehel-staleness-"))
+    target = holder / "tree"
+    added = subprocess.run(
+        ["git", "worktree", "add", "--no-checkout", "--detach", str(target), commit],
+        cwd=ROOT, capture_output=True, text=True, encoding="utf-8", errors="replace")
+    if added.returncode != 0:
+        shutil.rmtree(holder, ignore_errors=True)
+        _WORKTREES[commit] = None
+        return None
+    for argv in (["sparse-checkout", "set", "--no-cone",
+                  "/src/prototypes/ehel-academy/english/grade-*/data/"],
+                 ["checkout"]):
+        subprocess.run(["git", "-C", str(target), *argv],
+                       capture_output=True, text=True, encoding="utf-8", errors="replace")
+    # The CURRENT generator is copied in rather than checked out with the rest.
+    # --emit-scripts did not exist at every commit that recorded a clip: the
+    # 2026-08-05 overview commit predates it, and that generator ignores the
+    # unknown flag, tries to narrate all 36 panels and writes no script file.
+    #
+    # So this holds the composition rule fixed at today's and varies only the
+    # DATA, which is the question being asked — did the text change under the
+    # recording. A change to the composition itself is invisible to that, and is
+    # reported separately below rather than silently folded in.
+    (target / "tools").mkdir(parents=True, exist_ok=True)
+    shutil.copy2(ROOT / "tools" / "generate-ehel-english-audio.js", target / "tools")
+    shutil.copytree(ROOT / "tools" / "lib", target / "tools" / "lib", dirs_exist_ok=True)
+    _WORKTREES[commit] = target
+    return target
+
+
+@functools.lru_cache(maxsize=None)
+def composed_scripts_at(commit: str, grade: int) -> tuple:
+    """{clip_id: script} the generator would narrate for `grade` at `commit`.
+
+    Returned as a tuple of pairs so lru_cache can hold it.
+    """
+    target = _worktree_at(commit)
+    if target is None:
+        return ()
+    with tempfile.TemporaryDirectory() as tmp:
+        out = Path(tmp) / "overview.json"
+        subprocess.run(
+            ["node", "tools/generate-ehel-english-audio.js", "overview", str(grade),
+             "--emit-scripts", str(out)],
+            cwd=target, capture_output=True, text=True, encoding="utf-8", errors="replace")
+        if not out.exists():
+            return ()
+        return tuple(json.loads(out.read_text(encoding="utf-8")).items())
 
 
 def clip_objects(node, parent=None, found=None):
@@ -202,6 +302,12 @@ def narrated_fields(obj: dict, script: str) -> list:
     return out
 
 
+def norm(text: str) -> str:
+    """Whitespace collapsed, for the same reason script_of() collapses it: a
+    reflow changes the file and changes nothing a listener could hear."""
+    return re.sub(r"\s+", " ", text or "").strip()
+
+
 def script_of(obj: dict, fields: list) -> str:
     """The narrated text, with whitespace collapsed.
 
@@ -233,7 +339,11 @@ def main() -> None:
     # text a recording is supposed to say.
     audit = _load_audit()
 
-    stale, checked, untracked, unmapped = [], 0, 0, 0
+    # unmapped is counted BY CATEGORY. As one number it was uninterpretable: 31
+    # out of 16,948 reads as rounding, and it was in fact every overview clip in
+    # the course going unexamined behind an "ok".
+    stale, checked, untracked = [], 0, 0
+    unmapped = collections.Counter()
     for grade in args.grades:
         data_dir = ENGLISH / f"grade-{grade}" / "data"
         if not data_dir.exists():
@@ -272,13 +382,31 @@ def main() -> None:
                 then = was_pair[0]
                 fields = narrated_fields(obj, scripts.get(clip_id, ""))
                 if not fields:
-                    unmapped += 1
+                    # No field carries this clip's text, so the script is composed
+                    # rather than stored. Ask the generator what it narrated then
+                    # and what it narrates now, instead of giving up on the clip.
+                    category = mp3.split("/")[-2]
+                    then_scripts = dict(composed_scripts_at(commit, grade))
+                    now_script = scripts.get(clip_id)
+                    then_script = then_scripts.get(clip_id)
+                    if not now_script or then_script is None:
+                        unmapped[category] += 1
+                        continue
+                    if norm(then_script) != norm(now_script):
+                        stale.append((grade, clip_id, recorded, rel, mp3))
                     continue
                 if script_of(then, fields) != script_of(obj, fields):
                     stale.append((grade, clip_id, recorded, rel, mp3))
 
+    total_unmapped = sum(unmapped.values())
     print(f"checked {checked} live clips ({untracked} not in git history, "
-          f"{unmapped} whose narrated field could not be identified)\n")
+          f"{total_unmapped} whose narrated text could not be identified)")
+    # Named per category, because the number alone cannot be acted on and a
+    # clean "ok" underneath it reads as full coverage when it is not.
+    if total_unmapped:
+        print("  unexamined by category:", dict(unmapped.most_common()))
+        print("  these are NOT checked below — the run says nothing about them.")
+    print()
     if not stale:
         print("──────── ok ──────── every clip's script is unchanged since it was recorded")
         return

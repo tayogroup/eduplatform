@@ -122,7 +122,11 @@ npm run extract:global-perspectives-content && npm run build:global-perspectives
 
 **The source packs are preserved in `inputs/ehel-global-perspectives-source/`** (extracted `.docx`, the same shape `inputs/ehel-grade*-source/` uses). The extractor prefers a fresh export in `~/Downloads` and falls back to that tree, so a re-export always wins but the pipeline still runs once the zips have been tidied away — which happened, and left the extractor with nothing to read. `source-manifest.json` records which archive each year came from, so provenance in the built units stays the export's own filename.
 
-**Year 5 holds Units 1-2 only** (Research, Analysis). Evaluation, Reflection, Collaboration and Communication were never in the export; that gap needs a re-export from Google Drive, not a code change.
+**Year 5 holds Units 1-2 only** (Research, Analysis), and **Stage 5 is withdrawn from the app because of it** (`WITHDRAWN_STAGES` in `shell/subjects/global-perspectives.js`).
+
+**Evaluation, Reflection, Collaboration and Communication have not been authored** — confirmed by the school on 2026-08-11. **Do not re-export Drive to close this**, and do not go looking for the files: they do not exist. One was taken on 2026-08-09 and returned the same two units byte for byte (8/8 SHA-256 identical to `inputs/ehel-global-perspectives-source/Year 5/`), and a full local sweep found no Global Perspectives source under any other name. This gap closes when four units are written, not found — a content commission, not a pipeline run.
+
+One trap if you search anyway: `~/Downloads/Year 5-20260720T212141Z-1-001.zip` **does** hold Units 1-6, and it is **Science** — its pack shape is Lesson / Experiments / Practice / Reference, where Global Perspectives uses Lesson / Skills Toolkit / Activities & Discussion / Practice & Reflection.
 
 Two pack shapes, one runtime:
 

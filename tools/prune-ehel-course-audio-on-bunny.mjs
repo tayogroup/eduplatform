@@ -37,7 +37,7 @@ const MANIFEST = path.join(ROOT, ".bunny-upload-manifest.json");
 // uploader gives them the same gNN slot (upload-media-to-bunny.js builds
 // media/<subject>/gNN/audio/tts/<hash>.mp3 for every subject), so the expected
 // set below is built the same way for it as for the rest.
-const SUBJECTS = ["science", "mathematics", "computing", "intensive-english"];
+const SUBJECTS = ["science", "mathematics", "computing", "global-perspectives", "intensive-english"];
 const subject = process.argv.slice(2).find((a) => SUBJECTS.includes(a));
 if (!subject) {
   console.error(`Usage: node tools/prune-ehel-course-audio-on-bunny.mjs <${SUBJECTS.join("|")}> [--delete]`);

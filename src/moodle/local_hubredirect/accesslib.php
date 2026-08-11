@@ -2592,6 +2592,23 @@ function pqh_ip_rate_limited(string $bucket, int $max = 30, int $windowsecs = 60
  * of each one rather than a restyle. Colour, type, borders, radii and gaps
  * only.
  *
+ * ONE EXCEPTION, and it is not optional: the header band, .<prefix>-top. This
+ * function PAINTS that element -- navy fill, white ink -- and 84 of the 149
+ * pages that have a -top declare it as nothing but `display:flex;
+ * justify-content:space-between;margin-bottom:16px`, with no padding at all.
+ * Painting a box that has no padding puts its heading hard against the top-left
+ * corner and its subtitle hard against the bottom edge, where the line reads as
+ * cut off rather than as text. So -top carries padding here, the same
+ * 16px/20px course_offerings.php and course_catalog_browse.php force on theirs.
+ * Nothing else gains padding.
+ *
+ * The band also has to recolour what it contains, not just .<prefix>-title and
+ * -sub. Counted over every -top in the plugin: the subtitle is .<prefix>-muted
+ * 25 times against -sub twice, and the heading is a bare <h1>/<h2> 27 times
+ * against .<prefix>-title 9 times. Left alone, -muted keeps the grey
+ * (--op-ink-soft) the skin gives it everywhere else, which on navy is the
+ * near-invisible line this fixed.
+ *
  * @param string|string[] $prefixes the page's class prefix, e.g. 'pqwd'
  * @param string $bodyclass the page's add_body_class() value, for the canvas
  * @param string $sep prefix/component separator; '__' for the BEM pages
@@ -2667,9 +2684,10 @@ function pqh_openproject_skin_css($prefixes, string $bodyclass = '', string $sep
 .{$p}{$s}pill:not([class*="{$s}pill--"]),.{$p}{$s}tag:not([class*="{$s}tag--"]),.{$p}{$s}chip:not([class*="{$s}chip--"]){border-color:var(--op-primary-border);background:var(--op-primary-subtle);color:var(--op-primary-emphasis)}
 .{$p}{$s}empty{border:1px dashed var(--op-line-strong);border-radius:var(--op-radius);background:var(--op-surface-soft);color:var(--op-ink-soft);font-weight:400}
 .{$p}{$s}grid,.{$p}{$s}list{gap:16px}
-.{$p}{$s}top{border:1px solid var(--op-header-bg);border-radius:var(--op-radius);background:var(--op-header-bg);color:var(--op-header-ink)}
-.{$p}{$s}top .{$p}{$s}title{color:var(--op-header-ink)}
-.{$p}{$s}top .{$p}{$s}sub{color:var(--op-header-ink-soft)}
+.{$p}{$s}top{padding:16px 20px;border:1px solid var(--op-header-bg);border-radius:var(--op-radius);background:var(--op-header-bg);color:var(--op-header-ink)}
+.{$p}{$s}top h1,.{$p}{$s}top h2,.{$p}{$s}top h3,.{$p}{$s}top .{$p}{$s}title{margin:0;color:var(--op-header-ink);font-size:24px;font-weight:700;line-height:1.25}
+.{$p}{$s}top .{$p}{$s}sub,.{$p}{$s}top .{$p}{$s}muted,.{$p}{$s}top .{$p}{$s}meta,.{$p}{$s}top .{$p}{$s}text{color:var(--op-header-ink-soft)}
+.{$p}{$s}top h1+*,.{$p}{$s}top h2+*,.{$p}{$s}top h3+*,.{$p}{$s}top .{$p}{$s}title+*{margin-top:6px}
 
 CSS;
             continue;
@@ -2746,9 +2764,13 @@ CSS;
 .{$p}{$s}meta{gap:6px}
 .{$p}{$s}modal-box{border:1px solid var(--op-line);border-radius:var(--op-radius-lg);background:var(--op-surface);box-shadow:var(--op-shadow-lg)}
 .{$p}{$s}close{border:1px solid var(--op-line-strong);border-radius:var(--op-radius);background:var(--op-surface);color:var(--op-ink)!important;font-family:var(--op-font);font-weight:700}
-.{$p}{$s}top{border:1px solid var(--op-header-bg);border-radius:var(--op-radius);background:var(--op-header-bg);color:var(--op-header-ink);box-shadow:none}
-.{$p}{$s}top .{$p}{$s}title,.{$p}{$s}top .pqh-workspace-title{color:var(--op-header-ink)!important;font-family:var(--op-font)!important;font-size:24px!important;font-weight:700!important;line-height:1.25!important;letter-spacing:0!important;text-shadow:none!important}
+.{$p}{$s}top{padding:16px 20px;border:1px solid var(--op-header-bg);border-radius:var(--op-radius);background:var(--op-header-bg);color:var(--op-header-ink);box-shadow:none}
+.{$p}{$s}top h1,.{$p}{$s}top h2,.{$p}{$s}top h3,.{$p}{$s}top .{$p}{$s}title,.{$p}{$s}top .pqh-workspace-title{margin:0;color:var(--op-header-ink)!important;font-family:var(--op-font)!important;font-size:24px!important;font-weight:700!important;line-height:1.25!important;letter-spacing:0!important;text-shadow:none!important}
 .{$p}{$s}top .{$p}{$s}sub,.{$p}{$s}top .pqh-workspace-sub{color:var(--op-header-ink-soft)!important;font-size:14px!important;font-weight:400!important;opacity:1}
+.{$p}{$s}top .{$p}{$s}muted,.{$p}{$s}top .{$p}{$s}help,.{$p}{$s}top .{$p}{$s}meta,.{$p}{$s}top .{$p}{$s}text,.{$p}{$s}top .{$p}{$s}note,.{$p}{$s}top .{$p}{$s}label,.{$p}{$s}top .{$p}{$s}caption,.{$p}{$s}top .{$p}{$s}kicker{color:var(--op-header-ink-soft)!important}
+.{$p}{$s}top .{$p}{$s}name,.{$p}{$s}top .{$p}{$s}num,.{$p}{$s}top .{$p}{$s}value,.{$p}{$s}top .{$p}{$s}count,.{$p}{$s}top .{$p}{$s}ico{color:var(--op-header-ink)!important}
+.{$p}{$s}top a:not([class*="{$s}btn"]):not([class*="{$s}pill"]){color:var(--op-header-ink)!important}
+.{$p}{$s}top h1+*,.{$p}{$s}top h2+*,.{$p}{$s}top h3+*,.{$p}{$s}top .{$p}{$s}title+*,.{$p}{$s}top .pqh-workspace-title+*{margin-top:6px}
 .{$p}{$s}top .{$p}{$s}btn,.{$p}{$s}top .pqh-workspace-actions a,.{$p}{$s}top .pqh-workspace-actions button{border:1px solid rgba(255,255,255,.30)!important;border-radius:var(--op-radius)!important;background:rgba(255,255,255,.10)!important;color:var(--op-header-ink)!important;font-family:var(--op-font)!important;font-size:14px!important;font-weight:700!important;box-shadow:none!important}
 .{$p}{$s}top .{$p}{$s}btn:hover,.{$p}{$s}top .pqh-workspace-actions a:hover,.{$p}{$s}top .pqh-workspace-actions button:hover{background:rgba(255,255,255,.20)!important;border-color:rgba(255,255,255,.50)!important;color:var(--op-header-ink)!important}
 .{$p}{$s}top a.pqh-workspace-logout,.{$p}{$s}top .{$p}{$s}btn.pqh-workspace-logout{background:rgba(255,255,255,.18)!important;border-color:rgba(255,255,255,.60)!important;color:var(--op-header-ink)!important}
@@ -2883,20 +2905,20 @@ CSS;
     //
     // Written here rather than in pqh_design_shell_css() where the rail is
     // defined, for the same reason nothing else in this skin edits a page's own
-    // CSS: the rail is on 41 pages, and editing it there would change all of
-    // them whether or not they carry a skin call. This way it follows the skin.
+    // CSS: the rail is on 41 pages, and every one of them would change whether
+    // or not it has a skin call. This way it follows the skin exactly.
     //
-    // The rail's own rules put !important on background and colour, so these
-    // double the class to (0,2,0) and re-declare -- the same trick the rest of
-    // the generator uses. .is-active is already (0,2,0) there, so the active
-    // rule needs all three classes to land.
+    // The rail's own rules carry !important on background and colour, so these
+    // double the class to (0,2,0) and re-declare it -- the same trick the rest
+    // of the generator uses. .is-active is (0,2,0) in the original, so the
+    // active rule here needs all three classes to land.
     //
-    // The redesign: items stop being filled chips (#f4f6f9 at 9px radius) and
-    // become flat rows the way OpenProject's own sidebar reads -- transparent
+    // The redesign: items stop being filled chips (#f4f6f9 pills at 9px radius)
+    // and become flat rows the way OpenProject's own sidebar reads -- transparent
     // until hovered, 3px corners, regular weight, bold only when active. The
     // brand square loses its blue gradient and drop shadow for a flat primary
-    // tile. LAYOUT IS UNTOUCHED -- no width, position or padding -- so the
-    // 248px rail and its 72px collapsed state behave exactly as before.
+    // tile. LAYOUT IS UNTOUCHED: no widths, no padding, no position, so the
+    // 248px rail and its 72px collapsed state still behave exactly as before.
     if (!isset($emittedprefix['@railskin'])) {
         $emittedprefix['@railskin'] = true;
         $css .= <<<CSS

@@ -2705,6 +2705,14 @@ CSS;
             continue;
         }
 
+        // NO -track / -bar / -fill rule below, deliberately. "track" is a
+        // progress groove on workspace_reports and executive_dashboard, but on
+        // public_intake, public_teacher_intake and student_intake it is the
+        // WIZARD SLIDER -- a flex row as wide as all its steps. Painting that
+        // with the pill radius and the canvas grey drew an 883x843 lozenge
+        // behind the whole form, reading as a giant pale circle that slid about
+        // behind the fields. Both pages with real progress bars already colour
+        // their own groove and fill, so the rule bought nothing and broke three.
         $css .= <<<CSS
 .{$p}{$s}shell{background:var(--op-canvas);color:var(--op-ink);font-family:var(--op-font);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
 .{$p}{$s}panel,.{$p}{$s}card,.{$p}{$s}summary-card,.{$p}{$s}quick-card{border-width:1px;border-style:solid;border-radius:var(--op-radius);box-shadow:none}
@@ -2766,8 +2774,6 @@ CSS;
    reasoning for -head above: recolour the rule a page already draws, never
    add one. */
 .{$p}{$s}note,.{$p}{$s}summary{border-color:var(--op-line);color:var(--op-ink-muted)}
-.{$p}{$s}track,.{$p}{$s}bar{border-radius:var(--op-pill);background:var(--op-canvas)}
-.{$p}{$s}fill{border-radius:var(--op-pill);background:var(--op-primary)}
 .{$p}{$s}chart,.{$p}{$s}barbox{border:1px solid var(--op-line);border-radius:var(--op-radius);background:var(--op-surface)}
 .{$p}{$s}tag{border:1px solid var(--op-primary-border);border-radius:var(--op-pill);background:var(--op-primary-subtle);color:var(--op-primary-emphasis);font-size:12px;font-weight:700}
 .{$p}{$s}item{border-color:var(--op-line)}

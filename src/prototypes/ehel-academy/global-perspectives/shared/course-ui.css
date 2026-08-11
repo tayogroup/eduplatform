@@ -171,6 +171,24 @@
 @media (max-width: 900px) {
   .reference-grid, .goal-columns { grid-template-columns: 1fr; }
 }
+
+/* Let a both-designs page shrink to a phone.
+   .both-designs is `display: grid` with no explicit column, so its single
+   column is auto-sized, and a grid item's default `min-width: auto` refuses to
+   shrink below its content's min-content width. One wide source table is then
+   enough to size the column past the viewport — and because the column is the
+   PAGE, the whole document scrolls sideways rather than the table. Measured at
+   375px on Stage 1 Unit 1: the column resolved to 456px inside a 347px content
+   area, so every deck page in Stages 1-4 scrolled ~100px horizontally.
+   minmax(0, …) lets the column shrink, and min-width: 0 does the same for the
+   two halves; .gp-table-wrap already carries overflow-x: auto, so the table
+   scrolls inside its own box, which is what should have been happening.
+   Scoped here rather than fixed in the design system every subject imports:
+   Computing shows the same shape (a 380px column in the same 347px area), so
+   the root cause is shared and wants fixing there for all five subjects. */
+.both-designs { grid-template-columns: minmax(0, 1fr); }
+.both-designs > .classic-design,
+.both-designs > .deck-design { min-width: 0; }
 /* Inline labels ("Hint:", "Meaning:") name a field; they are not emphasis. */
 .field-label { font-weight: var(--weight-normal); }
 /* Status lines and correctness feedback: colour carries the meaning, not weight. */

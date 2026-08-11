@@ -1,0 +1,20 @@
+Correction: this commit also contains a file that is not part of its change.
+
+src/prototypes/ehel-academy/science/data/booklet-answer-keys.json (2,431
+lines) belongs to the concurrent session's answer-key gate work, not to the
+8ESp.01 mapping described in the message above. It was untracked at the time
+and was swept in by a faulty file classifier of mine: the classifier split
+`git status --porcelain` output on whitespace, so untracked paths entered the
+list, and an untracked file has an empty `git diff`, which made it look like
+an unchanged file safe to stage.
+
+The file's CONTENT is correct and current — nothing was lost or altered, and
+the later commit 9e2b2ced9 ("Gate Science answer keys...") depends on it.
+Only its attribution is wrong.
+
+Not corrected by rewriting history: 31 commits sit on top of this one, all
+pushed to origin and backup, and the other session was committing to main at
+the time. A rebase would have changed 32 SHAs and required a force-push over
+a branch in active use.
+
+Recorded 2026-08-12.

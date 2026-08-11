@@ -1821,26 +1821,22 @@ function pqh_design_shell_html(string $shellclass, string $active = '', array $o
     $html .= '<a class="pqh-gnav__item" href="' . $logouturl . '"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/></svg><span class="pqh-gnav__label">Logout</span></a>';
     $html .= '<button class="pqh-gnav__item" id="pqh-rail-toggle" type="button" aria-label="Collapse or expand navigation"><svg viewBox="0 0 24 24"><path d="m11 17-5-5 5-5M18 17l-5-5 5-5"/></svg><span class="pqh-gnav__label">Collapse</span></button>';
     $html .= '</div></nav>';
-    // The header's top-left is the institution's LOGO, not a section icon and
-    // the page name. The page title lives on the row below, in <prefix>-top, so
-    // repeating it here was saying the same thing twice a centimetre apart --
-    // "Teacher Workspace" over "Teacher Live-Class Workspace".
+    // The header's top-left is EMPTY on purpose.
     //
-    // Only workspace_dashboard has no title in its -top, so it is the one page
-    // that loses text here; it passes the workspace name as the title and its
-    // own workspace switcher already shows that name on the row below, so the
-    // name is still on screen.
+    // The rail beside it already shows the institution's logo and name, so a
+    // logo here was the same mark twice on one screen. Before that it was a
+    // section icon plus the page name, which repeated the title sitting a
+    // centimetre below it in <prefix>-top -- "Teacher Workspace" over "Teacher
+    // Live-Class Workspace". Neither earns the space.
     //
-    // Falls back to the old icon-and-title when the consumer has no logo set,
-    // rather than leaving the corner empty.
-    $titleicon = $icons[$active] ?? '';
-    if ($brandlogo !== '') {
-        $brandhtml = '<img class="pqh-appbar__logo" src="' . s($brandlogo) . '" alt="' . s($brand) . '">';
-    } else if ($titleicon !== '') {
-        $brandhtml = '<svg class="pqh-appbar__brand-icon" viewBox="0 0 24 24" aria-hidden="true">' . $titleicon . '</svg><span>' . s($title) . '</span>';
-    } else {
-        $brandhtml = s($title);
-    }
+    // The empty div stays because .pqh-appbar__brand carries margin-right:auto;
+    // it is what pushes the nav links to the right edge. Dropping the element
+    // would left-align them.
+    //
+    // Only workspace_dashboard has no title in its own -top, so it is the one
+    // page with no page-name text at all. It passes the workspace name as the
+    // title and its workspace switcher shows that name on the row below.
+    $brandhtml = '';
     if (!empty($opts['appbar']) && is_array($opts['appbar'])) {
         $appbar = $opts['appbar'];
     }
@@ -2661,34 +2657,6 @@ function pqh_openproject_skin_css($prefixes, string $bodyclass = '', string $sep
         . "--op-header-bg:#162b48;--op-header-ink:#fff;--op-header-ink-soft:rgba(255,255,255,.72)}\n";
     }
 
-    // The consumer's logo, so the standalone headers below can show it without
-    // any page changing its markup. Resolved once per request and cached,
-    // because whether it exists decides whether a rule is emitted at all --
-    // an empty ::before still reserves its 38px box and pushes the title down
-    // into blank space, so a consumer with no logo must get no rule, not a rule
-    // painting `none`.
-    static $logourl = null;
-    if ($logourl === null) {
-        $logourl = '';
-        if (function_exists('pqh_requested_consumer_context')) {
-            try {
-                $logoctx = pqh_requested_consumer_context();
-                $logourl = trim((string)($logoctx->logourl ?? ''));
-            } catch (\Throwable $logoerror) {
-                $logourl = '';
-            }
-        }
-        // Only http(s) and root-relative paths; anything else (data:, javascript:)
-        // is dropped rather than interpolated into a stylesheet.
-        if ($logourl !== '' && !preg_match('~^(https?://|/)[^\s\'"()]+$~i', $logourl)) {
-            $logourl = '';
-        }
-    }
-    if ($logourl !== '' && !isset($emittedprefix['@logo'])) {
-        $emittedprefix['@logo'] = true;
-        $css .= ':root{--op-header-logo:' . "url('" . $logourl . "')}\n";
-    }
-
     $bodyclass = trim($bodyclass);
     if ($bodyclass !== '' && !isset($emittedprefix['body:' . $bodyclass])) {
         $emittedprefix['body:' . $bodyclass] = true;
@@ -2702,18 +2670,6 @@ function pqh_openproject_skin_css($prefixes, string $bodyclass = '', string $sep
             continue;
         }
         $emittedprefix[$p . $s] = true;
-
-        // A page with NO appbar has no logo slot at all -- its header is one row
-        // of title-plus-links. The same arrangement is reached from CSS: the
-        // logo goes above the title as a ::before on the header's first column,
-        // which is where every one of these pages puts its title block. No
-        // markup is touched. Guarded by :not(:has(.pqh-appbar)) so the shell
-        // pages, which show the logo in the bar above, do not get a second one.
-        // Emitted ONLY when a logo exists -- see the note by $logourl.
-        $logorule = $logourl === '' ? '' :
-            ".{$p}{$s}shell:not(:has(.pqh-appbar)) .{$p}{$s}top>:first-child::before"
-            . '{content:"";display:block;width:38px;height:38px;margin:0 0 10px;'
-            . "background:var(--op-header-logo) left center/contain no-repeat}\n";
 
         // A BEM family (pqh-todo__item, pqhsd-ccard__body) is one component's
         // parts, not a whole page: it has no -table, -textarea, -filter and
@@ -2849,7 +2805,7 @@ CSS;
    max-width:1440px. On a viewport wider than roughly 1690px the wrap is
    narrower than the full-bleed appbar, so the lower half of the block stops
    short on the right. Everything below 1440px of content width is flush. */
-{$logorule}.{$p}{$s}shell:has(.pqh-appbar) .pqh-appbar{border-bottom-width:0!important}
+.{$p}{$s}shell:has(.pqh-appbar) .pqh-appbar{border-bottom-width:0!important}
 .{$p}{$s}shell:has(.pqh-appbar) .{$p}{$s}top{margin:-24px -24px 16px!important;padding:16px 22px!important;border:0!important;border-radius:0!important;box-shadow:none!important}
 /* Below 900px the shell drops the rail and re-pads the appbar to 8px 14px, so
    the block's own padding has to follow or the title stops lining up with the
@@ -2948,7 +2904,6 @@ CSS;
 .pqh-appbar.pqh-appbar{background:var(--op-header-bg)!important;background-image:none!important;border-bottom:1px solid var(--op-header-bg)!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;box-shadow:none!important}
 .pqh-appbar__brand.pqh-appbar__brand{color:var(--op-header-ink)!important;font-family:var(--op-font)!important;font-size:16px!important;font-weight:700!important;letter-spacing:0!important}
 .pqh-appbar__brand-icon.pqh-appbar__brand-icon{stroke:var(--op-header-ink)!important}
-.pqh-appbar__logo.pqh-appbar__logo{display:block;height:36px;width:auto;max-width:220px;object-fit:contain}
 .pqh-appbar__nav.pqh-appbar__nav a,.pqh-appbar__nav.pqh-appbar__nav button{border:1px solid rgba(255,255,255,.30)!important;border-radius:var(--op-radius)!important;background:rgba(255,255,255,.10)!important;color:var(--op-header-ink)!important;font-family:var(--op-font)!important;font-size:14px!important;font-weight:700!important;box-shadow:none!important}
 .pqh-appbar__nav.pqh-appbar__nav a:hover,.pqh-appbar__nav.pqh-appbar__nav button:hover{background:rgba(255,255,255,.20)!important;border-color:rgba(255,255,255,.50)!important;color:var(--op-header-ink)!important}
 .pqh-appbar__nav.pqh-appbar__nav .pqh-appbar__logout{background:rgba(255,255,255,.18)!important;border-color:rgba(255,255,255,.60)!important;color:var(--op-header-ink)!important;box-shadow:none!important}

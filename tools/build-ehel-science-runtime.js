@@ -1532,7 +1532,16 @@ function buildGrade(grade) {
       const endsMidWorkedExample = bodyItems.length > 1
         && isWorkedStep(bodyItems[bodyItems.length - 1])
         && isWorkedStep(bodyItems[bodyItems.length - 2]);
-      const hasSpareParagraph = body.length > 2 && !endsMidWorkedExample;
+      // The same rule, for the same reason, one case over: when the closing
+      // paragraph is the body of a sub-heading, holding it out leaves the
+      // heading stranded at the end of the explanation announcing something
+      // that is not there. "The special truth about boiling and melting
+      // temperatures" ended a Stage 7 concept with its answer displayed
+      // separately under "Example:".
+      const endsOnHeadingBody = bodyItems.length > 1
+        && isSectionHeading(tidy(bodyItems[bodyItems.length - 2].text));
+      const heldBack = endsMidWorkedExample || endsOnHeadingBody;
+      const hasSpareParagraph = body.length > 2 && !heldBack;
       return {
         id: `concept-${position + 1}-${slug(heading) || position + 1}`,
         title: heading,
@@ -1545,14 +1554,14 @@ function buildGrade(grade) {
         // context above.
         example: tidy(hasSpareParagraph
           ? body[body.length - 1]
-          : (endsMidWorkedExample
+          : (heldBack
             ? (([...bodyItems].reverse().find((item) => {
               const text = tidy(item.text);
-              // Not a step, and not the example's own title line — "Worked
+              // Not a step, not the example's own title line — "Worked
               // Example: using the law of reflection." names the thing rather
               // than showing it, which reads as badly under "Example:" as a
-              // bare step does.
-              return !isWorkedStep(item) && !/^Worked Examples?\b/i.test(text);
+              // bare step does — and not a sub-heading, for the same reason.
+              return !isWorkedStep(item) && !/^Worked Examples?\b/i.test(text) && !isSectionHeading(text);
             }) || {}).text || body[0])
             : null)
             || body[1] || body[0] || heading),

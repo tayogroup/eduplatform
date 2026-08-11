@@ -230,6 +230,26 @@ function renderWithdrawn() {
     </section>`;
 }
 
+// EVERY route draws the notice on a withdrawn stage, which is what the comment
+// on WITHDRAWN_STAGES promises and what guarding two routes by hand did not
+// deliver. `overview` and `placement` name the stage, so they were the two that
+// got the guard; every teaching route resolves through routeTo -> paint,
+// finds its section unavailable on the withdrawn shell — which carries no
+// explainers, no practice, nothing — and falls back to renderOverview().
+//
+// That fallback is the hole. It painted a course-shaped page headed "This stage
+// is not available" with an empty lesson panel, a Listen button bound to an
+// empty string, and a live "I have read the overview" button. Pressing it
+// completed the only countable section the withdrawn shell has, so the unit bar
+// read 100% and course-app.js emitted unit.completed — a withdrawn stage
+// reporting a finished unit upstream. #progress drew a progress table alongside.
+//
+// Wrapping the whole map is what makes the guard total: the shell resolves an
+// unknown route to `overview`, so every entry plus every typo is covered, and a
+// route added later cannot quietly reopen this.
+const whenWithdrawn = (renderers) => Object.fromEntries(
+  Object.entries(renderers).map(([route, render]) => [route, () => (withdrawal() ? renderWithdrawn() : render())]));
+
 const isDeckStage = () => stageNumber <= DECK_MAX_STAGE;
 
 // BOTH designs, the way English Grades 1-4 show a unit module: the original
@@ -979,8 +999,9 @@ const paint = (id, fn) => () => {
 const routeTo = (id, deckRenderer, pageRenderer, slidesIntro) => () => {
   if (!isDeckStage()) return paint(id, pageRenderer)();
   if (!availableSections().some(([sectionId]) => sectionId === id)) return paint("overview", renderOverview)();
-  // Stage 1 gets the original section AND the deck; Stages 2-4 are still on the
-  // deck alone until this is widened.
+  // Stages 1-4 all get the original section AND the deck. BOTH_MAX_STAGE and
+  // DECK_MAX_STAGE are both 4, so the deck-alone return below is unreachable —
+  // it is kept because Stage 5+ still resolves through this helper.
   if (isBothStage()) return renderBothDesigns(pageRenderer, deckRenderer, slidesIntro);
   return deckRenderer();
 };
@@ -1064,12 +1085,9 @@ const config = {
   progressDefaults: { completed: [], answersSeen: [], reflection: {}, quiz: {}, aiMessages: [] },
   keys: (s, u) => ({ progress: `ehel-gp-s${s}-u${u}-progress-v1` }),
   courseKey: (s) => `ehel-gp-g${String(s).padStart(2, "0")}`,
-  renderers: {
-    // A withdrawn stage draws the notice on every route, not just overview —
-    // the shell falls back to `overview` for unknown routes, but `placement`
-    // and the teaching sections are real entries and would otherwise render.
-    overview: () => (withdrawal() ? renderWithdrawn() : isPrereqUnit ? placement.renderOverview() : paint("overview", renderOverview)()),
-    placement: () => (withdrawal() ? renderWithdrawn() : isPrereqUnit ? placement.renderExam() : paint("overview", renderOverview)()),
+  renderers: whenWithdrawn({
+    overview: () => (isPrereqUnit ? placement.renderOverview() : paint("overview", renderOverview)()),
+    placement: () => (isPrereqUnit ? placement.renderExam() : paint("overview", renderOverview)()),
     // Every teaching section takes the slide deck at DECK_MAX_STAGE and below.
     // Four stay as pages on purpose: the overview and My Progress are summaries
     // rather than a sequence to walk through, My Learning Goals is a
@@ -1098,7 +1116,7 @@ const config = {
     teacher: routeTo("teacher", renderTeacherDeck, renderTeacher, "The same cards, one at a time."),
     grownup: paint("grownup", renderGrownUp),
     progress: paint("progress", renderProgressPage),
-  },
+  }),
   // The deck is full-bleed via a class on <body>; leaving the section has to
   // take it off, or the next page renders inside a viewport still sized for a
   // carousel.
@@ -1107,7 +1125,15 @@ const config = {
   // and mount the NEXT section's deck into a region that no longer exists.
   onBeforeRender: () => { document.body.classList.remove("gc-full"); deckMount = null; },
   bind,
-  wehelOptions,
+  // The dock sits on top of whatever is rendered, so making every route draw
+  // the notice does not reach it: the Wehel Tutor button was still floating
+  // over the notice, offering to discuss a stage nobody should be working in.
+  // The shell reads this property inside mountWehelDock() and skips the dock
+  // entirely when it is falsy. That read happens after bind(), so `withdrawal()`
+  // knows the stage by then — which is why this can be a getter and not a
+  // decision frozen at module load. The bare name below is the module-level
+  // wehelOptions function; a getter introduces no binding of its own.
+  get wehelOptions() { return withdrawal() ? null : wehelOptions; },
   async load(ctx) {
     // Checked before any fetch: a withdrawn stage's data is still on disk, and
     // loading it would put the course one render away from a learner. Read off

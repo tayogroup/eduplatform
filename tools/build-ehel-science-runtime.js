@@ -121,7 +121,11 @@ const CAMBRIDGE_OBJECTIVES = {
   // explicitly — "Each jar changes only ONE condition… you keep everything the
   // same except the one thing you are testing" — which is the objective's
   // substance even though the unit plans one investigation rather than a range.
-  "8-1": ["8SIC.02", "8TWSp.04"],
+  // 8Be.01-8Be.03 are claimed on the passage CONCEPT_INSERTS continues concept 6
+  // with: habitats within an ecosystem, invasive species, and bioaccumulation up
+  // a food chain. The unit's own subject — plant reproduction — is Stage 9 in
+  // 0893, so before this it claimed almost nothing at its own stage.
+  "8-1": ["8SIC.02", "8TWSp.04", "8Be.01", "8Be.02", "8Be.03"],
   "8-2": ["8Bp.01", "8Bp.03"],
   "8-3": ["8Pf.01", "8Pf.02", "8TWSm.03", "8TWSc.02", "8TWSc.04"],
   "8-4": ["8TWSm.03"],
@@ -204,7 +208,6 @@ function cambridgeObjectivesFor(grade, unitNo, code) {
 // REASON is authored, and only where it has actually been established.
 const CAMBRIDGE_GAP_REASONS = {
   "8-Structure and function": "Three of the four are now taught: Unit 7 continues its digestion arc into what blood is made of, how the alveoli are built for gas exchange, and how oxygen and carbon dioxide diffuse across that barrier (8Bs.02-8Bs.04). 8Bs.01 remains — joints and antagonistic muscles are taught nowhere in Grade 8, and a unit about food is not where they belong. The course teaches the skeleton at Grade 4 (4Bh1, vertebrates having internal backbones) and body systems at Grade 6 (6Bh1-6Bh4), neither at Lower Secondary depth, so closing 8Bs.01 needs movement and muscles written for Stage 8.",
-  "8-Ecosystems": "No Grade 8 unit teaches ecology. The course covers ecosystems, food webs and human impact at Grade 6 (6Be1-6Be6, Stage 6 depth); bioaccumulation and invasive species are taught nowhere in the course.",
   "8-Cycles on Earth": "Climate is taught nowhere in the course. Grade 8's Rocks unit accounts for 96 apparent matches on \"weather\", but every one is \"weathering\" — the breakdown of rock — and its single use of \"climate\" is the incidental phrase \"in the climate of East Africa\". No unit distinguishes climate from weather, or covers climate cycles or atmospheric change.",
   "8-Earth in space": "No Grade 8 unit teaches astronomy. The course covers the Solar System at Grade 5 (5Pb1-5Pb3, Stage 5 depth); galaxies and asteroids are taught nowhere. Grade 8's apparent matches on \"star\" are all \"starch\", from Unit 7's food tests.",
   "4-Sound": "No Year 4 Science pack contains a sound unit. Grade 4's six units are Living Things, Energy, Materials, The Earth, Light and Electricity; the only sound content anywhere in the stage is one glossary line in the Energy unit (\"Sound energy = Energy of vibrations that we hear\"), which teaches none of 4Ps1-4Ps5. Grade 1 covers sound at Stage 1 depth (1Ps1-1Ps3) and nothing revisits it. Closing this needs a Stage 4 sound unit to be written — a content commission, not a rebuild.",
@@ -246,6 +249,24 @@ const CONCEPT_INSERTS = {
   // honest home in a unit about food, and bolting a skeleton onto a digestion
   // concept to turn a number green is the kind of mapping this table exists to
   // avoid. It stays recorded as a gap with its reason.
+  // Ecosystems is the same shape as Structure and function: 0893 publishes three
+  // objectives at Stage 8, the course teaches ecology at Grade 6 (6Be1-6Be6) and
+  // never returns to it. All three are kept together because they need each
+  // other — bioaccumulation cannot be taught without a food chain, and a food
+  // chain needs the ecosystem it sits in.
+  //
+  // Unit 1 is the home because its seed concept ends on dispersal ("part of the
+  // plant's clever plan for spreading its seeds" … "much of what you eat is the
+  // reproductive success of a plant"). Where a seed lands is a habitat; a plant
+  // that lands where nothing checks it is invasive; and the unit's closing theme
+  // is farming, which is where the pesticide comes from. That also lifts a unit
+  // that claimed almost nothing — its own subject, plant reproduction, is Stage
+  // 9 in 0893 — to one that genuinely carries three Stage 8 objectives.
+  "8-1": [{
+    conceptId: "concept-6-seeds-and-fruits-form",
+    after: "much of what you eat is the reproductive success of a plant.",
+    text: "\n\nWhere those seeds land matters. A place with its own conditions and its own community of living things is a habitat — the shade under a mango tree, a stretch of riverbank, a patch of thorn scrub. Group the habitats of an area together with the soil, water, air and weather they share and you have an ecosystem. The Earth carries many kinds: coral reef, mangrove, savanna, desert, mountain forest. One ecosystem holds many habitats, and a seed that thrives in one may fail a few metres away.\n\nDispersal usually carries a seed a short way, but people move plants across the world. A species that arrives somewhere new, without the insects and diseases that kept it in check at home, can spread unchecked. Such an invasive species crowds out native plants for light, water and soil, and the animals that fed on those natives lose their food. Prosopis, the thorny tree planted across the Horn of Africa to hold back the desert, now chokes grazing land and waterholes that people and their livestock depended on.\n\nWhat we add to an ecosystem travels too. A pesticide sprayed on a crop does not stay on the leaf: it washes into soil and water and is taken up by plants and small creatures. Every animal that eats many of them takes in all the poison they carried, so the amount rises at each step of the food chain, and the hunters at the top — big fish, fish eagles, and the people who eat them — carry the heaviest dose of all. This building up is called bioaccumulation, and it is why a chemical that looks harmless in a single spray can damage an ecosystem years later.",
+  }],
   "8-7": [{
     conceptId: "concept-4-the-journey-through-your-digestive-system",
     after: "digested food is absorbed quickly and efficiently into the blood, which carries the nutrients to every cell in your body.",

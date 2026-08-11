@@ -72,10 +72,27 @@ export function createDeck({ $, escapeHtml, icon, stopAudio = () => {}, afterPai
     let items = [];
     let index = 0;
 
+    // Only the slide on screen may be reached. The others are not hidden — they
+    // sit in the track at full width beside it, so on a 1280px viewport slides
+    // 3-6 of a six-slide deck lay out from x=2108 to x=5687. Without this a Tab
+    // press walks straight into a Listen or Done button the learner cannot see,
+    // and a screen reader reads all six slides as one continuous page.
+    //
+    // `inert` is the one attribute that does both halves: it takes the subtree
+    // out of the tab order AND out of the accessibility tree. It does not touch
+    // rendering, so the neighbouring slide still animates into view during a
+    // transition exactly as before.
+    const syncReachable = () => {
+      for (const [position, slide] of [...track.children].entries()) {
+        slide.inert = position !== index;
+      }
+    };
+
     const goTo = (next) => {
       if (!items.length) return;
       index = Math.max(0, Math.min(items.length - 1, next));
       track.style.transform = `translateX(-${index * 100}%)`;
+      syncReachable();
       dotsRow.querySelectorAll("[data-dot]").forEach((dot, position) => dot.classList.toggle("active", position === index));
       prevArrow.disabled = index === 0;
       nextArrow.disabled = index === items.length - 1;
@@ -109,6 +126,9 @@ export function createDeck({ $, escapeHtml, icon, stopAudio = () => {}, afterPai
       if (!node) return;
       items[position] = html;
       node.outerHTML = html;
+      // The replacement is a fresh element, so it does not carry the inert flag
+      // the old one had — a redrawn off-screen slide would become tabbable again.
+      syncReachable();
       afterPaint(track.children[position] || track);
     };
 

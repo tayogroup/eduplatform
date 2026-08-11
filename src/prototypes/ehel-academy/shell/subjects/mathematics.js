@@ -897,7 +897,10 @@ function renderPracticeDeck() {
       if (target.dataset.hintPractice) {
         const used = Number(target.dataset.used || 0) + 1;
         target.dataset.used = String(used);
-        const hints = [item.hint, `Use a diagram, familiar object, table, number line or other model that fits ${course.unit.unitTitle}.`, `The reviewed guidance is ${item.answer}. Explain why it fits before moving on.`];
+        // Same three-step escalation as the grid, and the same rule about its last
+        // step: it names where the method is taught, never the answer. See the
+        // note in renderPracticeClassic.
+        const hints = [item.hint, `Use a diagram, familiar object, table, number line or other model that fits ${course.unit.unitTitle}.`, `Study the Worked Examples for ${course.unit.unitTitle} — one of the twelve uses this method — or ask your AI tutor to set out just the first step.`];
         box.innerHTML = `<p class="feedback try"><span class="field-label">Hint ${Math.min(used, 3)}:</span> ${esc(hints[Math.min(used - 1, 2)])}</p>`;
         return undefined;
       }
@@ -934,7 +937,16 @@ function renderPracticeClassic() {
     const item = course.practice.find((candidate) => candidate.id === button.dataset.hint);
     const used = Number(button.dataset.used || 0) + 1;
     button.dataset.used = String(used);
-    const hints = [item.hint, `Use a diagram, familiar object, table, number line or other model that fits ${course.unit.unitTitle}.`, `The reviewed guidance is ${item.answer}. Explain why it fits before moving on.`];
+    // The third hint used to print the answer itself ("The reviewed guidance is
+    // <answer>"), which a learner could type straight back to mark the question
+    // correct. That cost nothing while grading accepted any substring, because
+    // the question was already free; it costs the section's meaning now that
+    // completing Guided Practice means the mathematics was actually done.
+    //
+    // So the escalation ends by naming where the method is taught rather than
+    // handing over the result. Every unit carries twelve worked examples across
+    // the same three levels, and the tutor is available at any hour.
+    const hints = [item.hint, `Use a diagram, familiar object, table, number line or other model that fits ${course.unit.unitTitle}.`, `Study the Worked Examples for ${course.unit.unitTitle} — one of the twelve uses this method — or ask your AI tutor to set out just the first step.`];
     $(`#feedback-${item.id}`).innerHTML = `<p class="feedback try"><span class="field-label">Hint ${Math.min(used,3)}:</span> ${escapeHtml(hints[Math.min(used-1,2)])}</p>`;
   }));
   $$('[data-answer]').forEach((button) => button.addEventListener("click", () => {
@@ -1235,7 +1247,23 @@ function renderFluency() {
       $("#fluency-time").textContent=`${seconds}s`;
       $("#check-fluency").disabled=true;
       $("#fluency-question").textContent=`${score} of ${items.length} accurate`;
-      complete("fluency", "Math Fluency sprint complete.");
+      // Reaching the end is not the same as being fluent. This used to complete
+      // on the last question whatever the score, so a sprint answered wrongly
+      // twelve times out of twelve reported "Math Fluency sprint complete." and
+      // ticked the section — which mattered little while grading accepted any
+      // substring and nobody could fail, and matters now that it does not.
+      //
+      // The threshold is the unit's own assessment.passPercent rather than a
+      // number invented here: 80 in all 133 units, and the figure the course
+      // already tells learners is mastery.
+      const needed = Math.ceil(items.length * (course.assessment?.passPercent ?? 80) / 100);
+      if (score >= needed) complete("fluency", "Math Fluency sprint complete.");
+      else {
+        // A section that cannot be completed holds the rest of the grade shut,
+        // so falling short has to offer another run rather than a dead end.
+        $("#fluency-feedback").innerHTML = `<p class="feedback try"><span class="status-note">${score} of ${items.length} — fluency needs ${needed}.</span> Review the worked examples for the ones you missed, then run the sprint again.</p><button class="button primary" id="retry-fluency" type="button">↻ Run the sprint again</button>`;
+        $("#retry-fluency").addEventListener("click", renderFluency);
+      }
     } else draw();
   });
   $("#fluency-answer").addEventListener("keydown",event=>{if(event.key==="Enter")$("#check-fluency").click();});

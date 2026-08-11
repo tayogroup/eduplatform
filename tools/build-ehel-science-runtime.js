@@ -142,7 +142,11 @@ const CAMBRIDGE_OBJECTIVES = {
   // and a galaxy as stars, planetary systems and star-forming dust and gas. The
   // unit's own subject, rocks and the rock cycle, appears nowhere in 0893 at any
   // stage, so before this it claimed only enquiry and application objectives.
-  "8-8": ["8TWSc.01", "8TWSc.07", "8SIC.02", "8ESs.01", "8ESs.02"],
+  // 8ESc.01-8ESc.03 join them, claimed on the passage that continues the
+  // sedimentary concept: climate distinguished from weather, the rock, fossil
+  // and ice-core evidence for the ice-age cycle, and atmospheric change as what
+  // drives it.
+  "8-8": ["8TWSc.01", "8TWSc.07", "8SIC.02", "8ESs.01", "8ESs.02", "8ESc.01", "8ESc.02", "8ESc.03"],
   // Both Planet Earth objectives are claimed on passages CONCEPT_INSERTS adds:
   // 8ESp.01 on concept 6, which attributes the Earth's field to its moving iron
   // core, and 8ESp.02 on concept 2, which teaches renewable and non-renewable
@@ -213,7 +217,6 @@ function cambridgeObjectivesFor(grade, unitNo, code) {
 // REASON is authored, and only where it has actually been established.
 const CAMBRIDGE_GAP_REASONS = {
   "8-Structure and function": "Three of the four are now taught: Unit 7 continues its digestion arc into what blood is made of, how the alveoli are built for gas exchange, and how oxygen and carbon dioxide diffuse across that barrier (8Bs.02-8Bs.04). 8Bs.01 remains — joints and antagonistic muscles are taught nowhere in Grade 8, and a unit about food is not where they belong. The course teaches the skeleton at Grade 4 (4Bh1, vertebrates having internal backbones) and body systems at Grade 6 (6Bh1-6Bh4), neither at Lower Secondary depth, so closing 8Bs.01 needs movement and muscles written for Stage 8.",
-  "8-Cycles on Earth": "Climate is taught nowhere in the course. Grade 8's Rocks unit accounts for 96 apparent matches on \"weather\", but every one is \"weathering\" — the breakdown of rock — and its single use of \"climate\" is the incidental phrase \"in the climate of East Africa\". No unit distinguishes climate from weather, or covers climate cycles or atmospheric change.",
   "4-Sound": "No Year 4 Science pack contains a sound unit. Grade 4's six units are Living Things, Energy, Materials, The Earth, Light and Electricity; the only sound content anywhere in the stage is one glossary line in the Energy unit (\"Sound energy = Energy of vibrations that we hear\"), which teaches none of 4Ps1-4Ps5. Grade 1 covers sound at Stage 1 depth (1Ps1-1Ps3) and nothing revisits it. Closing this needs a Stage 4 sound unit to be written — a content commission, not a rebuild.",
 };
 
@@ -285,6 +288,22 @@ const CONCEPT_INSERTS = {
   // subject. Asteroids are the bridge: they are rocks, which is what this unit
   // is about, and they are what the planets were built from.
   "8-8": [{
+    // Cycles on Earth was the last Stage 8 sub-strand no unit reached, and the
+    // hardest to place: climate is taught nowhere in the course at any stage, and
+    // no Grade 8 unit has it as a subject. It looked like it would have to be
+    // bolted on somewhere.
+    //
+    // It does not, because rock IS the evidence. The sedimentary concept ends on
+    // the stone town of Lamu — "sedimentary rock made from the skeletons of sea
+    // creatures that lived long ago" — and coral only grows in warm, shallow,
+    // clear sea. That building is already a record of what the climate was like
+    // there, which is the natural place to separate climate from weather and
+    // then to say that the record shows it changing. 8ESc.01's own wording is
+    // about EVIDENCE for the cycle, and this unit is where a learner meets it.
+    conceptId: "concept-3-sedimentary-rock-built-in-layers",
+    after: "you are looking at sedimentary rock made from the skeletons of sea creatures that lived long ago.",
+    text: "\n\nRock records more than the creatures in it. Coral grows only in warm, shallow, clear sea, so coral limestone beneath a town tells you what conditions were like there long ago — and conditions over the long run are climate, not weather. The two are easy to confuse. Weather is what the sky is doing now, or this week: today's rain, this morning's wind, the heat this afternoon. Climate is the pattern of weather a place has over decades, the reason we can say the coast is hot and humid and the highlands are cool even though any single day may go against it. Weather changes hour by hour; climate changes over lifetimes and longer.\n\nAnd it does change. Rock layers, the fossils inside them, and bubbles of ancient air trapped deep in polar ice all point the same way: the Earth's climate has swung slowly between long cold periods called ice ages, when sheets of ice spread far from the poles, and warmer periods between them, when the ice drew back and forests and seas advanced. That cycle has repeated many times over.\n\nWhat tips the balance is largely the air itself. Gases such as carbon dioxide and methane trap some of the Sun's heat instead of letting it escape back into space, so when their share of the atmosphere rises the world warms, and when it falls the world cools. That is why burning coal, oil and gas — which releases carbon dioxide that was locked away for millions of years — changes the climate, and not merely the weather outside your window today.",
+  }, {
     conceptId: "concept-5-the-rock-cycle-nature-s-great-recycling",
     after: "the rock beneath your feet has almost certainly been many different rocks before, and will become many more long after we are gone.",
     text: "\n\nPush that question back far enough, though, and you leave the Earth altogether. Where did the very first rock come from? Our Sun and everything circling it formed from an enormous cloud of dust and gas. Gravity drew that cloud together: most of it became the Sun, while the dust further out clumped into larger and larger lumps until those lumps became planets. Not all of the material was used up. Between Mars and Jupiter, and scattered elsewhere, lie asteroids — rocks left over from that building work, far smaller than any planet, ranging from boulders to bodies hundreds of kilometres across. They never gathered into a planet of their own, so they remain close to the original material the planets were made from. Now and then one falls to Earth as a meteorite, and you can hold a piece of rock older than the ground you are standing on.\n\nThe Sun and its planets together make a planetary system, and it is not alone. A galaxy is a vast collection of stars, planetary systems, and the clouds of dust and gas that new stars form from, all held together by gravity. Ours is called the Milky Way, and on a really dark night the pale band of light across the sky is our own view of it, seen edge-on from the inside. It holds hundreds of billions of stars, and our Sun is one of them.",

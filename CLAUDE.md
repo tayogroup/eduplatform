@@ -76,7 +76,59 @@ npm run extract:computing-content && npm run build:computing && npm run check:co
 
 All three subjects export from Google Drive as `Year <n>-<UTC stamp>-<part>.zip`, so a Downloads folder holds three subjects under indistinguishable filenames. The Computing and Global Perspectives extractors classify each archive by what its documents say and accept only their own. The science extractor still picks by name alone, so **check which subject a `Year N` zip actually contains before running `extract:science-content`.**
 
-Computing spans Stages 1-7 (Cambridge Primary Computing 0672, Lower Secondary 0868). Stages 1-4 ship as Teacher & Parent Guides, so the builder rewrites their prose into learner-facing explainers (`learnerVoice`); Stages 5-7 ship student lesson books carried across as written. `check:computing` is the gate on that conversion — it fails on adult-addressed text, classroom staging, truncated explainers and modules duplicated across units.
+Computing spans Stages 1-8 (Cambridge Primary Computing 0672, Lower Secondary 0868) — the Stage 8 pack was exported later than the rest and all eight stages are published in `catalog.json`. Stages 1-4 ship as Teacher & Parent Guides, so the builder rewrites their prose into learner-facing explainers (`learnerVoice`); Stages 5-8 ship student lesson books carried across as written. `check:computing` is the gate on that conversion — it fails on adult-addressed text, classroom staging, truncated explainers and modules duplicated across units.
+
+#### Answer keys are checked against the booklet, not just for shape
+
+Three quiz keys shipped bound to the wrong option — a flowchart decision keyed
+`oval`, an integer question keyed `3.14`, a micro:bit OUTPUT keyed
+`the shake sensor`. Every existing gate passed them: the key was a real option,
+the options were unique, the explanation was prose. Nothing compared the key to
+the booklet it came from. `check-computing-answer-keys.mjs` does, and is wired
+into `check:computing`.
+
+Only **booklet-derived** questions can fail it — 188 of 768. The other 580 are
+built from the unit's own content (`Which of these describes "X"?` from
+concepts, `What should you do when this happens:` from the debugging table,
+`What does "X" mean in computing?` from the glossary) as
+`options: [row.answer, ...distractors], answer: row.answer`. The key *is* the
+object the question was generated from, so it cannot disagree with itself and
+there is nothing external to compare it against. Don't read the 580 as unchecked;
+read them as unfalsifiable.
+
+**Ground truth is a committed fixture** (`computing/data/booklet-answer-keys.json`),
+not the content model. `outputs/` is gitignored, so a gate reading the model
+would find nothing on a fresh clone and pass having compared nothing. Regenerate
+after re-running `extract:computing-content`:
+
+```bash
+node tools/check-computing-answer-keys.mjs --write-fixture
+```
+
+When the model *is* present the gate re-derives every key and fails if the
+fixture has drifted from it, so the committed copy cannot quietly go stale. On a
+machine without the model that cross-check cannot run — the fixture is trusted,
+and its diff is the review surface.
+
+Two traps, both found by the fixture disagreeing with itself between runs:
+
+- **An unnumbered key run binds by position**, so it is only trustworthy when it
+  is the same length as the question run. One question that fails to parse
+  shifts every later answer onto the wrong question, and the fixture then
+  asserts the wrong key with complete confidence. Where the counts disagree the
+  section is skipped and reported instead. A gap is recoverable; wrong ground
+  truth inside the gate is not.
+- **A stem filter that counts words rejects real questions.** "Bandwidth is:",
+  "Encryption means:" and "Phishing is:" are two words each, and dropping them
+  caused exactly the shift above. The filter exists only to reject the
+  underscore runs the booklets print as write-in lines, so it asks for letters,
+  not for word count.
+
+The packs write keys five ways (`1 (b)`, `1: (c)`, `1. (b)`, bare `(b)`, `B - `)
+and options three ways (`(a)`, `a)`, `A)`), and one layout gives the key run the
+**same section name as the questions**, separable only by position. Each variant
+was found by a unit silently going unchecked, so narrowing any of them drops
+that unit from the gate without saying so.
 
 #### Computing Stages 1-4 show BOTH designs
 

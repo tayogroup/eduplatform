@@ -108,6 +108,43 @@ $CFG->sessioncookie = 'ep1';
 $CFG->dataroot = '/home/ehelacad/moodledata_quraantest';
 $CFG->admin = 'admin';
 
+// Shared secret for local/hubredirect/deployment_drift_probe.php, the endpoint
+// that lists checksums of every plugin PHP file so a deploy can be proved to
+// have reached the SERVED docroot rather than a shadowed copy. With no token
+// the probe falls back to requiring an interactive site-admin session, which a
+// CLI check cannot supply -- that is the HTTP 401 it answers with today.
+//
+// READ FROM A FILE OUTSIDE THE DOCROOT, and deliberately not written inline.
+// Two reasons, and the second is the sharper one:
+//
+//   1. This snippet is in git. A literal token here is a live credential in the
+//      repository's history, which is the rule .env exists to avoid.
+//   2. The probe also accepts local/hubredirect/.deployment_drift_token and
+//      local/hubredirect/deployment_drift_token.txt. BOTH OF THOSE SIT INSIDE
+//      THE WEB-SERVED PLUGIN DIRECTORY, and nothing in this install blocks
+//      them -- the .txt one is plainly downloadable, handing the credential
+//      that gates a checksum listing of every file on the box to anyone who
+//      asks for it. ~/.eduplatform_drift_token is above the docroot, so it is
+//      not reachable over HTTP at all.
+//
+// To set it, on the server (never commit the value):
+//
+//   printf '%s' 'PASTE_TOKEN_HERE' > /home/ehelacad/.eduplatform_drift_token
+//   chmod 600 /home/ehelacad/.eduplatform_drift_token
+//
+// The matching client-side value lives in this repo's gitignored .env.e2e as
+// EDUPLATFORM_DEPLOYMENT_DRIFT_TOKEN. The two must be identical or the probe
+// answers 403 invalid_token instead of 401.
+$eduplatformdrifttokenfile = '/home/ehelacad/.eduplatform_drift_token';
+if (is_readable($eduplatformdrifttokenfile)) {
+    $eduplatformdrifttoken = trim((string)file_get_contents($eduplatformdrifttokenfile));
+    if ($eduplatformdrifttoken !== '') {
+        $CFG->eduplatform_deployment_drift_token = $eduplatformdrifttoken;
+    }
+    unset($eduplatformdrifttoken);
+}
+unset($eduplatformdrifttokenfile);
+
 $CFG->directorypermissions = 0777;
 $CFG->enablewebservices = 1;
 

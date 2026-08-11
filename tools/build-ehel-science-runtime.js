@@ -136,7 +136,11 @@ const CAMBRIDGE_OBJECTIVES = {
   // possible, and the diffusion of oxygen and carbon dioxide across it. 8Bs.01
   // (joints and antagonistic muscles) is not claimed — nothing in Grade 8
   // teaches it, and a digestion unit is not where it belongs.
-  "8-7": ["8Bp.01", "8Bp.02", "8Bp.03", "8Bs.02", "8Bs.03", "8Bs.04", "8TWSc.07", "8TWSa.05"],
+  // 8Bs.01 joins them, claimed on the passage that continues the mechanical
+  // digestion concept: hinge and ball-and-socket joints identified, and
+  // antagonistic muscle pairs explained at a hinge — the elbow explicitly, and
+  // the jaw the learner is chewing with.
+  "8-7": ["8Bp.01", "8Bp.02", "8Bp.03", "8Bs.01", "8Bs.02", "8Bs.03", "8Bs.04", "8TWSc.07", "8TWSa.05"],
   // 8ESs.01-8ESs.02 are claimed on the passage CONCEPT_INSERTS continues the
   // rock cycle concept with: asteroids as leftover rock smaller than any planet,
   // and a galaxy as stars, planetary systems and star-forming dust and gas. The
@@ -216,7 +220,6 @@ function cambridgeObjectivesFor(grade, unitNo, code) {
 // unit to a new objective and the gap closes here on the next build. Only the
 // REASON is authored, and only where it has actually been established.
 const CAMBRIDGE_GAP_REASONS = {
-  "8-Structure and function": "Three of the four are now taught: Unit 7 continues its digestion arc into what blood is made of, how the alveoli are built for gas exchange, and how oxygen and carbon dioxide diffuse across that barrier (8Bs.02-8Bs.04). 8Bs.01 remains — joints and antagonistic muscles are taught nowhere in Grade 8, and a unit about food is not where they belong. The course teaches the skeleton at Grade 4 (4Bh1, vertebrates having internal backbones) and body systems at Grade 6 (6Bh1-6Bh4), neither at Lower Secondary depth, so closing 8Bs.01 needs movement and muscles written for Stage 8.",
   "4-Sound": "No Year 4 Science pack contains a sound unit. Grade 4's six units are Living Things, Energy, Materials, The Earth, Light and Electricity; the only sound content anywhere in the stage is one glossary line in the Energy unit (\"Sound energy = Energy of vibrations that we hear\"), which teaches none of 4Ps1-4Ps5. Grade 1 covers sound at Stage 1 depth (1Ps1-1Ps3) and nothing revisits it. Closing this needs a Stage 4 sound unit to be written — a content commission, not a rebuild.",
 };
 
@@ -309,6 +312,26 @@ const CONCEPT_INSERTS = {
     text: "\n\nPush that question back far enough, though, and you leave the Earth altogether. Where did the very first rock come from? Our Sun and everything circling it formed from an enormous cloud of dust and gas. Gravity drew that cloud together: most of it became the Sun, while the dust further out clumped into larger and larger lumps until those lumps became planets. Not all of the material was used up. Between Mars and Jupiter, and scattered elsewhere, lie asteroids — rocks left over from that building work, far smaller than any planet, ranging from boulders to bodies hundreds of kilometres across. They never gathered into a planet of their own, so they remain close to the original material the planets were made from. Now and then one falls to Earth as a meteorite, and you can hold a piece of rock older than the ground you are standing on.\n\nThe Sun and its planets together make a planetary system, and it is not alone. A galaxy is a vast collection of stars, planetary systems, and the clouds of dust and gas that new stars form from, all held together by gravity. Ours is called the Milky Way, and on a really dark night the pale band of light across the sky is our own view of it, seen edge-on from the inside. It holds hundreds of billions of stars, and our Sun is one of them.",
   }],
   "8-7": [{
+    // 8Bs.01 was the last Stage 8 objective outstanding, and I twice said it had
+    // no honest home — the candidate units are about food, reproduction and
+    // rocks, none of which leans toward a skeleton. That was wrong, and the lean
+    // was in the unit I had already extended.
+    //
+    // Mechanical digestion IS this objective in use. The concept ends on "we are
+    // taught to eat calmly and chew our food well", and chewing is the body's
+    // most familiar hinge joint driven by opposing muscles. Starting from the
+    // jaw rather than from the elbow also makes the "a muscle can only pull"
+    // rule land on something the learner is doing while reading it. The unit
+    // already teaches calcium building bones, so bone is in its vocabulary.
+    //
+    // Anchored on the chewing sentence rather than the concept's true last line,
+    // which is a stray fragment ("Breaking large molecules into small ones.") —
+    // a definition merged into the explanation during extraction. 18 concepts
+    // across the course end that way; it is a real defect, but a separate one.
+    conceptId: "concept-5-mechanical-and-chemical-digestion",
+    after: "This is also why we are taught to eat calmly and chew our food well.",
+    text: "\n\nNone of that chewing would happen without the machinery that moves your jaw. Bones themselves cannot bend, so wherever the body needs to move, two bones meet at a joint. Your jaw swings on a hinge joint, which opens and closes in one plane like a door; your elbow and knee are hinges too. A ball-and-socket joint, where the rounded end of one bone sits in a cup in another, turns in almost any direction — that is your shoulder and your hip. It is why you can swing your arm in a full circle but bend your elbow only one way.\n\nMuscles move those bones, and there is a catch: a muscle can only pull, never push. So muscles are arranged in antagonistic pairs that pull in opposite directions. At the elbow, the biceps on top of your upper arm contracts and shortens to bend the joint while the triceps underneath relaxes; to straighten the arm again the triceps contracts and the biceps relaxes. Your jaw works the same way — one set of muscles contracts to close it against the food, another set opens it again — and those two take turns for every mouthful you chew.",
+  }, {
     conceptId: "concept-4-the-journey-through-your-digestive-system",
     after: "digested food is absorbed quickly and efficiently into the blood, which carries the nutrients to every cell in your body.",
     text: "\n\nSo what is blood, and what else does it carry? A little over half of it is plasma, a straw-coloured liquid that carries the dissolved nutrients you have just absorbed, along with wastes and heat. Floating in that plasma are three kinds of cell, each with its own job. Red blood cells are packed with a red pigment called haemoglobin, which grips oxygen and carries it to every working cell. White blood cells are part of your defence against infection. Platelets are cell fragments that clump together to seal a cut — they are why Amina's finger stops bleeding.\n\nThe oxygen those red cells carry is collected in your lungs. Each lung divides into finer and finer tubes that end in millions of tiny air sacs called alveoli. The trick is the one the small intestine already showed you: an enormous surface area folded into a small space. The wall of an alveolus is a single cell thick and is wrapped in blood capillaries whose walls are also a single cell thick, so the air and the blood are separated by almost nothing.\n\nGases cross that thin barrier by diffusion, moving from where they are crowded to where they are not. The air in an alveolus is rich in oxygen and the blood arriving there is poor in it, so oxygen diffuses into the blood. Carbon dioxide, the waste your cells produce, is crowded in the arriving blood and scarce in the air, so it diffuses the other way and you breathe it out.",

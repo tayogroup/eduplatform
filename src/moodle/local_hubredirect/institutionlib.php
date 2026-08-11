@@ -884,8 +884,25 @@ function pqhi_public_email_recipient(string $email, string $firstname, string $l
  * "Primary language" answer -- the language spoken at home. Anything other than
  * Somali gets English, because those are the only two written, and a family is
  * better served by a language they may read than by one nobody has translated.
+ *
+ * SOMALI IS OFF BY DEFAULT. The Somali bodies are written and wired, but the
+ * text is machine-written and has not been read by a native speaker; a
+ * mistranslated credentials block is a family that cannot sign in. Until that
+ * review comes back, everyone gets the approved English.
+ *
+ * It is a setting rather than a constant so that turning it on does not need
+ * another release. Deploying here is a manual file copy to a box that hosts nine
+ * Moodle installs, so "one line and a deploy" is not one line -- and a switch
+ * nobody can reach without a deploy is a switch that stays where it is.
+ *
+ *   php admin/cli/cfg.php --component=local_hubredirect --name=intake_email_somali --set=1
+ *
+ * Anything other than 1 -- unset, 0, empty -- keeps English for everyone.
  */
 function pqhi_intake_language(string $primarylanguage): string {
+    if ((string)get_config('local_hubredirect', 'intake_email_somali') !== '1') {
+        return 'en';
+    }
     return core_text::strtolower(trim($primarylanguage)) === 'somali' ? 'so' : 'en';
 }
 

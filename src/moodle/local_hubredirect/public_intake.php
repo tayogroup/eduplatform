@@ -1032,8 +1032,12 @@ if ($ready && !$needsschoolselection && $_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors['course_type'] = 'Please select the course.';
     }
     if ($isprimaryeducation) {
-        foreach ([
-            'date_of_birth' => 'Please enter the student date of birth.',
+        // Date of birth is deliberately absent from this list and from the form.
+        // Age carries the placement check on its own; asking a family to fetch a
+        // birth certificate before they can submit cost more than it returned.
+        // The column and every read of it stay, so records that already hold a
+        // date keep it and nothing downstream has to change.
+foreach ([
             'age_years' => 'Please enter the student age.',
             'gender' => 'Please select the student gender.',
             'special_needs' => 'Please select Yes or No for Special Needs.',
@@ -1716,8 +1720,12 @@ body.pqh-public-intake-page #page-wrapper,body.pqh-public-intake-page #page,body
             </div><div class="pqpir-page">
             <h3>Primary education details</h3>
             <div class="pqpir-grid">
-              <div class="pqpir-field<?php echo isset($errors['date_of_birth']) ? ' pqpir-field--error' : ''; ?>"><label>Date of birth</label><?php echo pqpir_hint("The student's real date of birth, from their birth certificate. We use it to check the grade placement is right for their age."); ?><input class="pqpir-input" name="date_of_birth" type="date" value="<?php echo s(pqpir_value($form, 'date_of_birth')); ?>"><?php echo pqpir_error($errors, 'date_of_birth'); ?></div>
-              <div class="pqpir-field<?php echo isset($errors['age_years']) ? ' pqpir-field--error' : ''; ?>"><label>Age</label><?php echo pqpir_hint('Age in whole years today — it should agree with the date of birth you entered.'); ?><input class="pqpir-input" name="age_years" type="number" min="1" max="99" value="<?php echo s(pqpir_value($form, 'age_years')); ?>"><?php echo pqpir_error($errors, 'age_years'); ?></div>
+              <?php // Date of birth is not asked for. Age answers the same question for
+                    // placement, and a parent filling this in on a phone should not have to
+                    // find a birth certificate first. The field is gone rather than hidden:
+                    // a hidden input still posts, and an empty value that looks deliberate
+                    // is worse than no value at all. ?>
+              <div class="pqpir-field<?php echo isset($errors['age_years']) ? ' pqpir-field--error' : ''; ?>"><label>Age</label><?php echo pqpir_hint("The student's age in whole years today. We use it to check the grade is right for their age."); ?><input class="pqpir-input" name="age_years" type="number" min="1" max="99" value="<?php echo s(pqpir_value($form, 'age_years')); ?>"><?php echo pqpir_error($errors, 'age_years'); ?></div>
               <div class="pqpir-field<?php echo isset($errors['gender']) ? ' pqpir-field--error' : ''; ?>"><label>Gender</label><?php echo pqpir_hint('Used for class grouping and, where you ask for it below, for matching a teacher of the same gender.'); ?><select class="pqpir-input" name="gender"><option value="">Select</option><option value="female"<?php echo pqpir_selected($form, 'gender', 'female'); ?>>Female</option><option value="male"<?php echo pqpir_selected($form, 'gender', 'male'); ?>>Male</option></select><?php echo pqpir_error($errors, 'gender'); ?></div>
               <div class="pqpir-field<?php echo isset($errors['current_grade']) ? ' pqpir-field--error' : ''; ?>"><label>Current grade/year</label><?php echo pqpir_hint('The grade the student is in right now — not the one they are moving up to. Choose "Other / not sure" if the student is between schools or systems.'); ?><?php echo pqpir_select('current_grade', $options['primary_grade_levels'] ?? [], $form, $errors); ?></div>
               <div class="pqpir-field<?php echo isset($errors['school_curriculum']) ? ' pqpir-field--error' : ''; ?>"><label>School curriculum</label><?php echo pqpir_hint('The curriculum the student\'s current school follows. Pick the closest match — it tells us how their grade compares to ours.'); ?><?php echo pqpir_select('school_curriculum', $options['primary_curricula'] ?? [], $form, $errors); ?></div>

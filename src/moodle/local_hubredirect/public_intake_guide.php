@@ -212,7 +212,7 @@ echo ehp_styles();
       <h2>What to have ready</h2>
       <ul>
         <li><strong>Your email address</strong> — this is where our decision and your child's login details are sent.</li>
-        <li><strong>Your child's date of birth</strong>, as it appears on the birth certificate.</li>
+        <li><strong>Your child's age</strong> in whole years.</li>
         <li><strong>The grade your child is in right now</strong> — not the grade they are moving up to.</li>
       </ul>
       <p class="pqig-muted">

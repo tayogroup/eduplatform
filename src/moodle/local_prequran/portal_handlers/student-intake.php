@@ -415,8 +415,12 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
             $ageyears = $bodyint('age_years', 0);
             $isadultstudent = $ageyears >= 18;
             if ($pqsiisprimaryeducation) {
-                foreach ([
-                    'date_of_birth' => 'Date of birth is required for primary education students.',
+                // Date of birth is deliberately absent from this list and from the form.
+                // Age carries the placement check on its own; asking a family to fetch a
+                // birth certificate before they can submit cost more than it returned.
+                // The column and every read of it stay, so records that already hold a
+                // date keep it and nothing downstream has to change.
+foreach ([
                     'age_years' => 'Age is required for primary education students.',
                     'gender' => 'Gender is required for primary education students.',
                     'special_needs' => 'Special Needs must be Yes or No for primary education students.',

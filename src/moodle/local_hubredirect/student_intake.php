@@ -1564,8 +1564,12 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
         $ageyears = optional_param('age_years', 0, PARAM_INT);
         $isadultstudent = $ageyears >= 18;
         if ($pqsiisprimaryeducation) {
-            foreach ([
-                'date_of_birth' => 'Date of birth is required for primary education students.',
+            // Date of birth is deliberately absent from this list and from the form.
+            // Age carries the placement check on its own; asking a family to fetch a
+            // birth certificate before they can submit cost more than it returned.
+            // The column and every read of it stay, so records that already hold a
+            // date keep it and nothing downstream has to change.
+foreach ([
                 'age_years' => 'Age is required for primary education students.',
                 'gender' => 'Gender is required for primary education students.',
                 'special_needs' => 'Special Needs must be Yes or No for primary education students.',
@@ -2447,7 +2451,8 @@ body.pqh-student-intake-page #page,body.pqh-student-intake-page #page-content,bo
             </div><div class="pqsi-page">
             <h3>Primary education details</h3>
             <div class="pqsi-grid">
-              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'date_of_birth'); ?>" id="pqsi-date_of_birth"><label>Date of birth</label><input class="pqsi-input" name="date_of_birth" type="date" value="<?php echo s(pqsi_form_value($form, 'date_of_birth')); ?>"><?php echo pqsi_form_error($fielderrors, 'date_of_birth'); ?></div>
+              <?php // Date of birth is not asked for here either, matching the public
+                    // form. Age is what the placement check reads. ?>
               <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'age_years'); ?>"><label>Age</label><input class="pqsi-input" name="age_years" type="number" min="0" max="99" value="<?php echo s(pqsi_form_value($form, 'age_years')); ?>"><?php echo pqsi_form_error($fielderrors, 'age_years'); ?></div>
               <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'gender'); ?>"><label>Gender</label><select class="pqsi-select" name="gender"><option value="">Select</option><option value="female"<?php echo pqsi_selected($form, 'gender', 'female'); ?>>Female</option><option value="male"<?php echo pqsi_selected($form, 'gender', 'male'); ?>>Male</option></select><?php echo pqsi_form_error($fielderrors, 'gender'); ?></div>
               <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'current_grade'); ?>" id="pqsi-current_grade"><label>Current grade/year</label><?php echo pqsi_select('current_grade', $pqsioptions['primary_grade_levels'] ?? [], $form, $fielderrors); ?></div>

@@ -462,8 +462,12 @@ foreach ($requiredfields as $field => $errormessage) {
     }
 }
 if ($isprimaryeducation) {
-    foreach ([
-        'date_of_birth' => 'Please enter the student date of birth.',
+    // Date of birth is deliberately absent from this list and from the form.
+    // Age carries the placement check on its own; asking a family to fetch a
+    // birth certificate before they can submit cost more than it returned.
+    // The column and every read of it stay, so records that already hold a
+    // date keep it and nothing downstream has to change.
+foreach ([
         'age_years' => 'Please enter the student age.',
         'gender' => 'Please select the student gender.',
         'special_needs' => 'Please select Yes or No for Special Needs.',

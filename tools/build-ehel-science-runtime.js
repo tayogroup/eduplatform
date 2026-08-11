@@ -1395,6 +1395,10 @@ function buildGrade(grade) {
     return grid;
   }
 
+  // How these books open a line of a worked solution. Anchored, so a sentence
+  // that merely contains the word "answer" is not mistaken for one.
+  const WORKED_STEP = /^(?:Step\s*\d|Given\b|Formula\b|Calculate\b|Working\b|Solution\b|Answer\b)\s*[:.—-]/i;
+
   function conceptList(lesson, title) {
     const gridCells = gridCellIndexes(lesson.blocks);
     // Concept headings are not written the same way in every year. Three
@@ -1472,7 +1476,13 @@ function buildGrade(grade) {
         })
         : slice.findIndex((item) => LESSON_TAIL.test(tidy(item.text)));
       const kept = tailAt >= 0 ? slice.slice(0, tailAt) : slice;
-      const usable = (text, minLength) => text.length > minLength && !/Ask Your AI Tutor|^Remember\b/i.test(text);
+      // A worked example's steps are short by nature — "Calculate: m = 1.03 x
+      // 500 = 515." is 32 characters — so the 40-character prose filter dropped
+      // the arithmetic and kept the sentence that set it up. A line opening with
+      // a step marker is teaching however short it is, so it is measured against
+      // the same floor the table fallback uses rather than the prose one.
+      const usable = (text, minLength) => text.length > (WORKED_STEP.test(text) ? 12 : minLength)
+        && !/Ask Your AI Tutor|^Remember\b/i.test(text);
       // Prose first, and prose is decided by the table a block sits in, not by
       // its length. The 40-character filter was doing both jobs and could only
       // do one: it kept out SHORT table cells and let long ones through as if
@@ -1487,25 +1497,65 @@ function buildGrade(grade) {
       // them all would delete real teaching to remove a dozen fragments.
       // gridCells separates the two by shape — see the helper.
       const prose = kept.filter((item, offset) => !gridCells.has(index + 1 + offset));
-      let body = prose.map((item) => tidy(item.text)).filter((text) => usable(text, 40));
+      let bodyItems = prose.filter((item) => usable(tidy(item.text), 40));
       // Some sections teach mostly through a table (states of matter, beak
       // shapes, natural vs man-made). Their rows arrive as short table-cell
       // blocks, so the 40-character prose filter empties the concept. Fall back
       // to the shorter blocks so the table's content survives — cells included,
       // because here they ARE the teaching rather than debris caught beside it.
-      if (body.join(" ").length < 300) {
-        body = kept.map((item) => tidy(item.text)).filter((text) => usable(text, 12));
+      if (bodyItems.map((item) => tidy(item.text)).join(" ").length < 300) {
+        bodyItems = kept.filter((item) => usable(tidy(item.text), 12));
       }
+      const body = bodyItems.map((item) => tidy(item.text));
       const heading = numberedTitle
         || tidy(block.text).replace(/^(?:Part|Concept|Topic|Section|Idea|Big Idea|Lesson)\s+\d+\s*[—:.\-]\s*/i, "");
       // The closing paragraph becomes the worked "Example", so hold it out of
       // the explanation whenever there is enough prose to spare one.
-      const hasSpareParagraph = body.length > 2;
+      //
+      // Unless it is the tail of a worked example, which is not a spare
+      // paragraph but the second half of a sentence pair. Three concepts ended
+      // mid-solution because of this: the explanation stopped at "Step 1 — Pick
+      // the two numbers. Metal box = 12 N, plastic toy = 2 N." and Step 2, the
+      // one with the answer in it, was displayed on its own under "Example:".
+      // Nothing was lost, but a learner read the setup and never the result.
+      //
+      // The test is on the last TWO blocks, not one. A single closing worked
+      // example makes a perfectly good Example and should still be held out;
+      // what must not be severed is a run of steps. The model marks these
+      // (content_kind "Worked example"), so the sequence is visible here.
+      // content_kind alone cannot answer this. The same worked example is
+      // labelled "Worked example" in the Year 3 pack and "Learning outcome" in
+      // the Year 8 one, so the marker the author actually wrote is the more
+      // reliable signal, and both are used.
+      const isWorkedStep = (item) => Boolean(item)
+        && (item.content_kind === "Worked example" || WORKED_STEP.test(tidy(item.text)));
+      const endsMidWorkedExample = bodyItems.length > 1
+        && isWorkedStep(bodyItems[bodyItems.length - 1])
+        && isWorkedStep(bodyItems[bodyItems.length - 2]);
+      const hasSpareParagraph = body.length > 2 && !endsMidWorkedExample;
       return {
         id: `concept-${position + 1}-${slug(heading) || position + 1}`,
         title: heading,
         explanation: paragraphs(hasSpareParagraph ? body.slice(0, -1) : body),
-        example: tidy(hasSpareParagraph ? body[body.length - 1] : (body[1] || body[0] || heading)),
+        // When the closing run is a worked example the whole run stays in the
+        // explanation, so the Example line has to come from somewhere else —
+        // and it must not be another step, or the card shows "Step 1 — Look
+        // closely" with nothing to look at. Take the last paragraph that is not
+        // a step: it is the concept's own illustrative sentence, already read in
+        // context above.
+        example: tidy(hasSpareParagraph
+          ? body[body.length - 1]
+          : (endsMidWorkedExample
+            ? (([...bodyItems].reverse().find((item) => {
+              const text = tidy(item.text);
+              // Not a step, and not the example's own title line — "Worked
+              // Example: using the law of reflection." names the thing rather
+              // than showing it, which reads as badly under "Example:" as a
+              // bare step does.
+              return !isWorkedStep(item) && !/^Worked Examples?\b/i.test(text);
+            }) || {}).text || body[0])
+            : null)
+            || body[1] || body[0] || heading),
         // The book gave this concept its own heading, so the title is the
         // author's, not one the builder inferred.
         fromHeading: true,

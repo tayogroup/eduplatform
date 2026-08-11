@@ -154,7 +154,7 @@ echo ehp_styles();
 .pqig-navmark--img img{height:38px;width:auto;display:block}
 .pqig-navname{font-size:16px;font-weight:700;color:var(--op-header-ink,#fff)}
 .pqig-panel{margin-top:16px;padding:26px 24px;border-radius:14px;background:var(--pq-card);border:1px solid var(--pq-line)}
-.pqig-title{margin:0;font-family:var(--pq-serif);font-size:30px;line-height:1.15;font-weight:600;color:var(--op-header-ink,#fff)}
+.pqig-title{margin:0;font-family:var(--pq-serif);font-size:24px;line-height:1.25;font-weight:600;color:var(--op-header-ink,#fff)}
 .pqig-lede{margin:12px 0 0;font-size:16px;line-height:1.6;color:var(--op-header-ink-soft,rgba(255,255,255,.72))}
 /* The skip route sits with the watch buttons, not below the fold: a parent who
    does not want a video should not have to scroll past one to leave. */

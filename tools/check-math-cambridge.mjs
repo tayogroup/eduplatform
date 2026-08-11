@@ -33,7 +33,13 @@ const MATH = path.join(ROOT, "src", "prototypes", "ehel-academy", "mathematics")
 const CURRICULUM = path.join(ROOT, "src", "curriculum");
 
 // Units with no objective mapping. This may fall, never rise.
-const MAXIMUM_UNMAPPED = 133;
+//
+// 133 -> 101: the 32 Stage 7-8 units now carry a mapping against 0862
+// (tools/map-ehel-math-cambridge-objectives.mjs). The remaining 101 are Stages
+// 1-6, and they stay unmapped until Cambridge Primary Mathematics 0096 is
+// extracted into src/curriculum/ — there is no document to map them against,
+// and codes invented against an absent framework would be worse than the gap.
+const MAXIMUM_UNMAPPED = 101;
 
 const EXPECTED_CODE = (stage) => (stage <= 6 ? "0096" : "0862");
 const norm = (value) => String(value ?? "").toLowerCase().replace(/\s+/g, " ").replace(/[^a-z0-9 ]/g, "").trim();

@@ -129,7 +129,11 @@ const CAMBRIDGE_OBJECTIVES = {
   "8-6": ["8Ps.01", "8Ps.02", "8Ps.03", "8Ps.04", "8TWSc.04"],
   "8-7": ["8Bp.01", "8Bp.02", "8Bp.03", "8TWSc.07", "8TWSa.05"],
   "8-8": ["8TWSc.01", "8TWSc.07", "8SIC.02"],
-  "8-9": ["8Pe.01", "8Pe.02", "8Pe.03", "8TWSm.03", "8TWSc.02"],
+  // 8ESp.01 is claimed on the clause CONCEPT_INSERTS adds to concept 6: the
+  // Earth's field is attributed to its moving iron core, which is the part of
+  // the objective the unit was missing. 8ESp.02 stays unclaimed — renewable and
+  // non-renewable resources are taught in Grade 4's Energy unit, not here.
+  "8-9": ["8Pe.01", "8Pe.02", "8Pe.03", "8ESp.01", "8TWSm.03", "8TWSc.02"],
 };
 
 // Where a unit teaches content its own stage does not carry, the mapping says so
@@ -196,11 +200,55 @@ function cambridgeObjectivesFor(grade, unitNo, code) {
 const CAMBRIDGE_GAP_REASONS = {
   "8-Structure and function": "No Grade 8 unit teaches human body structure. The course covers body systems at Grade 6 (6Bh1-6Bh4, Stage 6 depth) and does not revisit them at Lower Secondary depth, so joints and antagonistic muscles, the components of blood, the respiratory system and gas diffusion are taught nowhere. Unit 7 covers nutrition and digestion but never blood, lungs or joints — its only mentions of blood are a quiz distractor.",
   "8-Ecosystems": "No Grade 8 unit teaches ecology. The course covers ecosystems, food webs and human impact at Grade 6 (6Be1-6Be6, Stage 6 depth); bioaccumulation and invasive species are taught nowhere in the course.",
-  "8-Planet Earth": "Two separate causes. 8ESp.01 is a near miss: Unit 9 teaches that the Earth behaves like a giant magnet and that a compass lines up with its field, but never says the core is the reason — the word appears in the unit only as \"core ideas\" boilerplate and as a difficulty label. One sentence would close it. 8ESp.02 is taught in the wrong stage: renewable and non-renewable resources are a learning outcome of Grade 4's Energy unit, where 0846 has no energy sub-strand to map them to, while Stage 8 — which does publish the objective — never covers them.",
+  "8-Planet Earth": "8ESp.01 was a near miss and is now closed: Unit 9 taught that the Earth behaves like a giant magnet and that a compass lines up with its field, but never why, so CONCEPT_INSERTS adds the missing clause attributing the field to the moving iron core. 8ESp.02 remains, and it is taught in the wrong stage rather than missing: renewable and non-renewable resources are a learning outcome of Grade 4's Energy unit, where 0846 has no energy sub-strand to credit them, while Stage 8 publishes the objective and never covers them. Moving that teaching here would close it without writing anything new.",
   "8-Cycles on Earth": "Climate is taught nowhere in the course. Grade 8's Rocks unit accounts for 96 apparent matches on \"weather\", but every one is \"weathering\" — the breakdown of rock — and its single use of \"climate\" is the incidental phrase \"in the climate of East Africa\". No unit distinguishes climate from weather, or covers climate cycles or atmospheric change.",
   "8-Earth in space": "No Grade 8 unit teaches astronomy. The course covers the Solar System at Grade 5 (5Pb1-5Pb3, Stage 5 depth); galaxies and asteroids are taught nowhere. Grade 8's apparent matches on \"star\" are all \"starch\", from Unit 7's food tests.",
   "4-Sound": "No Year 4 Science pack contains a sound unit. Grade 4's six units are Living Things, Energy, Materials, The Earth, Light and Electricity; the only sound content anywhere in the stage is one glossary line in the Energy unit (\"Sound energy = Energy of vibrations that we hear\"), which teaches none of 4Ps1-4Ps5. Grade 1 covers sound at Stage 1 depth (1Ps1-1Ps3) and nothing revisits it. Closing this needs a Stage 4 sound unit to be written — a content commission, not a rebuild.",
 };
+
+// ── Targeted teaching added to a source concept ──────────────────────────────
+// Grade 8 Unit 9 taught that the Earth behaves like a giant magnet and that a
+// compass lines up with its field, but never why. 0893's 8ESp.01 is specifically
+// "Know that the REASON the Earth has a magnetic field is that the core acts as
+// a magnet", so the objective was a near miss on one missing clause — the word
+// "core" appeared in that unit only as "core ideas" boilerplate and as a
+// difficulty label.
+//
+// The insert is anchored to the exact sentence it follows rather than to an
+// offset, and a missing anchor fails the build. The source pack is re-extracted
+// from Word documents; an insert that silently stopped applying would drop the
+// teaching while leaving 8ESp.01 claimed, which is the one outcome worse than
+// never having claimed it.
+//
+// Kept deliberately small. This is a clause the unit was missing, in the voice
+// it already uses, not an excuse to author Science content in the builder — a
+// whole missing topic (Stage 4 sound) is recorded as a commission instead.
+const CONCEPT_INSERTS = {
+  "8-9": [{
+    conceptId: "concept-6-magnets-and-magnetic-fields",
+    after: "the Earth itself behaves like a giant magnet, with a magnetic field stretching all around it.",
+    text: " The reason lies deep inside the planet. The Earth's core is mostly iron, and its outer part is liquid and always moving. That moving iron acts like a magnet, and it is what gives the whole Earth its magnetic field.",
+  }],
+};
+
+function applyConceptInserts(grade, unitNo, concepts) {
+  const inserts = CONCEPT_INSERTS[`${grade}-${unitNo}`];
+  if (!inserts) return concepts;
+  return inserts.reduce((current, insert) => {
+    const index = current.findIndex((concept) => concept.id === insert.conceptId);
+    if (index < 0) {
+      throw new Error(`Grade ${grade} Unit ${unitNo}: CONCEPT_INSERTS targets ${insert.conceptId}, which this unit no longer has`);
+    }
+    const explanation = current[index].explanation || "";
+    if (!explanation.includes(insert.after)) {
+      throw new Error(`Grade ${grade} Unit ${unitNo}: CONCEPT_INSERTS anchor not found in ${insert.conceptId} — "${insert.after.slice(0, 60)}…"`);
+    }
+    if (explanation.includes(insert.text.trim())) return current;
+    const next = [...current];
+    next[index] = { ...current[index], explanation: explanation.replace(insert.after, `${insert.after}${insert.text}`) };
+    return next;
+  }, concepts);
+}
 
 function stageCoverage(grade, code, builtUnits) {
   const objectives = (cambridgeFramework(code).objectivesByStage || {})[String(grade)] || [];
@@ -211,14 +259,23 @@ function stageCoverage(grade, code, builtUnits) {
     if (!bySubStrand.has(objective.subStrand)) bySubStrand.set(objective.subStrand, []);
     bySubStrand.get(objective.subStrand).push(objective);
   }
-  // A sub-strand no unit reaches at all is the reportable gap. One where some
-  // objectives are claimed and others are not is ordinary partial coverage —
-  // every stage has that, and listing it would bury the real holes.
+  // Two kinds of gap are worth reporting, and only these two. A sub-strand no
+  // unit reaches AT ALL is a hole in the stage. A sub-strand that is partly
+  // covered is ordinary — every stage has that, and listing them all would bury
+  // the holes — EXCEPT where a cause has been established, which is the only
+  // reason an entry is authored below.
+  //
+  // That exception is load-bearing. Closing 8ESp.01 left Planet Earth partly
+  // covered, and without it the finding behind 8ESp.02 — renewable resources
+  // taught in Grade 4, where 0846 has no objective to credit them, while Stage 8
+  // publishes one and never teaches it — would have vanished from the record the
+  // moment the sibling objective was fixed.
   const claimedSubStrands = new Set(objectives.filter((objective) => claimed.has(objective.code)).map((objective) => objective.subStrand));
   const gaps = [...bySubStrand.entries()]
-    .filter(([subStrand]) => !claimedSubStrands.has(subStrand))
+    .filter(([subStrand]) => !claimedSubStrands.has(subStrand) || CAMBRIDGE_GAP_REASONS[`${grade}-${subStrand}`])
     .map(([subStrand, entries]) => ({
       subStrand,
+      reachedByNoUnit: !claimedSubStrands.has(subStrand),
       objectives: entries.map((objective) => ({ code: objective.code, text: objective.text })),
       ...(CAMBRIDGE_GAP_REASONS[`${grade}-${subStrand}`] ? { reason: CAMBRIDGE_GAP_REASONS[`${grade}-${subStrand}`] } : {}),
     }));
@@ -228,7 +285,7 @@ function stageCoverage(grade, code, builtUnits) {
     objectivesPublished: objectives.length,
     objectivesClaimed: claimed.size,
     coveragePercent: Math.round((claimed.size / objectives.length) * 100),
-    unreachedSubStrands: gaps,
+    gaps,
   };
 }
 
@@ -1997,6 +2054,14 @@ function buildGrade(grade) {
     // Reviewed prose wins over the generated text, and must land before the
     // capstone samples questions out of the unit assessments.
     applyScriptReview(runtime, grade, unitMeta.unit);
+    // AFTER the review overlay, deliberately. The overlay replaces a reviewed
+    // field wholesale, so an insert applied while the concepts were being built
+    // was simply thrown away for any field a reviewer had touched — which is
+    // exactly the case here, and it failed silently: the anchor matched the
+    // pre-overlay text, so nothing threw, and the unit shipped claiming 8ESp.01
+    // with the teaching absent. Running last makes the reviewer's prose the base
+    // and checks the anchor against the text that actually ships.
+    runtime.concepts = applyConceptInserts(grade, unitMeta.unit, runtime.concepts);
     builtUnits.push(runtime);
     for (const key of ["outcomes", "concepts", "practice", "workedExamples", "activities"]) {
       if (!runtime[key] || !runtime[key].length) warnings.push(`grade ${grade} unit ${unitMeta.unit}: empty ${key}`);

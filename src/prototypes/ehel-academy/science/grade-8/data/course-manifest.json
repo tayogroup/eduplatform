@@ -114,11 +114,12 @@
     "framework": "0893",
     "status": "Proposed mapping — Cambridge sign-off pending",
     "objectivesPublished": 70,
-    "objectivesClaimed": 25,
-    "coveragePercent": 36,
-    "unreachedSubStrands": [
+    "objectivesClaimed": 26,
+    "coveragePercent": 37,
+    "gaps": [
       {
         "subStrand": "Structure and function",
+        "reachedByNoUnit": true,
         "objectives": [
           {
             "code": "8Bs.01",
@@ -141,6 +142,7 @@
       },
       {
         "subStrand": "Ecosystems",
+        "reachedByNoUnit": true,
         "objectives": [
           {
             "code": "8Be.01",
@@ -159,20 +161,18 @@
       },
       {
         "subStrand": "Planet Earth",
+        "reachedByNoUnit": false,
         "objectives": [
-          {
-            "code": "8ESp.01",
-            "text": "Know that the reason the Earth has a magnetic field is that the core acts as a magnet."
-          },
           {
             "code": "8ESp.02",
             "text": "Identify renewable resources (including wind, tidal and solar power, and bioplastics) and non-renewable resources (including fossil fuels), and describe how humans use them."
           }
         ],
-        "reason": "Two separate causes. 8ESp.01 is a near miss: Unit 9 teaches that the Earth behaves like a giant magnet and that a compass lines up with its field, but never says the core is the reason — the word appears in the unit only as \"core ideas\" boilerplate and as a difficulty label. One sentence would close it. 8ESp.02 is taught in the wrong stage: renewable and non-renewable resources are a learning outcome of Grade 4's Energy unit, where 0846 has no energy sub-strand to map them to, while Stage 8 — which does publish the objective — never covers them."
+        "reason": "8ESp.01 was a near miss and is now closed: Unit 9 taught that the Earth behaves like a giant magnet and that a compass lines up with its field, but never why, so CONCEPT_INSERTS adds the missing clause attributing the field to the moving iron core. 8ESp.02 remains, and it is taught in the wrong stage rather than missing: renewable and non-renewable resources are a learning outcome of Grade 4's Energy unit, where 0846 has no energy sub-strand to credit them, while Stage 8 publishes the objective and never covers them. Moving that teaching here would close it without writing anything new."
       },
       {
         "subStrand": "Cycles on Earth",
+        "reachedByNoUnit": true,
         "objectives": [
           {
             "code": "8ESc.01",
@@ -191,6 +191,7 @@
       },
       {
         "subStrand": "Earth in space",
+        "reachedByNoUnit": true,
         "objectives": [
           {
             "code": "8ESs.01",

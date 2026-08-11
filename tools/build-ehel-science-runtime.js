@@ -1356,7 +1356,47 @@ function buildGrade(grade) {
     return s.split(/\s+/).map((w, i) => (i > 0 && small.has(w.toLowerCase())) ? w.toLowerCase() : w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
   }
 
+  // Which blocks are rows of a real grid, as opposed to a paragraph that merely
+  // has a border drawn round it.
+  //
+  // The model marks every table cell the same way, but Word is being used for
+  // two different things. A data table (states of matter, plant versus animal,
+  // the element list) is a grid whose cells are fragments — "Milk, oil, honey"
+  // means nothing read aloud in a paragraph. A callout box ("Did You Know? …")
+  // is a single cell that contains an ordinary paragraph, and there are 213 of
+  // those in this course.
+  //
+  // A run of consecutive Table cell blocks is one table. If any cell in the run
+  // reaches column 2, it is a grid and the whole run is data — including its
+  // first column, which is why the test is on the run and not on each cell.
+  // A run that never leaves column 1 is a box, and its text is prose.
+  function gridCellIndexes(blocks) {
+    const grid = new Set();
+    let runStart = null;
+    const closeRun = (endExclusive) => {
+      if (runStart === null) return;
+      let widest = 0;
+      for (let i = runStart; i < endExclusive; i += 1) widest = Math.max(widest, Number(blocks[i].table_col) || 0);
+      if (widest >= 2) for (let i = runStart; i < endExclusive; i += 1) grid.add(i);
+      runStart = null;
+    };
+    blocks.forEach((block, index) => {
+      if (block.block_type !== "Table cell") { closeRun(index); return; }
+      // Two tables can sit back to back with no paragraph between them, and in
+      // this course they routinely do: a callout box follows the data table it
+      // comments on. Treating the cells as one run merged the box into the grid
+      // and deleted five callouts. A cell at row 1, column 1 is a table's
+      // top-left corner, so it ends the previous run and starts a new one.
+      const topLeft = Number(block.table_row) === 1 && Number(block.table_col) === 1;
+      if (runStart !== null && topLeft) closeRun(index);
+      if (runStart === null) runStart = index;
+    });
+    closeRun(blocks.length);
+    return grid;
+  }
+
   function conceptList(lesson, title) {
+    const gridCells = gridCellIndexes(lesson.blocks);
     // Concept headings are not written the same way in every year. Three
     // conventions appear across the source books:
     //   "Part 2 - What Plants Need"      (word marker, Years 1-6)
@@ -1433,11 +1473,26 @@ function buildGrade(grade) {
         : slice.findIndex((item) => LESSON_TAIL.test(tidy(item.text)));
       const kept = tailAt >= 0 ? slice.slice(0, tailAt) : slice;
       const usable = (text, minLength) => text.length > minLength && !/Ask Your AI Tutor|^Remember\b/i.test(text);
-      let body = kept.map((item) => tidy(item.text)).filter((text) => usable(text, 40));
+      // Prose first, and prose is decided by the table a block sits in, not by
+      // its length. The 40-character filter was doing both jobs and could only
+      // do one: it kept out SHORT table cells and let long ones through as if
+      // they were paragraphs, so a concept of ordinary prose ended on a stray
+      // row of somebody's comparison table — "Milk, oil, honey", "Distant suns;
+      // they twinkle in the night sky", "Needed by plants and by your body;
+      // from Latin kalium".
+      //
+      // Excluding every Table cell is NOT the fix, and trying it is what showed
+      // why: Word draws a callout box as a one-cell table, and every one of the
+      // 213 "Did You Know?" callouts in this course is a table cell. Dropping
+      // them all would delete real teaching to remove a dozen fragments.
+      // gridCells separates the two by shape — see the helper.
+      const prose = kept.filter((item, offset) => !gridCells.has(index + 1 + offset));
+      let body = prose.map((item) => tidy(item.text)).filter((text) => usable(text, 40));
       // Some sections teach mostly through a table (states of matter, beak
       // shapes, natural vs man-made). Their rows arrive as short table-cell
       // blocks, so the 40-character prose filter empties the concept. Fall back
-      // to the shorter blocks so the table's content survives.
+      // to the shorter blocks so the table's content survives — cells included,
+      // because here they ARE the teaching rather than debris caught beside it.
       if (body.join(" ").length < 300) {
         body = kept.map((item) => tidy(item.text)).filter((text) => usable(text, 12));
       }

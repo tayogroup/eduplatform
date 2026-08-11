@@ -199,6 +199,21 @@ const { mountDeck: baseMountDeck, deckFinish } = createDeck({
 // the page the grid is still in.
 const mountDeck = (options) => baseMountDeck(deckMount ? { ...options, mount: deckMount, fullBleed: false } : options);
 
+// A deck slide draws its diagram flat whenever the grid is above it.
+//
+// Both halves render every item at once — a deck puts all its slides in the DOM
+// together, not just the visible one — so an interactive deck built a second
+// live WebGL context for a model the grid had already built. That peaked at
+// twelve contexts on one page in eleven of the twenty-four Stage 1-4 units
+// (Stage 2 Unit 1's lesson was measured at eight: four classic, four deck).
+// Desktop Chrome allows about sixteen per page and mobile GPUs commonly eight,
+// and the second copy shows the learner nothing the first does not. Computing
+// draws its deck diagrams flat for exactly this reason.
+//
+// Gated on BOTH_DESIGNS() rather than hard-coded, so a deck that ever stands
+// alone keeps the interactive model instead of silently losing it.
+const deckDiagram = (topic, index) => scienceDiagram(topic, index, { interactive: !BOTH_DESIGNS() });
+
 // The deck's own Listen button: the shell's voiceButton renders a `.button
 // secondary` with a lucide glyph that never draws here. Same contract —
 // data-speak, bound by bindVoiceControls, marked .is-playing while it speaks —
@@ -217,12 +232,75 @@ function deckVoiceSmall(text, label = "Listen") {
   return `<button class="gc-btn ghost small" type="button" data-speak="${escapeHtml(text)}" aria-label="${escapeHtml(label)}">${deckIcon("volume-2")} ${escapeHtml(label)}</button>`;
 }
 
-// Answer checking is the grids' rule, unchanged and in one place: a response
-// counts when it matches the reviewed answer, or either contains the other.
+// Answer checking is one rule, in one place, for both designs and both halves.
+//
+// The grids' rule was "a response counts when it matches the reviewed answer, or
+// either contains the other", and the deck copied it faithfully. Raw substring
+// containment is what made it wrong: every expected answer in this course is a
+// model paragraph — 545 of them, median 36 words — so `answer.includes(given)`
+// was true for very nearly any keystroke. "a" scored correct against "water",
+// "e" against "the seed germinates", "s" against "photosynthesis".
+//
+// What replaces it keeps the generosity the old rule was reaching for — a
+// learner who types a short true answer against a long model answer still earns
+// it — but requires the overlap to be a real content word rather than a
+// character that happens to appear. A response offering no content word cannot
+// match at all, however long it is.
+const CHECK_FILLER = new Set([
+  "and", "are", "but", "can", "did", "does", "for", "from", "had", "has", "have",
+  "how", "into", "its", "may", "not", "now", "one", "our", "out", "own", "see",
+  "some", "such", "than", "that", "the", "their", "them", "then", "there",
+  "these", "they", "this", "those", "use", "using", "very", "was", "were",
+  "what", "when", "which", "while", "who", "why", "will", "with", "you", "your",
+]);
+
+// The tokens worth matching on: three characters or more, and not filler.
+// Anything shorter is a keystroke rather than evidence the learner knew this.
+const contentWords = (text) => String(text || "").toLowerCase().split(/[^a-z0-9]+/).filter((word) => word.length > 2 && !CHECK_FILLER.has(word));
+
+const normaliseResponse = (value) => String(value || "").trim().toLowerCase().replace(/\s+/g, " ");
+
 function answerMatches(response, expected) {
-  const given = String(response || "").trim().toLowerCase().replace(/\s+/g, " ");
-  const answer = String(expected || "").toLowerCase();
-  return Boolean(given) && (given === answer || answer.includes(given) || given.includes(answer));
+  const given = normaliseResponse(response);
+  const answer = normaliseResponse(expected);
+  if (!given || !answer) return false;
+  if (given === answer) return true;
+  const answerWords = new Set(contentWords(answer));
+  const givenWords = contentWords(given);
+  // An answer carrying no content word of its own can only be met exactly; a
+  // response carrying none has offered nothing to check.
+  if (!answerWords.size || !givenWords.length) return false;
+  return givenWords.some((word) => answerWords.has(word));
+}
+
+// A key idea counts as addressed when the explanation uses one of ITS content
+// words. The old test asked whether the text contained any token of the idea
+// longer than two characters, as a raw substring — so "the" matched, and
+// "i do not know the answer at all really honestly" was accepted as scientific
+// evidence on any prompt whose ideas contained the word "the".
+const reasoningHits = (keyIdeas, text) => {
+  const said = new Set(contentWords(text));
+  return (keyIdeas || []).filter((idea) => contentWords(idea).some((word) => said.has(word))).length;
+};
+
+// Quiz options are dealt in a random order. Authored order is not neutral here:
+// across the 636 questions in this course the second option is the answer 287
+// times and the fourth only 17, so a learner who always picked the second scored
+// 45% against 25% for chance and could learn never to pick the last. Reshuffling
+// on every draw also makes a retry a fresh test rather than a remembered
+// sequence of positions.
+//
+// The answer is compared by VALUE — data-option against item.answer — never by
+// index, so dealing a copy changes what the learner sees and nothing else. No
+// narration clip covers an option (only the question is spoken), so no
+// pre-rendered audio moves.
+function shuffled(list) {
+  const items = [...list];
+  for (let i = items.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [items[i], items[j]] = [items[j], items[i]];
+  }
+  return items;
 }
 
 const feedbackHtml = (tone, note, body) => `<p class="feedback ${tone}"><span class="status-note">${escapeHtml(note)}</span> ${escapeHtml(body)}</p>`;
@@ -429,9 +507,7 @@ function renderExploreConceptClassic() {
     $$('[data-exploration]').forEach(button=>button.addEventListener("click",()=>{active=Number(button.dataset.exploration);draw();}));
     $("#hint-discovery").addEventListener("click",()=>{$("#discovery-feedback").innerHTML=`<p class="feedback try"><span class="field-label">Hint:</span> ${escapeHtml(item.hint)}</p>`;});
     $("#check-discovery").addEventListener("click",()=>{
-      const response=$("#discovery-answer").value.trim().toLowerCase().replace(/\s+/g," ");
-      const answer=item.answer.toLowerCase();
-      const correct=response && (response===answer || answer.includes(response) || response.includes(answer));
+      const correct=answerMatches($("#discovery-answer").value, item.answer);
       $("#discovery-feedback").innerHTML=`<p class="feedback ${correct?'good':'try'}"><span class="status-note">${correct?'Exactly!':'Look again.'}</span> ${escapeHtml(correct?item.explanation:item.hint)}</p>`;
       if(correct){completed.add(item.id);progress.explorations=[...completed];saveProgress();if(completed.size===course.explorations.length)complete("explore","All six concept discoveries complete.");}
     });
@@ -460,7 +536,7 @@ function renderExploreConceptDeck() {
   const exploreSlide = (item, index) => `<section class="gc-slide gc-v${index % 5}"><div class="gc-inner">
       <span class="gc-eyebrow">Discovery ${index + 1} of ${explorations.length} · ${esc(item.difficulty)}</span>
       <h3 class="gc-title">${esc(item.title)}</h3>
-      ${scienceDiagram(topic, index)}
+      ${deckDiagram(topic, index)}
       <p class="gc-lead">${esc(item.context)}</p>
       <div class="gc-actions">${deckVoice(`${item.title}. ${item.context}. ${item.explanation}`, "Listen to discovery")}</div>
       <div class="sci-gc-model ${esc(item.modelType)}"><strong>${esc(item.modelType.replaceAll("-", " "))}</strong><span>${esc(item.explanation)}</span></div>
@@ -536,7 +612,7 @@ function renderVisualModelsDeck() {
   const slides = models.map((model, index) => `<section class="gc-slide gc-v${index % 5}"><div class="gc-inner">
       <span class="gc-eyebrow">${esc(model.outcomeId || `Model ${index + 1}`)} · Model ${index + 1} of ${models.length}</span>
       <h3 class="gc-title">${esc(model.title)}</h3>
-      ${scienceDiagram(topic, index)}
+      ${deckDiagram(topic, index)}
       <p class="gc-lead">${esc(model.purpose)}</p>
       <div class="gc-actions">${deckVoice(`${model.title}. ${model.purpose}`, "Listen to model")}</div>
       <div class="sci-gc-cards">${course.concepts.slice(0, 3).map((concept) => `<article><strong>${esc(concept.title)}</strong><span>${esc(concept.example)}</span></article>`).join("")}</div>
@@ -679,7 +755,7 @@ function renderLessonDeck() {
   const slides = concepts.map((concept, index) => `<section class="gc-slide gc-v${index % 5}"><div class="gc-inner">
       <span class="gc-eyebrow">Concept ${index + 1} of ${concepts.length}</span>
       <h3 class="gc-title">${esc(concept.title)}</h3>
-      ${scienceDiagram(topic, index)}
+      ${deckDiagram(topic, index)}
       <div class="gc-actions">${deckVoice(`${concept.title}. ${spokenText(concept.explanation)}. Example: ${concept.example}`, "Listen to concept")}</div>
       <div class="sci-gc-prose">${richText(concept.explanation, "gc-lead")}</div>
       <p class="gc-note gc-try"><span class="field-label">Example:</span> ${esc(concept.example)}</p>
@@ -950,7 +1026,7 @@ function renderActivitiesDeck() {
   const slides = activities.map((activity, index) => `<section class="gc-slide gc-v${index % 5}"><div class="gc-inner">
       <span class="gc-eyebrow">Investigation ${index + 1} of ${activities.length} · Hands-on</span>
       <h3 class="gc-title">${esc(activity.title)}</h3>
-      ${scienceDiagram(topic, index)}
+      ${deckDiagram(topic, index)}
       <p class="gc-note gc-try"><span class="field-label">You need:</span> ${esc(activity.materials)}</p>
       <ol class="sci-gc-list">${activity.steps.map((step) => `<li>${esc(step)}</li>`).join("")}</ol>
       <div class="wc-sentence">
@@ -1239,7 +1315,7 @@ function renderRealProblemsClassic() {
   const problems = course.realProblems;
   $("#app").innerHTML = `${pageHeader("Science in daily life", "Solve Real Problems", `Apply ${escapeHtml(course.unit.unitTitle)} to home, school, markets, travel and the wider community.`)}
     <div class="problem-grid">${problems.map((item,index)=>`<article class="panel real-problem"><div class="problem-icon">${["⌂","◫","🚌","▦","◇","✦"][index]||"#"}</div><span class="eyebrow">${escapeHtml(item.context)} · ${escapeHtml(item.difficulty)}</span><h2>${escapeHtml(item.prompt)}</h2>${voiceButton(item.prompt, "Listen to problem")}<textarea id="problem-${item.id}" placeholder="Show your calculation and answer…"></textarea><div class="question-actions"><button class="button primary" data-check-problem="${item.id}" type="button">Check answer</button><button class="button secondary" data-problem-hint="${item.id}" type="button">Hint</button></div><div id="problem-feedback-${item.id}"></div></article>`).join("")}</div>`;
-  $$('[data-check-problem]').forEach(button=>button.addEventListener("click",()=>{const item=problems.find(candidate=>candidate.id===button.dataset.checkProblem);const response=$(`#problem-${item.id}`).value.trim().toLowerCase();const expected=item.answer.toLowerCase();const correct=response&&(response===expected||expected.includes(response)||response.includes(expected));$(`#problem-feedback-${item.id}`).innerHTML=`<p class="feedback ${correct?'good':'try'}"><span class="status-note">${correct?'Applied correctly!':'Check the situation.'}</span> ${escapeHtml(correct?item.answer:item.hint)}</p>`;if(correct)button.disabled=true;if($$('[data-check-problem]').every(itemButton=>itemButton.disabled))complete("problems","Real-world problems complete.");}));
+  $$('[data-check-problem]').forEach(button=>button.addEventListener("click",()=>{const item=problems.find(candidate=>candidate.id===button.dataset.checkProblem);const correct=answerMatches($(`#problem-${item.id}`).value,item.answer);$(`#problem-feedback-${item.id}`).innerHTML=`<p class="feedback ${correct?'good':'try'}"><span class="status-note">${correct?'Applied correctly!':'Check the situation.'}</span> ${escapeHtml(correct?item.answer:item.hint)}</p>`;if(correct)button.disabled=true;if($$('[data-check-problem]').every(itemButton=>itemButton.disabled))complete("problems","Real-world problems complete.");}));
   $$('[data-problem-hint]').forEach(button=>button.addEventListener("click",()=>{const item=problems.find(candidate=>candidate.id===button.dataset.problemHint);$(`#problem-feedback-${item.id}`).innerHTML=`<p class="feedback try"><span class="field-label">Hint:</span> ${escapeHtml(item.hint)}</p>`;}));
 }
 
@@ -1304,7 +1380,7 @@ function renderExplainThinkingClassic() {
   const { $, $$ } = classicScope();
   let active=0;
   const completed=new Set(progress.reasoning||[]);
-  const draw=()=>{const item=course.reasoningPrompts[active];$("#app").innerHTML=`${pageHeader("Reasoning matters", "Explain Your Thinking", `Explain the ideas in ${escapeHtml(course.unit.unitTitle)} using scientific evidence, not only a final answer.`)}<div class="reasoning-tabs">${course.reasoningPrompts.map((entry,index)=>`<button class="${index===active?'active':''} ${completed.has(entry.id)?'done':''}" data-reasoning-index="${index}" type="button"><span>${index+1}</span>${escapeHtml(entry.difficulty)}</button>`).join('')}</div><div class="explain-layout"><section class="panel"><span class="eyebrow">Reasoning prompt</span><h2>${escapeHtml(item.prompt)}</h2>${voiceButton(item.prompt,"Listen to prompt")}<textarea id="reasoning-text" rows="9" placeholder="Explain what you know, what rule you used and why your conclusion makes sense…"></textarea><button class="button primary" id="check-reasoning-text" type="button">Check scientific ideas</button><div id="reasoning-text-feedback"></div></section><section class="panel"><h3>Key ideas</h3><ul class="checklist">${item.keyIdeas.map((idea)=>`<li>${escapeHtml(idea)}</li>`).join('')}</ul><details><summary>Show model explanation</summary><p>${escapeHtml(item.modelAnswer)}</p>${voiceButton(item.modelAnswer,"Listen to model answer")}</details></section></div>`;$$('[data-reasoning-index]').forEach((button)=>button.addEventListener('click',()=>{active=Number(button.dataset.reasoningIndex);draw();}));$("#check-reasoning-text").addEventListener('click',()=>{const text=$("#reasoning-text").value.toLowerCase();const hits=item.keyIdeas.filter((idea)=>idea.toLowerCase().split(/\s+/).some((word)=>word.length>2&&text.includes(word))).length;const secure=text.length>30&&(hits>0||item.keyIdeas.length===0);$("#reasoning-text-feedback").innerHTML=`<p class="feedback ${secure?'good':'try'}"><span class="status-note">${secure?'Your explanation includes scientific evidence.':'Add more scientific evidence.'}</span> ${secure?escapeHtml(item.modelAnswer):`Use these ideas: ${escapeHtml(item.keyIdeas.join(', '))}.`}</p>`;if(secure){completed.add(item.id);progress.reasoning=[...completed];saveProgress();if(completed.size===course.reasoningPrompts.length)complete('explain','Reasoning explanations complete.');}});};
+  const draw=()=>{const item=course.reasoningPrompts[active];$("#app").innerHTML=`${pageHeader("Reasoning matters", "Explain Your Thinking", `Explain the ideas in ${escapeHtml(course.unit.unitTitle)} using scientific evidence, not only a final answer.`)}<div class="reasoning-tabs">${course.reasoningPrompts.map((entry,index)=>`<button class="${index===active?'active':''} ${completed.has(entry.id)?'done':''}" data-reasoning-index="${index}" type="button"><span>${index+1}</span>${escapeHtml(entry.difficulty)}</button>`).join('')}</div><div class="explain-layout"><section class="panel"><span class="eyebrow">Reasoning prompt</span><h2>${escapeHtml(item.prompt)}</h2>${voiceButton(item.prompt,"Listen to prompt")}<textarea id="reasoning-text" rows="9" placeholder="Explain what you know, what rule you used and why your conclusion makes sense…"></textarea><button class="button primary" id="check-reasoning-text" type="button">Check scientific ideas</button><div id="reasoning-text-feedback"></div></section><section class="panel"><h3>Key ideas</h3><ul class="checklist">${item.keyIdeas.map((idea)=>`<li>${escapeHtml(idea)}</li>`).join('')}</ul><details><summary>Show model explanation</summary><p>${escapeHtml(item.modelAnswer)}</p>${voiceButton(item.modelAnswer,"Listen to model answer")}</details></section></div>`;$$('[data-reasoning-index]').forEach((button)=>button.addEventListener('click',()=>{active=Number(button.dataset.reasoningIndex);draw();}));$("#check-reasoning-text").addEventListener('click',()=>{const text=$("#reasoning-text").value.toLowerCase();const hits=reasoningHits(item.keyIdeas,text);const secure=text.length>30&&(hits>0||item.keyIdeas.length===0);$("#reasoning-text-feedback").innerHTML=`<p class="feedback ${secure?'good':'try'}"><span class="status-note">${secure?'Your explanation includes scientific evidence.':'Add more scientific evidence.'}</span> ${secure?escapeHtml(item.modelAnswer):`Use these ideas: ${escapeHtml(item.keyIdeas.join(', '))}.`}</p>`;if(secure){completed.add(item.id);progress.reasoning=[...completed];saveProgress();if(completed.size===course.reasoningPrompts.length)complete('explain','Reasoning explanations complete.');}});};
   draw();
 }
 
@@ -1345,7 +1421,7 @@ function renderExplainThinkingDeck() {
       if (!target) return undefined;
       const item = prompts.find((entry) => entry.id === target.dataset.checkReasoning);
       const text = slideValue(`reason-${item.id}`).toLowerCase();
-      const hits = item.keyIdeas.filter((idea) => idea.toLowerCase().split(/\s+/).some((word) => word.length > 2 && text.includes(word))).length;
+      const hits = reasoningHits(item.keyIdeas, text);
       const secure = text.length > 30 && (hits > 0 || item.keyIdeas.length === 0);
       setSlideBox(`reason-${item.id}`, `<p class="feedback ${secure ? "good" : "try"}"><span class="status-note">${secure ? "Your explanation includes scientific evidence." : "Add more scientific evidence."}</span> ${secure ? esc(item.modelAnswer) : `Use these ideas: ${esc(item.keyIdeas.join(", "))}.`}</p>`);
       if (secure) {
@@ -1386,7 +1462,7 @@ function drawAssessmentQuestion() {
     return;
   }
   const item = course.assessment.questions[assessmentIndex];
-  shell.innerHTML = `<div class="quiz-top"><span>Question ${assessmentIndex + 1} of ${course.assessment.questions.length}</span><strong>${assessmentScore} correct</strong></div><div class="progress-track"><span style="width:${assessmentIndex / course.assessment.questions.length * 100}%"></span></div><h2 class="quiz-question">${escapeHtml(item.question)}</h2>${voiceButton(item.question, "Listen to question")}<div class="quiz-options">${item.options.map((option) => `<button class="quiz-option" data-option="${escapeHtml(option)}" type="button">${escapeHtml(option)}</button>`).join("")}</div><div id="quiz-feedback"></div><button class="button primary" id="next-question" type="button" hidden>Next question →</button>`;
+  shell.innerHTML = `<div class="quiz-top"><span>Question ${assessmentIndex + 1} of ${course.assessment.questions.length}</span><strong>${assessmentScore} correct</strong></div><div class="progress-track"><span style="width:${assessmentIndex / course.assessment.questions.length * 100}%"></span></div><h2 class="quiz-question">${escapeHtml(item.question)}</h2>${voiceButton(item.question, "Listen to question")}<div class="quiz-options">${shuffled(item.options).map((option) => `<button class="quiz-option" data-option="${escapeHtml(option)}" type="button">${escapeHtml(option)}</button>`).join("")}</div><div id="quiz-feedback"></div><button class="button primary" id="next-question" type="button" hidden>Next question →</button>`;
   bindVoiceControls();
   updateVoiceUI();
   assessmentLocked = false;
@@ -1450,7 +1526,7 @@ function drawCapstoneQuizQuestion() {
     return;
   }
   const item = quiz.questions[capstoneQuizIndex];
-  shell.innerHTML = `<div class="quiz-top"><span>Question ${capstoneQuizIndex + 1} of ${quiz.questions.length}</span><strong>${capstoneQuizScore} correct</strong></div><div class="progress-track"><span style="width:${capstoneQuizIndex / quiz.questions.length * 100}%"></span></div><span class="eyebrow">Unit ${item.unitNo}: ${escapeHtml(item.unitTitle)}</span><h2 class="quiz-question">${escapeHtml(item.question)}</h2>${voiceButton(item.question, "Listen to question")}<div class="quiz-options">${item.options.map((option) => `<button class="quiz-option" data-capstone-option="${escapeHtml(option)}" type="button">${escapeHtml(option)}</button>`).join("")}</div><div id="capstone-quiz-feedback"></div><button class="button primary" id="next-capstone-question" type="button" hidden>Next question →</button>`;
+  shell.innerHTML = `<div class="quiz-top"><span>Question ${capstoneQuizIndex + 1} of ${quiz.questions.length}</span><strong>${capstoneQuizScore} correct</strong></div><div class="progress-track"><span style="width:${capstoneQuizIndex / quiz.questions.length * 100}%"></span></div><span class="eyebrow">Unit ${item.unitNo}: ${escapeHtml(item.unitTitle)}</span><h2 class="quiz-question">${escapeHtml(item.question)}</h2>${voiceButton(item.question, "Listen to question")}<div class="quiz-options">${shuffled(item.options).map((option) => `<button class="quiz-option" data-capstone-option="${escapeHtml(option)}" type="button">${escapeHtml(option)}</button>`).join("")}</div><div id="capstone-quiz-feedback"></div><button class="button primary" id="next-capstone-question" type="button" hidden>Next question →</button>`;
   bindVoiceControls();
   updateVoiceUI();
   capstoneQuizLocked = false;

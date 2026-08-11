@@ -51,12 +51,19 @@ function cambridgeFramework(code) {
 
 const CAMBRIDGE_OBJECTIVES = {
   // ── Stage 1 (0846) ──
-  "1-1": ["1Bp1", "1Bp2", "1Bh5", "1Eo1", "1Eo4"],
-  "1-2": ["1Bp1", "1Bp4", "1Bp5", "1Bp6", "1Eo1", "1Eo3"],
-  "1-3": ["1Bh1", "1Bh2", "1Bh4", "1Cp1", "1Eo4"],
-  "1-4": ["1Cp1", "1Cp2", "1Cp3", "1Cp4", "1Eo3", "1Eo4"],
-  "1-5": ["1Pf1", "1Pf2", "1Pf3", "1Eo1"],
-  "1-6": ["1Ps1", "1Ps2", "1Ps3", "1Eo4"],
+  // 1Ep3 and 1Eo5 are on every Stage 1 unit because every one of them runs the
+  // same exploration cycle: the prompt is literally "What do you predict will
+  // happen in <investigation>?" and the answer is "carry it out, record what you
+  // observe, and compare it with the prediction you wrote before you started".
+  // That is 1Ep3 "Make predictions" and 1Eo5 "Compare what happened with
+  // predictions", word for word, so claiming them six times is accurate rather
+  // than padding — leaving them off reported a whole sub-strand as untaught.
+  "1-1": ["1Bp1", "1Bp2", "1Bh5", "1Ep3", "1Eo1", "1Eo4", "1Eo5"],
+  "1-2": ["1Bp1", "1Bp4", "1Bp5", "1Bp6", "1Ep3", "1Eo1", "1Eo3", "1Eo5"],
+  "1-3": ["1Bh1", "1Bh2", "1Bh4", "1Cp1", "1Ep3", "1Eo4", "1Eo5"],
+  "1-4": ["1Cp1", "1Cp2", "1Cp3", "1Cp4", "1Ep3", "1Eo3", "1Eo4", "1Eo5"],
+  "1-5": ["1Pf1", "1Pf2", "1Pf3", "1Ep3", "1Eo1", "1Eo5"],
+  "1-6": ["1Ps1", "1Ps2", "1Ps3", "1Ep3", "1Eo4", "1Eo5"],
   // ── Stage 2 (0846) ──
   "2-1": ["2Be1", "2Be2", "2Be3", "2Eo2", "2Eo3", "2Eo5"],
   "2-2": ["2Cp1", "2Cp2", "2Eo3", "2Eo6"],
@@ -72,7 +79,11 @@ const CAMBRIDGE_OBJECTIVES = {
   "3-5": ["3Pf1", "3Pf2", "3Pf4", "3Cp3", "3Ep3"],
   "3-6": ["3Eo1", "3Eo2", "3Eo5"],
   // ── Stage 4 (0846) ──
-  "4-1": ["4Be1", "4Be2", "4Eo1"],
+  // 4Bh1 is claimed on the strength of "Animals With Backbones and Without",
+  // which has the learner feel their own spine, and the five vertebrate groups.
+  // 4Bh2 is not: the unit never covers how a skeleton supports or protects, and
+  // says nothing about muscles at all.
+  "4-1": ["4Bh1", "4Be1", "4Be2", "4Eo1"],
   "4-2": ["4Be3", "4Ep1", "4Eo4"],
   "4-3": ["4Cs1", "4Cs2", "4Cs3", "4Cs4", "4Ep4", "4Eo4"],
   "4-4": ["4Be1", "4Eo7"],
@@ -161,6 +172,51 @@ function cambridgeObjectivesFor(grade, unitNo, code) {
     const objective = byCode.get(entry);
     return { code: objective.code, strand: objective.strand, subStrand: objective.subStrand, text: objective.text };
   });
+}
+
+// ── What a stage does NOT teach ──────────────────────────────────────────────
+// The per-unit mapping answers "which objectives does this unit meet". It cannot
+// answer "which objectives does this stage miss entirely", because that is a
+// fact about the absence of a unit, and an absent unit has no file to carry a
+// note. Stage 4 is the case in point: 0846 gives it five sound objectives
+// (4Ps1-4Ps5) and no Grade 4 unit teaches sound at all, so nothing anywhere in
+// the course recorded that until this block.
+//
+// Derived from the mapping rather than hand-listed, so it cannot go stale: map a
+// unit to a new objective and the gap closes here on the next build. Only the
+// REASON is authored, and only where it has actually been established.
+const CAMBRIDGE_GAP_REASONS = {
+  "4-Sound": "No Year 4 Science pack contains a sound unit. Grade 4's six units are Living Things, Energy, Materials, The Earth, Light and Electricity; the only sound content anywhere in the stage is one glossary line in the Energy unit (\"Sound energy = Energy of vibrations that we hear\"), which teaches none of 4Ps1-4Ps5. Grade 1 covers sound at Stage 1 depth (1Ps1-1Ps3) and nothing revisits it. Closing this needs a Stage 4 sound unit to be written — a content commission, not a rebuild.",
+};
+
+function stageCoverage(grade, code, builtUnits) {
+  const objectives = (cambridgeFramework(code).objectivesByStage || {})[String(grade)] || [];
+  const claimed = new Set(builtUnits.flatMap((unit) => unit.cambridge.objectiveCodes || []));
+  const uncovered = objectives.filter((objective) => !claimed.has(objective.code));
+  const bySubStrand = new Map();
+  for (const objective of uncovered) {
+    if (!bySubStrand.has(objective.subStrand)) bySubStrand.set(objective.subStrand, []);
+    bySubStrand.get(objective.subStrand).push(objective);
+  }
+  // A sub-strand no unit reaches at all is the reportable gap. One where some
+  // objectives are claimed and others are not is ordinary partial coverage —
+  // every stage has that, and listing it would bury the real holes.
+  const claimedSubStrands = new Set(objectives.filter((objective) => claimed.has(objective.code)).map((objective) => objective.subStrand));
+  const gaps = [...bySubStrand.entries()]
+    .filter(([subStrand]) => !claimedSubStrands.has(subStrand))
+    .map(([subStrand, entries]) => ({
+      subStrand,
+      objectives: entries.map((objective) => ({ code: objective.code, text: objective.text })),
+      ...(CAMBRIDGE_GAP_REASONS[`${grade}-${subStrand}`] ? { reason: CAMBRIDGE_GAP_REASONS[`${grade}-${subStrand}`] } : {}),
+    }));
+  return {
+    framework: code,
+    status: "Proposed mapping — Cambridge sign-off pending",
+    objectivesPublished: objectives.length,
+    objectivesClaimed: claimed.size,
+    coveragePercent: Math.round((claimed.size / objectives.length) * 100),
+    unreachedSubStrands: gaps,
+  };
 }
 
 // The source books mark callouts with a bracketed tag the typesetter turned
@@ -1993,6 +2049,7 @@ function buildGrade(grade) {
       passPercent: 80,
       reviewStatus: "Rebuilt v2.0 - curriculum review pending",
     },
+    cambridgeCoverage: stageCoverage(grade, cambridge.code, builtUnits),
   };
   fs.writeFileSync(path.join(gradeDir, "data", "course-manifest.json"), `${JSON.stringify(manifest, null, 2)}\n`, "utf8");
 

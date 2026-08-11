@@ -46,7 +46,7 @@ Real uploads are `npm run deploy:integration|staging|production`. **Never run a 
 - **Generated bundle**: never edit `runtime.bundle.js` directly (`docs/generated-bundle-policy.md`).
 - **Stable filenames**: active JS/CSS filenames never contain versions, dates, or `locked`. Versions live in git tags (`alphabet-v1.0.0`, `shared-v1.0.0`) and manifests (`docs/naming-versioning.md`).
 - **Unit config schema**: `unit.config.js` must pass `npm run validate:units`; schema documented in `docs/unit-config-schema.md`.
-- **Two unit validators, different targets**: `validate:units` checks `unit.config.js` schemas under `src/units/`; `validate:curriculum-units` checks Cambridge objective mappings under `src/prototypes/ehel-academy/`. Neither covers the other's files.
+- **Two unit validators, different targets**: `validate:units` checks `unit.config.js` schemas under `src/units/`; `validate:curriculum-units` checks Cambridge objective mappings for **English only** — its glob is `english/grade-*/data/units/*.json`, and `validate-unit.mjs` is English-shaped besides (it requires readings, grammar, speaking and writing sections, and reads objectives from a per-outcome `cambridgeObjectives` field). Pointing it at another subject reports dozens of failures about a schema that subject never claimed. Science's mapping lives at `unit.cambridge` and is checked by `check:science-cambridge`; Computing has no objective mapping at all.
 - **Teacher-voice → learner-voice lives in `tools/lib/ehel-learner-voice.js`**, shared by the Computing and Global Perspectives builders. The grammar is shared; each subject passes its own vocabulary. Widening the *default* word lists changes what an already-gated subject produces — add new words in the calling subject's options instead.
 - **Secrets**: `.env` holds Bunny storage keys and TTS API keys — never commit it or copy values into source. E2e credentials are `EDUPLATFORM_*` env vars (template: `.env.e2e.example`).
 - Windows environment; some docs write commands as `npm.cmd run ...` — plain `npm run ...` works in both shells.
@@ -241,6 +241,58 @@ curl -sI "https://ehelacademy.b-cdn.net/Ehel%20Primary/app/global-perspectives/s
 - **A `shared/` filename is not immutable on the CDN, dated or not.** Query strings are ignored (a never-before-seen `?probe=` returns `CDN-Cache: HIT` off the bare URL's entry), so `?v=` busting never worked and dated names were the workaround. Only `v{TAG}/` is genuinely immutable. GP's releases go through the versioned flow (`deploy-app-version.js`, `--shell`), never a bare `upload-app-to-bunny.js global-perspectives`.
 - **`app/english/shared/course-ui-20260723e.css` is the 1.3 KB local alias, not the full snapshot the convention promises.** It `@import`s the live `app/english/shared/course-ui.css`, so edits to the English stylesheet propagate into every subject importing the dated alias — GP included. The dated name buys nothing; a `v{TAG}/` bundle does. (`deploy-app-version.js` rewrites that `@import` to a bundled `design-system.css`, so a versioned release is already immune.)
 - **`app/{subject}/shared/grade-redirect.js` is deliberately not versioned, and that is safe only because of the edge rule above.** `grade-N/index.html` loads `../shared/grade-redirect.js` and that entry path has to stay stable across releases, so `deploy-app-version.js` uploads the stub outside `v{TAG}/`. At `max-age=300` a release ships it within five minutes. If rule 4 is ever narrowed again it silently returns to 30 days, and a release *depending* on new redirect behaviour would work locally and not on the CDN. All five subjects with per-grade stubs share this.
+
+### Science answer keys and Cambridge mapping are gated
+
+Two checks inside `check:science`, both added after the Computing course shipped
+three keys bound to the wrong option with every gate passing them.
+
+**`check-science-answer-keys.mjs`** compares each quiz key with the answer key
+printed in its own booklet. Science is far more exposed than Computing here:
+598 of its 636 questions come from the booklet, where Computing generates 580
+of 768 from the unit's own content and only 188 can disagree with anything.
+Ground truth is a committed fixture (`science/data/booklet-answer-keys.json`),
+not the content model — `outputs/` is gitignored, so a gate reading the model
+finds nothing on a fresh clone and passes having compared nothing. Where the
+model IS present the keys are re-derived and the fixture must still match.
+
+```bash
+node tools/check-science-answer-keys.mjs --write-fixture   # after extract:science-content
+```
+
+**Coverage is recorded and may not fall.** 480 of 636 questions are covered;
+the fixture stores that as `minimumCovered` and the gate fails if it drops. A
+parser that stops recognising one pack's key layout otherwise takes a whole
+unit out of the comparison while the gate still prints ✓ — which is exactly how
+156 questions can sit unchecked behind a green tick. Coverage is a number that
+only goes up.
+
+The 156 uncovered are 13 units, all-or-nothing per unit, and 6 of them are
+**Stage 1, which ships no Practice booklet at all** (Activities, Experiments and
+Lesson only — and no Reference, so no glossary either). Those have no booklet
+key to check against and never will.
+
+The packs write keys five ways — a 3-column table, a whole section packed into
+one cell, and three paragraph forms — and one gives the key run the **same
+section name as the questions**. Two traps worth keeping:
+
+- **Splitting keys from questions by section name does not work.** The key
+  sections are "Section A Answers" (no "Key" in the name) while the QUESTION
+  section is "Section A: Choose the Right Answer" — matching on "answer" swaps
+  the two. Position works, but only anchored to a question first: one pack
+  titles its whole document "Practice Questions and Answer Keys", so an
+  unanchored boundary lands at block 1 and swallows the unit.
+- **A letter regex must require its bracket.** Allowing a bare `[a-e]` ate the
+  first character of every answer starting with one — "clear glass" became
+  "lear glass" and read as a mismatch against a correct key.
+
+**`check-science-cambridge-objectives.mjs`** checks the mapping nothing was
+checking. Beyond "the code exists in this stage", it compares the objective
+**text** stored beside each code against the framework: a code stays valid
+while the text beside it goes stale, and the text is what a teacher reads. It
+also prints per-stage coverage, so a stage mapped to a fraction of its
+objectives is visible rather than passing as "all codes valid" — Stage 8
+currently references 26 of 70, Stage 4 18 of 34.
 
 ### Reviewed Science scripts
 

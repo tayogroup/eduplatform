@@ -303,6 +303,34 @@ function stageCoverage(grade, code, builtUnits) {
 // tag-stripped text alone: it also requires the line to be heading-length.
 // Without that, removing "[SAFE]" turned a paragraph of electrical safety
 // guidance into a boundary and dropped it from the unit.
+// The booklet answer key reads "2. texture. Texture is how a surface feels".
+// Stripping the "2." leaves the key restating the chosen option before it
+// explains it, so the learner is shown "texture. Texture is how a surface
+// feels" — opening on a lowercase stutter. Drop the restatement only where the
+// explanation already begins with that same word; elsewhere the fragment
+// carries the answer and the sentence after it leans on that ("A named box…
+// That is exactly what a variable is."), so removing it would strand the
+// reference. Then capitalise, because the fragment held the only capital.
+const RESTATED_ANSWER = /^([A-Za-z][A-Za-z0-9'’-]*)\.\s+(?=\1\b)/i;
+
+// Only the stutter is repaired, and only then is the result re-capitalised.
+// Capitalising every explanation that opens lowercase looked like the same fix
+// and was not: it rewrote 409 more, including a separate defect where the
+// restated answer carries no full stop at all ("melting A solid turning into a
+// liquid when heated is called melting"), which capitalisation tidies the look
+// of without mending. Those need their own decision, not this one's side
+// effect.
+function tidyAnswerExplanations(questions = [], stats = null) {
+  for (const question of questions || []) {
+    const before = String(question.explanation || "");
+    if (!before) continue;
+    const deduped = before.replace(RESTATED_ANSWER, "");
+    if (deduped === before) continue;
+    question.explanation = deduped.charAt(0).toUpperCase() + deduped.slice(1);
+    if (stats) stats.push(`${question.id}`);
+  }
+}
+
 const SOURCE_MARKER = /\[(?:[A-Za-z]{1,12}|!)\]\s*/g;
 // Sub-headings the source runs straight into the sentence after them, listed
 // rather than matched by shape. A shape rule cannot tell a heading from a
@@ -427,6 +455,7 @@ const scriptReview = fs.existsSync(reviewPath)
   ? (JSON.parse(fs.readFileSync(reviewPath, "utf8")).overrides || {})
   : {};
 const reviewStats = { applied: 0, missed: [] };
+const tidiedExplanations = [];
 
 // Where each exported category's fields live inside a built unit. Returns the
 // object a field should be written to, or null when the item has gone from the
@@ -1851,6 +1880,10 @@ function buildGrade(grade) {
     let outcomes = (override && override.outcomes) ? override.outcomes.slice() : outcomeList(lesson);
     if (!outcomes.length) outcomes = concepts.map((concept) => `Explore and talk about ${concept.title.toLowerCase()}.`).slice(0, 6);
     const assessment = assessmentData(mcqs, reference, unitNo);
+    // After assessmentData, which copies mcq.explanation across verbatim. The
+    // stage capstone samples these same question objects, so it inherits the
+    // repair rather than needing its own.
+    tidyAnswerExplanations(assessment.questions, tidiedExplanations);
     // The first long paragraph is the unit's own introduction — except in
     // Grade 1, where it opens by briefing the adult ("In this unit your child
     // learns..."). Skip anything addressed to the adult; the overview is shown
@@ -2186,6 +2219,10 @@ function buildGrade(grade) {
 const allWarnings = [];
 for (const grade of grades) allWarnings.push(...buildGrade(grade));
 console.log(`\nReviewer corrections applied: ${reviewStats.applied}`);
+if (tidiedExplanations.length) {
+  console.log(`Restated-answer stutters removed from quiz explanations (${tidiedExplanations.length}) — `
+    + `"texture. Texture is how a surface feels" opened by naming the option, then said it again.`);
+}
 if (reviewStats.missed.length) {
   console.log(`Review entries with no matching item (${reviewStats.missed.length}) — re-run tools/apply-ehel-science-script-review.py:`);
   for (const miss of reviewStats.missed) console.log(`  - ${miss}`);

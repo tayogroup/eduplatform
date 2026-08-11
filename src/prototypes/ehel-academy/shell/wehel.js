@@ -11,9 +11,48 @@ const IS_LOCAL_DEV = ["localhost", "127.0.0.1"].includes(location.hostname);
 // servers that have no API routes (vite on 5173, the bunny dist preview on
 // 4173) and bare 80/443, which would be a local Moodle.
 const DEV_API = IS_LOCAL_DEV && !["", "80", "443", "5173", "4173"].includes(location.port);
-export const WEHEL_CHAT_ENDPOINT = DEV_API ? "/api/wehel-chat" : "/local/hubredirect/wehel_chat.php";
-export const WEHEL_STT_ENDPOINT = DEV_API ? "/api/elevenlabs-stt" : "/local/hubredirect/quiz_stt.php";
-export const WEHEL_SOMALI_TTS_ENDPOINT = DEV_API ? "/api/somali-tts" : "/local/hubredirect/somali_tts.php";
+
+// Where Moodle is, for a page Moodle does not serve.
+//
+// A learner never opens these files from Moodle: course_launch.php redirects
+// them to the CDN (progress_gatewaylib.php :: pqpg_ehel_launch_url →
+// ehelacademy.b-cdn.net/…/app/<subject>/index.html). A root-relative
+// "/local/hubredirect/…" therefore resolves against the CDN, which has no PHP
+// and answers 404 — so the runtime voice, the pronunciation check and the tutor
+// were unreachable in production while the PHP side had already been given a
+// CORS allowlist for exactly this cross-origin call (quiz_tts.php ::
+// pqh_quiz_tts_origin_allowed allows `bunny_app_base_url`'s origin).
+//
+// The origin comes from `pwsEndpoint`, the launch's own absolute URL to the
+// progress gateway ($CFG->wwwroot . '/local/prequran/progress_gateway.php').
+// Reusing it means there is ONE answer to "where is the platform" and no second
+// launch parameter that could drift out of step with it — and it is already the
+// parameter that decides where this learner's progress and drafts are posted,
+// so it widens no trust boundary.
+//
+// Anything that is not an http(s) origin is ignored rather than trusted, and no
+// pwsEndpoint at all (local dev, a direct link, QA, a Moodle-hosted page) keeps
+// the paths root-relative — byte-identical to what shipped before.
+function platformOrigin() {
+  const endpoint = new URLSearchParams(location.search).get("pwsEndpoint") || "";
+  if (!endpoint) return "";
+  try {
+    const url = new URL(endpoint, location.href);
+    if (!/^https?:$/.test(url.protocol) || url.origin === location.origin) return "";
+    return url.origin;
+  } catch {
+    return ""; // an unparseable launch param is not an origin
+  }
+}
+// Resolved once: location.search does not change under the app's hash routing,
+// and a per-call parse would only invite the two halves to disagree.
+export const PLATFORM_ORIGIN = platformOrigin();
+// The dev twins are served by the page's own origin, so they are never rebased.
+export const platformUrl = (path) => (DEV_API ? path : `${PLATFORM_ORIGIN}${path}`);
+
+export const WEHEL_CHAT_ENDPOINT = DEV_API ? "/api/wehel-chat" : platformUrl("/local/hubredirect/wehel_chat.php");
+export const WEHEL_STT_ENDPOINT = DEV_API ? "/api/elevenlabs-stt" : platformUrl("/local/hubredirect/quiz_stt.php");
+export const WEHEL_SOMALI_TTS_ENDPOINT = DEV_API ? "/api/somali-tts" : platformUrl("/local/hubredirect/somali_tts.php");
 
 const HISTORY_LIMIT = 12;
 

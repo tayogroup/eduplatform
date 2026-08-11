@@ -11,7 +11,7 @@ import { grammarDiagram, phonicsDiagram } from "../../english/shared/grammar-vis
 import { createCourseApp } from "../course-app.js?v=t2";
 import { createDeck } from "../deck.js?v=deck-1";
 import { wordPicture } from "./word-pictures.js?v=pictures-1";
-import { askWehel, focusModule, setFocusModule, onFocusChange, modulesFromSections, outlineFromManifest, unitFetcher, browserSpeechSupported, speakBrowser, speechRateForGrade, stopBrowserSpeech, speechRecognitionCtor, recognizeSpeech, wehelIcon } from "../wehel.js?v=wehel-2";
+import { askWehel, focusModule, setFocusModule, onFocusChange, modulesFromSections, outlineFromManifest, unitFetcher, browserSpeechSupported, speakBrowser, speechRateForGrade, stopBrowserSpeech, speechRecognitionCtor, recognizeSpeech, wehelIcon, platformUrl } from "../wehel.js?v=wehel-2";
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
@@ -82,8 +82,14 @@ const PLACEMENT_STORAGE_KEY = `ehel-english-g${gradeNumber}-placement-exam-v1`;
 const AI_STORAGE_KEY = `ehel-english-g${gradeNumber}-u${unitNumber}-ai-v1`;
 const AI_VOICE_ID = "XfNU2rGpBa01ckF309OY";
 const AI_NARRATION_RATE = 0.90;
-const AI_TTS_ENDPOINT = AUDIO_IS_DEV && location.port === "4287" ? "/api/elevenlabs-tts" : "/local/hubredirect/quiz_tts.php";
-const AI_STT_ENDPOINT = "/local/hubredirect/quiz_stt.php";
+// Absolute once a launch names the platform, root-relative otherwise — see
+// wehel.js :: platformOrigin. English is served from the CDN like every other
+// subject, so a bare "/local/hubredirect/…" here reached the CDN and 404ed,
+// taking "Listen to this page", on-demand reading narration and the
+// pronunciation check with it. platformUrl is the one definition; restating the
+// rule here is what let the tutor and the voice disagree about the same server.
+const AI_TTS_ENDPOINT = AUDIO_IS_DEV && location.port === "4287" ? "/api/elevenlabs-tts" : platformUrl("/local/hubredirect/quiz_tts.php");
+const AI_STT_ENDPOINT = platformUrl("/local/hubredirect/quiz_stt.php");
 
 // Shell-provided bindings (populated by bind(ctx)). English keeps its own
 // pageHeader/toast/escapeHtml/icon(s) — only progress + nav come from the shell.

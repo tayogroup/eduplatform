@@ -280,6 +280,13 @@ function buildGrade(grade) {
         hint: sectionIndex < 2 ? methodHint : applyHint,
       }));
     });
+    // Stage 1's booklets carry no "Section N" headings, so the whole pool comes
+    // through here — and the cap stays at 12 deliberately. Beyond the twelfth
+    // block these packs are headings and instructions ("4. One More", "Circle
+    // the word that is true."), and this path has no answer guidance to pair
+    // with them, so a wider slice buys unanswerable prompts rather than
+    // questions. Fluency therefore keeps repeating practice at Stage 1; see the
+    // note on the fluency slice below.
     if (!items.length) {
       practice.blocks.filter((block) => block.content_kind === "Task").slice(0, 12).forEach((block, index) => items.push({
         id: `p${String(index + 1).padStart(2, "0")}`,
@@ -290,6 +297,27 @@ function buildGrade(grade) {
       }));
     }
     return items;
+  }
+
+  // The sprint's own questions: the pool after Guided Practice's twelve, kept
+  // only where the booklet's Answer Key supplied an answer, since the Fluency
+  // sprint marks a typed response and an unanswerable question can never be got
+  // right — which would leave the section unable to complete and hold the rest
+  // of the grade shut.
+  //
+  // Below MIN_FLUENCY the tail is not a sprint, so the old duplicate-of-practice
+  // stands: better a repeated set than a three-question round. That is 15 Stage
+  // 1 units, whose packs carry no per-section key, plus 8 elsewhere whose tail
+  // is too thin.
+  // `answer` is never empty — where the Answer Key ran out, practiceData writes
+  // a placeholder telling the learner to work it through. Testing for a missing
+  // answer therefore finds nothing; the placeholders have to be named. Both
+  // forms are the two literals practiceData can emit.
+  const PLACEHOLDER_ANSWER = /^Use the .* guidance and explain each step\.$|^Work through the task one step at a time,/i;
+  const MIN_FLUENCY = 6;
+  function fluencyItems(practiceItems) {
+    const tail = practiceItems.slice(12, 24).filter((item) => item.answer && !PLACEHOLDER_ANSWER.test(item.answer));
+    return tail.length >= MIN_FLUENCY ? tail : practiceItems.slice(0, 12);
   }
 
   function workedExampleData(lesson, practiceItems) {
@@ -540,7 +568,19 @@ function buildGrade(grade) {
       media: { lectureStatus: "Video pending", lectureVideo: null, poster: null },
       outcomes, concepts, explorations, visualModels, methods, workedExamples,
       practice: practice.slice(0, 12), activities: activityData(activitiesDoc), reference,
-      fluency: practice.slice(0, 12).map((item, index) => ({ id: `fl${String(index + 1).padStart(2, "0")}`, outcomeId: `lo${String(index % Math.max(1, outcomes.length) + 1).padStart(2, "0")}`, difficulty: index < 4 ? "Round 1" : index < 8 ? "Round 2" : "Round 3", prompt: item.prompt, answer: item.answer, hint: item.hint, errorFeedback: item.answer })),
+      // Fluency takes the questions Guided Practice did NOT, where the booklet
+      // has them. `practice.slice(0, 12).map(...)` re-issued the identical set
+      // under new ids, so the sprint was a re-run of the page above it in 118
+      // of 133 units.
+      //
+      // Two limits are the source's, not the code's, and both are why this
+      // falls back rather than insisting. The distinct pool is 20 to 23 in most
+      // units, so the tail is 8 to 12 questions and not always 12 — padding it
+      // back could only be done by repeating, which is the defect. And a tail
+      // question is only usable if the Answer Key paired one with it; Stage 1's
+      // packs have no per-section key at all, so its tail is unanswerable and
+      // it keeps the old behaviour.
+      fluency: fluencyItems(practice).map((item, index) => ({ id: `fl${String(index + 1).padStart(2, "0")}`, outcomeId: `lo${String(index % Math.max(1, outcomes.length) + 1).padStart(2, "0")}`, difficulty: index < 4 ? "Round 1" : index < 8 ? "Round 2" : "Round 3", prompt: item.prompt, answer: item.answer, hint: item.hint, errorFeedback: item.answer })),
       realProblems, reasoningPrompts, assessment,
       games: { masteryScore: 3, games: gameData(assessment, reference.terms, unitNo) },
       selfAssessment: outcomes.slice(0, 8).map((outcome) => `I can ${outcome.charAt(0).toLowerCase()}${outcome.slice(1)}`),

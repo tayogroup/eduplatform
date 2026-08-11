@@ -1505,10 +1505,28 @@ if ($ready && !$needsschoolselection && $_SERVER['REQUEST_METHOD'] === 'POST') {
         $requestid = $DB->insert_record('local_prequran_intake_request', $requestrecord);
         $SESSION->pqpir_last_submit = $now;
         $SESSION->pqpir_formtime = $now;
+        // The receipt. Sent after the row is committed, so a mail failure can
+        // never cost the family their submission -- and deliberately not gated on
+        // parent_email_enabled, which governs ongoing notices rather than an
+        // acknowledgement of what they just sent us.
+        //
+        // The parent contact field accepts "email or phone" by design, so this
+        // returns false for every parent who gave a number. That is expected, not
+        // an error; the audit records which, so the team can see who needs
+        // contacting another way.
+        $receiptsent = pqhi_send_intake_receipt(
+            $consumercontext,
+            pqpir_value($form, 'parent_email'),
+            pqpir_value($form, 'parent_name'),
+            trim(pqpir_value($form, 'student_firstname') . ' ' . pqpir_value($form, 'student_lastname')),
+            (int)$requestid,
+            $now
+        );
         pqpir_security_audit('public_intake_submitted', [
             'requestid' => (int)$requestid,
             'consumerid' => (int)$consumercontext->consumerid,
             'consumerslug' => (string)$consumercontext->consumerslug,
+            'receipt_email_sent' => $receiptsent ? 1 : 0,
         ]);
         $returnurl = trim((string)($consumercontext->returnurl ?? ''));
         if ($returnurl !== '' && preg_match('#^https?://#i', $returnurl)) {

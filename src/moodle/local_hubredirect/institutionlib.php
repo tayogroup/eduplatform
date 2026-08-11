@@ -788,7 +788,13 @@ function pqhi_email_sender_for_consumer(?stdClass $consumer = null): stdClass {
     }
     $fromname = trim((string)($consumer->emailfromname ?? ''));
     if ($fromname === '') {
-        $fromname = trim((string)($consumer->name ?? ''));
+        // Both shapes reach here: a raw local_prequran_consumer record, which has
+        // `name`, and a consumer CONTEXT from pqh_*_consumer_context(), which
+        // renames it to `consumername`. Reading only `name` meant every caller
+        // holding a context -- student_intake.php among them -- silently fell
+        // back to Moodle's default noreply name, so the school's own branding
+        // never reached the parent's inbox.
+        $fromname = trim((string)($consumer->consumername ?? $consumer->name ?? ''));
     }
     $replyto = clean_param(trim((string)($consumer->emailreplyto ?? ($consumer->supportemail ?? ''))), PARAM_EMAIL);
     if ($fromname !== '') {
@@ -819,7 +825,9 @@ function pqhi_support_recipient_for_consumer(?stdClass $consumer = null): stdCla
 }
 
 function pqhi_send_consumer_email(stdClass $to, ?stdClass $consumer, string $subject, string $messagetext, string $messagehtml = ''): bool {
-    $brand = $consumer ? trim((string)($consumer->name ?? '')) : '';
+    // Same two shapes as pqhi_email_sender_for_consumer(): record has `name`,
+    // context has `consumername`.
+    $brand = $consumer ? trim((string)($consumer->consumername ?? $consumer->name ?? '')) : '';
     if ($brand !== '' && stripos($subject, $brand) === false) {
         $subject = $brand . ': ' . $subject;
     }
@@ -827,4 +835,158 @@ function pqhi_send_consumer_email(stdClass $to, ?stdClass $consumer, string $sub
         $messagehtml = nl2br(s($messagetext));
     }
     return email_to_user($to, pqhi_email_sender_for_consumer($consumer), $subject, $messagetext, $messagehtml);
+}
+
+/**
+ * A recipient object for someone with no Moodle account -- a parent who has
+ * only just filled in the public intake form.
+ *
+ * email_to_user() expects a user record, so this borrows the shape of the
+ * no-reply pseudo-user (which carries every name field fullname() touches) and
+ * swaps in the real address. The negative id is deliberate: it keeps Moodle from
+ * treating this as a real account for bounce counting or preferences, and
+ * emailstop must be cleared because the no-reply user ships with it set.
+ *
+ * Returns null when the contact is not an email at all. The intake form accepts
+ * "email or phone" on purpose, so a good share of parents have no address here
+ * and simply cannot be emailed -- callers must treat that as normal, not as an
+ * error.
+ */
+function pqhi_public_email_recipient(string $email, string $firstname, string $lastname = ''): ?stdClass {
+    $email = trim($email);
+    if ($email === '' || !validate_email($email)) {
+        return null;
+    }
+    $to = clone core_user::get_noreply_user();
+    $to->id = -1;
+    $to->email = $email;
+    $to->firstname = trim($firstname) !== '' ? trim($firstname) : 'Parent';
+    $to->lastname = trim($lastname);
+    $to->emailstop = 0;
+    $to->maildisplay = 1;
+    $to->mailformat = 1;
+    $to->deleted = 0;
+    $to->suspended = 0;
+    return $to;
+}
+
+/**
+ * Email 1: the receipt a parent gets the moment the public intake form is
+ * submitted. Deliberately carries no credentials and asks for nothing back --
+ * its whole job is to prove the form arrived and say what happens next.
+ *
+ * Not gated on the form's "parent email notifications" checkbox: that preference
+ * governs ongoing notices, while this is a transactional receipt for someone who
+ * has just handed over their child's date of birth.
+ */
+function pqhi_send_intake_receipt(?stdClass $consumer, string $toemail, string $parentname, string $studentname, int $requestid, int $submitted = 0): bool {
+    $to = pqhi_public_email_recipient($toemail, $parentname);
+    if (!$to) {
+        return false;
+    }
+    $brand = trim((string)($consumer->consumername ?? $consumer->name ?? ''));
+    if ($brand === '') {
+        $brand = 'Ehel Academy';
+    }
+    $student = trim($studentname) !== '' ? trim($studentname) : 'your child';
+    $firstname = trim((string)preg_split('/\s+/', trim($studentname) !== '' ? trim($studentname) : 'your child')[0]);
+    $submitted = $submitted > 0 ? $submitted : time();
+
+    $lines = [
+        'Assalamu alaykum ' . trim($parentname) . ',',
+        '',
+        'Thank you -- we have received your enrolment request for ' . $student . '.',
+        '',
+        '  Reference: ' . $requestid,
+        '  Submitted: ' . userdate($submitted),
+        '',
+        'Our team will review it and come back to you shortly. There is nothing you',
+        'need to do in the meantime.',
+        '',
+        'When we reply, it will come to this email address. Please keep an eye on',
+        'your inbox, and check your spam folder just in case.',
+        '',
+        'If something in your request has changed, or you have a question, simply',
+        'reply to this message -- it reaches our admissions team.',
+        '',
+        'Sending this form does not enrol ' . $firstname . ' yet, and it does not',
+        'commit you to anything.',
+        '',
+        'Thank you,',
+        $brand,
+    ];
+    $text = implode("\n", $lines);
+    return pqhi_send_consumer_email($to, $consumer, 'We have your enrolment request', $text);
+}
+
+/**
+ * Email 2's body, defined once. Both intake paths -- student_intake.php and the
+ * portal handler's student_intake_portallib.php twin -- build it from here so the
+ * wording cannot drift between them, which is exactly what happened to the
+ * validation rules these two files share.
+ *
+ * $vars keys: parentname, studentname, loginurl, parentusername, parentpassword,
+ * studentusername, studentpassword, brand. A blank password means the account
+ * already existed and keeps its current one -- the email must say so rather than
+ * print an empty line where a password should be.
+ */
+function pqhi_intake_welcome_message(array $vars): array {
+    $brand = trim((string)($vars['brand'] ?? '')) !== '' ? trim((string)$vars['brand']) : 'Ehel Academy';
+    $studentname = trim((string)($vars['studentname'] ?? '')) !== '' ? trim((string)$vars['studentname']) : 'your child';
+    $first = (string)preg_split('/\s+/', $studentname)[0];
+    $loginurl = trim((string)($vars['loginurl'] ?? ''));
+
+    $block = static function (string $heading, string $username, string $password, string $loginurl): array {
+        $out = [$heading];
+        if ($loginurl !== '') {
+            $out[] = '  Sign in:   ' . $loginurl;
+        }
+        $out[] = '  Username:  ' . $username;
+        $out[] = $password !== ''
+            ? '  Password:  ' . $password
+            : '  Password:  (unchanged -- this account already existed, so keep using the password you have)';
+        $out[] = '';
+        return $out;
+    };
+
+    $lines = [
+        'Assalamu alaykum ' . trim((string)($vars['parentname'] ?? '')) . ',',
+        '',
+        'Good news -- ' . $studentname . '\'s enrolment request has been approved,',
+        'and your accounts are ready.',
+        '',
+        'You have two separate logins: one for you, and one for ' . $first . '.',
+        '',
+    ];
+    $lines = array_merge($lines, $block('YOUR PARENT ACCOUNT',
+        (string)($vars['parentusername'] ?? ''), (string)($vars['parentpassword'] ?? ''), $loginurl));
+    $lines = array_merge($lines, $block(core_text::strtoupper($first) . '\'S STUDENT ACCOUNT',
+        (string)($vars['studentusername'] ?? ''), (string)($vars['studentpassword'] ?? ''), $loginurl));
+    $lines = array_merge($lines, [
+        'Any temporary password above must be changed the first time you sign in.',
+        'Please keep ' . $first . '\'s login somewhere safe.',
+        '',
+        'WHAT TO DO NEXT',
+        '',
+        '  1. Sign in with your parent account using the link above.',
+        '  2. Open the course catalogue.',
+        '  3. Choose ' . $first . ' and the course you would like, then press',
+        '     Request enrolment.',
+        '  4. Our team confirms the place and the class times.',
+        '',
+        'From your Parent Workspace you can follow attendance, see assigned',
+        'materials and teacher notes, and watch approved class recordings.',
+        '',
+        'If a login does not work, or you get stuck anywhere, just reply to this',
+        'message -- it reaches our admissions team directly.',
+        '',
+        'Welcome to ' . $brand . '.',
+        '',
+        $brand,
+    ]);
+
+    return [
+        'subject' => $studentname . ' has a place -- your accounts are ready',
+        'text' => implode("\n", $lines),
+    ];
 }

@@ -232,15 +232,31 @@ function pqsi_create_user(string $firstname, string $lastname, string $email, st
     ];
 
     $userid = (int)user_create_user($user, true, false);
+    // The generated password is temporary and is emailed to the parent, so it
+    // must not stay valid indefinitely. student_intake_portallib.php's twin has
+    // always done this; this path did not, which left every account created here
+    // usable forever on a password that had travelled through an inbox.
+    set_user_preference('auth_forcepasswordchange', 1, $userid);
     return [$userid, $password];
 }
 
-function pqsi_send_parent_intake_email(stdClass $parent, stdClass $student, string $approvalurl, bool $parentcreated): bool {
+/**
+ * Email 2: the welcome, sent once the request is approved and the accounts exist.
+ *
+ * This used to say "please use the login details shared by the academy team" and
+ * carry neither a username nor a password -- the generated passwords only ever
+ * appeared on the admin's screen, so somebody had to relay them by hand and a
+ * hundred families would have been a hundred manual handovers. It now carries
+ * both accounts' credentials and what to do with them.
+ *
+ * The body itself lives in pqhi_intake_welcome_message() so this and the portal
+ * handler's twin cannot drift apart.
+ */
+function pqsi_send_parent_intake_email(stdClass $parent, stdClass $student, string $approvalurl, bool $parentcreated, array $credentials = []): bool {
     global $CFG, $SITE;
     if (empty($parent->email) || !pqsi_contact_is_email((string)$parent->email) || !empty($parent->emailstop)) {
         return false;
     }
-    $studentname = fullname($student);
     $consumer = null;
     try {
         $consumer = pqh_current_consumer_context();
@@ -251,27 +267,24 @@ function pqsi_send_parent_intake_email(stdClass $parent, stdClass $student, stri
     if ($brandname === '') {
         $brandname = format_string($SITE->fullname ?? ($CFG->wwwroot ?? 'EduPlatform'));
     }
-    $subject = 'Student intake update';
-    $lines = [
-        'Assalamu alaikum ' . fullname($parent) . ',',
-        '',
-        'A ' . $brandname . ' student intake record has been created or updated for ' . $studentname . '.',
-        '',
-    ];
-    if ($approvalurl !== '') {
-        $lines[] = 'Please review the parent approval page here:';
-        $lines[] = $approvalurl;
-        $lines[] = '';
-    }
-    if ($parentcreated) {
-        $lines[] = 'A parent/guardian account has also been created for you. Please use the login details shared by the academy team.';
-        $lines[] = '';
-    }
-    $lines[] = 'Thank you,';
-    $lines[] = $brandname;
-    $messagetext = implode("\n", $lines);
-    $messagehtml = nl2br(s($messagetext));
-    return pqhi_send_consumer_email($parent, $consumer, $subject, $messagetext, $messagehtml);
+    $loginurl = (new moodle_url('/local/hubredirect/consumer_login.php', array_filter([
+        'consumer' => (string)($consumer->consumerslug ?? ''),
+    ])))->out(false);
+
+    $message = pqhi_intake_welcome_message([
+        'parentname' => fullname($parent),
+        'studentname' => fullname($student),
+        'brand' => $brandname,
+        'loginurl' => $loginurl,
+        'parentusername' => (string)($credentials['parentusername'] ?? $parent->username ?? ''),
+        // Blank when the account already existed -- the shared builder prints
+        // "keep using the password you have" rather than an empty line.
+        'parentpassword' => $parentcreated ? (string)($credentials['parentpassword'] ?? '') : '',
+        'studentusername' => (string)($credentials['studentusername'] ?? $student->username ?? ''),
+        'studentpassword' => (string)($credentials['studentpassword'] ?? ''),
+    ]);
+    $messagehtml = nl2br(s($message['text']));
+    return pqhi_send_consumer_email($parent, $consumer, $message['subject'], $message['text'], $messagehtml);
 }
 
 function pqsi_save_profile(int $studentid, array $data): int {
@@ -2136,7 +2149,10 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
         );
         $approvalurl = $parentid > 0 ? (new moodle_url('/local/hubredirect/enrollment_approval.php', ['studentid' => $studentid]))->out(false) : '';
         $parentemailsent = false;
-        $parentemailattempted = $parentid > 0 && !empty($data['parent_email_enabled']) && pqsi_contact_is_email($parentcontact);
+        // Not gated on parent_email_enabled: that preference governs ongoing
+        // notices, while this hands over the credentials the family needs in
+        // order to log in at all.
+        $parentemailattempted = $parentid > 0 && pqsi_contact_is_email($parentcontact);
         pqsi_audit('student_intake_created', 'student', $studentid, [
             'profileid' => $profileid,
             'parentid' => $parentid,
@@ -2215,7 +2231,15 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
             $parentuser = core_user::get_user($parentid, '*', IGNORE_MISSING);
             $studentuserforemail = core_user::get_user($studentid, '*', IGNORE_MISSING);
             if ($parentuser && $studentuserforemail) {
-                $parentemailsent = pqsi_send_parent_intake_email($parentuser, $studentuserforemail, $approvalurl, $parentcreated);
+                // The generated passwords exist only in these locals; once this
+                // request ends they are hashed in the DB and unrecoverable, so
+                // they have to be handed to the email here or not at all.
+                $parentemailsent = pqsi_send_parent_intake_email($parentuser, $studentuserforemail, $approvalurl, $parentcreated, [
+                    'parentusername' => $parentusername ?? '',
+                    'parentpassword' => $parentpassword ?? '',
+                    'studentusername' => $studentusername ?? '',
+                    'studentpassword' => $existingstudentid > 0 ? '' : ($studentpassword ?? ''),
+                ]);
             }
             pqsi_audit('student_intake_parent_email', 'student', $studentid, [
                 'parentid' => $parentid,

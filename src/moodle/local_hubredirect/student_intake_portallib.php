@@ -221,12 +221,16 @@ function pqsil_create_user(string $firstname, string $lastname, string $email, s
     return [$userid, $password];
 }
 
-function pqsil_send_parent_intake_email(stdClass $parent, stdClass $student, string $approvalurl, bool $parentcreated): bool {
+/**
+ * Email 2, portal path. Mirrors pqsi_send_parent_intake_email() in
+ * student_intake.php; the body itself comes from pqhi_intake_welcome_message()
+ * so the two cannot drift.
+ */
+function pqsil_send_parent_intake_email(stdClass $parent, stdClass $student, string $approvalurl, bool $parentcreated, array $credentials = []): bool {
     global $CFG, $SITE;
     if (empty($parent->email) || !pqsil_contact_is_email((string)$parent->email) || !empty($parent->emailstop)) {
         return false;
     }
-    $studentname = fullname($student);
     $consumer = null;
     try {
         $consumer = pqh_current_consumer_context();
@@ -237,27 +241,21 @@ function pqsil_send_parent_intake_email(stdClass $parent, stdClass $student, str
     if ($brandname === '') {
         $brandname = format_string($SITE->fullname ?? ($CFG->wwwroot ?? 'EduPlatform'));
     }
-    $subject = 'Student intake update';
-    $lines = [
-        'Assalamu alaikum ' . fullname($parent) . ',',
-        '',
-        'A ' . $brandname . ' student intake record has been created or updated for ' . $studentname . '.',
-        '',
-    ];
-    if ($approvalurl !== '') {
-        $lines[] = 'Please review the parent approval page here:';
-        $lines[] = $approvalurl;
-        $lines[] = '';
-    }
-    if ($parentcreated) {
-        $lines[] = 'A parent/guardian account has also been created for you. Please use the login details shared by the academy team.';
-        $lines[] = '';
-    }
-    $lines[] = 'Thank you,';
-    $lines[] = $brandname;
-    $messagetext = implode("\n", $lines);
-    $messagehtml = nl2br(s($messagetext));
-    return pqhi_send_consumer_email($parent, $consumer, $subject, $messagetext, $messagehtml);
+    $loginurl = (new moodle_url('/local/hubredirect/consumer_login.php', array_filter([
+        'consumer' => (string)($consumer->consumerslug ?? ''),
+    ])))->out(false);
+
+    $message = pqhi_intake_welcome_message([
+        'parentname' => fullname($parent),
+        'studentname' => fullname($student),
+        'brand' => $brandname,
+        'loginurl' => $loginurl,
+        'parentusername' => (string)($credentials['parentusername'] ?? $parent->username ?? ''),
+        'parentpassword' => $parentcreated ? (string)($credentials['parentpassword'] ?? '') : '',
+        'studentusername' => (string)($credentials['studentusername'] ?? $student->username ?? ''),
+        'studentpassword' => (string)($credentials['studentpassword'] ?? ''),
+    ]);
+    return pqhi_send_consumer_email($parent, $consumer, $message['subject'], $message['text'], nl2br(s($message['text'])));
 }
 
 function pqsil_save_profile(int $studentid, array $data): int {

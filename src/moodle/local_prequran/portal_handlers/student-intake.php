@@ -984,7 +984,10 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
             );
             $approvalurl = $parentid > 0 ? (new moodle_url('/local/hubredirect/enrollment_approval.php', ['studentid' => $studentid]))->out(false) : '';
             $parentemailsent = false;
-            $parentemailattempted = $parentid > 0 && !empty($data['parent_email_enabled']) && pqsil_contact_is_email($parentcontact);
+            // Not gated on parent_email_enabled: that preference governs ongoing
+            // notices, while this hands over the credentials the family needs in
+            // order to log in at all.
+            $parentemailattempted = $parentid > 0 && pqsil_contact_is_email($parentcontact);
             pqsil_audit('student_intake_created', 'student', $studentid, [
                 'profileid' => $profileid,
                 'parentid' => $parentid,
@@ -1063,7 +1066,14 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
                 $parentuser = core_user::get_user($parentid, '*', IGNORE_MISSING);
                 $studentuserforemail = core_user::get_user($studentid, '*', IGNORE_MISSING);
                 if ($parentuser && $studentuserforemail) {
-                    $parentemailsent = pqsil_send_parent_intake_email($parentuser, $studentuserforemail, $approvalurl, $parentcreated);
+                    // Generated passwords live only in these locals -- hashed and
+                    // unrecoverable once the request ends.
+                    $parentemailsent = pqsil_send_parent_intake_email($parentuser, $studentuserforemail, $approvalurl, $parentcreated, [
+                        'parentusername' => $parentusername ?? '',
+                        'parentpassword' => $parentpassword ?? '',
+                        'studentusername' => $studentusername ?? '',
+                        'studentpassword' => $existingstudentid > 0 ? '' : ($studentpassword ?? ''),
+                    ]);
                 }
                 pqsil_audit('student_intake_parent_email', 'student', $studentid, [
                     'parentid' => $parentid,

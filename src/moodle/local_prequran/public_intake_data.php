@@ -925,14 +925,27 @@ if (pqpirl_table_has_column('local_prequran_intake_request', 'workspaceid')) {
     $requestrecord->workspaceid = (int)($consumercontext->workspaceid ?? 0);
 }
 $requestid = $DB->insert_record('local_prequran_intake_request', $requestrecord);
+// The receipt, matching public_intake.php exactly -- these two run in parallel
+// over the same form, so a parent must get the same acknowledgement whichever
+// front end they used. Sent after commit, so a mail failure cannot cost them the
+// submission, and false is the normal result for a parent who gave a phone
+// number rather than an email.
+$receiptsent = pqhi_send_intake_receipt(
+    $consumercontext,
+    pqpirl_value($form, 'parent_email'),
+    pqpirl_value($form, 'parent_name'),
+    trim(pqpirl_value($form, 'student_firstname') . ' ' . pqpirl_value($form, 'student_lastname')),
+    (int)$requestid
+);
 pqpirl_security_audit('public_intake_submitted', [
     'requestid' => (int)$requestid,
     'consumerid' => (int)($consumercontext->consumerid ?? 0),
     'consumerslug' => (string)($consumercontext->consumerslug ?? ''),
+    'receipt_email_sent' => $receiptsent ? 1 : 0,
 ]);
 
 // g) success — the legacy thank-you message (legacy redirects to
-// ?submitted=1 and renders this alert; no notification emails are sent).
+// ?submitted=1 and renders this alert).
 echo json_encode([
     'ok' => true,
     'message' => 'Thank you. Your request was received and ' . $brandname . ' will review the best live-class options.',

@@ -14,6 +14,155 @@ const model = JSON.parse(fs.readFileSync(modelPath, "utf8"));
 
 const grades = process.argv.slice(2).length ? process.argv.slice(2).map(Number) : Object.keys(model.grades).map(Number).sort((a, b) => a - b);
 
+// ── Cambridge objective mapping ──────────────────────────────────────────────
+// Every unit declared a syllabus and a stage but claimed no objective, so
+// check-science-content.mjs reported all 53 as "alignment is declared, not
+// evidenced". CAMBRIDGE_OBJECTIVES below is that evidence: which published
+// objectives each unit actually teaches.
+//
+// Unlike Global Perspectives, nothing in the Science pipeline can extract this.
+// GP's Year 5/7/8 packs print their own "Code | What Cambridge says" table, so
+// its build proves the mapping against the source. The Science Word packs print
+// no codes — the extracted content model contains zero matches for the published
+// code shape — and the packs themselves are not kept in the repo (inputs/
+// ehel-grade*-source is English). So the only authority here is Cambridge's own
+// framework, and the mapping is authored against it rather than extracted.
+//
+// That is why the codes are recorded as PROPOSED. Each was chosen by reading a
+// unit's own outcomes against its stage's objectives, and the mapping is stated
+// so a reviewer can check it — but it is not a Cambridge-verified alignment, and
+// the units already carry "Curriculum review required" for the same reason.
+// alignmentStatus below says so in the data rather than only in this comment.
+//
+// Two rules held while authoring, both to keep the mapping honest:
+//   - An objective is claimed only where the unit's outcomes or concepts teach
+//     it. Padding every unit with the recurring enquiry objectives (Ep/Eo) would
+//     turn 53 real mappings into 53 that mean nothing.
+//   - Objective TEXT is never copied here. It is resolved from the framework
+//     file at build time, so the wording in a unit is always Cambridge's current
+//     wording and cannot drift from it.
+const frameworkCache = new Map();
+function cambridgeFramework(code) {
+  if (!frameworkCache.has(code)) {
+    frameworkCache.set(code, JSON.parse(fs.readFileSync(path.join(root, "src", "curriculum", `cambridge-science-${code}.json`), "utf8")));
+  }
+  return frameworkCache.get(code);
+}
+
+const CAMBRIDGE_OBJECTIVES = {
+  // ── Stage 1 (0846) ──
+  "1-1": ["1Bp1", "1Bp2", "1Bh5", "1Eo1", "1Eo4"],
+  "1-2": ["1Bp1", "1Bp4", "1Bp5", "1Bp6", "1Eo1", "1Eo3"],
+  "1-3": ["1Bh1", "1Bh2", "1Bh4", "1Cp1", "1Eo4"],
+  "1-4": ["1Cp1", "1Cp2", "1Cp3", "1Cp4", "1Eo3", "1Eo4"],
+  "1-5": ["1Pf1", "1Pf2", "1Pf3", "1Eo1"],
+  "1-6": ["1Ps1", "1Ps2", "1Ps3", "1Eo4"],
+  // ── Stage 2 (0846) ──
+  "2-1": ["2Be1", "2Be2", "2Be3", "2Eo2", "2Eo3", "2Eo5"],
+  "2-2": ["2Cp1", "2Cp2", "2Eo3", "2Eo6"],
+  "2-3": ["2Cc2", "2Cc3", "2Ep2", "2Ep5", "2Eo2"],
+  "2-4": ["2Pl1", "2Pl2", "2Pl3", "2Pb2", "2Eo2"],
+  "2-5": ["2Pm1", "2Pm2", "2Eo2"],
+  "2-6": ["2Pb1", "2Pb2", "2Pl3", "2Eo2", "2Eo3"],
+  // ── Stage 3 (0846) ──
+  "3-1": ["3Bh1", "3Bh2", "3Bp2", "3Ep1", "3Eo4"],
+  "3-2": ["3Cp2", "3Ep2", "3Ep3", "3Eo2", "3Eo4"],
+  "3-3": ["3Cp1", "3Cp2", "3Ep2", "3Eo1", "3Eo4"],
+  "3-4": ["3Bh1", "3Bh3", "3Eo2", "3Eo4"],
+  "3-5": ["3Pf1", "3Pf2", "3Pf4", "3Cp3", "3Ep3"],
+  "3-6": ["3Eo1", "3Eo2", "3Eo5"],
+  // ── Stage 4 (0846) ──
+  "4-1": ["4Be1", "4Be2", "4Eo1"],
+  "4-2": ["4Be3", "4Ep1", "4Eo4"],
+  "4-3": ["4Cs1", "4Cs2", "4Cs3", "4Cs4", "4Ep4", "4Eo4"],
+  "4-4": ["4Be1", "4Eo7"],
+  "4-5": ["4Ep2", "4Eo1"],
+  "4-6": ["4Pm1", "4Pm2", "4Pm3", "4Eo1"],
+  // ── Stage 5 (0846) ──
+  "5-1": ["5Bp1", "5Bp2", "5Bp4", "5Bp7", "5Ep4", "5Eo2", "5Eo4"],
+  "5-2": ["5Bp2", "5Bp3", "5Bp5", "5Bp6", "5Bp7", "5Eo1"],
+  "5-3": ["5Cs1", "5Cs2", "5Cs3", "5Cs4", "5Ep4", "5Ep6"],
+  "5-4": ["5Pl1", "5Pl6", "5Pl7", "5Pl8", "5Eo1"],
+  "5-5": ["5Pl1", "5Pl2", "5Pl3", "5Pl5", "5Ep3", "5Eo1"],
+  "5-6": ["5Pb1", "5Pb2", "5Pb3", "5Eo1"],
+  // ── Stage 6 (0846) ──
+  "6-1": ["6Bh1", "6Bh2", "6Bh3", "6Bh4", "6Ep4", "6Eo1", "6Eo3"],
+  "6-2": ["6Be1", "6Be2", "6Be3", "6Be4", "6Be5", "6Be6"],
+  "6-3": ["6Cc1", "6Cc2", "6Cc3", "6Cc4", "6Cc5", "6Ep6"],
+  "6-4": ["6Pf1", "6Pf2", "6Pf3", "6Pf4", "6Eo1"],
+  "6-5": ["6Pm1", "6Pm2", "6Pm3", "6Pm4", "6Pm5"],
+  // ── Stage 7 (0893) ──
+  "7-1": ["7Bs.01", "7Bs.02", "7Bs.03", "7Bs.04", "7Bs.05", "7SIC.01"],
+  "7-2": ["7Cm.01", "7Cm.04", "7Cm.06", "7Cm.07", "7ESc.01"],
+  "7-3": ["7Pf.03", "7TWSm.02"],
+  "7-4": ["7Bp.01", "7Bp.02", "7Bp.03", "7Bp.04", "7TWSc.01"],
+  "7-5": ["7Cm.03", "7Cp.01", "7Cp.02", "7Cp.03", "7Cp.05", "7Cp.06", "7Cp.07", "7TWSp.05"],
+  "7-6": ["7Ps.01", "7Ps.02", "7ESp.01", "7ESp.02", "7ESs.04", "7TWSc.05"],
+  "7-7": ["7Bs.01", "7Be.01", "7Be.02", "7TWSp.04", "7TWSa.03", "7SIC.02"],
+  "7-8": ["7Cc.01", "7Cc.03", "7Cc.04", "7TWSc.05", "7TWSc.07"],
+  "7-9": ["7Pe.01", "7Pe.02", "7Pe.03", "7Pe.04", "7Pe.05"],
+  // ── Stage 8 (0893) ──
+  "8-1": ["8SIC.02"],
+  "8-2": ["8Bp.01", "8Bp.03"],
+  "8-3": ["8Pf.01", "8Pf.02", "8TWSm.03", "8TWSc.02", "8TWSc.04"],
+  "8-4": ["8TWSm.03"],
+  "8-5": ["8Cm.04", "8Cp.01", "8Cp.02", "8Cc.05", "8TWSa.05"],
+  "8-6": ["8Ps.01", "8Ps.02", "8Ps.03", "8Ps.04", "8TWSc.04"],
+  "8-7": ["8Bp.01", "8Bp.02", "8Bp.03", "8TWSc.07", "8TWSa.05"],
+  "8-8": ["8TWSc.01", "8TWSc.07", "8SIC.02"],
+  "8-9": ["8Pe.01", "8Pe.02", "8Pe.03", "8TWSm.03", "8TWSc.02"],
+};
+
+// Where a unit teaches content its own stage does not carry, the mapping says so
+// rather than going quiet. Cambridge Stage 3 of 0846 has no light sub-strand and
+// no Earth-and-beyond sub-strand at all — its 27 objectives are enquiry, plants,
+// humans and animals, material properties and forces — so two Grade 3 units sit
+// outside it. Their enquiry objectives are real and are claimed; the content
+// strand genuinely has nowhere to map, and a reader of the unit should be told
+// that instead of seeing a short list and assuming it is complete.
+const CAMBRIDGE_ALIGNMENT_NOTES = {
+  "3-3": "Light and shadow are not in 0846 Stage 3 — the framework carries light at Stage 2 (2Pl) and Stage 5 (5Pl) only. The material-property and enquiry objectives claimed here are met in full; the light content itself has no Stage 3 objective to map to.",
+  "3-6": "Earth, Sun and Moon are not in 0846 Stage 3 — the framework carries Earth and beyond at Stage 2 (2Pb) and Stage 5 (5Pb) only. Only the enquiry objectives this unit genuinely meets are claimed; its astronomy content has no Stage 3 objective to map to.",
+  "4-2": "Energy is not a sub-strand of 0846 Stage 4, or of any primary stage — the framework first treats it as \"energy in movement\" at Stage 6 (6Pf3). The environmental and enquiry objectives claimed here are met; the unit's core energy content sits outside the primary framework.",
+  "4-4": "The Earth's structure, volcanoes and earthquakes are not in 0846 Stage 4 — the framework carries Earth and beyond at Stage 2 (2Pb) and Stage 5 (5Pb), and neither covers plate geology. The habitat and enquiry objectives claimed here are met in full.",
+  "4-5": "Light is not in 0846 Stage 4 — the framework carries light at Stage 2 (2Pl) and Stage 5 (5Pl). Only the enquiry objectives this unit genuinely meets are claimed; Stage 4 has no light or material-property objective for its content.",
+  "8-1": "Plant reproduction is not in 0893 Stage 8 — the framework introduces fertilisation as the fusion of gametes at Stage 9 (9Bp.01), and Stages 7 and 8 carry no pollination, seed or germination objective. Only the application objective this unit meets is claimed; its subject matter is a stage ahead.",
+  "8-2": "Human reproduction is not in 0893 Stage 8 — as with Unit 1, the framework places fertilisation at Stage 9 (9Bp.01) and carries no puberty or gestation objective at any Lower Secondary stage. The diet and lifestyle objectives claimed here are Stage 8 and are met in full.",
+  "8-3": "Half of this unit is a stage ahead: speed and distance/time graphs are Stage 8 (8Pf.01, 8Pf.02) and are claimed, but density is Stage 9 (9Cp.02, and 9Pf.01 for floating and sinking). The unit teaches both together.",
+  "8-4": "Atoms, elements, compounds and metals versus non-metals are Stage 7 in 0893 (7Cm.01-7Cm.04, 7Cp.05), and the structure and trends of the Periodic Table are Stage 9 (9Cm.01, 9Cp.01). Stage 8 carries none of this unit's chemistry, so only its use of chemical symbols and formulae is claimed.",
+  "8-7": "The nutrition half of this unit maps to Stage 8 in full (8Bp.01-8Bp.03), but digestion does not: 0893 carries no objective for mechanical or chemical digestion, enzymes or absorption at Stage 7, 8 or 9.",
+  "8-8": "Rocks and the rock cycle are not in 0893 at any stage — Lower Secondary treats geology as plate tectonics at Stage 7 (7ESp.01, 7ESp.02), and rock types, weathering, erosion and fossils appear nowhere in Stages 7-9. Only the enquiry and application objectives this unit genuinely meets are claimed.",
+  "8-9": "The magnetism half of this unit is Stage 8 and is claimed in full (8Pe.01-8Pe.03). Current, voltage and resistance are Stage 9 (9Pe.02, 9Pe.03), as is the motor effect, so the electricity half is a stage ahead.",
+};
+
+// Resolve a unit's codes against the framework, and refuse the build if one is
+// not published for that unit's own stage. A wrong code is worse than none: it
+// reads as verified alignment to anyone downstream, which is the exact claim
+// this mapping exists to stop the course making without evidence.
+function cambridgeObjectivesFor(grade, unitNo, code) {
+  const claimed = CAMBRIDGE_OBJECTIVES[`${grade}-${unitNo}`];
+  // All 53 units are mapped. A new unit arriving unmapped is the state this
+  // whole table exists to end, and it would otherwise reappear only as a line in
+  // check:science that does not fail — which is how it went unnoticed before.
+  if (!claimed) {
+    throw new Error(`Grade ${grade} Unit ${unitNo}: no CAMBRIDGE_OBJECTIVES entry. Add "${grade}-${unitNo}" with the objectives this unit teaches, from ${code} Stage ${grade}.`);
+  }
+  const stageObjectives = (cambridgeFramework(code).objectivesByStage || {})[String(grade)] || [];
+  const byCode = new Map(stageObjectives.map((entry) => [entry.code, entry]));
+  const missing = claimed.filter((entry) => !byCode.has(entry));
+  if (missing.length) {
+    throw new Error(`Grade ${grade} Unit ${unitNo}: objective ${missing.join(", ")} is not published in ${code} Stage ${grade}`);
+  }
+  const duplicates = claimed.filter((entry, index) => claimed.indexOf(entry) !== index);
+  if (duplicates.length) {
+    throw new Error(`Grade ${grade} Unit ${unitNo}: objective ${[...new Set(duplicates)].join(", ")} is claimed twice`);
+  }
+  return claimed.map((entry) => {
+    const objective = byCode.get(entry);
+    return { code: objective.code, strand: objective.strand, subStrand: objective.subStrand, text: objective.text };
+  });
+}
+
 // The source books mark callouts with a bracketed tag the typesetter turned
 // into an icon ("[Star] Big Idea…", "[!] Did You Know?"). Those tags are
 // layout instructions, not words for the learner, so strip them here rather
@@ -1458,6 +1607,9 @@ function buildGrade(grade) {
 
   function buildUnit(unitMeta, position) {
     const unitNo = unitMeta.unit;
+    // Resolved here so an unpublished or duplicated code stops the build at the
+    // unit that claims it, named, rather than at the end of the run.
+    const unitObjectives = cambridgeObjectivesFor(grade, unitNo, cambridge.code);
     const term = termOf(position);
     const lesson = docFor(unitNo, "Lesson");
     const practiceDoc = docFor(unitNo, "Practice");
@@ -1742,7 +1894,21 @@ function buildGrade(grade) {
       stage: { id: stageId, label: stageLabel }, subject: "Science",
       term: { id: `t0${term}`, label: `Term ${term}` },
       unit: { unitId: unitMeta.unit_id, unitNo, unitTitle: title, unitOverview: sentence(overview, 760), learningPath: ["Preview the goals and core ideas", "Explore concepts and investigations", "Learn methods and study worked examples", "Complete guided practice, experiments and games", "Apply, explain and complete the Unit Challenge"], reviewStatus: "Curriculum review required" },
-      cambridge,
+      // Spread rather than mutated: one `cambridge` object is shared by every
+      // unit in the grade, so assigning onto it would give all six the codes of
+      // whichever unit was built last. objectiveCodes is the flat list the gate
+      // reads (it treats every string under that key as a claimed code, so it
+      // must hold codes and nothing else); objectives carries the same codes
+      // with Cambridge's own wording resolved from the framework file.
+      cambridge: unitObjectives
+        ? {
+          ...cambridge,
+          objectiveCodes: unitObjectives.map((entry) => entry.code),
+          objectives: unitObjectives,
+          alignmentStatus: "Proposed from unit outcomes — Cambridge sign-off pending",
+          ...(CAMBRIDGE_ALIGNMENT_NOTES[`${grade}-${unitNo}`] ? { alignmentNote: CAMBRIDGE_ALIGNMENT_NOTES[`${grade}-${unitNo}`] } : {}),
+        }
+        : cambridge,
       provenance: { contentPackage, framework: cambridgeLabel, sourceArchive: source.metadata.source_archive, sourceDocuments: [lesson, experimentsDoc, activitiesDoc, practiceDoc, referenceDoc].filter((doc) => doc !== EMPTY_DOC).map((doc) => doc.source_file), sourceBlockCount: unitMeta.source_block_count, transformation: `Structured from the ${cambridgeLabel} workbook source documents for screen presentation.`, reviewStatus: unitMeta.review_status },
       media: { lectureStatus: "Video pending", lectureVideo: null, poster: null },
       outcomes, concepts, explorations, visualModels, methods, workedExamples,

@@ -137,7 +137,12 @@ const CAMBRIDGE_OBJECTIVES = {
   // (joints and antagonistic muscles) is not claimed — nothing in Grade 8
   // teaches it, and a digestion unit is not where it belongs.
   "8-7": ["8Bp.01", "8Bp.02", "8Bp.03", "8Bs.02", "8Bs.03", "8Bs.04", "8TWSc.07", "8TWSa.05"],
-  "8-8": ["8TWSc.01", "8TWSc.07", "8SIC.02"],
+  // 8ESs.01-8ESs.02 are claimed on the passage CONCEPT_INSERTS continues the
+  // rock cycle concept with: asteroids as leftover rock smaller than any planet,
+  // and a galaxy as stars, planetary systems and star-forming dust and gas. The
+  // unit's own subject, rocks and the rock cycle, appears nowhere in 0893 at any
+  // stage, so before this it claimed only enquiry and application objectives.
+  "8-8": ["8TWSc.01", "8TWSc.07", "8SIC.02", "8ESs.01", "8ESs.02"],
   // Both Planet Earth objectives are claimed on passages CONCEPT_INSERTS adds:
   // 8ESp.01 on concept 6, which attributes the Earth's field to its moving iron
   // core, and 8ESp.02 on concept 2, which teaches renewable and non-renewable
@@ -209,7 +214,6 @@ function cambridgeObjectivesFor(grade, unitNo, code) {
 const CAMBRIDGE_GAP_REASONS = {
   "8-Structure and function": "Three of the four are now taught: Unit 7 continues its digestion arc into what blood is made of, how the alveoli are built for gas exchange, and how oxygen and carbon dioxide diffuse across that barrier (8Bs.02-8Bs.04). 8Bs.01 remains — joints and antagonistic muscles are taught nowhere in Grade 8, and a unit about food is not where they belong. The course teaches the skeleton at Grade 4 (4Bh1, vertebrates having internal backbones) and body systems at Grade 6 (6Bh1-6Bh4), neither at Lower Secondary depth, so closing 8Bs.01 needs movement and muscles written for Stage 8.",
   "8-Cycles on Earth": "Climate is taught nowhere in the course. Grade 8's Rocks unit accounts for 96 apparent matches on \"weather\", but every one is \"weathering\" — the breakdown of rock — and its single use of \"climate\" is the incidental phrase \"in the climate of East Africa\". No unit distinguishes climate from weather, or covers climate cycles or atmospheric change.",
-  "8-Earth in space": "No Grade 8 unit teaches astronomy. The course covers the Solar System at Grade 5 (5Pb1-5Pb3, Stage 5 depth); galaxies and asteroids are taught nowhere. Grade 8's apparent matches on \"star\" are all \"starch\", from Unit 7's food tests.",
   "4-Sound": "No Year 4 Science pack contains a sound unit. Grade 4's six units are Living Things, Energy, Materials, The Earth, Light and Electricity; the only sound content anywhere in the stage is one glossary line in the Energy unit (\"Sound energy = Energy of vibrations that we hear\"), which teaches none of 4Ps1-4Ps5. Grade 1 covers sound at Stage 1 depth (1Ps1-1Ps3) and nothing revisits it. Closing this needs a Stage 4 sound unit to be written — a content commission, not a rebuild.",
 };
 
@@ -266,6 +270,24 @@ const CONCEPT_INSERTS = {
     conceptId: "concept-6-seeds-and-fruits-form",
     after: "much of what you eat is the reproductive success of a plant.",
     text: "\n\nWhere those seeds land matters. A place with its own conditions and its own community of living things is a habitat — the shade under a mango tree, a stretch of riverbank, a patch of thorn scrub. Group the habitats of an area together with the soil, water, air and weather they share and you have an ecosystem. The Earth carries many kinds: coral reef, mangrove, savanna, desert, mountain forest. One ecosystem holds many habitats, and a seed that thrives in one may fail a few metres away.\n\nDispersal usually carries a seed a short way, but people move plants across the world. A species that arrives somewhere new, without the insects and diseases that kept it in check at home, can spread unchecked. Such an invasive species crowds out native plants for light, water and soil, and the animals that fed on those natives lose their food. Prosopis, the thorny tree planted across the Horn of Africa to hold back the desert, now chokes grazing land and waterholes that people and their livestock depended on.\n\nWhat we add to an ecosystem travels too. A pesticide sprayed on a crop does not stay on the leaf: it washes into soil and water and is taken up by plants and small creatures. Every animal that eats many of them takes in all the poison they carried, so the amount rises at each step of the food chain, and the hunters at the top — big fish, fish eagles, and the people who eat them — carry the heaviest dose of all. This building up is called bioaccumulation, and it is why a chemical that looks harmless in a single spray can damage an ecosystem years later.",
+  }],
+  // Earth in space: 0893 publishes two objectives at Stage 8 and no Grade 8 unit
+  // teaches astronomy — the course covers the Solar System at Grade 5
+  // (5Pb1-5Pb3) and never returns. Unit 8 had no astronomy at all: zero mentions
+  // of asteroid, galaxy or solar system, and its thirteen apparent hits on
+  // "star" were all "start".
+  //
+  // The rock cycle concept is the home because of how it ends — "the rock
+  // beneath your feet has almost certainly been many different rocks before, and
+  // will become many more long after we are gone". That is already a passage
+  // about deep time, and pushing the same question one step further ("so where
+  // did the FIRST rock come from") leaves the Earth without changing the
+  // subject. Asteroids are the bridge: they are rocks, which is what this unit
+  // is about, and they are what the planets were built from.
+  "8-8": [{
+    conceptId: "concept-5-the-rock-cycle-nature-s-great-recycling",
+    after: "the rock beneath your feet has almost certainly been many different rocks before, and will become many more long after we are gone.",
+    text: "\n\nPush that question back far enough, though, and you leave the Earth altogether. Where did the very first rock come from? Our Sun and everything circling it formed from an enormous cloud of dust and gas. Gravity drew that cloud together: most of it became the Sun, while the dust further out clumped into larger and larger lumps until those lumps became planets. Not all of the material was used up. Between Mars and Jupiter, and scattered elsewhere, lie asteroids — rocks left over from that building work, far smaller than any planet, ranging from boulders to bodies hundreds of kilometres across. They never gathered into a planet of their own, so they remain close to the original material the planets were made from. Now and then one falls to Earth as a meteorite, and you can hold a piece of rock older than the ground you are standing on.\n\nThe Sun and its planets together make a planetary system, and it is not alone. A galaxy is a vast collection of stars, planetary systems, and the clouds of dust and gas that new stars form from, all held together by gravity. Ours is called the Milky Way, and on a really dark night the pale band of light across the sky is our own view of it, seen edge-on from the inside. It holds hundreds of billions of stars, and our Sun is one of them.",
   }],
   "8-7": [{
     conceptId: "concept-4-the-journey-through-your-digestive-system",

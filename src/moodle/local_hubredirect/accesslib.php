@@ -2755,19 +2755,32 @@ CSS;
 .{$p}{$s}top a.pqh-workspace-logout:hover,.{$p}{$s}top .{$p}{$s}btn.pqh-workspace-logout:hover{background:var(--op-header-ink)!important;border-color:var(--op-header-ink)!important;color:var(--op-header-bg)!important}
 .{$p}{$s}top select{border:1px solid rgba(255,255,255,.30)!important;border-radius:var(--op-radius)!important;background:rgba(255,255,255,.10)!important;color:var(--op-header-ink)!important;font-family:var(--op-font)!important;font-size:14px!important;font-weight:400!important}
 .{$p}{$s}top .{$p}{$s}pill{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.34);color:var(--op-header-ink)}
-/* ...unless the page already has an appbar, which IS the header. Then -top is a
-   plain heading strip on the canvas and every rule above has to be undone,
-   including the ghost buttons -- they are white-on-transparent and would be
-   invisible here. See the note by the appbar block. */
-.{$p}{$s}shell:has(.pqh-appbar) .{$p}{$s}top{padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;color:var(--op-ink)!important;box-shadow:none!important}
-.{$p}{$s}shell:has(.pqh-appbar) .{$p}{$s}top h1,.{$p}{$s}shell:has(.pqh-appbar) .{$p}{$s}top h2,.{$p}{$s}shell:has(.pqh-appbar) .{$p}{$s}top h3,.{$p}{$s}shell:has(.pqh-appbar) .{$p}{$s}top .{$p}{$s}title,.{$p}{$s}shell:has(.pqh-appbar) .{$p}{$s}top .pqh-workspace-title{color:var(--op-ink)!important;font-size:20px!important}
-.{$p}{$s}shell:has(.pqh-appbar) .{$p}{$s}top .{$p}{$s}sub,.{$p}{$s}shell:has(.pqh-appbar) .{$p}{$s}top .{$p}{$s}muted,.{$p}{$s}shell:has(.pqh-appbar) .{$p}{$s}top .{$p}{$s}meta,.{$p}{$s}shell:has(.pqh-appbar) .{$p}{$s}top .{$p}{$s}text,.{$p}{$s}shell:has(.pqh-appbar) .{$p}{$s}top .pqh-workspace-sub{color:var(--op-ink-soft)!important}
-.{$p}{$s}shell:has(.pqh-appbar) .{$p}{$s}top .{$p}{$s}name,.{$p}{$s}shell:has(.pqh-appbar) .{$p}{$s}top .{$p}{$s}num,.{$p}{$s}shell:has(.pqh-appbar) .{$p}{$s}top .{$p}{$s}value,.{$p}{$s}shell:has(.pqh-appbar) .{$p}{$s}top a:not([class*="{$s}btn"]):not([class*="{$s}pill"]){color:var(--op-ink)!important}
-.{$p}{$s}shell:has(.pqh-appbar) .{$p}{$s}top .{$p}{$s}btn,.{$p}{$s}shell:has(.pqh-appbar) .{$p}{$s}top .pqh-workspace-actions a,.{$p}{$s}shell:has(.pqh-appbar) .{$p}{$s}top .pqh-workspace-actions button{border-color:var(--op-line-strong)!important;background:var(--op-surface)!important;color:var(--op-ink)!important}
-.{$p}{$s}shell:has(.pqh-appbar) .{$p}{$s}top .{$p}{$s}btn:hover,.{$p}{$s}shell:has(.pqh-appbar) .{$p}{$s}top .pqh-workspace-actions a:hover,.{$p}{$s}shell:has(.pqh-appbar) .{$p}{$s}top .pqh-workspace-actions button:hover{background:var(--op-surface-soft)!important;border-color:var(--op-ink-faint)!important;color:var(--op-primary-hover)!important}
-.{$p}{$s}shell:has(.pqh-appbar) .{$p}{$s}top .{$p}{$s}btn:not([class*="{$s}btn--"]){border-color:var(--op-primary)!important;background:var(--op-primary)!important;color:#fff!important}
-.{$p}{$s}shell:has(.pqh-appbar) .{$p}{$s}top select{border-color:var(--op-line-strong)!important;background:var(--op-surface)!important;color:var(--op-ink)!important}
-.{$p}{$s}shell:has(.pqh-appbar) .{$p}{$s}top .{$p}{$s}pill{background:var(--op-primary-subtle);border-color:var(--op-primary-border);color:var(--op-primary-emphasis)}
+/* ...and where the page has an appbar, the two become ONE continuous navy
+   block rather than two bars. -top keeps everything above -- navy fill, white
+   title, ghost buttons -- and only its GEOMETRY changes, so nothing here has to
+   restate colour.
+   Three things close the seam:
+     - the appbar drops its bottom border, so there is no line between them;
+     - -top loses its corner radius, so the join is square;
+     - -top is pulled out of the wrap's padding. pqh_design_shell_css sets
+       {scope}>[class*="-wrap"]{padding:24px 24px 0}, so -24px on three sides
+       cancels exactly that and the block reaches the same edges the appbar
+       does. 22px of its own padding then lines its text up with the appbar
+       brand, which sits at 0 22px.
+   Caveat, stated rather than hidden: that same shared rule caps the wrap at
+   max-width:1440px. On a viewport wider than roughly 1690px the wrap is
+   narrower than the full-bleed appbar, so the lower half of the block stops
+   short on the right. Everything below 1440px of content width is flush. */
+.{$p}{$s}shell:has(.pqh-appbar) .pqh-appbar{border-bottom-width:0!important}
+.{$p}{$s}shell:has(.pqh-appbar) .{$p}{$s}top{margin:-24px -24px 16px!important;padding:16px 22px!important;border:0!important;border-radius:0!important;box-shadow:none!important}
+/* Below 900px the shell drops the rail and re-pads the appbar to 8px 14px, so
+   the block's own padding has to follow or the title stops lining up with the
+   brand -- 8px out, which is exactly the 22px-vs-14px difference.
+   The leading class is doubled BY HAND here. The specificity pass above skips
+   any line starting with '@', so it doubles the rule outside this media query
+   and not the one inside it, leaving the unconditional (0,4,0) rule beating
+   this (0,3,0) one and the media query silently dead. */
+@media(max-width:900px){.{$p}{$s}shell.{$p}{$s}shell:has(.pqh-appbar) .{$p}{$s}top{padding:14px!important}}
 
 CSS;
     }

@@ -129,11 +129,11 @@ const CAMBRIDGE_OBJECTIVES = {
   "8-6": ["8Ps.01", "8Ps.02", "8Ps.03", "8Ps.04", "8TWSc.04"],
   "8-7": ["8Bp.01", "8Bp.02", "8Bp.03", "8TWSc.07", "8TWSa.05"],
   "8-8": ["8TWSc.01", "8TWSc.07", "8SIC.02"],
-  // 8ESp.01 is claimed on the clause CONCEPT_INSERTS adds to concept 6: the
-  // Earth's field is attributed to its moving iron core, which is the part of
-  // the objective the unit was missing. 8ESp.02 stays unclaimed — renewable and
-  // non-renewable resources are taught in Grade 4's Energy unit, not here.
-  "8-9": ["8Pe.01", "8Pe.02", "8Pe.03", "8ESp.01", "8TWSm.03", "8TWSc.02"],
+  // Both Planet Earth objectives are claimed on passages CONCEPT_INSERTS adds:
+  // 8ESp.01 on concept 6, which attributes the Earth's field to its moving iron
+  // core, and 8ESp.02 on concept 2, which teaches renewable and non-renewable
+  // resources at the stage that examines them.
+  "8-9": ["8Pe.01", "8Pe.02", "8Pe.03", "8ESp.01", "8ESp.02", "8TWSm.03", "8TWSc.02"],
 };
 
 // Where a unit teaches content its own stage does not carry, the mapping says so
@@ -200,7 +200,6 @@ function cambridgeObjectivesFor(grade, unitNo, code) {
 const CAMBRIDGE_GAP_REASONS = {
   "8-Structure and function": "No Grade 8 unit teaches human body structure. The course covers body systems at Grade 6 (6Bh1-6Bh4, Stage 6 depth) and does not revisit them at Lower Secondary depth, so joints and antagonistic muscles, the components of blood, the respiratory system and gas diffusion are taught nowhere. Unit 7 covers nutrition and digestion but never blood, lungs or joints — its only mentions of blood are a quiz distractor.",
   "8-Ecosystems": "No Grade 8 unit teaches ecology. The course covers ecosystems, food webs and human impact at Grade 6 (6Be1-6Be6, Stage 6 depth); bioaccumulation and invasive species are taught nowhere in the course.",
-  "8-Planet Earth": "8ESp.01 was a near miss and is now closed: Unit 9 taught that the Earth behaves like a giant magnet and that a compass lines up with its field, but never why, so CONCEPT_INSERTS adds the missing clause attributing the field to the moving iron core. 8ESp.02 remains, and it is taught in the wrong stage rather than missing: renewable and non-renewable resources are a learning outcome of Grade 4's Energy unit, where 0846 has no energy sub-strand to credit them, while Stage 8 publishes the objective and never covers them. Moving that teaching here would close it without writing anything new.",
   "8-Cycles on Earth": "Climate is taught nowhere in the course. Grade 8's Rocks unit accounts for 96 apparent matches on \"weather\", but every one is \"weathering\" — the breakdown of rock — and its single use of \"climate\" is the incidental phrase \"in the climate of East Africa\". No unit distinguishes climate from weather, or covers climate cycles or atmospheric change.",
   "8-Earth in space": "No Grade 8 unit teaches astronomy. The course covers the Solar System at Grade 5 (5Pb1-5Pb3, Stage 5 depth); galaxies and asteroids are taught nowhere. Grade 8's apparent matches on \"star\" are all \"starch\", from Unit 7's food tests.",
   "4-Sound": "No Year 4 Science pack contains a sound unit. Grade 4's six units are Living Things, Energy, Materials, The Earth, Light and Electricity; the only sound content anywhere in the stage is one glossary line in the Energy unit (\"Sound energy = Energy of vibrations that we hear\"), which teaches none of 4Ps1-4Ps5. Grade 1 covers sound at Stage 1 depth (1Ps1-1Ps3) and nothing revisits it. Closing this needs a Stage 4 sound unit to be written — a content commission, not a rebuild.",
@@ -228,6 +227,23 @@ const CONCEPT_INSERTS = {
     conceptId: "concept-6-magnets-and-magnetic-fields",
     after: "the Earth itself behaves like a giant magnet, with a magnetic field stretching all around it.",
     text: " The reason lies deep inside the planet. The Earth's core is mostly iron, and its outer part is liquid and always moving. That moving iron acts like a magnet, and it is what gives the whole Earth its magnetic field.",
+  }, {
+    // 8ESp.02 was not missing from the course, only from the stage that can
+    // credit it: renewable and non-renewable resources are a learning outcome of
+    // Grade 4's Energy unit, where 0846 publishes no energy sub-strand at all,
+    // while Stage 8 publishes the objective and taught nothing towards it. The
+    // Grade 4 teaching is left where it is — it is sound, and stripping a unit
+    // to satisfy a mapping would be the tail wagging the dog — so the fix is to
+    // teach it again at the stage that examines it, at Stage 8 depth.
+    //
+    // Placed on Voltage rather than on a unit of its own: that concept has just
+    // explained that the cell does not create the charge but provides the energy
+    // that pushes it, which is the question "and where does THAT energy come
+    // from" arriving on its own. The named examples are the objective's own —
+    // wind, tidal and solar power, and bioplastics.
+    conceptId: "concept-2-voltage-the-push-behind-the-current",
+    after: "That is why a torch that needs more power holds several cells stacked end to end.",
+    text: "\n\nA cell is only a store, though, and the energy inside it had to come from somewhere — so did the electricity in a wall socket. Some of the resources we draw that energy from are renewable, which means nature replaces them about as fast as we use them: sunlight caught by a solar panel, wind turning a turbine, and the rise and fall of the tide. Plants count as renewable too, which is why bioplastics can be made from them instead of from oil. Other resources are non-renewable. Coal, oil and natural gas took many millions of years to form underground, and once they are burned they are gone for good. The difference matters to a whole country, not just to a science lesson: building on renewable resources means the lights still come on long after the coal would have run out.",
   }],
 };
 

@@ -174,6 +174,7 @@
     "check:wehel": "node tools/check-wehel-audio-coverage.mjs",
     "check:math": "node tools/check-math-content.mjs && node tools/check-ehel-audio-coverage.mjs mathematics",
     "check:english-audio": "python tools/check-ehel-english-audio-integrity.py",
+    "check:english": "node tools/check-english-content.mjs",
     "build:intensive": "node tools/build-intensive-units.js",
     "check:intensive": "node tools/build-intensive-units.js && node tools/check-intensive-audio-coverage.mjs",
     "check:courses": "node tools/check-science-content.mjs && node tools/check-science-webgl-scenes.mjs && node tools/check-math-content.mjs && node tools/check-computing-content.mjs && node tools/check-computing-webgl-scenes.mjs",

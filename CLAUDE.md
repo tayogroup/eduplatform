@@ -461,6 +461,56 @@ search costs less than one sentence — generate the candidate, rank it with
 Use it only where a render has been shown to be wrong. It is a way to make the
 voice say the printed word, not a way to change the word.
 
+### The English content gate
+
+```bash
+npm run check:english     # node tools/check-english-content.mjs
+```
+
+English is hand-authored, so it had no builder to hang a gate on and went
+without one — which is how six teacher lesson plans came to sit in a Grade 1
+learner's Reading section, narrated, with nothing in the repo saying so.
+
+It deliberately does **not** repeat `validate:curriculum-units`, which owns
+per-unit structure, xrefs and the Cambridge mapping. This one covers what
+nothing read: cross-file agreement (manifest vs unit title, id, term,
+`vocabularyCount`), **who the text is written for**, answer keys in both course
+assessments, live audio existing on disk, and that every countable section is
+non-empty — an empty one can never be completed, and the unit gate then holds
+the rest of the grade shut for good.
+
+**The exemption is `audience: "adult"`, never a `type` string.** Adult-addressed
+prose is legitimate only in text marked that way (drawn behind the grown-up
+panel) or in a unit's `grownUpGuide`. `validate-unit.mjs` already looks for a
+leaked teacher-guide header and then exempts any reading whose type matches
+`/phonics/i` — and the six Grade 1 plans are typed "Teacher-led phonics text",
+so that exemption swallowed every one. A check whose escape hatch is a
+free-text label is one the content can talk its way out of.
+
+Two patterns that cost real accuracy, both found by measuring rather than
+reasoning:
+
+- **A phoneme pattern must require its brackets.** Bare `/[a-z]{1,3}/` also
+  matches the slash ALTERNATIONS grammar teaching is full of — `am/is/are`,
+  `he/she/it`, `in/on/at` — and reported 18 of them as narrated defects across
+  Grades 4-8, nearly half of the first run's findings. The opening slash may not
+  follow a word character and the closing one may not precede one.
+- **Options are stored two ways.** Unit quizzes and both course assessments use
+  a pipe-separated string (`"see | smell | taste"`); some carry an array. Reading
+  only arrays reported all 36 Grade 8 placement questions as having no options.
+  `optionsOf()` is the one parser.
+
+**The baseline may only shrink.** The gate was written after the content, so it
+opened on 16 real failures; they live in `english/data/content-gate-baseline.json`
+so the build stays green and every one stays visible. A failure not in the
+baseline fails; a baseline entry that *stops* firing **also** fails, asking to be
+deleted — so the file cannot rot into a permanent amnesty. Its diff is the review
+surface. Regenerate deliberately, never to get green:
+
+```bash
+node tools/check-english-content.mjs --write-baseline
+```
+
 ## Git
 
 - Work on `main` (or feature branches off it). History before 2026-07-16 lived on `codex/*` branches, now merged and deleted.

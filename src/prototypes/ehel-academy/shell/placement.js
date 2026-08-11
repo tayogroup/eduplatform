@@ -37,7 +37,12 @@ export function createPlacementUnit(options) {
   const store = loadPlacementStore(options.storageKey);
   let questionIndex = 0;
 
-  const save = () => localStorage.setItem(options.storageKey, JSON.stringify(store));
+  // loadPlacementStore() above already guards the read; this guards the write for
+  // the same reason. The exam runs in a cross-origin iframe, and a browser that
+  // blocks third-party storage throws SecurityError on every localStorage access
+  // — which here would throw out of the click handler on each answered question.
+  // Blocked storage costs the learner resume-across-reloads, not the exam.
+  const save = () => { try { localStorage.setItem(options.storageKey, JSON.stringify(store)); } catch { /* exam state stays in memory for this sitting */ } };
 
   function remediationHref(item) {
     if (item.href) return new URL(item.href, location.href).href;

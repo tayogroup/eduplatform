@@ -17,6 +17,15 @@ export const WEHEL_SOMALI_TTS_ENDPOINT = DEV_API ? "/api/somali-tts" : "/local/h
 
 const HISTORY_LIMIT = 12;
 
+// Blocked third-party storage throws SecurityError on the localStorage property
+// itself (the courses run in a cross-origin iframe). Most accesses in this file
+// already carry their own try/catch; these two exist for the read-aloud toggle,
+// which had none — the read sits in mountWehelChat, so a throw there cost the
+// learner the whole tutor, and the write sat in a click handler that threw
+// uncaught on every toggle.
+const storageGet = (key) => { try { return localStorage.getItem(key); } catch { return null; } };
+const storageSet = (key, value) => { try { localStorage.setItem(key, value); } catch { /* the choice just won't persist */ } };
+
 // --- preferred teaching language ---------------------------------------------
 // "somali" makes Wehel add Somali FOR VOCABULARY ONLY — the prompt's
 // languageSupport block has it translate key words on "Soomaali:" lines while
@@ -736,7 +745,7 @@ export function mountWehelChat(options) {
   // conversation also means the learner hears one voice rather than two.
   const speechKey = `wehel-speech-${meta.subject}`;
   const speechRate = speechRateForGrade(meta.grade);
-  let speakReplies = browserSpeechSupported && localStorage.getItem(speechKey) !== "off";
+  let speakReplies = browserSpeechSupported && storageGet(speechKey) !== "off";
   let speakingIndex = null;
   let somaliSpeakingIndex = null;
 
@@ -825,7 +834,7 @@ export function mountWehelChat(options) {
     const voiceToggle = container.querySelector("#wehel-voice-toggle");
     if (voiceToggle) voiceToggle.addEventListener("click", () => {
       speakReplies = !speakReplies;
-      localStorage.setItem(speechKey, speakReplies ? "on" : "off");
+      storageSet(speechKey, speakReplies ? "on" : "off");
       if (!speakReplies) { stopBrowserSpeech(); speakingIndex = null; }
       render();
       if (ui.toast) ui.toast(speakReplies ? `${tutorLabel} will read replies aloud.` : `${tutorLabel} is quiet now.`);

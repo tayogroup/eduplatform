@@ -25,6 +25,26 @@ import { mountWehelChat } from "./wehel.js?v=wehel-2";
 
 const pad2 = (n) => String(n).padStart(2, "0");
 
+// Storage can be UNAVAILABLE rather than merely empty. Every course runs inside
+// a cross-origin iframe (Moodle -> CDN, see local_hubredirect/issue_child.php),
+// and a browser that blocks third-party storage throws SecurityError on the
+// `localStorage` property itself — not on the call. That is the default in
+// Chrome Incognito, Safari's cross-site tracking prevention and Firefox strict.
+//
+// The reads inside loadProgress()/loadGradeProgress() were already guarded, but
+// the property access at setup was not, and it runs BEFORE init() — so the
+// throw escaped the one try/catch that would have shown "We could not prepare
+// the lesson", and the learner got a stuck loading pane with no message at all.
+// The writes were unguarded too, so a blocked device threw on every save.
+//
+// Guarding here means a blocked device loses persistence and nothing else: the
+// lesson boots, plays and scores; only resume-where-you-left-off is gone. Same
+// shape as the guards wehel.js applies to its own accesses — though note that
+// file was not fully covered either: its read-aloud toggle had no guard until
+// this pass, so don't read it as the worked example.
+const storageGet = (key) => { try { return localStorage.getItem(key); } catch { return null; } };
+const storageSet = (key, value) => { try { localStorage.setItem(key, value); } catch { /* progress stays per-session on this device */ } };
+
 export function createCourseApp(config) {
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
@@ -69,7 +89,7 @@ export function createCourseApp(config) {
   const voiceAudioCache = new Map();
   const voiceAudioPending = new Map();
   const voiceSupported = Boolean(voicePlayer && typeof fetch === "function");
-  let voiceEnabled = localStorage.getItem(`${STORAGE_KEY}-voice-enabled`) !== "false";
+  let voiceEnabled = storageGet(`${STORAGE_KEY}-voice-enabled`) !== "false";
 
   const loadProgress = () => {
     try { return { ...config.progressDefaults, ...JSON.parse(localStorage.getItem(STORAGE_KEY) || (keys.legacyProgress && localStorage.getItem(keys.legacyProgress)) || "{}") }; }
@@ -109,8 +129,8 @@ export function createCourseApp(config) {
     emitProgress(config.extendSummary ? config.extendSummary(progress, base) : base);
   };
 
-  const saveProgress = () => { localStorage.setItem(STORAGE_KEY, JSON.stringify(progress)); updateProgress(); emitProgressSummary(); };
-  const saveGradeProgress = () => { if (STAGE_STORAGE_KEY) localStorage.setItem(STAGE_STORAGE_KEY, JSON.stringify(gradeProgress)); renderNav(); };
+  const saveProgress = () => { storageSet(STORAGE_KEY, JSON.stringify(progress)); updateProgress(); emitProgressSummary(); };
+  const saveGradeProgress = () => { if (STAGE_STORAGE_KEY) storageSet(STAGE_STORAGE_KEY, JSON.stringify(gradeProgress)); renderNav(); };
   const completeGradeSection = (section, message) => {
     if (!gradeProgress.completed.includes(section)) gradeProgress.completed.push(section);
     saveGradeProgress();
@@ -585,7 +605,7 @@ export function createCourseApp(config) {
           if (draft && draft.text && !progress.writing[id]) { progress.writing[id] = draft.text; changed = true; }
         }
       }
-      if (changed) localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+      if (changed) storageSet(STORAGE_KEY, JSON.stringify(progress));
     } catch (e) { /* offline / gateway unreachable → per-device resume */ }
   }
 
@@ -625,7 +645,7 @@ export function createCourseApp(config) {
     const voiceToggle = $("#voice-toggle");
     if (voiceToggle) voiceToggle.addEventListener("click", () => {
       voiceEnabled = !voiceEnabled;
-      localStorage.setItem(`${STORAGE_KEY}-voice-enabled`, String(voiceEnabled));
+      storageSet(`${STORAGE_KEY}-voice-enabled`, String(voiceEnabled));
       if (!voiceEnabled) stopVoice();
       updateVoiceUI();
       toast(voiceEnabled ? "Voice Guide is on." : "Voice Guide is off.");

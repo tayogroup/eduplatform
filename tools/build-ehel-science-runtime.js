@@ -70,7 +70,11 @@ const CAMBRIDGE_OBJECTIVES = {
   "2-3": ["2Cc2", "2Cc3", "2Ep2", "2Ep5", "2Eo2"],
   "2-4": ["2Pl1", "2Pl2", "2Pl3", "2Pb2", "2Eo2"],
   "2-5": ["2Pm1", "2Pm2", "2Eo2"],
-  "2-6": ["2Pb1", "2Pb2", "2Pl3", "2Eo2", "2Eo3"],
+  // 2Ep5 for the same reason 1Ep3 is claimed at Stage 1: this unit's explorations
+  // run the "What do you predict will happen in <investigation>?" cycle. That
+  // prompt is not universal — it appears in 6 of 6 Stage 1 units but only 6 units
+  // across Stages 2-8 — so it is claimed exactly where it is used, not by rule.
+  "2-6": ["2Pb1", "2Pb2", "2Pl3", "2Ep5", "2Eo2", "2Eo3"],
   // ── Stage 3 (0846) ──
   "3-1": ["3Bh1", "3Bh2", "3Bp2", "3Ep1", "3Eo4"],
   "3-2": ["3Cp2", "3Ep2", "3Ep3", "3Eo2", "3Eo4"],
@@ -88,10 +92,10 @@ const CAMBRIDGE_OBJECTIVES = {
   "4-3": ["4Cs1", "4Cs2", "4Cs3", "4Cs4", "4Ep4", "4Eo4"],
   "4-4": ["4Be1", "4Eo7"],
   "4-5": ["4Ep2", "4Eo1"],
-  "4-6": ["4Pm1", "4Pm2", "4Pm3", "4Eo1"],
+  "4-6": ["4Pm1", "4Pm2", "4Pm3", "4Ep3", "4Eo1"],
   // ── Stage 5 (0846) ──
   "5-1": ["5Bp1", "5Bp2", "5Bp4", "5Bp7", "5Ep4", "5Eo2", "5Eo4"],
-  "5-2": ["5Bp2", "5Bp3", "5Bp5", "5Bp6", "5Bp7", "5Eo1"],
+  "5-2": ["5Bp2", "5Bp3", "5Bp5", "5Bp6", "5Bp7", "5Ep3", "5Eo1"],
   "5-3": ["5Cs1", "5Cs2", "5Cs3", "5Cs4", "5Ep4", "5Ep6"],
   "5-4": ["5Pl1", "5Pl6", "5Pl7", "5Pl8", "5Eo1"],
   "5-5": ["5Pl1", "5Pl2", "5Pl3", "5Pl5", "5Ep3", "5Eo1"],
@@ -113,11 +117,15 @@ const CAMBRIDGE_OBJECTIVES = {
   "7-8": ["7Cc.01", "7Cc.03", "7Cc.04", "7TWSc.05", "7TWSc.07"],
   "7-9": ["7Pe.01", "7Pe.02", "7Pe.03", "7Pe.04", "7Pe.05"],
   // ── Stage 8 (0893) ──
-  "8-1": ["8SIC.02"],
+  // 8TWSp.04: the germination investigation is planned with variables controlled
+  // explicitly — "Each jar changes only ONE condition… you keep everything the
+  // same except the one thing you are testing" — which is the objective's
+  // substance even though the unit plans one investigation rather than a range.
+  "8-1": ["8SIC.02", "8TWSp.04"],
   "8-2": ["8Bp.01", "8Bp.03"],
   "8-3": ["8Pf.01", "8Pf.02", "8TWSm.03", "8TWSc.02", "8TWSc.04"],
   "8-4": ["8TWSm.03"],
-  "8-5": ["8Cm.04", "8Cp.01", "8Cp.02", "8Cc.05", "8TWSa.05"],
+  "8-5": ["8Cm.04", "8Cp.01", "8Cp.02", "8Cc.05", "8TWSp.03", "8TWSa.05"],
   "8-6": ["8Ps.01", "8Ps.02", "8Ps.03", "8Ps.04", "8TWSc.04"],
   "8-7": ["8Bp.01", "8Bp.02", "8Bp.03", "8TWSc.07", "8TWSa.05"],
   "8-8": ["8TWSc.01", "8TWSc.07", "8SIC.02"],
@@ -186,6 +194,11 @@ function cambridgeObjectivesFor(grade, unitNo, code) {
 // unit to a new objective and the gap closes here on the next build. Only the
 // REASON is authored, and only where it has actually been established.
 const CAMBRIDGE_GAP_REASONS = {
+  "8-Structure and function": "No Grade 8 unit teaches human body structure. The course covers body systems at Grade 6 (6Bh1-6Bh4, Stage 6 depth) and does not revisit them at Lower Secondary depth, so joints and antagonistic muscles, the components of blood, the respiratory system and gas diffusion are taught nowhere. Unit 7 covers nutrition and digestion but never blood, lungs or joints — its only mentions of blood are a quiz distractor.",
+  "8-Ecosystems": "No Grade 8 unit teaches ecology. The course covers ecosystems, food webs and human impact at Grade 6 (6Be1-6Be6, Stage 6 depth); bioaccumulation and invasive species are taught nowhere in the course.",
+  "8-Planet Earth": "Two separate causes. 8ESp.01 is a near miss: Unit 9 teaches that the Earth behaves like a giant magnet and that a compass lines up with its field, but never says the core is the reason — the word appears in the unit only as \"core ideas\" boilerplate and as a difficulty label. One sentence would close it. 8ESp.02 is taught in the wrong stage: renewable and non-renewable resources are a learning outcome of Grade 4's Energy unit, where 0846 has no energy sub-strand to map them to, while Stage 8 — which does publish the objective — never covers them.",
+  "8-Cycles on Earth": "Climate is taught nowhere in the course. Grade 8's Rocks unit accounts for 96 apparent matches on \"weather\", but every one is \"weathering\" — the breakdown of rock — and its single use of \"climate\" is the incidental phrase \"in the climate of East Africa\". No unit distinguishes climate from weather, or covers climate cycles or atmospheric change.",
+  "8-Earth in space": "No Grade 8 unit teaches astronomy. The course covers the Solar System at Grade 5 (5Pb1-5Pb3, Stage 5 depth); galaxies and asteroids are taught nowhere. Grade 8's apparent matches on \"star\" are all \"starch\", from Unit 7's food tests.",
   "4-Sound": "No Year 4 Science pack contains a sound unit. Grade 4's six units are Living Things, Energy, Materials, The Earth, Light and Electricity; the only sound content anywhere in the stage is one glossary line in the Energy unit (\"Sound energy = Energy of vibrations that we hear\"), which teaches none of 4Ps1-4Ps5. Grade 1 covers sound at Stage 1 depth (1Ps1-1Ps3) and nothing revisits it. Closing this needs a Stage 4 sound unit to be written — a content commission, not a rebuild.",
 };
 

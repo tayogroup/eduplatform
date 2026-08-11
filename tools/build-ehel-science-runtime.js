@@ -316,6 +316,43 @@ const RULE_TITLE_OVERRIDES = {
     "A Way to Remember the Meters", "Current, Voltage and Resistance"],
 };
 
+// Grade 2 Unit 4 (Light) is the one unit whose source pack sets three options per
+// quiz question instead of four. Its Practice document is written that way
+// throughout, so all twelve questions gave a one-in-three guess where every other
+// unit in the course gives one in four — a different pass mark in practice,
+// inside a single graded unit, reported only as a warning that had been passing
+// for months.
+//
+// A fourth distractor rather than a hand-authored quiz (which is what Grade 1
+// uses): the source's questions and answers were reviewed and are right, and only
+// the option count is short. Each distractor below is drawn from what THIS unit
+// teaches — "a phone screen" is its own example of artificial light, "reflective"
+// belongs to its own vocabulary — so none tests a word the unit never introduces.
+// That is what ruled out "translucent" for the transparent question, the obvious
+// distractor everywhere else: Stage 2 here teaches opaque and transparent only,
+// and a distractor has to be wrong for a reason the learner was taught.
+//
+// Keyed by question stem rather than by position, so a reordered extraction
+// cannot attach a distractor to the wrong question. A key that matches nothing is
+// a build error, not a silent no-op — an override that quietly stops applying is
+// the option count dropping back to three with the warning as the only trace.
+const QUIZ_FOURTH_OPTION = {
+  "2-4": {
+    "Which of these is a natural light source?": "a phone screen",
+    "Which of these makes its OWN light?": "a shiny spoon",
+    "Darkness is best described as:": "something you can hold in your hand",
+    "To see an object, light must:": "pass straight through the object",
+    "To make a shadow you need a light, a surface, and:": "a sheet of clear glass",
+    "A material that lets light pass straight through is called:": "reflective",
+    "When you move a torch closer to an object, its shadow gets:": "stays the same size",
+    "Which surface reflects light the best?": "a woollen blanket",
+    "The moon shines because it:": "is covered in bright lamps",
+    "We have day and night because:": "the sun moves around the Earth",
+    "Your shadow outside is longest:": "when the sky is cloudy",
+    "Which is the safest rule when exploring light?": "stare at a bright lamp to test it",
+  },
+};
+
 const CONCEPT_TITLE_OVERRIDES = {
   "2-1": ["What Animals Need to Live", "What Plants Need to Live", "Different Environments", "Protecting the Environment", "Weather and Seasons", "Science Words for Living Things"],
   "2-3": ["Heating Melts Solids", "Cooling Freezes Liquids", "Melting and Freezing", "Reversible and Irreversible Changes", "Dissolving in Water", "Mixing Materials"],
@@ -1342,17 +1379,37 @@ function buildGrade(grade) {
   }
 
   function assessmentData(mcqs, reference, unitNo) {
-    const questions = mcqs.slice(0, 12).map((mcq, index) => ({
-      id: `q${String(index + 1).padStart(2, "0")}`,
-      type: index < 4 ? "Concept" : index < 8 ? "Application" : "Reasoning",
-      outcomeId: `lo${String(index % 8 + 1).padStart(2, "0")}`,
-      difficulty: index < 4 ? "Basic" : index < 9 ? "Core" : "Challenge",
-      question: mcq.question,
-      options: [...new Set(mcq.options)].slice(0, 4),
-      answer: mcq.answer,
-      hint: `Use the Unit ${unitNo} Science Words reference.`,
-      explanation: mcq.explanation,
-    }));
+    // Fourth options for the one unit whose source offers three. Applied here,
+    // before the vocabulary-derived padding below, which already builds four.
+    const fourthOptions = QUIZ_FOURTH_OPTION[`${grade}-${unitNo}`] || {};
+    const applied = new Set();
+    const questions = mcqs.slice(0, 12).map((mcq, index) => {
+      const options = [...new Set(mcq.options)].slice(0, 4);
+      const stem = String(mcq.question || "").trim();
+      const fourth = fourthOptions[stem];
+      if (fourth && options.length === 3 && !options.includes(fourth)) {
+        options.push(fourth);
+        applied.add(stem);
+      }
+      return {
+        id: `q${String(index + 1).padStart(2, "0")}`,
+        type: index < 4 ? "Concept" : index < 8 ? "Application" : "Reasoning",
+        outcomeId: `lo${String(index % 8 + 1).padStart(2, "0")}`,
+        difficulty: index < 4 ? "Basic" : index < 9 ? "Core" : "Challenge",
+        question: mcq.question,
+        options,
+        answer: mcq.answer,
+        hint: `Use the Unit ${unitNo} Science Words reference.`,
+        explanation: mcq.explanation,
+      };
+    });
+    // A stale override means the option count has silently dropped back to
+    // three, so refuse the build rather than ship the guess it restores. If the
+    // source has since grown a fourth option of its own, delete the entry here.
+    const unapplied = Object.keys(fourthOptions).filter((stem) => !applied.has(stem));
+    if (unapplied.length) {
+      throw new Error(`Grade ${grade} Unit ${unitNo}: QUIZ_FOURTH_OPTION matched no three-option question for ${unapplied.map((stem) => JSON.stringify(stem)).join(", ")}`);
+    }
     const terms = reference.terms.length >= 4 ? reference.terms : [["Science", "Studying the world by observing and testing"], ["Observe", "Look carefully and notice details"], ["Predict", "Say what you think will happen"], ["Record", "Write or draw what you find"]];
     let index = questions.length;
     const seenQuestions = new Set(questions.map((q) => q.question));

@@ -172,11 +172,19 @@ Clips are committed (as Science's are, unlike Computing's and Mathematics'), so 
 
 Stage 5's 158 clips (40,251 characters) narrate a **withdrawn** stage. Leave them — they are committed, so they cost nothing to keep and would have to be paid for again — but do not regenerate them while the hold stands.
 
-#### Deploying Global Perspectives — three traps (the first two verified on the live CDN, 2026-08-02)
+#### Deploying Global Perspectives — what the CDN actually does (re-measured 2026-08-11)
 
-- **The undated `app/global-perspectives/shared/course-ui.css` / `.js` on the CDN are the day-one versions**, served `max-age=2592000` with query strings ignored. The live release points at the dated `course-ui-20260802a.*` files instead. If a release repoints `index.html` at plain `./shared/…` paths and ships through the plain uploader, learners get the month-old skin and runtime for up to 30 days. GP's next release goes through the versioned flow (`deploy-app-version.js`, `v{TAG}/` bundle), never a bare `upload-app-to-bunny.js global-perspectives` from a tree whose `index.html` references undated names.
-- **The CDN copy of `app/english/shared/course-ui-20260723e.css` is the 1.3 KB local alias, not the full snapshot the convention promises.** It `@import`s the live `app/english/shared/course-ui.css`, so the dated name is not immutable on the CDN: edits to the live English stylesheet propagate into every subject that imports the dated alias — GP included — on the shared file's own cache schedule. Don't rely on snapshot immutability until a full snapshot is re-uploaded to the dated path (or subjects move to versioned bundles).
-- **`app/{subject}/shared/grade-redirect.js` is deliberately NOT versioned, so an edit to it lands on the CDN's 30-day schedule rather than with the release that carries it.** `grade-N/index.html` loads `../shared/grade-redirect.js`, and that entry-layer path has to stay stable across releases, so `deploy-app-version.js` uploads the stub outside `v{TAG}/` — inheriting the unversioned `max-age=2592000`. This is a real constraint, not a bug: the file has been stable, but a fix to it is not something a release can ship quickly, and a release that *depends* on new redirect behaviour will appear to work locally and not on the CDN. All five subjects with per-grade stubs (english, mathematics, science, computing, global-perspectives) share it.
+**Every `.js`, `.css` and `.html` under `app/` is now served `max-age=300`, in all five subjects.** Edge Rule 4's general `*/app/*` pattern is live; `docs/bunny-cache-config.md` recorded it as NOT live when it measured on 2026-08-02, so the 30-day exposure the notes below were written about is five minutes today. `current.json` is the exception and is still `max-age=2592000`.
+
+**Measure before trusting either number.** The window is set by an edge rule, not by the path, so it changes under the repo with no commit to notice — which is what happened here. Reading the figure out of a doc instead of the CDN is how a five-minute cache got written up as a thirty-day one:
+
+```bash
+curl -sI "https://ehelacademy.b-cdn.net/Ehel%20Primary/app/global-perspectives/shared/grade-redirect.js" | grep -i cache-control
+```
+
+- **A `shared/` filename is not immutable on the CDN, dated or not.** Query strings are ignored (a never-before-seen `?probe=` returns `CDN-Cache: HIT` off the bare URL's entry), so `?v=` busting never worked and dated names were the workaround. Only `v{TAG}/` is genuinely immutable. GP's releases go through the versioned flow (`deploy-app-version.js`, `--shell`), never a bare `upload-app-to-bunny.js global-perspectives`.
+- **`app/english/shared/course-ui-20260723e.css` is the 1.3 KB local alias, not the full snapshot the convention promises.** It `@import`s the live `app/english/shared/course-ui.css`, so edits to the English stylesheet propagate into every subject importing the dated alias — GP included. The dated name buys nothing; a `v{TAG}/` bundle does. (`deploy-app-version.js` rewrites that `@import` to a bundled `design-system.css`, so a versioned release is already immune.)
+- **`app/{subject}/shared/grade-redirect.js` is deliberately not versioned, and that is safe only because of the edge rule above.** `grade-N/index.html` loads `../shared/grade-redirect.js` and that entry path has to stay stable across releases, so `deploy-app-version.js` uploads the stub outside `v{TAG}/`. At `max-age=300` a release ships it within five minutes. If rule 4 is ever narrowed again it silently returns to 30 days, and a release *depending* on new redirect behaviour would work locally and not on the CDN. All five subjects with per-grade stubs share this.
 
 ### Reviewed Science scripts
 

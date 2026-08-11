@@ -40,33 +40,47 @@ Add these in order — Edge Rules match **top to bottom**, so the immutable
 Media + versioned code are ~99% of bytes and requests, so keeping them at 1 year
 holds the cache-hit ratio high while pointers and content stay fresh within 5 min.
 
-### What is actually configured (measured 2026-08-02)
+### What is actually configured (re-measured 2026-08-11)
 
-Rules 1 and the `index.html` half of rule 4 are live. Rule 4's general `*/app/*`
-pattern is **not** — everything under `app/` that is not `index.html` still falls
-through to the 30-day default:
+Rule 4's general `*/app/*` pattern **is now live** for code and markup. On
+2026-08-02 this section recorded it as not live, with everything under `app/`
+except `index.html` falling through to the 30-day default. That is no longer
+true, and the change arrived with no commit in this repo to mark it — the rule
+lives in the Bunny dashboard, so **re-measure rather than trusting this table**:
 
-| path | Cache-Control | as designed? |
-|---|---|---|
-| `app/{subject}/v{N}/…` | `max-age=31536000` | ✅ 1 year |
-| `app/{subject}/index.html` | `max-age=300` | ✅ 5 min |
-| `app/{subject}/current.json` | `max-age=2592000` | ❌ documented as a pointer that flips |
-| `app/{subject}/shared/…` | `max-age=2592000` | ❌ |
-| `app/shared/…` | `max-age=2592000` | ❌ |
+```bash
+curl -sI "https://ehelacademy.b-cdn.net/Ehel%20Primary/app/science/shared/grade-redirect.js" | grep -i cache-control
+```
 
-The two tiers the release mechanism actually depends on — immutable `v{N}/` and a
-short-cached `index.html` — are both correct, so deploys work. The rest matters
-in two places:
+| path | Cache-Control | as designed? | 2026-08-02 |
+|---|---|---|---|
+| `app/{subject}/v{N}/…` | `max-age=31536000` | ✅ 1 year | unchanged |
+| `app/{subject}/index.html` | `max-age=300` | ✅ 5 min | unchanged |
+| `app/{subject}/grade-N/index.html` | `max-age=300` | ✅ 5 min | not measured |
+| `app/{subject}/shared/…` (`.js`/`.css`) | `max-age=300` | ✅ 5 min | **was `2592000`** |
+| `app/shared/…` (`.js`/`.css`) | `max-age=300` | ✅ 5 min | **was `2592000`** |
+| `app/{subject}/current.json` | `max-age=2592000` | ❌ documented as a pointer that flips | unchanged |
+
+Checked across all five subjects with per-grade stubs, plus
+`{english,global-perspectives}/shared/course-ui.css` and the dated
+`course-ui-20260723e.css` alias — every one of them `max-age=300`. `current.json`
+is the sole remaining 30-day object, so it is still the one to distrust.
+
+The two tiers the release mechanism depends on — immutable `v{N}/` and a
+short-cached `index.html` — remain correct, so deploys work. What is left:
 
 - **`current.json` reports the live version and is cached for 30 days**, so it can
   name a release that was superseded weeks ago. Trust `index.html` (which is what
   browsers load) when the two disagree.
-- **`app/{subject}/shared/grade-redirect.js`** is a stable path by design, so an
-  edit to it is stuck behind the 30-day TTL. It is six lines and has not changed;
-  if it ever needs to, purge that path.
+- **`app/{subject}/shared/grade-redirect.js`** is a stable path by design — it is
+  what `grade-N/index.html` loads, so it cannot move into `v{TAG}/`. It is no
+  longer stuck: at `max-age=300` an edit ships with the release that carries it,
+  no purge. That safety comes from the edge rule and not from the path, so if
+  rule 4 is ever narrowed the stub silently returns to 30 days and a release
+  depending on new redirect behaviour would work locally and not on the CDN.
 
-Adding the general `*/app/*` rule would fix both. Until then, nothing else should
-be served from a stable path under `app/`.
+Adding the general `*/app/*` rule fixed the code and markup tiers; extending it
+to `current.json` is what remains.
 
 ## 3. Path versioning — app deploys are now purge-free ✅
 

@@ -2755,6 +2755,19 @@ CSS;
 .{$p}{$s}top a.pqh-workspace-logout:hover,.{$p}{$s}top .{$p}{$s}btn.pqh-workspace-logout:hover{background:var(--op-header-ink)!important;border-color:var(--op-header-ink)!important;color:var(--op-header-bg)!important}
 .{$p}{$s}top select{border:1px solid rgba(255,255,255,.30)!important;border-radius:var(--op-radius)!important;background:rgba(255,255,255,.10)!important;color:var(--op-header-ink)!important;font-family:var(--op-font)!important;font-size:14px!important;font-weight:400!important}
 .{$p}{$s}top .{$p}{$s}pill{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.34);color:var(--op-header-ink)}
+/* ...unless the page already has an appbar, which IS the header. Then -top is a
+   plain heading strip on the canvas and every rule above has to be undone,
+   including the ghost buttons -- they are white-on-transparent and would be
+   invisible here. See the note by the appbar block. */
+.{$p}{$s}shell:has(.pqh-appbar) .{$p}{$s}top{padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;color:var(--op-ink)!important;box-shadow:none!important}
+.{$p}{$s}shell:has(.pqh-appbar) .{$p}{$s}top h1,.{$p}{$s}shell:has(.pqh-appbar) .{$p}{$s}top h2,.{$p}{$s}shell:has(.pqh-appbar) .{$p}{$s}top h3,.{$p}{$s}shell:has(.pqh-appbar) .{$p}{$s}top .{$p}{$s}title,.{$p}{$s}shell:has(.pqh-appbar) .{$p}{$s}top .pqh-workspace-title{color:var(--op-ink)!important;font-size:20px!important}
+.{$p}{$s}shell:has(.pqh-appbar) .{$p}{$s}top .{$p}{$s}sub,.{$p}{$s}shell:has(.pqh-appbar) .{$p}{$s}top .{$p}{$s}muted,.{$p}{$s}shell:has(.pqh-appbar) .{$p}{$s}top .{$p}{$s}meta,.{$p}{$s}shell:has(.pqh-appbar) .{$p}{$s}top .{$p}{$s}text,.{$p}{$s}shell:has(.pqh-appbar) .{$p}{$s}top .pqh-workspace-sub{color:var(--op-ink-soft)!important}
+.{$p}{$s}shell:has(.pqh-appbar) .{$p}{$s}top .{$p}{$s}name,.{$p}{$s}shell:has(.pqh-appbar) .{$p}{$s}top .{$p}{$s}num,.{$p}{$s}shell:has(.pqh-appbar) .{$p}{$s}top .{$p}{$s}value,.{$p}{$s}shell:has(.pqh-appbar) .{$p}{$s}top a:not([class*="{$s}btn"]):not([class*="{$s}pill"]){color:var(--op-ink)!important}
+.{$p}{$s}shell:has(.pqh-appbar) .{$p}{$s}top .{$p}{$s}btn,.{$p}{$s}shell:has(.pqh-appbar) .{$p}{$s}top .pqh-workspace-actions a,.{$p}{$s}shell:has(.pqh-appbar) .{$p}{$s}top .pqh-workspace-actions button{border-color:var(--op-line-strong)!important;background:var(--op-surface)!important;color:var(--op-ink)!important}
+.{$p}{$s}shell:has(.pqh-appbar) .{$p}{$s}top .{$p}{$s}btn:hover,.{$p}{$s}shell:has(.pqh-appbar) .{$p}{$s}top .pqh-workspace-actions a:hover,.{$p}{$s}shell:has(.pqh-appbar) .{$p}{$s}top .pqh-workspace-actions button:hover{background:var(--op-surface-soft)!important;border-color:var(--op-ink-faint)!important;color:var(--op-primary-hover)!important}
+.{$p}{$s}shell:has(.pqh-appbar) .{$p}{$s}top .{$p}{$s}btn:not([class*="{$s}btn--"]){border-color:var(--op-primary)!important;background:var(--op-primary)!important;color:#fff!important}
+.{$p}{$s}shell:has(.pqh-appbar) .{$p}{$s}top select{border-color:var(--op-line-strong)!important;background:var(--op-surface)!important;color:var(--op-ink)!important}
+.{$p}{$s}shell:has(.pqh-appbar) .{$p}{$s}top .{$p}{$s}pill{background:var(--op-primary-subtle);border-color:var(--op-primary-border);color:var(--op-primary-emphasis)}
 
 CSS;
     }
@@ -2819,6 +2832,38 @@ CSS;
         $emittedprefix['@sharedheader'] = true;
         $css .= ".pqh-workspace-top{box-shadow:none!important;border-radius:var(--op-radius)!important;"
             . "background:var(--op-header-bg)!important;border-color:var(--op-header-bg)!important;color:var(--op-header-ink)!important}\n";
+    }
+
+    // TWO HEADERS, ONE PAGE. 30 of the 40 pages built on pqh_design_shell_html()
+    // draw .pqh-appbar -- brand, nav links, Logout -- AND their own <prefix>-top
+    // underneath it. That was always true; it was invisible because both were
+    // white, so the lower one read as the first content card. Painting -top
+    // #162b48 turned a redundancy into a visible second header, which is a
+    // defect this skin introduced.
+    //
+    // Resolution: the APPBAR is the header, because it is the one that already
+    // holds the links and is sticky. It goes navy. The page's own -top stops
+    // painting on those pages and becomes an ordinary heading strip -- so
+    // workspace_dashboard, whose -top carries no title at all and only a
+    // workspace switcher, no longer shows an empty navy slab.
+    //
+    // :has() is what tells the two situations apart. A page with no design
+    // shell -- course_offerings, workspace_requests -- has no .pqh-appbar, so
+    // its -top keeps the navy band and stays its header. Both live inside
+    // <main class="<prefix>-shell">, which is what makes the test possible.
+    if (!isset($emittedprefix['@appbar'])) {
+        $emittedprefix['@appbar'] = true;
+        $css .= <<<CSS
+.pqh-appbar.pqh-appbar{background:var(--op-header-bg)!important;background-image:none!important;border-bottom:1px solid var(--op-header-bg)!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;box-shadow:none!important}
+.pqh-appbar__brand.pqh-appbar__brand{color:var(--op-header-ink)!important;font-family:var(--op-font)!important;font-size:16px!important;font-weight:700!important;letter-spacing:0!important}
+.pqh-appbar__brand-icon.pqh-appbar__brand-icon{stroke:var(--op-header-ink)!important}
+.pqh-appbar__nav.pqh-appbar__nav a,.pqh-appbar__nav.pqh-appbar__nav button{border:1px solid rgba(255,255,255,.30)!important;border-radius:var(--op-radius)!important;background:rgba(255,255,255,.10)!important;color:var(--op-header-ink)!important;font-family:var(--op-font)!important;font-size:14px!important;font-weight:700!important;box-shadow:none!important}
+.pqh-appbar__nav.pqh-appbar__nav a:hover,.pqh-appbar__nav.pqh-appbar__nav button:hover{background:rgba(255,255,255,.20)!important;border-color:rgba(255,255,255,.50)!important;color:var(--op-header-ink)!important}
+.pqh-appbar__nav.pqh-appbar__nav .pqh-appbar__logout{background:rgba(255,255,255,.18)!important;border-color:rgba(255,255,255,.60)!important;color:var(--op-header-ink)!important;box-shadow:none!important}
+.pqh-appbar__nav.pqh-appbar__nav .pqh-appbar__logout:hover{background:var(--op-header-ink)!important;border-color:var(--op-header-ink)!important;color:var(--op-header-bg)!important}
+.pqh-appbar__nav.pqh-appbar__nav a.pqh-appbar__icon svg{stroke:currentColor!important}
+
+CSS;
     }
 
     // The sidebar rail. Also prefix-independent, so once only.

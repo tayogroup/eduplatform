@@ -36,7 +36,7 @@ const CURRICULUM_DIR = path.join(ROOT, "src", "curriculum");
 const files = args.length
   ? args
   : (fs.existsSync(CURRICULUM_DIR)
-    ? fs.readdirSync(CURRICULUM_DIR).filter((f) => /^cambridge-(?:english|science|global-perspectives)-\d+\.json$/.test(f)).sort().map((f) => path.join(CURRICULUM_DIR, f))
+    ? fs.readdirSync(CURRICULUM_DIR).filter((f) => /^cambridge-(?:english|science|global-perspectives|mathematics)-\d+\.json$/.test(f)).sort().map((f) => path.join(CURRICULUM_DIR, f))
     : []);
 if (!files.length) {
   console.error(`usage: node tools/validate-curriculum-framework.mjs [--quiet] [<framework.json> ...]\n(no framework files found in ${CURRICULUM_DIR})`);
@@ -57,7 +57,11 @@ if (!files.length) {
 //     `codeScheme` in the file and the extractor's header. Reflection takes F
 //     and Communication takes M because R and C belong to Research and
 //     Collaboration.
-const CODE_RE = /^([1-9])((?:SL|R|W|TWS|ES|SIC|[EBCPAFM])[a-z]?)\.?(\d{1,2})$/;
+// Mathematics adds N (Number), G (Geometry and Measure), S (Statistics and
+// Probability) and TWM, so 7Ni.01 and 7Gg.03 are well-formed codes too. The
+// multi-letter alternatives stay ahead of the single-letter class or "SIC"
+// would match as S + "IC".
+const CODE_RE = /^([1-9])((?:SL|SIC|TWS|TWM|ES|R|W|[EBCPAFMNGS])[a-z]?)\.?(\d{1,2})$/;
 // Page furniture that has been observed glued onto objective text, plus the
 // headings that sit between sections in the source PDFs. Any of these inside an
 // objective means the parser ran past the end of the bullet.
@@ -97,7 +101,7 @@ function validate(file) {
   }
   // The unit validator resolves a framework by filename from the unit's declared
   // code, so a filename that disagrees with curriculumCode loads the wrong file.
-  const fileCode = /cambridge-(?:english|science|global-perspectives)-(\d+)\.json$/.exec(path.basename(file))?.[1];
+  const fileCode = /cambridge-(?:english|science|global-perspectives|mathematics)-(\d+)\.json$/.exec(path.basename(file))?.[1];
   if (fileCode) F(String(fw.curriculumCode) === fileCode, "metadata: curriculumCode ≠ filename", `${fw.curriculumCode} vs ${fileCode}`);
   if (!isBlank(fw.source)) F(!PLACEHOLDER.test(fw.source), "metadata: source looks like a placeholder", fw.source);
 
@@ -161,13 +165,19 @@ function validate(file) {
   const style = fw.objectiveStyle || {};
   const requireTerminalPunctuation = style.terminalPunctuation !== false;
   const minTextChars = Number.isFinite(style.minTextChars) ? style.minTextChars : TEXT_MIN;
+  // Mathematics prints nested "o" bullets as part of the objective they sit
+  // under ("Record, organise and represent categorical, discrete and continuous
+  // data … o Venn and Carroll diagrams o tally charts …"), so a few genuinely
+  // run past the limit that flags a swallowed section elsewhere. Declared in
+  // the data like the other style differences, not hidden in a list here.
+  const maxTextChars = Number.isFinite(style.maxTextChars) ? style.maxTextChars : TEXT_MAX;
 
   const empty = [], tooShort = [], tooLong = [], unterminated = [], contaminated = [], mojibake = [], placeholder = [];
   for (const [, o] of all) {
     const t = String(o.text ?? "");
     if (isBlank(t)) { empty.push(o.code); continue; }
     if (t.length < minTextChars) tooShort.push(`${o.code} (${t.length} chars: "${t}")`);
-    if (t.length > TEXT_MAX) tooLong.push(`${o.code} (${t.length} chars, starts "${t.slice(0, 60)}…")`);
+    if (t.length > maxTextChars) tooLong.push(`${o.code} (${t.length} chars, starts "${t.slice(0, 60)}…")`);
     else if (t.length > TEXT_LONG_NOTE) N(`text note: ${o.code} is ${t.length} chars — long for an objective, worth an eye`);
     if (requireTerminalPunctuation && !/[.?!]$/.test(t.trim())) unterminated.push(`${o.code} (ends "…${t.trim().slice(-40)}")`);
     const hit = BOILERPLATE.find((rx) => rx.test(t));

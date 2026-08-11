@@ -8,11 +8,52 @@ const path = require("path");
 const { generateQuestions, unitTopic } = require("./lib/math-question-gen.js");
 
 const root = path.resolve(__dirname, "..");
-const modelPath = path.join(root, "outputs", "019f6433-3b5b-7513-8de4-dfd68b782812", "math-content-model.json");
+// The model used to be read from outputs/<uuid>/, a one-off session directory.
+// outputs/ is gitignored, so that path was reproducible on exactly one machine
+// and only until somebody cleared it. Prefer the stable location; keep reading
+// the old one so a machine that still has it does not break.
+const MODEL_CANDIDATES = [
+  path.join(root, "outputs", "math-content", "math-content-model.json"),
+  path.join(root, "outputs", "019f6433-3b5b-7513-8de4-dfd68b782812", "math-content-model.json"),
+];
+const modelPath = MODEL_CANDIDATES.find((candidate) => fs.existsSync(candidate));
+if (!modelPath) {
+  console.error("✗ no math content model found. Looked in:");
+  for (const candidate of MODEL_CANDIDATES) console.error(`   ${path.relative(root, candidate)}`);
+  console.error("  Regenerate it with: npm run extract:math-content");
+  process.exit(1);
+}
 const mathRoot = path.join(root, "src", "prototypes", "ehel-academy", "mathematics");
 const model = JSON.parse(fs.readFileSync(modelPath, "utf8"));
 
-const grades = process.argv.slice(2).length ? process.argv.slice(2).map(Number) : [1, 3, 4, 5, 6, 7, 8];
+const argv = process.argv.slice(2);
+const FORCE = argv.includes("--force");
+const grades = argv.filter((value) => /^\d+$/.test(value)).length
+  ? argv.filter((value) => /^\d+$/.test(value)).map(Number)
+  : [1, 3, 4, 5, 6, 7, 8];
+
+// Roughly twenty repair-ehel-math-* tools edit the built units IN PLACE — answer
+// ordinals, truncated explainers, duplicate titles, exploration pairing. None of
+// that is in the model, so a rebuild discards every one of them, and the only
+// sign is a large diff nobody asked for.
+//
+// The guard is an explicit flag, not a timestamp comparison. Comparing the
+// model's mtime against the units' was tried and is worthless: copying the model
+// to a new path refreshes its mtime, the model then looks newer than the units,
+// and the check waves through exactly the rebuild it exists to stop. That
+// happened on this file's first run and overwrote 125 units.
+if (!FORCE) {
+  console.error("build-ehel-math-runtime.js will OVERWRITE every built unit for grades "
+    + `${grades.join(", ")}.`);
+  console.error("");
+  console.error("  About twenty repair-ehel-math-* tools have edited those files in place, and");
+  console.error("  none of their work is in the content model — a rebuild silently drops it.");
+  console.error("  Their only other copy is git history, so check the diff before committing.");
+  console.error("");
+  console.error("  Re-run with --force when you mean it:");
+  console.error(`    node tools/build-ehel-math-runtime.js --force ${grades.join(" ")}`);
+  process.exit(1);
+}
 
 const tidy = (value = "") => String(value).replace(/�/g, "–").replace(/\s+/g, " ").trim();
 const slug = (value = "") => tidy(value).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");

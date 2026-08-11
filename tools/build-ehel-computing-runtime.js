@@ -93,7 +93,7 @@ const reviewPath = path.join(compRoot, "data", "script-review.json");
 const scriptReview = fs.existsSync(reviewPath)
   ? (JSON.parse(fs.readFileSync(reviewPath, "utf8")).overrides || {})
   : {};
-const reviewStats = { applied: 0, missed: [], rekeyed: [], stranded: [], refusedSteps: [] };
+const reviewStats = { applied: 0, missed: [], rekeyed: [], stranded: [], refusedSteps: [], answerKeyPrefixes: [], restatedAnswers: [] };
 const practiceStats = { unaligned: [] };
 
 // Where each exported category's fields live inside a built unit. Returns the
@@ -359,6 +359,61 @@ function balanceOptionPositions(questions = [], scope = "") {
     ordered.splice(target, 0, question.answer);
     question.options = ordered;
   });
+}
+
+// The Practice & Quiz booklets print their answer key as "11 (c) the LED
+// screen. It is an output.", and the reader carried that line across whole as
+// the explanation. Both halves of the prefix are wrong here and neither is
+// visible to fix by eye:
+//
+//   - the number is the BOOKLET's question number. The unit ships a selection
+//     in its own order, so source 11 is app q09 and source 6 is app q05.
+//   - the letter names an option position that balanceOptionPositions moves by
+//     design, so it was wrong on 14 of 22 questions. The other 8 were right by
+//     the seed alone, not because anything kept them right — a reseed or one
+//     more question in a unit re-rolls all 22.
+//
+// Nothing renders a letter to match it against: quiz options are plain text
+// buttons (`<button class="quiz-option">`), so "(c)" points at a label the
+// learner never sees. So the prefix is dropped rather than recomputed, which
+// leaves the sentence the booklet actually wrote.
+//
+// Run BEFORE balanceOptionPositions and it would still be describing the
+// pre-shuffle order; run it after and the letter is already meaningless. It is
+// dropped either way, so this sits next to the shuffle and after the review —
+// a reviewed explanation can carry the prefix too.
+const ANSWER_KEY_PREFIX = /^\s*\d+\s*\(\s*[a-j]\s*\)\s*/i;
+
+// The booklet restates the chosen option as a fragment before giving the reason
+// ("iteration. Iteration means repeating…"). Drop it only where the reason
+// already opens with the same word — elsewhere the fragment carries the answer
+// and the reason leans on it ("A named box… That is exactly what a variable
+// is."), so removing it would leave "That is" pointing at nothing.
+//
+// Not gated on the prefix: five explanations stutter without ever having
+// carried one ("Python. Python is typed as text"), so keying this to the number
+// would fix the ones that happened to be numbered and leave the rest. The word
+// kept is the second occurrence, which arrives with its own capital — no
+// re-casing, so a lowercase identifier ("print() writes to the screen") is
+// never capitalised into something that is not the function's name.
+const RESTATED_ANSWER = /^([A-Za-z][A-Za-z0-9'’-]*)\.\s+(?=\1\b)/i;
+
+function tidyAnswerKeyExplanations(questions = [], label = "") {
+  for (const question of questions) {
+    const explanation = String(question.explanation || "");
+    let text = explanation;
+    if (ANSWER_KEY_PREFIX.test(text)) {
+      text = text.replace(ANSWER_KEY_PREFIX, "");
+      // "11 (c) the LED screen. It is an output." loses its only capital with
+      // the prefix, so the explanation would open mid-sentence.
+      text = text.charAt(0).toUpperCase() + text.slice(1);
+      reviewStats.answerKeyPrefixes.push(`${label}: ${question.id}`);
+    }
+    const deduped = text.replace(RESTATED_ANSWER, "");
+    if (deduped !== text) reviewStats.restatedAnswers.push(`${label}: ${question.id}`);
+    if (deduped === explanation) continue;
+    question.explanation = deduped;
+  }
 }
 
 const PRACTICE_PLACEHOLDER = "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.";
@@ -2285,6 +2340,7 @@ function buildGrade(grade) {
     // so shuffling first would let a reviewed row put the answer back in
     // position one.
     balanceOptionPositions((runtime.assessment || {}).questions, `g${grade}u${unitMeta.unit}`);
+    tidyAnswerKeyExplanations((runtime.assessment || {}).questions, `grade ${grade} unit ${unitMeta.unit}`);
     builtUnits.push(runtime);
     for (const key of ["outcomes", "concepts", "practice", "workedExamples", "activities", "methods", "debugging"]) {
       if (!runtime[key] || !runtime[key].length) warnings.push(`grade ${grade} unit ${unitMeta.unit}: empty ${key}`);
@@ -2393,6 +2449,7 @@ function buildGrade(grade) {
   applyCapstoneReview(gradeCapstone, grade);
   dropStrandedExplanations((gradeCapstone.quiz || {}).questions, `grade ${grade} capstone`);
   balanceOptionPositions((gradeCapstone.quiz || {}).questions, `g${grade}capstone`);
+  tidyAnswerKeyExplanations((gradeCapstone.quiz || {}).questions, `grade ${grade} capstone`);
   fs.writeFileSync(path.join(gradeDir, "data", "grade-capstone.json"), `${JSON.stringify(gradeCapstone, null, 2)}\n`, "utf8");
 
   const indexHtml = `<!doctype html>
@@ -2427,6 +2484,12 @@ if (reviewStats.rekeyed.length) {
 }
 if (reviewStats.refusedSteps.length) {
   console.log(`Review step overrides refused (${reviewStats.refusedSteps.length}) — they were reviewed before the underlying defect was fixed and would put it back. Re-export to pick up the corrected wording.`);
+}
+if (reviewStats.answerKeyPrefixes.length) {
+  console.log(`Booklet answer-key prefixes dropped from explanations (${reviewStats.answerKeyPrefixes.length}) — "11 (c)" numbers the source booklet's question and names an option position this build reshuffles.`);
+}
+if (reviewStats.restatedAnswers.length) {
+  console.log(`Restated-answer stutters removed from explanations (${reviewStats.restatedAnswers.length}) — "Python. Python is typed as text" opened by naming the option, then said it again.`);
 }
 if (reviewStats.stranded.length) {
   console.log(`Review explanations dropped as stranded (${reviewStats.stranded.length}) — they define a word no question in their unit asks about; the built explanation stands.`);

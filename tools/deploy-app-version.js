@@ -89,15 +89,9 @@ const PARTIAL = picked.length > 0;
 // module), course-app.js (the shell core), the subject's visual modules, and
 // course-ui.css — with import paths rewritten for the deployed layout.
 const SHELL = process.argv.slice(2).includes("--shell");
-// A subject listed in NON_SHELL_SUBJECTS has no shell/subjects/ module, so a
-// --shell release naming it would fail on a missing file part-way through,
-// after some items had already uploaded. Refuse up front instead.
-//
-// The list is empty today, so this never fires. Computing and global-perspectives
-// were the last two on it and both now run from shell/subjects/ — global
-// perspectives in particular must be released WITH --shell, because its
-// shared/course-ui.js is a one-line loader that imports the shell module and
-// resolves to nothing in the deployed v{TAG}/ layout.
+// computing and global-perspectives have no shell/subjects/ module — a --shell
+// release naming them would fail on a missing file part-way through, after some
+// items had already uploaded. Refuse up front instead.
 const shellless = SHELL ? SUBJECTS.filter((s) => NON_SHELL_SUBJECTS.includes(s)) : [];
 if (shellless.length) {
   console.error(`--shell was given but ${shellless.join(", ")} run a standalone shared/course-ui.js.\n` +

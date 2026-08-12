@@ -74,7 +74,15 @@ npm run extract:computing-content && npm run build:computing && npm run check:co
 
 **Never hand-edit `src/prototypes/ehel-academy/{science,computing,global-perspectives}/grade-*/data/`** — it is generated, and the next build overwrites it. Fix the builder instead.
 
-All three subjects export from Google Drive as `Year <n>-<UTC stamp>-<part>.zip`, so a Downloads folder holds three subjects under indistinguishable filenames. The Computing and Global Perspectives extractors classify each archive by what its documents say and accept only their own. The science extractor still picks by name alone, so **check which subject a `Year N` zip actually contains before running `extract:science-content`.**
+All three subjects export from Google Drive as `Year <n>-<UTC stamp>-<part>.zip`, so a Downloads folder holds three subjects under indistinguishable filenames. **All three extractors now classify each archive by what its documents say and accept only their own** — science was the last to pick by name alone, and did so until 2026-08-12.
+
+That was not a theoretical risk. Picking the newest stamp per year does not merely risk the wrong pack, it prefers it: Downloads held Year 4 and Year 5 Global Perspectives exports stamped *later* than their science counterparts, so a plain `extract:science-content` would have rebuilt Grades 4 and 5 of Science out of Global Perspectives content. Each extractor now walks a year's candidates newest-first and takes the first that is actually its own subject, reporting what it skipped:
+
+```
+  Year 4: skipped Year 4-20260809T160348Z-1-001.zip - it is GlobalPerspectives, not Science
+```
+
+A year whose archives are *all* another subject is reported rather than passed over quietly, because the silent version is a grade vanishing from the model and, one build later, from the course.
 
 Computing spans Stages 1-8 (Cambridge Primary Computing 0672, Lower Secondary 0868) — the Stage 8 pack was exported later than the rest and all eight stages are published in `catalog.json`. Stages 1-4 ship as Teacher & Parent Guides, so the builder rewrites their prose into learner-facing explainers (`learnerVoice`); Stages 5-8 ship student lesson books carried across as written. `check:computing` is the gate on that conversion — it fails on adult-addressed text, classroom staging, truncated explainers and modules duplicated across units.
 

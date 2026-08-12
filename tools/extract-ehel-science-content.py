@@ -24,19 +24,85 @@ from docx.oxml.text.paragraph import CT_P
 # re-exported.
 ZIP_PATTERN = "Year *.zip"
 
+# ── subject classification ───────────────────────────────────────────────────
+# Science, Computing and Global Perspectives all export from Google Drive as
+# "Year <n>-<stamp>-<part>.zip", so a Downloads folder holds three subjects
+# under indistinguishable names and the newest stamp for a year is often not
+# ours. Picking by name alone therefore does not merely risk the wrong pack, it
+# actively prefers it: at the time this was written Downloads held a Year 4 and
+# a Year 5 Global Perspectives export, both stamped later than their Science
+# counterparts, so a plain run would have rebuilt Grades 4 and 5 of Science out
+# of another subject's content.
+#
+# Every document names its subject in its opening lines — "Year 4 Science -
+# Unit 2 - Quick Revision Guide" against "Year 4 - Unit 3: Skills Toolkit
+# Evaluation - Global Perspectives" — which is the cheapest reliable signal.
+# The Computing and Global Perspectives extractors already classify this way;
+# this brings Science in line with them.
+SCIENCE_HEAD = re.compile(r"year\s*\d+\s*[-–—]?\s*science|science\s*[-–—]\s*unit|scientific\s+terms", re.I)
+GP_HEAD = re.compile(r"global\s+perspectives", re.I)
+COMPUTING_HEAD = re.compile(r"year\s*\d+\s*[-–—]?\s*computing|computing\s*[-–—]\s*unit", re.I)
+
+
+def classify_archive(archive: zipfile.ZipFile) -> str:
+    """'Science', 'GlobalPerspectives', 'Computing' or 'Unknown'.
+
+    Every .docx votes on the subject named in its first eight paragraphs and the
+    majority wins, so one oddly-headed document cannot carry an archive.
+    """
+    votes: Counter[str] = Counter()
+    for entry in archive.infolist():
+        if not entry.filename.lower().endswith(".docx"):
+            continue
+        try:
+            document = Document(io.BytesIO(archive.read(entry)))
+        except Exception:
+            continue
+        head = " ".join(clean(paragraph.text) for paragraph in document.paragraphs[:8])
+        if GP_HEAD.search(head):
+            votes["GlobalPerspectives"] += 1
+        elif COMPUTING_HEAD.search(head):
+            votes["Computing"] += 1
+        elif SCIENCE_HEAD.search(head):
+            votes["Science"] += 1
+    if not votes:
+        return "Unknown"
+    return votes.most_common(1)[0][0]
+
 
 def newest_archive_per_year(downloads: Path, pattern: str = ZIP_PATTERN) -> list[Path]:
-    """Return one zip per year: the highest timestamp stamp available."""
-    by_year: dict[int, Path] = {}
-    for candidate in sorted(downloads.glob(pattern)):
-        match = re.search(r"Year\s+(\d+)\s*-\s*(\d{8}T\d{6}Z)", candidate.name)
+    """Newest SCIENCE archive per year.
+
+    Candidates are walked newest-stamp-first and the first that classifies as
+    Science wins, so a later export of another subject never displaces a Science
+    pack. A year whose archives are all another subject is reported rather than
+    skipped in silence: the alternative is a grade quietly vanishing from the
+    model and, one build later, from the course.
+    """
+    candidates: defaultdict[int, list[tuple[str, Path]]] = defaultdict(list)
+    for path in downloads.glob(pattern):
+        match = re.search(r"Year\s+(\d+)\s*[^-]*-\s*(\d{8}T\d{6}Z)", path.name)
         if not match:
             continue
-        year = int(match.group(1))
-        current = by_year.get(year)
-        if current is None or match.group(2) > re.search(r"-(\d{8}T\d{6}Z)", current.name).group(1):
-            by_year[year] = candidate
-    return [by_year[year] for year in sorted(by_year)]
+        candidates[int(match.group(1))].append((match.group(2), path))
+
+    chosen: list[Path] = []
+    for year, entries in sorted(candidates.items()):
+        rejected: list[tuple[Path, str]] = []
+        for _, path in sorted(entries, reverse=True):
+            with zipfile.ZipFile(path) as archive:
+                subject = classify_archive(archive)
+            if subject == "Science":
+                chosen.append(path)
+                for other, other_subject in rejected:
+                    print(f"  Year {year}: skipped {other.name} - it is {other_subject}, not Science")
+                break
+            rejected.append((path, subject))
+        else:
+            print(f"  Year {year}: NO Science archive found among {len(entries)} candidate(s):")
+            for other, other_subject in rejected:
+                print(f"      {other.name} is {other_subject}")
+    return chosen
 
 
 def clean(value: str) -> str:

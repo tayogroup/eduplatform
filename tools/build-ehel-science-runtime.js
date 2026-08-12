@@ -270,6 +270,24 @@ const CAMBRIDGE_GAP_REASONS = {
 // it already uses, not an excuse to author Science content in the builder — a
 // whole missing topic (Stage 4 sound) is recorded as a commission instead.
 const CONCEPT_INSERTS = {
+  // The Grade 4 sound gap, and it was never as empty as the gap record said.
+  // I recorded it as "no Year 4 pack contains a sound unit… the only sound
+  // content is one glossary line", and that was wrong: the Energy unit's forms
+  // concept already teaches a full paragraph of it — a drum skin vibrating, the
+  // air vibrating with it, the vibrations reaching the ear, and no sound in
+  // empty space. That is 4Ps1's first clause and much of 4Ps2 already done.
+  //
+  // What was missing is the rest: measuring loudness, travel through solids and
+  // liquids, materials that stop sound, pitch as distinct from loudness, and
+  // changing pitch on an instrument. It goes after the concept's own closing
+  // line, which hands it over — electrical energy "can easily be changed into
+  // light, heat, sound, or movement" — so the survey of the forms stays intact
+  // and the depth follows it.
+  "4-2": [{
+    conceptId: "concept-2-the-many-forms-of-energy",
+    after: "it can easily be changed into light, heat, sound, or movement.",
+    text: "\n\nOf all those forms, sound is worth a closer look, because how it behaves is easy to test for yourself.\n\nSound needs matter to carry it, and air is only the usual choice. It travels through solids and liquids too, and faster: press your ear to a wooden door while somebody taps the far side and the tap comes through surprisingly clearly, because the particles of a solid are packed close together and pass the shaking along quickly. Swimmers hear sounds underwater for the same reason. Other materials do the opposite. Thick cloth, a woollen blanket, a mattress, a wall of mud brick — these soak the vibrations up instead of passing them on, which is why a room with hangings on the walls sounds softer and why heavy curtains dull the noise of the street. Where quiet matters, people choose materials that stop sound on purpose.\n\nLoudness and pitch are two different things, and they are easy to muddle. Loudness is how strong the vibration is, and it is measured in decibels with a sound level meter: a whisper is around 30 decibels, ordinary talking about 60, and a generator close by can pass 90, which is why people working beside one wear ear protection. Pitch is something else entirely — how high or low the note sounds — and it depends on how fast the vibration is. Fast vibrations give a high note, slow ones a low note. High and low sounds can each be loud or soft, which is why a child can whisper a high note and a man can shout a low one.\n\nYou can change pitch yourself. Pluck a tight string and it sounds higher than a loose one; shorten the string and it rises again, which is exactly what a player does pressing a string against the neck of an oud. Blow across the top of a bottle holding a little water and the note is low; add more water and it climbs, because the column of air left to vibrate is shorter. Every instrument, from a drum to a flute, is a way of controlling how fast something vibrates.",
+  }],
   // Grade 7 Unit 3 is called Forces and Energy. Two of its outcomes promise
   // energy — naming the forms, and describing transfers and dissipation — and
   // the word does not appear once in any of its six concept explanations, which
@@ -1888,6 +1906,41 @@ function buildGrade(grade) {
       }
       return rawKeys;
     };
+    // Where a key is printed as prose rather than a table, it carries its own
+    // question number ("1. The chocolate will melt…"), and that number then sat
+    // in front of the text a learner is shown for getting it right.
+    //
+    // Stripped only when the number matches the key's position in the section,
+    // which is what makes it the question's rather than the answer's. Some
+    // answers open with a number that IS the answer — "360 degrees divided by
+    // 24 hours = 15 degrees per hour", "12 g + 8 g = 20 g" — and a key that
+    // goes on to "2." is a numbered procedure whose first step would otherwise
+    // be lost.
+    // Position alone will not do it: a section often opens with a preamble
+    // ("Each answer is explained so you understand the reasoning…") which
+    // carries no number and shifts every key after it by one. What identifies a
+    // question number is that the numbered keys run 1, 2, 3… in order, so the
+    // run is checked as a whole and stripped only if it does.
+    //
+    // Three is the shortest run trusted. A lone leading number proves nothing —
+    // "360 degrees divided by 24 hours = 15 degrees per hour" and "138 — 84 =
+    // 54 bpm increase" are answers that open with a number, and a one-element
+    // "sequence" of 1 would take the first digit off a real answer.
+    const LEADING = /^\s*(\d+)[.)]?\s+(?=\S)/;
+    const dropQuestionNumbers = (keys) => {
+      const numbered = keys.map((text, index) => ({ text, index, lead: LEADING.exec(text) })).filter((entry) => entry.lead);
+      if (numbered.length < 3) return keys;
+      if (!numbered.every((entry, position) => Number(entry.lead[1]) === position + 1)) return keys;
+      const stripped = [...keys];
+      for (const entry of numbered) {
+        // A key that goes on to "2." is a numbered procedure, and its first
+        // step would be lost.
+        if (/[.;:]\s+2[.)]\s/.test(entry.text)) continue;
+        stripped[entry.index] = entry.text.replace(LEADING, "");
+      }
+      return stripped;
+    };
+
     const keysFor = (letter) => {
       const raw = keyBlocks.filter((block) => new RegExp(`\\bSection\\s+${letter}\\b`, "i").test(block.section) && block.content_kind !== "Heading");
       const tableCells = raw.filter((block) => block.block_type === "Table cell");
@@ -1906,11 +1959,23 @@ function buildGrade(grade) {
           previousCol = cell.table_col;
         }
         const list = rows
+          // The "Q" column is the question's number, not part of its answer.
+          // Joining the whole row put it in front of the text the learner is
+          // shown when they get the question right — "1 b) Brain The brain is
+          // the control center…" — in 676 answers across 29 units.
+          //
+          // Dropped only when the leading cell is a bare number, because the
+          // packs also print two-column keys with no Q column at all (99 rows,
+          // answer | why) and those must keep both cells. The two are otherwise
+          // indistinguishable, so the test is that the numbers run 1, 2, 3…
+          // down the table: measured across every numbered key in the course,
+          // 45 tables of 45 do, and none carries a bare number as its answer.
+          .map((cells) => (cells.length > 1 && /^\d+$/.test(cells[0]) ? cells.slice(1) : cells))
           .map((cells) => cells.join(" "))
           .filter((text) => text.length > 1 && !/^(q|question|answer|why|explanation)\b/i.test(text));
-        return normalizeKeys(list);
+        return dropQuestionNumbers(normalizeKeys(list));
       }
-      return normalizeKeys(raw.map((block) => tidy(block.text)).filter((text) => text.length > 1));
+      return dropQuestionNumbers(normalizeKeys(raw.map((block) => tidy(block.text)).filter((text) => text.length > 1)));
     };
     const levelFor = { A: "Warm-up", B: "Core", C: "Core", D: "Challenge", E: "Extension" };
     const items = [];

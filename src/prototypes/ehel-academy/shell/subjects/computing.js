@@ -185,10 +185,42 @@ const d$$ = (selector) => [...(deckRegion || document).querySelectorAll(selector
 // The page: original first, deck second, each in its own region. The deck mounts
 // with fullBleed off so it sits IN the page rather than being the page — no
 // body.gc-full, because the original above it still needs the normal chrome.
+// A both-designs page carries the section TWICE, so a screen reader met every
+// concept, activity and quiz question as the section and then the section
+// again. The deck half is hidden from assistive tech: it is a second
+// PRESENTATION of content already read in full above, not second content.
+// Nothing is lost by skipping it — the two halves draw from the same data, and
+// the deck's finish button settles the same progress key through the original's
+// own done handler.
+//
+// Deliberate, and it has a cost: the slides stay for mouse and touch and are
+// gone for screen readers AND for sighted keyboard users, who now meet the page
+// half alone. That second group is why this is a product decision rather than a
+// tidy-up. Global Perspectives made the same call first; this matches it.
+//
+// `inert` would be the one-attribute version and is WRONG here — it blocks
+// pointer events too, so it would not hide the deck, it would delete it for
+// everyone. Two attributes are needed instead:
+//   aria-hidden    takes the half out of the accessibility tree, inherited.
+//   tabindex="-1"  on every control inside it. aria-hidden over focusable
+//                  controls is its own defect: Tab still lands there, on
+//                  something that now announces nothing at all.
+function untabDeckHalf() {
+  // Read out of the DOM rather than through deckRegion: afterPaint fires from
+  // inside the deck, which does not know what it was mounted into. Scoped by
+  // the aria-hidden attribute, so it can only ever reach the deck half — on a
+  // page that is not both-designs there is no hidden half and this is a no-op.
+  const region = document.querySelector('#app .deck-design[aria-hidden="true"]');
+  if (!region) return;
+  for (const control of region.querySelectorAll('a[href], button, select, textarea, input, [tabindex]:not([tabindex="-1"])')) {
+    control.setAttribute("tabindex", "-1");
+  }
+}
+
 function bothDesignsPage(renderClassic, renderDeck) {
   $("#app").innerHTML = `<div class="both-designs">
       <div class="classic-design" id="classic-design"></div>
-      <div class="deck-design" id="deck-design">
+      <div class="deck-design" id="deck-design" aria-hidden="true">
         <div class="deck-design-head"><span class="eyebrow">The same section, one card at a time</span><p>Swipe or use the arrows. Everything above is here too.</p></div>
         <div id="deck-host"></div>
       </div>
@@ -200,6 +232,7 @@ function bothDesignsPage(renderClassic, renderDeck) {
   // and its controls must not be found by the original's still-live listeners.
   deckRegion = $("#deck-design");
   renderDeck();
+  untabDeckHalf();
 }
 
 // Every deck renderer mounts through this, so where a deck goes is decided once.
@@ -223,7 +256,11 @@ const { mountDeck, deckFinish } = createDeck({
   // Scoped to what actually changed: a one-slide redraw must not re-initialise
   // the WebGL models on the slides either side of it, which would leave two
   // animation loops running on one canvas.
-  afterPaint: (scope) => { bindVoiceControls(); updateVoiceUI(); initComputingWebGL(scope); },
+  // untabDeckHalf runs here as well as after the first mount: the deck replaces
+  // its whole track on setSlides and a single slide on redrawSlide, and every
+  // fresh button arrives tabbable again — so without this the tab order quietly
+  // repairs itself the first time a learner moves a slide.
+  afterPaint: (scope) => { bindVoiceControls(); updateVoiceUI(); initComputingWebGL(scope); untabDeckHalf(); },
 });
 
 // The debugging rule and the online-safety help are the UI's own words, not any

@@ -37,6 +37,24 @@ function cambridgeLabel(stage) {
   const fw = cambridgeFramework(stage);
   return `${fw.level} ${fw.code} — Stage ${stage}`;
 }
+// Whether THIS unit is still waiting on a curriculum reviewer.
+//
+// The overview used to state "AI-assisted content review complete — human
+// curriculum sign-off pending" as a fixed sentence, so it appeared on all 81
+// units — including the 44 whose reviewStatus reads "Approved v1.2". A learner
+// (or the parent reading over their shoulder) was told the work in front of
+// them was unreviewed even where a reviewer had signed it off, and the notice
+// meant nothing precisely because it was on everything.
+//
+// It is a disclosure worth keeping where it is TRUE, so it is now driven by the
+// unit's own reviewStatus rather than deleted. Unknown or missing status counts
+// as pending: the honest default for "we cannot tell" is to disclose, not to
+// imply approval.
+function unitAwaitsSignOff() {
+  const status = String(course?.unit?.reviewStatus || "").trim();
+  if (!status) return true;
+  return !/^approved\b/i.test(status);
+}
 const gradeRootUrl = new URL(`./grade-${gradeNumber}/`, location.href);
 const AUDIO_IS_DEV = ["localhost", "127.0.0.1"].includes(location.hostname);
 function resolveMediaUrl(source) {
@@ -1294,7 +1312,7 @@ function renderOverview() {
         <section class="panel"><h2>What you will learn</h2><div class="outcome-list">${course.outcomes.map((outcome) => `<div class="outcome"><span>${outcome.sequence}</span><p>${escapeHtml(outcome.learningOutcome)}</p></div>`).join("")}</div>${overviewAudioButton(course, "outcomes", "Hear what you will learn")}</section>
       </div>
       <div class="section-stack">
-        <section class="panel approval-banner"><span class="eyebrow">${escapeHtml(cambridgeFramework(gradeNumber).level)} ${cambridgeFramework(gradeNumber).code}</span><h3>Aligned to ${escapeHtml(cambridgeLabel(gradeNumber))}</h3><p>Unit ${course.unit.unitNo} is structured from the ${escapeHtml(cambridgeLabel(gradeNumber))} content package. AI-assisted content review complete — human curriculum sign-off pending.</p></section>
+        <section class="panel approval-banner"><span class="eyebrow">${escapeHtml(cambridgeFramework(gradeNumber).level)} ${cambridgeFramework(gradeNumber).code}</span><h3>Aligned to ${escapeHtml(cambridgeLabel(gradeNumber))}</h3><p>Unit ${course.unit.unitNo} is structured from the ${escapeHtml(cambridgeLabel(gradeNumber))} content package.${unitAwaitsSignOff() ? " AI-assisted content review complete — human curriculum sign-off pending." : ""}</p></section>
         <section class="panel"><h3>Your unit at a glance</h3><div class="stat-row"><div class="stat"><strong>${course.dictionaryLinks.length}</strong><small>words</small></div><div class="stat"><strong>${course.readings.length}</strong><small>texts</small></div><div class="stat"><strong>${course.quizzes.length}</strong><small>quiz points</small></div></div></section>
         <section class="panel"><h3>Recommended path</h3><ol class="path-list">${learningPath.map((item) => `<li>${icon("circle-check-big")}<span>${escapeHtml(item)}</span></li>`).join("")}</ol>${overviewAudioButton(course, "path", "Hear the recommended path")}</section>
         <section class="panel"><h3>Keep going</h3><p>${progress.completed.length ? `You have completed ${progress.completed.length} learning sections. Pick up where you left off.` : "Your progress will save on this device as you learn."}</p><button class="button primary" data-go="${progress.completed.includes("lecture") ? "dictionary" : "lecture"}" type="button">Continue ${icon("arrow-right")}</button></section>

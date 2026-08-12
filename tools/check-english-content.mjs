@@ -102,6 +102,41 @@ const PHONEME_NOTATION = /(?:^|[^\w/-])\/[a-zɒʌæɜɪʊθðʃʒŋ]{1,3}\/(?![\
 const MOJIBAKE = /�|Ã[-¿]|â€[™œ""]/;
 const PLACEHOLDER = /\b(TBD|TODO|FIXME|Lorem ipsum)\b/i;
 
+// Instructions to whoever is MARKING, in a field the learner reads.
+//
+// Kept separate from ADULT_ADDRESSED because it reads as perfectly ordinary
+// prose — there is no "your child" to spot. Found by clicking "Check guidance"
+// in the browser and reading what came back: "Accept any kind, practical idea,
+// such as saying hello, asking the child's name…". Comprehension shows
+// `correctAnswer` to the learner as "Reviewed guidance" once they have written
+// something, so mark-scheme wording lands in front of the child.
+//
+// Anchored to the start of a sentence and to a small closed set of openers.
+// Bare "accept" is an ordinary word in a story ("they would not accept the
+// offer"); it is the sentence-initial imperative that makes it an instruction
+// to a marker. Measured: 15 hits, all in comprehension guidance, 14 of them
+// Grade 2. A further 11 matches live in activities.answerSummary, which is
+// NEVER rendered — english.js does not read that field — so they are correctly
+// out of scope here rather than inflating the count.
+const MARKER_INSTRUCTION = /(?:^|[.!?]\s+)(?:Accept|Award|Allow|Credit|Mark)\s+(?:any|both|either|one|two|full|marks?|the)\b/;
+
+// The fields comprehension actually shows the learner as "Reviewed guidance".
+// Narrower than LEARNER_FIELDS on purpose: a mark scheme is legitimate in an
+// answerKey or a teacherNote, and neither is drawn on a learner's page.
+const GUIDANCE_FIELDS = { comprehension: ["correctAnswer", "explanation"] };
+
+// The id field each section uses, in the order they are looked for. One list,
+// because every failure message needs to name the item it is about.
+//
+// ORDER MATTERS, and getting it wrong is silent. `readingId` first labelled
+// every comprehension question by the READING it points at — a cross-reference,
+// not an identity — so a unit's questions all shared one label and collapsed
+// back into a single baseline entry, which is the exact bug the item id was
+// added to fix. An item's OWN id comes first; readingId is last because only a
+// reading has nothing better.
+const ID_KEYS = ["questionId", "grammarId", "speakingId", "writingId",
+  "activityId", "assignmentId", "selfAssessmentId", "vocabularyId", "readingId"];
+
 // Every field the learner reads on screen, per section. If the renderer prints
 // it, it belongs here; if it does not, it does not.
 const LEARNER_FIELDS = {
@@ -235,6 +270,12 @@ for (const gradeDir of grades) {
     // ── who is being spoken to, and in what notation ────────────────────────
     for (const [section, fields] of Object.entries(LEARNER_FIELDS)) {
       for (const item of unit[section] || []) {
+        // Every message names the ITEM, not just the unit and field. Without it
+        // three identical "grade-2/unit-1: comprehension.correctAnswer …"
+        // failures collapse into one entry in the baseline Set, and fixing two
+        // of the three leaves the gate seeing the survivor and reporting
+        // nothing — a baseline that cannot count what it is holding.
+        const itemId = ID_KEYS.map((key) => item[key]).find(Boolean) || "?";
         const adult = isAdult(item);
         for (const field of fields) {
           const raw = item[field];
@@ -242,19 +283,25 @@ for (const gradeDir of grades) {
           for (const value of values) {
             if (typeof value !== "string" || !value) continue;
             learnerChars += value.length;
-            if (MOJIBAKE.test(value)) fail(label, `${section}.${field} has mojibake`);
-            if (PLACEHOLDER.test(value)) fail(label, `${section}.${field} still has placeholder text`);
+            if (MOJIBAKE.test(value)) fail(label, `${itemId} ${section}.${field} has mojibake`);
+            if (PLACEHOLDER.test(value)) fail(label, `${itemId} ${section}.${field} still has placeholder text`);
             // An adult-audience item is allowed both of the checks below: it is
             // a teacher's document, drawn behind the grown-up panel, and /m/ is
             // that reader's own notation.
             if (adult) continue;
             const adultHit = value.match(ADULT_ADDRESSED);
             if (adultHit) {
-              fail(label, `${section}.${field} is written to an adult (${JSON.stringify(adultHit[0])}) but is not marked audience:"adult"`);
+              fail(label, `${itemId} ${section}.${field} is written to an adult (${JSON.stringify(adultHit[0])}) but is not marked audience:"adult"`);
+            }
+            if (GUIDANCE_FIELDS[section]?.includes(field)) {
+              const markerHit = value.match(MARKER_INSTRUCTION);
+              if (markerHit) {
+                fail(label, `${itemId} ${section}.${field} instructs a marker (${JSON.stringify(markerHit[0].trim())}) and is shown to the learner as "Reviewed guidance"`);
+              }
             }
             if (PHONEME_NOTATION.test(value)) {
               if (NARRATED_FIELDS[section]?.includes(field)) {
-                fail(label, `${section}.${field} prints phoneme notation and is NARRATED — the voice reads /m/ as the letter name "em"`);
+                fail(label, `${itemId} ${section}.${field} prints phoneme notation and is NARRATED — the voice reads /m/ as the letter name "em"`);
               } else {
                 displayPhonemes += 1;
               }

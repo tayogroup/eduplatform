@@ -98,7 +98,11 @@ const CAMBRIDGE_OBJECTIVES = {
   // 4Bh2 is not: the unit never covers how a skeleton supports or protects, and
   // says nothing about muscles at all.
   "4-1": ["4Bh1", "4Be1", "4Be2", "4Eo1"],
-  "4-2": ["4Be3", "4Ep1", "4Eo4"],
+  // 4Ps1-4Ps5 join them: the forms concept already taught vibration making
+  // sound and reaching the ear, and CONCEPT_INSERTS adds what was missing —
+  // decibels, travel through solids and liquids, materials that stop sound,
+  // pitch as distinct from loudness, and changing pitch on an instrument.
+  "4-2": ["4Be3", "4Ep1", "4Eo4", "4Ps1", "4Ps2", "4Ps3", "4Ps4", "4Ps5"],
   "4-3": ["4Cs1", "4Cs2", "4Cs3", "4Cs4", "4Ep4", "4Eo4"],
   "4-4": ["4Be1", "4Eo7"],
   "4-5": ["4Ep2", "4Eo1"],
@@ -197,7 +201,7 @@ const CAMBRIDGE_OBJECTIVES = {
 const CAMBRIDGE_ALIGNMENT_NOTES = {
   "3-3": "Light and shadow are not in 0846 Stage 3 — the framework carries light at Stage 2 (2Pl) and Stage 5 (5Pl) only. The material-property and enquiry objectives claimed here are met in full; the light content itself has no Stage 3 objective to map to.",
   "3-6": "Earth, Sun and Moon are not in 0846 Stage 3 — the framework carries Earth and beyond at Stage 2 (2Pb) and Stage 5 (5Pb) only. Only the enquiry objectives this unit genuinely meets are claimed; its astronomy content has no Stage 3 objective to map to.",
-  "4-2": "Energy is not a sub-strand of 0846 Stage 4, or of any primary stage — the framework first treats it as \"energy in movement\" at Stage 6 (6Pf3). The environmental and enquiry objectives claimed here are met; the unit's core energy content sits outside the primary framework.",
+  "4-2": "Energy is not a sub-strand of 0846 Stage 4, or of any primary stage — the framework first treats it as \"energy in movement\" at Stage 6 (6Pf3). The sound, environmental and enquiry objectives claimed here are met in full; it is the unit's core energy content, which is most of it, that has no primary objective to map to.",
   "4-4": "The Earth's structure, volcanoes and earthquakes are not in 0846 Stage 4 — the framework carries Earth and beyond at Stage 2 (2Pb) and Stage 5 (5Pb), and neither covers plate geology. The habitat and enquiry objectives claimed here are met in full.",
   "4-5": "Light is not in 0846 Stage 4 — the framework carries light at Stage 2 (2Pl) and Stage 5 (5Pl). Only the enquiry objectives this unit genuinely meets are claimed; Stage 4 has no light or material-property objective for its content.",
   "8-1": "Plant reproduction is not in 0893 Stage 8 — the framework introduces fertilisation as the fusion of gametes at Stage 9 (9Bp.01), and Stages 7 and 8 carry no pollination, seed or germination objective. Only the application objective this unit meets is claimed; its subject matter is a stage ahead.",
@@ -249,7 +253,6 @@ function cambridgeObjectivesFor(grade, unitNo, code) {
 // unit to a new objective and the gap closes here on the next build. Only the
 // REASON is authored, and only where it has actually been established.
 const CAMBRIDGE_GAP_REASONS = {
-  "4-Sound": "No Year 4 Science pack contains a sound unit. Grade 4's six units are Living Things, Energy, Materials, The Earth, Light and Electricity; the only sound content anywhere in the stage is one glossary line in the Energy unit (\"Sound energy = Energy of vibrations that we hear\"), which teaches none of 4Ps1-4Ps5. Grade 1 covers sound at Stage 1 depth (1Ps1-1Ps3) and nothing revisits it. Closing this needs a Stage 4 sound unit to be written — a content commission, not a rebuild.",
 };
 
 // ── Targeted teaching added to a source concept ──────────────────────────────

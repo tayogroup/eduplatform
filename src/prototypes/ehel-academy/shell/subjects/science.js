@@ -82,7 +82,11 @@ let capstoneQuizIndex = 0, capstoneQuizScore = 0, capstoneQuizLocked = false;
 
 const sections = [
   ["overview", "layout-dashboard", "Unit Overview"],
-  ["lesson", "book-open", "Teacher Lesson"],
+  // "The Lesson", not "Teacher Lesson". These courses are self-paced, and a
+  // learner working alone should not be told the explainer belongs to someone
+  // else. Computing and Global Perspectives renamed theirs for that reason;
+  // this is the same section and the same argument.
+  ["lesson", "book-open", "The Lesson"],
   ["words", "braces", "Science Words"],
   ["explore", "scan-search", "Explore the Concept"],
   ["visuals", "shapes", "Visual Models"],
@@ -743,14 +747,14 @@ function renderLessonClassic() {
   const { $, $$ } = classicScope();
   const topic = courseTopic();
   const concepts = course.concepts.map((concept, index) => `<article class="panel concept-card"><span class="eyebrow">Concept ${index + 1}</span><h2>${escapeHtml(concept.title)}</h2>${scienceDiagram(topic, index)}<div class="concept-body">${richText(concept.explanation)}</div><p class="example"><span class="field-label">Example:</span> ${escapeHtml(concept.example)}</p>${voiceButton(`${concept.title}. ${spokenText(concept.explanation)}. Example: ${concept.example}`, "Listen to concept")}</article>`).join("");
-  $("#app").innerHTML = `${pageHeader("Teacher lesson", course.unit.unitTitle, "Read the source-grounded concepts with a labelled diagram for each, and follow the complete ElevenLabs narration.")}
+  $("#app").innerHTML = `${pageHeader("The lesson", course.unit.unitTitle, "Read the source-grounded concepts with a labelled diagram for each, and follow the complete ElevenLabs narration.")}
     <div class="concept-grid">${concepts}</div>
     <p><button class="button primary" id="lesson-done" type="button">I studied the concepts ✓</button></p>`;
   initScienceWebGL($("#app"));
-  $("#lesson-done").addEventListener("click", () => { complete("lesson", "Teacher lesson marked studied."); navigate("ai"); });
+  $("#lesson-done").addEventListener("click", () => { complete("lesson", "Lesson marked studied."); navigate("ai"); });
 }
 
-// The teacher lesson as a deck: one concept per slide, with its labelled diagram
+// The lesson as a deck: one concept per slide, with its labelled diagram
 // and the full source prose beneath it. The grid put four concepts side by side,
 // each holding several paragraphs; a Stage 1 learner reads the one they are on.
 //
@@ -772,13 +776,13 @@ function renderLessonDeck() {
     </div></section>`);
 
   mountDeck({
-    heading: "Teacher lesson",
+    heading: "The lesson",
     label: "Concept",
     slides,
     emptyMessage: "No concepts in this unit yet.",
     onClick: (event) => {
       if (!event.target.closest("[data-deck-finish]")) return undefined;
-      complete("lesson", "Teacher lesson marked studied.");
+      complete("lesson", "Lesson marked studied.");
       return navigate("ai");
     },
   });

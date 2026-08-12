@@ -86,7 +86,11 @@ let capstoneQuizIndex = 0, capstoneQuizScore = 0, capstoneQuizLocked = false;
 
 const sections = [
   ["overview", "layout-dashboard", "Unit Overview"],
-  ["lesson", "book-open", "Teacher Lesson"],
+  // "The Lesson", not "Teacher Lesson". These courses are self-paced, and a
+  // learner working alone should not be told the explainer belongs to someone
+  // else. Computing and Global Perspectives renamed theirs for that reason;
+  // this is the same section and the same argument.
+  ["lesson", "book-open", "The Lesson"],
   ["words", "braces", "Math Words & Symbols"],
   ["explore", "scan-search", "Explore the Concept"],
   ["visuals", "shapes", "Visual Models"],
@@ -720,7 +724,7 @@ function geometryConceptVisual(concept, index) {
 
 const courseTopic = () => unitTopic(course.unit.unitTitle, course.concepts);
 
-// The Teacher Lesson as a deck: one concept per slide, its diagram above the
+// The Lesson as a deck: one concept per slide, its diagram above the
 // prose. The concept grid put five long explainers on one page; a Stage 1
 // learner reads one, hears it, and swipes.
 //
@@ -750,7 +754,7 @@ function renderLessonDeck() {
     slides,
     onClick: (event) => {
       if (!event.target.closest("[data-deck-finish]")) return undefined;
-      complete("lesson", "Teacher lesson marked studied.");
+      complete("lesson", "Lesson marked studied.");
       return navigate("ai");
     },
   });
@@ -765,12 +769,12 @@ function renderLessonClassic() {
   const { $, $$ } = classicScope();
   const topic = courseTopic();
   const concepts = course.concepts.map((concept, index) => `<article class="panel concept-card"><span class="eyebrow">Concept ${index + 1}</span><h2>${escapeHtml(concept.title)}</h2>${mathDiagram(topic, index)}<div class="concept-body">${richText(concept.explanation)}</div>${concept.example ? `<p class="example"><span class="field-label">Example:</span> ${escapeHtml(concept.example)}</p>` : ""}${voiceButton(`${concept.title}. ${spokenText(concept.explanation)}${exampleClause(concept)}`, "Listen to concept")}${grownUpGuide(concept)}</article>`).join("");
-  $("#app").innerHTML = `${pageHeader("Teacher lesson", course.unit.unitTitle, "Read the source-grounded concepts with a labelled diagram for each, and follow the complete ElevenLabs narration.")}
+  $("#app").innerHTML = `${pageHeader("The lesson", course.unit.unitTitle, "Read the source-grounded concepts with a labelled diagram for each, and follow the complete ElevenLabs narration.")}
     <div class="concept-grid">${concepts}</div>
     <p><button class="button primary" id="lesson-done" type="button">I studied the concepts ✓</button></p>`;
   initGeometryWebGL($("#app"));
   initMathWebGL($("#app"));
-  $("#lesson-done").addEventListener("click", () => { complete("lesson", "Teacher lesson marked studied."); navigate("ai"); });
+  $("#lesson-done").addEventListener("click", () => { complete("lesson", "Lesson marked studied."); navigate("ai"); });
 }
 
 // Worked Examples as a deck: one example per slide, its solution still behind a

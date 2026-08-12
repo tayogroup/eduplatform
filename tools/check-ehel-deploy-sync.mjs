@@ -21,7 +21,7 @@
 //   audio orphaned — clips on the CDN that no current text can request; wasted
 //                    storage rather than breakage, so reported as a warning
 //
-//   node tools/check-ehel-deploy-sync.mjs [mathematics|science|computing]…
+//   node tools/check-ehel-deploy-sync.mjs [mathematics|science|computing|global-perspectives]…
 //
 // Exits non-zero if content is stale or audio is missing. Skips a subject whose
 // manifests do not exist yet — a fresh checkout has not deployed anything, and
@@ -47,6 +47,7 @@ const LIBS = {
   mathematics: "./lib/ehel-math-narration",
   science: "./lib/ehel-science-narration",
   computing: "./lib/ehel-computing-narration",
+  "global-perspectives": "./lib/ehel-global-perspectives-narration",
 };
 
 const asked = process.argv.slice(2).filter((a) => !a.startsWith("--"));

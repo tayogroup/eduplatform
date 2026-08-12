@@ -12,20 +12,35 @@
 // Listen button onto the paid runtime endpoint. Neither side could see it: each
 // was internally consistent.
 //
-// Three things are checked, in the order they break:
+// The APP tier is checked against content for the same reason, added after the
+// join between those two broke production on 2026-08-12. See the long note above
+// appState() — the short version is that neither tier was wrong on its own.
+//
+// What is checked, in the order it breaks:
 //
 //   content stale  — local unit text differs from what was uploaded, so the app
 //                    serves old text and asks for old hashes
+//   app vs content — one tier current and the other behind. Both behind is
+//                    coherent; the split is what let a grading change require a
+//                    question number the learner could not see
 //   audio missing  — text is deployed but its clips never reached the CDN, so
 //                    the button falls back to the paid endpoint
 //   audio orphaned — clips on the CDN that no current text can request; wasted
 //                    storage rather than breakage, so reported as a warning
+//   nothing compared — files recorded as uploaded for a subject with no local
+//                    content found to compare them against. Reported as
+//                    unchecked, never as agreement
 //
-//   node tools/check-ehel-deploy-sync.mjs [mathematics|science|computing|global-perspectives]…
+//   node tools/check-ehel-deploy-sync.mjs [mathematics|science|computing|global-perspectives|english|intensive-english]…
 //
-// Exits non-zero if content is stale or audio is missing. Skips a subject whose
-// manifests do not exist yet — a fresh checkout has not deployed anything, and
-// that is not a failure.
+// All six subjects get the content and app checks. English and Intensive English
+// skip the audio half and say so: their clips are named after the item id rather
+// than a hash of the text, so staleness there needs a different shape.
+//
+// Exits non-zero if content is stale, the tiers are split, audio is missing, or a
+// subject was passed without being compared. Skips a subject whose manifests do
+// not exist yet — a fresh checkout has not deployed anything, and that is not a
+// failure.
 
 import fs from "node:fs";
 import path from "node:path";
@@ -39,6 +54,8 @@ const ROOT = path.resolve(here, "..");
 const EHEL = path.join(ROOT, "src", "prototypes", "ehel-academy");
 const CONTENT_MANIFEST = path.join(ROOT, ".bunny-content-manifest.json");
 const MEDIA_MANIFEST = path.join(ROOT, ".bunny-upload-manifest.json");
+const APP_MANIFEST = path.join(ROOT, ".bunny-appver-manifest.json");
+const APP_DEPLOYER = path.join(here, "deploy-app-version.js");
 
 // Only the subjects whose audio is hash-named per Listen button. English names
 // its clips after the item id, so a stale-text check there needs a different
@@ -50,10 +67,19 @@ const LIBS = {
   "global-perspectives": "./lib/ehel-global-perspectives-narration",
 };
 
+// English and Intensive English have no narration library of this shape — their
+// clips are named after the item id, not a hash of the text, so the audio half
+// below cannot run for them and says so rather than pretending. The app and
+// content halves need no such library, and leaving these two out of those would
+// have hidden a real gap: on the first run of the app check, English was found
+// sitting on v148 with newer code in the tree.
+const AUDIO_EXEMPT = ["english", "intensive-english"];
+const ALL = [...Object.keys(LIBS), ...AUDIO_EXEMPT];
+
 const asked = process.argv.slice(2).filter((a) => !a.startsWith("--"));
-const unknown = asked.filter((s) => !LIBS[s]);
+const unknown = asked.filter((s) => !ALL.includes(s));
 if (unknown.length) { console.error(`unknown subject(s): ${unknown.join(", ")}`); process.exit(2); }
-const subjects = asked.length ? asked : Object.keys(LIBS);
+const subjects = asked.length ? asked : ALL;
 
 if (!fs.existsSync(CONTENT_MANIFEST) || !fs.existsSync(MEDIA_MANIFEST)) {
   console.log("No deploy manifests present — nothing has been deployed from this checkout. Skipping.");
@@ -80,6 +106,69 @@ function deployedMatches(remote, buf) {
   return recorded === sha1(asLf) || recorded === sha1(asCrlf);
 }
 
+// ── the app tier ──────────────────────────────────────────────────────────
+//
+// Content and audio were checked against each other; nothing checked either
+// against the CODE. On 2026-08-12 Mathematics shipped app v141 while the
+// content on the CDN was three weeks old, and the two were individually fine:
+// the release verified, the content manifest was internally consistent, and
+// this check passed. What broke was the JOIN. The new grading rule reads every
+// number in a stored answer as a value the learner must produce, so against the
+// unrepaired text `"1) 43, 45, 47."` asserted [1, 43, 45, 47] — the stray
+// question number became a required answer. 557 items across 102 units began
+// rejecting the correct answer, and in 16 units the fluency sprint could no
+// longer reach its threshold, which leaves the section uncompletable and the
+// grade shut.
+//
+// The lesson is not "content was stale" — this file already said that. It is
+// that an app release can ACTIVATE a dependency on content. So what is checked
+// is not each tier's freshness but their AGREEMENT: both current, or both
+// behind, is coherent. One current and the other behind is the state that broke
+// production, and it is the only combination that fails here.
+//
+// The uploaded bytes are not the file on disk — deploy-app-version.js rewrites
+// each module's imports for the deployed layout — so the transform is sliced
+// out of that script rather than copied. A copy would be free to drift from the
+// deployer, and then this check would compare against bytes nobody ships.
+const appManifest = fs.existsSync(APP_MANIFEST) ? JSON.parse(fs.readFileSync(APP_MANIFEST, "utf8")) : null;
+
+function loadSubjectModuleTransform() {
+  if (!fs.existsSync(APP_DEPLOYER)) return null;
+  const src = fs.readFileSync(APP_DEPLOYER, "utf8");
+  const from = src.indexOf("function shellSubjectModule(");
+  if (from < 0) return null;
+  const to = src.indexOf("\n}", from) + 2;
+  if (to < 2) return null;
+  // fs/path/EHEL are the only things it closes over.
+  return new Function("fs", "path", "EHEL", `${src.slice(from, to)}\nreturn shellSubjectModule;`)(fs, path, EHEL);
+}
+const shellSubjectModule = loadSubjectModuleTransform();
+
+// The release a subject is on, read from the manifest rather than the network so
+// this stays an offline check. The highest recorded tag is the live one: a
+// release writes v{TAG}/ and repoints index.html at it in the same run.
+function liveTag(subject) {
+  let best = null;
+  for (const key of Object.keys(appManifest || {})) {
+    const m = key.match(new RegExp(`^app/${subject}/v(\\d+)/`));
+    if (m && (best === null || Number(m[1]) > best)) best = Number(m[1]);
+  }
+  return best === null ? null : `v${best}`;
+}
+
+// Is the deployed subject module built from the code in the working tree?
+function appState(subject) {
+  if (!appManifest) return { known: false, why: "no .bunny-appver-manifest.json — nothing released from this checkout" };
+  if (!shellSubjectModule) return { known: false, why: "could not read shellSubjectModule() out of deploy-app-version.js — re-point this check rather than dropping it" };
+  const tag = liveTag(subject);
+  if (!tag) return { known: false, why: "no versioned release recorded for this subject" };
+  const remote = `app/${subject}/${tag}/course-ui.js`;
+  const recorded = appManifest[remote];
+  if (!recorded) return { known: false, why: `${remote} is not in the manifest` };
+  const built = Buffer.from(shellSubjectModule(subject), "utf8");
+  return { known: true, tag, stale: sha1(built) !== recorded };
+}
+
 let failed = false;
 
 for (const subject of subjects) {
@@ -91,7 +180,13 @@ for (const subject of subjects) {
   //    "data/" segment, matching what the app requests via dataRootUrl.
   let contentOk = 0, contentStale = 0, contentNew = 0;
   const staleExamples = [];
-  for (const gradeDir of fs.readdirSync(root).filter((n) => /^grade-\d+$/.test(n))) {
+  // Intensive English numbers its folders level-1…level-N, not grade-N, and the
+  // uploader maps both onto gNN. Matching only "grade-" found no local files for
+  // it, so the walk compared nothing and the subject passed — with 45 entries
+  // sitting in the content manifest. A check that reports "0 in sync, 0 stale"
+  // and calls it agreement is worse than one that is absent, because it is
+  // counted as covered.
+  for (const gradeDir of fs.readdirSync(root).filter((n) => /^(?:grade|level)-\d+$/.test(n))) {
     const g = Number(gradeDir.split("-")[1]);
     const dataDir = path.join(root, gradeDir, "data");
     if (!fs.existsSync(dataDir)) continue;
@@ -114,8 +209,8 @@ for (const subject of subjects) {
   // 2. Does every clip the current text can request exist on the CDN? The
   //    uploader places a clip under each grade that claims it, so a hash is
   //    only satisfied when its own grade's path was uploaded.
-  const narration = require(LIBS[subject]);
-  const map = narration.hashGradeMap(root);
+  const narration = LIBS[subject] ? require(LIBS[subject]) : null;
+  const map = narration ? narration.hashGradeMap(root) : new Map();
   let audioOk = 0, audioMissing = 0;
   const missingExamples = [];
   for (const [hash, grades] of map) {
@@ -139,12 +234,28 @@ for (const subject of subjects) {
     if (!grades || !grades.has(g)) orphaned += 1;
   }
 
+  // 4. Do the app tier and the content tier describe the same source state?
+  const app = appState(subject);
+  const contentBehind = contentStale + contentNew > 0;
+
+  // Backstop for the same trap in general: if the manifest says files were
+  // uploaded for this subject but the walk found none locally, the comparison
+  // examined nothing and its silence means nothing.
+  const uploadedHere = Object.keys(content).filter((k) => k.startsWith(`content/${subject}/`)).length;
+  const vacuous = uploadedHere > 0 && contentOk + contentStale + contentNew === 0;
+
   console.log(`  content  : ${contentOk} in sync, ${contentStale} stale, ${contentNew} never uploaded`);
-  console.log(`  audio    : ${audioOk} deployed, ${audioMissing} missing`);
-  console.log(`  orphaned : ${orphaned} clip(s) on the CDN no current text can request`);
+  console.log(`  app      : ${app.known ? `${app.tag} ${app.stale ? "behind the working tree" : "matches the working tree"}` : `not checked — ${app.why}`}`);
+  console.log(`  audio    : ${narration ? `${audioOk} deployed, ${audioMissing} missing` : "not checked — clips here are named by item id, not by a hash of the text"}`);
+  if (narration) console.log(`  orphaned : ${orphaned} clip(s) on the CDN no current text can request`);
   for (const e of staleExamples) console.log(`    ${e}`);
   for (const e of missingExamples) console.log(`    missing: ${e}`);
 
+  if (vacuous) {
+    console.error(`  ✗ ${uploadedHere} file(s) are recorded as uploaded for ${subject} but no local content was found to compare.`);
+    console.error("    The content comparison examined nothing — treat this as unchecked, not as agreement.");
+    failed = true;
+  }
   if (contentStale || contentNew) {
     console.error(`  ✗ content is behind — run: node tools/upload-content-to-bunny.js ${subject}`);
     failed = true;
@@ -153,11 +264,31 @@ for (const subject of subjects) {
     console.error(`  ✗ audio is behind — run: node tools/upload-media-to-bunny.js ${subject}`);
     failed = true;
   }
-  if (!contentStale && !contentNew && !audioMissing) console.log("  ✓ content and audio describe the same text");
+  // Both behind is coherent — nothing has been released since the working tree
+  // moved, and a learner sees an older but self-consistent course. It is the
+  // SPLIT that is dangerous, so only the split is called out here.
+  if (app.known && app.stale !== contentBehind) {
+    if (contentBehind) {
+      console.error(`  ✗ the app tier (${app.tag}) was released from newer code than the content on the CDN.`);
+      console.error("    This is the 2026-08-12 shape: an app change can make scoring depend on content it never shipped with.");
+      console.error(`    Fix by catching the content up: node tools/upload-content-to-bunny.js ${subject}`);
+    } else {
+      console.error(`  ✗ the content on the CDN is newer than the app tier (${app.tag}).`);
+      console.error("    Content written against newer app behaviour will not get it, and the app cannot tell.");
+      console.error(`    Fix by releasing the app: node tools/deploy-app-version.js <tag> --verify ${subject}`);
+    }
+    failed = true;
+  }
+  if (!contentStale && !contentNew && !audioMissing && !(app.known && app.stale !== contentBehind)) {
+    console.log(`  ✓ app${app.known ? ` (${app.tag})` : ""}, content${narration ? ", audio" : ""} — all in step`);
+  }
 }
 
 if (failed) {
-  console.error("\nDeployed content and audio disagree. Whichever side is behind, the app will ask for clips that are not there and fall back to the paid runtime endpoint.");
+  console.error("\nThe deployed tiers disagree about what the course is.");
+  console.error("  content vs audio — the app asks for clips that are not there and falls back to the paid runtime endpoint.");
+  console.error("  app vs content   — the code and the text it reads were released from different states, which is how a");
+  console.error("                     grading change came to require a question number the learner could not see.");
   process.exit(1);
 }
-console.log("\n✓ every checked subject has content and audio in step");
+console.log("\n✓ every checked subject has its app, content and audio in step");

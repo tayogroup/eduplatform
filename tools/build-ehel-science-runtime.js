@@ -60,7 +60,9 @@ const CAMBRIDGE_OBJECTIVES = {
   // than padding — leaving them off reported a whole sub-strand as untaught.
   "1-1": ["1Bp1", "1Bp2", "1Bh5", "1Ep3", "1Eo1", "1Eo4", "1Eo5"],
   "1-2": ["1Bp1", "1Bp4", "1Bp5", "1Bp6", "1Ep3", "1Eo1", "1Eo3", "1Eo5"],
-  "1-3": ["1Bh1", "1Bh2", "1Bh4", "1Cp1", "1Ep3", "1Eo4", "1Eo5"],
+  // 1Bh3 on "Staying Healthy and Clean": "Your body also needs good food,
+  // clean water, plenty of sleep and lots of moving and playing to stay strong."
+  "1-3": ["1Bh1", "1Bh2", "1Bh3", "1Bh4", "1Cp1", "1Ep3", "1Eo4", "1Eo5"],
   "1-4": ["1Cp1", "1Cp2", "1Cp3", "1Cp4", "1Ep3", "1Eo3", "1Eo4", "1Eo5"],
   "1-5": ["1Pf1", "1Pf2", "1Pf3", "1Ep3", "1Eo1", "1Eo5"],
   "1-6": ["1Ps1", "1Ps2", "1Ps3", "1Ep3", "1Eo4", "1Eo5"],
@@ -74,13 +76,21 @@ const CAMBRIDGE_OBJECTIVES = {
   // run the "What do you predict will happen in <investigation>?" cycle. That
   // prompt is not universal — it appears in 6 of 6 Stage 1 units but only 6 units
   // across Stages 2-8 — so it is claimed exactly where it is used, not by rule.
-  "2-6": ["2Pb1", "2Pb2", "2Pl3", "2Ep5", "2Eo2", "2Eo3"],
+  // 2Eo7 on the shadow concept, which is about the pattern itself — shadows
+  // "change in a pattern you can predict", and the seasons are named as the
+  // same idea over a year.
+  "2-6": ["2Pb1", "2Pb2", "2Pl3", "2Ep5", "2Eo2", "2Eo3", "2Eo7"],
   // ── Stage 3 (0846) ──
   "3-1": ["3Bh1", "3Bh2", "3Bp2", "3Ep1", "3Eo4"],
   "3-2": ["3Cp2", "3Ep2", "3Ep3", "3Eo2", "3Eo4"],
   "3-3": ["3Cp1", "3Cp2", "3Ep2", "3Eo1", "3Eo4"],
-  "3-4": ["3Bh1", "3Bh3", "3Eo2", "3Eo4"],
-  "3-5": ["3Pf1", "3Pf2", "3Pf4", "3Cp3", "3Ep3"],
+  // 3Bh5 on the concept titled "Your Senses - How You Know the World", which
+  // teaches the five senses as how the body gathers information.
+  "3-4": ["3Bh1", "3Bh3", "3Bh5", "3Eo2", "3Eo4"],
+  // 3Pf3 on the fourth job of a force in "What Is a Force?": "a force can
+  // change the shape of something - when you squeeze a ripe mango, your fingers
+  // press dents into it, and when you stretch a rubber band it grows longer."
+  "3-5": ["3Pf1", "3Pf2", "3Pf3", "3Pf4", "3Cp3", "3Ep3"],
   "3-6": ["3Eo1", "3Eo2", "3Eo5"],
   // ── Stage 4 (0846) ──
   // 4Bh1 is claimed on the strength of "Animals With Backbones and Without",

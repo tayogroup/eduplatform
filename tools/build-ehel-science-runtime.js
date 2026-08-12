@@ -127,7 +127,10 @@ const CAMBRIDGE_OBJECTIVES = {
   // gravity … holds everything else in the Solar System in place"), the tides
   // from the Moon's pull, a vacuum as space with no particles in it, and why
   // there is no air resistance there. Read the concepts, not the outcomes.
-  "7-3": ["7Pf.03", "7Pf.04", "7Cm.05", "7ESs.02", "7ESs.03", "7TWSm.02"],
+  // 7Pf.01 and 7Pf.02 are claimed on the energy passage CONCEPT_INSERTS adds to
+  // the tides concept: stores transferring into one another as an event runs,
+  // and every transfer spilling some energy as heat too thinly spread to use.
+  "7-3": ["7Pf.01", "7Pf.02", "7Pf.03", "7Pf.04", "7Cm.05", "7ESs.02", "7ESs.03", "7TWSm.02"],
   "7-4": ["7Bp.01", "7Bp.02", "7Bp.03", "7Bp.04", "7TWSc.01"],
   "7-5": ["7Cm.03", "7Cp.01", "7Cp.02", "7Cp.03", "7Cp.05", "7Cp.06", "7Cp.07", "7TWSp.05"],
   "7-6": ["7Ps.01", "7Ps.02", "7ESp.01", "7ESp.02", "7ESs.04", "7TWSc.05"],
@@ -192,7 +195,6 @@ const CAMBRIDGE_OBJECTIVES = {
 // strand genuinely has nowhere to map, and a reader of the unit should be told
 // that instead of seeing a short list and assuming it is complete.
 const CAMBRIDGE_ALIGNMENT_NOTES = {
-  "7-3": "This unit is called Forces and Energy and two of its outcomes promise energy — naming the forms of energy, and describing transfers and dissipation — but it teaches none of it: the word \"energy\" does not appear once in any of its six concept explanations, which are gravity, mass and weight, calculating weight, the Solar System, movement in space and the tides. 7Pf.01 and 7Pf.02 are therefore not claimed. The unit promises the content; the pack does not deliver it.",
   "3-3": "Light and shadow are not in 0846 Stage 3 — the framework carries light at Stage 2 (2Pl) and Stage 5 (5Pl) only. The material-property and enquiry objectives claimed here are met in full; the light content itself has no Stage 3 objective to map to.",
   "3-6": "Earth, Sun and Moon are not in 0846 Stage 3 — the framework carries Earth and beyond at Stage 2 (2Pb) and Stage 5 (5Pb) only. Only the enquiry objectives this unit genuinely meets are claimed; its astronomy content has no Stage 3 objective to map to.",
   "4-2": "Energy is not a sub-strand of 0846 Stage 4, or of any primary stage — the framework first treats it as \"energy in movement\" at Stage 6 (6Pf3). The environmental and enquiry objectives claimed here are met; the unit's core energy content sits outside the primary framework.",
@@ -268,6 +270,22 @@ const CAMBRIDGE_GAP_REASONS = {
 // it already uses, not an excuse to author Science content in the builder — a
 // whole missing topic (Stage 4 sound) is recorded as a commission instead.
 const CONCEPT_INSERTS = {
+  // Grade 7 Unit 3 is called Forces and Energy. Two of its outcomes promise
+  // energy — naming the forms, and describing transfers and dissipation — and
+  // the word does not appear once in any of its six concept explanations, which
+  // run from gravity through mass and weight to the Solar System and the tides.
+  // The pack simply never delivered the second half of its own title, so
+  // 7Pf.01 and 7Pf.02 had nothing to map to.
+  //
+  // It goes at the end, where the outcomes put it, and the tides are the way in:
+  // the concept has just spent 2,000 characters on the Moon hauling an entire
+  // ocean up a beach twice a day, which is energy on a scale nothing else in the
+  // unit matches. The forms named are the ones the unit's own outcome lists.
+  "7-3": [{
+    conceptId: "concept-6-the-tides",
+    after: "can plan when it is safe to bring a boat into the harbour and when the reef will be exposed for gathering shellfish.",
+    text: "\n\nEverything in this unit has been about pull and movement, and behind all of it sits one idea: energy. Energy is what must be transferred for anything at all to happen — for the sea to climb the beach, for a boat to lift on the water, for a fisherman's arms to haul in a net.\n\nEnergy is stored in several ways, and their names are worth learning. A moving object carries kinetic energy: the running child, the falling date, the incoming tide. An object that has been lifted carries gravitational potential energy, ready to be released the moment it is let go — the higher and heavier it is, the more it holds. A stretched rubber band or a bent bow holds elastic energy. Food, charcoal and a battery hold chemical energy. A hot pot holds thermal energy. Light, sound and electricity are all ways energy travels from one place to another.\n\nEnergy is never created and never destroyed; it only moves from one store to another. Hold a stone above the ground and it holds gravitational potential energy. Let go, and gravity transfers that store into kinetic energy as the stone speeds up. When it strikes the sand the movement stops, but the energy has not vanished — it has gone into a small thud of sound and a slight warming of the stone and the ground where they met.\n\nThat last step matters more than it looks. Every transfer spills some energy into the surroundings as heat, spread thinly through the air and the ground. It is still energy, but it is now shared out so widely that nothing can be done with it. Scientists say the energy has dissipated. It is why a bicycle left to itself always rolls to a stop, why every machine grows warm as it works, and why no engine ever returns all the energy it is fed.",
+  }],
   // Structure and function is the largest Stage 8 hole: 0893 publishes four
   // objectives and no Grade 8 unit taught any of them. The course covers body
   // systems at Grade 6 (6Bh1-6Bh4) at Stage 6 depth and never returns to them,

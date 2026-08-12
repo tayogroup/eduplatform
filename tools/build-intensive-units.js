@@ -45,13 +45,19 @@ for (const code of ["0058", "0861"]) {
   }
 }
 
-const audio = (category, id, levelNumber) => ({
-  source: `./media/audio/level-${levelNumber}/${category}/${id}.mp3`,
-  ...VOICE,
-  slowPlaybackRate: 0.8,
-  available: false,
-  status: "Not yet generated",
-});
+// No per-item audio descriptors. This course narrates through the shared
+// voiceButton, which looks a clip up by cyrb53 of the text it is about to
+// speak — generate-ehel-intensive-audio.js writes media/audio/tts/<hash>.mp3
+// and never touches a descriptor. The old audio() helper stamped 6,226 of them
+// across the 40 units, every one `available: false`, every one pointing at a
+// media/audio/level-N/<category>/ path that no tool in this repo writes and
+// nothing in the runtime reads (checked: intensive-english.js, its course-ui,
+// the shared shell, and check-intensive-audio-coverage.mjs all ignore them).
+//
+// They were not merely useless. They read as a 6,226-clip content gap that
+// does not exist, and if anything ever started honouring `available` the whole
+// course would go silent at once — the flag says no on every item while 5,592
+// real clips sit on disk with 0 orphans.
 
 // Course-wide rubric set: one standard, so a speaking task in Level 1 Unit 3 is
 // marked the same way as one in Level 2 Unit 19.
@@ -164,8 +170,6 @@ function buildUnit(authored) {
         childMeaning: word.meaning,
         exampleSentence: word.example,
         practiceSentences: word.practice || [],
-        sentenceAudio: (word.practice || []).map((_, n) => audio("vocabulary", `${vocabularyId}-s${n + 1}`, level.number)),
-        meaningAudio: audio("vocabulary", `${vocabularyId}-meaning`, level.number),
         spellingPractice: word.spelling || String(word.w).split("").join(" - "),
         sentenceStarter: word.starter || "",
         aiTutorPrompt: word.tutor,
@@ -189,7 +193,7 @@ function buildUnit(authored) {
     // is the spoken form of that passage and reaches ElevenLabs alone; the
     // learner still reads `passageScript` with its blanks intact.
     ...(item.passageSpeech ? { passageScriptSpeech: item.passageSpeech } : {}),
-    audio: audio("readings", rid, level.number),
+   
   }));
   if (!readings.some((reading) => reading.documentType)) {
     problems.push(`${where}: no reading is marked as a real-world document (set "documentType").`);
@@ -210,7 +214,7 @@ function buildUnit(authored) {
       ...(item.contrast ? { contrast: true } : {}),
       workedExample: item.workedExample, commonMistake: item.mistake, memoryTip: item.tip,
       practice: item.practice, answerKey: item.answers,
-      outcomeId: outcomeAt((item.outcome || 1) - 1), audio: audio("grammar", gid, level.number),
+      outcomeId: outcomeAt((item.outcome || 1) - 1),
     };
   });
 
@@ -227,7 +231,7 @@ function buildUnit(authored) {
     // ______." is right on the page and unreadable aloud.
     ...(item.instructionsSpeech ? { instructionsAndModelLinesSpeech: item.instructionsSpeech } : {}),
     recordingRequired: item.recording !== false, aiTutorPrompt: item.tutor,
-    outcomeId: outcomeAt((item.outcome || 1) - 1), audio: audio("speaking", sid, level.number),
+    outcomeId: outcomeAt((item.outcome || 1) - 1),
   }));
 
   const writing = list("writing", "write", (item, n, wid) => ({
@@ -549,7 +553,10 @@ for (const level of plan.levels) {
         lemma: link.masterWord, displayWord: link.displayWord,
         partOfSpeech: link.partOfSpeech, canonicalMeaning: link.childMeaning,
         firstTaughtIn: link.unitId,
-        audio: { normal: link.meaningAudio.source, slow: link.meaningAudio.source, slowPlaybackRate: 0.8, ...VOICE, available: false },
+        // No audio field either: it was derived from the per-item descriptor
+        // above, so it inherited the same dead path and the same available:
+        // false. The vocabulary screen speaks through voiceButton like every
+        // other surface in this course.
         status: REVIEW,
       });
     }

@@ -928,7 +928,19 @@ function buildAssessment(practice, isGuide) {
       responseMode: "text",
       part: item.part,
     }));
-  const assessment = { passPercent: 80, responseMode: "text", questions };
+  // No passPercent here, deliberately. Every question in this subject is
+  // `responseMode: "text"` — the learner writes an answer and compares it with
+  // a model answer the page reveals. Nothing scores that, so a percentage has
+  // no input: the 80 that used to sit here was carried over from the
+  // multiple-choice subjects and read by nothing, in this subject's runtime or
+  // the shared shell. Science references passPercent eight times and drives a
+  // score ring from it; Global Perspectives referenced it zero times.
+  //
+  // The fix is to stop claiming the threshold, not to invent a number to meet
+  // it. A pass mark computed from self-marking would report mastery nobody
+  // measured, which is worse than reporting none. If this subject ever needs a
+  // completion signal, it wants a "questions attempted" count, not a score.
+  const assessment = { responseMode: "text", questions };
   if (!questions.length && isGuide) {
     // Not a gap to be filled by invention: at Stages 1-3 the pack assesses
     // through the mini-project and the look-back grid, and there is no quiz to

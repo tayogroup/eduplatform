@@ -193,6 +193,22 @@ Cambridge does not print objective codes in either Global Perspectives framework
 
 A unit's objectives are resolved from its skill, and the Year 5, 7 and 8 packs print their own `Code | What Cambridge says` table. The build **proves** the skill rule against those tables and refuses to run if they disagree — so a wrong mapping stops the build instead of shipping.
 
+**Global Perspectives quizzes are not scored, and carry no `passPercent`.** All
+312 questions are `responseMode: "text"`: the learner writes an answer and
+compares it with a model answer the page reveals. Nothing marks that, so a
+percentage has no input. The units used to declare `passPercent: 80` anyway,
+carried over from the multiple-choice subjects and read by nothing — Science
+references `passPercent` eight times and draws a score ring from it, Global
+Perspectives referenced it zero times, in its own runtime and in the shared
+shell. The field is gone from the builder.
+
+Do not add it back as a way to give the section a mastery target. A pass mark
+computed from self-marking reports mastery nobody measured, which is worse than
+reporting none. If the section ever needs a completion signal it wants a
+"questions attempted" count, not a score. The **placement exams are different** —
+those 233 questions do carry options and are auto-scorable, and they are where a
+threshold belongs if one is wanted.
+
 #### Reviewed Global Perspectives scripts
 
 Same loop as Science and Computing, with its own tools. `export-ehel-global-perspectives-scripts.py` flattens every learner-facing line into one sheet per grade (6,407 rows), on the layout of `ehel-english-scripts-complete.xlsx`; the reviewed file comes back from OneDrive and lands in `global-perspectives/data/script-review.json`:

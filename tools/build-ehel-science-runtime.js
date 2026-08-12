@@ -109,12 +109,25 @@ const CAMBRIDGE_OBJECTIVES = {
   // ── Stage 7 (0893) ──
   "7-1": ["7Bs.01", "7Bs.02", "7Bs.03", "7Bs.04", "7Bs.05", "7SIC.01"],
   "7-2": ["7Cm.01", "7Cm.04", "7Cm.06", "7Cm.07", "7ESc.01"],
-  "7-3": ["7Pf.03", "7TWSm.02"],
+  // This unit was badly under-mapped, because its outcomes list is short and
+  // misleading and I mapped from it. Its concepts are Gravity, Mass and Weight,
+  // Calculating Weight, The Solar System, Movement in Space and The Tides — so
+  // beyond mass and weight it teaches four more objectives outright: gravity
+  // holding the Solar System in orbit ("the Sun's mass is so gigantic that its
+  // gravity … holds everything else in the Solar System in place"), the tides
+  // from the Moon's pull, a vacuum as space with no particles in it, and why
+  // there is no air resistance there. Read the concepts, not the outcomes.
+  "7-3": ["7Pf.03", "7Pf.04", "7Cm.05", "7ESs.02", "7ESs.03", "7TWSm.02"],
   "7-4": ["7Bp.01", "7Bp.02", "7Bp.03", "7Bp.04", "7TWSc.01"],
   "7-5": ["7Cm.03", "7Cp.01", "7Cp.02", "7Cp.03", "7Cp.05", "7Cp.06", "7Cp.07", "7TWSp.05"],
   "7-6": ["7Ps.01", "7Ps.02", "7ESp.01", "7ESp.02", "7ESs.04", "7TWSc.05"],
   "7-7": ["7Bs.01", "7Be.01", "7Be.02", "7TWSp.04", "7TWSa.03", "7SIC.02"],
-  "7-8": ["7Cc.01", "7Cc.03", "7Cc.04", "7TWSc.05", "7TWSc.07"],
+  // 7Cp.04 on the gas tests the unit teaches by name: "Carbon dioxide turns
+  // limewater cloudy and can put out a burning splint. Oxygen will relight a
+  // glowing splint." 7Cc.02 is NOT claimed — the unit names a precipitate as one
+  // of the signs a reaction has happened, but never explains why one forms from
+  // soluble reactants, which is what the objective asks for.
+  "7-8": ["7Cc.01", "7Cc.03", "7Cc.04", "7Cp.04", "7TWSc.05", "7TWSc.07"],
   "7-9": ["7Pe.01", "7Pe.02", "7Pe.03", "7Pe.04", "7Pe.05"],
   // ── Stage 8 (0893) ──
   // 8TWSp.04: the germination investigation is planned with variables controlled
@@ -150,7 +163,10 @@ const CAMBRIDGE_OBJECTIVES = {
   // sedimentary concept: climate distinguished from weather, the rock, fossil
   // and ice-core evidence for the ice-age cycle, and atmospheric change as what
   // drives it.
-  "8-8": ["8TWSc.01", "8TWSc.07", "8SIC.02", "8ESs.01", "8ESs.02", "8ESc.01", "8ESc.02", "8ESc.03"],
+  // 8SIC.05 on the closing turn of the climate passage, which is a discussion of
+  // exactly what the objective asks — burning carbon locked away for millions of
+  // years changing the climate, not the weather.
+  "8-8": ["8TWSc.01", "8TWSc.07", "8SIC.02", "8SIC.05", "8ESs.01", "8ESs.02", "8ESc.01", "8ESc.02", "8ESc.03"],
   // Both Planet Earth objectives are claimed on passages CONCEPT_INSERTS adds:
   // 8ESp.01 on concept 6, which attributes the Earth's field to its moving iron
   // core, and 8ESp.02 on concept 2, which teaches renewable and non-renewable
@@ -166,6 +182,7 @@ const CAMBRIDGE_OBJECTIVES = {
 // strand genuinely has nowhere to map, and a reader of the unit should be told
 // that instead of seeing a short list and assuming it is complete.
 const CAMBRIDGE_ALIGNMENT_NOTES = {
+  "7-3": "This unit is called Forces and Energy and two of its outcomes promise energy — naming the forms of energy, and describing transfers and dissipation — but it teaches none of it: the word \"energy\" does not appear once in any of its six concept explanations, which are gravity, mass and weight, calculating weight, the Solar System, movement in space and the tides. 7Pf.01 and 7Pf.02 are therefore not claimed. The unit promises the content; the pack does not deliver it.",
   "3-3": "Light and shadow are not in 0846 Stage 3 — the framework carries light at Stage 2 (2Pl) and Stage 5 (5Pl) only. The material-property and enquiry objectives claimed here are met in full; the light content itself has no Stage 3 objective to map to.",
   "3-6": "Earth, Sun and Moon are not in 0846 Stage 3 — the framework carries Earth and beyond at Stage 2 (2Pb) and Stage 5 (5Pb) only. Only the enquiry objectives this unit genuinely meets are claimed; its astronomy content has no Stage 3 objective to map to.",
   "4-2": "Energy is not a sub-strand of 0846 Stage 4, or of any primary stage — the framework first treats it as \"energy in movement\" at Stage 6 (6Pf3). The environmental and enquiry objectives claimed here are met; the unit's core energy content sits outside the primary framework.",

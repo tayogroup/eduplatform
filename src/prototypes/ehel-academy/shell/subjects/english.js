@@ -151,7 +151,11 @@ const IS_STAFF = ["admin", "teacher", "staff"].includes(launchRole());
 // ===================== english body (verbatim) =====================
 const sections = [
   ["overview", "layout-dashboard", "Overview"],
-  ["lecture", "play-square", "Teacher lecture"],
+  // "Video lesson", not "Teacher lecture". The section IS a teacher's recorded
+  // lesson, but these courses are self-paced and naming it for whose it is
+  // tells a learner working alone that the explainer belongs to someone else.
+  // Computing and Global Perspectives made the same rename for the same reason.
+  ["lecture", "play-square", "Video lesson"],
   ["dictionary", "book-a", "Vocabulary"],
   ["reading", "book-open", "Reading & story"],
   ["comprehension", "list-checks", "Comprehension"],
@@ -1362,7 +1366,7 @@ function lectureJourney() {
       list: "path-list",
       eyebrow: "How to learn",
       heading: "Use language with purpose",
-      finish: { action: "toast", label: "I have previewed this unit", message: "Unit preview opened. Teacher lecture completion awaits the video." },
+      finish: { action: "toast", label: "I have previewed this unit", message: "Unit preview opened. The video lesson is marked complete once the video is ready." },
       steps: [
         ["eye", "Preview the unit goals and connect them to what you know."],
         ["ear", "Listen, read and notice how English works in context."],
@@ -1429,12 +1433,12 @@ function renderLectureClassic() {
     return;
   }
   if (course.visual.lectureMode === "guided-launch" || !course.visual.lectureVideo) {
-    $("#app").innerHTML = `${pageHeader("Lecture media pending", "Teacher lecture", "Preview the unit purpose while the audiovisual teacher lecture is being prepared.", "Video pending")}
+    $("#app").innerHTML = `${pageHeader("Lesson video pending", "Video lesson", "Preview what this unit is about while the video lesson is being prepared.", "Video pending")}
       <div class="lecture-layout">
         <section class="unit-banner"><img src="${course.visual.image}" alt="${escapeHtml(course.visual.alt)}"><div class="banner-copy"><span>${gradeLabel} unit preview</span><h2>Explore. Practise. Apply. Improve.</h2><p>${escapeHtml(course.unit.unitOverview.split(". ").slice(0, 2).join(". "))}</p><button class="button gold" id="guided-launch-done" type="button">${icon("eye")} Preview this unit</button></div></section>
         <div class="section-stack"><section class="panel"><span class="eyebrow">${escapeHtml(journey.eyebrow)}</span><h2>${escapeHtml(journey.heading)}</h2>${lectureJourneyList(journey)}</section><section class="panel"><h3>Words in this unit</h3><p>Explore ${escapeHtml(groups)} in the linked ${gradeLabel} dictionary.</p><button class="button primary" id="to-dictionary" type="button">Open vocabulary ${icon("arrow-right")}</button></section></div>
       </div>`;
-    $("#guided-launch-done").addEventListener("click", () => toast("Unit preview opened. Teacher lecture completion awaits the video."));
+    $("#guided-launch-done").addEventListener("click", () => toast("Unit preview opened. The video lesson is marked complete once the video is ready."));
     $("#to-dictionary").addEventListener("click", () => navigate("dictionary"));
     return;
   }

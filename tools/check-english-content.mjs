@@ -430,6 +430,19 @@ if (notes.length) {
 }
 
 // ── the baseline ────────────────────────────────────────────────────────────
+// The ceiling the "may only shrink" rule needs to actually be a rule. Without
+// it the promise was documentation: a fresh failure fails the build, and a
+// stale entry fails too, but --write-baseline regenerates the file wholesale
+// with no limit, so absorbing a new defect was one command away. The list went
+// 16 -> 25 -> 40 across three commits that way; some of that was the gate being
+// widened, and nine of it was new instances of a check that already existed.
+//
+// Raising this is legitimate exactly once per reason: when the gate itself gets
+// a NEW check and the pre-existing failures it finds have to be recorded before
+// the build can go green. Raise it in the same commit that widens the gate, and
+// say which check did it. Lowering it needs no ceremony — that is the direction
+// this number is supposed to travel.
+const MAXIMUM_KNOWN_FAILURES = 40;
 const baselinePath = path.join(root, "data", "content-gate-baseline.json");
 if (process.argv.includes("--write-baseline")) {
   fs.mkdirSync(path.dirname(baselinePath), { recursive: true });
@@ -460,6 +473,18 @@ if (fresh.length) {
   console.log(`\n✗ ${fresh.length} new english content failure(s):`);
   for (const message of fresh) console.log(`   FAIL  ${message}`);
 }
-if (fresh.length || fixed.length) process.exit(1);
+// Checked against the committed file, not against `failures`, so it catches a
+// baseline that was regenerated to swallow something as well as one edited by
+// hand. Running --write-baseline does not silence this: the next run reads the
+// bigger file and fails.
+let overCeiling = false;
+if (baseline.size > MAXIMUM_KNOWN_FAILURES) {
+  overCeiling = true;
+  console.log(`\n✗ the baseline holds ${baseline.size} known failures, above the ceiling of ${MAXIMUM_KNOWN_FAILURES}.`);
+  console.log("   This list may only shrink. If you widened the gate and the new check found");
+  console.log("   pre-existing defects, raise MAXIMUM_KNOWN_FAILURES in the same commit and name");
+  console.log("   the check. Otherwise fix the failure rather than recording it.");
+}
+if (fresh.length || fixed.length || overCeiling) process.exit(1);
 
 console.log(`\n✓ all english content checks pass${baseline.size ? ` (${baseline.size} known failure(s) still held in the baseline)` : ""}`);

@@ -289,7 +289,10 @@ function deck() {
       // replaces them with unbound copies. Re-binding is idempotent — the shell
       // marks a bound button with data-voiceBound — so this is safe to call on
       // every paint.
-      afterPaint: () => { bindVoiceControls(); updateVoiceUI(); },
+      // untabDeckHalf runs here too, not only after the first mount: a re-deck
+      // (the practice part filter) builds new slides and a new dot strip, and
+      // fresh controls arrive tabbable.
+      afterPaint: () => { bindVoiceControls(); updateVoiceUI(); untabDeckHalf(); },
     });
   }
   // Where a deck lands is decided by whoever is rendering, not by the eleven
@@ -310,33 +313,59 @@ function deck() {
 // reassigned #app.innerHTML and would have erased the deck below. Nothing here
 // repaints — the only in-place change a page makes is disabling its own done
 // button — so the original half can simply be dropped into the region.
-// A screen reader met this page as the lesson, then the lesson again, with
-// nothing between them saying so. A sighted learner never has that problem — the
-// second half is visibly a strip of slides under a heading that says "Slides,
-// the same lesson one part at a time" — so the information existed, it just was
-// not structure: an eyebrow <span> and a <p> convey nothing to a screen reader
-// about what the region below them IS.
+// Takes every control in the AT-hidden deck half out of the tab order.
 //
-// Naming the <section> is the whole fix. An unnamed <section> is a generic
-// container; a named one is a `region` landmark, so the deck half now announces
-// itself with the same sentence the page shows, and every screen reader offers
-// a single keystroke to jump over a landmark. The duplication stops being a
-// surprise and becomes a labelled alternative the learner can take or skip.
-// The name is the visible text verbatim, so what is heard matches what is read.
+// Has to run after every paint, not once: the deck rebuilds its slides and its
+// whole dot strip on setSlides (Stage 4 practice filters itself from 25
+// questions to 14), and replaces a single slide on redrawSlide. Each of those
+// mints fresh elements, and a fresh button is tabbable — so a learner who
+// filtered the practice deck would find the tab order quietly restored.
 //
-// Deliberately NOT `inert` or aria-hidden on this half. Both would end the
-// duplication outright, and the deck carries nothing the page above lacks — the
-// same Listen buttons over the same clips, and a finish button that settles the
-// page's own through markSectionDone. But neither attribute is assistive-tech
-// specific: `inert` would take the slides away from sighted keyboard users too,
-// and aria-hidden over focusable controls is its own defect. Removing a
-// deliberate feature from a whole class of learners is a product decision, and
-// this is not the place to make it silently.
+// Reads the region out of the DOM rather than taking it as an argument, because
+// the repaint callers are inside the deck and do not know what they are mounted
+// into. The aria-hidden attribute IS the condition: no hidden half, nothing to
+// do, so this is a no-op on any page that is not both-designs.
+function untabDeckHalf() {
+  const region = $("#app")?.querySelector('.deck-design[aria-hidden="true"]');
+  if (!region) return;
+  for (const control of region.querySelectorAll('a[href], button, select, textarea, input, [tabindex]:not([tabindex="-1"])')) {
+    control.setAttribute("tabindex", "-1");
+  }
+}
+
+// A both-designs page carries the section twice, and a screen reader met it as
+// the lesson and then the lesson again. The deck half is now hidden from
+// assistive tech outright: it is a second PRESENTATION of content already read
+// in full above, not second content. Nothing is lost by skipping it — measured
+// rather than assumed, the two halves carry the same six Listen buttons over
+// the same clips, and the deck's finish button already settles the page's own
+// through markSectionDone.
+//
+// This is a product decision, taken deliberately: the slides remain for mouse
+// and touch, and are gone for screen readers AND for sighted keyboard users,
+// who now meet the page half alone. That second group is the real cost, and it
+// is the reason this was not done as a side effect of an accessibility pass.
+//
+// `inert` would be the tidy one-attribute version and is WRONG here. Inert
+// blocks pointer events as well as focus and AT, so it would not hide the deck
+// from screen readers — it would delete the feature for everyone, mouse and
+// touch included. What is wanted is narrower, so it takes two things:
+//
+//   aria-hidden      removes the half from the accessibility tree, inherited by
+//                    everything inside it.
+//   tabindex="-1"    on every control in it. aria-hidden alone over focusable
+//                    controls is its own defect: Tab still lands there, and the
+//                    learner is now on something that announces nothing at all.
+//
+// The aria-label this section briefly carried is gone with it. A named section
+// is a `region` landmark, which was the point when the deck was still exposed
+// and skippable; on a hidden subtree the name is unreachable, and leaving dead
+// ARIA behind reads as an oversight.
 function renderBothDesigns(classic, deckRenderer, intro) {
   const app = $("#app");
   app.innerHTML = `<div class="both-designs">
       <div class="classic-design" id="classic-design">${classic()}</div>
-      <section class="deck-design" aria-label="Slides — ${escapeHtml(intro)}">
+      <section class="deck-design" aria-hidden="true">
         <div class="deck-design-head"><span class="eyebrow">Slides</span><p>${escapeHtml(intro)}</p></div>
         <div id="deck-design"></div>
       </section>
@@ -345,6 +374,7 @@ function renderBothDesigns(classic, deckRenderer, intro) {
   deckMount = "#deck-design";
   deckRenderer();
   deckMount = null;
+  untabDeckHalf();
   // The original half's Listen buttons were written as a string just now, so
   // they are not bound yet — the deck binds its own through afterPaint, and the
   // shell binds after a renderer returns, but this renderer painted twice.

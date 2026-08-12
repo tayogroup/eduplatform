@@ -27,6 +27,28 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 const reviewPath = path.join(here, "..", "src", "prototypes", "ehel-academy", "science", "data", "script-review.json");
 const write = process.argv.includes("--write");
 
+// Three overrides whose leading "1" is a question number even though it does
+// not match the item's index, so the general rule below refuses them — rightly,
+// because a lone leading number is exactly what "360 degrees divided by 24
+// hours" and "12 g + 8 g = 20 g" also look like.
+//
+// Each is listed only after being shown stale rather than guessed at, by the
+// test the earlier override repair used: rebuild with the overrides emptied and
+// compare. Their booklets print Section E as a clean run of five keys numbered
+// 1 to 5, the builder now strips that run, and rp01-rp05 in the same three
+// units already read cleanly — the number survived only because the reviewer's
+// workbook was exported before the builder was fixed, and the overlay is
+// applied last.
+//
+// An explicit list, not a wider regex: the guard that refuses these is the same
+// one protecting real answers that open with a figure, and loosening it to
+// catch three items would put those at risk.
+const STALE_NUMBERED_OVERRIDES = new Set([
+  "grade-4.unit-4.Real Problem.rp06.answer",
+  "grade-8.unit-5.Real Problem.rp06.answer",
+  "grade-8.unit-8.Real Problem.rp06.answer",
+]);
+
 const LEADING_NUMBER = /^\s*(\d+)[.)]?\s+(?=\S)/;
 // The number is only the question's if the field belongs to a numbered item and
 // the two agree. Worked examples are offset by one in some units (we02 carries
@@ -59,6 +81,10 @@ function walk(node, at) {
 function fix(text, where) {
   const lead = LEADING_NUMBER.exec(text);
   if (!lead) return text;
+  if (STALE_NUMBERED_OVERRIDES.has(where)) {
+    repaired.push(`${where}: "${text.slice(0, 56)}"   [listed as stale]`);
+    return text.replace(LEADING_NUMBER, "");
+  }
   const item = ITEM_INDEX.exec(where);
   // No numbered item in the path: this is a rule, a game round or a capstone
   // answer, where a leading number is content. Grade 7 Unit 5 answers "7 —

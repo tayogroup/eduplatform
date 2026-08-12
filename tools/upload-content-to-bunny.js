@@ -15,6 +15,7 @@
 //   (no args = every subject below)
 
 const fs = require("fs"), path = require("path"), crypto = require("crypto");
+const { requireTiersInStep } = require("./lib/require-tiers-in-step");
 const ROOT = path.resolve(__dirname, "..");
 const EHEL = path.join(ROOT, "src", "prototypes", "ehel-academy");
 const ZONE = "ehelacademy";
@@ -122,4 +123,15 @@ async function put(remote, buf) {
   await Promise.all(Array.from({ length: CONCURRENCY }, worker));
   save();
   console.log(`\n──────── done ──────── uploaded: ${done} | failed: ${failed} | manifest: ${Object.keys(manifest).length}`);
+
+  // A tier is only correct next to the others. On 2026-08-12 Mathematics shipped
+  // app v141 against content three weeks old: each side was internally
+  // consistent, and the join is what reached learners — the grading rule started
+  // requiring a question number the content had since dropped.
+  //
+  // Checked AFTER the upload, not before. Before a deploy the local tree is
+  // supposed to be ahead of the CDN, so a pre-flight version of this would fail
+  // on every legitimate release. Afterwards, a split means the operator is not
+  // finished, and the exit code says so while the upload itself stands.
+  if (!failed) requireTiersInStep(subjectList);
 })();

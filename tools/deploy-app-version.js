@@ -28,6 +28,7 @@
 //   e.g. BUNNY_KEY=… node tools/deploy-app-version.js v111 --shell english
 
 const fs = require("fs"), path = require("path"), crypto = require("crypto");
+const { requireTiersInStep } = require("./lib/require-tiers-in-step");
 const ROOT = path.resolve(__dirname, "..");
 const EHEL = path.join(ROOT, "src", "prototypes", "ehel-academy");
 const ZONE = "ehelacademy";
@@ -471,4 +472,9 @@ async function verifyRelease(items) {
   } else if (VERIFY) {
     console.log(`\nSkipping --verify: ${failed} upload(s) failed, so a 404 would not tell you anything.`);
   }
+
+  // --verify proves the release is SERVED. It cannot tell whether the content
+  // that code reads was shipped with it, and that gap is what reached learners
+  // on 2026-08-12: v141 verified perfectly against three-week-old content.
+  if (!failed) requireTiersInStep(SUBJECTS);
 })();

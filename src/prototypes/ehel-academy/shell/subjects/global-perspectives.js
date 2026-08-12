@@ -310,11 +310,33 @@ function deck() {
 // reassigned #app.innerHTML and would have erased the deck below. Nothing here
 // repaints — the only in-place change a page makes is disabling its own done
 // button — so the original half can simply be dropped into the region.
+// A screen reader met this page as the lesson, then the lesson again, with
+// nothing between them saying so. A sighted learner never has that problem — the
+// second half is visibly a strip of slides under a heading that says "Slides,
+// the same lesson one part at a time" — so the information existed, it just was
+// not structure: an eyebrow <span> and a <p> convey nothing to a screen reader
+// about what the region below them IS.
+//
+// Naming the <section> is the whole fix. An unnamed <section> is a generic
+// container; a named one is a `region` landmark, so the deck half now announces
+// itself with the same sentence the page shows, and every screen reader offers
+// a single keystroke to jump over a landmark. The duplication stops being a
+// surprise and becomes a labelled alternative the learner can take or skip.
+// The name is the visible text verbatim, so what is heard matches what is read.
+//
+// Deliberately NOT `inert` or aria-hidden on this half. Both would end the
+// duplication outright, and the deck carries nothing the page above lacks — the
+// same Listen buttons over the same clips, and a finish button that settles the
+// page's own through markSectionDone. But neither attribute is assistive-tech
+// specific: `inert` would take the slides away from sighted keyboard users too,
+// and aria-hidden over focusable controls is its own defect. Removing a
+// deliberate feature from a whole class of learners is a product decision, and
+// this is not the place to make it silently.
 function renderBothDesigns(classic, deckRenderer, intro) {
   const app = $("#app");
   app.innerHTML = `<div class="both-designs">
       <div class="classic-design" id="classic-design">${classic()}</div>
-      <section class="deck-design">
+      <section class="deck-design" aria-label="Slides — ${escapeHtml(intro)}">
         <div class="deck-design-head"><span class="eyebrow">Slides</span><p>${escapeHtml(intro)}</p></div>
         <div id="deck-design"></div>
       </section>

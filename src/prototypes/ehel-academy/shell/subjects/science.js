@@ -234,6 +234,15 @@ function deckVoiceSmall(text, label = "Listen") {
 
 // Answer checking is one rule, in one place, for both designs and both halves.
 //
+// That sentence was written before it was true. Discovery, the explorations and
+// Real Problems were moved onto this function; Guided Practice kept its own copy
+// of the old rule in BOTH designs, and so did the Fluency sprint. Three sites,
+// 1,272 answers — every practice and every fluency item in the course — went on
+// accepting a single character while the function that fixed it sat in the same
+// file. Writing "one rule, in one place" is not the same as having one, and the
+// grep that proves it costs a second: there must be no `includes(response)` or
+// `includes(expected)` anywhere below.
+//
 // The grids' rule was "a response counts when it matches the reviewed answer, or
 // either contains the other", and the deck copied it faithfully. Raw substring
 // containment is what made it wrong: every expected answer in this course is a
@@ -901,9 +910,7 @@ function renderPracticeClassic() {
     ${levels.map((level) => `<section class="section-stack" style="margin-bottom:24px"><h2>${escapeHtml(level)}</h2><div class="task-grid">${course.practice.filter((item) => item.level === level).map((item) => `<article class="panel question-card"><label for="answer-${item.id}">${escapeHtml(item.prompt)}</label>${voiceButton(item.prompt, "Listen to question")}<input id="answer-${item.id}" autocomplete="off" placeholder="Type your answer or working notes"><div class="question-actions"><button class="button primary" data-check="${item.id}" type="button">Check my answer</button><button class="button secondary" data-hint="${item.id}" type="button">Give me a hint</button><button class="button secondary" data-answer="${item.id}" type="button">Show next step</button></div><div id="feedback-${item.id}" aria-live="polite"></div></article>`).join("")}</div></section>`).join("")}`;
   $$('[data-check]').forEach((button) => button.addEventListener("click", () => {
     const item = course.practice.find((candidate) => candidate.id === button.dataset.check);
-    const response = $(`#answer-${item.id}`).value.trim().toLowerCase().replace(/\s+/g," ");
-    const expected = item.answer.toLowerCase();
-    const correct = response && (expected.includes(response) || response.includes(expected));
+    const correct = answerMatches($(`#answer-${item.id}`).value, item.answer);
     $(`#feedback-${item.id}`).innerHTML = `<p class="feedback ${correct ? "good" : "try"}"><span class="status-note">${correct ? "Correct reasoning!" : "Not yet."}</span> ${correct ? escapeHtml(item.answer) : `Your response does not match the reviewed guidance yet. ${escapeHtml(item.hint)} Try representing the idea in a simpler way first.`}</p>`;
     if (correct && !progress.practiceOpened.includes(item.id)) { progress.practiceOpened.push(item.id); saveProgress(); }
     if (progress.practiceOpened.length === course.practice.length) complete("guided", "Guided Practice complete.");
@@ -973,9 +980,7 @@ function renderPracticeDeck() {
       if (target.dataset.answer) {
         return setSlideBox(key, `<p class="feedback try"><span class="field-label">Next step:</span> ${esc(item.hint)} Do that step, then check your answer again.</p>`);
       }
-      const response = slideValue(key).toLowerCase().replace(/\s+/g, " ");
-      const expected = item.answer.toLowerCase();
-      const correct = Boolean(response) && (expected.includes(response) || response.includes(expected));
+      const correct = answerMatches(slideValue(key), item.answer);
       setSlideBox(key, `<p class="feedback ${correct ? "good" : "try"}"><span class="status-note">${correct ? "Correct reasoning!" : "Not yet."}</span> ${correct ? esc(item.answer) : `Your response does not match the reviewed guidance yet. ${esc(item.hint)} Try representing the idea in a simpler way first.`}</p>`);
       if (correct && !opened.has(item.id)) {
         opened.add(item.id);
@@ -1284,9 +1289,7 @@ function renderFluency() {
   const draw = () => { $("#fluency-position").textContent=`${index+1}/${items.length}`; $("#fluency-question").textContent=items[index].prompt; $("#fluency-answer").value=""; $("#fluency-answer").focus(); };
   $("#check-fluency").addEventListener("click", () => {
     if (!startedAt) startedAt = Date.now();
-    const response = $("#fluency-answer").value.trim().toLowerCase();
-    const expected = items[index].answer.toLowerCase();
-    const correct = response && (response===expected || expected.includes(response) || response.includes(expected));
+    const correct = answerMatches($("#fluency-answer").value, items[index].answer);
     if (correct) score += 1;
     $("#fluency-score").textContent=score;
     $("#fluency-feedback").innerHTML=`<p class="feedback ${correct?'good':'try'}"><span class="status-note">${correct?'Correct!':'Review:'}</span> ${escapeHtml(correct?items[index].answer:items[index].hint)}</p>`;

@@ -11,9 +11,15 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { reportLastTouch } from "./lib/subject-last-touch.mjs";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const mathRoot = path.join(here, "..", "src", "prototypes", "ehel-academy", "mathematics");
+
+// First line of the first check in `npm run check:math`, so it is seen on every
+// run. Six sessions hold six subjects and share one git identity; this says who
+// last wrote here, which is the only part git can answer.
+reportLastTouch("mathematics");
 
 // How much learner-facing teaching a concept must carry.
 //

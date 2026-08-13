@@ -156,6 +156,35 @@ function liveTag(subject) {
   return best === null ? null : `v${best}`;
 }
 
+// The lowest tag no subject has ever written, so nobody has to find out by
+// fetching one.
+//
+// Asking the CDN "is v149 free?" is the single most expensive question in this
+// repo. Edge Rule #1 puts a 1-year override on */app/*/v and Bunny applies it to
+// a 404 as readily as a 200, so the probe CREATES a version path that answers
+// 404 for a year — and deploy-app-version.js says so directly above --verify.
+// Two sessions did it anyway on 2026-08-12, four times between them, against
+// v147 through v149. Nothing has surfaced, but a poisoned POP stays poisoned and
+// neither could prove otherwise, because there is no purge credential in .env.
+//
+// Deliberately GLOBAL, not per subject. A release names subjects and writes
+// app/{subject}/{TAG}/ for each, and those paths are immutable — so a tag is
+// only free if it is free EVERYWHERE. Mathematics sits on v141 and English on
+// v149; suggesting v142 because maths has not used it would hand the operator a
+// path English wrote months ago and cached for a year.
+//
+// Read from the manifest, so it only knows releases made from this checkout. A
+// release from another machine would not be recorded, which is why this is
+// printed as the floor to go above rather than the answer.
+function nextFreeTag() {
+  let highest = 0;
+  for (const key of Object.keys(appManifest || {})) {
+    const m = key.match(/^app\/[a-z-]+\/v(\d+)\//);
+    if (m && Number(m[1]) > highest) highest = Number(m[1]);
+  }
+  return highest ? `v${highest + 1}` : null;
+}
+
 // Is the deployed subject module built from the code in the working tree?
 function appState(subject) {
   if (!appManifest) return { known: false, why: "no .bunny-appver-manifest.json — nothing released from this checkout" };
@@ -289,6 +318,12 @@ for (const subject of subjects) {
   if (!contentStale && !contentNew && !audioMissing && !(app.known && app.stale !== contentBehind)) {
     console.log(`  ✓ app${app.known ? ` (${app.tag})` : ""}, content${narration ? ", audio" : ""} — all in step${narration ? "" : " (audio not covered by this tick)"}`);
   }
+}
+
+const free = nextFreeTag();
+if (free) {
+  console.log(`\nnext free release tag: ${free}  (nothing has written it; use this instead of asking the CDN,`);
+  console.log("                       which caches a 404 on a version path for a year and cannot be purged)");
 }
 
 if (failed) {

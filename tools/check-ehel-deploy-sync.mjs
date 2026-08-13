@@ -246,7 +246,14 @@ for (const subject of subjects) {
 
   console.log(`  content  : ${contentOk} in sync, ${contentStale} stale, ${contentNew} never uploaded`);
   console.log(`  app      : ${app.known ? `${app.tag} ${app.stale ? "behind the working tree" : "matches the working tree"}` : `not checked — ${app.why}`}`);
-  console.log(`  audio    : ${narration ? `${audioOk} deployed, ${audioMissing} missing` : "not checked — clips here are named by item id, not by a hash of the text"}`);
+  // Naming the tool that DOES cover it, not just the reason this one cannot.
+  // Both audio incidents this week were English, and a reader who sees the tick
+  // below can reasonably take it for a statement about clips unless the line
+  // says where to go instead.
+  const AUDIO_ELSEWHERE = "python tools/check-english-audio-staleness.py";
+  console.log(`  audio    : ${narration
+    ? `${audioOk} deployed, ${audioMissing} missing`
+    : `not checked here — clips are named by item id, not by a hash of the text. Run: ${AUDIO_ELSEWHERE}`}`);
   if (narration) console.log(`  orphaned : ${orphaned} clip(s) on the CDN no current text can request`);
   for (const e of staleExamples) console.log(`    ${e}`);
   for (const e of missingExamples) console.log(`    missing: ${e}`);
@@ -280,7 +287,7 @@ for (const subject of subjects) {
     failed = true;
   }
   if (!contentStale && !contentNew && !audioMissing && !(app.known && app.stale !== contentBehind)) {
-    console.log(`  ✓ app${app.known ? ` (${app.tag})` : ""}, content${narration ? ", audio" : ""} — all in step`);
+    console.log(`  ✓ app${app.known ? ` (${app.tag})` : ""}, content${narration ? ", audio" : ""} — all in step${narration ? "" : " (audio not covered by this tick)"}`);
   }
 }
 

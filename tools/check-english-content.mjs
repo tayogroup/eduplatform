@@ -46,6 +46,7 @@
 
 import fs from "node:fs";
 import path from "node:path";
+import { execFileSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
@@ -204,6 +205,46 @@ function resolveAsset(source, gradeDir) {
   if (/^\.\.?\//.test(clean)) return path.join(root, gradeDir, clean);
   return null; // absolute or remote — not ours to check
 }
+
+// ── who last touched this subject ───────────────────────────────────────────
+// Printed first, before any check runs, because the thing it answers is not a
+// content question: it is "did somebody else change English while I was working
+// on it".
+//
+// Every session in this repo commits as the same git identity, so `git log`
+// cannot say WHICH session made a change — only that one was made, and when.
+// That turned out to matter. Four commits have touched this file; three are
+// from the session that wrote it and the fourth is from neither of the two
+// sessions that later discussed it, and nobody noticed until a hand-written
+// note crossed between sessions days later. In the same window something
+// renamed English's lecture nav, rewrote nine Grade 2 units, and edited two
+// other subjects' modules. All of it was fine; none of it was visible.
+//
+// One `git log -1` (~140 ms) turns "found out from a note, afterwards" into
+// "found out from the gate, immediately". It cannot PREVENT a collision —
+// nothing can, with one shared identity and no locking — so it deliberately
+// holds no state, compares against nothing and never fails the build. It just
+// says who was here last, and lets the reader notice it was not them.
+//
+// Scoped to English's own paths. Shared modules (wehel.js, course-app.js,
+// deck.js) are left out on purpose: they change for every subject's reasons,
+// so including them would make this line fire constantly and mean nothing.
+function printLastTouch() {
+  const paths = [
+    "src/prototypes/ehel-academy/english",
+    "src/prototypes/ehel-academy/shell/subjects/english.js",
+    "tools/check-english-content.mjs",
+  ];
+  try {
+    const out = execFileSync("git", ["log", "-1", "--format=%h  %ci  %s", "--", ...paths],
+      { cwd: path.join(here, ".."), encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] }).trim();
+    if (out) console.log(`last commit touching english: ${out}\n`);
+  } catch {
+    // No git, a shallow clone, or an exported tree. This is context, not a
+    // check — a gate that fails because it could not gossip would be absurd.
+  }
+}
+printLastTouch();
 
 const grades = fs.readdirSync(root)
   .filter((name) => /^grade-[1-8]$/.test(name))

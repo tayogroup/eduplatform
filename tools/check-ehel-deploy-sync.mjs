@@ -47,6 +47,7 @@ import path from "node:path";
 import crypto from "node:crypto";
 import { fileURLToPath } from "node:url";
 import { createRequire } from "node:module";
+import { spawnSync } from "node:child_process";
 
 const require = createRequire(import.meta.url);
 // The media manifest's shape is owned by tools/lib/upload-manifest.js. Reading
@@ -147,22 +148,52 @@ function deployedMatches(remote, buf) {
 // production, and it is the only combination that fails here.
 //
 // The uploaded bytes are not the file on disk — deploy-app-version.js rewrites
-// each module's imports for the deployed layout — so the transform is sliced
-// out of that script rather than copied. A copy would be free to drift from the
-// deployer, and then this check would compare against bytes nobody ships.
+// each module's imports for the deployed layout — so the deployer is ASKED what
+// a release contains rather than the answer being reproduced here. A second
+// description of a release is free to drift from the one that ships.
+//
+// This used to compare exactly one file, app/{subject}/{tag}/course-ui.js, and
+// report the whole app tier on it. A release ships fifteen or sixteen. Every
+// other member — course-ui.css, course-app.js, word-pictures.js, lesson-gate.js,
+// grammar-visuals.js, brand-fx.js, seb-session.js — was outside the question, so
+// a change to any of them left the tier reading "matches the working tree".
+//
+// That is not hypothetical. On 2026-08-14 a one-line stylesheet fix sat
+// unreleased while this printed `app: v152 matches the working tree`: the
+// "Hear the overview" button was rendering white on white, and the tier that
+// would have said so was looking at a file the fix did not touch. The failure
+// mode is the same one this file already carries twice — a tick standing over
+// something never compared — and it was the least visible of the three, because
+// unlike the audio line it did not even disclose the omission.
 const appManifest = fs.existsSync(APP_MANIFEST) ? JSON.parse(fs.readFileSync(APP_MANIFEST, "utf8")) : null;
 
-function loadSubjectModuleTransform() {
-  if (!fs.existsSync(APP_DEPLOYER)) return null;
-  const src = fs.readFileSync(APP_DEPLOYER, "utf8");
-  const from = src.indexOf("function shellSubjectModule(");
-  if (from < 0) return null;
-  const to = src.indexOf("\n}", from) + 2;
-  if (to < 2) return null;
-  // fs/path/EHEL are the only things it closes over.
-  return new Function("fs", "path", "EHEL", `${src.slice(from, to)}\nreturn shellSubjectModule;`)(fs, path, EHEL);
+// Ask the deployer to enumerate the release and hash every byte stream it would
+// write. Runs it in --plan-json, which uploads nothing and needs no BUNNY_KEY,
+// so this stays an offline check.
+function releasePlan(subject, tag) {
+  if (!fs.existsSync(APP_DEPLOYER)) return { ok: false, why: "deploy-app-version.js is not in tools/" };
+  // course-app.js only reaches a version path in --shell mode, so its presence
+  // in the manifest is how the release itself says which mode built it. Every
+  // subject ships --shell today; reading it back rather than assuming keeps this
+  // honest if one ever does not.
+  const wasShell = Object.prototype.hasOwnProperty.call(appManifest, `app/${subject}/${tag}/course-app.js`);
+  const args = [APP_DEPLOYER, tag, ...(wasShell ? ["--shell"] : []), "--plan-json", subject];
+  const run = spawnSync(process.execPath, args, { encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
+  if (run.error) return { ok: false, why: `could not run deploy-app-version.js --plan-json (${run.error.message})` };
+  if (run.status !== 0) {
+    const first = (run.stderr || run.stdout || "").trim().split("\n")[0] || `exit ${run.status}`;
+    return { ok: false, why: `deploy-app-version.js --plan-json failed: ${first}` };
+  }
+  try {
+    const parsed = JSON.parse(run.stdout);
+    if (!Array.isArray(parsed.items)) throw new Error("no items");
+    return { ok: true, items: parsed.items };
+  } catch {
+    // Never fall back to comparing one file. A quieter check that silently
+    // narrows to course-ui.js is precisely the state this replaced.
+    return { ok: false, why: "deploy-app-version.js --plan-json did not return a plan — re-point this check rather than dropping it" };
+  }
 }
-const shellSubjectModule = loadSubjectModuleTransform();
 
 // The release a subject is on, read from the manifest rather than the network so
 // this stays an offline check. The highest recorded tag is the live one: a
@@ -205,17 +236,33 @@ function nextFreeTag() {
   return highest ? `v${highest + 1}` : null;
 }
 
-// Is the deployed subject module built from the code in the working tree?
+// Is EVERY file of the deployed release built from the code in the working tree?
 function appState(subject) {
   if (!appManifest) return { known: false, why: "no .bunny-appver-manifest.json — nothing released from this checkout" };
-  if (!shellSubjectModule) return { known: false, why: "could not read shellSubjectModule() out of deploy-app-version.js — re-point this check rather than dropping it" };
   const tag = liveTag(subject);
   if (!tag) return { known: false, why: "no versioned release recorded for this subject" };
-  const remote = `app/${subject}/${tag}/course-ui.js`;
-  const recorded = appManifest[remote];
-  if (!recorded) return { known: false, why: `${remote} is not in the manifest` };
-  const built = Buffer.from(shellSubjectModule(subject), "utf8");
-  return { known: true, tag, stale: sha1(built) !== recorded };
+  const plan = releasePlan(subject, tag);
+  if (!plan.ok) return { known: false, why: plan.why };
+
+  const differing = [];
+  let compared = 0;
+  for (const item of plan.items) {
+    // The pointer files carry the version rather than the code — index.html and
+    // current.json are rewritten every release by definition, so comparing them
+    // would report every subject as permanently behind.
+    if (item.pointer) continue;
+    // Only the immutable version path. app/{subject}/shared/grade-redirect.js
+    // and app/shared/ live outside it deliberately and are not what this tag
+    // pins; a partial --shell release does not even write app/shared/.
+    if (!item.remote.includes(`/${tag}/`)) continue;
+    compared += 1;
+    if (appManifest[item.remote] !== item.sha1) differing.push(item.remote);
+  }
+  // A plan that matched nothing is not agreement. It means the release was
+  // recorded under paths this plan does not name, and comparing zero files
+  // while printing a tick is the whole defect being fixed here.
+  if (!compared) return { known: false, why: `no ${tag} file from the release plan is in the manifest — nothing could be compared` };
+  return { known: true, tag, stale: differing.length > 0, compared, differing };
 }
 
 let failed = false;
@@ -294,7 +341,12 @@ for (const subject of subjects) {
   const vacuous = uploadedHere > 0 && contentOk + contentStale + contentNew === 0;
 
   console.log(`  content  : ${contentOk} in sync, ${contentStale} stale, ${contentNew} never uploaded`);
-  console.log(`  app      : ${app.known ? `${app.tag} ${app.stale ? "behind the working tree" : "matches the working tree"}` : `not checked — ${app.why}`}`);
+  // Say how many files the verdict covers. "matches the working tree" over one
+  // file and over sixteen read identically, and for a long time it was one.
+  console.log(`  app      : ${app.known
+    ? `${app.tag} ${app.stale ? `behind the working tree in ${app.differing.length} of ${app.compared} file(s)` : `matches the working tree`} (${app.compared} file(s) compared)`
+    : `not checked — ${app.why}`}`);
+  for (const remote of app.differing || []) console.log(`    behind: ${remote}`);
   // Naming the tool that DOES cover it, not just the reason this one cannot.
   // Both audio incidents this week were English, and a reader who sees the tick
   // below can reasonably take it for a statement about clips unless the line

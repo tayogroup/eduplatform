@@ -21,6 +21,10 @@
 //             the edge does not serve it (catches a version path poisoned by a
 //             cached 404 — see docs/bunny-cache-config.md). Recommended always.
 //   --dry     print the remote paths a release would write, and exit.
+//   --plan-json  print {tag, shell, items:[{remote, sha1, pointer}]} and exit,
+//             uploading nothing. Machine-readable twin of --dry; needs no
+//             BUNNY_KEY. This is what check-ehel-deploy-sync.mjs reads to learn
+//             which files a release contains.
 //   default tag: v1. Name one or more subjects (english mathematics science
 //   computing) to release only those and leave the rest on their current version;
 //   omit for all. A one-subject --shell release also skips app/shared/, since
@@ -56,6 +60,22 @@ const argv = process.argv.slice(2);
 // uploading. Worth having: this tool's whole job is which path a file lands on,
 // and until now the only way to see that was to run a real deploy.
 const DRY = argv.includes("--dry");
+// --plan-json prints WHAT a release contains and the sha1 of every byte stream it
+// would write, then exits. It exists so check-ehel-deploy-sync.mjs can ask this
+// tool what a version path holds instead of re-deriving the list itself.
+//
+// That check used to compare a single file — app/{subject}/{tag}/course-ui.js —
+// and report the whole app tier as matching on the strength of it. A release
+// ships fifteen. So a change to course-ui.css, word-pictures.js, lesson-gate.js
+// or any other member was invisible to it, and on 2026-08-14 it reported English
+// "in step" while an unreleased stylesheet fix sat in the tree. Nothing was
+// wrong with the file it did check; everything it did not check was simply
+// absent from the question.
+//
+// Emitted from buildItems() rather than from a list kept over there, because a
+// second description of a release is a description free to drift from the one
+// that ships.
+const PLAN_JSON = argv.includes("--plan-json");
 // --verify re-reads the release back THROUGH THE CDN once every file is up, and
 // fails if the edge does not serve what storage now holds. It exists because a
 // successful upload does not mean a served release: Edge Rule #1 puts a 1-year
@@ -67,7 +87,7 @@ const DRY = argv.includes("--dry");
 // thing that causes the fault — which is why this is a flag on the deploy rather
 // than a script anyone would be tempted to run first.
 const VERIFY = argv.includes("--verify");
-if (!KEY && !DRY) { console.error("BUNNY_KEY not set (use --dry to preview without uploading)"); process.exit(1); }
+if (!KEY && !DRY && !PLAN_JSON) { console.error("BUNNY_KEY not set (use --dry to preview without uploading)"); process.exit(1); }
 const TAG = (argv.find((a) => /^v\d+$/.test(a))) || "v1";
 // Optional subject filter: name one or more subjects to release only those. The
 // release pointer is already per-subject (app/{subject}/index.html + current.json),
@@ -450,6 +470,15 @@ async function verifyRelease(items) {
   // one line rather than a stack trace, and before anything has been uploaded.
   try { all = buildItems(); }
   catch (e) { console.error(e.message); process.exit(1); }
+  // Before any human-readable line, so stdout is parseable on its own.
+  if (PLAN_JSON) {
+    process.stdout.write(JSON.stringify({
+      tag: TAG,
+      shell: SHELL,
+      items: all.map((x) => ({ remote: x.remote, sha1: sha1(x.buf), pointer: !!x.always })),
+    }) + "\n");
+    return;
+  }
   const todo = all.filter((x) => x.always || manifest[x.remote] !== sha1(x.buf));
   console.log(`tag: ${TAG} | subjects: ${SUBJECTS.join(",")}${PARTIAL ? ` (partial release — ${ALL_SUBJECTS.filter((s) => !SUBJECTS.includes(s)).join(",")} left on their current version)` : " (all)"}${SHELL ? " | shell" : ""}`);
   console.log(`items: ${all.length} | to upload: ${todo.length} (${todo.filter((x) => x.always).length} pointer files always sent)`);

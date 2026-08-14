@@ -405,7 +405,12 @@ body.focus-mode.gc-full .wc-tools { position: fixed; left: 0; right: 0; bottom: 
 .button.primary { background: var(--teal); color: white; }
 .button.primary:hover { background: var(--teal-dark); }
 .button.gold { background: var(--gold); color: #17324d; }
-.button.secondary { background: white; border: 1px solid var(--line); }
+/* The colour is not optional. buttons are `color: inherit`, so a secondary
+   button takes its text colour from whatever it sits in — and .banner-copy
+   paints its contents white for the dark hero. That made "Hear the overview"
+   white on white: present, clickable, and completely unreadable. Every sibling
+   here already declares its own colour; this one was the omission. */
+.button.secondary { background: white; color: var(--ink); border: 1px solid var(--line); }
 .button.ghost { background: transparent; color: var(--teal); }
 .button:disabled { opacity: .48; cursor: not-allowed; }
 .panel { min-width: 0; background: white; border: 1px solid var(--line); border-radius: 8px; padding: 22px; }

@@ -1022,7 +1022,9 @@ $receiptsent = pqhi_send_intake_receipt(
     (int)$requestid,
     0,
     pqhi_intake_language(pqpirl_value($form, 'primary_language')),
-    $extrachildren
+    $extrachildren,
+    // Their timezone, not the site's -- see public_intake.php.
+    pqpirl_value($form, 'timezone')
 );
 pqpirl_security_audit('public_intake_submitted', [
     'requestid' => (int)$requestid,

@@ -921,7 +921,7 @@ function pqhi_intake_language(string $primarylanguage): string {
  * so a family that enrolled three children gets one receipt listing three --
  * not three near-identical emails, which reads as a bug rather than a service.
  */
-function pqhi_send_intake_receipt(?stdClass $consumer, string $toemail, string $parentname, string $studentname, int $requestid, int $submitted = 0, string $lang = 'en', array $extrachildren = []): bool {
+function pqhi_send_intake_receipt(?stdClass $consumer, string $toemail, string $parentname, string $studentname, int $requestid, int $submitted = 0, string $lang = 'en', array $extrachildren = [], string $timezone = ''): bool {
     $to = pqhi_public_email_recipient($toemail, $parentname);
     if (!$to) {
         return false;
@@ -932,6 +932,23 @@ function pqhi_send_intake_receipt(?stdClass $consumer, string $toemail, string $
     }
     $submitted = $submitted > 0 ? $submitted : time();
     $so = $lang === 'so';
+
+    // The recipient has no Moodle account -- pqhi_public_email_recipient() builds
+    // a pseudo-user with id -1 -- so userdate() falls back to the SITE timezone.
+    // That printed a US clock to a family in Mogadishu: a receipt stamped
+    // "6:31 PM" that arrived at 1:31 AM. The form already asks which timezone
+    // they are in, so use theirs, and name it, because an unlabelled time is
+    // what made the first one ambiguous. An empty or unrecognised value falls
+    // back to Moodle's own resolution rather than guessing at one.
+    $tz = trim($timezone);
+    if ($tz !== '') {
+        try {
+            new DateTimeZone($tz);
+        } catch (Exception $e) {
+            $tz = '';
+        }
+    }
+    $when = $tz !== '' ? userdate($submitted, '', $tz) . ' (' . $tz . ')' : userdate($submitted);
     $student = trim($studentname) !== '' ? trim($studentname) : ($so ? 'ilmahaaga' : 'your child');
     $firstname = (string)preg_split('/\s+/', $student)[0];
 
@@ -981,7 +998,7 @@ function pqhi_send_intake_receipt(?stdClass $consumer, string $toemail, string $
         ], $ledelines, [
             '',
         ], $refblock, [
-            '  La diray:  ' . userdate($submitted),
+            '  La diray:  ' . $when,
             '',
             'Kooxdeennu way eegi doontaa, waxayna kuula soo laaban doontaa dhawaan.',
             'Waxba kama baahnid inaad samayso inta u dhaxaysa.',
@@ -1006,7 +1023,7 @@ function pqhi_send_intake_receipt(?stdClass $consumer, string $toemail, string $
         ], $ledelines, [
             '',
         ], $refblock, [
-            '  Submitted: ' . userdate($submitted),
+            '  Submitted: ' . $when,
             '',
             'Our team will review it and come back to you shortly. There is nothing you',
             'need to do in the meantime.',

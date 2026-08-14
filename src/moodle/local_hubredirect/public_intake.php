@@ -1664,7 +1664,11 @@ foreach ([
             (int)$requestid,
             $now,
             pqhi_intake_language(pqpir_value($form, 'primary_language')),
-            $extrachildren
+            $extrachildren,
+            // Their timezone, not the site's -- the receipt goes to someone with
+            // no Moodle account, so userdate() would otherwise stamp it in the
+            // server's zone and print a US clock to a family in Mogadishu.
+            pqpir_value($form, 'timezone')
         );
         pqpir_security_audit('public_intake_submitted', [
             'requestid' => (int)$requestid,

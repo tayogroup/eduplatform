@@ -213,19 +213,33 @@ export function outlineFromManifest(manifest) {
 // user/assistant alternation, and a failed exchange can leave two learner
 // messages in a row in the stored transcript.
 function apiMessages(stored) {
+  // A canned offline hint is not Wehel's answer — the bubble says so in
+  // words. Sending it as an assistant turn made the model ADOPT it: it would
+  // resume the hint's off-topic mini-lesson ("day" for "birthday") instead
+  // of the learner's next question, so one hiccup poisoned every later turn.
+  //
+  // The QUESTION the hint answered goes with it. Leaving it in strands an
+  // answerless user turn that merges into the learner's next question, and
+  // the model then answers a backlog in written order — "Three good
+  // questions!" to a learner who asked one, with the real question served
+  // last. On screen that exchange already completed (the hint said "ask
+  // again in a moment"); if the learner still cares, they will re-ask.
+  const recent = stored.slice(-HISTORY_LIMIT);
+  const skip = new Set();
+  recent.forEach((item, index) => {
+    if (!item.offline) return;
+    skip.add(index);
+    if (index > 0 && recent[index - 1].role === "user") skip.add(index - 1);
+  });
   const merged = [];
-  for (const item of stored.slice(-HISTORY_LIMIT)) {
-    // A canned offline hint is not Wehel's answer — the bubble says so in
-    // words. Sending it as an assistant turn made the model ADOPT it: it would
-    // resume the hint's off-topic mini-lesson ("day" for "birthday") instead
-    // of the learner's next question, so one hiccup poisoned every later turn.
-    if (item.offline) continue;
+  recent.forEach((item, index) => {
+    if (skip.has(index)) return;
     const role = item.role === "assistant" ? "assistant" : "user";
     const content = String(item.text || "").trim();
-    if (!content) continue;
+    if (!content) return;
     if (merged.length && merged[merged.length - 1].role === role) merged[merged.length - 1].content += `\n${content}`;
     else merged.push({ role, content });
-  }
+  });
   while (merged.length && merged[0].role !== "user") merged.shift();
   return merged;
 }

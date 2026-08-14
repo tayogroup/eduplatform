@@ -7,7 +7,7 @@
 // Usage: BUNNY_KEY=… node tools/upload-media-to-bunny.js [english|mathematics|science|computing]…
 //   (no subject args = all four)
 
-const fs = require("fs"), path = require("path");
+const fs = require("fs"), path = require("path"), crypto = require("crypto");
 const ROOT = path.resolve(__dirname, "..");
 const EHEL = path.join(ROOT, "src", "prototypes", "ehel-academy");
 const ZONE = "ehelacademy";
@@ -167,14 +167,59 @@ async function put(remote, buf) {
   if (!r.ok && r.status !== 201) throw new Error(`${r.status} ${(await r.text()).slice(0, 120)}`);
 }
 
+// What the manifest remembers about a file it has sent.
+//
+// It used to be a flat LIST of remote paths, which records that a path was
+// uploaded once and nothing about what was in it. Most subjects name a clip by
+// a hash of its narration text, so changed text mints a new filename and the
+// list is adequate. English names clips for their content
+// (u1-g1-1-coal-sentence-1.mp3), so a RE-RECORDING KEEPS ITS FILENAME — the path
+// is already in the list, the uploader skips it, and the run reports success
+// while leaving the old audio live.
+//
+// That is not hypothetical. 4,831 English clips were repaired on 2026-08-06 and
+// none of them reached the CDN; production served pre-repair audio for weeks,
+// every local check passed (they compare the repo against the repo), and the
+// mismatch was found by a person listening to a vocabulary example. The manifest
+// asserted the opposite the entire time. It had already cost 853 stale clips
+// once before.
+//
+// So the manifest now stores path -> sha1 of the bytes sent, and a file is
+// skipped only when the hash still matches. This is what
+// .bunny-content-manifest.json has always done, which is why the content
+// uploader has never had this bug.
+//
+// MIGRATION: a legacy array is read as "uploaded, contents unknown". Unknown is
+// not a match, so those files upload once more and gain a hash. That means the
+// first run per subject after this change re-sends that subject's tree — a
+// bounded, one-time cost, and the honest one: the alternative is trusting a
+// claim the manifest cannot support, which is the whole defect. There is
+// deliberately no --trust-legacy flag; it would reintroduce exactly that.
+function readManifest() {
+  if (!fs.existsSync(MANIFEST)) return {};
+  const raw = JSON.parse(fs.readFileSync(MANIFEST, "utf8"));
+  if (!Array.isArray(raw)) return raw;
+  return Object.fromEntries(raw.map((remote) => [remote, null]));
+}
+const sha1 = (buf) => crypto.createHash("sha1").update(buf).digest("hex");
+
 (async () => {
-  const manifest = fs.existsSync(MANIFEST) ? new Set(JSON.parse(fs.readFileSync(MANIFEST, "utf8"))) : new Set();
+  const manifest = readManifest();
   const all = buildList();
-  const todo = all.filter((x) => !manifest.has(x.remote));
+  // Hashing reads every selected file once. On the English tree that is ~17k
+  // files and a couple of seconds — cheap against the upload it gates, and the
+  // only way to know whether a same-named file has changed.
+  for (const item of all) item.hash = sha1(fs.readFileSync(item.local));
+  const todo = all.filter((x) => manifest[x.remote] !== x.hash);
+  const legacy = todo.filter((x) => x.remote in manifest).length;
   const bytes = todo.reduce((s, x) => s + fs.statSync(x.local).size, 0);
   console.log(`subjects: ${subjectList.join(",")} | total: ${all.length} | already uploaded: ${all.length - todo.length} | to upload: ${todo.length} (${(bytes / 1048576).toFixed(0)} MB)`);
+  if (legacy) {
+    console.log(`  ${legacy} of those were recorded before the manifest stored hashes, so their contents cannot be`);
+    console.log(`  verified from here. They upload once and gain a hash; subsequent runs skip them normally.`);
+  }
   let done = 0, failed = 0, since = 0;
-  const save = () => fs.writeFileSync(MANIFEST, JSON.stringify([...manifest]));
+  const save = () => fs.writeFileSync(MANIFEST, JSON.stringify(manifest));
   let idx = 0;
   async function worker() {
     while (idx < todo.length) {
@@ -184,11 +229,14 @@ async function put(remote, buf) {
         try { await put(item.remote, fs.readFileSync(item.local)); ok = true; }
         catch (e) { if (a === 4) { failed += 1; console.log(`FAIL ${item.remote}: ${e.message}`); } else await new Promise((r) => setTimeout(r, 800 * a)); }
       }
-      if (ok) { manifest.add(item.remote); done += 1; since += 1; }
+      // The hash of the bytes ACTUALLY SENT, recorded only on success. A failed
+      // upload leaves no entry, so the next run retries it rather than
+      // inheriting a claim nothing delivered.
+      if (ok) { manifest[item.remote] = item.hash; done += 1; since += 1; }
       if (since >= 100) { since = 0; save(); process.stdout.write(`  …${done}/${todo.length} uploaded\n`); }
     }
   }
   await Promise.all(Array.from({ length: CONCURRENCY }, worker));
   save();
-  console.log(`\n──────── done ──────── uploaded: ${done} | failed: ${failed} | manifest: ${manifest.size}`);
+  console.log(`\n──────── done ──────── uploaded: ${done} | failed: ${failed} | manifest: ${Object.keys(manifest).length}`);
 })();

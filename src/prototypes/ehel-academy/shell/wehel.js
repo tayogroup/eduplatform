@@ -231,14 +231,26 @@ function apiMessages(stored) {
     skip.add(index);
     if (index > 0 && recent[index - 1].role === "user") skip.add(index - 1);
   });
-  const merged = [];
+  const kept = [];
   recent.forEach((item, index) => {
     if (skip.has(index)) return;
     const role = item.role === "assistant" ? "assistant" : "user";
     const content = String(item.text || "").trim();
     if (!content) return;
-    if (merged.length && merged[merged.length - 1].role === role) merged[merged.length - 1].content += `\n${content}`;
-    else merged.push({ role, content });
+    kept.push({ role, content });
+  });
+  // A question with no reply after it is an ABANDONED ask — the input locks
+  // while a reply is pending, so the only way two user turns sit adjacent is
+  // that the tab was closed mid-request and the answer never landed. The
+  // transcript survives in localStorage, so those strays resurfaced in every
+  // later payload and the model answered a phantom backlog ("Two more you
+  // asked about…") instead of the question in front of it. Keep only the
+  // newest question of such a run.
+  const merged = [];
+  kept.forEach((item, index) => {
+    if (item.role === "user" && index < kept.length - 1 && kept[index + 1].role === "user") return;
+    if (merged.length && merged[merged.length - 1].role === item.role) merged[merged.length - 1].content += `\n${item.content}`;
+    else merged.push({ role: item.role, content: item.content });
   });
   while (merged.length && merged[0].role !== "user") merged.shift();
   return merged;

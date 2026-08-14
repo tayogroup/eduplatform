@@ -51,6 +51,60 @@ Real uploads are `npm run deploy:integration|staging|production`. **Never run a 
 - **Secrets**: `.env` holds Bunny storage keys and TTS API keys — never commit it or copy values into source. E2e credentials are `EDUPLATFORM_*` env vars (template: `.env.e2e.example`).
 - Windows environment; some docs write commands as `npm.cmd run ...` — plain `npm run ...` works in both shells.
 
+## Wehel, the AI tutor, and the contract that holds it
+
+```bash
+npm run check:wehel          # phrase-audio drift + the contract below
+npm run check:wehel-contract # the contract alone
+```
+
+Wehel spent 2026-08-14 giving learners confidently wrong answers, and **not one
+existing gate could see any of it** — every failure was in data the model
+receives, which nothing in the repo read. `check-wehel-contract.mjs` imports
+the real functions and tests them by behaviour, so a refactor that keeps the
+rules passes and one that drops a filter fails.
+
+**The transcript the model sees carries answered pairs and the live question,
+and nothing else.** Three separate mechanisms broke that, each surfacing as a
+reply that answered a question the learner had not just asked:
+
+- The canned offline hint was sent as an assistant turn, so the model adopted
+  it and resumed its off-topic mini-lesson ("day" for "birth**day**", picked by
+  substring) on every later turn.
+- Hiding the hint but keeping the **question it answered** left an answerless
+  turn that merged into the next ask — "Three good questions!" to a learner who
+  asked one, the real question served last.
+- A tab closed mid-reply saves a question with no answer and no failure flag.
+  `localStorage` outlives the tab, so these accumulated; Opus's 7-10s latency
+  made abandonment routine. Two adjacent user turns can only mean this — the
+  input locks while a reply is pending.
+
+Diagnostic tell for all three: **the reply answers more questions than were
+asked**, or says "you asked about". A "fresh launch" does not clear them —
+`localStorage` is per-origin, not per-tab.
+
+**A whole unit must reach the tutor.** The cap lives in three files
+(`shell/wehel.js` `UNIT_JSON_LIMIT`, `wehel_chat.php`, `tools/lib/wehel-dev-chat.js`)
+and the smallest wins silently, so the gate holds them equal. It also strips
+every unit with the app's own function and fails if one no longer fits: at the
+old 120k cap, **63% of an English unit was audio descriptors** (path, duration,
+voiceId, hash per narrated line), so the cut landed just after the word lists
+and in all 81 English units the readings, grammar, quizzes and answer keys were
+invisible. It taught vocabulary because vocabulary was all it could see. The
+strip removes whole `audio`/`*Audio` objects, never fields — a field-by-field
+version would catch teaching text that happens to share a name.
+
+This gate was **mutation-tested**: each invariant was broken in turn and the
+gate had to fail. One check passed a deliberately broken filter — it asserted
+on message *count*, and adjacent same-role turns merge, so four stray questions
+became one message that still looked right. Assert on payload **content**. A
+gate you have not watched fail is not known to work.
+
+Two things it cannot see, both server-side config: the model
+(`local_prequran/wehel_model`) and the suspended rate limit
+(`wehel_chat_rate_limit`, 0 = off — the machinery is intact, set it to restore
+the cap on a paid endpoint).
+
 ## Curriculum validation
 
 Before merging a change to a Cambridge framework file (`src/curriculum/cambridge-english-*.json`) or to unit objective mappings, both of these must exit 0:

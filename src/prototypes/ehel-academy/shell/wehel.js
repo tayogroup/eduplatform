@@ -212,7 +212,9 @@ export function outlineFromManifest(manifest) {
 // Merge consecutive same-role turns: the Anthropic API requires strict
 // user/assistant alternation, and a failed exchange can leave two learner
 // messages in a row in the stored transcript.
-function apiMessages(stored) {
+// Exported for tools/check-wehel-contract.mjs, which holds this to the three
+// transcript rules below by behaviour rather than by reading the source.
+export function apiMessages(stored) {
   // A canned offline hint is not Wehel's answer — the bubble says so in
   // words. Sending it as an assistant turn made the model ADOPT it: it would
   // resume the hint's off-topic mini-lesson ("day" for "birthday") instead
@@ -313,7 +315,7 @@ function resolveCourseRef(meta, input) {
 // Only keys named `audio` or ending in `Audio` are dropped, so the whole
 // descriptor object goes with them and nothing is trimmed field by field —
 // a teaching field can never be caught by accident.
-function withoutMediaPlumbing(value) {
+export function withoutMediaPlumbing(value) {
   if (Array.isArray(value)) return value.map(withoutMediaPlumbing);
   if (value && typeof value === "object") {
     const kept = {};
@@ -328,7 +330,7 @@ function withoutMediaPlumbing(value) {
 
 // One cap, matching wehel_chat.php's. Raised from 120000 with the strip above:
 // every one of the academy's 410 units now fits whole, with room to spare.
-const UNIT_JSON_LIMIT = 200000;
+export const UNIT_JSON_LIMIT = 200000;
 
 async function handleGetUnit(meta, fetchUnit, input) {
   const ref = resolveCourseRef(meta, input);

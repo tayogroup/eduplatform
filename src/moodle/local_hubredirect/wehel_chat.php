@@ -332,9 +332,16 @@ $system = strtr($system, [
     '{{UNIT_CONTENT}}' => $unitcontent,
     '{{FOCUS}}' => $focusblock,
 ]);
+// Everything from here down is the VOLATILE tail: it changes between questions
+// in the same unit (the page the learner is on, the mode a quick prompt asked
+// for). It is kept out of $system so the big stable block above — template plus
+// the whole unit JSON, ~30k tokens — can be prompt-cached across a learner's
+// questions. That cache is why a burst of questions stopped exhausting the
+// per-minute token allowance: a cache read is a fraction of a fresh read.
+$volatile = '';
 $modehints = (array)($promptdata['modeHints'] ?? []);
 if ($modehint !== '' && isset($modehints[$modehint])) {
-    $system .= "\n\n" . (string)$modehints[$modehint];
+    $volatile .= "\n\n" . (string)$modehints[$modehint];
 }
 // Preferred teaching language — only languages the prompt source defines are
 // honoured, and the block itself (e.g. Somali-for-vocabulary-only) lives in
@@ -342,13 +349,13 @@ if ($modehint !== '' && isset($modehints[$modehint])) {
 $teachinglanguage = core_text::strtolower(trim((string)($payload['teachingLanguage'] ?? '')));
 $languageblock = ($promptdata['languageSupport'] ?? [])[$teachinglanguage] ?? null;
 if (is_array($languageblock) && $languageblock) {
-    $system .= "\n\n" . implode("\n", array_map('strval', $languageblock));
+    $volatile .= "\n\n" . implode("\n", array_map('strval', $languageblock));
 }
 // Where the learner is standing right now. The dock opens over any lesson
 // page, so "I don't get this" has a referent.
 $sectionhint = $clean($payload['sectionHint'] ?? '', 80);
 if ($sectionhint !== '') {
-    $system .= "\n\nThe learner is on the \"" . $sectionhint . "\" page of this unit right now — useful context for what they may mean, but their own words always come first: answer what they asked, not the page.";
+    $volatile .= "\n\nThe learner is on the \"" . $sectionhint . "\" page of this unit right now — useful context for what they may mean, but their own words always come first: answer what they asked, not the page.";
 }
 
 // --- call the Anthropic API ---------------------------------------------------
@@ -360,10 +367,19 @@ if ($apikey === '') {
 $model = pqh_wehel_config('wehel_model', 'local_prequran_wehel_model', 'WEHEL_MODEL', (string)($promptdata['model'] ?? 'claude-sonnet-5'));
 $maxtokens = max(200, min(2000, (int)($promptdata['maxTokens'] ?? 700)));
 
+// The stable block carries cache_control so a learner's second and later
+// questions in the same unit read it from cache instead of re-sending ~30k
+// tokens. The volatile tail rides in its own uncached block after it.
+$systemblocks = [
+    ['type' => 'text', 'text' => $system, 'cache_control' => ['type' => 'ephemeral']],
+];
+if (trim($volatile) !== '') {
+    $systemblocks[] = ['type' => 'text', 'text' => $volatile];
+}
 $request = [
     'model' => $model,
     'max_tokens' => $maxtokens,
-    'system' => $system,
+    'system' => $systemblocks,
     'messages' => $conversation,
 ];
 if ($tooldefs) {
@@ -371,29 +387,62 @@ if ($tooldefs) {
 }
 $body = json_encode($request, JSON_UNESCAPED_UNICODE);
 
-$curl = curl_init('https://api.anthropic.com/v1/messages');
-if ($curl === false) {
-    pqh_wehel_json(500, ['ok' => false, 'message' => 'Wehel is unavailable right now.']);
+// Transient upstream failures are retried HERE rather than shown to the
+// learner. A rate limit (429) or an overloaded model (529) is a wait, not an
+// answer, and the canned hint that a surfaced failure produces is a far worse
+// reply than a two-second pause. Only these two plus 5xx are retried: a 400
+// is our own bad request and would fail identically every time.
+$response = false;
+$status = 0;
+$upstreamerror = '';
+for ($attempt = 0; $attempt < 3; $attempt++) {
+    if ($attempt > 0) {
+        // 1s then 3s. Well inside the browser's patience, and long enough for
+        // a per-minute allowance to free up after a burst of questions.
+        sleep($attempt === 1 ? 1 : 3);
+    }
+    $curl = curl_init('https://api.anthropic.com/v1/messages');
+    if ($curl === false) {
+        pqh_wehel_json(500, ['ok' => false, 'message' => 'Wehel is unavailable right now.']);
+    }
+    curl_setopt_array($curl, [
+        CURLOPT_POST => true,
+        CURLOPT_POSTFIELDS => $body,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_CONNECTTIMEOUT => 10,
+        CURLOPT_TIMEOUT => 60,
+        CURLOPT_HTTPHEADER => [
+            'Content-Type: application/json',
+            'Accept: application/json',
+            'x-api-key: ' . $apikey,
+            'anthropic-version: 2023-06-01',
+        ],
+    ]);
+    $response = curl_exec($curl);
+    $status = (int)curl_getinfo($curl, CURLINFO_RESPONSE_CODE);
+    $curlerror = curl_error($curl);
+    curl_close($curl);
+
+    if ($response !== false && $status >= 200 && $status < 300) {
+        break;
+    }
+    $upstreamerror = $response === false ? ('connection: ' . $curlerror) : ('http ' . $status);
+    $retryable = $response === false || $status === 429 || $status === 529 || $status >= 500;
+    if (!$retryable) {
+        break;
+    }
 }
-curl_setopt_array($curl, [
-    CURLOPT_POST => true,
-    CURLOPT_POSTFIELDS => $body,
-    CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_CONNECTTIMEOUT => 10,
-    CURLOPT_TIMEOUT => 60,
-    CURLOPT_HTTPHEADER => [
-        'Content-Type: application/json',
-        'Accept: application/json',
-        'x-api-key: ' . $apikey,
-        'anthropic-version: 2023-06-01',
-    ],
-]);
-$response = curl_exec($curl);
-$status = (int)curl_getinfo($curl, CURLINFO_RESPONSE_CODE);
-curl_close($curl);
 
 if ($response === false || $status < 200 || $status >= 300) {
-    pqh_wehel_json(502, ['ok' => false, 'message' => 'Wehel could not answer just now. Please try again.']);
+    // The upstream status rides along so a failure can be diagnosed from the
+    // browser's network tab instead of guessing. It names no secret — the key
+    // never appears in a response body.
+    debugging('Wehel upstream failure: ' . $upstreamerror, DEBUG_DEVELOPER);
+    pqh_wehel_json(502, [
+        'ok' => false,
+        'message' => 'Wehel could not answer just now. Please try again.',
+        'upstream' => $upstreamerror,
+    ]);
 }
 $result = json_decode((string)$response, true);
 // A tool call goes back to the client, which holds the course data and will

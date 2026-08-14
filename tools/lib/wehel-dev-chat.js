@@ -112,17 +112,25 @@ function createWehelChatHandler({ apiKey, model: modelOverride = () => undefined
         "{{FOCUS}}": focusBlock,
       };
       let system = promptData.template.join("\n").replace(/\{\{[A-Z_]+\}\}/g, (token) => replacements[token] ?? token);
+      // Everything appended from here is the VOLATILE tail — it varies between
+      // questions in the same unit, so it stays out of the cached block above.
+      // Mirrored in wehel_chat.php.
+      let volatileTail = "";
       const modeHint = (promptData.modeHints || {})[String(payload.mode || "")];
-      if (modeHint) system += `\n\n${modeHint}`;
+      if (modeHint) volatileTail += `\n\n${modeHint}`;
       // Preferred teaching language — only languages the prompt source defines
       // are honoured, and the block itself (e.g. Somali-for-vocabulary-only)
       // lives in wehel_prompt.json. Mirrored in wehel_chat.php.
       const languageBlock = (promptData.languageSupport || {})[String(payload.teachingLanguage || "").toLowerCase()];
-      if (Array.isArray(languageBlock)) system += `\n\n${languageBlock.join("\n")}`;
+      if (Array.isArray(languageBlock)) volatileTail += `\n\n${languageBlock.join("\n")}`;
       // Where the learner is standing right now. The dock opens over any
       // lesson page, so "I don't get this" has a referent.
       const sectionHint = clean(payload.sectionHint, 80);
-      if (sectionHint) system += `\n\nThe learner is on the "${sectionHint}" page of this unit right now — useful context for what they may mean, but their own words always come first: answer what they asked, not the page.`;
+      if (sectionHint) volatileTail += `\n\nThe learner is on the "${sectionHint}" page of this unit right now — useful context for what they may mean, but their own words always come first: answer what they asked, not the page.`;
+      // The stable block is cached; a learner's later questions in the same
+      // unit read ~30k tokens from cache instead of re-sending them.
+      const systemBlocks = [{ type: "text", text: system, cache_control: { type: "ephemeral" } }];
+      if (volatileTail.trim()) systemBlocks.push({ type: "text", text: volatileTail });
 
       const key = apiKey();
       if (!key) return fail(503, "ANTHROPIC_API_KEY is not configured in the local .env file.");
@@ -137,7 +145,7 @@ function createWehelChatHandler({ apiKey, model: modelOverride = () => undefined
         body: JSON.stringify({
           model,
           max_tokens: Math.max(200, Math.min(2000, Number(promptData.maxTokens) || 700)),
-          system,
+          system: systemBlocks,
           ...(toolDefs.length ? { tools: toolDefs } : {}),
           messages: conversation,
         }),

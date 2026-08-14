@@ -78,7 +78,11 @@ function createWehelChatHandler({ apiKey, model: modelOverride = () => undefined
       let unitContent = "";
       if (payload.unit !== undefined) {
         unitContent = JSON.stringify(payload.unit);
-        if (unitContent.length > 120000) unitContent = `${unitContent.slice(0, 120000)} …(unit content truncated)`;
+        // Matches UNIT_JSON_LIMIT in shell/wehel.js and the cap in
+        // wehel_chat.php — the client strips audio descriptors before sending,
+        // and at 120000 the cut hid every English unit's readings, grammar and
+        // quizzes behind its word lists.
+        if (unitContent.length > 200000) unitContent = `${unitContent.slice(0, 200000)} …(unit content truncated)`;
       }
       if (!unitContent) {
         unitContent = "(The unit content was not provided. Teach from the unit title and general Cambridge knowledge for this grade, and say when you are unsure what the lesson on screen shows.)";

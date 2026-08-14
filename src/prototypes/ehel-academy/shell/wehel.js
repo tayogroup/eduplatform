@@ -297,6 +297,39 @@ function resolveCourseRef(meta, input) {
   return { subject, grade };
 }
 
+// The unit JSON is written for the APP, and most of its weight is media
+// plumbing the tutor can do nothing with: every narrated line carries an audio
+// descriptor (file path, duration, voice id, provider, hash). In English that
+// is 63% of the file — Grade 2 Unit 1 is 400KB, of which 250KB is audio
+// bookkeeping for vocabulary sentences.
+//
+// That mattered because the server caps unit content at a fixed size: past the
+// cap the rest is simply invisible, and in English the cut landed just after
+// the word lists, so the tutor could not see the readings, grammar, quizzes or
+// answer keys of ANY of its 81 units — it taught vocabulary because vocabulary
+// was all it had. Stripping the descriptors takes the worst unit in the whole
+// academy to 150KB and leaves every word of teaching content intact.
+//
+// Only keys named `audio` or ending in `Audio` are dropped, so the whole
+// descriptor object goes with them and nothing is trimmed field by field —
+// a teaching field can never be caught by accident.
+function withoutMediaPlumbing(value) {
+  if (Array.isArray(value)) return value.map(withoutMediaPlumbing);
+  if (value && typeof value === "object") {
+    const kept = {};
+    for (const [key, item] of Object.entries(value)) {
+      if (/^audio$|Audio$/.test(key)) continue;
+      kept[key] = withoutMediaPlumbing(item);
+    }
+    return kept;
+  }
+  return value;
+}
+
+// One cap, matching wehel_chat.php's. Raised from 120000 with the strip above:
+// every one of the academy's 410 units now fits whole, with room to spare.
+const UNIT_JSON_LIMIT = 200000;
+
 async function handleGetUnit(meta, fetchUnit, input) {
   const ref = resolveCourseRef(meta, input);
   if (ref.error) return ref.error;
@@ -304,11 +337,11 @@ async function handleGetUnit(meta, fetchUnit, input) {
   const label = `Unit ${input?.unitNo} of ${ref.subject} grade ${ref.grade}`;
   if (ref.subject === meta.subject && ref.grade === Number(meta.grade) && fetchUnit) {
     const unit = await fetchUnit(unitNo);
-    return unit ? JSON.stringify(unit).slice(0, 120000) : `${label} does not exist — only the units in the year outline.`;
+    return unit ? JSON.stringify(withoutMediaPlumbing(unit)).slice(0, UNIT_JSON_LIMIT) : `${label} does not exist — only the units in the year outline.`;
   }
   const response = await fetch(new URL(`units/unit-${unitNo}.json`, courseDataRoot(ref.subject, ref.grade)));
   if (!response.ok) return `${label} is not available.`;
-  return JSON.stringify(await response.json()).slice(0, 120000);
+  return JSON.stringify(withoutMediaPlumbing(await response.json())).slice(0, UNIT_JSON_LIMIT);
 }
 
 async function handleGetCourseOutline(meta, input) {
@@ -644,7 +677,7 @@ export async function askWehel({ meta, messages, channel = "text", mode = "", se
         unitTitle: meta.unitTitle,
         learnerName: meta.learnerName || "",
         courseOutline: meta.courseOutline || "",
-        unit: meta.unit,
+        unit: withoutMediaPlumbing(meta.unit),
         teachingLanguage: preferredTeachingLanguage(),
         channel,
         mode: mode || undefined,

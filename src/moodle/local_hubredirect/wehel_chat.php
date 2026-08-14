@@ -253,8 +253,16 @@ if (isset($payload['unit'])) {
     if (!is_string($unitcontent)) {
         $unitcontent = '';
     }
-    if (core_text::strlen($unitcontent) > 120000) {
-        $unitcontent = core_text::substr($unitcontent, 0, 120000) . ' …(unit content truncated)';
+    // Matches UNIT_JSON_LIMIT in shell/wehel.js. Raised from 120000 on
+    // 2026-08-15: the client now strips audio descriptors before sending
+    // (63% of an English unit was media bookkeeping), and at the old cap the
+    // cut landed just after the word lists — so in all 81 English units the
+    // tutor could not see the readings, grammar, quizzes or answer keys, and
+    // taught vocabulary because vocabulary was all it could see. Every one of
+    // the academy's 410 units now fits whole. The unit prompt is cached, so
+    // the larger payload is paid for once per learner per unit.
+    if (core_text::strlen($unitcontent) > 200000) {
+        $unitcontent = core_text::substr($unitcontent, 0, 200000) . ' …(unit content truncated)';
     }
 }
 if ($unitcontent === '') {

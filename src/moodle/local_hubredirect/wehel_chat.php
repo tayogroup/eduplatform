@@ -267,22 +267,32 @@ if ($unitcontent === '') {
 // every request and the counter below would read 1 every time — leaving a PAID
 // endpoint with no cap at all. Those callers are counted by user id in an
 // application cache; cookie callers keep the original counter untouched.
-if ($pqh_apiuserid > 0) {
-    if (!pqh_api_rate_limit_ok('wehel_chat', $pqh_apiuserid, 20)) {
-        pqh_wehel_json(429, ['ok' => false, 'message' => 'Wehel needs a short break. Please wait a minute.']);
-    }
-} else {
-    global $SESSION;
-    $now = time();
-    if (empty($SESSION->local_hubredirect_wehel_window) || !is_array($SESSION->local_hubredirect_wehel_window)) {
-        $SESSION->local_hubredirect_wehel_window = ['start' => $now, 'count' => 0];
-    }
-    if (($now - (int)$SESSION->local_hubredirect_wehel_window['start']) > 60) {
-        $SESSION->local_hubredirect_wehel_window = ['start' => $now, 'count' => 0];
-    }
-    $SESSION->local_hubredirect_wehel_window['count'] = (int)$SESSION->local_hubredirect_wehel_window['count'] + 1;
-    if ($SESSION->local_hubredirect_wehel_window['count'] > 20) {
-        pqh_wehel_json(429, ['ok' => false, 'message' => 'Wehel needs a short break. Please wait a minute.']);
+//
+// SUSPENDED 2026-08-14 at the owner's request: the shipped default is 0 (no
+// cap), because the 20/min limit kept reading as an outage during rollout
+// testing — the client shows a 429 as the same fallback bubble as a real
+// failure. This endpoint is PAID, per message, so the machinery stays and the
+// cap comes back the moment a limit is configured:
+//   php admin/cli/cfg.php --component=local_prequran --name=wehel_chat_rate_limit --set=20
+$pqh_wehel_ratelimit = (int)pqh_wehel_config('wehel_chat_rate_limit', 'local_prequran_wehel_chat_rate_limit', 'WEHEL_CHAT_RATE_LIMIT', '0');
+if ($pqh_wehel_ratelimit > 0) {
+    if ($pqh_apiuserid > 0) {
+        if (!pqh_api_rate_limit_ok('wehel_chat', $pqh_apiuserid, $pqh_wehel_ratelimit)) {
+            pqh_wehel_json(429, ['ok' => false, 'message' => 'Wehel needs a short break. Please wait a minute.']);
+        }
+    } else {
+        global $SESSION;
+        $now = time();
+        if (empty($SESSION->local_hubredirect_wehel_window) || !is_array($SESSION->local_hubredirect_wehel_window)) {
+            $SESSION->local_hubredirect_wehel_window = ['start' => $now, 'count' => 0];
+        }
+        if (($now - (int)$SESSION->local_hubredirect_wehel_window['start']) > 60) {
+            $SESSION->local_hubredirect_wehel_window = ['start' => $now, 'count' => 0];
+        }
+        $SESSION->local_hubredirect_wehel_window['count'] = (int)$SESSION->local_hubredirect_wehel_window['count'] + 1;
+        if ($SESSION->local_hubredirect_wehel_window['count'] > $pqh_wehel_ratelimit) {
+            pqh_wehel_json(429, ['ok' => false, 'message' => 'Wehel needs a short break. Please wait a minute.']);
+        }
     }
 }
 

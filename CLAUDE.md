@@ -562,6 +562,41 @@ search costs less than one sentence — generate the candidate, rank it with
 Use it only where a render has been shown to be wrong. It is a way to make the
 voice say the printed word, not a way to change the word.
 
+#### Re-rendering without a text change strands every learner who already listened
+
+**This is not an English problem. The trigger is "same text, new recording",
+whatever the subject.**
+
+Bunny serves media as `Cache-Control: public, max-age=31536000` with no ETag, so
+a browser that has played a clip holds it for **a year** and never revalidates.
+Whether a repair reaches a learner therefore depends entirely on whether the URL
+changes:
+
+- **Text edited** — a hash-named subject (Science, Mathematics, Computing,
+  Global Perspectives, Intensive English) mints a new filename, so the URL
+  changes and the learner refetches. Safe by construction.
+- **Text unchanged, clip re-rendered** — same hash, same filename, same URL. The
+  CDN is correct, the manifest hash matches, every check passes, and the learner
+  keeps the old audio for a year. Nothing in the repo can see it.
+
+The realistic trigger is a **voice change** (a new `VOICE_ID`, or regenerating a
+grade), and `speechSpelling` is the other: it exists to fix a mispronunciation
+*without* changing the displayed text, so a respelling applied to a clip already
+in production is exactly this case.
+
+English hit the general version of this and carries the fix: `AUDIO_RELEASE` in
+`shell/subjects/english.js` stamps audio URLs with `?a=<date>`, bumped whenever
+English audio is re-uploaded. It works because the pull zone **ignores query
+strings when caching** — verified, not assumed: `?a=20260814` and
+`?a=zzz-nonsense` against a clip that had seen neither both returned
+`CDN-Cache: HIT`, byte-identical, off the bare path. So it busts browsers and is
+invisible to the edge, unlike a version *segment*, which would risk a cached 404
+on a path that cannot be purged.
+
+The other five subjects have no such stamp. If one ever re-renders audio without
+changing the text, it needs one — copying English's is a few lines — or a purge,
+which needs an account-level key that is not in `.env`.
+
 ### The English content gate
 
 ```bash

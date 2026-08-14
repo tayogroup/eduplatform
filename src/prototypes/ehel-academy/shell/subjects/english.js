@@ -889,6 +889,12 @@ let activeWordId;
 // onBeforeRender with the other region state — a handler in the lab must never
 // reach into a deck belonging to a section that has already been replaced.
 let showWordInDeck = null;
+// Same contract for the other three sections whose classic half has a selector:
+// the shelf in Reading, the task subtabs in Writing, the group subtabs in
+// Comprehension. Each is published by its own carousel and cleared with the rest.
+let showReadingInDeck = null;
+let showWritingInDeck = null;
+let showComprehensionGroupInDeck = null;
 let activeSentence = 0;
 let quizIndex = 0;
 let quizScore = 0;
@@ -2355,6 +2361,15 @@ function renderReadingCarousel() {
     inDeck("#rd-pages").textContent = `${pages.length} page${pages.length === 1 ? "" : "s"}`;
   };
   inDeck("#reading-filter").addEventListener("change", drawDeck);
+  // The shelf above picks a text; this deck's filter is how it reaches one.
+  // Setting the select and redrawing is the same path the learner's own change
+  // event takes, so the page count and slides stay consistent with it.
+  showReadingInDeck = (readingId) => {
+    const select = inDeck("#reading-filter");
+    if (!select || !texts.some((text) => text.readingId === readingId)) return;
+    select.value = readingId;
+    drawDeck();
+  };
   drawDeck();
 }
 
@@ -2372,7 +2387,7 @@ function renderReadingClassic() {
     const audioMode = reading.audio?.available ? "recorded" : audioReady ? "ready" : "on demand";
     const audioControls = `<div class="ebook-audio-wrap"><small>ElevenLabs · ${audioMode} · 0.90x</small>${audioReady ? "" : `<button class="button secondary" id="prepare-reading-audio" type="button" aria-label="Prepare ElevenLabs narration for ${escapeHtml(reading.title)}">${icon("audio-lines")} Prepare audio</button>`}<audio id="ebook-reading-audio" class="ebook-native-audio" controls ${audioReady ? "" : "hidden"} aria-label="Reading narration for ${escapeHtml(reading.title)}"></audio></div>`;
     $("#reading-panel").innerHTML = `<div class="ebook-progress" aria-label="Text ${readingIndex + 1} of ${course.readings.length}"><span style="width:${((readingIndex + 1) / course.readings.length) * 100}%"></span></div><header class="ebook-toolbar"><div><span class="ebook-count">Book ${readingIndex + 1} of ${course.readings.length}</span><span>${wordCount} words · about ${readingMinutes} min</span></div>${audioControls}</header><figure class="ebook-cover"><img src="${course.visual.image}" alt="${escapeHtml(course.visual.alt || course.unit.unitTitle)}"><figcaption><span>${escapeHtml(reading.type)}</span><h2>${escapeHtml(reading.title)}</h2><p>${escapeHtml(course.unit.unitTitle)}</p></figcaption></figure><section class="ebook-page"><div class="ebook-page-heading"><span>${icon("bookmark")}</span><div><small>${reading.genre ? escapeHtml(reading.genre) : "Ehel Academy English"}</small><h2>${escapeHtml(reading.title)}</h2>${reading.setting ? `<p>${icon("map-pin")} ${escapeHtml(reading.setting)}</p>` : ""}</div></div><div class="reading-text ebook-copy">${readingBodyHtml(reading.passageScript)}</div><div class="ebook-page-number">${readingIndex + 1}</div></section><footer class="ebook-footer"><button class="button secondary" data-reading-step="-1" type="button" ${readingIndex === 0 ? "disabled" : ""}>${icon("arrow-left")} Previous text</button><button class="button primary" id="reading-done" type="button">Finished reading ${icon("check")}</button><button class="button secondary" data-reading-step="1" type="button" ${readingIndex === course.readings.length - 1 ? "disabled" : ""}>Next text ${icon("arrow-right")}</button></footer>`;
-    $$('[data-reading]').forEach((button) => button.addEventListener("click", () => { selected = button.dataset.reading; stopAudio(); draw(); icons(); focusDynamicContent("#reading-panel .ebook-page-heading h2", "Reading selected. " + $("#reading-panel .ebook-page-heading h2").textContent); }));
+    $$('[data-reading]').forEach((button) => button.addEventListener("click", () => { selected = button.dataset.reading; stopAudio(); draw(); icons(); showReadingInDeck?.(selected); focusDynamicContent("#reading-panel .ebook-page-heading h2", "Reading selected. " + $("#reading-panel .ebook-page-heading h2").textContent); }));
     $$('[data-reading-step]').forEach((button) => button.addEventListener("click", () => {
       const next = course.readings[readingIndex + Number(button.dataset.readingStep)];
       if (!next) return;
@@ -2403,7 +2418,7 @@ function renderComprehensionClassic() {
   const draw = () => {
     const questions = course.comprehension.filter((question) => question.section === active);
     $("#app").innerHTML = `${pageHeader("Think about the text", "Comprehension", "Write your answer first. Then reveal the reviewed guidance and improve your response.")}<div class="subtabs">${groups.map((group) => `<button class="subtab ${group === active ? "active" : ""}" data-group="${escapeHtml(group)}" type="button">${escapeHtml(group)}</button>`).join("")}</div><section class="panel"><div class="question-list">${questions.map((question) => `<div class="question"><label for="answer-${question.questionId}">${question.sequence}. ${escapeHtml(question.question)}</label><textarea id="answer-${question.questionId}" data-answer-input="${question.questionId}" placeholder="Write a complete answer…"></textarea><button class="button secondary" data-check-answer="${question.questionId}" type="button">Check guidance</button><div id="feedback-${question.questionId}" role="status" aria-live="polite" aria-atomic="true"></div></div>`).join("")}</div><button class="button primary" id="comprehension-done" type="button">Finish comprehension ${icon("check")}</button></section>`;
-    $$('[data-group]').forEach((button) => button.addEventListener("click", () => { active = button.dataset.group; draw(); }));
+    $$('[data-group]').forEach((button) => button.addEventListener("click", () => { active = button.dataset.group; draw(); showComprehensionGroupInDeck?.(active); }));
     $$('[data-check-answer]').forEach((button) => button.addEventListener("click", () => {
       const question = course.comprehension.find((item) => item.questionId === button.dataset.checkAnswer);
       const value = $(`#answer-${question.questionId}`).value.trim();
@@ -2476,6 +2491,15 @@ function renderComprehensionCarousel() {
     if (counter) counter.textContent = `${questions.length} question${questions.length === 1 ? "" : "s"}`;
   };
   inDeck("#section-filter")?.addEventListener("change", drawDeck);
+  // The subtabs above are the same grouping as this deck's filter, so a learner
+  // narrowing one expects the other to follow. A unit with a single group has no
+  // filter to set (tools is empty), hence the optional lookup.
+  showComprehensionGroupInDeck = (group) => {
+    const select = inDeck("#section-filter");
+    if (!select) return;
+    select.value = group;
+    drawDeck();
+  };
   drawDeck();
 }
 
@@ -2751,7 +2775,7 @@ function renderWritingClassic() {
     const task = course.writing.find((item) => item.writingId === active);
     const saved = progress.writing[active] || "";
     $("#app").innerHTML = `${pageHeader("Plan, write and improve", "Writing studio", "Choose a task. Your draft saves automatically on this device.")}<div class="subtabs">${course.writing.map((item) => `<button class="subtab ${active === item.writingId ? "active" : ""}" data-writing="${item.writingId}" type="button">Writing ${item.sequence}</button>`).join("")}</div><div class="task-grid"><section class="panel"><h2>${escapeHtml(task.title)}</h2><p class="rule-box">${escapeHtml(task.promptAndInstructions)}</p>${task.audio?.available ? `<button class="button secondary" data-writing-audio="${task.writingId}" type="button">${icon("volume-2")} Hear the task</button>` : ""}<details><summary>View model text</summary><p class="model">${escapeHtml(task.modelText)}</p></details><p><span class="field-label">Expected:</span> ${escapeHtml(task.expectedLength)}</p><textarea id="writing-draft" placeholder="${escapeHtml(task.sentenceStarter)}">${escapeHtml(saved)}</textarea><p id="save-status"><small>${saved ? "Draft restored" : "Start writing when you are ready"}</small></p></section><aside class="panel"><h3>Writer's checklist</h3><ul class="checklist">${task.successCriteria.split(";").map((criterion, index) => `<li><label><input type="checkbox" data-writing-check="${index}"><span>${escapeHtml(criterion.trim())}</span></label></li>`).join("")}</ul><h3>Support</h3><p>${escapeHtml(task.support)}</p><h3>Challenge</h3><p>${escapeHtml(task.extension)}</p><button class="button primary" id="writing-done" type="button">Submit this draft ${icon("send")}</button></aside></div>`;
-    $$('[data-writing]').forEach((button) => button.addEventListener("click", () => { active = button.dataset.writing; draw(); }));
+    $$('[data-writing]').forEach((button) => button.addEventListener("click", () => { active = button.dataset.writing; draw(); showWritingInDeck?.(active); }));
     $$('[data-writing-audio]').forEach((button) => button.addEventListener("click", () => {
       const item = course.writing.find((w) => w.writingId === button.dataset.writingAudio);
       playAudio(item.audio.source, { rate: AI_NARRATION_RATE, button });
@@ -2842,6 +2866,14 @@ function renderWritingCarousel() {
       if (status) status.textContent = "Draft saved";
     }, 350));
   });
+
+  // One slide per task and no filter, so the subtabs above map straight onto a
+  // slide index. Unlike the vocabulary deck this list cannot be narrowed, so the
+  // index is stable and does not need looking up at click time.
+  showWritingInDeck = (writingId) => {
+    const position = tasks.findIndex((task) => task.writingId === writingId);
+    if (position >= 0) deck.goTo(position);
+  };
 }
 
 function renderActivities() {
@@ -4115,7 +4147,7 @@ const config = {
   // classicRegion and deckMount are per-render state: a section that draws both
   // designs sets them, and every other section must find them clear or it would
   // paint into a region the previous section left behind.
-  onBeforeRender: () => { route = shellCtx.route; stopAudio(); document.body.classList.remove("gc-full"); classicRegion = null; deckMount = null; showWordInDeck = null; $("#app").setAttribute("aria-busy", "true"); },
+  onBeforeRender: () => { route = shellCtx.route; stopAudio(); document.body.classList.remove("gc-full"); classicRegion = null; deckMount = null; showWordInDeck = null; showReadingInDeck = null; showWritingInDeck = null; showComprehensionGroupInDeck = null; $("#app").setAttribute("aria-busy", "true"); },
   onAfterRender: () => { $("#app").setAttribute("aria-busy", "false"); prepareScreenReaderView(); icons(); },
   onNavRendered: () => { renderUnitPickers(); paintSectionLocks(); icons(); },
   // Every route draws the locked page while a unit is locked. The check is

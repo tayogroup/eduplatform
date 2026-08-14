@@ -173,6 +173,13 @@ const bothDesigns = () => stageNumber <= BOTH_DESIGNS_MAX_STAGE;
 // exactly as $ and $$ did — which is why Stages 2-8 are unaffected by the switch.
 let classicRegion = null;
 let deckRegion = null;
+// Published by renderComputingWordsDeck while both designs are mounted, cleared
+// in onBeforeRender with the regions above. Stages 1-4 show the word LIST and
+// the word DECK on one page over the same vocabulary, and picking a word in the
+// list moved the list alone — the deck stayed on the previous word, which reads
+// as the page ignoring the click. Reported in English, where the same one-way
+// wiring existed; this is the same defect in this subject.
+let showComputingWordInDeck = null;
 // The original renderers assign to their root's innerHTML. On a both-designs
 // page that root is the classic region, not #app — otherwise the first redraw
 // from a subtab or a Learned mark erases the deck mounted below.
@@ -730,6 +737,14 @@ function renderComputingWordsDeck(vocab) {
     deck.setSlides(shown.map(wordSlide));
   };
   d$("#word-search").addEventListener("input", drawDeck);
+  // Looked up against `shown` at click time, not against vocab: this deck has
+  // its own search box, deliberately separate from the list's, so a word's
+  // position moves under it. A word the deck has filtered out simply leaves the
+  // deck where the learner put it.
+  showComputingWordInDeck = (index) => {
+    const position = shown.findIndex((item) => item.index === index);
+    if (position >= 0) deck.goTo(position);
+  };
   drawDeck();
 }
 
@@ -773,7 +788,7 @@ function renderComputingWordsClassic(vocab) {
       <p style="margin-top:16px"><button class="button primary" id="words-done" type="button">I explored the computing words ✓</button></p>`;
     const search = c$("#word-search");
     search.addEventListener("input", () => { query = search.value.trim().toLowerCase(); const pos = search.selectionStart; draw(); const s = c$("#word-search"); s.focus(); s.setSelectionRange(pos, pos); });
-    c$$('[data-word]').forEach((button) => button.addEventListener("click", () => { activeIndex = Number(button.dataset.word); draw(); }));
+    c$$('[data-word]').forEach((button) => button.addEventListener("click", () => { activeIndex = Number(button.dataset.word); draw(); showComputingWordInDeck?.(activeIndex); }));
     c$("#listen-word").addEventListener("click", (event) => speakText(`${current.term}. ${current.meaning}`, event.currentTarget));
     c$("#check-word-sentence").addEventListener("click", () => {
       const written = c$("#word-sentence").value.trim().toLowerCase();
@@ -1923,6 +1938,7 @@ const config = {
     document.body.classList.remove("gc-full");
     classicRegion = null;
     deckRegion = null;
+    showComputingWordInDeck = null;
   },
   async load(ctx) {
     const s = ctx.stageNumber, u = ctx.unitNumber;

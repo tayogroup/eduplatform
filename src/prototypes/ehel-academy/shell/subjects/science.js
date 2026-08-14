@@ -148,6 +148,11 @@ const BOTH_DESIGNS = () => stageNumber <= DECK_MAX_STAGE;
 // document and the real #app when they are — so a grid renderer behaves exactly
 // as it did before at every stage that does not use this. Cleared in onBeforeRender.
 let classicRegion = null;
+// Published by renderScienceWordsDeck while both designs are mounted, cleared in
+// onBeforeRender with classicRegion. At the stages that show the word LIST and
+// the word DECK together, picking a word in the list moved the list alone and
+// left the deck on the previous word. Same one-way wiring reported in English.
+let showScienceWordInDeck = null;
 let deckMount = null;
 // `$("#app")` resolves to the region rather than the page. That one mapping is
 // what lets the ten grid renderers move into a half-page untouched: they keep
@@ -387,7 +392,7 @@ function renderScienceWordsClassic() {
       <p style="margin-top:16px"><button class="button primary" id="words-done" type="button">I explored the science words ✓</button></p>`;
     const search = $("#word-search");
     search.addEventListener("input", () => { query = search.value.trim().toLowerCase(); const pos = search.selectionStart; draw(); const s = $("#word-search"); s.focus(); s.setSelectionRange(pos, pos); });
-    $$('[data-word]').forEach((button) => button.addEventListener("click", () => { activeIndex = Number(button.dataset.word); draw(); }));
+    $$('[data-word]').forEach((button) => button.addEventListener("click", () => { activeIndex = Number(button.dataset.word); draw(); showScienceWordInDeck?.(activeIndex); }));
     $("#listen-word").addEventListener("click", (event) => speakText(`${current.term}. ${current.meaning}`, event.currentTarget));
     $("#check-word-sentence").addEventListener("click", () => {
       const written = $("#word-sentence").value.trim().toLowerCase();
@@ -497,6 +502,13 @@ function renderScienceWordsDeck() {
   // Re-decking replaces the track, not the tools row, so the search keeps focus
   // and the caret where the learner left it — no selection restore needed.
   $("#sci-deck-search").addEventListener("input", drawDeck);
+  // Against `shown` at click time: this deck has its own search, separate from
+  // the list's, so a word's position moves under it. A word filtered out of the
+  // deck leaves it where the learner put it.
+  showScienceWordInDeck = (index) => {
+    const position = shown.findIndex((entry) => entry.index === index);
+    if (position >= 0) deck.goTo(position);
+  };
   drawDeck();
 }
 
@@ -1702,7 +1714,7 @@ const config = {
   wehelOptions,
   // A deck takes the whole viewport while it is mounted; leaving the section has
   // to give it back, or the next page renders inside a full-bleed shell.
-  onBeforeRender: () => { document.body.classList.remove("gc-full"); classicRegion = null; deckMount = null; },
+  onBeforeRender: () => { document.body.classList.remove("gc-full"); classicRegion = null; deckMount = null; showScienceWordInDeck = null; },
   async load(ctx) {
     const s = ctx.stageNumber, u = ctx.unitNumber;
     if (isPrereqUnit) {

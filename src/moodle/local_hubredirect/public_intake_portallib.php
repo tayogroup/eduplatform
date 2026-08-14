@@ -330,11 +330,17 @@ function pqpirl_contact_submission_count(array $contacts, int $since): int {
         $params[$parentphoneparam] = $key;
         $params[$studentemailparam] = $key;
     }
-    return (int)$DB->count_records_select(
+    // COUNT(DISTINCT timecreated), matching public_intake.php: one submission
+    // can write a row per child, all stamped with the same $now, and counting
+    // rows would put a family of four over the three-per-hour limit the moment
+    // they enrolled their children together.
+    $rows = $DB->get_fieldset_select(
         'local_prequran_intake_request',
+        'DISTINCT timecreated',
         'timecreated >= :since AND (' . implode(' OR ', $likes) . ')',
         $params
     );
+    return is_array($rows) ? count($rows) : 0;
 }
 
 function pqpirl_value(array $form, string $name): string {

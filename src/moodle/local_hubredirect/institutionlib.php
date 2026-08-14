@@ -6,6 +6,15 @@ defined('MOODLE_INTERNAL') || die();
 require_once(__DIR__ . '/accesslib.php');
 require_once(__DIR__ . '/account_ids.php');
 
+// Additional children accepted on one intake submission, beyond the first. Ten
+// is far past any real family and well short of a useful amount of row-spam.
+// It lives here because this is the one file both intake front ends load --
+// public_intake.php and local_prequran/public_intake_data.php run in parallel
+// over the same form, and a cap that differed between them would be no cap.
+if (!defined('PQPIR_SIBLING_MAX')) {
+    define('PQPIR_SIBLING_MAX', 10);
+}
+
 function pqhi_clean_slug(string $value): string {
     $slug = strtolower(trim($value));
     $slug = preg_replace('/[^a-z0-9]+/', '-', $slug) ?? '';
@@ -906,7 +915,13 @@ function pqhi_intake_language(string $primarylanguage): string {
     return core_text::strtolower(trim($primarylanguage)) === 'somali' ? 'so' : 'en';
 }
 
-function pqhi_send_intake_receipt(?stdClass $consumer, string $toemail, string $parentname, string $studentname, int $requestid, int $submitted = 0, string $lang = 'en'): bool {
+/**
+ * $studentname and $requestid describe the FIRST child. $extrachildren carries
+ * any siblings on the same submission as ['name' => ..., 'requestid' => ...],
+ * so a family that enrolled three children gets one receipt listing three --
+ * not three near-identical emails, which reads as a bug rather than a service.
+ */
+function pqhi_send_intake_receipt(?stdClass $consumer, string $toemail, string $parentname, string $studentname, int $requestid, int $submitted = 0, string $lang = 'en', array $extrachildren = []): bool {
     $to = pqhi_public_email_recipient($toemail, $parentname);
     if (!$to) {
         return false;
@@ -920,15 +935,52 @@ function pqhi_send_intake_receipt(?stdClass $consumer, string $toemail, string $
     $student = trim($studentname) !== '' ? trim($studentname) : ($so ? 'ilmahaaga' : 'your child');
     $firstname = (string)preg_split('/\s+/', $student)[0];
 
+    // One reference per child, in one block, so a parent who entered three
+    // children can see that all three were received and which number belongs to
+    // whom. A single-child submission keeps the exact one-line block it has
+    // always had -- that wording is already in front of parents, and there is
+    // nothing to disambiguate when there is only one child.
+    $siblings = [];
+    foreach ($extrachildren as $child) {
+        $name = trim((string)($child['name'] ?? ''));
+        $ref = (int)($child['requestid'] ?? 0);
+        if ($name !== '' && $ref > 0) {
+            $siblings[] = ['name' => $name, 'requestid' => $ref];
+        }
+    }
+    if ($siblings) {
+        $count = count($siblings) + 1;
+        $reflabel = $so ? '  Tixraacyo: ' : '  References: ';
+        // Continuation lines hang under the first reference, so the pad is
+        // measured from the label rather than counted out by hand.
+        $pad = str_repeat(' ', core_text::strlen($reflabel));
+        $refblock = [$reflabel . $requestid . '  ' . $student];
+        foreach ($siblings as $sib) {
+            $refblock[] = $pad . $sib['requestid'] . '  ' . $sib['name'];
+        }
+        // The Somali line carries no numeral on purpose: "carruur" is a
+        // collective, so "2 carruur" reads wrong, and the reference block below
+        // names every child anyway.
+        $ledelines = $so
+            ? ['Waad ku mahadsan tahay -- waxaan helnay codsiyada diiwaangelinta', 'ee carruurtaada.']
+            : ['Thank you -- we have received your enrolment requests for your ' . $count . ' children.'];
+        $notyet = $so ? 'carruurtaada' : 'them';
+    } else {
+        $refblock = [($so ? '  Tixraac:   ' : '  Reference: ') . $requestid];
+        $ledelines = $so
+            ? ['Waad ku mahadsan tahay -- waxaan helnay codsigaaga diiwaangelinta ee', $student . '.']
+            : ['Thank you -- we have received your enrolment request for ' . $student . '.'];
+        $notyet = $firstname;
+    }
+
     if ($so) {
-        $subject = 'Waxaan helnay codsigaaga diiwaangelinta';
-        $lines = [
+        $subject = $siblings ? 'Waxaan helnay codsiyadaada diiwaangelinta' : 'Waxaan helnay codsigaaga diiwaangelinta';
+        $lines = array_merge([
             'Assalaamu calaykum ' . trim($parentname) . ',',
             '',
-            'Waad ku mahadsan tahay -- waxaan helnay codsigaaga diiwaangelinta ee',
-            $student . '.',
+        ], $ledelines, [
             '',
-            '  Tixraac:   ' . $requestid,
+        ], $refblock, [
             '  La diray:  ' . userdate($submitted),
             '',
             'Kooxdeennu way eegi doontaa, waxayna kuula soo laaban doontaa dhawaan.',
@@ -940,20 +992,20 @@ function pqhi_send_intake_receipt(?stdClass $consumer, string $toemail, string $
             'Haddii wax ka bedelmeen codsigaaga, ama aad su\'aal qabtid, kaliya ka',
             'jawaab fariintan -- waxay gaadhaysaa kooxdeenna diiwaangelinta.',
             '',
-            'Foomkan dirintiisu weli ma diiwaangelinayso ' . $firstname . ', waxbana',
+            'Foomkan dirintiisu weli ma diiwaangelinayso ' . $notyet . ', waxbana',
             'kuma khasbayo.',
             '',
             'Waad mahadsan tahay,',
             $brand,
-        ];
+        ]);
     } else {
-        $subject = 'We have your enrolment request';
-        $lines = [
+        $subject = $siblings ? 'We have your enrolment requests' : 'We have your enrolment request';
+        $lines = array_merge([
             'Assalamu alaykum ' . trim($parentname) . ',',
             '',
-            'Thank you -- we have received your enrolment request for ' . $student . '.',
+        ], $ledelines, [
             '',
-            '  Reference: ' . $requestid,
+        ], $refblock, [
             '  Submitted: ' . userdate($submitted),
             '',
             'Our team will review it and come back to you shortly. There is nothing you',
@@ -965,12 +1017,12 @@ function pqhi_send_intake_receipt(?stdClass $consumer, string $toemail, string $
             'If something in your request has changed, or you have a question, simply',
             'reply to this message -- it reaches our admissions team.',
             '',
-            'Sending this form does not enrol ' . $firstname . ' yet, and it does not',
+            'Sending this form does not enrol ' . $notyet . ' yet, and it does not',
             'commit you to anything.',
             '',
             'Thank you,',
             $brand,
-        ];
+        ]);
     }
     return pqhi_send_consumer_email($to, $consumer, $subject, implode("\n", $lines));
 }

@@ -15,6 +15,8 @@ const PQPIR_MAX_FORM_SECONDS = 7200;
 const PQPIR_SESSION_COOLDOWN_SECONDS = 60;
 const PQPIR_CONTACT_WINDOW_SECONDS = 3600;
 const PQPIR_CONTACT_WINDOW_LIMIT = 3;
+// PQPIR_SIBLING_MAX lives in institutionlib.php, the only file both this page
+// and the JSON twin load -- the two must cap at the same number.
 // Consumer slug of the school shown first in "Which school is this for?" and
 // preselected when the visitor has not chosen one.
 const PQPIR_DEFAULT_SCHOOL_SLUG = 'ehel-k12';
@@ -377,11 +379,65 @@ function pqpir_contact_submission_count(array $contacts, int $since): int {
         $params[$parentphoneparam] = $key;
         $params[$studentemailparam] = $key;
     }
-    return (int)$DB->count_records_select(
+    // COUNT(DISTINCT timecreated), not COUNT(*): one submission can now write a
+    // row per child, and every row of a submission is stamped with the same
+    // $now. Counting rows would put a family of four straight over the
+    // three-per-hour limit the moment they enrolled their children together --
+    // punishing exactly the case this feature exists to serve.
+    $rows = $DB->get_fieldset_select(
         'local_prequran_intake_request',
+        'DISTINCT timecreated',
         'timecreated >= :since AND (' . implode(' OR ', $likes) . ')',
         $params
     );
+    return is_array($rows) ? count($rows) : 0;
+}
+
+/**
+ * The additional children on one submission.
+ *
+ * Only the answers that genuinely differ between siblings are asked again --
+ * name, age, gender, grade and support needs. School, curriculum, address,
+ * languages, class preferences, timetable and consents are answered once and
+ * copied, which is the whole point of the feature and what the form tells the
+ * parent it will do.
+ *
+ * A row is ignored entirely unless it carries a name, so an empty card left
+ * open by a parent who changed their mind is not a validation error.
+ *
+ * Capped at PQPIR_SIBLING_MAX. The hourly limiter counts submissions, not rows,
+ * precisely so a family of five is not locked out halfway -- which means one
+ * POST carrying a thousand children would otherwise write a thousand rows and
+ * spend a single unit of the limit. The cap is what keeps that trade honest.
+ */
+function pqpir_sibling_rows(): array {
+    $first = optional_param_array('sibling_firstname', [], PARAM_TEXT);
+    $rows = [];
+    foreach (array_keys($first) as $i) {
+        if (count($rows) >= PQPIR_SIBLING_MAX) {
+            break;
+        }
+        $get = static function (string $field, int $limit) use ($i) {
+            $values = optional_param_array($field, [], PARAM_TEXT);
+            return pqpir_limit_text(trim((string)($values[$i] ?? '')), $limit);
+        };
+        $row = [
+            'firstname' => $get('sibling_firstname', 100),
+            'middle_name' => $get('sibling_middle_name', 100),
+            'lastname' => $get('sibling_lastname', 100),
+            'display_name' => $get('sibling_display_name', 255),
+            'age_years' => (string)(int)$get('sibling_age_years', 4),
+            'gender' => $get('sibling_gender', 20),
+            'current_grade' => $get('sibling_current_grade', 80),
+            'special_needs' => $get('sibling_special_needs', 20),
+            'medical_safety_notes' => $get('sibling_medical_safety_notes', 1000),
+        ];
+        if ($row['firstname'] === '' && $row['lastname'] === '') {
+            continue;
+        }
+        $rows[] = $row;
+    }
+    return $rows;
 }
 
 function pqpir_value(array $form, string $name): string {
@@ -788,6 +844,8 @@ $form = [
     'adult_learning_confidence' => '',
     'adult_support_needs' => '',
     'adult_notes' => '',
+    // Additional children on this submission; each becomes its own request row.
+    'siblings' => [],
     'course_type' => '',
     'country' => '',
     'city' => '',
@@ -824,6 +882,10 @@ if ($ready && !$needsschoolselection && $_SERVER['REQUEST_METHOD'] === 'POST') {
         'parent_phone' => pqpir_contact('parent_phone'),
         'emergency_contact_name' => pqpir_limit_text(pqpir_trim('emergency_contact_name'), 255),
         'emergency_contact_phone' => pqpir_contact('emergency_contact_phone'),
+        // Only K-12 offers the extra-children step, and only the K-12 branch of
+        // the validator checks those rows -- so read them nowhere else, or a
+        // hand-made POST on another path would insert children nothing vetted.
+        'siblings' => $isprimaryeducation ? pqpir_sibling_rows() : [],
         'student_firstname' => pqpir_limit_text(pqpir_trim('student_firstname'), 100),
         'student_middle_name' => pqpir_limit_text(pqpir_trim('student_middle_name'), 100),
         'student_lastname' => pqpir_limit_text(pqpir_trim('student_lastname'), 100),
@@ -1052,6 +1114,29 @@ foreach ([
         }
         if (pqpir_value($form, 'parent_phone') === '' && pqpir_value($form, 'parent_email') === '') {
             $errors['parent_phone'] = 'Please enter a parent/guardian phone, WhatsApp, or email contact.';
+        }
+        // Additional children are held to the same bar as the first: a
+        // half-filled sibling is a child arriving in the queue with no grade
+        // and no age, which is worse than being asked to finish the card.
+        foreach (($form['siblings'] ?? []) as $index => $sibling) {
+            $missing = [];
+            foreach ([
+                'firstname' => 'first name',
+                'lastname' => 'last name',
+                'age_years' => 'age',
+                'gender' => 'gender',
+                'current_grade' => 'current grade',
+                'special_needs' => 'Special Needs answer',
+            ] as $sfield => $slabel) {
+                $svalue = trim((string)($sibling[$sfield] ?? ''));
+                if ($svalue === '' || ($sfield === 'age_years' && (int)$svalue <= 0)) {
+                    $missing[] = $slabel;
+                }
+            }
+            if ($missing) {
+                $errors['sibling_' . $index] = 'Please complete the ' . implode(', ', $missing)
+                    . ' for child ' . ($index + 2) . ', or remove that child.';
+            }
         }
     }
     if ($ishighereducation) {
@@ -1507,6 +1592,52 @@ foreach ([
             $requestrecord->workspaceid = (int)$consumercontext->workspaceid;
         }
         $requestid = $DB->insert_record('local_prequran_intake_request', $requestrecord);
+
+        // One full request row per additional child. Everything the family
+        // answered once -- parent, address, languages, class preferences,
+        // timetable, consents -- is carried across verbatim, and only the
+        // per-child answers are replaced.
+        //
+        // Rows rather than a child table on purpose: a row IS what the rest of
+        // the system understands. The admin queue lists one per placement
+        // decision, approval converts one into one student, and the second
+        // child's approval links the parent account the first one created
+        // instead of duplicating it. Nothing downstream had to change.
+        //
+        // Only properties already on the record are overwritten, so a column
+        // this install does not have (special_needs is conditional) is not
+        // invented here.
+        $childnames = [trim(pqpir_value($form, 'student_firstname') . ' ' . pqpir_value($form, 'student_lastname'))];
+        $requestids = [(int)$requestid];
+        foreach (($form['siblings'] ?? []) as $sibling) {
+            $sibrecord = clone $requestrecord;
+            $sibname = trim($sibling['firstname'] . ' ' . $sibling['lastname']);
+            $display = trim((string)$sibling['display_name']);
+            $overrides = [
+                'student_firstname' => $sibling['firstname'],
+                'student_middle_name' => $sibling['middle_name'],
+                'student_lastname' => $sibling['lastname'],
+                'student_display_name' => $display !== '' ? $display
+                    : (string)preg_replace('/\s+/u', ' ', trim($sibling['firstname'] . ' ' . $sibling['middle_name'] . ' ' . $sibling['lastname'])),
+                // A sibling has no login of their own to give; the shared parent
+                // contact is what reaches this family, and copying the first
+                // child's address would point two records at one inbox.
+                'student_email' => '',
+                'age_years' => (int)$sibling['age_years'],
+                'gender' => $sibling['gender'],
+                'current_grade' => $sibling['current_grade'],
+                'special_needs' => $sibling['special_needs'],
+                'medical_safety_notes' => $sibling['medical_safety_notes'],
+            ];
+            foreach ($overrides as $column => $value) {
+                if (property_exists($sibrecord, $column)) {
+                    $sibrecord->{$column} = $value;
+                }
+            }
+            $requestids[] = (int)$DB->insert_record('local_prequran_intake_request', $sibrecord);
+            $childnames[] = $sibname;
+        }
+
         $SESSION->pqpir_last_submit = $now;
         $SESSION->pqpir_formtime = $now;
         // The receipt. Sent after the row is committed, so a mail failure can
@@ -1518,20 +1649,30 @@ foreach ([
         // returns false for every parent who gave a number. That is expected, not
         // an error; the audit records which, so the team can see who needs
         // contacting another way.
+        // ONE receipt for the whole submission, listing every child. Sending one
+        // per child would put three near-identical emails in a parent's inbox
+        // and read as a fault rather than a service.
+        $extrachildren = [];
+        foreach (array_slice($childnames, 1) as $i => $name) {
+            $extrachildren[] = ['name' => $name, 'requestid' => $requestids[$i + 1] ?? 0];
+        }
         $receiptsent = pqhi_send_intake_receipt(
             $consumercontext,
             pqpir_value($form, 'parent_email'),
             pqpir_value($form, 'parent_name'),
-            trim(pqpir_value($form, 'student_firstname') . ' ' . pqpir_value($form, 'student_lastname')),
+            $childnames[0],
             (int)$requestid,
             $now,
-            pqhi_intake_language(pqpir_value($form, 'primary_language'))
+            pqhi_intake_language(pqpir_value($form, 'primary_language')),
+            $extrachildren
         );
         pqpir_security_audit('public_intake_submitted', [
             'requestid' => (int)$requestid,
             'consumerid' => (int)$consumercontext->consumerid,
             'consumerslug' => (string)$consumercontext->consumerslug,
             'receipt_email_sent' => $receiptsent ? 1 : 0,
+            'children' => count($requestids),
+            'requestids' => implode(',', $requestids),
         ]);
         $returnurl = trim((string)($consumercontext->returnurl ?? ''));
         if ($returnurl !== '' && preg_match('#^https?://#i', $returnurl)) {
@@ -1554,7 +1695,7 @@ body.pqh-public-intake-page{padding-top:0!important}
 body.pqh-public-intake-page #page-wrapper,body.pqh-public-intake-page #page,body.pqh-public-intake-page #page-content,body.pqh-public-intake-page #region-main,body.pqh-public-intake-page .main-inner{margin:0!important;padding:0!important;max-width:none!important;border:0!important;background:transparent!important}
 .pqpir-shell{--pq-blue:#2f6f4e;--pq-blue-dark:#1f5138;--pq-blue-soft:#e4efe6;--pq-ink:#1c2b22;--pq-ink-2:#33463a;--pq-muted:#5c7267;--pq-line:#e3dcc8;--pq-line-strong:#c9bd9d;--pq-paper:#f7f4ec;--pq-card:#fffdf8;--pq-green:#2f6f4e;--pq-gold:#a5741e;--pq-gold-soft:#f4e6c8;--pq-hero-bg:#dbeafe;--pq-red:#9a3d2d;--pq-label:#2f5fad;--pq-serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;--pq-sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;--pq-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;position:fixed;inset:0;z-index:2147483000;overflow:auto;min-height:100vh;padding:0 0 64px;background:var(--pq-paper);font-family:var(--pq-sans);color:var(--pq-ink);-webkit-font-smoothing:antialiased}
 @media(prefers-color-scheme:dark){.pqpir-shell{--pq-blue:#7fc79e;--pq-blue-dark:#63a883;--pq-blue-soft:#1c3327;--pq-ink:#e8e3d3;--pq-ink-2:#cdd7c9;--pq-muted:#9fb0a4;--pq-line:#2a3a30;--pq-line-strong:#3a4c40;--pq-paper:#121d17;--pq-card:#16241c;--pq-green:#7fc79e;--pq-gold:#dcaa54;--pq-gold-soft:#3a301a;--pq-hero-bg:#1c2e47;--pq-red:#e08876;--pq-label:#8ab4e8}}
-.pqpir-wrap{max-width:920px;margin:0 auto;padding:18px 18px 0}.pqpir-hero,.pqpir-panel{background:var(--pq-card);border:1px solid var(--pq-line);border-radius:14px;box-shadow:0 2px 10px rgba(22,38,30,.06)}.pqpir-hero{padding:28px 32px;margin-bottom:16px}.pqpir-brand{display:inline-flex;align-items:center;gap:10px;margin-bottom:10px;color:var(--pq-blue);font-family:var(--pq-mono);font-size:11.5px;font-weight:600;letter-spacing:.09em;text-transform:uppercase}.pqpir-brand-mark{display:none}.pqpir-title{margin:0;font-family:var(--pq-serif);font-size:clamp(28px,4vw,38px);line-height:1.12;font-weight:600;color:var(--pq-ink);letter-spacing:-.01em}.pqpir-sub{margin:8px 0 0;color:var(--pq-muted);font-size:14.5px;font-weight:400;line-height:1.6}.pqpir-panel{padding:26px;margin-bottom:16px;overflow:hidden}.pqpir-panel h2{margin:0 0 18px;font-size:22px;line-height:1.2;font-weight:700;color:var(--pq-ink)}.pqpir-panel h3{display:block;margin:8px 0 24px;padding:0 0 16px;border-bottom:2px solid var(--pq-line-strong);background:none;color:var(--pq-ink);font-family:var(--pq-serif);font-size:24px;line-height:1.2;font-weight:600;letter-spacing:-.01em}.pqpir-panel h3:first-of-type{margin-top:0}.pqpir-panel h3 .pqpir-muted{display:block;margin-top:6px;font-family:var(--pq-sans);font-size:13px;font-weight:600;text-transform:none;letter-spacing:0}.pqpir-muted{color:var(--pq-muted);font-size:12px}.pqpir-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 20px}.pqpir-field{display:grid;gap:6px;margin-bottom:16px;align-content:start;align-self:start}.pqpir-field label{font-size:13px;font-weight:600;color:var(--pq-label)}.pqpir-hint{margin:-1px 0 1px;color:var(--pq-muted);font-size:12.5px;font-weight:400;line-height:1.45}.pqpir-checkrow .pqpir-hint{display:block;margin:3px 0 0;font-weight:400}.pqpir-req{color:var(--pq-red);font-weight:700}.pqpir-pref{padding:12px 15px;margin:0 0 16px;border:1px solid rgba(47,158,92,.25);border-radius:8px;background:#eefaf1;color:#1d6b3c;font-weight:600;font-size:13.5px}.pqpir-city-other{display:none}.pqpir-city-other--visible{display:grid}.pqpir-input{width:100%;min-height:44px;border:1px solid var(--pq-line-strong);border-radius:8px;padding:10px 13px;font:400 14.5px/1.3 var(--pq-sans);background:var(--pq-card);color:var(--pq-ink);transition:border-color .15s ease,box-shadow .15s ease}.pqpir-input::placeholder{color:#a3adb8}.pqpir-input:focus{outline:0;border-color:var(--pq-blue);box-shadow:0 0 0 3px rgba(47,111,78,.15)}.pqpir-multi{min-height:120px}.pqpir-textarea{min-height:90px;line-height:1.5}.pqpir-error{font-size:12px;font-weight:600;color:var(--pq-red)}.pqpir-field--error .pqpir-input,.pqpir-field--error .pqpir-calendar{border-color:var(--pq-red);background:#fef6f5}.pqpir-alert{padding:13px 18px;border-radius:8px;margin-bottom:14px;font-weight:600;font-size:14px;border:1px solid transparent}.pqpir-alert ul{margin:8px 0 0;padding-left:22px}.pqpir-alert--ok{background:#eefaf1;border-color:#bfe8cb;color:#1d6b3c}.pqpir-alert--bad{background:#fdeeec;border-color:#f3c3bc;color:#a3382a}.pqpir-calendar{overflow:auto;border:1px solid var(--pq-line);border-radius:8px;background:var(--pq-card)}.pqpir-calendar table{width:100%;border-collapse:separate;border-spacing:0;min-width:850px}.pqpir-calendar th,.pqpir-calendar td{border-bottom:1px solid var(--pq-line);border-right:1px solid var(--pq-line);padding:10px;text-align:center;font-weight:600}.pqpir-calendar th{background:var(--pq-blue-soft);color:var(--pq-blue-dark);font-size:12px}.pqpir-calendar td:first-child{text-align:left;color:var(--pq-ink);background:var(--pq-paper)}.pqpir-calendar tr:nth-child(even) td:first-child{background:#eef1f5}.pqpir-slot{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:7px;background:var(--pq-blue-soft);border:1px solid var(--pq-line-strong)}.pqpir-slot input{width:17px;height:17px;accent-color:var(--pq-blue)}.pqpir-checkrow{display:flex;gap:10px;align-items:flex-start;margin:10px 0 13px;font-size:13.5px;font-weight:500;color:var(--pq-ink)}.pqpir-checkrow input{width:18px;height:18px;accent-color:var(--pq-blue)}.pqpir-level-guide{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:4px 0 14px}.pqpir-level-card{padding:12px;border:1px solid var(--pq-line);border-radius:8px;background:var(--pq-paper)}.pqpir-level-card strong{display:block;margin-bottom:5px;color:var(--pq-ink);font-size:13px}.pqpir-level-card p{margin:4px 0;color:var(--pq-muted);font-size:12px;font-weight:400;line-height:1.4}.pqpir-btn{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:0 24px;border:0;border-radius:8px;background:var(--pq-blue);color:#fff!important;text-decoration:none;font-size:15px;font-weight:600;cursor:pointer;box-shadow:0 1px 2px rgba(47,111,78,.3)}.pqpir-btn:hover{background:var(--pq-blue-dark)}.pqpir-btn[hidden]{display:none!important}.pqpir-btn-ghost{background:transparent;color:var(--pq-ink)!important;border:1px solid var(--pq-line-strong);box-shadow:none}.pqpir-btn-ghost:hover{background:var(--pq-paper)}.pqpir-empty{padding:18px;border:1px dashed var(--pq-line-strong);border-radius:8px;color:var(--pq-muted);font-weight:500;background:var(--pq-paper)}.pqpir-trap{position:absolute!important;left:-10000px!important;width:1px!important;height:1px!important;overflow:hidden!important}
+.pqpir-wrap{max-width:920px;margin:0 auto;padding:18px 18px 0}.pqpir-hero,.pqpir-panel{background:var(--pq-card);border:1px solid var(--pq-line);border-radius:14px;box-shadow:0 2px 10px rgba(22,38,30,.06)}.pqpir-hero{padding:28px 32px;margin-bottom:16px}.pqpir-brand{display:inline-flex;align-items:center;gap:10px;margin-bottom:10px;color:var(--pq-blue);font-family:var(--pq-mono);font-size:11.5px;font-weight:600;letter-spacing:.09em;text-transform:uppercase}.pqpir-brand-mark{display:none}.pqpir-title{margin:0;font-family:var(--pq-serif);font-size:clamp(28px,4vw,38px);line-height:1.12;font-weight:600;color:var(--pq-ink);letter-spacing:-.01em}.pqpir-sub{margin:8px 0 0;color:var(--pq-muted);font-size:14.5px;font-weight:400;line-height:1.6}.pqpir-panel{padding:26px;margin-bottom:16px;overflow:hidden}.pqpir-panel h2{margin:0 0 18px;font-size:22px;line-height:1.2;font-weight:700;color:var(--pq-ink)}.pqpir-panel h3{display:block;margin:8px 0 24px;padding:0 0 16px;border-bottom:2px solid var(--pq-line-strong);background:none;color:var(--pq-ink);font-family:var(--pq-serif);font-size:24px;line-height:1.2;font-weight:600;letter-spacing:-.01em}.pqpir-panel h3:first-of-type{margin-top:0}.pqpir-panel h3 .pqpir-muted{display:block;margin-top:6px;font-family:var(--pq-sans);font-size:13px;font-weight:600;text-transform:none;letter-spacing:0}.pqpir-muted{color:var(--pq-muted);font-size:12px}.pqpir-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 20px}.pqpir-field{display:grid;gap:6px;margin-bottom:16px;align-content:start;align-self:start}.pqpir-field label{font-size:13px;font-weight:600;color:var(--pq-label)}.pqpir-hint{margin:-1px 0 1px;color:var(--pq-muted);font-size:12.5px;font-weight:400;line-height:1.45}.pqpir-checkrow .pqpir-hint{display:block;margin:3px 0 0;font-weight:400}.pqpir-req{color:var(--pq-red);font-weight:700}.pqpir-pref{padding:12px 15px;margin:0 0 16px;border:1px solid rgba(47,158,92,.25);border-radius:8px;background:#eefaf1;color:#1d6b3c;font-weight:600;font-size:13.5px}.pqpir-city-other{display:none}.pqpir-city-other--visible{display:grid}.pqpir-input{width:100%;min-height:44px;border:1px solid var(--pq-line-strong);border-radius:8px;padding:10px 13px;font:400 14.5px/1.3 var(--pq-sans);background:var(--pq-card);color:var(--pq-ink);transition:border-color .15s ease,box-shadow .15s ease}.pqpir-input::placeholder{color:#a3adb8}.pqpir-input:focus{outline:0;border-color:var(--pq-blue);box-shadow:0 0 0 3px rgba(47,111,78,.15)}.pqpir-multi{min-height:120px}.pqpir-textarea{min-height:90px;line-height:1.5}.pqpir-error{font-size:12px;font-weight:600;color:var(--pq-red)}.pqpir-field--error .pqpir-input,.pqpir-field--error .pqpir-calendar{border-color:var(--pq-red);background:#fef6f5}.pqpir-alert{padding:13px 18px;border-radius:8px;margin-bottom:14px;font-weight:600;font-size:14px;border:1px solid transparent}.pqpir-alert ul{margin:8px 0 0;padding-left:22px}.pqpir-alert--ok{background:#eefaf1;border-color:#bfe8cb;color:#1d6b3c}.pqpir-alert--bad{background:#fdeeec;border-color:#f3c3bc;color:#a3382a}.pqpir-calendar{overflow:auto;border:1px solid var(--pq-line);border-radius:8px;background:var(--pq-card)}.pqpir-calendar table{width:100%;border-collapse:separate;border-spacing:0;min-width:850px}.pqpir-calendar th,.pqpir-calendar td{border-bottom:1px solid var(--pq-line);border-right:1px solid var(--pq-line);padding:10px;text-align:center;font-weight:600}.pqpir-calendar th{background:var(--pq-blue-soft);color:var(--pq-blue-dark);font-size:12px}.pqpir-calendar td:first-child{text-align:left;color:var(--pq-ink);background:var(--pq-paper)}.pqpir-calendar tr:nth-child(even) td:first-child{background:#eef1f5}.pqpir-slot{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:7px;background:var(--pq-blue-soft);border:1px solid var(--pq-line-strong)}.pqpir-slot input{width:17px;height:17px;accent-color:var(--pq-blue)}.pqpir-checkrow{display:flex;gap:10px;align-items:flex-start;margin:10px 0 13px;font-size:13.5px;font-weight:500;color:var(--pq-ink)}.pqpir-checkrow input{width:18px;height:18px;accent-color:var(--pq-blue)}.pqpir-level-guide{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:4px 0 14px}.pqpir-level-card{padding:12px;border:1px solid var(--pq-line);border-radius:8px;background:var(--pq-paper)}.pqpir-level-card strong{display:block;margin-bottom:5px;color:var(--pq-ink);font-size:13px}.pqpir-level-card p{margin:4px 0;color:var(--pq-muted);font-size:12px;font-weight:400;line-height:1.4}.pqpir-btn{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:0 24px;border:0;border-radius:8px;background:var(--pq-blue);color:#fff!important;text-decoration:none;font-size:15px;font-weight:600;cursor:pointer;box-shadow:0 1px 2px rgba(47,111,78,.3)}.pqpir-btn:hover{background:var(--pq-blue-dark)}.pqpir-btn[hidden]{display:none!important}.pqpir-btn-ghost{background:transparent;color:var(--pq-ink)!important;border:1px solid var(--pq-line-strong);box-shadow:none}.pqpir-btn-ghost:hover{background:var(--pq-paper)}.pqpir-empty{padding:18px;border:1px dashed var(--pq-line-strong);border-radius:8px;color:var(--pq-muted);font-weight:500;background:var(--pq-paper)}.pqpir-sib-h{margin:26px 0 8px;padding-top:20px;border-top:1px solid var(--pq-line-strong);font-family:var(--pq-serif);font-size:19px;font-weight:600;color:var(--pq-ink);letter-spacing:-.01em}.pqpir-sib-lede{margin:0 0 16px;font-size:13.5px;line-height:1.55}.pqpir-sib{padding:16px 16px 4px;margin-bottom:14px;border:1px solid var(--pq-line-strong);border-radius:10px;background:var(--pq-paper)}.pqpir-sib--error{border-color:var(--pq-red);background:#fef6f5}.pqpir-sib-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}.pqpir-sib-head strong{font-size:15px;color:var(--pq-ink)}.pqpir-sib-remove{border:0;background:none;padding:4px 2px;color:var(--pq-red);font:600 13px/1 var(--pq-sans);cursor:pointer;text-decoration:underline}.pqpir-trap{position:absolute!important;left:-10000px!important;width:1px!important;height:1px!important;overflow:hidden!important}
 @media(max-width:760px){.pqpir-grid,.pqpir-level-guide{grid-template-columns:1fr}.pqpir-title{font-size:24px}.pqpir-wrap{padding:12px 10px 0}.pqpir-hero{padding:20px 18px}.pqpir-panel{padding:18px}.pqpir-panel h3{font-size:19px;margin:4px 0 18px;padding:0 0 12px}.pqpir-sub{font-size:14px}}
 .pqpir-navbrand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--pq-ink)!important;min-width:0;margin-bottom:16px}.pqpir-navmark{width:40px;height:40px;border-radius:8px;background:var(--pq-blue);color:#fff;display:grid;place-items:center;font-size:16px;font-weight:700;flex:0 0 auto}.pqpir-navmark--img{width:58px;height:58px;padding:0;background:none;border:0;border-radius:0}.pqpir-navmark--img img{display:block;width:100%;height:100%;object-fit:contain}.pqpir-navname{font-size:17px;font-weight:700;line-height:1.1;white-space:normal}
 <?php echo pqh_dashboard_header_css(); ?>
@@ -1736,6 +1877,66 @@ body.pqh-public-intake-page #page-wrapper,body.pqh-public-intake-page #page,body
               <div class="pqpir-field<?php echo isset($errors['special_needs']) ? ' pqpir-field--error' : ''; ?>"><label>Special learning needs / accommodations</label><?php echo pqpir_hint('Choose Yes if the student needs any learning support or adjustment — extra time, help with reading, larger text, a quieter setting. Describe it in the notes box below.'); ?><select class="pqpir-input" name="special_needs"><option value="">Select</option><option value="no"<?php echo pqpir_selected($form, 'special_needs', 'no'); ?>>No</option><option value="yes"<?php echo pqpir_selected($form, 'special_needs', 'yes'); ?>>Yes</option></select><?php echo pqpir_error($errors, 'special_needs'); ?></div>
             </div>
             <div class="pqpir-field<?php echo isset($errors['medical_safety_notes']) ? ' pqpir-field--error' : ''; ?>"><label>Medical/allergy/safety notes</label><?php echo pqpir_hint('Optional. Allergies, medication, or any condition a teacher should know about to keep the student safe and supported. Leave blank if there is nothing to report.'); ?><textarea class="pqpir-input pqpir-textarea" name="medical_safety_notes"><?php echo s(pqpir_value($form, 'medical_safety_notes')); ?></textarea><?php echo pqpir_error($errors, 'medical_safety_notes'); ?></div>
+
+            <?php // Siblings. Only what genuinely differs between children is asked
+                  // again; school, curriculum, address, languages, class preferences,
+                  // timetable and consents are answered once above and copied to each
+                  // child, which is what the note under the heading promises.
+                  //
+                  // A card is ignored unless it carries a name, so a parent who opens
+                  // one and changes their mind is not blocked by a validation error.
+                  //
+                  // Deliberately NOT its own wizard page. The step count is derived
+                  // from .pqpir-page, so a new page would silently turn "Step 3 of 6"
+                  // into "of 7" -- and the parent guide videos, in both languages, tell
+                  // families the form has six steps. It also belongs here on the
+                  // merits: this step already asks age, gender, grade and support
+                  // needs, which is exactly the set a sibling card repeats. ?>
+            <h4 class="pqpir-sib-h">Another child?</h4>
+            <p class="pqpir-muted pqpir-sib-lede">If you are enrolling more than one child, add them here.
+              Everything you have already answered &mdash; your details, where you live, languages,
+              class preferences and the timetable &mdash; is used for every child, so you only
+              fill in what is different.</p>
+
+            <div data-sib-list>
+              <?php foreach (($form['siblings'] ?? []) as $sibindex => $sib): ?>
+                <div class="pqpir-sib<?php echo isset($errors['sibling_' . $sibindex]) ? ' pqpir-sib--error' : ''; ?>" data-sib-card>
+                  <div class="pqpir-sib-head"><strong data-sib-title>Child <?php echo (int)$sibindex + 2; ?></strong><button type="button" class="pqpir-sib-remove" data-sib-remove>Remove</button></div>
+                  <?php echo pqpir_error($errors, 'sibling_' . $sibindex); ?>
+                  <div class="pqpir-grid">
+                    <div class="pqpir-field"><label>First name</label><input class="pqpir-input" name="sibling_firstname[]" value="<?php echo s((string)$sib['firstname']); ?>"></div>
+                    <div class="pqpir-field"><label>Middle name</label><?php echo pqpir_hint('Optional.'); ?><input class="pqpir-input" name="sibling_middle_name[]" value="<?php echo s((string)$sib['middle_name']); ?>"></div>
+                    <div class="pqpir-field"><label>Last name</label><input class="pqpir-input" name="sibling_lastname[]" value="<?php echo s((string)$sib['lastname']); ?>"></div>
+                    <div class="pqpir-field"><label>Preferred name</label><?php echo pqpir_hint('Optional.'); ?><input class="pqpir-input" name="sibling_display_name[]" value="<?php echo s((string)$sib['display_name']); ?>"></div>
+                    <div class="pqpir-field"><label>Age</label><input class="pqpir-input" name="sibling_age_years[]" type="number" min="1" max="99" value="<?php echo s((string)((int)$sib['age_years'] ?: '')); ?>"></div>
+                    <div class="pqpir-field"><label>Gender</label><select class="pqpir-input" name="sibling_gender[]"><option value="">Select</option><option value="female"<?php echo $sib['gender'] === 'female' ? ' selected' : ''; ?>>Female</option><option value="male"<?php echo $sib['gender'] === 'male' ? ' selected' : ''; ?>>Male</option></select></div>
+                    <div class="pqpir-field"><label>Current grade/year</label><select class="pqpir-input" name="sibling_current_grade[]"><option value="">Select</option><?php foreach (($options['primary_grade_levels'] ?? []) as $gv => $gl): ?><option value="<?php echo s((string)$gv); ?>"<?php echo (string)$sib['current_grade'] === (string)$gv ? ' selected' : ''; ?>><?php echo s((string)$gl); ?></option><?php endforeach; ?></select></div>
+                    <div class="pqpir-field"><label>Special learning needs</label><select class="pqpir-input" name="sibling_special_needs[]"><option value="">Select</option><option value="no"<?php echo $sib['special_needs'] === 'no' ? ' selected' : ''; ?>>No</option><option value="yes"<?php echo $sib['special_needs'] === 'yes' ? ' selected' : ''; ?>>Yes</option></select></div>
+                  </div>
+                  <div class="pqpir-field"><label>Medical/allergy/safety notes</label><?php echo pqpir_hint('Optional, and specific to this child.'); ?><textarea class="pqpir-input pqpir-textarea" name="sibling_medical_safety_notes[]"><?php echo s((string)$sib['medical_safety_notes']); ?></textarea></div>
+                </div>
+              <?php endforeach; ?>
+            </div>
+            <?php // Always rendered, hidden and disabled: without it the first
+                  // "Add another child" on a fresh page would have nothing to clone.
+                  // Disabled inputs are not posted, so this never becomes a phantom
+                  // child in the queue. ?>
+            <div class="pqpir-sib" data-sib-template hidden>
+              <div class="pqpir-sib-head"><strong data-sib-title>Child</strong><button type="button" class="pqpir-sib-remove" data-sib-remove>Remove</button></div>
+              <div class="pqpir-grid">
+                <div class="pqpir-field"><label>First name</label><input class="pqpir-input" name="sibling_firstname[]" disabled></div>
+                <div class="pqpir-field"><label>Middle name</label><?php echo pqpir_hint('Optional.'); ?><input class="pqpir-input" name="sibling_middle_name[]" disabled></div>
+                <div class="pqpir-field"><label>Last name</label><input class="pqpir-input" name="sibling_lastname[]" disabled></div>
+                <div class="pqpir-field"><label>Preferred name</label><?php echo pqpir_hint('Optional.'); ?><input class="pqpir-input" name="sibling_display_name[]" disabled></div>
+                <div class="pqpir-field"><label>Age</label><input class="pqpir-input" name="sibling_age_years[]" type="number" min="1" max="99" disabled></div>
+                <div class="pqpir-field"><label>Gender</label><select class="pqpir-input" name="sibling_gender[]" disabled><option value="">Select</option><option value="female">Female</option><option value="male">Male</option></select></div>
+                <div class="pqpir-field"><label>Current grade/year</label><select class="pqpir-input" name="sibling_current_grade[]" disabled><option value="">Select</option><?php foreach (($options['primary_grade_levels'] ?? []) as $gv => $gl): ?><option value="<?php echo s((string)$gv); ?>"><?php echo s((string)$gl); ?></option><?php endforeach; ?></select></div>
+                <div class="pqpir-field"><label>Special learning needs</label><select class="pqpir-input" name="sibling_special_needs[]" disabled><option value="">Select</option><option value="no">No</option><option value="yes">Yes</option></select></div>
+              </div>
+              <div class="pqpir-field"><label>Medical/allergy/safety notes</label><?php echo pqpir_hint('Optional, and specific to this child.'); ?><textarea class="pqpir-input pqpir-textarea" name="sibling_medical_safety_notes[]" disabled></textarea></div>
+            </div>
+            <button type="button" class="pqpir-btn pqpir-btn-ghost" data-sib-add>+ Add another child</button>
+            <p class="pqpir-muted" style="margin-top:10px">Each child gets their own place and their own login. You will receive one email listing them all.</p>
           <?php endif; ?>
 
           <?php if ($parentguardianrequired && !$parentguardianfirst): ?>
@@ -2117,6 +2318,54 @@ body.pqh-public-intake-page #page-wrapper,body.pqh-public-intake-page #page,body
   });
 
   render();
+})();
+</script>
+<script>
+(function () {
+  // Siblings are added by cloning the first card rather than by building markup
+  // in JS: the card is rendered by PHP, so the two cannot drift when a field is
+  // added, and a parent with JS disabled still sees any cards that came back
+  // from a failed submission.
+  var list = document.querySelector('[data-sib-list]');
+  var add = document.querySelector('[data-sib-add]');
+  if (!list || !add) { return; }
+
+  var template = document.querySelector('[data-sib-template]');
+  if (!template) { return; }
+
+  function renumber() {
+    Array.prototype.forEach.call(list.querySelectorAll('[data-sib-card]'), function (card, i) {
+      var title = card.querySelector('[data-sib-title]');
+      if (title) { title.textContent = 'Child ' + (i + 2); }
+    });
+  }
+
+  function wire(card) {
+    var remove = card.querySelector('[data-sib-remove]');
+    if (remove) {
+      remove.addEventListener('click', function () { card.remove(); renumber(); });
+    }
+  }
+
+  Array.prototype.forEach.call(list.querySelectorAll('[data-sib-card]'), wire);
+
+  add.addEventListener('click', function () {
+    var card = template.cloneNode(true);
+    card.removeAttribute('hidden');
+    card.removeAttribute('data-sib-template');
+    card.setAttribute('data-sib-card', '');
+    // The template's controls are disabled so it never posts; a real card's
+    // must be live, or the child the parent just typed would be dropped
+    // silently on submit.
+    Array.prototype.forEach.call(card.querySelectorAll('input, select, textarea'), function (el) {
+      el.disabled = false;
+    });
+    list.appendChild(card);
+    wire(card);
+    renumber();
+    var firstinput = card.querySelector('input');
+    if (firstinput) { firstinput.focus(); }
+  });
 })();
 </script>
 <?php

@@ -461,6 +461,14 @@ foreach ($requiredfields as $field => $errormessage) {
         $errors[$field] = $errormessage;
     }
 }
+// The additional children on this submission, read once and capped once. Both
+// the validator below and the insert further down walk this exact array --
+// deriving it twice is how one of them ends up checking a row the other drops.
+// Gated on K-12 because only that branch of the validator inspects these rows.
+$siblinginput = ($isprimaryeducation && is_array($body['siblings'] ?? null))
+    ? array_slice(array_values($body['siblings']), 0, PQPIR_SIBLING_MAX)
+    : [];
+
 if ($isprimaryeducation) {
     // Date of birth is deliberately absent from this list and from the form.
     // Age carries the placement check on its own; asking a family to fetch a
@@ -482,6 +490,35 @@ foreach ([
     }
     if (pqpirl_value($form, 'parent_phone') === '' && pqpirl_value($form, 'parent_email') === '') {
         $errors['parent_phone'] = 'Please enter a parent/guardian phone, WhatsApp, or email contact.';
+    }
+    // Additional children are held to the same bar as the first, matching
+    // public_intake.php -- a half-filled sibling is a child arriving in the
+    // queue with no grade and no age. Without this the JSON twin would accept
+    // rows the page rejects, which is the one thing these two must never do.
+    // Validated over the same capped slice the insert walks, so a row can never
+    // be checked here and then silently dropped there, or the reverse.
+    foreach ($siblinginput as $index => $sibling) {
+        if (!is_array($sibling)) {
+            continue;
+        }
+        $missing = [];
+        foreach ([
+            'firstname' => 'first name',
+            'lastname' => 'last name',
+            'age_years' => 'age',
+            'gender' => 'gender',
+            'current_grade' => 'current grade',
+            'special_needs' => 'Special Needs answer',
+        ] as $sfield => $slabel) {
+            $svalue = trim((string)($sibling[$sfield] ?? ''));
+            if ($svalue === '' || ($sfield === 'age_years' && (int)$svalue <= 0)) {
+                $missing[] = $slabel;
+            }
+        }
+        if ($missing) {
+            $errors['sibling_' . $index] = 'Please complete the ' . implode(', ', $missing)
+                . ' for child ' . ((int)$index + 2) . ', or remove that child.';
+        }
     }
 }
 if ($ishighereducation) {
@@ -929,6 +966,49 @@ if (pqpirl_table_has_column('local_prequran_intake_request', 'workspaceid')) {
     $requestrecord->workspaceid = (int)($consumercontext->workspaceid ?? 0);
 }
 $requestid = $DB->insert_record('local_prequran_intake_request', $requestrecord);
+
+// One row per additional child, matching public_intake.php exactly -- these two
+// run in parallel over the same form, so a family must get the same result
+// whichever front end they used. Siblings arrive as a `siblings` array in the
+// JSON body; each carries only the answers that differ between children.
+$childnames = [trim(pqpirl_value($form, 'student_firstname') . ' ' . pqpirl_value($form, 'student_lastname'))];
+$requestids = [(int)$requestid];
+foreach ($siblinginput as $sibling) {
+    if (!is_array($sibling)) {
+        continue;
+    }
+    $sfirst = pqpirl_limit_text(trim((string)($sibling['firstname'] ?? '')), 100);
+    $slast = pqpirl_limit_text(trim((string)($sibling['lastname'] ?? '')), 100);
+    if ($sfirst === '' && $slast === '') {
+        continue;
+    }
+    $sibrecord = clone $requestrecord;
+    $sdisplay = pqpirl_limit_text(trim((string)($sibling['display_name'] ?? '')), 255);
+    $overrides = [
+        'student_firstname' => $sfirst,
+        'student_middle_name' => pqpirl_limit_text(trim((string)($sibling['middle_name'] ?? '')), 100),
+        'student_lastname' => $slast,
+        'student_display_name' => $sdisplay !== '' ? $sdisplay
+            : (string)preg_replace('/\s+/u', ' ', trim($sfirst . ' ' . $slast)),
+        'student_email' => '',
+        'age_years' => (int)($sibling['age_years'] ?? 0),
+        'gender' => pqpirl_limit_text(trim((string)($sibling['gender'] ?? '')), 20),
+        'current_grade' => pqpirl_limit_text(trim((string)($sibling['current_grade'] ?? '')), 80),
+        'special_needs' => pqpirl_limit_text(trim((string)($sibling['special_needs'] ?? '')), 20),
+        'medical_safety_notes' => pqpirl_limit_text(trim((string)($sibling['medical_safety_notes'] ?? '')), 1000),
+    ];
+    foreach ($overrides as $column => $value) {
+        if (property_exists($sibrecord, $column)) {
+            $sibrecord->{$column} = $value;
+        }
+    }
+    $requestids[] = (int)$DB->insert_record('local_prequran_intake_request', $sibrecord);
+    $childnames[] = trim($sfirst . ' ' . $slast);
+}
+$extrachildren = [];
+foreach (array_slice($childnames, 1) as $ci => $cname) {
+    $extrachildren[] = ['name' => $cname, 'requestid' => $requestids[$ci + 1] ?? 0];
+}
 // The receipt, matching public_intake.php exactly -- these two run in parallel
 // over the same form, so a parent must get the same acknowledgement whichever
 // front end they used. Sent after commit, so a mail failure cannot cost them the
@@ -941,13 +1021,16 @@ $receiptsent = pqhi_send_intake_receipt(
     trim(pqpirl_value($form, 'student_firstname') . ' ' . pqpirl_value($form, 'student_lastname')),
     (int)$requestid,
     0,
-    pqhi_intake_language(pqpirl_value($form, 'primary_language'))
+    pqhi_intake_language(pqpirl_value($form, 'primary_language')),
+    $extrachildren
 );
 pqpirl_security_audit('public_intake_submitted', [
     'requestid' => (int)$requestid,
     'consumerid' => (int)($consumercontext->consumerid ?? 0),
     'consumerslug' => (string)($consumercontext->consumerslug ?? ''),
     'receipt_email_sent' => $receiptsent ? 1 : 0,
+    'children' => count($requestids),
+    'requestids' => implode(',', $requestids),
 ]);
 
 // g) success — the legacy thank-you message (legacy redirects to

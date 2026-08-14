@@ -885,6 +885,10 @@ let audioRequestId = 0;
 let pageNarrationActive = false;
 let pageNarrationCancel = null;
 let activeWordId;
+// Set by renderWordCarousel while both designs are mounted, cleared by
+// onBeforeRender with the other region state — a handler in the lab must never
+// reach into a deck belonging to a section that has already been replaced.
+let showWordInDeck = null;
 let activeSentence = 0;
 let quizIndex = 0;
 let quizScore = 0;
@@ -1711,7 +1715,7 @@ function renderDictionaryClassic() {
     const filtered = words.filter((item) => (group === "all" || item.groupId === group) && (!query || `${item.master.displayWord} ${item.childMeaning}`.toLowerCase().includes(query)));
     $("#dictionary-count").textContent = `${filtered.length} words`;
     $("#word-list").innerHTML = filtered.length ? filtered.map((item) => `<button class="word-row ${item.vocabularyId === activeWordId ? "active" : ""}" data-word="${item.vocabularyId}" type="button"><span><strong>${escapeHtml(item.master.displayWord)}</strong><small>${escapeHtml(item.master.partOfSpeech)} · ${escapeHtml(item.groupTitle)}</small></span>${progress.knownWords.includes(item.vocabularyId) ? "<span>LEARNED</span>" : ""}</button>`).join("") : `<div class="empty">No matching words found.</div>`;
-    $$('[data-word]').forEach((button) => button.addEventListener("click", () => { activeWordId = button.dataset.word; activeSentence = 0; drawList(); drawWord(); }));
+    $$('[data-word]').forEach((button) => button.addEventListener("click", () => { activeWordId = button.dataset.word; activeSentence = 0; drawList(); drawWord(); showWordInDeck?.(activeWordId); }));
   };
   const drawWord = () => {
     const item = words.find((word) => word.vocabularyId === activeWordId) || words[0];
@@ -1845,6 +1849,25 @@ function renderWordCarousel() {
     const position = words.findIndex((item) => item.vocabularyId === id);
     if (position < 0) return;
     deck.redrawSlide(position, wordSlide(words[position], position));
+  };
+
+  // Lets the word list ABOVE move this deck. At Grades 1-4 both designs are on
+  // screen showing the same words, so picking a word in the lab and watching the
+  // deck stay on the previous one reads as the page ignoring the click — which
+  // is what a learner reported. The lab already repaints its own card; this is
+  // the other half of that.
+  //
+  // Published as a function rather than the deck itself so the lookup happens
+  // against `words` AS IT IS WHEN CLICKED — the deck filters itself, so a word's
+  // index moves under it, the same reason redrawWord addresses slides by id.
+  //
+  // A word the deck has filtered out has no slide to show, so the click moves
+  // the lab alone. The two halves filter independently on purpose (see inDeck
+  // below), and yanking the deck's filter open from the other design would be a
+  // bigger surprise than leaving it where the learner put it.
+  showWordInDeck = (id) => {
+    const position = words.findIndex((item) => item.vocabularyId === id);
+    if (position >= 0) deck.goTo(position);
   };
 
   const deck = mountDeck({
@@ -4092,7 +4115,7 @@ const config = {
   // classicRegion and deckMount are per-render state: a section that draws both
   // designs sets them, and every other section must find them clear or it would
   // paint into a region the previous section left behind.
-  onBeforeRender: () => { route = shellCtx.route; stopAudio(); document.body.classList.remove("gc-full"); classicRegion = null; deckMount = null; $("#app").setAttribute("aria-busy", "true"); },
+  onBeforeRender: () => { route = shellCtx.route; stopAudio(); document.body.classList.remove("gc-full"); classicRegion = null; deckMount = null; showWordInDeck = null; $("#app").setAttribute("aria-busy", "true"); },
   onAfterRender: () => { $("#app").setAttribute("aria-busy", "false"); prepareScreenReaderView(); icons(); },
   onNavRendered: () => { renderUnitPickers(); paintSectionLocks(); icons(); },
   // Every route draws the locked page while a unit is locked. The check is

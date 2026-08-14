@@ -109,6 +109,25 @@ function pqpc_update_consumer(
     if (!pqhi_consumer_slug_available($slug, $consumerid)) {
         throw new invalid_parameter_exception('Consumer slug is already used.');
     }
+    // The email sender name is derived from the consumer name at creation
+    // (pqhi_upsert_consumer_app defaults emailfromname to $name), and this form
+    // has no field for it -- nor does any other form for a non-foundation
+    // consumer; the only emailfromname input in the plugin is in
+    // platform_settings.php, which loads slug='eduplatform' alone.
+    //
+    // So a rename here changed the school's name everywhere EXCEPT the From line
+    // of every email it sends, and left the stale value unreachable through the
+    // UI. That is how "Ehel Primary & Secondary" kept writing to families as
+    // "Ehel Primary School".
+    //
+    // Follow the rename only when the stored sender name still matches the OLD
+    // consumer name, i.e. it was auto-derived and nobody has deliberately chosen
+    // a different one. A sender name set on purpose is left alone.
+    $oldname = trim((string)($consumer->name ?? ''));
+    $oldfromname = trim((string)($consumer->emailfromname ?? ''));
+    if ($oldfromname === '' || $oldfromname === $oldname) {
+        $consumer->emailfromname = $name;
+    }
     $consumer->name = $name;
     $consumer->slug = $slug;
     $consumer->consumer_type = $consumertype;

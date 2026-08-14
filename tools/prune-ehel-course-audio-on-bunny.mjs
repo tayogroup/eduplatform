@@ -24,6 +24,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { createRequire } from "node:module";
+const { readManifest, writeManifest } = createRequire(import.meta.url)("./lib/upload-manifest.js");
 import { fileURLToPath } from "node:url";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -134,10 +135,13 @@ await Promise.all(Array.from({ length: 8 }, worker));
 // Drop the deleted paths from the upload manifest, or a later run would treat
 // them as already uploaded and skip them if they ever became reachable again.
 if (fs.existsSync(MANIFEST)) {
-  const entries = new Set(JSON.parse(fs.readFileSync(MANIFEST, "utf8")));
-  const before = entries.size;
-  for (const o of orphans) entries.delete(o);
-  fs.writeFileSync(MANIFEST, JSON.stringify([...entries]));
-  console.log(`manifest: ${before} → ${entries.size} entries`);
+  // Through the shared reader/writer: this block used to parse the file as an
+  // array and write one back, which would silently strip every hash and
+  // reintroduce the skip-a-re-recorded-clip bug on the next prune.
+  const manifest = readManifest(MANIFEST);
+  const before = Object.keys(manifest).length;
+  for (const o of orphans) delete manifest[o];
+  writeManifest(MANIFEST, manifest);
+  console.log(`manifest: ${before} → ${Object.keys(manifest).length} entries`);
 }
 console.log(`\n──────── done ──────── deleted: ${done - gone} | already absent: ${gone} | failed: ${failed}`);

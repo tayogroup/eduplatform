@@ -49,6 +49,9 @@ import { fileURLToPath } from "node:url";
 import { createRequire } from "node:module";
 
 const require = createRequire(import.meta.url);
+// The media manifest's shape is owned by tools/lib/upload-manifest.js. Reading
+// it directly here is what broke this check when the format gained hashes.
+const { readManifestPaths } = require("./lib/upload-manifest.js");
 const here = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(here, "..");
 const EHEL = path.join(ROOT, "src", "prototypes", "ehel-academy");
@@ -86,7 +89,7 @@ if (!fs.existsSync(CONTENT_MANIFEST) || !fs.existsSync(MEDIA_MANIFEST)) {
   process.exit(0);
 }
 const content = JSON.parse(fs.readFileSync(CONTENT_MANIFEST, "utf8"));
-const media = new Set(JSON.parse(fs.readFileSync(MEDIA_MANIFEST, "utf8")));
+const media = new Set(readManifestPaths(MEDIA_MANIFEST));
 const sha1 = (buf) => crypto.createHash("sha1").update(buf).digest("hex");
 const gg = (g) => `g${String(g).padStart(2, "0")}`;
 

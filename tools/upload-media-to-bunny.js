@@ -8,6 +8,7 @@
 //   (no subject args = all four)
 
 const fs = require("fs"), path = require("path"), crypto = require("crypto");
+const { readManifest, writeManifest } = require("./lib/upload-manifest");
 const ROOT = path.resolve(__dirname, "..");
 const EHEL = path.join(ROOT, "src", "prototypes", "ehel-academy");
 const ZONE = "ehelacademy";
@@ -195,16 +196,10 @@ async function put(remote, buf) {
 // bounded, one-time cost, and the honest one: the alternative is trusting a
 // claim the manifest cannot support, which is the whole defect. There is
 // deliberately no --trust-legacy flag; it would reintroduce exactly that.
-function readManifest() {
-  if (!fs.existsSync(MANIFEST)) return {};
-  const raw = JSON.parse(fs.readFileSync(MANIFEST, "utf8"));
-  if (!Array.isArray(raw)) return raw;
-  return Object.fromEntries(raw.map((remote) => [remote, null]));
-}
 const sha1 = (buf) => crypto.createHash("sha1").update(buf).digest("hex");
 
 (async () => {
-  const manifest = readManifest();
+  const manifest = readManifest(MANIFEST);
   const all = buildList();
   // Hashing reads every selected file once. On the English tree that is ~17k
   // files and a couple of seconds — cheap against the upload it gates, and the
@@ -219,7 +214,7 @@ const sha1 = (buf) => crypto.createHash("sha1").update(buf).digest("hex");
     console.log(`  verified from here. They upload once and gain a hash; subsequent runs skip them normally.`);
   }
   let done = 0, failed = 0, since = 0;
-  const save = () => fs.writeFileSync(MANIFEST, JSON.stringify(manifest));
+  const save = () => writeManifest(MANIFEST, manifest);
   let idx = 0;
   async function worker() {
     while (idx < todo.length) {

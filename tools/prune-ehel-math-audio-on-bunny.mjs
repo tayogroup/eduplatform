@@ -29,6 +29,7 @@ import { fileURLToPath } from "node:url";
 import { createRequire } from "node:module";
 
 const require = createRequire(import.meta.url);
+const { readManifest, writeManifest } = require("./lib/upload-manifest.js");
 const here = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(here, "..");
 const EHEL = path.join(ROOT, "src", "prototypes", "ehel-academy");
@@ -125,8 +126,11 @@ await Promise.all(Array.from({ length: CONCURRENCY }, async () => {
 // upload even though the file is no longer there.
 if (fs.existsSync(MANIFEST)) {
   const removed = new Set(stale.map((s) => s.remote));
-  const kept = JSON.parse(fs.readFileSync(MANIFEST, "utf8")).filter((p) => !removed.has(p));
-  fs.writeFileSync(MANIFEST, JSON.stringify(kept, null, 0), "utf8");
+  // Through the shared reader/writer — see tools/lib/upload-manifest.js. Parsing
+  // this file as an array and writing one back drops every hash.
+  const manifest = readManifest(MANIFEST);
+  for (const r of removed) delete manifest[r];
+  writeManifest(MANIFEST, manifest);
   console.log(`manifest: dropped ${removed.size} path(s)`);
 }
 

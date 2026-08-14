@@ -33,9 +33,9 @@
 //
 //   node tools/check-ehel-deploy-sync.mjs [mathematics|science|computing|global-perspectives|english|intensive-english]…
 //
-// All six subjects get the content and app checks. English and Intensive English
-// skip the audio half and say so: their clips are named after the item id rather
-// than a hash of the text, so staleness there needs a different shape.
+// All six subjects get the content and app checks. English skips the audio half
+// and says so: its clips are named after the item id rather than a hash of the
+// text, so staleness there needs a different shape.
 //
 // Exits non-zero if content is stale, the tiers are split, audio is missing, or a
 // subject was passed without being compared. Skips a subject whose manifests do
@@ -63,20 +63,37 @@ const APP_DEPLOYER = path.join(here, "deploy-app-version.js");
 // Only the subjects whose audio is hash-named per Listen button. English names
 // its clips after the item id, so a stale-text check there needs a different
 // shape and is deliberately out of scope here.
+//
+// Intensive English was listed as exempt alongside English until 2026-08-14, on
+// the stated grounds that it too named clips by item id. It does not: its clips
+// are cyrb53 hashes (10044c3df3e1bb.mp3), its narration library exports the same
+// hashGradeMap this file calls — named, in its own comment, "for the shape the
+// uploader expects from every subject" — and upload-media-to-bunny.js has always
+// treated it as hash-named. So 5,592 clips sat outside the comparison while the
+// subject still printed a tick. Nothing was wrong behind it when the mistake was
+// found, which is the only reason this reads as a near miss rather than an
+// incident. Adding it needed no adaptation, because there was never anything to
+// adapt.
 const LIBS = {
   mathematics: "./lib/ehel-math-narration",
   science: "./lib/ehel-science-narration",
   computing: "./lib/ehel-computing-narration",
   "global-perspectives": "./lib/ehel-global-perspectives-narration",
+  "intensive-english": "./lib/ehel-intensive-narration",
 };
 
-// English and Intensive English have no narration library of this shape — their
-// clips are named after the item id, not a hash of the text, so the audio half
-// below cannot run for them and says so rather than pretending. The app and
-// content halves need no such library, and leaving these two out of those would
-// have hidden a real gap: on the first run of the app check, English was found
-// sitting on v148 with newer code in the tree.
-const AUDIO_EXEMPT = ["english", "intensive-english"];
+// English has no narration library of this shape — its clips are named after the
+// item id, not a hash of the text, so the audio half below cannot run for it and
+// says so rather than pretending. The app and content halves need no such
+// library, and leaving English out of those would have hidden a real gap: on the
+// first run of the app check, it was found sitting on v148 with newer code in
+// the tree.
+//
+// Before adding anything here, check the clip filenames. A hash-named subject
+// listed as exempt is not a gap that announces itself: the subject keeps
+// printing a tick, and the line that admits the omission gives a reason that
+// sounds authoritative and sends the reader to a tool that cannot help.
+const AUDIO_EXEMPT = ["english"];
 const ALL = [...Object.keys(LIBS), ...AUDIO_EXEMPT];
 
 const asked = process.argv.slice(2).filter((a) => !a.startsWith("--"));

@@ -215,6 +215,11 @@ export function outlineFromManifest(manifest) {
 function apiMessages(stored) {
   const merged = [];
   for (const item of stored.slice(-HISTORY_LIMIT)) {
+    // A canned offline hint is not Wehel's answer — the bubble says so in
+    // words. Sending it as an assistant turn made the model ADOPT it: it would
+    // resume the hint's off-topic mini-lesson ("day" for "birthday") instead
+    // of the learner's next question, so one hiccup poisoned every later turn.
+    if (item.offline) continue;
     const role = item.role === "assistant" ? "assistant" : "user";
     const content = String(item.text || "").trim();
     if (!content) continue;
@@ -1065,11 +1070,23 @@ export function mountWehelChat(options) {
     render();
     let reply;
     let offline = false;
+    const ask = () => askWehel({ meta, messages, channel, mode: modeHint || options.mode,
+      sectionHint: typeof options.sectionHint === "function" ? options.sectionHint() : options.sectionHint,
+      focus: focusModule(meta, modules),
+      fetchUnit: options.fetchUnit || null });
     try {
-      reply = await askWehel({ meta, messages, channel, mode: modeHint || options.mode,
-        sectionHint: typeof options.sectionHint === "function" ? options.sectionHint() : options.sectionHint,
-        focus: focusModule(meta, modules),
-        fetchUnit: options.fetchUnit || null });
+      // One transient blip must not become a lesson about a different word:
+      // most failures here (an overloaded model API, a dropped connection) are
+      // gone seconds later, and the canned hint below is a far worse answer
+      // than a two-second wait. So ask once more before giving up — the
+      // thinking dots are already on screen, so the learner just sees a
+      // slightly longer think.
+      try {
+        reply = await ask();
+      } catch (firstError) {
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+        reply = await ask();
+      }
     } catch (error) {
       offline = true;
       reply = options.fallbackReply

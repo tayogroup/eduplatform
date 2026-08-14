@@ -328,7 +328,31 @@ function itemsForUnit(unit, grade) {
       const sentences = entry.practiceSentences || [];
       if (!Array.isArray(entry.sentenceAudio)) entry.sentenceAudio = [];
       sentences.forEach((sentence, i) => {
-        const id = `${entry.vocabularyId}-sentence-${i + 1}`;
+        // `audioRevision` renames the clip, and it is the only way to reach a
+        // learner whose EDGE has the old one.
+        //
+        // Bunny serves media max-age=31536000 and caches by PATH — it ignores
+        // query strings, which is why AUDIO_RELEASE can bust a browser and not
+        // an edge node. So a clip re-recorded under the same filename keeps the
+        // same cache entry, and a POP holding the old bytes serves them for a
+        // year. That happened: a learner reported hearing "Ismael is my partner
+        // for the reading game" for a sentence whose text had long since become
+        // "Nora chose a partner for the counting game" — correct in the repo,
+        // correct in storage, stale at their edge, and unpurgeable without an
+        // account key this repo does not have.
+        //
+        // Setting `audioRevision: "b"` on the descriptor makes the filename
+        // …-sentence-1b.mp3: a path no POP has ever cached, so every learner
+        // gets the new recording immediately. It lives in the DATA rather than
+        // in a rename on disk because this function derives the filename — a
+        // hand-renamed file would be silently reverted the next time anyone
+        // regenerated the grade, which is the sort of fix that looks done and
+        // is not.
+        //
+        // Use it only when a clip is known stale at the edge. Every bump strands
+        // the previous file as an orphan and costs a re-record.
+        const revision = entry.sentenceAudio[i]?.audioRevision || "";
+        const id = `${entry.vocabularyId}-sentence-${i + 1}${revision}`;
         const source = `./${dir}/${id}.mp3`;
         items.push({
           id, ref: entry, title: entry.vocabularyId,
@@ -343,6 +367,9 @@ function itemsForUnit(unit, grade) {
               provider: "ElevenLabs", voiceId: VOICE_ID, model: MODEL_ID,
               slowPlaybackRate: prev.slowPlaybackRate ?? 0.76,
               available: true, status: "Generated",
+              // Carried forward, or the next run would derive the pre-rename
+              // filename again and undo the thing this field exists to do.
+              ...(prev.audioRevision ? { audioRevision: prev.audioRevision } : {}),
             };
           },
         });

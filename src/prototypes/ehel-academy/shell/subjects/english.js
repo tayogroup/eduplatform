@@ -57,13 +57,45 @@ function unitAwaitsSignOff() {
 }
 const gradeRootUrl = new URL(`./grade-${gradeNumber}/`, location.href);
 const AUDIO_IS_DEV = ["localhost", "127.0.0.1"].includes(location.hostname);
+
+// Bump this whenever English audio is re-uploaded. It is the only thing that
+// makes a repaired recording reach a learner who has already heard the broken
+// one.
+//
+// English clips are named for their CONTENT (u1-g1-1-coal-sentence-1.mp3), so a
+// re-recording keeps its filename and its URL. Bunny serves media as
+// `Cache-Control: public, max-age=31536000` with no ETag, so a browser that has
+// played a clip holds it for A YEAR and never revalidates. Re-uploading fixes
+// storage and cannot reach that cache: after 17,178 clips were re-uploaded to
+// repair a months-old backlog, the learner who reported the fault still heard
+// the old audio, because their browser was never going to ask again.
+//
+// The stamp rides as a query string. The pull zone ignores query strings when
+// it caches — a never-before-seen `?probe=` returns `CDN-Cache: HIT` off the
+// bare path — so this cannot fragment or poison the edge; it is invisible to
+// Bunny. A BROWSER keys its cache on the full URL, which is precisely the cache
+// that needs busting.
+//
+// A date, not a hash: one stamp covers the whole tree, so an audio release is
+// one edit rather than 17,178. The cost is that everyone refetches everything
+// once per bump, which is the correct trade for audio that is otherwise wrong
+// for a year. upload-media-to-bunny.js prints a reminder when it sends English
+// clips, because a stamp nobody remembers to bump is worse than none.
+const AUDIO_RELEASE = "20260814";
+function withAudioRelease(url) {
+  // Dev serves from disk with no caching worth defeating, and a bare filename
+  // is easier to grep for in the network panel.
+  if (AUDIO_IS_DEV) return url;
+  return url + (url.includes("?") ? "&" : "?") + `a=${AUDIO_RELEASE}`;
+}
+
 function resolveMediaUrl(source) {
   let s = String(source);
   if (!AUDIO_IS_DEV) {
     const m = s.match(/media\/audio\/grade-(\d+)\/([a-z]+)\/(.+)$/i);
     if (m) s = `../../media/english/g${String(m[1]).padStart(2, "0")}/audio/${m[2]}/${m[3]}`;
   }
-  return new URL(s, document.baseURI).href;
+  return withAudioRelease(new URL(s, document.baseURI).href);
 }
 // Bunny serves .vtt as application/octet-stream: it ignores the Content-Type
 // the upload sends and derives one from the extension, and its table has no

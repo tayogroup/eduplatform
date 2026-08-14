@@ -239,4 +239,15 @@ const sha1 = (buf) => crypto.createHash("sha1").update(buf).digest("hex");
   await Promise.all(Array.from({ length: CONCURRENCY }, worker));
   save();
   console.log(`\n──────── done ──────── uploaded: ${done} | failed: ${failed} | manifest: ${Object.keys(manifest).length}`);
+  // English clips are named for their content, so a repaired recording keeps its
+  // URL — and media is served max-age=31536000 with no ETag, so a browser that
+  // has played the broken version holds it for a year and never asks again.
+  // Uploading is therefore only half of shipping an English audio repair. The
+  // other half is one edit, and it is easy to walk away without it: the learner
+  // who reported the last fault still heard the old audio after all 17,178 clips
+  // had been re-uploaded.
+  if (done > 0 && subjectList.includes("english")) {
+    console.log(`\n  NOTE: bump AUDIO_RELEASE in shell/subjects/english.js and release the app,`);
+    console.log(`        or learners who already played these clips keep the old audio for a year.`);
+  }
 })();

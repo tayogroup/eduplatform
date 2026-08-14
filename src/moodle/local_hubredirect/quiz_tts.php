@@ -175,12 +175,12 @@ if ($apikey === '') {
 
 $purpose = trim((string)($payload['purpose'] ?? ''));
 $voicespeed = 1.0;
-if ($purpose === 'ehel_math') {
-    $requestedspeed = isset($payload['speed']) && is_numeric($payload['speed']) ? (float)$payload['speed'] : 0.90;
+if ($purpose === 'ehel_math' || $purpose === 'wehel_reply') {
+    $requestedspeed = isset($payload['speed']) && is_numeric($payload['speed']) ? (float)$payload['speed'] : ($purpose === 'wehel_reply' ? 1.0 : 0.90);
     $voicespeed = max(0.70, min(1.0, $requestedspeed));
 }
 $voiceid = '';
-if ($purpose === 'ehel_english' || $purpose === 'ehel_math' || $purpose === 'ehel_course_page') {
+if ($purpose === 'ehel_english' || $purpose === 'ehel_math' || $purpose === 'ehel_course_page' || $purpose === 'wehel_reply') {
     $voiceid = 'XfNU2rGpBa01ckF309OY';
 } else if ($purpose === 'practice_coach') {
     $voiceid = pqh_quiz_tts_config_value(
@@ -204,6 +204,16 @@ if ($purpose === 'practice_coach') {
         'practice_coach_model_id',
         'local_prequran_practice_coach_model_id',
         'PREQURAN_PRACTICE_COACH_MODEL_ID'
+    );
+} else if ($purpose === 'wehel_reply') {
+    // Wehel replies are conversational and never reused across learners, so
+    // they use the low-latency Flash model rather than the studio model the
+    // pre-recorded lesson clips are rendered with.
+    $modelid = pqh_quiz_tts_config_value(
+        'wehel_tts_model_id',
+        'local_prequran_wehel_tts_model_id',
+        'WEHEL_TTS_MODEL_ID',
+        'eleven_flash_v2_5'
     );
 }
 if ($modelid === '') {

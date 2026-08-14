@@ -99,13 +99,20 @@ async function handleElevenLabs(req, res) {
     .map((line) => /[.!?;:…]["'”’)]*$/.test(line) ? line : `${line}.`)
     .join('\n\n');
   const voiceId = String(payload.voiceId || defaultElevenLabsVoice).replace(/[^A-Za-z0-9_-]/g, '');
+  // Wehel replies use the low-latency Flash model — they are conversational,
+  // per-learner and never reused, so studio quality buys nothing. Mirrors the
+  // wehel_reply purpose in local_hubredirect/quiz_tts.php.
+  const modelId = String(payload.purpose || '') === 'wehel_reply' ? 'eleven_flash_v2_5' : 'eleven_multilingual_v2';
   const requestedSpeed = Number(payload.speed);
   const speed = Number.isFinite(requestedSpeed) ? Math.max(0.70, Math.min(1, requestedSpeed)) : 0.90;
   if (!text || text.length > 5000) throw new Error('Voice text must contain between 1 and 5000 characters.');
   if (!process.env.ELEVENLABS_API_KEY) throw new Error('ELEVENLABS_API_KEY is not configured in the local .env file.');
 
   fs.mkdirSync(elevenLabsCache, { recursive: true });
-  const cacheKey = crypto.createHash('sha256').update(`math-voice-v3-speed-${speed.toFixed(2)}\n${voiceId}\n${text}`).digest('hex');
+  // The model joins the key only when it is not the long-standing default, so
+  // every clip already in the cache keeps its name (each render costs money).
+  const modelTag = modelId === 'eleven_multilingual_v2' ? '' : `${modelId}\n`;
+  const cacheKey = crypto.createHash('sha256').update(`math-voice-v3-speed-${speed.toFixed(2)}\n${voiceId}\n${modelTag}${text}`).digest('hex');
   const cacheFile = path.join(elevenLabsCache, `${cacheKey}.mp3`);
   if (!fs.existsSync(cacheFile) || fs.statSync(cacheFile).size < 1000) {
     const response = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}?output_format=mp3_44100_128`, {
@@ -113,7 +120,7 @@ async function handleElevenLabs(req, res) {
       headers: { 'Content-Type': 'application/json', 'xi-api-key': process.env.ELEVENLABS_API_KEY },
       body: JSON.stringify({
         text,
-        model_id: 'eleven_multilingual_v2',
+        model_id: modelId,
         voice_settings: { stability: 0.48, similarity_boost: 0.82, style: 0.32, speed, use_speaker_boost: true }
       })
     });

@@ -75,6 +75,7 @@ export function platformHeaders(extra = {}) {
 export const WEHEL_CHAT_ENDPOINT = DEV_API ? "/api/wehel-chat" : platformUrl("/local/hubredirect/wehel_chat.php");
 export const WEHEL_STT_ENDPOINT = DEV_API ? "/api/elevenlabs-stt" : platformUrl("/local/hubredirect/quiz_stt.php");
 export const WEHEL_SOMALI_TTS_ENDPOINT = DEV_API ? "/api/somali-tts" : platformUrl("/local/hubredirect/somali_tts.php");
+export const WEHEL_TTS_ENDPOINT = DEV_API ? "/api/elevenlabs-tts" : platformUrl("/local/hubredirect/quiz_tts.php");
 
 const HISTORY_LIMIT = 12;
 
@@ -289,12 +290,13 @@ async function handleGetCourseOutline(meta, input) {
 }
 
 // --- browser speech synthesis ------------------------------------------------
-// Wehel speaks its replies with the browser's own voice. A chat reply does not
-// exist until the model writes it, so a pre-generated clip can never cover one
-// — every spoken sentence would otherwise be a paid ElevenLabs request, per
-// learner, per message. speechSynthesis is free, needs no key and no network,
-// and starts instantly. Lesson narration keeps the recorded Ehel voice; this is
-// only for the conversation.
+// The browser's own voice is now the FALLBACK for spoken replies: since
+// 2026-08-14 the tutor speaks with the Ehel narration voice via ElevenLabs
+// Flash v2.5 (speakEhelVoice, below) — an explicit cost decision, bounded by
+// quiz_tts.php's per-learner rate limit and a per-session clip cache. The
+// engine below needs no key and no network, so it still reads replies when the
+// voice endpoint cannot be reached — which includes the built-in offline
+// hints, whose whole premise is that the network already failed.
 
 export const browserSpeechSupported = typeof window !== "undefined"
   && "speechSynthesis" in window && typeof SpeechSynthesisUtterance === "function";
@@ -380,9 +382,10 @@ let speechToken = 0;
 export function stopBrowserSpeech() {
   speechToken += 1;
   if (browserSpeechSupported) speechSynthesis.cancel();
-  // One stop for all tutor speech: the Somali clip and the browser voice never
-  // talk over each other.
+  // One stop for all tutor speech: the Ehel clip, the Somali clip and the
+  // browser voice never talk over each other.
   stopSomaliAudio();
+  stopReplyAudio();
 }
 // Route changes are hash-based in the shell — leaving the tutor page must not
 // leave the voice talking over the next section.
@@ -417,6 +420,66 @@ export async function speakBrowser(text, { rate = 0.95, onStart, onEnd } = {}) {
   } finally {
     if (token === speechToken && onEnd) onEnd();
   }
+  return true;
+}
+
+// --- Ehel reply audio (ElevenLabs Flash v2.5, the narration voice) -----------
+// A chat reply does not exist until the model writes it, so no pre-rendered
+// clip can cover one — each spoken reply is a live render through the same
+// endpoint the runtime lesson voice uses (quiz_tts.php / the dev twin), on the
+// low-latency Flash model with the Ehel narration voice. Clips are cached per
+// text for the session so replaying a bubble is free.
+
+let replyAudio = null;
+const replyClipCache = new Map(); // "<rate>\n<text>" -> object URL
+
+function stopReplyAudio() {
+  if (!replyAudio) return;
+  const audio = replyAudio;
+  replyAudio = null;
+  audio.pause();
+  // pause() never fires onended, so release the caller awaiting this clip.
+  if (audio.onended) audio.onended();
+}
+
+/** Speak text in the Ehel voice. Resolves when the clip finishes; rejects when
+ * the voice endpoint cannot be reached so the caller can fall back. */
+export async function speakEhelVoice(text, { rate = 1 } = {}) {
+  const clean = speakableText(text);
+  if (!clean) return false;
+  stopBrowserSpeech();
+  const cacheKey = `${rate}\n${clean}`;
+  let url = replyClipCache.get(cacheKey);
+  if (!url) {
+    const wstoken = new URLSearchParams(location.search).get("wstoken") || undefined;
+    const response = await fetch(WEHEL_TTS_ENDPOINT, {
+      method: "POST",
+      credentials: DEV_API ? "same-origin" : "include",
+      headers: platformHeaders({ Accept: "audio/mpeg", "Content-Type": "application/json" }),
+      body: JSON.stringify({ text: clean, purpose: "wehel_reply", speed: rate, wstoken }),
+    });
+    if (!response.ok) {
+      const result = await response.json().catch(() => ({}));
+      throw new Error(result.message || `The tutor voice is unavailable (${response.status}).`);
+    }
+    url = URL.createObjectURL(await response.blob());
+    replyClipCache.set(cacheKey, url);
+  }
+  await new Promise((resolve, reject) => {
+    const audio = new Audio(url);
+    let settled = false;
+    const finish = (failed) => () => {
+      if (settled) return;
+      settled = true;
+      if (replyAudio === audio) replyAudio = null;
+      if (failed) reject(new Error("The tutor clip could not be played."));
+      else resolve();
+    };
+    audio.onended = finish(false);
+    audio.onerror = finish(true);
+    replyAudio = audio;
+    audio.play().catch(finish(true));
+  });
   return true;
 }
 
@@ -801,9 +864,10 @@ export function mountWehelChat(options) {
   let recordedChunks = [];
   let panel = null; // this panel's registry entry, assigned after first render
 
-  // Speech is the browser's, not ElevenLabs': a reply is written at request
-  // time, so no recorded clip can exist for it. One engine for the whole
-  // conversation also means the learner hears one voice rather than two.
+  // Replies are spoken with the Ehel narration voice (ElevenLabs Flash v2.5,
+  // rendered per reply through the quiz TTS endpoint); the browser engine is
+  // the no-network fallback, so a reply is never silent just because the paid
+  // voice cannot be reached.
   const speechKey = `wehel-speech-${meta.subject}`;
   const speechRate = speechRateForGrade(meta.grade);
   let speakReplies = browserSpeechSupported && storageGet(speechKey) !== "off";
@@ -854,14 +918,23 @@ export function mountWehelChat(options) {
   };
 
   // Speak one stored reply aloud; index -1 marks the greeting bubble. The
-  // "Soomaali:" lines are dropped first — the English engine mangles Somali,
-  // and the bubble's own Soomaali button owns those lines.
-  function speakReply(index, text) {
-    speakBrowser(withoutSomaliLines(text), {
-      rate: speechRate,
-      onStart: () => { speakingIndex = index; render(); },
-      onEnd: () => { speakingIndex = null; render(); },
-    });
+  // "Soomaali:" lines are dropped first — the English voice mangles Somali,
+  // and the bubble's own Soomaali button owns those lines. The Ehel voice
+  // speaks first; the browser engine steps in only when the voice endpoint
+  // cannot be reached, so an offline hint is still read aloud.
+  async function speakReply(index, text) {
+    const clean = withoutSomaliLines(text);
+    speakingIndex = index;
+    render();
+    try {
+      await speakEhelVoice(clean, { rate: speechRate });
+    } catch {
+      await speakBrowser(clean, { rate: speechRate });
+    } finally {
+      // Another bubble may have taken over while this one played — only the
+      // still-current speaker clears the highlight.
+      if (speakingIndex === index) { speakingIndex = null; render(); }
+    }
   }
 
   function render() {

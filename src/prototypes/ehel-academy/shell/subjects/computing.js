@@ -1774,14 +1774,41 @@ function renderReference() {
   $("#reference-done").addEventListener("click", () => complete("reference", "Reference reviewed."));
 }
 
+// Which item the built-in hints reach for next. Every branch below used to take
+// [0], so a learner who asked three questions the online tutor could not be
+// reached for got the SAME sentence three times and reasonably concluded the
+// tutor was useless. Rotating means each attempt surfaces different material
+// from the unit, which is the most a static hint can honestly do — the bubble
+// itself now says this is not Wehel's answer, so this text does not have to
+// carry that apology as well.
+let fallbackTurn = 0;
+
 function buildTutorReply(message) {
   const lower = message.toLowerCase();
+  // Advance first, so two identical questions in a row do not return the same
+  // item, and reset on overflow rather than growing without bound.
+  fallbackTurn = (fallbackTurn + 1) % 1000;
+  const cycle = (list) => (Array.isArray(list) && list.length ? list[fallbackTurn % list.length] : null);
+
   if (/answer|quiz/.test(lower)) return `I can give a hint, but I will not choose a checkpoint answer. Start by naming the Unit ${course.unit.unitNo} concept and the evidence you can see.`;
-  if (/easier|simpler/.test(lower)) return `Let us simplify it. ${course.concepts[0]?.explanation || course.reference.rules[0]?.text}`;
-  if (/visual|model|picture/.test(lower)) return `Try this model: ${course.visualModels[0]?.title}. ${course.visualModels[0]?.purpose}`;
-  const term = course.reference.terms.find(([name])=>lower.includes(name.toLowerCase().split(/[ /]/)[0]));
+  if (/easier|simpler/.test(lower)) {
+    const concept = cycle(course.concepts);
+    return concept
+      ? `Let us take one idea at a time — ${concept.title}. ${concept.explanation}`
+      : `Let us simplify it. ${course.reference.rules[0]?.text || ""}`;
+  }
+  if (/visual|model|picture/.test(lower)) {
+    const model = cycle(course.visualModels);
+    return model ? `Try this model: ${model.title}. ${model.purpose}` : `This unit has no diagram to point you at yet.`;
+  }
+  const term = course.reference.terms.find(([name]) => lower.includes(name.toLowerCase().split(/[ /]/)[0]));
   if (term) return `${term[0]} means ${term[1]}. Now use that meaning to identify the first step.`;
-  return `This unit is about ${course.unit.unitTitle}. A useful rule is: ${course.reference.rules[0]?.text || course.concepts[0]?.explanation} Tell me which step is difficult and I will give one hint.`;
+
+  const concept = cycle(course.concepts);
+  const rule = cycle(course.reference.rules);
+  const material = concept ? `${concept.title}: ${concept.explanation}` : (rule?.text || "");
+  return `While I cannot reach the full tutor, here is one idea from ${course.unit.unitTitle} — ${material} `
+    + `Tell me which step is difficult and ask again; I will show you a different idea each time.`;
 }
 
 // Every option the Wehel panel needs, shared by the nav section and the

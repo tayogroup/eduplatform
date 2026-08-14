@@ -811,7 +811,18 @@ export function mountWehelChat(options) {
   let somaliSpeakingIndex = null;
 
   const bubble = (item, index) => {
-    const label = item.role === "user" ? "You" : (item.offline ? `${tutorLabel} (offline hint)` : tutorLabel);
+    // An offline bubble used to differ from a real answer by the two words
+    // "(offline hint)" in the small grey name line, and by a toast that is gone
+    // a few seconds later. Everything else about it — same avatar, same bubble,
+    // same confident sentence — read as the tutor's considered reply. A learner
+    // asking three questions and getting the same built-in sentence three times
+    // concludes the tutor is useless, when in fact it was never reached.
+    //
+    // So the bubble says so in words, in its own body, where it cannot be
+    // missed or time out. The styling is inline rather than a class in
+    // english/shared/course-ui.css: that file is the base every subject imports,
+    // and this has to be legible even if no subject stylesheet is redeployed.
+    const label = item.role === "user" ? "You" : (item.offline ? `${tutorLabel} — could not be reached` : tutorLabel);
     const playing = speakingIndex === index;
     const speak = item.role === "assistant" && browserSpeechSupported
       ? `<button class="button secondary voice-button${playing ? " is-playing" : ""}" data-wehel-speak="${index}" type="button" aria-label="${playing ? "Stop" : `Listen to ${escapeHtml(tutorLabel)}`}">${playing ? `${wehelIcon("stop")} Stop` : `${wehelIcon("volume")} Listen`}</button>`
@@ -829,10 +840,17 @@ export function mountWehelChat(options) {
     const tools = speak || somali
       ? `<div class="w-tools">${speak}${somali}</div>`
       : "";
-    return `<article class="ai-message ${item.role}">`
+    // Said in the bubble, not only in the name line: this is not Wehel's answer.
+    const offlineNote = item.offline
+      ? `<p class="w-offline-note" style="margin:0 0 6px;padding:7px 10px;border-radius:8px;`
+        + `background:#fff4e5;border:1px solid #e0b070;color:#7a4a00;font-size:13px;">`
+        + `Wehel could not be reached, so this is a hint from the unit — not Wehel's answer. `
+        + `Ask again in a moment.</p>`
+      : "";
+    return `<article class="ai-message ${item.role}${item.offline ? " offline" : ""}">`
       + `<span class="w-avatar" role="img" aria-label="${escapeHtml(avatar)}">${wehelIcon(item.role === "user" ? "user" : "sparkle")}</span>`
       + `<div class="w-body"><strong class="w-who">${escapeHtml(label)}</strong>`
-      + `<p class="w-text">${escapeHtml(item.text)}</p>${tools}</div></article>`;
+      + `${offlineNote}<p class="w-text">${escapeHtml(item.text)}</p>${tools}</div></article>`;
   };
 
   // Speak one stored reply aloud; index -1 marks the greeting bubble. The

@@ -122,7 +122,7 @@ function createWehelChatHandler({ apiKey, model: modelOverride = () => undefined
       // Where the learner is standing right now. The dock opens over any
       // lesson page, so "I don't get this" has a referent.
       const sectionHint = clean(payload.sectionHint, 80);
-      if (sectionHint) system += `\n\nThe learner is on the "${sectionHint}" page of this unit right now, and is most likely asking about what is on it.`;
+      if (sectionHint) system += `\n\nThe learner is on the "${sectionHint}" page of this unit right now — useful context for what they may mean, but their own words always come first: answer what they asked, not the page.`;
 
       const key = apiKey();
       if (!key) return fail(503, "ANTHROPIC_API_KEY is not configured in the local .env file.");

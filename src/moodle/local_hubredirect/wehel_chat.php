@@ -348,7 +348,7 @@ if (is_array($languageblock) && $languageblock) {
 // page, so "I don't get this" has a referent.
 $sectionhint = $clean($payload['sectionHint'] ?? '', 80);
 if ($sectionhint !== '') {
-    $system .= "\n\nThe learner is on the \"" . $sectionhint . "\" page of this unit right now, and is most likely asking about what is on it.";
+    $system .= "\n\nThe learner is on the \"" . $sectionhint . "\" page of this unit right now — useful context for what they may mean, but their own words always come first: answer what they asked, not the page.";
 }
 
 // --- call the Anthropic API ---------------------------------------------------

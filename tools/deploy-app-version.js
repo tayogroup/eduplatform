@@ -100,6 +100,29 @@ if (shellless.length) {
   process.exit(1);
 }
 
+// The mirror of the guard above, and the one that actually fires — NON_SHELL_
+// SUBJECTS is empty, so the case worth refusing is --shell being LEFT OUT.
+//
+// Every subject runs from shell/subjects/ now, and each shared/course-ui.js is
+// a one-line loader kept only so index.html can keep referencing the stable
+// name. Release without --shell and that stub is what lands in v{TAG}/ —
+// ~1.2 KB where the app is ~150 KB — and NOTHING downstream objects: --verify
+// confirms the bytes arrived, not that they are the right bytes, and the
+// "self-contained" line below is computed from the references in what was
+// packaged, so a stub that references nothing passes it too. The release then
+// serves 200 on every path and shows a learner a blank course.
+//
+// Refused up front rather than warned about, because the failure is silent
+// everywhere else it could be caught.
+const missingShell = SHELL ? [] : SUBJECTS.filter((s) => !NON_SHELL_SUBJECTS.includes(s));
+if (missingShell.length) {
+  console.error(`✗ --shell is required: ${missingShell.join(", ")} run from shell/subjects/.`);
+  console.error("  Without it, course-ui.js ships as the ~1.2 KB loader stub instead of the app,");
+  console.error("  and --verify still passes because it checks that bytes arrived, not which bytes.");
+  console.error(`\n  node tools/deploy-app-version.js ${TAG} --shell --verify ${SUBJECTS.join(" ")}`);
+  process.exit(1);
+}
+
 const sha1 = (buf) => crypto.createHash("sha1").update(buf).digest("hex");
 const CT = {
   ".html": "text/html; charset=utf-8", ".js": "text/javascript; charset=utf-8",

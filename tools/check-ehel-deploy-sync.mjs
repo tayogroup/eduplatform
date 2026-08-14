@@ -314,7 +314,12 @@ for (const subject of subjects) {
     } else {
       console.error(`  ✗ the content on the CDN is newer than the app tier (${app.tag}).`);
       console.error("    Content written against newer app behaviour will not get it, and the app cannot tell.");
-      console.error(`    Fix by releasing the app: node tools/deploy-app-version.js <tag> --verify ${subject}`);
+      // --shell is not optional. Every subject runs from shell/subjects/ now, so
+      // without it course-ui.js ships as the ~1.2 KB loader stub instead of the
+      // ~150 KB app, and --verify still passes because it confirms the bytes
+      // arrived rather than that they are the right bytes. This line used to
+      // omit it, so following the tool's own advice produced a broken release.
+      console.error(`    Fix by releasing the app: node tools/deploy-app-version.js <tag> --shell --verify ${subject}`);
     }
     failed = true;
   }

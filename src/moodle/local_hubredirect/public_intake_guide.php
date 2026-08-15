@@ -176,6 +176,17 @@ echo ehp_styles();
 .pqig-foot{margin-top:18px}
 .pqig-foot .pqig-skip{width:100%}
 .pqig-muted{margin:14px 0 0;font-size:13.5px;line-height:1.55;color:var(--pq-muted)}
+.pqig-steps{margin-top:20px;padding:4px 22px;border-radius:12px;background:var(--pq-card);border:1px solid var(--pq-line)}
+.pqig-steps>summary{padding:16px 0;font-size:15.5px;font-weight:700;color:var(--pq-ink);cursor:pointer;list-style:none}
+.pqig-steps>summary::-webkit-details-marker{display:none}
+.pqig-steps>summary::after{content:" \25BE";color:var(--pq-muted)}
+.pqig-steps[open]>summary{border-bottom:1px solid var(--pq-line)}
+.pqig-steps[open]>summary::after{content:" \25B4"}
+.pqig-steps h3{margin:20px 0 6px;font-size:15px;font-weight:700;color:var(--pq-ink)}
+.pqig-steps p{margin:0 0 10px;font-size:14.5px;line-height:1.6;color:var(--pq-ink)}
+.pqig-steps .pqig-muted{margin:0 0 10px}
+.pqig-steps-lede{margin-top:14px!important}
+.pqig-steps>*:last-child{margin-bottom:18px}
 </style>
 <style><?php echo pqh_openproject_skin_css('pqig', 'pqh-public-intake-page'); ?></style>
 <main class="pqig-shell">
@@ -223,6 +234,7 @@ echo ehp_styles();
         <li><strong>Your email address</strong> — this is where our decision and your child's login details are sent.</li>
         <li><strong>Your child's age</strong> in whole years.</li>
         <li><strong>The grade your child is in right now</strong> — not the grade they are moving up to.</li>
+        <li><strong>Enrolling more than one child?</strong> You only need one form. Have each child's age and current grade ready.</li>
       </ul>
       <p class="pqig-muted">
         When you reach the timetable, tick every day and time that could work, not only your first choice —
@@ -230,6 +242,76 @@ echo ehp_styles();
         Sending the form does not enrol your child and does not commit you to anything.
       </p>
     </section>
+
+    <?php // The written walkthrough. It exists for two reasons the video cannot
+          // cover: a parent on a metered connection who will not spend 9 MB, and
+          // the "Another child?" section, which was added to the form after both
+          // videos were recorded. Collapsed by default so the page still reads as
+          // "watch, or skip to the form" -- this is the third option, not a wall
+          // of text in front of the first two. ?>
+    <details class="pqig-steps">
+      <summary>Prefer to read? The six steps, in order</summary>
+
+      <p class="pqig-muted pqig-steps-lede">The form takes about ten minutes and works on a phone.
+        A bar at the top shows which step you are on. Nothing is sent until you press
+        <strong>Submit Enrolment Request</strong> on the last step.</p>
+
+      <h3>Step 1 — Parent / guardian</h3>
+      <p>Your full name, and how you are related to the student. Then your email address —
+        this is the important one, because our decision and your child's login details are
+        sent there. Add your phone number, ideally one with WhatsApp, and include the country
+        code. Finally, a second person we can call if we cannot reach you.</p>
+
+      <h3>Step 2 — Your child</h3>
+      <?php // Deliberately does NOT say "as on the birth certificate". Date of birth was taken
+            // off this form so a parent on a phone would not have to go and find paperwork
+            // before they could finish; sending them after a certificate for the spelling
+            // would put that back. ?>
+      <p>Their name, spelled the way you want it to appear on their school records. Middle name
+        is optional — leave it blank if there isn't one. If they are known at home by a shorter
+        name, put that under <em>Preferred name</em>. Then choose your country first, because
+        that fills in the city list and the time zone for you.</p>
+
+      <h3>Step 3 — School details, and any other children</h3>
+      <p>Your child's age in whole years, and the grade they are in <strong>right now</strong> —
+        not the one they are moving up to. If you are not sure, choose <em>Other</em> and we will
+        work it out with you. Tell us the curriculum their school follows and its name; if they
+        are not in school, or you teach them at home, just write that.</p>
+      <p>Answer <em>Yes</em> to special learning needs if your child needs extra help — more time,
+        help with reading, larger print, a quiet room. Use the notes box for allergies, medication,
+        or anything a teacher should know to keep them safe.</p>
+      <p><strong>Enrolling more than one child? Scroll to the bottom of this step.</strong> Under
+        <em>Another child?</em>, press <em>+ Add another child</em> and fill in their name, age,
+        gender and grade. Add a card for each child. Everything you have already answered — your
+        details, where you live, languages, class preferences and the timetable — is used for
+        every child, so you only fill in what is different. You will get one email listing them all,
+        and each child gets their own place and their own login.</p>
+
+      <h3>Step 4 — How your child learns best</h3>
+      <p>The language you speak at home, and the language you want lessons taught in. These can be
+        different, and that is normal. Then the class format, the group size, and whether you would
+        prefer a male or female teacher. If it does not matter to you, choose
+        <em>No preference</em> — it is a real answer, not a blank.</p>
+
+      <h3>Step 5 — Lessons and times</h3>
+      <p>Choose how many live lessons a week you would like, from one to five. Then the timetable.
+        <strong>This is the most useful part of the whole form.</strong> Tick every day and time that
+        could work for your family, not only your favourite. The more you tick, the easier it is for
+        us to find your child a class. On a phone, drag the timetable sideways to see later times.</p>
+
+      <h3>Step 6 — Consent</h3>
+      <p>The middle box is required: it says you agree to your child joining live online lessons.
+        The first is for email reminders and progress updates, and the last covers lessons being
+        recorded so your child can watch them again. Both of those are optional.</p>
+      <p>Then press <strong>Submit Enrolment Request</strong>.</p>
+
+      <h3>What happens next</h3>
+      <p>You will get an email confirming we have your request, with a reference number for each
+        child. Our team reviews it and comes back to you. If your child is offered a place, a second
+        email arrives with their login details.</p>
+      <p class="pqig-muted">If you get stuck at any point, reply to the message that sent you this
+        page and a person will help you.</p>
+    </details>
 
     <div class="pqig-foot">
       <a class="pqig-btn pqig-skip" href="<?php echo s($formurl); ?>">Continue to the enrolment form</a>

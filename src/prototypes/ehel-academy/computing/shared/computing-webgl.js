@@ -633,6 +633,198 @@ export function sceneObjects(id, time) {
       const a = time * 1.4 + i / 4 * TAU;
       objects.push(object("sphere", [1.9 + Math.cos(a) * 0.95, 0.4 + hover + Math.sin(a) * 0.6, 0.3], .07, COLORS.gold));
     }
+  } else if (id === "speed") {
+    // The same steps at two speeds: speed is how fast the steps run, not
+    // what the steps are.
+    for (const [y, rate, color] of [[0.9, 1.6, COLORS.teal], [-0.9, 0.55, COLORS.orange]]) {
+      for (let i = 0; i < 7; i += 1) objects.push(object("cube", [-2.7 + i * 0.9, y - 0.55, 0], [.36, .05, .36], COLORS.gray));
+      objects.push(object("sphere", [-2.7 + ((time * rate) % 6) * 0.9, y, 0], .22, color));
+    }
+  } else if (id === "sound") {
+    // A speaker turns data into sound: waves ripple out through the air, and
+    // louder means bigger waves — watch the volume bars follow.
+    const loud = 0.55 + 0.45 * Math.sin(time * 0.7);
+    objects.push(object("cube", [-2.3, 0, 0], [.5, .8, .4], COLORS.navy));
+    objects.push(object("cone", [-1.65, 0, 0], [.34, .3, .34], COLORS.gray, [0, 0, -Math.PI / 2]));
+    for (let r = 0; r < 4; r += 1) {
+      const p = (time * 0.55 + r / 4) % 1;
+      const radius = 0.5 + p * 2.6;
+      for (let a = -2; a <= 2; a += 1) {
+        objects.push(object("sphere", [-1.4 + Math.cos(a * 0.32) * radius, Math.sin(a * 0.32) * radius * loud, 0], .07 + loud * 0.05, COLORS.gold));
+      }
+    }
+    for (let i = 0; i < Math.max(1, Math.round(loud * 5)); i += 1) objects.push(object("cube", [2.6, -1 + i * 0.42, 0], [.3, .14, .3], COLORS.teal));
+  } else if (id === "music") {
+    // A melody is notes at different pitches; the beat is the steady pulse
+    // underneath; the tempo is how fast that pulse goes — it changes halfway.
+    const pitches = [0, 2, 4, 2, 5, 4, 2, 0];
+    const tempo = Math.floor(time / 8) % 2 === 0 ? 0.55 : 0.32;
+    const playing = Math.floor(time / tempo) % pitches.length;
+    pitches.forEach((pitch, i) => {
+      objects.push(object("sphere", [-2.8 + i * 0.8, -0.6 + pitch * 0.38, 0], i === playing ? .3 : .2, i === playing ? COLORS.gold : COLORS.teal));
+    });
+    const pulse = Math.abs(Math.sin(time / tempo * Math.PI));
+    objects.push(object("cube", [-2.8 + playing * 0.8, -1.5 + pulse * 0.2, 0], [.24, .12, .24], COLORS.orange));
+    objects.push(object("cube", [0, -1.75, 0], [3.3, .04, .4], COLORS.gray));
+  } else if (id === "printer") {
+    // Output on paper: each page slides out with its printing on it, and the
+    // finished pages stack up.
+    objects.push(object("cube", [-1.6, 0.35, 0], [1.0, .55, .8], COLORS.navy));
+    objects.push(object("cube", [-1.6, -0.05, 0.75], [.8, .05, .1], COLORS.gray));
+    const p = (time * 0.5) % 1;
+    objects.push(object("cube", [-1.6 + p * 2.2, -0.15 - p * 0.35, 0.8], [.55, .02, .75], COLORS.gray));
+    for (let l = 0; l < Math.floor(p * 5); l += 1) {
+      objects.push(object("cube", [-1.85 + p * 2.2, -0.1 - p * 0.35, 0.55 + l * 0.28], [.3, .02, .05], COLORS.teal));
+    }
+    const done = Math.floor(time * 0.5) % 4;
+    for (let i = 0; i < done; i += 1) objects.push(object("cube", [1.7, -1.15 + i * 0.09, 0], [.55, .03, .75], COLORS.gray));
+  } else if (id === "frames") {
+    // Animation: each frame is a still picture a little different from the
+    // last; play them quickly and the eye sees movement.
+    for (let f = 0; f < 4; f += 1) {
+      objects.push(object("cube", [-3.0 + f * 1.05, 1.2, -0.1], [.44, .44, .04], COLORS.navy));
+      objects.push(object("sphere", [-3.0 + f * 1.05, 0.95 + f * 0.2, 0], .12, COLORS.gold));
+    }
+    objects.push(object("cube", [1.9, -0.6, -0.1], [1.2, 1.05, .05], COLORS.navy));
+    const p = (time * 1.6) % 4;
+    const seq = Math.floor(p), frac = p - seq;
+    const heights = [0, 0.2, 0.4, 0.6];
+    const h = heights[seq] + (heights[(seq + 1) % 4] - heights[seq]) * frac;
+    objects.push(object("sphere", [1.9, -0.9 + h * 1.6, 0], .26, COLORS.gold));
+  } else if (id === "shapes") {
+    // Drawing a shape is a program: forward along each side, turn at each
+    // corner, four times round.
+    const corners = [[-1.6, -1], [1.6, -1], [1.6, 0.9], [-1.6, 0.9]];
+    const cycle = (time * 0.5) % 5;
+    const side = Math.min(3, Math.floor(cycle));
+    const frac = Math.min(1, cycle - side);
+    for (let s = 0; s <= side; s += 1) {
+      const [ax, ay] = corners[s], [bx, by] = corners[(s + 1) % 4];
+      const end = s === side ? frac : 1;
+      const dots = Math.max(1, Math.floor(Math.hypot(bx - ax, by - ay) * end / 0.24));
+      for (let d = 0; d <= dots; d += 1) {
+        const q = (d / dots) * end;
+        objects.push(object("sphere", [ax + (bx - ax) * q, ay + (by - ay) * q, 0], .08, COLORS.teal));
+      }
+    }
+    const [cx1, cy1] = corners[side], [cx2, cy2] = corners[(side + 1) % 4];
+    objects.push(object("cone", [cx1 + (cx2 - cx1) * frac, cy1 + (cy2 - cy1) * frac + 0.5, 0], [.18, .42, .18], COLORS.orange, [Math.PI, 0, 0]));
+  } else if (id === "looks") {
+    // The backdrop is the scene behind; a costume is the sprite's look.
+    // Either can change while the sprite keeps moving — the program is the
+    // same, only the looks swap.
+    const backdrop = Math.floor(time / 3) % 2;
+    const costume = Math.floor((time + 1.5) / 3) % 2;
+    objects.push(object("cube", [0, 0.3, -0.6], [2.9, 1.7, .05], backdrop === 0 ? COLORS.blue : COLORS.green));
+    const sx = Math.sin(time * 0.8) * 1.6;
+    objects.push(object("cube", [sx, -0.75, 0], [.32, .4, .26], costume === 0 ? COLORS.gold : COLORS.pink));
+    objects.push(object("sphere", [sx, -0.1, 0], .27, costume === 0 ? COLORS.orange : COLORS.teal));
+    objects.push(object("cube", [0, -1.35, 0], [3.0, .06, .6], COLORS.gray));
+  } else if (id === "manualautomatic") {
+    // Manual input needs a person for every piece — one press, one value.
+    // Automatic input streams in from a sensor by itself.
+    const press = (time % 2) < 0.3;
+    objects.push(object("cone", [-2.1, 1.25 - (press ? 0.25 : 0), 0], [.14, .35, .14], COLORS.gold, [Math.PI, 0, 0]));
+    objects.push(object("cylinder", [-2.1, 0.55, 0], [.3, .1, .3], press ? COLORS.orange : COLORS.gray));
+    objects.push(object("cube", [-2.1, -1.3, 0], [.55, .35, .45], COLORS.navy));
+    const mp = (time % 2) / 2;
+    if (mp < 0.85) objects.push(object("sphere", [-2.1, 0.3 - mp * 1.5, 0], .12, COLORS.teal));
+    objects.push(object("cube", [2.2, 0.9, 0], [.45, .3, .3], COLORS.teal));
+    for (let i = 0; i < 4; i += 1) {
+      const p = (time * 0.8 + i / 4) % 1;
+      objects.push(object("sphere", [2.2, 0.6 - p * 1.7, 0], .11, COLORS.gold));
+    }
+    objects.push(object("cube", [2.2, -1.3, 0], [.55, .35, .45], COLORS.navy));
+  } else if (id === "sensors") {
+    // A sensor measures the real world and turns it into readings a computer
+    // can use — and the log keeps one reading after another, so you can see
+    // how the measurement changed.
+    const heat = 0.5 + 0.5 * Math.sin(time * 0.6);
+    objects.push(object("sphere", [-2.8, 0.9, 0], .4 + heat * 0.25, COLORS.gold));
+    objects.push(object("cube", [-0.9, 0, 0], [.5, .38, .35], COLORS.teal));
+    const p = (time * 0.9) % 1;
+    objects.push(object("sphere", [-2.3 + p * 1.4, 0.75 - p * 0.6, 0], .1, COLORS.orange));
+    for (let i = 0; i < 8; i += 1) {
+      const h = 0.25 + (0.5 + 0.5 * Math.sin((time - (7 - i) * 0.7) * 0.6)) * 0.85;
+      objects.push(object("cube", [0.4 + i * 0.42, -1.3 + h / 2, 0], [.15, h / 2, .15], COLORS.navy));
+    }
+    objects.push(object("cube", [1.85, -1.4, 0], [1.9, .04, .4], COLORS.gray));
+  } else if (id === "piechart") {
+    // A pie chart: the whole circle is everything counted, and each colour's
+    // share of the circle is its share of the whole.
+    const shares = [[6, COLORS.teal], [4, COLORS.gold], [2, COLORS.orange]];
+    const shown = Math.floor(time / 0.5) % 15;
+    objects.push(object("cylinder", [0, 0, -0.2], [1.15, .06, 1.15], COLORS.navy, [Math.PI / 2, 0, 0]));
+    let index = 0;
+    for (const [count, color] of shares) {
+      for (let i = 0; i < count; i += 1) {
+        if (index < shown) {
+          const a = index / 12 * TAU;
+          objects.push(object("sphere", [Math.cos(a) * 1.5, Math.sin(a) * 1.5, 0], .22, color));
+        }
+        index += 1;
+      }
+    }
+  } else if (id === "events") {
+    // An event starts a program: nothing runs until the button is pressed,
+    // then the steps fire and the sprite reacts.
+    const cycle = time % 4;
+    const press = cycle < 0.35;
+    objects.push(object("cone", [-2.4, 1.25 - (press ? 0.3 : 0), 0], [.16, .4, .16], COLORS.gold, [Math.PI, 0, 0]));
+    objects.push(object("cylinder", [-2.4, 0.55, 0], [.4, .12, .4], press ? COLORS.orange : COLORS.red));
+    const run = cycle >= 0.35 && cycle < 2.6 ? (cycle - 0.35) / 0.75 : -1;
+    for (let i = 0; i < 3; i += 1) {
+      objects.push(object("cube", [-0.9 + i * 1.0, 0.55, 0], [.4, .26, .24], run >= 0 && Math.floor(run) === i ? COLORS.gold : COLORS.navy));
+    }
+    const hop = run >= 0 ? Math.abs(Math.sin(run * Math.PI)) * 0.5 : 0;
+    objects.push(object("cube", [1.9, -1.0 + hop, 0], [.3, .36, .24], COLORS.teal));
+    objects.push(object("sphere", [1.9, -0.4 + hop, 0], .25, COLORS.gold));
+    objects.push(object("cube", [0.3, -1.45, 0], [2.9, .05, .5], COLORS.gray));
+  } else if (id === "gridcells") {
+    // A spreadsheet is a grid: a row runs across, a column runs down, one
+    // cell is active at a time, and a range is a block of cells together.
+    const phase = Math.floor(time / 3) % 4;
+    for (let r = 0; r < 4; r += 1) for (let c = 0; c < 5; c += 1) {
+      let color = (r === 0 || c === 0) ? COLORS.navy : COLORS.gray;
+      let depth = 0.04;
+      if (phase === 0 && r === 2 && c > 0) { color = COLORS.gold; depth = 0.16; }
+      if (phase === 1 && c === 3 && r > 0) { color = COLORS.teal; depth = 0.16; }
+      if (phase === 2 && r === 2 && c === 3) { color = COLORS.orange; depth = 0.16 + Math.abs(Math.sin(time * 2)) * 0.12; }
+      if (phase === 3 && r >= 1 && r <= 2 && c >= 2 && c <= 4) { color = COLORS.blue; depth = 0.16; }
+      objects.push(object("cube", [-2.2 + c * 1.1, 1.1 - r * 0.75, 0], [.5, .33, depth], color));
+    }
+  } else if (id === "randompick") {
+    // Random means the computer picks and you cannot know which before it
+    // lands — a different box each round, decided by nothing you can see.
+    const round = Math.floor(time / 2.5);
+    const pick = Math.floor(Math.abs(Math.sin(round * 12.9898) * 43758.5453) % 4);
+    const palette = [COLORS.teal, COLORS.gold, COLORS.orange, COLORS.blue];
+    for (let i = 0; i < 4; i += 1) objects.push(object("cube", [-2.4 + i * 1.6, -0.9, 0], [.5, .4, .4], palette[i]));
+    const p = (time % 2.5) / 2.5;
+    const at = p < 0.7 ? Math.floor(p / 0.7 * 6) % 4 : pick;
+    const hop = p < 0.7 ? Math.abs(Math.sin(p / 0.7 * 6 * Math.PI)) * 0.6 : 0;
+    objects.push(object("sphere", [-2.4 + at * 1.6, -0.25 + hop, 0], .24, COLORS.pink));
+  } else if (id === "comment") {
+    // A comment is a note for people: the program runs straight past it, and
+    // the computer never reads it — watch it stay grey while the blocks light.
+    const active = step(0.75) % 5;
+    for (let i = 0; i < 5; i += 1) {
+      objects.push(object("cube", [-2.6 + i * 1.3, -0.4, 0], [.5, .3, .3], i === active ? COLORS.gold : COLORS.navy));
+    }
+    objects.push(object("cylinder", [-1.3, 0.45, 0], [.03, .35, .03], COLORS.gray));
+    objects.push(object("cube", [-1.3, 1.1, 0], [.55, .3, .06], COLORS.gray));
+    objects.push(object("sphere", [-2.6 + ((time / 0.75) % 5) * 1.3, 0.35, 0], .18, COLORS.orange));
+  } else if (id === "subroutine") {
+    // A sub-routine is steps you name once and call from the main program:
+    // the token jumps in, runs them, and comes back to carry on.
+    const mainX = (i) => -2.7 + i * 1.35;
+    for (let i = 0; i < 4; i += 1) objects.push(object("cube", [mainX(i), 1.0, 0], [.5, .3, .3], i === 1 ? COLORS.gold : COLORS.navy));
+    for (let i = 0; i < 3; i += 1) objects.push(object("cube", [-0.6 + i * 1.1, -1.1, 0], [.42, .26, .26], COLORS.teal));
+    const route = [[mainX(0), 1.6], [mainX(1), 1.6], [-0.6, -0.5], [0.5, -0.5], [1.6, -0.5], [mainX(2), 1.6], [mainX(3), 1.6]];
+    const p = Math.min(route.length - 1.001, (time % 8) / 8 * route.length);
+    const leg = Math.floor(p), frac = p - leg;
+    const [x1, y1] = route[leg], [x2, y2] = route[leg + 1];
+    objects.push(object("sphere", [x1 + (x2 - x1) * frac, y1 + (y2 - y1) * frac, 0], .19, COLORS.orange));
   } else if (id === "general") {
     // The input → process → output pipeline every unit rests on. Named
     // explicitly rather than left as the else-branch so the scene catalogue

@@ -7,11 +7,11 @@
 // named scene exists, produces geometry at several points in its animation, and
 // only emits finite coordinates and known meshes.
 //
-// The word explainers carry their own promise: every Grade 2 vocabulary word
+// The word explainers carry their own promise: every Grade 1-4 vocabulary word
 // resolves to a scene (that is the feature — a word card with no model is a
-// silent regression, exactly like a blank canvas). Grades 1, 3 and 4 share many
-// of these terms and are reported as coverage, not failures: only Grade 2's
-// words were commissioned.
+// silent regression, exactly like a blank canvas). Those are the grades whose
+// word card renders the explainer; Stages 5-8 keep their design and their
+// vocabulary is deliberately not mapped.
 
 import fs from "node:fs";
 import path from "node:path";
@@ -72,8 +72,6 @@ for (const [term, entry] of Object.entries(COMPUTING_WORD_SCENES)) {
   if (!entry.caption || !entry.caption.trim()) fail(`word "${term}" has no caption`);
 }
 
-// Grade 2 word coverage is the commitment; the other Stage 1-4 grades reuse
-// whatever terms they share and are reported for information.
 const gradeCoverage = [];
 for (const grade of [1, 2, 3, 4]) {
   const unitsDir = path.join(sharedDir, "..", `grade-${grade}`, "data", "units");
@@ -88,7 +86,7 @@ for (const grade of [1, 2, 3, 4]) {
     for (const term of vocab) {
       total += 1;
       if (computingWordScene(term)) covered += 1;
-      else if (grade === 2) fail(`grade 2 ${file}: word "${term}" has no explainer scene`);
+      else fail(`grade ${grade} ${file}: word "${term}" has no explainer scene`);
     }
   }
   gradeCoverage.push(`grade ${grade}: ${covered}/${total}`);
@@ -105,4 +103,4 @@ const totals = defined.map((id) => sceneObjects(id, 1.5).length);
 console.log(`✓ computing WebGL scenes: ${defined.length} scenes, all referenced and all render geometry`);
 console.log(`   diagrams with a scene: ${(visualsSource.match(/scene:/g) || []).length} of ${(visualsSource.match(/caption:/g) || []).length}`);
 console.log(`   objects per scene: min ${Math.min(...totals)}, max ${Math.max(...totals)}`);
-console.log(`   word explainer coverage: ${gradeCoverage.join(", ")} (grade 2 must be total)`);
+console.log(`   word explainer coverage: ${gradeCoverage.join(", ")} (grades 1-4 must be total)`);

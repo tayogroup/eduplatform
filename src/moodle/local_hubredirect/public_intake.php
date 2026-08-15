@@ -1896,6 +1896,17 @@ body.pqh-public-intake-page #page-wrapper,body.pqh-public-intake-page #page,body
                   // families the form has six steps. It also belongs here on the
                   // merits: this step already asks age, gender, grade and support
                   // needs, which is exactly the set a sibling card repeats. ?>
+            <?php // Shown to a parent only. The block is addressed to somebody enrolling
+                  // children ("If you are enrolling more than one child"), which reads
+                  // wrong to a learner filling the form in for themselves.
+                  //
+                  // Presentation only -- the POST read stays gated on K-12 alone. The
+                  // JSON twin has no respondent_role at all, so a stricter server-side
+                  // rule here would accept different submissions than it does, and these
+                  // two must not diverge. Nothing is lost: the K-12 branch requires the
+                  // parent details regardless of role, so a sibling row is complete
+                  // whichever way it arrives. ?>
+            <?php if ($respondentrole !== 'student'): ?>
             <h4 class="pqpir-sib-h">Another child?</h4>
             <p class="pqpir-muted pqpir-sib-lede">If you are enrolling more than one child, add them here.
               Everything you have already answered &mdash; your details, where you live, languages,
@@ -1941,6 +1952,7 @@ body.pqh-public-intake-page #page-wrapper,body.pqh-public-intake-page #page,body
             </div>
             <button type="button" class="pqpir-btn pqpir-btn-ghost" data-sib-add>+ Add another child</button>
             <p class="pqpir-muted" style="margin-top:10px">Each child gets their own place and their own login. You will receive one email listing them all.</p>
+            <?php endif; ?>
           <?php endif; ?>
 
           <?php if ($parentguardianrequired && !$parentguardianfirst): ?>

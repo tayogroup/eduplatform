@@ -1,10 +1,17 @@
 // Acceptance check for the Computing WebGL scene catalogue.
 //
-// A scene is wired up in two files: computing-visuals.js names it on a diagram,
-// computing-webgl.js builds its geometry. Nothing at runtime complains when those
-// disagree — the canvas just renders empty — so check here that every named
-// scene exists, produces geometry at several points in its animation, and only
-// emits finite coordinates and known meshes.
+// A scene is wired up in three files: computing-visuals.js names it on a
+// diagram, computing-word-scenes.js names it on a vocabulary word's explainer,
+// and computing-webgl.js builds its geometry. Nothing at runtime complains when
+// those disagree — the canvas just renders empty — so check here that every
+// named scene exists, produces geometry at several points in its animation, and
+// only emits finite coordinates and known meshes.
+//
+// The word explainers carry their own promise: every Grade 2 vocabulary word
+// resolves to a scene (that is the feature — a word card with no model is a
+// silent regression, exactly like a blank canvas). Grades 1, 3 and 4 share many
+// of these terms and are reported as coverage, not failures: only Grade 2's
+// words were commissioned.
 
 import fs from "node:fs";
 import path from "node:path";
@@ -14,11 +21,13 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 const sharedDir = path.join(here, "..", "src", "prototypes", "ehel-academy", "computing", "shared");
 
 const { sceneObjects } = await import(`file://${path.join(sharedDir, "computing-webgl.js")}`);
+const { COMPUTING_WORD_SCENES, computingWordScene } = await import(`file://${path.join(sharedDir, "computing-word-scenes.js")}`);
 
 const visualsSource = fs.readFileSync(path.join(sharedDir, "computing-visuals.js"), "utf8");
+const wordScenesSource = fs.readFileSync(path.join(sharedDir, "computing-word-scenes.js"), "utf8");
 const webglSource = fs.readFileSync(path.join(sharedDir, "computing-webgl.js"), "utf8");
 
-const referenced = [...new Set([...visualsSource.matchAll(/scene:\s*"([A-Za-z]+)"/g)].map((m) => m[1]))];
+const referenced = [...new Set([...`${visualsSource}\n${wordScenesSource}`.matchAll(/scene:\s*"([A-Za-z]+)"/g)].map((m) => m[1]))];
 const defined = [...new Set([...webglSource.matchAll(/id === "([A-Za-z]+)"/g)].map((m) => m[1]))];
 
 const KNOWN_MESHES = new Set(["cube", "sphere", "cylinder", "cone"]);
@@ -55,6 +64,36 @@ for (const id of defined) {
   }
 }
 
+// Every word-scene entry must name a real scene and carry a caption — the
+// caption is what ties a shared scene to the specific word, so an empty one
+// leaves the learner watching an unexplained animation.
+for (const [term, entry] of Object.entries(COMPUTING_WORD_SCENES)) {
+  if (!defined.includes(entry.scene)) fail(`word "${term}" names scene "${entry.scene}" which has no geometry`);
+  if (!entry.caption || !entry.caption.trim()) fail(`word "${term}" has no caption`);
+}
+
+// Grade 2 word coverage is the commitment; the other Stage 1-4 grades reuse
+// whatever terms they share and are reported for information.
+const gradeCoverage = [];
+for (const grade of [1, 2, 3, 4]) {
+  const unitsDir = path.join(sharedDir, "..", `grade-${grade}`, "data", "units");
+  if (!fs.existsSync(unitsDir)) continue;
+  let total = 0;
+  let covered = 0;
+  for (const file of fs.readdirSync(unitsDir).filter((name) => /^unit-\d+\.json$/.test(name)).sort()) {
+    const unit = JSON.parse(fs.readFileSync(path.join(unitsDir, file), "utf8"));
+    const vocab = unit.reference?.vocabulary?.length
+      ? unit.reference.vocabulary.map((entry) => entry.term)
+      : (unit.reference?.terms || []).map(([term]) => term);
+    for (const term of vocab) {
+      total += 1;
+      if (computingWordScene(term)) covered += 1;
+      else if (grade === 2) fail(`grade 2 ${file}: word "${term}" has no explainer scene`);
+    }
+  }
+  gradeCoverage.push(`grade ${grade}: ${covered}/${total}`);
+}
+
 const unique = [...new Set(failures)];
 if (unique.length) {
   console.error(`✗ computing WebGL scenes: ${unique.length} problem(s)`);
@@ -66,3 +105,4 @@ const totals = defined.map((id) => sceneObjects(id, 1.5).length);
 console.log(`✓ computing WebGL scenes: ${defined.length} scenes, all referenced and all render geometry`);
 console.log(`   diagrams with a scene: ${(visualsSource.match(/scene:/g) || []).length} of ${(visualsSource.match(/caption:/g) || []).length}`);
 console.log(`   objects per scene: min ${Math.min(...totals)}, max ${Math.max(...totals)}`);
+console.log(`   word explainer coverage: ${gradeCoverage.join(", ")} (grade 2 must be total)`);

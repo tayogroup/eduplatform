@@ -8,6 +8,7 @@
 import { initComputingWebGL } from "../../computing/shared/computing-webgl.js";
 import { unitTopic, computingDiagram } from "../../computing/shared/computing-visuals.js";
 import { computingWordPicture } from "../../computing/shared/computing-word-pictures.js?v=cmp-pictures-1";
+import { computingWordExplainer } from "../../computing/shared/computing-word-scenes.js?v=cmp-word-scenes-1";
 import { createCourseApp } from "../course-app.js";
 import { createDeck, deckIcon } from "../deck.js?v=deck-1";
 import { createPlacementUnit, placementCallout, placementCourseShell, PREREQ_UNIT } from "../placement.js?v=placement-1";
@@ -779,6 +780,7 @@ function renderComputingWordsClassic(vocab) {
         <section class="panel word-card" id="word-card">
           <div class="word-card-head"><div><span class="word-type">Computing word</span><h2>${escapeHtml(current.term)}</h2></div><button class="icon-button" id="listen-word" type="button" title="Listen" aria-label="Listen to ${escapeHtml(current.term)}">♪</button></div>
           <p class="meaning"><span class="field-label">Meaning:</span> ${escapeHtml(current.meaning)}</p>
+          ${bothDesigns() ? computingWordExplainer(current.term) : ""}
           ${current.example ? `<div class="sentence-card"><small>Used in the lesson</small><p>“${escapeHtml(current.example)}”</p>${voiceButton(current.example, "Hear the example")}</div>` : ""}
           <div class="practice-box"><input id="word-sentence" maxlength="180" placeholder="Write your own sentence using ${escapeHtml(current.term.toLowerCase())}…" aria-label="Write your own sentence"><button class="button primary" id="check-word-sentence" type="button">Check sentence</button></div>
           <div id="word-feedback"></div>
@@ -786,6 +788,10 @@ function renderComputingWordsClassic(vocab) {
         </section>
       </div>
       <p style="margin-top:16px"><button class="button primary" id="words-done" type="button">I explored the computing words ✓</button></p>`;
+    // One canvas per page — the card shows a single word, and each redraw
+    // replaces it, so this never stacks live contexts the way per-slide
+    // canvases in the deck half would.
+    if (bothDesigns()) initComputingWebGL(cRoot());
     const search = c$("#word-search");
     search.addEventListener("input", () => { query = search.value.trim().toLowerCase(); const pos = search.selectionStart; draw(); const s = c$("#word-search"); s.focus(); s.setSelectionRange(pos, pos); });
     c$$('[data-word]').forEach((button) => button.addEventListener("click", () => { activeIndex = Number(button.dataset.word); draw(); showComputingWordInDeck?.(activeIndex); }));

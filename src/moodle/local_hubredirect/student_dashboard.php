@@ -160,6 +160,19 @@ foreach (pqh_user_courses($userid) as $key => $entry) {
         'summary' => (string)($entry['summary'] ?? ''),
         'coursename' => '',
         'continue' => new moodle_url('/local/hubredirect/course_launch.php', ['course' => (string)$key]),
+        // Where the learner is in this course, shown under the title in the card's
+        // header -- "Unit 3, Module 2". Empty until a source is agreed, and the
+        // line is not rendered while it is empty, so a card never claims a
+        // position nobody measured.
+        //
+        // It is NOT derivable from what this page already reads. The dashboard
+        // loads homework submissions and the next live session, neither of which
+        // carries a position in course content. unitid/lessonid DO exist, but on
+        // local_prequran_live_session and _live_series -- they describe what a
+        // class covers, not where a learner has got to -- and a session's cohortid
+        // is a Moodle cohort, not a class_group, so there is no verified join from
+        // a session to the course key this card is built from.
+        'position' => '',
     ];
 }
 try {
@@ -180,6 +193,8 @@ try {
             'summary' => '',
             'coursename' => $title,
             'continue' => new moodle_url('/local/hubredirect/course_launch.php', ['course' => (string)$key]),
+            // See the note on the catalog branch above.
+            'position' => '',
         ];
     }
 } catch (Throwable $e) {
@@ -256,14 +271,14 @@ body.pqhsd-page #page,body.pqhsd-page #page-content,body.pqhsd-page #region-main
 .pqhsd-courses{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
 .pqhsd-ccard{display:flex;flex-direction:column;background:#fff;border:1px solid #e4e9ef;border-radius:16px;overflow:hidden;box-shadow:0 1px 2px rgba(15,34,55,.05),0 10px 28px -16px rgba(15,34,55,.14);transition:transform .15s ease,box-shadow .15s ease}
 .pqhsd-ccard:hover{transform:translateY(-2px);box-shadow:0 2px 4px rgba(15,34,55,.06),0 18px 38px -16px rgba(15,34,55,.22)}
-.pqhsd-ccard__cover{height:74px;background:linear-gradient(115deg,var(--cc,#2166d1),var(--cc2,#4d8be0))}
+.pqhsd-ccard__cover{min-height:74px;padding:13px 15px;display:flex;flex-direction:column;justify-content:center;gap:2px;background:linear-gradient(115deg,var(--cc,#2166d1),var(--cc2,#4d8be0))}.pqhsd-ccard__cover h3{margin:0;color:#fff;font-size:15px;font-weight:800;line-height:1.25;letter-spacing:-.01em}.pqhsd-ccard__pos{margin:0;color:rgba(255,255,255,.86);font-size:12px;font-weight:650;line-height:1.3}
 .pqhsd-courses .pqhsd-ccard:nth-child(5n+1){--cc:#2166d1;--cc2:#4d8be0}
 .pqhsd-courses .pqhsd-ccard:nth-child(5n+2){--cc:#0d5c8c;--cc2:#3383b4}
 .pqhsd-courses .pqhsd-ccard:nth-child(5n+3){--cc:#0f7f9e;--cc2:#3aa7c4}
 .pqhsd-courses .pqhsd-ccard:nth-child(5n+4){--cc:#4f5fc4;--cc2:#7b88dd}
 .pqhsd-courses .pqhsd-ccard:nth-child(5n+5){--cc:#33567e;--cc2:#5c7ea6}
 .pqhsd-ccard__body{display:flex;flex-direction:column;gap:8px;flex:1;padding:12px 14px 14px}
-.pqhsd-ccard__body h3{margin:0;font-size:14.5px;font-weight:750;letter-spacing:-.01em}
+
 .pqhsd-ccard__meta{color:#8494a5;font-size:11.5px;font-weight:600}
 .pqhsd-chip{display:inline-flex;align-items:center;align-self:flex-start;min-height:22px;padding:1px 8px;border-radius:999px;background:#fbe9e7;color:#c0392b;font-size:11px;font-weight:700}
 .pqhsd-progress{height:7px;border-radius:999px;background:#edf3fc;overflow:hidden}
@@ -403,9 +418,17 @@ echo pqh_design_shell_html('pqhsd-shell', 'dashboard', [
         <?php endif; ?>
         <?php foreach ($courses as $course): ?>
           <div class="pqhsd-ccard">
-            <div class="pqhsd-ccard__cover"></div>
-            <div class="pqhsd-ccard__body">
+            <?php // The cover is the card's header, not decoration: the course and the
+                    // learner's place in it are the two things worth reading at a glance,
+                    // so they sit in the coloured band and the white body is left to the
+                    // actions and progress. ?>
+            <div class="pqhsd-ccard__cover">
               <h3><?php echo s($course['title']); ?></h3>
+              <?php if (($course['position'] ?? '') !== ''): ?>
+                <p class="pqhsd-ccard__pos"><?php echo s((string)$course['position']); ?></p>
+              <?php endif; ?>
+            </div>
+            <div class="pqhsd-ccard__body">
               <?php if ($course['missing'] > 0): ?>
                 <span class="pqhsd-chip"><?php echo (int)$course['missing']; ?> missing task<?php echo $course['missing'] === 1 ? '' : 's'; ?></span>
               <?php elseif ($course['next'] !== ''): ?>

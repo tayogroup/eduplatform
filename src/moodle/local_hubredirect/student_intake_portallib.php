@@ -241,9 +241,27 @@ function pqsil_send_parent_intake_email(stdClass $parent, stdClass $student, str
     if ($brandname === '') {
         $brandname = format_string($SITE->fullname ?? ($CFG->wwwroot ?? 'EduPlatform'));
     }
-    $loginurl = (new moodle_url('/local/hubredirect/consumer_login.php', array_filter([
+    // Built from the consumer's OWN canonical domain, not from $CFG->wwwroot.
+    //
+    // This install sets wwwroot from the current request host (the custom-domains
+    // snippet: 'https://' . $customdomainhost), so moodle_url() would bake in
+    // whichever hostname the ADMIN happened to be using when they approved. A
+    // family that filled the form on app.ehelacademy.org could be sent a login
+    // link on app.k-12.ehelacademy.org purely because of an admin's browser tab,
+    // and every already-sent welcome email would break if that hostname were
+    // ever retired.
+    //
+    // pqh_consumer_dashboard_domain() resolves the consumer's active 'app'
+    // domain, so every family gets the same address. Falls back to the old
+    // behaviour when the consumer has no domain configured -- an unprovisioned
+    // school should still get a working link rather than none.
+    $loginpath = (new moodle_url('/local/hubredirect/consumer_login.php', array_filter([
         'consumer' => (string)($consumer->consumerslug ?? ''),
-    ])))->out(false);
+    ])))->out_as_local_url(false);
+    $logindomain = $consumer ? pqh_consumer_dashboard_domain($consumer) : '';
+    $loginurl = $logindomain !== ''
+        ? 'https://' . $logindomain . $loginpath
+        : (new moodle_url($loginpath))->out(false);
 
     $message = pqhi_intake_welcome_message([
         'parentname' => fullname($parent),

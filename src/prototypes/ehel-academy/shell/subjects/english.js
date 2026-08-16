@@ -239,7 +239,43 @@ const sections = [
 // This is now true for every grade the app serves. Narrowing it later means
 // putting a grade test back here, not deleting the constant: everything that
 // reads it treats "not gated" as a real state.
-const UNIT_GATE_ENABLED = true;
+// Every grade is gated by default, and an admin can suspend a whole course
+// without a code change or a release: data/gating.json beside the manifest
+// carries `sequentialLocking`, and "suspended" opens that course completely.
+// It lives in the CONTENT tier, which is cached for five minutes, so a change
+// reaches learners in minutes through upload-content-to-bunny.js.
+//
+// Not final at module scope — the file has not been fetched yet. load() settles
+// it, and everything that reads it does so at render time or later, exactly as
+// with unitLocked. A missing or unreadable file leaves gating ON: the safe
+// default is the course behaving as it was built to, not silently unlocked.
+let UNIT_GATE_ENABLED = true;
+let gatingSuspendedReason = "";
+
+// Reads data/gating.json for this course and applies it. Deliberately forgiving
+// in one direction only: a 404, a parse error, an unreachable network or a value
+// it does not recognise all leave gating ON. A course that opens itself because
+// a file failed to load is a silent failure a learner would never report, while
+// a course that stays gated when it should not is one an admin sees at once and
+// can fix by re-checking the file.
+//
+// "suspended" is the only word that switches it off, and it is compared
+// case-insensitively after trimming — an admin editing JSON by hand should not
+// be defeated by " Suspended".
+async function applyCourseGating(ctx) {
+  try {
+    const response = await fetch(new URL("gating.json", ctx.dataRootUrl));
+    if (!response.ok) return; // not published for this course yet — gated
+    const config = await response.json();
+    const setting = String(config?.sequentialLocking ?? "").trim().toLowerCase();
+    if (setting === "suspended") {
+      UNIT_GATE_ENABLED = false;
+      gatingSuspendedReason = String(config?.suspendedReason ?? "").trim();
+    }
+  } catch {
+    /* offline, malformed, or absent: the course stays as it was built */
+  }
+}
 const CAPSTONE_UNIT = 10;
 // The Teacher view is a preview, not a lesson: a teacher or parent planning
 // ahead has to be able to open Unit 6 in week one. This is no weaker than what
@@ -4185,6 +4221,7 @@ const config = {
     // home to Unit 7, not to a locked year. Offline, or on a per-device launch,
     // ctx.remoteUnits is null and the answer is the local one, unchanged.
     remoteUnits = ctx.remoteUnits || null;
+    await applyCourseGating(ctx);
     // Recompute, don't just read: remoteUnits has only now arrived, and the
     // cached answer above was taken from this device alone.
     unitLockedCache = computeUnitLocked();

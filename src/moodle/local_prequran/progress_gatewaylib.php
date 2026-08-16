@@ -60,6 +60,25 @@ function pqpg_launch_role(int $userid): string {
     return 'student';
 }
 
+/**
+ * Whether an admin has suspended sequential locking for this course.
+ *
+ * Settings are per English grade (local_prequran/gating_suspend_eng_gNN), so the
+ * course key decides which one is read. Any course the settings do not cover —
+ * every non-English subject today — answers false and keeps its own behaviour.
+ *
+ * Returned as a claim rather than written to the CDN: Moodle holds no Bunny
+ * credential, and the token is already the channel the app trusts for identity.
+ * The cost is that it reaches a learner at their NEXT launch, which the admin
+ * screen says plainly.
+ */
+function pqpg_gating_suspended(string $coursekey): bool {
+    if (!preg_match('/^ehel-eng-g(\d{2})$/', $coursekey, $m)) {
+        return false;
+    }
+    return (bool)get_config('local_prequran', 'gating_suspend_eng_g' . $m[1]);
+}
+
 /** Mint a launch token binding a learner to a course (and optionally an env). */
 function pqpg_mint_token(int $userid, string $coursekey, string $env = '', int $ttl = PQPG_TOKEN_TTL): string {
     global $DB;
@@ -76,6 +95,10 @@ function pqpg_mint_token(int $userid, string $coursekey, string $env = '', int $
     $payload = pqpg_b64url(json_encode([
         'sub' => $userid, 'course' => $coursekey, 'env' => $env, 'iat' => $now, 'exp' => $now + $ttl, 'jti' => $jti,
         'role' => pqpg_launch_role($userid),
+        // Present only when an admin has suspended this course, so a token
+        // minted before the setting existed simply has no opinion and the
+        // app falls through to gating.json.
+        'gate' => pqpg_gating_suspended($coursekey) ? 'suspended' : null,
     ], JSON_UNESCAPED_SLASHES));
     $signature = hash_hmac('sha256', "{$header}.{$payload}", pqpg_secret(), true);
     try {

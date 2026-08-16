@@ -162,17 +162,27 @@ function bind(ctx) {
 // No token at all means this is not a learner launch — local dev, a direct link,
 // QA — and the picker stays. A learner who strips their own token loses progress
 // sync to gain a control they could have reached by editing the URL.
-function launchRole() {
+// The token's payload, or null when there is no readable one. One decoder, so
+// the claims cannot be read two different ways as more of them are added.
+function launchClaims() {
   const token = routeParams.get("pwsToken") || "";
-  if (!token) return "staff";
+  if (!token) return null;
   const [, payload] = token.split(".");
+  if (!payload) return null;
   try {
     const base64 = payload.replace(/-/g, "+").replace(/_/g, "/").padEnd(Math.ceil(payload.length / 4) * 4, "=");
-    const role = JSON.parse(atob(base64)).role;
-    if (typeof role === "string" && role) return role;
+    const claims = JSON.parse(atob(base64));
+    return claims && typeof claims === "object" ? claims : null;
   } catch {
-    /* a token minted before `role` existed, or one we cannot read */
+    return null; /* not a token we can read */
   }
+}
+const LAUNCH_CLAIMS = launchClaims();
+
+function launchRole() {
+  if (!routeParams.get("pwsToken")) return "staff";
+  const role = LAUNCH_CLAIMS?.role;
+  if (typeof role === "string" && role) return role;
   // Tokens predating the claim carry no role. Treating them as staff would show
   // every learner the picker; treating them as students is the safer default and
   // costs a teacher on an old token one refreshed launch.
@@ -263,6 +273,19 @@ let gatingSuspendedReason = "";
 // case-insensitively after trimming — an admin editing JSON by hand should not
 // be defeated by " Suspended".
 async function applyCourseGating(ctx) {
+  // The Moodle setting first. It rides in the signed token as `gate`, set by the
+  // admin screen (local_prequran :: Sequential locking), and it is checked before
+  // the file because it is the lever with a human behind it and no CDN in the
+  // way — it applies at the launch itself rather than waiting on a cache.
+  //
+  // Either lever can suspend and neither can force locking back ON: the claim is
+  // absent unless an admin has ticked the box, so an un-ticked setting simply has
+  // no opinion and the file decides. Both must be clear for a course to gate.
+  if (LAUNCH_CLAIMS?.gate === "suspended") {
+    UNIT_GATE_ENABLED = false;
+    gatingSuspendedReason = "Suspended by an administrator in Moodle";
+    return;
+  }
   try {
     // no-store, and a cache-busting query. This file is CONFIG, not content:
     // an admin flips it expecting an effect, and the default cache mode made

@@ -1017,5 +1017,26 @@ if ($hassiteconfig) {
         PARAM_RAW_TRIMMED
     ));
 
+    $settings->add(new admin_setting_heading(
+        'local_prequran/gating_heading',
+        'Sequential locking (Ehel English)',
+        'Each English course walks its units and sections in order: a step opens only when every step above it is finished. '
+        . 'Suspending a course opens all of it at once, for every learner on that course, without changing any progress — '
+        . 'ticks and percentages keep being recorded, so unsuspending resumes exactly where each learner had reached.'
+        . '<br><br>Takes effect at the <strong>next launch from Moodle</strong>, because the setting travels in the '
+        . 'launch token. A learner already inside the course keeps the previous behaviour until they launch again '
+        . '(tokens last 12 hours). It does not reach anyone opening the course from a direct '
+        . 'link rather than from Moodle — those follow gating.json on the CDN.'
+    ));
+
+    foreach ([1, 2, 3, 4, 5, 6, 7, 8] as $grade) {
+        $settings->add(new admin_setting_configcheckbox(
+            'local_prequran/gating_suspend_eng_g' . str_pad((string)$grade, 2, '0', STR_PAD_LEFT),
+            'Suspend locking — Grade ' . $grade . ' English',
+            'Ticked: Grade ' . $grade . ' English opens every unit and section. Unticked (default): the course walks in order.',
+            0
+        ));
+    }
+
     $ADMIN->add('localplugins', $settings);
 }

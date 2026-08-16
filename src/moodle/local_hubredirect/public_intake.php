@@ -39,8 +39,30 @@ function pqpir_trim(string $name, string $default = ''): string {
     return trim(optional_param($name, $default, PARAM_TEXT));
 }
 
+/**
+ * A contact answer -- "email or phone" -- cleaned of what a PASTE carries
+ * invisibly.
+ *
+ * PHP's trim() strips only " \t\n\r\0\x0B". It does not touch U+00A0, the
+ * non-breaking space that copying an address out of Word, WhatsApp or a web page
+ * routinely appends, nor zero-width characters (U+200B-U+200D, U+2060) nor a BOM
+ * (U+FEFF). PARAM_TEXT passes all of them through, so "parent@example.com" with
+ * an invisible tail failed validate_email(), failed the digits test too, and the
+ * parent was told to "enter a valid email address or phone number" while looking
+ * at one. Deleting the field and retyping it fixed it, which is exactly the
+ * report that led here.
+ *
+ * Unicode spaces become ordinary spaces so trim() can remove them at the ends;
+ * zero-width marks are dropped outright, having no width to trim. An interior
+ * space is left alone and still fails -- an email address cannot contain one,
+ * and silently deleting characters from the middle of what somebody typed would
+ * be worse than rejecting it.
+ */
 function pqpir_contact(string $name): string {
-    return core_text::substr(trim(optional_param($name, '', PARAM_TEXT)), 0, 255);
+    $value = (string)optional_param($name, '', PARAM_TEXT);
+    $value = (string)preg_replace('/[\x{00A0}\x{1680}\x{2000}-\x{200A}\x{202F}\x{205F}\x{3000}]/u', ' ', $value);
+    $value = (string)preg_replace('/[\x{200B}-\x{200D}\x{2060}\x{FEFF}]/u', '', $value);
+    return core_text::substr(trim($value), 0, 255);
 }
 
 function pqpir_param_array(string $name): array {

@@ -264,7 +264,19 @@ let gatingSuspendedReason = "";
 // be defeated by " Suspended".
 async function applyCourseGating(ctx) {
   try {
-    const response = await fetch(new URL("gating.json", ctx.dataRootUrl));
+    // no-store, and a cache-busting query. This file is CONFIG, not content:
+    // an admin flips it expecting an effect, and the default cache mode made
+    // restoring one unreliable. Suspending Grade 1 on production and switching
+    // it straight back, the browser kept applying "suspended" through a full
+    // page reload, because its own copy was still inside the five-minute TTL —
+    // and the edge object it came from was serving past that TTL as well. The
+    // query defeats both: the browser treats it as a URL it has never seen, and
+    // it misses the stuck edge entry (verified on production — the plain URL
+    // returned "suspended" while ?x=… returned "on" from the same POP).
+    //
+    // It costs one uncached request of about 200 bytes per course load, which is
+    // the right price for a control an admin has to be able to trust.
+    const response = await fetch(new URL(`gating.json?t=${Date.now()}`, ctx.dataRootUrl), { cache: "no-store" });
     if (!response.ok) return; // not published for this course yet — gated
     const config = await response.json();
     const setting = String(config?.sequentialLocking ?? "").trim().toLowerCase();

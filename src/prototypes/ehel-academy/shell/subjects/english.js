@@ -220,7 +220,7 @@ const sections = [
 // youngest reader who meets it (Grade 1), so every grade gets the plain form.
 const SECTION_HINTS = {
   lecture: "Watch the video to the end. Listen and read the captions.",
-  dictionary: "Learn each word and press “I know this word”. Know most of the words to finish.",
+  dictionary: "Learn each word and press “I know this word”, until all the words are learned.",
   reading: "Read the story, or listen to it. Then press the button to say you have read it.",
   comprehension: "Answer the questions about the story, then press the button to finish.",
   grammar: "Look at the pattern and try the practice, then press the button to finish.",
@@ -293,7 +293,6 @@ const SECTION_GUIDES = {
     }),
   dictionary: () => {
     const total = course.dictionaryLinks.length;
-    const needed = Math.ceil(total * 0.8);
     return {
       steps: [
         `On the left is the list of the ${total} words in this unit. Press a word to open it.`,
@@ -302,9 +301,9 @@ const SECTION_GUIDES = {
         "Read the example sentences. Press “Hear sentence” to listen, and use the arrows to go through all of them.",
         "Look at the spelling. Then type your own sentence with the word in the box and press “Check sentence”.",
         "When you know the word, press “I know this word”. It gets a LEARNED tag in the list.",
-        "Do this for every word. Use the search box or the group menu to find words.",
+        "Do this for every word. Click the next word in the word list on the left until you have learned all the words.",
       ],
-      finish: `Vocabulary is finished when you have marked ${needed} of the ${total} words as known — about 8 out of every 10. You have marked ${progress.knownWords.length} so far.`,
+      finish: "Vocabulary is finished when you have learned all the words and marked each one as known.",
     };
   },
   reading: () => {

@@ -449,11 +449,15 @@ const SECTION_CHAIN = ["overview", "lecture", "dictionary", "reading", "comprehe
 // Games entry, and a chain that still demanded it would stall the learner at
 // the Quiz forever. `final-quiz` only exists on Unit 10, and comes last there.
 const sectionChain = () => SECTION_CHAIN.filter((id) => visibleSections().some(([visible]) => visible === id));
-function sectionUnlocked(id) {
+// `fromOverview` answers the question as the Overview's own guide asks it: the
+// button on that page is what completes Overview, so from there the lecture is
+// one press away and must read as open, not padlocked behind the page it is on.
+function sectionUnlocked(id, { fromOverview = false } = {}) {
   if (!UNIT_GATE_ENABLED || isPrereqUnit || TEACHER_PREVIEW) return true;
   const chain = sectionChain();
   const index = chain.indexOf(id);
   if (index <= 0) return true; // not a step, or the first one
+  if (fromOverview) return chain.slice(1, index).every((step) => progress.completed.includes(step));
   // EVERY earlier step, and nothing else. A section being finished does NOT open
   // it: that exemption was here as "revisiting is free" and it punched exactly
   // the holes the rule above was written to close. A Grade 2 learner carrying a
@@ -1312,8 +1316,8 @@ function gradeLocation(nextGrade) {
 // recommended path are authored independently, and ElevenLabs bills per
 // character: a reworded outcome must re-buy the outcomes clip alone. The panels
 // that are counts ("Your unit at a glance"), compliance notes (the Cambridge
-// approval banner) or progress-dependent ("Keep going" reads "You have
-// completed 3 learning sections") carry no button — the last of those cannot be
+// approval banner) or progress-dependent (the unit guide reads "You have
+// finished 3 of 11 sections") carry no button — the last of those cannot be
 // pre-rendered at all, since the text differs per learner.
 //
 // Descriptors are written by `node tools/generate-ehel-english-audio.js
@@ -1419,6 +1423,18 @@ function renderLockedUnit() {
 
 function renderOverview() {
   const learningPath = course.unit.learningPath.split("\n").filter(Boolean);
+  // The shell's checklist of what finishing this unit takes, with the section
+  // gate painted on so a locked row looks locked here as it does in the nav.
+  // The closing sentence is this subject's rule, not the shell's: the shell
+  // knows which sections count, only english knows that a finished unit opens
+  // the next one — and only while the gate is on.
+  const nextUnitOpens = UNIT_GATE_ENABLED && unitNumber < CAPSTONE_UNIT && !isPrereqUnit;
+  const unitGuide = shellCtx.unitGuide({
+    isUnlocked: (id) => sectionUnlocked(id, { fromOverview: true }),
+    rule: nextUnitOpens
+      ? `When every section has a tick, this unit is finished and Unit ${unitNumber + 1} opens.`
+      : "When every section has a tick, this unit is finished.",
+  });
   $("#app").innerHTML = `${pageHeader(`${course.grade.label} · ${course.term.label} · Unit ${course.unit.unitNo}`, course.unit.unitTitle, course.unit.unitOverview.split(". ").slice(0, 2).join(". "))}
     <div class="overview-grid">
       <div class="section-stack">
@@ -1426,13 +1442,13 @@ function renderOverview() {
           <img src="${course.visual.image}" alt="${escapeHtml(course.visual.alt)}">
           <div class="banner-copy"><span>Your learning journey</span><h2>Explore ${escapeHtml(course.unit.unitTitle)}</h2><p>${escapeHtml(course.unit.unitOverview.split(". ").slice(0, 2).join(". "))}</p><button class="button gold" data-go="lecture" type="button">${icon("play")} ${unitNumber === 10 ? "Launch my capstone" : "Start with Teacher Musa"}</button>${overviewAudioButton(course, "intro", "Hear the overview")}</div>
         </section>
+        ${unitGuide}
         <section class="panel"><h2>What you will learn</h2><div class="outcome-list">${course.outcomes.map((outcome) => `<div class="outcome"><span>${outcome.sequence}</span><p>${escapeHtml(outcome.learningOutcome)}</p></div>`).join("")}</div>${overviewAudioButton(course, "outcomes", "Hear what you will learn")}</section>
       </div>
       <div class="section-stack">
         <section class="panel approval-banner"><span class="eyebrow">${escapeHtml(cambridgeFramework(gradeNumber).level)} ${cambridgeFramework(gradeNumber).code}</span><h3>Aligned to ${escapeHtml(cambridgeLabel(gradeNumber))}</h3><p>Unit ${course.unit.unitNo} is structured from the ${escapeHtml(cambridgeLabel(gradeNumber))} content package.${unitAwaitsSignOff() ? " AI-assisted content review complete — human curriculum sign-off pending." : ""}</p></section>
         <section class="panel"><h3>Your unit at a glance</h3><div class="stat-row"><div class="stat"><strong>${course.dictionaryLinks.length}</strong><small>words</small></div><div class="stat"><strong>${course.readings.length}</strong><small>texts</small></div><div class="stat"><strong>${course.quizzes.length}</strong><small>quiz points</small></div></div></section>
         <section class="panel"><h3>Recommended path</h3><ol class="path-list">${learningPath.map((item) => `<li>${icon("circle-check-big")}<span>${escapeHtml(item)}</span></li>`).join("")}</ol>${overviewAudioButton(course, "path", "Hear the recommended path")}</section>
-        <section class="panel"><h3>Keep going</h3><p>${progress.completed.length ? `You have completed ${progress.completed.length} learning sections. Pick up where you left off.` : "Your progress will save on this device as you learn."}</p><button class="button primary" data-go="${progress.completed.includes("lecture") ? "dictionary" : "lecture"}" type="button">Continue ${icon("arrow-right")}</button></section>
         ${unitNumber === defaultUnit && !placementProgress.completed ? `<section class="panel final-quiz-callout"><span class="eyebrow">New to ${gradeLabel}?</span><h3>Prerequisite: placement exam</h3><p>A short exam over your earlier English finds your perfect starting point and suggests review lessons if you need them.</p><a class="button gold" href="${courseLocation(PREREQ_UNIT, "placement")}">Take the placement exam ${icon("arrow-right")}</a></section>` : ""}
         ${unitNumber === 10 ? `<section class="panel final-quiz-callout"><span class="eyebrow">After your capstone</span><h3>Final course quiz</h3><p>Complete 30 questions across words, reading, grammar, speaking and writing. Your answers save as you work.</p><button class="button gold" data-go="final-quiz" type="button">${finalQuizProgress.completed ? "View my results" : "Open final quiz"} ${icon("arrow-right")}</button></section>` : ""}
       </div>

@@ -350,6 +350,61 @@ export function createCourseApp(config) {
     if (value >= 100 && !unitCompletedSent) { unitCompletedSent = true; emitProgress({ type: "unit.completed", unit: PROGRESS_UNIT, sectionsDone: done, total: countable.length }); }
   }
   const isSectionDone = config.isSectionDone || ((id) => (gradeSections.includes(id) ? gradeProgress.completed.includes(id) : progress.completed.includes(id)));
+
+  // --- unit guide: "how this unit works", drawn from what the shell already
+  // knows ---------------------------------------------------------------------
+  // The one place a learner is told what finishing a unit means. It reads the
+  // SAME lists updateProgress() divides by — navSections() minus nonCountable —
+  // so the checklist, the progress bar and the unit.completed event can never
+  // disagree about which sections count. Overview itself is never listed: it is
+  // the page this panel sits on.
+  //
+  // Returns HTML only. The button carries `data-go`, which every subject's
+  // overview already binds (english completes Overview on it before navigating,
+  // the others just navigate), so the panel inherits each subject's own rule for
+  // leaving the overview rather than adding a second one.
+  //
+  // `isUnlocked(id)` is the hook for a subject that walks its sections in order
+  // (english's section chain); the default treats every section as open.
+  // `hints` is an optional {id: text} map of one-line "what to do here" notes.
+  function unitGuide({ heading = "How this unit works", intro, rule, isUnlocked = () => true, hints = {}, startLabel } = {}) {
+    const rows = navSections().filter(([id]) => !nonCountable.includes(id) && id !== "overview");
+    const done = rows.filter(([id]) => isSectionDone(id)).length;
+    const next = rows.find(([id]) => !isSectionDone(id) && isUnlocked(id)) || null;
+    const total = rows.length;
+    const status = !total ? ""
+      : done === total ? "All done! Every section has a tick."
+      : done === 0 ? `There are ${total} sections to finish.`
+      : `You have finished ${done} of ${total} sections.`;
+    // Locked looks locked even when finished — the same rule the english nav
+    // paints (paintSectionLocks): a tick inside a padlocked run reads as the
+    // lock being broken. The completion still counts, and the row says so for
+    // a screen reader.
+    const items = rows.map(([id, sectionIcon, label]) => {
+      const finished = isSectionDone(id);
+      const locked = !isUnlocked(id);
+      const current = next && next[0] === id;
+      const state = locked ? "locked" : finished ? "done" : current ? "next" : "todo";
+      const spoken = locked ? (finished ? "finished, opens again in order" : "locked, opens in order") : finished ? "finished" : current ? "up next" : "to do";
+      const mark = locked ? "🔒" : finished ? "✓" : current ? "▶" : "";
+      return `<li class="unit-guide-row is-${state}" data-guide-section="${escapeHtml(id)}">
+        <span class="unit-guide-mark" aria-hidden="true">${mark}</span>
+        ${icon(sectionIcon)}
+        <span class="unit-guide-label">${escapeHtml(label)}<span class="sr-only">, ${spoken}</span>${hints[id] ? `<small>${escapeHtml(hints[id])}</small>` : ""}</span>
+      </li>`;
+    }).join("");
+    const button = next
+      ? `<button class="button primary" data-go="${escapeHtml(next[0])}" type="button">${escapeHtml(startLabel || (done ? `Continue with ${next[2]}` : `Start with ${next[2]}`))} ${icon("arrow-right")}</button>`
+      : "";
+    return `<section class="panel unit-guide" aria-labelledby="unit-guide-heading">
+      <h2 id="unit-guide-heading">${escapeHtml(heading)}</h2>
+      <p>${escapeHtml(intro || "Work through the sections below, one at a time. Each one gets a tick when it is finished.")}${rule ? ` ${escapeHtml(rule)}` : ""}</p>
+      <ol class="unit-guide-list">${items}</ol>
+      <p class="unit-guide-status"><strong>${escapeHtml(status)}</strong></p>
+      ${button}
+    </section>`;
+  }
+
   function renderNav() {
     $("#section-nav").innerHTML = sectionNavigation(navSections().map(([id, sectionIcon, label]) => ({ id, iconName: sectionIcon, label, active: route === id, done: isSectionDone(id) })));
     $$('[data-route]').forEach((button) => button.addEventListener("click", () => navigate(button.dataset.route)));
@@ -561,7 +616,7 @@ export function createCourseApp(config) {
     // swipes to the next slide. navigate() already does this on a route change,
     // but a deck changes what is on screen without changing route.
     navigate, emitProgress, bindVoiceControls, updateVoiceUI, renderNav, renderRoute, speakText, stopVoice,
-    unitSectionIds, updateProgress, stageNumber, unitNumber, params, dataRootUrl,
+    unitSectionIds, updateProgress, unitGuide, stageNumber, unitNumber, params, dataRootUrl,
     STORAGE_KEY, STAGE_STORAGE_KEY, PROGRESS_UNIT,
     progress, gradeProgress,
     manifest: undefined, course: undefined, gradeCapstone: undefined,

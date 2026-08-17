@@ -423,6 +423,24 @@ body.focus-mode.gc-full .wc-tools { position: fixed; left: 0; right: 0; bottom: 
 .path-list { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
 .path-list li { display: flex; gap: 9px; color: var(--muted); font-size: 14px; line-height: 1.45; }
 .path-list i { color: var(--teal); }
+/* Unit guide — the shell's "how this unit works" panel (course-app.js ::
+   unitGuide). Every subject's stylesheet @imports this file, so it is styled
+   once here. */
+.unit-guide { border-left: 5px solid var(--teal); }
+.unit-guide > p { margin: 0 0 12px; font-size: 15px; }
+.unit-guide-list { display: grid; gap: 6px; margin: 0 0 12px; padding: 0; list-style: none; counter-reset: guide; }
+.unit-guide-row { display: grid; grid-template-columns: 22px 20px 1fr; gap: 9px; align-items: start; padding: 7px 10px; border-radius: 7px; font-size: 15px; line-height: 1.4; color: var(--ink); }
+.unit-guide-row i, .unit-guide-row svg { width: 18px; height: 18px; color: var(--teal); margin-top: 2px; }
+.unit-guide-mark { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--line); font-size: 12px; font-weight: var(--weight-medium); color: var(--teal-dark); }
+.unit-guide-label small { display: block; color: var(--muted); font-size: 13px; }
+.unit-guide-row.is-done { color: var(--muted); }
+.unit-guide-row.is-done .unit-guide-mark { background: var(--teal); border-color: var(--teal); color: white; }
+.unit-guide-row.is-next { background: var(--teal-soft); font-weight: var(--weight-medium); }
+.unit-guide-row.is-next .unit-guide-mark { border-color: var(--teal); }
+.unit-guide-row.is-locked { color: var(--muted); }
+.unit-guide-row.is-locked i, .unit-guide-row.is-locked svg { color: var(--muted); }
+.unit-guide-row.is-locked .unit-guide-mark { border-style: dashed; font-size: 11px; }
+.unit-guide-status { margin: 0 0 12px; }
 .section-stack { display: grid; gap: 18px; }
 .lecture-layout { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(260px, .7fr); gap: 20px; }
 .video-shell { padding: 0; overflow: hidden; background: #0c2335; }

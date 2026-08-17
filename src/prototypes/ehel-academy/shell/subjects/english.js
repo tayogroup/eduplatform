@@ -443,8 +443,9 @@ function numberWord(n) { return ["zero", "one", "two", "three", "four", "five", 
 // lab on every filter), and a guide inside it would vanish on the first redraw.
 // Refreshed on every route render, removed where there is no lesson to guide —
 // the overview has its own guide, and a locked page already says the one thing
-// it has to say. Open at Grades 1-4; from Grade 5 it starts folded, since a
-// learner there scans a page and can open it when they want it.
+// it has to say. Open at every grade — it started folded from Grade 5 on the
+// theory that an older learner scans, and was asked open: the steps are the
+// point, and a folded guide is one more thing to find.
 function renderSectionGuide() {
   const app = $("#app");
   let host = $("#section-guide");
@@ -454,7 +455,7 @@ function renderSectionGuide() {
   const guide = SECTION_GUIDES[route]();
   const hasDeck = Boolean($("#deck-design"));
   host.className = "section-guide";
-  host.innerHTML = `<details ${BOTH_DESIGNS ? "open" : ""}>
+  host.innerHTML = `<details open>
       <summary>${icon("info")}<span><strong>How to use this page</strong><small>${escapeHtml(sectionLabel(route))} — what to do, step by step</small></span></summary>
       <ol class="section-guide-steps">${guide.steps.map((step) => `<li>${escapeHtml(step)}</li>`).join("")}</ol>
       <p class="section-guide-finish">${icon("check-circle")}<span><strong>To finish:</strong> ${escapeHtml(guide.finish)}</span></p>

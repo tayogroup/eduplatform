@@ -28,6 +28,14 @@ const CONCURRENCY = 12;
 
 // --dry lists what a run would upload and exits, without contacting Bunny.
 const DRY = process.argv.slice(2).includes("--dry");
+// --only <substring>[,<substring>...]: upload just the changed files whose remote
+// path contains one of these. Added 2026-08-17 to ship 256 re-rendered lecture
+// files (grade-N/media/unit-N/) without also sending the two live code files
+// (shared/course-ui.css, shared/grade-redirect.js) that happened to differ from
+// the manifest — code goes out through deploy-app-version.js, on purpose. Same
+// shape as upload-media-to-bunny.js's --only.
+const onlyArg = process.argv.indexOf("--only");
+const ONLY = onlyArg >= 0 ? String(process.argv[onlyArg + 1] || "").split(",").map((s) => s.trim()).filter(Boolean) : null;
 if (!KEY && !DRY) { console.error("BUNNY_KEY not set (use --dry to preview without uploading)"); process.exit(1); }
 
 // Each entry: local source dir → remote path under app/. Subjects exclude their
@@ -69,7 +77,8 @@ const ROOT_FILES = [
 ];
 
 const names = [...TREES.map((t) => t.name), ...ROOT_FILES.map((f) => f.name)];
-const unknown = process.argv.slice(2).filter((a) => !a.startsWith("--") && !names.includes(a));
+const onlyValueIndex = process.argv.indexOf("--only") + 1;
+const unknown = process.argv.slice(2).filter((a, i) => !a.startsWith("--") && !names.includes(a) && (i + 2) !== onlyValueIndex);
 if (unknown.length) {
   console.error(`unknown target(s): ${unknown.join(", ")}\nknown: ${names.join(", ")}`);
   process.exit(1);
@@ -211,7 +220,12 @@ async function put(remote, buf, ct) {
   const raw = fs.existsSync(MANIFEST) ? JSON.parse(fs.readFileSync(MANIFEST, "utf8")) : {};
   const manifest = Array.isArray(raw) ? {} : raw;
   const all = buildList();
-  const todo = all.filter((x) => manifest[x.remote] !== x.hash);
+  let todo = all.filter((x) => manifest[x.remote] !== x.hash);
+  if (ONLY) {
+    const before = todo.length;
+    todo = todo.filter((x) => ONLY.some((s) => x.remote.includes(s)));
+    console.log(`--only ${ONLY.join(",")}: ${todo.length} of ${before} changed file(s) selected; the rest stay pending`);
+  }
   const bytes = todo.reduce((s, x) => s + fs.statSync(x.local).size, 0);
   console.log(`trees: ${trees.map((t) => t.name).join(",")} | total: ${all.length} | unchanged: ${all.length - todo.length} | to upload: ${todo.length} (${(bytes / 1048576).toFixed(0)} MB)`);
   if (DRY) {

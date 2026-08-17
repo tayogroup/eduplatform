@@ -235,8 +235,8 @@ const SECTION_HINTS = {
 // Unit 10 has no video: its first step is a page that launches the capstone.
 const CAPSTONE_LAUNCH_HINT = "Read about your capstone project, then press the button to start.";
 // The one line for a section, with the two per-unit exceptions applied — used
-// by the overview's checklist and by the strip at the top of each section page,
-// so the two can never describe the same section differently.
+// by the overview's checklist, so it and the page guide below never describe
+// the same section differently.
 function sectionHint(id) {
   if (id === "lecture" && unitNumber === CAPSTONE_UNIT) return CAPSTONE_LAUNCH_HINT;
   // A unit whose readings are written to the parent shows the grown-up guide
@@ -244,6 +244,217 @@ function sectionHint(id) {
   // two of them press together.
   if (id === "reading" && course && readingsAreForTheGrownUp()) return "Go through the reading with your grown-up, then press the button together.";
   return SECTION_HINTS[id] || "";
+}
+
+// --- the page guide: a teacher explaining the page ---------------------------
+// Every section page opens with a guide that walks the learner through the
+// page the way a teacher would: what is on it, what to read, what to listen
+// to, which button does what, and what makes the section count as finished.
+// The one-line hint above is the summary; this is the explanation.
+//
+// Each guide is a function, not a literal, because it names what THIS unit
+// holds — the five texts on the shelf and which are for listening, six
+// grammar lessons by title, 8 of 10 to pass — and the numbers come from the
+// same fields the renderers draw and the completion rules read, so the guide
+// cannot promise a count the page does not have. Written for the youngest
+// reader who meets it; short sentences, one action each.
+// “A”, “B” and “C”. A title that already carries quotes (A Poem: “When I Open
+// Up a Book”) is left bare rather than double-wrapped.
+const listNames = (items, key = "title") => {
+  const names = items.map((item) => (/[“"]/.test(item[key]) ? item[key] : `“${item[key]}”`));
+  return names.length <= 1 ? names.join("") : `${names.slice(0, -1).join(", ")} and ${names[names.length - 1]}`;
+};
+const SECTION_GUIDES = {
+  lecture: () => (course.visual.lectureMode === "capstone-launch" || unitNumber === CAPSTONE_UNIT
+    ? {
+      steps: [
+        "This is the start of your capstone project. There is no video here — read the page instead.",
+        "Read the four milestones. They tell you what you will make and show this unit.",
+        "Press “I have seen the whole project” when you have read them.",
+        "Then press “Open review vocabulary” to go on.",
+      ],
+      finish: "This section is finished when you press “I have seen the whole project”.",
+    }
+    : course.visual.lectureVideo ? {
+      steps: [
+        "Press play on the video. Teacher Musa teaches the whole lesson.",
+        "Read the captions under the picture while you listen. If you miss something, drag the bar back and watch that part again.",
+        "Watch right to the end. The gold button says “Watch to complete” until then, and turns into “Lecture complete” by itself when the video finishes.",
+        "Then press “Open vocabulary” to go to the next section.",
+      ],
+      finish: "This section is finished when the video has played to the end. You cannot skip it — the buttons stay grey until then.",
+    } : {
+      steps: [
+        "Read the unit preview on this page. It tells you what you will learn.",
+        "Read the four steps under “How to learn” — that is how you will work in this unit.",
+        "Press “I have previewed this unit”, then “Open vocabulary” to go on.",
+      ],
+      finish: "This section is marked complete once the video lesson is ready. For now, read the preview and go on to Vocabulary.",
+    }),
+  dictionary: () => {
+    const total = course.dictionaryLinks.length;
+    const needed = Math.ceil(total * 0.8);
+    return {
+      steps: [
+        `On the left is the list of the ${total} words in this unit. Press a word to open it.`,
+        "On the word card, press the speaker to hear the word, then say it out loud. Press the second speaker to hear it again.",
+        "Read the meaning. Press its speaker to hear it read to you.",
+        "Read the example sentences. Press “Hear sentence” to listen, and use the arrows to go through all of them.",
+        "Look at the spelling. Then type your own sentence with the word in the box and press “Check sentence”.",
+        "When you know the word, press “I know this word”. It gets a LEARNED tag in the list.",
+        "Do this for every word. Use the search box or the group menu to find words.",
+      ],
+      finish: `Vocabulary is finished when you have marked ${needed} of the ${total} words as known — about 8 out of every 10. You have marked ${progress.knownWords.length} so far.`,
+    };
+  },
+  reading: () => {
+    if (readingsAreForTheGrownUp()) {
+      return {
+        steps: [
+          "This reading is for you and your grown-up to do together.",
+          "Ask your grown-up to open the page with you. They read the notes; you do the reading and the sounds with them.",
+          "Go through every part on the page together.",
+        ],
+        finish: "Press “We have been through this together” at the bottom when you have finished.",
+      };
+    }
+    const texts = course.readings;
+    const listening = texts.filter((text) => /listen/i.test(text.type));
+    const story = texts.filter((text) => /story/i.test(text.type));
+    return {
+      steps: [
+        `There are ${texts.length} texts on your reading shelf: ${listNames(texts)}.`,
+        "Read the text on the screen. Read it slowly, and read it out loud if you can.",
+        "To hear it read to you, press “Prepare audio” and then the play button. Listen and follow the words with your finger.",
+        ...(listening.length ? [`${listNames(listening)} ${listening.length === 1 ? "is a listening text" : "are listening texts"}: listen to ${listening.length === 1 ? "it" : "them"} first, then read along.`] : []),
+        ...(story.length ? [`${listNames(story)} is the story of this unit. Read it carefully — the Comprehension questions are about it and the other texts.`] : []),
+        "Use “Next text” and “Previous text” to move between the texts. Read every one.",
+      ],
+      finish: "Press “Finished reading” when you have read all the texts.",
+    };
+  },
+  comprehension: () => ({
+    steps: [
+      `There are ${course.comprehension.length} questions about the texts you read.`,
+      "Read each question. Think about the text.",
+      "Type your answer in the box in a full sentence.",
+      "Press “Check guidance” to see a good answer. Compare it with yours. If your box is empty, the page asks you to write your answer first.",
+      "Do this for every question.",
+    ],
+    finish: "Press “Finish comprehension” at the bottom when you have answered them all.",
+  }),
+  grammar: () => ({
+    steps: [
+      `There are ${course.grammar.length} grammar lessons: ${listNames(course.grammar)}.`,
+      "Read the rule and the examples in each lesson. Press the speaker or “Replay” to hear it read to you.",
+      "Say the examples out loud.",
+      "Open “Show practice” under the lesson and try the practice sentences. Press “Hear the practice” to check how they sound.",
+      "Do this for every lesson.",
+    ],
+    finish: `Press “I practised all ${numberWord(course.grammar.length)} lessons” at the bottom.`,
+  }),
+  speaking: () => ({
+    steps: [
+      `There are ${course.speaking.length} speaking practices.`,
+      "In each one, press the speaker or “Replay” to hear the model. Listen twice. Then say it out loud yourself.",
+      "Step 1, Record: press the microphone, say the sentence, and press it again to stop.",
+      "Step 2, Listen: play your recording back and listen to yourself.",
+      "Step 3, Submit: press “Submit for pronunciation check”. It turns on after you have listened back.",
+      "Step 4, Feedback: read what the checker says. Record again if you want to do better.",
+      "Do this for every practice.",
+    ],
+    finish: `Press “Finish ${numberWord(course.speaking.length)} speaking practices” at the bottom.`,
+  }),
+  writing: () => ({
+    steps: [
+      `There are ${course.writing.length} writing tasks. Choose one from the list.`,
+      "Read the task. Press “Hear the task” if there is a speaker.",
+      "Open “View model text” to see an example of good writing.",
+      "Write your own in the big box — at least 8 words. Use the Writer's checklist. “Support” helps you if you are stuck; “Challenge” gives you more to do.",
+      "Press “Submit this draft”. Your writing is saved. You can come back and make it better any time.",
+    ],
+    finish: "Writing is finished as soon as you submit one draft — but do every task, one after another.",
+  }),
+  activities: () => ({
+    steps: [
+      `There are ${course.activities.length} activities.`,
+      "Read the instructions for each activity. Press “Hear the instructions” to listen to them.",
+      "Do the activity. Some ask you to write your answer in the box.",
+      "Press “Mark complete” under each activity when you have done it.",
+    ],
+    finish: "Press “Finish activities” at the bottom when you have done them all.",
+  }),
+  games: () => ({
+    steps: [
+      `There are ${gamePack?.games?.length ?? "several"} games. Press a game to open it.`,
+      "Play the game. You earn stars and XP for what you know. Hints and retries are always there — use them.",
+      "Play every game at least once. Play again to get more stars.",
+    ],
+    finish: "When you have played them all, press “I have played them all”. If you master every game, the section finishes by itself.",
+  }),
+  quiz: () => {
+    const total = course.quizzes.length;
+    return {
+      steps: [
+        `There are ${total} questions. Read each one and choose one answer.`,
+        "You see your score at the end.",
+        "If your score is not high enough, press “Try again” and do the quiz once more.",
+        "Then press “Continue” to go to My progress.",
+      ],
+      finish: `The quiz is passed with ${Math.ceil(total * 0.6)} right out of ${total} — more than half.`,
+    };
+  },
+  ebooks: () => ({
+    steps: [
+      "Choose a book from the shelf.",
+      "Read it page by page with the arrows, or watch it if it plays as a video.",
+      "Read or watch it right to the end.",
+    ],
+    finish: "Press “Finish book” on the last page. One book finishes this section — read more if you like.",
+  }),
+  reflect: () => ({
+    steps: [
+      "The top of the page shows how much of the unit you have finished.",
+      `Read the ${course.selfAssessment.length} sentences about your learning. For each one, choose the answer that is true for you.`,
+      "Be honest — this shows your teacher where you need help.",
+    ],
+    finish: "Press “Save reflection” when every sentence has an answer.",
+  }),
+  live: () => ({
+    steps: [
+      "This page lists the live classes for this unit, if your school runs them.",
+      "Read “Before class” to get ready, then press “I'm ready”.",
+      "Join the class at its time. Afterwards, read “After class” to remember what to practise.",
+    ],
+    finish: "Live sessions are extra. They do not count toward finishing the unit.",
+  }),
+};
+function numberWord(n) { return ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"][n] || String(n); }
+
+// Mounted OUTSIDE #app, as a sibling before it: a section redraws #app freely
+// as the learner works (Games after "I have played them all", the vocabulary
+// lab on every filter), and a guide inside it would vanish on the first redraw.
+// Refreshed on every route render, removed where there is no lesson to guide —
+// the overview has its own guide, and a locked page already says the one thing
+// it has to say. Open at Grades 1-4; from Grade 5 it starts folded, since a
+// learner there scans a page and can open it when they want it.
+function renderSectionGuide() {
+  const app = $("#app");
+  let host = $("#section-guide");
+  const build = !isPrereqUnit && !unitIsLocked() && SECTION_GUIDES[route] && sectionUnlocked(route);
+  if (!build) { host?.remove(); return; }
+  if (!host) { host = document.createElement("section"); host.id = "section-guide"; app.parentNode.insertBefore(host, app); }
+  const guide = SECTION_GUIDES[route]();
+  const hasDeck = Boolean($("#deck-design"));
+  host.className = "section-guide";
+  host.innerHTML = `<details ${BOTH_DESIGNS ? "open" : ""}>
+      <summary>${icon("info")}<span><strong>How to use this page</strong><small>${escapeHtml(sectionLabel(route))} — what to do, step by step</small></span></summary>
+      <ol class="section-guide-steps">${guide.steps.map((step) => `<li>${escapeHtml(step)}</li>`).join("")}</ol>
+      <p class="section-guide-finish">${icon("check-circle")}<span><strong>To finish:</strong> ${escapeHtml(guide.finish)}</span></p>
+      ${hasDeck ? `<p class="section-guide-deck">${icon("gallery-horizontal")}<span>Under the page there are slides with the same things, one at a time. <button class="link-button" type="button" data-jump-deck>Go to the slides</button></span></p>` : ""}
+    </details>`;
+  host.querySelector("[data-jump-deck]")?.addEventListener("click", () => $("#deck-design")?.scrollIntoView({ behavior: "smooth", block: "start" }));
+  icons();
 }
 
 // --- unit gate: one unit at a time -------------------------------------------
@@ -1811,21 +2022,10 @@ function classicScope() {
 }
 
 function renderBothDesigns(classic, carousel, intro) {
-  // The original paints first and is tall — the vocabulary lab alone runs past
-  // one screen — so the deck, and the instruction slide in front of it, sit
-  // below the fold. A learner who opens Vocabulary sees the lab and nothing
-  // that says what to do. This strip is the same one line the overview's
-  // checklist carries for the section, at the top of the page where the eye
-  // lands, with a way down to the slides for a learner who wants one item at
-  // a time. The button scrolls; a #hash would be read as a route.
-  const hint = sectionHint(route);
-  const strip = hint ? `<aside class="section-guide" aria-label="How to use this page">
-        ${icon("info")}
-        <div><strong>How to use this page</strong><p>${escapeHtml(hint)}</p></div>
-        <button class="button secondary small" type="button" data-jump-deck>${icon("arrow-down")} One at a time on slides</button>
-      </aside>` : "";
+  // The page guide (renderSectionGuide, run by onAfterRender) sits above this
+  // whole block and links down to the deck: the original paints first and is
+  // tall, so the deck and its instruction slide are below the fold.
   $("#app").innerHTML = `<div class="both-designs">
-      ${strip}
       <div class="classic-design" id="classic-design"></div>
       <section class="deck-design">
         <div class="deck-design-head"><span class="eyebrow">Slides</span><p>${escapeHtml(intro)}</p></div>
@@ -1840,7 +2040,6 @@ function renderBothDesigns(classic, carousel, intro) {
   deckMount = "#deck-design";
   carousel();
   deckMount = null;
-  $("[data-jump-deck]")?.addEventListener("click", () => document.querySelector("#deck-design")?.scrollIntoView({ behavior: "smooth", block: "start" }));
 }
 
 function renderDictionary() {
@@ -4317,7 +4516,7 @@ const config = {
   // designs sets them, and every other section must find them clear or it would
   // paint into a region the previous section left behind.
   onBeforeRender: () => { route = shellCtx.route; stopAudio(); document.body.classList.remove("gc-full"); classicRegion = null; deckMount = null; showWordInDeck = null; showReadingInDeck = null; showWritingInDeck = null; showComprehensionGroupInDeck = null; $("#app").setAttribute("aria-busy", "true"); },
-  onAfterRender: () => { $("#app").setAttribute("aria-busy", "false"); prepareScreenReaderView(); icons(); },
+  onAfterRender: () => { $("#app").setAttribute("aria-busy", "false"); renderSectionGuide(); prepareScreenReaderView(); icons(); },
   onNavRendered: () => { renderUnitPickers(); paintSectionLocks(); icons(); },
   // Every route draws the locked page while a unit is locked. The check is
   // inside each entry, not a swapped-out map: the lock is not settled until

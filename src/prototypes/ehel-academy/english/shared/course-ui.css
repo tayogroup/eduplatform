@@ -326,6 +326,14 @@ body.focus-mode.gc-full .wc-tools { position: fixed; left: 0; right: 0; bottom: 
    both-designs page to style. */
 .both-designs { display: grid; gap: 30px; }
 .deck-design { border-top: 2px dashed var(--line); padding-top: 24px; }
+/* The strip at the top of a both-designs page: what to do here, and a way down
+   to the slides (english.js :: renderBothDesigns). */
+.section-guide { display: grid; grid-template-columns: 24px 1fr auto; gap: 12px; align-items: center; margin: 0 0 18px; padding: 12px 16px; border-radius: 8px; border-left: 5px solid var(--teal); background: var(--teal-soft); color: var(--ink); }
+.section-guide > i, .section-guide > svg { width: 24px; height: 24px; color: var(--teal-dark); }
+.section-guide strong { display: block; font-size: 13px; text-transform: uppercase; letter-spacing: .04em; color: var(--teal-dark); }
+.section-guide p { margin: 2px 0 0; font-size: 15px; line-height: 1.45; }
+.section-guide .button.small { min-height: 36px; padding: 6px 12px; font-size: 14px; white-space: nowrap; }
+@media (max-width: 720px) { .section-guide { grid-template-columns: 24px 1fr; } .section-guide .button.small { grid-column: 2; justify-self: start; } }
 .deck-design-head { max-width: 960px; margin: 0 auto 16px; text-align: center; }
 .deck-design-head .eyebrow { display: block; }
 .deck-design-head p { margin: 5px 0 0; color: #64748b; font-size: 15px; }

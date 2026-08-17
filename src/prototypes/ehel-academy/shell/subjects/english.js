@@ -234,6 +234,17 @@ const SECTION_HINTS = {
 };
 // Unit 10 has no video: its first step is a page that launches the capstone.
 const CAPSTONE_LAUNCH_HINT = "Read about your capstone project, then press the button to start.";
+// The one line for a section, with the two per-unit exceptions applied — used
+// by the overview's checklist and by the strip at the top of each section page,
+// so the two can never describe the same section differently.
+function sectionHint(id) {
+  if (id === "lecture" && unitNumber === CAPSTONE_UNIT) return CAPSTONE_LAUNCH_HINT;
+  // A unit whose readings are written to the parent shows the grown-up guide
+  // in place of the story (renderReadingGrownUp), and finishes on a button the
+  // two of them press together.
+  if (id === "reading" && course && readingsAreForTheGrownUp()) return "Go through the reading with your grown-up, then press the button together.";
+  return SECTION_HINTS[id] || "";
+}
 
 // --- unit gate: one unit at a time -------------------------------------------
 // The early grades are walked in order rather than browsed. The first unit is
@@ -1460,14 +1471,7 @@ function renderOverview() {
     // Authored per unit, only where the unit's shape needs saying (unit.howToUse
     // in the unit JSON); check-english-content.mjs holds it to learner voice.
     howToUse: Array.isArray(course.unit.howToUse) ? course.unit.howToUse : [],
-    hints: {
-      ...SECTION_HINTS,
-      ...(unitNumber === CAPSTONE_UNIT ? { lecture: CAPSTONE_LAUNCH_HINT } : {}),
-      // A unit whose readings are written to the parent shows the grown-up guide
-      // in place of the story (renderReadingGrownUp), and finishes on a button
-      // the two of them press together.
-      ...(readingsAreForTheGrownUp() ? { reading: "Go through the reading with your grown-up, then press the button together." } : {}),
-    },
+    hints: Object.fromEntries(Object.keys(SECTION_HINTS).map((id) => [id, sectionHint(id)])),
     rule: nextUnitOpens
       ? `When every section has a tick, this unit is finished and Unit ${unitNumber + 1} opens.`
       : "When every section has a tick, this unit is finished.",
@@ -1807,7 +1811,21 @@ function classicScope() {
 }
 
 function renderBothDesigns(classic, carousel, intro) {
+  // The original paints first and is tall — the vocabulary lab alone runs past
+  // one screen — so the deck, and the instruction slide in front of it, sit
+  // below the fold. A learner who opens Vocabulary sees the lab and nothing
+  // that says what to do. This strip is the same one line the overview's
+  // checklist carries for the section, at the top of the page where the eye
+  // lands, with a way down to the slides for a learner who wants one item at
+  // a time. The button scrolls; a #hash would be read as a route.
+  const hint = sectionHint(route);
+  const strip = hint ? `<aside class="section-guide" aria-label="How to use this page">
+        ${icon("info")}
+        <div><strong>How to use this page</strong><p>${escapeHtml(hint)}</p></div>
+        <button class="button secondary small" type="button" data-jump-deck>${icon("arrow-down")} One at a time on slides</button>
+      </aside>` : "";
   $("#app").innerHTML = `<div class="both-designs">
+      ${strip}
       <div class="classic-design" id="classic-design"></div>
       <section class="deck-design">
         <div class="deck-design-head"><span class="eyebrow">Slides</span><p>${escapeHtml(intro)}</p></div>
@@ -1822,6 +1840,7 @@ function renderBothDesigns(classic, carousel, intro) {
   deckMount = "#deck-design";
   carousel();
   deckMount = null;
+  $("[data-jump-deck]")?.addEventListener("click", () => document.querySelector("#deck-design")?.scrollIntoView({ behavior: "smooth", block: "start" }));
 }
 
 function renderDictionary() {

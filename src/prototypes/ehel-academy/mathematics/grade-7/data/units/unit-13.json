@@ -124,7 +124,7 @@
     {
       "id": "concept-6-the-not-rule-and-mutually-exclusive-events",
       "title": "The 'Not' Rule and Mutually Exclusive Events",
-      "explanation": "Sometimes it is easier to work out the chance of an event not happening than the chance of it happening. There is a beautiful rule for this. Since all the probabilities in an experiment add up to 1, the probability that an event does not happen is 1 minus the probability that it does:\n\nFor example, the probability of rolling a 6 on a die is 1/6, so the probability of not rolling a 6 is 1 − 1/6 = 5/6. This makes sense: five of the six faces are 'not a 6'. The 'not' event is called the complement, and the rule is one of the most useful shortcuts in probability, especially when the event you want is complicated but its opposite is simple. If Omar wants the probability of not drawing the winning raffle ticket, it is far quicker to work out the small chance of winning and subtract from 1.\n\nNow for mutually exclusive events. Two events are mutually exclusive if they cannot both happen at the same time. On a single die roll, 'rolling a 2' and 'rolling a 5' are mutually exclusive – one roll cannot be both a 2 and a 5. When two events are mutually exclusive, the probability that one or the other happens is found by adding their probabilities:\n\nP(A or B) = P(A) + P(B) (only when A and B are mutually exclusive)\n\nSo the probability of rolling a 2 or a 5 is P(2) + P(5) = 1/6 + 1/6 = 2/6 = 1/3. Likewise, drawing a marble that is 'red or yellow' from Khadija's bag (4 red, 3 blue, 1 yellow) is 4/8 + 1/8 = 5/8. The addition rule works here because no marble is both red and yellow at once.",
+      "explanation": "Sometimes it is easier to work out the chance of an event not happening than the chance of it happening. There is a beautiful rule for this. Since all the probabilities in an experiment add up to 1, the probability that an event does not happen is 1 minus the probability that it does: P(not A) = 1 − P(A).\n\nFor example, the probability of rolling a 6 on a die is 1/6, so the probability of not rolling a 6 is 1 − 1/6 = 5/6. This makes sense: five of the six faces are 'not a 6'. The 'not' event is called the complement, and the rule is one of the most useful shortcuts in probability, especially when the event you want is complicated but its opposite is simple. If Omar wants the probability of not drawing the winning raffle ticket, it is far quicker to work out the small chance of winning and subtract from 1.\n\nNow for mutually exclusive events. Two events are mutually exclusive if they cannot both happen at the same time. On a single die roll, 'rolling a 2' and 'rolling a 5' are mutually exclusive – one roll cannot be both a 2 and a 5. When two events are mutually exclusive, the probability that one or the other happens is found by adding their probabilities:\n\nP(A or B) = P(A) + P(B) (only when A and B are mutually exclusive)\n\nSo the probability of rolling a 2 or a 5 is P(2) + P(5) = 1/6 + 1/6 = 2/6 = 1/3. Likewise, drawing a marble that is 'red or yellow' from Khadija's bag (4 red, 3 blue, 1 yellow) is 4/8 + 1/8 = 5/8. The addition rule works here because no marble is both red and yellow at once.",
       "example": "Be careful, though: not all events are mutually exclusive, and then you cannot simply add. On a die, 'rolling an even number' and 'rolling a number greater than 3' can happen together, because a 4 or a 6 fits both descriptions. Events that share an outcome overlap, and adding their probabilities would count the shared outcomes twice. For now, always check first: can these two events happen on the same go? If the answer is no, they are mutually exclusive and you may add."
     }
   ],
@@ -385,7 +385,7 @@
       "difficulty": "Intermediate",
       "title": "Total of two dice",
       "prompt": "Two fair dice are rolled and the scores are added. Find P(total of 7).",
-      "solution": "There are 6 × 6 = 36 equally likely outcomes. The pairs giving a total of 7 are (1,6), (2,5), (3,4), (4,3), (5,2) and (6,1) — that is 6 favourable outcomes. So P(total of 7) = 6/36 = 1/6. This is why 7 is the most common total when rolling two die."
+      "solution": "There are 6 × 6 = 36 equally likely outcomes. The pairs giving a total of 7 are (1,6), (2,5), (3,4), (4,3), (5,2) and (6,1) — that is 6 favourable outcomes. So P(total of 7) = 6/36 = 1/6. This is why 7 is the most common total when rolling two dice."
     },
     {
       "id": "we08",
@@ -399,7 +399,7 @@
       "id": "we09",
       "outcomeId": "lo01",
       "difficulty": "Challenge",
-      "title": "Practice 9",
+      "title": "A coin is flipped and a die is rolled. List the sample…",
       "prompt": "A coin is flipped and a die is rolled. List the sample space, then find P(heads and an odd number).",
       "solution": "Sample space: H1–H6, T1–T6 (12 outcomes). Heads with an odd number = H1, H3, H5 → P(heads and odd) = 3/12 = 1/4."
     },
@@ -415,7 +415,7 @@
       "id": "we11",
       "outcomeId": "lo03",
       "difficulty": "Challenge",
-      "title": "Practice 11",
+      "title": "A spinner is spun 60 times and lands on 'blue' 27…",
       "prompt": "A spinner is spun 60 times and lands on 'blue' 27 times. Find the experimental probability of blue as a fraction, a decimal and a percentage.",
       "solution": "Experimental probability of blue = 27/60 = 9/20 = 0.45 = 45%."
     },
@@ -423,7 +423,7 @@
       "id": "we12",
       "outcomeId": "lo04",
       "difficulty": "Challenge",
-      "title": "Practice 12",
+      "title": "Two fair dice are rolled and the scores added. Find",
       "prompt": "Two fair dice are rolled and the scores added. Find: a) P(total of 8) b) P(total of 2) c) P(total greater than 10).",
       "solution": "a) totals of 8: (2,6)(3,5)(4,4)(5,3)(6,2) = 5/36; b) total of 2: (1,1) = 1/36; c) greater than 10 means 11 or 12: (5,6)(6,5)(6,6) = 3/36 = 1/12."
     }
@@ -553,7 +553,7 @@
       "materials": "two dice, paper, a pencil.",
       "steps": [
         "List every total from 2 to 12. Predict which total you think will come up most often.",
-        "Roll the two die 50 times, each time adding the scores and tallying the total.",
+        "Roll the two dice 50 times, each time adding the scores and tallying the total.",
         "Make a bar of tallies for each total. Which total won?",
         "Explain your result: there are 6 ways to make 7 but only 1 way to make 2 or 12.",
         "Challenge: work out the theoretical probability of each total out of 36 and compare it to your tallies."
@@ -586,7 +586,7 @@
     "rules": [
       {
         "title": "What You Will Learn in This Unit",
-        "text": "By the end of this unit you will be able to place events on a probability scale from 0 to 1, calculate the probability of an event using fractions, decimals and percentages, list all the possible outcomes of an experiment in a sample space, and tell the difference between theoretical probability (what the mathematics predicts) and experimental probability (what actually happens when you try it). You will also learn about mutually exclusive events and a neat rule for finding the probability that something does *not* happen."
+        "text": "By the end of this unit you will be able to place events on a probability scale from 0 to 1, calculate the probability of an event using fractions, decimals and percentages, list all the possible outcomes of an experiment in a sample space, and tell the difference between theoretical probability (what the mathematics predicts) and experimental probability (what actually happens when you try it). You will also learn about mutually exclusive events and a neat rule for finding the probability that something does not happen."
       },
       {
         "title": "The Complement Rule: P(not A) = 1 − P(A)",
@@ -598,7 +598,7 @@
       },
       {
         "title": "Why Use the Complement Rule",
-        "text": "Sometimes it is easier to work out the chance of an event not happening than the chance of it happening. There is a beautiful rule for this. Since all the probabilities in an experiment add up to 1, the probability that an event does not happen is 1 minus the probability that it does:"
+        "text": "Sometimes it is easier to work out the chance of an event not happening than the chance of it happening. There is a beautiful rule for this. Since all the probabilities in an experiment add up to 1, the probability that an event does not happen is 1 minus the probability that it does: P(not A) = 1 − P(A)."
       },
       {
         "title": "Complement Rule Example",
@@ -606,7 +606,7 @@
       },
       {
         "title": "Adding Mutually Exclusive Probabilities",
-        "text": "So the probability of rolling a 2 or a 5 is P(2) + P(5) = 1/6 + 1/6 = 2/6 = 1/3. Likewise, drawing a marble that is 'red or yellow' from Khadija's bag (4 red, 3 blue, 1 yellow) is 4/8 + 1/8 = 5/8. The addition rule works here because no marble is both red and yellow at once."
+        "text": "For mutually exclusive events P(A or B) = P(A) + P(B). So the probability of rolling a 2 or a 5 is P(2) + P(5) = 1/6 + 1/6 = 2/6 = 1/3. Likewise, drawing a marble that is 'red or yellow' from Khadija's bag (4 red, 3 blue, 1 yellow) is 4/8 + 1/8 = 5/8. The addition rule works here because no marble is both red and yellow at once."
       }
     ],
     "terms": [
@@ -915,7 +915,7 @@
         "Event",
         "Sample space"
       ],
-      "modelAnswer": "Sometimes it is easier to work out the chance of an event not happening than the chance of it happening. There is a beautiful rule for this. Since all the probabilities in an experiment add up to 1, the probability that an event does not happen is 1 minus the probability that it does:\n\nFor example, the probability of rolling a 6 on a die is 1/6, so the probability of not rolling a 6 is 1 − 1/6 = 5/6. This makes sense: five of the six faces are 'not a 6'. The 'not' event is called the complement, and the rule is one of the most useful shortcuts in probability, especially when the event you want is complicated but its opposite is simple. If Omar wants the probability of not drawing the winning raffle ticket, it is far quicker to work out the small chance of winning and subtract from 1."
+      "modelAnswer": "Sometimes it is easier to work out the chance of an event not happening than the chance of it happening. There is a beautiful rule for this. Since all the probabilities in an experiment add up to 1, the probability that an event does not happen is 1 minus the probability that it does: P(not A) = 1 − P(A).\n\nFor example, the probability of rolling a 6 on a die is 1/6, so the probability of not rolling a 6 is 1 − 1/6 = 5/6. This makes sense: five of the six faces are 'not a 6'. The 'not' event is called the complement, and the rule is one of the most useful shortcuts in probability, especially when the event you want is complicated but its opposite is simple. If Omar wants the probability of not drawing the winning raffle ticket, it is far quicker to work out the small chance of winning and subtract from 1."
     }
   ],
   "assessment": {
@@ -1078,8 +1078,8 @@
           "Probability worked out by reasoning"
         ],
         "answer": "One possible result of an experiment",
-        "hint": "Use the Unit 13 Math Words & Symbols reference.",
-        "explanation": "Outcome means One possible result of an experiment."
+        "hint": "Use the Unit 13 Maths Words & Symbols reference.",
+        "explanation": "Outcome means one possible result of an experiment."
       },
       {
         "id": "q11",
@@ -1094,8 +1094,8 @@
           "Probability found from doing trials"
         ],
         "answer": "One or more outcomes we are interested in",
-        "hint": "Use the Unit 13 Math Words & Symbols reference.",
-        "explanation": "Event means One or more outcomes we are interested in."
+        "hint": "Use the Unit 13 Maths Words & Symbols reference.",
+        "explanation": "Event means one or more outcomes we are interested in."
       },
       {
         "id": "q12",
@@ -1110,8 +1110,8 @@
           "Another name for experimental probability"
         ],
         "answer": "The set of all possible outcomes",
-        "hint": "Use the Unit 13 Math Words & Symbols reference.",
-        "explanation": "Sample space means The set of all possible outcomes."
+        "hint": "Use the Unit 13 Maths Words & Symbols reference.",
+        "explanation": "Sample space means the set of all possible outcomes."
       }
     ]
   },
@@ -1123,7 +1123,7 @@
         "icon": "?",
         "skill": "Outcome",
         "title": "Quick Match: Outcome",
-        "description": "Practise outcome through four short challenges.",
+        "description": "Four short challenges on Outcome.",
         "type": "choice",
         "rounds": [
           {
@@ -1171,8 +1171,8 @@
               "Probability worked out by reasoning"
             ],
             "answer": "One possible result of an experiment",
-            "clue": "Use the Unit 13 Math Words & Symbols reference.",
-            "explanation": "Outcome means One possible result of an experiment."
+            "clue": "Use the Unit 13 Maths Words & Symbols reference.",
+            "explanation": "Outcome means one possible result of an experiment."
           }
         ]
       },
@@ -1181,7 +1181,7 @@
         "icon": "★",
         "skill": "Event",
         "title": "Concept Quest: Event",
-        "description": "Practise event through four short challenges.",
+        "description": "Four short challenges on Event.",
         "type": "choice",
         "rounds": [
           {
@@ -1229,8 +1229,8 @@
               "Probability found from doing trials"
             ],
             "answer": "One or more outcomes we are interested in",
-            "clue": "Use the Unit 13 Math Words & Symbols reference.",
-            "explanation": "Event means One or more outcomes we are interested in."
+            "clue": "Use the Unit 13 Maths Words & Symbols reference.",
+            "explanation": "Event means one or more outcomes we are interested in."
           }
         ]
       },
@@ -1239,7 +1239,7 @@
         "icon": "◫",
         "skill": "Sample space",
         "title": "Model Detective: Sample space",
-        "description": "Practise sample space through four short challenges.",
+        "description": "Four short challenges on Sample space.",
         "type": "choice",
         "rounds": [
           {
@@ -1287,8 +1287,8 @@
               "Another name for experimental probability"
             ],
             "answer": "The set of all possible outcomes",
-            "clue": "Use the Unit 13 Math Words & Symbols reference.",
-            "explanation": "Sample space means The set of all possible outcomes."
+            "clue": "Use the Unit 13 Maths Words & Symbols reference.",
+            "explanation": "Sample space means the set of all possible outcomes."
           }
         ]
       },
@@ -1297,7 +1297,7 @@
         "icon": "→",
         "skill": "Theoretical probability",
         "title": "Rule Runner: Theoretical probability",
-        "description": "Practise theoretical probability through four short challenges.",
+        "description": "Four short challenges on Theoretical probability.",
         "type": "choice",
         "rounds": [
           {
@@ -1333,8 +1333,8 @@
               "Probability worked out by reasoning"
             ],
             "answer": "One possible result of an experiment",
-            "clue": "Use the Unit 13 Math Words & Symbols reference.",
-            "explanation": "Outcome means One possible result of an experiment."
+            "clue": "Use the Unit 13 Maths Words & Symbols reference.",
+            "explanation": "Outcome means one possible result of an experiment."
           },
           {
             "prompt": "Which word best describes the chance of rolling a 7 on an ordinary six-sided die?",
@@ -1355,7 +1355,7 @@
         "icon": "Σ",
         "skill": "Experimental probability",
         "title": "Vocabulary Vault: Experimental probability",
-        "description": "Practise experimental probability through four short challenges.",
+        "description": "Four short challenges on Experimental probability.",
         "type": "choice",
         "rounds": [
           {
@@ -1391,8 +1391,8 @@
               "Probability found from doing trials"
             ],
             "answer": "One or more outcomes we are interested in",
-            "clue": "Use the Unit 13 Math Words & Symbols reference.",
-            "explanation": "Event means One or more outcomes we are interested in."
+            "clue": "Use the Unit 13 Maths Words & Symbols reference.",
+            "explanation": "Event means one or more outcomes we are interested in."
           },
           {
             "prompt": "On the probability scale from 0 to 1, which value shows that an event is certain to happen?",
@@ -1413,7 +1413,7 @@
         "icon": "◇",
         "skill": "Relative frequency",
         "title": "Challenge Cards: Relative frequency",
-        "description": "Practise relative frequency through four short challenges.",
+        "description": "Four short challenges on Relative frequency.",
         "type": "choice",
         "rounds": [
           {
@@ -1449,8 +1449,8 @@
               "Another name for experimental probability"
             ],
             "answer": "The set of all possible outcomes",
-            "clue": "Use the Unit 13 Math Words & Symbols reference.",
-            "explanation": "Sample space means The set of all possible outcomes."
+            "clue": "Use the Unit 13 Maths Words & Symbols reference.",
+            "explanation": "Sample space means the set of all possible outcomes."
           },
           {
             "prompt": "Write the probability 1/4 as a percentage.",
@@ -1471,7 +1471,7 @@
         "icon": "⚡",
         "skill": "Mutually exclusive",
         "title": "Think Fast: Mutually exclusive",
-        "description": "Practise mutually exclusive through four short challenges.",
+        "description": "Four short challenges on Mutually exclusive.",
         "type": "choice",
         "rounds": [
           {
@@ -1495,8 +1495,8 @@
               "Probability worked out by reasoning"
             ],
             "answer": "One possible result of an experiment",
-            "clue": "Use the Unit 13 Math Words & Symbols reference.",
-            "explanation": "Outcome means One possible result of an experiment."
+            "clue": "Use the Unit 13 Maths Words & Symbols reference.",
+            "explanation": "Outcome means one possible result of an experiment."
           },
           {
             "prompt": "Which word best describes the chance of rolling a 7 on an ordinary six-sided die?",
@@ -1529,7 +1529,7 @@
         "icon": "☁",
         "skill": "Complement",
         "title": "Explain It: Complement",
-        "description": "Practise complement through four short challenges.",
+        "description": "Four short challenges on Complement.",
         "type": "choice",
         "rounds": [
           {
@@ -1553,8 +1553,8 @@
               "Probability found from doing trials"
             ],
             "answer": "One or more outcomes we are interested in",
-            "clue": "Use the Unit 13 Math Words & Symbols reference.",
-            "explanation": "Event means One or more outcomes we are interested in."
+            "clue": "Use the Unit 13 Maths Words & Symbols reference.",
+            "explanation": "Event means one or more outcomes we are interested in."
           },
           {
             "prompt": "On the probability scale from 0 to 1, which value shows that an event is certain to happen?",
@@ -1587,7 +1587,7 @@
         "icon": "⌂",
         "skill": "Fair",
         "title": "Real-Life Round: Fair",
-        "description": "Practise fair through four short challenges.",
+        "description": "Four short challenges on Fair.",
         "type": "choice",
         "rounds": [
           {
@@ -1611,8 +1611,8 @@
               "Another name for experimental probability"
             ],
             "answer": "The set of all possible outcomes",
-            "clue": "Use the Unit 13 Math Words & Symbols reference.",
-            "explanation": "Sample space means The set of all possible outcomes."
+            "clue": "Use the Unit 13 Maths Words & Symbols reference.",
+            "explanation": "Sample space means the set of all possible outcomes."
           },
           {
             "prompt": "Write the probability 1/4 as a percentage.",
@@ -1645,7 +1645,7 @@
         "icon": "!",
         "skill": "Outcome",
         "title": "Spot the Error: Outcome",
-        "description": "Practise outcome through four short challenges.",
+        "description": "Four short challenges on Outcome.",
         "type": "choice",
         "rounds": [
           {
@@ -1657,8 +1657,8 @@
               "Probability worked out by reasoning"
             ],
             "answer": "One possible result of an experiment",
-            "clue": "Use the Unit 13 Math Words & Symbols reference.",
-            "explanation": "Outcome means One possible result of an experiment."
+            "clue": "Use the Unit 13 Maths Words & Symbols reference.",
+            "explanation": "Outcome means one possible result of an experiment."
           },
           {
             "prompt": "Which word best describes the chance of rolling a 7 on an ordinary six-sided die?",
@@ -1703,7 +1703,7 @@
         "icon": "≡",
         "skill": "Event",
         "title": "Mastery Mix: Event",
-        "description": "Practise event through four short challenges.",
+        "description": "Four short challenges on Event.",
         "type": "choice",
         "rounds": [
           {
@@ -1715,8 +1715,8 @@
               "Probability found from doing trials"
             ],
             "answer": "One or more outcomes we are interested in",
-            "clue": "Use the Unit 13 Math Words & Symbols reference.",
-            "explanation": "Event means One or more outcomes we are interested in."
+            "clue": "Use the Unit 13 Maths Words & Symbols reference.",
+            "explanation": "Event means one or more outcomes we are interested in."
           },
           {
             "prompt": "On the probability scale from 0 to 1, which value shows that an event is certain to happen?",
@@ -1761,7 +1761,7 @@
         "icon": "T",
         "skill": "Sample space",
         "title": "Unit Champion: Sample space",
-        "description": "Practise sample space through four short challenges.",
+        "description": "Four short challenges on Sample space.",
         "type": "choice",
         "rounds": [
           {
@@ -1773,8 +1773,8 @@
               "Another name for experimental probability"
             ],
             "answer": "The set of all possible outcomes",
-            "clue": "Use the Unit 13 Math Words & Symbols reference.",
-            "explanation": "Sample space means The set of all possible outcomes."
+            "clue": "Use the Unit 13 Maths Words & Symbols reference.",
+            "explanation": "Sample space means the set of all possible outcomes."
           },
           {
             "prompt": "Write the probability 1/4 as a percentage.",

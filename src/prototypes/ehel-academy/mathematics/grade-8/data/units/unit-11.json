@@ -103,7 +103,7 @@
       "id": "concept-2-functions-and-tables-of-values",
       "title": "Functions and Tables of Values",
       "explanation": "A function is a rule that turns each input number into exactly one output number. We usually call the input x and the output y, and we write the rule as an equation, for example y = 2x + 1. This rule says: take the x-value, multiply it by 2, then add 1. Feed in x = 3 and the rule gives y = 2(3) + 1 = 7. Feed in x = 0 and it gives y = 1. Each input has one clear output – that is what makes it a function.\n\nTo draw the graph of a function we first make a table of values. This is simply an organised list of x-values and the y-values they produce. Choosing a small spread of x-values – usually including 0 and a couple of negatives – gives us enough points to plot. Let us build the table for y = 3x − 2, calculating carefully one column at a time.\n\nRead the bottom row: when x goes up by 1, y goes up by 3 every single time (−8, −5, −2, 1, 4). This constant difference is the fingerprint of a linear function – it is exactly why the graph will be a straight line. If the differences were not constant, the graph would curve. When x = 0 the value of y is −2; hold on to that number, because in the next concept you will see it is the y-intercept.",
-      "example": "It is worth being careful with negative numbers when filling a table, because this is where most mistakes happen. For 3 × (−2) we get −6, and then −6 − 2 = −8, not −4. Take each calculation slowly, write out the middle step as shown, and check the pattern of your answers at the end. If one y-value breaks the steady pattern, you have almost certainly made an arithmetic slip in that column."
+      "example": "It is worth being careful with negative numbers when filling a table, because this is where most mistakes happen. For 3 × (−2) we get −6, and then −6 − 2 = −8, not −4. Take each calculation slowly, write out the middle step, and check the pattern of your answers at the end. If one y-value breaks the steady pattern, you have almost certainly made an arithmetic slip in that column."
     },
     {
       "id": "concept-3-the-equation-y-mx-c",
@@ -120,7 +120,7 @@
     {
       "id": "concept-5-drawing-a-linear-graph",
       "title": "Drawing a Linear Graph",
-      "explanation": "Now we bring the ideas together and actually draw a line. There is more than one method, and it is worth knowing each so you can choose the quickest for a given problem.\n\nThis is the most reliable method and works for any linear equation. To draw y = 2x − 1, first build a short table, then plot the points and join them with a ruled straight line.\n\nPlot the points (0, −1), (1, 1), (2, 3) and (3, 5), then lay your ruler along them and draw a single straight line right across the grid, extending it a little past the end points. The points should all sit exactly on the line – if one is out of place, recheck its calculation. Three points is the safe minimum: two to draw the line and a third to check you have made no mistakes.\n\nMethod 2: Using the gradient and intercept\n\nOnce you understand y = mx + c you can draw a line very quickly without a full table. To draw y = ½x + 3: first mark the intercept c = 3, which is the point (0, 3). Then use the gradient m = ½ = rise 1 over run 2. Starting from (0, 3), move 2 across and 1 up to reach (2, 4); move another 2 across and 1 up to reach (4, 5). Join these points and you have your line. This method is fast and shows clearly how m and c control the graph.\n\nFor an equation like y = 3x + 6 you can find where it crosses each axis. Setting x = 0 gives y = 6, so the line passes through (0, 6). Setting y = 0 gives 0 = 3x + 6, so x = −2, giving the point (−2, 0). Plot these two intercepts and rule a line through them. This is neat when the intercepts come out as tidy whole numbers.",
+      "explanation": "Now we bring the ideas together and actually draw a line. There is more than one method, and it is worth knowing each so you can choose the quickest for a given problem.\n\nMethod 1: Using a table of values\n\nThis is the most reliable method and works for any linear equation. To draw y = 2x − 1, first build a short table, then plot the points and join them with a ruled straight line.\n\nPlot the points (0, −1), (1, 1), (2, 3) and (3, 5), then lay your ruler along them and draw a single straight line right across the grid, extending it a little past the end points. The points should all sit exactly on the line – if one is out of place, recheck its calculation. Three points is the safe minimum: two to draw the line and a third to check you have made no mistakes.\n\nMethod 2: Using the gradient and intercept\n\nOnce you understand y = mx + c you can draw a line very quickly without a full table. To draw y = ½x + 3: first mark the intercept c = 3, which is the point (0, 3). Then use the gradient m = ½ = rise 1 over run 2. Starting from (0, 3), move 2 across and 1 up to reach (2, 4); move another 2 across and 1 up to reach (4, 5). Join these points and you have your line. This method is fast and shows clearly how m and c control the graph.\n\nFor an equation like y = 3x + 6 you can find where it crosses each axis. Setting x = 0 gives y = 6, so the line passes through (0, 6). Setting y = 0 gives 0 = 3x + 6, so x = −2, giving the point (−2, 0). Plot these two intercepts and rule a line through them. This is neat when the intercepts come out as tidy whole numbers.",
       "example": "Whichever method you use, always label your line with its equation, use a sharp pencil, and draw with a ruler. A straight-line graph drawn freehand is never accurate enough to read values from later."
     },
     {
@@ -234,7 +234,7 @@
       "outcomeId": "lo04",
       "title": "Understanding Gradient",
       "modelType": "concept-model-4",
-      "purpose": "The gradient measures how steep a line is. We calculate it as rise ÷ run, which means the change in y divided by the change in x as you move from one point on the line to another: gradient = (change in y) ÷ (change in.",
+      "purpose": "The gradient measures how steep a line is. We calculate it as rise ÷ run, which means the change in y divided by the change in x as you move from one point on the line to another: gradient = (change in y) ÷ (change in x) = rise ÷ run.",
       "defaultNumber": null
     },
     {
@@ -401,7 +401,7 @@
       "id": "we09",
       "outcomeId": "lo01",
       "difficulty": "Challenge",
-      "title": "Practice 9",
+      "title": "Find the gradient of the line through (2, 3) and (6…",
       "prompt": "Find the gradient of the line through (2, 3) and (6, 15).",
       "solution": "Change in y = 15 − 3 = 12. Change in x = 6 − 2 = 4. Gradient = rise ÷ run = 12 ÷ 4 = 3. The line slopes uphill because the gradient is positive."
     },
@@ -417,7 +417,7 @@
       "id": "we11",
       "outcomeId": "lo03",
       "difficulty": "Challenge",
-      "title": "Practice 11",
+      "title": "For y = ½x + 1, find y when x = 6, and find x when y =…",
       "prompt": "For y = ½x + 1, find y when x = 6, and find x when y = 0.",
       "solution": "When x = 6: y = ½(6) + 1 = 3 + 1 = 4. When y = 0: 0 = ½x + 1, so ½x = −1 and x = −2."
     },
@@ -425,7 +425,7 @@
       "id": "we12",
       "outcomeId": "lo04",
       "difficulty": "Challenge",
-      "title": "Practice 12",
+      "title": "Find where y = 3x − 2 and y = x + 4 intersect, using…",
       "prompt": "Find where y = 3x − 2 and y = x + 4 intersect, using algebra.",
       "solution": "At the crossing point the two y-values are equal, so 3x − 2 = x + 4. Subtracting x from both sides: 2x − 2 = 4, so 2x = 6 and x = 3. Then y = 3 + 4 = 7. The lines cross at (3, 7)."
     }
@@ -601,7 +601,7 @@
       },
       {
         "title": "Drawing a Line from Intercept and Gradient",
-        "text": "Solution: The intercept is c = 1, so start at (0, 1). The gradient is m = 2 = rise 2 over run 1, so move 1 right and 2 up to reach (1, 3), then again to (2, 5). Rule a straight line through the points. Check: substituting x = 2 gives y = 5, which matches."
+        "text": "The intercept is c = 1, so start at (0, 1). The gradient is m = 2 = rise 2 over run 1, so move 1 right and 2 up to reach (1, 3), then again to (2, 5). Rule a straight line through the points. Check: substituting x = 2 gives y = 5, which matches."
       }
     ],
     "terms": [
@@ -1114,7 +1114,7 @@
         "icon": "?",
         "skill": "Coordinates",
         "title": "Quick Match: Coordinates",
-        "description": "Practise coordinates through four short challenges.",
+        "description": "Four short challenges on Coordinates.",
         "type": "choice",
         "rounds": [
           {
@@ -1172,7 +1172,7 @@
         "icon": "★",
         "skill": "Gradient (m)",
         "title": "Concept Quest: Gradient (m)",
-        "description": "Practise gradient (m) through four short challenges.",
+        "description": "Four short challenges on Gradient (m).",
         "type": "choice",
         "rounds": [
           {
@@ -1230,7 +1230,7 @@
         "icon": "◫",
         "skill": "y-intercept (c)",
         "title": "Model Detective: y-intercept (c)",
-        "description": "Practise y-intercept (c) through four short challenges.",
+        "description": "Four short challenges on y-intercept (c).",
         "type": "choice",
         "rounds": [
           {
@@ -1288,7 +1288,7 @@
         "icon": "→",
         "skill": "x-intercept",
         "title": "Rule Runner: x-intercept",
-        "description": "Practise x-intercept through four short challenges.",
+        "description": "Four short challenges on x-intercept.",
         "type": "choice",
         "rounds": [
           {
@@ -1346,7 +1346,7 @@
         "icon": "Σ",
         "skill": "Linear graph",
         "title": "Vocabulary Vault: Linear graph",
-        "description": "Practise linear graph through four short challenges.",
+        "description": "Four short challenges on Linear graph.",
         "type": "choice",
         "rounds": [
           {
@@ -1404,7 +1404,7 @@
         "icon": "◇",
         "skill": "Table of values",
         "title": "Challenge Cards: Table of values",
-        "description": "Practise table of values through four short challenges.",
+        "description": "Four short challenges on Table of values.",
         "type": "choice",
         "rounds": [
           {
@@ -1462,7 +1462,7 @@
         "icon": "⚡",
         "skill": "Intersection",
         "title": "Think Fast: Intersection",
-        "description": "Practise intersection through four short challenges.",
+        "description": "Four short challenges on Intersection.",
         "type": "choice",
         "rounds": [
           {
@@ -1520,7 +1520,7 @@
         "icon": "☁",
         "skill": "Distance-time graph",
         "title": "Explain It: Distance-time graph",
-        "description": "Practise distance-time graph through four short challenges.",
+        "description": "Four short challenges on Distance-time graph.",
         "type": "choice",
         "rounds": [
           {
@@ -1578,7 +1578,7 @@
         "icon": "⌂",
         "skill": "Coordinates",
         "title": "Real-Life Round: Coordinates",
-        "description": "Practise coordinates through four short challenges.",
+        "description": "Four short challenges on Coordinates.",
         "type": "choice",
         "rounds": [
           {
@@ -1636,7 +1636,7 @@
         "icon": "!",
         "skill": "Gradient (m)",
         "title": "Spot the Error: Gradient (m)",
-        "description": "Practise gradient (m) through four short challenges.",
+        "description": "Four short challenges on Gradient (m).",
         "type": "choice",
         "rounds": [
           {
@@ -1694,7 +1694,7 @@
         "icon": "≡",
         "skill": "y-intercept (c)",
         "title": "Mastery Mix: y-intercept (c)",
-        "description": "Practise y-intercept (c) through four short challenges.",
+        "description": "Four short challenges on y-intercept (c).",
         "type": "choice",
         "rounds": [
           {
@@ -1752,7 +1752,7 @@
         "icon": "T",
         "skill": "x-intercept",
         "title": "Unit Champion: x-intercept",
-        "description": "Practise x-intercept through four short challenges.",
+        "description": "Four short challenges on x-intercept.",
         "type": "choice",
         "rounds": [
           {

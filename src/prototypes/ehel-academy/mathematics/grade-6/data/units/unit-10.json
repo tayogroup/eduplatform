@@ -77,7 +77,7 @@
     {
       "id": "concept-3-long-multiplication-two-digit-multipliers",
       "title": "Long Multiplication (Two-Digit Multipliers)",
-      "explanation": "When both numbers have two or more digits, you multiply in parts and then add the parts together. Each part is called a partial product. There are two popular methods, and it is worth knowing both: the grid method shows clearly what is happening, and the column method is quicker once you understand it.\n\nThe grid method breaks each number into its place-value parts. For 23 × 47, split 23 into 20 + 3 and 47 into 40 + 7, then fill a grid:\n\nNow add all four partial products: 800 + 140 + 120 + 21 = 1081. Every part is visible, so it is easy to see nothing has been missed.\n\nIn the column method you multiply 23 by the ones digit (7), then by the tens digit (40), and add:\n\n23 × 7 = 161 (first partial product)\n\n23 × 40 = 920 (second partial product – notice it ends in 0)",
+      "explanation": "When both numbers have two or more digits, you multiply in parts and then add the parts together. Each part is called a partial product. There are two popular methods, and it is worth knowing both: the grid method shows clearly what is happening, and the column method is quicker once you understand it.\n\nThe grid method breaks each number into its place-value parts. For 23 × 47, split 23 into 20 + 3 and 47 into 40 + 7, then fill a grid: 20 × 40 = 800, 3 × 40 = 120, 20 × 7 = 140, 3 × 7 = 21.\n\nNow add all four partial products: 800 + 140 + 120 + 21 = 1081. Every part is visible, so it is easy to see nothing has been missed.\n\nIn the column method you multiply 23 by the ones digit (7), then by the tens digit (40), and add:\n\n23 × 7 = 161 (first partial product)\n\n23 × 40 = 920 (second partial product – notice it ends in 0)\n\nAdd: 161 + 920 = 1081, the same answer as the grid method.",
       "example": "The two methods always agree – that is the whole point of learning both. Try 156 × 24. By the grid method: 100×20 + 50×20 + 6×20 + 100×4 + 50×4 + 6×4 = 2000 + 1000 + 120 + 400 + 200 + 24 = 3744. By the column method: 156 × 4 = 624, and 156 × 20 = 3120, and 624 + 3120 = 3744. Same answer, two routes – a perfect way to check."
     },
     {
@@ -95,7 +95,7 @@
     {
       "id": "concept-6-order-of-operations",
       "title": "Order of Operations",
-      "explanation": "What is the value of 6 + 3 × 4? If you work from left to right you might say 9 × 4 = 36, but that is wrong. Mathematicians all over the world agree to do multiplication and division before addition and subtraction, so 3 × 4 = 12 is done first, then 6 + 12 = 18. Without an agreed order, the same calculation would give different answers to different people – so the order of operations is a shared rule that keeps everyone in step.\n\nI – Indices (powers), such as squaring.\n\nD and M – Division and Multiplication, worked left to right.\n\nA and S – Addition and Subtraction, worked left to right.",
+      "explanation": "What is the value of 6 + 3 × 4? If you work from left to right you might say 9 × 4 = 36, but that is wrong. Mathematicians all over the world agree to do multiplication and division before addition and subtraction, so 3 × 4 = 12 is done first, then 6 + 12 = 18. Without an agreed order, the same calculation would give different answers to different people – so the order of operations is a shared rule that keeps everyone in step.\n\nThe agreed order is remembered as BIDMAS:\n\nB – Brackets first.\n\nI – Indices (powers), such as squaring.\n\nD and M – Division and Multiplication, worked left to right.\n\nA and S – Addition and Subtraction, worked left to right.",
       "example": "Brackets always come first because they let you override the normal order. Compare these two: 6 + 3 × 4 = 6 + 12 = 18, but (6 + 3) × 4 = 9 × 4 = 36. The brackets change which calculation happens first, and so they change the answer completely. Another example: 20 − 12 ÷ 4 = 20 − 3 = 17, because the division is done before the subtraction."
     },
     {
@@ -311,7 +311,7 @@
       "example": "A litre of oil costs 4.5 dollars. What do 8 litres cost?",
       "steps": [
         "Ignore the point: 45 × 8 = 360.",
-        "There is one decimal place in 4.5, so the answer has one decimal place: 36.0, i.e.",
+        "There is one decimal place in 4.5, so the answer has one decimal place: 36.0, i.e. $36.00.",
         "$36.00.",
         "Estimate 4 × 8 = 32 confirms the size."
       ]
@@ -573,7 +573,7 @@
       },
       {
         "title": "Division and Multiplication Share Equal Rank",
-        "text": "that division and multiplication share the same rank, so you work them left to right, not division-before-multiplication. The same is true for addition and subtraction. Getting this right matters more and more as you move towards algebra, where the order of operations is used in every single line."
+        "text": "Remember that division and multiplication share the same rank, so you work them left to right, not division-before-multiplication. The same is true for addition and subtraction. Getting this right matters more and more as you move towards algebra, where the order of operations is used in every single line."
       }
     ],
     "terms": [
@@ -878,7 +878,7 @@
         "Estimate",
         "Order of operations"
       ],
-      "modelAnswer": "What is the value of 6 + 3 × 4? If you work from left to right you might say 9 × 4 = 36, but that is wrong. Mathematicians all over the world agree to do multiplication and division before addition and subtraction, so 3 × 4 = 12 is done first, then 6 + 12 = 18. Without an agreed order, the same calculation would give different answers to different people – so the order of operations is a shared rule that keeps everyone in step. I – Indices (powers), such as squaring."
+      "modelAnswer": "What is the value of 6 + 3 × 4? If you work from left to right you might say 9 × 4 = 36, but that is wrong. Mathematicians all over the world agree to do multiplication and division before addition and subtraction, so 3 × 4 = 12 is done first, then 6 + 12 = 18. Without an agreed order, the same calculation would give different answers to different people – so the order of operations is a shared rule that keeps everyone in step. The order is remembered as BIDMAS: Brackets, Indices, Division and Multiplication (left to right), Addition and Subtraction (left to right)."
     }
   ],
   "assessment": {
@@ -1041,8 +1041,8 @@
           "The number divided / the number you divide by"
         ],
         "answer": "The answer to a multiplication",
-        "hint": "Use the Unit 10 Math Words & Symbols reference.",
-        "explanation": "Product means The answer to a multiplication."
+        "hint": "Use the Unit 10 Maths Words & Symbols reference.",
+        "explanation": "Product means the answer to a multiplication."
       },
       {
         "id": "q11",
@@ -1057,8 +1057,8 @@
           "What is left over after dividing"
         ],
         "answer": "A number being multiplied",
-        "hint": "Use the Unit 10 Math Words & Symbols reference.",
-        "explanation": "Factor means A number being multiplied."
+        "hint": "Use the Unit 10 Maths Words & Symbols reference.",
+        "explanation": "Factor means a number being multiplied."
       },
       {
         "id": "q12",
@@ -1073,8 +1073,8 @@
           "One part of a long multiplication"
         ],
         "answer": "The answer to a division",
-        "hint": "Use the Unit 10 Math Words & Symbols reference.",
-        "explanation": "Quotient means The answer to a division."
+        "hint": "Use the Unit 10 Maths Words & Symbols reference.",
+        "explanation": "Quotient means the answer to a division."
       }
     ]
   },
@@ -1086,7 +1086,7 @@
         "icon": "?",
         "skill": "Product",
         "title": "Quick Match: Product",
-        "description": "Practise product through four short challenges.",
+        "description": "Four short challenges on Product.",
         "type": "choice",
         "rounds": [
           {
@@ -1134,8 +1134,8 @@
               "The number divided / the number you divide by"
             ],
             "answer": "The answer to a multiplication",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Product means The answer to a multiplication."
+            "clue": "Use the Unit 10 Maths Words & Symbols reference.",
+            "explanation": "Product means the answer to a multiplication."
           }
         ]
       },
@@ -1144,7 +1144,7 @@
         "icon": "★",
         "skill": "Factor",
         "title": "Concept Quest: Factor",
-        "description": "Practise factor through four short challenges.",
+        "description": "Four short challenges on Factor.",
         "type": "choice",
         "rounds": [
           {
@@ -1192,8 +1192,8 @@
               "What is left over after dividing"
             ],
             "answer": "A number being multiplied",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Factor means A number being multiplied."
+            "clue": "Use the Unit 10 Maths Words & Symbols reference.",
+            "explanation": "Factor means a number being multiplied."
           }
         ]
       },
@@ -1202,7 +1202,7 @@
         "icon": "◫",
         "skill": "Quotient",
         "title": "Model Detective: Quotient",
-        "description": "Practise quotient through four short challenges.",
+        "description": "Four short challenges on Quotient.",
         "type": "choice",
         "rounds": [
           {
@@ -1250,8 +1250,8 @@
               "One part of a long multiplication"
             ],
             "answer": "The answer to a division",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Quotient means The answer to a division."
+            "clue": "Use the Unit 10 Maths Words & Symbols reference.",
+            "explanation": "Quotient means the answer to a division."
           }
         ]
       },
@@ -1260,7 +1260,7 @@
         "icon": "→",
         "skill": "Dividend / Divisor",
         "title": "Rule Runner: Dividend / Divisor",
-        "description": "Practise dividend / divisor through four short challenges.",
+        "description": "Four short challenges on Dividend / Divisor.",
         "type": "choice",
         "rounds": [
           {
@@ -1296,8 +1296,8 @@
               "The number divided / the number you divide by"
             ],
             "answer": "The answer to a multiplication",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Product means The answer to a multiplication."
+            "clue": "Use the Unit 10 Maths Words & Symbols reference.",
+            "explanation": "Product means the answer to a multiplication."
           },
           {
             "prompt": "Calculate 2456 × 7.",
@@ -1318,7 +1318,7 @@
         "icon": "Σ",
         "skill": "Remainder",
         "title": "Vocabulary Vault: Remainder",
-        "description": "Practise remainder through four short challenges.",
+        "description": "Four short challenges on Remainder.",
         "type": "choice",
         "rounds": [
           {
@@ -1354,8 +1354,8 @@
               "What is left over after dividing"
             ],
             "answer": "A number being multiplied",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Factor means A number being multiplied."
+            "clue": "Use the Unit 10 Maths Words & Symbols reference.",
+            "explanation": "Factor means a number being multiplied."
           },
           {
             "prompt": "Calculate 1234 × 30.",
@@ -1376,7 +1376,7 @@
         "icon": "◇",
         "skill": "Partial product",
         "title": "Challenge Cards: Partial product",
-        "description": "Practise partial product through four short challenges.",
+        "description": "Four short challenges on Partial product.",
         "type": "choice",
         "rounds": [
           {
@@ -1412,8 +1412,8 @@
               "One part of a long multiplication"
             ],
             "answer": "The answer to a division",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Quotient means The answer to a division."
+            "clue": "Use the Unit 10 Maths Words & Symbols reference.",
+            "explanation": "Quotient means the answer to a division."
           },
           {
             "prompt": "Calculate 234 × 56.",
@@ -1434,7 +1434,7 @@
         "icon": "⚡",
         "skill": "Estimate",
         "title": "Think Fast: Estimate",
-        "description": "Practise estimate through four short challenges.",
+        "description": "Four short challenges on Estimate.",
         "type": "choice",
         "rounds": [
           {
@@ -1458,8 +1458,8 @@
               "The number divided / the number you divide by"
             ],
             "answer": "The answer to a multiplication",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Product means The answer to a multiplication."
+            "clue": "Use the Unit 10 Maths Words & Symbols reference.",
+            "explanation": "Product means the answer to a multiplication."
           },
           {
             "prompt": "Calculate 2456 × 7.",
@@ -1492,7 +1492,7 @@
         "icon": "☁",
         "skill": "Order of operations",
         "title": "Explain It: Order of operations",
-        "description": "Practise order of operations through four short challenges.",
+        "description": "Four short challenges on Order of operations.",
         "type": "choice",
         "rounds": [
           {
@@ -1516,8 +1516,8 @@
               "What is left over after dividing"
             ],
             "answer": "A number being multiplied",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Factor means A number being multiplied."
+            "clue": "Use the Unit 10 Maths Words & Symbols reference.",
+            "explanation": "Factor means a number being multiplied."
           },
           {
             "prompt": "Calculate 1234 × 30.",
@@ -1550,7 +1550,7 @@
         "icon": "⌂",
         "skill": "Product",
         "title": "Real-Life Round: Product",
-        "description": "Practise product through four short challenges.",
+        "description": "Four short challenges on Product.",
         "type": "choice",
         "rounds": [
           {
@@ -1574,8 +1574,8 @@
               "One part of a long multiplication"
             ],
             "answer": "The answer to a division",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Quotient means The answer to a division."
+            "clue": "Use the Unit 10 Maths Words & Symbols reference.",
+            "explanation": "Quotient means the answer to a division."
           },
           {
             "prompt": "Calculate 234 × 56.",
@@ -1608,7 +1608,7 @@
         "icon": "!",
         "skill": "Factor",
         "title": "Spot the Error: Factor",
-        "description": "Practise factor through four short challenges.",
+        "description": "Four short challenges on Factor.",
         "type": "choice",
         "rounds": [
           {
@@ -1620,8 +1620,8 @@
               "The number divided / the number you divide by"
             ],
             "answer": "The answer to a multiplication",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Product means The answer to a multiplication."
+            "clue": "Use the Unit 10 Maths Words & Symbols reference.",
+            "explanation": "Product means the answer to a multiplication."
           },
           {
             "prompt": "Calculate 2456 × 7.",
@@ -1666,7 +1666,7 @@
         "icon": "≡",
         "skill": "Quotient",
         "title": "Mastery Mix: Quotient",
-        "description": "Practise quotient through four short challenges.",
+        "description": "Four short challenges on Quotient.",
         "type": "choice",
         "rounds": [
           {
@@ -1678,8 +1678,8 @@
               "What is left over after dividing"
             ],
             "answer": "A number being multiplied",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Factor means A number being multiplied."
+            "clue": "Use the Unit 10 Maths Words & Symbols reference.",
+            "explanation": "Factor means a number being multiplied."
           },
           {
             "prompt": "Calculate 1234 × 30.",
@@ -1724,7 +1724,7 @@
         "icon": "T",
         "skill": "Dividend / Divisor",
         "title": "Unit Champion: Dividend / Divisor",
-        "description": "Practise dividend / divisor through four short challenges.",
+        "description": "Four short challenges on Dividend / Divisor.",
         "type": "choice",
         "rounds": [
           {
@@ -1736,8 +1736,8 @@
               "One part of a long multiplication"
             ],
             "answer": "The answer to a division",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Quotient means The answer to a division."
+            "clue": "Use the Unit 10 Maths Words & Symbols reference.",
+            "explanation": "Quotient means the answer to a division."
           },
           {
             "prompt": "Calculate 234 × 56.",
@@ -1783,7 +1783,7 @@
     "I can multiply numbers up to four digits by a single-digit number using the standard written method.",
     "I can multiply by multiples of 10 (such as 20, 30, 700) using place-value patterns.",
     "I can multiply a three-digit or four-digit number by a two-digit number (long multiplication).",
-    "I can use the grid method as a second way to multiply and to check your work.",
+    "I can use the grid method as a second way to multiply and to check my work.",
     "I can carry out long division of large numbers, expressing remainders correctly.",
     "I can multiply and divide decimals by whole numbers.",
     "I can apply the correct order of operations (brackets, then × and ÷, then + and −).",

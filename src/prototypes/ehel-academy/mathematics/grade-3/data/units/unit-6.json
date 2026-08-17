@@ -74,13 +74,13 @@
     {
       "id": "concept-3-converting-between-units",
       "title": "Converting Between Units",
-      "explanation": "Here are the key metric conversions to learn by heart:\n\n10 millimetres (mm) = 1 centimetre (cm)\n\nThere is a simple pattern to converting. When you go from a larger unit to a smaller unit, the number gets bigger, so you multiply. When you go from a smaller unit to a larger unit, the number gets smaller, so you divide. This makes sense: it takes many small units to make up one big unit, so there will always be more small units.\n\nLet us work through some examples. To change 5 m into centimetres, we are going from a larger unit (m) to a smaller unit (cm), so we multiply by 100: 5 × 100 = 500 cm. To change 250 cm into metres, we are going from a smaller unit to a larger unit, so we divide by 100: 250 ÷ 100 = 2.5 m. To change 3 km into metres, we multiply by 1000: 3 × 1000 = 3000 m. And to change 15 mm into centimetres, we divide by 10: 15 ÷ 10 = 1.5 cm.",
+      "explanation": "Here are the key metric conversions to learn by heart:\n\n10 millimetres (mm) = 1 centimetre (cm)\n\n100 centimetres (cm) = 1 metre (m)\n\n1000 metres (m) = 1 kilometre (km)\n\nThere is a simple pattern to converting. When you go from a larger unit to a smaller unit, the number gets bigger, so you multiply. When you go from a smaller unit to a larger unit, the number gets smaller, so you divide. This makes sense: it takes many small units to make up one big unit, so there will always be more small units.\n\nLet us work through some examples. To change 5 m into centimetres, we are going from a larger unit (m) to a smaller unit (cm), so we multiply by 100: 5 × 100 = 500 cm. To change 250 cm into metres, we are going from a smaller unit to a larger unit, so we divide by 100: 250 ÷ 100 = 2.5 m. To change 3 km into metres, we multiply by 1000: 3 × 1000 = 3000 m. And to change 15 mm into centimetres, we divide by 10: 15 ÷ 10 = 1.5 cm.",
       "example": "Some measurements are given in two units at once, like 2 m 35 cm. To turn this into a single unit, change the larger part into the smaller unit and add. So 2 m 35 cm becomes 200 cm + 35 cm = 235 cm. Going the other way, 450 cm can be split into 4 whole metres (400 cm) with 50 cm left over, so 450 cm = 4 m 50 cm. Being able to move smoothly between units is one of the most useful measurement skills you can have."
     },
     {
       "id": "concept-4-estimating-length",
       "title": "Estimating Length",
-      "explanation": "An estimate is a sensible guess about a measurement made before you measure exactly. Estimating is useful when you do not need an exact answer, and it is also a way of checking – if your careful measurement is far from your estimate, that is a warning to measure again. Good mathematicians estimate first out of habit.\n\nTo make a good estimate, think about the size of the unit and compare the object to something you already know. You know your finger is about 7 cm wide, so you can use it as a ruler in your mind. You know a big step is about 1 m, so you can pace out a room to estimate its length. When Idris wants to estimate the length of his desk, he pictures how many hand-widths would fit along it, then turns that into centimetres.",
+      "explanation": "An estimate is a sensible guess about a measurement made before you measure exactly. Estimating is useful when you do not need an exact answer, and it is also a way of checking – if your careful measurement is far from your estimate, that is a warning to measure again. Good mathematicians estimate first out of habit.\n\nTo make a good estimate, think about the size of the unit and compare the object to something you already know. You know your hand is about 7 cm wide, so you can use it as a ruler in your mind. You know a big step is about 1 m, so you can pace out a room to estimate its length. When Idris wants to estimate the length of his desk, he pictures how many hand-widths would fit along it, then turns that into centimetres.",
       "example": "Here are some useful lengths to keep in your memory as reference points: a pencil is about 15–20 cm long, a door is about 2 m tall, a new pencil eraser is about 4 cm long, and a doorway is about 1 m wide. When you carry a few known lengths in your head, every estimate becomes more accurate. Estimating and measuring work together like two hands – one guesses, the other checks."
     },
     {
@@ -93,7 +93,7 @@
       "id": "concept-6-area-the-space-inside",
       "title": "Area – the Space Inside",
       "explanation": "Area is the amount of flat space inside a shape. If perimeter is the distance an ant walks around the edge, then area is the amount of floor the ant could cover with tiles inside the shape. Because area measures a flat surface, it is measured in square units, such as square centimetres (cm²) or square metres (m²).\n\nThe best way to understand area is to think of covering the shape with unit squares. A square centimetre (cm²) is a little square that is exactly 1 cm long on each side. The area of a shape is simply the number of these unit squares that fit inside it. If a rectangle can be covered by 40 of these 1 cm squares with no gaps and no overlaps, then its area is 40 cm².\n\nImagine a rectangle that is 8 cm long and 5 cm wide, drawn on grid paper. Along the length you can fit 8 squares in a row. There are 5 such rows going down. So the total number of squares is 8 in each row, 5 rows, which is 8 × 5 = 40 squares. This is exactly why the rule for the area of a rectangle is:\n\nArea of a rectangle = length × width.",
-      "example": "So for our rectangle, Area = 8 cm × 5 cm = 40 cm². The little ² (the raised 2, said “squared”) tells us we are measuring area, not length. A square is just a special rectangle where the length and width are equal, so:"
+      "example": "So for our rectangle, Area = 8 cm × 5 cm = 40 cm². The little ² (the raised 2, said “squared”) tells us we are measuring area, not length. A square is just a special rectangle where the length and width are equal, so: Area of a square = side × side."
     }
   ],
   "explorations": [
@@ -356,7 +356,7 @@
       "outcomeId": "lo08",
       "difficulty": "Intermediate",
       "title": "Perimeter and area together",
-      "prompt": "A rectangular room is 6 m long and 4 m wide. How much baseboard is needed to go around it, and how many square tiles of 1 m² are needed to cover the floor?",
+      "prompt": "A rectangular room is 6 m long and 4 m wide. How much skirting board is needed to go around it, and how many square tiles of 1 m² are needed to cover the floor?",
       "solution": "Baseboard goes around the edge, so use perimeter: 2 × (6 + 4) = 2 × 10 = 20 m of baseboard. Tiles cover the floor, so use area: 6 × 4 = 24 m², which means 24 tiles. Notice how one question needed perimeter and the other needed area — always ask which you need."
     },
     {
@@ -379,7 +379,7 @@
       "id": "we11",
       "outcomeId": "lo03",
       "difficulty": "Challenge",
-      "title": "Practice 11",
+      "title": "For a rectangle 9 m long and 5 m wide, find both the…",
       "prompt": "For a rectangle 9 m long and 5 m wide, find both the perimeter and the area.",
       "solution": "Perimeter = 2 × (9 + 5) = 2 × 14 = 28 m. Area = 9 × 5 = 45 m²."
     },
@@ -387,7 +387,7 @@
       "id": "we12",
       "outcomeId": "lo04",
       "difficulty": "Challenge",
-      "title": "Practice 12",
+      "title": "Find all the rectangles with whole-number sides that…",
       "prompt": "Find all the rectangles with whole-number sides that have a perimeter of 20 cm. List each length and width.",
       "solution": "Perimeter 20 cm means length + width = 10: so 1×9, 2×8, 3×7, 4×6, and 5×5."
     }
@@ -550,11 +550,11 @@
     "rules": [
       {
         "title": "Rectangle Perimeter Shortcut Rule",
-        "text": "For rectangles and squares there are helpful shortcuts, because their sides follow a rule. In a rectangle, the opposite sides are equal, so there are really only two different side lengths: the length and the width. Instead of adding four numbers, we can add the length and width and then double the answer:"
+        "text": "For rectangles and squares there are helpful shortcuts, because their sides follow a rule. In a rectangle, the opposite sides are equal, so there are really only two different side lengths: the length and the width. Instead of adding four numbers, we can add the length and width and then double the answer: Perimeter of a rectangle = 2 × (length + width)."
       },
       {
         "title": "Rectangle Area Rule",
-        "text": "Imagine a rectangle that is 8 cm long and 5 cm wide, drawn on grid paper. Along the length you can fit 8 squares in a row. There are 5 such rows going down. So the total number of squares is 8 in each row, 5 rows, which is 8 × 5 = 40 squares. This is exactly why the rule for the area of a rectangle is:"
+        "text": "Imagine a rectangle that is 8 cm long and 5 cm wide, drawn on grid paper. Along the length you can fit 8 squares in a row. There are 5 such rows going down. So the total number of squares is 8 in each row, 5 rows, which is 8 × 5 = 40 squares. This is exactly why the rule for the area of a rectangle is: Area of a rectangle = length × width."
       },
       {
         "title": "Perimeter and Area Recap Rule",
@@ -1030,8 +1030,8 @@
           "A standard amount for measuring"
         ],
         "answer": "How long something is, end to end",
-        "hint": "Use the Unit 6 Math Words & Symbols reference.",
-        "explanation": "Length means How long something is, end to end."
+        "hint": "Use the Unit 6 Maths Words & Symbols reference.",
+        "explanation": "Length means how long something is, end to end."
       },
       {
         "id": "q11",
@@ -1046,8 +1046,8 @@
           "A square used to measure area (cm², m²)"
         ],
         "answer": "The distance around a shape",
-        "hint": "Use the Unit 6 Math Words & Symbols reference.",
-        "explanation": "Perimeter means The distance around a shape."
+        "hint": "Use the Unit 6 Maths Words & Symbols reference.",
+        "explanation": "Perimeter means the distance around a shape."
       },
       {
         "id": "q12",
@@ -1062,8 +1062,8 @@
           "A sensible guess before measuring"
         ],
         "answer": "The flat space inside a shape",
-        "hint": "Use the Unit 6 Math Words & Symbols reference.",
-        "explanation": "Area means The flat space inside a shape."
+        "hint": "Use the Unit 6 Maths Words & Symbols reference.",
+        "explanation": "Area means the flat space inside a shape."
       }
     ]
   },
@@ -1075,7 +1075,7 @@
         "icon": "?",
         "skill": "Length",
         "title": "Quick Match: Length",
-        "description": "Practise length through four short challenges.",
+        "description": "Four short challenges on Length.",
         "type": "choice",
         "rounds": [
           {
@@ -1123,8 +1123,8 @@
               "A standard amount for measuring"
             ],
             "answer": "How long something is, end to end",
-            "clue": "Use the Unit 6 Math Words & Symbols reference.",
-            "explanation": "Length means How long something is, end to end."
+            "clue": "Use the Unit 6 Maths Words & Symbols reference.",
+            "explanation": "Length means how long something is, end to end."
           }
         ]
       },
@@ -1133,7 +1133,7 @@
         "icon": "★",
         "skill": "Perimeter",
         "title": "Concept Quest: Perimeter",
-        "description": "Practise perimeter through four short challenges.",
+        "description": "Four short challenges on Perimeter.",
         "type": "choice",
         "rounds": [
           {
@@ -1181,8 +1181,8 @@
               "A square used to measure area (cm², m²)"
             ],
             "answer": "The distance around a shape",
-            "clue": "Use the Unit 6 Math Words & Symbols reference.",
-            "explanation": "Perimeter means The distance around a shape."
+            "clue": "Use the Unit 6 Maths Words & Symbols reference.",
+            "explanation": "Perimeter means the distance around a shape."
           }
         ]
       },
@@ -1191,7 +1191,7 @@
         "icon": "◫",
         "skill": "Area",
         "title": "Model Detective: Area",
-        "description": "Practise area through four short challenges.",
+        "description": "Four short challenges on Area.",
         "type": "choice",
         "rounds": [
           {
@@ -1239,8 +1239,8 @@
               "A sensible guess before measuring"
             ],
             "answer": "The flat space inside a shape",
-            "clue": "Use the Unit 6 Math Words & Symbols reference.",
-            "explanation": "Area means The flat space inside a shape."
+            "clue": "Use the Unit 6 Maths Words & Symbols reference.",
+            "explanation": "Area means the flat space inside a shape."
           }
         ]
       },
@@ -1249,7 +1249,7 @@
         "icon": "→",
         "skill": "Unit",
         "title": "Rule Runner: Unit",
-        "description": "Practise unit through four short challenges.",
+        "description": "Four short challenges on Unit.",
         "type": "choice",
         "rounds": [
           {
@@ -1285,8 +1285,8 @@
               "A standard amount for measuring"
             ],
             "answer": "How long something is, end to end",
-            "clue": "Use the Unit 6 Math Words & Symbols reference.",
-            "explanation": "Length means How long something is, end to end."
+            "clue": "Use the Unit 6 Maths Words & Symbols reference.",
+            "explanation": "Length means how long something is, end to end."
           },
           {
             "prompt": "A rectangle is 3 cm wide and 2 cm tall. What is its area in square centimetres?",
@@ -1307,7 +1307,7 @@
         "icon": "Σ",
         "skill": "Square unit",
         "title": "Vocabulary Vault: Square unit",
-        "description": "Practise square unit through four short challenges.",
+        "description": "Four short challenges on Square unit.",
         "type": "choice",
         "rounds": [
           {
@@ -1343,8 +1343,8 @@
               "A square used to measure area (cm², m²)"
             ],
             "answer": "The distance around a shape",
-            "clue": "Use the Unit 6 Math Words & Symbols reference.",
-            "explanation": "Perimeter means The distance around a shape."
+            "clue": "Use the Unit 6 Maths Words & Symbols reference.",
+            "explanation": "Perimeter means the distance around a shape."
           },
           {
             "prompt": "A rectangle is 7 cm wide and 5 cm tall. What is its area in square centimetres?",
@@ -1365,7 +1365,7 @@
         "icon": "◇",
         "skill": "Estimate",
         "title": "Challenge Cards: Estimate",
-        "description": "Practise estimate through four short challenges.",
+        "description": "Four short challenges on Estimate.",
         "type": "choice",
         "rounds": [
           {
@@ -1401,8 +1401,8 @@
               "A sensible guess before measuring"
             ],
             "answer": "The flat space inside a shape",
-            "clue": "Use the Unit 6 Math Words & Symbols reference.",
-            "explanation": "Area means The flat space inside a shape."
+            "clue": "Use the Unit 6 Maths Words & Symbols reference.",
+            "explanation": "Area means the flat space inside a shape."
           },
           {
             "prompt": "A rectangle is 5 cm wide and 9 cm tall. What is its area in square centimetres?",
@@ -1423,7 +1423,7 @@
         "icon": "⚡",
         "skill": "Convert",
         "title": "Think Fast: Convert",
-        "description": "Practise convert through four short challenges.",
+        "description": "Four short challenges on Convert.",
         "type": "choice",
         "rounds": [
           {
@@ -1447,8 +1447,8 @@
               "A standard amount for measuring"
             ],
             "answer": "How long something is, end to end",
-            "clue": "Use the Unit 6 Math Words & Symbols reference.",
-            "explanation": "Length means How long something is, end to end."
+            "clue": "Use the Unit 6 Maths Words & Symbols reference.",
+            "explanation": "Length means how long something is, end to end."
           },
           {
             "prompt": "A rectangle is 3 cm wide and 2 cm tall. What is its area in square centimetres?",
@@ -1481,7 +1481,7 @@
         "icon": "☁",
         "skill": "Polygon",
         "title": "Explain It: Polygon",
-        "description": "Practise polygon through four short challenges.",
+        "description": "Four short challenges on Polygon.",
         "type": "choice",
         "rounds": [
           {
@@ -1505,8 +1505,8 @@
               "A square used to measure area (cm², m²)"
             ],
             "answer": "The distance around a shape",
-            "clue": "Use the Unit 6 Math Words & Symbols reference.",
-            "explanation": "Perimeter means The distance around a shape."
+            "clue": "Use the Unit 6 Maths Words & Symbols reference.",
+            "explanation": "Perimeter means the distance around a shape."
           },
           {
             "prompt": "A rectangle is 7 cm wide and 5 cm tall. What is its area in square centimetres?",
@@ -1539,7 +1539,7 @@
         "icon": "⌂",
         "skill": "Length",
         "title": "Real-Life Round: Length",
-        "description": "Practise length through four short challenges.",
+        "description": "Four short challenges on Length.",
         "type": "choice",
         "rounds": [
           {
@@ -1563,8 +1563,8 @@
               "A sensible guess before measuring"
             ],
             "answer": "The flat space inside a shape",
-            "clue": "Use the Unit 6 Math Words & Symbols reference.",
-            "explanation": "Area means The flat space inside a shape."
+            "clue": "Use the Unit 6 Maths Words & Symbols reference.",
+            "explanation": "Area means the flat space inside a shape."
           },
           {
             "prompt": "A rectangle is 5 cm wide and 9 cm tall. What is its area in square centimetres?",
@@ -1597,7 +1597,7 @@
         "icon": "!",
         "skill": "Perimeter",
         "title": "Spot the Error: Perimeter",
-        "description": "Practise perimeter through four short challenges.",
+        "description": "Four short challenges on Perimeter.",
         "type": "choice",
         "rounds": [
           {
@@ -1609,8 +1609,8 @@
               "A standard amount for measuring"
             ],
             "answer": "How long something is, end to end",
-            "clue": "Use the Unit 6 Math Words & Symbols reference.",
-            "explanation": "Length means How long something is, end to end."
+            "clue": "Use the Unit 6 Maths Words & Symbols reference.",
+            "explanation": "Length means how long something is, end to end."
           },
           {
             "prompt": "A rectangle is 3 cm wide and 2 cm tall. What is its area in square centimetres?",
@@ -1655,7 +1655,7 @@
         "icon": "≡",
         "skill": "Area",
         "title": "Mastery Mix: Area",
-        "description": "Practise area through four short challenges.",
+        "description": "Four short challenges on Area.",
         "type": "choice",
         "rounds": [
           {
@@ -1667,8 +1667,8 @@
               "A square used to measure area (cm², m²)"
             ],
             "answer": "The distance around a shape",
-            "clue": "Use the Unit 6 Math Words & Symbols reference.",
-            "explanation": "Perimeter means The distance around a shape."
+            "clue": "Use the Unit 6 Maths Words & Symbols reference.",
+            "explanation": "Perimeter means the distance around a shape."
           },
           {
             "prompt": "A rectangle is 7 cm wide and 5 cm tall. What is its area in square centimetres?",
@@ -1713,7 +1713,7 @@
         "icon": "T",
         "skill": "Unit",
         "title": "Unit Champion: Unit",
-        "description": "Practise unit through four short challenges.",
+        "description": "Four short challenges on Unit.",
         "type": "choice",
         "rounds": [
           {
@@ -1725,8 +1725,8 @@
               "A sensible guess before measuring"
             ],
             "answer": "The flat space inside a shape",
-            "clue": "Use the Unit 6 Math Words & Symbols reference.",
-            "explanation": "Area means The flat space inside a shape."
+            "clue": "Use the Unit 6 Maths Words & Symbols reference.",
+            "explanation": "Area means the flat space inside a shape."
           },
           {
             "prompt": "A rectangle is 5 cm wide and 9 cm tall. What is its area in square centimetres?",
@@ -1769,13 +1769,13 @@
     ]
   },
   "selfAssessment": [
-    "I can this unit is designed for self-paced learning. That means you move at your own speed. Read each explanation slowly, work every example yourself with a pencil and paper, and only move on when you feel ready. Your AI tutor is available day and night to give you extra practice, explain a step in a fresh way, or check your answers. Your teacher will also meet with you about twice a week to help with anything that feels tricky.",
-    "I can keep a ruler, a pencil, and some paper beside you as you read. Mathematics is not a subject you can learn only by looking – you must do it. Measure real objects, draw the shapes, count the squares, and say the answers out loud. If you make a mistake, that is not a failure; it is simply a sign of exactly what to practise next. Let us begin exploring the world of measurement together.",
     "I can choose the best unit to measure a length: millimetres, centimetres, metres or kilometres.",
     "I can measure objects accurately using a ruler, lining up the zero mark correctly.",
     "I can convert between units in the metric system (mm ↔ cm ↔ m ↔ km).",
     "I can estimate a length sensibly and then measure to check.",
     "I can find the perimeter of rectangles, squares, triangles and other polygons.",
-    "I can find the area of rectangles and squares using length × width."
+    "I can find the area of rectangles and squares using length × width.",
+    "I can find area by counting squares on grid paper.",
+    "I can explain the difference between perimeter and area, and use the correct units for each."
   ]
 }

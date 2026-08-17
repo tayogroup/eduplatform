@@ -93,7 +93,7 @@
     {
       "id": "concept-6-carroll-diagrams",
       "title": "Carroll Diagrams",
-      "explanation": "A Carroll diagram is another way to sort, but instead of circles it uses a grid of boxes. It sorts items by asking yes or no questions. It is named after Lewis Carroll, who wrote *Alice in Wonderland* and loved puzzles and mathematics.\n\nA simple Carroll diagram has two columns and two rows. Suppose we sort the numbers 1 to 12 by two rules: 'Even?' across the top and 'More than 6?' down the side. The top row is 'More than 6' and the bottom row is 'Not more than 6'. The left column is 'Even' and the right column is 'Not even'. The number 8 is even and more than 6, so it goes in the top-left box. The number 3 is not even and not more than 6, so it goes in the bottom-right box. Every number has exactly one box where it belongs.\n\nThe clever thing about a Carroll diagram is that every item has a home. Each box answers both questions at once: yes-yes, yes-no, no-yes, or no-no. Nothing can fall between the boxes, and nothing can be left out, because every item is either even or not even, and either more than 6 or not. This makes the Carroll diagram very tidy and complete.",
+      "explanation": "A Carroll diagram is another way to sort, but instead of circles it uses a grid of boxes. It sorts items by asking yes or no questions. It is named after Lewis Carroll, who wrote Alice in Wonderland and loved puzzles and mathematics.\n\nA simple Carroll diagram has two columns and two rows. Suppose we sort the numbers 1 to 12 by two rules: 'Even?' across the top and 'More than 6?' down the side. The top row is 'More than 6' and the bottom row is 'Not more than 6'. The left column is 'Even' and the right column is 'Not even'. The number 8 is even and more than 6, so it goes in the top-left box. The number 3 is not even and not more than 6, so it goes in the bottom-right box. Every number has exactly one box where it belongs.\n\nThe clever thing about a Carroll diagram is that every item has a home. Each box answers both questions at once: yes-yes, yes-no, no-yes, or no-no. Nothing can fall between the boxes, and nothing can be left out, because every item is either even or not even, and either more than 6 or not. This makes the Carroll diagram very tidy and complete.",
       "example": "To sort an item, work through the questions one at a time. Take the number 10 with our rules. First question: is it even? Yes, so it belongs in the left column. Second question: is it more than 6? Yes, so it belongs in the top row. The two answers together point to the top-left box. Doing the questions in order stops you from getting muddled."
     }
   ],
@@ -163,12 +163,12 @@
       "outcomeId": "lo06",
       "difficulty": "Explore",
       "title": "Carroll Diagrams",
-      "context": "A Carroll diagram is another way to sort, but instead of circles it uses a grid of boxes. It sorts items by asking yes or no questions. It is named after Lewis Carroll, who wrote *Alice in Wonderland* and loved puzzles and mathematics.",
+      "context": "A Carroll diagram is another way to sort, but instead of circles it uses a grid of boxes. It sorts items by asking yes or no questions. It is named after Lewis Carroll, who wrote Alice in Wonderland and loved puzzles and mathematics.",
       "prompt": "A pictogram key is one 🐪 = 10 camels. A herd shows 4 whole and 1 half symbol. How many camels?",
       "answer": "4 × 10 + 5 = 45 camels.",
       "modelType": "model-6",
       "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Data or Pictogram.",
-      "explanation": "Carroll Diagrams: A Carroll diagram is another way to sort, but instead of circles it uses a grid of boxes. It sorts items by asking yes or no questions. It is named after Lewis Carroll, who wrote *Alice in Wonderland* and loved puzzles and mathematics."
+      "explanation": "Carroll Diagrams: A Carroll diagram is another way to sort, but instead of circles it uses a grid of boxes. It sorts items by asking yes or no questions. It is named after Lewis Carroll, who wrote Alice in Wonderland and loved puzzles and mathematics."
     }
   ],
   "visualModels": [
@@ -353,8 +353,8 @@
       "outcomeId": "lo07",
       "difficulty": "Intermediate",
       "title": "How many more?",
-      "prompt": "Sort 6 and 9 into a Carroll diagram with columns 'Even / Not even' and rows 'More than 5 / Not more than 5'.",
-      "solution": "For 6: it is even (left column) and more than 5 (top row), so top-left box. For 9: it is not even (right column) and more than 5 (top row), so top-right box. Doing the two questions in order gives each number its home.\n\nWorked Example 7: How many more?\n\nA bar chart of museum visitors shows Friday with 200 and Tuesday with 90. How many more visitors came on Friday than on Tuesday?\n\nSolution: 'How many more' means subtract the smaller from the larger. 200 − 90 = 110 more visitors on Friday. Subtraction is the tool for every 'how many more' question."
+      "prompt": "A bar chart of museum visitors shows Friday with 200 and Tuesday with 90. How many more visitors came on Friday than on Tuesday?",
+      "solution": "'How many more' means subtract the smaller from the larger. 200 − 90 = 110 more visitors on Friday. Subtraction is the tool for every 'how many more' question."
     },
     {
       "id": "we08",
@@ -376,7 +376,7 @@
       "id": "we10",
       "outcomeId": "lo02",
       "difficulty": "Challenge",
-      "title": "Practice 10",
+      "title": "Sort these numbers into a Venn diagram of 'Even' and…",
       "prompt": "Sort these numbers into a Venn diagram of 'Even' and 'Multiple of 3': 2, 3, 6, 9, 8, 12.",
       "solution": "Even only: 2, 8. Multiple-of-3 only: 3, 9. Overlap (even and multiple of 3): 6, 12."
     },
@@ -384,7 +384,7 @@
       "id": "we11",
       "outcomeId": "lo03",
       "difficulty": "Challenge",
-      "title": "Practice 11",
+      "title": "A bar chart of visitors shows Monday 120, Friday 200…",
       "prompt": "A bar chart of visitors shows Monday 120, Friday 200, Saturday 250. How many more came on Saturday than on Monday?",
       "solution": "Saturday reaches 250 and Monday reaches 120. 250 − 120 = 130. Saturday had 130 more visitors than Monday."
     },
@@ -392,7 +392,7 @@
       "id": "we12",
       "outcomeId": "lo04",
       "difficulty": "Challenge",
-      "title": "Practice 12",
+      "title": "A pictogram key is one 🍎 = 4 apples. A row is worth…",
       "prompt": "A pictogram key is one 🍎 = 4 apples. A row is worth 26 apples. How many whole and part symbols are drawn?",
       "solution": "26 ÷ 4 = 6 remainder 2. So 6 whole symbols show 24 apples (6 × 4 = 24), and a half symbol shows the remaining 2 apples (half of 4 = 2). Altogether: 6 whole symbols and 1 half symbol, worth 26 apples."
     }
@@ -758,7 +758,7 @@
       "outcomeId": "lo03",
       "difficulty": "Core",
       "context": "Travel",
-      "prompt": "A double survey compares two weeks of reading minutes. Week 1: Monday 20, Tuesday 15. Week 2: Monday 25, Tuesday 20. In which week did Monday have more reading, and by how many minutes?",
+      "prompt": "A survey compares two weeks of reading minutes. Week 1: Monday 20, Tuesday 15. Week 2: Monday 25, Tuesday 20. In which week did Monday have more reading, and by how many minutes?",
       "answer": "Week 2 Monday had more (25 vs 20), by 25 − 20 = 5 minutes.",
       "hint": "Decide which idea the question is really about (Data, Pictogram, Key), then work one step at a time and check the answer is sensible.",
       "errorFeedback": "Week 2 Monday had more (25 vs 20), by 25 − 20 = 5 minutes."
@@ -871,7 +871,7 @@
         "Pictogram",
         "Key"
       ],
-      "modelAnswer": "A Carroll diagram is another way to sort, but instead of circles it uses a grid of boxes. It sorts items by asking yes or no questions. It is named after Lewis Carroll, who wrote *Alice in Wonderland* and loved puzzles and mathematics.\n\nA simple Carroll diagram has two columns and two rows. Suppose we sort the numbers 1 to 12 by two rules: 'Even?' across the top and 'More than 6?' down the side. The top row is 'More than 6' and the bottom row is 'Not more than 6'. The left column is 'Even' and the right column is 'Not even'. The number 8 is even and more than 6, so it goes in the top-left box. The number 3 is not even and not more than 6, so it goes in the bottom-right box. Every number has exactly one box where it belongs."
+      "modelAnswer": "A Carroll diagram is another way to sort, but instead of circles it uses a grid of boxes. It sorts items by asking yes or no questions. It is named after Lewis Carroll, who wrote Alice in Wonderland and loved puzzles and mathematics.\n\nA simple Carroll diagram has two columns and two rows. Suppose we sort the numbers 1 to 12 by two rules: 'Even?' across the top and 'More than 6?' down the side. The top row is 'More than 6' and the bottom row is 'Not more than 6'. The left column is 'Even' and the right column is 'Not even'. The number 8 is even and more than 6, so it goes in the top-left box. The number 3 is not even and not more than 6, so it goes in the bottom-right box. Every number has exactly one box where it belongs."
     }
   ],
   "assessment": {
@@ -1034,8 +1034,8 @@
           "A graph using bars to compare amounts"
         ],
         "answer": "Information you collect, often numbers",
-        "hint": "Use the Unit 10 Math Words & Symbols reference.",
-        "explanation": "Data means Information you collect, often numbers."
+        "hint": "Use the Unit 10 Maths Words & Symbols reference.",
+        "explanation": "Data means information you collect, often numbers."
       },
       {
         "id": "q11",
@@ -1050,8 +1050,8 @@
           "A labelled line on the side or bottom"
         ],
         "answer": "A graph using pictures or symbols",
-        "hint": "Use the Unit 10 Math Words & Symbols reference.",
-        "explanation": "Pictogram means A graph using pictures or symbols."
+        "hint": "Use the Unit 10 Maths Words & Symbols reference.",
+        "explanation": "Pictogram means a graph using pictures or symbols."
       },
       {
         "id": "q12",
@@ -1066,8 +1066,8 @@
           "How much each step on an axis is worth"
         ],
         "answer": "What each symbol in a pictogram is worth",
-        "hint": "Use the Unit 10 Math Words & Symbols reference.",
-        "explanation": "Key means What each symbol in a pictogram is worth."
+        "hint": "Use the Unit 10 Maths Words & Symbols reference.",
+        "explanation": "Key means what each symbol in a pictogram is worth."
       }
     ]
   },
@@ -1079,7 +1079,7 @@
         "icon": "?",
         "skill": "Data",
         "title": "Quick Match: Data",
-        "description": "Practise data through four short challenges.",
+        "description": "Four short challenges on Data.",
         "type": "choice",
         "rounds": [
           {
@@ -1127,8 +1127,8 @@
               "A graph using bars to compare amounts"
             ],
             "answer": "Information you collect, often numbers",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Data means Information you collect, often numbers."
+            "clue": "Use the Unit 10 Maths Words & Symbols reference.",
+            "explanation": "Data means information you collect, often numbers."
           }
         ]
       },
@@ -1137,7 +1137,7 @@
         "icon": "★",
         "skill": "Pictogram",
         "title": "Concept Quest: Pictogram",
-        "description": "Practise pictogram through four short challenges.",
+        "description": "Four short challenges on Pictogram.",
         "type": "choice",
         "rounds": [
           {
@@ -1185,8 +1185,8 @@
               "A labelled line on the side or bottom"
             ],
             "answer": "A graph using pictures or symbols",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Pictogram means A graph using pictures or symbols."
+            "clue": "Use the Unit 10 Maths Words & Symbols reference.",
+            "explanation": "Pictogram means a graph using pictures or symbols."
           }
         ]
       },
@@ -1195,7 +1195,7 @@
         "icon": "◫",
         "skill": "Key",
         "title": "Model Detective: Key",
-        "description": "Practise key through four short challenges.",
+        "description": "Four short challenges on Key.",
         "type": "choice",
         "rounds": [
           {
@@ -1243,8 +1243,8 @@
               "How much each step on an axis is worth"
             ],
             "answer": "What each symbol in a pictogram is worth",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Key means What each symbol in a pictogram is worth."
+            "clue": "Use the Unit 10 Maths Words & Symbols reference.",
+            "explanation": "Key means what each symbol in a pictogram is worth."
           }
         ]
       },
@@ -1253,7 +1253,7 @@
         "icon": "→",
         "skill": "Bar chart",
         "title": "Rule Runner: Bar chart",
-        "description": "Practise bar chart through four short challenges.",
+        "description": "Four short challenges on Bar chart.",
         "type": "choice",
         "rounds": [
           {
@@ -1289,8 +1289,8 @@
               "A graph using bars to compare amounts"
             ],
             "answer": "Information you collect, often numbers",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Data means Information you collect, often numbers."
+            "clue": "Use the Unit 10 Maths Words & Symbols reference.",
+            "explanation": "Data means information you collect, often numbers."
           },
           {
             "prompt": "A pictogram shows books read. Key: one 📚 = 2 books. Farah's row shows 4 symbols. How many books did Farah read?",
@@ -1311,7 +1311,7 @@
         "icon": "Σ",
         "skill": "Axis",
         "title": "Vocabulary Vault: Axis",
-        "description": "Practise axis through four short challenges.",
+        "description": "Four short challenges on Axis.",
         "type": "choice",
         "rounds": [
           {
@@ -1347,8 +1347,8 @@
               "A labelled line on the side or bottom"
             ],
             "answer": "A graph using pictures or symbols",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Pictogram means A graph using pictures or symbols."
+            "clue": "Use the Unit 10 Maths Words & Symbols reference.",
+            "explanation": "Pictogram means a graph using pictures or symbols."
           },
           {
             "prompt": "A pictogram will show 4, 8 and 12 books read by three children. Which key avoids needing any half-symbols?",
@@ -1369,7 +1369,7 @@
         "icon": "◇",
         "skill": "Scale",
         "title": "Challenge Cards: Scale",
-        "description": "Practise scale through four short challenges.",
+        "description": "Four short challenges on Scale.",
         "type": "choice",
         "rounds": [
           {
@@ -1405,8 +1405,8 @@
               "How much each step on an axis is worth"
             ],
             "answer": "What each symbol in a pictogram is worth",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Key means What each symbol in a pictogram is worth."
+            "clue": "Use the Unit 10 Maths Words & Symbols reference.",
+            "explanation": "Key means what each symbol in a pictogram is worth."
           },
           {
             "prompt": "A bar chart shows favourite pets: Cat 6, Dog 9, Fish 3. Reading the up axis, how many children chose Dog?",
@@ -1427,7 +1427,7 @@
         "icon": "⚡",
         "skill": "Frequency",
         "title": "Think Fast: Frequency",
-        "description": "Practise frequency through four short challenges.",
+        "description": "Four short challenges on Frequency.",
         "type": "choice",
         "rounds": [
           {
@@ -1451,8 +1451,8 @@
               "A graph using bars to compare amounts"
             ],
             "answer": "Information you collect, often numbers",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Data means Information you collect, often numbers."
+            "clue": "Use the Unit 10 Maths Words & Symbols reference.",
+            "explanation": "Data means information you collect, often numbers."
           },
           {
             "prompt": "A pictogram shows books read. Key: one 📚 = 2 books. Farah's row shows 4 symbols. How many books did Farah read?",
@@ -1485,7 +1485,7 @@
         "icon": "☁",
         "skill": "Venn diagram",
         "title": "Explain It: Venn diagram",
-        "description": "Practise venn diagram through four short challenges.",
+        "description": "Four short challenges on Venn diagram.",
         "type": "choice",
         "rounds": [
           {
@@ -1509,8 +1509,8 @@
               "A labelled line on the side or bottom"
             ],
             "answer": "A graph using pictures or symbols",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Pictogram means A graph using pictures or symbols."
+            "clue": "Use the Unit 10 Maths Words & Symbols reference.",
+            "explanation": "Pictogram means a graph using pictures or symbols."
           },
           {
             "prompt": "A pictogram will show 4, 8 and 12 books read by three children. Which key avoids needing any half-symbols?",
@@ -1543,7 +1543,7 @@
         "icon": "⌂",
         "skill": "Carroll diagram",
         "title": "Real-Life Round: Carroll diagram",
-        "description": "Practise carroll diagram through four short challenges.",
+        "description": "Four short challenges on Carroll diagram.",
         "type": "choice",
         "rounds": [
           {
@@ -1567,8 +1567,8 @@
               "How much each step on an axis is worth"
             ],
             "answer": "What each symbol in a pictogram is worth",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Key means What each symbol in a pictogram is worth."
+            "clue": "Use the Unit 10 Maths Words & Symbols reference.",
+            "explanation": "Key means what each symbol in a pictogram is worth."
           },
           {
             "prompt": "A bar chart shows favourite pets: Cat 6, Dog 9, Fish 3. Reading the up axis, how many children chose Dog?",
@@ -1601,7 +1601,7 @@
         "icon": "!",
         "skill": "Data",
         "title": "Spot the Error: Data",
-        "description": "Practise data through four short challenges.",
+        "description": "Four short challenges on Data.",
         "type": "choice",
         "rounds": [
           {
@@ -1613,8 +1613,8 @@
               "A graph using bars to compare amounts"
             ],
             "answer": "Information you collect, often numbers",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Data means Information you collect, often numbers."
+            "clue": "Use the Unit 10 Maths Words & Symbols reference.",
+            "explanation": "Data means information you collect, often numbers."
           },
           {
             "prompt": "A pictogram shows books read. Key: one 📚 = 2 books. Farah's row shows 4 symbols. How many books did Farah read?",
@@ -1659,7 +1659,7 @@
         "icon": "≡",
         "skill": "Pictogram",
         "title": "Mastery Mix: Pictogram",
-        "description": "Practise pictogram through four short challenges.",
+        "description": "Four short challenges on Pictogram.",
         "type": "choice",
         "rounds": [
           {
@@ -1671,8 +1671,8 @@
               "A labelled line on the side or bottom"
             ],
             "answer": "A graph using pictures or symbols",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Pictogram means A graph using pictures or symbols."
+            "clue": "Use the Unit 10 Maths Words & Symbols reference.",
+            "explanation": "Pictogram means a graph using pictures or symbols."
           },
           {
             "prompt": "A pictogram will show 4, 8 and 12 books read by three children. Which key avoids needing any half-symbols?",
@@ -1717,7 +1717,7 @@
         "icon": "T",
         "skill": "Key",
         "title": "Unit Champion: Key",
-        "description": "Practise key through four short challenges.",
+        "description": "Four short challenges on Key.",
         "type": "choice",
         "rounds": [
           {
@@ -1729,8 +1729,8 @@
               "How much each step on an axis is worth"
             ],
             "answer": "What each symbol in a pictogram is worth",
-            "clue": "Use the Unit 10 Math Words & Symbols reference.",
-            "explanation": "Key means What each symbol in a pictogram is worth."
+            "clue": "Use the Unit 10 Maths Words & Symbols reference.",
+            "explanation": "Key means what each symbol in a pictogram is worth."
           },
           {
             "prompt": "A bar chart shows favourite pets: Cat 6, Dog 9, Fish 3. Reading the up axis, how many children chose Dog?",

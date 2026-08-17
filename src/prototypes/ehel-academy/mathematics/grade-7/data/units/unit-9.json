@@ -117,14 +117,14 @@
     {
       "id": "concept-5-finding-the-nth-term-of-an-arithmetic-sequence",
       "title": "Finding the nth Term of an Arithmetic Sequence",
-      "explanation": "The nth term formula is the most useful position-to-term rule of all, because there is a reliable method to find it for any arithmetic sequence. The formula is:\n\nnth term = first term + (n − 1) × common difference\n\nLet us find the nth term of the sequence 5, 9, 13, 17, … First, the first term is 5. Second, the common difference is d = 4 (each step adds 4). Now substitute into the formula and simplify:\n\nSo the nth term is 4n + 1. Let us check it works: for n = 1 we get 4 + 1 = 5 (correct), for n = 2 we get 8 + 1 = 9 (correct), for n = 3 we get 12 + 1 = 13 (correct). It works, so we can trust it. Now the 10th term is easy: 4 × 10 + 1 = 41, and the 100th term is 4 × 100 + 1 = 401 – found instantly.",
+      "explanation": "The nth term formula is the most useful position-to-term rule of all, because there is a reliable method to find it for any arithmetic sequence. The formula is:\n\nnth term = first term + (n − 1) × common difference\n\nLet us find the nth term of the sequence 5, 9, 13, 17, … First, the first term is 5. Second, the common difference is d = 4 (each step adds 4). Now substitute into the formula and simplify: nth term = 5 + (n − 1) × 4 = 5 + 4n − 4 = 4n + 1.\n\nSo the nth term is 4n + 1. Let us check it works: for n = 1 we get 4 + 1 = 5 (correct), for n = 2 we get 8 + 1 = 9 (correct), for n = 3 we get 12 + 1 = 13 (correct). It works, so we can trust it. Now the 10th term is easy: 4 × 10 + 1 = 41, and the 100th term is 4 × 100 + 1 = 401 – found instantly.",
       "example": "Here is a quick shortcut worth knowing. In the nth term of an arithmetic sequence, the number in front of n is always the common difference. So for a sequence that goes up in 4s, the nth term will start with 4n; for a sequence that goes up in 7s, it will start with 7n. You then adjust with a constant number to make the first term come out right. For 6, 13, 20, 27, … the common difference is 7, so the nth term begins 7n; since 7 × 1 = 7 but the first term is 6, we subtract 1, giving nth term = 7n − 1."
     },
     {
       "id": "concept-6-what-is-a-function",
       "title": "What Is a Function?",
-      "explanation": "A function is a rule that connects two quantities. It takes an input, does something to it, and produces exactly one output. The key idea is that word exactly one – for every input you put in, a function always gives back a single, definite output. Put the same input in twice and you always get the same output, because the rule never changes.\n\nThe easiest way to picture a function is as a function machine. You feed a number in one end, the machine works on it according to its rule, and the answer drops out the other end. Imagine a machine whose rule is “multiply by 2, then add 3”. If you feed in 5, the machine doubles it to 10, then adds 3, and out comes 13. If you feed in 0, you get 3. If you feed in 10, you get 23. The machine treats every number the same way.",
-      "example": "Function machines can also be run in the right order carefully. A machine that says “multiply by 2, then add 3” is not the same as one that says “add 3, then multiply by 2”. Feed 5 into the second machine: 5 + 3 = 8, then 8 × 2 = 16 – a different answer. The order of the steps matters, just like the order of terms matters in a sequence. Always follow the machine’s steps from left to right."
+      "explanation": "A function is a rule that connects two quantities. It takes an input, does something to it, and produces exactly one output. The key idea is in those words: exactly one – for every input you put in, a function always gives back a single, definite output. Put the same input in twice and you always get the same output, because the rule never changes.\n\nThe easiest way to picture a function is as a function machine. You feed a number in one end, the machine works on it according to its rule, and the answer drops out the other end. Imagine a machine whose rule is “multiply by 2, then add 3”. If you feed in 5, the machine doubles it to 10, then adds 3, and out comes 13. If you feed in 0, you get 3. If you feed in 10, you get 23. The machine treats every number the same way.",
+      "example": "Function machines must be run in the right order. A machine that says “multiply by 2, then add 3” is not the same as one that says “add 3, then multiply by 2”. Feed 5 into the second machine: 5 + 3 = 8, then 8 × 2 = 16 – a different answer. The order of the steps matters, just like the order of terms matters in a sequence. Always follow the machine’s steps from left to right."
     }
   ],
   "explorations": [
@@ -399,7 +399,7 @@
       "id": "we09",
       "outcomeId": "lo01",
       "difficulty": "Challenge",
-      "title": "Practice 9",
+      "title": "For h(x) = 2x + 1, find the value of x for which h(x)…",
       "prompt": "For h(x) = 2x + 1, find the value of x for which h(x) = 15.",
       "solution": "x = 7."
     },
@@ -407,7 +407,7 @@
       "id": "we10",
       "outcomeId": "lo02",
       "difficulty": "Challenge",
-      "title": "Practice 10",
+      "title": "A sequence has nth term 6n − 1. Find the 1st, 5th and…",
       "prompt": "A sequence has nth term 6n − 1. Find the 1st, 5th and 10th terms.",
       "solution": "5, 29, 59."
     },
@@ -415,7 +415,7 @@
       "id": "we11",
       "outcomeId": "lo03",
       "difficulty": "Challenge",
-      "title": "Practice 11",
+      "title": "Write a term-to-term rule and a position-to-term rule…",
       "prompt": "Write a term-to-term rule and a position-to-term rule for 5, 10, 15, 20, …",
       "solution": "Term-to-term: “add 5”; position-to-term: 5n."
     },
@@ -423,7 +423,7 @@
       "id": "we12",
       "outcomeId": "lo04",
       "difficulty": "Challenge",
-      "title": "Practice 12",
+      "title": "In an arithmetic sequence, the 5th term is 23 and the…",
       "prompt": "In an arithmetic sequence, the 5th term is 23 and the 12th term is 58. Find the first term and the common difference.",
       "solution": "From term 5 to term 12 the value rises 58 − 23 = 35 over 7 steps, so d = 5; first term = 23 − 4×5 = 3."
     }
@@ -897,7 +897,7 @@
       "outcomeId": "lo01",
       "difficulty": "Core",
       "responseMode": "text",
-      "prompt": "Explain the key idea in What Is a Function?.",
+      "prompt": "Explain the key idea in What Is a Function?",
       "keyIdeas": [
         "Sequence",
         "Term / Position",
@@ -1066,8 +1066,8 @@
           "How to find a term from its position"
         ],
         "answer": "An ordered list of numbers following a rule",
-        "hint": "Use the Unit 9 Math Words & Symbols reference.",
-        "explanation": "Sequence means An ordered list of numbers following a rule."
+        "hint": "Use the Unit 9 Maths Words & Symbols reference.",
+        "explanation": "Sequence means an ordered list of numbers following a rule."
       },
       {
         "id": "q11",
@@ -1082,8 +1082,8 @@
           "The constant step in an arithmetic sequence"
         ],
         "answer": "A number in the sequence / where it sits (n)",
-        "hint": "Use the Unit 9 Math Words & Symbols reference.",
-        "explanation": "Term / Position means A number in the sequence / where it sits (n)."
+        "hint": "Use the Unit 9 Maths Words & Symbols reference.",
+        "explanation": "Term / Position means a number in the sequence / where it sits (n)."
       },
       {
         "id": "q12",
@@ -1098,8 +1098,8 @@
           "A formula for the term in position n"
         ],
         "answer": "How to get from one term to the next",
-        "hint": "Use the Unit 9 Math Words & Symbols reference.",
-        "explanation": "Term-to-term rule means How to get from one term to the next."
+        "hint": "Use the Unit 9 Maths Words & Symbols reference.",
+        "explanation": "Term-to-term rule means how to get from one term to the next."
       }
     ]
   },
@@ -1111,7 +1111,7 @@
         "icon": "?",
         "skill": "Sequence",
         "title": "Quick Match: Sequence",
-        "description": "Practise sequence through four short challenges.",
+        "description": "Four short challenges on Sequence.",
         "type": "choice",
         "rounds": [
           {
@@ -1159,8 +1159,8 @@
               "How to find a term from its position"
             ],
             "answer": "An ordered list of numbers following a rule",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Sequence means An ordered list of numbers following a rule."
+            "clue": "Use the Unit 9 Maths Words & Symbols reference.",
+            "explanation": "Sequence means an ordered list of numbers following a rule."
           }
         ]
       },
@@ -1169,7 +1169,7 @@
         "icon": "★",
         "skill": "Term / Position",
         "title": "Concept Quest: Term / Position",
-        "description": "Practise term / position through four short challenges.",
+        "description": "Four short challenges on Term / Position.",
         "type": "choice",
         "rounds": [
           {
@@ -1217,8 +1217,8 @@
               "The constant step in an arithmetic sequence"
             ],
             "answer": "A number in the sequence / where it sits (n)",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Term / Position means A number in the sequence / where it sits (n)."
+            "clue": "Use the Unit 9 Maths Words & Symbols reference.",
+            "explanation": "Term / Position means a number in the sequence / where it sits (n)."
           }
         ]
       },
@@ -1227,7 +1227,7 @@
         "icon": "◫",
         "skill": "Term-to-term rule",
         "title": "Model Detective: Term-to-term rule",
-        "description": "Practise term-to-term rule through four short challenges.",
+        "description": "Four short challenges on Term-to-term rule.",
         "type": "choice",
         "rounds": [
           {
@@ -1275,8 +1275,8 @@
               "A formula for the term in position n"
             ],
             "answer": "How to get from one term to the next",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Term-to-term rule means How to get from one term to the next."
+            "clue": "Use the Unit 9 Maths Words & Symbols reference.",
+            "explanation": "Term-to-term rule means how to get from one term to the next."
           }
         ]
       },
@@ -1285,7 +1285,7 @@
         "icon": "→",
         "skill": "Position-to-term rule",
         "title": "Rule Runner: Position-to-term rule",
-        "description": "Practise position-to-term rule through four short challenges.",
+        "description": "Four short challenges on Position-to-term rule.",
         "type": "choice",
         "rounds": [
           {
@@ -1321,8 +1321,8 @@
               "How to find a term from its position"
             ],
             "answer": "An ordered list of numbers following a rule",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Sequence means An ordered list of numbers following a rule."
+            "clue": "Use the Unit 9 Maths Words & Symbols reference.",
+            "explanation": "Sequence means an ordered list of numbers following a rule."
           },
           {
             "prompt": "Find the next term: 4, 12, 20, 28, ___",
@@ -1343,7 +1343,7 @@
         "icon": "Σ",
         "skill": "Common difference",
         "title": "Vocabulary Vault: Common difference",
-        "description": "Practise common difference through four short challenges.",
+        "description": "Four short challenges on Common difference.",
         "type": "choice",
         "rounds": [
           {
@@ -1379,8 +1379,8 @@
               "The constant step in an arithmetic sequence"
             ],
             "answer": "A number in the sequence / where it sits (n)",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Term / Position means A number in the sequence / where it sits (n)."
+            "clue": "Use the Unit 9 Maths Words & Symbols reference.",
+            "explanation": "Term / Position means a number in the sequence / where it sits (n)."
           },
           {
             "prompt": "Which sequence is infinite?",
@@ -1401,7 +1401,7 @@
         "icon": "◇",
         "skill": "nth term",
         "title": "Challenge Cards: nth term",
-        "description": "Practise nth term through four short challenges.",
+        "description": "Four short challenges on nth term.",
         "type": "choice",
         "rounds": [
           {
@@ -1437,8 +1437,8 @@
               "A formula for the term in position n"
             ],
             "answer": "How to get from one term to the next",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Term-to-term rule means How to get from one term to the next."
+            "clue": "Use the Unit 9 Maths Words & Symbols reference.",
+            "explanation": "Term-to-term rule means how to get from one term to the next."
           },
           {
             "prompt": "What is the common difference of the arithmetic sequence 5, 9, 13, 17, …?",
@@ -1459,7 +1459,7 @@
         "icon": "⚡",
         "skill": "Function",
         "title": "Think Fast: Function",
-        "description": "Practise function through four short challenges.",
+        "description": "Four short challenges on Function.",
         "type": "choice",
         "rounds": [
           {
@@ -1483,8 +1483,8 @@
               "How to find a term from its position"
             ],
             "answer": "An ordered list of numbers following a rule",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Sequence means An ordered list of numbers following a rule."
+            "clue": "Use the Unit 9 Maths Words & Symbols reference.",
+            "explanation": "Sequence means an ordered list of numbers following a rule."
           },
           {
             "prompt": "Find the next term: 4, 12, 20, 28, ___",
@@ -1517,7 +1517,7 @@
         "icon": "☁",
         "skill": "Linear function",
         "title": "Explain It: Linear function",
-        "description": "Practise linear function through four short challenges.",
+        "description": "Four short challenges on Linear function.",
         "type": "choice",
         "rounds": [
           {
@@ -1541,8 +1541,8 @@
               "The constant step in an arithmetic sequence"
             ],
             "answer": "A number in the sequence / where it sits (n)",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Term / Position means A number in the sequence / where it sits (n)."
+            "clue": "Use the Unit 9 Maths Words & Symbols reference.",
+            "explanation": "Term / Position means a number in the sequence / where it sits (n)."
           },
           {
             "prompt": "Which sequence is infinite?",
@@ -1575,7 +1575,7 @@
         "icon": "⌂",
         "skill": "Sequence",
         "title": "Real-Life Round: Sequence",
-        "description": "Practise sequence through four short challenges.",
+        "description": "Four short challenges on Sequence.",
         "type": "choice",
         "rounds": [
           {
@@ -1599,8 +1599,8 @@
               "A formula for the term in position n"
             ],
             "answer": "How to get from one term to the next",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Term-to-term rule means How to get from one term to the next."
+            "clue": "Use the Unit 9 Maths Words & Symbols reference.",
+            "explanation": "Term-to-term rule means how to get from one term to the next."
           },
           {
             "prompt": "What is the common difference of the arithmetic sequence 5, 9, 13, 17, …?",
@@ -1633,7 +1633,7 @@
         "icon": "!",
         "skill": "Term / Position",
         "title": "Spot the Error: Term / Position",
-        "description": "Practise term / position through four short challenges.",
+        "description": "Four short challenges on Term / Position.",
         "type": "choice",
         "rounds": [
           {
@@ -1645,8 +1645,8 @@
               "How to find a term from its position"
             ],
             "answer": "An ordered list of numbers following a rule",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Sequence means An ordered list of numbers following a rule."
+            "clue": "Use the Unit 9 Maths Words & Symbols reference.",
+            "explanation": "Sequence means an ordered list of numbers following a rule."
           },
           {
             "prompt": "Find the next term: 4, 12, 20, 28, ___",
@@ -1691,7 +1691,7 @@
         "icon": "≡",
         "skill": "Term-to-term rule",
         "title": "Mastery Mix: Term-to-term rule",
-        "description": "Practise term-to-term rule through four short challenges.",
+        "description": "Four short challenges on Term-to-term rule.",
         "type": "choice",
         "rounds": [
           {
@@ -1703,8 +1703,8 @@
               "The constant step in an arithmetic sequence"
             ],
             "answer": "A number in the sequence / where it sits (n)",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Term / Position means A number in the sequence / where it sits (n)."
+            "clue": "Use the Unit 9 Maths Words & Symbols reference.",
+            "explanation": "Term / Position means a number in the sequence / where it sits (n)."
           },
           {
             "prompt": "Which sequence is infinite?",
@@ -1749,7 +1749,7 @@
         "icon": "T",
         "skill": "Position-to-term rule",
         "title": "Unit Champion: Position-to-term rule",
-        "description": "Practise position-to-term rule through four short challenges.",
+        "description": "Four short challenges on Position-to-term rule.",
         "type": "choice",
         "rounds": [
           {
@@ -1761,8 +1761,8 @@
               "A formula for the term in position n"
             ],
             "answer": "How to get from one term to the next",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Term-to-term rule means How to get from one term to the next."
+            "clue": "Use the Unit 9 Maths Words & Symbols reference.",
+            "explanation": "Term-to-term rule means how to get from one term to the next."
           },
           {
             "prompt": "What is the common difference of the arithmetic sequence 5, 9, 13, 17, …?",

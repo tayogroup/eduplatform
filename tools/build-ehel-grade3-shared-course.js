@@ -79,14 +79,20 @@ function sourcePath(unitNo, type) {
 }
 
 function normalizeType(type) {
-  const lower = String(type || "word").toLowerCase();
-  if (lower.includes("noun")) return "noun";
-  if (lower.includes("verb")) return "verb";
-  if (lower.includes("adjective")) return "adjective";
-  if (lower.includes("adverb")) return "adverb";
-  if (lower.includes("preposition")) return "preposition";
-  if (lower.includes("expression")) return "expression";
-  return lower.split(/\s*\/\s*/)[0] || "word";
+  // The source lists a dual-class word in the order the unit teaches it
+  // ("verb / noun" for present), so the FIRST listed class wins — and adverb
+  // is tested before verb: `includes("verb")` matched "adverb" and filed every
+  // adverb as a verb until 2026-08-17 (repair-ehel-english-dictionary-pos.js
+  // corrected the shipped dictionaries).
+  const first = String(type || "word").toLowerCase().split(/\s*\/\s*/)[0].replace(/\(.*?\)/g, "").trim();
+  if (first.includes("adverb")) return "adverb";
+  if (first.includes("noun")) return "noun";
+  if (first.includes("verb")) return "verb";
+  if (first.includes("adj")) return "adjective";
+  if (first.includes("preposition")) return "preposition";
+  if (first.includes("expression") || first.includes("greeting")) return "expression";
+  if (first.includes("position")) return "position";
+  return first || "word";
 }
 
 function partDefinition(type) {

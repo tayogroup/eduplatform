@@ -22,7 +22,7 @@ Downgraded: item 10 (marking guidance in `assignments[0].instructions`) — assi
 Still open, in order of impact:
 
 1. **Re-render the lectures.** The generator is fixed but every existing mp4/vtt was rendered by the old one — the "learner can" narration, the lowercase captions, the doubled welcomes and the ~20 stale-protagonist lectures are all still what learners get until `create-ehel-english-unit-lecture.py --all-missing --force` runs (ElevenLabs, ~1,500 chars per lecture, ~64 lectures) followed by `version-lecture-captions.js`. Grade 6 Units 3/6/8/9 need real reading titles first.
-2. Dictionary part-of-speech mislabels (`it` noun, `really`/`eagerly`/`firmly` verb, `soon` verb, `town` adjective, `present` noun) — these drive wrong Word Type Power keys; data.
+2. ~~Dictionary part-of-speech mislabels~~ **Fixed**: 34 entries corrected by `repair-ehel-english-dictionary-pos.js` (explicit table, ids untouched). Root cause was `normalizeType()` in the six grade builders testing `includes("verb")` before `"adverb"` and taking noun before verb for dual-class words — Grades 3–8 had no adverb category at all — and Grade 1 having no pronoun/article label. Builders now take the first-listed class with adverb tested first; Grade 1 gains `pronoun` and `article`. Games rebuilt (Word Type Power now keys "an adverb" for *eagerly*). Left alone and flagged: *honour* (Grade 3 noun in the unit's list, verb-phrased meaning) and noun-first dual words.
 3. Everything in sections 2 and 3 below (answer keys, wrong grammar rules, factual slips, audience) — hand edits.
 
 ---

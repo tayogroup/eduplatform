@@ -356,6 +356,25 @@ for (const gradeDir of grades) {
     // is checked, never its voice.
     if (unit.grownUpGuide && !unit.grownUpGuide.label) fail(label, "grownUpGuide has no label");
 
+    // unit.howToUse is the opposite: the unit's own instructions to the LEARNER,
+    // drawn at the top of the overview's "How this unit works" panel. Optional,
+    // but where present it is an array of non-empty strings in learner voice —
+    // there is no adult exemption, since it has no grown-up panel to hide in.
+    if (unit.unit?.howToUse !== undefined) {
+      const lines = unit.unit.howToUse;
+      if (!Array.isArray(lines) || !lines.length || lines.some((line) => typeof line !== "string" || !line.trim())) {
+        fail(label, "unit.howToUse must be a non-empty array of non-empty strings");
+      } else {
+        lines.forEach((line, i) => {
+          learnerChars += line.length;
+          if (MOJIBAKE.test(line)) fail(label, `unit.howToUse[${i}] has mojibake`);
+          if (PLACEHOLDER.test(line)) fail(label, `unit.howToUse[${i}] still has placeholder text`);
+          const adultHit = line.match(ADULT_ADDRESSED);
+          if (adultHit) fail(label, `unit.howToUse[${i}] is written to an adult (${JSON.stringify(adultHit[0])}) but the learner reads it`);
+        });
+      }
+    }
+
     // ── the renderer's own field expectations ───────────────────────────────
     // `section` groups the comprehension subtabs. Missing, the group renders as
     // one empty-labelled tab. A note rather than a failure: the values are a

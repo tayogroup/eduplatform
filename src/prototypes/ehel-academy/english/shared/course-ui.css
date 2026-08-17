@@ -447,6 +447,10 @@ body.focus-mode.gc-full .wc-tools { position: fixed; left: 0; right: 0; bottom: 
 .unit-guide-row.is-locked i, .unit-guide-row.is-locked svg { color: var(--muted); }
 .unit-guide-row.is-locked .unit-guide-mark { border-style: dashed; font-size: 11px; }
 .unit-guide-status { margin: 0 0 12px; }
+.unit-guide-subheading { margin: 0 0 8px; font-size: 15px; color: var(--teal-dark); }
+.unit-guide-howto { margin: 0 0 14px; padding: 12px 14px; list-style: none; display: grid; gap: 8px; border-radius: 8px; background: var(--gold-soft); }
+.unit-guide-howto li { display: grid; grid-template-columns: 18px 1fr; gap: 9px; align-items: start; font-size: 15px; line-height: 1.45; color: var(--ink); }
+.unit-guide-howto li i, .unit-guide-howto li svg { width: 18px; height: 18px; margin-top: 2px; color: var(--teal-dark); }
 .section-stack { display: grid; gap: 18px; }
 .lecture-layout { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(260px, .7fr); gap: 20px; }
 .video-shell { padding: 0; overflow: hidden; background: #0c2335; }

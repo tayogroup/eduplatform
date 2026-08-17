@@ -1454,6 +1454,9 @@ function renderOverview() {
   const nextUnitOpens = UNIT_GATE_ENABLED && unitNumber < CAPSTONE_UNIT && !isPrereqUnit;
   const unitGuide = shellCtx.unitGuide({
     isUnlocked: (id) => sectionUnlocked(id, { fromOverview: true }),
+    // Authored per unit, only where the unit's shape needs saying (unit.howToUse
+    // in the unit JSON); check-english-content.mjs holds it to learner voice.
+    howToUse: Array.isArray(course.unit.howToUse) ? course.unit.howToUse : [],
     hints: {
       ...SECTION_HINTS,
       ...(unitNumber === CAPSTONE_UNIT ? { lecture: CAPSTONE_LAUNCH_HINT } : {}),

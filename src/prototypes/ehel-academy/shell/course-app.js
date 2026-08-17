@@ -367,7 +367,12 @@ export function createCourseApp(config) {
   // `isUnlocked(id)` is the hook for a subject that walks its sections in order
   // (english's section chain); the default treats every section as open.
   // `hints` is an optional {id: text} map of one-line "what to do here" notes.
-  function unitGuide({ heading = "How this unit works", intro, rule, isUnlocked = () => true, hints = {}, startLabel } = {}) {
+  // `howToUse` is the unit's OWN instructions — a short array of learner-voice
+  // sentences authored on the unit (`unit.howToUse`) for the few units whose
+  // shape the generic checklist cannot explain: a capstone with no video, a
+  // reading list where two texts are for listening. Most units carry none, and
+  // the panel is complete without it.
+  function unitGuide({ heading = "How this unit works", intro, rule, isUnlocked = () => true, hints = {}, howToUse = [], startLabel } = {}) {
     const rows = navSections().filter(([id]) => !nonCountable.includes(id) && id !== "overview");
     const done = rows.filter(([id]) => isSectionDone(id)).length;
     const next = rows.find(([id]) => !isSectionDone(id) && isUnlocked(id)) || null;
@@ -399,6 +404,7 @@ export function createCourseApp(config) {
     return `<section class="panel unit-guide" aria-labelledby="unit-guide-heading">
       <h2 id="unit-guide-heading">${escapeHtml(heading)}</h2>
       <p>${escapeHtml(intro || "Work through the sections below, one at a time. Each one gets a tick when it is finished.")}${rule ? ` ${escapeHtml(rule)}` : ""}</p>
+      ${howToUse.length ? `<h3 class="unit-guide-subheading">Just for this unit</h3><ul class="unit-guide-howto">${howToUse.map((line) => `<li>${icon("info")}<span>${escapeHtml(line)}</span></li>`).join("")}</ul>` : ""}
       <ol class="unit-guide-list">${items}</ol>
       <p class="unit-guide-status"><strong>${escapeHtml(status)}</strong></p>
       ${button}

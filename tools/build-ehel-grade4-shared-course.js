@@ -34,6 +34,22 @@ const visualMap = {
   10: ["capstone-my-english-world.png", "A Grade 4 learner presenting a completed English portfolio"],
 };
 
+
+// A vocabulary sentence starter is the placeholder of the "write your own
+// sentence" box. "The <word>" reads for nouns and adjectives and for nothing
+// else ("The persuade", "The eagerly") — 154 such starters shipped before
+// 2026-08-17 and were repaired in place by repair-ehel-english-sentence-starters.js;
+// this keeps a rebuild from writing them again.
+function starterFor(word) {
+  const type = String(word.type || "").toLowerCase();
+  const text = String(word.word || "");
+  if (/ly$/i.test(text) && !/^(apply|rely|supply|reply|fly|imply|comply|multiply)$/i.test(text)) return `She spoke ${text}`;
+  if (type.startsWith("verb")) return /s$/.test(text) && !/ss$/.test(text) ? `It ${text}` : `I can ${text}`;
+  if (type.startsWith("adverb")) return `She spoke ${text}`;
+  if (type.startsWith("preposition")) return `The cat sat ${text}`;
+  return `The ${text}`;
+}
+
 function slug(value) {
   return String(value).toLowerCase().normalize("NFKD").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 }
@@ -265,7 +281,7 @@ function buildRegularUnit(unitNo, dictionaryEntries) {
         status: "approved",
       });
       const practiceSentences = [word.example, `The word ${word.word} belongs to our ${group.title.toLowerCase()} vocabulary.`, `I can explain ${word.word} in my own words.`, `I can connect ${word.word} to this unit's texts.`, `I can use ${word.word} in a clear Grade 4 sentence.`];
-      dictionaryLinks.push({ vocabularyId, dictionaryEntryId, senseId: `${dictionaryEntryId}-sense-01`, gradeId: "g04", termId: term.id, unitId: id, groupId, groupTitle: group.title, sequence: wordIndex + 1, childMeaning: word.meaning, exampleSentence: word.example, practiceSentences, sentenceAudio: practiceSentences.map((_, sentenceIndex) => pendingAudio(`./unit-${unitNo}/media/audio/vocabulary/${vocabularyId}-sentence-${sentenceIndex + 1}.mp3`)), sentenceStarter: `The ${word.word}`, spellingPractice: word.word.split("").join(" - "), aiTutorPrompt: `Ask me to define '${word.word}', use it in a sentence, and connect it to ${title}.`, reviewStatus: "Approved v1.2" });
+      dictionaryLinks.push({ vocabularyId, dictionaryEntryId, senseId: `${dictionaryEntryId}-sense-01`, gradeId: "g04", termId: term.id, unitId: id, groupId, groupTitle: group.title, sequence: wordIndex + 1, childMeaning: word.meaning, exampleSentence: word.example, practiceSentences, sentenceAudio: practiceSentences.map((_, sentenceIndex) => pendingAudio(`./unit-${unitNo}/media/audio/vocabulary/${vocabularyId}-sentence-${sentenceIndex + 1}.mp3`)), sentenceStarter: starterFor(word), spellingPractice: word.word.split("").join(" - "), aiTutorPrompt: `Ask me to define '${word.word}', use it in a sentence, and connect it to ${title}.`, reviewStatus: "Approved v1.2" });
       vocabularyIds.push(vocabularyId);
     });
     vocabularyGroups.push({ id: groupId, number: groupIndex + 1, title: group.title, vocabularyIds });

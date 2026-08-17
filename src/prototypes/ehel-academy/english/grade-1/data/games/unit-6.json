@@ -95,19 +95,6 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "book.",
-            "my",
-            "read",
-            "me",
-            "help",
-            "eyes",
-            "My"
-          ],
-          "answer": "My eyes help me read my book."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
             "eating.",
             "before",
             "hands",
@@ -116,6 +103,18 @@
             "I"
           ],
           "answer": "I wash my hands before eating."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "now.",
+            "short",
+            "very",
+            "is",
+            "pencil",
+            "My"
+          ],
+          "answer": "My pencil is very short now."
         }
       ]
     },
@@ -191,7 +190,7 @@
           "explanation": "Review the unit text evidence: 'Fresh fish! Fresh fish!'"
         },
         {
-          "prompt": "Why did Selma say 'Alhamdulillah' at the end?",
+          "prompt": "Why did Selma say 'thank you' at the end?",
           "choices": [
             "I can see with my eyes.",
             "To give thanks for their wonderful senses",
@@ -212,7 +211,7 @@
       "rounds": [
         {
           "prompt": "Speaking 1 - Listen and point",
-          "target": "Point to the body part an adult names, then say the sentence back."
+          "target": "Point to the body part an adult names if one is nearby, or that the audio names, then say the sentence back."
         },
         {
           "prompt": "Speaking 3 - Ask and answer",
@@ -235,39 +234,39 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "quiet.",
-            "and",
-            "nice",
-            "is",
-            "library",
-            "The"
-          ],
-          "answer": "The library is nice and quiet."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "flat.",
-            "very",
-            "is",
-            "top",
-            "table",
-            "The"
-          ],
-          "answer": "The table top is very flat."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "car.",
+            "hall.",
             "the",
-            "than",
-            "louder",
-            "is",
-            "tractor",
-            "The"
+            "from",
+            "bell",
+            "the",
+            "hear",
+            "I"
           ],
-          "answer": "The tractor is louder than the car."
+          "answer": "I hear the bell from the hall."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "soft.",
+            "and",
+            "warm",
+            "is",
+            "blanket",
+            "My"
+          ],
+          "answer": "My blanket is warm and soft."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "long.",
+            "and",
+            "warm",
+            "is",
+            "scarf",
+            "My"
+          ],
+          "answer": "My scarf is warm and long."
         }
       ]
     },
@@ -327,7 +326,7 @@
             "Verb"
           ],
           "answer": "Adjective",
-          "explanation": "cold is used as a adjective in this dictionary sense."
+          "explanation": "cold is used as an adjective in this dictionary sense."
         },
         {
           "prompt": "What type of word is 'sweeter'?",
@@ -337,7 +336,7 @@
             "Adjective"
           ],
           "answer": "Adjective",
-          "explanation": "sweeter is used as a adjective in this dictionary sense."
+          "explanation": "sweeter is used as an adjective in this dictionary sense."
         },
         {
           "prompt": "What type of word is 'nose'?",

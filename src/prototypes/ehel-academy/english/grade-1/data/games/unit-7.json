@@ -95,18 +95,6 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "clouds.",
-            "the",
-            "above",
-            "flies",
-            "plane",
-            "The"
-          ],
-          "answer": "The plane flies above the clouds."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
             "school.",
             "to",
             "us",
@@ -115,6 +103,17 @@
             "Dad"
           ],
           "answer": "Dad will drive us to school."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "slow.",
+            "very",
+            "is",
+            "tractor",
+            "The"
+          ],
+          "answer": "The tractor is very slow."
         }
       ]
     },
@@ -211,11 +210,11 @@
       "rounds": [
         {
           "prompt": "Speaking 1 - Listen and point",
-          "target": "Point to transport pictures as an adult names them, then say your own."
+          "target": "Point to transport pictures as an adult names them if one is nearby, or as the audio names them, then say your own."
         },
         {
           "prompt": "Speaking 3 - Ask and answer",
-          "target": "and answer about a busy street picture."
+          "target": "Ask and answer about a busy street picture."
         },
         {
           "prompt": "Speaking 5 - Role-play",
@@ -234,36 +233,39 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "seat.",
-            "your",
+            "school.",
+            "our",
+            "outside",
+            "stops",
+            "bus",
+            "The"
+          ],
+          "answer": "The bus stops outside our school."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "high.",
+            "very",
+            "fly",
+            "can",
+            "kite",
+            "My"
+          ],
+          "answer": "My kite can fly very high."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "road.",
+            "our",
             "on",
-            "down",
-            "sit",
-            "Please"
-          ],
-          "answer": "Please sit down on your seat."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "fast.",
-            "very",
-            "is",
-            "train",
+            "stop",
+            "will",
+            "bus",
             "The"
           ],
-          "answer": "The train is very fast."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "long.",
-            "very",
-            "is",
-            "train",
-            "The"
-          ],
-          "answer": "The train is very long."
+          "answer": "The bus will stop on our road."
         }
       ]
     },
@@ -323,7 +325,7 @@
             "Verb"
           ],
           "answer": "Adjective",
-          "explanation": "town is used as a adjective in this dictionary sense."
+          "explanation": "town is used as an adjective in this dictionary sense."
         },
         {
           "prompt": "What type of word is 'red'?",
@@ -333,7 +335,7 @@
             "Adjective"
           ],
           "answer": "Adjective",
-          "explanation": "red is used as a adjective in this dictionary sense."
+          "explanation": "red is used as an adjective in this dictionary sense."
         },
         {
           "prompt": "What type of word is 'seat'?",

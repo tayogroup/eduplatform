@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -49,6 +50,107 @@ def clean(value: str, limit: int = 320) -> str:
     return text[:limit].rsplit(" ", 1)[0] + "..." if len(text) > limit else text
 
 
+# --- Narration text helpers ---------------------------------------------------
+#
+# The lecture is SPOKEN (ElevenLabs) and captioned from the same string, so a
+# template seam is heard as well as read. The 2026-08-17 review of all 64
+# rendered lectures found five seams, each below with the line that caused it:
+#
+#   "you will be able to learner can recognise…"  outcomes glued on verbatim
+#   "you will also name…", "(“i see with my eyes”)", "in english"
+#                                                   .lower() over the whole join
+#   "Welcome to Grade 4 English, Unit 3… Welcome to Unit 3!"
+#                                                   overview already opens with a welcome (35 units)
+#   "…“i go to school by ___.”."  /  "…Conjunctions?."
+#                                                   ". " appended after a closing quote or "?"
+#   "For example, compare these two sentences:"  → nothing
+#                                                   clean() cuts at a WORD boundary
+#
+# Nothing here rewrites content — every function only decides how a unit's own
+# text is joined into a sentence.
+
+_TERMINAL = re.compile(r'[.!?…]+["”’\')\]]*$')
+# Outcome statements are written in several voices across the grades. All of
+# these must read as a bare verb phrase after "you will be able to":
+#   "Learner can recognise…"  "Learners will be able to…"  "I can…"
+#   "You will…"  "Be able to…"  "The learner will…"
+_OUTCOME_SUBJECT = re.compile(
+    r"^(?:(?:the\s+)?learners?|students?|pupils?|children|you|i)\s+"
+    r"(?:can|will(?:\s+be\s+able\s+to)?|are\s+able\s+to|am\s+able\s+to|is\s+able\s+to|should\s+be\s+able\s+to)\s+"
+    r"|^be\s+able\s+to\s+",
+    re.I,
+)
+# A first word that must keep its capital when the phrase is spliced mid-sentence.
+_KEEP_CAPITAL = re.compile(r"^(?:I|I'[a-z]+|English|Grade|Unit|Cambridge|Somali|Arabic|Year)\b")
+# Any opening "Welcome…" sentence — "Welcome to Unit 3!", "Welcome to your first
+# unit of Year 2 English.", "Welcome back to…" — the template says its own.
+_LEADING_WELCOME = re.compile(r"^\s*Welcome\b[^.!?]*[.!?]+\s*", re.I)
+
+
+def outcome_phrase(value: str) -> str:
+    """'Learner can name the five senses.' -> 'name the five senses'
+
+    Strips the subject+modal an outcome statement carries, drops the final
+    stop so the phrase can be spliced, and lowercases ONLY the first letter —
+    and not even that when the first word is a proper noun or "I".
+    """
+    text = " ".join(str(value or "").replace("--", "-").split())
+    text = _OUTCOME_SUBJECT.sub("", text, count=1)
+    text = re.sub(r"[.\s]+$", "", text)
+    if text and not _KEEP_CAPITAL.match(text):
+        text = text[0].lower() + text[1:]
+    return text
+
+
+def sentence(value: str) -> str:
+    """Give a phrase exactly one terminal stop.
+
+    Leaves a phrase alone when it already ends in . ! ? … — including when
+    that stop sits inside a closing quote or bracket ('…by ___.”'), which is
+    what turned into '.”.' before.
+    """
+    text = " ".join(str(value or "").split())
+    if not text or _TERMINAL.search(text):
+        return text
+    return text + "."
+
+
+def clean_narration(value: str, limit: int) -> str:
+    """Trim spoken text to `limit` characters at a SENTENCE boundary.
+
+    clean() cuts at a word and appends '...', which the voice reads as a
+    trailing-off — fine on a slide bullet, wrong for narration ("For example,
+    compare these two sentences:" and then nothing). Here whole sentences are
+    kept while they fit; only when the very first sentence is longer than the
+    limit does it fall back to the word cut.
+    """
+    text = " ".join(str(value or "").replace("--", "-").split())
+    if len(text) <= limit:
+        return text
+    kept = ""
+    for match in re.finditer(r'.+?[.!?…]+["”’\')\]]*(?:\s+|$)', text, re.S):
+        candidate = (kept + match.group()).strip()
+        if len(candidate) > limit:
+            break
+        kept = candidate
+    return kept if kept else clean(text, limit)
+
+
+def overview_narration(overview: str, limit: int) -> str:
+    """The overview, minus a leading 'Welcome to Unit N!' the template already says."""
+    return clean_narration(_LEADING_WELCOME.sub("", str(overview or ""), count=1), limit)
+
+
+def join_outcomes(phrases: list[str]) -> str:
+    phrases = [p for p in phrases if p]
+    if not phrases:
+        return "Keep this unit's goals in mind as you work."
+    parts = [sentence("By the end of this unit, you will be able to " + phrases[0])]
+    parts.extend(sentence("You will also " + p) for p in phrases[1:])
+    parts.append("Keep these goals in mind as you work.")
+    return " ".join(parts)
+
+
 def wrap(draw: ImageDraw.ImageDraw, text: str, face: ImageFont.ImageFont, width: int) -> list[str]:
     words = text.split()
     lines: list[str] = []
@@ -73,27 +175,43 @@ def resolve_asset(grade_root: Path, value: str) -> Path:
 def build_slides(unit: dict, dictionary: dict) -> list[dict]:
     entries = {item["dictionaryEntryId"]: item for item in dictionary["entries"]}
     words = [entries[link["dictionaryEntryId"]]["displayWord"] for link in unit["dictionaryLinks"][:6] if link["dictionaryEntryId"] in entries]
-    outcome_narration = [clean(item["learningOutcome"], 520).rstrip(". ") for item in unit["outcomes"][:3]]
-    outcomes = [clean(item, 150) for item in outcome_narration]
+    # Spoken form: a bare verb phrase per outcome ("name the five senses"), so
+    # it can follow "you will be able to". The slide bullet keeps the outcome
+    # as written, capital and all — it is read, not spliced.
+    outcome_phrases = [outcome_phrase(clean_narration(item["learningOutcome"], 520)) for item in unit["outcomes"][:3]]
+    outcomes = [clean(item["learningOutcome"], 150) for item in unit["outcomes"][:3]]
     reading_titles = [item["title"] for item in unit["readings"][:2]]
+    # A placeholder title is narrated verbatim ("The reading sequence includes
+    # Amazing Arts: source text 1 and Amazing Arts: source text 2") — 36 of the
+    # 64 rendered lectures said exactly that. Refuse rather than bill for it.
+    placeholders = [t for t in reading_titles if re.search(r"\bsource text \d\b", t, re.I)]
+    if placeholders:
+        raise SystemExit(
+            f"{unit['grade']['label']} Unit {unit['unit']['unitNo']}: "
+            f"reading title(s) are placeholders {placeholders!r} — name the readings before rendering a lecture."
+        )
     grammar = unit["grammar"][0]
     speaking = unit["speaking"][0]
     writing = unit["writing"][0]
     title = unit["unit"]["unitTitle"]
-    overview = clean(unit["unit"]["unitOverview"], 760)
+    overview = overview_narration(unit["unit"]["unitOverview"], 760)
 
     return [
         {
             "kicker": f"{unit['grade']['label'].upper()} ENGLISH  |  UNIT {unit['unit']['unitNo']}",
             "title": title,
             "bullets": ["Listen for the big ideas", "Preview the learning journey", "Prepare to read, discuss and write"],
-            "narration": f"Welcome to {unit['grade']['label']} English, Unit {unit['unit']['unitNo']}: {title}. {overview} In this short lecture, preview the key ideas and prepare for the independent lesson.",
+            "narration": " ".join(filter(None, [
+                sentence(f"Welcome to {unit['grade']['label']} English, Unit {unit['unit']['unitNo']}: {title}"),
+                sentence(overview),
+                "In this short lecture, preview the key ideas and prepare for the independent lesson.",
+            ])),
         },
         {
             "kicker": "LEARNING OUTCOMES",
             "title": "What you will achieve",
             "bullets": outcomes,
-            "narration": "By the end of this unit, you will be able to " + ". You will also ".join(outcome_narration).lower() + ". Keep these goals in mind as you work.",
+            "narration": join_outcomes(outcome_phrases),
         },
         {
             "kicker": "KEY VOCABULARY",
@@ -111,13 +229,20 @@ def build_slides(unit: dict, dictionary: dict) -> list[dict]:
             "kicker": "LANGUAGE FOCUS",
             "title": grammar["title"],
             "bullets": [clean(grammar["explanation"], 155), "Notice the structure", "Apply it in connected paragraphs"],
-            "narration": f"The first language focus is {grammar['title']}. {clean(grammar['explanation'], 500)} Notice the structure in the model examples, then apply it deliberately in connected sentences and paragraphs.",
+            "narration": " ".join(filter(None, [
+                sentence(f"The first language focus is {grammar['title']}"),
+                sentence(clean_narration(grammar["explanation"], 500)),
+                "Notice the structure in the model examples, then apply it deliberately in connected sentences and paragraphs.",
+            ])),
         },
         {
             "kicker": "SPEAKING AND WRITING",
             "title": "Use English for a real purpose",
             "bullets": [speaking["title"], writing["title"] or "Writing and revision", "Explain, support and improve your ideas"],
-            "narration": f"In speaking, you will complete {speaking['title']}. Organise your ideas, use evidence and respond clearly to questions. In writing, you will plan, draft, check and revise. Use the success criteria before submitting your work.",
+            "narration": " ".join([
+                sentence(f"In speaking, you will complete {speaking['title']}"),
+                "Organise your ideas, use evidence and respond clearly to questions. In writing, you will plan, draft, check and revise. Use the success criteria before submitting your work.",
+            ]),
         },
         {
             "kicker": "YOUR LEARNING PATH",

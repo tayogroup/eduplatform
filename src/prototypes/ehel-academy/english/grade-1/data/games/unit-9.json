@@ -20,20 +20,20 @@
           "choices": [
             "shop",
             "school",
-            "park"
+            "library"
           ],
           "answer": "shop",
           "explanation": "shop: A place in town where we buy food and things."
         },
         {
-          "prompt": "Which word means: The person who sells you things inside a shop.",
+          "prompt": "Which word means: A person who helps you get better when you are ill.",
           "choices": [
             "shop",
             "school",
-            "shopkeeper"
+            "doctor"
           ],
-          "answer": "shopkeeper",
-          "explanation": "shopkeeper: The person who sells you things inside a shop."
+          "answer": "doctor",
+          "explanation": "doctor: A person who helps you get better when you are ill."
         },
         {
           "prompt": "Which word means: To start moving, like when the light turns green.",
@@ -62,8 +62,8 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Someone you like to play with and help every day.",
-          "answer": "friend"
+          "clue": "The person who sells you things inside a shop.",
+          "answer": "shopkeeper"
         },
         {
           "prompt": "Build the word that matches the clue.",
@@ -96,18 +96,6 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "park.",
-            "the",
-            "in",
-            "football",
-            "play",
-            "We"
-          ],
-          "answer": "We play football in the park."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
             "change.",
             "his",
             "Sami",
@@ -116,6 +104,17 @@
             "The"
           ],
           "answer": "The shopkeeper gives Sami his change."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "stop.",
+            "means",
+            "light",
+            "red",
+            "The"
+          ],
+          "answer": "The red light means stop."
         }
       ]
     },
@@ -212,11 +211,11 @@
       "rounds": [
         {
           "prompt": "Speaking 1 - Listen and point",
-          "target": "Point to town places as an adult names them, then name them on your own."
+          "target": "Point to town places as an adult names them if one is nearby, or as the audio names them, then name them on your own."
         },
         {
           "prompt": "Speaking 3 - Ask and answer",
-          "target": "and answer about the people who help your town."
+          "target": "Ask and answer about the people who help your town."
         },
         {
           "prompt": "Speaking 5 - Role-play",
@@ -235,37 +234,39 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "house.",
-            "our",
-            "near",
-            "is",
-            "park",
-            "The"
-          ],
-          "answer": "The park is near our house."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "go.",
-            "can",
-            "we",
-            "means",
-            "Green"
-          ],
-          "answer": "Green means we can go."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "small.",
-            "is",
-            "us",
-            "near",
+            "market.",
+            "the",
+            "at",
             "shop",
-            "The"
+            "people",
+            "Many"
           ],
-          "answer": "The shop near us is small."
+          "answer": "Many people shop at the market."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "helps.",
+            "and",
+            "shares",
+            "friend",
+            "good",
+            "A"
+          ],
+          "answer": "A good friend shares and helps."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "move.",
+            "cars",
+            "the",
+            "lets",
+            "light",
+            "green",
+            "A"
+          ],
+          "answer": "A green light lets the cars move."
         }
       ]
     },
@@ -288,19 +289,19 @@
           "explanation": "neighbour: A person who lives in the house next to yours."
         },
         {
-          "prompt": "What does 'yellow' mean in this unit?",
+          "prompt": "What does 'green' mean in this unit?",
           "choices": [
             "A place in town where we buy food and things.",
             "The place where children come to learn and play together.",
-            "The bright colour of lemons and the middle traffic light."
+            "The colour of grass, and of the light meaning go."
           ],
-          "answer": "The bright colour of lemons and the middle traffic light.",
-          "explanation": "yellow: The bright colour of lemons and the middle traffic light."
+          "answer": "The colour of grass, and of the light meaning go.",
+          "explanation": "green: The colour of grass, and of the light meaning go."
         },
         {
           "prompt": "What does 'school' mean in this unit?",
           "choices": [
-            "A green place in town with grass, trees and swings.",
+            "A quiet building where you can read books and borrow them to take home.",
             "The place where children come to learn and play together.",
             "A place in town where we buy food and things."
           ],
@@ -318,14 +319,14 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'next to'?",
+          "prompt": "What type of word is 'far'?",
           "choices": [
             "Adjective",
             "Noun",
             "Verb"
           ],
           "answer": "Adjective",
-          "explanation": "next to is used as a adjective in this dictionary sense."
+          "explanation": "far is used as an adjective in this dictionary sense."
         },
         {
           "prompt": "What type of word is 'quiet'?",
@@ -335,17 +336,17 @@
             "Adjective"
           ],
           "answer": "Adjective",
-          "explanation": "quiet is used as a adjective in this dictionary sense."
+          "explanation": "quiet is used as an adjective in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'teacher'?",
+          "prompt": "What type of word is 'bus stop'?",
           "choices": [
             "Adjective",
             "Noun",
             "Verb"
           ],
           "answer": "Noun",
-          "explanation": "teacher is used as a noun in this dictionary sense."
+          "explanation": "bus stop is used as a noun in this dictionary sense."
         }
       ]
     },
@@ -365,12 +366,12 @@
               "The place where children come to learn and play together."
             ],
             [
-              "road",
-              "A long hard path where cars and buses drive."
+              "park",
+              "A green place in town with grass, trees and swings."
             ],
             [
-              "doctor",
-              "A person who helps you get better when you are ill."
+              "teacher",
+              "A person who helps children learn new things at school."
             ]
           ]
         },
@@ -378,12 +379,12 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "neighbour",
-              "A person who lives in the house next to yours."
+              "friend",
+              "Someone you like to play with and help every day."
             ],
             [
-              "near",
-              "Close to something, only a short walk away."
+              "there",
+              "This word means in that place, away from you."
             ],
             [
               "stop",

@@ -94,17 +94,6 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "playground.",
-            "the",
-            "in",
-            "run",
-            "I"
-          ],
-          "answer": "I run in the playground."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
             "car.",
             "toy",
             "my",
@@ -113,6 +102,18 @@
             "I"
           ],
           "answer": "I wind up my toy car."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "table.",
+            "the",
+            "on",
+            "is",
+            "book",
+            "The"
+          ],
+          "answer": "The book is on the table."
         }
       ]
     },
@@ -209,7 +210,7 @@
       "rounds": [
         {
           "prompt": "Speaking 1 - Listen and point",
-          "target": "Copy an adult's action, then say what you did."
+          "target": "Copy an adult's action if one is nearby, or copy the action from the audio, then say what you did."
         },
         {
           "prompt": "Speaking 3 - Ask and answer",
@@ -232,39 +233,37 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "hand.",
-            "my",
-            "with",
-            "shoulder",
-            "my",
-            "touch",
-            "I"
+            "high.",
+            "very",
+            "bounce",
+            "can",
+            "ball",
+            "The"
           ],
-          "answer": "I touch my shoulder with my hand."
+          "answer": "The ball can bounce very high."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "fingers.",
+            "five",
+            "has",
+            "hand",
+            "My"
+          ],
+          "answer": "My hand has five fingers."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
             "table.",
             "the",
-            "on",
-            "is",
-            "book",
+            "under",
+            "rolls",
+            "ball",
             "The"
           ],
-          "answer": "The book is on the table."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "pond.",
-            "the",
-            "on",
-            "swims",
-            "duck",
-            "The"
-          ],
-          "answer": "The duck swims on the pond."
+          "answer": "The ball rolls under the table."
         }
       ]
     },

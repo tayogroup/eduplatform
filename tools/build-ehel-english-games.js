@@ -11,6 +11,23 @@ function clean(value, limit = 240) {
   return `${clipped.slice(0, clipped.lastIndexOf(" "))}...`;
 }
 
+// "an adjective", "an adverb", "an expression" — the 2026-08-17 review found
+// "is used as a adjective" in 40 of the 81 game files.
+function article(word) {
+  return /^[aeiou]/i.test(String(word || "").trim()) ? "an" : "a";
+}
+
+// A choice the learner must pick has to be complete: an answer clipped to
+// "…put them in the toy..." cannot be recognised as correct. Reading Detective
+// therefore only admits comprehension items whose answer fits whole; the
+// generator used to clip 167 of them across 28 units. 180 characters admits
+// every unit's minimum of three (measured 2026-08-17); anything longer is left
+// out rather than cut.
+const READING_CHOICE_MAX = 180;
+function fitsWhole(value, limit) {
+  return String(value || "").replace(/\s+/g, " ").trim().length <= limit;
+}
+
 function sample(items, count, offset = 0) {
   if (!items.length) return [];
   const output = [];
@@ -80,15 +97,18 @@ function sentenceRound(sentence, prompt) {
 }
 
 function speakingTarget(task, fallback) {
-  const text = clean(task.instructionsAndModelLines, 260)
-    .replace(/^(get ready to say|say|ask|answer|practise|practice):?\s*/i, "")
-    .replace(/[“”]/g, "\"");
-  const quoted = [...text.matchAll(/["“]([^"”\n]{4,150})["”]/g)]
+  const source = clean(task.instructionsAndModelLines, 260).replace(/[“”]/g, "\"");
+  // A quoted model line is the target ("Say: \"My name is Amal.\"").
+  const quoted = [...source.matchAll(/["“]([^"”\n]{4,150})["”]/g)]
     .map((match) => clean(match[1], 145))
     .find((candidate) => candidate.split(/\s+/).length >= 4 && /[.!?]$/.test(candidate));
   if (quoted) return quoted;
-  const firstSentence = text.match(/^(.{4,145}?[.!?])(?:\s|$)/);
-  const candidate = clean(firstSentence ? firstSentence[1] : text, 145);
+  // No quote: fall back to the first WHOLE sentence of the instruction. The
+  // leading verb used to be stripped here too, which turned "Say the /a/ sound
+  // five times." into "the /a/ sound five times." and "Ask and answer about…"
+  // into "and answer about…" — a target that starts lowercase with no verb.
+  const firstSentence = source.match(/^(.{4,145}?[.!?])(?:\s|$)/);
+  const candidate = clean(firstSentence ? firstSentence[1] : source, 145);
   if (/^(choose|create|discuss|find|in small|if you|look|plan|prepare|read|record|retell|select|take|use|work|write)/i.test(candidate)) {
     return clean(fallback, 145);
   }
@@ -110,16 +130,19 @@ function buildPack(grade, unit, dictionary) {
     && /\?\s*$/.test(item.question)
     && item.correctAnswer
     && !/answers will vary|depends on|accept an answer/i.test(item.correctAnswer)
+    && fitsWhole(item.correctAnswer, READING_CHOICE_MAX)
   ));
+  // Distractors drawn from the same pool must be whole for the same reason —
+  // and a fragment beside a complete answer also gives the answer away.
   const answerPool = [
-    ...comprehension.map((item) => clean(item.correctAnswer, 130)),
-    ...unit.quizzes.map((item) => clean(item.correctAnswer, 130)),
-    ...vocabulary.map((item) => clean(item.link.childMeaning || item.entry.canonicalMeaning, 130)),
+    ...comprehension.map((item) => clean(item.correctAnswer, READING_CHOICE_MAX)),
+    ...unit.quizzes.map((item) => item.correctAnswer).filter((text) => fitsWhole(text, READING_CHOICE_MAX)).map((text) => clean(text, READING_CHOICE_MAX)),
+    ...vocabulary.map((item) => item.link.childMeaning || item.entry.canonicalMeaning).filter((text) => fitsWhole(text, READING_CHOICE_MAX)).map((text) => clean(text, READING_CHOICE_MAX)),
   ];
   const readingRounds = comprehension.length >= 3
     ? sample(comprehension, 3).map((item, index) => {
-      const distractors = sample(comprehension.filter((other) => other.questionId !== item.questionId), 2, index + 1).map((other) => clean(other.correctAnswer, 130));
-      const answer = clean(item.correctAnswer, 130);
+      const distractors = sample(comprehension.filter((other) => other.questionId !== item.questionId), 2, index + 1).map((other) => clean(other.correctAnswer, READING_CHOICE_MAX));
+      const answer = clean(item.correctAnswer, READING_CHOICE_MAX);
       return { prompt: clean(item.question, 180), choices: choices(answer, distractors, index, answerPool), answer, explanation: `Review the unit text evidence: ${answer}` };
     })
     : quizRounds(unit, 2);
@@ -190,7 +213,7 @@ function buildPack(grade, unit, dictionary) {
         description: "Identify how each vocabulary word works in English.",
         rounds: sample(selected, 3, 7).map((item, index) => {
           const answer = item.entry.partOfSpeech.charAt(0).toUpperCase() + item.entry.partOfSpeech.slice(1);
-          return { prompt: `What type of word is '${item.entry.displayWord}'?`, choices: choices(answer, parts, index), answer, explanation: `${item.entry.displayWord} is used as a ${item.entry.partOfSpeech} in this dictionary sense.` };
+          return { prompt: `What type of word is '${item.entry.displayWord}'?`, choices: choices(answer, parts, index), answer, explanation: `${item.entry.displayWord} is used as ${article(item.entry.partOfSpeech)} ${item.entry.partOfSpeech} in this dictionary sense.` };
         }),
       },
       {

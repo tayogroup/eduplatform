@@ -96,18 +96,6 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "night.",
-            "every",
-            "book",
-            "a",
-            "read",
-            "I"
-          ],
-          "answer": "I read a book every night."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
             "red.",
             "bright",
             "is",
@@ -115,6 +103,17 @@
             "My"
           ],
           "answer": "My jumper is bright red."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "read.",
+            "me",
+            "helps",
+            "teacher",
+            "My"
+          ],
+          "answer": "My teacher helps me read."
         }
       ]
     },
@@ -211,11 +210,11 @@
       "rounds": [
         {
           "prompt": "Speaking 1 - Listen and point",
-          "target": "Point to school things as an adult names them, then name them yourself."
+          "target": "Point to school things as an adult names them if one is nearby, or as the audio names them, then name them yourself."
         },
         {
           "prompt": "Speaking 3 - Ask and answer",
-          "target": "I read a book every night."
+          "target": "My jumper is bright red."
         },
         {
           "prompt": "Speaking 5 - Role-play",
@@ -234,35 +233,37 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "purple.",
-            "dark",
+            "table.",
+            "the",
+            "on",
+            "sit",
+            "books",
+            "Our"
+          ],
+          "answer": "Our books sit on the table."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "red.",
+            "and",
+            "shiny",
             "is",
-            "scarf",
-            "My"
+            "apple",
+            "The"
           ],
-          "answer": "My scarf is dark purple."
+          "answer": "The apple is shiny and red."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "read.",
-            "me",
-            "helps",
+            "morning.",
+            "every",
+            "smiles",
             "teacher",
-            "My"
+            "Our"
           ],
-          "answer": "My teacher helps me read."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "carefully.",
-            "name",
-            "my",
-            "write",
-            "I"
-          ],
-          "answer": "I write my name carefully."
+          "answer": "Our teacher smiles every morning."
         }
       ]
     },
@@ -322,7 +323,7 @@
             "Verb"
           ],
           "answer": "Adjective",
-          "explanation": "white is used as a adjective in this dictionary sense."
+          "explanation": "white is used as an adjective in this dictionary sense."
         },
         {
           "prompt": "What type of word is 'sing'?",

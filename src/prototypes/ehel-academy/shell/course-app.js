@@ -9,7 +9,8 @@
 //              progressDefaults, gradeDefaults, courseKey, mediaSubject,
 //              ttsPurpose, sections, nonCountable, gradeSections, renderers,
 //              load(ctx), onReady(ctx), extendSummary?(progress, base),
-//              staticVoiceUrl?(text), isSectionDone?(id), stageDir?(stage) }
+//              staticVoiceUrl?(text), isSectionDone?(id), stageDir?(stage),
+//              completionCard?: false, nextUnit?(unitNumber, manifest) }
 //   bind(ctx) — populates the module's shell-provided `let` bindings so the
 //   renderer bodies (kept verbatim from the original apps) run unchanged.
 //
@@ -331,11 +332,99 @@ export function createCourseApp(config) {
   }
 
   function complete(section, message) {
-    if (!progress.completed.includes(section)) progress.completed.push(section);
+    const wasDone = progress.completed.includes(section);
+    if (!wasDone) progress.completed.push(section);
     emitProgress({ type: "section.completed", unit: PROGRESS_UNIT, section });
     saveProgress();
     renderNav();
     if (message) toast(message);
+    renderCompletionCard({ celebrate: !wasDone && section === route });
+  }
+
+  // --- the completion card: "this section is finished, here is the way on" ---
+  // The toast above is gone in 2.4 seconds, and a learner who has just pressed
+  // Finish is left at the bottom of the page with nothing saying it is done
+  // and nowhere obvious to go. This card stays. It is drawn AFTER #app, never
+  // inside it — renderers rewrite #app.innerHTML freely, and a card inside
+  // would vanish on the next repaint — and it is redrawn from progress on
+  // every route render and every complete(), so it reads the same lists the
+  // nav ticks and the progress bar read (unitSectionIds, isSectionDone) and
+  // can never disagree with them.
+  //
+  // Two states, one card. While sections remain it names the one just
+  // finished, counts the ticks and offers the next unfinished section in nav
+  // order. When the last tick lands it becomes the unit's finish line: what was
+  // finished and what it opened — the next unit in the manifest (a link, since
+  // a unit is a page load), the stage capstone where the subject has one, the
+  // overview otherwise. The overview shows the finish line too, so a learner
+  // returning to a done unit meets it where they land.
+  //
+  // A subject that draws its own card sets `completionCard: false` (English —
+  // its sections open in a gated chain and its units unlock one another, rules
+  // the shell does not know). `nextUnit(unitNumber, manifest)` lets a subject
+  // override where a finished unit leads; the default is the next manifest
+  // entry that is actually authored, reached by rewriting ?unit= on the current
+  // URL, which every subject's own picker already does the same way.
+  //
+  // Not drawn on the prerequisite unit (its one section is the placement exam
+  // — "Unit -1 is finished" is nobody's finish line), the teacher page, or a
+  // unit with nothing countable (a withdrawn stage).
+  function renderCompletionCard({ celebrate = false } = {}) {
+    if (config.completionCard === false) return;
+    const app = $("#app");
+    if (!app) return;
+    let host = $("#section-complete");
+    const countable = unitSectionIds();
+    const done = countable.filter((id) => isSectionDone(id));
+    const unitDone = countable.length > 0 && done.length === countable.length;
+    const isSection = countable.includes(route) && isSectionDone(route);
+    const build = unitNumber >= 0 && route !== "teacher" && course && (isSection || (unitDone && route === "overview"));
+    if (!build) { host?.remove(); return; }
+    if (!host) { host = document.createElement("section"); host.id = "section-complete"; app.parentNode.insertBefore(host, app.nextSibling); }
+    const unitNo = course.unit?.unitNo ?? unitNumber;
+    const unitTitle = course.unit?.unitTitle || "";
+    const labelOf = (id) => (navSections().find(([sid]) => sid === id) || [null, null, id])[2];
+    let eyebrow, title, body, action;
+    if (unitDone) {
+      const nextUnit = config.nextUnit
+        ? config.nextUnit(unitNumber, manifest)
+        : (manifest?.units || []).find((unit) => Number(unit.number) === unitNumber + 1 && !String(unit.status || "").startsWith("Planned")) || null;
+      const nextHref = nextUnit ? (nextUnit.href || (() => { const url = new URL(location.href); url.searchParams.set("unit", nextUnit.number); url.hash = "overview"; return url.href; })()) : "";
+      const capstone = navSections().find(([id]) => gradeSections.includes(id));
+      eyebrow = "Unit finished";
+      title = `Unit ${unitNo} is finished. Brilliant work!`;
+      body = unitTitle ? `Every section of “${unitTitle}” has a tick.` : "Every section has a tick.";
+      if (nextUnit) {
+        body += ` Unit ${nextUnit.number}${nextUnit.title ? `: ${nextUnit.title}` : ""} is next.`;
+        action = `<a class="button gold" href="${escapeHtml(nextHref)}">Go on to Unit ${escapeHtml(nextUnit.number)} ${icon("arrow-right")}</a>`;
+      } else if (capstone && !isSectionDone(capstone[0])) {
+        body += ` That was the last unit — the ${capstone[2]} brings the whole stage together.`;
+        action = `<button class="button gold" type="button" data-complete-go="${escapeHtml(capstone[0])}">Open the ${escapeHtml(capstone[2])} ${icon("arrow-right")}</button>`;
+      } else {
+        action = `<button class="button primary" type="button" data-complete-go="overview">Back to the overview ${icon("arrow-right")}</button>`;
+      }
+    } else {
+      const next = countable.find((id) => !isSectionDone(id));
+      eyebrow = "Section finished";
+      title = `Well done! ${labelOf(route)} is finished.`;
+      body = `That is ${done.length} of ${countable.length} sections in Unit ${unitNo} ticked.${next ? ` Next up: ${labelOf(next)}.` : ""}`;
+      action = next ? `<button class="button primary" type="button" data-complete-go="${escapeHtml(next)}">Continue to ${escapeHtml(labelOf(next))} ${icon("arrow-right")}</button>` : "";
+    }
+    host.className = `section-complete ${unitDone ? "is-unit" : "is-section"}`;
+    host.setAttribute("aria-labelledby", "section-complete-title");
+    host.innerHTML = `<div class="section-complete-mark" aria-hidden="true">${icon(unitDone ? "trophy" : "check")}</div>
+      <div class="section-complete-copy">
+        <span class="eyebrow">${escapeHtml(eyebrow)}</span>
+        <h2 id="section-complete-title" tabindex="-1">${escapeHtml(title)}</h2>
+        <p>${escapeHtml(body)}</p>
+        ${action}
+      </div>`;
+    host.querySelector("[data-complete-go]")?.addEventListener("click", (event) => navigate(event.currentTarget.dataset.completeGo));
+    paintIcons();
+    if (celebrate) {
+      host.scrollIntoView({ behavior: "smooth", block: "center" });
+      requestAnimationFrame(() => host.querySelector("h2")?.focus({ preventScroll: true }));
+    }
   }
   // navSections() lets a subject vary the nav list at runtime (english gates
   // `games` on a loaded gamePack and appends a unit-10-only `final-quiz`).
@@ -494,6 +583,7 @@ export function createCourseApp(config) {
     $("#app").innerHTML = "";
     (config.renderers[route] || config.renderers.overview)();
     if (!config.disableShellVoice) bindVoiceControls();
+    renderCompletionCard();
     if (config.onAfterRender) config.onAfterRender();
     paintIcons();
   }

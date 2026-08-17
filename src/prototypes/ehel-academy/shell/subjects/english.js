@@ -4713,6 +4713,10 @@ const config = {
   // whether a unit is finished.
   nonCountable: ["overview", "live", "final-quiz"],
   gradeSections: [],
+  // English draws its own card (renderSectionCompletion): its sections open
+  // in a gated chain and its units unlock one another, which the shell's
+  // generic card does not know about.
+  completionCard: false,
   progressDefaults: { completed: [], knownWords: [], self: {}, writing: {}, games: {} },
   gradeDefaults: { completed: [] },
   keys: (g, u) => ({ progress: `ehel-english-g${g}-u${u}-progress-v1` }),

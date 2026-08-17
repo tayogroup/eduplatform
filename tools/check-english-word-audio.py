@@ -108,7 +108,10 @@ def main() -> None:
     parser.add_argument("--sample", type=int, help="check only the first N clips of each grade")
     parser.add_argument("--model", default="base")
     parser.add_argument("--out", help="write suspect clip ids here as JSON")
+    parser.add_argument("--only", help="comma-separated words or clip ids to check; the whole "
+                        "grade still supplies the distractors, so a narrowed run ranks the same way")
     args = parser.parse_args()
+    only = {s.strip().lower() for s in (args.only or "").split(",") if s.strip()}
 
     audit = load_audit()
     import torch
@@ -149,6 +152,11 @@ def main() -> None:
         if not clips:
             continue
         vocabulary = [str(script).strip().lower() for _, _, _, script, _ in clips]
+        if only:
+            clips = [c for c in clips
+                     if str(c[3]).strip().lower() in only or str(c[2]).lower() in only]
+            if not clips:
+                continue
         flagged_here = 0
         for _, _, clip_id, script, mp3 in clips:
             word = str(script).strip().lower()

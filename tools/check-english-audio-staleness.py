@@ -302,10 +302,65 @@ def narrated_fields(obj: dict, script: str) -> list:
     return out
 
 
+# --ignore-respelling: a US→British respelling ("emphasize" → "emphasise",
+# "center" → "centre", "labor" → "labour") changes the file and changes nothing
+# a listener could hear, exactly like a reflow. On 2026-08-17 the whole course
+# was respelled British (repair-ehel-english-british-spelling.js, 730 strings)
+# and this check reported every one of them stale — a bill for ~300 clips that
+# already say the right thing. Under the flag both sides of the comparison go
+# through the same map, so only edits that move the SOUND count. The map is the
+# same pairs the respelling tool used; keep the two in step.
+IGNORE_RESPELLING = False
+_IZE_STEMS = ("synthes|emphas|organ|antagon|material|character|plagiar|critic|civil|mechan|recogn|real|apolog|memor|"
+              "summar|visual|categor|priorit|minim|maxim|special|util|stabil|modern|industrial|author|global|social|"
+              "harmon|ideal|mobil|normal|optim|personal|popular|public|random|revolution|standard|sympath|symbol|theor|"
+              "vandal|victim|fertil|familiar|dramat|digit|custom|colon|capital|central|commercial|criminal|econom|energ|"
+              "equal|final|formal|general|human|hypnot|item|jeopard|legitim|local|marginal|mesmer|monopol|national|"
+              "neutral|patron|penal|polar|pressur|privat|rational|satir|scrutin|steril|subsid|terror|traumat|trivial|"
+              "urban|verbal|vocal|agon|empath|epitom|fantas|immortal|individual|internal|ion|legal|liberal|magnet|"
+              "memorial|moral|natural|prior|reorgan|roman|sanit|scandal|sensational|solemn|stigmat|tender|vapor")
+_IZE_RE = re.compile(r"\b((?:" + _IZE_STEMS + r"))iz(e|es|ed|ing|ation|ations|er|ers|able)\b", re.I)
+_PAIRS = {
+    "labor": "labour", "labors": "labours", "labored": "laboured", "laboring": "labouring", "laborer": "labourer", "laborers": "labourers",
+    "honor": "honour", "honors": "honours", "honored": "honoured", "honoring": "honouring", "honorable": "honourable", "honorably": "honourably",
+    "demeanor": "demeanour", "candor": "candour", "clamor": "clamour", "clamors": "clamours", "clamored": "clamoured", "clamoring": "clamouring",
+    "humor": "humour", "behavior": "behaviour", "behaviors": "behaviours", "neighbor": "neighbour", "neighbors": "neighbours",
+    "neighborhood": "neighbourhood", "neighborhoods": "neighbourhoods", "favor": "favour", "favors": "favours", "favorite": "favourite",
+    "favorites": "favourites", "flavor": "flavour", "flavors": "flavours", "color": "colour", "colors": "colours", "colored": "coloured",
+    "colorful": "colourful", "harbor": "harbour", "harbors": "harbours", "rumor": "rumour", "rumors": "rumours", "odor": "odour",
+    "odors": "odours", "vigor": "vigour", "endeavor": "endeavour", "endeavors": "endeavours", "splendor": "splendour", "valor": "valour",
+    "fervor": "fervour", "armor": "armour", "center": "centre", "centers": "centres", "centered": "centred", "meter": "metre",
+    "meters": "metres", "centimeter": "centimetre", "centimeters": "centimetres", "kilometer": "kilometre", "kilometers": "kilometres",
+    "millimeter": "millimetre", "millimeters": "millimetres", "liter": "litre", "liters": "litres", "theater": "theatre",
+    "theaters": "theatres", "fiber": "fibre", "fibers": "fibres", "somber": "sombre", "meager": "meagre", "luster": "lustre",
+    "specter": "spectre", "defense": "defence", "defenses": "defences", "offense": "offence", "offenses": "offences", "mold": "mould",
+    "molds": "moulds", "moldy": "mouldy", "artifact": "artefact", "artifacts": "artefacts", "mollusk": "mollusc", "mollusks": "molluscs",
+    "archeological": "archaeological", "archeology": "archaeology", "archeologist": "archaeologist", "archeologists": "archaeologists",
+    "instill": "instil", "instills": "instils", "grueling": "gruelling", "cozy": "cosy", "cozier": "cosier", "coziest": "cosiest",
+    "curb": "kerb", "curbs": "kerbs", "traveling": "travelling", "traveled": "travelled", "traveler": "traveller", "travelers": "travellers",
+    "canceled": "cancelled", "canceling": "cancelling", "labeled": "labelled", "labeling": "labelling", "modeled": "modelled",
+    "modeling": "modelling", "marvelous": "marvellous", "jewelry": "jewellery", "gray": "grey", "skeptical": "sceptical", "skeptic": "sceptic",
+    "catalog": "catalogue", "catalogs": "catalogues", "plow": "plough", "plows": "ploughs", "analyze": "analyse", "analyzes": "analyses",
+    "analyzed": "analysed", "analyzing": "analysing", "paralyze": "paralyse", "paralyzed": "paralysed",
+}
+_PAIR_RE = re.compile(r"\b(" + "|".join(sorted(_PAIRS, key=len, reverse=True)) + r")\b", re.I)
+
+
+def british(text: str) -> str:
+    """Map US spellings to British so a respelling compares equal (lower-cased —
+    only the SOUND is being compared here)."""
+    text = _IZE_RE.sub(lambda m: m.group(1) + "is" + m.group(2), text)
+    # A hyphen between letters is silent too: "brightly-coloured" and "brightly
+    # coloured" are one recording.
+    text = re.sub(r"(?<=[A-Za-z])-(?=[A-Za-z])", " ", text)
+    return _PAIR_RE.sub(lambda m: _PAIRS[m.group(1).lower()], text.lower())
+
+
 def norm(text: str) -> str:
     """Whitespace collapsed, for the same reason script_of() collapses it: a
     reflow changes the file and changes nothing a listener could hear."""
-    return re.sub(r"\s+", " ", text or "").strip()
+    out = re.sub(r"\s+", " ", text or "").strip()
+    return british(out) if IGNORE_RESPELLING else out
 
 
 def script_of(obj: dict, fields: list) -> str:
@@ -320,7 +375,7 @@ def script_of(obj: dict, fields: list) -> str:
         value = obj.get(key, "")
         if index is not None:
             value = value[index] if isinstance(value, list) and index < len(value) else ""
-        parts.append("{}[{}]={}".format(key, index, re.sub(r"\s+", " ", str(value)).strip()))
+        parts.append("{}[{}]={}".format(key, index, norm(str(value))))
     return "\n".join(parts)
 
 
@@ -328,7 +383,11 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--grades", nargs="*", type=int, default=list(range(1, 9)))
     parser.add_argument("--out", help="write stale clip ids here, as the generator's --only-file")
+    parser.add_argument("--ignore-respelling", action="store_true",
+                        help="treat a US→British respelling as unchanged (a homophone is the same recording)")
     args = parser.parse_args()
+    global IGNORE_RESPELLING
+    IGNORE_RESPELLING = args.ignore_respelling
 
     print("reading git history for the audio tree…")
     newest = newest_commit_per_clip()

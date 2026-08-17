@@ -600,9 +600,10 @@ export function createCourseApp(config) {
   // Deliberately quiet: no proactive popups, no attract animation, no
   // unsolicited messages. It sits still until a learner reaches for it.
   const DOCK_STYLE = `
-  .wehel-dock-button{position:fixed;right:18px;bottom:18px;z-index:70;display:inline-flex;align-items:center;gap:8px;
-    padding:11px 16px;border:0;border-radius:999px;cursor:pointer;font:inherit;font-size:.95rem;font-weight:600;
-    color:#fff;background:linear-gradient(135deg,#7c3aed,#4f46e5);box-shadow:0 6px 20px rgba(49,46,129,.34)}
+  .wehel-dock-button{position:fixed;right:12px;bottom:10px;z-index:70;display:inline-flex;align-items:center;gap:6px;
+    padding:7px 12px;border:0;border-radius:999px;cursor:pointer;font:inherit;font-size:.82rem;font-weight:600;
+    color:#fff;background:linear-gradient(135deg,#7c3aed,#4f46e5);box-shadow:0 4px 14px rgba(49,46,129,.3)}
+  .wehel-dock-button svg{width:15px;height:15px}
   .wehel-dock-button:hover{transform:translateY(-1px)}
   .wehel-dock-button:focus-visible{outline:3px solid #c4b5fd;outline-offset:2px}
   .wehel-dock-button[hidden]{display:none}
@@ -612,7 +613,7 @@ export function createCourseApp(config) {
      of it — on the final screen there is otherwise nothing left to scroll.
      Page-level and dock-gated: it changes no section's own layout, and a
      page without the dock gets no padding. */
-  body.has-wehel-dock #app{padding-bottom:72px}
+  body.has-wehel-dock #app{padding-bottom:56px}
   .wehel-dock-backdrop{position:fixed;inset:0;z-index:71;background:rgba(15,23,42,.45);border:0;padding:0;cursor:pointer}
   .wehel-drawer{position:fixed;top:0;right:0;bottom:0;z-index:72;width:min(420px,100vw);display:flex;flex-direction:column;
     background:var(--surface,#fff);color:inherit;box-shadow:-8px 0 30px rgba(15,23,42,.22);border-left:1px solid rgba(15,23,42,.12)}

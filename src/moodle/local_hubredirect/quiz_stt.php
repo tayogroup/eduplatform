@@ -156,7 +156,20 @@ try {
 }
 
 if ($response === false || $status < 200 || $status >= 300) {
-    pqh_quiz_stt_json(502, ['ok' => false, 'message' => 'ElevenLabs speech recognition failed.']);
+    // Say WHY. A key scoped to text_to_speech only answers 401
+    // missing_permissions here while every Listen button works, and a bare
+    // "failed" sent that to the app as an outage — it was a dashboard checkbox.
+    $reason = '';
+    $upstream = is_string($response) ? json_decode($response, true) : null;
+    if (is_array($upstream)) {
+        $detail = $upstream['detail'] ?? null;
+        $reason = is_array($detail)
+            ? trim((string)($detail['status'] ?? $detail['message'] ?? ''))
+            : trim((string)($detail ?? ''));
+    }
+    $reason = preg_replace('/[^A-Za-z0-9 _.\-]/', '', substr($reason, 0, 80));
+    $why = $status > 0 ? 'HTTP ' . $status . ($reason !== '' ? ' ' . $reason : '') : 'no response';
+    pqh_quiz_stt_json(502, ['ok' => false, 'message' => 'ElevenLabs speech recognition failed (' . $why . ').']);
 }
 $result = json_decode((string)$response, true);
 $text = trim((string)($result['text'] ?? $result['transcript'] ?? ''));

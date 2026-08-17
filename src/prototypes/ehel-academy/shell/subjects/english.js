@@ -86,6 +86,14 @@ function withAudioRelease(url) {
   // Dev serves from disk with no caching worth defeating, and a bare filename
   // is easier to grep for in the network panel.
   if (AUDIO_IS_DEV) return url;
+  // Only http(s) media has a browser cache to bust. On-demand ElevenLabs voice
+  // (aiVoiceUrl) hands playAudio a blob: URL, and a blob URL is looked up by
+  // its exact serialisation minus the fragment — so `blob:…?a=20260814` names
+  // an object that does not exist and the element fails with
+  // MEDIA_ERR_SRC_NOT_SUPPORTED. That took "Hear ElevenLabs model" and the game
+  // instruction voice down with "The ElevenLabs recording could not be played"
+  // the day this stamp shipped. Same for data: URLs, which carry their bytes.
+  if (!/^https?:/i.test(url)) return url;
   return url + (url.includes("?") ? "&" : "?") + `a=${AUDIO_RELEASE}`;
 }
 

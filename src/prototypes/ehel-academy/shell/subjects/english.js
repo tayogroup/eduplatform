@@ -214,7 +214,7 @@ const sections = [
 
 // One line under each row of the overview's unit guide: what a learner does in
 // the section, and what finishes it. Each line is written from the section's
-// own completion rule — the 80% of words, the eight-word draft, the 60% pass
+// own completion rule — every word known, the eight-word draft, the 60% pass
 // mark are the numbers the renderers enforce, so a line here that drifts from
 // its renderer is telling the learner the wrong thing. Written for the
 // youngest reader who meets it (Grade 1), so every grade gets the plain form.
@@ -234,6 +234,14 @@ const SECTION_HINTS = {
 };
 // Unit 10 has no video: its first step is a page that launches the capstone.
 const CAPSTONE_LAUNCH_HINT = "Read about your capstone project, then press the button to start.";
+// Vocabulary completes when EVERY word in the unit has been marked known — the
+// one rule for both designs (the lab and the deck), so they cannot finish the
+// section at different points. It was 80% of the words; the guide now tells the
+// learner "all the words", and a tick that arrived at 56 of 70 would have made
+// that a lie. Checked by id, not by count: knownWords is per unit, but an id
+// list is what "every word" means.
+const allWordsKnown = (words) => words.length > 0 && words.every((item) => progress.knownWords.includes(item.vocabularyId));
+
 // The one line for a section, with the two per-unit exceptions applied — used
 // by the overview's checklist, so it and the page guide below never describe
 // the same section differently.
@@ -2105,7 +2113,7 @@ function renderDictionaryClassic() {
     });
     $("#know-word").addEventListener("click", () => {
       if (!progress.knownWords.includes(item.vocabularyId)) progress.knownWords.push(item.vocabularyId);
-      if (progress.knownWords.length >= Math.ceil(words.length * .8)) complete("dictionary"); else saveProgress();
+      if (allWordsKnown(words)) complete("dictionary"); else saveProgress();
       drawList(); drawWord(); icons(); toast(`${item.master.displayWord} added to My Word Book.`);
     });
     icons();
@@ -2256,7 +2264,14 @@ function renderWordCarousel() {
         || target.dataset.sentenceAudio || target.dataset.check || target.dataset.know;
       const item = wordFor(id);
 
-      if (target.dataset.deckFinish) return complete("dictionary", "Vocabulary complete. Well done!");
+      // The last slide's finish button holds to the same rule as the lab: it
+      // used to complete the section outright, which let a learner swipe to the
+      // end and take the tick with no word marked. Now it names what is left.
+      if (target.dataset.deckFinish) {
+        if (allWordsKnown(allWords)) return complete("dictionary", "Vocabulary complete. Well done!");
+        const left = allWords.filter((word) => !progress.knownWords.includes(word.vocabularyId)).length;
+        return toast(`Mark every word with “I know this word” first — ${left} to go.`);
+      }
       if (!item) return undefined;
       if (target.dataset.wordAudio) {
         return playAudio(item.master.audio.normal, { rate: AI_NARRATION_RATE, start: item.master.audio.cueStart, end: item.master.audio.cueEnd, button: target });
@@ -2292,9 +2307,9 @@ function renderWordCarousel() {
       }
       if (target.dataset.know) {
         if (!progress.knownWords.includes(id)) progress.knownWords.push(id);
-        // Same rule as the lab: the section completes at 80% of the unit's words,
+        // Same rule as the lab: the section completes when every word in the unit is known,
         // counted over every word in the unit, not just the filtered deck.
-        if (progress.knownWords.length >= Math.ceil(allWords.length * 0.8)) complete("dictionary"); else saveProgress();
+        if (allWordsKnown(allWords)) complete("dictionary"); else saveProgress();
         inDeck("#wc-known").textContent = `${progress.knownWords.length} learned`;
         redrawWord(id);
         toast(`${item.master.displayWord} added to My Word Book.`);

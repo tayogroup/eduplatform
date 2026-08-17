@@ -96,7 +96,9 @@ function walk(node, key) {
   }
   if (typeof node !== "string") return node;
   // A slug/path-looking string is only respelled under an explicit word key.
-  const looksLikeIdOrPath = /[\/\\]/.test(node) || /\.(mp3|mp4|vtt|png|jpg|json|js|css)$/i.test(node) || (!/\s/.test(node) && !WORD_KEY.test(key || ""));
+  // A path has no spaces; "Yes/No questions" and "(Have / got)" are prose. The
+  // first version treated any "/" as a path and skipped 20 real strings.
+  const looksLikeIdOrPath = (!/\s/.test(node) && /[\/\\]/.test(node)) || /\.(mp3|mp4|vtt|png|jpg|json|js|css)$/i.test(node) || (!/\s/.test(node) && !WORD_KEY.test(key || ""));
   if (looksLikeIdOrPath) return node;
   const out = respell(node);
   if (out !== node) { changedStrings += 1; if (touched.length < 40) touched.push(`${key}: ${node.slice(0, 70)} -> ${out.slice(0, 70)}`); }

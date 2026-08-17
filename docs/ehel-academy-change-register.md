@@ -99,3 +99,28 @@ integration), so most of the platform build is P1+, not P0.
 → **P2 migration per feature** → **P3 growth**. Tenancy hardening (P3.3–P3.7) waits until a
 second sizeable tenant is real — build the *seams* (metering, service interface) early, the
 machinery late.
+
+---
+
+## Release log — app tier (`deploy-app-version.js`, zone `ehelacademy` / "Ehel Primary")
+
+Newest first. Each tag is an immutable `app/{subject}/v{TAG}/` bundle; the
+subject's `index.html` is the pointer. Content and audio tiers ship separately
+(`upload-media-to-bunny.js`, content uploader) and are not listed here.
+
+| Date | Tag | Subjects | What shipped | Notes |
+|---|---|---|---|---|
+| 2026-08-17 | **v178** | Mathematics, Science, Computing, Global Perspectives, Intensive English | Shell completion card at the end of every section and the unit finish line (`course-app.js` `renderCompletionCard`, `1b02af5c0`); Wehel dock pill kept clear of page content (`8b8329654`) | Cut from a clean worktree at `8b8329654` with the working tree's bytes, because the tree held another session's uncommitted `course-app.js` edit. `--verify` read all 74 files back from the edge; pointers on v178. |
+| 2026-08-17 | v177 | Mathematics, Science, Computing, Global Perspectives, Intensive English | Same content as v178 | **Superseded within the hour** — the worktree checked out with `core.autocrlf=true`, so the bundle was CRLF and the tier check reported 10-12 files "behind" per subject. Functionally identical; left on storage (version paths cannot be removed). |
+| 2026-08-17 | v177 | English | 2026-08-17 content review: answer keys, grammar rules, factual slips, learner-addressed text, British spelling; reviewed narration workbook synced (`eecf81410`) | Released by the English review session after v176. |
+| 2026-08-17 | v176 | English | Section completion card + unit finish line (`d74f00981`); Grade 1-4 decks end on a closing slide (`450d1ba73`) | Code-only; `--verify` 13/13 from the edge. |
+| earlier | v175 English · v175 Mathematics · v161 Science · … | — | see `.bunny-appver-manifest.json` (local) | Predates this log. |
+
+Two things every release here relearned, kept so the next one does not:
+
+- **The tool ships the working tree.** If another session has an uncommitted
+  edit in a shared file, release from a detached worktree at `HEAD` — and check
+  out with `core.autocrlf=false` (or mirror the main tree's bytes) so the shas
+  match what `check-ehel-deploy-sync.mjs` compares against.
+- **`--verify` always.** A version path with a cached 404 cannot be purged; the
+  read-back is what proves the edge serves the release.

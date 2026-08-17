@@ -157,6 +157,19 @@ function bind(ctx) {
   ({ complete, updateProgress, saveProgress, navigate, renderNav, emitProgress, unitSectionIds, dataRootUrl, PROGRESS_UNIT } = ctx);
   progress = ctx.progress;
   shellCtx = ctx;
+  // Every renderer in this file finishes a section through complete(), so this
+  // is the one place to say so on the page. The shell's own message is a toast
+  // that is gone in 2.6 seconds; the card renderSectionCompletion draws stays,
+  // names what was finished, and offers the way on. `wasDone` keeps the
+  // celebration (scroll + focus) for the moment the tick is earned — completing
+  // an already-finished section again (a second Mark complete, a re-saved
+  // draft) only refreshes the card in place.
+  const shellComplete = ctx.complete;
+  complete = (section, message) => {
+    const wasDone = progress.completed.includes(section);
+    shellComplete(section, message);
+    if (section === route) renderSectionCompletion({ celebrate: !wasDone });
+  };
 }
 
 // --- who is looking ----------------------------------------------------------
@@ -471,6 +484,90 @@ function renderSectionGuide() {
     </details>`;
   host.querySelector("[data-jump-deck]")?.addEventListener("click", () => $("#deck-design")?.scrollIntoView({ behavior: "smooth", block: "start" }));
   icons();
+}
+
+// The completion card — the bookend to the section guide above. The guide sits
+// BEFORE #app and says what to do; this sits AFTER it and says it is done. Both
+// live outside #app on purpose: renderers rewrite #app.innerHTML freely (games
+// after a round, reflect after a choice, the eBook reader on every page turn),
+// and a card drawn inside it would vanish on the next repaint. Out here it is
+// redrawn from progress on every route render and every complete(), so it can
+// never disagree with the ticks in the nav — it reads the same list
+// (unitSectionIds) the progress bar divides by.
+//
+// Two states, one card. While the unit has sections left it names the one just
+// finished, counts the ticks, and offers the next open section — the learner
+// who has just pressed Finish is standing at the bottom of a page with nowhere
+// obvious to go. When the last tick lands the same card becomes the unit's
+// finish line: what was finished, and what it opened (the next unit under the
+// gate, the final quiz on the capstone, the overview otherwise). The Overview
+// also shows the finish line, so a learner returning to a done unit meets it
+// where they land rather than only on whichever section they finished last.
+//
+// `celebrate` — the tick was earned this moment, so bring the learner to the
+// card. Without it a Grade 1-4 learner who finishes on the deck's last slide
+// would have the card below the fold and see only the 2.6-second toast, which
+// is the gap this exists to close.
+function renderSectionCompletion({ celebrate = false } = {}) {
+  const app = $("#app");
+  let host = $("#section-complete");
+  const countable = unitSectionIds();
+  const done = countable.filter((id) => progress.completed.includes(id));
+  const unitDone = countable.length > 0 && done.length === countable.length;
+  // A finished section waiting behind an unfinished earlier step draws the
+  // locked page (gated → renderLockedSection), and a "finished" card under a
+  // "not open yet" heading contradicts itself — same rule the section guide
+  // follows.
+  const isSection = countable.includes(route) && progress.completed.includes(route) && sectionUnlocked(route);
+  const build = !isPrereqUnit && !unitIsLocked() && route !== "teacher" && (isSection || (unitDone && route === "overview"));
+  if (!build) { host?.remove(); return; }
+  if (!host) { host = document.createElement("section"); host.id = "section-complete"; app.parentNode.insertBefore(host, app.nextSibling); }
+  host.className = `section-complete ${unitDone ? "is-unit" : "is-section"}`;
+  host.setAttribute("aria-labelledby", "section-complete-title");
+  let eyebrow, title, body, action;
+  if (unitDone) {
+    const nextUnit = manifest?.units?.find((unit) => Number(unit.number) === unitNumber + 1) || null;
+    const nextOpen = nextUnit && unitIsUnlocked(nextUnit.number);
+    eyebrow = "Unit finished";
+    title = `Unit ${course.unit.unitNo} is finished. Brilliant work!`;
+    body = `Every section of “${course.unit.unitTitle}” has a tick.`;
+    if (unitNumber === CAPSTONE_UNIT) {
+      body += " One thing is left for the whole course: the final quiz.";
+      action = `<button class="button gold" type="button" data-complete-go="final-quiz">${finalQuizProgress.completed ? "View my final quiz results" : "Open the final course quiz"} ${icon("arrow-right")}</button>`;
+    } else if (nextOpen) {
+      body += ` Unit ${nextUnit.number}: ${nextUnit.title} is open now.`;
+      action = `<a class="button gold" href="${courseLocation(nextUnit.number)}">Go on to Unit ${nextUnit.number} ${icon("arrow-right")}</a>`;
+    } else if (nextUnit) {
+      // The gate is on and an EARLIER unit is still unfinished, so the next one
+      // stays shut; the overview's guide names what is missing.
+      body += ` Unit ${nextUnit.number} opens when every unit before it is finished.`;
+      action = `<button class="button primary" type="button" data-complete-go="overview">Back to the overview ${icon("arrow-right")}</button>`;
+    } else {
+      action = `<button class="button primary" type="button" data-complete-go="overview">Back to the overview ${icon("arrow-right")}</button>`;
+    }
+  } else {
+    // The next section in the chain the learner can actually open; failing that
+    // the first one still to do — its own page explains what stands in the way.
+    const pending = sectionChain().filter((id) => countable.includes(id) && !progress.completed.includes(id));
+    const next = pending.find((id) => sectionUnlocked(id)) || pending[0];
+    eyebrow = "Section finished";
+    title = `Well done! ${sectionLabel(route)} is finished.`;
+    body = `That is ${done.length} of ${countable.length} sections in Unit ${course.unit.unitNo} ticked.${next ? ` Next up: ${sectionLabel(next)}.` : ""}`;
+    action = next ? `<button class="button primary" type="button" data-complete-go="${escapeHtml(next)}">Continue to ${escapeHtml(sectionLabel(next))} ${icon("arrow-right")}</button>` : "";
+  }
+  host.innerHTML = `<div class="section-complete-mark" aria-hidden="true">${icon(unitDone ? "trophy" : "check")}</div>
+    <div class="section-complete-copy">
+      <span class="eyebrow">${escapeHtml(eyebrow)}</span>
+      <h2 id="section-complete-title">${escapeHtml(title)}</h2>
+      <p>${escapeHtml(body)}</p>
+      ${action}
+    </div>`;
+  host.querySelector("[data-complete-go]")?.addEventListener("click", (event) => navigate(event.currentTarget.dataset.completeGo));
+  icons();
+  if (celebrate) {
+    host.scrollIntoView({ behavior: "smooth", block: "center" });
+    focusDynamicContent("#section-complete-title", `${title} ${body}`);
+  }
 }
 
 // --- unit gate: one unit at a time -------------------------------------------
@@ -4539,7 +4636,7 @@ const config = {
   // designs sets them, and every other section must find them clear or it would
   // paint into a region the previous section left behind.
   onBeforeRender: () => { route = shellCtx.route; stopAudio(); document.body.classList.remove("gc-full"); classicRegion = null; deckMount = null; showWordInDeck = null; showReadingInDeck = null; showWritingInDeck = null; showComprehensionGroupInDeck = null; $("#app").setAttribute("aria-busy", "true"); },
-  onAfterRender: () => { $("#app").setAttribute("aria-busy", "false"); renderSectionGuide(); prepareScreenReaderView(); icons(); },
+  onAfterRender: () => { $("#app").setAttribute("aria-busy", "false"); renderSectionGuide(); renderSectionCompletion(); prepareScreenReaderView(); icons(); },
   onNavRendered: () => { renderUnitPickers(); paintSectionLocks(); icons(); },
   // Every route draws the locked page while a unit is locked. The check is
   // inside each entry, not a swapped-out map: the lock is not settled until

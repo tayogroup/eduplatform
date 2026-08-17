@@ -16,7 +16,7 @@
 // by the other tools and are unaffected. Shared modules (course-shell.js,
 // progress-client.js) go to app/shared/ (short-cached; imported via ../../shared/).
 //
-// Usage: BUNNY_KEY=… node tools/deploy-app-version.js [v2] [--shell] [--verify] [--dry] [subject…]
+// Usage: BUNNY_KEY=… node tools/deploy-app-version.js [v2] [--shell] [--verify] [--dry] [--force-tag] [subject…]
 //   --verify  after uploading, read the release back through the CDN and fail if
 //             the edge does not serve it (catches a version path poisoned by a
 //             cached 404 — see docs/bunny-cache-config.md). Recommended always.
@@ -350,6 +350,44 @@ async function put(remote, buf) {
   if (!r.ok && r.status !== 201) throw new Error(`${r.status} ${(await r.text()).slice(0, 120)}`);
 }
 
+// Which of this release's version-path files already sit on storage with other
+// bytes. Reads the storage listing (one request per subject), never the CDN.
+// Bunny's listing carries Length and a SHA-256 Checksum per object; a missing
+// checksum falls back to length alone, and an unreadable listing is reported
+// as such rather than treated as "free" — the tool would rather stop on a
+// storage hiccup than mint a second release onto a taken tag.
+async function tagAlreadyWritten(items) {
+  const found = [];
+  const bySubject = new Map();
+  for (const item of items) {
+    const m = item.remote.match(/^app\/([a-z-]+)\/(v\d+)\/(.+)$/);
+    if (m && m[2] === TAG) { if (!bySubject.has(m[1])) bySubject.set(m[1], new Map()); bySubject.get(m[1]).set(m[3], item.buf); }
+  }
+  for (const [subject, files] of bySubject) {
+    const url = `${STORAGE}/${ZONE}/` + encodeURI(`${ROOT_FOLDER}/app/${subject}/${TAG}/`);
+    let listing;
+    try {
+      const r = await fetch(url, { headers: { AccessKey: KEY } });
+      if (r.status === 404) continue;
+      if (!r.ok) throw new Error(`${r.status}`);
+      listing = await r.json();
+    } catch (e) {
+      found.push(`app/${subject}/${TAG}/ — could not read the storage listing (${e.message}); not proven free`);
+      continue;
+    }
+    for (const entry of listing || []) {
+      if (entry.IsDirectory) continue;
+      const buf = files.get(entry.ObjectName);
+      if (!buf) continue; // a file we are not writing cannot be overwritten
+      const same = entry.Checksum
+        ? entry.Checksum.toLowerCase() === crypto.createHash("sha256").update(buf).digest("hex")
+        : entry.Length === buf.length;
+      if (!same) found.push(`app/${subject}/${TAG}/${entry.ObjectName} (on storage since ${entry.DateCreated}, ${entry.Length}B; this release: ${buf.length}B)`);
+    }
+  }
+  return found;
+}
+
 // Read the release back through the edge. Returns true if anything is wrong.
 async function verifyRelease(items) {
   const CDN = `https://${ZONE}.b-cdn.net/` + encodeURI(`${ROOT_FOLDER}/`);
@@ -498,6 +536,24 @@ async function verifyRelease(items) {
       : `\nAll ${TAG} bundles are self-contained: no reference reaches outside the version path.`);
     console.log("\n(dry run — nothing uploaded)");
     return;
+  }
+  // A version path is immutable at the edge — Edge Rule #1 caches it for a year
+  // — so writing DIFFERENT bytes to a tag that already exists on storage does
+  // not update anything a learner sees: every POP that fetched the tag before
+  // keeps serving the old release, forever, and there is no purge key in .env.
+  // That happened on 2026-08-17: english v164 had been written the day before
+  // from another checkout, this checkout's manifest did not know, the tool
+  // overwrote it, --verify passed (the files did serve 200), and the learner
+  // still saw the previous release. Ask STORAGE, not the CDN — the storage API
+  // caches nothing, so the question is free; a probe against the edge is what
+  // mints the cached 404s the manifest warning below is about. Same bytes are
+  // allowed: a retry after a failed upload is not a second release.
+  const taken = await tagAlreadyWritten(all);
+  if (taken.length && !argv.includes("--force-tag")) {
+    console.error(`\nREFUSING: ${TAG} already exists on storage with different bytes:`);
+    for (const t of taken) console.error(`  ${t}`);
+    console.error("A version path is cached at the edge for a year, so overwriting it does not reach learners.\nRelease under a tag that has never been written (check with the storage listing, never by fetching from the CDN),\nor pass --force-tag if you truly mean to overwrite.");
+    process.exit(1);
   }
   let done = 0, failed = 0;
   const save = () => fs.writeFileSync(MANIFEST, JSON.stringify(manifest, null, 0));

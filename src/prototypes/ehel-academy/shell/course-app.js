@@ -606,6 +606,13 @@ export function createCourseApp(config) {
   .wehel-dock-button:hover{transform:translateY(-1px)}
   .wehel-dock-button:focus-visible{outline:3px solid #c4b5fd;outline-offset:2px}
   .wehel-dock-button[hidden]{display:none}
+  /* The pill floats over the bottom-right ~200x50px of every page. Reserve
+     that footprint at the end of the app column so the LAST control on a
+     page (Submit, Finish, a deck's closing button) can always scroll clear
+     of it — on the final screen there is otherwise nothing left to scroll.
+     Page-level and dock-gated: it changes no section's own layout, and a
+     page without the dock gets no padding. */
+  body.has-wehel-dock #app{padding-bottom:72px}
   .wehel-dock-backdrop{position:fixed;inset:0;z-index:71;background:rgba(15,23,42,.45);border:0;padding:0;cursor:pointer}
   .wehel-drawer{position:fixed;top:0;right:0;bottom:0;z-index:72;width:min(420px,100vw);display:flex;flex-direction:column;
     background:var(--surface,#fff);color:inherit;box-shadow:-8px 0 30px rgba(15,23,42,.22);border-left:1px solid rgba(15,23,42,.12)}
@@ -696,6 +703,7 @@ export function createCourseApp(config) {
 
     button.addEventListener("click", open);
     document.addEventListener("keydown", (event) => { if (event.key === "Escape" && drawer) close(); });
+    document.body.classList.add("has-wehel-dock");
     document.body.appendChild(button);
   }
 

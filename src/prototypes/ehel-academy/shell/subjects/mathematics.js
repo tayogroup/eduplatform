@@ -31,10 +31,12 @@ let $, $$, escapeHtml, icon, voiceButton, pageHeader, toast;
 let complete, completeGradeSection, saveProgress, saveGradeProgress, navigate, emitProgress;
 let bindVoiceControls, updateVoiceUI, stopVoice, renderNav, unitSectionIds, stageNumber, STAGE_STORAGE_KEY;
 let course, progress, gradeProgress, manifest, gradeCapstone, dataRootUrl;
+let shellCtx;
 function bind(ctx) {
   ({ $, $$, escapeHtml, icon, voiceButton, pageHeader, toast, complete, completeGradeSection,
      saveProgress, saveGradeProgress, navigate, emitProgress, bindVoiceControls, updateVoiceUI,
      stopVoice, renderNav, unitSectionIds, stageNumber, STAGE_STORAGE_KEY } = ctx);
+  shellCtx = ctx;
   course = ctx.course; progress = ctx.progress; gradeProgress = ctx.gradeProgress;
   manifest = ctx.manifest; gradeCapstone = ctx.gradeCapstone; dataRootUrl = ctx.dataRootUrl;
   if (isPrereqUnit) {
@@ -108,6 +110,227 @@ const sections = [
   ["live", "video", "Live Math Class"],
   ["progress", "badge-check", "My Math Progress"]
 ];
+const sectionLabel = (id) => (sections.find(([sid]) => sid === id) || [null, null, id])[2];
+
+// ===================== the guides: overview, page, deck =====================
+// The same three surfaces English carries (english.js :: SECTION_HINTS,
+// SECTION_GUIDES, DECK_INTROS): one line per section under the overview's
+// checklist, a teacher's walk through each page at the top of it, and an
+// instruction slide in front of each Stage 1-4 deck. Each line is written from
+// the section's own completion rule — every discovery answered, every method
+// stepped through, all twelve solutions opened, 80% of the sprint, more than
+// half the challenge — and the counts come from the unit's fields, so the guide
+// cannot promise what the page does not hold.
+const SECTION_HINTS = {
+  lesson: "Read the concepts, or press Listen to hear them, then press “I studied the concepts”.",
+  words: "Learn the words and the five symbols, then press “I know these words and symbols”.",
+  explore: "Answer the discovery question in every situation. Each one you get right is ticked.",
+  visuals: "Look at every model — turn them, count them — then press “I explored the models”.",
+  method: "Step through every method with “Show me the next step” until each says Method complete.",
+  examples: "Open “Show worked solution” on all twelve examples.",
+  guided: "Type your answer to every practice question and press “Check my answer”. Hints are there if you need them.",
+  activities: "Do each activity and press “Mark complete”, then “Finish activities”.",
+  games: "Play every game until it is mastered — every star lit.",
+  fluency: "Answer the sprint questions quickly. Get most of them right — you can run it again.",
+  problems: "Solve every real-world problem: show your calculation and press “Check answer”.",
+  explain: "Write an explanation for every prompt using the key ideas, and press “Check mathematical ideas”.",
+  challenge: "Answer all the questions. Get more than half right to pass. You can try again.",
+  live: "Read the plan for each class and press “I'm ready for class” on every one.",
+  progress: "Choose an answer for every statement, then press “Save reflection”.",
+};
+
+const numberWord = (n) => ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"][n] || String(n);
+const listTitles = (items, key = "title") => items.map((item) => `“${item[key]}”`).join(", ");
+const SECTION_GUIDES = {
+  lesson: () => ({
+    steps: [
+      `The lesson has ${course.concepts.length} concepts. Each one is a short explanation with an example.`,
+      "Read each concept slowly. Press Listen to hear it read to you.",
+      "Say the example out loud, and try it with your own numbers or objects.",
+      "Read every concept before you press the button.",
+    ],
+    finish: "Press “I studied the concepts” at the bottom. Then Wehel Tutor opens, so you can ask about anything you did not understand.",
+  }),
+  words: () => ({
+    steps: [
+      "This page has the math words for this unit, and the five symbols every unit uses: + − = < >.",
+      "Read each word and what it means. Press Listen to hear it.",
+      "Read what each symbol means and when you use it. Say it out loud: “plus means combine or add”.",
+    ],
+    finish: "Press “I know these words and symbols” at the bottom.",
+  }),
+  explore: () => ({
+    steps: [
+      `There are ${course.explorations.length} discoveries, each in a familiar place — ${listTitles(course.explorations)}.`,
+      "Press a numbered tab to open a discovery. Read the situation and look at the picture or model.",
+      "Read the discovery question. Think, then type your idea in the box and press “Check my idea”.",
+      "If it says “Look again”, press “Hint” and try once more. When it says “Exactly!”, the tab gets a tick.",
+      "Do all of them.",
+    ],
+    finish: `This section is finished when every one of the ${course.explorations.length} discovery questions has been answered right.`,
+  }),
+  visuals: () => ({
+    steps: [
+      `There are ${course.visualModels.length} visual models — pictures and 3D shapes of the ideas in this unit.`,
+      "Look at each model. If it moves, drag it to turn it and press its buttons to change it.",
+      "Read the caption under each one and press Listen to hear it.",
+    ],
+    finish: "Press “I explored the models” at the bottom.",
+  }),
+  method: () => ({
+    steps: [
+      `There are ${course.methods.length} methods — ways to work things out step by step.`,
+      "Read the first step of a method. Then press “Show me the next step” to see the next one.",
+      "Keep pressing until the button says “Method complete”. Say each step out loud as you go.",
+      "Do this for every method.",
+    ],
+    finish: `This section is finished when all ${course.methods.length} methods have been stepped through to the end.`,
+  }),
+  examples: () => ({
+    steps: [
+      `There are ${course.workedExamples.length} worked examples. Each one is a question with the full working shown.`,
+      "Read the question first and try it yourself.",
+      "Then press “Show worked solution” and compare your working with the solution, line by line.",
+      "The counter at the top shows how many solutions you have opened. Open all of them.",
+    ],
+    finish: `This section is finished when all ${course.workedExamples.length} worked solutions have been opened.`,
+  }),
+  guided: () => ({
+    steps: [
+      `There are ${course.practice.length} practice questions.`,
+      "Read a question. Work it out on paper or in your head.",
+      "Type your answer in the box and press “Check my answer”. Show your working if you like — the checker looks for the numbers.",
+      "Stuck? Press “Give me a hint” — you get up to three hints. “Show next step” shows one line of the working.",
+      "Do this for every question until each one says “Correct reasoning!”.",
+    ],
+    finish: `This section is finished when all ${course.practice.length} questions have been answered right.`,
+  }),
+  activities: () => ({
+    steps: [
+      `There are ${course.activities.length} hands-on activities. Each one tells you what to use and what to do.`,
+      "Read the activity and press Listen to hear it. Get the materials it names.",
+      "Do the activity. Write your answer, or what you noticed, in the box.",
+      "Press “Mark complete” under each activity when you have done it.",
+    ],
+    finish: "Press “Finish activities” at the bottom when every activity is marked complete.",
+  }),
+  games: () => {
+    const pack = activeGamePack();
+    const stars = numberWord(pack.masteryScore);
+    return {
+      steps: [
+        `There are ${pack.games.length} games. Press “Start game” on one.`,
+        "Answer each round. You earn a star for every round you get right.",
+        `A game is mastered at ${stars} stars. Press “Play again” to earn more.`,
+        "Master every game.",
+      ],
+      finish: `This section finishes by itself when every game has ${stars} stars.`,
+    };
+  },
+  fluency: () => {
+    const total = course.fluency?.length ?? 0;
+    const passPercent = course.assessment?.passPercent ?? 80;
+    return {
+      steps: [
+        `The fluency sprint has ${total} quick questions. Answer them as fast as you can.`,
+        "Type your answer and press “Check & continue” for each one. Your time is shown at the top.",
+        `You need ${Math.ceil(total * passPercent / 100)} right out of ${total}. If you get fewer, press “Run the sprint again”.`,
+      ],
+      finish: `This section is finished when a sprint has ${Math.ceil(total * passPercent / 100)} or more right.`,
+    };
+  },
+  problems: () => ({
+    steps: [
+      `There are ${course.realProblems.length} real-world problems.`,
+      "Read the situation carefully. Decide what is being asked.",
+      "Work it out, then type your calculation and answer in the box and press “Check answer”.",
+      "Press “Hint” if you are stuck. When it says “Applied correctly!”, that problem is done.",
+    ],
+    finish: `This section is finished when all ${course.realProblems.length} problems have been answered right.`,
+  }),
+  explain: () => ({
+    steps: [
+      `There are ${course.reasoningPrompts.length} prompts that ask you to explain your thinking.`,
+      "Read the prompt and the key ideas under it.",
+      "Write your explanation in the box: what you know, what rule you used, and why your conclusion makes sense. Use the key ideas.",
+      "Press “Check mathematical ideas”. If it asks for more evidence, add more and check again.",
+      "Open “Show model explanation” to compare with a good answer.",
+    ],
+    finish: `This section is finished when all ${course.reasoningPrompts.length} explanations use the key ideas.`,
+  }),
+  challenge: () => {
+    const total = course.assessment?.questions?.length ?? 0;
+    return {
+      steps: [
+        `The Unit Challenge has ${total} questions. Read each one and choose your answer.`,
+        "Press “Next question” after each one. You see your score at the end.",
+        "If your score is not high enough, press “Try again”.",
+        "Then press “Continue” to go to My Math Progress.",
+      ],
+      finish: `The challenge is passed with ${Math.ceil(total * 0.6)} right out of ${total} — more than half.`,
+    };
+  },
+  live: () => ({
+    steps: [
+      "This page lists the live math classes for this unit, if your school runs them.",
+      "For each class, read “Before class” and get ready — bring the model, problem or question it asks for.",
+      "Read “Class plan” so you know what will happen. After the class, read “After class” to remember what to practise.",
+      "Press “I'm ready for class” on each class.",
+    ],
+    finish: "This section is finished when you have pressed “I'm ready for class” on every class.",
+  }),
+  progress: () => ({
+    steps: [
+      "The top of the page shows how many learning steps of the unit you have finished.",
+      `Read the ${course.selfAssessment.length} statements. For each one, choose Not yet, With help, or By myself.`,
+      "Be honest — this shows what to practise next.",
+    ],
+    finish: "Press “Save reflection” when every statement has an answer.",
+  }),
+};
+
+// Mounted before #app, not inside it: the original renderers repaint #app as
+// the learner works (every explore tab, every practice check), and a guide
+// inside it would vanish on the first repaint. Refreshed on every route render,
+// removed where there is nothing to guide. Open at every stage — the steps are
+// the point.
+function renderSectionGuide() {
+  const app = $("#app");
+  let host = $("#section-guide");
+  const route = shellCtx.route;
+  const build = !isPrereqUnit && SECTION_GUIDES[route];
+  if (!build) { host?.remove(); return; }
+  if (!host) { host = document.createElement("section"); host.id = "section-guide"; app.parentNode.insertBefore(host, app); }
+  const guide = SECTION_GUIDES[route]();
+  const hasDeck = Boolean($("#deck-design"));
+  host.className = "section-guide";
+  host.innerHTML = `<details open>
+      <summary>${icon("info")}<span><strong>How to use this page</strong><small>${escapeHtml(sectionLabel(route))} — what to do, step by step</small></span></summary>
+      <ol class="section-guide-steps">${guide.steps.map((step) => `<li>${escapeHtml(step)}</li>`).join("")}</ol>
+      <p class="section-guide-finish">${icon("check-circle")}<span><strong>To finish:</strong> ${escapeHtml(guide.finish)}</span></p>
+      ${hasDeck ? `<p class="section-guide-deck">${icon("gallery-horizontal")}<span>Under the page there are slides with the same things, one at a time. <button class="link-button" type="button" data-jump-deck>Go to the slides</button></span></p>` : ""}
+    </details>`;
+  host.querySelector("[data-jump-deck]")?.addEventListener("click", () => $("#deck-design")?.scrollIntoView({ behavior: "smooth", block: "start" }));
+}
+
+// The instruction slide in front of each Stage 1-4 deck. Icons are the deck's
+// own inline set (deck.js :: DECK_ICON_PATHS) — Mathematics draws no lucide in
+// its decks.
+const DECK_STEP_NEXT = ["chevron-right", "Press the arrow to go to the next slide."];
+const DECK_STEP_LISTEN = ["volume-2", "Press Listen to hear it read to you."];
+const DECK_INTROS = {
+  lesson: { title: "The Lesson", steps: [["eye", "One concept at a time. Read it and say the example out loud."], DECK_STEP_LISTEN, ["check", "On the last slide, press the button to finish."]] },
+  words: { title: "Math words and symbols", steps: [["eye", "One word or symbol at a time. Read it and say what it means."], DECK_STEP_LISTEN, ["check", "On the last slide, press the button to finish."]] },
+  explore: { title: "Explore the concept", steps: [["lightbulb", "One discovery at a time. Read the situation, then type your idea and press “Check my idea”."], ["lightbulb", "Stuck? Press “Hint”."], DECK_STEP_NEXT] },
+  visuals: { title: "Visual models", steps: [["eye", "One model at a time. Look at it — drag it to turn it if it moves."], DECK_STEP_LISTEN, ["check", "On the last slide, press the button to finish."]] },
+  method: { title: "Learn the method", steps: [["list-checks", "One method at a time. Press “Show me the next step” until it says Method complete."], DECK_STEP_LISTEN, DECK_STEP_NEXT] },
+  examples: { title: "Worked examples", steps: [["eye", "One example at a time. Try it, then open “Show worked solution”."], DECK_STEP_NEXT, ["check", "Open all the solutions to finish."]] },
+  guided: { title: "Guided practice", steps: [["pencil", "One question at a time. Type your answer and press “Check my answer”."], ["lightbulb", "Press “Give me a hint” if you need help."], DECK_STEP_NEXT] },
+  activities: { title: "Activities", steps: [["list-checks", "One activity at a time. Do it, then press “Mark complete”."], DECK_STEP_LISTEN, ["check", "On the last slide, press the button to finish."]] },
+  problems: { title: "Solve real problems", steps: [["pencil", "One problem at a time. Work it out, type your answer and press “Check answer”."], ["lightbulb", "Press “Hint” if you are stuck."], DECK_STEP_NEXT] },
+  explain: { title: "Explain your thinking", steps: [["pencil", "One prompt at a time. Write your explanation using the key ideas, then press “Check mathematical ideas”."], ["eye", "Open “Show model explanation” to compare."], DECK_STEP_NEXT] },
+};
+const deckIntro = (id) => DECK_INTROS[id] || null;
 
 // ===================== the Stage 1-4 slide deck =====================
 // Mathematics meets its youngest learners the way English Grades 1-4 do: one
@@ -359,17 +582,33 @@ function grownUpGuide(item) {
 
 // ===================== section renderers (verbatim) =====================
 function renderOverview() {
+  // The shell's checklist of what finishing this unit takes, first in the
+  // column so it is met before anything else — under the banner it would start
+  // below the fold. Mathematics has no section gate, so every row is open; the
+  // per-unit note (unit.howToUse) is read if a unit ever carries one, though
+  // every unit here has the same fifteen-section shape and none does yet.
+  const unitGuide = shellCtx.unitGuide({
+    hints: SECTION_HINTS,
+    howToUse: Array.isArray(course.unit.howToUse) ? course.unit.howToUse : [],
+    rule: "When every section has a tick, this unit is finished.",
+  });
+  // The unit's own path, authored per unit as an array of steps. It used to be
+  // ignored here in favour of one generic five-item list, so a unit could
+  // describe its own order and no learner ever read it.
+  const learningPath = Array.isArray(course.unit.learningPath) && course.unit.learningPath.length
+    ? course.unit.learningPath
+    : ["Discover and model the concept.", "Learn the method and study examples.", "Practise with hints, games and fluency.", "Solve real problems and explain your reasoning.", "Complete the Unit Challenge and reflect."];
   $("#app").innerHTML = `${pageHeader(`${(course.stage || course.grade).label} · ${course.term.label} · Unit ${course.unit.unitNo}`, course.unit.unitTitle, course.unit.unitOverview)}
     <div class="overview-grid">
       <div class="section-stack">
+        ${unitGuide}
         <section class="unit-banner math-banner"><div class="banner-copy"><span>Your mathematics journey</span><h2>Explore ${escapeHtml(course.unit.unitTitle)}</h2><p>Discover the ideas in familiar situations, model them, learn reliable methods, practise with support and explain your thinking.</p><button class="button gold" data-go="lesson" type="button">▶ Start the lesson</button></div></section>
         <section class="panel"><h2>What you will learn</h2><div class="outcome-list">${course.outcomes.map((outcome, index) => `<div class="outcome"><span>${index + 1}</span><p>${escapeHtml(outcome)}</p></div>`).join("")}</div></section>
       </div>
       <div class="section-stack">
         <section class="panel approval-banner"><span class="eyebrow">${escapeHtml(cambridgeFramework(stageNumber).level)} ${cambridgeFramework(stageNumber).code}</span><h3>Aligned to ${escapeHtml(cambridgeLabel(stageNumber))}</h3><p>Unit ${course.unit.unitNo} is structured from the ${escapeHtml(cambridgeLabel(stageNumber))} content package. AI-assisted content review complete — human curriculum sign-off pending.</p></section>
         <section class="panel"><h3>Your unit at a glance</h3><div class="stat-row"><div class="stat"><strong>${course.concepts.length}</strong><small>concepts</small></div><div class="stat"><strong>${course.practice.length}</strong><small>practice items</small></div><div class="stat"><strong>${course.activities.length}</strong><small>activities</small></div></div></section>
-        <section class="panel"><h3>Recommended path</h3><ol class="path-list"><li><span>1</span><span>Discover and model the concept.</span></li><li><span>2</span><span>Learn the method and study examples.</span></li><li><span>3</span><span>Practise with hints, games and fluency.</span></li><li><span>4</span><span>Solve real problems and explain your reasoning.</span></li><li><span>5</span><span>Complete the Unit Challenge and reflect.</span></li></ol></section>
-        <section class="panel"><h3>Keep going</h3><p>${progress.completed.length ? `You have completed ${progress.completed.length} learning steps on this device.` : "Your progress will save on this device as you learn."}</p><button class="button primary" data-go="${progress.completed.includes("lesson") ? "ai" : "lesson"}" type="button">Continue →</button></section>
+        <section class="panel"><h3>Recommended path</h3><ol class="path-list">${learningPath.map((step, index) => `<li><span>${index + 1}</span><span>${escapeHtml(step)}</span></li>`).join("")}</ol></section>
         ${placementCallout({ escapeHtml, storageKey: `ehel-math-s${stageNumber}-placement-exam-v1`, stageLabel: `Stage ${stageNumber}`, href: `?stage=${stageNumber}&unit=-1#placement`, unitNo: course.unit.unitNo })}
       </div>
     </div>`;
@@ -426,6 +665,7 @@ function renderMathWordsDeck() {
   const deck = mountDeck({
     ...deckPlacement(),
     heading: "Language for mathematics",
+    intro: deckIntro("words"),
     label: "Card",
     emptyMessage: "No words or symbols in this unit yet.",
     tools: `<div class="wc-tools">
@@ -518,6 +758,7 @@ function renderExploreConceptDeck() {
   mountDeck({
     ...deckPlacement(),
     heading: "Six familiar discoveries",
+    intro: deckIntro("explore"),
     label: "Discovery",
     slides,
     onClick: (event) => {
@@ -583,6 +824,7 @@ function renderVisualModelsDeck() {
   mountDeck({
     ...deckPlacement(),
     heading: "Ways to see the mathematics",
+    intro: deckIntro("visuals"),
     label: "Model",
     slides,
     onClick: (event) => {
@@ -642,6 +884,7 @@ function renderLearnMethodDeck() {
   mountDeck({
     ...deckPlacement(),
     heading: "Six short procedures",
+    intro: deckIntro("method"),
     label: "Method",
     slides,
     onClick: (event) => {
@@ -750,6 +993,7 @@ function renderLessonDeck() {
   mountDeck({
     ...deckPlacement(),
     heading: course.unit.unitTitle,
+    intro: deckIntro("lesson"),
     label: "Concept",
     slides,
     onClick: (event) => {
@@ -803,6 +1047,7 @@ function renderExamplesDeck() {
   const deck = mountDeck({
     ...deckPlacement(),
     heading: "Twelve examples · three levels",
+    intro: deckIntro("examples"),
     label: "Example",
     emptyMessage: "No examples at this level yet.",
     tools: `<div class="wc-tools">
@@ -885,6 +1130,7 @@ function renderPracticeDeck() {
   mountDeck({
     ...deckPlacement(),
     heading: "Support that adapts",
+    intro: deckIntro("guided"),
     label: "Question",
     slides,
     onClick: (event) => {
@@ -983,6 +1229,7 @@ function renderActivitiesDeck() {
   mountDeck({
     ...deckPlacement(),
     heading: "Learn by doing",
+    intro: deckIntro("activities"),
     label: "Activity",
     slides,
     onClick: (event, deck) => {
@@ -1300,6 +1547,7 @@ function renderRealProblemsDeck() {
   mountDeck({
     ...deckPlacement(),
     heading: "Mathematics in daily life",
+    intro: deckIntro("problems"),
     label: "Problem",
     slides,
     onClick: (event, deck) => {
@@ -1366,6 +1614,7 @@ function renderExplainThinkingDeck() {
   mountDeck({
     ...deckPlacement(),
     heading: "Reasoning matters",
+    intro: deckIntro("explain"),
     label: "Prompt",
     slides,
     onClick: (event) => {
@@ -1622,6 +1871,7 @@ const config = {
   // A deck takes the whole viewport while it is mounted; the next route has to
   // get the padded layout back, and whatever the last slide was saying has to
   // stop before its page is replaced.
+  onAfterRender: () => { renderSectionGuide(); },
   onBeforeRender: () => {
     stopVoice();
     document.body.classList.remove("gc-full");

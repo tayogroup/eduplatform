@@ -48,7 +48,10 @@ const FIXES = {
     "next to": "position", near: "position", up: "position", down: "position", here: "position", there: "position",
     town: "noun",
   },
-  3: { soon: "adverb", sooner: "adverb", care: "verb" },
+  // honour: the unit teaches the VERB ("We honour our parents", "I want to honour them",
+  // quiz "which word means to show someone great respect" → honour); the tag said noun
+  // because the source listed it beside respect and duty. User decision 2026-08-17: keep it.
+  3: { soon: "adverb", sooner: "adverb", care: "verb", honour: "verb" },
   4: { really: "adverb", clearly: "adverb", judge: "verb" },
   5: { unfortunately: "adverb" },
   6: { originally: "adverb", eagerly: "adverb", firmly: "adverb", dramatically: "adverb" },

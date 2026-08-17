@@ -39,8 +39,21 @@ export function createDeck({ $, escapeHtml, icon, stopAudio = () => {}, afterPai
   // keeps the original section above the deck, so it passes its own container
   // and turns full-bleed off: the body class — and the 100vh slide CSS it
   // switches on — would swallow the page the deck is meant to sit under.
-  function mountDeck({ heading, label = "Slide", slides = [], tools = "", emptyMessage = "", onSlide = null, onClick = null, mount = "#app", fullBleed = true }) {
+  //
+  // `intro` — { title, steps: [[icon, text], …], start = "Start" } — puts one
+  // instruction slide in front of the subject's slides: what this deck is, how
+  // to move through it, what finishes it. It exists because the deck is where
+  // the youngest learners meet a section and it was the one surface with no
+  // framing at all — a five-year-old landed on "Word 1 of 14" with no idea the
+  // arrow was the way on. The intro is the deck's own: every position a subject
+  // sees or passes (goTo, redrawSlide, onSlide, index, count) is still numbered
+  // over the subject's slides alone, so a subject that adds an intro changes no
+  // other line. It is shown once, on the first paint — a re-deck (a filter, a
+  // section change) lands where it is asked to, not back on the instructions.
+  function mountDeck({ heading, label = "Slide", slides = [], tools = "", emptyMessage = "", onSlide = null, onClick = null, mount = "#app", fullBleed = true, intro = null }) {
     const lower = label.toLowerCase();
+    // "activities", not "activitys" — the one irregular the labels here need.
+    const plural = lower.endsWith("y") ? `${lower.slice(0, -1)}ies` : `${lower}s`;
     const host = typeof mount === "string" ? $(mount) : mount;
     host.innerHTML = `
     <div class="gc-wrap">
@@ -71,6 +84,16 @@ export function createDeck({ $, escapeHtml, icon, stopAudio = () => {}, afterPai
     const countLabel = find("#gc-count");
     let items = [];
     let index = 0;
+    // `index` is the subject's position; `pos` below is the track child. They
+    // differ by one when an intro slide is in front, and by nothing otherwise.
+    const offset = intro ? 1 : 0;
+    let firstPaint = true;
+    const introSlide = () => intro ? `<section class="gc-slide gc-intro gc-v0"><div class="gc-inner">
+        <span class="gc-eyebrow">How to use these slides</span>
+        <h3 class="gc-title">${escapeHtml(intro.title || heading)}</h3>
+        <ol class="gc-intro-steps">${(intro.steps || []).map(([name, text]) => `<li>${icon(name)}<span>${escapeHtml(text)}</span></li>`).join("")}</ol>
+        <button class="gc-btn" type="button" data-deck-start>${escapeHtml(intro.start || "Start")} ${icon("arrow-right")}</button>
+      </div></section>` : "";
 
     // Only the slide on screen may be reached. The others are not hidden — they
     // sit in the track at full width beside it, so on a 1280px viewport slides
@@ -91,19 +114,21 @@ export function createDeck({ $, escapeHtml, icon, stopAudio = () => {}, afterPai
     // already spoken in the aria-label ("Question 3 of 25"), and what
     // aria-roledescription has to convey is what KIND of thing this is.
     const syncReachable = () => {
-      const total = track.children.length;
+      const pos = index + offset;
       for (const [position, slide] of [...track.children].entries()) {
-        slide.inert = position !== index;
+        slide.inert = position !== pos;
         slide.setAttribute("role", "group");
         slide.setAttribute("aria-roledescription", "slide");
-        slide.setAttribute("aria-label", `${label} ${position + 1} of ${total}`);
+        slide.setAttribute("aria-label", position < offset ? "How to use these slides" : `${label} ${position + 1 - offset} of ${items.length}`);
       }
     };
 
+    // `next` is a subject position; -1 is the intro slide when there is one.
     const goTo = (next) => {
       if (!items.length) return;
-      index = Math.max(0, Math.min(items.length - 1, next));
-      track.style.transform = `translateX(-${index * 100}%)`;
+      index = Math.max(-offset, Math.min(items.length - 1, next));
+      const pos = index + offset;
+      track.style.transform = `translateX(-${pos * 100}%)`;
       syncReachable();
       // The dots carried a label ("Part 3 of 6") but nothing said which one the
       // learner is on, so the strip announced six identical-sounding choices.
@@ -111,16 +136,18 @@ export function createDeck({ $, escapeHtml, icon, stopAudio = () => {}, afterPai
       // aria-selected is not, outside a tab/listbox pattern these dots do not
       // implement — they are plain buttons that move a carousel.
       dotsRow.querySelectorAll("[data-dot]").forEach((dot, position) => {
-        const isCurrent = position === index;
+        const isCurrent = position === pos;
         dot.classList.toggle("active", isCurrent);
         if (isCurrent) dot.setAttribute("aria-current", "true");
         else dot.removeAttribute("aria-current");
       });
-      prevArrow.disabled = index === 0;
+      prevArrow.disabled = pos === 0;
       nextArrow.disabled = index === items.length - 1;
-      countLabel.textContent = `${label} ${index + 1} of ${items.length}`;
+      countLabel.textContent = index < 0 ? `${items.length} ${plural}` : `${label} ${index + 1} of ${items.length}`;
       stopAudio();
-      onSlide?.(index, deck);
+      // The intro is the deck's slide, not the subject's: a subject watching for
+      // "the last slide" or "which word is showing" never hears about it.
+      if (index >= 0) onSlide?.(index, deck);
     };
 
     const setSlides = (next, { at = 0 } = {}) => {
@@ -130,28 +157,33 @@ export function createDeck({ $, escapeHtml, icon, stopAudio = () => {}, afterPai
         dotsRow.innerHTML = "";
         prevArrow.disabled = true;
         nextArrow.disabled = true;
-        countLabel.textContent = `No ${lower}s`;
+        countLabel.textContent = `No ${plural}`;
         index = 0;
+        // Not a paint the intro counts: a subject that mounts empty and fills
+        // its deck from a filter a line later (english vocabulary) has not shown
+        // the learner anything yet.
         afterPaint(track);
         return;
       }
-      track.innerHTML = items.join("");
-      dotsRow.innerHTML = items.map((_, position) => `<button class="gc-dot" type="button" data-dot="${position}" aria-label="${label} ${position + 1} of ${items.length}"></button>`).join("");
+      track.innerHTML = introSlide() + items.join("");
+      dotsRow.innerHTML = (intro ? `<button class="gc-dot gc-dot-intro" type="button" data-dot="-1" aria-label="How to use these slides"></button>` : "")
+        + items.map((_, position) => `<button class="gc-dot" type="button" data-dot="${position}" aria-label="${label} ${position + 1} of ${items.length}"></button>`).join("");
       dotsRow.querySelectorAll("[data-dot]").forEach((dot) => dot.addEventListener("click", () => goTo(Number(dot.dataset.dot))));
       index = 0;
-      goTo(Math.max(0, Math.min(items.length - 1, at)));
+      goTo(firstPaint && intro ? -1 : Math.max(0, Math.min(items.length - 1, at)));
+      firstPaint = false;
       afterPaint(track);
     };
 
     const redrawSlide = (position, html) => {
-      const node = track.children[position];
+      const node = track.children[position + offset];
       if (!node) return;
       items[position] = html;
       node.outerHTML = html;
       // The replacement is a fresh element, so it does not carry the inert flag
       // the old one had — a redrawn off-screen slide would become tabbable again.
       syncReachable();
-      afterPaint(track.children[position] || track);
+      afterPaint(track.children[position + offset] || track);
     };
 
     const deck = { root, goTo, setSlides, redrawSlide, get index() { return index; }, get count() { return items.length; } };
@@ -160,6 +192,9 @@ export function createDeck({ $, escapeHtml, icon, stopAudio = () => {}, afterPai
     // learner works, and rebinding every control on every repaint is how a dead
     // button appears three interactions later.
     if (onClick) root.addEventListener("click", (event) => onClick(event, deck));
+    // The intro's Start button is the deck's own control, so it is handled here
+    // and never reaches a subject's onClick as an unknown target.
+    if (intro) root.addEventListener("click", (event) => { if (event.target.closest("[data-deck-start]")) goTo(0); });
     prevArrow.addEventListener("click", () => goTo(index - 1));
     nextArrow.addEventListener("click", () => goTo(index + 1));
 

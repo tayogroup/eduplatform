@@ -1908,6 +1908,25 @@ const { deckFinish } = baseDeck;
 // before the original designs were restored above them.
 const mountDeck = (options) => baseDeck.mountDeck(deckMount ? { ...options, mount: deckMount, fullBleed: false } : options);
 
+// The instruction slide in front of each deck: what the learner does on the
+// slides, and what finishes the section. One line is the section's own; the
+// two about moving on and listening are the same everywhere, because the deck
+// works the same everywhere. Written for the youngest reader — this deck is
+// what a Grade 1 learner meets — and kept to three lines, since a slide of
+// instructions the learner cannot read is a slide they swipe past.
+const DECK_STEP_NEXT = ["chevron-right", "Press the arrow to go to the next slide."];
+const DECK_STEP_LISTEN = ["volume-2", "Press the speaker to hear it read to you."];
+const DECK_INTROS = {
+  dictionary: { title: "Say the words", steps: [["book-a", "One word at a time. Say each word out loud, then press “I know this word”."], DECK_STEP_LISTEN, DECK_STEP_NEXT] },
+  reading: { title: "Read the story", steps: [["book-open", "One page at a time. Read it, or listen to it."], DECK_STEP_LISTEN, ["check", "On the last page, press “I have read this text”."]] },
+  comprehension: { title: "Think about the story", steps: [["list-checks", "One question at a time. Say your answer, then press “Check guidance” to see a good answer."], DECK_STEP_NEXT, ["check", "On the last slide, press “Finish comprehension”."]] },
+  grammar: { title: "Say the patterns", steps: [["braces", "One pattern at a time. Say it out loud and try the practice."], DECK_STEP_LISTEN, ["check", "Go through every pattern to the last slide to finish."]] },
+  speaking: { title: "Use your voice", steps: [["messages-square", "One practice at a time. Press “Hear model”, then say it yourself."], ["mic", "Press Record to record yourself, then Submit."], DECK_STEP_NEXT] },
+  writing: { title: "Plan, write and improve", steps: [["pencil-line", "One task at a time. Write your own sentences in the box — at least eight words."], ["send", "Press “Submit this draft” to save your writing."], DECK_STEP_NEXT] },
+  activities: { title: "Learn by doing", steps: [["shapes", "One activity at a time. Do it, then press “Mark complete”."], DECK_STEP_LISTEN, ["check", "On the last slide, press “Finish activities”."]] },
+};
+const deckIntro = (id) => DECK_INTROS[id] || null;
+
 // Vocabulary as a slide deck, on the Grade 1 grammar carousel's design (gc-*):
 // one word per vivid slide, big Hear buttons, side arrows, dots, swipe.
 //
@@ -1997,6 +2016,7 @@ function renderWordCarousel() {
   const deck = mountDeck({
     heading: "Say the words",
     label: "Word",
+    intro: deckIntro("dictionary"),
     emptyMessage: "No matching words. Clear the search to see them all.",
     // Sits below the dots, not in .gc-top, which the full-bleed CSS hides. A unit
     // holds 13-70 words, so the deck itself is what the search narrows.
@@ -2457,6 +2477,7 @@ function renderReadingCarousel() {
   const deck = mountDeck({
     heading: "Read, listen and imagine",
     label: "Page",
+    intro: deckIntro("reading"),
     emptyMessage: "This text has no pages yet.",
     // A unit holds four to six texts, so the deck needs a way to reach them —
     // the same job the shelf does in the e-book above, in the place every other
@@ -2579,6 +2600,7 @@ function renderComprehensionCarousel() {
   const deck = mountDeck({
     heading: "Think about the text",
     label: "Question",
+    intro: deckIntro("comprehension"),
     emptyMessage: "No questions in this section yet.",
     tools: groups.length > 1 ? `<div class="wc-tools">
         <select id="section-filter" aria-label="Filter questions by text"><option value="all">All texts</option>${groups.map((group) => `<option value="${esc(group)}">${esc(group)}</option>`).join("")}</select>
@@ -2692,6 +2714,7 @@ function renderGrammarCarousel() {
   mountDeck({
     heading: "Say the patterns",
     label: "Pattern",
+    intro: deckIntro("grammar"),
     slides,
     // Reaching the last slide is the completion: a learner who swiped through
     // every pattern has done the section, button or no button.
@@ -2798,6 +2821,7 @@ function renderSpeakingCarousel() {
   mountDeck({
     heading: "Use your voice",
     label: "Practice",
+    intro: deckIntro("speaking"),
     slides,
     onClick: (event) => {
       const target = event.target.closest("[data-model], [data-record], [data-speaking-submit], [data-deck-finish]");
@@ -2953,6 +2977,7 @@ function renderWritingCarousel() {
   const deck = mountDeck({
     heading: "Plan, write and improve",
     label: "Task",
+    intro: deckIntro("writing"),
     slides,
     onClick: (event) => {
       const target = event.target.closest("[data-writing-audio], [data-writing-submit]");
@@ -3033,6 +3058,7 @@ function renderActivitiesCarousel() {
   mountDeck({
     heading: "Learn by doing",
     label: "Activity",
+    intro: deckIntro("activities"),
     slides,
     onClick: (event) => {
       const target = event.target.closest("[data-activity-audio], [data-activity-done], [data-deck-finish]");

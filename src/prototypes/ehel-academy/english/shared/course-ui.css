@@ -285,6 +285,14 @@ body.focus-mode .focus-exit:hover { background: #1d4360; }
 /* The deck's own intro slide (deck.js :: mountDeck `intro`): a short list of
    what to do, in the same card as every other slide. */
 .gc-dot-intro { border-radius: 4px; }
+/* The closing slide — the deck's own last slide, drawn by english.js :: deckClosingSlide. */
+.gc-closing .gc-title { font-size: 26px; }
+.gc-closing-mark { display: grid; place-items: center; width: 72px; height: 72px; margin: 0 auto 4px; border-radius: 50%; background: #2a6cb0; color: #fff; }
+.gc-closing-mark i, .gc-closing-mark svg { width: 36px; height: 36px; }
+.gc-closing.is-done .gc-closing-mark { background: var(--teal); }
+.gc-closing.is-unit .gc-closing-mark { background: var(--gold); color: var(--ink); }
+.gc-btn.gc-gold { background: var(--gold); color: #17324d; }
+a.gc-btn { text-decoration: none; }
 .gc-intro-steps { margin: 0; padding: 0; list-style: none; display: grid; gap: 12px; width: 100%; max-width: 440px; text-align: left; }
 .gc-intro-steps li { display: grid; grid-template-columns: 40px 1fr; gap: 12px; align-items: center; font-size: 19px; line-height: 1.4; color: #33465e; }
 .gc-intro-steps li i, .gc-intro-steps li svg { width: 40px; height: 40px; padding: 8px; border-radius: 50%; background: #eef4fa; color: #2a6cb0; }

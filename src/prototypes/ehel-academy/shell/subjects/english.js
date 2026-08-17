@@ -168,7 +168,7 @@ function bind(ctx) {
   complete = (section, message) => {
     const wasDone = progress.completed.includes(section);
     shellComplete(section, message);
-    if (section === route) renderSectionCompletion({ celebrate: !wasDone });
+    if (section === route) { renderSectionCompletion({ celebrate: !wasDone }); activeDeck?.refreshClosing(); }
   };
 }
 
@@ -508,12 +508,53 @@ function renderSectionGuide() {
 // card. Without it a Grade 1-4 learner who finishes on the deck's last slide
 // would have the card below the fold and see only the 2.6-second toast, which
 // is the gap this exists to close.
-function renderSectionCompletion({ celebrate = false } = {}) {
-  const app = $("#app");
-  let host = $("#section-complete");
+// The words and the way on, computed once so the card under the page and the
+// deck's closing slide (deckClosingSlide) cannot tell the learner two different
+// things. `buttons` names the button classes, because the two surfaces dress
+// their controls differently (.button on the page, .gc-btn on a slide); the
+// action itself is `data-complete-go` either way, or a link for the next unit.
+function completionCopy({ buttons = { primary: "button primary", gold: "button gold" } } = {}) {
   const countable = unitSectionIds();
   const done = countable.filter((id) => progress.completed.includes(id));
   const unitDone = countable.length > 0 && done.length === countable.length;
+  let eyebrow, title, body, action;
+  if (unitDone) {
+    const nextUnit = manifest?.units?.find((unit) => Number(unit.number) === unitNumber + 1) || null;
+    const nextOpen = nextUnit && unitIsUnlocked(nextUnit.number);
+    eyebrow = "Unit finished";
+    title = `Unit ${course.unit.unitNo} is finished. Brilliant work!`;
+    body = `Every section of “${course.unit.unitTitle}” has a tick.`;
+    if (unitNumber === CAPSTONE_UNIT) {
+      body += " One thing is left for the whole course: the final quiz.";
+      action = `<button class="${buttons.gold}" type="button" data-complete-go="final-quiz">${finalQuizProgress.completed ? "View my final quiz results" : "Open the final course quiz"} ${icon("arrow-right")}</button>`;
+    } else if (nextOpen) {
+      body += ` Unit ${nextUnit.number}: ${nextUnit.title} is open now.`;
+      action = `<a class="${buttons.gold}" href="${courseLocation(nextUnit.number)}">Go on to Unit ${nextUnit.number} ${icon("arrow-right")}</a>`;
+    } else if (nextUnit) {
+      // The gate is on and an EARLIER unit is still unfinished, so the next one
+      // stays shut; the overview's guide names what is missing.
+      body += ` Unit ${nextUnit.number} opens when every unit before it is finished.`;
+      action = `<button class="${buttons.primary}" type="button" data-complete-go="overview">Back to the overview ${icon("arrow-right")}</button>`;
+    } else {
+      action = `<button class="${buttons.primary}" type="button" data-complete-go="overview">Back to the overview ${icon("arrow-right")}</button>`;
+    }
+  } else {
+    // The next section in the chain the learner can actually open; failing that
+    // the first one still to do — its own page explains what stands in the way.
+    const pending = sectionChain().filter((id) => countable.includes(id) && !progress.completed.includes(id));
+    const next = pending.find((id) => sectionUnlocked(id)) || pending[0];
+    eyebrow = "Section finished";
+    title = `Well done! ${sectionLabel(route)} is finished.`;
+    body = `That is ${done.length} of ${countable.length} sections in Unit ${course.unit.unitNo} ticked.${next ? ` Next up: ${sectionLabel(next)}.` : ""}`;
+    action = next ? `<button class="${buttons.primary}" type="button" data-complete-go="${escapeHtml(next)}">Continue to ${escapeHtml(sectionLabel(next))} ${icon("arrow-right")}</button>` : "";
+  }
+  return { unitDone, countable, eyebrow, title, body, action };
+}
+
+function renderSectionCompletion({ celebrate = false } = {}) {
+  const app = $("#app");
+  let host = $("#section-complete");
+  const { unitDone, countable, eyebrow, title, body, action } = completionCopy();
   // A finished section waiting behind an unfinished earlier step draws the
   // locked page (gated → renderLockedSection), and a "finished" card under a
   // "not open yet" heading contradicts itself — same rule the section guide
@@ -524,37 +565,6 @@ function renderSectionCompletion({ celebrate = false } = {}) {
   if (!host) { host = document.createElement("section"); host.id = "section-complete"; app.parentNode.insertBefore(host, app.nextSibling); }
   host.className = `section-complete ${unitDone ? "is-unit" : "is-section"}`;
   host.setAttribute("aria-labelledby", "section-complete-title");
-  let eyebrow, title, body, action;
-  if (unitDone) {
-    const nextUnit = manifest?.units?.find((unit) => Number(unit.number) === unitNumber + 1) || null;
-    const nextOpen = nextUnit && unitIsUnlocked(nextUnit.number);
-    eyebrow = "Unit finished";
-    title = `Unit ${course.unit.unitNo} is finished. Brilliant work!`;
-    body = `Every section of “${course.unit.unitTitle}” has a tick.`;
-    if (unitNumber === CAPSTONE_UNIT) {
-      body += " One thing is left for the whole course: the final quiz.";
-      action = `<button class="button gold" type="button" data-complete-go="final-quiz">${finalQuizProgress.completed ? "View my final quiz results" : "Open the final course quiz"} ${icon("arrow-right")}</button>`;
-    } else if (nextOpen) {
-      body += ` Unit ${nextUnit.number}: ${nextUnit.title} is open now.`;
-      action = `<a class="button gold" href="${courseLocation(nextUnit.number)}">Go on to Unit ${nextUnit.number} ${icon("arrow-right")}</a>`;
-    } else if (nextUnit) {
-      // The gate is on and an EARLIER unit is still unfinished, so the next one
-      // stays shut; the overview's guide names what is missing.
-      body += ` Unit ${nextUnit.number} opens when every unit before it is finished.`;
-      action = `<button class="button primary" type="button" data-complete-go="overview">Back to the overview ${icon("arrow-right")}</button>`;
-    } else {
-      action = `<button class="button primary" type="button" data-complete-go="overview">Back to the overview ${icon("arrow-right")}</button>`;
-    }
-  } else {
-    // The next section in the chain the learner can actually open; failing that
-    // the first one still to do — its own page explains what stands in the way.
-    const pending = sectionChain().filter((id) => countable.includes(id) && !progress.completed.includes(id));
-    const next = pending.find((id) => sectionUnlocked(id)) || pending[0];
-    eyebrow = "Section finished";
-    title = `Well done! ${sectionLabel(route)} is finished.`;
-    body = `That is ${done.length} of ${countable.length} sections in Unit ${course.unit.unitNo} ticked.${next ? ` Next up: ${sectionLabel(next)}.` : ""}`;
-    action = next ? `<button class="button primary" type="button" data-complete-go="${escapeHtml(next)}">Continue to ${escapeHtml(sectionLabel(next))} ${icon("arrow-right")}</button>` : "";
-  }
   host.innerHTML = `<div class="section-complete-mark" aria-hidden="true">${icon(unitDone ? "trophy" : "check")}</div>
     <div class="section-complete-copy">
       <span class="eyebrow">${escapeHtml(eyebrow)}</span>
@@ -2243,7 +2253,85 @@ const { deckFinish } = baseDeck;
 // arrives that way now — the unset branch is what a carousel would get if it were
 // ever mounted as a section on its own again, which is how Grades 1-4 worked
 // before the original designs were restored above them.
-const mountDeck = (options) => baseDeck.mountDeck(deckMount ? { ...options, mount: deckMount, fullBleed: false } : options);
+//
+// Every English deck also ends on a CLOSING slide, added here so the six
+// carousels get it without knowing about it — the mirror of the intro slide the
+// shared deck puts in front. Before the section is finished it holds the deck's
+// Finish button (`finish: [action, label]`, the same data-deck-finish the
+// subject's onClick already handles) or, for a deck that finishes some other
+// way, a line saying what does (`closingHint`). Once the tick lands it is
+// redrawn as the celebration — the same words as the card under the page
+// (completionCopy) — with the way on. So a Grade 1-4 learner who never scrolls
+// below the deck still meets "you finished this" where they are.
+//
+// The closing slide is the subject's LAST slide, so it counts in `count` and
+// gets a dot; the subject's own onSlide is not told about it (nothing to look at
+// there). The shared deck numbers everything it holds, so left alone it would
+// say "Pattern 7 of 7" over six patterns — relabel() re-counts over the content
+// slides alone and calls the closing one "The end", in the counter, the dots
+// and each slide's aria-label. It runs after every move (onSlide, and a click
+// on the deck for the intro dot, which onSlide never reports) because the deck
+// rewrites those labels on every goTo. A subject that re-decks (setSlides) gets
+// the closing slide appended again.
+let activeDeck = null;
+const mountDeck = (options) => {
+  const { finish = null, closingHint = "", onSlide = null, slides = [], ...rest } = options;
+  const label = options.label || "Slide";
+  const closing = () => deckClosingSlide({ finish, hint: closingHint });
+  const withClosing = (list) => (list.length ? [...list, closing()] : list);
+  const relabel = (deck) => {
+    const n = deck.count - 1;
+    if (n < 0) return;
+    const name = (i) => (i === n ? "The end" : `${label} ${i + 1} of ${n}`);
+    const slideNodes = deck.root.querySelectorAll(".gc-track > .gc-slide");
+    const offset = slideNodes.length - deck.count; // 1 with an intro slide in front
+    slideNodes.forEach((node, pos) => { if (pos - offset >= 0) node.setAttribute("aria-label", name(pos - offset)); });
+    deck.root.querySelectorAll("[data-dot]").forEach((dot, pos) => { if (pos - offset >= 0) dot.setAttribute("aria-label", name(pos - offset)); });
+    const count = deck.root.querySelector("#gc-count");
+    if (!count) return;
+    if (deck.index >= 0) count.textContent = name(deck.index);
+    else count.textContent = count.textContent.replace(/^\d+/, String(n)); // the intro's "14 words"
+  };
+  const deck = baseDeck.mountDeck({
+    ...rest,
+    ...(deckMount ? { mount: deckMount, fullBleed: false } : {}),
+    slides: withClosing(slides),
+    onSlide: (index, self) => {
+      relabel(self);
+      if (index < self.count - 1) onSlide?.(index, self);
+    },
+  });
+  const baseSetSlides = deck.setSlides;
+  deck.setSlides = (next, opts) => { baseSetSlides(withClosing([...next]), opts); relabel(deck); };
+  deck.refreshClosing = () => { if (deck.count) { deck.redrawSlide(deck.count - 1, closing()); relabel(deck); } };
+  deck.root.addEventListener("click", (event) => {
+    relabel(deck); // the deck's own listeners ran first, so any move has happened
+    const go = event.target.closest("[data-complete-go]");
+    if (go) navigate(go.dataset.completeGo);
+  });
+  relabel(deck);
+  activeDeck = deck;
+  return deck;
+};
+
+function deckClosingSlide({ finish, hint }) {
+  if (!progress.completed.includes(route)) {
+    return `<section class="gc-slide gc-closing gc-v0"><div class="gc-inner">
+      <span class="gc-eyebrow">The end of the slides</span>
+      <h3 class="gc-title">You reached the end!</h3>
+      <p class="gc-lead">${escapeHtml(hint || (finish ? "Press the button to finish this section." : "Finish the task on the slides and this section gets its tick."))}</p>
+      ${finish ? deckFinish(finish[0], finish[1]) : ""}
+    </div></section>`;
+  }
+  const { unitDone, eyebrow, title, body, action } = completionCopy({ buttons: { primary: "gc-btn", gold: "gc-btn gc-gold" } });
+  return `<section class="gc-slide gc-closing is-done ${unitDone ? "is-unit" : ""} gc-v0"><div class="gc-inner">
+      <div class="gc-closing-mark" aria-hidden="true">${icon(unitDone ? "trophy" : "check")}</div>
+      <span class="gc-eyebrow">${escapeHtml(eyebrow)}</span>
+      <h3 class="gc-title">${escapeHtml(title)}</h3>
+      <p class="gc-lead">${escapeHtml(body)}</p>
+      ${action}
+    </div></section>`;
+}
 
 // The instruction slide in front of each deck: what the learner does on the
 // slides, and what finishes the section. One line is the section's own; the
@@ -2317,7 +2405,6 @@ function renderWordCarousel() {
         <div data-feedback="${esc(item.vocabularyId)}" role="status" aria-live="polite" aria-atomic="true"></div>
       </details>
       <button class="gc-btn ${known ? "done" : "ghost"}" type="button" data-know="${esc(item.vocabularyId)}">${known ? `${icon("check-circle")} Learned` : `${icon("bookmark-plus")} I know this word`}</button>
-      ${index === words.length - 1 ? deckFinish("dictionary", "I have learned these words") : ""}
     </div></section>`;
   };
 
@@ -2354,6 +2441,7 @@ function renderWordCarousel() {
     heading: "Say the words",
     label: "Word",
     intro: deckIntro("dictionary"),
+    finish: ["dictionary", "I have learned these words"],
     emptyMessage: "No matching words. Clear the search to see them all.",
     // Sits below the dots, not in .gc-top, which the full-bleed CSS hides. A unit
     // holds 13-70 words, so the deck itself is what the search narrows.
@@ -2815,13 +2903,13 @@ function renderReadingCarousel() {
       <span class="gc-eyebrow">${esc(reading.type)} · Page ${index + 1} of ${pages.length}</span>
       ${index === 0 ? `<h3 class="gc-title">${esc(reading.title)}</h3>${reading.setting ? `<small class="gc-source">${esc(reading.setting)}</small>` : ""}` : ""}
       <div class="rd-page">${html}</div>
-      ${index === pages.length - 1 ? deckFinish("reading", "I have read this text") : ""}
     </div></section>`;
 
   const deck = mountDeck({
     heading: "Read, listen and imagine",
     label: "Page",
     intro: deckIntro("reading"),
+    finish: ["reading", "I have read this text"],
     emptyMessage: "This text has no pages yet.",
     // A unit holds four to six texts, so the deck needs a way to reach them —
     // the same job the shelf does in the e-book above, in the place every other
@@ -2938,13 +3026,13 @@ function renderComprehensionCarousel() {
       </div>
       <div class="gc-actions"><button class="gc-btn" type="button" data-check-answer="${esc(question.questionId)}">${icon("list-checks")} Check guidance</button></div>
       <div data-feedback="${esc(question.questionId)}" role="status" aria-live="polite" aria-atomic="true"></div>
-      ${index === questions.length - 1 ? deckFinish("comprehension", "Finish comprehension") : ""}
     </div></section>`;
 
   const deck = mountDeck({
     heading: "Think about the text",
     label: "Question",
     intro: deckIntro("comprehension"),
+    finish: ["comprehension", "Finish comprehension"],
     emptyMessage: "No questions in this section yet.",
     tools: groups.length > 1 ? `<div class="wc-tools">
         <select id="section-filter" aria-label="Filter questions by text"><option value="all">All texts</option>${groups.map((group) => `<option value="${esc(group)}">${esc(group)}</option>`).join("")}</select>
@@ -3050,7 +3138,6 @@ function renderGrammarCarousel() {
       ${lesson.commonMistake ? `<p class="gc-note gc-mistake">${esc(lesson.commonMistake)}</p>` : ""}
       ${lesson.memoryTip ? `<p class="gc-note"><span class="field-label">Memory tip:</span> ${esc(lesson.memoryTip)}</p>` : ""}
       ${lesson.practice ? `<details class="gc-practice"><summary>Show practice</summary><p class="gc-note gc-try">${esc(lesson.practice)}</p>${lesson.practiceAudio?.available ? `<button class="gc-btn" data-practice-audio="${lesson.grammarId}" type="button">${icon("volume-2")} Hear the practice</button>` : ""}</details>` : ""}
-      ${i === lessons.length - 1 ? deckFinish("grammar", `I practised all ${lessons.length} lessons`) : ""}
     </div></section>`;
   });
 
@@ -3059,6 +3146,7 @@ function renderGrammarCarousel() {
     heading: "Say the patterns",
     label: "Pattern",
     intro: deckIntro("grammar"),
+    finish: ["grammar", `I practised all ${lessons.length} lessons`],
     slides,
     // Reaching the last slide is the completion: a learner who swiped through
     // every pattern has done the section, button or no button.
@@ -3159,13 +3247,13 @@ function renderSpeakingCarousel() {
            <small class="gc-source">ElevenLabs · approved Ehel voice · 0.90x</small>`
         : `<span class="audio-pending">${icon("clock-3")} ElevenLabs model audio pending</span>`}
       ${task.recordingRequired ? speakingCoachHtml(task, { idPrefix: "deck-", buttonClass: "gc-btn" }) : ""}
-      ${index === tasks.length - 1 ? deckFinish("speaking", `I finished all ${tasks.length} speaking practices`) : ""}
     </div></section>`);
 
   mountDeck({
     heading: "Use your voice",
     label: "Practice",
     intro: deckIntro("speaking"),
+    finish: ["speaking", `I finished all ${tasks.length} speaking practices`],
     slides,
     onClick: (event) => {
       const target = event.target.closest("[data-model], [data-record], [data-speaking-submit], [data-deck-finish]");
@@ -3322,6 +3410,7 @@ function renderWritingCarousel() {
     heading: "Plan, write and improve",
     label: "Task",
     intro: deckIntro("writing"),
+    closingHint: "Submit one draft on the task slides and Writing gets its tick.",
     slides,
     onClick: (event) => {
       const target = event.target.closest("[data-writing-audio], [data-writing-submit]");
@@ -3396,13 +3485,13 @@ function renderActivitiesCarousel() {
         <textarea data-activity-response="${esc(activity.activityId)}" rows="5" placeholder="Record your answer or notes…" aria-label="Response for ${esc(activity.title)}"></textarea>
       </div>
       <button class="gc-btn ghost" type="button" data-activity-done="${esc(activity.activityId)}">${icon("check")} Mark complete</button>
-      ${index === activities.length - 1 ? deckFinish("activities", "Finish activities") : ""}
     </div></section>`);
 
   mountDeck({
     heading: "Learn by doing",
     label: "Activity",
     intro: deckIntro("activities"),
+    finish: ["activities", "Finish activities"],
     slides,
     onClick: (event) => {
       const target = event.target.closest("[data-activity-audio], [data-activity-done], [data-deck-finish]");
@@ -4635,7 +4724,7 @@ const config = {
   // classicRegion and deckMount are per-render state: a section that draws both
   // designs sets them, and every other section must find them clear or it would
   // paint into a region the previous section left behind.
-  onBeforeRender: () => { route = shellCtx.route; stopAudio(); document.body.classList.remove("gc-full"); classicRegion = null; deckMount = null; showWordInDeck = null; showReadingInDeck = null; showWritingInDeck = null; showComprehensionGroupInDeck = null; $("#app").setAttribute("aria-busy", "true"); },
+  onBeforeRender: () => { route = shellCtx.route; stopAudio(); document.body.classList.remove("gc-full"); classicRegion = null; deckMount = null; activeDeck = null; showWordInDeck = null; showReadingInDeck = null; showWritingInDeck = null; showComprehensionGroupInDeck = null; $("#app").setAttribute("aria-busy", "true"); },
   onAfterRender: () => { $("#app").setAttribute("aria-busy", "false"); renderSectionGuide(); renderSectionCompletion(); prepareScreenReaderView(); icons(); },
   onNavRendered: () => { renderUnitPickers(); paintSectionLocks(); icons(); },
   // Every route draws the locked page while a unit is locked. The check is

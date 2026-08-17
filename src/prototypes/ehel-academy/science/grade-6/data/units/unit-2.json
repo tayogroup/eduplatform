@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-08-12T13:35:44.454Z",
+  "generatedAt": "2026-08-17T23:43:43.352Z",
   "stage": {
     "id": "s06",
     "label": "Stage 6"
@@ -96,7 +96,6 @@
     "poster": null
   },
   "outcomes": [
-    "By the end of this unit, you will be able to:",
     "Explain what an ecosystem and a habitat are, and describe the biotic (living) and abiotic (non-living) factors within them.",
     "Describe how plants act as producers and capture energy from the sun through photosynthesis.",
     "Classify animals as primary, secondary, and tertiary consumers, and as herbivores, carnivores, and omnivores.",
@@ -105,7 +104,8 @@
     "Explain why energy decreases at each step of a food chain and why there are fewer top predators than plants.",
     "Describe how living things show adaptations that help them survive in their habitat.",
     "Evaluate how human activities such as deforestation, overfishing, drought, and plastic pollution affect ecosystems.",
-    "Suggest conservation actions that protect living things, connecting this to the responsibility of caring for the Earth."
+    "Name three biotic and three abiotic factors in a mangrove ecosystem along the coast near Kismaayo.",
+    "Classify each of these as herbivore, carnivore, or omnivore: goat, lion, human, heron, camel."
   ],
   "concepts": [
     {
@@ -316,7 +316,7 @@
       "id": "we02",
       "outcomeId": "lo02",
       "difficulty": "Basic",
-      "title": "Guided example 2",
+      "title": "In a food chain, the arrow points",
       "prompt": "In a food chain, the arrow points: (a) from the eater to the food (b) from the food to the eater (c) in both directions (d) it does not matter.",
       "solution": "(b) from the food to the eater. The arrow shows the direction energy flows, into the animal that eats."
     },
@@ -324,7 +324,7 @@
       "id": "we03",
       "outcomeId": "lo03",
       "difficulty": "Basic",
-      "title": "Guided example 3",
+      "title": "Which of these is a producer",
       "prompt": "Which of these is a producer? (a) gazelle (b) lion (c) acacia grass (d) earthworm.",
       "solution": "(c) acacia grass. Grass is a producer because it makes its own food by photosynthesis; the others must eat."
     },
@@ -332,7 +332,7 @@
       "id": "we04",
       "outcomeId": "lo04",
       "difficulty": "Basic",
-      "title": "Guided example 4",
+      "title": "An animal that eats only plants is called a",
       "prompt": "An animal that eats only plants is called a: (a) carnivore (b) herbivore (c) omnivore (d) decomposer.",
       "solution": "(b) herbivore. A herbivore eats only plants, like a goat or gazelle."
     },
@@ -340,7 +340,7 @@
       "id": "we05",
       "outcomeId": "lo05",
       "difficulty": "Intermediate",
-      "title": "Guided example 5",
+      "title": "Which organism is a decomposer",
       "prompt": "Which organism is a decomposer? (a) grass (b) fungus (c) gazelle (d) heron.",
       "solution": "(b) fungus. Fungi break down dead matter and return nutrients to the soil, so they are decomposers."
     },
@@ -348,7 +348,7 @@
       "id": "we06",
       "outcomeId": "lo06",
       "difficulty": "Intermediate",
-      "title": "Guided example 6",
+      "title": "About how much energy passes from one level of a",
       "prompt": "About how much energy passes from one level of a food chain to the next? (a) 100 percent (b) 50 percent (c) 10 percent (d) 0 percent.",
       "solution": "(c) 10 percent. About ninety percent is lost as heat and through living and moving, so only about ten percent passes on."
     },
@@ -356,7 +356,7 @@
       "id": "we07",
       "outcomeId": "lo07",
       "difficulty": "Intermediate",
-      "title": "Guided example 7",
+      "title": "In the chain plankton to tilapia to Nile perch, the",
       "prompt": "In the chain plankton to tilapia to Nile perch, the tilapia is the: (a) producer (b) primary consumer (c) secondary consumer (d) decomposer.",
       "solution": "(b) primary consumer. The tilapia eats the producer (plankton) directly, so it is a primary consumer."
     },
@@ -364,7 +364,7 @@
       "id": "we08",
       "outcomeId": "lo08",
       "difficulty": "Intermediate",
-      "title": "Guided example 8",
+      "title": "A non-living part of an ecosystem, such as sunlight",
       "prompt": "A non-living part of an ecosystem, such as sunlight or water, is called a: (a) biotic factor (b) abiotic factor (c) consumer (d) producer.",
       "solution": "(b) abiotic factor. Abiotic means non-living, such as sunlight, water, soil, and temperature."
     }
@@ -837,7 +837,7 @@
       "outcomeId": "lo01",
       "difficulty": "Core",
       "context": "Home",
-      "prompt": "Use what you have learned to solve these real-life problems.",
+      "prompt": "A grass patch captures 8,000 units of energy from the sun. Using the ten percent rule, how much energy reaches the gazelle that eats the grass, and how much reaches the lion that eats the gazelle? Show your working.",
       "answer": "Gazelle receives ten percent of 8,000 = 800 units. Lion receives ten percent of 800 = 80 units. Working: 8,000 divided by 10 = 800; 800 divided by 10 = 80.",
       "hint": "Decide which idea the situation is about — Ecosystem, Habitat, Biotic factor — then explain your reasoning step by step.",
       "errorFeedback": "Check your reasoning against this: Gazelle receives ten percent of 8,000 = 800 units. Lion receives ten percent of 800 = 80 units. Working: 8,000 divided by 10 = 800; 800 divided by 10 = 80."
@@ -847,17 +847,17 @@
       "outcomeId": "lo02",
       "difficulty": "Core",
       "context": "Market",
-      "prompt": "A grass patch captures 8,000 units of energy from the sun. Using the ten percent rule, how much energy reaches the gazelle that eats the grass, and how much reaches the lion that eats the gazelle? Show your working.",
-      "answer": "This is likely overfishing — fish are being caught faster than they can breed and replace themselves, so populations shrink. Actions: agree on catch limits and closed seasons, use larger net holes so young fish escape, and protect breeding areas like mangroves. (Any two sensible actions.)",
+      "prompt": "Fishermen near the coast are catching fewer and smaller fish each year. Explain what may be happening and suggest two actions the community could take.",
+      "answer": "This is likely overfishing - fish are being caught faster than they can breed and replace themselves, so populations shrink. Actions: agree on catch limits and closed seasons, use larger net holes so young fish escape, and protect breeding areas like mangroves. (Any two sensible actions.)",
       "hint": "Decide which idea the situation is about — Ecosystem, Habitat, Biotic factor — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: This is likely overfishing — fish are being caught faster than they can breed and replace themselves, so populations shrink. Actions: agree on catch limits and closed seasons, use larger net holes so young fish escape, and protect breeding areas like mangroves. (Any two sensible actions.)"
+      "errorFeedback": "Check your reasoning against this: This is likely overfishing - fish are being caught faster than they can breed and replace themselves, so populations shrink. Actions: agree on catch limits and closed seasons, use larger net holes so young fish escape, and protect breeding areas like mangroves. (Any two sensible actions.)"
     },
     {
       "id": "rp03",
       "outcomeId": "lo03",
       "difficulty": "Core",
       "context": "Travel",
-      "prompt": "Fishermen near the coast are catching fewer and smaller fish each year. Explain what may be happening and suggest two actions the community could take.",
+      "prompt": "A family cuts many trees near their home for charcoal. Describe two effects this could have on the local ecosystem.",
       "answer": "Cutting many trees causes: loss of habitat for animals that lived in or around the trees; soil erosion because roots no longer hold the soil; fewer producers and possibly less rainfall. (Any two.)",
       "hint": "Decide which idea the situation is about — Ecosystem, Habitat, Biotic factor — then explain your reasoning step by step.",
       "errorFeedback": "Check your reasoning against this: Cutting many trees causes: loss of habitat for animals that lived in or around the trees; soil erosion because roots no longer hold the soil; fewer producers and possibly less rainfall. (Any two.)"
@@ -867,7 +867,7 @@
       "outcomeId": "lo04",
       "difficulty": "Challenge",
       "context": "School",
-      "prompt": "A family cuts many trees near their home for charcoal. Describe two effects this could have on the local ecosystem.",
+      "prompt": "Amina wants to reduce plastic pollution on her local beach. Suggest three practical actions she and her friends could take.",
       "answer": "Amina could: organise a beach clean-up, carry reusable bags and bottles, set up bins, refuse single-use plastic, and teach others why plastic harms sea life. (Any three practical actions.)",
       "hint": "Decide which idea the situation is about — Ecosystem, Habitat, Biotic factor — then explain your reasoning step by step.",
       "errorFeedback": "Check your reasoning against this: Amina could: organise a beach clean-up, carry reusable bags and bottles, set up bins, refuse single-use plastic, and teach others why plastic harms sea life. (Any three practical actions.)"
@@ -877,7 +877,7 @@
       "outcomeId": "lo05",
       "difficulty": "Challenge",
       "context": "Community",
-      "prompt": "Amina wants to reduce plastic pollution on her local beach. Suggest three practical actions she and her friends could take.",
+      "prompt": "During a long drought, a waterhole dries up. Explain the chain of effects on the grass, the gazelles, and the lions.",
       "answer": "The waterhole drying up means less water (an abiotic factor). Grass dries and dies, so gazelles have less food and may leave or die; with fewer gazelles, the lions have less prey and must move or go hungry. The whole chain is affected because each level depends on the one below.",
       "hint": "Decide which idea the situation is about — Ecosystem, Habitat, Biotic factor — then explain your reasoning step by step.",
       "errorFeedback": "Check your reasoning against this: The waterhole drying up means less water (an abiotic factor). Grass dries and dies, so gazelles have less food and may leave or die; with fewer gazelles, the lions have less prey and must move or go hungry. The whole chain is affected because each level depends on the one below."
@@ -887,10 +887,10 @@
       "outcomeId": "lo06",
       "difficulty": "Challenge",
       "context": "Nature",
-      "prompt": "During a long drought, a waterhole dries up. Explain the chain of effects on the grass, the gazelles, and the lions.",
-      "answer": "Work through the task, then check your answer against the Science Words reference card and the concept explanations for this unit.",
+      "prompt": "Hunters remove all the lions from a savanna. Predict what happens to the gazelles, then to the grass, then back to the gazelles again. Explain each step.",
+      "answer": "With no lions, fewer gazelles are hunted, so the gazelle population grows large. Too many gazelles overgraze and strip the grass bare. With little grass left, many gazelles then starve and their numbers fall. This shows how removing one species unbalances the whole web.",
       "hint": "Decide which idea the situation is about — Ecosystem, Habitat, Biotic factor — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check your answer against the Science Words reference card and the concept explanations for this unit."
+      "errorFeedback": "Check your reasoning against this: With no lions, fewer gazelles are hunted, so the gazelle population grows large. Too many gazelles overgraze and strip the grass bare. With little grass left, many gazelles then starve and their numbers fall. This shows how removing one species unbalances the whole web."
     }
   ],
   "reasoningPrompts": [
@@ -1872,13 +1872,13 @@
     ]
   },
   "selfAssessment": [
-    "I can by the end of this unit, you will be able to:",
     "I can explain what an ecosystem and a habitat are, and describe the biotic (living) and abiotic (non-living) factors within them.",
     "I can describe how plants act as producers and capture energy from the sun through photosynthesis.",
     "I can classify animals as primary, secondary, and tertiary consumers, and as herbivores, carnivores, and omnivores.",
     "I can explain the vital role of decomposers in recycling nutrients back into the soil.",
     "I can build and read food chains and food webs, using arrows correctly to show the flow of energy.",
     "I can explain why energy decreases at each step of a food chain and why there are fewer top predators than plants.",
-    "I can describe how living things show adaptations that help them survive in their habitat."
+    "I can describe how living things show adaptations that help them survive in their habitat.",
+    "I can evaluate how human activities such as deforestation, overfishing, drought, and plastic pollution affect ecosystems."
   ]
 }

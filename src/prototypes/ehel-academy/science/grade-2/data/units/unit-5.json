@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-08-12T13:35:43.648Z",
+  "generatedAt": "2026-08-17T23:43:42.576Z",
   "stage": {
     "id": "s02",
     "label": "Stage 2"
@@ -78,10 +78,11 @@
     "Name many devices that use electricity and say what each one is for.",
     "Sort electrical devices by what they make: light, sound, heat, or movement.",
     "Explain the difference between a device that uses batteries and one that plugs into the mains (the wall socket).",
+    "Follow the most important electrical safety rules and explain why each rule keeps you safe.",
+    "Build a simple circuit with a battery, wires, and a small bulb (using only safe 1.5V batteries).",
     "Describe how electricity flows around a complete loop, and what happens when the loop is broken.",
     "Explain how a switch turns a circuit on and off.",
-    "Name two safety habits that Amina followed with her new lamp.",
-    "Use the word wall. Keep the Key Terms table nearby and check any word you forget."
+    "Tell how electricity is made in East Africa, including from the sun using solar panels."
   ],
   "concepts": [
     {
@@ -324,7 +325,7 @@
       "id": "we06",
       "outcomeId": "lo06",
       "difficulty": "Intermediate",
-      "title": "Guided example 6",
+      "title": "Electricity is a kind of",
       "prompt": "Electricity is a kind of: (a) food (b) energy (c) water (d) rock",
       "solution": "b) energy. Electricity is a form of energy that flows through wires."
     },
@@ -332,7 +333,7 @@
       "id": "we07",
       "outcomeId": "lo07",
       "difficulty": "Intermediate",
-      "title": "Guided example 7",
+      "title": "A complete loop that electricity flows around is",
       "prompt": "A complete loop that electricity flows around is called a: (a) circle (b) circuit (c) socket (d) switch",
       "solution": "b) circuit. A circuit is the complete loop electricity travels around."
     },
@@ -340,7 +341,7 @@
       "id": "we08",
       "outcomeId": "lo08",
       "difficulty": "Intermediate",
-      "title": "Guided example 8",
+      "title": "Which of these makes electricity you can carry",
       "prompt": "Which of these makes electricity you can carry around? (a) a battery (b) a wall socket (c) a window (d) a book",
       "solution": "a) a battery. A battery is a small store of electricity you can carry."
     }
@@ -766,7 +767,7 @@
     },
     {
       "id": "fl08",
-      "outcomeId": "lo01",
+      "outcomeId": "lo08",
       "difficulty": "Round 2",
       "prompt": "Which material is a good insulator? (a) copper (b) plastic (c) a coin (d) a metal spoon",
       "answer": "b) plastic. Plastic stops electricity flowing, so it is an insulator.",
@@ -775,7 +776,7 @@
     },
     {
       "id": "fl09",
-      "outcomeId": "lo02",
+      "outcomeId": "lo01",
       "difficulty": "Round 3",
       "prompt": "A solar panel turns ______ into electricity. (a) water (b) sunlight (c) sound (d) wind",
       "answer": "b) sunlight. A solar panel turns sunlight into electricity.",
@@ -784,7 +785,7 @@
     },
     {
       "id": "fl10",
-      "outcomeId": "lo03",
+      "outcomeId": "lo02",
       "difficulty": "Round 3",
       "prompt": "Which is SAFE to use for a science experiment? (a) a wall socket (b) a 1.5V AA battery (c) a damaged wire (d) a wet plug",
       "answer": "b) a 1.5V AA battery. Small batteries are gentle and safe; the others are dangerous.",
@@ -793,7 +794,7 @@
     },
     {
       "id": "fl11",
-      "outcomeId": "lo04",
+      "outcomeId": "lo03",
       "difficulty": "Round 3",
       "prompt": "What should you do if you see a wire with the metal showing? (a) touch it (b) fix it yourself (c) tell an adult (d) pour water on it",
       "answer": "c) tell an adult. Never touch or fix a damaged wire yourself.",
@@ -802,7 +803,7 @@
     },
     {
       "id": "fl12",
-      "outcomeId": "lo05",
+      "outcomeId": "lo04",
       "difficulty": "Round 3",
       "prompt": "A switch that is turned OFF makes the loop: (a) complete (b) broken (c) wet (d) hot",
       "answer": "b) broken. An off switch opens a gap, breaking the loop.",
@@ -816,7 +817,7 @@
       "outcomeId": "lo01",
       "difficulty": "Core",
       "context": "Home",
-      "prompt": "Use what you know to solve these real problems from daily life.",
+      "prompt": "The mains power goes off in the evening in Mogadishu. Name two battery-powered things your family could use for light and news.",
       "answer": "Any two battery-powered items, for example a torch and a battery-powered radio. (A phone or a solar lamp are also good answers.)",
       "hint": "Decide which idea the situation is about — Electricity, Battery, Mains electricity — then explain your reasoning step by step.",
       "errorFeedback": "Check your reasoning against this: Any two battery-powered items, for example a torch and a battery-powered radio. (A phone or a solar lamp are also good answers.)"
@@ -826,7 +827,7 @@
       "outcomeId": "lo02",
       "difficulty": "Core",
       "context": "Market",
-      "prompt": "The mains power goes off in the evening in Mogadishu. Name two battery-powered things your family could use for light and news.",
+      "prompt": "Hassan's torch will not light. Give two things he should check before deciding the bulb is broken.",
       "answer": "He should check that the battery is not flat and that the loop is complete (no loose parts or gaps). The bulb itself is often not the problem.",
       "hint": "Decide which idea the situation is about — Electricity, Battery, Mains electricity — then explain your reasoning step by step.",
       "errorFeedback": "Check your reasoning against this: He should check that the battery is not flat and that the loop is complete (no loose parts or gaps). The bulb itself is often not the problem."
@@ -836,7 +837,7 @@
       "outcomeId": "lo03",
       "difficulty": "Core",
       "context": "Travel",
-      "prompt": "Hassan's torch will not light. Give two things he should check before deciding the bulb is broken.",
+      "prompt": "Khadija's family wants light in the evening but lives far from power lines. Explain how a solar lamp could help them.",
       "answer": "A solar panel on the lamp turns sunlight into electricity in the day and stores it in a battery, giving clean light at night without power lines.",
       "hint": "Decide which idea the situation is about — Electricity, Battery, Mains electricity — then explain your reasoning step by step.",
       "errorFeedback": "Check your reasoning against this: A solar panel on the lamp turns sunlight into electricity in the day and stores it in a battery, giving clean light at night without power lines."
@@ -846,7 +847,7 @@
       "outcomeId": "lo04",
       "difficulty": "Challenge",
       "context": "School",
-      "prompt": "Khadija's family wants light in the evening but lives far from power lines. Explain how a solar lamp could help them.",
+      "prompt": "Yusuf's hands are wet after making wudu. He wants to switch on a light. What should he do first, and why?",
       "answer": "He should dry his hands fully first, because water carries electricity and touching a switch with wet hands is dangerous.",
       "hint": "Decide which idea the situation is about — Electricity, Battery, Mains electricity — then explain your reasoning step by step.",
       "errorFeedback": "Check your reasoning against this: He should dry his hands fully first, because water carries electricity and touching a switch with wet hands is dangerous."
@@ -856,7 +857,7 @@
       "outcomeId": "lo05",
       "difficulty": "Challenge",
       "context": "Community",
-      "prompt": "Yusuf's hands are wet after making wudu. He wants to switch on a light. What should he do first, and why?",
+      "prompt": "A family wants to use less electricity to save money and care for the earth. Suggest two simple things they could do.",
       "answer": "Any two sensible ideas, for example: turn off lights when not needed, unplug devices, use LED bulbs, or use solar power.",
       "hint": "Decide which idea the situation is about — Electricity, Battery, Mains electricity — then explain your reasoning step by step.",
       "errorFeedback": "Check your reasoning against this: Any two sensible ideas, for example: turn off lights when not needed, unplug devices, use LED bulbs, or use solar power."
@@ -866,7 +867,7 @@
       "outcomeId": "lo06",
       "difficulty": "Challenge",
       "context": "Nature",
-      "prompt": "A family wants to use less electricity to save money and care for the earth. Suggest two simple things they could do.",
+      "prompt": "Amina finds a phone charger cable with the plastic torn and metal showing. What should she do?",
       "answer": "She should not touch it and should tell an adult straight away, because a damaged wire is dangerous.",
       "hint": "Decide which idea the situation is about — Electricity, Battery, Mains electricity — then explain your reasoning step by step.",
       "errorFeedback": "Check your reasoning against this: She should not touch it and should tell an adult straight away, because a damaged wire is dangerous."
@@ -1854,9 +1855,10 @@
     "I can name many devices that use electricity and say what each one is for.",
     "I can sort electrical devices by what they make: light, sound, heat, or movement.",
     "I can explain the difference between a device that uses batteries and one that plugs into the mains (the wall socket).",
+    "I can follow the most important electrical safety rules and explain why each rule keeps I safe.",
+    "I can build a simple circuit with a battery, wires, and a small bulb (using only safe 1.5V batteries).",
     "I can describe how electricity flows around a complete loop, and what happens when the loop is broken.",
     "I can explain how a switch turns a circuit on and off.",
-    "I can name two safety habits that Amina followed with her new lamp.",
-    "I can use the word wall. Keep the Key Terms table nearby and check any word you forget."
+    "I can tell how electricity is made in East Africa, including from the sun using solar panels."
   ]
 }

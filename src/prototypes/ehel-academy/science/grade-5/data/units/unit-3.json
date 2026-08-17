@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-08-12T13:35:44.254Z",
+  "generatedAt": "2026-08-17T23:43:43.164Z",
   "stage": {
     "id": "s05",
     "label": "Stage 5"
@@ -97,13 +97,13 @@
   },
   "outcomes": [
     "Name and describe the three states of matter: solid, liquid, and gas, and give examples of each from your own home.",
-    "Explain the particle model — that all matter is made of tiny particles, and describe how those particles are arranged and how they move in each state.",
-    "Describe state changes — melting, freezing, evaporation, condensing, and boiling — and explain how heating and cooling cause them.",
+    "Explain the particle model - that all matter is made of tiny particles, and describe how those particles are arranged and how they move in each state.",
+    "Describe state changes - melting, freezing, evaporation, condensing, and boiling - and explain how heating and cooling cause them.",
     "Explain evaporation and identify the four main factors that make a liquid evaporate faster: temperature, surface area, air movement, and humidity.",
     "Describe the water cycle and explain how evaporation and condensation move water between the ocean, the sky, and the land.",
+    "Understand dissolving - how a solid such as sugar or salt can seem to disappear into a liquid.",
     "Plan a fair test to investigate what affects evaporation, and record your results carefully.",
-    "Use scientific words correctly when you write and talk about matter.",
-    "Name two other factors mentioned in the passage that help the fish dry faster."
+    "Use scientific words correctly when you write and talk about matter."
   ],
   "concepts": [
     {
@@ -330,7 +330,7 @@
       "id": "we01",
       "outcomeId": "lo01",
       "difficulty": "Basic",
-      "title": "Guided example 1",
+      "title": "Which state of matter keeps both a definite shape",
       "prompt": "Which state of matter keeps both a definite shape and a definite volume? (a) solid (b) liquid (c) gas (d) none of them",
       "solution": "(a) solid. Only solids keep both a fixed shape and a fixed volume because their particles are locked in place."
     },
@@ -338,7 +338,7 @@
       "id": "we02",
       "outcomeId": "lo02",
       "difficulty": "Basic",
-      "title": "Guided example 2",
+      "title": "In which state are the particles far apart and",
       "prompt": "In which state are the particles far apart and moving quickly in all directions? (a) solid (b) liquid (c) gas (d) ice",
       "solution": "(c) gas. Gas particles are spread far apart and move quickly in every direction."
     },
@@ -346,7 +346,7 @@
       "id": "we03",
       "outcomeId": "lo03",
       "difficulty": "Basic",
-      "title": "Guided example 3",
+      "title": "A liquid poured from a cup into a bowl will",
       "prompt": "A liquid poured from a cup into a bowl will: (a) change its amount (b) keep its shape (c) take the shape of the bowl (d) turn into a gas",
       "solution": "(c) take the shape of the bowl. A liquid keeps its volume but takes the container's shape; the amount does not change."
     },
@@ -354,7 +354,7 @@
       "id": "we04",
       "outcomeId": "lo04",
       "difficulty": "Basic",
-      "title": "Guided example 4",
+      "title": "Melting is the change from",
       "prompt": "Melting is the change from: (a) liquid to solid (b) solid to liquid (c) liquid to gas (d) gas to liquid",
       "solution": "(b) solid to liquid. Melting is a solid becoming a liquid when heated."
     },
@@ -362,7 +362,7 @@
       "id": "we05",
       "outcomeId": "lo05",
       "difficulty": "Intermediate",
-      "title": "Guided example 5",
+      "title": "Which change needs heat to be REMOVED",
       "prompt": "Which change needs heat to be REMOVED? (a) melting (b) evaporation (c) boiling (d) freezing",
       "solution": "(d) freezing. Freezing needs heat removed so particles slow and lock into a solid. The others all need heat added."
     },
@@ -370,7 +370,7 @@
       "id": "we06",
       "outcomeId": "lo06",
       "difficulty": "Intermediate",
-      "title": "Guided example 6",
+      "title": "Evaporation happens",
       "prompt": "Evaporation happens: (a) only at boiling point (b) at any temperature, at the surface (c) only in a freezer (d) only at night",
       "solution": "(b) at any temperature, at the surface. Only surface particles with enough energy escape; boiling is not required."
     },
@@ -378,7 +378,7 @@
       "id": "we07",
       "outcomeId": "lo07",
       "difficulty": "Intermediate",
-      "title": "Guided example 7",
+      "title": "Which factor does NOT speed up evaporation",
       "prompt": "Which factor does NOT speed up evaporation? (a) more heat (b) more wind (c) a smaller surface area (d) drier air",
       "solution": "(c) a smaller surface area. A smaller surface slows evaporation; the other three all speed it up."
     },
@@ -386,7 +386,7 @@
       "id": "we08",
       "outcomeId": "lo08",
       "difficulty": "Intermediate",
-      "title": "Guided example 8",
+      "title": "Water droplets forming on a cold glass is an",
       "prompt": "Water droplets forming on a cold glass is an example of: (a) melting (b) condensation (c) freezing (d) dissolving",
       "solution": "(b) condensation. Water vapour in the air cools on the glass and turns to liquid."
     }
@@ -861,9 +861,9 @@
       "difficulty": "Core",
       "context": "Home",
       "prompt": "Halima wants the washing to dry as fast as possible. Give her three pieces of advice based on the factors affecting evaporation, and explain each one.",
-      "answer": "(i) Hang the washing in the hot sun — heat gives particles energy to escape. (ii) Spread the clothes out wide — a larger surface area lets more water escape. (iii) Hang them where the wind blows — moving air carries damp air away so more water can evaporate. (Drier air / low humidity also helps.)",
+      "answer": "(i) Hang the washing in the hot sun - heat gives particles energy to escape. (ii) Spread the clothes out wide - a larger surface area lets more water escape. (iii) Hang them where the wind blows - moving air carries damp air away so more water can evaporate. (Drier air / low humidity also helps.)",
       "hint": "Decide which idea the situation is about — Temperature, Surface area, Air movement — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: 1. (i) Hang the washing in the hot sun — heat gives particles energy to escape. (ii) Spread the clothes out wide — a larger surface area lets more water escape. (iii) Hang them where the wind blows — moving air carries damp air away so more water can evaporate. (Drier air / low humidity also helps.)"
+      "errorFeedback": "Check your reasoning against this: (i) Hang the washing in the hot sun - heat gives particles energy to escape. (ii) Spread the clothes out wide - a larger surface area lets more water escape. (iii) Hang them where the wind blows - moving air carries damp air away so more water can evaporate. (Drier air / low humidity also helps.)"
     },
     {
       "id": "rp02",
@@ -1895,13 +1895,13 @@
     ]
   },
   "selfAssessment": [
-    "I can name and describe the three states of matter: solid, liquid, and gas, and give examples of each from your own home.",
-    "I can explain the particle model — that all matter is made of tiny particles, and describe how those particles are arranged and how they move in each state.",
-    "I can describe state changes — melting, freezing, evaporation, condensing, and boiling — and explain how heating and cooling cause them.",
+    "I can name and describe the three states of matter: solid, liquid, and gas, and give examples of each from my own home.",
+    "I can explain the particle model - that all matter is made of tiny particles, and describe how those particles are arranged and how they move in each state.",
+    "I can describe state changes - melting, freezing, evaporation, condensing, and boiling - and explain how heating and cooling cause them.",
     "I can explain evaporation and identify the four main factors that make a liquid evaporate faster: temperature, surface area, air movement, and humidity.",
     "I can describe the water cycle and explain how evaporation and condensation move water between the ocean, the sky, and the land.",
-    "I can plan a fair test to investigate what affects evaporation, and record your results carefully.",
-    "I can use scientific words correctly when you write and talk about matter.",
-    "I can name two other factors mentioned in the passage that help the fish dry faster."
+    "I can understand dissolving - how a solid such as sugar or salt can seem to disappear into a liquid.",
+    "I can plan a fair test to investigate what affects evaporation, and record my results carefully.",
+    "I can use scientific words correctly when I write and talk about matter."
   ]
 }

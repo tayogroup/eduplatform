@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-08-12T13:35:45.054Z",
+  "generatedAt": "2026-08-17T23:43:43.913Z",
   "stage": {
     "id": "s08",
     "label": "Stage 8"
@@ -90,16 +90,13 @@
     "poster": null
   },
   "outcomes": [
-    "By the end of this unit, you should be able to do each of the things below. Come back to this list at the end and check yourself honestly.",
     "Explain what density means as the amount of mass packed into a given volume, and state its units (g/cm3 or kg/m3).",
     "Measure mass and volume correctly, including finding the volume of an irregular object by displacement of water.",
-    "Calculate density using the relationship density = mass / volume, showing every step of your working.",
-    "Rearrange the density formula to find mass or volume when the other quantities are known.",
     "Explain floating and sinking by comparing the density of an object with the density of the liquid it is placed in.",
     "Explain what speed means as the distance travelled in a given time, and state its units (m/s or km/h).",
-    "Calculate speed using the relationship speed = distance / time, showing every step of your working.",
-    "Rearrange the speed formula to find distance or time when the other quantities are known.",
-    "Read and draw distance-time graphs, and describe motion (fast, slow, or stopped) from the shape of the line."
+    "Read and draw distance-time graphs, and describe motion (fast, slow, or stopped) from the shape of the line.",
+    "Use units correctly and measure accurately, choosing the right instrument, reading scales carefully, and repeating measurements to make them reliable.",
+    "Describe what the line on a distance-time graph looks like when an object is: (a) moving fast, (b) moving slowly, (c) standing still. Which line is steepest?"
   ],
   "concepts": [
     {
@@ -797,7 +794,7 @@
     },
     {
       "id": "fl08",
-      "outcomeId": "lo08",
+      "outcomeId": "lo01",
       "difficulty": "Round 2",
       "prompt": "A common unit of speed is: (a) kilograms (kg), (b) metres per second (m/s), (c) cubic metres (m3), (d) grams (g).",
       "answer": "(b) metres per second (m/s) Speed is a distance for each unit of time, such as m/s or km/h.",
@@ -806,7 +803,7 @@
     },
     {
       "id": "fl09",
-      "outcomeId": "lo09",
+      "outcomeId": "lo02",
       "difficulty": "Round 3",
       "prompt": "A car travels 100 km in 2 hours. Its average speed is: (a) 200 km/h, (b) 50 km/h, (c) 102 km/h, (d) 25 km/h.",
       "answer": "(b) 50 km/h s = d / t = 100 / 2 = 50 km/h.",
@@ -815,7 +812,7 @@
     },
     {
       "id": "fl10",
-      "outcomeId": "lo10",
+      "outcomeId": "lo03",
       "difficulty": "Round 3",
       "prompt": "On a distance-time graph, a steeper line means the object is moving: (a) slower, (b) faster, (c) backwards, (d) not at all.",
       "answer": "(b) faster A steeper line means more distance covered in less time, so a greater speed.",
@@ -824,7 +821,7 @@
     },
     {
       "id": "fl11",
-      "outcomeId": "lo01",
+      "outcomeId": "lo04",
       "difficulty": "Round 3",
       "prompt": "On a distance-time graph, a flat (horizontal) line means the object is: (a) speeding up, (b) moving fast, (c) stopped, (d) sinking.",
       "answer": "(c) stopped A flat line means distance is not changing while time passes, so the object is still.",
@@ -833,7 +830,7 @@
     },
     {
       "id": "fl12",
-      "outcomeId": "lo02",
+      "outcomeId": "lo05",
       "difficulty": "Round 3",
       "prompt": "To find mass when you know density and volume, you use: (a) m = D / V, (b) m = D x V, (c) m = V / D, (d) m = D + V.",
       "answer": "(b) m = D x V Rearranging D = m / V gives mass = density x volume.",
@@ -898,9 +895,9 @@
       "difficulty": "Challenge",
       "context": "Nature",
       "prompt": "A metal object has a mass of 240 g. When placed in a jug the water rises from 100 cm3 to 130 cm3. Calculate its density. A book says iron has a density of 7.9 g/cm3 and aluminium 2.7 g/cm3. Which metal is the object most likely made of, and why?",
-      "answer": "Volume = 130 — 100 = 30 cm3. Density = m / V = 240 / 30 = 8 g/cm3. This is very close to iron's 7.9 g/cm3 and far from aluminium's 2.7 g/cm3, so the object is most likely made of iron.",
+      "answer": "Volume = 130 - 100 = 30 cm3. Density = m / V = 240 / 30 = 8 g/cm3. This is very close to iron's 7.9 g/cm3 and far from aluminium's 2.7 g/cm3, so the object is most likely made of iron.",
       "hint": "Decide which idea the situation is about — Density from mass and volume, Mass from density and volume, Volume from mass and density — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Volume = 130 — 100 = 30 cm3. Density = m / V = 240 / 30 = 8 g/cm3. This is very close to iron's 7.9 g/cm3 and far from aluminium's 2.7 g/cm3, so the object is most likely made of iron."
+      "errorFeedback": "Check your reasoning against this: Volume = 130 - 100 = 30 cm3. Density = m / V = 240 / 30 = 8 g/cm3. This is very close to iron's 7.9 g/cm3 and far from aluminium's 2.7 g/cm3, so the object is most likely made of iron."
     }
   ],
   "reasoningPrompts": [
@@ -1882,13 +1879,12 @@
     ]
   },
   "selfAssessment": [
-    "I can by the end of this unit, you should be able to do each of the things below. Come back to this list at the end and check yourself honestly.",
     "I can explain what density means as the amount of mass packed into a given volume, and state its units (g/cm3 or kg/m3).",
     "I can measure mass and volume correctly, including finding the volume of an irregular object by displacement of water.",
-    "I can calculate density using the relationship density = mass / volume, showing every step of your working.",
-    "I can rearrange the density formula to find mass or volume when the other quantities are known.",
     "I can explain floating and sinking by comparing the density of an object with the density of the liquid it is placed in.",
     "I can explain what speed means as the distance travelled in a given time, and state its units (m/s or km/h).",
-    "I can calculate speed using the relationship speed = distance / time, showing every step of your working."
+    "I can read and draw distance-time graphs, and describe motion (fast, slow, or stopped) from the shape of the line.",
+    "I can use units correctly and measure accurately, choosing the right instrument, reading scales carefully, and repeating measurements to make them reliable.",
+    "I can describe what the line on a distance-time graph looks like when an object is: (a) moving fast, (b) moving slowly, (c) standing still. Which line is steepest?."
   ]
 }

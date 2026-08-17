@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-08-12T13:35:45.170Z",
+  "generatedAt": "2026-08-17T23:43:44.018Z",
   "stage": {
     "id": "s08",
     "label": "Stage 8"
@@ -89,7 +89,6 @@
     "poster": null
   },
   "outcomes": [
-    "By the end of this unit you will be able to:",
     "Explain that light is a form of energy that travels in straight lines and describe evidence for this, such as shadows and beams.",
     "Describe the difference between luminous and non-luminous objects and explain how we see non-luminous objects by reflected light.",
     "State and use the law of reflection: the angle of incidence equals the angle of reflection.",
@@ -98,7 +97,8 @@
     "Describe how convex and concave lenses bend light, and explain how a converging lens forms an image.",
     "Label the main parts of the human eye and explain how the eye focuses light onto the retina.",
     "Explain dispersion and how a prism or rain droplets split white light into a spectrum.",
-    "Describe the difference between mixing coloured light and mixing paints, and explain why objects appear the colours they do."
+    "Describe the difference between mixing coloured light and mixing paints, and explain why objects appear the colours they do.",
+    "Learn these words carefully. Each one unlocks part of the story of light. You will meet them again and again, so keep this table close."
   ],
   "concepts": [
     {
@@ -335,7 +335,7 @@
       "id": "we02",
       "outcomeId": "lo02",
       "difficulty": "Basic",
-      "title": "Guided example 2",
+      "title": "Which of these is a luminous object",
       "prompt": "Which of these is a luminous object? (a) the moon (b) a mirror (c) the sun (d) a mango",
       "solution": "(c) the sun. A luminous object makes its own light; the moon, a mirror and a mango only reflect light."
     },
@@ -343,7 +343,7 @@
       "id": "we03",
       "outcomeId": "lo03",
       "difficulty": "Basic",
-      "title": "Guided example 3",
+      "title": "Light travels in",
       "prompt": "Light travels in: (a) curves (b) straight lines (c) circles (d) zig-zags on its own",
       "solution": "(b) straight lines. This is shown by sharp shadows and narrow beams."
     },
@@ -351,7 +351,7 @@
       "id": "we04",
       "outcomeId": "lo04",
       "difficulty": "Basic",
-      "title": "Guided example 4",
+      "title": "The imaginary line at 90 degrees to a mirror is",
       "prompt": "The imaginary line at 90 degrees to a mirror is called the: (a) ray (b) normal (c) incident line (d) spectrum",
       "solution": "(b) normal. The normal is drawn at 90 degrees to the surface and is the reference for all angles."
     },
@@ -359,7 +359,7 @@
       "id": "we05",
       "outcomeId": "lo05",
       "difficulty": "Intermediate",
-      "title": "Guided example 5",
+      "title": "The law of reflection says the angle of incidence",
       "prompt": "The law of reflection says the angle of incidence equals the angle of: (a) refraction (b) reflection (c) the mirror (d) dispersion",
       "solution": "(b) reflection. The law states angle of incidence = angle of reflection."
     },
@@ -367,7 +367,7 @@
       "id": "we06",
       "outcomeId": "lo06",
       "difficulty": "Intermediate",
-      "title": "Guided example 6",
+      "title": "A ray hits a mirror at 30 degrees to the normal.",
       "prompt": "A ray hits a mirror at 30 degrees to the normal. The angle of reflection is: (a) 60 degrees (b) 30 degrees (c) 90 degrees (d) 15 degrees",
       "solution": "(b) 30 degrees. By the law of reflection the reflected angle equals the incident angle."
     },
@@ -375,7 +375,7 @@
       "id": "we07",
       "outcomeId": "lo07",
       "difficulty": "Intermediate",
-      "title": "Guided example 7",
+      "title": "The bending of light as it passes from air into",
       "prompt": "The bending of light as it passes from air into water is called: (a) reflection (b) refraction (c) dispersion (d) scattering",
       "solution": "(b) refraction. Refraction is the bending of light when it changes speed between materials."
     },
@@ -383,7 +383,7 @@
       "id": "we08",
       "outcomeId": "lo08",
       "difficulty": "Intermediate",
-      "title": "Guided example 8",
+      "title": "A convex lens is",
       "prompt": "A convex lens is: (a) thinner in the middle (b) thicker in the middle (c) flat (d) always black",
       "solution": "(b) thicker in the middle. A convex (converging) lens is thicker at its centre."
     }
@@ -893,9 +893,9 @@
       "difficulty": "Challenge",
       "context": "Nature",
       "prompt": "A ray of light strikes a flat mirror making an angle of 65 degrees with the mirror surface. Find the angle of incidence and the angle of reflection, showing your working.",
-      "answer": "The angle is given from the surface, so the angle of incidence = 90 — 65 = 25 degrees. By the law of reflection the angle of reflection = 25 degrees (both from the normal).",
+      "answer": "The angle is given from the surface, so the angle of incidence = 90 - 65 = 25 degrees. By the law of reflection the angle of reflection = 25 degrees (both from the normal).",
       "hint": "Decide which idea the situation is about — Luminous, Non-luminous, Ray — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: The angle is given from the surface, so the angle of incidence = 90 — 65 = 25 degrees. By the law of reflection the angle of reflection = 25 degrees (both from the normal)."
+      "errorFeedback": "Check your reasoning against this: The angle is given from the surface, so the angle of incidence = 90 - 65 = 25 degrees. By the law of reflection the angle of reflection = 25 degrees (both from the normal)."
     }
   ],
   "reasoningPrompts": [
@@ -1877,13 +1877,13 @@
     ]
   },
   "selfAssessment": [
-    "I can by the end of this unit you will be able to:",
     "I can explain that light is a form of energy that travels in straight lines and describe evidence for this, such as shadows and beams.",
     "I can describe the difference between luminous and non-luminous objects and explain how we see non-luminous objects by reflected light.",
     "I can state and use the law of reflection: the angle of incidence equals the angle of reflection.",
     "I can measure angles of incidence and reflection from the normal and solve simple numerical problems.",
     "I can explain refraction as the bending of light when it changes speed passing from one material into another.",
     "I can describe how convex and concave lenses bend light, and explain how a converging lens forms an image.",
-    "I can label the main parts of the human eye and explain how the eye focuses light onto the retina."
+    "I can label the main parts of the human eye and explain how the eye focuses light onto the retina.",
+    "I can explain dispersion and how a prism or rain droplets split white light into a spectrum."
   ]
 }

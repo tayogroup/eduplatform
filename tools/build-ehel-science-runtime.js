@@ -567,6 +567,19 @@ const sentence = (value = "", max = 250) => {
   return `${cut}…`;
 };
 
+// A worked example built by padding from spare practice items had no source
+// heading to take a title from, so it fell back to "Guided example N" —
+// meaningless once several of them sit next to each other in a list. Derive
+// one from the question itself, the same technique used for Mathematics.
+function titleFromPrompt(prompt, fallback) {
+  let label = String(prompt || "").replace(/\s*\(?[a-e]\)\s[\s\S]*$/i, "").replace(/\s*[:?.]+\s*$/, "").trim();
+  if (label.length > 52) {
+    const cut = label.slice(0, 52);
+    label = cut.slice(0, Math.max(cut.lastIndexOf(" "), 20)).replace(/[,;:—–-]$/, "").trim();
+  }
+  return label.length >= 8 ? label : fallback;
+}
+
 // Join source paragraphs into one field, keeping the paragraph breaks. Teaching
 // prose is never clipped: an explainer that stops mid-sentence is worse than
 // useless to a learner working without a teacher. Consumers split on the blank
@@ -1381,14 +1394,53 @@ function buildGrade(grade) {
     return `Unit ${unitNo}`;
   }
 
+  // The "able to do" section label is applied by the extractor to every block
+  // until the next detected heading — and for many Lesson documents no later
+  // heading is detected at all, so the label runs on through the vocabulary
+  // glossary and every concept's body text. Length + a couple of banned
+  // openers was not enough to hold that back: it let through whole glossary
+  // definitions ("A hard, solid material that comes from the Earth...") and
+  // section intros ("Here are the important words for this unit...") as if
+  // they were outcomes, and because selfAssessment[] is built by prefixing
+  // "I can" onto outcomes[0..7], those leaks surfaced twice — once as a
+  // nonsense outcome, once as a nonsense self-assessment line. Confirmed
+  // against every Lesson document in the content model: requiring an
+  // outcome-shaped opening verb holds in every unit that has real objectives
+  // and only kicks in the (already-existing) verb-led fallback for the few
+  // that don't.
+  const OUTCOME_VERB = "sort|name|describe|explain|identify|compare|classify|plan|record|measure|observe|predict|investigate|use|give|connect|state|label|list|recognise|recognize|discuss|show|define|understand|know|learn|find|draw|write|read|calculate|solve|apply|analyse|analyze|evaluate|create|design|build|test|carry out|talk about|collect|make|tell|choose|follow|stay|keep";
+  const OUTCOME_VERB_RE = new RegExp(`^(?:${OUTCOME_VERB})\\b`, "i");
+  function looksLikeOutcome(text) {
+    return OUTCOME_VERB_RE.test(text) && text.length < 220 && !/=/.test(text)
+      && !/^(Ask Your AI Tutor|Read each question)\b/i.test(text);
+  }
+  // Outcomes are written to the learner in second person ("Explain what
+  // happens when you heat water") — correct there, since that is how the
+  // rest of the unit talks to the learner. selfAssessment turns each one into
+  // a first-person "I can..." checklist line, but only ever touched the
+  // opening word: an outcome ending "...around you" or "...record your
+  // results" came out as "I can name light sources around you", a person
+  // mismatch inside a single sentence, in 81 lines across the course.
+  function toFirstPerson(outcome) {
+    let s = String(outcome).trim().replace(/\s*\.?\s*$/, ".");
+    s = s.charAt(0).toLowerCase() + s.slice(1);
+    s = s.replace(/\byourself\b/gi, "myself").replace(/\byours\b/gi, "mine").replace(/\byour\b/gi, "my");
+    // Object position ("around you", "show you", "for you") first, so the
+    // generic subject-position fallback below does not turn these into
+    // "around I". Whatever "you" survives that is a subject ("when you
+    // write", "so that you can see") and becomes "I".
+    s = s.replace(/\b(help|helps|let|lets|tell|tells|show|shows|give|gives|remind|reminds|for|to|with|beside|around|before|after|from|of|than|and|behind|near|about|makes|make|allow|allows|between|at|in|on|by|like)\s+you\b/gi, "$1 me");
+    s = s.replace(/\byou were\b/gi, "I was").replace(/\byou are\b/gi, "I am").replace(/\byou have\b/gi, "I have").replace(/\byou\b/gi, "I");
+    return `I can ${s}`;
+  }
   function outcomeList(lesson) {
     let list = sectionBlocks(lesson, /able to do|learning objectives|what you will learn/i)
       .map((block) => tidy(block.text))
-      .filter((text) => text.length > 20 && !/^(read them now|by the time|these are)/i.test(text))
+      .filter((text) => text.length > 20 && !/^(read them now|by the time|these are)/i.test(text) && looksLikeOutcome(text))
       .slice(0, 10);
     if (!list.length) {
       list = lesson.blocks.map((block) => tidy(block.text))
-        .filter((text) => /^(sort|name|describe|explain|identify|compare|plan|record|measure|observe|predict|investigate|use|give|connect|state|label)\b/i.test(text) && text.length > 25)
+        .filter((text) => text.length > 25 && looksLikeOutcome(text))
         .slice(0, 8);
     }
     return list;
@@ -1766,7 +1818,7 @@ function buildGrade(grade) {
     // up as if it were a mistake. It carries no science, and a learner sees a
     // card whose heading and body are both placeholder labels. Four of these
     // reached the courses before a reviewer spotted them.
-    const PLACEHOLDER_MISTAKE = /^(common mistake|misconception|why people think it|why it is wrong|correction|the truth)$/i;
+    const PLACEHOLDER_MISTAKE = /^(common mistake|the mistake|misconception|why people think it|why it is wrong|correction|the truth)$/i;
     commonMistakes = commonMistakes.filter(
       (pair) => !PLACEHOLDER_MISTAKE.test(String(pair[0] || "").trim()));
 
@@ -1986,8 +2038,21 @@ function buildGrade(grade) {
     let contradictions = 0;
     for (const section of names) {
       const letter = section.match(/^Section\s+([A-E])/i)[1].toUpperCase();
-      const isInstruction = (text) => text.length < 110 && !/\(?[a-d]\)\s/i.test(text)
-        && /^(choose|circle|tick|select|answer(\s+each|\s+in)|write|read\s+each|match|complete|label|draw|for the grown-up|try every|do not)/i.test(text);
+      // A section-level preamble ("Use what you know to solve these real
+      // problems.", "These questions make you think harder.") is not a task,
+      // but nothing above excluded it, so it was kept as tasks[0] with no
+      // matching entry in the parallel `keys` array. That shifts every
+      // task/key pairing after it by one for the rest of the section — the
+      // dominant defect in the 2026-08-18 review (400+ instances): every
+      // later prompt paired with the PREVIOUS task's answer, and the section's
+      // last task fell back to the generic "Work through the task..." filler
+      // because `keys` had run one short. Confirmed against every Practice
+      // document in the content model: these two openers cover all 46
+      // preambles across every grade and section, none over 127 characters,
+      // and none collides with a real numbered task.
+      const PREAMBLE_RE = /^(Use (what|your|the)\b|These (questions|are|make|need|require)\b|Apply what\b)/i;
+      const isInstruction = (text) => PREAMBLE_RE.test(text) || (text.length < 110 && !/\(?[a-d]\)\s/i.test(text)
+        && /^(choose|circle|tick|select|answer(\s+each|\s+in)|write|read\s+each|match|complete|label|draw|for the grown-up|try every|do not)/i.test(text));
       const tasks = taskBlocks
         .filter((block) => block.section === section && block.content_kind !== "Heading")
         .map((block) => tidy(block.text))
@@ -2268,7 +2333,7 @@ function buildGrade(grade) {
     while (workedExamples.length < 8 && pi < realPractice.length) {
       const item = realPractice[pi]; pi += 1;
       const n = workedExamples.length + 1;
-      workedExamples.push({ id: `we${String(n).padStart(2, "0")}`, outcomeId: `lo${String(workedExamples.length % 8 + 1).padStart(2, "0")}`, difficulty: workedExamples.length < 4 ? "Basic" : "Intermediate", title: `Guided example ${n}`, prompt: item.prompt, solution: item.answer });
+      workedExamples.push({ id: `we${String(n).padStart(2, "0")}`, outcomeId: `lo${String(workedExamples.length % 8 + 1).padStart(2, "0")}`, difficulty: workedExamples.length < 4 ? "Basic" : "Intermediate", title: titleFromPrompt(item.prompt, `Guided example ${n}`), prompt: item.prompt, solution: item.answer });
     }
     // Still short? Build worked examples from the unit's own concepts — a real
     // question and a worked answer drawn from the concept's teaching text.
@@ -2430,8 +2495,25 @@ function buildGrade(grade) {
       practice: practice.slice(0, 12), activities, reference,
       fluency: pool.slice(0, 12).map((item, index) => ({ id: `fl${String(index + 1).padStart(2, "0")}`, outcomeId: `lo${String(index % Math.max(1, outcomes.length) + 1).padStart(2, "0")}`, difficulty: index < 4 ? "Round 1" : index < 8 ? "Round 2" : "Round 3", prompt: item.prompt, answer: item.answer, hint: item.hint, errorFeedback: item.answer })),
       realProblems, reasoningPrompts, assessment,
-      games: { masteryScore: 3, games: gameData(assessment, reference.terms, unitNo) },
-      selfAssessment: outcomes.slice(0, 8).map((outcome) => `I can ${outcome.charAt(0).toLowerCase()}${outcome.slice(1)}`),
+      // gameData() copies its rounds straight from `assessment`, and
+      // applyScriptReview() below only patches the assembled `runtime`
+      // object — so a reviewer's fix to a quiz answer landed in
+      // assessment.questions but the game round built from the SAME
+      // question kept the original wrong text forever. Applying just the
+      // Assessment Question corrections here, before the rounds are built,
+      // means gameData() starts from what the reviewer actually approved;
+      // applyScriptReview() re-applies the same fields onto assessment
+      // afterward, which is a no-op there but is what everything else in
+      // the unit still needs.
+      games: {
+        masteryScore: 3,
+        games: gameData((() => {
+          const preGame = ((scriptReview[`grade-${grade}`] || {})[`unit-${unitNo}`] || {})["Assessment Question"] || {};
+          for (const [itemId, fields] of Object.entries(preGame)) applyReviewFields({ assessment }, "Assessment Question", itemId, fields, `grade ${grade} unit ${unitNo} (pre-game):`);
+          return assessment;
+        })(), reference.terms, unitNo),
+      },
+      selfAssessment: outcomes.slice(0, 8).map(toFirstPerson),
     };
   }
 

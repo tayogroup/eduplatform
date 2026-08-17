@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-08-12T13:35:44.307Z",
+  "generatedAt": "2026-08-17T23:43:43.205Z",
   "stage": {
     "id": "s05",
     "label": "Stage 5"
@@ -93,10 +93,10 @@
     "Explain that light travels in straight lines, and use this idea to explain shadows and why you cannot see around corners.",
     "Describe how you see an object: light travels from a source, bounces off the object, and enters your eye.",
     "Investigate how mirrors reflect light, and use two mirrors to see hidden things.",
+    "Classify materials as transparent, translucent, or opaque, and predict the shadows they make.",
     "Name the main parts of the eye and explain, in simple words, how it lets you see.",
-    "Explain why still water at dawn shows a clear reflection but the same water shows no reflection when the wind makes waves.",
-    "Name two things Abdi did to protect his eyes from the strong sun, and explain why eye protection matters.",
-    "Explain that light is a form of energy that travels in straight lines."
+    "Recognise that light can bend (refract) when it passes into water, and connect this to why a straw looks broken in a glass.",
+    "Apply what you learn to real life: mirrors, safety in bright sun, and clean vision."
   ],
   "concepts": [
     {
@@ -333,7 +333,7 @@
       "id": "we02",
       "outcomeId": "lo02",
       "difficulty": "Basic",
-      "title": "Guided example 2",
+      "title": "Which of these is a light source",
       "prompt": "Which of these is a light source? (a) a mirror (b) the moon (c) a candle flame (d) a white wall",
       "solution": "c) a candle flame A candle makes its own light; the others only reflect."
     },
@@ -341,7 +341,7 @@
       "id": "we03",
       "outcomeId": "lo03",
       "difficulty": "Basic",
-      "title": "Guided example 3",
+      "title": "Light travels in",
       "prompt": "Light travels in: (a) curved lines (b) straight lines (c) zigzags (d) circles",
       "solution": "b) straight lines This is a basic property of light."
     },
@@ -349,7 +349,7 @@
       "id": "we04",
       "outcomeId": "lo04",
       "difficulty": "Basic",
-      "title": "Guided example 4",
+      "title": "We can see the moon at night because it",
       "prompt": "We can see the moon at night because it: (a) makes its own light (b) reflects sunlight (c) glows in the dark (d) is on fire",
       "solution": "b) reflects sunlight The moon is a reflector, not a light source."
     },
@@ -357,7 +357,7 @@
       "id": "we05",
       "outcomeId": "lo05",
       "difficulty": "Intermediate",
-      "title": "Guided example 5",
+      "title": "We see a book because light",
       "prompt": "We see a book because light: (a) goes from our eyes to the book (b) is made by the book (c) reflects off the book into our eyes (d) bends around the book",
       "solution": "c) reflects off the book into our eyes Eyes catch light; they do not send it."
     },
@@ -365,7 +365,7 @@
       "id": "we06",
       "outcomeId": "lo06",
       "difficulty": "Intermediate",
-      "title": "Guided example 6",
+      "title": "A material that lets no light through is",
       "prompt": "A material that lets no light through is: (a) transparent (b) translucent (c) opaque (d) reflective",
       "solution": "c) opaque Opaque means no light passes through."
     },
@@ -373,7 +373,7 @@
       "id": "we07",
       "outcomeId": "lo07",
       "difficulty": "Intermediate",
-      "title": "Guided example 7",
+      "title": "Frosted bathroom glass is best described as",
       "prompt": "Frosted bathroom glass is best described as: (a) transparent (b) translucent (c) opaque (d) a light source",
       "solution": "b) translucent Frosted glass scatters light so you cannot see clearly."
     },
@@ -381,7 +381,7 @@
       "id": "we08",
       "outcomeId": "lo08",
       "difficulty": "Intermediate",
-      "title": "Guided example 8",
+      "title": "A straw looks bent in water because light",
       "prompt": "A straw looks bent in water because light: (a) reflects (b) refracts (bends) (c) stops (d) speeds up forever",
       "solution": "b) refracts (bends) Light bends leaving the water, so the straw looks bent."
     }
@@ -841,7 +841,7 @@
       "outcomeId": "lo01",
       "difficulty": "Core",
       "context": "Home",
-      "prompt": "Use what you have learned to solve these real-life problems.",
+      "prompt": "Zahra is looking for her sandals in a dark store-room and cannot see them at all. Explain why, and give two ways she could see them.",
       "answer": "She cannot see because there is no light to reflect off the sandals into her eyes. She could switch on a light or bring a torch, or open a door or window to let daylight in.",
       "hint": "Decide which idea the situation is about — Light, Light source, Reflect / Reflection — then explain your reasoning step by step.",
       "errorFeedback": "Check your reasoning against this: She cannot see because there is no light to reflect off the sandals into her eyes. She could switch on a light or bring a torch, or open a door or window to let daylight in."
@@ -851,7 +851,7 @@
       "outcomeId": "lo02",
       "difficulty": "Core",
       "context": "Market",
-      "prompt": "Zahra is looking for her sandals in a dark store-room and cannot see them at all. Explain why, and give two ways she could see them.",
+      "prompt": "A driver on the busy road near Eastleigh needs to see cars coming up behind. Explain how mirrors solve this problem using reflection.",
       "answer": "A mirror reflects the light coming from cars behind and sends it into the driver's eyes, so the driver can see behind without turning around, thanks to reflection.",
       "hint": "Decide which idea the situation is about — Light, Light source, Reflect / Reflection — then explain your reasoning step by step.",
       "errorFeedback": "Check your reasoning against this: A mirror reflects the light coming from cars behind and sends it into the driver's eyes, so the driver can see behind without turning around, thanks to reflection."
@@ -861,7 +861,7 @@
       "outcomeId": "lo03",
       "difficulty": "Core",
       "context": "Travel",
-      "prompt": "A driver on the busy road near Eastleigh needs to see cars coming up behind. Explain how mirrors solve this problem using reflection.",
+      "prompt": "A family near Mombasa wants daylight in the bathroom but also privacy. What kind of glass should the window be, and why?",
       "answer": "Frosted (translucent) glass, because it lets daylight into the bathroom while scattering the light so that people outside cannot see clearly through it, giving privacy.",
       "hint": "Decide which idea the situation is about — Light, Light source, Reflect / Reflection — then explain your reasoning step by step.",
       "errorFeedback": "Check your reasoning against this: Frosted (translucent) glass, because it lets daylight into the bathroom while scattering the light so that people outside cannot see clearly through it, giving privacy."
@@ -871,7 +871,7 @@
       "outcomeId": "lo04",
       "difficulty": "Challenge",
       "context": "School",
-      "prompt": "A family near Mombasa wants daylight in the bathroom but also privacy. What kind of glass should the window be, and why?",
+      "prompt": "Yusuf tries to scoop a fish he sees just under the water of the Jubba River but keeps missing. Explain what is tricking him and how he should adjust.",
       "answer": "Refraction bends the light coming from the fish as it leaves the water, so the fish is not exactly where it appears. He should aim a little lower or to the side of where he sees it.",
       "hint": "Decide which idea the situation is about — Light, Light source, Reflect / Reflection — then explain your reasoning step by step.",
       "errorFeedback": "Check your reasoning against this: Refraction bends the light coming from the fish as it leaves the water, so the fish is not exactly where it appears. He should aim a little lower or to the side of where he sees it."
@@ -881,7 +881,7 @@
       "outcomeId": "lo05",
       "difficulty": "Challenge",
       "context": "Community",
-      "prompt": "Yusuf tries to scoop a fish he sees just under the water of the Jubba River but keeps missing. Explain what is tricking him and how he should adjust.",
+      "prompt": "During a hot, bright afternoon on the savanna, explain why wearing a light-coloured headscarf and a hat helps, using ideas about reflecting and absorbing light and protecting the eyes.",
       "answer": "Light colours reflect most sunlight and heat away, keeping him cooler, while dark colours absorb it. A hat shades the eyes and face, and keeping the strong sun off the eyes protects the retina from damage.",
       "hint": "Decide which idea the situation is about — Light, Light source, Reflect / Reflection — then explain your reasoning step by step.",
       "errorFeedback": "Check your reasoning against this: Light colours reflect most sunlight and heat away, keeping him cooler, while dark colours absorb it. A hat shades the eyes and face, and keeping the strong sun off the eyes protects the retina from damage."
@@ -891,10 +891,10 @@
       "outcomeId": "lo06",
       "difficulty": "Challenge",
       "context": "Nature",
-      "prompt": "During a hot, bright afternoon on the savanna, explain why wearing a light-coloured headscarf and a hat helps, using ideas about reflecting and absorbing light and protecting the eyes.",
-      "answer": "Work through the task, then check your answer against the Science Words reference card and the concept explanations for this unit.",
+      "prompt": "A red apple and a blue book sit under a red light. Predict the colour each appears and explain why, using absorbing and reflecting light.",
+      "answer": "Under red light the red apple still looks red (it reflects red light). The blue book looks dark or black, because there is no blue light for it to reflect and it absorbs the red light.",
       "hint": "Decide which idea the situation is about — Light, Light source, Reflect / Reflection — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check your answer against the Science Words reference card and the concept explanations for this unit."
+      "errorFeedback": "Check your reasoning against this: Under red light the red apple still looks red (it reflects red light). The blue book looks dark or black, because there is no blue light for it to reflect and it absorbs the red light."
     }
   ],
   "reasoningPrompts": [
@@ -1877,12 +1877,12 @@
   },
   "selfAssessment": [
     "I can identify light sources and tell the difference between objects that make their own light and objects that only reflect light.",
-    "I can explain that light travels in straight lines, and use this idea to explain shadows and why you cannot see around corners.",
-    "I can describe how you see an object: light travels from a source, bounces off the object, and enters your eye.",
+    "I can explain that light travels in straight lines, and use this idea to explain shadows and why I cannot see around corners.",
+    "I can describe how I see an object: light travels from a source, bounces off the object, and enters my eye.",
     "I can investigate how mirrors reflect light, and use two mirrors to see hidden things.",
-    "I can name the main parts of the eye and explain, in simple words, how it lets you see.",
-    "I can explain why still water at dawn shows a clear reflection but the same water shows no reflection when the wind makes waves.",
-    "I can name two things Abdi did to protect his eyes from the strong sun, and explain why eye protection matters.",
-    "I can explain that light is a form of energy that travels in straight lines."
+    "I can classify materials as transparent, translucent, or opaque, and predict the shadows they make.",
+    "I can name the main parts of the eye and explain, in simple words, how it lets me see.",
+    "I can recognise that light can bend (refract) when it passes into water, and connect this to why a straw looks broken in a glass.",
+    "I can apply what I learn to real life: mirrors, safety in bright sun, and clean vision."
   ]
 }

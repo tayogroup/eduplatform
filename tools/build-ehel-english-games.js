@@ -52,7 +52,9 @@ function choices(correct, distractors, roundIndex, fallbackPool = []) {
 function quizRound(question) {
   const options = String(question.options || "").split(" | ").map((item) => clean(item, 150)).filter(Boolean);
   return {
-    prompt: clean(question.question, 180),
+    // Cloze stems quote a story line and can run past 180 characters; a prompt
+    // clipped before its blank cannot be answered, so allow the whole question.
+    prompt: clean(question.question, 400),
     choices: options,
     answer: clean(question.correctAnswer, 150),
     explanation: clean(question.explanation || `The correct answer is ${question.correctAnswer}.`, 220),
@@ -108,11 +110,14 @@ function speakingTarget(task, fallback) {
   // five times." into "the /a/ sound five times." and "Ask and answer about…"
   // into "and answer about…" — a target that starts lowercase with no verb.
   const firstSentence = source.match(/^(.{4,145}?[.!?])(?:\s|$)/);
-  const candidate = clean(firstSentence ? firstSentence[1] : source, 145);
-  if (/^(choose|create|discuss|find|in small|if you|look|plan|prepare|read|record|retell|select|take|use|work|write)/i.test(candidate)) {
+  // A target the learner must SAY has to be a whole sentence: if the first
+  // sentence does not fit in 145 characters, use the fallback rather than a
+  // fragment ending "…" (the second pass found "…three comparatives and one...").
+  const candidate = firstSentence ? clean(firstSentence[1], 145) : "";
+  if (!candidate || /^(choose|create|discuss|find|in small|if you|look|plan|prepare|read|record|retell|select|take|use|work|write)/i.test(candidate)) {
     return clean(fallback, 145);
   }
-  return candidate || clean(fallback, 145);
+  return candidate;
 }
 
 function buildPack(grade, unit, dictionary) {
@@ -143,7 +148,10 @@ function buildPack(grade, unit, dictionary) {
     ? sample(comprehension, 3).map((item, index) => {
       const distractors = sample(comprehension.filter((other) => other.questionId !== item.questionId), 2, index + 1).map((other) => clean(other.correctAnswer, READING_CHOICE_MAX));
       const answer = clean(item.correctAnswer, READING_CHOICE_MAX);
-      return { prompt: clean(item.question, 180), choices: choices(answer, distractors, index, answerPool), answer, explanation: `Review the unit text evidence: ${answer}` };
+      // The comprehension item's own explanation is now written to the learner
+      // (second pass, 2026-08-17); use it, and fall back to quoting the answer.
+      const explanation = fitsWhole(item.explanation, 240) && !/^(The learner|Award|Accept)/.test(String(item.explanation)) ? clean(item.explanation, 240) : `The text says: ${answer}`;
+      return { prompt: clean(item.question, 400), choices: choices(answer, distractors, index, answerPool), answer, explanation };
     })
     : quizRounds(unit, 2);
   const pairsVocabulary = sample(vocabulary, 9, 2);
@@ -213,13 +221,13 @@ function buildPack(grade, unit, dictionary) {
         description: "Identify how each vocabulary word works in English.",
         rounds: sample(selected, 3, 7).map((item, index) => {
           const answer = item.entry.partOfSpeech.charAt(0).toUpperCase() + item.entry.partOfSpeech.slice(1);
-          return { prompt: `What type of word is '${item.entry.displayWord}'?`, choices: choices(answer, parts, index), answer, explanation: `${item.entry.displayWord} is used as ${article(item.entry.partOfSpeech)} ${item.entry.partOfSpeech} in this dictionary sense.` };
+          return { prompt: `What type of word is '${item.entry.displayWord}'?`, choices: choices(answer, parts, index), answer, explanation: `${item.entry.displayWord.charAt(0).toUpperCase()}${item.entry.displayWord.slice(1)} is used as ${article(item.entry.partOfSpeech)} ${item.entry.partOfSpeech} in this dictionary sense.` };
         }),
       },
       {
         id: "memory-pairs", type: "pairs", icon: "copy-check", title: "Memory Pairs", skill: "Vocabulary recall",
         description: "Reveal tiles and connect each word with its meaning.",
-        rounds: [0, 1, 2].map((round) => ({ prompt: `Match vocabulary set ${round + 1}.`, pairs: pairsVocabulary.slice(round * 3, round * 3 + 3).map((item) => [item.entry.displayWord, clean(item.link.childMeaning || item.entry.canonicalMeaning, 90)]) })),
+        rounds: [0, 1, 2].map((round) => ({ prompt: `Match vocabulary set ${round + 1}.`, pairs: pairsVocabulary.slice(round * 3, round * 3 + 3).map((item) => [item.entry.displayWord, clean(item.link.childMeaning || item.entry.canonicalMeaning, 200)]) })),
       },
       {
         id: "question-quest", type: "choice", icon: "circle-help", title: "Question Quest", skill: "Question answering",

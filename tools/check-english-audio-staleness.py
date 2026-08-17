@@ -353,6 +353,10 @@ def british(text: str) -> str:
     # A hyphen between letters is silent too: "brightly-coloured" and "brightly
     # coloured" are one recording.
     text = re.sub(r"(?<=[A-Za-z])-(?=[A-Za-z])", " ", text)
+    # Also silent: the full stop after Mr/Mrs/Ms/Dr, and the space in "any
+    # more" / "per cent" (US "anymore" / "percent").
+    text = re.sub(r"(Mr|Mrs|Ms|Dr)\.", r"", text)
+    text = re.sub(r"any more", "anymore", text, flags=re.I).replace("per cent", "percent").replace("Per cent", "percent")
     return _PAIR_RE.sub(lambda m: _PAIRS[m.group(1).lower()], text.lower())
 
 

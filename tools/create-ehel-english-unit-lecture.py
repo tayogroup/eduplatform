@@ -195,6 +195,28 @@ def build_slides(unit: dict, dictionary: dict) -> list[dict]:
     writing = unit["writing"][0]
     title = unit["unit"]["unitTitle"]
     overview = overview_narration(unit["unit"]["unitOverview"], 760)
+    # One template served every grade, so a five-year-old was told to "notice
+    # viewpoint and reliability, and support every inference with relevant
+    # evidence" (second-pass review, 2026-08-17). Grades 1-3 get the same slides
+    # in words a young child can follow; the upper grades keep the original.
+    young = int(unit["grade"].get("number") or re.sub(r"\D", "", unit["grade"].get("label", "9")) or 9) <= 3
+    T = {
+        "vocab_bullets_title": "Words to learn" if young else "Language for precise thinking",
+        "vocab": ("Listen to each word, look at what it means, and try to use it when you talk and write."
+                  if young else "Listen to each pronunciation in the vocabulary lab, study its meaning in context, and use the word accurately in your own discussion and writing."),
+        "read_title": "Read and think" if young else "Read critically",
+        "read_bullets": ["Find the big idea", "Point to the words that show it"] if young else ["Identify central ideas", "Support conclusions with evidence"],
+        "read": ("Read slowly, look at the pictures, and find the big idea in each text. When you answer a question, point to the words that show it."
+                 if young else "Read actively. Identify each text's central ideas, notice viewpoint and reliability, and support every inference with relevant evidence from the text."),
+        "grammar_bullets": ["Look at the examples", "Try it in your own sentences"] if young else ["Notice the structure", "Apply it in connected paragraphs"],
+        "grammar": ("Look at the examples, then try the pattern in your own sentences."
+                    if young else "Notice the structure in the model examples, then apply it deliberately in connected sentences and paragraphs."),
+        "sw_bullets_tail": "Say it, write it, make it better" if young else "Explain, support and improve your ideas",
+        "sw": ("Say your ideas clearly and listen to your partner. In writing, you will draw, trace, copy or write, then check your work with a grown-up or the AI tutor."
+               if young else "Organise your ideas, use evidence and respond clearly to questions. In writing, you will plan, draft, check and revise. Use the success criteria before submitting your work."),
+        "path": ("You are ready to begin. Start with the words, then the reading and the questions, then the grammar, speaking and writing. Ask the AI tutor for help any time, and bring your questions to a live session too if you join one."
+                 if young else "You are ready to begin. Start with the vocabulary lab, continue through reading and comprehension, apply the grammar focus, and complete the speaking and writing practices. Use the AI tutor for hints and feedback any time, and bring your questions to a live session too if you join one."),
+    }
 
     return [
         {
@@ -215,40 +237,40 @@ def build_slides(unit: dict, dictionary: dict) -> list[dict]:
         },
         {
             "kicker": "KEY VOCABULARY",
-            "title": "Language for precise thinking",
+            "title": T["vocab_bullets_title"],
             "bullets": words,
-            "narration": f"Your vocabulary work begins with these words: {', '.join(words)}. Listen to each pronunciation in the vocabulary lab, study its meaning in context, and use the word accurately in your own discussion and writing.",
+            "narration": f"Your vocabulary work begins with these words: {', '.join(words)}. {T['vocab']}",
         },
         {
             "kicker": "READING AND EVIDENCE",
-            "title": "Read critically",
-            "bullets": reading_titles + ["Identify central ideas", "Support conclusions with evidence"],
-            "narration": f"The reading sequence includes {reading_titles[0]} and {reading_titles[1]}. Read actively. Identify each text's central ideas, notice viewpoint and reliability, and support every inference with relevant evidence from the text.",
+            "title": T["read_title"],
+            "bullets": reading_titles + T["read_bullets"],
+            "narration": f"The reading sequence includes {reading_titles[0]} and {reading_titles[1]}. {T['read']}",
         },
         {
             "kicker": "LANGUAGE FOCUS",
             "title": grammar["title"],
-            "bullets": [clean(grammar["explanation"], 155), "Notice the structure", "Apply it in connected paragraphs"],
+            "bullets": [clean(grammar["explanation"], 155)] + T["grammar_bullets"],
             "narration": " ".join(filter(None, [
                 sentence(f"The first language focus is {grammar['title']}"),
                 sentence(clean_narration(grammar["explanation"], 500)),
-                "Notice the structure in the model examples, then apply it deliberately in connected sentences and paragraphs.",
+                T["grammar"],
             ])),
         },
         {
             "kicker": "SPEAKING AND WRITING",
             "title": "Use English for a real purpose",
-            "bullets": [speaking["title"], writing["title"] or "Writing and revision", "Explain, support and improve your ideas"],
+            "bullets": [speaking["title"], writing["title"] or "Writing and revision", T["sw_bullets_tail"]],
             "narration": " ".join([
                 sentence(f"In speaking, you will complete {speaking['title']}"),
-                "Organise your ideas, use evidence and respond clearly to questions. In writing, you will plan, draft, check and revise. Use the success criteria before submitting your work.",
+                T["sw"],
             ]),
         },
         {
             "kicker": "YOUR LEARNING PATH",
             "title": "You are ready to begin",
             "bullets": ["Vocabulary and dictionary", "Reading and comprehension", "Grammar, speaking and writing", "Activities, quiz and optional live sessions"],
-            "narration": "You are ready to begin. Start with the vocabulary lab, continue through reading and comprehension, apply the grammar focus, and complete the speaking and writing practices. Use AI English for hints and feedback any time, and bring your questions to a live session too if you join one.",
+            "narration": T["path"],
         },
     ]
 

@@ -53,17 +53,40 @@ const PHRASES = [
   ["on the first floor, close to the main entrance", "on the ground floor, close to the main entrance"],
   ["garden hose", "hosepipe"],
   ["many stores under one roof", "many shops under one roof"], ["stores under one roof", "shops under one roof"],
+  // ---- second pass (2026-08-17, later): what the sixteen readers still found ----
+  ["apartment buildings", "blocks of flats"], ["apartment building", "block of flats"], ["an apartment", "a flat"], ["An apartment", "A flat"], ["apartments", "flats"], ["apartment", "flat"], ["Apartments", "Flats"], ["Apartment", "Flat"],
+  ["hallways", "corridors"], ["hallway", "corridor"], ["Hallways", "Corridors"], ["Hallway", "Corridor"],
+  ["A bicycle rental costs", "Bicycle hire costs"], ["We got a beach umbrella rental for", "We hired a beach umbrella for"], ["take as a rental", "hire"], ["We paid for a bike rental", "We paid for bike hire"], ["How much does a ski rental cost", "How much does ski hire cost"], ["The rental costs", "Bike hire costs"],
+  ["bike rental shop", "bike hire shop"], ["car rental", "car hire"], ["boat rental", "boat hire"], ["ski rental", "ski hire"], ["bike rental", "bike hire"], ["rental stand", "hire stand"], ["rental shop", "hire shop"], ["rentals", "hires"], ["rental", "hire"], ["Rental", "Hire"],
+  ["inquired", "enquired"], ["inquires", "enquires"], ["inquiring", "enquiring"], ["inquire", "enquire"], ["Inquire", "Enquire"], ["inquiry", "enquiry"], ["inquiries", "enquiries"],
+  ["hardware store", "hardware shop"], ["pet store", "pet shop"], ["grocery store", "grocery shop"], ["the store", "the shop"], ["a store", "a shop"], ["boycott the store", "boycott the shop"],
+  ["truck driver", "lorry driver"], ["fire trucks", "fire engines"], ["council trucks", "council lorries"], ["heavy trucks", "heavy lorries"], ["trucks", "lorries"], ["truck", "lorry"], ["Trucks", "Lorries"], ["Truck", "Lorry"],
+  ["allowance", "pocket money"], ["schoolyard", "playground"], ["school yard", "playground"], ["in our yard", "in our garden"],
+  ["stop light", "traffic light"], ["dollhouse", "doll's house"], ["baking soda", "bicarbonate of soda"], ["city hall", "town hall"], ["City Hall", "Town Hall"],
+  ["kitchen counter", "kitchen worktop"], ["while biking", "while cycling"], ["biking", "cycling"], ["pitcher", "jug"], ["yogurt", "yoghurt"], ["midmorning", "mid-morning"], ["banana peels", "banana skins"], ["banana peel", "banana skin"],
+  ["on weekends", "at weekends"], ["percent", "per cent"], ["anymore", "any more"], ["cheat on the test", "cheat in the test"],
+  ["Toward", "Towards"], ["toward", "towards"], ["Afterward", "Afterwards"], ["afterward", "afterwards"],
+  ["Mr. ", "Mr "], ["Ms. ", "Ms "], ["Mrs. ", "Mrs "], ["Dr. ", "Dr "],
 ];
-const HEADWORDS = { janitor: "caretaker", vacation: "holiday", elevator: "lift", railroad: "railway" };
+// Noun "commercial" (a TV advert) is Grade 6 Unit 8's headword; the adjective in
+// Grades 7-8 ("commercial fishing", "for commercial use") is British and stays.
+const GRADE6_ONLY = [
+  ["commercials", "adverts"], ["Commercials", "Adverts"], ["a commercial", "an advert"], ["A commercial", "An advert"], ["the commercial", "the advert"], ["The commercial", "The advert"],
+  ["memorable commercial", "memorable advert"], ["well-made commercial", "well-made advert"], ["funny commercial", "funny advert"], ["real commercial", "real advert"], ["commercial you have seen", "advert you have seen"], ["single memorable advert", "single memorable advert"],
+  ["'commercial'", "'advert'"], ["What is a commercial?", "What is an advert?"], ["documentary or commercial", "documentary or advert"], ["and a commercial;", "and an advert;"],
+];
+const HEADWORDS = { janitor: "caretaker", vacation: "holiday", elevator: "lift", railroad: "railway", apartment: "flat", hallway: "corridor", rental: "hire", inquire: "enquire", commercial: "advert" };
 
 const SKIP_KEY = /(Id$|^id$|Ids$|Path$|^path$|^src$|^source$|^normal$|^slow$|^href$|^url$|Url$|^file|Hash$|^hash$|^lectureVideo$|^lecturePoster$|^lectureCaptions$|^image$|^audio$|^outcomeIds$|^rubricIds$|^origin$|^reviewStatus$|^sourceFile$|^sourceUnitTitle$|^source|^vocabularyId$|^masterWord$|^dictionaryEntryId$|^senseId$|^lemma$|^displayWord$|^spellingPractice$)/;
 const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 const RULES = PHRASES.map(([a, b]) => [new RegExp(`(?<![\\w-])${esc(a)}(?![\\w-])`, "g"), b]);
+const RULES_G6 = GRADE6_ONLY.map(([a, b]) => [new RegExp(`(?<![\\w-])${esc(a)}(?![\\w-])`, "g"), b]);
+let currentGrade = 0;
 
 const previews = [];
 function rewrite(text, where) {
   let out = text;
-  for (const [rx, to] of RULES) {
+  for (const [rx, to] of (currentGrade === 6 ? RULES.concat(RULES_G6) : RULES)) {
     if (rx.test(out)) {
       rx.lastIndex = 0;
       if (PREVIEW) for (const m of out.matchAll(rx)) previews.push(`${where}: …${out.slice(Math.max(0, m.index - 45), m.index + m[0].length + 45).replace(/\n/g, " ")}…  → ${to}`);
@@ -92,6 +115,7 @@ const drill = (w) => w.toLowerCase().split("").map((c) => (c === " " ? "space" :
 
 let files = 0;
 for (let grade = 1; grade <= 8; grade += 1) {
+  currentGrade = grade;
   const dataDir = path.join(ENGLISH, `grade-${grade}`, "data");
   const targets = [];
   for (const name of fs.readdirSync(dataDir)) {
@@ -110,7 +134,7 @@ for (let grade = 1; grade <= 8; grade += 1) {
     if (file.includes("master-dictionary")) {
       for (const e of doc.entries) {
         const to = HEADWORDS[String(e.displayWord).toLowerCase()];
-        if (to) { e.displayWord = to; e.lemma = to; renamed.set(e.dictionaryEntryId, to); changed += 1; }
+        if (to && !(to === "advert" && grade !== 6)) { e.displayWord = to; e.lemma = to; renamed.set(e.dictionaryEntryId, to); changed += 1; }
       }
     }
     walk(doc, null, rel);

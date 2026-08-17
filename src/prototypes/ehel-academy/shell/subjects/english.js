@@ -212,6 +212,29 @@ const sections = [
   ["reflect", "sparkles", "My progress"],
 ];
 
+// One line under each row of the overview's unit guide: what a learner does in
+// the section, and what finishes it. Each line is written from the section's
+// own completion rule — the 80% of words, the eight-word draft, the 60% pass
+// mark are the numbers the renderers enforce, so a line here that drifts from
+// its renderer is telling the learner the wrong thing. Written for the
+// youngest reader who meets it (Grade 1), so every grade gets the plain form.
+const SECTION_HINTS = {
+  lecture: "Watch the video to the end. Listen and read the captions.",
+  dictionary: "Learn each word and press “I know this word”. Know most of the words to finish.",
+  reading: "Read the story, or listen to it. Then press the button to say you have read it.",
+  comprehension: "Answer the questions about the story, then press the button to finish.",
+  grammar: "Look at the pattern and try the practice, then press the button to finish.",
+  speaking: "Say the sentences out loud. Record yourself if you can, then press the button to finish.",
+  writing: "Write your own sentences — at least eight words — and press Submit.",
+  activities: "Do the activities, then press the button to finish.",
+  games: "Play every game once.",
+  quiz: "Answer all the questions. Get more than half right to pass. You can try again.",
+  ebooks: "Read or watch one book to the end.",
+  reflect: "Choose an answer for every sentence about how you did.",
+};
+// Unit 10 has no video: its first step is a page that launches the capstone.
+const CAPSTONE_LAUNCH_HINT = "Read about your capstone project, then press the button to start.";
+
 // --- unit gate: one unit at a time -------------------------------------------
 // The early grades are walked in order rather than browsed. The first unit is
 // open from the start; every later one opens when the unit before it is
@@ -1431,6 +1454,14 @@ function renderOverview() {
   const nextUnitOpens = UNIT_GATE_ENABLED && unitNumber < CAPSTONE_UNIT && !isPrereqUnit;
   const unitGuide = shellCtx.unitGuide({
     isUnlocked: (id) => sectionUnlocked(id, { fromOverview: true }),
+    hints: {
+      ...SECTION_HINTS,
+      ...(unitNumber === CAPSTONE_UNIT ? { lecture: CAPSTONE_LAUNCH_HINT } : {}),
+      // A unit whose readings are written to the parent shows the grown-up guide
+      // in place of the story (renderReadingGrownUp), and finishes on a button
+      // the two of them press together.
+      ...(readingsAreForTheGrownUp() ? { reading: "Go through the reading with your grown-up, then press the button together." } : {}),
+    },
     rule: nextUnitOpens
       ? `When every section has a tick, this unit is finished and Unit ${unitNumber + 1} opens.`
       : "When every section has a tick, this unit is finished.",

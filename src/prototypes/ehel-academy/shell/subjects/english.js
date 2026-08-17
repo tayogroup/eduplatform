@@ -1448,6 +1448,9 @@ function renderOverview() {
   const learningPath = course.unit.learningPath.split("\n").filter(Boolean);
   // The shell's checklist of what finishing this unit takes, with the section
   // gate painted on so a locked row looks locked here as it does in the nav.
+  // It goes FIRST in the column, above the banner: under it, the panel began
+  // at 731px on a 720px viewport, and a guide that starts below the fold is a
+  // guide the learner it is for never sees.
   // The closing sentence is this subject's rule, not the shell's: the shell
   // knows which sections count, only english knows that a finished unit opens
   // the next one — and only while the gate is on.
@@ -1472,11 +1475,11 @@ function renderOverview() {
   $("#app").innerHTML = `${pageHeader(`${course.grade.label} · ${course.term.label} · Unit ${course.unit.unitNo}`, course.unit.unitTitle, course.unit.unitOverview.split(". ").slice(0, 2).join(". "))}
     <div class="overview-grid">
       <div class="section-stack">
+        ${unitGuide}
         <section class="unit-banner">
           <img src="${course.visual.image}" alt="${escapeHtml(course.visual.alt)}">
           <div class="banner-copy"><span>Your learning journey</span><h2>Explore ${escapeHtml(course.unit.unitTitle)}</h2><p>${escapeHtml(course.unit.unitOverview.split(". ").slice(0, 2).join(". "))}</p><button class="button gold" data-go="lecture" type="button">${icon("play")} ${unitNumber === 10 ? "Launch my capstone" : "Start with Teacher Musa"}</button>${overviewAudioButton(course, "intro", "Hear the overview")}</div>
         </section>
-        ${unitGuide}
         <section class="panel"><h2>What you will learn</h2><div class="outcome-list">${course.outcomes.map((outcome) => `<div class="outcome"><span>${outcome.sequence}</span><p>${escapeHtml(outcome.learningOutcome)}</p></div>`).join("")}</div>${overviewAudioButton(course, "outcomes", "Hear what you will learn")}</section>
       </div>
       <div class="section-stack">

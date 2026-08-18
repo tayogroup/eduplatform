@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-18T07:18:06.493Z",
+  "generatedAt": "2026-08-18T07:59:31.880Z",
   "stage": {
     "id": "s07",
     "label": "Stage 7"
@@ -141,7 +141,7 @@
     {
       "id": "concept-9-worked-example-3",
       "title": "Worked Example 3",
-      "explanation": "This is the most important idea in the whole spreadsheet section, so read it slowly. Your class is saving up for a trip to the ancient rock-art caves at Laas Geel. The trip costs a fixed 90,000 shillings per student. Each student pays over three months. Enter this table starting at A1, and type 90000 into cell H1 on its own: First work out Total Paid. In cell E2 type =SUM(B2:D2) and press Enter; it returns 90000 for Nadia. Drag the fill handle from E2 down to E4. Because these are ordinary references, Calc helpfully changes them as it copies: E3 becomes =SUM(B3:D3) (returns 70000) and E4 becomes =SUM(B4:D4) (returns 70000). A reference that changes when copied is called a relative reference, and here it is exactly what we want. Now the Balance, which is Trip Cost minus Total Paid. It is tempting to click cell F2 and type =H1-E2. For Nadia this returns 0 (90000 — 90000), which looks correct. But watch what happens when you drag the fill handle down: cell F3 becomes =H2-E3. There is nothing in H2, so Calc treats it as 0 and returns -70000 — a wrong, negative balance! The relative reference moved H1 down to H2, away from our trip cost. The fix is an absolute reference. Change F2 to read =$H$1-E2. The dollar signs lock the reference to cell H1 so it can never move. Now drag the fill handle down again: F3 becomes =$H$1-E3 (returns 20000) and F4 becomes =$H$1-E4 (returns 20000). The H1 part stayed fixed while the E part moved, and every balance is correct. Remember the rule: use a relative reference when you want it to move, and an absolute reference (with $ signs) when it must always point to the same cell. Row — A · B · C · D · E · F 1 — Name · May · June · July · Total Paid · Balance 2 — Nadia · 30000 · 30000 · 30000 3 — Sami · 30000 · 20000 · 20000",
+      "explanation": "This is the most important idea in the whole spreadsheet section, so read it slowly. Your class is saving up for a trip to the ancient rock-art caves at Laas Geel. The trip costs a fixed 90,000 shillings per student. Each student pays over three months. Enter this table starting at A1, and type 90000 into cell H1 on its own: First work out Total Paid. In cell E2 type =SUM(B2:D2) and press Enter; it returns 90000 for Nadia. Drag the fill handle from E2 down to E4. Because these are ordinary references, Calc helpfully changes them as it copies: E3 becomes =SUM(B3:D3) (returns 70000) and E4 becomes =SUM(B4:D4) (returns 70000). A reference that changes when copied is called a relative reference, and here it is exactly what we want. Now the Balance, which is Trip Cost minus Total Paid. It is tempting to click cell F2 and type =H1-E2. For Nadia this returns 0 (90000 - 90000), which looks correct. But watch what happens when you drag the fill handle down: cell F3 becomes =H2-E3. There is nothing in H2, so Calc treats it as 0 and returns -70000 — a wrong, negative balance! The relative reference moved H1 down to H2, away from our trip cost. The fix is an absolute reference. Change F2 to read =$H$1-E2. The dollar signs lock the reference to cell H1 so it can never move. Now drag the fill handle down again: F3 becomes =$H$1-E3 (returns 20000) and F4 becomes =$H$1-E4 (returns 20000). The H1 part stayed fixed while the E part moved, and every balance is correct. Remember the rule: use a relative reference when you want it to move, and an absolute reference (with $ signs) when it must always point to the same cell. Row — A · B · C · D · E · F 1 — Name · May · June · July · Total Paid · Balance 2 — Nadia · 30000 · 30000 · 30000 3 — Sami · 30000 · 20000 · 20000",
       "example": "4 — Maya · 40000 · 30000 · 0"
     },
     {
@@ -818,11 +818,11 @@
   "reference": {
     "rules": [
       {
-        "title": "!",
+        "title": "Remember",
         "text": "A missing = sign is the number-one reason a formula does not work — Calc just shows your typing as text. If a whole column of copied results looks wrong, a reference probably needed $ signs to stay fixed. Database Terms Quick-Reference (LibreOffice Base)"
       },
       {
-        "title": "!",
+        "title": "Remember",
         "text": "Match the data type to the job: text for names, numbers for maths, dates for dates, Yes/No for two-value answers. Plan before you build: a data dictionary for a database, and a clear idea of your labels and formulas for a spreadsheet, save a lot of fixing later. Save early and often. Use clear file names like Fair.odb and ShopSales.ods so you can find your work again."
       }
     ],

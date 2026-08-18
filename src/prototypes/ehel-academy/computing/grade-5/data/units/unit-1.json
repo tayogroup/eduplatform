@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-18T07:18:06.109Z",
+  "generatedAt": "2026-08-18T07:59:31.537Z",
   "stage": {
     "id": "s05",
     "label": "Stage 5"
@@ -116,7 +116,7 @@
     {
       "id": "concept-2-using-operators",
       "title": "Using Operators",
-      "explanation": "An operator is a symbol that does an action on values. In this subunit you meet two families of operators: arithmetic operators for doing maths, and comparison operators for comparing values. Arithmetic is the use of numbers in calculations, such as adding or subtracting. The two most important arithmetic operators are + for addition and — for subtraction. (Computers can also multiply with * and divide with /, but in this unit we focus on + and -.) For example, 7 + 6 tells the computer to add 7 and 6, and 10 — 3 tells it to subtract 3 from 10. We can use arithmetic operators with variables, not just plain numbers. Here is the classic example: Adding two variables and storing the answer in a third variable Trace the result. First, 7 is assigned to FirstNumber and 6 is assigned to SecondNumber. Then the computer adds the values inside those two variables: 7 + 6 = 13. The answer 13 is assigned to the variable Result. So the value of Result is 13. Because we used variables, we can change the two numbers without rewriting the calculation. Remember two rules that catch people out. First, a variable holds only the last value assigned to it: if you set Balls to 1, then set Balls to 2, then set Balls to 3, the value of Balls is 3. Second, instructions run in sequence, one after another, from top to bottom. Sometimes we do not know a value until the program runs. Think of Sami's little sister Nadia using a calculator: the numbers change every time. This is where user input comes in — the user provides the data. In Scratch, the ask [ ] and wait block (in the Sensing section) lets the user type on the keyboard. Whatever they type is stored in a special variable called answer. Because answer changes every time someone types, it is a good idea to copy it into a variable with a meaningful name: Storing user input in a well-named variable Trace the result. If the user types Maya, the value Maya is stored in answer, and then copied into the variable Name. Now, even if the user later types something else, the variable Name still remembers Maya. Now Sami builds a calculator in Scratch. It has an addition button and a subtraction button, each a sprite. Here is the working code: Scratch: a calculator that adds or subtracts two user inputs --- Subtraction button sprite --- Trace the result. Suppose the user clicks the addition button and enters 7 then 5. Number1 becomes 7, Number2 becomes 5, Result becomes 7 + 5 = 12, and the sprite says 12. If instead the user clicks the subtraction button and enters 7 then 5, Result becomes 7 — 5 = 2, and the sprite says 2. The calculation blocks use the arithmetic operators + and — from the green Operators section. Comparison operators and conditions Sometimes we want to compare two values rather than do maths with them. A comparison operator compares two values and gives back True or False. In programming we say it returns True or False. The one you need here is equal to, written =. It checks if two values are the same. Imagine a ride at a theme park where you must be exactly 150 cm tall. If your height is 150, then Height = 150 returns True. If your height is 160, then Height = 150 returns False, because 160 is not the same as 150. A comparison like this is called a condition. A condition is like a question that can only be answered True or False. Height = 150 can be read as the question: 'Is height equal to 150?' Conditions are the foundation of selection, which is the very next subunit.",
+      "explanation": "An operator is a symbol that does an action on values. In this subunit you meet two families of operators: arithmetic operators for doing maths, and comparison operators for comparing values. Arithmetic is the use of numbers in calculations, such as adding or subtracting. The two most important arithmetic operators are + for addition and - for subtraction. (Computers can also multiply with * and divide with /, but in this unit we focus on + and -.) For example, 7 + 6 tells the computer to add 7 and 6, and 10 - 3 tells it to subtract 3 from 10. We can use arithmetic operators with variables, not just plain numbers. Here is the classic example: Adding two variables and storing the answer in a third variable Trace the result. First, 7 is assigned to FirstNumber and 6 is assigned to SecondNumber. Then the computer adds the values inside those two variables: 7 + 6 = 13. The answer 13 is assigned to the variable Result. So the value of Result is 13. Because we used variables, we can change the two numbers without rewriting the calculation. Remember two rules that catch people out. First, a variable holds only the last value assigned to it: if you set Balls to 1, then set Balls to 2, then set Balls to 3, the value of Balls is 3. Second, instructions run in sequence, one after another, from top to bottom. Sometimes we do not know a value until the program runs. Think of Sami's little sister Nadia using a calculator: the numbers change every time. This is where user input comes in — the user provides the data. In Scratch, the ask [ ] and wait block (in the Sensing section) lets the user type on the keyboard. Whatever they type is stored in a special variable called answer. Because answer changes every time someone types, it is a good idea to copy it into a variable with a meaningful name: Storing user input in a well-named variable Trace the result. If the user types Maya, the value Maya is stored in answer, and then copied into the variable Name. Now, even if the user later types something else, the variable Name still remembers Maya. Now Sami builds a calculator in Scratch. It has an addition button and a subtraction button, each a sprite. Here is the working code: Scratch: a calculator that adds or subtracts two user inputs --- Subtraction button sprite --- Trace the result. Suppose the user clicks the addition button and enters 7 then 5. Number1 becomes 7, Number2 becomes 5, Result becomes 7 + 5 = 12, and the sprite says 12. If instead the user clicks the subtraction button and enters 7 then 5, Result becomes 7 - 5 = 2, and the sprite says 2. The calculation blocks use the arithmetic operators + and - from the green Operators section. Comparison operators and conditions Sometimes we want to compare two values rather than do maths with them. A comparison operator compares two values and gives back True or False. In programming we say it returns True or False. The one you need here is equal to, written =. It checks if two values are the same. Imagine a ride at a theme park where you must be exactly 150 cm tall. If your height is 150, then Height = 150 returns True. If your height is 160, then Height = 150 returns False, because 160 is not the same as 150. A comparison like this is called a condition. A condition is like a question that can only be answered True or False. Height = 150 can be read as the question: 'Is height equal to 150?' Conditions are the foundation of selection, which is the very next subunit.",
       "example": "Computers often use the equal to operator to check passwords: they compare what you type with the stored password. A strong password is long and easy for you to remember — three random words such as riverlemontiger work well. Never write your password down where others can see it, and never share it with anyone."
     },
     {
@@ -435,7 +435,7 @@
       "example": "Computers often use the equal to operator to check passwords: they compare what you type with the stored password. A strong password is long and easy for you to remember — three random words such as riverlemontiger work well. Never write your password down…",
       "steps": [
         "An operator is a symbol that does an action on values. In this subunit you meet two families of operators: arithmetic operators for doing maths, and comparison operators for comparing values.",
-        "Arithmetic is the use of numbers in calculations, such as adding or subtracting. The two most important arithmetic operators are + for addition and — for subtraction. (Computers can also multiply with * and divide with…",
+        "Arithmetic is the use of numbers in calculations, such as adding or subtracting. The two most important arithmetic operators are + for addition and - for subtraction. (Computers can also multiply with * and divide with…",
         "We can use arithmetic operators with variables, not just plain numbers. Here is the classic example:",
         "Adding two variables and storing the answer in a third variable"
       ]
@@ -878,7 +878,7 @@
         "text": "The free simulator at makecode.microbit.org or python.microbit.org runs your code and lets you click the buttons and shake it with your mouse."
       },
       {
-        "title": "!",
+        "title": "Remember",
         "text": "Test one small thing at a time. Read your blocks slowly from the top and say out loud what each one does. If you are stuck, tell your AI tutor what you expected to happen and what actually happened — that is the fastest way to find a bug."
       }
     ],
@@ -909,7 +909,7 @@
       ],
       [
         "arithmetic operator",
-        "An operator for maths, such as + (add) and — (subtract)."
+        "An operator for maths, such as + (add) and - (subtract)."
       ],
       [
         "comparison operator",
@@ -1019,7 +1019,7 @@
       },
       {
         "term": "arithmetic operator",
-        "meaning": "An operator for maths, such as + (add) and — (subtract).",
+        "meaning": "An operator for maths, such as + (add) and - (subtract).",
         "example": "",
         "letter": "A"
       },

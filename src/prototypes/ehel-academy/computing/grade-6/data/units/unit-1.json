@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-18T07:18:06.275Z",
+  "generatedAt": "2026-08-18T07:59:31.683Z",
   "stage": {
     "id": "s06",
     "label": "Stage 6"
@@ -156,7 +156,7 @@
     {
       "id": "concept-5-scratch-chatbot-using-string-and-integer-data",
       "title": "Scratch chatbot using string and integer data",
-      "explanation": "say (join [You are about ] (join ((current [year v]) — (birthYear)) [ years old!])) for 3 seconds Trace the result. Suppose the user types Ben then 2015. The chatbot says 'Hello! My name is Robo.', then 'Nice to meet you, Ben', then it works out the age and says 'You are about 11 years old!'. Notice we use the current [year] block (the same clock block you met in the talking clock) instead of typing this year's number ourselves, so the age is always right — in 2026 the block gives 2026, so 2026 — 2015 = 11. The name is a string; the year is used as an integer in the subtraction; and join glues the pieces of the message together. Chatbots are only programs following an algorithm, so their answers are not always reliable. Some hackers build chatbots to steal personal information. Only chat with a chatbot on a website or app you trust, and never share private details.",
+      "explanation": "say (join [You are about ] (join ((current [year v]) — (birthYear)) [ years old!])) for 3 seconds Trace the result. Suppose the user types Ben then 2015. The chatbot says 'Hello! My name is Robo.', then 'Nice to meet you, Ben', then it works out the age and says 'You are about 11 years old!'. Notice we use the current [year] block (the same clock block you met in the talking clock) instead of typing this year's number ourselves, so the age is always right — in 2026 the block gives 2026, so 2026 - 2015 = 11. The name is a string; the year is used as an integer in the subtraction; and join glues the pieces of the message together. Chatbots are only programs following an algorithm, so their answers are not always reliable. Some hackers build chatbots to steal personal information. Only chat with a chatbot on a website or app you trust, and never share private details.",
       "example": "Leo wants to help his grandmother Nora hear the time. Scratch has a Text to Speech extension (click 'Add Extension' at the bottom-left of the screen) and blocks that read the current hour and minute. Here is a working talking clock:"
     },
     {
@@ -962,7 +962,7 @@
   "reference": {
     "rules": [
       {
-        "title": "!",
+        "title": "Remember",
         "text": "A decision diamond must always have exactly one Yes arrow and one No arrow leaving it. Both paths should eventually lead to the End."
       },
       {
@@ -986,7 +986,7 @@
         "text": "Input (buttons, shake) then Process (your code) then Output (LED screen, speaker). You can do it all on the free online simulator."
       },
       {
-        "title": "!",
+        "title": "Remember",
         "text": "A bug is not a failure — it is a clue. Test one small thing at a time, read your blocks slowly from the top, and ask your AI tutor to help you trace what the program does step by step."
       }
     ],
@@ -1033,7 +1033,7 @@
       ],
       [
         "arithmetic operator",
-        "An operator for maths: + — * and /."
+        "An operator for maths: + - * and /."
       ],
       [
         "comparison operator",
@@ -1151,7 +1151,7 @@
       },
       {
         "term": "arithmetic operator",
-        "meaning": "An operator for maths: + — * and /.",
+        "meaning": "An operator for maths: + - * and /.",
         "example": "",
         "letter": "A"
       },

@@ -959,7 +959,10 @@ function buildGrade(grade) {
     doc.blocks.forEach((block, index) => {
       const kind = calloutKind(block.text);
       if (!kind) return;
-      const heading = tidy(block.text).replace(/^(?:Ask Your AI Tutor|Stay Safe!?|Common Misconception|Computational Thinking|Remember|Warm[- ]?Up)\s*[-–—:]?\s*/i, "");
+      // The strip must cover every separator CALLOUT_KINDS itself matches on —
+      // "remember" accepts a trailing "!" with no text after it ("Remember!"),
+      // and leaving that out of the class left "!" behind as the whole title.
+      const heading = tidy(block.text).replace(/^(?:Ask Your AI Tutor|Stay Safe!?|Common Misconception|Computational Thinking|Remember|Warm[- ]?Up)\s*[-–—:!]?\s*/i, "");
       const body = [];
       for (let cursor = index + 1; cursor < doc.blocks.length && body.length < 6; cursor += 1) {
         const text = tidy(doc.blocks[cursor].text);

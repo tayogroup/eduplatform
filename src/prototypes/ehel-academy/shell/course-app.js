@@ -799,6 +799,16 @@ export function createCourseApp(config) {
     const next = location.hash.slice(1);
     if (next && next !== route) { route = next; renderNav(); renderRoute(); }
   });
+  // Ehel Academy logo: back to the learner's Moodle dashboard. pwsEndpoint
+  // carries the Moodle host on a real launch; derive the dashboard from its
+  // origin the same way seb-session.js derives its "I'm leaving" link. Local
+  // dev/preview carries no pwsEndpoint, so the logo keeps its #overview jump —
+  // there is no dashboard to send it to.
+  const brandLink = $(".brand");
+  if (brandLink && launchEndpoint) {
+    try { brandLink.href = new URL(launchEndpoint).origin + "/local/hubredirect/student_dashboard.php"; }
+    catch { /* keep #overview */ }
+  }
   // Subjects with their own audio engine (english: file-based reading + TTS/STT)
   // opt out of the shell voice UI entirely via config.disableShellVoice.
   if (!config.disableShellVoice) {

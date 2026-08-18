@@ -203,7 +203,9 @@ function buildGuide(unit, grade) {
   // generic instead of trying to merge them into prose.
   const intro = `In this unit, your child works through "${unit.unit.unitTitle}" — new words, a grammar focus, and a story. See exactly what they will practise below.`;
 
-  const checkItems = (unit.outcomes || []).map((o) => o.evidenceOfLearning).filter(Boolean);
+  // Deduped: a unit whose evidenceOfLearning repeats the same generic line
+  // across every outcome would otherwise show that line several times over.
+  const checkItems = [...new Set((unit.outcomes || []).map((o) => o.evidenceOfLearning).filter(Boolean))];
 
   const sections = [
     ...frontCallouts(unit, grade),
@@ -213,7 +215,7 @@ function buildGuide(unit, grade) {
     howToTeachSection(unit),
     { title: "Sentence Patterns to Say Out Loud", items: sentencePatterns(unit) },
     { title: "Simple Check — What to Look For", body: "You do not need a test. Just watch for these as you go through the unit together:", items: checkItems },
-  ].filter((s) => (s.items?.length ?? 1) > 0 || s.body);
+  ].filter(Boolean).filter((s) => (s.items?.length ?? 1) > 0 || s.body);
 
   return normalizeWhitespace({ label: "Teacher & Parent Guide", intro, sections });
 }

@@ -1628,16 +1628,13 @@ document.addEventListener("keydown", (event) => { if (event.key === "Escape") hi
 // deployed shell serves, so the two must not drift.
 const SHARED_AUDIO = /(^|\/)media\/audio\/grade-\d+\//;
 
-// lectureVideo and lecturePoster used to keep a stable filename across a
-// re-render, busted only by a `?a=` query stamp — which turned out to bust
-// the BROWSER's cache but not Bunny's edge, which keys purely on path and
-// keeps serving whatever it last cached there for up to a year (confirmed
-// 2026-08-18: Grade 1 Unit 0's lecture video was still the original pre-fix
-// render at one edge node weeks after three redeploys). Both are now
-// content-hashed filenames (version-lecture-video.js), same as
-// lectureCaptions already was (version-lecture-captions.js) — a re-render
-// mints a new URL on its own, so no query stamp is needed here any more.
-const CACHE_BUST_ASSET_KEYS = new Set();
+// lectureVideo and lecturePoster keep a stable filename across a re-render —
+// unlike an individual clip's `source`, there is no `?a=` stamp anywhere on
+// this path, so a browser that already played a lecture caches the OLD file
+// for a year and a redeploy at the same URL never reaches it. lectureCaptions
+// does not need this: its filename is a content hash (version-lecture-
+// captions.js), so a caption edit already mints a new URL on its own.
+const CACHE_BUST_ASSET_KEYS = new Set(["lectureVideo", "lecturePoster"]);
 
 function resolveGradeAssets(value) {
   const assetKeys = new Set(["source", "normal", "slow", "image", "lectureVideo", "lecturePoster", "lectureCaptions"]);

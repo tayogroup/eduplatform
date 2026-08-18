@@ -81,7 +81,7 @@ const AUDIO_IS_DEV = ["localhost", "127.0.0.1"].includes(location.hostname);
 // once per bump, which is the correct trade for audio that is otherwise wrong
 // for a year. upload-media-to-bunny.js prints a reminder when it sends English
 // clips, because a stamp nobody remembers to bump is worse than none.
-const AUDIO_RELEASE = "20260818d";
+const AUDIO_RELEASE = "20260819a";
 function withAudioRelease(url) {
   // Dev serves from disk with no caching worth defeating, and a bare filename
   // is easier to grep for in the network panel.
@@ -2641,12 +2641,14 @@ function stopAudio() {
   audioRequestId += 1;
   const player = $("#word-audio");
   player.pause();
-  const readingPlayer = $("#ebook-reading-audio");
-  if (readingPlayer) {
-    readingPlayer.pause();
-    readingPlayer.removeAttribute("src");
-    readingPlayer.load();
-  }
+  // Pause only — never strip src/load() here. stopAudio() is the shared kill
+  // switch for every audio feature (mute toggle, Wehel's spoken replies, word
+  // audio), none of which know the ebook reader exists or ever remount it.
+  // Clearing src left the native player with nothing loaded: Chrome renders
+  // that as fully disabled, unclickable transport controls, and only a manual
+  // switch to another text in the shelf (which calls mountReadingAudioPlayer
+  // again) brought it back. Pausing stops playback, which is the actual job.
+  $("#ebook-reading-audio")?.pause();
   if (pageNarrationCancel) pageNarrationCancel();
   pageNarrationCancel = null;
   pageNarrationActive = false;

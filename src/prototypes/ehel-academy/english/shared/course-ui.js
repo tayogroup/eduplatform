@@ -17,4 +17,4 @@
 // leave the deployed entry unversioned.
 //
 // index.html and shell-test.html expose the same DOM ids, so both drive this app.
-import "../../shell/subjects/english.js?v=english-shell-20260805a";
+import "../../shell/subjects/english.js?v=english-shell-20260818a";

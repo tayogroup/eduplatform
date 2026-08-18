@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-18T08:37:23.329Z",
+  "generatedAt": "2026-08-18T10:01:00.341Z",
   "stage": {
     "id": "s08",
     "label": "Stage 8"
@@ -74,16 +74,7 @@
       "note": "Any free spreadsheet works — the ideas are the same in all of them."
     }
   ],
-  "tutorPrompts": [
-    "Try this prompt:",
-    "Describe a small office network to me and ask me which topology would suit it best - bus, star, ring or mesh - then tell me if my choice and my reasons were good ones.",
-    "Explaining your reasoning out loud is one of the best ways to make an idea stick in your memory.",
-    "5. Wired Connections: Copper vs Fibre Optic",
-    "When a network uses a wired connection, the wire is almost always one of two kinds: a copper cable or a fibre optic cable. They carry data in completely different ways, and each has its own strengths.",
-    "A safe habit to build:",
-    "Here is a made-up website address and message. Can you help me spot the warning signs that it might not be safe, without me sharing any of my real personal details?",
-    "Practising with pretend examples builds real skills - and you never have to share real private information to learn."
-  ],
+  "tutorPrompts": [],
   "concepts": [
     {
       "id": "concept-1-personal-area-network-pan",
@@ -804,9 +795,19 @@
   ],
   "debugging": [
     {
-      "symptom": "\"The internet and a WAN are exactly the same thing.\" Not quite. The internet IS a WAN - in fact the biggest one - but not every WAN is the internet. A large bank could build its own private WAN linking branches in different cities without letting the public onto it. So: the internet is a WAN, but a WAN is not always the internet.",
-      "cause": "A common mix-up in this unit, “Networks and Digital Communication”.",
-      "fix": "The internet and a WAN are exactly the same thing. The internet IS a WAN - in fact the biggest one - but not every WAN is the internet. A large bank could build its own private WAN linking branches in different cities without letting the public onto it. So: the internet is a WAN, but a WAN is not always the internet. 4. Network Topologies: The Shape of a Network Once you have several devices in a LAN, you must decide how to arrange the connections between them. The layout, or shape, of a network is called its topology. Choosing a topology is a real decision when you design a network, so Horizon Distributors will need to pick one for its office. There are four common topologies to know: bus, star, ring and mesh. In a bus topology, every device connects to a single central cable called the backbone. Data travels along this one cable, and each end of it has a terminator to stop signals bouncing back. A bus is cheap and uses little cable, but it has a big weakness: if the backbone cable breaks, the whole network fails. And if many devices send data at once, they collide and the network slows down. Bus topology - all devices share one backbone cable [PC 1] [PC 2] [PC 3]"
+      "symptom": "Your program runs but does the wrong thing.",
+      "cause": "The instructions are in the wrong order, or one is missing.",
+      "fix": "Read your steps out loud one at a time and act them out. The first step that does not match what you wanted is the bug."
+    },
+    {
+      "symptom": "Nothing happens when you run it.",
+      "cause": "There is no trigger, or the blocks are not joined together.",
+      "fix": "Check that your first block is a start block and that every block below it is snapped on."
+    },
+    {
+      "symptom": "It works once, then stops.",
+      "cause": "The instructions need to repeat.",
+      "fix": "Put the steps that should happen again inside a repeat or forever loop."
     }
   ],
   "esafety": [
@@ -1096,8 +1097,16 @@
     ],
     "commonMistakes": [
       [
-        "\"The internet and a WAN are exactly the same thing.\" Not quite. The internet IS a WAN - in fact the biggest one - but not every WAN is the internet. A large bank could build its own private WAN linking branches in different cities without letting the public onto it. So: the internet is a WAN, but a WAN is not always the internet.",
-        "The internet and a WAN are exactly the same thing. The internet IS a WAN - in fact the biggest one - but not every WAN is the internet. A large bank could build its own private WAN linking branches in different cities without letting the public onto it. So: the internet is a WAN, but a WAN is not always the internet. 4. Network Topologies: The Shape of a Network Once you have several devices in a LAN, you must decide how to arrange the connections between them. The layout, or shape, of a network is called its topology. Choosing a topology is a real decision when you design a network, so Horizon Distributors will need to pick one for its office. There are four common topologies to know: bus, star, ring and mesh. In a bus topology, every device connects to a single central cable called the backbone. Data travels along this one cable, and each end of it has a terminator to stop signals bouncing back. A bus is cheap and uses little cable, but it has a big weakness: if the backbone cable breaks, the whole network fails. And if many devices send data at once, they collide and the network slows down. Bus topology - all devices share one backbone cable [PC 1] [PC 2] [PC 3]"
+        "Your program runs but does the wrong thing.",
+        "The instructions are in the wrong order, or one is missing. Read your steps out loud one at a time and act them out. The first step that does not match what you wanted is the bug."
+      ],
+      [
+        "Nothing happens when you run it.",
+        "There is no trigger, or the blocks are not joined together. Check that your first block is a start block and that every block below it is snapped on."
+      ],
+      [
+        "It works once, then stops.",
+        "The instructions need to repeat. Put the steps that should happen again inside a repeat or forever loop."
       ]
     ],
     "connections": []

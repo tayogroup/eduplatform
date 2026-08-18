@@ -676,6 +676,25 @@ function isCodeLine(text) {
   return CODE_LINE.test(value) || (CODE_HINT.test(value) && value.split(/\s+/).length <= 8);
 }
 
+// A short, title-cased, unpunctuated line reads as the start of the next
+// taught idea rather than more of whatever came before it — used to stop a
+// forward-walking reader (a callout's body, a concept's prose) from running
+// on into someone else's section. Numbered ("6. Bandwidth: …") and bare
+// ("Representing images") headings are both this shape; a genuine sentence
+// almost always ends in punctuation, which this excludes.
+function looksLikeSectionHeading(text) {
+  const value = tidy(text);
+  // Word cap raised from the 10 a concept-splitting heading needs to 14:
+  // this book's own subheadings run to "why some networks feel fast and
+  // others feel slow" (11 words), and missing that shape was the whole
+  // reason the check was added in the first place.
+  return value.length >= 8 && value.length <= 90
+    && !/[.?!,;]$/.test(value)
+    && /^[A-Z0-9]/.test(value)
+    && value.split(/\s+/).length <= 14
+    && !isCodeLine(value);
+}
+
 function codeRuns(doc, minimumLines = 2) {
   const runs = [];
   let current = null;
@@ -995,6 +1014,14 @@ function buildGrade(grade) {
         if (!text || calloutKind(text) || LESSON_TAIL.test(text)) break;
         if (doc.blocks[cursor].content_kind === "Heading") break;
         if (text.length < 12) break;
+        // A subheading — numbered ("6. Bandwidth: why some networks feel
+        // fast…") or bare ("Representing images") — marks the start of the
+        // NEXT taught idea, not more of the callout. These are plain
+        // "Instructional text" blocks like everything else here, so nothing
+        // else stops the walk at them — a two-paragraph misconception/truth
+        // pair kept absorbing the whole next section, up to six paragraphs
+        // deep, until the callout body was mostly someone else's content.
+        if (looksLikeSectionHeading(text)) break;
         body.push(text);
       }
       if (body.length) found[kind].push({ title: heading || null, body });
@@ -1665,8 +1692,19 @@ function buildGrade(grade) {
       letter: (term[0] || "?").toUpperCase(),
     }));
 
+    // Some books give the marker no trailing title at all — just "Common
+    // Misconception" on its own line — and write the misconception and its
+    // correction as the next two paragraphs, each carrying its own literal
+    // "Misconception:"/"Truth:" label. Falling back to body[0] as the wrong
+    // statement while joining the WHOLE body (body[0] included) as the
+    // correction repeated the misconception a second time inside its own fix,
+    // labels and all. Strip the labels and, when there is no title, treat
+    // body[0] as the wrong statement and only what follows as the correction.
+    const stripLabel = (text) => tidy(text).replace(/^(?:Misconception|The truth|Truth)\s*:\s*/i, "");
     let commonMistakes = lessonCallouts.misconception
-      .map((callout) => [tidy(callout.title || callout.body[0]), tidy(callout.body.join(" "))])
+      .map((callout) => (callout.title
+        ? [tidy(callout.title), tidy(callout.body.map(stripLabel).join(" "))]
+        : [stripLabel(callout.body[0]), tidy(callout.body.slice(1).map(stripLabel).join(" "))]))
       .filter(([wrong, right]) => wrong && right && wrong !== right);
     if (!commonMistakes.length) commonMistakes = dropHeaderRows(tableRows(lesson, /common misconceptions?/i)).map((row) => [row[0], row.slice(1).join(" ")]);
     if (!commonMistakes.length) {

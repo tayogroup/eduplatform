@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-18T08:37:22.946Z",
+  "generatedAt": "2026-08-18T10:00:59.931Z",
   "stage": {
     "id": "s07",
     "label": "Stage 7"
@@ -108,11 +108,6 @@
     }
   ],
   "tutorPrompts": [
-    "Open Thonny, then ask your AI tutor:",
-    "I am learning Python in Thonny. Give me five short print() statements to type into the Shell so I can practise. After I try them, ask me what output I expected before you tell me the answer.",
-    "Learning by predicting first, then checking, makes the ideas stick.",
-    "If you get a strange answer like 55 instead of 10, ask your tutor:",
-    "My Python program joined two numbers instead of adding them. I think it is a casting problem. Can you explain casting with int() using my code, but let me try the fix myself first?",
     "The single most useful habit: when you see a red error, copy the WHOLE message and ask:",
     "I got this error in Thonny. Here is my code and here is the full error message. Please explain what the error means in simple words, and give me a hint, not the full answer.",
     "Reading error messages is a superpower. The last line of the error usually tells you the type of problem and the line number."
@@ -956,10 +951,6 @@
   ],
   "reference": {
     "rules": [
-      {
-        "title": "input() always gives a string, so cast it with int() or float() if you need a number.",
-        "text": "Casting: changing the data type"
-      },
       {
         "title": "input() always gives a string",
         "text": "Even when the user types 5, Python stores the text \"5\". If you want to do maths, cast it: int(input(...)) or float(input(...))."

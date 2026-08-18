@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-18T08:37:23.041Z",
+  "generatedAt": "2026-08-18T10:01:00.025Z",
   "stage": {
     "id": "s07",
     "label": "Stage 7"
@@ -96,16 +96,7 @@
       "note": "A spreadsheet laid out with fields and records works as a database for this unit."
     }
   ],
-  "tutorPrompts": [
-    "Give me a real-life situation and ask me whether Wi-Fi, Bluetooth or cellular data would be best — then tell me if I was right and why.",
-    "This turns your tutor into a quiz partner and helps the four characteristics stick in your memory.",
-    "2. Where Websites Live: Servers",
-    "Try this prompt:",
-    "Pretend you are a DNS server. I will type a website name, and you walk me through every step your request takes to load the page. Then let me try explaining the steps back to you.",
-    "Explaining an idea back in your own words is one of the best ways to prove you truly understand it.",
-    "6. Data Packets: How Data Travels in Small Pieces",
-    "When you send a photo or open a web page, the data does not travel as one big lump. Instead, the network breaks it into many small pieces called data packets. This is one of the most important ideas about how the internet works."
-  ],
+  "tutorPrompts": [],
   "concepts": [
     {
       "id": "concept-1-getting-online-how-devices-connect-without-wires",
@@ -721,14 +712,9 @@
   ],
   "debugging": [
     {
-      "symptom": "\"An IP address like 256.1.1.1 is fine.\" It is not! Each number must be between 0 and 255. So 256 is too big, and an address is invalid. An address also needs exactly four numbers — 69.171.224 is invalid because it only has three. You will practise spotting invalid addresses in your Activities.",
-      "cause": "A common mix-up in this unit, “Connections Are Made: Accessing the Internet”.",
-      "fix": "An IP address like 256.1.1.1 is fine. Each number must be between 0 and 255. So 256 is too big, and an address is invalid. An address also needs exactly four numbers — 69.171.224 is invalid because it only has three. You will practise spotting invalid addresses in your Activities. 4. URLs: Names Are Easier Than Numbers Could you remember the IP address of 20 different websites? Probably not — numbers like 172.217.169.78 are hard to recall. That is why we use URLs. A URL (Uniform Resource Locator) is the web address you type into your browser, and it is far easier to remember than a string of numbers. A URL is written in a set way, and each part has a job. Look at this example and the labels below it: https://www.africanews.com https — the protocol, the set of rules for sending the data. The 's' means it is the secure version (more on that soon)."
-    },
-    {
       "symptom": "\"If there is a padlock, the website is completely safe and I can trust it.\" Be careful. The padlock only means the connection is encrypted — that nobody can spy on the data as it travels. It does NOT promise the website itself is honest. A dishonest website can still have a padlock. Always think about who runs a site before you trust it with your information.",
       "cause": "A common mix-up in this unit, “Connections Are Made: Accessing the Internet”.",
-      "fix": "If there is a padlock, the website is completely safe and I can trust it. The padlock only means the connection is encrypted — that nobody can spy on the data as it travels. It does NOT promise the website itself is honest. A dishonest website can still have a padlock. Always think about who runs a site before you trust it with your information. There is one more warning. Even a site that shows SSL and HTTPS is not automatically safe if your own computer has a virus. A virus could trick your browser into thinking a site is secure when it is not. This is why you should keep your device protected and never ignore security warnings. 9. Encryption: Turning Messages Into Secret Code Messages sent across a network can be intercepted (secretly captured) on the way. If a message is sent as ordinary plaintext, anyone who captures it can read it. Imagine Computer 1 sending the message “Your password is: aXa1239” in plaintext — a hacker who grabbed it would see the password immediately. Encryption solves this. It scrambles the message into cipher text that looks like nonsense, such as “JHAF&^-FDJG”. The message can still be intercepted, but now the hacker cannot understand it. Only the device with the correct key can decrypt it back into readable plaintext. To encrypt data, the two devices agree on an algorithm (a set of steps) so the receiver knows how to unscramble the message. The Caesar cipher"
+      "fix": "There is one more warning. Even a site that shows SSL and HTTPS is not automatically safe if your own computer has a virus. A virus could trick your browser into thinking a site is secure when it is not. This is why you should keep your device protected and never ignore security warnings."
     }
   ],
   "esafety": [
@@ -1018,12 +1004,8 @@
     ],
     "commonMistakes": [
       [
-        "\"An IP address like 256.1.1.1 is fine.\" It is not! Each number must be between 0 and 255. So 256 is too big, and an address is invalid. An address also needs exactly four numbers — 69.171.224 is invalid because it only has three. You will practise spotting invalid addresses in your Activities.",
-        "An IP address like 256.1.1.1 is fine. Each number must be between 0 and 255. So 256 is too big, and an address is invalid. An address also needs exactly four numbers — 69.171.224 is invalid because it only has three. You will practise spotting invalid addresses in your Activities. 4. URLs: Names Are Easier Than Numbers Could you remember the IP address of 20 different websites? Probably not — numbers like 172.217.169.78 are hard to recall. That is why we use URLs. A URL (Uniform Resource Locator) is the web address you type into your browser, and it is far easier to remember than a string of numbers. A URL is written in a set way, and each part has a job. Look at this example and the labels below it: https://www.africanews.com https — the protocol, the set of rules for sending the data. The 's' means it is the secure version (more on that soon)."
-      ],
-      [
         "\"If there is a padlock, the website is completely safe and I can trust it.\" Be careful. The padlock only means the connection is encrypted — that nobody can spy on the data as it travels. It does NOT promise the website itself is honest. A dishonest website can still have a padlock. Always think about who runs a site before you trust it with your information.",
-        "If there is a padlock, the website is completely safe and I can trust it. The padlock only means the connection is encrypted — that nobody can spy on the data as it travels. It does NOT promise the website itself is honest. A dishonest website can still have a padlock. Always think about who runs a site before you trust it with your information. There is one more warning. Even a site that shows SSL and HTTPS is not automatically safe if your own computer has a virus. A virus could trick your browser into thinking a site is secure when it is not. This is why you should keep your device protected and never ignore security warnings. 9. Encryption: Turning Messages Into Secret Code Messages sent across a network can be intercepted (secretly captured) on the way. If a message is sent as ordinary plaintext, anyone who captures it can read it. Imagine Computer 1 sending the message “Your password is: aXa1239” in plaintext — a hacker who grabbed it would see the password immediately. Encryption solves this. It scrambles the message into cipher text that looks like nonsense, such as “JHAF&^-FDJG”. The message can still be intercepted, but now the hacker cannot understand it. Only the device with the correct key can decrypt it back into readable plaintext. To encrypt data, the two devices agree on an algorithm (a set of steps) so the receiver knows how to unscramble the message. The Caesar cipher"
+        "There is one more warning. Even a site that shows SSL and HTTPS is not automatically safe if your own computer has a virus. A virus could trick your browser into thinking a site is secure when it is not. This is why you should keep your device protected and never ignore security warnings."
       ]
     ],
     "connections": []

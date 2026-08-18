@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-18T08:37:23.176Z",
+  "generatedAt": "2026-08-18T10:01:00.174Z",
   "stage": {
     "id": "s07",
     "label": "Stage 7"
@@ -100,11 +100,11 @@
     "Ask: 'Describe the traffic-light sequence used in Somalia (or my country) and what each colour means.'",
     "Ask: 'Give me three other examples of safety light sequences and explain why the order must stay the same.'",
     "Then explain back to your tutor, in your own words, why a wrong sequence in a program causes a wrong output.",
-    "Getting Set Up: python.microbit.org and the Simulator",
-    "You will write every program in this unit in one free website. You do not need to download or install anything, and you do not need to own a physical micro:bit. Follow these steps to get ready.",
-    "Open your web browser (Chrome, Edge, Firefox or Safari all work).",
     "Ask: 'Explain the difference between display.clear() and showing an all-zero Image, are they the same?'",
-    "Ask: 'How could a fading light make my visual alarm easier to notice than a light that just switches on?'"
+    "Ask: 'How could a fading light make my visual alarm easier to notice than a light that just switches on?'",
+    "Ask: 'In the simulator, how do I trigger the microphone sound level so I can test my alarm?'",
+    "Ask: 'What is a good sound-level threshold so my alarm does not go off from quiet talking?'",
+    "Ask: 'Show me how to trigger my alarm with a sound OR a button press using the OR operator.'"
   ],
   "concepts": [
     {
@@ -851,7 +851,7 @@
       },
       {
         "title": "Remember",
-        "text": "Every MicroPython program in this unit begins with the same first line: from microbit import * This line imports everything you need to control the micro:bit's lights, buttons and sensors. The star symbol * here means 'everything'. Without this line, none of the micro:bit commands will work. Concept 1: Sequencing — Order Is Everything A sequence is a set of instructions carried out in a fixed order, one after another, from top to bottom. When your program runs, the micro:bit reads the first line, does it, then reads the second line, does it, and so on. It never skips ahead and never guesses what you meant. This makes the order of your lines the single most important thing about a simple program. Here is a tiny program that outputs the numbers 1, 2 and 3, with a one-second pause between each. The display.scroll() command scrolls text or numbers across the LED display, and sleep() pauses the program. Remember that time on the micro:bit is measured in milliseconds: there are 1000 milliseconds in one second, so sleep(1000) waits for one second and sleep(500) waits for half a second."
+        "text": "Every MicroPython program in this unit begins with the same first line: from microbit import * This line imports everything you need to control the micro:bit's lights, buttons and sensors. The star symbol * here means 'everything'. Without this line, none of the micro:bit commands will work."
       }
     ],
     "terms": [

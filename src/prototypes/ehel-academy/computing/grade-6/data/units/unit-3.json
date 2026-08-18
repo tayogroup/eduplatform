@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-18T08:37:22.835Z",
+  "generatedAt": "2026-08-18T10:00:59.828Z",
   "stage": {
     "id": "s06",
     "label": "Stage 6"
@@ -74,16 +74,7 @@
       "note": "Any free spreadsheet works — the ideas are the same in all of them."
     }
   ],
-  "tutorPrompts": [
-    "Try these prompts to go deeper on servers and storage:",
-    "Explain the difference between streaming a film and downloading a film, like I am 11.",
-    "What is the difference between a megabyte and a gigabyte? Give me an everyday example of each.",
-    "Why does a school use an intranet instead of just the open internet for its notices?",
-    "3. How data travels: wired and wireless",
-    "Prompts to test your understanding of 3.1:",
-    "Give me a home network example and ask me whether it will overload. Then check my answer.",
-    "Explain bandwidth to me using an example from my daily life."
-  ],
+  "tutorPrompts": [],
   "concepts": [
     {
       "id": "concept-1-streaming-messaging-and-the-school-intranet",
@@ -700,14 +691,9 @@
   ],
   "debugging": [
     {
-      "symptom": "Misconception: \"My message travels to my friend in one straight line, all in one piece.\"",
+      "symptom": "\"My message travels to my friend in one straight line, all in one piece.\"",
       "cause": "A common mix-up in this unit, “Networks and Digital Communication”.",
-      "fix": "Misconception: “My message travels to my friend in one straight line, all in one piece.” Truth: The message is split into many packets. They can each take a different path across the world and arrive out of order. The receiving device sorts them back into the correct order using the numbers on each packet. 6. Bandwidth: why some networks feel fast and others feel slow Bandwidth is the maximum amount of data that can travel between two points in a network in a certain amount of time. It is usually measured in bits per second. The bigger your bandwidth, the more data can flow at once, and the quicker everything feels. The smaller your bandwidth, the longer it takes for a file to download or a video to load. Bandwidth does not change how far the data goes — it changes how *much* can go at a time. A good way to picture bandwidth is a drinking straw. Imagine drinking mango juice through a very thin straw — you can only sip a little at a time, so it takes ages to finish the glass. Now swap it for a wide, fat straw: the same juice rushes up and you finish in seconds. The juice is your data, and the width of the straw is your bandwidth. A wide 'straw' lets a lot of data through quickly; a narrow one makes you wait. But bandwidth is not the only thing that matters. The number of devices using the network at the same time also changes the speed. Your home has a limited amount of bandwidth that must be shared among every active device. So even if your bandwidth is large, everything can still slow down when lots of people are streaming or downloading at once. That is often why your video pauses to load in the evening, when the whole family is online together."
-    },
-    {
-      "symptom": "Misconception: \"Encryption hides the message so nobody can see it is being sent.\"",
-      "cause": "A common mix-up in this unit, “Networks and Digital Communication”.",
-      "fix": "Misconception: “Encryption hides the message so nobody can see it is being sent.” Truth: Encryption does not hide that a message exists — a thief can still grab the packets. What encryption does is scramble the contents so the packets are useless nonsense without the secret key. 10. User authentication: proving it is really you Encryption protects data while it travels. But we also need to protect data where it is stored, by making sure only the right person can open an account. The way we do this is called user authentication, which simply means checking that a user really is who they say they are. There are several ways to authenticate a user, and good systems often use more than one. 10a. Usernames and passwords The most common method is a username and a password. A username is the unique name that identifies you on a system. A password is a secret string of letters, numbers and characters that you set — like a private code that proves the username really belongs to you. Because someone needs *both* to get in, the two together are much stronger than either alone. If someone can guess your password, they can hack your account, which means getting into something they are not allowed to use."
+      "fix": "The message is split into many packets. They can each take a different path across the world and arrive out of order. The receiving device sorts them back into the correct order using the numbers on each packet."
     }
   ],
   "esafety": [
@@ -717,11 +703,7 @@
     },
     {
       "title": "Password golden rules — Never share your password with anyone — not even your best friend, and not even if they promise to keep it secret. — Never use the same password for lots of different accounts. If one is guessed, all of them are open. — Never type a real password into a website just to 'test how strong it is'. — When you talk about passwords in class, never say your real ones out loud. 10b. Fingerprints Many devices can be unlocked with a fingerprint using a fingerprint scanner. When you place your finger on the scanner, the software looks at the unique pattern of ridges on your fingertip and compares it with the fingerprint already stored in the device. If the scanned pattern matches the stored one, the device unlocks. If it does not match, the device stays locked. Fingerprints are an excellent method because every person's fingerprint is unique — no two people share the same one, not even identical twins. That makes this kind of authentication very hard to hack, because a thief cannot easily copy your finger.",
-      "text": "- Never share your password with anyone - not even your best friend, and not even if they promise to keep it secret. - Never use the same password for lots of different accounts. If one is guessed, all of them are open. - Never type a real password into a website just to 'test how strong it is'. - When you talk about passwords in class, never say your real ones out loud. 10b. Fingerprints Many devices can be unlocked with a fingerprint using a fingerprint scanner. When you place your finger on the scanner, the software looks at the unique pattern of ridges on your fingertip and compares it with the fingerprint already stored in the device. If the scanned pattern matches the stored one, the device unlocks. If it does not match, the device stays locked. Fingerprints are an excellent method because every person's fingerprint is unique - no two people share the same one, not even identical twins. That makes this kind of authentication very hard to hack, because a thief cannot easily copy your finger."
-    },
-    {
-      "title": "Spot a phishing trick",
-      "text": "Warning signs that a message might be phishing: — It creates panic or urgency, pushing you to act fast. — It asks for your password, PIN, or bank details. — The sender's address looks odd or slightly misspelled. — There is a link that does not match the real company's website. — It promises something too good to be true, like a free phone."
+      "text": "- Never share your password with anyone - not even your best friend, and not even if they promise to keep it secret. - Never use the same password for lots of different accounts. If one is guessed, all of them are open. - Never type a real password into a website just to 'test how strong it is'. - When you talk about passwords in class, never say your real ones out loud."
     }
   ],
   "reference": {
@@ -993,12 +975,8 @@
     ],
     "commonMistakes": [
       [
-        "Misconception: \"My message travels to my friend in one straight line, all in one piece.\"",
-        "Misconception: “My message travels to my friend in one straight line, all in one piece.” Truth: The message is split into many packets. They can each take a different path across the world and arrive out of order. The receiving device sorts them back into the correct order using the numbers on each packet. 6. Bandwidth: why some networks feel fast and others feel slow Bandwidth is the maximum amount of data that can travel between two points in a network in a certain amount of time. It is usually measured in bits per second. The bigger your bandwidth, the more data can flow at once, and the quicker everything feels. The smaller your bandwidth, the longer it takes for a file to download or a video to load. Bandwidth does not change how far the data goes — it changes how *much* can go at a time. A good way to picture bandwidth is a drinking straw. Imagine drinking mango juice through a very thin straw — you can only sip a little at a time, so it takes ages to finish the glass. Now swap it for a wide, fat straw: the same juice rushes up and you finish in seconds. The juice is your data, and the width of the straw is your bandwidth. A wide 'straw' lets a lot of data through quickly; a narrow one makes you wait. But bandwidth is not the only thing that matters. The number of devices using the network at the same time also changes the speed. Your home has a limited amount of bandwidth that must be shared among every active device. So even if your bandwidth is large, everything can still slow down when lots of people are streaming or downloading at once. That is often why your video pauses to load in the evening, when the whole family is online together."
-      ],
-      [
-        "Misconception: \"Encryption hides the message so nobody can see it is being sent.\"",
-        "Misconception: “Encryption hides the message so nobody can see it is being sent.” Truth: Encryption does not hide that a message exists — a thief can still grab the packets. What encryption does is scramble the contents so the packets are useless nonsense without the secret key. 10. User authentication: proving it is really you Encryption protects data while it travels. But we also need to protect data where it is stored, by making sure only the right person can open an account. The way we do this is called user authentication, which simply means checking that a user really is who they say they are. There are several ways to authenticate a user, and good systems often use more than one. 10a. Usernames and passwords The most common method is a username and a password. A username is the unique name that identifies you on a system. A password is a secret string of letters, numbers and characters that you set — like a private code that proves the username really belongs to you. Because someone needs *both* to get in, the two together are much stronger than either alone. If someone can guess your password, they can hack your account, which means getting into something they are not allowed to use."
+        "\"My message travels to my friend in one straight line, all in one piece.\"",
+        "The message is split into many packets. They can each take a different path across the world and arrive out of order. The receiving device sorts them back into the correct order using the numbers on each packet."
       ]
     ],
     "connections": []

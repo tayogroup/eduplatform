@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-18T08:37:23.379Z",
+  "generatedAt": "2026-08-18T10:01:00.411Z",
   "stage": {
     "id": "s08",
     "label": "Stage 8"
@@ -89,11 +89,11 @@
     "Ask: 'Explain the difference between the control unit and the ALU using a simple everyday comparison.'",
     "Ask: 'What does clock speed in gigahertz actually mean, and does a higher number always mean a faster computer?'",
     "Then explain the three main parts of the CPU back to your tutor in your own words.",
-    "Primary memory: RAM and ROM",
     "Ask: 'List the operating systems on the devices in a typical school, and say which are free and open-source.'",
     "Ask: 'Give me a real example for each of the six main jobs of an operating system.'",
-    "Utility software",
-    "Ask: 'Give me five denary numbers between 20 and 200 and let me convert each to binary, then check my answers one at a time.'"
+    "Ask: 'Give me five denary numbers between 20 and 200 and let me convert each to binary, then check my answers one at a time.'",
+    "Ask: 'Give me a two-input truth table with the output column blank for a NOT, AND or OR gate, and let me fill it in.'",
+    "Ask: 'Describe a real decision from daily life that works like an AND gate, and one that works like an OR gate.'"
   ],
   "concepts": [
     {
@@ -735,12 +735,12 @@
     {
       "symptom": "It is easy to think the CPU stores your files. It does not.",
       "cause": "A common mix-up in this unit, “Computer Systems”.",
-      "fix": "It is easy to think the CPU stores your files. It does not. The CPU processes data; your files are stored in RAM while in use and in secondary storage when saved. The CPU only holds a tiny amount of data at a time, in its registers, just long enough to work on it."
+      "fix": "The CPU processes data; your files are stored in RAM while in use and in secondary storage when saved. The CPU only holds a tiny amount of data at a time, in its registers, just long enough to work on it."
     },
     {
       "symptom": "Some learners think the letter A is stored as the shape of an A. It is not.",
       "cause": "A common mix-up in this unit, “Computer Systems”.",
-      "fix": "Some learners think the letter A is stored as the shape of an A. It is not. A is stored as the number 65 in binary. The shape you see on screen is drawn separately from that code. This is why the same text can appear in many different fonts: the code stays 65, only the drawing changes. Representing images A digital image of the kind a phone camera makes is a bitmap, which means it is built from a grid of tiny coloured squares called pixels (short for 'picture elements'). Each pixel is a single solid colour, and that colour is stored as a binary number. When there are enough small pixels, your eye blends them into a smooth picture, just as many tiles make a mosaic. Two settings decide how an image looks and how big its file is. The resolution is how many pixels the image has, usually given as width times height; more pixels means more detail but a bigger file. The colour depth (or bit depth) is how many bits are used for each pixel, which decides how many colours are possible. With 1 bit per pixel you get only 2 colours (black and white). With 8 bits you get 256 colours. Photographs usually use 24-bit colour, which gives over sixteen million colours by using 8 bits each for red, green and blue light mixed together. This is the same red-green-blue idea behind those hex colour codes like #FF0000. The more pixels and the greater the colour depth, the larger the file: an uncompressed image file size is roughly width x height x colour depth."
+      "fix": "A is stored as the number 65 in binary. The shape you see on screen is drawn separately from that code. This is why the same text can appear in many different fonts: the code stays 65, only the drawing changes."
     }
   ],
   "esafety": [
@@ -1031,11 +1031,11 @@
     "commonMistakes": [
       [
         "It is easy to think the CPU stores your files. It does not.",
-        "It is easy to think the CPU stores your files. It does not. The CPU processes data; your files are stored in RAM while in use and in secondary storage when saved. The CPU only holds a tiny amount of data at a time, in its registers, just long enough to work on it."
+        "The CPU processes data; your files are stored in RAM while in use and in secondary storage when saved. The CPU only holds a tiny amount of data at a time, in its registers, just long enough to work on it."
       ],
       [
         "Some learners think the letter A is stored as the shape of an A. It is not.",
-        "Some learners think the letter A is stored as the shape of an A. It is not. A is stored as the number 65 in binary. The shape you see on screen is drawn separately from that code. This is why the same text can appear in many different fonts: the code stays 65, only the drawing changes. Representing images A digital image of the kind a phone camera makes is a bitmap, which means it is built from a grid of tiny coloured squares called pixels (short for 'picture elements'). Each pixel is a single solid colour, and that colour is stored as a binary number. When there are enough small pixels, your eye blends them into a smooth picture, just as many tiles make a mosaic. Two settings decide how an image looks and how big its file is. The resolution is how many pixels the image has, usually given as width times height; more pixels means more detail but a bigger file. The colour depth (or bit depth) is how many bits are used for each pixel, which decides how many colours are possible. With 1 bit per pixel you get only 2 colours (black and white). With 8 bits you get 256 colours. Photographs usually use 24-bit colour, which gives over sixteen million colours by using 8 bits each for red, green and blue light mixed together. This is the same red-green-blue idea behind those hex colour codes like #FF0000. The more pixels and the greater the colour depth, the larger the file: an uncompressed image file size is roughly width x height x colour depth."
+        "A is stored as the number 65 in binary. The shape you see on screen is drawn separately from that code. This is why the same text can appear in many different fonts: the code stays 65, only the drawing changes."
       ]
     ],
     "connections": []

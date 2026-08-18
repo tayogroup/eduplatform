@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-18T08:37:22.593Z",
+  "generatedAt": "2026-08-18T10:00:59.631Z",
   "stage": {
     "id": "s05",
     "label": "Stage 5"
@@ -74,15 +74,7 @@
       "note": "Any free spreadsheet works — the ideas are the same in all of them."
     }
   ],
-  "tutorPrompts": [
-    "Give me a device — like a printer, a phone or a smart TV — and ask me whether it would connect to the network through the switch, the wireless access point, or the router. Then tell me if I was right and explain why.",
-    "This turns your tutor into a quiz partner and helps the three devices stick in your memory.",
-    "Try this prompt:",
-    "Pretend a message is being sent from Hargeisa to Mogadishu. Walk me through every step — splitting into packets, travelling by different routes, and being put back in order. Then let me try to explain the steps back to you in my own words.",
-    "Explaining an idea back in your own words is one of the best ways to prove you truly understand it.",
-    "Try this challenge:",
-    "Thinking about causes and cures is exactly how real network engineers work."
-  ],
+  "tutorPrompts": [],
   "concepts": [
     {
       "id": "concept-1-network-hardware-the-machines-that-connect-us",
@@ -748,9 +740,19 @@
   ],
   "debugging": [
     {
-      "symptom": "When something goes wrong, people often shout: \"The internet is broken!\" But remember: the internet itself does NOT break. It is far too big for that. What actually breaks is just the CONNECTIONS between some of the computers. There are almost always other connections the data can use instead.",
-      "cause": "A common mix-up in this unit, “Networks and Digital Communication”.",
-      "fix": "When something goes wrong, people often shout: “The internet is broken!” But remember: the internet itself does NOT break. It is far too big for that. What actually breaks is just the CONNECTIONS between some of the computers. There are almost always other connections the data can use instead. The effects of network failures Network failures can have very small effects, or very big effects. Small failures happen quite often, and they are usually just annoying rather than serious. For example, if a network fails while you are working online, any work you have not saved recently might disappear. Or if you are playing an online game, the game might suddenly stop. Frustrating — but not the end of the world. Large failures with big effects do not happen as often, but they matter far more. Imagine a bank's network failing. Effects of a large failure could include: not being able to stream films, radio or TV shows; not being able to reach money in an online bank account to pay bills or buy food"
+      "symptom": "Your program runs but does the wrong thing.",
+      "cause": "The instructions are in the wrong order, or one is missing.",
+      "fix": "Read your steps out loud one at a time and act them out. The first step that does not match what you wanted is the bug."
+    },
+    {
+      "symptom": "Nothing happens when you run it.",
+      "cause": "There is no trigger, or the blocks are not joined together.",
+      "fix": "Check that your first block is a start block and that every block below it is snapped on."
+    },
+    {
+      "symptom": "It works once, then stops.",
+      "cause": "The instructions need to repeat.",
+      "fix": "Put the steps that should happen again inside a repeat or forever loop."
     }
   ],
   "esafety": [
@@ -1028,8 +1030,16 @@
     ],
     "commonMistakes": [
       [
-        "When something goes wrong, people often shout: \"The internet is broken!\" But remember: the internet itself does NOT break. It is far too big for that. What actually breaks is just the CONNECTIONS between some of the computers. There are almost always other connections the data can use instead.",
-        "When something goes wrong, people often shout: “The internet is broken!” But remember: the internet itself does NOT break. It is far too big for that. What actually breaks is just the CONNECTIONS between some of the computers. There are almost always other connections the data can use instead. The effects of network failures Network failures can have very small effects, or very big effects. Small failures happen quite often, and they are usually just annoying rather than serious. For example, if a network fails while you are working online, any work you have not saved recently might disappear. Or if you are playing an online game, the game might suddenly stop. Frustrating — but not the end of the world. Large failures with big effects do not happen as often, but they matter far more. Imagine a bank's network failing. Effects of a large failure could include: not being able to stream films, radio or TV shows; not being able to reach money in an online bank account to pay bills or buy food"
+        "Your program runs but does the wrong thing.",
+        "The instructions are in the wrong order, or one is missing. Read your steps out loud one at a time and act them out. The first step that does not match what you wanted is the bug."
+      ],
+      [
+        "Nothing happens when you run it.",
+        "There is no trigger, or the blocks are not joined together. Check that your first block is a start block and that every block below it is snapped on."
+      ],
+      [
+        "It works once, then stops.",
+        "The instructions need to repeat. Put the steps that should happen again inside a repeat or forever loop."
       ]
     ],
     "connections": []

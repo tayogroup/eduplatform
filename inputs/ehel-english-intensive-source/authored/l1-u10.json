@@ -573,8 +573,8 @@
       "section": "Document",
       "reading": 3,
       "q": "It is 14:52 and your ticket is to Northfield. Which departure should you aim for, and why not the earlier one?",
-      "a": "The 15:40 from platform 6. The 15:12 is delayed 25 minutes, which makes it about 15:37 — but platform 6 needs 6 minutes by footbridge and the gate closes 3 minutes before, so it is very tight, and the 15:40 is on time from the same platform.",
-      "why": "Three pieces of information combine: the delay, the footbridge time, and the gate rule. Any one alone gives the wrong answer.",
+      "a": "The 15:40 from platform 6. The 15:12 is delayed 25 minutes, so it will not leave until about 15:37 — and platform 6 needs 6 minutes by footbridge with the gate closing 3 minutes before departure, so its real departure is barely three minutes ahead of the 15:40, which is on time from the same platform and needs the same walk. There is nothing to gain by aiming for the delayed one, and a delay can still grow.",
+      "why": "Three pieces of information combine: the size of the delay, the footbridge time, and the gate rule. Together they show the delayed train's real head start is almost gone, so there is no advantage in chasing it — and it may be delayed further still.",
       "outcome": 4,
       "difficulty": "Stretch"
     },
@@ -590,7 +590,7 @@
       "section": "Document",
       "reading": 3,
       "q": "The 15:24 to Eastbourne is cancelled. A passenger with a ticket for it asks you what to do. What does the board tell you?",
-      "a": "There is no later Eastbourne service on the board, so the 15:05 has gone and the next one is not shown — they need to ask, or wait for a later board.",
+      "a": "The 15:05 to Eastbourne, platform 3, is still to come — its gate does not close until 15:02 — but after that no further Eastbourne service is shown on the board at all, so if they miss it too they need to ask, or wait for a later board.",
       "why": "The useful answer here is what the board does not contain. Reading a document includes noticing when the information you need is absent.",
       "outcome": 4,
       "difficulty": "Stretch"
@@ -712,7 +712,7 @@
     {
       "title": "Writing 3 — Read the board and the ticket for four situations",
       "prompt": "Use the board and ticket in Reading 3. Write full-sentence answers.\n1. It is 14:52 and you are going to Northfield. Which train, and why not the earlier one?\n2. You want to return tomorrow morning. Can you? Give two reasons from the ticket.\n3. You have a ticket for the 15:24 to Eastbourne. What does the board tell you, and what does it not tell you?\n4. You made the outward journey and now want a refund on the return half. What is the answer, and where does it say so?\n5. You are meeting somebody off the 15:19 to Manchester at 15:17. Is that a problem?",
-      "model": "1. The 15:40 from platform 6. The 15:12 is delayed 25 minutes, so it leaves about 15:37, but platform 6 is over the footbridge and needs 6 minutes, and the gate closes 3 minutes before — so it is too tight to rely on.\n2. No. The ticket is valid on the date of issue only, and it says the return journey must start before 23:30 today.\n3. It tells me the 15:24 is cancelled. It does not tell me when the next Eastbourne service is, because there is no later one on the board.\n4. There is no refund, because the ticket says no refund after the outward journey has been made.\n5. Yes. The 15:19 is already boarding at 14:52, and gates close 3 minutes before departure, so arriving at 15:17 means the gate closes in one minute and I would not get through to meet them.",
+      "model": "1. The 15:40 from platform 6. The 15:12 is delayed 25 minutes, so it now leaves about 15:37 — platform 6 is over the footbridge and needs 6 minutes, and the gate closes 3 minutes before, so its real departure is barely three minutes ahead of the 15:40, which needs the same walk and is on time. There is nothing to gain by chasing the delayed one, and it may be delayed further still.\n2. No. The ticket is valid on the date of issue only, and it says the return journey must start before 23:30 today.\n3. It tells me the 15:24 is cancelled. It does not tell me when the next Eastbourne service is, because there is no later one on the board.\n4. There is no refund, because the ticket says no refund after the outward journey has been made.\n5. Yes. The 15:19 is already boarding at 14:52, and gates close 3 minutes before departure, so arriving at 15:17 means the gate closes in one minute and I would not get through to meet them.",
       "starter": "1. The 15:40 from",
       "length": "Five full-sentence answers",
       "criteria": "Five answers, each a full sentence; answer 1 combines the delay, the footbridge and the gate rule; answer 2 gives two separate reasons; answer 3 identifies missing information; answer 5 uses the gate rule",
@@ -893,7 +893,7 @@
         "The name of the driver"
       ],
       "a": "That platform 6 needs 6 minutes and the gate closes 3 minutes before",
-      "why": "The delay alone suggests you have time. The footbridge and the gate rule together are what make it too tight to rely on.",
+      "why": "The delay alone tells you when the train is now due, but not whether chasing it is worthwhile. The footbridge and the gate rule show how much of that apparent head start is used up just reaching the platform.",
       "outcome": 4
     },
     {

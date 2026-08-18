@@ -1317,6 +1317,15 @@ let manifest;
 let finalAssessment;
 let placementExam;
 let gamePack;
+// A word that appears inside a practice sentence but has no dictionary entry
+// of its own — "The lion roars in the hot sun" names "lion" but leaves
+// "roars" undefined. Deliberately NOT a full vocabulary entry: no audio, no
+// practice sentences, not tracked in My Word Book — just enough for a tap on
+// the word to show what it means without leaving the sentence. Optional per
+// grade (sentence-glossary.json may not exist yet), so a missing file is not
+// a load failure — the words in that grade's sentences simply are not
+// clickable until it does.
+let sentenceGlossary = {};
 let route = location.hash.slice(1) || "overview";
 let audioEnabled = true;
 let mediaRecorder;
@@ -1531,6 +1540,75 @@ function icons() {
 function escapeHtml(value = "") {
   return sharedEscapeHtml(value);
 }
+
+// Wrap any word in `text` that sentenceGlossary defines in a clickable span,
+// leaving everything else untouched. Built by walking regex matches and
+// escaping each literal segment in between, rather than String#replace: a
+// replacer only transforms the MATCHED text, so the untouched punctuation and
+// spacing around it would reach the page unescaped — the same content this
+// file escapes everywhere else it renders learner-facing text. `excludeWord`
+// is the card's own target word (already named above the sentence); linking
+// it back to itself would be a click that does nothing useful.
+function linkGlossaryWords(text, excludeWord = "") {
+  const excludeLower = String(excludeWord || "").toLowerCase();
+  const source = String(text || "");
+  const pattern = /[A-Za-z']+/g;
+  let out = "";
+  let last = 0;
+  let match;
+  while ((match = pattern.exec(source))) {
+    out += escapeHtml(source.slice(last, match.index));
+    const word = match[0];
+    const lw = word.toLowerCase();
+    const entry = lw !== excludeLower ? sentenceGlossary[lw] : null;
+    out += entry
+      ? `<button type="button" class="glossary-word" data-glossary-word="${escapeHtml(lw)}">${escapeHtml(word)}</button>`
+      : escapeHtml(word);
+    last = match.index + word.length;
+  }
+  out += escapeHtml(source.slice(last));
+  return out;
+}
+
+let activeGlossaryButton = null;
+function hideGlossaryPopover() {
+  document.querySelectorAll(".glossary-popover").forEach((el) => el.remove());
+  if (activeGlossaryButton) activeGlossaryButton.setAttribute("aria-expanded", "false");
+  activeGlossaryButton = null;
+}
+function showGlossaryPopover(button) {
+  const word = button.dataset.glossaryWord;
+  const entry = sentenceGlossary[word];
+  if (!entry) return;
+  hideGlossaryPopover();
+  const pop = document.createElement("div");
+  pop.className = "glossary-popover";
+  pop.setAttribute("role", "status");
+  pop.innerHTML = `<strong>${escapeHtml(word)}</strong><p>${escapeHtml(entry.definition)}</p>`;
+  document.body.appendChild(pop);
+  const rect = button.getBoundingClientRect();
+  const top = rect.bottom + window.scrollY + 6;
+  const maxLeft = window.scrollX + document.documentElement.clientWidth - pop.offsetWidth - 8;
+  const left = Math.max(8, Math.min(rect.left + window.scrollX, maxLeft));
+  pop.style.top = `${top}px`;
+  pop.style.left = `${left}px`;
+  button.setAttribute("aria-expanded", "true");
+  activeGlossaryButton = button;
+}
+// One delegated listener for the whole app, registered once at module load —
+// a word can be clicked on any page a sentence renders on, and re-attaching
+// this per render would stack duplicate listeners.
+document.addEventListener("click", (event) => {
+  const button = event.target.closest(".glossary-word");
+  if (button) {
+    event.preventDefault();
+    if (activeGlossaryButton === button) hideGlossaryPopover();
+    else showGlossaryPopover(button);
+    return;
+  }
+  if (!event.target.closest(".glossary-popover")) hideGlossaryPopover();
+});
+document.addEventListener("keydown", (event) => { if (event.key === "Escape") hideGlossaryPopover(); });
 
 // Narration clips live in one shared tree (english/media/audio/grade-N/{cat}/)
 // beside the app, not under the per-grade app folder, so rebasing them against
@@ -2202,7 +2280,7 @@ function renderDictionaryClassic() {
   const drawWord = () => {
     const item = words.find((word) => word.vocabularyId === activeWordId) || words[0];
     const sentence = item.practiceSentences[activeSentence] || item.exampleSentence;
-    $("#word-card").innerHTML = `<div class="word-card-head"><div><span class="word-type">${escapeHtml(item.master.partOfSpeech)}</span><h2>${escapeHtml(item.master.displayWord)}</h2><small>${escapeHtml(item.master.partOfSpeechDefinition)}</small></div><div class="audio-actions"><button class="icon-button" id="listen-word" type="button" title="Listen at 0.90x" aria-label="Listen to ${escapeHtml(item.master.displayWord)} at 0.90x">${icon("volume-2")}</button><button class="icon-button" id="slow-word" type="button" title="Replay at 0.90x" aria-label="Replay at 0.90x">${icon("rotate-ccw")}</button></div></div><p class="meaning"><span class="field-label">Meaning:</span> ${escapeHtml(item.childMeaning)}${item.meaningAudio?.available ? ` <button class="icon-button" id="hear-meaning" type="button" title="Listen to the meaning" aria-label="Listen to the meaning of ${escapeHtml(item.master.displayWord)}">${icon("volume-2")}</button>` : ""}</p><div class="sentence-card"><small>In a sentence · ${activeSentence + 1} of ${item.practiceSentences.length}</small><p>${escapeHtml(sentence)}</p><div class="sentence-controls"><button class="icon-button" id="previous-sentence" type="button" aria-label="Previous sentence">${icon("arrow-left")}</button><div class="sentence-dots">${item.practiceSentences.map((_, index) => `<button class="sentence-dot ${index === activeSentence ? "active" : ""}" data-sentence="${index}" type="button" aria-label="Sentence ${index + 1}"></button>`).join("")}</div><button class="button ghost" id="hear-sentence" type="button">${icon("volume-2")} Hear sentence</button><button class="icon-button" id="next-sentence" type="button" aria-label="Next sentence">${icon("arrow-right")}</button></div></div><div><span class="field-label">Spelling:</span> ${escapeHtml(item.spellingPractice)}</div><div class="practice-box"><input id="word-sentence" maxlength="180" placeholder="${escapeHtml(item.sentenceStarter)}…" aria-label="Write your own sentence"><button class="button primary" id="check-word-sentence" type="button">Check sentence</button></div><div id="word-feedback" role="status" aria-live="polite" aria-atomic="true"></div><button class="button secondary" id="know-word" type="button">${progress.knownWords.includes(item.vocabularyId) ? icon("check-circle") + " Learned" : icon("bookmark-plus") + " I know this word"}</button>`;
+    $("#word-card").innerHTML = `<div class="word-card-head"><div><span class="word-type">${escapeHtml(item.master.partOfSpeech)}</span><h2>${escapeHtml(item.master.displayWord)}</h2><small>${escapeHtml(item.master.partOfSpeechDefinition)}</small></div><div class="audio-actions"><button class="icon-button" id="listen-word" type="button" title="Listen at 0.90x" aria-label="Listen to ${escapeHtml(item.master.displayWord)} at 0.90x">${icon("volume-2")}</button><button class="icon-button" id="slow-word" type="button" title="Replay at 0.90x" aria-label="Replay at 0.90x">${icon("rotate-ccw")}</button></div></div><p class="meaning"><span class="field-label">Meaning:</span> ${escapeHtml(item.childMeaning)}${item.meaningAudio?.available ? ` <button class="icon-button" id="hear-meaning" type="button" title="Listen to the meaning" aria-label="Listen to the meaning of ${escapeHtml(item.master.displayWord)}">${icon("volume-2")}</button>` : ""}</p><div class="sentence-card"><small>In a sentence · ${activeSentence + 1} of ${item.practiceSentences.length}</small><p>${linkGlossaryWords(sentence, item.master.displayWord)}</p><div class="sentence-controls"><button class="icon-button" id="previous-sentence" type="button" aria-label="Previous sentence">${icon("arrow-left")}</button><div class="sentence-dots">${item.practiceSentences.map((_, index) => `<button class="sentence-dot ${index === activeSentence ? "active" : ""}" data-sentence="${index}" type="button" aria-label="Sentence ${index + 1}"></button>`).join("")}</div><button class="button ghost" id="hear-sentence" type="button">${icon("volume-2")} Hear sentence</button><button class="icon-button" id="next-sentence" type="button" aria-label="Next sentence">${icon("arrow-right")}</button></div></div><div><span class="field-label">Spelling:</span> ${escapeHtml(item.spellingPractice)}</div><div class="practice-box"><input id="word-sentence" maxlength="180" placeholder="${escapeHtml(item.sentenceStarter)}…" aria-label="Write your own sentence"><button class="button primary" id="check-word-sentence" type="button">Check sentence</button></div><div id="word-feedback" role="status" aria-live="polite" aria-atomic="true"></div><button class="button secondary" id="know-word" type="button">${progress.knownWords.includes(item.vocabularyId) ? icon("check-circle") + " Learned" : icon("bookmark-plus") + " I know this word"}</button>`;
     const play = (button = null) => playAudio(item.master.audio.normal, {
       rate: AI_NARRATION_RATE,
       start: item.master.audio.cueStart,
@@ -2408,7 +2486,7 @@ function renderWordCarousel() {
       <small class="gc-source">ElevenLabs · approved Ehel voice · 0.90x</small>
       ${sentences.length ? `<div class="wc-sentence">
         <small>In a sentence · ${position + 1} of ${sentences.length}</small>
-        <p>${esc(sentences[position])}</p>
+        <p>${linkGlossaryWords(sentences[position], item.master.displayWord)}</p>
         <div class="wc-sentence-controls">
           <button class="icon-button" type="button" data-sentence-step="-1" data-word="${esc(item.vocabularyId)}" aria-label="Previous sentence" ${sentences.length < 2 ? "disabled" : ""}>${icon("arrow-left")}</button>
           <div class="sentence-dots">${sentences.map((_, i) => `<button class="sentence-dot ${i === position ? "active" : ""}" type="button" data-sentence-dot="${i}" data-word="${esc(item.vocabularyId)}" aria-label="Sentence ${i + 1}"></button>`).join("")}</div>
@@ -4878,16 +4956,21 @@ const config = {
       };
       return { manifest, course };
     }
-    const [manifestResponse, courseResponse, dictionaryResponse, finalAssessmentResponse, lectureMediaResponse] = await Promise.all([
+    const [manifestResponse, courseResponse, dictionaryResponse, finalAssessmentResponse, lectureMediaResponse, sentenceGlossaryResponse] = await Promise.all([
       fetch(new URL("course-manifest.json", ctx.dataRootUrl)),
       fetch(new URL(`units/unit-${unitNumber}.json`, ctx.dataRootUrl)),
       fetch(new URL(`master-dictionary.grade${gradeNumber}.json`, ctx.dataRootUrl)),
       fetch(new URL("course-final-quiz.json", ctx.dataRootUrl)),
       fetch(new URL("lecture-media.json", ctx.dataRootUrl)),
+      // Not every grade has this file yet (pilot: Grade 1), and it is not
+      // taught content — a 404 here is not a course failure the way a
+      // missing dictionary is.
+      fetch(new URL("sentence-glossary.json", ctx.dataRootUrl)).catch(() => null),
     ]);
     const failedResponse = [manifestResponse, courseResponse, dictionaryResponse, finalAssessmentResponse].find((response) => !response.ok);
     if (failedResponse) throw new Error(`Course data could not be loaded (${failedResponse.status} ${failedResponse.url}).`);
     [manifest, course, dictionary, finalAssessment] = await Promise.all([manifestResponse.json(), courseResponse.json(), dictionaryResponse.json(), finalAssessmentResponse.json()]);
+    sentenceGlossary = sentenceGlossaryResponse?.ok ? (await sentenceGlossaryResponse.json())?.entries || {} : {};
     const gameResponse = await fetch(new URL(`games/unit-${unitNumber}.json`, ctx.dataRootUrl));
     if (!gameResponse.ok) throw new Error(`Game data could not be loaded (${gameResponse.status}).`);
     gamePack = await gameResponse.json();

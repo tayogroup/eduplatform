@@ -556,6 +556,15 @@ body.focus-mode.gc-full .wc-tools { position: fixed; left: 0; right: 0; bottom: 
 .sentence-dot.active { background: var(--teal); }
 .practice-box { display: grid; grid-template-columns: 1fr auto; gap: 10px; margin-top: 15px; }
 .practice-box input { min-width: 0; border: 1px solid var(--line); border-radius: 6px; padding: 10px 12px; }
+/* A word inside a practice sentence that has its own quick definition (see
+   sentenceGlossary in shell/subjects/english.js) — tap it, see what it means,
+   stay on the sentence. Underline rather than a button-like fill: it needs to
+   read as "part of this sentence" first and "clickable" second. */
+.glossary-word { display: inline; border: 0; background: transparent; padding: 0; margin: 0; font: inherit; color: inherit; cursor: pointer; text-decoration: underline; text-decoration-style: dotted; text-decoration-color: var(--teal); text-underline-offset: 3px; }
+.glossary-word:hover, .glossary-word[aria-expanded="true"] { color: var(--teal-dark); background: var(--teal-soft); border-radius: 3px; }
+.glossary-popover { position: absolute; z-index: 80; max-width: 260px; background: var(--paper); border: 1px solid var(--line); border-radius: 8px; box-shadow: var(--shadow); padding: 10px 12px; }
+.glossary-popover strong { display: block; color: var(--teal-dark); text-transform: capitalize; margin-bottom: 3px; }
+.glossary-popover p { margin: 0; font-size: 13px; line-height: 1.4; color: var(--ink); }
 .feedback { margin-top: 10px; padding: 10px 12px; border-radius: 6px; font-size: 14px; }
 .feedback.good { background: #e1f5e9; color: #176442; }
 .feedback.try { background: var(--coral-soft); color: #9c3e2e; }

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-18T07:59:31.411Z",
+  "generatedAt": "2026-08-18T08:37:22.240Z",
   "stage": {
     "id": "s04",
     "label": "Stage 4"
@@ -503,27 +503,22 @@
     {
       "symptom": "A phone number is a Number.",
       "cause": "A common mix-up in this unit, “Be a Data Boss”.",
-      "fix": "No. We never add phone numbers together, and they have hyphens, so they are stored as Text."
+      "fix": "No. We never add phone numbers together, and they have hyphens, so they are stored as Text. Would you ever do a sum with it?"
     },
     {
       "symptom": "Data and information are the same thing.",
       "cause": "A common mix-up in this unit, “Be a Data Boss”.",
-      "fix": "Not quite. Data is the raw fact ("
-    },
-    {
-      "symptom": "); information is that fact given meaning (",
-      "cause": "A common mix-up in this unit, “Be a Data Boss”.",
-      "fix": "Leila is 9 years old"
+      "fix": "Not quite. Data is the raw fact (\"9 “); information is that fact given meaning (” Leila is 9 years old\")."
     },
     {
       "symptom": "A Yes/No field can hold Maybe.",
       "cause": "A common mix-up in this unit, “Be a Data Boss”.",
-      "fix": "No. A Yes/No type has exactly two values — Yes or No. Nothing else fits."
+      "fix": "No. A Yes/No type has exactly two values - Yes or No. Nothing else fits."
     },
     {
       "symptom": "A Text field can only hold letters.",
       "cause": "A common mix-up in this unit, “Be a Data Boss”.",
-      "fix": "No. Text can also hold digits, hyphens and spaces — anything we are not going to calculate with, like 063-456-789 or 4A."
+      "fix": "No. A Yes/No type has exactly two values — Yes or No. Nothing else fits."
     }
   ],
   "esafety": [
@@ -689,20 +684,20 @@
     ],
     "commonMistakes": [
       [
+        "Watch for these ideas. They are normal at this age",
+        "gently show the truth with a quick example rather than only saying \"no\"."
+      ],
+      [
         "A record goes down a column.",
-        "No. A record is a whole row — everything about one person or thing. A field is the column. Trace a row across with your finger to show it."
+        "No. A record is a whole row - everything about one person or thing. A field is the column. Trace a row across with your finger to show it."
       ],
       [
         "A phone number is a Number.",
-        "No. We never add phone numbers together, and they have hyphens, so they are stored as Text."
+        "No. We never add phone numbers together, and they have hyphens, so they are stored as Text. Would you ever do a sum with it?"
       ],
       [
         "Data and information are the same thing.",
-        "Not quite. Data is the raw fact ("
-      ],
-      [
-        "); information is that fact given meaning (",
-        "Leila is 9 years old"
+        "Not quite. Data is the raw fact (\"9 “); information is that fact given meaning (” Leila is 9 years old\")."
       ],
       [
         "A Yes/No field can hold Maybe.",
@@ -993,13 +988,13 @@
         "question": "What should you do when this happens: A phone number is a Number.",
         "options": [
           "No. A record is a whole row - everything about one person or thing. A field is the column. Trace a row across with your finger to show it.",
-          "Not quite. Data is the raw fact (",
-          "No. We never add phone numbers together, and they have hyphens, so they are stored as Text.",
-          "Leila is 9 years old"
+          "Not quite. Data is the raw fact (\"9 “); information is that fact given meaning (” Leila is 9 years old\").",
+          "No. We never add phone numbers together, and they have hyphens, so they are stored as Text. Would you ever do a sum with it?",
+          "No. A Yes/No type has exactly two values - Yes or No. Nothing else fits."
         ],
-        "answer": "No. We never add phone numbers together, and they have hyphens, so they are stored as Text.",
+        "answer": "No. We never add phone numbers together, and they have hyphens, so they are stored as Text. Would you ever do a sum with it?",
         "hint": "Use the Unit 7 Computing Words reference.",
-        "explanation": "No. We never add phone numbers together, and they have hyphens, so they are stored as Text."
+        "explanation": "No. We never add phone numbers together, and they have hyphens, so they are stored as Text. Would you ever do a sum with it?"
       },
       {
         "id": "q08",
@@ -1009,61 +1004,61 @@
         "question": "What should you do when this happens: Data and information are the same thing.",
         "options": [
           "No. A record is a whole row - everything about one person or thing. A field is the column. Trace a row across with your finger to show it.",
-          "Not quite. Data is the raw fact (",
-          "No. We never add phone numbers together, and they have hyphens, so they are stored as Text.",
-          "Leila is 9 years old"
+          "Not quite. Data is the raw fact (\"9 “); information is that fact given meaning (” Leila is 9 years old\").",
+          "No. We never add phone numbers together, and they have hyphens, so they are stored as Text. Would you ever do a sum with it?",
+          "No. A Yes/No type has exactly two values - Yes or No. Nothing else fits."
         ],
-        "answer": "Not quite. Data is the raw fact (",
+        "answer": "Not quite. Data is the raw fact (\"9 “); information is that fact given meaning (” Leila is 9 years old\").",
         "hint": "Use the Unit 7 Computing Words reference.",
-        "explanation": "Not quite. Data is the raw fact ("
+        "explanation": "Not quite. Data is the raw fact (\"9 “); information is that fact given meaning (” Leila is 9 years old\")."
       },
       {
         "id": "q09",
         "type": "Reasoning",
         "outcomeId": "lo09",
         "difficulty": "Core",
-        "question": "What should you do when this happens: ); information is that fact given meaning (",
-        "options": [
-          "No. A record is a whole row - everything about one person or thing. A field is the column. Trace a row across with your finger to show it.",
-          "No. We never add phone numbers together, and they have hyphens, so they are stored as Text.",
-          "Leila is 9 years old",
-          "Not quite. Data is the raw fact ("
-        ],
-        "answer": "Leila is 9 years old",
-        "hint": "Use the Unit 7 Computing Words reference.",
-        "explanation": "Leila is 9 years old"
-      },
-      {
-        "id": "q10",
-        "type": "Reasoning",
-        "outcomeId": "lo10",
-        "difficulty": "Challenge",
         "question": "What should you do when this happens: A Yes/No field can hold Maybe.",
         "options": [
-          "No. A Yes/No type has exactly two values - Yes or No. Nothing else fits.",
           "No. A record is a whole row - everything about one person or thing. A field is the column. Trace a row across with your finger to show it.",
-          "No. We never add phone numbers together, and they have hyphens, so they are stored as Text.",
-          "Not quite. Data is the raw fact ("
+          "No. We never add phone numbers together, and they have hyphens, so they are stored as Text. Would you ever do a sum with it?",
+          "No. A Yes/No type has exactly two values - Yes or No. Nothing else fits.",
+          "Not quite. Data is the raw fact (\"9 “); information is that fact given meaning (” Leila is 9 years old\")."
         ],
         "answer": "No. A Yes/No type has exactly two values - Yes or No. Nothing else fits.",
         "hint": "Use the Unit 7 Computing Words reference.",
         "explanation": "No. A Yes/No type has exactly two values - Yes or No. Nothing else fits."
       },
       {
-        "id": "q11",
+        "id": "q10",
         "type": "Reasoning",
-        "outcomeId": "lo01",
+        "outcomeId": "lo10",
         "difficulty": "Challenge",
         "question": "What should you do when this happens: A Text field can only hold letters.",
         "options": [
-          "No. A record is a whole row - everything about one person or thing. A field is the column. Trace a row across with your finger to show it.",
           "No. Text can also hold digits, hyphens and spaces - anything we are not going to calculate with, like 063-456-789 or 4A.",
-          "No. We never add phone numbers together, and they have hyphens, so they are stored as Text.",
-          "Not quite. Data is the raw fact ("
+          "No. A record is a whole row - everything about one person or thing. A field is the column. Trace a row across with your finger to show it.",
+          "No. We never add phone numbers together, and they have hyphens, so they are stored as Text. Would you ever do a sum with it?",
+          "Not quite. Data is the raw fact (\"9 “); information is that fact given meaning (” Leila is 9 years old\")."
         ],
         "answer": "No. Text can also hold digits, hyphens and spaces - anything we are not going to calculate with, like 063-456-789 or 4A.",
         "hint": "Use the Unit 7 Computing Words reference.",
         "explanation": "No. Text can also hold digits, hyphens and spaces - anything we are not going to calculate with, like 063-456-789 or 4A."
+      },
+      {
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo01",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: To look through a data table to find an answer.?",
+        "options": [
+          "field first",
+          "search",
+          "database",
+          "data table"
+        ],
+        "answer": "search",
+        "hint": "Use the Unit 7 Computing Words reference.",
+        "explanation": "Search means to look through a data table to find an answer."
       },
       {
         "id": "q12",
@@ -1121,24 +1116,24 @@
           {
             "prompt": "What should you do when this happens: A phone number is a Number.",
             "choices": [
-              "No. We never add phone numbers together, and they have hyphens, so they are stored as Text.",
+              "No. We never add phone numbers together, and they have hyphens, so they are stored as Text. Would you ever do a sum with it?",
               "No. A record is a whole row - everything about one person or thing. A field is the column. Trace a row across with your finger to show it.",
-              "Not quite. Data is the raw fact (",
-              "Leila is 9 years old"
+              "Not quite. Data is the raw fact (\"9 “); information is that fact given meaning (” Leila is 9 years old\").",
+              "No. A Yes/No type has exactly two values - Yes or No. Nothing else fits."
             ],
-            "answer": "No. We never add phone numbers together, and they have hyphens, so they are stored as Text.",
+            "answer": "No. We never add phone numbers together, and they have hyphens, so they are stored as Text. Would you ever do a sum with it?",
             "clue": "Use the Unit 7 Computing Words reference.",
             "explanation": "Data item means one single fact in one cell."
           },
           {
-            "prompt": "What should you do when this happens: A Yes/No field can hold Maybe.",
+            "prompt": "What should you do when this happens: A Text field can only hold letters.",
             "choices": [
-              "No. A Yes/No type has exactly two values - Yes or No. Nothing else fits.",
+              "No. Text can also hold digits, hyphens and spaces - anything we are not going to calculate with, like 063-456-789 or 4A.",
               "No. A record is a whole row - everything about one person or thing. A field is the column. Trace a row across with your finger to show it.",
-              "No. We never add phone numbers together, and they have hyphens, so they are stored as Text.",
-              "Not quite. Data is the raw fact ("
+              "No. We never add phone numbers together, and they have hyphens, so they are stored as Text. Would you ever do a sum with it?",
+              "Not quite. Data is the raw fact (\"9 “); information is that fact given meaning (” Leila is 9 years old\")."
             ],
-            "answer": "No. A Yes/No type has exactly two values - Yes or No. Nothing else fits.",
+            "answer": "No. Text can also hold digits, hyphens and spaces - anything we are not going to calculate with, like 063-456-789 or 4A.",
             "clue": "Use the Unit 7 Computing Words reference.",
             "explanation": "Format means the way data is arranged or shown."
           }
@@ -1179,24 +1174,24 @@
           {
             "prompt": "What should you do when this happens: Data and information are the same thing.",
             "choices": [
-              "Not quite. Data is the raw fact (",
+              "Not quite. Data is the raw fact (\"9 “); information is that fact given meaning (” Leila is 9 years old\").",
               "No. A record is a whole row - everything about one person or thing. A field is the column. Trace a row across with your finger to show it.",
-              "No. We never add phone numbers together, and they have hyphens, so they are stored as Text.",
-              "Leila is 9 years old"
+              "No. We never add phone numbers together, and they have hyphens, so they are stored as Text. Would you ever do a sum with it?",
+              "No. A Yes/No type has exactly two values - Yes or No. Nothing else fits."
             ],
-            "answer": "Not quite. Data is the raw fact (",
+            "answer": "Not quite. Data is the raw fact (\"9 “); information is that fact given meaning (” Leila is 9 years old\").",
             "clue": "Use the Unit 7 Computing Words reference.",
             "explanation": "Data type means the kind of data a field is allowed to store."
           },
           {
-            "prompt": "What should you do when this happens: A Text field can only hold letters.",
+            "prompt": "Which computing word matches this meaning: To look through a data table to find an answer.?",
             "choices": [
-              "No. Text can also hold digits, hyphens and spaces - anything we are not going to calculate with, like 063-456-789 or 4A.",
-              "No. A record is a whole row - everything about one person or thing. A field is the column. Trace a row across with your finger to show it.",
-              "No. We never add phone numbers together, and they have hyphens, so they are stored as Text.",
-              "Not quite. Data is the raw fact ("
+              "search",
+              "field first",
+              "database",
+              "data table"
             ],
-            "answer": "No. Text can also hold digits, hyphens and spaces - anything we are not going to calculate with, like 063-456-789 or 4A.",
+            "answer": "search",
             "clue": "Use the Unit 7 Computing Words reference.",
             "explanation": "Search means to look through a data table to find an answer."
           }
@@ -1235,14 +1230,14 @@
             "explanation": "Record means a row in a data table — all the data about one person or thing."
           },
           {
-            "prompt": "What should you do when this happens: ); information is that fact given meaning (",
+            "prompt": "What should you do when this happens: A Yes/No field can hold Maybe.",
             "choices": [
-              "Leila is 9 years old",
+              "No. A Yes/No type has exactly two values - Yes or No. Nothing else fits.",
               "No. A record is a whole row - everything about one person or thing. A field is the column. Trace a row across with your finger to show it.",
-              "No. We never add phone numbers together, and they have hyphens, so they are stored as Text.",
-              "Not quite. Data is the raw fact ("
+              "No. We never add phone numbers together, and they have hyphens, so they are stored as Text. Would you ever do a sum with it?",
+              "Not quite. Data is the raw fact (\"9 “); information is that fact given meaning (” Leila is 9 years old\")."
             ],
-            "answer": "Leila is 9 years old",
+            "answer": "No. A Yes/No type has exactly two values - Yes or No. Nothing else fits.",
             "clue": "Use the Unit 7 Computing Words reference.",
             "explanation": "Currency means the special number type used for money."
           },
@@ -1283,24 +1278,24 @@
           {
             "prompt": "What should you do when this happens: A phone number is a Number.",
             "choices": [
-              "No. We never add phone numbers together, and they have hyphens, so they are stored as Text.",
+              "No. We never add phone numbers together, and they have hyphens, so they are stored as Text. Would you ever do a sum with it?",
               "No. A record is a whole row - everything about one person or thing. A field is the column. Trace a row across with your finger to show it.",
-              "Not quite. Data is the raw fact (",
-              "Leila is 9 years old"
+              "Not quite. Data is the raw fact (\"9 “); information is that fact given meaning (” Leila is 9 years old\").",
+              "No. A Yes/No type has exactly two values - Yes or No. Nothing else fits."
             ],
-            "answer": "No. We never add phone numbers together, and they have hyphens, so they are stored as Text.",
+            "answer": "No. We never add phone numbers together, and they have hyphens, so they are stored as Text. Would you ever do a sum with it?",
             "clue": "Use the Unit 7 Computing Words reference.",
             "explanation": "Data item means one single fact in one cell."
           },
           {
-            "prompt": "What should you do when this happens: A Yes/No field can hold Maybe.",
+            "prompt": "What should you do when this happens: A Text field can only hold letters.",
             "choices": [
-              "No. A Yes/No type has exactly two values - Yes or No. Nothing else fits.",
+              "No. Text can also hold digits, hyphens and spaces - anything we are not going to calculate with, like 063-456-789 or 4A.",
               "No. A record is a whole row - everything about one person or thing. A field is the column. Trace a row across with your finger to show it.",
-              "No. We never add phone numbers together, and they have hyphens, so they are stored as Text.",
-              "Not quite. Data is the raw fact ("
+              "No. We never add phone numbers together, and they have hyphens, so they are stored as Text. Would you ever do a sum with it?",
+              "Not quite. Data is the raw fact (\"9 “); information is that fact given meaning (” Leila is 9 years old\")."
             ],
-            "answer": "No. A Yes/No type has exactly two values - Yes or No. Nothing else fits.",
+            "answer": "No. Text can also hold digits, hyphens and spaces - anything we are not going to calculate with, like 063-456-789 or 4A.",
             "clue": "Use the Unit 7 Computing Words reference.",
             "explanation": "Format means the way data is arranged or shown."
           },
@@ -1341,24 +1336,24 @@
           {
             "prompt": "What should you do when this happens: Data and information are the same thing.",
             "choices": [
-              "Not quite. Data is the raw fact (",
+              "Not quite. Data is the raw fact (\"9 “); information is that fact given meaning (” Leila is 9 years old\").",
               "No. A record is a whole row - everything about one person or thing. A field is the column. Trace a row across with your finger to show it.",
-              "No. We never add phone numbers together, and they have hyphens, so they are stored as Text.",
-              "Leila is 9 years old"
+              "No. We never add phone numbers together, and they have hyphens, so they are stored as Text. Would you ever do a sum with it?",
+              "No. A Yes/No type has exactly two values - Yes or No. Nothing else fits."
             ],
-            "answer": "Not quite. Data is the raw fact (",
+            "answer": "Not quite. Data is the raw fact (\"9 “); information is that fact given meaning (” Leila is 9 years old\").",
             "clue": "Use the Unit 7 Computing Words reference.",
             "explanation": "Data type means the kind of data a field is allowed to store."
           },
           {
-            "prompt": "What should you do when this happens: A Text field can only hold letters.",
+            "prompt": "Which computing word matches this meaning: To look through a data table to find an answer.?",
             "choices": [
-              "No. Text can also hold digits, hyphens and spaces - anything we are not going to calculate with, like 063-456-789 or 4A.",
-              "No. A record is a whole row - everything about one person or thing. A field is the column. Trace a row across with your finger to show it.",
-              "No. We never add phone numbers together, and they have hyphens, so they are stored as Text.",
-              "Not quite. Data is the raw fact ("
+              "search",
+              "field first",
+              "database",
+              "data table"
             ],
-            "answer": "No. Text can also hold digits, hyphens and spaces - anything we are not going to calculate with, like 063-456-789 or 4A.",
+            "answer": "search",
             "clue": "Use the Unit 7 Computing Words reference.",
             "explanation": "Search means to look through a data table to find an answer."
           },
@@ -1397,14 +1392,14 @@
             "explanation": "Record means a row in a data table — all the data about one person or thing."
           },
           {
-            "prompt": "What should you do when this happens: ); information is that fact given meaning (",
+            "prompt": "What should you do when this happens: A Yes/No field can hold Maybe.",
             "choices": [
-              "Leila is 9 years old",
+              "No. A Yes/No type has exactly two values - Yes or No. Nothing else fits.",
               "No. A record is a whole row - everything about one person or thing. A field is the column. Trace a row across with your finger to show it.",
-              "No. We never add phone numbers together, and they have hyphens, so they are stored as Text.",
-              "Not quite. Data is the raw fact ("
+              "No. We never add phone numbers together, and they have hyphens, so they are stored as Text. Would you ever do a sum with it?",
+              "Not quite. Data is the raw fact (\"9 “); information is that fact given meaning (” Leila is 9 years old\")."
             ],
-            "answer": "Leila is 9 years old",
+            "answer": "No. A Yes/No type has exactly two values - Yes or No. Nothing else fits.",
             "clue": "Use the Unit 7 Computing Words reference.",
             "explanation": "Currency means the special number type used for money."
           },
@@ -1445,24 +1440,24 @@
           {
             "prompt": "What should you do when this happens: A phone number is a Number.",
             "choices": [
-              "No. We never add phone numbers together, and they have hyphens, so they are stored as Text.",
+              "No. We never add phone numbers together, and they have hyphens, so they are stored as Text. Would you ever do a sum with it?",
               "No. A record is a whole row - everything about one person or thing. A field is the column. Trace a row across with your finger to show it.",
-              "Not quite. Data is the raw fact (",
-              "Leila is 9 years old"
+              "Not quite. Data is the raw fact (\"9 “); information is that fact given meaning (” Leila is 9 years old\").",
+              "No. A Yes/No type has exactly two values - Yes or No. Nothing else fits."
             ],
-            "answer": "No. We never add phone numbers together, and they have hyphens, so they are stored as Text.",
+            "answer": "No. We never add phone numbers together, and they have hyphens, so they are stored as Text. Would you ever do a sum with it?",
             "clue": "Use the Unit 7 Computing Words reference.",
             "explanation": "Data item means one single fact in one cell."
           },
           {
-            "prompt": "What should you do when this happens: A Yes/No field can hold Maybe.",
+            "prompt": "What should you do when this happens: A Text field can only hold letters.",
             "choices": [
-              "No. A Yes/No type has exactly two values - Yes or No. Nothing else fits.",
+              "No. Text can also hold digits, hyphens and spaces - anything we are not going to calculate with, like 063-456-789 or 4A.",
               "No. A record is a whole row - everything about one person or thing. A field is the column. Trace a row across with your finger to show it.",
-              "No. We never add phone numbers together, and they have hyphens, so they are stored as Text.",
-              "Not quite. Data is the raw fact ("
+              "No. We never add phone numbers together, and they have hyphens, so they are stored as Text. Would you ever do a sum with it?",
+              "Not quite. Data is the raw fact (\"9 “); information is that fact given meaning (” Leila is 9 years old\")."
             ],
-            "answer": "No. A Yes/No type has exactly two values - Yes or No. Nothing else fits.",
+            "answer": "No. Text can also hold digits, hyphens and spaces - anything we are not going to calculate with, like 063-456-789 or 4A.",
             "clue": "Use the Unit 7 Computing Words reference.",
             "explanation": "Format means the way data is arranged or shown."
           },
@@ -1503,24 +1498,24 @@
           {
             "prompt": "What should you do when this happens: Data and information are the same thing.",
             "choices": [
-              "Not quite. Data is the raw fact (",
+              "Not quite. Data is the raw fact (\"9 “); information is that fact given meaning (” Leila is 9 years old\").",
               "No. A record is a whole row - everything about one person or thing. A field is the column. Trace a row across with your finger to show it.",
-              "No. We never add phone numbers together, and they have hyphens, so they are stored as Text.",
-              "Leila is 9 years old"
+              "No. We never add phone numbers together, and they have hyphens, so they are stored as Text. Would you ever do a sum with it?",
+              "No. A Yes/No type has exactly two values - Yes or No. Nothing else fits."
             ],
-            "answer": "Not quite. Data is the raw fact (",
+            "answer": "Not quite. Data is the raw fact (\"9 “); information is that fact given meaning (” Leila is 9 years old\").",
             "clue": "Use the Unit 7 Computing Words reference.",
             "explanation": "Data type means the kind of data a field is allowed to store."
           },
           {
-            "prompt": "What should you do when this happens: A Text field can only hold letters.",
+            "prompt": "Which computing word matches this meaning: To look through a data table to find an answer.?",
             "choices": [
-              "No. Text can also hold digits, hyphens and spaces - anything we are not going to calculate with, like 063-456-789 or 4A.",
-              "No. A record is a whole row - everything about one person or thing. A field is the column. Trace a row across with your finger to show it.",
-              "No. We never add phone numbers together, and they have hyphens, so they are stored as Text.",
-              "Not quite. Data is the raw fact ("
+              "search",
+              "field first",
+              "database",
+              "data table"
             ],
-            "answer": "No. Text can also hold digits, hyphens and spaces - anything we are not going to calculate with, like 063-456-789 or 4A.",
+            "answer": "search",
             "clue": "Use the Unit 7 Computing Words reference.",
             "explanation": "Search means to look through a data table to find an answer."
           },
@@ -1559,14 +1554,14 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What should you do when this happens: ); information is that fact given meaning (",
+            "prompt": "What should you do when this happens: A Yes/No field can hold Maybe.",
             "choices": [
-              "Leila is 9 years old",
+              "No. A Yes/No type has exactly two values - Yes or No. Nothing else fits.",
               "No. A record is a whole row - everything about one person or thing. A field is the column. Trace a row across with your finger to show it.",
-              "No. We never add phone numbers together, and they have hyphens, so they are stored as Text.",
-              "Not quite. Data is the raw fact ("
+              "No. We never add phone numbers together, and they have hyphens, so they are stored as Text. Would you ever do a sum with it?",
+              "Not quite. Data is the raw fact (\"9 “); information is that fact given meaning (” Leila is 9 years old\")."
             ],
-            "answer": "Leila is 9 years old",
+            "answer": "No. A Yes/No type has exactly two values - Yes or No. Nothing else fits.",
             "clue": "Use the Unit 7 Computing Words reference.",
             "explanation": "Currency means the special number type used for money."
           },
@@ -1617,14 +1612,14 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What should you do when this happens: A Yes/No field can hold Maybe.",
+            "prompt": "What should you do when this happens: A Text field can only hold letters.",
             "choices": [
-              "No. A Yes/No type has exactly two values - Yes or No. Nothing else fits.",
+              "No. Text can also hold digits, hyphens and spaces - anything we are not going to calculate with, like 063-456-789 or 4A.",
               "No. A record is a whole row - everything about one person or thing. A field is the column. Trace a row across with your finger to show it.",
-              "No. We never add phone numbers together, and they have hyphens, so they are stored as Text.",
-              "Not quite. Data is the raw fact ("
+              "No. We never add phone numbers together, and they have hyphens, so they are stored as Text. Would you ever do a sum with it?",
+              "Not quite. Data is the raw fact (\"9 “); information is that fact given meaning (” Leila is 9 years old\")."
             ],
-            "answer": "No. A Yes/No type has exactly two values - Yes or No. Nothing else fits.",
+            "answer": "No. Text can also hold digits, hyphens and spaces - anything we are not going to calculate with, like 063-456-789 or 4A.",
             "clue": "Use the Unit 7 Computing Words reference.",
             "explanation": "Format means the way data is arranged or shown."
           },
@@ -1655,12 +1650,12 @@
           {
             "prompt": "What should you do when this happens: A phone number is a Number.",
             "choices": [
-              "No. We never add phone numbers together, and they have hyphens, so they are stored as Text.",
+              "No. We never add phone numbers together, and they have hyphens, so they are stored as Text. Would you ever do a sum with it?",
               "No. A record is a whole row - everything about one person or thing. A field is the column. Trace a row across with your finger to show it.",
-              "Not quite. Data is the raw fact (",
-              "Leila is 9 years old"
+              "Not quite. Data is the raw fact (\"9 “); information is that fact given meaning (” Leila is 9 years old\").",
+              "No. A Yes/No type has exactly two values - Yes or No. Nothing else fits."
             ],
-            "answer": "No. We never add phone numbers together, and they have hyphens, so they are stored as Text.",
+            "answer": "No. We never add phone numbers together, and they have hyphens, so they are stored as Text. Would you ever do a sum with it?",
             "clue": "Use the Unit 7 Computing Words reference.",
             "explanation": "Data item means one single fact in one cell."
           }
@@ -1675,14 +1670,14 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What should you do when this happens: A Text field can only hold letters.",
+            "prompt": "Which computing word matches this meaning: To look through a data table to find an answer.?",
             "choices": [
-              "No. Text can also hold digits, hyphens and spaces - anything we are not going to calculate with, like 063-456-789 or 4A.",
-              "No. A record is a whole row - everything about one person or thing. A field is the column. Trace a row across with your finger to show it.",
-              "No. We never add phone numbers together, and they have hyphens, so they are stored as Text.",
-              "Not quite. Data is the raw fact ("
+              "search",
+              "field first",
+              "database",
+              "data table"
             ],
-            "answer": "No. Text can also hold digits, hyphens and spaces - anything we are not going to calculate with, like 063-456-789 or 4A.",
+            "answer": "search",
             "clue": "Use the Unit 7 Computing Words reference.",
             "explanation": "Search means to look through a data table to find an answer."
           },
@@ -1713,12 +1708,12 @@
           {
             "prompt": "What should you do when this happens: Data and information are the same thing.",
             "choices": [
-              "Not quite. Data is the raw fact (",
+              "Not quite. Data is the raw fact (\"9 “); information is that fact given meaning (” Leila is 9 years old\").",
               "No. A record is a whole row - everything about one person or thing. A field is the column. Trace a row across with your finger to show it.",
-              "No. We never add phone numbers together, and they have hyphens, so they are stored as Text.",
-              "Leila is 9 years old"
+              "No. We never add phone numbers together, and they have hyphens, so they are stored as Text. Would you ever do a sum with it?",
+              "No. A Yes/No type has exactly two values - Yes or No. Nothing else fits."
             ],
-            "answer": "Not quite. Data is the raw fact (",
+            "answer": "Not quite. Data is the raw fact (\"9 “); information is that fact given meaning (” Leila is 9 years old\").",
             "clue": "Use the Unit 7 Computing Words reference.",
             "explanation": "Data type means the kind of data a field is allowed to store."
           }
@@ -1769,14 +1764,14 @@
             "explanation": "Record means a row in a data table — all the data about one person or thing."
           },
           {
-            "prompt": "What should you do when this happens: ); information is that fact given meaning (",
+            "prompt": "What should you do when this happens: A Yes/No field can hold Maybe.",
             "choices": [
-              "Leila is 9 years old",
+              "No. A Yes/No type has exactly two values - Yes or No. Nothing else fits.",
               "No. A record is a whole row - everything about one person or thing. A field is the column. Trace a row across with your finger to show it.",
-              "No. We never add phone numbers together, and they have hyphens, so they are stored as Text.",
-              "Not quite. Data is the raw fact ("
+              "No. We never add phone numbers together, and they have hyphens, so they are stored as Text. Would you ever do a sum with it?",
+              "Not quite. Data is the raw fact (\"9 “); information is that fact given meaning (” Leila is 9 years old\")."
             ],
-            "answer": "Leila is 9 years old",
+            "answer": "No. A Yes/No type has exactly two values - Yes or No. Nothing else fits.",
             "clue": "Use the Unit 7 Computing Words reference.",
             "explanation": "Currency means the special number type used for money."
           }

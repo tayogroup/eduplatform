@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-18T07:59:31.321Z",
+  "generatedAt": "2026-08-18T08:37:22.089Z",
   "stage": {
     "id": "s04",
     "label": "Stage 4"
@@ -630,6 +630,11 @@
       "symptom": "Comments make the program work / comments run like code.",
       "cause": "A common mix-up in this unit, “Be an Animator”.",
       "fix": "Comments never run. Prove it by running the program with and without a comment — it behaves the same."
+    },
+    {
+      "symptom": "The blocks can go anywhere near the Forever block.",
+      "cause": "A common mix-up in this unit, “Be an Animator”.",
+      "fix": "Blocks must go INSIDE the C-shape to repeat; blocks left outside it do not. Point to the shape and check together."
     }
   ],
   "esafety": [
@@ -795,20 +800,28 @@
     ],
     "commonMistakes": [
       [
-        "A forever loop just means do it a lot of times.",
-        "No — it means do it over and over with no end, until you press stop. Show the butterfly flapping and you can see it never stops on its own."
+        "Watch for these ideas. They are completely normal for this age",
+        "gently show the truth with a quick example rather than just correcting."
       ],
       [
-        "I need to copy the blocks many times to repeat them.",
+        "A forever loop just means do it a lot of times.",
         "This is the whole reason the Forever block exists — one Forever block does the job of many copied blocks, and is far tidier."
       ],
       [
+        "I need to copy the blocks many times to repeat them.",
+        "This is the whole reason the Forever block exists - one Forever block does the job of many copied blocks, and is far tidier."
+      ],
+      [
         "You can put blocks after a Forever block.",
-        "Nothing below a Forever block ever runs, because the loop never ends. Scratch will not even let a block snap on below it."
+        "Comments never run. Prove it by running the program with and without a comment — it behaves the same."
       ],
       [
         "Comments make the program work / comments run like code.",
-        "Comments never run. Prove it by running the program with and without a comment — it behaves the same."
+        "Comments never run. Prove it by running the program with and without a comment - it behaves the same."
+      ],
+      [
+        "The blocks can go anywhere near the Forever block.",
+        "Blocks must go INSIDE the C-shape to repeat; blocks left outside it do not. Point to the shape and check together."
       ]
     ],
     "connections": []
@@ -1136,16 +1149,16 @@
         "type": "Reasoning",
         "outcomeId": "lo03",
         "difficulty": "Challenge",
-        "question": "Which computing word matches this meaning: A note that explains what the code does.?",
+        "question": "What should you do when this happens: The blocks can go anywhere near the Forever block.",
         "options": [
-          "debugging",
-          "algorithm",
-          "repetition",
-          "comment"
+          "No - it means do it over and over with no end, until you press stop. Show the butterfly flapping and you can see it never stops on its own.",
+          "This is the whole reason the Forever block exists - one Forever block does the job of many copied blocks, and is far tidier.",
+          "Nothing below a Forever block ever runs, because the loop never ends. Scratch will not even let a block snap on below it.",
+          "Blocks must go INSIDE the C-shape to repeat; blocks left outside it do not. Point to the shape and check together."
         ],
-        "answer": "comment",
+        "answer": "Blocks must go INSIDE the C-shape to repeat; blocks left outside it do not. Point to the shape and check together.",
         "hint": "Use the Unit 1 Computing Words reference.",
-        "explanation": "Comment means a note that explains what the code does."
+        "explanation": "Blocks must go INSIDE the C-shape to repeat; blocks left outside it do not. Point to the shape and check together."
       },
       {
         "id": "q11",
@@ -1229,14 +1242,14 @@
             "explanation": "Costume means one of the pictures a sprite can wear."
           },
           {
-            "prompt": "Which computing word matches this meaning: A note that explains what the code does.?",
+            "prompt": "What should you do when this happens: The blocks can go anywhere near the Forever block.",
             "choices": [
-              "comment",
-              "debugging",
-              "algorithm",
-              "repetition"
+              "Blocks must go INSIDE the C-shape to repeat; blocks left outside it do not. Point to the shape and check together.",
+              "No - it means do it over and over with no end, until you press stop. Show the butterfly flapping and you can see it never stops on its own.",
+              "This is the whole reason the Forever block exists - one Forever block does the job of many copied blocks, and is far tidier.",
+              "Nothing below a Forever block ever runs, because the loop never ends. Scratch will not even let a block snap on below it."
             ],
-            "answer": "comment",
+            "answer": "Blocks must go INSIDE the C-shape to repeat; blocks left outside it do not. Point to the shape and check together.",
             "clue": "Use the Unit 1 Computing Words reference.",
             "explanation": "Comment means a note that explains what the code does."
           }
@@ -1391,14 +1404,14 @@
             "explanation": "Costume means one of the pictures a sprite can wear."
           },
           {
-            "prompt": "Which computing word matches this meaning: A note that explains what the code does.?",
+            "prompt": "What should you do when this happens: The blocks can go anywhere near the Forever block.",
             "choices": [
-              "comment",
-              "debugging",
-              "algorithm",
-              "repetition"
+              "Blocks must go INSIDE the C-shape to repeat; blocks left outside it do not. Point to the shape and check together.",
+              "No - it means do it over and over with no end, until you press stop. Show the butterfly flapping and you can see it never stops on its own.",
+              "This is the whole reason the Forever block exists - one Forever block does the job of many copied blocks, and is far tidier.",
+              "Nothing below a Forever block ever runs, because the loop never ends. Scratch will not even let a block snap on below it."
             ],
-            "answer": "comment",
+            "answer": "Blocks must go INSIDE the C-shape to repeat; blocks left outside it do not. Point to the shape and check together.",
             "clue": "Use the Unit 1 Computing Words reference.",
             "explanation": "Comment means a note that explains what the code does."
           },
@@ -1553,14 +1566,14 @@
             "explanation": "Costume means one of the pictures a sprite can wear."
           },
           {
-            "prompt": "Which computing word matches this meaning: A note that explains what the code does.?",
+            "prompt": "What should you do when this happens: The blocks can go anywhere near the Forever block.",
             "choices": [
-              "comment",
-              "debugging",
-              "algorithm",
-              "repetition"
+              "Blocks must go INSIDE the C-shape to repeat; blocks left outside it do not. Point to the shape and check together.",
+              "No - it means do it over and over with no end, until you press stop. Show the butterfly flapping and you can see it never stops on its own.",
+              "This is the whole reason the Forever block exists - one Forever block does the job of many copied blocks, and is far tidier.",
+              "Nothing below a Forever block ever runs, because the loop never ends. Scratch will not even let a block snap on below it."
             ],
-            "answer": "comment",
+            "answer": "Blocks must go INSIDE the C-shape to repeat; blocks left outside it do not. Point to the shape and check together.",
             "clue": "Use the Unit 1 Computing Words reference.",
             "explanation": "Comment means a note that explains what the code does."
           },
@@ -1715,14 +1728,14 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which computing word matches this meaning: A note that explains what the code does.?",
+            "prompt": "What should you do when this happens: The blocks can go anywhere near the Forever block.",
             "choices": [
-              "comment",
-              "debugging",
-              "algorithm",
-              "repetition"
+              "Blocks must go INSIDE the C-shape to repeat; blocks left outside it do not. Point to the shape and check together.",
+              "No - it means do it over and over with no end, until you press stop. Show the butterfly flapping and you can see it never stops on its own.",
+              "This is the whole reason the Forever block exists - one Forever block does the job of many copied blocks, and is far tidier.",
+              "Nothing below a Forever block ever runs, because the loop never ends. Scratch will not even let a block snap on below it."
             ],
-            "answer": "comment",
+            "answer": "Blocks must go INSIDE the C-shape to repeat; blocks left outside it do not. Point to the shape and check together.",
             "clue": "Use the Unit 1 Computing Words reference.",
             "explanation": "Comment means a note that explains what the code does."
           },

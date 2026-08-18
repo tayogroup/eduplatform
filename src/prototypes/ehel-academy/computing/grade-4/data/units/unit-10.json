@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-18T07:59:31.456Z",
+  "generatedAt": "2026-08-18T08:37:22.318Z",
   "stage": {
     "id": "s04",
     "label": "Stage 4"
@@ -624,11 +624,6 @@
       "symptom": "When the game misbehaves, I should delete it and start again.",
       "cause": "A common mix-up in this unit, “Be a Game Developer”.",
       "fix": "No — test each part in turn to find the one bug, then fix just that. Starting again usually brings the bug back."
-    },
-    {
-      "symptom": "The blocks go next to the repeat loop.",
-      "cause": "A common mix-up in this unit, “Be a Game Developer”.",
-      "fix": "The blocks you want repeated must sit INSIDE the C-shaped repeat block, hugged by its arms, not stacked underneath it."
     }
   ],
   "esafety": [
@@ -794,28 +789,28 @@
     ],
     "commonMistakes": [
       [
-        "A sub-routine is a brand-new kind of instruction.",
-        "No — it is just a bundle of ordinary blocks you gave a name to. Nothing magic; it saves you writing the same blocks again."
+        "Watch for these ideas. They are normal for this age",
+        "Gently show the truth with a quick example rather than just correcting you."
       ],
       [
-        "Making the Move Around block runs it.",
+        "A sub-routine is a brand-new kind of instruction.",
         "No — making a block (the define hat) only creates the job. It does nothing until you drag the Move Around block into a script and run it."
       ],
       [
-        "repeat and forever are the same.",
-        "A repeat (6) loop runs a set number of times and then stops (iteration); a forever loop never stops on its own (repetition). Count the runs together to feel the difference."
+        "Making the Move Around block runs it.",
+        "No - making a block (the define hat) only creates the job. It does nothing until you drag the Move Around block into a script and run it."
       ],
       [
-        "Bigger y means down, like reading down a page.",
+        "repeat and forever are the same.",
         "On the Scratch stage, bigger y means UP and smaller y means DOWN. This is the cause of the classic down-arrow bug — worth showing slowly."
       ],
       [
-        "When the game misbehaves, I should delete it and start again.",
+        "Bigger y means down, like reading down a page.",
         "No — test each part in turn to find the one bug, then fix just that. Starting again usually brings the bug back."
       ],
       [
-        "The blocks go next to the repeat loop.",
-        "The blocks you want repeated must sit INSIDE the C-shaped repeat block, hugged by its arms, not stacked underneath it."
+        "When the game misbehaves, I should delete it and start again.",
+        "No - test each part in turn to find the one bug, then fix just that. Starting again usually brings the bug back."
       ]
     ],
     "connections": []
@@ -1173,16 +1168,16 @@
         "type": "Reasoning",
         "outcomeId": "lo05",
         "difficulty": "Challenge",
-        "question": "What should you do when this happens: The blocks go next to the repeat loop.",
+        "question": "Which computing word matches this meaning: To find and fix a bug.?",
         "options": [
-          "No - it is just a bundle of ordinary blocks you gave a name to. Nothing magic; it saves you writing the same blocks again.",
-          "No - making a block (the define hat) only creates the job. It does nothing until you drag the Move Around block into a script and run it.",
-          "The blocks you want repeated must sit INSIDE the C-shaped repeat block, hugged by its arms, not stacked underneath it.",
-          "A repeat (6) loop runs a set number of times and then stops (iteration); a forever loop never stops on its own (repetition). Count the runs together…"
+          "game developer",
+          "sub-routine",
+          "debug",
+          "My Blocks"
         ],
-        "answer": "The blocks you want repeated must sit INSIDE the C-shaped repeat block, hugged by its arms, not stacked underneath it.",
+        "answer": "debug",
         "hint": "Use the Unit 10 Computing Words reference.",
-        "explanation": "The blocks you want repeated must sit INSIDE the C-shaped repeat block, hugged by its arms, not stacked underneath it."
+        "explanation": "Debug means to find and fix a bug."
       }
     ]
   },
@@ -1348,14 +1343,14 @@
             "explanation": "Coordinates means the x and y numbers that give a sprite's spot on the stage."
           },
           {
-            "prompt": "What should you do when this happens: The blocks go next to the repeat loop.",
+            "prompt": "Which computing word matches this meaning: To find and fix a bug.?",
             "choices": [
-              "The blocks you want repeated must sit INSIDE the C-shaped repeat block, hugged by its arms, not stacked underneath it.",
-              "No - it is just a bundle of ordinary blocks you gave a name to. Nothing magic; it saves you writing the same blocks again.",
-              "No - making a block (the define hat) only creates the job. It does nothing until you drag the Move Around block into a script and run it.",
-              "A repeat (6) loop runs a set number of times and then stops (iteration); a forever loop never stops on its own (repetition). Count the runs together…"
+              "debug",
+              "game developer",
+              "sub-routine",
+              "My Blocks"
             ],
-            "answer": "The blocks you want repeated must sit INSIDE the C-shaped repeat block, hugged by its arms, not stacked underneath it.",
+            "answer": "debug",
             "clue": "Use the Unit 10 Computing Words reference.",
             "explanation": "Debug means to find and fix a bug."
           }
@@ -1508,14 +1503,14 @@
             "explanation": "Coordinates means the x and y numbers that give a sprite's spot on the stage."
           },
           {
-            "prompt": "What should you do when this happens: The blocks go next to the repeat loop.",
+            "prompt": "Which computing word matches this meaning: To find and fix a bug.?",
             "choices": [
-              "The blocks you want repeated must sit INSIDE the C-shaped repeat block, hugged by its arms, not stacked underneath it.",
-              "No - it is just a bundle of ordinary blocks you gave a name to. Nothing magic; it saves you writing the same blocks again.",
-              "No - making a block (the define hat) only creates the job. It does nothing until you drag the Move Around block into a script and run it.",
-              "A repeat (6) loop runs a set number of times and then stops (iteration); a forever loop never stops on its own (repetition). Count the runs together…"
+              "debug",
+              "game developer",
+              "sub-routine",
+              "My Blocks"
             ],
-            "answer": "The blocks you want repeated must sit INSIDE the C-shaped repeat block, hugged by its arms, not stacked underneath it.",
+            "answer": "debug",
             "clue": "Use the Unit 10 Computing Words reference.",
             "explanation": "Debug means to find and fix a bug."
           },
@@ -1668,14 +1663,14 @@
             "explanation": "Coordinates means the x and y numbers that give a sprite's spot on the stage."
           },
           {
-            "prompt": "What should you do when this happens: The blocks go next to the repeat loop.",
+            "prompt": "Which computing word matches this meaning: To find and fix a bug.?",
             "choices": [
-              "The blocks you want repeated must sit INSIDE the C-shaped repeat block, hugged by its arms, not stacked underneath it.",
-              "No - it is just a bundle of ordinary blocks you gave a name to. Nothing magic; it saves you writing the same blocks again.",
-              "No - making a block (the define hat) only creates the job. It does nothing until you drag the Move Around block into a script and run it.",
-              "A repeat (6) loop runs a set number of times and then stops (iteration); a forever loop never stops on its own (repetition). Count the runs together…"
+              "debug",
+              "game developer",
+              "sub-routine",
+              "My Blocks"
             ],
-            "answer": "The blocks you want repeated must sit INSIDE the C-shaped repeat block, hugged by its arms, not stacked underneath it.",
+            "answer": "debug",
             "clue": "Use the Unit 10 Computing Words reference.",
             "explanation": "Debug means to find and fix a bug."
           },
@@ -1828,14 +1823,14 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What should you do when this happens: The blocks go next to the repeat loop.",
+            "prompt": "Which computing word matches this meaning: To find and fix a bug.?",
             "choices": [
-              "The blocks you want repeated must sit INSIDE the C-shaped repeat block, hugged by its arms, not stacked underneath it.",
-              "No - it is just a bundle of ordinary blocks you gave a name to. Nothing magic; it saves you writing the same blocks again.",
-              "No - making a block (the define hat) only creates the job. It does nothing until you drag the Move Around block into a script and run it.",
-              "A repeat (6) loop runs a set number of times and then stops (iteration); a forever loop never stops on its own (repetition). Count the runs together…"
+              "debug",
+              "game developer",
+              "sub-routine",
+              "My Blocks"
             ],
-            "answer": "The blocks you want repeated must sit INSIDE the C-shaped repeat block, hugged by its arms, not stacked underneath it.",
+            "answer": "debug",
             "clue": "Use the Unit 10 Computing Words reference.",
             "explanation": "Debug means to find and fix a bug."
           },

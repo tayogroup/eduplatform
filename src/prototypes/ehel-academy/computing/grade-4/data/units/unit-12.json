@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-18T07:59:31.487Z",
+  "generatedAt": "2026-08-18T08:37:22.370Z",
   "stage": {
     "id": "s04",
     "label": "Stage 4"
@@ -535,11 +535,6 @@
       "symptom": "forever and repeat are the same.",
       "cause": "A common mix-up in this unit, “Be an Artist”.",
       "fix": "No. forever never stops on its own; repeat (5) counts to five and stops."
-    },
-    {
-      "symptom": "The pause number is in seconds.",
-      "cause": "A common mix-up in this unit, “Be an Artist”.",
-      "fix": "No, it is in milliseconds. pause (1000) waits one second; pause (500) waits half a second."
     }
   ],
   "esafety": [
@@ -755,6 +750,10 @@
     ],
     "commonMistakes": [
       [
+        "Watch for these ideas. They are normal at this age",
+        "gently show the truth with a quick example rather than only correcting."
+      ],
+      [
         "The micro:bit has a proper screen like a laptop.",
         "No. Its display is just 25 red lights in a grid. It draws shapes and letters as patterns of dots."
       ],
@@ -773,10 +772,6 @@
       [
         "forever and repeat are the same.",
         "No. forever never stops on its own; repeat (5) counts to five and stops."
-      ],
-      [
-        "The pause number is in seconds.",
-        "No, it is in milliseconds. pause (1000) waits one second; pause (500) waits half a second."
       ]
     ],
     "connections": []
@@ -1120,16 +1115,16 @@
         "type": "Reasoning",
         "outcomeId": "lo02",
         "difficulty": "Challenge",
-        "question": "What should you do when this happens: The pause number is in seconds.",
+        "question": "Which computing word matches this meaning: The on-screen micro:bit we click with the mouse.?",
         "options": [
-          "No. Its display is just 25 red lights in a grid. It draws shapes and letters as patterns of dots.",
-          "No. An input goes IN (pressing a button); an output comes OUT (a shape lights up, a sound plays).",
-          "No. We program each input separately, so Button A can paint a square while Button B paints a heart.",
-          "No, it is in milliseconds. pause (1000) waits one second; pause (500) waits half a second."
+          "algorithm",
+          "count-controlled loop",
+          "forever loop",
+          "simulator"
         ],
-        "answer": "No, it is in milliseconds. pause (1000) waits one second; pause (500) waits half a second.",
+        "answer": "simulator",
         "hint": "Use the Unit 12 Computing Words reference.",
-        "explanation": "No, it is in milliseconds. pause (1000) waits one second; pause (500) waits half a second."
+        "explanation": "Simulator means the on-screen micro:bit we click with the mouse."
       },
       {
         "id": "q12",
@@ -1255,14 +1250,14 @@
             "explanation": "Touch logo means the gold logo at the top that senses a touch."
           },
           {
-            "prompt": "What should you do when this happens: The pause number is in seconds.",
+            "prompt": "Which computing word matches this meaning: The on-screen micro:bit we click with the mouse.?",
             "choices": [
-              "No, it is in milliseconds. pause (1000) waits one second; pause (500) waits half a second.",
-              "No. Its display is just 25 red lights in a grid. It draws shapes and letters as patterns of dots.",
-              "No. An input goes IN (pressing a button); an output comes OUT (a shape lights up, a sound plays).",
-              "No. We program each input separately, so Button A can paint a square while Button B paints a heart."
+              "simulator",
+              "algorithm",
+              "count-controlled loop",
+              "forever loop"
             ],
-            "answer": "No, it is in milliseconds. pause (1000) waits one second; pause (500) waits half a second.",
+            "answer": "simulator",
             "clue": "Use the Unit 12 Computing Words reference.",
             "explanation": "Simulator means the on-screen micro:bit we click with the mouse."
           }
@@ -1417,14 +1412,14 @@
             "explanation": "Touch logo means the gold logo at the top that senses a touch."
           },
           {
-            "prompt": "What should you do when this happens: The pause number is in seconds.",
+            "prompt": "Which computing word matches this meaning: The on-screen micro:bit we click with the mouse.?",
             "choices": [
-              "No, it is in milliseconds. pause (1000) waits one second; pause (500) waits half a second.",
-              "No. Its display is just 25 red lights in a grid. It draws shapes and letters as patterns of dots.",
-              "No. An input goes IN (pressing a button); an output comes OUT (a shape lights up, a sound plays).",
-              "No. We program each input separately, so Button A can paint a square while Button B paints a heart."
+              "simulator",
+              "algorithm",
+              "count-controlled loop",
+              "forever loop"
             ],
-            "answer": "No, it is in milliseconds. pause (1000) waits one second; pause (500) waits half a second.",
+            "answer": "simulator",
             "clue": "Use the Unit 12 Computing Words reference.",
             "explanation": "Simulator means the on-screen micro:bit we click with the mouse."
           },
@@ -1579,14 +1574,14 @@
             "explanation": "Touch logo means the gold logo at the top that senses a touch."
           },
           {
-            "prompt": "What should you do when this happens: The pause number is in seconds.",
+            "prompt": "Which computing word matches this meaning: The on-screen micro:bit we click with the mouse.?",
             "choices": [
-              "No, it is in milliseconds. pause (1000) waits one second; pause (500) waits half a second.",
-              "No. Its display is just 25 red lights in a grid. It draws shapes and letters as patterns of dots.",
-              "No. An input goes IN (pressing a button); an output comes OUT (a shape lights up, a sound plays).",
-              "No. We program each input separately, so Button A can paint a square while Button B paints a heart."
+              "simulator",
+              "algorithm",
+              "count-controlled loop",
+              "forever loop"
             ],
-            "answer": "No, it is in milliseconds. pause (1000) waits one second; pause (500) waits half a second.",
+            "answer": "simulator",
             "clue": "Use the Unit 12 Computing Words reference.",
             "explanation": "Simulator means the on-screen micro:bit we click with the mouse."
           },
@@ -1741,14 +1736,14 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What should you do when this happens: The pause number is in seconds.",
+            "prompt": "Which computing word matches this meaning: The on-screen micro:bit we click with the mouse.?",
             "choices": [
-              "No, it is in milliseconds. pause (1000) waits one second; pause (500) waits half a second.",
-              "No. Its display is just 25 red lights in a grid. It draws shapes and letters as patterns of dots.",
-              "No. An input goes IN (pressing a button); an output comes OUT (a shape lights up, a sound plays).",
-              "No. We program each input separately, so Button A can paint a square while Button B paints a heart."
+              "simulator",
+              "algorithm",
+              "count-controlled loop",
+              "forever loop"
             ],
-            "answer": "No, it is in milliseconds. pause (1000) waits one second; pause (500) waits half a second.",
+            "answer": "simulator",
             "clue": "Use the Unit 12 Computing Words reference.",
             "explanation": "Simulator means the on-screen micro:bit we click with the mouse."
           },

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-18T07:59:31.069Z",
+  "generatedAt": "2026-08-18T08:37:21.633Z",
   "stage": {
     "id": "s02",
     "label": "Stage 2"
@@ -468,7 +468,7 @@
     {
       "symptom": "A statistical question is one about numbers.",
       "cause": "A common mix-up in this unit, “Be a Data Scientist”.",
-      "fix": "No — it is about the number of answers, not the kind of data."
+      "fix": "What is your favourite colour?"
     },
     {
       "symptom": "All data is numbers.",
@@ -484,6 +484,11 @@
       "symptom": "Numerical and categorical are the same thing.",
       "cause": "A common mix-up in this unit, “Be a Data Scientist”.",
       "fix": "Numerical data is numbers we count or measure; categorical data is groups. Height is numerical; eye colour is categorical."
+    },
+    {
+      "symptom": "Data just sits there.",
+      "cause": "A common mix-up in this unit, “Be a Data Scientist”.",
+      "fix": "Data is useful - we use it to decide what to do: who needs help, what to buy, whether to take a coat."
     }
   ],
   "esafety": [
@@ -610,27 +615,27 @@
     "commonMistakes": [
       [
         "A statistical question is one about numbers.",
-        "No — it is about the number of answers, not the kind of data."
-      ],
-      [
-        "What is your favourite colour?",
-        "asked to the class is statistical (many answers) even though the answers are words."
+        "What is your favourite colour?"
       ],
       [
         "How many children are in our class? has many answers.",
-        "It has only one answer — a single number. It is about how many answers the question has. It is non-statistical, even though we count many you to find it."
+        "It has only one answer - a single number. It is about how many answers the question has. It is non-statistical, even though we count many you to find it."
       ],
       [
         "All data is numbers.",
-        "Data can be groups too. Eye colour, favourite fruit and how we travel to school are all data (categorical data)."
+        "It has only one answer — a single number. It is about how many answers the question has. It is non-statistical, even though we count many you to find it."
       ],
       [
         "You can add up any numbers.",
-        "Not categorical ones. If brown eyes are 1 and blue eyes are 2, then 1 plus 2 means nothing — the numbers are just name tags, like shirt numbers."
+        "Not categorical ones. If brown eyes are 1 and blue eyes are 2, then 1 plus 2 means nothing - the numbers are just name tags, like shirt numbers."
       ],
       [
         "Numerical and categorical are the same thing.",
-        "Numerical data is numbers we count or measure; categorical data is groups. Height is numerical; eye colour is categorical."
+        "Not categorical ones. If brown eyes are 1 and blue eyes are 2, then 1 plus 2 means nothing — the numbers are just name tags, like shirt numbers."
+      ],
+      [
+        "Data just sits there.",
+        "Data is useful - we use it to decide what to do: who needs help, what to buy, whether to take a coat."
       ]
     ],
     "connections": []
@@ -924,14 +929,14 @@
         "difficulty": "Core",
         "question": "What should you do when this happens: A statistical question is one about numbers.",
         "options": [
-          "No - it is about the number of answers, not the kind of data.",
+          "What is your favourite colour?",
           "Data can be groups too. Eye colour, favourite fruit and how we travel to school are all data (categorical data).",
           "Not categorical ones. If brown eyes are 1 and blue eyes are 2, then 1 plus 2 means nothing - the numbers are just name tags, like shirt numbers.",
           "Numerical data is numbers we count or measure; categorical data is groups. Height is numerical; eye colour is categorical."
         ],
-        "answer": "No - it is about the number of answers, not the kind of data.",
+        "answer": "What is your favourite colour?",
         "hint": "Use the Unit 7 Computing Words reference.",
-        "explanation": "No - it is about the number of answers, not the kind of data."
+        "explanation": "What is your favourite colour?"
       },
       {
         "id": "q09",
@@ -940,7 +945,7 @@
         "difficulty": "Core",
         "question": "What should you do when this happens: All data is numbers.",
         "options": [
-          "No - it is about the number of answers, not the kind of data.",
+          "What is your favourite colour?",
           "Not categorical ones. If brown eyes are 1 and blue eyes are 2, then 1 plus 2 means nothing - the numbers are just name tags, like shirt numbers.",
           "Data can be groups too. Eye colour, favourite fruit and how we travel to school are all data (categorical data).",
           "Numerical data is numbers we count or measure; categorical data is groups. Height is numerical; eye colour is categorical."
@@ -956,7 +961,7 @@
         "difficulty": "Challenge",
         "question": "What should you do when this happens: You can add up any numbers.",
         "options": [
-          "No - it is about the number of answers, not the kind of data.",
+          "What is your favourite colour?",
           "Data can be groups too. Eye colour, favourite fruit and how we travel to school are all data (categorical data).",
           "Not categorical ones. If brown eyes are 1 and blue eyes are 2, then 1 plus 2 means nothing - the numbers are just name tags, like shirt numbers.",
           "Numerical data is numbers we count or measure; categorical data is groups. Height is numerical; eye colour is categorical."
@@ -972,7 +977,7 @@
         "difficulty": "Challenge",
         "question": "What should you do when this happens: Numerical and categorical are the same thing.",
         "options": [
-          "No - it is about the number of answers, not the kind of data.",
+          "What is your favourite colour?",
           "Data can be groups too. Eye colour, favourite fruit and how we travel to school are all data (categorical data).",
           "Not categorical ones. If brown eyes are 1 and blue eyes are 2, then 1 plus 2 means nothing - the numbers are just name tags, like shirt numbers.",
           "Numerical data is numbers we count or measure; categorical data is groups. Height is numerical; eye colour is categorical."
@@ -986,16 +991,16 @@
         "type": "Reasoning",
         "outcomeId": "lo04",
         "difficulty": "Challenge",
-        "question": "Which computing word matches this meaning: A question with only one answer.?",
+        "question": "What should you do when this happens: Data just sits there.",
         "options": [
-          "numerical data",
-          "non-statistical question",
-          "categorical data",
-          "form"
+          "What is your favourite colour?",
+          "Data is useful - we use it to decide what to do: who needs help, what to buy, whether to take a coat.",
+          "Data can be groups too. Eye colour, favourite fruit and how we travel to school are all data (categorical data).",
+          "Not categorical ones. If brown eyes are 1 and blue eyes are 2, then 1 plus 2 means nothing - the numbers are just name tags, like shirt numbers."
         ],
-        "answer": "non-statistical question",
+        "answer": "Data is useful - we use it to decide what to do: who needs help, what to buy, whether to take a coat.",
         "hint": "Use the Unit 7 Computing Words reference.",
-        "explanation": "Non-statistical question means a question with only one answer.."
+        "explanation": "Data is useful - we use it to decide what to do: who needs help, what to buy, whether to take a coat."
       }
     ]
   },
@@ -1049,7 +1054,7 @@
             "prompt": "What should you do when this happens: You can add up any numbers.",
             "choices": [
               "Not categorical ones. If brown eyes are 1 and blue eyes are 2, then 1 plus 2 means nothing - the numbers are just name tags, like shirt numbers.",
-              "No - it is about the number of answers, not the kind of data.",
+              "What is your favourite colour?",
               "Data can be groups too. Eye colour, favourite fruit and how we travel to school are all data (categorical data).",
               "Numerical data is numbers we count or measure; categorical data is groups. Height is numerical; eye colour is categorical."
             ],
@@ -1092,12 +1097,12 @@
           {
             "prompt": "What should you do when this happens: A statistical question is one about numbers.",
             "choices": [
-              "No - it is about the number of answers, not the kind of data.",
+              "What is your favourite colour?",
               "Data can be groups too. Eye colour, favourite fruit and how we travel to school are all data (categorical data).",
               "Not categorical ones. If brown eyes are 1 and blue eyes are 2, then 1 plus 2 means nothing - the numbers are just name tags, like shirt numbers.",
               "Numerical data is numbers we count or measure; categorical data is groups. Height is numerical; eye colour is categorical."
             ],
-            "answer": "No - it is about the number of answers, not the kind of data.",
+            "answer": "What is your favourite colour?",
             "clue": "Use the Unit 7 Computing Words reference.",
             "explanation": "Data scientist means someone who uses data to solve problems."
           },
@@ -1105,7 +1110,7 @@
             "prompt": "What should you do when this happens: Numerical and categorical are the same thing.",
             "choices": [
               "Numerical data is numbers we count or measure; categorical data is groups. Height is numerical; eye colour is categorical.",
-              "No - it is about the number of answers, not the kind of data.",
+              "What is your favourite colour?",
               "Data can be groups too. Eye colour, favourite fruit and how we travel to school are all data (categorical data).",
               "Not categorical ones. If brown eyes are 1 and blue eyes are 2, then 1 plus 2 means nothing - the numbers are just name tags, like shirt numbers."
             ],
@@ -1151,7 +1156,7 @@
             "prompt": "What should you do when this happens: All data is numbers.",
             "choices": [
               "Data can be groups too. Eye colour, favourite fruit and how we travel to school are all data (categorical data).",
-              "No - it is about the number of answers, not the kind of data.",
+              "What is your favourite colour?",
               "Not categorical ones. If brown eyes are 1 and blue eyes are 2, then 1 plus 2 means nothing - the numbers are just name tags, like shirt numbers.",
               "Numerical data is numbers we count or measure; categorical data is groups. Height is numerical; eye colour is categorical."
             ],
@@ -1160,14 +1165,14 @@
             "explanation": "Data means the facts we collect."
           },
           {
-            "prompt": "Which computing word matches this meaning: A question with only one answer.?",
+            "prompt": "What should you do when this happens: Data just sits there.",
             "choices": [
-              "non-statistical question",
-              "numerical data",
-              "categorical data",
-              "form"
+              "Data is useful - we use it to decide what to do: who needs help, what to buy, whether to take a coat.",
+              "What is your favourite colour?",
+              "Data can be groups too. Eye colour, favourite fruit and how we travel to school are all data (categorical data).",
+              "Not categorical ones. If brown eyes are 1 and blue eyes are 2, then 1 plus 2 means nothing - the numbers are just name tags, like shirt numbers."
             ],
-            "answer": "non-statistical question",
+            "answer": "Data is useful - we use it to decide what to do: who needs help, what to buy, whether to take a coat.",
             "clue": "Use the Unit 7 Computing Words reference.",
             "explanation": "Non-statistical question means a question with only one answer."
           }
@@ -1209,7 +1214,7 @@
             "prompt": "What should you do when this happens: You can add up any numbers.",
             "choices": [
               "Not categorical ones. If brown eyes are 1 and blue eyes are 2, then 1 plus 2 means nothing - the numbers are just name tags, like shirt numbers.",
-              "No - it is about the number of answers, not the kind of data.",
+              "What is your favourite colour?",
               "Data can be groups too. Eye colour, favourite fruit and how we travel to school are all data (categorical data).",
               "Numerical data is numbers we count or measure; categorical data is groups. Height is numerical; eye colour is categorical."
             ],
@@ -1253,12 +1258,12 @@
           {
             "prompt": "What should you do when this happens: A statistical question is one about numbers.",
             "choices": [
-              "No - it is about the number of answers, not the kind of data.",
+              "What is your favourite colour?",
               "Data can be groups too. Eye colour, favourite fruit and how we travel to school are all data (categorical data).",
               "Not categorical ones. If brown eyes are 1 and blue eyes are 2, then 1 plus 2 means nothing - the numbers are just name tags, like shirt numbers.",
               "Numerical data is numbers we count or measure; categorical data is groups. Height is numerical; eye colour is categorical."
             ],
-            "answer": "No - it is about the number of answers, not the kind of data.",
+            "answer": "What is your favourite colour?",
             "clue": "Use the Unit 7 Computing Words reference.",
             "explanation": "Data scientist means someone who uses data to solve problems."
           },
@@ -1266,7 +1271,7 @@
             "prompt": "What should you do when this happens: Numerical and categorical are the same thing.",
             "choices": [
               "Numerical data is numbers we count or measure; categorical data is groups. Height is numerical; eye colour is categorical.",
-              "No - it is about the number of answers, not the kind of data.",
+              "What is your favourite colour?",
               "Data can be groups too. Eye colour, favourite fruit and how we travel to school are all data (categorical data).",
               "Not categorical ones. If brown eyes are 1 and blue eyes are 2, then 1 plus 2 means nothing - the numbers are just name tags, like shirt numbers."
             ],
@@ -1310,7 +1315,7 @@
             "prompt": "What should you do when this happens: All data is numbers.",
             "choices": [
               "Data can be groups too. Eye colour, favourite fruit and how we travel to school are all data (categorical data).",
-              "No - it is about the number of answers, not the kind of data.",
+              "What is your favourite colour?",
               "Not categorical ones. If brown eyes are 1 and blue eyes are 2, then 1 plus 2 means nothing - the numbers are just name tags, like shirt numbers.",
               "Numerical data is numbers we count or measure; categorical data is groups. Height is numerical; eye colour is categorical."
             ],
@@ -1319,14 +1324,14 @@
             "explanation": "Data means the facts we collect."
           },
           {
-            "prompt": "Which computing word matches this meaning: A question with only one answer.?",
+            "prompt": "What should you do when this happens: Data just sits there.",
             "choices": [
-              "non-statistical question",
-              "numerical data",
-              "categorical data",
-              "form"
+              "Data is useful - we use it to decide what to do: who needs help, what to buy, whether to take a coat.",
+              "What is your favourite colour?",
+              "Data can be groups too. Eye colour, favourite fruit and how we travel to school are all data (categorical data).",
+              "Not categorical ones. If brown eyes are 1 and blue eyes are 2, then 1 plus 2 means nothing - the numbers are just name tags, like shirt numbers."
             ],
-            "answer": "non-statistical question",
+            "answer": "Data is useful - we use it to decide what to do: who needs help, what to buy, whether to take a coat.",
             "clue": "Use the Unit 7 Computing Words reference.",
             "explanation": "Non-statistical question means a question with only one answer."
           },
@@ -1368,7 +1373,7 @@
             "prompt": "What should you do when this happens: You can add up any numbers.",
             "choices": [
               "Not categorical ones. If brown eyes are 1 and blue eyes are 2, then 1 plus 2 means nothing - the numbers are just name tags, like shirt numbers.",
-              "No - it is about the number of answers, not the kind of data.",
+              "What is your favourite colour?",
               "Data can be groups too. Eye colour, favourite fruit and how we travel to school are all data (categorical data).",
               "Numerical data is numbers we count or measure; categorical data is groups. Height is numerical; eye colour is categorical."
             ],
@@ -1412,12 +1417,12 @@
           {
             "prompt": "What should you do when this happens: A statistical question is one about numbers.",
             "choices": [
-              "No - it is about the number of answers, not the kind of data.",
+              "What is your favourite colour?",
               "Data can be groups too. Eye colour, favourite fruit and how we travel to school are all data (categorical data).",
               "Not categorical ones. If brown eyes are 1 and blue eyes are 2, then 1 plus 2 means nothing - the numbers are just name tags, like shirt numbers.",
               "Numerical data is numbers we count or measure; categorical data is groups. Height is numerical; eye colour is categorical."
             ],
-            "answer": "No - it is about the number of answers, not the kind of data.",
+            "answer": "What is your favourite colour?",
             "clue": "Use the Unit 7 Computing Words reference.",
             "explanation": "Data scientist means someone who uses data to solve problems."
           },
@@ -1425,7 +1430,7 @@
             "prompt": "What should you do when this happens: Numerical and categorical are the same thing.",
             "choices": [
               "Numerical data is numbers we count or measure; categorical data is groups. Height is numerical; eye colour is categorical.",
-              "No - it is about the number of answers, not the kind of data.",
+              "What is your favourite colour?",
               "Data can be groups too. Eye colour, favourite fruit and how we travel to school are all data (categorical data).",
               "Not categorical ones. If brown eyes are 1 and blue eyes are 2, then 1 plus 2 means nothing - the numbers are just name tags, like shirt numbers."
             ],
@@ -1469,7 +1474,7 @@
             "prompt": "What should you do when this happens: All data is numbers.",
             "choices": [
               "Data can be groups too. Eye colour, favourite fruit and how we travel to school are all data (categorical data).",
-              "No - it is about the number of answers, not the kind of data.",
+              "What is your favourite colour?",
               "Not categorical ones. If brown eyes are 1 and blue eyes are 2, then 1 plus 2 means nothing - the numbers are just name tags, like shirt numbers.",
               "Numerical data is numbers we count or measure; categorical data is groups. Height is numerical; eye colour is categorical."
             ],
@@ -1478,14 +1483,14 @@
             "explanation": "Data means the facts we collect."
           },
           {
-            "prompt": "Which computing word matches this meaning: A question with only one answer.?",
+            "prompt": "What should you do when this happens: Data just sits there.",
             "choices": [
-              "non-statistical question",
-              "numerical data",
-              "categorical data",
-              "form"
+              "Data is useful - we use it to decide what to do: who needs help, what to buy, whether to take a coat.",
+              "What is your favourite colour?",
+              "Data can be groups too. Eye colour, favourite fruit and how we travel to school are all data (categorical data).",
+              "Not categorical ones. If brown eyes are 1 and blue eyes are 2, then 1 plus 2 means nothing - the numbers are just name tags, like shirt numbers."
             ],
-            "answer": "non-statistical question",
+            "answer": "Data is useful - we use it to decide what to do: who needs help, what to buy, whether to take a coat.",
             "clue": "Use the Unit 7 Computing Words reference.",
             "explanation": "Non-statistical question means a question with only one answer."
           },
@@ -1527,7 +1532,7 @@
             "prompt": "What should you do when this happens: You can add up any numbers.",
             "choices": [
               "Not categorical ones. If brown eyes are 1 and blue eyes are 2, then 1 plus 2 means nothing - the numbers are just name tags, like shirt numbers.",
-              "No - it is about the number of answers, not the kind of data.",
+              "What is your favourite colour?",
               "Data can be groups too. Eye colour, favourite fruit and how we travel to school are all data (categorical data).",
               "Numerical data is numbers we count or measure; categorical data is groups. Height is numerical; eye colour is categorical."
             ],
@@ -1584,7 +1589,7 @@
             "prompt": "What should you do when this happens: Numerical and categorical are the same thing.",
             "choices": [
               "Numerical data is numbers we count or measure; categorical data is groups. Height is numerical; eye colour is categorical.",
-              "No - it is about the number of answers, not the kind of data.",
+              "What is your favourite colour?",
               "Data can be groups too. Eye colour, favourite fruit and how we travel to school are all data (categorical data).",
               "Not categorical ones. If brown eyes are 1 and blue eyes are 2, then 1 plus 2 means nothing - the numbers are just name tags, like shirt numbers."
             ],
@@ -1617,12 +1622,12 @@
           {
             "prompt": "What should you do when this happens: A statistical question is one about numbers.",
             "choices": [
-              "No - it is about the number of answers, not the kind of data.",
+              "What is your favourite colour?",
               "Data can be groups too. Eye colour, favourite fruit and how we travel to school are all data (categorical data).",
               "Not categorical ones. If brown eyes are 1 and blue eyes are 2, then 1 plus 2 means nothing - the numbers are just name tags, like shirt numbers.",
               "Numerical data is numbers we count or measure; categorical data is groups. Height is numerical; eye colour is categorical."
             ],
-            "answer": "No - it is about the number of answers, not the kind of data.",
+            "answer": "What is your favourite colour?",
             "clue": "Use the Unit 7 Computing Words reference.",
             "explanation": "Data scientist means someone who uses data to solve problems."
           }
@@ -1637,14 +1642,14 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which computing word matches this meaning: A question with only one answer.?",
+            "prompt": "What should you do when this happens: Data just sits there.",
             "choices": [
-              "non-statistical question",
-              "numerical data",
-              "categorical data",
-              "form"
+              "Data is useful - we use it to decide what to do: who needs help, what to buy, whether to take a coat.",
+              "What is your favourite colour?",
+              "Data can be groups too. Eye colour, favourite fruit and how we travel to school are all data (categorical data).",
+              "Not categorical ones. If brown eyes are 1 and blue eyes are 2, then 1 plus 2 means nothing - the numbers are just name tags, like shirt numbers."
             ],
-            "answer": "non-statistical question",
+            "answer": "Data is useful - we use it to decide what to do: who needs help, what to buy, whether to take a coat.",
             "clue": "Use the Unit 7 Computing Words reference.",
             "explanation": "Non-statistical question means a question with only one answer."
           },
@@ -1676,7 +1681,7 @@
             "prompt": "What should you do when this happens: All data is numbers.",
             "choices": [
               "Data can be groups too. Eye colour, favourite fruit and how we travel to school are all data (categorical data).",
-              "No - it is about the number of answers, not the kind of data.",
+              "What is your favourite colour?",
               "Not categorical ones. If brown eyes are 1 and blue eyes are 2, then 1 plus 2 means nothing - the numbers are just name tags, like shirt numbers.",
               "Numerical data is numbers we count or measure; categorical data is groups. Height is numerical; eye colour is categorical."
             ],

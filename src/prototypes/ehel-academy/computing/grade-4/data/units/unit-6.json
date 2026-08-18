@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-18T07:59:31.398Z",
+  "generatedAt": "2026-08-18T08:37:22.215Z",
   "stage": {
     "id": "s04",
     "label": "Stage 4"
@@ -571,11 +571,6 @@
       "symptom": "A minus number is a mistake.",
       "cause": "A common mix-up in this unit, “Be a Musician”.",
       "fix": "No. change volume by (-10) is on purpose — a minus sign means"
-    },
-    {
-      "symptom": ", so it gets quieter.",
-      "cause": "A common mix-up in this unit, “Be a Musician”.",
-      "fix": "You must write the same block many times to repeat it."
     }
   ],
   "esafety": [
@@ -771,6 +766,10 @@
     ],
     "commonMistakes": [
       [
+        "Watch for these ideas. They are normal at this age",
+        "gently show the truth with a quick example rather than only correcting."
+      ],
+      [
         "forever and repeat are the same.",
         "No. A forever loop never stops on its own; a repeat ( ) loop counts to a number and stops. Show both back to back."
       ],
@@ -784,15 +783,11 @@
       ],
       [
         "change volume by (10) sets the volume to 10.",
-        "No. change adds to the current volume; set volume to (10) % jumps straight to 10."
-      ],
-      [
-        "A minus number is a mistake.",
         "No. change volume by (-10) is on purpose — a minus sign means"
       ],
       [
-        ", so it gets quieter.",
-        "You must write the same block many times to repeat it."
+        "A minus number is a mistake.",
+        "No. change volume by (-10) is on purpose - a minus sign means “go down”, so it gets quieter."
       ]
     ],
     "connections": []
@@ -1125,27 +1120,27 @@
           "No. A forever loop never stops on its own; a repeat ( ) loop counts to a number and stops. Show both back to back.",
           "It is the opposite. repeat until keeps going while the condition is false and stops the moment it becomes true.",
           "No. In play note (60) for (2) beats, the 60 is how high the note is; the 2 is how long it lasts.",
-          "No. change volume by (-10) is on purpose - a minus sign means"
+          "No. change volume by (-10) is on purpose - a minus sign means “go down”, so it gets quieter."
         ],
-        "answer": "No. change volume by (-10) is on purpose - a minus sign means",
+        "answer": "No. change volume by (-10) is on purpose - a minus sign means “go down”, so it gets quieter.",
         "hint": "Use the Unit 6 Computing Words reference.",
-        "explanation": "No. change volume by (-10) is on purpose - a minus sign means"
+        "explanation": "No. change volume by (-10) is on purpose - a minus sign means “go down”, so it gets quieter."
       },
       {
         "id": "q11",
         "type": "Reasoning",
         "outcomeId": "lo02",
         "difficulty": "Challenge",
-        "question": "What should you do when this happens: , so it gets quieter.",
+        "question": "Which computing word matches this meaning: How fast or slow the beat goes.?",
         "options": [
-          "No. A forever loop never stops on its own; a repeat ( ) loop counts to a number and stops. Show both back to back.",
-          "It is the opposite. repeat until keeps going while the condition is false and stops the moment it becomes true.",
-          "You must write the same block many times to repeat it.",
-          "No. In play note (60) for (2) beats, the 60 is how high the note is; the 2 is how long it lasts."
+          "beat",
+          "Music extension",
+          "tempo",
+          "sprite"
         ],
-        "answer": "You must write the same block many times to repeat it.",
+        "answer": "tempo",
         "hint": "Use the Unit 6 Computing Words reference.",
-        "explanation": "You must write the same block many times to repeat it."
+        "explanation": "Tempo means how fast or slow the beat goes."
       },
       {
         "id": "q12",
@@ -1215,12 +1210,12 @@
           {
             "prompt": "What should you do when this happens: A minus number is a mistake.",
             "choices": [
-              "No. change volume by (-10) is on purpose - a minus sign means",
+              "No. change volume by (-10) is on purpose - a minus sign means “go down”, so it gets quieter.",
               "No. A forever loop never stops on its own; a repeat ( ) loop counts to a number and stops. Show both back to back.",
               "It is the opposite. repeat until keeps going while the condition is false and stops the moment it becomes true.",
               "No. In play note (60) for (2) beats, the 60 is how high the note is; the 2 is how long it lasts."
             ],
-            "answer": "No. change volume by (-10) is on purpose - a minus sign means",
+            "answer": "No. change volume by (-10) is on purpose - a minus sign means “go down”, so it gets quieter.",
             "clue": "Use the Unit 6 Computing Words reference.",
             "explanation": "Sequence means the order in which steps happen."
           }
@@ -1271,14 +1266,14 @@
             "explanation": "Algorithm means a set of steps, in the right order, to do a job."
           },
           {
-            "prompt": "What should you do when this happens: , so it gets quieter.",
+            "prompt": "Which computing word matches this meaning: How fast or slow the beat goes.?",
             "choices": [
-              "You must write the same block many times to repeat it.",
-              "No. A forever loop never stops on its own; a repeat ( ) loop counts to a number and stops. Show both back to back.",
-              "It is the opposite. repeat until keeps going while the condition is false and stops the moment it becomes true.",
-              "No. In play note (60) for (2) beats, the 60 is how high the note is; the 2 is how long it lasts."
+              "tempo",
+              "beat",
+              "Music extension",
+              "sprite"
             ],
-            "answer": "You must write the same block many times to repeat it.",
+            "answer": "tempo",
             "clue": "Use the Unit 6 Computing Words reference.",
             "explanation": "Tempo means how fast or slow the beat goes."
           }
@@ -1377,12 +1372,12 @@
           {
             "prompt": "What should you do when this happens: A minus number is a mistake.",
             "choices": [
-              "No. change volume by (-10) is on purpose - a minus sign means",
+              "No. change volume by (-10) is on purpose - a minus sign means “go down”, so it gets quieter.",
               "No. A forever loop never stops on its own; a repeat ( ) loop counts to a number and stops. Show both back to back.",
               "It is the opposite. repeat until keeps going while the condition is false and stops the moment it becomes true.",
               "No. In play note (60) for (2) beats, the 60 is how high the note is; the 2 is how long it lasts."
             ],
-            "answer": "No. change volume by (-10) is on purpose - a minus sign means",
+            "answer": "No. change volume by (-10) is on purpose - a minus sign means “go down”, so it gets quieter.",
             "clue": "Use the Unit 6 Computing Words reference.",
             "explanation": "Sequence means the order in which steps happen."
           },
@@ -1433,14 +1428,14 @@
             "explanation": "Algorithm means a set of steps, in the right order, to do a job."
           },
           {
-            "prompt": "What should you do when this happens: , so it gets quieter.",
+            "prompt": "Which computing word matches this meaning: How fast or slow the beat goes.?",
             "choices": [
-              "You must write the same block many times to repeat it.",
-              "No. A forever loop never stops on its own; a repeat ( ) loop counts to a number and stops. Show both back to back.",
-              "It is the opposite. repeat until keeps going while the condition is false and stops the moment it becomes true.",
-              "No. In play note (60) for (2) beats, the 60 is how high the note is; the 2 is how long it lasts."
+              "tempo",
+              "beat",
+              "Music extension",
+              "sprite"
             ],
-            "answer": "You must write the same block many times to repeat it.",
+            "answer": "tempo",
             "clue": "Use the Unit 6 Computing Words reference.",
             "explanation": "Tempo means how fast or slow the beat goes."
           },
@@ -1539,12 +1534,12 @@
           {
             "prompt": "What should you do when this happens: A minus number is a mistake.",
             "choices": [
-              "No. change volume by (-10) is on purpose - a minus sign means",
+              "No. change volume by (-10) is on purpose - a minus sign means “go down”, so it gets quieter.",
               "No. A forever loop never stops on its own; a repeat ( ) loop counts to a number and stops. Show both back to back.",
               "It is the opposite. repeat until keeps going while the condition is false and stops the moment it becomes true.",
               "No. In play note (60) for (2) beats, the 60 is how high the note is; the 2 is how long it lasts."
             ],
-            "answer": "No. change volume by (-10) is on purpose - a minus sign means",
+            "answer": "No. change volume by (-10) is on purpose - a minus sign means “go down”, so it gets quieter.",
             "clue": "Use the Unit 6 Computing Words reference.",
             "explanation": "Sequence means the order in which steps happen."
           },
@@ -1595,14 +1590,14 @@
             "explanation": "Algorithm means a set of steps, in the right order, to do a job."
           },
           {
-            "prompt": "What should you do when this happens: , so it gets quieter.",
+            "prompt": "Which computing word matches this meaning: How fast or slow the beat goes.?",
             "choices": [
-              "You must write the same block many times to repeat it.",
-              "No. A forever loop never stops on its own; a repeat ( ) loop counts to a number and stops. Show both back to back.",
-              "It is the opposite. repeat until keeps going while the condition is false and stops the moment it becomes true.",
-              "No. In play note (60) for (2) beats, the 60 is how high the note is; the 2 is how long it lasts."
+              "tempo",
+              "beat",
+              "Music extension",
+              "sprite"
             ],
-            "answer": "You must write the same block many times to repeat it.",
+            "answer": "tempo",
             "clue": "Use the Unit 6 Computing Words reference.",
             "explanation": "Tempo means how fast or slow the beat goes."
           },
@@ -1701,12 +1696,12 @@
           {
             "prompt": "What should you do when this happens: A minus number is a mistake.",
             "choices": [
-              "No. change volume by (-10) is on purpose - a minus sign means",
+              "No. change volume by (-10) is on purpose - a minus sign means “go down”, so it gets quieter.",
               "No. A forever loop never stops on its own; a repeat ( ) loop counts to a number and stops. Show both back to back.",
               "It is the opposite. repeat until keeps going while the condition is false and stops the moment it becomes true.",
               "No. In play note (60) for (2) beats, the 60 is how high the note is; the 2 is how long it lasts."
             ],
-            "answer": "No. change volume by (-10) is on purpose - a minus sign means",
+            "answer": "No. change volume by (-10) is on purpose - a minus sign means “go down”, so it gets quieter.",
             "clue": "Use the Unit 6 Computing Words reference.",
             "explanation": "Sequence means the order in which steps happen."
           },
@@ -1757,14 +1752,14 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What should you do when this happens: , so it gets quieter.",
+            "prompt": "Which computing word matches this meaning: How fast or slow the beat goes.?",
             "choices": [
-              "You must write the same block many times to repeat it.",
-              "No. A forever loop never stops on its own; a repeat ( ) loop counts to a number and stops. Show both back to back.",
-              "It is the opposite. repeat until keeps going while the condition is false and stops the moment it becomes true.",
-              "No. In play note (60) for (2) beats, the 60 is how high the note is; the 2 is how long it lasts."
+              "tempo",
+              "beat",
+              "Music extension",
+              "sprite"
             ],
-            "answer": "You must write the same block many times to repeat it.",
+            "answer": "tempo",
             "clue": "Use the Unit 6 Computing Words reference.",
             "explanation": "Tempo means how fast or slow the beat goes."
           },

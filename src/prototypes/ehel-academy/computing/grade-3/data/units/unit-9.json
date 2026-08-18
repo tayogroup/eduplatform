@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-18T07:59:31.265Z",
+  "generatedAt": "2026-08-18T08:37:21.995Z",
   "stage": {
     "id": "s03",
     "label": "Stage 3"
@@ -505,11 +505,6 @@
       "symptom": "Only some of the word gets flipped.",
       "cause": "A common mix-up in this unit, “Sending Secret Messages”.",
       "fix": "In flip-text the *whole* message reverses, every letter. Count the letters to check none went missing."
-    },
-    {
-      "symptom": "A secret code can never be worked out by anyone else.",
-      "cause": "A common mix-up in this unit, “Sending Secret Messages”.",
-      "fix": "Simple codes can be guessed, especially very short ones. That is exactly why the Mini-Project asks you to make a *new* code when the first is discovered — a real idea in keeping messages safe. Confusing the letter O and the number 0, or the letter I and the number 1. This causes real decoding bugs."
     }
   ],
   "esafety": [
@@ -649,16 +644,20 @@
     ],
     "commonMistakes": [
       [
+        "Watch for these ideas. They are completely normal for this age",
+        "Gently show you the truth with a quick example rather than just correcting them."
+      ],
+      [
         "A cipher is the secret message.",
-        "No — the cipher is the *rule*. The secret message it makes is the ciphertext. Point to the rule and the result separately."
+        "No - the cipher is the *rule*. The secret message it makes is the ciphertext. Point to the rule and the result separately."
       ],
       [
         "Plain text and ciphertext are different words for the same thing.",
-        "Same message, two forms. Show both together: hello is plain text, svool is ciphertext."
+        "Not at all — people used codes long before computers. Everything in this unit is done with a pencil."
       ],
       [
         "You need a computer to use a cipher.",
-        "Not at all — people used codes long before computers. Everything in this unit is done with a pencil."
+        "Not at all - people used codes long before computers. Everything in this unit is done with a pencil."
       ],
       [
         "05 and 5 are the same in the number code.",
@@ -667,10 +666,6 @@
       [
         "Only some of the word gets flipped.",
         "In flip-text the *whole* message reverses, every letter. Count the letters to check none went missing."
-      ],
-      [
-        "A secret code can never be worked out by anyone else.",
-        "Simple codes can be guessed, especially very short ones. That is exactly why the Mini-Project asks you to make a *new* code when the first is discovered — a real idea in keeping messages safe. Confusing the letter O and the number 0, or the letter I and the number 1. This causes real decoding bugs."
       ]
     ],
     "connections": []
@@ -1013,16 +1008,16 @@
         "type": "Reasoning",
         "outcomeId": "lo05",
         "difficulty": "Challenge",
-        "question": "What should you do when this happens: A secret code can never be worked out by anyone else.",
+        "question": "Which computing word matches this meaning: The normal message that anyone can read.?",
         "options": [
-          "Simple codes can be guessed, especially very short ones. That is exactly why the Mini-Project asks you to make a *new* code when the first is…",
-          "No - the cipher is the *rule*. The secret message it makes is the ciphertext. Point to the rule and the result separately.",
-          "Same message, two forms. Show both together: hello is plain text, svool is ciphertext.",
-          "Not at all - people used codes long before computers. Everything in this unit is done with a pencil."
+          "plain text",
+          "ciphertext",
+          "code",
+          "encode"
         ],
-        "answer": "Simple codes can be guessed, especially very short ones. That is exactly why the Mini-Project asks you to make a *new* code when the first is…",
+        "answer": "plain text",
         "hint": "Use the Unit 9 Computing Words reference.",
-        "explanation": "Simple codes can be guessed, especially very short ones. That is exactly why the Mini-Project asks you to make a *new* code when the first is…"
+        "explanation": "Plain text means the normal message that anyone can read."
       },
       {
         "id": "q12",
@@ -1148,14 +1143,14 @@
             "explanation": "Network means computers joined together so they can share."
           },
           {
-            "prompt": "What should you do when this happens: A secret code can never be worked out by anyone else.",
+            "prompt": "Which computing word matches this meaning: The normal message that anyone can read.?",
             "choices": [
-              "Simple codes can be guessed, especially very short ones. That is exactly why the Mini-Project asks you to make a *new* code when the first is…",
-              "No - the cipher is the *rule*. The secret message it makes is the ciphertext. Point to the rule and the result separately.",
-              "Same message, two forms. Show both together: hello is plain text, svool is ciphertext.",
-              "Not at all - people used codes long before computers. Everything in this unit is done with a pencil."
+              "plain text",
+              "ciphertext",
+              "code",
+              "encode"
             ],
-            "answer": "Simple codes can be guessed, especially very short ones. That is exactly why the Mini-Project asks you to make a *new* code when the first is…",
+            "answer": "plain text",
             "clue": "Use the Unit 9 Computing Words reference.",
             "explanation": "Plain text means the normal message that anyone can read."
           }
@@ -1310,14 +1305,14 @@
             "explanation": "Network means computers joined together so they can share."
           },
           {
-            "prompt": "What should you do when this happens: A secret code can never be worked out by anyone else.",
+            "prompt": "Which computing word matches this meaning: The normal message that anyone can read.?",
             "choices": [
-              "Simple codes can be guessed, especially very short ones. That is exactly why the Mini-Project asks you to make a *new* code when the first is…",
-              "No - the cipher is the *rule*. The secret message it makes is the ciphertext. Point to the rule and the result separately.",
-              "Same message, two forms. Show both together: hello is plain text, svool is ciphertext.",
-              "Not at all - people used codes long before computers. Everything in this unit is done with a pencil."
+              "plain text",
+              "ciphertext",
+              "code",
+              "encode"
             ],
-            "answer": "Simple codes can be guessed, especially very short ones. That is exactly why the Mini-Project asks you to make a *new* code when the first is…",
+            "answer": "plain text",
             "clue": "Use the Unit 9 Computing Words reference.",
             "explanation": "Plain text means the normal message that anyone can read."
           },
@@ -1472,14 +1467,14 @@
             "explanation": "Network means computers joined together so they can share."
           },
           {
-            "prompt": "What should you do when this happens: A secret code can never be worked out by anyone else.",
+            "prompt": "Which computing word matches this meaning: The normal message that anyone can read.?",
             "choices": [
-              "Simple codes can be guessed, especially very short ones. That is exactly why the Mini-Project asks you to make a *new* code when the first is…",
-              "No - the cipher is the *rule*. The secret message it makes is the ciphertext. Point to the rule and the result separately.",
-              "Same message, two forms. Show both together: hello is plain text, svool is ciphertext.",
-              "Not at all - people used codes long before computers. Everything in this unit is done with a pencil."
+              "plain text",
+              "ciphertext",
+              "code",
+              "encode"
             ],
-            "answer": "Simple codes can be guessed, especially very short ones. That is exactly why the Mini-Project asks you to make a *new* code when the first is…",
+            "answer": "plain text",
             "clue": "Use the Unit 9 Computing Words reference.",
             "explanation": "Plain text means the normal message that anyone can read."
           },
@@ -1634,14 +1629,14 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What should you do when this happens: A secret code can never be worked out by anyone else.",
+            "prompt": "Which computing word matches this meaning: The normal message that anyone can read.?",
             "choices": [
-              "Simple codes can be guessed, especially very short ones. That is exactly why the Mini-Project asks you to make a *new* code when the first is…",
-              "No - the cipher is the *rule*. The secret message it makes is the ciphertext. Point to the rule and the result separately.",
-              "Same message, two forms. Show both together: hello is plain text, svool is ciphertext.",
-              "Not at all - people used codes long before computers. Everything in this unit is done with a pencil."
+              "plain text",
+              "ciphertext",
+              "code",
+              "encode"
             ],
-            "answer": "Simple codes can be guessed, especially very short ones. That is exactly why the Mini-Project asks you to make a *new* code when the first is…",
+            "answer": "plain text",
             "clue": "Use the Unit 9 Computing Words reference.",
             "explanation": "Plain text means the normal message that anyone can read."
           },

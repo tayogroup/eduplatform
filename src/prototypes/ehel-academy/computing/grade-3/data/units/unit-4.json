@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-18T07:59:31.200Z",
+  "generatedAt": "2026-08-18T08:37:21.870Z",
   "stage": {
     "id": "s03",
     "label": "Stage 3"
@@ -572,11 +572,6 @@
       "symptom": "Scratch puts the characters back to the start by itself.",
       "cause": "A common mix-up in this unit, “Be a Designer”.",
       "fix": "It does not, unless we add a reset block. Show the sprites drifting away to prove it."
-    },
-    {
-      "symptom": "A static object is broken because it does nothing.",
-      "cause": "A common mix-up in this unit, “Be a Designer”.",
-      "fix": "It has no code on purpose — it is meant to sit still. Forgetting the minus sign. go to x: (-150) y: (0) sends the sprite to the left; without the minus it goes to the right instead."
     }
   ],
   "esafety": [
@@ -722,12 +717,16 @@
     ],
     "commonMistakes": [
       [
+        "Watch for these ideas. They are completely normal for this age",
+        "Gently show you the truth with a quick example rather than just correcting them."
+      ],
+      [
         "A longer program is a better program.",
-        "You often think more blocks means more work done. Show that the short version does the very same job — shorter is smarter here."
+        "Sometimes you make it shorter by removing a step, but that can change the result. Remind you: the short version must do the SAME job (same number of hops, same distance)."
       ],
       [
         "Combining repeated steps means deleting steps.",
-        "Sometimes you make it shorter by removing a step, but that can change the result. Remind you: the short version must do the SAME job (same number of hops, same distance)."
+        "Some you make it shorter by throwing a step away and changing the result. Remind you: the short version must do the SAME job (same number of hops, same distance)."
       ],
       [
         "The two characters take turns.",
@@ -740,10 +739,6 @@
       [
         "Scratch puts the characters back to the start by itself.",
         "It does not, unless we add a reset block. Show the sprites drifting away to prove it."
-      ],
-      [
-        "A static object is broken because it does nothing.",
-        "It has no code on purpose — it is meant to sit still. Forgetting the minus sign. go to x: (-150) y: (0) sends the sprite to the left; without the minus it goes to the right instead."
       ]
     ],
     "connections": []
@@ -1114,16 +1109,16 @@
         "type": "Reasoning",
         "outcomeId": "lo05",
         "difficulty": "Challenge",
-        "question": "What should you do when this happens: A static object is broken because it does nothing.",
+        "question": "Which computing word matches this meaning: A set of steps for doing a job, in the right order.?",
         "options": [
-          "It has no code on purpose - it is meant to sit still. Forgetting the minus sign. go to x: (-150) y: (0) sends the sprite to the left; without the…",
-          "You often think more blocks means more work done. Show that the short version does the very same job - shorter is smarter here.",
-          "Some you make it shorter by throwing a step away and changing the result. Remind you: the short version must do the SAME job (same number of hops,…",
-          "With one green flag, both sprites start at the SAME time, not one after the other. Run it and watch you move together."
+          "algorithm",
+          "efficient",
+          "concise",
+          "repetitive"
         ],
-        "answer": "It has no code on purpose - it is meant to sit still. Forgetting the minus sign. go to x: (-150) y: (0) sends the sprite to the left; without the…",
+        "answer": "algorithm",
         "hint": "Use the Unit 4 Computing Words reference.",
-        "explanation": "It has no code on purpose - it is meant to sit still. Forgetting the minus sign. go to x: (-150) y: (0) sends the sprite to the left; without the…"
+        "explanation": "Algorithm means a set of steps for doing a job, in the right order.."
       },
       {
         "id": "q12",
@@ -1249,14 +1244,14 @@
             "explanation": "Backdrop means the picture behind the sprites."
           },
           {
-            "prompt": "What should you do when this happens: A static object is broken because it does nothing.",
+            "prompt": "Which computing word matches this meaning: A set of steps for doing a job, in the right order.?",
             "choices": [
-              "It has no code on purpose - it is meant to sit still. Forgetting the minus sign. go to x: (-150) y: (0) sends the sprite to the left; without the…",
-              "You often think more blocks means more work done. Show that the short version does the very same job - shorter is smarter here.",
-              "Some you make it shorter by throwing a step away and changing the result. Remind you: the short version must do the SAME job (same number of hops,…",
-              "With one green flag, both sprites start at the SAME time, not one after the other. Run it and watch you move together."
+              "algorithm",
+              "efficient",
+              "concise",
+              "repetitive"
             ],
-            "answer": "It has no code on purpose - it is meant to sit still. Forgetting the minus sign. go to x: (-150) y: (0) sends the sprite to the left; without the…",
+            "answer": "algorithm",
             "clue": "Use the Unit 4 Computing Words reference.",
             "explanation": "Algorithm means a set of steps for doing a job, in the right order."
           }
@@ -1411,14 +1406,14 @@
             "explanation": "Backdrop means the picture behind the sprites."
           },
           {
-            "prompt": "What should you do when this happens: A static object is broken because it does nothing.",
+            "prompt": "Which computing word matches this meaning: A set of steps for doing a job, in the right order.?",
             "choices": [
-              "It has no code on purpose - it is meant to sit still. Forgetting the minus sign. go to x: (-150) y: (0) sends the sprite to the left; without the…",
-              "You often think more blocks means more work done. Show that the short version does the very same job - shorter is smarter here.",
-              "Some you make it shorter by throwing a step away and changing the result. Remind you: the short version must do the SAME job (same number of hops,…",
-              "With one green flag, both sprites start at the SAME time, not one after the other. Run it and watch you move together."
+              "algorithm",
+              "efficient",
+              "concise",
+              "repetitive"
             ],
-            "answer": "It has no code on purpose - it is meant to sit still. Forgetting the minus sign. go to x: (-150) y: (0) sends the sprite to the left; without the…",
+            "answer": "algorithm",
             "clue": "Use the Unit 4 Computing Words reference.",
             "explanation": "Algorithm means a set of steps for doing a job, in the right order."
           },
@@ -1573,14 +1568,14 @@
             "explanation": "Backdrop means the picture behind the sprites."
           },
           {
-            "prompt": "What should you do when this happens: A static object is broken because it does nothing.",
+            "prompt": "Which computing word matches this meaning: A set of steps for doing a job, in the right order.?",
             "choices": [
-              "It has no code on purpose - it is meant to sit still. Forgetting the minus sign. go to x: (-150) y: (0) sends the sprite to the left; without the…",
-              "You often think more blocks means more work done. Show that the short version does the very same job - shorter is smarter here.",
-              "Some you make it shorter by throwing a step away and changing the result. Remind you: the short version must do the SAME job (same number of hops,…",
-              "With one green flag, both sprites start at the SAME time, not one after the other. Run it and watch you move together."
+              "algorithm",
+              "efficient",
+              "concise",
+              "repetitive"
             ],
-            "answer": "It has no code on purpose - it is meant to sit still. Forgetting the minus sign. go to x: (-150) y: (0) sends the sprite to the left; without the…",
+            "answer": "algorithm",
             "clue": "Use the Unit 4 Computing Words reference.",
             "explanation": "Algorithm means a set of steps for doing a job, in the right order."
           },
@@ -1735,14 +1730,14 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What should you do when this happens: A static object is broken because it does nothing.",
+            "prompt": "Which computing word matches this meaning: A set of steps for doing a job, in the right order.?",
             "choices": [
-              "It has no code on purpose - it is meant to sit still. Forgetting the minus sign. go to x: (-150) y: (0) sends the sprite to the left; without the…",
-              "You often think more blocks means more work done. Show that the short version does the very same job - shorter is smarter here.",
-              "Some you make it shorter by throwing a step away and changing the result. Remind you: the short version must do the SAME job (same number of hops,…",
-              "With one green flag, both sprites start at the SAME time, not one after the other. Run it and watch you move together."
+              "algorithm",
+              "efficient",
+              "concise",
+              "repetitive"
             ],
-            "answer": "It has no code on purpose - it is meant to sit still. Forgetting the minus sign. go to x: (-150) y: (0) sends the sprite to the left; without the…",
+            "answer": "algorithm",
             "clue": "Use the Unit 4 Computing Words reference.",
             "explanation": "Algorithm means a set of steps for doing a job, in the right order."
           },

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-18T07:59:31.426Z",
+  "generatedAt": "2026-08-18T08:37:22.269Z",
   "stage": {
     "id": "s04",
     "label": "Stage 4"
@@ -564,11 +564,6 @@
       "symptom": "Both scripts must join together.",
       "cause": "A common mix-up in this unit, “Be an Innovator”.",
       "fix": "No. Each script has its own hat block and waits for its own input; they sit side by side and stay separate."
-    },
-    {
-      "symptom": "The blocks under the loop still repeat.",
-      "cause": "A common mix-up in this unit, “Be an Innovator”.",
-      "fix": "Only the blocks INSIDE the loop's mouth repeat. Blocks below the loop run once, after it finishes."
     }
   ],
   "esafety": [
@@ -764,12 +759,16 @@
     ],
     "commonMistakes": [
       [
+        "Watch for these ideas. They are normal at this age",
+        "gently show the truth with a quick example rather than only correcting."
+      ],
+      [
         "Input and output mean the same thing.",
-        "No. An input goes into the computer (a key press); an output comes back out to us (a sound or a picture)."
+        "No — the screen sends a picture out to you, so it is an output device. Your eyes are the input."
       ],
       [
         "A screen is an input because I look at it.",
-        "No — the screen sends a picture out to you, so it is an output device. Your eyes are the input."
+        "No - the screen sends a picture out to you, so it is an output device. Your eyes are the input."
       ],
       [
         "A gadget with two jobs needs one big algorithm.",
@@ -782,10 +781,6 @@
       [
         "Both scripts must join together.",
         "No. Each script has its own hat block and waits for its own input; they sit side by side and stay separate."
-      ],
-      [
-        "The blocks under the loop still repeat.",
-        "Only the blocks INSIDE the loop's mouth repeat. Blocks below the loop run once, after it finishes."
       ]
     ],
     "connections": []
@@ -1129,16 +1124,16 @@
         "type": "Reasoning",
         "outcomeId": "lo02",
         "difficulty": "Challenge",
-        "question": "What should you do when this happens: The blocks under the loop still repeat.",
+        "question": "Which computing word matches this meaning: An algorithm written in code the computer runs.?",
         "options": [
-          "No. An input goes into the computer (a key press); an output comes back out to us (a sound or a picture).",
-          "No - the screen sends a picture out to you, so it is an output device. Your eyes are the input.",
-          "No. Decomposition breaks it into parts, so two jobs become two algorithms, one for each input.",
-          "Only the blocks INSIDE the loop's mouth repeat. Blocks below the loop run once, after it finishes."
+          "event",
+          "sprite",
+          "comment",
+          "program"
         ],
-        "answer": "Only the blocks INSIDE the loop's mouth repeat. Blocks below the loop run once, after it finishes.",
+        "answer": "program",
         "hint": "Use the Unit 8 Computing Words reference.",
-        "explanation": "Only the blocks INSIDE the loop's mouth repeat. Blocks below the loop run once, after it finishes."
+        "explanation": "Program means an algorithm written in code the computer runs."
       },
       {
         "id": "q12",
@@ -1264,14 +1259,14 @@
             "explanation": "Repetition means doing something again and again."
           },
           {
-            "prompt": "What should you do when this happens: The blocks under the loop still repeat.",
+            "prompt": "Which computing word matches this meaning: An algorithm written in code the computer runs.?",
             "choices": [
-              "Only the blocks INSIDE the loop's mouth repeat. Blocks below the loop run once, after it finishes.",
-              "No. An input goes into the computer (a key press); an output comes back out to us (a sound or a picture).",
-              "No - the screen sends a picture out to you, so it is an output device. Your eyes are the input.",
-              "No. Decomposition breaks it into parts, so two jobs become two algorithms, one for each input."
+              "program",
+              "event",
+              "sprite",
+              "comment"
             ],
-            "answer": "Only the blocks INSIDE the loop's mouth repeat. Blocks below the loop run once, after it finishes.",
+            "answer": "program",
             "clue": "Use the Unit 8 Computing Words reference.",
             "explanation": "Program means an algorithm written in code the computer runs."
           }
@@ -1426,14 +1421,14 @@
             "explanation": "Repetition means doing something again and again."
           },
           {
-            "prompt": "What should you do when this happens: The blocks under the loop still repeat.",
+            "prompt": "Which computing word matches this meaning: An algorithm written in code the computer runs.?",
             "choices": [
-              "Only the blocks INSIDE the loop's mouth repeat. Blocks below the loop run once, after it finishes.",
-              "No. An input goes into the computer (a key press); an output comes back out to us (a sound or a picture).",
-              "No - the screen sends a picture out to you, so it is an output device. Your eyes are the input.",
-              "No. Decomposition breaks it into parts, so two jobs become two algorithms, one for each input."
+              "program",
+              "event",
+              "sprite",
+              "comment"
             ],
-            "answer": "Only the blocks INSIDE the loop's mouth repeat. Blocks below the loop run once, after it finishes.",
+            "answer": "program",
             "clue": "Use the Unit 8 Computing Words reference.",
             "explanation": "Program means an algorithm written in code the computer runs."
           },
@@ -1588,14 +1583,14 @@
             "explanation": "Repetition means doing something again and again."
           },
           {
-            "prompt": "What should you do when this happens: The blocks under the loop still repeat.",
+            "prompt": "Which computing word matches this meaning: An algorithm written in code the computer runs.?",
             "choices": [
-              "Only the blocks INSIDE the loop's mouth repeat. Blocks below the loop run once, after it finishes.",
-              "No. An input goes into the computer (a key press); an output comes back out to us (a sound or a picture).",
-              "No - the screen sends a picture out to you, so it is an output device. Your eyes are the input.",
-              "No. Decomposition breaks it into parts, so two jobs become two algorithms, one for each input."
+              "program",
+              "event",
+              "sprite",
+              "comment"
             ],
-            "answer": "Only the blocks INSIDE the loop's mouth repeat. Blocks below the loop run once, after it finishes.",
+            "answer": "program",
             "clue": "Use the Unit 8 Computing Words reference.",
             "explanation": "Program means an algorithm written in code the computer runs."
           },
@@ -1750,14 +1745,14 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What should you do when this happens: The blocks under the loop still repeat.",
+            "prompt": "Which computing word matches this meaning: An algorithm written in code the computer runs.?",
             "choices": [
-              "Only the blocks INSIDE the loop's mouth repeat. Blocks below the loop run once, after it finishes.",
-              "No. An input goes into the computer (a key press); an output comes back out to us (a sound or a picture).",
-              "No - the screen sends a picture out to you, so it is an output device. Your eyes are the input.",
-              "No. Decomposition breaks it into parts, so two jobs become two algorithms, one for each input."
+              "program",
+              "event",
+              "sprite",
+              "comment"
             ],
-            "answer": "Only the blocks INSIDE the loop's mouth repeat. Blocks below the loop run once, after it finishes.",
+            "answer": "program",
             "clue": "Use the Unit 8 Computing Words reference.",
             "explanation": "Program means an algorithm written in code the computer runs."
           },

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-18T07:59:31.185Z",
+  "generatedAt": "2026-08-18T08:37:21.844Z",
   "stage": {
     "id": "s03",
     "label": "Stage 3"
@@ -487,14 +487,24 @@
       "fix": "Data can be words too. Favourite fruit (mango, banana, dates) is data — it is categorical data. Point it out a group of words is still data."
     },
     {
-      "symptom": "A pie chart tells me the exact number.",
+      "symptom": "You can have half in a count.",
       "cause": "A common mix-up in this unit, “Be a Data Expert”.",
       "fix": "A pie chart shows the share — a bigger slice means more — but it does not always show the exact number unless it is labelled."
     },
     {
+      "symptom": "A pie chart tells me the exact number.",
+      "cause": "A common mix-up in this unit, “Be a Data Expert”.",
+      "fix": "A pie chart shows the share - a bigger slice means more - but it does not always show the exact number unless it is labelled."
+    },
+    {
       "symptom": "Any device works for any question.",
       "cause": "A common mix-up in this unit, “Be a Data Expert”.",
-      "fix": "Match the device to the data: a keyboard for typing numbers and words, a pointing device for ticking a box. Forgetting the last step. After we collect and look at data, we must still understand it and decide. Collecting data is not the answer by itself — it is only the first step."
+      "fix": "Match the device to the data: a keyboard for typing numbers and words, a pointing device for ticking a box."
+    },
+    {
+      "symptom": "Forgetting the last step. After we collect and look at data, we must still understand it and decide. Collecting data is not the answer by itself",
+      "cause": "A common mix-up in this unit, “Be a Data Expert”.",
+      "fix": "it is only the first step."
     }
   ],
   "esafety": [
@@ -670,16 +680,28 @@
     ],
     "commonMistakes": [
       [
-        "Data is only numbers.",
-        "Data can be words too. Favourite fruit (mango, banana, dates) is data — it is categorical data. Point it out a group of words is still data."
+        "Watch for these ideas. They are completely normal for this age",
+        "Gently show you the truth with a quick example rather than just correcting them."
       ],
       [
-        "A pie chart tells me the exact number.",
+        "Data is only numbers.",
         "A pie chart shows the share — a bigger slice means more — but it does not always show the exact number unless it is labelled."
       ],
       [
+        "You can have half in a count.",
+        "Discrete data is always whole numbers. You cannot have two and a half you, or half a pencil in your count. Use the whole-apples picture."
+      ],
+      [
+        "A pie chart tells me the exact number.",
+        "A pie chart shows the share - a bigger slice means more - but it does not always show the exact number unless it is labelled."
+      ],
+      [
         "Any device works for any question.",
-        "Match the device to the data: a keyboard for typing numbers and words, a pointing device for ticking a box. Forgetting the last step. After we collect and look at data, we must still understand it and decide. Collecting data is not the answer by itself — it is only the first step."
+        "Match the device to the data: a keyboard for typing numbers and words, a pointing device for ticking a box."
+      ],
+      [
+        "Forgetting the last step. After we collect and look at data, we must still understand it and decide. Collecting data is not the answer by itself",
+        "it is only the first step."
       ]
     ],
     "connections": []
@@ -944,9 +966,10 @@
         "difficulty": "Core",
         "question": "What should you do when this happens: Data is only numbers.",
         "options": [
-          "A pie chart shows the share - a bigger slice means more - but it does not always show the exact number unless it is labelled.",
+          "Discrete data is always whole numbers. You cannot have two and a half you, or half a pencil in your count. Use the whole-apples picture.",
           "Data can be words too. Favourite fruit (mango, banana, dates) is data - it is categorical data. Point it out a group of words is still data.",
-          "Match the device to the data: a keyboard for typing numbers and words, a pointing device for ticking a box. Forgetting the last step. After we…"
+          "A pie chart shows the share - a bigger slice means more - but it does not always show the exact number unless it is labelled.",
+          "Match the device to the data: a keyboard for typing numbers and words, a pointing device for ticking a box."
         ],
         "answer": "Data can be words too. Favourite fruit (mango, banana, dates) is data - it is categorical data. Point it out a group of words is still data.",
         "hint": "Use the Unit 3 Computing Words reference.",
@@ -957,62 +980,64 @@
         "type": "Application",
         "outcomeId": "lo07",
         "difficulty": "Core",
-        "question": "What should you do when this happens: A pie chart tells me the exact number.",
+        "question": "What should you do when this happens: You can have half in a count.",
         "options": [
-          "A pie chart shows the share - a bigger slice means more - but it does not always show the exact number unless it is labelled.",
           "Data can be words too. Favourite fruit (mango, banana, dates) is data - it is categorical data. Point it out a group of words is still data.",
-          "Match the device to the data: a keyboard for typing numbers and words, a pointing device for ticking a box. Forgetting the last step. After we…"
+          "A pie chart shows the share - a bigger slice means more - but it does not always show the exact number unless it is labelled.",
+          "Match the device to the data: a keyboard for typing numbers and words, a pointing device for ticking a box.",
+          "Discrete data is always whole numbers. You cannot have two and a half you, or half a pencil in your count. Use the whole-apples picture."
         ],
-        "answer": "A pie chart shows the share - a bigger slice means more - but it does not always show the exact number unless it is labelled.",
+        "answer": "Discrete data is always whole numbers. You cannot have two and a half you, or half a pencil in your count. Use the whole-apples picture.",
         "hint": "Use the Unit 3 Computing Words reference.",
-        "explanation": "A pie chart shows the share - a bigger slice means more - but it does not always show the exact number unless it is labelled."
+        "explanation": "Discrete data is always whole numbers. You cannot have two and a half you, or half a pencil in your count. Use the whole-apples picture."
       },
       {
         "id": "q08",
         "type": "Application",
         "outcomeId": "lo01",
         "difficulty": "Core",
-        "question": "What should you do when this happens: Any device works for any question.",
+        "question": "What should you do when this happens: A pie chart tells me the exact number.",
         "options": [
-          "Match the device to the data: a keyboard for typing numbers and words, a pointing device for ticking a box. Forgetting the last step. After we…",
+          "A pie chart shows the share - a bigger slice means more - but it does not always show the exact number unless it is labelled.",
           "Data can be words too. Favourite fruit (mango, banana, dates) is data - it is categorical data. Point it out a group of words is still data.",
-          "A pie chart shows the share - a bigger slice means more - but it does not always show the exact number unless it is labelled."
+          "Discrete data is always whole numbers. You cannot have two and a half you, or half a pencil in your count. Use the whole-apples picture.",
+          "Match the device to the data: a keyboard for typing numbers and words, a pointing device for ticking a box."
         ],
-        "answer": "Match the device to the data: a keyboard for typing numbers and words, a pointing device for ticking a box. Forgetting the last step. After we…",
+        "answer": "A pie chart shows the share - a bigger slice means more - but it does not always show the exact number unless it is labelled.",
         "hint": "Use the Unit 3 Computing Words reference.",
-        "explanation": "Match the device to the data: a keyboard for typing numbers and words, a pointing device for ticking a box. Forgetting the last step. After we…"
+        "explanation": "A pie chart shows the share - a bigger slice means more - but it does not always show the exact number unless it is labelled."
       },
       {
         "id": "q09",
         "type": "Reasoning",
         "outcomeId": "lo02",
         "difficulty": "Core",
-        "question": "Which computing word matches this meaning: A chart with bars lying down (across).?",
+        "question": "What should you do when this happens: Any device works for any question.",
         "options": [
-          "column chart",
-          "pie chart",
-          "key",
-          "bar chart"
+          "Data can be words too. Favourite fruit (mango, banana, dates) is data - it is categorical data. Point it out a group of words is still data.",
+          "Discrete data is always whole numbers. You cannot have two and a half you, or half a pencil in your count. Use the whole-apples picture.",
+          "A pie chart shows the share - a bigger slice means more - but it does not always show the exact number unless it is labelled.",
+          "Match the device to the data: a keyboard for typing numbers and words, a pointing device for ticking a box."
         ],
-        "answer": "bar chart",
+        "answer": "Match the device to the data: a keyboard for typing numbers and words, a pointing device for ticking a box.",
         "hint": "Use the Unit 3 Computing Words reference.",
-        "explanation": "Bar chart means a chart with bars lying down (across)."
+        "explanation": "Match the device to the data: a keyboard for typing numbers and words, a pointing device for ticking a box."
       },
       {
         "id": "q10",
         "type": "Reasoning",
         "outcomeId": "lo03",
         "difficulty": "Challenge",
-        "question": "Which computing word matches this meaning: A chart with columns standing up.?",
+        "question": "What should you do when this happens: Forgetting the last step. After we collect and look at data, we must still understand it and decide. Collecting data is not the answer by itself",
         "options": [
-          "pie chart",
-          "column chart",
-          "key",
-          "input device"
+          "Data can be words too. Favourite fruit (mango, banana, dates) is data - it is categorical data. Point it out a group of words is still data.",
+          "it is only the first step.",
+          "Discrete data is always whole numbers. You cannot have two and a half you, or half a pencil in your count. Use the whole-apples picture.",
+          "A pie chart shows the share - a bigger slice means more - but it does not always show the exact number unless it is labelled."
         ],
-        "answer": "column chart",
+        "answer": "it is only the first step.",
         "hint": "Use the Unit 3 Computing Words reference.",
-        "explanation": "Column chart means a chart with columns standing up."
+        "explanation": "it is only the first step."
       },
       {
         "id": "q11",
@@ -1084,25 +1109,26 @@
             "explanation": "Table means data set out in rows and columns."
           },
           {
-            "prompt": "What should you do when this happens: A pie chart tells me the exact number.",
+            "prompt": "What should you do when this happens: You can have half in a count.",
             "choices": [
-              "A pie chart shows the share - a bigger slice means more - but it does not always show the exact number unless it is labelled.",
+              "Discrete data is always whole numbers. You cannot have two and a half you, or half a pencil in your count. Use the whole-apples picture.",
               "Data can be words too. Favourite fruit (mango, banana, dates) is data - it is categorical data. Point it out a group of words is still data.",
-              "Match the device to the data: a keyboard for typing numbers and words, a pointing device for ticking a box. Forgetting the last step. After we…"
+              "A pie chart shows the share - a bigger slice means more - but it does not always show the exact number unless it is labelled.",
+              "Match the device to the data: a keyboard for typing numbers and words, a pointing device for ticking a box."
             ],
-            "answer": "A pie chart shows the share - a bigger slice means more - but it does not always show the exact number unless it is labelled.",
+            "answer": "Discrete data is always whole numbers. You cannot have two and a half you, or half a pencil in your count. Use the whole-apples picture.",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Pictogram means a chart that uses pictures, with a key."
           },
           {
-            "prompt": "Which computing word matches this meaning: A chart with columns standing up.?",
+            "prompt": "What should you do when this happens: Forgetting the last step. After we collect and look at data, we must still understand it and decide. Collecting data is not the answer by itself",
             "choices": [
-              "column chart",
-              "pie chart",
-              "key",
-              "input device"
+              "it is only the first step.",
+              "Data can be words too. Favourite fruit (mango, banana, dates) is data - it is categorical data. Point it out a group of words is still data.",
+              "Discrete data is always whole numbers. You cannot have two and a half you, or half a pencil in your count. Use the whole-apples picture.",
+              "A pie chart shows the share - a bigger slice means more - but it does not always show the exact number unless it is labelled."
             ],
-            "answer": "column chart",
+            "answer": "it is only the first step.",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Column chart means a chart with columns standing up."
           }
@@ -1141,13 +1167,14 @@
             "explanation": "Categorical data means data that goes in groups or words."
           },
           {
-            "prompt": "What should you do when this happens: Any device works for any question.",
+            "prompt": "What should you do when this happens: A pie chart tells me the exact number.",
             "choices": [
-              "Match the device to the data: a keyboard for typing numbers and words, a pointing device for ticking a box. Forgetting the last step. After we…",
+              "A pie chart shows the share - a bigger slice means more - but it does not always show the exact number unless it is labelled.",
               "Data can be words too. Favourite fruit (mango, banana, dates) is data - it is categorical data. Point it out a group of words is still data.",
-              "A pie chart shows the share - a bigger slice means more - but it does not always show the exact number unless it is labelled."
+              "Discrete data is always whole numbers. You cannot have two and a half you, or half a pencil in your count. Use the whole-apples picture.",
+              "Match the device to the data: a keyboard for typing numbers and words, a pointing device for ticking a box."
             ],
-            "answer": "Match the device to the data: a keyboard for typing numbers and words, a pointing device for ticking a box. Forgetting the last step. After we…",
+            "answer": "A pie chart shows the share - a bigger slice means more - but it does not always show the exact number unless it is labelled.",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Block graph means a chart made of blocks; taller means more."
           },
@@ -1189,22 +1216,23 @@
             "prompt": "What should you do when this happens: Data is only numbers.",
             "choices": [
               "Data can be words too. Favourite fruit (mango, banana, dates) is data - it is categorical data. Point it out a group of words is still data.",
+              "Discrete data is always whole numbers. You cannot have two and a half you, or half a pencil in your count. Use the whole-apples picture.",
               "A pie chart shows the share - a bigger slice means more - but it does not always show the exact number unless it is labelled.",
-              "Match the device to the data: a keyboard for typing numbers and words, a pointing device for ticking a box. Forgetting the last step. After we…"
+              "Match the device to the data: a keyboard for typing numbers and words, a pointing device for ticking a box."
             ],
             "answer": "Data can be words too. Favourite fruit (mango, banana, dates) is data - it is categorical data. Point it out a group of words is still data.",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Discrete data means number data that is only whole numbers."
           },
           {
-            "prompt": "Which computing word matches this meaning: A chart with bars lying down (across).?",
+            "prompt": "What should you do when this happens: Any device works for any question.",
             "choices": [
-              "bar chart",
-              "column chart",
-              "pie chart",
-              "key"
+              "Match the device to the data: a keyboard for typing numbers and words, a pointing device for ticking a box.",
+              "Data can be words too. Favourite fruit (mango, banana, dates) is data - it is categorical data. Point it out a group of words is still data.",
+              "Discrete data is always whole numbers. You cannot have two and a half you, or half a pencil in your count. Use the whole-apples picture.",
+              "A pie chart shows the share - a bigger slice means more - but it does not always show the exact number unless it is labelled."
             ],
-            "answer": "bar chart",
+            "answer": "Match the device to the data: a keyboard for typing numbers and words, a pointing device for ticking a box.",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Bar chart means a chart with bars lying down (across)."
           },
@@ -1243,25 +1271,26 @@
             "explanation": "Table means data set out in rows and columns."
           },
           {
-            "prompt": "What should you do when this happens: A pie chart tells me the exact number.",
+            "prompt": "What should you do when this happens: You can have half in a count.",
             "choices": [
-              "A pie chart shows the share - a bigger slice means more - but it does not always show the exact number unless it is labelled.",
+              "Discrete data is always whole numbers. You cannot have two and a half you, or half a pencil in your count. Use the whole-apples picture.",
               "Data can be words too. Favourite fruit (mango, banana, dates) is data - it is categorical data. Point it out a group of words is still data.",
-              "Match the device to the data: a keyboard for typing numbers and words, a pointing device for ticking a box. Forgetting the last step. After we…"
+              "A pie chart shows the share - a bigger slice means more - but it does not always show the exact number unless it is labelled.",
+              "Match the device to the data: a keyboard for typing numbers and words, a pointing device for ticking a box."
             ],
-            "answer": "A pie chart shows the share - a bigger slice means more - but it does not always show the exact number unless it is labelled.",
+            "answer": "Discrete data is always whole numbers. You cannot have two and a half you, or half a pencil in your count. Use the whole-apples picture.",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Pictogram means a chart that uses pictures, with a key."
           },
           {
-            "prompt": "Which computing word matches this meaning: A chart with columns standing up.?",
+            "prompt": "What should you do when this happens: Forgetting the last step. After we collect and look at data, we must still understand it and decide. Collecting data is not the answer by itself",
             "choices": [
-              "column chart",
-              "pie chart",
-              "key",
-              "input device"
+              "it is only the first step.",
+              "Data can be words too. Favourite fruit (mango, banana, dates) is data - it is categorical data. Point it out a group of words is still data.",
+              "Discrete data is always whole numbers. You cannot have two and a half you, or half a pencil in your count. Use the whole-apples picture.",
+              "A pie chart shows the share - a bigger slice means more - but it does not always show the exact number unless it is labelled."
             ],
-            "answer": "column chart",
+            "answer": "it is only the first step.",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Column chart means a chart with columns standing up."
           },
@@ -1300,13 +1329,14 @@
             "explanation": "Categorical data means data that goes in groups or words."
           },
           {
-            "prompt": "What should you do when this happens: Any device works for any question.",
+            "prompt": "What should you do when this happens: A pie chart tells me the exact number.",
             "choices": [
-              "Match the device to the data: a keyboard for typing numbers and words, a pointing device for ticking a box. Forgetting the last step. After we…",
+              "A pie chart shows the share - a bigger slice means more - but it does not always show the exact number unless it is labelled.",
               "Data can be words too. Favourite fruit (mango, banana, dates) is data - it is categorical data. Point it out a group of words is still data.",
-              "A pie chart shows the share - a bigger slice means more - but it does not always show the exact number unless it is labelled."
+              "Discrete data is always whole numbers. You cannot have two and a half you, or half a pencil in your count. Use the whole-apples picture.",
+              "Match the device to the data: a keyboard for typing numbers and words, a pointing device for ticking a box."
             ],
-            "answer": "Match the device to the data: a keyboard for typing numbers and words, a pointing device for ticking a box. Forgetting the last step. After we…",
+            "answer": "A pie chart shows the share - a bigger slice means more - but it does not always show the exact number unless it is labelled.",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Block graph means a chart made of blocks; taller means more."
           },
@@ -1348,22 +1378,23 @@
             "prompt": "What should you do when this happens: Data is only numbers.",
             "choices": [
               "Data can be words too. Favourite fruit (mango, banana, dates) is data - it is categorical data. Point it out a group of words is still data.",
+              "Discrete data is always whole numbers. You cannot have two and a half you, or half a pencil in your count. Use the whole-apples picture.",
               "A pie chart shows the share - a bigger slice means more - but it does not always show the exact number unless it is labelled.",
-              "Match the device to the data: a keyboard for typing numbers and words, a pointing device for ticking a box. Forgetting the last step. After we…"
+              "Match the device to the data: a keyboard for typing numbers and words, a pointing device for ticking a box."
             ],
             "answer": "Data can be words too. Favourite fruit (mango, banana, dates) is data - it is categorical data. Point it out a group of words is still data.",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Discrete data means number data that is only whole numbers."
           },
           {
-            "prompt": "Which computing word matches this meaning: A chart with bars lying down (across).?",
+            "prompt": "What should you do when this happens: Any device works for any question.",
             "choices": [
-              "bar chart",
-              "column chart",
-              "pie chart",
-              "key"
+              "Match the device to the data: a keyboard for typing numbers and words, a pointing device for ticking a box.",
+              "Data can be words too. Favourite fruit (mango, banana, dates) is data - it is categorical data. Point it out a group of words is still data.",
+              "Discrete data is always whole numbers. You cannot have two and a half you, or half a pencil in your count. Use the whole-apples picture.",
+              "A pie chart shows the share - a bigger slice means more - but it does not always show the exact number unless it is labelled."
             ],
-            "answer": "bar chart",
+            "answer": "Match the device to the data: a keyboard for typing numbers and words, a pointing device for ticking a box.",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Bar chart means a chart with bars lying down (across)."
           },
@@ -1402,25 +1433,26 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What should you do when this happens: A pie chart tells me the exact number.",
+            "prompt": "What should you do when this happens: You can have half in a count.",
             "choices": [
-              "A pie chart shows the share - a bigger slice means more - but it does not always show the exact number unless it is labelled.",
+              "Discrete data is always whole numbers. You cannot have two and a half you, or half a pencil in your count. Use the whole-apples picture.",
               "Data can be words too. Favourite fruit (mango, banana, dates) is data - it is categorical data. Point it out a group of words is still data.",
-              "Match the device to the data: a keyboard for typing numbers and words, a pointing device for ticking a box. Forgetting the last step. After we…"
+              "A pie chart shows the share - a bigger slice means more - but it does not always show the exact number unless it is labelled.",
+              "Match the device to the data: a keyboard for typing numbers and words, a pointing device for ticking a box."
             ],
-            "answer": "A pie chart shows the share - a bigger slice means more - but it does not always show the exact number unless it is labelled.",
+            "answer": "Discrete data is always whole numbers. You cannot have two and a half you, or half a pencil in your count. Use the whole-apples picture.",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Pictogram means a chart that uses pictures, with a key."
           },
           {
-            "prompt": "Which computing word matches this meaning: A chart with columns standing up.?",
+            "prompt": "What should you do when this happens: Forgetting the last step. After we collect and look at data, we must still understand it and decide. Collecting data is not the answer by itself",
             "choices": [
-              "column chart",
-              "pie chart",
-              "key",
-              "input device"
+              "it is only the first step.",
+              "Data can be words too. Favourite fruit (mango, banana, dates) is data - it is categorical data. Point it out a group of words is still data.",
+              "Discrete data is always whole numbers. You cannot have two and a half you, or half a pencil in your count. Use the whole-apples picture.",
+              "A pie chart shows the share - a bigger slice means more - but it does not always show the exact number unless it is labelled."
             ],
-            "answer": "column chart",
+            "answer": "it is only the first step.",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Column chart means a chart with columns standing up."
           },
@@ -1459,13 +1491,14 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What should you do when this happens: Any device works for any question.",
+            "prompt": "What should you do when this happens: A pie chart tells me the exact number.",
             "choices": [
-              "Match the device to the data: a keyboard for typing numbers and words, a pointing device for ticking a box. Forgetting the last step. After we…",
+              "A pie chart shows the share - a bigger slice means more - but it does not always show the exact number unless it is labelled.",
               "Data can be words too. Favourite fruit (mango, banana, dates) is data - it is categorical data. Point it out a group of words is still data.",
-              "A pie chart shows the share - a bigger slice means more - but it does not always show the exact number unless it is labelled."
+              "Discrete data is always whole numbers. You cannot have two and a half you, or half a pencil in your count. Use the whole-apples picture.",
+              "Match the device to the data: a keyboard for typing numbers and words, a pointing device for ticking a box."
             ],
-            "answer": "Match the device to the data: a keyboard for typing numbers and words, a pointing device for ticking a box. Forgetting the last step. After we…",
+            "answer": "A pie chart shows the share - a bigger slice means more - but it does not always show the exact number unless it is labelled.",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Block graph means a chart made of blocks; taller means more."
           },
@@ -1516,14 +1549,14 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which computing word matches this meaning: A chart with bars lying down (across).?",
+            "prompt": "What should you do when this happens: Any device works for any question.",
             "choices": [
-              "bar chart",
-              "column chart",
-              "pie chart",
-              "key"
+              "Match the device to the data: a keyboard for typing numbers and words, a pointing device for ticking a box.",
+              "Data can be words too. Favourite fruit (mango, banana, dates) is data - it is categorical data. Point it out a group of words is still data.",
+              "Discrete data is always whole numbers. You cannot have two and a half you, or half a pencil in your count. Use the whole-apples picture.",
+              "A pie chart shows the share - a bigger slice means more - but it does not always show the exact number unless it is labelled."
             ],
-            "answer": "bar chart",
+            "answer": "Match the device to the data: a keyboard for typing numbers and words, a pointing device for ticking a box.",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Bar chart means a chart with bars lying down (across)."
           },
@@ -1555,8 +1588,9 @@
             "prompt": "What should you do when this happens: Data is only numbers.",
             "choices": [
               "Data can be words too. Favourite fruit (mango, banana, dates) is data - it is categorical data. Point it out a group of words is still data.",
+              "Discrete data is always whole numbers. You cannot have two and a half you, or half a pencil in your count. Use the whole-apples picture.",
               "A pie chart shows the share - a bigger slice means more - but it does not always show the exact number unless it is labelled.",
-              "Match the device to the data: a keyboard for typing numbers and words, a pointing device for ticking a box. Forgetting the last step. After we…"
+              "Match the device to the data: a keyboard for typing numbers and words, a pointing device for ticking a box."
             ],
             "answer": "Data can be words too. Favourite fruit (mango, banana, dates) is data - it is categorical data. Point it out a group of words is still data.",
             "clue": "Use the Unit 3 Computing Words reference.",
@@ -1573,14 +1607,14 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which computing word matches this meaning: A chart with columns standing up.?",
+            "prompt": "What should you do when this happens: Forgetting the last step. After we collect and look at data, we must still understand it and decide. Collecting data is not the answer by itself",
             "choices": [
-              "column chart",
-              "pie chart",
-              "key",
-              "input device"
+              "it is only the first step.",
+              "Data can be words too. Favourite fruit (mango, banana, dates) is data - it is categorical data. Point it out a group of words is still data.",
+              "Discrete data is always whole numbers. You cannot have two and a half you, or half a pencil in your count. Use the whole-apples picture.",
+              "A pie chart shows the share - a bigger slice means more - but it does not always show the exact number unless it is labelled."
             ],
-            "answer": "column chart",
+            "answer": "it is only the first step.",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Column chart means a chart with columns standing up."
           },
@@ -1609,13 +1643,14 @@
             "explanation": "Table means data set out in rows and columns."
           },
           {
-            "prompt": "What should you do when this happens: A pie chart tells me the exact number.",
+            "prompt": "What should you do when this happens: You can have half in a count.",
             "choices": [
-              "A pie chart shows the share - a bigger slice means more - but it does not always show the exact number unless it is labelled.",
+              "Discrete data is always whole numbers. You cannot have two and a half you, or half a pencil in your count. Use the whole-apples picture.",
               "Data can be words too. Favourite fruit (mango, banana, dates) is data - it is categorical data. Point it out a group of words is still data.",
-              "Match the device to the data: a keyboard for typing numbers and words, a pointing device for ticking a box. Forgetting the last step. After we…"
+              "A pie chart shows the share - a bigger slice means more - but it does not always show the exact number unless it is labelled.",
+              "Match the device to the data: a keyboard for typing numbers and words, a pointing device for ticking a box."
             ],
-            "answer": "A pie chart shows the share - a bigger slice means more - but it does not always show the exact number unless it is labelled.",
+            "answer": "Discrete data is always whole numbers. You cannot have two and a half you, or half a pencil in your count. Use the whole-apples picture.",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Pictogram means a chart that uses pictures, with a key."
           }
@@ -1666,13 +1701,14 @@
             "explanation": "Categorical data means data that goes in groups or words."
           },
           {
-            "prompt": "What should you do when this happens: Any device works for any question.",
+            "prompt": "What should you do when this happens: A pie chart tells me the exact number.",
             "choices": [
-              "Match the device to the data: a keyboard for typing numbers and words, a pointing device for ticking a box. Forgetting the last step. After we…",
+              "A pie chart shows the share - a bigger slice means more - but it does not always show the exact number unless it is labelled.",
               "Data can be words too. Favourite fruit (mango, banana, dates) is data - it is categorical data. Point it out a group of words is still data.",
-              "A pie chart shows the share - a bigger slice means more - but it does not always show the exact number unless it is labelled."
+              "Discrete data is always whole numbers. You cannot have two and a half you, or half a pencil in your count. Use the whole-apples picture.",
+              "Match the device to the data: a keyboard for typing numbers and words, a pointing device for ticking a box."
             ],
-            "answer": "Match the device to the data: a keyboard for typing numbers and words, a pointing device for ticking a box. Forgetting the last step. After we…",
+            "answer": "A pie chart shows the share - a bigger slice means more - but it does not always show the exact number unless it is labelled.",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Block graph means a chart made of blocks; taller means more."
           }
@@ -1714,22 +1750,23 @@
             "prompt": "What should you do when this happens: Data is only numbers.",
             "choices": [
               "Data can be words too. Favourite fruit (mango, banana, dates) is data - it is categorical data. Point it out a group of words is still data.",
+              "Discrete data is always whole numbers. You cannot have two and a half you, or half a pencil in your count. Use the whole-apples picture.",
               "A pie chart shows the share - a bigger slice means more - but it does not always show the exact number unless it is labelled.",
-              "Match the device to the data: a keyboard for typing numbers and words, a pointing device for ticking a box. Forgetting the last step. After we…"
+              "Match the device to the data: a keyboard for typing numbers and words, a pointing device for ticking a box."
             ],
             "answer": "Data can be words too. Favourite fruit (mango, banana, dates) is data - it is categorical data. Point it out a group of words is still data.",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Discrete data means number data that is only whole numbers."
           },
           {
-            "prompt": "Which computing word matches this meaning: A chart with bars lying down (across).?",
+            "prompt": "What should you do when this happens: Any device works for any question.",
             "choices": [
-              "bar chart",
-              "column chart",
-              "pie chart",
-              "key"
+              "Match the device to the data: a keyboard for typing numbers and words, a pointing device for ticking a box.",
+              "Data can be words too. Favourite fruit (mango, banana, dates) is data - it is categorical data. Point it out a group of words is still data.",
+              "Discrete data is always whole numbers. You cannot have two and a half you, or half a pencil in your count. Use the whole-apples picture.",
+              "A pie chart shows the share - a bigger slice means more - but it does not always show the exact number unless it is labelled."
             ],
-            "answer": "bar chart",
+            "answer": "Match the device to the data: a keyboard for typing numbers and words, a pointing device for ticking a box.",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Bar chart means a chart with bars lying down (across)."
           }

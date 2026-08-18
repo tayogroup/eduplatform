@@ -173,6 +173,17 @@ function applyReviewFields(unit, category, itemId, fields, label) {
   // produces, and replacing the richer text with it makes the card fail the
   // very thing it exists to do.
   const explanationBefore = typeof target.explanation === "string" ? target.explanation : null;
+  // A misconception/fix pair the builder rebuilds correctly can still be
+  // overwritten by an override captured from an older, buggy build — the
+  // parser used to merge two adjacent fixes into one, and a review row that
+  // passed that merged text through (or was exported before the merge was
+  // found) reintroduces it verbatim now that the builder is fixed. The
+  // contaminated shape is distinctive: the override opens with exactly what
+  // the builder itself just produced, then runs on well past it. A genuine
+  // wording edit does not usually keep the machine's own opening intact.
+  const isDebuggingFix = category === "Debugging" && "fix" in fields;
+  const isMistakeCorrection = category === "Reference" && itemId.startsWith("mistake-") && "correction" in fields;
+  const fixBefore = isDebuggingFix ? String(target.fix || "") : isMistakeCorrection ? String(target[1] || "") : null;
   const appliedBefore = reviewStats.applied;
   for (const [rawField, rawValue] of Object.entries(fields)) {
     const field = rawField;
@@ -230,6 +241,21 @@ function applyReviewFields(unit, category, itemId, fields, label) {
     target.steps = stepsBefore;
     reviewStats.applied = appliedBefore;
     reviewStats.refusedSteps.push(`${label} ${category}/${itemId}`);
+  }
+  if (fixBefore !== null && fixBefore.length > 20) {
+    const fixAfter = isDebuggingFix ? String(target.fix || "") : String(target[1] || "");
+    // Not gated on a shared prefix: the drift this catches isn't always
+    // "correct text plus a stapled-on tail" — an override can also land on a
+    // slot whose symptom changed entirely, in which case the override's fix
+    // is some OTHER misconception's answer wholesale, sharing no opening
+    // with this one at all. A fix this much longer than what the builder
+    // itself produces for the same slot is the signal either way; a real
+    // wording edit does not usually triple the length.
+    if (fixAfter.length > fixBefore.length * 1.5) {
+      if (isDebuggingFix) target.fix = fixBefore; else target[1] = fixBefore;
+      reviewStats.applied = appliedBefore;
+      reviewStats.refusedSteps.push(`${label} ${category}/${itemId} (reviewed fix is far longer than the builder's own text for this slot — looks like a stale merge or drift from an earlier build)`);
+    }
   }
 }
 
@@ -1644,30 +1670,35 @@ function buildGrade(grade) {
       .filter(([wrong, right]) => wrong && right && wrong !== right);
     if (!commonMistakes.length) commonMistakes = dropHeaderRows(tableRows(lesson, /common misconceptions?/i)).map((row) => [row[0], row.slice(1).join(" ")]);
     if (!commonMistakes.length) {
-      // The Stage 1-4 guides write this section as one run of prose in which
-      // each misconception is quoted and the correction follows it: «"Only the
-      // big machine on a desk is a computer." Phones and tablets are computers
-      // too.» Splitting on the quotes recovers the pairs; treating the run as
-      // one block produced a single card whose heading was a fragment of the
-      // section title.
-      const run = sectionBlocks(lesson, /common misconceptions?/i)
+      // The Stage 1-4 guides write this section as one paragraph per
+      // misconception: «"Only the big machine on a desk is a computer."
+      // Phones and tablets are computers too.» This used to join every
+      // paragraph into one string and re-split it on quote marks, which
+      // reads any embedded quote as a new pair boundary — a correction that
+      // itself suggests a phrase to say aloud ('Say: "What makes this a
+      // group?"') or an intro aside ('Do not say "no".') shifted every pair
+      // after it by one, and the wrong "fix" then shipped as a graded
+      // answer. Each paragraph already pairs its own misconception with its
+      // own correction, so matching block-by-block never crosses that
+      // boundary in the first place.
+      const pairs = sectionBlocks(lesson, /common misconceptions?/i)
         .map((block) => tidy(block.text))
         .filter((text) => text.length > 20)
-        .join(" ");
-      const pairs = [...run.matchAll(/[“"]([^“”"]{8,160})[”"]\s*([^“"]{15,400}?)(?=\s*[“"]|$)/g)]
-        .map((match) => [tidy(match[1]), tidy(match[2])])
-        .filter(([wrong, right]) => wrong && right);
+        .map((text) => {
+          const quoted = /^[“"]([^“”"]{8,160})[”"]\s*(.{15,600})$/.exec(text);
+          if (quoted) return [tidy(quoted[1]), tidy(quoted[2])];
+          // The dash must sit between two spaces to count as a separator —
+          // without that, "six-year-olds" reads as a split point and turns a
+          // paragraph of framing prose (no real misconception in it at all)
+          // into a fabricated pair. "The truth" needs "is"/":" after it for
+          // the same reason: bare \bThe truth\b also matches its ordinary
+          // use in a sentence like "show the child the truth again", which
+          // is not a correction marker at all.
+          const dashed = /^(.*?)(?:\s[-–—]\s|:\s*|\bActually\b|\bIn fact\b|\bThe truth(?:\s+is\b|:))\s*(.+)$/i.exec(text);
+          return dashed && dashed[1].length > 8 && dashed[2].length > 8 ? [tidy(dashed[1]), tidy(dashed[2])] : null;
+        })
+        .filter(Boolean);
       if (pairs.length) commonMistakes = pairs;
-      else {
-        commonMistakes = sectionBlocks(lesson, /common misconceptions?/i)
-          .map((block) => tidy(block.text))
-          .filter((text) => text.length > 20)
-          .map((text) => {
-            const match = /^(.*?)(?:\s*[-–—:]\s*|\bActually\b|\bIn fact\b|\bThe truth\b)\s*(.+)$/i.exec(text);
-            return match && match[1].length > 8 && match[2].length > 8 ? [tidy(match[1]), tidy(match[2])] : null;
-          })
-          .filter(Boolean);
-      }
     }
     commonMistakes = commonMistakes
       .map(([wrong, right]) => [tidy(wrong), polish(learnerVoice(right, { guide: isGuide }) || right)])

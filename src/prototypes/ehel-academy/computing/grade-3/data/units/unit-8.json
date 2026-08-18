@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-18T07:59:31.252Z",
+  "generatedAt": "2026-08-18T08:37:21.970Z",
   "stage": {
     "id": "s03",
     "label": "Stage 3"
@@ -562,11 +562,6 @@
       "symptom": "Changing one step changes the whole program.",
       "cause": "A common mix-up in this unit, “Be a Musician”.",
       "fix": "Usually only the changed step is different; the rest stays the same. When you edit a step, ask what stays the same as well as what changes."
-    },
-    {
-      "symptom": "play sound until done and start sound are the same.",
-      "cause": "A common mix-up in this unit, “Be a Musician”.",
-      "fix": "Play sound () until done waits for the whole sound to finish; start sound () moves on straight away, so sounds can overlap."
     }
   ],
   "esafety": [
@@ -732,16 +727,20 @@
     ],
     "commonMistakes": [
       [
+        "Watch for these ideas. They are completely normal for this age",
+        "Gently show you the truth with a quick example rather than just correcting them."
+      ],
+      [
         "The sound plays as soon as I open the program.",
-        "No — the output waits for the input. The meow only plays when we press the key or click the sprite. Prove it by opening the program and waiting: nothing happens until the input."
+        "No - the output waits for the input. The meow only plays when we press the key or click the sprite. Prove it by opening the program and waiting: nothing happens until the input."
       ],
       [
         "Louder volume makes the tune faster or higher.",
-        "No. Volume only changes how loud or quiet the sound is; the notes and speed stay the same. Play the tune at 100 percent, then 20 percent, to prove the tune is identical."
+        "No — volume 0 means no sound at all, total silence. A quiet sound is a small number like 10 or 20."
       ],
       [
         "Volume 0 is a nice quiet sound.",
-        "No — volume 0 means no sound at all, total silence. A quiet sound is a small number like 10 or 20."
+        "No - volume 0 means no sound at all, total silence. A quiet sound is a small number like 10 or 20."
       ],
       [
         "The order of the notes does not matter.",
@@ -750,10 +749,6 @@
       [
         "Changing one step changes the whole program.",
         "Usually only the changed step is different; the rest stays the same. When you edit a step, ask what stays the same as well as what changes."
-      ],
-      [
-        "play sound until done and start sound are the same.",
-        "Play sound () until done waits for the whole sound to finish; start sound () moves on straight away, so sounds can overlap."
       ]
     ],
     "connections": []
@@ -1097,16 +1092,16 @@
         "type": "Reasoning",
         "outcomeId": "lo04",
         "difficulty": "Challenge",
-        "question": "What should you do when this happens: play sound until done and start sound are the same.",
+        "question": "Which computing word matches this meaning: A free website where you join coloured blocks to make a program.?",
         "options": [
-          "Play sound () until done waits for the whole sound to finish; start sound () moves on straight away, so sounds can overlap.",
-          "No - the output waits for the input. The meow only plays when we press the key or click the sprite. Prove it by opening the program and waiting:…",
-          "No. Volume only changes how loud or quiet the sound is; the notes and speed stay the same. Play the tune at 100 percent, then 20 percent, to prove…",
-          "No - volume 0 means no sound at all, total silence. A quiet sound is a small number like 10 or 20."
+          "Scratch",
+          "sprite",
+          "algorithm",
+          "predict"
         ],
-        "answer": "Play sound () until done waits for the whole sound to finish; start sound () moves on straight away, so sounds can overlap.",
+        "answer": "Scratch",
         "hint": "Use the Unit 8 Computing Words reference.",
-        "explanation": "Play sound () until done waits for the whole sound to finish; start sound () moves on straight away, so sounds can overlap."
+        "explanation": "Scratch means a free website where you join coloured blocks to make a program."
       },
       {
         "id": "q12",
@@ -1232,14 +1227,14 @@
             "explanation": "Melody means a tune — musical notes played in an order."
           },
           {
-            "prompt": "What should you do when this happens: play sound until done and start sound are the same.",
+            "prompt": "Which computing word matches this meaning: A free website where you join coloured blocks to make a program.?",
             "choices": [
-              "Play sound () until done waits for the whole sound to finish; start sound () moves on straight away, so sounds can overlap.",
-              "No - the output waits for the input. The meow only plays when we press the key or click the sprite. Prove it by opening the program and waiting:…",
-              "No. Volume only changes how loud or quiet the sound is; the notes and speed stay the same. Play the tune at 100 percent, then 20 percent, to prove…",
-              "No - volume 0 means no sound at all, total silence. A quiet sound is a small number like 10 or 20."
+              "Scratch",
+              "sprite",
+              "algorithm",
+              "predict"
             ],
-            "answer": "Play sound () until done waits for the whole sound to finish; start sound () moves on straight away, so sounds can overlap.",
+            "answer": "Scratch",
             "clue": "Use the Unit 8 Computing Words reference.",
             "explanation": "Scratch means a free website where you join coloured blocks to make a program."
           }
@@ -1394,14 +1389,14 @@
             "explanation": "Melody means a tune — musical notes played in an order."
           },
           {
-            "prompt": "What should you do when this happens: play sound until done and start sound are the same.",
+            "prompt": "Which computing word matches this meaning: A free website where you join coloured blocks to make a program.?",
             "choices": [
-              "Play sound () until done waits for the whole sound to finish; start sound () moves on straight away, so sounds can overlap.",
-              "No - the output waits for the input. The meow only plays when we press the key or click the sprite. Prove it by opening the program and waiting:…",
-              "No. Volume only changes how loud or quiet the sound is; the notes and speed stay the same. Play the tune at 100 percent, then 20 percent, to prove…",
-              "No - volume 0 means no sound at all, total silence. A quiet sound is a small number like 10 or 20."
+              "Scratch",
+              "sprite",
+              "algorithm",
+              "predict"
             ],
-            "answer": "Play sound () until done waits for the whole sound to finish; start sound () moves on straight away, so sounds can overlap.",
+            "answer": "Scratch",
             "clue": "Use the Unit 8 Computing Words reference.",
             "explanation": "Scratch means a free website where you join coloured blocks to make a program."
           },
@@ -1556,14 +1551,14 @@
             "explanation": "Melody means a tune — musical notes played in an order."
           },
           {
-            "prompt": "What should you do when this happens: play sound until done and start sound are the same.",
+            "prompt": "Which computing word matches this meaning: A free website where you join coloured blocks to make a program.?",
             "choices": [
-              "Play sound () until done waits for the whole sound to finish; start sound () moves on straight away, so sounds can overlap.",
-              "No - the output waits for the input. The meow only plays when we press the key or click the sprite. Prove it by opening the program and waiting:…",
-              "No. Volume only changes how loud or quiet the sound is; the notes and speed stay the same. Play the tune at 100 percent, then 20 percent, to prove…",
-              "No - volume 0 means no sound at all, total silence. A quiet sound is a small number like 10 or 20."
+              "Scratch",
+              "sprite",
+              "algorithm",
+              "predict"
             ],
-            "answer": "Play sound () until done waits for the whole sound to finish; start sound () moves on straight away, so sounds can overlap.",
+            "answer": "Scratch",
             "clue": "Use the Unit 8 Computing Words reference.",
             "explanation": "Scratch means a free website where you join coloured blocks to make a program."
           },
@@ -1718,14 +1713,14 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What should you do when this happens: play sound until done and start sound are the same.",
+            "prompt": "Which computing word matches this meaning: A free website where you join coloured blocks to make a program.?",
             "choices": [
-              "Play sound () until done waits for the whole sound to finish; start sound () moves on straight away, so sounds can overlap.",
-              "No - the output waits for the input. The meow only plays when we press the key or click the sprite. Prove it by opening the program and waiting:…",
-              "No. Volume only changes how loud or quiet the sound is; the notes and speed stay the same. Play the tune at 100 percent, then 20 percent, to prove…",
-              "No - volume 0 means no sound at all, total silence. A quiet sound is a small number like 10 or 20."
+              "Scratch",
+              "sprite",
+              "algorithm",
+              "predict"
             ],
-            "answer": "Play sound () until done waits for the whole sound to finish; start sound () moves on straight away, so sounds can overlap.",
+            "answer": "Scratch",
             "clue": "Use the Unit 8 Computing Words reference.",
             "explanation": "Scratch means a free website where you join coloured blocks to make a program."
           },

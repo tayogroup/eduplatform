@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-18T07:59:31.152Z",
+  "generatedAt": "2026-08-18T08:37:21.790Z",
   "stage": {
     "id": "s03",
     "label": "Stage 3"
@@ -538,6 +538,11 @@
       "symptom": "Reset means stop.",
       "cause": "A common mix-up in this unit, “Making Programs Clear”.",
       "fix": "Reset does not stop the program; it puts the sprite back to the start so it can run again. Use the board-game counter picture."
+    },
+    {
+      "symptom": "Scratch resets by itself when I click the green flag.",
+      "cause": "A common mix-up in this unit, “Making Programs Clear”.",
+      "fix": "It does not reset position or size unless we add blocks to do it. Show the balloon drifting off the top to prove it."
     }
   ],
   "esafety": [
@@ -703,20 +708,28 @@
     ],
     "commonMistakes": [
       [
-        "The order does not matter as long as all the steps are there.",
-        "All the steps are there, but the order is silly. Order is part of the algorithm. Point it out: put your shoes on, then your socks."
+        "Watch for these ideas. They are completely normal for this age",
+        "Gently show you the truth with a quick example rather than just correcting them."
       ],
       [
-        "A longer program is a better program.",
+        "The order does not matter as long as all the steps are there.",
         "You often think more blocks means more work done, so it must be better. Show that the short version does the very same job — shorter is smarter here."
       ],
       [
-        "Combining steps means deleting steps.",
+        "A longer program is a better program.",
         "Sometimes you make it shorter by removing a step, but that can change the result. Remind you: the short version must do the SAME job."
+      ],
+      [
+        "Combining steps means deleting steps.",
+        "Some you make it shorter by throwing a step away and changing the result. Remind you: the short version must do the SAME job."
       ],
       [
         "Reset means stop.",
         "Reset does not stop the program; it puts the sprite back to the start so it can run again. Use the board-game counter picture."
+      ],
+      [
+        "Scratch resets by itself when I click the green flag.",
+        "It does not reset position or size unless we add blocks to do it. Show the balloon drifting off the top to prove it."
       ]
     ],
     "connections": []
@@ -1043,14 +1056,14 @@
         "type": "Reasoning",
         "outcomeId": "lo04",
         "difficulty": "Challenge",
-        "question": "Which computing word matches this meaning: A free website where you join coloured blocks to make a program.?",
+        "question": "What should you do when this happens: Scratch resets by itself when I click the green flag.",
         "options": [
-          "sprite",
-          "Scratch",
-          "backdrop",
-          "algorithm"
+          "All the steps are there, but the order is silly. Order is part of the algorithm. Point it out: put your shoes on, then your socks.",
+          "It does not reset position or size unless we add blocks to do it. Show the balloon drifting off the top to prove it.",
+          "You often think more blocks means more work done, so it must be better. Show that the short version does the very same job - shorter is smarter here.",
+          "Some you make it shorter by throwing a step away and changing the result. Remind you: the short version must do the SAME job."
         ],
-        "answer": "Scratch",
+        "answer": "It does not reset position or size unless we add blocks to do it. Show the balloon drifting off the top to prove it.",
         "hint": "Use the Unit 1 Computing Words reference.",
         "explanation": "Scratch means a free website where you join coloured blocks to make a program."
       },
@@ -1136,14 +1149,14 @@
             "explanation": "Concise means short — no extra steps."
           },
           {
-            "prompt": "Which computing word matches this meaning: A free website where you join coloured blocks to make a program.?",
+            "prompt": "What should you do when this happens: Scratch resets by itself when I click the green flag.",
             "choices": [
-              "Scratch",
-              "sprite",
-              "backdrop",
-              "algorithm"
+              "It does not reset position or size unless we add blocks to do it. Show the balloon drifting off the top to prove it.",
+              "All the steps are there, but the order is silly. Order is part of the algorithm. Point it out: put your shoes on, then your socks.",
+              "You often think more blocks means more work done, so it must be better. Show that the short version does the very same job - shorter is smarter here.",
+              "Some you make it shorter by throwing a step away and changing the result. Remind you: the short version must do the SAME job."
             ],
-            "answer": "Scratch",
+            "answer": "It does not reset position or size unless we add blocks to do it. Show the balloon drifting off the top to prove it.",
             "clue": "Use the Unit 1 Computing Words reference.",
             "explanation": "Scratch means a free website where you join coloured blocks to make a program."
           }
@@ -1298,14 +1311,14 @@
             "explanation": "Concise means short — no extra steps."
           },
           {
-            "prompt": "Which computing word matches this meaning: A free website where you join coloured blocks to make a program.?",
+            "prompt": "What should you do when this happens: Scratch resets by itself when I click the green flag.",
             "choices": [
-              "Scratch",
-              "sprite",
-              "backdrop",
-              "algorithm"
+              "It does not reset position or size unless we add blocks to do it. Show the balloon drifting off the top to prove it.",
+              "All the steps are there, but the order is silly. Order is part of the algorithm. Point it out: put your shoes on, then your socks.",
+              "You often think more blocks means more work done, so it must be better. Show that the short version does the very same job - shorter is smarter here.",
+              "Some you make it shorter by throwing a step away and changing the result. Remind you: the short version must do the SAME job."
             ],
-            "answer": "Scratch",
+            "answer": "It does not reset position or size unless we add blocks to do it. Show the balloon drifting off the top to prove it.",
             "clue": "Use the Unit 1 Computing Words reference.",
             "explanation": "Scratch means a free website where you join coloured blocks to make a program."
           },
@@ -1460,14 +1473,14 @@
             "explanation": "Concise means short — no extra steps."
           },
           {
-            "prompt": "Which computing word matches this meaning: A free website where you join coloured blocks to make a program.?",
+            "prompt": "What should you do when this happens: Scratch resets by itself when I click the green flag.",
             "choices": [
-              "Scratch",
-              "sprite",
-              "backdrop",
-              "algorithm"
+              "It does not reset position or size unless we add blocks to do it. Show the balloon drifting off the top to prove it.",
+              "All the steps are there, but the order is silly. Order is part of the algorithm. Point it out: put your shoes on, then your socks.",
+              "You often think more blocks means more work done, so it must be better. Show that the short version does the very same job - shorter is smarter here.",
+              "Some you make it shorter by throwing a step away and changing the result. Remind you: the short version must do the SAME job."
             ],
-            "answer": "Scratch",
+            "answer": "It does not reset position or size unless we add blocks to do it. Show the balloon drifting off the top to prove it.",
             "clue": "Use the Unit 1 Computing Words reference.",
             "explanation": "Scratch means a free website where you join coloured blocks to make a program."
           },
@@ -1622,14 +1635,14 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which computing word matches this meaning: A free website where you join coloured blocks to make a program.?",
+            "prompt": "What should you do when this happens: Scratch resets by itself when I click the green flag.",
             "choices": [
-              "Scratch",
-              "sprite",
-              "backdrop",
-              "algorithm"
+              "It does not reset position or size unless we add blocks to do it. Show the balloon drifting off the top to prove it.",
+              "All the steps are there, but the order is silly. Order is part of the algorithm. Point it out: put your shoes on, then your socks.",
+              "You often think more blocks means more work done, so it must be better. Show that the short version does the very same job - shorter is smarter here.",
+              "Some you make it shorter by throwing a step away and changing the result. Remind you: the short version must do the SAME job."
             ],
-            "answer": "Scratch",
+            "answer": "It does not reset position or size unless we add blocks to do it. Show the balloon drifting off the top to prove it.",
             "clue": "Use the Unit 1 Computing Words reference.",
             "explanation": "Scratch means a free website where you join coloured blocks to make a program."
           },

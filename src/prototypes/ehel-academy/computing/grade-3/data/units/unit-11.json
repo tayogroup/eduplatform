@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-18T07:59:31.294Z",
+  "generatedAt": "2026-08-18T08:37:22.040Z",
   "stage": {
     "id": "s03",
     "label": "Stage 3"
@@ -514,11 +514,6 @@
       "symptom": "The heading is part of the data.",
       "cause": "A common mix-up in this unit, “Be a Data Designer”.",
       "fix": "The headings (row 1) are labels that name each column; they are not one of the ages or prices. When we add a column, we do not include the heading cell."
-    },
-    {
-      "symptom": "Formatting changes the number.",
-      "cause": "A common mix-up in this unit, “Be a Data Designer”.",
-      "fix": "Choosing Currency does not make the price bigger or smaller; it only changes how it looks (it adds a $). The value is the same."
     }
   ],
   "esafety": [
@@ -710,6 +705,10 @@
     ],
     "commonMistakes": [
       [
+        "Watch for these ideas. They are completely normal for this age",
+        "Gently show you the truth with a quick example rather than only correcting them."
+      ],
+      [
         "Rows go up and down.",
         "Rows and columns get swapped all the time. Keep using the arm sweep and the rhyme: rows go across, columns go down."
       ],
@@ -728,10 +727,6 @@
       [
         "The heading is part of the data.",
         "The headings (row 1) are labels that name each column; they are not one of the ages or prices. When we add a column, we do not include the heading cell."
-      ],
-      [
-        "Formatting changes the number.",
-        "Choosing Currency does not make the price bigger or smaller; it only changes how it looks (it adds a $). The value is the same."
       ]
     ],
     "connections": []
@@ -1083,16 +1078,16 @@
         "type": "Reasoning",
         "outcomeId": "lo04",
         "difficulty": "Challenge",
-        "question": "What should you do when this happens: Formatting changes the number.",
+        "question": "Which computing word matches this meaning: A format for words and letters (and codes).?",
         "options": [
-          "Rows and columns get swapped all the time. Keep using the arm sweep and the rhyme: rows go across, columns go down.",
-          "Choosing Currency does not make the price bigger or smaller; it only changes how it looks (it adds a $). The value is the same.",
-          "The column letter always comes first, then the row number, so it is A3. Point to the letters along the top and the numbers down the side.",
-          "It has digits, but we never add it up, so it is Text. Use the test: would you ever add these together?"
+          "Number",
+          "Text",
+          "Date",
+          "Currency"
         ],
-        "answer": "Choosing Currency does not make the price bigger or smaller; it only changes how it looks (it adds a $). The value is the same.",
+        "answer": "Text",
         "hint": "Use the Unit 11 Computing Words reference.",
-        "explanation": "Choosing Currency does not make the price bigger or smaller; it only changes how it looks (it adds a $). The value is the same."
+        "explanation": "Text means a format for words and letters (and codes)."
       },
       {
         "id": "q12",
@@ -1218,14 +1213,14 @@
             "explanation": "Name Box means the little box that shows the active cell's address."
           },
           {
-            "prompt": "What should you do when this happens: Formatting changes the number.",
+            "prompt": "Which computing word matches this meaning: A format for words and letters (and codes).?",
             "choices": [
-              "Choosing Currency does not make the price bigger or smaller; it only changes how it looks (it adds a $). The value is the same.",
-              "Rows and columns get swapped all the time. Keep using the arm sweep and the rhyme: rows go across, columns go down.",
-              "The column letter always comes first, then the row number, so it is A3. Point to the letters along the top and the numbers down the side.",
-              "It has digits, but we never add it up, so it is Text. Use the test: would you ever add these together?"
+              "Text",
+              "Number",
+              "Date",
+              "Currency"
             ],
-            "answer": "Choosing Currency does not make the price bigger or smaller; it only changes how it looks (it adds a $). The value is the same.",
+            "answer": "Text",
             "clue": "Use the Unit 11 Computing Words reference.",
             "explanation": "Text means a format for words and letters (and codes)."
           }
@@ -1380,14 +1375,14 @@
             "explanation": "Name Box means the little box that shows the active cell's address."
           },
           {
-            "prompt": "What should you do when this happens: Formatting changes the number.",
+            "prompt": "Which computing word matches this meaning: A format for words and letters (and codes).?",
             "choices": [
-              "Choosing Currency does not make the price bigger or smaller; it only changes how it looks (it adds a $). The value is the same.",
-              "Rows and columns get swapped all the time. Keep using the arm sweep and the rhyme: rows go across, columns go down.",
-              "The column letter always comes first, then the row number, so it is A3. Point to the letters along the top and the numbers down the side.",
-              "It has digits, but we never add it up, so it is Text. Use the test: would you ever add these together?"
+              "Text",
+              "Number",
+              "Date",
+              "Currency"
             ],
-            "answer": "Choosing Currency does not make the price bigger or smaller; it only changes how it looks (it adds a $). The value is the same.",
+            "answer": "Text",
             "clue": "Use the Unit 11 Computing Words reference.",
             "explanation": "Text means a format for words and letters (and codes)."
           },
@@ -1542,14 +1537,14 @@
             "explanation": "Name Box means the little box that shows the active cell's address."
           },
           {
-            "prompt": "What should you do when this happens: Formatting changes the number.",
+            "prompt": "Which computing word matches this meaning: A format for words and letters (and codes).?",
             "choices": [
-              "Choosing Currency does not make the price bigger or smaller; it only changes how it looks (it adds a $). The value is the same.",
-              "Rows and columns get swapped all the time. Keep using the arm sweep and the rhyme: rows go across, columns go down.",
-              "The column letter always comes first, then the row number, so it is A3. Point to the letters along the top and the numbers down the side.",
-              "It has digits, but we never add it up, so it is Text. Use the test: would you ever add these together?"
+              "Text",
+              "Number",
+              "Date",
+              "Currency"
             ],
-            "answer": "Choosing Currency does not make the price bigger or smaller; it only changes how it looks (it adds a $). The value is the same.",
+            "answer": "Text",
             "clue": "Use the Unit 11 Computing Words reference.",
             "explanation": "Text means a format for words and letters (and codes)."
           },
@@ -1704,14 +1699,14 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What should you do when this happens: Formatting changes the number.",
+            "prompt": "Which computing word matches this meaning: A format for words and letters (and codes).?",
             "choices": [
-              "Choosing Currency does not make the price bigger or smaller; it only changes how it looks (it adds a $). The value is the same.",
-              "Rows and columns get swapped all the time. Keep using the arm sweep and the rhyme: rows go across, columns go down.",
-              "The column letter always comes first, then the row number, so it is A3. Point to the letters along the top and the numbers down the side.",
-              "It has digits, but we never add it up, so it is Text. Use the test: would you ever add these together?"
+              "Text",
+              "Number",
+              "Date",
+              "Currency"
             ],
-            "answer": "Choosing Currency does not make the price bigger or smaller; it only changes how it looks (it adds a $). The value is the same.",
+            "answer": "Text",
             "clue": "Use the Unit 11 Computing Words reference.",
             "explanation": "Text means a format for words and letters (and codes)."
           },

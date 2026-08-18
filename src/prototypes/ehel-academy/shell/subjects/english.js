@@ -214,6 +214,14 @@ const IS_STAFF = ["admin", "teacher", "staff"].includes(launchRole());
 // ===================== english body (verbatim) =====================
 const sections = [
   ["overview", "layout-dashboard", "Overview"],
+  // Only a handful of Grade 1 units carry a grownUpGuide (the Year 1 source
+  // pack's own Teacher & Parent Guide docs; see
+  // tools/build-ehel-grade1-teacher-guides.js) — every other unit in every
+  // other grade has none, so this drops out of the nav the same way Games and
+  // Books already do for a unit that cannot offer them (visibleSections()
+  // below). Not in nonCountable's sibling list of "sections a unit is allowed
+  // to lack" by accident — it belongs there for the same reason.
+  ["teacherguide", "users", "Teacher & Parent Guide"],
   // "Video lesson", not "Teacher lecture". The section IS a teacher's recorded
   // lesson, but these courses are self-paced and naming it for whose it is
   // tells a learner working alone that the explainer belongs to someone else.
@@ -240,6 +248,7 @@ const sections = [
 // its renderer is telling the learner the wrong thing. Written for the
 // youngest reader who meets it (Grade 1), so every grade gets the plain form.
 const SECTION_HINTS = {
+  teacherguide: "Read this whenever it helps — it is not required to move on.",
   lecture: "Watch the video to the end. Listen and read the captions.",
   dictionary: "Learn each word and press “I know this word”, until all the words are learned.",
   reading: "Read the story, or listen to it. Then press the button to say you have read it.",
@@ -717,7 +726,7 @@ const unitProgressKey = (unit) => `ehel-english-g${gradeNumber}-u${unit}-progres
 // leaving it demanded here would have made the bar read 100% while the gate held
 // the next unit shut.
 const countableSectionIds = () => sections
-  .filter(([id]) => !["overview", "live"].includes(id))
+  .filter(([id]) => !["overview", "live", "teacherguide"].includes(id))
   .filter(([id]) => (id !== "games" || gamePack) && (id !== "ebooks" || unitEbooks().length))
   .map(([id]) => id);
 // The server's view of every unit, handed over by the shell before load() and
@@ -1524,7 +1533,7 @@ function visibleSections() {
   // unit's 100%, which is why those grades' progress bars stopped at 92% and
   // could never read complete. It is also what made the gate unsafe beyond
   // Grade 1: an uncompletable step in the chain shuts the learner out for good.
-  const available = sections.filter(([id]) => (id !== "games" || gamePack) && (id !== "ebooks" || unitEbooks().length));
+  const available = sections.filter(([id]) => (id !== "games" || gamePack) && (id !== "ebooks" || unitEbooks().length) && (id !== "teacherguide" || hasGrownUpGuide()));
   return unitNumber === 10 ? [...available, ["final-quiz", "trophy", "Final course quiz"]] : available;
 }
 
@@ -1619,13 +1628,16 @@ document.addEventListener("keydown", (event) => { if (event.key === "Escape") hi
 // deployed shell serves, so the two must not drift.
 const SHARED_AUDIO = /(^|\/)media\/audio\/grade-\d+\//;
 
-// lectureVideo and lecturePoster keep a stable filename across a re-render —
-// unlike an individual clip's `source`, there is no `?a=` stamp anywhere on
-// this path, so a browser that already played a lecture caches the OLD file
-// for a year and a redeploy at the same URL never reaches it. lectureCaptions
-// does not need this: its filename is a content hash (version-lecture-
-// captions.js), so a caption edit already mints a new URL on its own.
-const CACHE_BUST_ASSET_KEYS = new Set(["lectureVideo", "lecturePoster"]);
+// lectureVideo and lecturePoster used to keep a stable filename across a
+// re-render, busted only by a `?a=` query stamp — which turned out to bust
+// the BROWSER's cache but not Bunny's edge, which keys purely on path and
+// keeps serving whatever it last cached there for up to a year (confirmed
+// 2026-08-18: Grade 1 Unit 0's lecture video was still the original pre-fix
+// render at one edge node weeks after three redeploys). Both are now
+// content-hashed filenames (version-lecture-video.js), same as
+// lectureCaptions already was (version-lecture-captions.js) — a re-render
+// mints a new URL on its own, so no query stamp is needed here any more.
+const CACHE_BUST_ASSET_KEYS = new Set();
 
 function resolveGradeAssets(value) {
   const assetKeys = new Set(["source", "normal", "slow", "image", "lectureVideo", "lecturePoster", "lectureCaptions"]);
@@ -2974,6 +2986,37 @@ function renderReadingGrownUp() {
   ${texts}
   <p><button class="button primary" id="reading-done" type="button">We have been through this together ${icon("check")}</button></p>`;
   $("#reading-done").addEventListener("click", () => complete("reading", "Grown-up guide marked as read."));
+  icons();
+}
+
+// A unit's own "Teacher & Parent Guide" tab — distinct from renderReadingGrownUp
+// above. That one REPLACES the Reading & story page because Unit 0 has no real
+// story to protect; these units have one (their Story doc), so the guide gets
+// its own tab instead, the way Global Perspectives' grownUpGuide does
+// (shell/subjects/global-perspectives.js :: renderGrownUp). Only Grade 1 Units
+// 1-9 currently carry this data (tools/build-ehel-grade1-teacher-guides.js),
+// so the tab is conditional — see hasGrownUpGuide() and visibleSections().
+//
+// Not narrated and not countable (nonCountable, countableSectionIds): the same
+// two calls Unit 0's own grown-up panel and Global Perspectives both make. A
+// parent or teacher who never opens this should not find the unit stuck open.
+const hasGrownUpGuide = () => Boolean(course.grownUpGuide?.sections?.length);
+
+function renderTeacherGuide() {
+  const guide = course.grownUpGuide || {};
+  const parts = (guide.sections || []).map((part) => `
+    <article class="panel">
+      <h2>${escapeHtml(part.title)}</h2>
+      ${part.body ? readingBodyHtml(part.body) : ""}
+      ${part.items?.length ? `<ul class="checklist">${part.items.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>` : ""}
+    </article>`).join("");
+  $("#app").innerHTML = `${pageHeader(
+    "For the grown-up",
+    guide.label || "Teacher & Parent Guide",
+    guide.intro || "This part is written for you, the parent or teacher, not for the learner to read alone.",
+    "Adult-audience text",
+  )}
+  ${parts}`;
   icons();
 }
 
@@ -4860,7 +4903,7 @@ const config = {
   // 92% and could not open the next unit — a support tool gating progression.
   // It stays in the nav and still ticks when used; it just no longer decides
   // whether a unit is finished.
-  nonCountable: ["overview", "live", "final-quiz"],
+  nonCountable: ["overview", "live", "final-quiz", "teacherguide"],
   gradeSections: [],
   // English draws its own card (renderSectionCompletion): its sections open
   // in a gated chain and its units unlock one another, which the shell's
@@ -4890,6 +4933,7 @@ const config = {
   renderers: gated({
     overview: () => (isPrereqUnit ? renderPrereqOverview() : renderOverview()),
     placement: () => renderPlacementExam(),
+    teacherguide: () => renderTeacherGuide(),
     lecture: () => renderLecture(),
     dictionary: () => renderDictionary(),
     reading: () => renderReading(),

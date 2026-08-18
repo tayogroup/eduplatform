@@ -2232,11 +2232,17 @@ function renderDictionaryClassic() {
     $("#previous-sentence").addEventListener("click", () => { activeSentence = (activeSentence - 1 + item.practiceSentences.length) % item.practiceSentences.length; drawWord(); icons(); });
     $("#next-sentence").addEventListener("click", () => { activeSentence = (activeSentence + 1) % item.practiceSentences.length; drawWord(); icons(); });
     $$('[data-sentence]').forEach((dot) => dot.addEventListener("click", () => { activeSentence = Number(dot.dataset.sentence); drawWord(); icons(); }));
-    $("#check-word-sentence").addEventListener("click", () => {
+    $("#check-word-sentence").addEventListener("click", (event) => {
       const value = $("#word-sentence").value.trim();
-      const usesWord = value.toLowerCase().includes(item.master.displayWord.toLowerCase());
-      const complete = value.length >= 8 && /[.!?]$/.test(value);
-      $("#word-feedback").innerHTML = `<p class="feedback ${usesWord && complete ? "good" : "try"}">${usesWord && complete ? "Strong sentence: you used the word and end punctuation." : `Try a complete sentence using “${escapeHtml(item.master.displayWord)}” and finish with punctuation.`}</p>`;
+      // A free local gate for the "nothing to check yet" case, so an empty or
+      // near-empty box gets an instant answer instead of spending a real
+      // request on it. Everything past that goes to Wehel — a regex can tell
+      // whether the word appears, not whether the sentence is any good.
+      if (value.length < 3) {
+        $("#word-feedback").innerHTML = `<p class="feedback try">Write a sentence using "${escapeHtml(item.master.displayWord)}" first.</p>`;
+        return;
+      }
+      checkWritingWithWehel(`Check my sentence using the word "${item.master.displayWord}": "${value}"`, event.currentTarget, $("#word-feedback"));
     });
     $("#know-word").addEventListener("click", () => {
       if (!progress.knownWords.includes(item.vocabularyId)) progress.knownWords.push(item.vocabularyId);
@@ -2500,14 +2506,12 @@ function renderWordCarousel() {
       }
       if (target.dataset.check) {
         const value = (inDeck(`[data-write="${CSS.escape(id)}"]`)?.value || "").trim();
-        const usesWord = value.toLowerCase().includes(item.master.displayWord.toLowerCase());
-        const finished = value.length >= 8 && /[.!?]$/.test(value);
         const box = inDeck(`[data-feedback="${CSS.escape(id)}"]`);
-        if (box) {
-          box.innerHTML = `<p class="feedback ${usesWord && finished ? "good" : "try"}">${usesWord && finished
-            ? "Strong sentence: you used the word and end punctuation."
-            : `Try a complete sentence using “${escapeHtml(item.master.displayWord)}” and finish with punctuation.`}</p>`;
+        if (value.length < 3) {
+          if (box) box.innerHTML = `<p class="feedback try">Write a sentence using "${escapeHtml(item.master.displayWord)}" first.</p>`;
+          return undefined;
         }
+        checkWritingWithWehel(`Check my sentence using the word "${item.master.displayWord}": "${value}"`, target, box);
         return undefined;
       }
       if (target.dataset.know) {
@@ -3359,7 +3363,7 @@ function renderWritingClassic() {
   const draw = () => {
     const task = course.writing.find((item) => item.writingId === active);
     const saved = progress.writing[active] || "";
-    $("#app").innerHTML = `${pageHeader("Plan, write and improve", "Writing studio", "Choose a task. Your draft saves automatically on this device.")}<div class="subtabs">${course.writing.map((item) => `<button class="subtab ${active === item.writingId ? "active" : ""}" data-writing="${item.writingId}" type="button">Writing ${item.sequence}</button>`).join("")}</div><div class="task-grid"><section class="panel"><h2>${escapeHtml(task.title)}</h2><p class="rule-box">${escapeHtml(task.promptAndInstructions)}</p>${task.audio?.available ? `<button class="button secondary" data-writing-audio="${task.writingId}" type="button">${icon("volume-2")} Hear the task</button>` : ""}<details><summary>View model text</summary><p class="model">${escapeHtml(task.modelText)}</p></details><p><span class="field-label">Expected:</span> ${escapeHtml(task.expectedLength)}</p><textarea id="writing-draft" placeholder="${escapeHtml(task.sentenceStarter)}">${escapeHtml(saved)}</textarea><p id="save-status"><small>${saved ? "Draft restored" : "Start writing when you are ready"}</small></p></section><aside class="panel"><h3>Writer's checklist</h3><ul class="checklist">${task.successCriteria.split(";").map((criterion, index) => `<li><label><input type="checkbox" data-writing-check="${index}"><span>${escapeHtml(criterion.trim())}</span></label></li>`).join("")}</ul><h3>Support</h3><p>${escapeHtml(task.support)}</p><h3>Challenge</h3><p>${escapeHtml(task.extension)}</p><button class="button primary" id="writing-done" type="button">Submit this draft ${icon("send")}</button></aside></div>`;
+    $("#app").innerHTML = `${pageHeader("Plan, write and improve", "Writing studio", "Choose a task. Your draft saves automatically on this device.")}<div class="subtabs">${course.writing.map((item) => `<button class="subtab ${active === item.writingId ? "active" : ""}" data-writing="${item.writingId}" type="button">Writing ${item.sequence}</button>`).join("")}</div><div class="task-grid"><section class="panel"><h2>${escapeHtml(task.title)}</h2><p class="rule-box">${escapeHtml(task.promptAndInstructions)}</p>${task.audio?.available ? `<button class="button secondary" data-writing-audio="${task.writingId}" type="button">${icon("volume-2")} Hear the task</button>` : ""}<details><summary>View model text</summary><p class="model">${escapeHtml(task.modelText)}</p></details><p><span class="field-label">Expected:</span> ${escapeHtml(task.expectedLength)}</p><textarea id="writing-draft" placeholder="${escapeHtml(task.sentenceStarter)}">${escapeHtml(saved)}</textarea><p id="save-status"><small>${saved ? "Draft restored" : "Start writing when you are ready"}</small></p></section><aside class="panel"><h3>Writer's checklist</h3><ul class="checklist">${task.successCriteria.split(";").map((criterion, index) => `<li><label><input type="checkbox" data-writing-check="${index}"><span>${escapeHtml(criterion.trim())}</span></label></li>`).join("")}</ul><h3>Support</h3><p>${escapeHtml(task.support)}</p><h3>Challenge</h3><p>${escapeHtml(task.extension)}</p><button class="button secondary" id="writing-feedback-btn" type="button">${icon("message-circle")} Get feedback</button><div id="writing-feedback" role="status" aria-live="polite" aria-atomic="true"></div><button class="button primary" id="writing-done" type="button">Submit this draft ${icon("send")}</button></aside></div>`;
     $$('[data-writing]').forEach((button) => button.addEventListener("click", () => { active = button.dataset.writing; draw(); showWritingInDeck?.(active); }));
     $$('[data-writing-audio]').forEach((button) => button.addEventListener("click", () => {
       const item = course.writing.find((w) => w.writingId === button.dataset.writingAudio);
@@ -3367,6 +3371,11 @@ function renderWritingClassic() {
     }));
     let saveTimer;
     $("#writing-draft").addEventListener("input", (event) => { clearTimeout(saveTimer); $("#save-status").innerHTML = "<small>Saving…</small>"; saveTimer = setTimeout(() => { progress.writing[active] = event.target.value; saveProgress(); emitProgress({ type: "draft.saved", unit: PROGRESS_UNIT, section: `writing:${active}`, text: event.target.value, words: event.target.value.trim().split(/\s+/).filter(Boolean).length }); $("#save-status").innerHTML = "<small>Draft saved</small>"; }, 350); });
+    $("#writing-feedback-btn").addEventListener("click", (event) => {
+      const draft = $("#writing-draft").value.trim();
+      if (draft.split(/\s+/).filter(Boolean).length < 5) return toast("Write a little more before asking for feedback.");
+      checkWritingWithWehel(`Check my writing for "${task.title}": "${draft}"`, event.currentTarget, $("#writing-feedback"));
+    });
     $("#writing-done").addEventListener("click", () => {
       const draft = $("#writing-draft").value.trim();
       if (draft.split(/\s+/).length < 8) return toast("Add a little more to your draft before submitting.");
@@ -3405,6 +3414,8 @@ function renderWritingCarousel() {
         <textarea data-draft="${esc(task.writingId)}" rows="7" placeholder="${esc(task.sentenceStarter)}" aria-label="Writing draft for ${esc(task.title)}">${esc(saved)}</textarea>
         <small data-save-status="${esc(task.writingId)}" role="status" aria-live="polite" aria-atomic="true">${saved ? "Draft restored" : "Start writing when you are ready"}</small>
       </div>
+      <button class="gc-btn" type="button" data-writing-feedback="${esc(task.writingId)}">${icon("message-circle")} Get feedback</button>
+      <div data-writing-feedback-out="${esc(task.writingId)}" role="status" aria-live="polite" aria-atomic="true"></div>
       <details class="gc-practice"><summary>Writer's checklist</summary>
         <ul class="checklist">${task.successCriteria.split(";").map((criterion, position) => `<li><label><input type="checkbox" data-writing-check="${esc(task.writingId)}-${position}"><span>${esc(criterion.trim())}</span></label></li>`).join("")}</ul>
       </details>
@@ -3424,8 +3435,16 @@ function renderWritingCarousel() {
     closingHint: "Submit one draft on the task slides and Writing gets its tick.",
     slides,
     onClick: (event) => {
-      const target = event.target.closest("[data-writing-audio], [data-writing-submit]");
+      const target = event.target.closest("[data-writing-audio], [data-writing-submit], [data-writing-feedback]");
       if (!target) return undefined;
+      if (target.dataset.writingFeedback) {
+        const id = target.dataset.writingFeedback;
+        const draft = (deck.root.querySelector(`[data-draft="${CSS.escape(id)}"]`)?.value || "").trim();
+        if (draft.split(/\s+/).filter(Boolean).length < 5) return toast("Write a little more before asking for feedback.");
+        const writingTask = tasks.find((item) => item.writingId === id);
+        checkWritingWithWehel(`Check my writing for "${writingTask.title}": "${draft}"`, target, deck.root.querySelector(`[data-writing-feedback-out="${CSS.escape(id)}"]`));
+        return undefined;
+      }
       if (target.dataset.writingAudio) {
         const task = tasks.find((item) => item.writingId === target.dataset.writingAudio);
         return playAudio(task.audio.source, { rate: AI_NARRATION_RATE, button: target });
@@ -4286,6 +4305,47 @@ async function submitSpeakingRecording(recordingId, target, button, { feedbackSe
     if (onFeedback) onFeedback(review.feedback);
   } catch (error) {
     toast(error.message || "Pronunciation checking is unavailable. Please try again.");
+  } finally {
+    button.disabled = false;
+    button.innerHTML = original;
+    button.classList.remove("loading");
+    icons();
+  }
+}
+
+// Proofread a word-sentence or a writing draft through Wehel's own "check"
+// mode, rather than a separate feedback pipeline. subjectNotes.english in
+// wehel_prompt.json already carries the pedagogy for this — celebrate ideas
+// first, polish second; recast an error instead of correcting it head-on — so
+// reusing askWehel means a change to how corrections are phrased only has to
+// be made once, in the tutor's own prompt, and stays consistent with what the
+// same learner sees if they ask Wehel directly. One retry on a transient
+// failure mirrors the dock's own submit(): a dropped connection is far more
+// likely than a real outage, and a canned "try again" is a worse reply than a
+// two-second wait would have been.
+// `target` is a resolved element, not a selector — the classic half and the
+// deck half of a BOTH_DESIGNS page both paint at once and each carries its
+// own feedback container, so the caller must resolve it with ITS OWN scoped
+// helper (classicScope()'s $, or a carousel's inDeck()) rather than this
+// function reaching into the whole document and risking the other half's.
+async function checkWritingWithWehel(prompt, button, target) {
+  const original = button.innerHTML;
+  button.disabled = true;
+  button.innerHTML = `${icon("loader-circle")} Checking`;
+  button.classList.add("loading");
+  icons();
+  const ask = () => askWehel({ meta: wehelOptions().meta, messages: [{ role: "user", text: prompt }], mode: "check" });
+  try {
+    let reply;
+    try {
+      reply = await ask();
+    } catch (firstError) {
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      reply = await ask();
+    }
+    if (target) target.innerHTML = `<p class="feedback good">${escapeHtml(reply)}</p>`;
+  } catch (error) {
+    if (target) target.innerHTML = `<p class="feedback try">I cannot reach my thinking engine right now. Please try again in a moment.</p>`;
   } finally {
     button.disabled = false;
     button.innerHTML = original;

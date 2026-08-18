@@ -3077,6 +3077,48 @@ function renderReadingCarousel() {
   drawDeck();
 }
 
+// A print window rather than an in-page print stylesheet, the same choice
+// openEbookReadAloud makes below for the same reason: it needs its own
+// document so the app chrome (topbar, sidebar, shelf, audio controls) never
+// has to be fought with @media print rules, and a popup-blocked user gets the
+// same "allow pop-ups" recovery already established for that button.
+function printReading(reading) {
+  const printWindow = window.open("", "_blank", "popup=yes,width=860,height=1000,resizable=yes,scrollbars=yes");
+  if (!printWindow) {
+    toast("Allow pop-ups to print this text.");
+    return;
+  }
+  printWindow.document.open();
+  printWindow.document.write(`<!doctype html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <title>${escapeHtml(reading.title)} | Ehel Academy English</title>
+      <style>
+        :root { color-scheme: light; }
+        * { box-sizing: border-box; }
+        body { margin: 0; padding: 40px 48px; color: #17324d; background: white; font: 17px/1.75 Georgia, "Times New Roman", serif; }
+        header { margin-bottom: 26px; padding-bottom: 16px; border-bottom: 2px solid #dce4ea; }
+        header span { display: block; color: #0f766e; font: 700 12px/1.4 Arial, sans-serif; text-transform: uppercase; letter-spacing: .05em; }
+        header h1 { margin: 6px 0 0; font-size: 30px; line-height: 1.15; }
+        header p { margin: 8px 0 0; color: #64748b; font: 14px/1.4 Arial, sans-serif; }
+        .body p { margin: 0 0 1.1em; }
+        .print-footer { margin-top: 34px; padding-top: 14px; border-top: 1px solid #dce4ea; color: #64748b; font: 12px/1.4 Arial, sans-serif; }
+        @page { margin: 18mm; }
+      </style>
+    </head>
+    <body>
+      <header><span>${escapeHtml(reading.type || "Reading")} · ${escapeHtml(course.unit.unitTitle)}</span><h1>${escapeHtml(reading.title)}</h1>${reading.setting ? `<p>${escapeHtml(reading.setting)}</p>` : ""}</header>
+      <div class="body">${readingBodyHtml(reading.passageScript)}</div>
+      <div class="print-footer">Ehel Academy English · Grade ${gradeNumber} · Unit ${unitNumber}</div>
+    </body>
+    </html>`);
+  printWindow.document.close();
+  printWindow.focus();
+  printWindow.onload = () => printWindow.print();
+  printWindow.addEventListener("afterprint", () => printWindow.close());
+}
+
 function renderReadingClassic() {
   const { $, $$ } = classicScope();
   let selected = course.readings[0].readingId;
@@ -3090,7 +3132,7 @@ function renderReadingClassic() {
     const audioReady = reading.audio?.available || readingVoiceSources.has(reading.readingId);
     const audioMode = reading.audio?.available ? "recorded" : audioReady ? "ready" : "on demand";
     const audioControls = `<div class="ebook-audio-wrap"><small>ElevenLabs · ${audioMode} · 0.90x</small>${audioReady ? "" : `<button class="button secondary" id="prepare-reading-audio" type="button" aria-label="Prepare ElevenLabs narration for ${escapeHtml(reading.title)}">${icon("audio-lines")} Prepare audio</button>`}<audio id="ebook-reading-audio" class="ebook-native-audio" controls ${audioReady ? "" : "hidden"} aria-label="Reading narration for ${escapeHtml(reading.title)}"></audio></div>`;
-    $("#reading-panel").innerHTML = `<div class="ebook-progress" aria-label="Text ${readingIndex + 1} of ${course.readings.length}"><span style="width:${((readingIndex + 1) / course.readings.length) * 100}%"></span></div><header class="ebook-toolbar"><div><span class="ebook-count">Book ${readingIndex + 1} of ${course.readings.length}</span><span>${wordCount} words · about ${readingMinutes} min</span></div>${audioControls}</header><figure class="ebook-cover"><img src="${course.visual.image}" alt="${escapeHtml(course.visual.alt || course.unit.unitTitle)}"><figcaption><span>${escapeHtml(reading.type)}</span><h2>${escapeHtml(reading.title)}</h2><p>${escapeHtml(course.unit.unitTitle)}</p></figcaption></figure><section class="ebook-page"><div class="ebook-page-heading"><span>${icon("bookmark")}</span><div><small>${reading.genre ? escapeHtml(reading.genre) : "Ehel Academy English"}</small><h2>${escapeHtml(reading.title)}</h2>${reading.setting ? `<p>${icon("map-pin")} ${escapeHtml(reading.setting)}</p>` : ""}</div></div><div class="reading-text ebook-copy">${readingBodyHtml(reading.passageScript)}</div><div class="ebook-page-number">${readingIndex + 1}</div></section><footer class="ebook-footer"><button class="button secondary" data-reading-step="-1" type="button" ${readingIndex === 0 ? "disabled" : ""}>${icon("arrow-left")} Previous text</button><button class="button primary" id="reading-done" type="button">Finished reading ${icon("check")}</button><button class="button secondary" data-reading-step="1" type="button" ${readingIndex === course.readings.length - 1 ? "disabled" : ""}>Next text ${icon("arrow-right")}</button></footer>`;
+    $("#reading-panel").innerHTML = `<div class="ebook-progress" aria-label="Text ${readingIndex + 1} of ${course.readings.length}"><span style="width:${((readingIndex + 1) / course.readings.length) * 100}%"></span></div><header class="ebook-toolbar"><div><span class="ebook-count">Book ${readingIndex + 1} of ${course.readings.length}</span><span>${wordCount} words · about ${readingMinutes} min</span></div><div class="ebook-toolbar-actions"><button class="button secondary" id="print-reading" type="button" aria-label="Print ${escapeHtml(reading.title)} as a PDF">${icon("printer")} Print</button>${audioControls}</div></header><figure class="ebook-cover"><img src="${course.visual.image}" alt="${escapeHtml(course.visual.alt || course.unit.unitTitle)}"><figcaption><span>${escapeHtml(reading.type)}</span><h2>${escapeHtml(reading.title)}</h2><p>${escapeHtml(course.unit.unitTitle)}</p></figcaption></figure><section class="ebook-page"><div class="ebook-page-heading"><span>${icon("bookmark")}</span><div><small>${reading.genre ? escapeHtml(reading.genre) : "Ehel Academy English"}</small><h2>${escapeHtml(reading.title)}</h2>${reading.setting ? `<p>${icon("map-pin")} ${escapeHtml(reading.setting)}</p>` : ""}</div></div><div class="reading-text ebook-copy">${readingBodyHtml(reading.passageScript)}</div><div class="ebook-page-number">${readingIndex + 1}</div></section><footer class="ebook-footer"><button class="button secondary" data-reading-step="-1" type="button" ${readingIndex === 0 ? "disabled" : ""}>${icon("arrow-left")} Previous text</button><button class="button primary" id="reading-done" type="button">Finished reading ${icon("check")}</button><button class="button secondary" data-reading-step="1" type="button" ${readingIndex === course.readings.length - 1 ? "disabled" : ""}>Next text ${icon("arrow-right")}</button></footer>`;
     $$('[data-reading]').forEach((button) => button.addEventListener("click", () => { selected = button.dataset.reading; stopAudio(); draw(); icons(); showReadingInDeck?.(selected); focusDynamicContent("#reading-panel .ebook-page-heading h2", "Reading selected. " + $("#reading-panel .ebook-page-heading h2").textContent); }));
     $$('[data-reading-step]').forEach((button) => button.addEventListener("click", () => {
       const next = course.readings[readingIndex + Number(button.dataset.readingStep)];
@@ -3103,6 +3145,7 @@ function renderReadingClassic() {
       focusDynamicContent("#reading-panel .ebook-page-heading h2", "Reading selected. " + $("#reading-panel .ebook-page-heading h2").textContent);
     }));
     if (audioReady) mountReadingAudioPlayer(reading);
+    $("#print-reading").addEventListener("click", () => printReading(reading));
     $("#prepare-reading-audio")?.addEventListener("click", (event) => prepareReadingNarration(reading, event.currentTarget));
     $("#reading-done").addEventListener("click", () => complete("reading", `${reading.title} marked as read.`));
     icons();
@@ -4674,6 +4717,58 @@ function openEbookReadAloud(book) {
   playFromPage(0);
 }
 
+// Same popup-window print approach as printReading above, but the on-screen
+// reader only ever holds one page's markup at a time (activeEbookPage), so
+// this builds all of the book's pages up front rather than printing whatever
+// happens to be drawn. Each page gets its own printed sheet (page-break-after)
+// the way a real picture book does — one page, one page.
+function printBook(book) {
+  const printWindow = window.open("", "_blank", "popup=yes,width=900,height=1000,resizable=yes,scrollbars=yes");
+  if (!printWindow) {
+    toast("Allow pop-ups to print this book.");
+    return;
+  }
+  const pages = book.pages.map((page, index) => `
+    <section class="print-page">
+      <span class="print-page-number">Page ${index + 1} of ${book.pages.length}</span>
+      <img src="${ebookAsset(book, page.image)}" alt="${escapeHtml(page.alt)}">
+      <p>${escapeHtml(page.text)}</p>
+    </section>`).join("");
+  printWindow.document.open();
+  printWindow.document.write(`<!doctype html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <title>${escapeHtml(book.title)} | Ehel Academy English</title>
+      <style>
+        :root { color-scheme: light; }
+        * { box-sizing: border-box; }
+        body { margin: 0; padding: 40px 48px; color: #17324d; background: white; font: 17px/1.75 Georgia, "Times New Roman", serif; }
+        header { margin-bottom: 26px; padding-bottom: 16px; border-bottom: 2px solid #dce4ea; }
+        header span { display: block; color: #0f766e; font: 700 12px/1.4 Arial, sans-serif; text-transform: uppercase; letter-spacing: .05em; }
+        header h1 { margin: 6px 0 0; font-size: 30px; line-height: 1.15; }
+        header p { margin: 8px 0 0; color: #64748b; font: 14px/1.4 Arial, sans-serif; }
+        .print-page { page-break-after: always; }
+        .print-page:last-child { page-break-after: auto; }
+        .print-page-number { display: block; margin-bottom: 10px; color: #64748b; font: 700 12px/1.4 Arial, sans-serif; text-transform: uppercase; letter-spacing: .05em; }
+        .print-page img { width: 100%; max-height: 60vh; display: block; margin: 0 0 16px; object-fit: contain; }
+        .print-page p { margin: 0; font-weight: 700; }
+        .print-footer { margin-top: 34px; padding-top: 14px; border-top: 1px solid #dce4ea; color: #64748b; font: 12px/1.4 Arial, sans-serif; }
+        @page { margin: 18mm; }
+      </style>
+    </head>
+    <body>
+      <header><span>${escapeHtml(book.level)} · Independent reading library</span><h1>${escapeHtml(book.title)}</h1><p>${escapeHtml(book.description)}</p></header>
+      ${pages}
+      <div class="print-footer">${escapeHtml(book.attribution || "")} · Ehel Academy English</div>
+    </body>
+    </html>`);
+  printWindow.document.close();
+  printWindow.focus();
+  printWindow.onload = () => printWindow.print();
+  printWindow.addEventListener("afterprint", () => printWindow.close());
+}
+
 function renderEbooks() {
   ebookWatchActive = false;
   ebookWatchToken += 1;
@@ -4691,6 +4786,7 @@ function renderEbooks() {
   $("#app").innerHTML = `<header class="page-header books-header"><div><span class="eyebrow">Independent reading library</span><h1>Books</h1></div>
       <div class="books-header-side">
       <button class="button secondary" id="listen-whole-ebook" type="button">${icon("audio-lines")} Listen to whole book</button>
+      <button class="button secondary" id="print-ebook" type="button" aria-label="Print ${escapeHtml(book.title)} as a PDF">${icon("printer")} Print book</button>
       <div class="course-ebook-shelfbar">
         <button class="course-ebook-shelf-title course-ebook-shelf-chip" id="shelf-toggle" type="button" aria-expanded="false" aria-controls="shelf-pop">${icon("library-big")}<div><strong>My shelf</strong><small>${gradeEbooks.length} ${gradeEbooks.length === 1 ? "book" : "books"} · tap to browse</small></div>${icon("chevron-down")}</button>
         <nav class="course-ebook-shelf-pop" id="shelf-pop" hidden aria-label="Book library">
@@ -4825,6 +4921,7 @@ function renderEbooks() {
     }
   }));
   $("#listen-whole-ebook").addEventListener("click", () => { stopEbookWatch(); openEbookReadAloud(book); });
+  $("#print-ebook").addEventListener("click", () => printBook(book));
   $$('[data-ebook]').forEach((button) => button.addEventListener("click", () => {
     stopEbookWatch();
     activeEbookId = button.dataset.ebook;

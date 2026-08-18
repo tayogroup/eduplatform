@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-18T10:00:59.931Z",
+  "generatedAt": "2026-08-18T10:20:43.776Z",
   "stage": {
     "id": "s07",
     "label": "Stage 7"
@@ -1410,7 +1410,7 @@
       "outcomeId": "lo06",
       "difficulty": "Challenge",
       "context": "Health",
-      "prompt": "A condition\nFill the blank so 'You passed' shows for 50 or more:\nscore = int(input(\"Enter your score: \"))\nif score ______ 50:\nprint(\"You passed\")\nprint(\"Try again\")",
+      "prompt": "A condition\nFill the blank so 'You passed' shows for 50 or more:\nscore = int(input(\"Enter your score: \"))\nif score ______ 50:\nprint(\"You passed\")\nelse:\nprint(\"Try again\")",
       "answer": ">= -> if score >= 50. Greater-than-or-equal-to means 50 counts as a pass.",
       "hint": "Work out which idea this is about — text-based programming, block-based programming, Python — then explain your reasoning step by step.",
       "errorFeedback": "Check your reasoning against this: >= -> if score >= 50. Greater-than-or-equal-to means 50 counts as a pass."

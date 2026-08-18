@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-18T10:00:59.543Z",
+  "generatedAt": "2026-08-18T10:20:43.479Z",
   "stage": {
     "id": "s05",
     "label": "Stage 5"
@@ -697,7 +697,7 @@
     {
       "id": "p36",
       "level": "Extension",
-      "prompt": "On the micro:bit, this counter jumps up by lots each time you hold button A. Why, and how do you fix it?\nif <button A is pressed> then\nchange Count by 1\nshow number Count",
+      "prompt": "On the micro:bit, this counter jumps up by lots each time you hold button A. Why, and how do you fix it?\nforever:\nif <button A is pressed> then\nchange Count by 1\nshow number Count",
       "answer": "In a forever loop, button A is pressed is True for the whole time you hold it, so it counts many times. Fix: use the on button A pressed event block, which runs exactly once per press.",
       "hint": "Work out which idea this is about — variable, value, assign — then explain your reasoning step by step."
     }
@@ -1310,7 +1310,7 @@
       "outcomeId": "lo05",
       "difficulty": "Challenge",
       "context": "Travel",
-      "prompt": "On the micro:bit, reset the count to zero when shaken:\n_____ Count to 0",
+      "prompt": "On the micro:bit, reset the count to zero when shaken:\non shake:\n_____ Count to 0\nclear screen",
       "answer": "Use a ‘when this sprite clicked’ block, followed by ‘change score by 1’.",
       "hint": "Work out which idea this is about — variable, value, assign — then explain your reasoning step by step.",
       "errorFeedback": "Use ‘change score by 1’, not ‘set score to 1’, so the existing score increases by one."

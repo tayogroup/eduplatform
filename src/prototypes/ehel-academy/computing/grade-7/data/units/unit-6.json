@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-18T10:01:00.174Z",
+  "generatedAt": "2026-08-18T10:20:43.914Z",
   "stage": {
     "id": "s07",
     "label": "Stage 7"
@@ -626,54 +626,54 @@
     {
       "id": "p29",
       "level": "Challenge",
-      "prompt": "D1 — complete the first line every program needs",
+      "prompt": "complete the first line every program needs\n___________________ display.show(Image.HAPPY)",
       "answer": "from microbit import *",
       "hint": "Work out which idea this is about — algorithm, arithmetic operator, Boolean logic operations — then explain your reasoning step by step."
     },
     {
       "id": "p30",
       "level": "Challenge",
-      "prompt": "___________________ display.show(Image.HAPPY)",
+      "prompt": "wait half a second between the images\nfrom microbit import * display.show(Image.SQUARE) ___________ display.show(Image.SQUARE_SMALL)",
       "answer": "sleep(500)",
       "hint": "Work out which idea this is about — algorithm, arithmetic operator, Boolean logic operations — then explain your reasoning step by step."
     },
     {
       "id": "p31",
       "level": "Challenge",
-      "prompt": "D2 — wait half a second between the images",
+      "prompt": "loop through the list of frames\nfrom microbit import * frames = [Image.HEART, Image.HEART_SMALL] ____________________ display.show(frame) sleep(300)",
       "answer": "for frame in frames:",
       "hint": "Work out which idea this is about — algorithm, arithmetic operator, Boolean logic operations — then explain your reasoning step by step."
     },
     {
       "id": "p32",
       "level": "Challenge",
-      "prompt": "from microbit import * display.show(Image.SQUARE) ___________ display.show(Image.SQUARE_SMALL)",
+      "prompt": "trigger the alarm when the sound is loud\nfrom microbit import * while True: if ______________________ > 128: display.show(Image(\"99999:99999:99999:99999:99999\")) else: display.clear()",
       "answer": "microphone.sound_level() — giving if microphone.sound_level() > 128:",
       "hint": "Work out which idea this is about — algorithm, arithmetic operator, Boolean logic operations — then explain your reasoning step by step."
     },
     {
-      "id": "p39",
+      "id": "p34",
       "level": "Extension",
       "prompt": "Each program has one or more bugs. Find them and write the corrected line(s).",
       "answer": "The first line from microbit import * is missing. Add it as the first line so Image and display are defined.",
       "hint": "Work out which idea this is about — algorithm, arithmetic operator, Boolean logic operations — then explain your reasoning step by step."
     },
     {
-      "id": "p40",
+      "id": "p35",
       "level": "Extension",
       "prompt": "display.show(Image.HEART)",
       "answer": "SQUAR_SMALL is misspelled — it should be Image.SQUARE_SMALL (with the E). The name must match exactly.",
       "hint": "Work out which idea this is about — algorithm, arithmetic operator, Boolean logic operations — then explain your reasoning step by step."
     },
     {
-      "id": "p41",
+      "id": "p36",
       "level": "Extension",
       "prompt": "The program crashes straight away. What is missing?",
       "answer": "There is no colon at the end of the if line. It should be if button_a.is_pressed(): with a colon.",
       "hint": "Work out which idea this is about — algorithm, arithmetic operator, Boolean logic operations — then explain your reasoning step by step."
     },
     {
-      "id": "p42",
+      "id": "p37",
       "level": "Extension",
       "prompt": "from microbit import * display.show(Image.SQUAR_SMALL)",
       "answer": "There is no sleep() between the two images, so the first is replaced instantly and you only see the second. Add sleep(500) between the two display.show lines (and a display.clear() at the end is good practice).",
@@ -1242,7 +1242,7 @@
       "outcomeId": "lo01",
       "difficulty": "Core",
       "context": "Home",
-      "prompt": "D1 — complete the first line every program needs",
+      "prompt": "complete the first line every program needs\n___________________ display.show(Image.HAPPY)",
       "answer": "from microbit import *",
       "hint": "Work out which idea this is about — algorithm, arithmetic operator, Boolean logic operations — then explain your reasoning step by step.",
       "errorFeedback": "Check your reasoning against this: from microbit import *"
@@ -1252,7 +1252,7 @@
       "outcomeId": "lo02",
       "difficulty": "Core",
       "context": "School",
-      "prompt": "___________________ display.show(Image.HAPPY)",
+      "prompt": "wait half a second between the images\nfrom microbit import * display.show(Image.SQUARE) ___________ display.show(Image.SQUARE_SMALL)",
       "answer": "sleep(500)",
       "hint": "Work out which idea this is about — algorithm, arithmetic operator, Boolean logic operations — then explain your reasoning step by step.",
       "errorFeedback": "Check your reasoning against this: sleep(500)"
@@ -1262,7 +1262,7 @@
       "outcomeId": "lo03",
       "difficulty": "Core",
       "context": "Market",
-      "prompt": "D2 — wait half a second between the images",
+      "prompt": "loop through the list of frames\nfrom microbit import * frames = [Image.HEART, Image.HEART_SMALL] ____________________ display.show(frame) sleep(300)",
       "answer": "for frame in frames:",
       "hint": "Work out which idea this is about — algorithm, arithmetic operator, Boolean logic operations — then explain your reasoning step by step.",
       "errorFeedback": "Check your reasoning against this: for frame in frames:"
@@ -1272,7 +1272,7 @@
       "outcomeId": "lo04",
       "difficulty": "Challenge",
       "context": "Community",
-      "prompt": "from microbit import * display.show(Image.SQUARE) ___________ display.show(Image.SQUARE_SMALL)",
+      "prompt": "trigger the alarm when the sound is loud\nfrom microbit import * while True: if ______________________ > 128: display.show(Image(\"99999:99999:99999:99999:99999\")) else: display.clear()",
       "answer": "microphone.sound_level() — giving if microphone.sound_level() > 128:",
       "hint": "Work out which idea this is about — algorithm, arithmetic operator, Boolean logic operations — then explain your reasoning step by step.",
       "errorFeedback": "Check your reasoning against this: microphone.sound_level() — giving if microphone.sound_level() > 128:"
@@ -1282,7 +1282,7 @@
       "outcomeId": "lo05",
       "difficulty": "Challenge",
       "context": "Travel",
-      "prompt": "D3 — loop through the list of frames",
+      "prompt": "light the middle column (fill the Image string)\nfrom microbit import * display.show(Image(\"_____:_____:_____:_____:_____\")) # goal: only the centre column is lit",
       "answer": "\"00900:00900:00900:00900:00900\" — a 9 in the centre position of every row lights the middle column.",
       "hint": "Work out which idea this is about — algorithm, arithmetic operator, Boolean logic operations — then explain your reasoning step by step.",
       "errorFeedback": "Check your reasoning against this: \"00900:00900:00900:00900:00900\" — a 9 in the centre position of every row lights the middle column."
@@ -1292,10 +1292,10 @@
       "outcomeId": "lo06",
       "difficulty": "Challenge",
       "context": "Health",
-      "prompt": "from microbit import * frames = [Image.HEART, Image.HEART_SMALL] ____________________ display.show(frame) sleep(300)",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "Each program has one or more bugs. Find them and write the corrected line(s).",
+      "answer": "The first line from microbit import * is missing. Add it as the first line so Image and display are defined.",
       "hint": "Work out which idea this is about — algorithm, arithmetic operator, Boolean logic operations — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "Check your reasoning against this: The first line from microbit import * is missing. Add it as the first line so Image and display are defined."
     }
   ],
   "reasoningPrompts": [

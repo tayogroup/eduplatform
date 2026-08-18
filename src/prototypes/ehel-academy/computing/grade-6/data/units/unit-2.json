@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-18T10:00:59.788Z",
+  "generatedAt": "2026-08-18T10:20:43.684Z",
   "stage": {
     "id": "s06",
     "label": "Stage 6"
@@ -595,54 +595,54 @@
     {
       "id": "p26",
       "level": "Challenge",
-      "prompt": "AVERAGE(B5:B10)",
-      "answer": "Incorrect - missing brackets. Correct: =SUM(B5:B10).",
+      "prompt": "=SUM(B5:B10)",
+      "answer": "Correct.",
       "hint": "Work out which idea this is about — attribute, AVERAGE, categorical data — then explain your reasoning step by step."
     },
     {
       "id": "p27",
       "level": "Challenge",
-      "prompt": "=AVERAGE(B5-B10)",
-      "answer": "Incorrect - a range on its own is not a calculation; there is no function or operator. Correct (for a total): =SUM(B5:B10).",
+      "prompt": "AVERAGE(B5:B10)",
+      "answer": "Incorrect - missing the equals sign. Correct: =AVERAGE(B5:B10).",
       "hint": "Work out which idea this is about — attribute, AVERAGE, categorical data — then explain your reasoning step by step."
     },
     {
       "id": "p28",
       "level": "Challenge",
-      "prompt": "=AVERAGE(B5B10)",
-      "answer": "Correct.",
+      "prompt": "=AVERAGE(B5-B10)",
+      "answer": "Incorrect - a minus sign instead of a colon. Correct: =AVERAGE(B5:B10).",
       "hint": "Work out which idea this is about — attribute, AVERAGE, categorical data — then explain your reasoning step by step."
     },
     {
       "id": "p29",
       "level": "Challenge",
-      "prompt": "=AVERAGE(B5:B10)",
-      "answer": "Incorrect - missing the equals sign. Correct: =AVERAGE(B5:B10).",
+      "prompt": "=AVERAGE(B5B10)",
+      "answer": "Incorrect - missing the colon in the range. Correct: =AVERAGE(B5:B10).",
       "hint": "Work out which idea this is about — attribute, AVERAGE, categorical data — then explain your reasoning step by step."
     },
     {
-      "id": "p30",
+      "id": "p32",
       "level": "Extension",
       "prompt": "These tasks ask you to design, not just remember. Write or sketch your answers.",
       "answer": "Sensible fields: CountryName (text/string), Size_km2 (integer), Population (integer), Language (text), Currency (text/string). A primary key such as CountryID (integer) is a bonus.",
       "hint": "Work out which idea this is about — attribute, AVERAGE, categorical data — then explain your reasoning step by step."
     },
     {
-      "id": "p31",
+      "id": "p33",
       "level": "Extension",
       "prompt": "Design a database table to store information about five countries. Write down at least four sensible field names and the data type for each field. (Hint: think about the Oman example - country name, size, population, language, currency.)",
       "answer": "Question: 'What is your height in centimetres, to one decimal place, for example 142.5?' Unit: centimetres. Precision: one decimal place. Validation rule: allow a decimal number between about 100 and 200 only (using Data > Validity in Calc), so words and silly numbers are refused.",
       "hint": "Work out which idea this is about — attribute, AVERAGE, categorical data — then explain your reasoning step by step."
     },
     {
-      "id": "p32",
+      "id": "p34",
       "level": "Extension",
       "prompt": "Design a form to collect the height of every learner in your class for the school photo. Write the question, say what unit and precision you will accept, and say what validation rule you would use so only sensible answers are entered.",
       "answer": "Sensible fields: ItemName (text), Price (currency or integer), NumberInStock (integer), OnSale (Yes/No / Boolean). A primary key such as ItemID (integer) is a good extra.",
       "hint": "Work out which idea this is about — attribute, AVERAGE, categorical data — then explain your reasoning step by step."
     },
     {
-      "id": "p33",
+      "id": "p35",
       "level": "Extension",
       "prompt": "Design a database table for Aunt Amara's shop stock. Include a field for the item name, the price, the number in stock, and whether the item is on sale. Give the data type for each field.",
       "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
@@ -1214,60 +1214,60 @@
       "outcomeId": "lo01",
       "difficulty": "Core",
       "context": "Home",
-      "prompt": "AVERAGE(B5:B10)",
-      "answer": "Incorrect - missing brackets. Correct: =SUM(B5:B10).",
+      "prompt": "=SUM(B5:B10)",
+      "answer": "Correct.",
       "hint": "Work out which idea this is about — attribute, AVERAGE, categorical data — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Incorrect - missing brackets. Correct: =SUM(B5:B10)."
+      "errorFeedback": "Check your reasoning against this: Correct."
     },
     {
       "id": "rp02",
       "outcomeId": "lo02",
       "difficulty": "Core",
       "context": "School",
-      "prompt": "=AVERAGE(B5-B10)",
-      "answer": "Incorrect - a range on its own is not a calculation; there is no function or operator. Correct (for a total): =SUM(B5:B10).",
+      "prompt": "AVERAGE(B5:B10)",
+      "answer": "Incorrect - missing the equals sign. Correct: =AVERAGE(B5:B10).",
       "hint": "Work out which idea this is about — attribute, AVERAGE, categorical data — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Incorrect - a range on its own is not a calculation; there is no function or operator. Correct (for a total): =SUM(B5:B10)."
+      "errorFeedback": "Check your reasoning against this: Incorrect - missing the equals sign. Correct: =AVERAGE(B5:B10)."
     },
     {
       "id": "rp03",
       "outcomeId": "lo03",
       "difficulty": "Core",
       "context": "Market",
-      "prompt": "=AVERAGE(B5B10)",
-      "answer": "Correct.",
+      "prompt": "=AVERAGE(B5-B10)",
+      "answer": "Incorrect - a minus sign instead of a colon. Correct: =AVERAGE(B5:B10).",
       "hint": "Work out which idea this is about — attribute, AVERAGE, categorical data — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Correct."
+      "errorFeedback": "Check your reasoning against this: Incorrect - a minus sign instead of a colon. Correct: =AVERAGE(B5:B10)."
     },
     {
       "id": "rp04",
       "outcomeId": "lo04",
       "difficulty": "Challenge",
       "context": "Community",
-      "prompt": "=AVERAGE(B5:B10)",
-      "answer": "Incorrect - missing the equals sign. Correct: =AVERAGE(B5:B10).",
+      "prompt": "=AVERAGE(B5B10)",
+      "answer": "Incorrect - missing the colon in the range. Correct: =AVERAGE(B5:B10).",
       "hint": "Work out which idea this is about — attribute, AVERAGE, categorical data — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Incorrect - missing the equals sign. Correct: =AVERAGE(B5:B10)."
+      "errorFeedback": "Check your reasoning against this: Incorrect - missing the colon in the range. Correct: =AVERAGE(B5:B10)."
     },
     {
       "id": "rp05",
       "outcomeId": "lo05",
       "difficulty": "Challenge",
       "context": "Travel",
-      "prompt": "These tasks ask you to design, not just remember. Write or sketch your answers.",
-      "answer": "Sensible fields: CountryName (text/string), Size_km2 (integer), Population (integer), Language (text), Currency (text/string). A primary key such as CountryID (integer) is a bonus.",
+      "prompt": "SUM=(B5:B10)",
+      "answer": "Incorrect - the equals sign is in the wrong place. Correct: =SUM(B5:B10).",
       "hint": "Work out which idea this is about — attribute, AVERAGE, categorical data — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Sensible fields: CountryName (text/string), Size_km2 (integer), Population (integer), Language (text), Currency (text/string). A primary key such as CountryID (integer) is a bonus."
+      "errorFeedback": "Check your reasoning against this: Incorrect - the equals sign is in the wrong place. Correct: =SUM(B5:B10)."
     },
     {
       "id": "rp06",
       "outcomeId": "lo06",
       "difficulty": "Challenge",
       "context": "Health",
-      "prompt": "Design a database table to store information about five countries. Write down at least four sensible field names and the data type for each field. (Hint: think about the Oman example - country name, size, population, language, currency.)",
-      "answer": "Question: 'What is your height in centimetres, to one decimal place, for example 142.5?' Unit: centimetres. Precision: one decimal place. Validation rule: allow a decimal number between about 100 and 200 only (using Data > Validity in Calc), so words and silly numbers are refused.",
+      "prompt": "=AVERAGE(B5:B10)",
+      "answer": "Correct.",
       "hint": "Work out which idea this is about — attribute, AVERAGE, categorical data — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Question: 'What is your height in centimetres, to one decimal place, for example 142.5?' Unit: centimetres. Precision: one decimal place. Validation rule: allow a decimal number between about 100 and 200 only (using Data > Validity in Calc), so words and silly numbers are refused."
+      "errorFeedback": "Check your reasoning against this: Correct."
     }
   ],
   "reasoningPrompts": [

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-18T10:01:00.411Z",
+  "generatedAt": "2026-08-18T10:20:44.044Z",
   "stage": {
     "id": "s08",
     "label": "Stage 8"
@@ -588,56 +588,56 @@
     {
       "id": "p31",
       "level": "Challenge",
-      "prompt": "D1 - NOT gate",
-      "answer": "D1 - NOT gate: input 0 gives output 1; input 1 gives output 0.",
+      "prompt": "NOT gate\nInput\nOutput",
+      "answer": "NOT gate: input 0 gives output 1; input 1 gives output 0.",
       "hint": "Work out which idea this is about — ALU (arithmetic logic unit), application software, ASCII — then explain your reasoning step by step."
     },
     {
       "id": "p32",
       "level": "Challenge",
-      "prompt": "D2 - AND gate",
-      "answer": "D2 - AND gate outputs (top to bottom): 0, 0, 0, 1. Only 1-and-1 gives 1.",
+      "prompt": "AND gate\nInput A\nInput B\nOutput",
+      "answer": "AND gate outputs (top to bottom): 0, 0, 0, 1. Only 1-and-1 gives 1.",
       "hint": "Work out which idea this is about — ALU (arithmetic logic unit), application software, ASCII — then explain your reasoning step by step."
     },
     {
       "id": "p33",
       "level": "Challenge",
-      "prompt": "D4 - Name the gate",
-      "answer": "D3 - OR gate outputs (top to bottom): 0, 1, 1, 1. Only 0-and-0 gives 0.",
+      "prompt": "OR gate\nInput A\nInput B\nOutput",
+      "answer": "OR gate outputs (top to bottom): 0, 1, 1, 1. Only 0-and-0 gives 0.",
       "hint": "Work out which idea this is about — ALU (arithmetic logic unit), application software, ASCII — then explain your reasoning step by step."
     },
     {
       "id": "p34",
       "level": "Challenge",
-      "prompt": "Look at this completed truth table and name the logic gate it describes.",
-      "answer": "D4 - Name the gate: the output is 1 whenever at least one input is 1, and 0 only when both are 0, so it is an OR gate.",
+      "prompt": "Name the gate\nLook at this completed truth table and name the logic gate it describes.\nInput A\nInput B\nOutput",
+      "answer": "Name the gate: the output is 1 whenever at least one input is 1, and 0 only when both are 0, so it is an OR gate.",
       "hint": "Work out which idea this is about — ALU (arithmetic logic unit), application software, ASCII — then explain your reasoning step by step."
     },
     {
       "id": "p35",
       "level": "Extension",
-      "prompt": "E1 - The lost homework",
+      "prompt": "The lost homework\nSami spends an hour typing an essay but does not save it. The power cuts out and his work is gone. Using the words RAM, volatile and secondary storage, explain exactly why his work disappeared and what he should have done.",
       "answer": "His essay was held in RAM while he typed, and RAM is volatile, so it needs power to keep its contents. When the power cut out, everything in RAM was lost. He should have saved it to secondary storage (which is non-volatile), so it would survive a power cut.",
       "hint": "Work out which idea this is about — ALU (arithmetic logic unit), application software, ASCII — then explain your reasoning step by step."
     },
     {
       "id": "p36",
       "level": "Extension",
-      "prompt": "Sami spends an hour typing an essay but does not save it. The power cuts out and his work is gone. Using the words RAM, volatile and secondary storage, explain exactly why his work disappeared and what he should have done.",
+      "prompt": "The bird-spotting app\nMaya wants an app that recognises local birds from photos. She trains it on 20 photos and it guesses badly. Explain, using the idea of machine learning, why it struggles and what she should do to improve it.",
       "answer": "A machine-learning model learns from examples, and 20 photos is far too few, so it has not learned the features that identify each bird. She should train it on many more labelled photos, including different angles and lighting, so it can learn reliable patterns.",
       "hint": "Work out which idea this is about — ALU (arithmetic logic unit), application software, ASCII — then explain your reasoning step by step."
     },
     {
       "id": "p37",
       "level": "Extension",
-      "prompt": "E2 - The bird-spotting app",
+      "prompt": "The soil sensor\nRohan designs a system where a sensor reads soil moisture and the system decides on its own when to water the crops. Name the type of programming this is, explain how it works, and give one responsible-use point Rohan should consider.",
       "answer": "This is autonomous programming: a sensor captures soil-moisture data and the system decides when to water with no human control. A responsible-use point: keep a human able to check and override it, so a faulty sensor cannot, for example, flood or dry out the crops.",
       "hint": "Work out which idea this is about — ALU (arithmetic logic unit), application software, ASCII — then explain your reasoning step by step."
     },
     {
       "id": "p38",
       "level": "Extension",
-      "prompt": "Maya wants an app that recognises local birds from photos. She trains it on 20 photos and it guesses badly. Explain, using the idea of machine learning, why it struggles and what she should do to improve it.",
+      "prompt": "The AR history app\nLeila builds an app that shows a 3D model of Laas Geel rock art over a real printed picture. Name the technology, explain the difference between it and virtual reality, and give one benefit for learning.\nA mixed quiz across the whole unit. Try to complete it without looking back at your notes.\nDefine CPU, binary and truth table in your own words.\nState whether RAM or ROM is described: 'permanent, non-volatile, holds the boot instructions'.\nConvert the denary number 100 into an 8-bit binary number.\nConvert the binary number 11111111 into denary and into hexadecimal.\nWrite the ASCII word spelled by 01000011 01001111 01000100 01000101.\nComplete the AND gate truth table in full.\nName and describe the three steps of the fetch-decode-execute cycle.\nGive two jobs of an operating system and say why each matters.\nExplain the difference between augmented reality and virtual reality.\nGive two ways to use AI responsibly, and explain why each matters.",
       "answer": "This is augmented reality. AR adds computer-generated objects over the real world you can still see, whereas virtual reality replaces the real world entirely with a computer-made one. A benefit: learners can see and rotate a 3D model, understanding it far better than from a flat book picture.",
       "hint": "Work out which idea this is about — ALU (arithmetic logic unit), application software, ASCII — then explain your reasoning step by step."
     }
@@ -1156,47 +1156,47 @@
       "outcomeId": "lo01",
       "difficulty": "Core",
       "context": "Home",
-      "prompt": "D1 - NOT gate",
-      "answer": "D1 - NOT gate: input 0 gives output 1; input 1 gives output 0.",
+      "prompt": "NOT gate\nInput\nOutput",
+      "answer": "NOT gate: input 0 gives output 1; input 1 gives output 0.",
       "hint": "Work out which idea this is about — ALU (arithmetic logic unit), application software, ASCII — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: D1 - NOT gate: input 0 gives output 1; input 1 gives output 0."
+      "errorFeedback": "Check your reasoning against this: NOT gate: input 0 gives output 1; input 1 gives output 0."
     },
     {
       "id": "rp02",
       "outcomeId": "lo02",
       "difficulty": "Core",
       "context": "School",
-      "prompt": "D2 - AND gate",
-      "answer": "D2 - AND gate outputs (top to bottom): 0, 0, 0, 1. Only 1-and-1 gives 1.",
+      "prompt": "AND gate\nInput A\nInput B\nOutput",
+      "answer": "AND gate outputs (top to bottom): 0, 0, 0, 1. Only 1-and-1 gives 1.",
       "hint": "Work out which idea this is about — ALU (arithmetic logic unit), application software, ASCII — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: D2 - AND gate outputs (top to bottom): 0, 0, 0, 1. Only 1-and-1 gives 1."
+      "errorFeedback": "Check your reasoning against this: AND gate outputs (top to bottom): 0, 0, 0, 1. Only 1-and-1 gives 1."
     },
     {
       "id": "rp03",
       "outcomeId": "lo03",
       "difficulty": "Core",
       "context": "Market",
-      "prompt": "D4 - Name the gate",
-      "answer": "D3 - OR gate outputs (top to bottom): 0, 1, 1, 1. Only 0-and-0 gives 0.",
+      "prompt": "OR gate\nInput A\nInput B\nOutput",
+      "answer": "OR gate outputs (top to bottom): 0, 1, 1, 1. Only 0-and-0 gives 0.",
       "hint": "Work out which idea this is about — ALU (arithmetic logic unit), application software, ASCII — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: D3 - OR gate outputs (top to bottom): 0, 1, 1, 1. Only 0-and-0 gives 0."
+      "errorFeedback": "Check your reasoning against this: OR gate outputs (top to bottom): 0, 1, 1, 1. Only 0-and-0 gives 0."
     },
     {
       "id": "rp04",
       "outcomeId": "lo04",
       "difficulty": "Challenge",
       "context": "Community",
-      "prompt": "Look at this completed truth table and name the logic gate it describes.",
-      "answer": "D4 - Name the gate: the output is 1 whenever at least one input is 1, and 0 only when both are 0, so it is an OR gate.",
+      "prompt": "Name the gate\nLook at this completed truth table and name the logic gate it describes.\nInput A\nInput B\nOutput",
+      "answer": "Name the gate: the output is 1 whenever at least one input is 1, and 0 only when both are 0, so it is an OR gate.",
       "hint": "Work out which idea this is about — ALU (arithmetic logic unit), application software, ASCII — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: D4 - Name the gate: the output is 1 whenever at least one input is 1, and 0 only when both are 0, so it is an OR gate."
+      "errorFeedback": "Check your reasoning against this: Name the gate: the output is 1 whenever at least one input is 1, and 0 only when both are 0, so it is an OR gate."
     },
     {
       "id": "rp05",
       "outcomeId": "lo05",
       "difficulty": "Challenge",
       "context": "Travel",
-      "prompt": "E1 - The lost homework",
+      "prompt": "The lost homework\nSami spends an hour typing an essay but does not save it. The power cuts out and his work is gone. Using the words RAM, volatile and secondary storage, explain exactly why his work disappeared and what he should have done.",
       "answer": "His essay was held in RAM while he typed, and RAM is volatile, so it needs power to keep its contents. When the power cut out, everything in RAM was lost. He should have saved it to secondary storage (which is non-volatile), so it would survive a power cut.",
       "hint": "Work out which idea this is about — ALU (arithmetic logic unit), application software, ASCII — then explain your reasoning step by step.",
       "errorFeedback": "Check your reasoning against this: His essay was held in RAM while he typed, and RAM is volatile, so it needs power to keep its contents. When the power cut out, everything in RAM was lost. He should have saved it to secondary storage (which is non-volatile), so it would survive a power cut."
@@ -1206,7 +1206,7 @@
       "outcomeId": "lo06",
       "difficulty": "Challenge",
       "context": "Health",
-      "prompt": "Sami spends an hour typing an essay but does not save it. The power cuts out and his work is gone. Using the words RAM, volatile and secondary storage, explain exactly why his work disappeared and what he should have done.",
+      "prompt": "The bird-spotting app\nMaya wants an app that recognises local birds from photos. She trains it on 20 photos and it guesses badly. Explain, using the idea of machine learning, why it struggles and what she should do to improve it.",
       "answer": "A machine-learning model learns from examples, and 20 photos is far too few, so it has not learned the features that identify each bird. She should train it on many more labelled photos, including different angles and lighting, so it can learn reliable patterns.",
       "hint": "Work out which idea this is about — ALU (arithmetic logic unit), application software, ASCII — then explain your reasoning step by step.",
       "errorFeedback": "Check your reasoning against this: A machine-learning model learns from examples, and 20 photos is far too few, so it has not learned the features that identify each bird. She should train it on many more labelled photos, including different angles and lighting, so it can learn reliable patterns."

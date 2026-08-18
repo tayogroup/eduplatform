@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-18T10:01:00.241Z",
+  "generatedAt": "2026-08-18T10:20:43.945Z",
   "stage": {
     "id": "s08",
     "label": "Stage 8"
@@ -714,14 +714,14 @@
     {
       "id": "p31",
       "level": "Challenge",
-      "prompt": "Input: 72\nscore = int(input(\"Enter your percentage: \"))\nif score >= 80:\nprint(\"Gold star\")\nelif score >= 60:\nprint(\"Silver star\")\nelif score >= 50:\nprint(\"Bronze star\")\nprint(\"You needed 50% to pass\")",
+      "prompt": "Input: 72\nscore = int(input(\"Enter your percentage: \"))\nif score >= 80:\nprint(\"Gold star\")\nelif score >= 60:\nprint(\"Silver star\")\nelif score >= 50:\nprint(\"Bronze star\")\nelse:\nprint(\"You needed 50% to pass\")",
       "answer": "72 is not >= 80, but is >= 60, so it prints: Silver star.",
       "hint": "Work out which idea this is about — Algorithm, Pseudocode, High-level language — then explain your reasoning step by step."
     },
     {
       "id": "p32",
       "level": "Challenge",
-      "prompt": "Input: 3 (no other input needed)",
+      "prompt": "Input: 3 (no other input needed)\nnumber = 50",
       "answer": "answer 3 is not equal to 50, and 3 > 50 is false, so the else runs: Too low.",
       "hint": "Work out which idea this is about — Algorithm, Pseudocode, High-level language — then explain your reasoning step by step."
     },
@@ -742,7 +742,7 @@
     {
       "id": "p35",
       "level": "Extension",
-      "prompt": "Import the library, then round 8.2 up.\nprint(math.____(8.2))",
+      "prompt": "Import the library, then round 8.2 up.\n____ math\nprint(math.____(8.2))",
       "answer": "!= is 'not equal to'.",
       "hint": "Work out which idea this is about — Algorithm, Pseudocode, High-level language — then explain your reasoning step by step."
     },
@@ -1319,7 +1319,7 @@
       "outcomeId": "lo01",
       "difficulty": "Core",
       "context": "Home",
-      "prompt": "Input: 72\nscore = int(input(\"Enter your percentage: \"))\nif score >= 80:\nprint(\"Gold star\")\nelif score >= 60:\nprint(\"Silver star\")\nelif score >= 50:\nprint(\"Bronze star\")\nprint(\"You needed 50% to pass\")",
+      "prompt": "Input: 72\nscore = int(input(\"Enter your percentage: \"))\nif score >= 80:\nprint(\"Gold star\")\nelif score >= 60:\nprint(\"Silver star\")\nelif score >= 50:\nprint(\"Bronze star\")\nelse:\nprint(\"You needed 50% to pass\")",
       "answer": "72 is not >= 80, but is >= 60, so it prints: Silver star.",
       "hint": "Work out which idea this is about — Algorithm, Pseudocode, High-level language — then explain your reasoning step by step.",
       "errorFeedback": "Check your reasoning against this: 72 is not >= 80, but is >= 60, so it prints: Silver star."
@@ -1329,7 +1329,7 @@
       "outcomeId": "lo02",
       "difficulty": "Core",
       "context": "School",
-      "prompt": "Input: 3 (no other input needed)",
+      "prompt": "Input: 3 (no other input needed)\nnumber = 50",
       "answer": "answer 3 is not equal to 50, and 3 > 50 is false, so the else runs: Too low.",
       "hint": "Work out which idea this is about — Algorithm, Pseudocode, High-level language — then explain your reasoning step by step.",
       "errorFeedback": "Check your reasoning against this: answer 3 is not equal to 50, and 3 > 50 is false, so the else runs: Too low."
@@ -1359,7 +1359,7 @@
       "outcomeId": "lo05",
       "difficulty": "Challenge",
       "context": "Travel",
-      "prompt": "Import the library, then round 8.2 up.\nprint(math.____(8.2))",
+      "prompt": "Import the library, then round 8.2 up.\n____ math\nprint(math.____(8.2))",
       "answer": "!= is 'not equal to'.",
       "hint": "Work out which idea this is about — Algorithm, Pseudocode, High-level language — then explain your reasoning step by step.",
       "errorFeedback": "Check your reasoning against this: != is 'not equal to'."

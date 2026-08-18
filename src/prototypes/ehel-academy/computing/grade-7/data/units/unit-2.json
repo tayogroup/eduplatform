@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-18T10:00:59.964Z",
+  "generatedAt": "2026-08-18T10:20:43.797Z",
   "stage": {
     "id": "s07",
     "label": "Stage 7"
@@ -741,59 +741,59 @@
       "hint": "Look back at what accelerometer and algorithm mean in this unit, then answer in your own words."
     },
     {
-      "id": "p41",
-      "level": "Challenge",
-      "prompt": "D1 - Show a heart when button A is pressed",
-      "answer": "if button_a.is_pressed(): then display.show(Image.HEART)",
-      "hint": "Work out which idea this is about — accelerometer, algorithm, algorithm tracing — then explain your reasoning step by step."
-    },
-    {
       "id": "p42",
       "level": "Challenge",
-      "prompt": "display.show(____)",
-      "answer": "import music and if pin_logo.is_touched(): and music.play(music.BADDY)",
+      "prompt": "Show a heart when button A is pressed\nMicroPython code\nfrom microbit import *\nwhile True:\nif ____:\ndisplay.show(____)",
+      "answer": "if button_a.is_pressed(): then display.show(Image.HEART)",
       "hint": "Work out which idea this is about — accelerometer, algorithm, algorithm tracing — then explain your reasoning step by step."
     },
     {
       "id": "p43",
       "level": "Challenge",
-      "prompt": "D2 - Scroll your name, then show a duck",
-      "answer": "sleep(2000) (lower-case sleep pauses the program for 2 seconds)",
+      "prompt": "Scroll your name, then show a duck\nMicroPython code\nfrom microbit import *\ndisplay.____('Nora')\ndisplay.show(Image.____)",
+      "answer": "display.scroll('Nora') and display.show(Image.DUCK)",
       "hint": "Work out which idea this is about — accelerometer, algorithm, algorithm tracing — then explain your reasoning step by step."
     },
     {
       "id": "p44",
       "level": "Challenge",
-      "prompt": "display.____('Nora')",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "Scroll 'HOT' when the temperature is above 35\nMicroPython code\nfrom microbit import *\nwhile True:\nif temperature() ____ 35:\ndisplay.____('HOT')",
+      "answer": "if temperature() > 35: then display.scroll('HOT')",
       "hint": "Work out which idea this is about — accelerometer, algorithm, algorithm tracing — then explain your reasoning step by step."
     },
     {
-      "id": "p56",
+      "id": "p45",
+      "level": "Challenge",
+      "prompt": "Play the Baddy tune when the logo is touched\nMicroPython code\nfrom microbit import *\nimport ____\nwhile True:\nif pin_logo.____():\nmusic.play(music.____)",
+      "answer": "import music and if pin_logo.is_touched(): and music.play(music.BADDY)",
+      "hint": "Work out which idea this is about — accelerometer, algorithm, algorithm tracing — then explain your reasoning step by step."
+    },
+    {
+      "id": "p48",
       "level": "Extension",
       "prompt": "Each program below has one or more bugs. Find them, then write the corrected program. Check your work against the Answer Key.",
       "answer": "Three bugs. Change button_b to button_a; change Image.happy to Image.HAPPY (capitals); and put quotation marks around Hello so it becomes 'Hello'.",
       "hint": "Work out which idea this is about — accelerometer, algorithm, algorithm tracing — then explain your reasoning step by step."
     },
     {
-      "id": "p57",
+      "id": "p50",
       "level": "Extension",
-      "prompt": "E1 - Should show a happy face and scroll 'Hello' when button A is pressed",
+      "prompt": "Should show a heart forever\nMicroPython code\nwhile True:\ndisplay.show(Image.HEART)",
       "answer": "Missing the import. Add from microbit import * as the first line.",
       "hint": "Work out which idea this is about — accelerometer, algorithm, algorithm tracing — then explain your reasoning step by step."
     },
     {
-      "id": "p58",
+      "id": "p51",
       "level": "Extension",
-      "prompt": "if button_b.is_pressed():",
-      "answer": "Two bugs. Add import music near the top, and change the operator: dark means the light is low, so use <= 10 instead of > 10.",
+      "prompt": "Should show a tick when button A is pressed\nMicroPython code\nfrom microbit import *\nwhile True\nif button_a.is_pressed():\ndisplay.show(Image.YES)",
+      "answer": "Two bugs. Add a colon so it reads while True:, and indent the display.show line so it is inside the if (one more step of indentation).",
       "hint": "Work out which idea this is about — accelerometer, algorithm, algorithm tracing — then explain your reasoning step by step."
     },
     {
-      "id": "p59",
+      "id": "p52",
       "level": "Extension",
-      "prompt": "display.scroll(Hello)",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "Should flash between a happy and a sad face, one second each\nMicroPython code\nfrom microbit import *\nwhile True:\ndisplay.show(Image.HAPPY)\nSleep(1000)\ndisplay.show(Image.SAD)\nsleep(1000)",
+      "answer": "One bug. MicroPython commands are lower-case, so change Sleep(1000) to sleep(1000).",
       "hint": "Work out which idea this is about — accelerometer, algorithm, algorithm tracing — then explain your reasoning step by step."
     }
   ],
@@ -1349,7 +1349,7 @@
       "outcomeId": "lo01",
       "difficulty": "Core",
       "context": "Home",
-      "prompt": "D1 - Show a heart when button A is pressed",
+      "prompt": "Show a heart when button A is pressed\nMicroPython code\nfrom microbit import *\nwhile True:\nif ____:\ndisplay.show(____)",
       "answer": "if button_a.is_pressed(): then display.show(Image.HEART)",
       "hint": "Work out which idea this is about — accelerometer, algorithm, algorithm tracing — then explain your reasoning step by step.",
       "errorFeedback": "Check your reasoning against this: if button_a.is_pressed(): then display.show(Image.HEART)"
@@ -1360,19 +1360,19 @@
       "difficulty": "Core",
       "context": "School",
       "prompt": "D1 — Show a heart when button A is pressed",
-      "answer": "import music and if pin_logo.is_touched(): and music.play(music.BADDY)",
+      "answer": "display.scroll('Nora') and display.show(Image.DUCK)",
       "hint": "Work out which idea this is about — accelerometer, algorithm, algorithm tracing — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: import music and if pin_logo.is_touched(): and music.play(music.BADDY)"
+      "errorFeedback": "Check your reasoning against this: display.scroll('Nora') and display.show(Image.DUCK)"
     },
     {
       "id": "rp03",
       "outcomeId": "lo03",
       "difficulty": "Core",
       "context": "Market",
-      "prompt": "D2 - Scroll your name, then show a duck",
-      "answer": "sleep(2000) (lower-case sleep pauses the program for 2 seconds)",
+      "prompt": "Scroll 'HOT' when the temperature is above 35\nMicroPython code\nfrom microbit import *\nwhile True:\nif temperature() ____ 35:\ndisplay.____('HOT')",
+      "answer": "if temperature() > 35: then display.scroll('HOT')",
       "hint": "Work out which idea this is about — accelerometer, algorithm, algorithm tracing — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: sleep(2000) (lower-case sleep pauses the program for 2 seconds)"
+      "errorFeedback": "Check your reasoning against this: if temperature() > 35: then display.scroll('HOT')"
     },
     {
       "id": "rp04",
@@ -1380,29 +1380,29 @@
       "difficulty": "Challenge",
       "context": "Community",
       "prompt": "D2 — Scroll your name, then show a duck",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "import music and if pin_logo.is_touched(): and music.play(music.BADDY)",
       "hint": "Work out which idea this is about — accelerometer, algorithm, algorithm tracing — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "Check your reasoning against this: import music and if pin_logo.is_touched(): and music.play(music.BADDY)"
     },
     {
       "id": "rp05",
       "outcomeId": "lo05",
       "difficulty": "Challenge",
       "context": "Travel",
-      "prompt": "display.show(Image.____)",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "Pause 2 seconds between two images\nMicroPython code\nfrom microbit import *\nwhile True:\ndisplay.show(Image.HAPPY)\n____(2000)\ndisplay.show(Image.SAD)\nsleep(2000)",
+      "answer": "sleep(2000) (lower-case sleep pauses the program for 2 seconds)",
       "hint": "Work out which idea this is about — accelerometer, algorithm, algorithm tracing — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "Check your reasoning against this: sleep(2000) (lower-case sleep pauses the program for 2 seconds)"
     },
     {
       "id": "rp06",
       "outcomeId": "lo06",
       "difficulty": "Challenge",
       "context": "Health",
-      "prompt": "D3 - Scroll 'HOT' when the temperature is above 35",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "Show a tick when the micro:bit is shaken\nMicroPython code\nfrom microbit import *\nwhile True:\nif accelerometer.____('shake'):\ndisplay.show(Image.____)",
+      "answer": "if accelerometer.was_gesture('shake'): then display.show(Image.YES)",
       "hint": "Work out which idea this is about — accelerometer, algorithm, algorithm tracing — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "Check your reasoning against this: if accelerometer.was_gesture('shake'): then display.show(Image.YES)"
     }
   ],
   "reasoningPrompts": [

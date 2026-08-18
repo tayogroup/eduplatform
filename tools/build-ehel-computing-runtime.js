@@ -1214,8 +1214,16 @@ function buildGrade(grade) {
         .map((block) => tidy(block.text))
         // The line under a section heading is the rubric, not a question. Left
         // in, it becomes task 0 and every answer after it is off by one — the
-        // TLD question answered with the padlock explanation.
-        .filter((text) => text.length > 12 && !/^(choose|circle|tick|answer (?:each|in|the)|write (?:your|down|the letter)|read each|use (?:the|what)|for each|sort or match|copy each|some of these|these questions|this quiz)/i.test(text))
+        // TLD question answered with the padlock explanation. The prefix list
+        // below is what actually catches a rubric; length alone is not a safe
+        // proxy for it — "Spot the Broken Formula" sections set real tasks as
+        // short as "B5*B10" (6 characters) and "=SUM(B5:B10)" (12, so ">12"
+        // dropped it too), and a numbered KEY of the same short task is not
+        // filtered at all (keys are matched by their own label, unaffected by
+        // length), so the survivors fell back to their position in this
+        // now-shorter list instead of their true ordinal — task 4 read key 1's
+        // answer, task 5 read key 2's, and so on for every task after the cut.
+        .filter((text) => text.length > 2 && !/^(choose|circle|tick|answer (?:each|in|the)|write (?:your|down|the letter)|read each|use (?:the|what)|for each|sort or match|copy each|some of these|these questions|this quiz)/i.test(text))
         // A heading for a later section, swept into this one by the extractor.
         // It is neither a question nor an answer, and it appears once in each
         // run, so leaving it in shifts one side against the other.
@@ -1225,7 +1233,15 @@ function buildGrade(grade) {
       // also say where one question ends: a "predict the output" question is a
       // stem followed by its program, and every line of that program was being
       // read as a question of its own. Twenty-five items, none answerable.
-      const LABEL = new RegExp(`^(?:${letter}\\s*)?(\\d{1,2})\\s*[.):]\\s*`, "i");
+      // The dash form ("E1 - The lost homework") is a fourth shape, used for a
+      // scenario's title line while its own answer key labels the same item
+      // "E1: …" — colon, not dash. Missing the dash meant the title line and
+      // the scenario paragraph under it were never merged into one task, so
+      // both existed as separate, unlabelled entries and fell back to their
+      // position in the list — which is where a duplicate title/scenario pair
+      // for one book's four scenarios turned into eight loosely-aligned items,
+      // each pulling a neighbour's answer instead of its own.
+      const LABEL = new RegExp(`^(?:${letter}\\s*)?(\\d{1,2})(?:\\s*[.):]\\s*|\\s+[-–—]\\s+)`, "i");
       const groupByLabel = (lines) => {
         if (!lines.some((line) => LABEL.test(line))) return lines;
         const out = [];

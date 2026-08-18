@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-18T10:00:59.594Z",
+  "generatedAt": "2026-08-18T10:20:43.530Z",
   "stage": {
     "id": "s05",
     "label": "Stage 5"
@@ -658,21 +658,21 @@
       "id": "p26",
       "level": "Challenge",
       "prompt": "AVERAGE(B2:B6)",
-      "answer": "Incorrect - missing brackets. Correct: =SUM(B2:B6).",
+      "answer": "Incorrect - missing the equals sign. Correct: =AVERAGE(B2:B6).",
       "hint": "Work out which idea this is about — analyse, automatically, average — then explain your reasoning step by step."
     },
     {
       "id": "p27",
       "level": "Challenge",
       "prompt": "=AVERAGE(B2-B6)",
-      "answer": "Incorrect - a range on its own is not a calculation; there is no function or operator. Correct (for a total): =SUM(B2:B6).",
+      "answer": "Incorrect - a minus sign instead of a colon. Correct: =AVERAGE(B2:B6).",
       "hint": "Work out which idea this is about — analyse, automatically, average — then explain your reasoning step by step."
     },
     {
       "id": "p28",
       "level": "Challenge",
       "prompt": "=AVERAGE(B2B6)",
-      "answer": "Correct.",
+      "answer": "Incorrect - missing the colon in the range. Correct: =AVERAGE(B2:B6).",
       "hint": "Work out which idea this is about — analyse, automatically, average — then explain your reasoning step by step."
     },
     {
@@ -1268,9 +1268,9 @@
       "difficulty": "Core",
       "context": "Home",
       "prompt": "AVERAGE(B2:B6)",
-      "answer": "Incorrect - missing brackets. Correct: =SUM(B2:B6).",
+      "answer": "Incorrect - missing the equals sign. Correct: =AVERAGE(B2:B6).",
       "hint": "Work out which idea this is about — analyse, automatically, average — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Incorrect - missing brackets. Correct: =SUM(B2:B6)."
+      "errorFeedback": "Check your reasoning against this: Incorrect - missing the equals sign. Correct: =AVERAGE(B2:B6)."
     },
     {
       "id": "rp02",
@@ -1278,9 +1278,9 @@
       "difficulty": "Core",
       "context": "School",
       "prompt": "=AVERAGE(B2-B6)",
-      "answer": "Incorrect - a range on its own is not a calculation; there is no function or operator. Correct (for a total): =SUM(B2:B6).",
+      "answer": "Incorrect - a minus sign instead of a colon. Correct: =AVERAGE(B2:B6).",
       "hint": "Work out which idea this is about — analyse, automatically, average — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Incorrect - a range on its own is not a calculation; there is no function or operator. Correct (for a total): =SUM(B2:B6)."
+      "errorFeedback": "Check your reasoning against this: Incorrect - a minus sign instead of a colon. Correct: =AVERAGE(B2:B6)."
     },
     {
       "id": "rp03",
@@ -1288,9 +1288,9 @@
       "difficulty": "Core",
       "context": "Market",
       "prompt": "=AVERAGE(B2B6)",
-      "answer": "Correct.",
+      "answer": "Incorrect - missing the colon in the range. Correct: =AVERAGE(B2:B6).",
       "hint": "Work out which idea this is about — analyse, automatically, average — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Correct."
+      "errorFeedback": "Check your reasoning against this: Incorrect - missing the colon in the range. Correct: =AVERAGE(B2:B6)."
     },
     {
       "id": "rp04",

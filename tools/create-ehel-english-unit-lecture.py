@@ -291,11 +291,43 @@ def speakable_blanks(text: str) -> str:
     return re.sub(r"_{2,}", "blank", text)
 
 
+# A bare hyphen between two single letters ("A-Z", "a-m") is not reliably read
+# as "to" — confirmed 2026-08-18 by a user report on THIS unit's own lecture:
+# "Week 1: Learn the Alphabet (A-Z)" and "Week 2: Phonics (Letter Sounds a-m)"
+# both came out wrong, sourced straight from readings[].title via
+# reading_titles above. Same fix shape as speakable_blanks() above: rewrite
+# only what is SENT to the voice, never the displayed slide bullet. The
+# lookahead-into-backreference captures the MAXIMAL hyphen-joined run of
+# single letters before deciding anything, so a 3+-segment phonics blend
+# ("c-a-t", spoken letter-by-letter on purpose) is never mistaken for a
+# 2-letter range — and neither is the "A-a" inside "A-a-apple" peeled off on
+# its own, which a simpler pattern's backtracking would do. Python and Node
+# don't share a module here (see speakable_blanks above) — keep this in step
+# by hand with speakableLetterRanges() in tools/lib/ehel-tts.js.
+_LETTER_CHAIN_RE = re.compile(r"\b(?=([A-Za-z](?:[-–][A-Za-z])+))\1(?![-–]?[A-Za-z])")
+
+
+def speakable_letter_ranges(text: str) -> str:
+    def repl(m: re.Match) -> str:
+        chain = m.group(1)
+        parts = re.split(r"[-–]", chain)
+        if len(parts) != 2:
+            return chain  # phonics blend or longer — leave untouched
+        a, b = parts
+        if a != b and a.lower() == b.lower():
+            upper = a if a == a.upper() else b
+            lower = a if a == a.lower() else b
+            return f"capital {upper}, lowercase {lower}"
+        return f"{a} to {b}"
+
+    return _LETTER_CHAIN_RE.sub(repl, text)
+
+
 def create_audio(text: str, output: Path) -> None:
     key = os.environ.get("ELEVENLABS_API_KEY", "").strip()
     if not key:
         raise SystemExit("ELEVENLABS_API_KEY is not configured.")
-    text = speakable_blanks(text)
+    text = speakable_letter_ranges(speakable_blanks(text))
     request = urllib.request.Request(
         f"https://api.elevenlabs.io/v1/text-to-speech/{VOICE_ID}?output_format=mp3_44100_128",
         data=json.dumps({

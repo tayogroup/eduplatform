@@ -34,6 +34,41 @@ function speakableBlanks(text) {
   return String(text).replace(/_{2,}/g, "blank");
 }
 
+// A bare hyphen between two single letters ("A-Z", "a-m", "Parts A-C") is not
+// reliably read as "to" — ElevenLabs drops it, says "dash", or runs the
+// letters together. Confirmed 2026-08-18 from a user report on Grade 1 Unit
+// 0's own lecture: "Connect letters a-z" and "Week 2: Phonics (Letter Sounds
+// a-m)" both came out wrong. Same failure family as speakableBlanks() above,
+// same fix shape: rewrite only what is SENT to the voice, never the displayed
+// text — a learner reading along must still see "A-Z", not "A to Z".
+//
+// Deliberately leaves 3+-segment chains alone: "c-a-t", "m-a-t", "A-a-apple"
+// are phonics blending notation, spoken letter-by-letter on purpose, not a
+// range, and "c to a to t" would be a worse bug than the one this fixes. The
+// lookahead-into-backreference below captures the MAXIMAL run of single
+// letters joined by hyphens/en-dashes before deciding anything, so a 2-letter
+// range inside a longer chain (the "A-a" in "A-a-apple") is never peeled off
+// on its own — ordinary backtracking would do exactly that with a simpler
+// pattern, which is the bug this shape avoids.
+//
+// A same-letter case pair ("A-a", "M-m", from "join each big letter to its
+// small partner") is not a range either — "A to a" reads like it skips
+// nothing, so it gets its own phrasing instead.
+const LETTER_CHAIN_RE = /\b(?=([A-Za-z](?:[-–][A-Za-z])+))\1(?![-–]?[A-Za-z])/g;
+function speakableLetterRanges(text) {
+  return String(text).replace(LETTER_CHAIN_RE, (_, chain) => {
+    const parts = chain.split(/[-–]/);
+    if (parts.length !== 2) return chain; // phonics blend or longer — leave untouched
+    const [a, b] = parts;
+    if (a !== b && a.toLowerCase() === b.toLowerCase()) {
+      const upper = a === a.toUpperCase() ? a : b;
+      const lower = a === a.toLowerCase() ? a : b;
+      return `capital ${upper}, lowercase ${lower}`;
+    }
+    return `${a} to ${b}`;
+  });
+}
+
 const API_BASE = "https://api.elevenlabs.io/v1";
 const VOICE_ID = "XfNU2rGpBa01ckF309OY";
 const MODEL_ID = "eleven_multilingual_v2";
@@ -95,6 +130,6 @@ async function tts(text, { voiceId = VOICE_ID, modelId = MODEL_ID, voiceSettings
 }
 
 module.exports = {
-  tts, speakableBlanks, FatalTtsError, PermanentTtsError,
+  tts, speakableBlanks, speakableLetterRanges, FatalTtsError, PermanentTtsError,
   API_BASE, VOICE_ID, MODEL_ID, VOICE_SETTINGS, OUTPUT_FORMAT, TIMEOUT_MS,
 };

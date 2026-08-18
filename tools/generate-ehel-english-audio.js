@@ -50,7 +50,7 @@ const ENGLISH = path.join(ROOT, "src", "prototypes", "ehel-academy", "english");
 // voiceId, model`), so the clip's own metadata names the voice that made it —
 // which means the constant a run reads and the constant it writes down can
 // never disagree.
-const { tts, speakableBlanks, FatalTtsError, PermanentTtsError, VOICE_ID, MODEL_ID } = require("./lib/ehel-tts");
+const { tts, speakableBlanks, speakableLetterRanges, FatalTtsError, PermanentTtsError, VOICE_ID, MODEL_ID } = require("./lib/ehel-tts");
 
 // --- args ---
 const args = process.argv.slice(2);
@@ -115,7 +115,7 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 // Clean text for narration: strip emoji/boilerplate, collapse whitespace.
 function narration(value) {
-  return speakableBlanks(String(value || "")
+  return speakableLetterRanges(speakableBlanks(String(value || "")
     .replace(/🤖|💡|📚|✨|[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}]/gu, "")
     // Only a genuinely bracketed aside. The optional parens here used to make this
     // match bare instruction text too, and `[^)]*` then ran to the next ")" -- or
@@ -126,7 +126,7 @@ function narration(value) {
     // strips nothing until a real "(Ask your AI Tutor …)" aside appears.
     .replace(/\(\s*Ask your AI Tutor[^)]*\)/gi, "")
     .replace(/\s+/g, " ")
-    .trim());
+    .trim()));
 }
 
 function slug(value) {

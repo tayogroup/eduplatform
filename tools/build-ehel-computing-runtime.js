@@ -288,12 +288,17 @@ function rekeyPaddingOverrides(unit, byId) {
   // Applying it would define a word the learner was never asked about, and its
   // option list would be that vanished question's. Drop both fields and let the
   // builder's own explanation, which is derived from the question, stand.
+  // Options must stay out of "about": a "Which of these describes X?" question's
+  // distractors are OTHER concepts' full sentences by design, so they contain
+  // plenty of unrelated vocabulary. Checking against them made this guard pass
+  // almost any override — the term just had to appear in someone's wrong answer.
+  // Only the question and its own correct answer say what the question is about.
   const kept = {};
   for (const [itemId, fields] of Object.entries(rekeyed)) {
     const said = /^([A-Za-z][A-Za-z0-9 .'’-]{1,30}?) means /.exec(tidy(fields.explanation || ""));
     const question = questions.find((entry) => entry.id === itemId);
     const about = question
-      ? `${question.question} ${question.answer} ${(question.options || []).join(" ")}`.toLowerCase()
+      ? `${question.question} ${question.answer}`.toLowerCase()
       : "";
     if (!said || !question || about.includes(said[1].toLowerCase())) {
       kept[itemId] = fields;
@@ -1511,7 +1516,7 @@ function buildGrade(grade) {
   // working alone actually needs. Matched against the unit's own text so a
   // unit only advertises the tools it uses.
   const TOOLS = [
-    { match: /scratchjr/i, name: "ScratchJr", url: "jrscratch.org (tablet app: ScratchJr)", steps: ["Open ScratchJr on a tablet.", "Tap the house, then tap the plus to start a new project.", "Drag the coloured picture blocks together to make your character move.", "Tap the green flag to run it."], note: "Made for ages 5-7. No reading needed and no account to create." },
+    { match: /scratchjr/i, name: "ScratchJr", url: "scratchjr.org (tablet app: ScratchJr)", steps: ["Open ScratchJr on a tablet.", "Tap the house, then tap the plus to start a new project.", "Drag the coloured picture blocks together to make your character move.", "Tap the green flag to run it."], note: "Made for ages 5-7. No reading needed and no account to create." },
     { match: /\bscratch\b|scratch\.mit\.edu/i, name: "Scratch", url: "scratch.mit.edu", steps: ["Go to scratch.mit.edu and click Create.", "Drag blocks from the palette on the left into the code area.", "Make variables in the orange Variables section.", "Click the green flag to run and the red circle to stop."], note: "Runs in a web browser. Free, with nothing to download." },
     { match: /micro:?bit|makecode/i, name: "micro:bit simulator", url: "makecode.microbit.org (blocks) or python.microbit.org (Python)", steps: ["Open makecode.microbit.org for blocks, or python.microbit.org for Python.", "Write your code in the editor.", "The simulator micro:bit on the left runs it straight away.", "Click the on-screen A and B buttons, and use the shake control, to test your inputs."], note: "You do not need to own a real micro:bit — the simulator does everything." },
     { match: /\bpython\b/i, name: "Python", url: "python.microbit.org or any Python editor", steps: ["Open the editor and start a new file.", "Type your program one line at a time.", "Run it and read any error message from the bottom up.", "Fix one error at a time, then run it again."], note: "Python is a text language: spelling and indentation both matter." },

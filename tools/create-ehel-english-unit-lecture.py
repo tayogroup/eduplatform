@@ -275,10 +275,27 @@ def build_slides(unit: dict, dictionary: dict) -> list[dict]:
     ]
 
 
+# A run of underscores is a fill-in-the-blank marker meant to be SEEN, never
+# spoken, but ElevenLabs does not treat it as silent. Grade 1 Unit 1's outcomes
+# slide — "My name is ___. I am ___ years old. I like ___." — came back as
+# "My name is Da Christal. I am a Christal a years old. I like Da Christal way
+# so.": the model hallucinates a word to fill the position instead of skipping
+# it, and three blanks in one slide produced three different hallucinations.
+# Confirmed by transcribing the actual recording, not by inspecting the
+# source text. Applied only to what is SENT to the voice, in create_audio()
+# below — the slide's own displayed text keeps its "___" untouched. The same
+# fix, same reasoning, lives in tools/lib/ehel-tts.js's speakableBlanks() for
+# the other narration pipeline (generate-ehel-english-audio.js); Python and
+# Node don't share a module here, so keep the two in step by hand.
+def speakable_blanks(text: str) -> str:
+    return re.sub(r"_{2,}", "blank", text)
+
+
 def create_audio(text: str, output: Path) -> None:
     key = os.environ.get("ELEVENLABS_API_KEY", "").strip()
     if not key:
         raise SystemExit("ELEVENLABS_API_KEY is not configured.")
+    text = speakable_blanks(text)
     request = urllib.request.Request(
         f"https://api.elevenlabs.io/v1/text-to-speech/{VOICE_ID}?output_format=mp3_44100_128",
         data=json.dumps({

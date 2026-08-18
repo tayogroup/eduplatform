@@ -16,6 +16,24 @@
 // or the failure handling HERE; a generator that needs different settings passes
 // them in rather than forking the function.
 
+// A run of underscores is a fill-in-the-blank marker meant to be SEEN, never
+// spoken — but ElevenLabs does not treat it as silent. Grade 1 Unit 1's
+// "My name is ___. I am ___ years old. I like ___." came back as "My name is
+// Da Christal. I am a Christal a years old. I like Da Christal way so.": the
+// model hallucinates a word to fill the position instead of skipping it, and
+// three blanks in one sentence made three different hallucinations. Confirmed
+// by transcribing the actual recording, not by inspecting the source text.
+//
+// Not wired into tts() itself: this is a content transform, not a transport
+// concern, and the fix belongs where a course's narration is COMPOSED, so a
+// caller opts in explicitly rather than every subject's audio silently
+// changing shape. Call this on narration text before tts(), never on text
+// that will be DISPLAYED — the visual blank a learner fills in must stay
+// "___".
+function speakableBlanks(text) {
+  return String(text).replace(/_{2,}/g, "blank");
+}
+
 const API_BASE = "https://api.elevenlabs.io/v1";
 const VOICE_ID = "XfNU2rGpBa01ckF309OY";
 const MODEL_ID = "eleven_multilingual_v2";
@@ -77,6 +95,6 @@ async function tts(text, { voiceId = VOICE_ID, modelId = MODEL_ID, voiceSettings
 }
 
 module.exports = {
-  tts, FatalTtsError, PermanentTtsError,
+  tts, speakableBlanks, FatalTtsError, PermanentTtsError,
   API_BASE, VOICE_ID, MODEL_ID, VOICE_SETTINGS, OUTPUT_FORMAT, TIMEOUT_MS,
 };

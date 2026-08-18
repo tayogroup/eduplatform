@@ -1541,6 +1541,14 @@ function escapeHtml(value = "") {
 // deployed shell serves, so the two must not drift.
 const SHARED_AUDIO = /(^|\/)media\/audio\/grade-\d+\//;
 
+// lectureVideo and lecturePoster keep a stable filename across a re-render —
+// unlike an individual clip's `source`, there is no `?a=` stamp anywhere on
+// this path, so a browser that already played a lecture caches the OLD file
+// for a year and a redeploy at the same URL never reaches it. lectureCaptions
+// does not need this: its filename is a content hash (version-lecture-
+// captions.js), so a caption edit already mints a new URL on its own.
+const CACHE_BUST_ASSET_KEYS = new Set(["lectureVideo", "lecturePoster"]);
+
 function resolveGradeAssets(value) {
   const assetKeys = new Set(["source", "normal", "slow", "image", "lectureVideo", "lecturePoster", "lectureCaptions"]);
   if (Array.isArray(value)) {
@@ -1550,7 +1558,10 @@ function resolveGradeAssets(value) {
   if (!value || typeof value !== "object") return value;
   for (const [key, item] of Object.entries(value)) {
     if (assetKeys.has(key) && typeof item === "string" && SHARED_AUDIO.test(item)) continue;
-    else if (assetKeys.has(key) && typeof item === "string" && /^(\.\.?[/\\])/.test(item)) value[key] = new URL(item.replace(/\\/g, "/"), gradeRootUrl).href;
+    else if (assetKeys.has(key) && typeof item === "string" && /^(\.\.?[/\\])/.test(item)) {
+      const resolved = new URL(item.replace(/\\/g, "/"), gradeRootUrl).href;
+      value[key] = CACHE_BUST_ASSET_KEYS.has(key) ? withAudioRelease(resolved) : resolved;
+    }
     else resolveGradeAssets(item);
   }
   return value;

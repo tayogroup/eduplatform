@@ -267,7 +267,11 @@ function placementPanels(exam) {
 function overviewItems(holder, panels, idPrefix, grade) {
   const dir = `media/audio/grade-${grade}/overview`;
   return panels.filter(([, text]) => narration(text)).map(([key, text]) => {
-    const id = `${idPrefix}-overview-${key}`;
+    // See the comment on the vocabulary branch below: a re-record under the
+    // same filename keeps the old bytes at the edge for a year. audioRevision
+    // works the same way here.
+    const revision = holder.overviewAudio?.[key]?.audioRevision || "";
+    const id = `${idPrefix}-overview-${key}${revision}`;
     const source = `./${dir}/${id}.mp3`;
     return {
       id, ref: holder, title: key,
@@ -283,6 +287,7 @@ function overviewItems(holder, panels, idPrefix, grade) {
           provider: "ElevenLabs", voiceId: VOICE_ID, model: MODEL_ID,
           slowPlaybackRate: prev.slowPlaybackRate ?? 0.76,
           available: true, status: "Generated",
+          ...(prev.audioRevision ? { audioRevision: prev.audioRevision } : {}),
         };
       },
     };
@@ -403,7 +408,8 @@ function itemsForUnit(unit, grade) {
   // grammar entry, whose `audio` already belongs to the explanation.
   if (category === "grammar-practice") {
     return (unit.grammar || []).filter((g) => g.practice).map((g) => {
-      const id = `${g.grammarId}-practice`;
+      const revision = g.practiceAudio?.audioRevision || "";
+      const id = `${g.grammarId}-practice${revision}`;
       const source = `./${dir}/${id}.mp3`;
       const prev = g.practiceAudio || {};
       return {
@@ -418,6 +424,7 @@ function itemsForUnit(unit, grade) {
             provider: "ElevenLabs", voiceId: VOICE_ID, model: MODEL_ID,
             slowPlaybackRate: prev.slowPlaybackRate ?? 0.76,
             available: true, status: "Generated",
+            ...(prev.audioRevision ? { audioRevision: prev.audioRevision } : {}),
           };
         },
       };
@@ -431,7 +438,8 @@ function itemsForUnit(unit, grade) {
     const idKey = category === "writing" ? "writingId" : "activityId";
     const textKey = category === "writing" ? "promptAndInstructions" : "instructionsAndItems";
     return list.map((entry) => {
-      const id = entry[idKey];
+      const revision = entry.audio?.audioRevision || "";
+      const id = `${entry[idKey]}${revision}`;
       const source = `./${dir}/${id}.mp3`;
       const prev = entry.audio || {};
       return {
@@ -446,6 +454,7 @@ function itemsForUnit(unit, grade) {
             provider: "ElevenLabs", voiceId: VOICE_ID, model: MODEL_ID,
             slowPlaybackRate: prev.slowPlaybackRate ?? 0.76,
             available: true, status: "Generated",
+            ...(prev.audioRevision ? { audioRevision: prev.audioRevision } : {}),
           };
         },
       };

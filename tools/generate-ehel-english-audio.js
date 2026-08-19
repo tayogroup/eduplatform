@@ -28,6 +28,12 @@
 //   Also rewrites each entry's audio.normal to the resolver-compatible
 //   media/audio/grade-N/dictionary/ path; the authored ./media/dictionary/ and
 //   ./vocabulary-audio/ paths resolved to nothing on disk.
+//   glossary = two clips per sentence-glossary.json entry (the word, and its
+//   definition) -- the words the click-popover on a vocabulary word's practice
+//   sentence links to (linkGlossaryWords/showGlossaryPopover in english.js).
+//   A mostly separate word list from master-dictionary: most entries have no
+//   dictionaryEntryId to join against, so this narrates its own text rather
+//   than reusing the dictionary clips.
 //   e.g. node tools/generate-ehel-english-audio.js readings 1
 //        node tools/generate-ehel-english-audio.js readings 1 2 3 --limit 5
 //        node tools/generate-ehel-english-audio.js readings --dry   (estimate only)
@@ -54,7 +60,7 @@ const { tts, speakableBlanks, speakableLetterRanges, FatalTtsError, PermanentTts
 
 // --- args ---
 const args = process.argv.slice(2);
-const category = args.find((a) => /^(readings|grammar-practice|grammar|speaking|vocabulary|dictionary|writing|activities|final-quiz|overview)$/.test(a)) || "readings";
+const category = args.find((a) => /^(readings|grammar-practice|grammar|speaking|vocabulary|dictionary|glossary|writing|activities|final-quiz|overview)$/.test(a)) || "readings";
 // A bare 1-8 selects a grade — but only when it is not the VALUE of a flag.
 // `--limit 5` used to add grade 5 to the run: the number is a positional match,
 // so a run meant to cap itself at five clips quietly widened to a second grade
@@ -173,6 +179,65 @@ function dictionaryItems(dictionary, grade) {
       },
     };
   });
+}
+
+// The sentence-glossary word list the click-popover on a vocabulary word's
+// practice sentence reads (linkGlossaryWords/showGlossaryPopover in
+// english.js). Keyed by lowercase word string, not by dictionaryEntryId --
+// most entries have no master-dictionary counterpart at all, so this narrates
+// its own word and definition text rather than reusing dictionary clips.
+function glossaryFile(grade) {
+  return path.join(ENGLISH, `grade-${grade}`, "data", "sentence-glossary.json");
+}
+
+function glossaryItems(glossary, grade) {
+  const dir = `media/audio/grade-${grade}/glossary`;
+  const items = [];
+  for (const [word, entry] of Object.entries(glossary.entries || {})) {
+    if (!entry) continue;
+    const id = slug(word);
+
+    const wordSource = `./${dir}/${id}.mp3`;
+    const prevWord = entry.wordAudio || {};
+    items.push({
+      id, ref: entry, title: word,
+      text: narration(word),
+      minChars: 1, // a single word is the whole point here, same as dictionary
+      source: wordSource,
+      output: path.join(ENGLISH, dir, `${id}.mp3`),
+      done: prevWord.available === true && prevWord.source === wordSource,
+      apply() {
+        entry.wordAudio = {
+          source: wordSource, normal: wordSource, slow: wordSource,
+          provider: "ElevenLabs", voiceId: VOICE_ID, model: MODEL_ID,
+          slowPlaybackRate: prevWord.slowPlaybackRate ?? 0.76,
+          cueStart: 0, cueEnd: null,
+          available: true, status: "Generated",
+        };
+      },
+    });
+
+    const defId = `${id}-meaning`;
+    const defSource = `./${dir}/${defId}.mp3`;
+    const prevDef = entry.definitionAudio || {};
+    items.push({
+      id: defId, ref: entry, title: word,
+      text: narration(entry.definition),
+      source: defSource,
+      output: path.join(ENGLISH, dir, `${defId}.mp3`),
+      done: prevDef.available === true && prevDef.source === defSource,
+      apply() {
+        entry.definitionAudio = {
+          source: defSource, normal: defSource, slow: defSource,
+          provider: "ElevenLabs", voiceId: VOICE_ID, model: MODEL_ID,
+          slowPlaybackRate: prevDef.slowPlaybackRate ?? 0.76,
+          cueStart: 0, cueEnd: null,
+          available: true, status: "Generated",
+        };
+      },
+    });
+  }
+  return items;
 }
 
 // The course-level final quiz, whose questions live in their own file rather than in
@@ -769,6 +834,19 @@ async function main() {
         if (await processItem(item, grade)) changed = true;
       }
       if (changed) dirtyFiles.set(filePath, { pristine: JSON.parse(dictionaryText), mutated: dictionary });
+      continue;
+    }
+
+    if (category === "glossary") {
+      const filePath = glossaryFile(grade);
+      if (!fs.existsSync(filePath)) continue;
+      const glossaryText = fs.readFileSync(filePath, "utf8");
+      const glossary = JSON.parse(glossaryText);
+      let changed = false;
+      for (const item of glossaryItems(glossary, grade)) {
+        if (await processItem(item, grade)) changed = true;
+      }
+      if (changed) dirtyFiles.set(filePath, { pristine: JSON.parse(glossaryText), mutated: glossary });
       continue;
     }
 

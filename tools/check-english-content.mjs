@@ -436,6 +436,19 @@ for (const gradeDir of grades) {
       checkKey(`${gradeDir}/${name}`, id, question);
     }
   }
+
+  // ── the vocabulary practice-sentence word glossary ──────────────────────
+  const glossaryFile = path.join(dataDir, "sentence-glossary.json");
+  if (fs.existsSync(glossaryFile)) {
+    const glossary = readJson(glossaryFile);
+    walkAudio(glossary.entries || {}, (descriptor, where) => {
+      if (descriptor.available !== true) return;
+      const source = descriptor.source || descriptor.normal;
+      if (!source) { fail(`${gradeDir}/sentence-glossary.json`, `${where} is available:true with no source`); return; }
+      const resolved = resolveAsset(source, gradeDir);
+      if (resolved && !fs.existsSync(resolved)) fail(`${gradeDir}/sentence-glossary.json`, `${where} is available:true but ${source} is not on disk`);
+    });
+  }
 }
 
 function walkAudio(value, visit, where = "") {

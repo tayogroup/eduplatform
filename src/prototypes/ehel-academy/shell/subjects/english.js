@@ -1593,7 +1593,11 @@ function showGlossaryPopover(button) {
   const pop = document.createElement("div");
   pop.className = "glossary-popover";
   pop.setAttribute("role", "status");
-  pop.innerHTML = `<strong>${escapeHtml(word)}</strong><p>${escapeHtml(entry.definition)}</p>`;
+  // Rendered only once a clip exists, same rule as the vocabulary page's
+  // #hear-meaning: the descriptors ship ahead of the audio while scripts are
+  // in review, and a button that can only ever say "not available" is worse
+  // than none.
+  pop.innerHTML = `<strong>${escapeHtml(word)}${entry.wordAudio?.available ? ` <button class="icon-button" type="button" id="glossary-hear-word" title="Listen" aria-label="Listen to ${escapeHtml(word)}">${icon("volume-2")}</button>` : ""}</strong><p>${escapeHtml(entry.definition)}${entry.definitionAudio?.available ? ` <button class="icon-button" type="button" id="glossary-hear-definition" title="Listen to the meaning" aria-label="Listen to the meaning of ${escapeHtml(word)}">${icon("volume-2")}</button>` : ""}</p>`;
   document.body.appendChild(pop);
   const rect = button.getBoundingClientRect();
   const top = rect.bottom + window.scrollY + 6;
@@ -1601,6 +1605,13 @@ function showGlossaryPopover(button) {
   const left = Math.max(8, Math.min(rect.left + window.scrollX, maxLeft));
   pop.style.top = `${top}px`;
   pop.style.left = `${left}px`;
+  pop.querySelector("#glossary-hear-word")?.addEventListener("click", (event) => playAudio(entry.wordAudio.source, {
+    rate: AI_NARRATION_RATE, start: entry.wordAudio.cueStart, end: entry.wordAudio.cueEnd, button: event.currentTarget,
+  }));
+  pop.querySelector("#glossary-hear-definition")?.addEventListener("click", (event) => playAudio(entry.definitionAudio.source, {
+    rate: AI_NARRATION_RATE, start: entry.definitionAudio.cueStart, end: entry.definitionAudio.cueEnd, button: event.currentTarget,
+  }));
+  icons();
   button.setAttribute("aria-expanded", "true");
   activeGlossaryButton = button;
 }

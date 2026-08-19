@@ -1545,6 +1545,11 @@ function visibleSections() {
     return [
       ["overview", "layout-dashboard", "Overview"],
       ["placement", "clipboard-check", placementExam?.kind === "readiness" ? "Readiness check" : "Placement exam"],
+      // The year plan lives here, under the Prerequisite entries, because it is
+      // read BEFORE the year is walked — the same reason the placement exam
+      // lives here. It is a reference page, not a step: never counted, never
+      // locked (sectionUnlocked already answers true for the whole prereq unit).
+      ["year-plan", "calendar-days", "Year plan"],
     ];
   }
   // Books drops out the same way Games does, and for the same reason: a section
@@ -4272,6 +4277,90 @@ function renderPrereqOverview() {
   icons();
 }
 
+// ===================== prerequisite unit: year plan ==========================
+// One page per grade, drawn from the course manifest at render time so it can
+// never disagree with the course it describes: the units, their terms and word
+// counts are read off the manifest, not restated here. It lives in the
+// Prerequisite unit's nav because it is read before the year is walked, and it
+// is a reference page, not a step — never counted, never locked.
+//
+// Weeks are per-term teaching weeks on the standing school calendar — three
+// terms of three months, ~12 teaching weeks each — allocated evenly across the
+// term's units with the remainder given to the earlier units, so a term of
+// three units reads 4+4+4 and a term of four reads 3+3+3+3. Units below
+// defaultUnit are excluded the same way the pickers exclude them: Grade 1's
+// withdrawn Unit 0 must not reappear here as a scheduled week.
+const YEAR_PLAN_TERM_WEEKS = 12;
+function yearPlanTerms() {
+  const byTerm = new Map();
+  for (const unit of manifest.units.filter((entry) => Number(entry.number) >= defaultUnit)) {
+    const key = unit.termId || "t01";
+    if (!byTerm.has(key)) byTerm.set(key, []);
+    byTerm.get(key).push(unit);
+  }
+  return [...byTerm.entries()].sort(([a], [b]) => a.localeCompare(b)).map(([termId, units], index) => ({ termNo: index + 1, units }));
+}
+function yearPlanWeekRows(units) {
+  const base = Math.floor(YEAR_PLAN_TERM_WEEKS / units.length);
+  const extra = YEAR_PLAN_TERM_WEEKS - base * units.length;
+  let start = 1;
+  return units.map((unit, index) => {
+    const span = base + (index < extra ? 1 : 0);
+    const row = { unit, from: start, to: start + span - 1 };
+    start += span;
+    return row;
+  });
+}
+function renderYearPlan() {
+  if (!isPrereqUnit) return navigate("overview");
+  const isReadiness = placementExam?.kind === "readiness";
+  const checkLabel = isReadiness ? "Readiness check" : "Placement exam";
+  const terms = yearPlanTerms();
+  const allUnits = terms.flatMap((term) => term.units);
+  const totalWords = allUnits.reduce((sum, unit) => sum + (Number(unit.vocabularyCount) || 0), 0);
+  const finalQuiz = manifest.finalAssessment;
+  const rhythm = [
+    ["Day 1", "Words", "Meet the unit's new words with the word cards, and listen to each one."],
+    ["Day 2", "Reading", "Read one story with its narration, then answer its comprehension questions."],
+    ["Day 3", "Grammar", "Work through two grammar lessons, said aloud and practised with examples."],
+    ["Day 4", "Speak & write", "Do two speaking tasks and two writing tasks from the unit."],
+    ["Day 5", "Play & check", "Play the unit games, try the quiz, and join the live session when one is scheduled."],
+  ];
+  const weekLabel = (row) => (row.from === row.to ? `Week ${row.from}` : `Weeks ${row.from}–${row.to}`);
+  const termTable = (term) => {
+    const rows = yearPlanWeekRows(term.units);
+    const isFirstTerm = term.termNo === 1;
+    const isLastTerm = term.termNo === terms.length;
+    return `<section class="panel">
+      <span class="eyebrow">Term ${term.termNo} · Months ${(term.termNo - 1) * 3 + 1}–${term.termNo * 3}</span>
+      <div class="teacher-table-scroll"><table class="teacher-table"><thead><tr><th>Weeks</th><th>Unit</th><th>New words</th></tr></thead><tbody>
+        ${isFirstTerm ? `<tr><td>Week 1</td><td><strong>${checkLabel}</strong> — finds your starting point before Unit ${defaultUnit}; it is never a fail</td><td>—</td></tr>` : ""}
+        ${rows.map((row) => `<tr><td>${weekLabel(row)}</td><td><strong>Unit ${row.unit.number}: ${escapeHtml(row.unit.title)}</strong></td><td>${Number(row.unit.vocabularyCount) || "—"}</td></tr>`).join("")}
+        ${isLastTerm && finalQuiz ? `<tr><td>Week ${YEAR_PLAN_TERM_WEEKS}</td><td><strong>${escapeHtml(finalQuiz.title || "Final course quiz")}</strong> — ${finalQuiz.questionCount} questions, mastery at ${finalQuiz.passPercent}%</td><td>—</td></tr>` : ""}
+      </tbody></table></div>
+    </section>`;
+  };
+  $("#app").innerHTML = `${pageHeader(
+    `${gradeLabel} · Prerequisite unit`,
+    `${gradeLabel} English year plan`,
+    `Your year at a glance: ${terms.length} terms of three months, ${allUnits.length} units, and where each one falls. Every term is about ${YEAR_PLAN_TERM_WEEKS} teaching weeks, so there is room for holidays.`,
+    "Year plan",
+  )}
+    <div class="final-quiz-intro">
+      <section class="panel">
+        <div class="final-quiz-facts"><span><strong>${allUnits.length}</strong> units</span><span><strong>${totalWords}</strong> new words</span><span><strong>${terms.length}</strong> terms</span><span><strong>5</strong> short sessions a week</span></div>
+        ${isReadiness && gradeNumber === 1 ? `<p>If the readiness check finds the letters are still new, it opens the Alphabet &amp; Sounds review programme for you — six extra weeks on letters and sounds, alongside or ahead of Unit 1.</p>` : ""}
+      </section>
+      ${terms.map(termTable).join("")}
+      <section class="panel"><h3>The weekly rhythm</h3><p>Every unit runs on the same five-day pattern, so you always know what kind of work today brings.</p><ol class="path-list">
+        ${rhythm.map(([day, name, what]) => `<li>${icon("circle-check-big")}<span><strong>${day} · ${name}:</strong> ${what}</span></li>`).join("")}
+      </ol></section>
+      <div class="audio-actions"><button class="button gold" data-go="placement" type="button">${isReadiness ? "Start the readiness check" : "Start the placement exam"} ${icon("arrow-right")}</button><a class="button secondary" href="${courseLocation(defaultUnit)}">Open Unit ${defaultUnit} ${icon("arrow-right")}</a></div>
+    </div>`;
+  $$('[data-go]').forEach((button) => button.addEventListener("click", () => navigate(button.dataset.go)));
+  icons();
+}
+
 function renderPlacementExam() {
   if (!isPrereqUnit) return navigate("overview");
   if (placementProgress.submitted) return renderPlacementResults(calculatePlacementResults());
@@ -5053,7 +5142,7 @@ const config = {
   // 92% and could not open the next unit — a support tool gating progression.
   // It stays in the nav and still ticks when used; it just no longer decides
   // whether a unit is finished.
-  nonCountable: ["overview", "live", "final-quiz", "teacherguide"],
+  nonCountable: ["overview", "live", "final-quiz", "teacherguide", "year-plan"],
   gradeSections: [],
   // English draws its own card (renderSectionCompletion): its sections open
   // in a gated chain and its units unlock one another, which the shell's
@@ -5083,6 +5172,7 @@ const config = {
   renderers: gated({
     overview: () => (isPrereqUnit ? renderPrereqOverview() : renderOverview()),
     placement: () => renderPlacementExam(),
+    "year-plan": () => renderYearPlan(),
     teacherguide: () => renderTeacherGuide(),
     lecture: () => renderLecture(),
     dictionary: () => renderDictionary(),
@@ -5189,8 +5279,8 @@ const config = {
     }
     if (location.hash.slice(1) === "final-quiz" && unitNumber !== 10) location.hash = "overview";
     if (location.hash.slice(1) === "games" && !gamePack) location.hash = "overview";
-    if (isPrereqUnit && !["overview", "placement", "teacher"].includes(location.hash.slice(1))) location.hash = "overview";
-    if (!isPrereqUnit && location.hash.slice(1) === "placement") location.hash = "overview";
+    if (isPrereqUnit && !["overview", "placement", "year-plan", "teacher"].includes(location.hash.slice(1))) location.hash = "overview";
+    if (!isPrereqUnit && ["placement", "year-plan"].includes(location.hash.slice(1))) location.hash = "overview";
     // Cosmetic only — the lock screen renders whatever the hash says. This just
     // stops the nav highlighting a section that is no longer on the page.
     if (unitIsLocked() && location.hash.slice(1) !== "overview") location.hash = "overview";

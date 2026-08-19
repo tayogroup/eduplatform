@@ -137,11 +137,14 @@ async function handleElevenLabs(req, res) {
 // wehel_prompt.json; change wording there, never here.
 // Wehel chat: the shared dev handler (also mounted by vite.config.js at the
 // production path). Assembly logic lives once, in tools/lib/wehel-dev-chat.js.
-const { createWehelChatHandler } = require(path.join(__dirname, 'lib', 'wehel-dev-chat.js'));
+const { createWehelChatHandler, createWehelHomeworkHandler } = require(path.join(__dirname, 'lib', 'wehel-dev-chat.js'));
 const handleWehelChat = createWehelChatHandler({
   apiKey: () => process.env.ANTHROPIC_API_KEY,
   model: () => process.env.WEHEL_MODEL
 });
+// Homework twin: sample assignments only when WEHEL_DEV_HOMEWORK is set, the
+// empty list otherwise — see the handler's own comment.
+const handleWehelHomework = createWehelHomeworkHandler({ enabled: () => process.env.WEHEL_DEV_HOMEWORK });
 
 // Somali vocabulary audio (Azure "Ubax"/Ubah voice) — the same shared handler
 // vite.config.js mounts at the production path /local/hubredirect/somali_tts.php.
@@ -183,6 +186,7 @@ const apiRoutes = {
   '/api/elevenlabs-tts': handleElevenLabs,
   '/api/elevenlabs-stt': handleElevenLabsStt,
   '/api/wehel-chat': handleWehelChat,
+  '/api/wehel-homework': handleWehelHomework,
   '/api/somali-tts': handleSomaliTts
 };
 

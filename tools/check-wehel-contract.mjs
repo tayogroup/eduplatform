@@ -44,8 +44,8 @@ globalThis.location = { hostname: "localhost", port: "4287", search: "", href: "
 globalThis.localStorage = { getItem: () => null, setItem: () => {} };
 
 const wehel = await import(pathToFileURL(SHELL).href);
-const { apiMessages, withoutMediaPlumbing, UNIT_JSON_LIMIT } = wehel;
-for (const [name, value] of Object.entries({ apiMessages, withoutMediaPlumbing, UNIT_JSON_LIMIT })) {
+const { apiMessages, withoutMediaPlumbing, UNIT_JSON_LIMIT, withAttachmentBlocks, homeworkContextText, HOMEWORK_CONTEXT_LIMIT, WEHEL_ATTACH_DAILY_LIMIT } = wehel;
+for (const [name, value] of Object.entries({ apiMessages, withoutMediaPlumbing, UNIT_JSON_LIMIT, withAttachmentBlocks, homeworkContextText, HOMEWORK_CONTEXT_LIMIT, WEHEL_ATTACH_DAILY_LIMIT })) {
   if (value === undefined) fail("shell/wehel.js no longer exports what this gate checks", `${name} is missing — restore the export rather than deleting the check`);
 }
 if (failures.length) { report(); process.exit(1); }
@@ -107,6 +107,50 @@ const text = (sent) => sent.map((m) => m.content).join(" | ");
   if (sent.length && sent[0].role !== "user") fail("The payload does not open with a user turn", `starts with ${sent[0].role}`);
 }
 
+// --- 1b. attachments ride the turn they were sent with, and nothing else -----
+
+{
+  const conversation = apiMessages([
+    { role: "user", text: "explain the word hello" },
+    { role: "assistant", text: "Hello is what we say when we meet somebody." },
+    { role: "user", text: "here is my homework\n(Attached: worksheet.jpg)" },
+  ]);
+  const files = [{ name: "worksheet.jpg", mediaType: "image/jpeg", data: "aGVsbG8=" }];
+  const sent = withAttachmentBlocks(conversation, files);
+  if (sent.length !== conversation.length) fail("Attaching a file changes the turn count", `${conversation.length} turns became ${sent.length}`);
+  if (typeof sent[0].content !== "string" || typeof sent[1].content !== "string") {
+    fail("Attachments leak into earlier turns", "only the live question may carry blocks — earlier turns must stay plain text");
+  }
+  const last = sent[sent.length - 1];
+  const image = Array.isArray(last.content) && last.content.find((block) => block.type === "image");
+  const text = Array.isArray(last.content) && last.content.find((block) => block.type === "text");
+  if (!image || image.source?.data !== "aGVsbG8=") fail("The attached file does not reach the model", JSON.stringify(last));
+  if (!text || !/here is my homework/.test(text.text)) fail("Attaching a file drops the learner's own words", JSON.stringify(last));
+  // No attachments → the conversation passes through untouched, so every
+  // pre-attachment behaviour above still holds verbatim.
+  const untouched = withAttachmentBlocks(conversation, []);
+  if (JSON.stringify(untouched) !== JSON.stringify(conversation)) fail("An empty attachment list rewrites the conversation", JSON.stringify(untouched));
+  // A PDF becomes a document block, not a mislabelled image.
+  const pdfSent = withAttachmentBlocks(conversation, [{ name: "hw.pdf", mediaType: "application/pdf", data: "aGVsbG8=" }]);
+  const doc = pdfSent[pdfSent.length - 1].content.find((block) => block.type === "document");
+  if (!doc || doc.source?.media_type !== "application/pdf") fail("A PDF attachment is not sent as a document block", JSON.stringify(pdfSent[pdfSent.length - 1]));
+}
+
+// --- 1c. the homework context carries the teacher's words, capped ------------
+
+{
+  const text = homeworkContextText([
+    { source: "workspace", title: "Fractions sheet", course: "Mathematics", text: "Do questions 1-10", dueLabel: "22 Aug 2026", status: "assigned", points: 20 },
+    { source: "live-class", title: "Read pages 4-6", classTitle: "English live (18 Aug)", text: "", dueLabel: "", priority: "high" },
+  ]);
+  for (const expected of ["Fractions sheet", "questions 1-10", "22 Aug 2026", "Read pages 4-6", "high"]) {
+    if (!text.includes(expected)) fail("The homework context drops what the teacher wrote", `"${expected}" missing from: ${text}`);
+  }
+  const capped = homeworkContextText([{ title: "x", text: "y".repeat(HOMEWORK_CONTEXT_LIMIT * 2) }]);
+  if (capped.length > HOMEWORK_CONTEXT_LIMIT) fail("The homework context exceeds its own cap", `${capped.length} > ${HOMEWORK_CONTEXT_LIMIT}`);
+  if (homeworkContextText([]) !== "" || homeworkContextText(null) !== "") fail("No homework must mean an empty context", "a non-empty string would append the homework block for a learner with no homework");
+}
+
 // --- 2. a whole unit reaches the tutor --------------------------------------
 
 const capIn = (file, re) => { const m = fs.readFileSync(file, "utf8").match(re); return m ? Number(m[1]) : null; };
@@ -114,6 +158,22 @@ const phpCap = capIn(PHP, /core_text::strlen\(\$unitcontent\)\s*>\s*(\d+)/);
 const devCap = capIn(DEV, /unitContent\.length\s*>\s*(\d+)/);
 if (phpCap !== UNIT_JSON_LIMIT || devCap !== UNIT_JSON_LIMIT) {
   fail("The three unit-content caps disagree", `wehel.js ${UNIT_JSON_LIMIT}, wehel_chat.php ${phpCap}, wehel-dev-chat.js ${devCap} — the smallest wins silently, and content past it is invisible to the tutor`);
+}
+
+// Same rule for the homework context cap and the attachment daily allowance:
+// each lives in three files, and the smallest (or largest) winning silently is
+// how a limit stops being a limit.
+{
+  const phpHomework = capIn(PHP, /core_text::strlen\(\$homeworkcontext\)\s*>\s*(\d+)/);
+  const devHomework = capIn(DEV, /homeworkContext\.length\s*>\s*(\d+)/);
+  if (phpHomework !== HOMEWORK_CONTEXT_LIMIT || devHomework !== HOMEWORK_CONTEXT_LIMIT) {
+    fail("The three homework-context caps disagree", `wehel.js ${HOMEWORK_CONTEXT_LIMIT}, wehel_chat.php ${phpHomework}, wehel-dev-chat.js ${devHomework}`);
+  }
+  const phpAttach = capIn(PHP, /define\('WEHEL_ATTACH_DAILY_LIMIT',\s*(\d+)\)/);
+  const devAttach = capIn(DEV, /const ATTACH_DAILY_LIMIT = (\d+)/);
+  if (phpAttach !== WEHEL_ATTACH_DAILY_LIMIT || devAttach !== WEHEL_ATTACH_DAILY_LIMIT) {
+    fail("The three attachment daily limits disagree", `wehel.js ${WEHEL_ATTACH_DAILY_LIMIT}, wehel_chat.php ${phpAttach}, wehel-dev-chat.js ${devAttach} — the owner set 5 a day per student, and the server copy is the one that enforces it`);
+  }
 }
 
 // Every unit must survive the strip whole. This fails if a unit grows, if a
@@ -165,6 +225,20 @@ if (phpCap !== UNIT_JSON_LIMIT || devCap !== UNIT_JSON_LIMIT) {
   }
   if (!Number.isInteger(prompt.maxTokens) || prompt.maxTokens < 1200) {
     fail("maxTokens is too small for a thinking model", `${prompt.maxTokens} — the cap covers thinking plus the visible reply, so a low value truncates answers mid-sentence`);
+  }
+  // Homework: the two sanctioned modes and the block their context lands in.
+  const hints = prompt.modeHints || {};
+  if (!hints["homework-coach"] || !hints["homework-solutions"]) {
+    fail("A homework mode is gone from the prompt", "homework-coach and homework-solutions are the modes the panel's homework chips send — without them a chip silently becomes an unhinted question");
+  }
+  if (hints["homework-solutions"] && !/quiz|test|exam/i.test(hints["homework-solutions"])) {
+    fail("The worked-solutions mode no longer protects quiz/test/exam answers", "the owner's permission covers homework only — the mode hint must say assessments stay off-limits");
+  }
+  if (!Array.isArray(prompt.homeworkBlock) || !prompt.homeworkBlock.join("\n").includes("{{HOMEWORK_LIST}}")) {
+    fail("The homework block is gone from the prompt", "homeworkBlock with {{HOMEWORK_LIST}} is where the learner's real assignments land — without it the fetched homework is invisible to the tutor");
+  }
+  if (!/worked-solutions homework mode/i.test(template)) {
+    fail("The Academic honesty exception for worked solutions is gone", "without it the system prompt forbids what the homework-solutions mode asks for, and the model splits the difference unpredictably");
   }
 }
 

@@ -22,7 +22,7 @@ import { createProgressClient } from "../shared/progress-client.js?v=20260722a";
 import "../shared/seb-session.js?v=20260724a";
 // Welcome gate (adopted from PreQuraan): one tap into fullscreen, every launch.
 import { mountLessonGate } from "../shared/lesson-gate.js?v=20260724a";
-import { mountWehelChat } from "./wehel.js?v=wehel-2";
+import { mountWehelChat } from "./wehel.js?v=wehel-3";
 
 const pad2 = (n) => String(n).padStart(2, "0");
 

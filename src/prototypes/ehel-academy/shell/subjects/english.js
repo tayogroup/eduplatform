@@ -11,7 +11,7 @@ import { grammarDiagram, phonicsDiagram } from "../../english/shared/grammar-vis
 import { createCourseApp } from "../course-app.js?v=t2";
 import { createDeck } from "../deck.js?v=deck-1";
 import { wordPicture } from "./word-pictures.js?v=pictures-1";
-import { platformHeaders, askWehel, focusModule, setFocusModule, onFocusChange, modulesFromSections, outlineFromManifest, unitFetcher, browserSpeechSupported, speakBrowser, speechRateForGrade, stopBrowserSpeech, speechRecognitionCtor, recognizeSpeech, wehelIcon, platformUrl } from "../wehel.js?v=wehel-2";
+import { platformHeaders, askWehel, focusModule, setFocusModule, onFocusChange, modulesFromSections, outlineFromManifest, unitFetcher, browserSpeechSupported, speakBrowser, speechRateForGrade, stopBrowserSpeech, speechRecognitionCtor, recognizeSpeech, wehelIcon, platformUrl } from "../wehel.js?v=wehel-3";
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];

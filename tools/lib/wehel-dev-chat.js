@@ -10,7 +10,41 @@
 
 const fs = require("fs");
 const path = require("path");
+const crypto = require("crypto");
 const { phrasesForSubject, normalisePhrase, PROMPT_FILE } = require("./ehel-wehel-phrases.js");
+
+// Homework attachments — mirrors of the wehel_chat.php constants; the contract
+// gate holds the daily limit equal across the three files.
+const ATTACH_DAILY_LIMIT = 5;
+const ATTACH_PER_MESSAGE = 2;
+const ATTACH_MAX_BASE64 = 2800000; // ≈2MB decoded, per file
+const ATTACH_MEDIA_TYPES = {
+  image: ["image/jpeg", "image/png", "image/webp", "image/gif"],
+  document: ["application/pdf"],
+};
+// Dev has one anonymous learner, so the ledger is a module-level day + hash
+// set — the same shape the PHP keeps in a user preference.
+const attachLedger = { day: "", hashes: new Set() };
+
+// Validate one image/document block; returns its content hash — what the daily
+// allowance counts, so a retry (or a tool-loop round re-posting the same
+// conversation) is free. Mirrors pqh_wehel_validate_attachment.
+function validateAttachment(block) {
+  const allowed = ATTACH_MEDIA_TYPES[block.type] || [];
+  const source = block.source || {};
+  if (source.type !== "base64") throw Object.assign(new Error("Malformed attachment."), { status: 400 });
+  if (!allowed.includes(String(source.media_type))) {
+    throw Object.assign(new Error("Only JPG, PNG, WEBP or GIF photos and PDF files can be attached."), { status: 400 });
+  }
+  const data = String(source.data || "");
+  if (!data || data.length > ATTACH_MAX_BASE64) {
+    throw Object.assign(new Error("An attachment is empty or too large — about 2MB is the limit."), { status: 400 });
+  }
+  if (!/^[A-Za-z0-9+/]+={0,2}$/.test(data)) {
+    throw Object.assign(new Error("An attachment could not be decoded."), { status: 400 });
+  }
+  return crypto.createHash("sha1").update(data).digest("hex");
+}
 
 // Snap reply sentences that nearly match a stock phrase back to its canonical
 // text, so the on-screen sentence and the pre-recorded clip share one hash.
@@ -39,7 +73,8 @@ function createWehelChatHandler({ apiKey, model: modelOverride = () => undefined
       let body = "";
       for await (const chunk of req) {
         body += chunk;
-        if (body.length > 600 * 1024) return fail(413, "The request is too large.");
+        // Matches wehel_chat.php: raised from 600KB for homework attachments.
+        if (body.length > 8 * 1024 * 1024) return fail(413, "The request is too large.");
       }
       const payload = JSON.parse(body || "{}");
       const promptData = JSON.parse(fs.readFileSync(PROMPT_FILE, "utf8"));
@@ -60,12 +95,22 @@ function createWehelChatHandler({ apiKey, model: modelOverride = () => undefined
 
       const messages = Array.isArray(payload.messages) ? payload.messages.slice(-30) : [];
       // Content is either a plain string or an array of API content blocks —
-      // the client's tool loop sends tool_use/tool_result turns as blocks.
+      // the client's tool loop sends tool_use/tool_result turns as blocks, and
+      // a homework attachment rides its message as image/document blocks.
+      const attachmentHashes = [];
       const conversation = messages.map((message) => {
         const role = message.role === "assistant" ? "assistant" : "user";
         const content = message.content ?? message.text ?? "";
         if (Array.isArray(content)) {
-          if (JSON.stringify(content).length > 200000) throw new Error("A chat message is too large.");
+          const files = content.filter((block) => block && (block.type === "image" || block.type === "document"));
+          if (files.length > ATTACH_PER_MESSAGE) {
+            throw Object.assign(new Error(`Up to ${ATTACH_PER_MESSAGE} files can go with one message.`), { status: 400 });
+          }
+          files.forEach((block) => attachmentHashes.push(validateAttachment(block)));
+          // The 200k ceiling guards the text/tool blocks; attachments carry
+          // their own per-block cap and are excluded from this measure.
+          const plain = content.filter((block) => !files.includes(block));
+          if (JSON.stringify(plain).length > 200000) throw new Error("A chat message is too large.");
           return { role, content };
         }
         const text = String(content).trim().slice(0, 4000);
@@ -73,6 +118,21 @@ function createWehelChatHandler({ apiKey, model: modelOverride = () => undefined
       }).filter(Boolean);
       if (!conversation.length || conversation[conversation.length - 1].role !== "user") {
         return fail(400, "The last message must be from the learner.");
+      }
+      // Daily allowance, hash-deduped — mirrors wehel_chat.php's user-preference
+      // ledger, keyed to the one dev learner.
+      if (attachmentHashes.length) {
+        const today = new Date().toISOString().slice(0, 10);
+        if (attachLedger.day !== today) { attachLedger.day = today; attachLedger.hashes.clear(); }
+        for (const hash of new Set(attachmentHashes)) {
+          if (attachLedger.hashes.has(hash)) continue;
+          if (attachLedger.hashes.size >= ATTACH_DAILY_LIMIT) {
+            res.writeHead(429, { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" });
+            res.end(JSON.stringify({ ok: false, code: "attach-limit", message: `You have used all ${ATTACH_DAILY_LIMIT} homework uploads for today — type the question instead, and the uploads come back tomorrow.` }));
+            return;
+          }
+          attachLedger.hashes.add(hash);
+        }
       }
 
       let unitContent = "";
@@ -127,6 +187,15 @@ function createWehelChatHandler({ apiKey, model: modelOverride = () => undefined
       // lives in wehel_prompt.json. Mirrored in wehel_chat.php.
       const languageBlock = (promptData.languageSupport || {})[String(payload.teachingLanguage || "").toLowerCase()];
       if (Array.isArray(languageBlock)) volatileTail += `\n\n${languageBlock.join("\n")}`;
+      // The learner's real assigned homework — formatted client-side by
+      // homeworkContextText. Multi-line by design, like the course outline.
+      // Mirrored in wehel_chat.php; the cap matches HOMEWORK_CONTEXT_LIMIT in
+      // shell/wehel.js and the contract gate holds the three equal.
+      let homeworkContext = String(payload.homework || "").replace(/[^\S\n]+/g, " ").trim();
+      if (homeworkContext.length > 6000) homeworkContext = `${homeworkContext.slice(0, 6000)} …`;
+      if (homeworkContext && Array.isArray(promptData.homeworkBlock) && promptData.homeworkBlock.length) {
+        volatileTail += `\n\n${promptData.homeworkBlock.join("\n").split("{{HOMEWORK_LIST}}").join(homeworkContext)}`;
+      }
       // Where the learner is standing right now. The dock opens over any
       // lesson page, so "I don't get this" has a referent.
       const sectionHint = clean(payload.sectionHint, 80);
@@ -170,9 +239,31 @@ function createWehelChatHandler({ apiKey, model: modelOverride = () => undefined
       res.writeHead(200, { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" });
       res.end(JSON.stringify({ ok: true, reply: canonical, model }));
     } catch (error) {
-      fail(503, error.message || "Wehel is unavailable right now.");
+      // Validation errors carry their own status (400s from the attachment
+      // checks); anything else is the generic 503.
+      fail(error.status || 503, error.message || "Wehel is unavailable right now.");
     }
   };
 }
 
-module.exports = { createWehelChatHandler, canonicaliseWehelReply };
+/**
+ * Local twin of local_hubredirect/wehel_homework.php. Production reads the
+ * learner's real assignments out of Moodle; dev has no Moodle, so this serves
+ * a small sample list ONLY when WEHEL_DEV_HOMEWORK is set in the environment —
+ * unset, it answers the empty list a learner without homework gets, so normal
+ * dev sessions never send fake homework context to the real API.
+ */
+function createWehelHomeworkHandler({ enabled = () => process.env.WEHEL_DEV_HOMEWORK } = {}) {
+  return async function handleWehelHomework(req, res) {
+    const homework = enabled()
+      ? [
+        { source: "workspace", title: "Fractions practice sheet", course: "Mathematics", text: "Complete questions 1 to 10 on adding fractions with different denominators. Show your working.", dueLabel: "22 Aug 2026", status: "assigned", points: 20 },
+        { source: "live-class", title: "Read pages 4-6 of the reading booklet and underline five new words.", classTitle: "English live class (18 Aug)", text: "", dueLabel: "21 Aug 2026", priority: "high", unitid: "unit-3" },
+      ]
+      : [];
+    res.writeHead(200, { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" });
+    res.end(JSON.stringify({ ok: true, homework }));
+  };
+}
+
+module.exports = { createWehelChatHandler, createWehelHomeworkHandler, canonicaliseWehelReply };

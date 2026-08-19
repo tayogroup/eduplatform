@@ -73,6 +73,7 @@ export function platformHeaders(extra = {}) {
 }
 
 export const WEHEL_CHAT_ENDPOINT = DEV_API ? "/api/wehel-chat" : platformUrl("/local/hubredirect/wehel_chat.php");
+export const WEHEL_HOMEWORK_ENDPOINT = DEV_API ? "/api/wehel-homework" : platformUrl("/local/hubredirect/wehel_homework.php");
 export const WEHEL_STT_ENDPOINT = DEV_API ? "/api/elevenlabs-stt" : platformUrl("/local/hubredirect/quiz_stt.php");
 export const WEHEL_SOMALI_TTS_ENDPOINT = DEV_API ? "/api/somali-tts" : platformUrl("/local/hubredirect/somali_tts.php");
 export const WEHEL_TTS_ENDPOINT = DEV_API ? "/api/elevenlabs-tts" : platformUrl("/local/hubredirect/quiz_tts.php");
@@ -331,6 +332,90 @@ export function withoutMediaPlumbing(value) {
 // One cap, matching wehel_chat.php's. Raised from 120000 with the strip above:
 // every one of the academy's 410 units now fits whole, with room to spare.
 export const UNIT_JSON_LIMIT = 200000;
+
+// --- homework ------------------------------------------------------------------
+// The learner's REAL assigned homework, so "help me with my homework" has a
+// referent the tutor can see. Two sources, both server-side in
+// wehel_homework.php: the workspace homework system (local_prequran_homework,
+// the teacher-assigned tasks with due dates and points) and the BBB live-class
+// notes (local_prequran_live_note.homework, what the teacher set after a live
+// session). Learners without either — including every learner whose account
+// the platform cannot resolve — simply get an empty list, and everything below
+// renders exactly as it did before homework existed.
+//
+// The caps live in three files and the contract gate holds them equal, the same
+// way UNIT_JSON_LIMIT is held: the smallest would win silently.
+export const HOMEWORK_CONTEXT_LIMIT = 6000;
+export const WEHEL_ATTACH_DAILY_LIMIT = 5;
+export const WEHEL_ATTACH_PER_MESSAGE = 2;
+
+// Fetched once per page load and shared by every panel and every askWehel call
+// — the list moves when a teacher grades or assigns, which is never mid-chat.
+// A failed fetch resolves [] and clears the memo so a later call may retry.
+let homeworkPromise = null;
+export function fetchWehelHomework() {
+  // Off the platform (a direct CDN link, QA, the 4173 preview) there is no
+  // origin that could answer — do not aim a POST at a page that 404s.
+  if (!DEV_API && !PLATFORM_ORIGIN) return Promise.resolve([]);
+  if (!homeworkPromise) {
+    const wstoken = new URLSearchParams(location.search).get("wstoken") || undefined;
+    homeworkPromise = fetch(WEHEL_HOMEWORK_ENDPOINT, {
+      method: "POST",
+      credentials: DEV_API ? "same-origin" : "include",
+      headers: platformHeaders({ Accept: "application/json", "Content-Type": "application/json" }),
+      body: JSON.stringify({ wstoken }),
+    }).then(async (response) => {
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok || !result.ok || !Array.isArray(result.homework)) throw new Error("no homework data");
+      return result.homework;
+    }).catch(() => {
+      homeworkPromise = null;
+      return [];
+    });
+  }
+  return homeworkPromise;
+}
+
+// One line per assignment, in the words the teacher wrote. This text is what
+// {{HOMEWORK_LIST}} becomes in the prompt's homeworkBlock, so it carries only
+// what a tutor needs: which task, for which course/class, due when, and the
+// instructions themselves.
+export function homeworkContextText(items) {
+  const lines = (Array.isArray(items) ? items : []).slice(0, 10).map((item, index) => {
+    const where = item.course || item.classTitle || "";
+    const parts = [
+      `${index + 1}. [${item.source === "live-class" ? "Live class homework" : "Homework"}] ${String(item.title || "Untitled task").trim()}${where ? ` — ${where}` : ""}`,
+    ];
+    if (item.dueLabel) parts.push(`due ${item.dueLabel}`);
+    if (item.status) parts.push(`status: ${item.status}`);
+    if (item.priority && item.priority !== "normal") parts.push(`priority: ${item.priority}`);
+    if (item.points) parts.push(`worth ${item.points} points`);
+    const head = parts.join("; ");
+    const text = String(item.text || "").trim();
+    return text ? `${head}\n   Task: ${text}` : head;
+  });
+  return lines.join("\n").slice(0, HOMEWORK_CONTEXT_LIMIT);
+}
+
+// Attach the learner's files to the turn they were sent with — and only that
+// turn. The stored transcript stays plain text (a base64 photo would blow the
+// localStorage quota and resurface in every later payload), so the message the
+// learner typed keeps a "(Attached: …)" marker and the blocks ride the live
+// request alone. The server counts attachments per learner per day (5) and
+// dedupes them by content hash, so the client's one automatic retry cannot
+// double-bill the allowance.
+export function withAttachmentBlocks(conversation, attachments) {
+  const files = (Array.isArray(attachments) ? attachments : [])
+    .filter((file) => file && file.data && file.mediaType)
+    .slice(0, WEHEL_ATTACH_PER_MESSAGE);
+  if (!files.length) return conversation;
+  const last = conversation[conversation.length - 1];
+  if (!last || last.role !== "user" || typeof last.content !== "string") return conversation;
+  const blocks = files.map((file) => (file.mediaType === "application/pdf"
+    ? { type: "document", source: { type: "base64", media_type: "application/pdf", data: file.data } }
+    : { type: "image", source: { type: "base64", media_type: file.mediaType, data: file.data } }));
+  return [...conversation.slice(0, -1), { role: "user", content: [...blocks, { type: "text", text: last.content }] }];
+}
 
 async function handleGetUnit(meta, fetchUnit, input) {
   const ref = resolveCourseRef(meta, input);
@@ -663,8 +748,12 @@ function syncPanels(source) {
   }
 }
 
-export async function askWehel({ meta, messages, channel = "text", mode = "", sectionHint = "", focus = null, fetchUnit = null }) {
+export async function askWehel({ meta, messages, channel = "text", mode = "", sectionHint = "", focus = null, fetchUnit = null, attachments = null }) {
   const wstoken = new URLSearchParams(location.search).get("wstoken") || undefined;
+  // The learner's real homework rides with every question (memoised fetch, so
+  // this await is instant after the first call) — the tutor can then answer
+  // "what's my homework?" from any surface, English's own tutor page included.
+  const homework = homeworkContextText(await fetchWehelHomework());
   const post = async (conversation) => {
     const response = await fetch(WEHEL_CHAT_ENDPOINT, {
       method: "POST",
@@ -687,13 +776,20 @@ export async function askWehel({ meta, messages, channel = "text", mode = "", se
         // Label only — the endpoints name the module in the prompt, and the
         // unit's own content is already there for the model to find it in.
         focus: focus?.label ? { label: focus.label } : undefined,
+        homework: homework || undefined,
         wstoken,
         tools: fetchUnit ? ["get_unit", "get_course_outline"] : [],
         messages: conversation,
       }),
     });
     const result = await response.json().catch(() => ({}));
-    if (!response.ok || !result.ok) throw new Error(result.message || `Wehel is unavailable (${response.status}).`);
+    if (!response.ok || !result.ok) {
+      const failure = new Error(result.message || `Wehel is unavailable (${response.status}).`);
+      // A structured code (e.g. "attach-limit") lets the panel answer with the
+      // real reason instead of the generic offline hint.
+      if (result.code) failure.code = result.code;
+      throw failure;
+    }
     return result;
   };
 
@@ -701,7 +797,7 @@ export async function askWehel({ meta, messages, channel = "text", mode = "", se
   // browser already has same-origin access to the course data tree, so the
   // endpoint stays stateless and never has to reach into the CDN. The tool
   // exchange lives only in this call; the stored transcript keeps plain text.
-  const conversation = apiMessages(messages);
+  const conversation = withAttachmentBlocks(apiMessages(messages), attachments);
   for (let round = 0; round < 4; round += 1) {
     const result = await post(conversation);
     if (result.reply) return String(result.reply);
@@ -751,6 +847,8 @@ const ICON_PATHS = {
   volume: '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>',
   volumeOff: '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="22" x2="16" y1="9" y2="15"/><line x1="16" x2="22" y1="9" y2="15"/>',
   stop: '<rect width="14" height="14" x="5" y="5" rx="2"/>',
+  paperclip: '<path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"/>',
+  book: '<path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/>',
 };
 export function wehelIcon(name) {
   return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="16" height="16" style="vertical-align:-3px">${ICON_PATHS[name] || ""}</svg>`;
@@ -837,6 +935,15 @@ const PANEL_STYLE = `
   transform:translateY(-1px);box-shadow:0 3px 10px rgba(15,118,110,.15)}
 .wehel-panel .ai-prompts button:disabled{opacity:.5;cursor:default}
 
+/* pending attachments — small removable chips above the compose row */
+.wehel-panel .w-attach-row{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 8px}
+.wehel-panel .w-attach-chip{display:inline-flex;align-items:center;gap:6px;max-width:min(70vw,260px);
+  padding:5px 10px;border:1px solid rgba(15,118,110,.3);border-radius:999px;
+  background:var(--w-teal-soft);color:var(--w-teal);font-size:12.5px;font-weight:700}
+.wehel-panel .w-attach-chip span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.wehel-panel .w-attach-chip button{border:0;background:none;color:inherit;font:inherit;
+  font-weight:900;cursor:pointer;padding:0 2px;line-height:1}
+
 /* compose */
 .wehel-panel .ai-compose{display:flex;align-items:center;gap:8px;padding:7px 7px 7px 8px;
   border:1.5px solid var(--w-line);border-radius:999px;background:#fff;
@@ -852,6 +959,8 @@ const PANEL_STYLE = `
 .wehel-panel .ai-compose .button{flex:0 0 auto;width:auto;min-height:42px;
   border-radius:999px;font-weight:750;white-space:nowrap}
 .wehel-panel #wehel-mic{width:42px;padding:0;display:grid;place-items:center}
+.wehel-panel #wehel-attach{width:42px;padding:0;display:grid;place-items:center}
+.wehel-panel #wehel-attach.has-files{background:var(--w-teal-soft);border-color:var(--w-teal);color:var(--w-teal)}
 .wehel-panel #wehel-mic.is-recording{background:#e4572e;border-color:#e4572e;color:#fff;
   animation:wehel-pulse 1.3s infinite}
 .wehel-panel .ai-compose button[type=submit]{padding:0 18px;display:inline-flex;align-items:center;gap:7px;
@@ -877,6 +986,47 @@ function ensurePanelStyle() {
   style.id = PANEL_STYLE_ID;
   style.textContent = PANEL_STYLE;
   document.head.appendChild(style);
+}
+
+// --- attachment preparation ----------------------------------------------------
+// A phone photo of a worksheet is 3-8MB; the homework on it is perfectly
+// readable at 1400px, and the server caps each block anyway. So photos are
+// downscaled and re-encoded as JPEG in the browser before they travel. PDFs
+// pass through untouched but size-capped — there is nothing lossless to shrink
+// client-side.
+const ATTACH_MAX_EDGE = 1400;
+const ATTACH_MAX_BASE64 = 2800000; // ≈2MB of file — matches the server's per-block cap
+function fileToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.addEventListener("load", () => resolve(String(reader.result).split(",")[1] || ""));
+    reader.addEventListener("error", () => reject(reader.error));
+    reader.readAsDataURL(file);
+  });
+}
+async function prepareAttachment(file) {
+  const name = String(file.name || "attachment");
+  if (file.type === "application/pdf") {
+    const data = await fileToBase64(file);
+    if (!data) throw new Error(`${name} could not be read.`);
+    if (data.length > ATTACH_MAX_BASE64) throw new Error(`${name} is too big — PDFs up to about 2MB work here.`);
+    return { name, mediaType: "application/pdf", data };
+  }
+  if (!/^image\//.test(String(file.type))) throw new Error("Photos (JPG or PNG) and PDF files work here.");
+  // createImageBitmap fails on formats the browser cannot decode (HEIC on
+  // non-Safari, mostly) — a clear message beats a silent empty canvas.
+  const bitmap = await createImageBitmap(file).catch(() => null);
+  if (!bitmap) throw new Error(`${name} could not be read — try a JPG or PNG photo.`);
+  const scale = Math.min(1, ATTACH_MAX_EDGE / Math.max(bitmap.width, bitmap.height));
+  const canvas = document.createElement("canvas");
+  canvas.width = Math.max(1, Math.round(bitmap.width * scale));
+  canvas.height = Math.max(1, Math.round(bitmap.height * scale));
+  canvas.getContext("2d").drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+  if (bitmap.close) bitmap.close();
+  const data = canvas.toDataURL("image/jpeg", 0.82).split(",")[1] || "";
+  if (!data) throw new Error(`${name} could not be read.`);
+  if (data.length > ATTACH_MAX_BASE64) throw new Error(`${name} is too big even after shrinking.`);
+  return { name, mediaType: "image/jpeg", data };
 }
 
 // mountWehelChat renders the conversation into `container` and owns the whole
@@ -929,6 +1079,21 @@ export function mountWehelChat(options) {
   let recorder = null;
   let recordedChunks = [];
   let panel = null; // this panel's registry entry, assigned after first render
+
+  // The learner's real assigned homework arrives async; when it does, the
+  // panel re-renders with the two homework quick prompts (coach and worked
+  // solutions) and a greeting that mentions it. options.homework === false
+  // opts a surface out of the chips — the context still rides with askWehel.
+  let homeworkItems = [];
+  if (options.homework !== false) {
+    fetchWehelHomework().then((items) => {
+      homeworkItems = Array.isArray(items) ? items : [];
+      if (homeworkItems.length && container.isConnected) render();
+    });
+  }
+  // Files picked but not yet sent. They ride the next message, then clear;
+  // they are never persisted (see withAttachmentBlocks for why).
+  let pendingAttachments = [];
 
   // Replies are spoken with the Ehel narration voice (ElevenLabs Flash v2.5,
   // rendered per reply through the quiz TTS endpoint); the browser engine is
@@ -1009,7 +1174,8 @@ export function mountWehelChat(options) {
     // be live over one store, and syncPanels repaints the sibling — so changing
     // Focus in either is immediately true in both.
     const focus = focusModule(meta, modules);
-    const greeting = greetingFor(focus);
+    let greeting = greetingFor(focus);
+    if (homeworkItems.length) greeting += " I can also see homework your teacher set — want to work on it together?";
     // Focused, the subject's own quick prompts step aside for the three the
     // learner asked for. Unfocused, nothing about this changes.
     const prompts = focus ? focusPrompts(focus.label) : [...(options.quickPrompts || [])];
@@ -1020,6 +1186,16 @@ export function mountWehelChat(options) {
       prompts.push({ label: "Erayada af-Soomaali", message: focus
         ? `Teach me the key words in "${focus.label}" and give the Somali translation for each one.`
         : "Teach me this unit's key words and give the Somali translation for each one." });
+    }
+    // Homework chips — both sanctioned ways in, shown only when the platform
+    // actually has homework on record for this learner. The modes reach the
+    // matching modeHints in wehel_prompt.json (coaching, and the worked-
+    // solutions exception written into Academic honesty).
+    if (homeworkItems.length) {
+      prompts.push(
+        { label: "Coach me through my homework", mode: "homework-coach", message: "Help me with my homework. Coach me through it step by step — I want to do it myself." },
+        { label: "Show my homework step by step", mode: "homework-solutions", message: "Help me with my homework. Show me how to do it with a full worked solution, step by step, and explain each step." },
+      );
     }
     container.innerHTML = `
       <div class="ai-voice-row">
@@ -1042,9 +1218,12 @@ export function mountWehelChat(options) {
         ${busy ? `<article class="ai-message assistant is-thinking"><span class="w-avatar" role="img" aria-label="${escapeHtml(tutorLabel)}">${wehelIcon("sparkle")}</span><div class="w-body"><strong class="w-who">${escapeHtml(tutorLabel)}</strong><p class="w-text"><span class="w-dot"></span><span class="w-dot"></span><span class="w-dot"></span><span class="sr-only">is thinking…</span></p></div></article>` : ""}
       </div>
       <div class="ai-prompts">${prompts.map((prompt) => `<button data-wehel-prompt="${escapeHtml(prompt.message)}" data-wehel-mode="${escapeHtml(prompt.mode || "")}" type="button" ${busy ? "disabled" : ""}>${escapeHtml(prompt.label)}</button>`).join("")}</div>
+      ${pendingAttachments.length ? `<div class="w-attach-row">${pendingAttachments.map((file, index) => `<span class="w-attach-chip"><span>${escapeHtml(file.name)}</span><button type="button" data-wehel-detach="${index}" aria-label="Remove ${escapeHtml(file.name)}">×</button></span>`).join("")}</div>` : ""}
       <form class="ai-compose" id="wehel-form">
         <label class="sr-only" for="wehel-input">Ask ${escapeHtml(tutorLabel)}</label>
         <input id="wehel-input" maxlength="500" placeholder="${escapeHtml(focus ? `Ask about ${focus.label}…` : (options.placeholder || `Ask about ${meta.unitTitle}…`))}" ${busy ? "disabled" : ""} autocomplete="off">
+        <button class="button secondary${pendingAttachments.length ? " has-files" : ""}" id="wehel-attach" type="button" aria-label="Attach a homework photo or PDF" title="Attach a homework photo or PDF (up to ${WEHEL_ATTACH_PER_MESSAGE} per message, ${WEHEL_ATTACH_DAILY_LIMIT} a day)" ${busy ? "disabled" : ""}>${wehelIcon("paperclip")}</button>
+        <input id="wehel-attach-input" type="file" accept="image/*,application/pdf" multiple hidden>
         ${micSupported ? `<button class="button secondary" id="wehel-mic" type="button" aria-label="Ask by voice" title="Ask by voice" ${busy ? "disabled" : ""}>${wehelIcon("mic")}</button>` : ""}
         <button class="button primary" type="submit" ${busy ? "disabled" : ""}>${wehelIcon("send")} Send</button>
       </form>`;
@@ -1106,6 +1285,29 @@ export function mountWehelChat(options) {
       const input = container.querySelector("#wehel-input");
       if (input.value.trim()) submit(input.value.trim(), "text");
     });
+    const attachButton = container.querySelector("#wehel-attach");
+    const attachInput = container.querySelector("#wehel-attach-input");
+    if (attachButton && attachInput) {
+      attachButton.addEventListener("click", () => attachInput.click());
+      attachInput.addEventListener("change", async () => {
+        for (const file of [...(attachInput.files || [])]) {
+          if (pendingAttachments.length >= WEHEL_ATTACH_PER_MESSAGE) {
+            if (ui.toast) ui.toast(`Up to ${WEHEL_ATTACH_PER_MESSAGE} files can go with one message.`);
+            break;
+          }
+          try {
+            pendingAttachments.push(await prepareAttachment(file));
+          } catch (error) {
+            if (ui.toast) ui.toast(error.message || "That file could not be attached.");
+          }
+        }
+        render();
+      });
+    }
+    container.querySelectorAll("[data-wehel-detach]").forEach((button) => button.addEventListener("click", () => {
+      pendingAttachments.splice(Number(button.dataset.wehelDetach), 1);
+      render();
+    }));
     const mic = container.querySelector("#wehel-mic");
     if (mic) mic.addEventListener("click", () => toggleMic(mic));
     const conversation = container.querySelector("#wehel-conversation");
@@ -1126,7 +1328,11 @@ export function mountWehelChat(options) {
     stopBrowserSpeech();
     speakingIndex = null;
     somaliSpeakingIndex = null;
-    append({ role: "user", text });
+    // Attachments ride this one message. The marker keeps them visible in the
+    // transcript (and tells the model on later turns that a file accompanied
+    // this question) without a megabyte of base64 entering localStorage.
+    const attachments = pendingAttachments.splice(0, pendingAttachments.length);
+    append({ role: "user", text: attachments.length ? `${text}\n(Attached: ${attachments.map((file) => file.name).join(", ")})` : text });
     busy = true;
     render();
     let reply;
@@ -1134,7 +1340,8 @@ export function mountWehelChat(options) {
     const ask = () => askWehel({ meta, messages, channel, mode: modeHint || options.mode,
       sectionHint: typeof options.sectionHint === "function" ? options.sectionHint() : options.sectionHint,
       focus: focusModule(meta, modules),
-      fetchUnit: options.fetchUnit || null });
+      fetchUnit: options.fetchUnit || null,
+      attachments });
     try {
       // One transient blip must not become a lesson about a different word:
       // most failures here (an overloaded model API, a dropped connection) are
@@ -1145,15 +1352,27 @@ export function mountWehelChat(options) {
       try {
         reply = await ask();
       } catch (firstError) {
+        // A spent daily allowance is deterministic — retrying cannot help.
+        if (firstError.code === "attach-limit") throw firstError;
         await new Promise((resolve) => setTimeout(resolve, 2000));
         reply = await ask();
       }
     } catch (error) {
-      offline = true;
-      reply = options.fallbackReply
-        ? options.fallbackReply(text)
-        : "I cannot reach my thinking engine right now. Please try again in a moment.";
-      if (ui.toast) ui.toast("Wehel is offline right now — showing a built-in hint instead.");
+      if (error.code === "attach-limit") {
+        // Not an outage: the tutor is fine, today's upload allowance is spent.
+        // Said as a normal reply, because the "could not be reached" banner
+        // would be a lie the learner acts on (retrying with the same photo).
+        reply = error.message || `You have used all ${WEHEL_ATTACH_DAILY_LIMIT} homework uploads for today. Type the question instead — I can still help!`;
+      } else {
+        offline = true;
+        // Give the files back: the ask never landed, so the learner should not
+        // have to re-pick them to try again.
+        pendingAttachments = attachments.concat(pendingAttachments);
+        reply = options.fallbackReply
+          ? options.fallbackReply(text)
+          : "I cannot reach my thinking engine right now. Please try again in a moment.";
+        if (ui.toast) ui.toast("Wehel is offline right now — showing a built-in hint instead.");
+      }
     }
     append({ role: "assistant", text: reply, offline });
     busy = false;

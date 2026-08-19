@@ -20,7 +20,7 @@
 import { escapeHtml as sharedEscapeHtml, icon as sharedIcon } from "../../shared/course-shell.js?v=20260721a";
 import { createCourseApp } from "../course-app.js?v=t2";
 import { createPlacementUnit, placementCallout, PREREQ_UNIT } from "../placement.js?v=placement-1";
-import { mountWehelChat, modulesFromSections, outlineFromManifest, unitFetcher } from "../wehel.js?v=wehel-2";
+import { mountWehelChat, modulesFromSections, outlineFromManifest, unitFetcher } from "../wehel.js?v=wehel-3";
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];

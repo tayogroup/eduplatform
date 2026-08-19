@@ -88,6 +88,60 @@ function pqh_wehel_valid_ws_token(string $token): bool {
     }
 }
 
+// Homework attachments: the hard daily allowance per learner. Mirrored as
+// ATTACH_DAILY_LIMIT in tools/lib/wehel-dev-chat.js and WEHEL_ATTACH_DAILY_LIMIT
+// in shell/wehel.js — the contract gate holds the three equal, the same way it
+// holds the unit-content caps.
+define('WEHEL_ATTACH_DAILY_LIMIT', 5);
+define('PQH_WEHEL_ATTACH_PER_MESSAGE', 2);
+define('PQH_WEHEL_ATTACH_MAX_BASE64', 2800000); // ≈2MB decoded, per file
+
+// The user a per-user external token belongs to — needed only to count
+// attachments, where "who" is the whole point. The configured shared ws_token
+// maps to nobody and returns 0.
+function pqh_wehel_ws_token_userid(string $token): int {
+    global $DB;
+
+    $token = trim($token);
+    if ($token === '') {
+        return 0;
+    }
+    try {
+        $record = $DB->get_record('external_tokens', ['token' => $token], 'id, userid, validuntil', IGNORE_MISSING);
+        if ($record && ((int)($record->validuntil ?? 0) === 0 || (int)$record->validuntil > time())) {
+            return (int)$record->userid;
+        }
+    } catch (Throwable $e) {
+        // Fall through to 0 — an unreadable token identifies nobody.
+    }
+    return 0;
+}
+
+// Validate one image/document content block; returns its content hash, which
+// is what the daily allowance counts (so a retry of the same photo is free).
+function pqh_wehel_validate_attachment(array $block): string {
+    $type = (string)($block['type'] ?? '');
+    $source = $block['source'] ?? null;
+    if (!is_array($source) || (string)($source['type'] ?? '') !== 'base64') {
+        pqh_wehel_json(400, ['ok' => false, 'message' => 'Malformed attachment.']);
+    }
+    $mediatype = (string)($source['media_type'] ?? '');
+    $allowed = $type === 'image'
+        ? ['image/jpeg', 'image/png', 'image/webp', 'image/gif']
+        : ['application/pdf'];
+    if (!in_array($mediatype, $allowed, true)) {
+        pqh_wehel_json(400, ['ok' => false, 'message' => 'Only JPG, PNG, WEBP or GIF photos and PDF files can be attached.']);
+    }
+    $data = (string)($source['data'] ?? '');
+    if ($data === '' || strlen($data) > PQH_WEHEL_ATTACH_MAX_BASE64) {
+        pqh_wehel_json(400, ['ok' => false, 'message' => 'An attachment is empty or too large — about 2MB is the limit.']);
+    }
+    if (base64_decode($data, true) === false) {
+        pqh_wehel_json(400, ['ok' => false, 'message' => 'An attachment could not be decoded.']);
+    }
+    return sha1($data);
+}
+
 // Global + subject stock phrases, in prompt order.
 function pqh_wehel_phrases(array $promptdata, string $subject): array {
     $bank = $promptdata['phraseBank'] ?? [];
@@ -134,7 +188,10 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 $raw = file_get_contents('php://input');
-if ($raw === false || strlen($raw) > 600 * 1024) {
+// Raised from 600KB for homework attachments: two ~2MB base64 files plus the
+// unit JSON. Text-only requests stay a fraction of this; each attachment block
+// is capped individually below.
+if ($raw === false || strlen($raw) > 8 * 1024 * 1024) {
     pqh_wehel_json(400, ['ok' => false, 'message' => 'The request is too large.']);
 }
 $payload = json_decode($raw ?: '', true);
@@ -216,6 +273,7 @@ if (!is_array($messages) || !count($messages) || count($messages) > 30) {
     pqh_wehel_json(400, ['ok' => false, 'message' => 'Send between 1 and 30 chat messages.']);
 }
 $conversation = [];
+$attachmenthashes = [];
 foreach ($messages as $message) {
     if (!is_array($message)) {
         pqh_wehel_json(400, ['ok' => false, 'message' => 'Malformed chat message.']);
@@ -226,9 +284,29 @@ foreach ($messages as $message) {
     }
     $content = $message['content'] ?? $message['text'] ?? '';
     // Content is either a plain string or an array of API content blocks — the
-    // client's get_unit tool loop sends tool_use/tool_result turns as blocks.
+    // client's get_unit tool loop sends tool_use/tool_result turns as blocks,
+    // and a homework attachment rides its message as image/document blocks.
     if (is_array($content)) {
-        $encoded = json_encode($content, JSON_UNESCAPED_UNICODE);
+        $plain = [];
+        $inmessage = 0;
+        foreach ($content as $block) {
+            if (!is_array($block)) {
+                pqh_wehel_json(400, ['ok' => false, 'message' => 'Malformed chat message.']);
+            }
+            $blocktype = (string)($block['type'] ?? '');
+            if ($blocktype === 'image' || $blocktype === 'document') {
+                $inmessage++;
+                if ($inmessage > PQH_WEHEL_ATTACH_PER_MESSAGE) {
+                    pqh_wehel_json(400, ['ok' => false, 'message' => 'Up to ' . PQH_WEHEL_ATTACH_PER_MESSAGE . ' files can go with one message.']);
+                }
+                $attachmenthashes[] = pqh_wehel_validate_attachment($block);
+                continue; // validated — the block itself still travels in $content below
+            }
+            $plain[] = $block;
+        }
+        // The 200k ceiling guards the text/tool blocks; attachments carry
+        // their own per-block cap above and are excluded from this measure.
+        $encoded = json_encode($plain, JSON_UNESCAPED_UNICODE);
         if (!is_string($encoded) || strlen($encoded) > 200000) {
             pqh_wehel_json(400, ['ok' => false, 'message' => 'A chat message is too large.']);
         }
@@ -304,6 +382,43 @@ if ($pqh_wehel_ratelimit > 0) {
     }
 }
 
+// --- homework attachment daily allowance ---------------------------------------
+// WEHEL_ATTACH_DAILY_LIMIT files per learner per day, counted by CONTENT HASH so
+// the client's one automatic retry — and the tool loop, which re-posts the same
+// conversation — never bills the same photo twice. The ledger is a user
+// preference ("YYYYMMDD|hash,hash,…") so it survives sessions and resets itself
+// at midnight. It runs AFTER the rate limit above: a rate-limited request must
+// not consume the day's allowance. Attachments require a resolvable learner —
+// the launch token and a logged-in session both name one, a per-user external
+// token maps to one, and the configured shared ws_token maps to nobody: that
+// caller is refused, because an uncountable allowance is no allowance.
+if ($attachmenthashes) {
+    global $USER;
+    $attachuserid = $pqh_apiuserid > 0 ? $pqh_apiuserid
+        : (isloggedin() ? (int)$USER->id : pqh_wehel_ws_token_userid($requesttoken));
+    if ($attachuserid <= 0) {
+        pqh_wehel_json(403, ['ok' => false, 'code' => 'attach-login', 'message' => 'Homework files need a learner login — open the course from the platform and try again.']);
+    }
+    $today = date('Ymd');
+    $ledger = explode('|', (string)get_user_preferences('local_hubredirect_wehel_attach', '', $attachuserid), 2);
+    $counted = (($ledger[0] ?? '') === $today && !empty($ledger[1])) ? explode(',', $ledger[1]) : [];
+    foreach (array_unique($attachmenthashes) as $hash) {
+        $short = substr($hash, 0, 12);
+        if (in_array($short, $counted, true)) {
+            continue; // already counted today — a retry or a tool-loop round
+        }
+        if (count($counted) >= WEHEL_ATTACH_DAILY_LIMIT) {
+            pqh_wehel_json(429, [
+                'ok' => false,
+                'code' => 'attach-limit',
+                'message' => 'You have used all ' . WEHEL_ATTACH_DAILY_LIMIT . ' homework uploads for today — type the question instead, and the uploads come back tomorrow.',
+            ]);
+        }
+        $counted[] = $short;
+    }
+    set_user_preference('local_hubredirect_wehel_attach', $today . '|' . implode(',', $counted), $attachuserid);
+}
+
 // --- assemble the prompt ------------------------------------------------------
 
 $bands = $promptdata['stageBands'] ?? [];
@@ -358,6 +473,20 @@ $teachinglanguage = core_text::strtolower(trim((string)($payload['teachingLangua
 $languageblock = ($promptdata['languageSupport'] ?? [])[$teachinglanguage] ?? null;
 if (is_array($languageblock) && $languageblock) {
     $volatile .= "\n\n" . implode("\n", array_map('strval', $languageblock));
+}
+// The learner's real assigned homework — fetched by the client from
+// wehel_homework.php and formatted by homeworkContextText in shell/wehel.js.
+// Multi-line by design, like the course outline, so newlines survive. The cap
+// matches HOMEWORK_CONTEXT_LIMIT in shell/wehel.js and the mirror in
+// tools/lib/wehel-dev-chat.js; the contract gate holds the three equal.
+$homeworkcontext = preg_replace('/[^\S\n]+/', ' ', trim((string)($payload['homework'] ?? '')));
+if (core_text::strlen($homeworkcontext) > 6000) {
+    $homeworkcontext = core_text::substr($homeworkcontext, 0, 6000) . ' …';
+}
+if ($homeworkcontext !== '' && !empty($promptdata['homeworkBlock'])) {
+    $volatile .= "\n\n" . strtr(implode("\n", array_map('strval', (array)$promptdata['homeworkBlock'])), [
+        '{{HOMEWORK_LIST}}' => $homeworkcontext,
+    ]);
 }
 // Where the learner is standing right now. The dock opens over any lesson
 // page, so "I don't get this" has a referent.

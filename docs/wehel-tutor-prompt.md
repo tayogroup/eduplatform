@@ -468,3 +468,46 @@ the tutor.
 5. **Safety block is written for minors** and for a conservative family
    audience, with an explicit prompt-injection guard since learners paste
    homework text into the chat.
+
+## Homework (added 2026-08-20)
+
+The owner's decisions, all three implemented together:
+
+1. **Both homework sources.** `wehel_homework.php` (new) merges the workspace
+   homework system (`local_prequran_homework` + `_sub`, open rows only:
+   assigned / in_progress / returned) and the BBB live-note homework
+   (`local_prequran_live_note.homework` + the Phase 24 structured fields,
+   selected conditionally so an un-upgraded schema still answers). Learners on
+   accounts the platform cannot resolve — the populations do not share
+   accounts — get an **empty list, never an error**: the tutor simply has no
+   homework to talk about, same as any learner without homework. The client
+   (`fetchWehelHomework` in `shell/wehel.js`, memoised per page load) formats
+   the list with `homeworkContextText` and sends it with **every** request, so
+   English's bespoke tutor page gets homework awareness through `askWehel`
+   without its own wiring; the shared panel additionally shows two homework
+   quick-prompt chips and mentions homework in the greeting.
+2. **Coaching AND worked solutions.** Two chips, two `modeHints`
+   (`homework-coach`, `homework-solutions`). Worked solutions needed more than
+   a hint: the Academic honesty section forbade exactly that, and a volatile
+   tail contradicting the cached core makes the model split the difference
+   unpredictably. So the honesty bullet now carries the sanctioned exception in
+   its own words — homework only, quiz/test/exam answers stay protected — and
+   the contract gate fails if either half of that pairing is edited away.
+3. **Attachments, 5 a day per student.** Photos are downscaled client-side
+   (1400px JPEG) and ride the live turn as image/document blocks; the stored
+   transcript keeps only an `(Attached: …)` marker, because base64 in
+   localStorage would blow the quota and resurface in every later payload
+   (`withAttachmentBlocks`). The server counts by **content hash** in a user
+   preference (`YYYYMMDD|hash,…`), so the client's automatic retry and the
+   tool loop's re-posts never double-bill; the count runs AFTER the rate
+   limiter so a 429 does not burn allowance. Attachments require a resolvable
+   learner (launch token, session, or per-user external token) — the shared
+   ws_token names nobody and is refused, because an uncountable allowance is
+   no allowance. The daily limit and the homework-context cap each live in
+   three files, held equal by `check:wehel-contract` exactly like
+   `UNIT_JSON_LIMIT`.
+
+Dev twins: `/api/wehel-homework` (and the vite production-path mount) serve
+sample assignments **only when `WEHEL_DEV_HOMEWORK` is set** — unset, dev
+behaves like a learner with no homework, so normal dev sessions never send
+fake homework context to the real API.

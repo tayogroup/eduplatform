@@ -1,5 +1,5 @@
 import { defineConfig, loadEnv } from "vite";
-import { createWehelChatHandler } from "./tools/lib/wehel-dev-chat.js";
+import { createWehelChatHandler, createWehelHomeworkHandler } from "./tools/lib/wehel-dev-chat.js";
 import { createSomaliTtsHandler } from "./tools/lib/azure-somali-tts.js";
 
 const EHEL_ENGLISH_VOICE_ID = "XfNU2rGpBa01ckF309OY";
@@ -84,6 +84,12 @@ function ehelEnglishVoicePlugin(env) {
       server.middlewares.use(
         "/local/hubredirect/wehel_chat.php",
         createWehelChatHandler({ apiKey: () => env.ANTHROPIC_API_KEY, model: () => env.WEHEL_MODEL }),
+      );
+      // Wehel homework twin — sample assignments only when WEHEL_DEV_HOMEWORK
+      // is set in .env, the empty list otherwise (see wehel-dev-chat.js).
+      server.middlewares.use(
+        "/local/hubredirect/wehel_homework.php",
+        createWehelHomeworkHandler({ enabled: () => env.WEHEL_DEV_HOMEWORK }),
       );
       // Somali vocabulary audio for Wehel — Azure's "Ubax" (Ubah) voice, same
       // shared handler serve-src-preview mounts at /api/somali-tts.

@@ -275,7 +275,7 @@ body.focus-mode .focus-exit:hover { background: #1d4360; }
 .gc-inner .wc-sentence textarea { min-height: 92px; }
 .gc-inner .recorder { width: 100%; max-width: 520px; text-align: left; }
 .gc-inner audio { width: 100%; max-width: 520px; }
-.gc-inner .checklist, .gc-inner .model, .gc-inner .feedback { text-align: left; }
+.gc-inner .checklist, .gc-inner .model, .gc-inner .feedback, .gc-inner .completed-example { text-align: left; }
 .gc-inner .model { margin: 0; }
 .gc-inner .gc-practice { width: 100%; }
 .gc-inner .gc-practice summary { text-align: center; }
@@ -705,6 +705,7 @@ body.focus-mode.gc-full .wc-tools { position: fixed; left: 0; right: 0; bottom: 
 .task-card .button { margin-top: auto; align-self: flex-start; }
 .task-card textarea { width: 100%; min-height: 180px; border: 1px solid var(--line); border-radius: 6px; padding: 12px; resize: vertical; line-height: 1.6; }
 .model { padding: 13px; background: var(--gold-soft); border-radius: 6px; white-space: pre-line; }
+.completed-example { margin: 8px 0; padding-left: 20px; display: grid; gap: 6px; line-height: 1.5; }
 .checklist { padding: 0; list-style: none; display: grid; gap: 8px; }
 .checklist label { display: flex; gap: 9px; align-items: flex-start; }
 .recorder { padding: 16px; background: #f5f8fa; border-radius: 7px; display: flex; align-items: center; gap: 12px; }

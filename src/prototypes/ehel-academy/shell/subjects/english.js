@@ -3520,13 +3520,25 @@ function renderWriting() {
   return renderWritingClassic();
 }
 
+// Shows what a finished response can look like, plus other answers that would
+// also count. Grade 1 tasks carry `completedExample`; other grades don't have
+// it yet, so this renders nothing for them.
+function completedExampleHtml(task, esc, detailsClass = "") {
+  if (!task.completedExample) return "";
+  const { items = [], otherAnswers = [] } = task.completedExample;
+  const otherAnswersHtml = otherAnswers.length
+    ? `<p class="field-label">Other suitable answers include:</p><ul class="completed-example">${otherAnswers.map((item) => `<li>${esc(item)}</li>`).join("")}</ul>`
+    : "";
+  return `<details${detailsClass ? ` class="${detailsClass}"` : ""}><summary>Completed example</summary><ul class="completed-example">${items.map((item) => `<li>${esc(item)}</li>`).join("")}</ul>${otherAnswersHtml}</details>`;
+}
+
 function renderWritingClassic() {
   const { $, $$ } = classicScope();
   let active = course.writing[0].writingId;
   const draw = () => {
     const task = course.writing.find((item) => item.writingId === active);
     const saved = progress.writing[active] || "";
-    $("#app").innerHTML = `${pageHeader("Plan, write and improve", "Writing studio", "Choose a task. Your draft saves automatically on this device.")}<div class="subtabs">${course.writing.map((item) => `<button class="subtab ${active === item.writingId ? "active" : ""}" data-writing="${item.writingId}" type="button">Writing ${item.sequence}</button>`).join("")}</div><div class="task-grid"><section class="panel"><h2>${escapeHtml(task.title)}</h2><p class="rule-box">${escapeHtml(task.promptAndInstructions)}</p>${task.audio?.available ? `<button class="button secondary" data-writing-audio="${task.writingId}" type="button">${icon("volume-2")} Hear the task</button>` : ""}<details><summary>View model text</summary><p class="model">${escapeHtml(task.modelText)}</p></details><p><span class="field-label">Expected:</span> ${escapeHtml(task.expectedLength)}</p><textarea id="writing-draft" placeholder="${escapeHtml(task.sentenceStarter)}">${escapeHtml(saved)}</textarea><p id="save-status"><small>${saved ? "Draft restored" : "Start writing when you are ready"}</small></p></section><aside class="panel"><h3>Writer's checklist</h3><ul class="checklist">${task.successCriteria.split(";").map((criterion, index) => `<li><label><input type="checkbox" data-writing-check="${index}"><span>${escapeHtml(criterion.trim())}</span></label></li>`).join("")}</ul><h3>Support</h3><p>${escapeHtml(task.support)}</p><h3>Challenge</h3><p>${escapeHtml(task.extension)}</p><button class="button secondary" id="writing-feedback-btn" type="button">${icon("message-circle")} Get feedback</button><div id="writing-feedback" role="status" aria-live="polite" aria-atomic="true"></div><button class="button primary" id="writing-done" type="button">Submit this draft ${icon("send")}</button></aside></div>`;
+    $("#app").innerHTML = `${pageHeader("Plan, write and improve", "Writing studio", "Choose a task. Your draft saves automatically on this device.")}<div class="subtabs">${course.writing.map((item) => `<button class="subtab ${active === item.writingId ? "active" : ""}" data-writing="${item.writingId}" type="button">Writing ${item.sequence}</button>`).join("")}</div><div class="task-grid"><section class="panel"><h2>${escapeHtml(task.title)}</h2><p class="rule-box">${escapeHtml(task.promptAndInstructions)}</p>${task.audio?.available ? `<button class="button secondary" data-writing-audio="${task.writingId}" type="button">${icon("volume-2")} Hear the task</button>` : ""}<details><summary>View model text</summary><p class="model">${escapeHtml(task.modelText)}</p></details>${completedExampleHtml(task, escapeHtml)}<p><span class="field-label">Expected:</span> ${escapeHtml(task.expectedLength)}</p><textarea id="writing-draft" placeholder="${escapeHtml(task.sentenceStarter)}">${escapeHtml(saved)}</textarea><p id="save-status"><small>${saved ? "Draft restored" : "Start writing when you are ready"}</small></p></section><aside class="panel"><h3>Writer's checklist</h3><ul class="checklist">${task.successCriteria.split(";").map((criterion, index) => `<li><label><input type="checkbox" data-writing-check="${index}"><span>${escapeHtml(criterion.trim())}</span></label></li>`).join("")}</ul><h3>Support</h3><p>${escapeHtml(task.support)}</p><h3>Challenge</h3><p>${escapeHtml(task.extension)}</p><button class="button secondary" id="writing-feedback-btn" type="button">${icon("message-circle")} Get feedback</button><div id="writing-feedback" role="status" aria-live="polite" aria-atomic="true"></div><button class="button primary" id="writing-done" type="button">Submit this draft ${icon("send")}</button></aside></div>`;
     $$('[data-writing]').forEach((button) => button.addEventListener("click", () => { active = button.dataset.writing; draw(); showWritingInDeck?.(active); }));
     $$('[data-writing-audio]').forEach((button) => button.addEventListener("click", () => {
       const item = course.writing.find((w) => w.writingId === button.dataset.writingAudio);
@@ -3583,6 +3595,7 @@ function renderWritingCarousel() {
         <ul class="checklist">${task.successCriteria.split(";").map((criterion, position) => `<li><label><input type="checkbox" data-writing-check="${esc(task.writingId)}-${position}"><span>${esc(criterion.trim())}</span></label></li>`).join("")}</ul>
       </details>
       <details class="gc-practice"><summary>View model text</summary><p class="model">${esc(task.modelText)}</p></details>
+      ${completedExampleHtml(task, esc, "gc-practice")}
       <details class="gc-practice"><summary>Support and challenge</summary>
         <p class="gc-note"><span class="field-label">Support:</span> ${esc(task.support)}</p>
         <p class="gc-note"><span class="field-label">Challenge:</span> ${esc(task.extension)}</p>

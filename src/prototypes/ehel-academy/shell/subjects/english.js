@@ -125,7 +125,20 @@ async function attachCaptions(video) {
     /* keep the original src; captions are an enhancement, not a gate */
   }
 }
-const defaultUnit = gradeNumber === 1 ? 0 : 1;
+// Grade 1 opened at Unit 0 (Alphabet & Sounds) until 2026-08-20, when the
+// owner withdrew it from learners — hidden, not deleted. Its data, games and
+// audio stay published, and two explicit doors still reach it: the teacher
+// preview (#teacher) and a placement-remediation visit (?review=1) — the
+// Grade 1 readiness check prescribes Unit 0 in all four of its sections, and
+// remediation is already the mechanism that opens exactly one unit outside
+// the learner's sequence. Everywhere else Grade 1 now behaves like every
+// other grade: it opens at Unit 1, the unit gate chains from Unit 1, and
+// Unit 0 is out of the pickers. To restore Unit 0, make this
+// `gradeNumber === 1 ? 0 : 1` again, mirror it in config.defaultUnit at the
+// bottom of this file and in placementLocation()'s fallback, and drop the
+// `unit0Visit` escape below, the filter in renderUnitPickers() and the one in
+// renderFinalQuizResults().
+const defaultUnit = 1;
 // Unit -1 is the Prerequisite unit, present on every grade before Unit 1: a
 // placement exam over the previous grades' essential outcomes. It has no
 // units/unit-*.json of its own — load() fetches placement-exam.json instead
@@ -133,7 +146,11 @@ const defaultUnit = gradeNumber === 1 ? 0 : 1;
 const PREREQ_UNIT = -1;
 const requestedUnit = Number(routeParams.get("unit") ?? defaultUnit);
 const isPrereqUnit = requestedUnit === PREREQ_UNIT;
-const unitNumber = isPrereqUnit ? PREREQ_UNIT : (requestedUnit >= defaultUnit && requestedUnit <= 10 ? requestedUnit : defaultUnit);
+// The two doors into withdrawn Unit 0. TEACHER_PREVIEW and REVIEW_VISIT are
+// declared hundreds of lines down and this line runs first at module scope,
+// so the same two markers are read inline here rather than referenced.
+const unit0Visit = gradeNumber === 1 && requestedUnit === 0 && (location.hash.slice(1) === "teacher" || routeParams.get("review") === "1");
+const unitNumber = isPrereqUnit ? PREREQ_UNIT : unit0Visit ? 0 : (requestedUnit >= defaultUnit && requestedUnit <= 10 ? requestedUnit : defaultUnit);
 const STORAGE_KEY = `ehel-english-g${gradeNumber}-u${unitNumber}-progress-v1`;
 const FINAL_QUIZ_STORAGE_KEY = `ehel-english-g${gradeNumber}-course-final-quiz-v1`;
 const PLACEMENT_STORAGE_KEY = `ehel-english-g${gradeNumber}-placement-exam-v1`;
@@ -894,7 +911,11 @@ function renderUnitPickers() {
   if (!manifest) return;
   const options = [
     `<option value="${PREREQ_UNIT}" ${isPrereqUnit ? "selected" : ""}>Prerequisite: Placement exam</option>`,
-    ...manifest.units.map((unit) => {
+    // A unit below defaultUnit is withdrawn from learners (Grade 1 Unit 0).
+    // It is listed only while it is the page actually open — a teacher preview
+    // or a remediation visit — so the picker never contradicts where the
+    // visitor is standing; every other render leaves it out entirely.
+    ...manifest.units.filter((unit) => Number(unit.number) >= defaultUnit || Number(unit.number) === unitNumber).map((unit) => {
       // The unit a remediation link opened is not drawn as locked, or the page
       // contradicts itself: the lesson renders while its own picker calls it shut.
       // Only that one — the rest of the grade stays locked in the list.
@@ -4113,7 +4134,11 @@ function drawFinalQuizQuestion() {
 }
 
 function renderFinalQuizResults(results) {
-  const reviewUnits = results.unitScores.filter((item) => item.percent < finalAssessment.passPercent).sort((a, b) => a.percent - b.percent).slice(0, 3);
+  // A withdrawn unit (Grade 1 Unit 0) is never recommended for review: its
+  // plain link would clamp to Unit 1 and land the learner somewhere the label
+  // did not promise. Its questions still count toward the score above; the
+  // readiness check's remediation links are the one door that prescribes it.
+  const reviewUnits = results.unitScores.filter((item) => Number(item.id) >= defaultUnit && item.percent < finalAssessment.passPercent).sort((a, b) => a.percent - b.percent).slice(0, 3);
   $("#app").innerHTML = `${pageHeader("Course assessment complete", `Your ${gradeLabel} English results`, "Your report brings together all three sections and shows exactly where to review next.", results.passed ? "Mastery achieved" : "Review recommended")}
     <div class="final-results-layout">
       <section class="panel final-result-summary"><div class="score-ring">${results.score}/${results.total}</div><span class="eyebrow">${results.percent}% overall</span><h2>${results.passed ? `You reached ${gradeLabel} mastery!` : "Your next attempt can be stronger."}</h2><p>${results.passed ? `You showed secure understanding across the ${gradeLabel} English course.` : `Review the suggested Units, then try again. The mastery target is ${finalAssessment.passPercent}%.`}</p><div class="audio-actions"><button class="button secondary" id="retry-final-quiz" type="button">${icon("rotate-ccw")} Try again</button><button class="button primary" id="back-to-capstone" type="button">Return to capstone ${icon("arrow-right")}</button></div></section>
@@ -4144,7 +4169,10 @@ function renderFinalQuizResults(results) {
 function placementLocation(targetGrade, targetUnit, nextRoute = "overview", { review = false } = {}) {
   const url = new URL(location.href);
   url.searchParams.set("grade", targetGrade);
-  url.searchParams.set("unit", targetUnit ?? (Number(targetGrade) === 1 ? 0 : 1));
+  // Every grade opens at Unit 1 now that Grade 1's Unit 0 is withdrawn from
+  // learners; a remediation item that means Unit 0 names it explicitly and
+  // arrives with the ?review=1 marker that unit0Visit honours.
+  url.searchParams.set("unit", targetUnit ?? 1);
   // Set for remediation, deleted for everything else. "Start Grade 2 English"
   // is a course to begin at its first unit and walk in order, not a unit to
   // reopen, so it must not inherit the marker from a url that carries one.
@@ -5016,7 +5044,9 @@ const config = {
   mediaSubject: "english",
   ttsPurpose: "ehel_english",
   disableShellVoice: true, // English runs its own audio engine (file-based + TTS/STT)
-  defaultUnit: (g) => (Number(g) === 1 ? 0 : 1),
+  // Grade 1's Unit 0 is withdrawn from learners — see the `defaultUnit`
+  // comment near the top of this file. Every grade opens at Unit 1.
+  defaultUnit: () => 1,
   sections,
   // `ai` is here because Wehel Tutor is help, not a lesson. Counting it meant a
   // learner who had done all twelve teaching sections but never chatted sat at

@@ -27,15 +27,18 @@ children who are five or six and, for many, meeting written English for the
 first time. It follows **Cambridge Primary English 0058, Stage 1**.
 
 The year begins before Unit 1. A short readiness check finds each child's
-starting point, and Unit 0, *Alphabet & Sounds*, teaches the letters and their
-sounds over six weeks so that no child is asked to read words before they know
-the letters those words are made of. Ten units then follow across three terms,
-each built the same way: a handful of new words met through pictures and play, a
-story to listen to and join in with, six short activities, some talking, some
-tracing and writing, and a small piece of work to be proud of at the end.
+starting point, and for a child who has not yet met the letters it opens
+*Alphabet & Sounds*, a six-week review programme that teaches the letters and
+their sounds so that no child is asked to read words before they know the
+letters those words are made of. It is reached only through the readiness
+check's report — it is not one of the year's units. The course itself is ten
+units across three terms, each built the same way: a handful of new words met
+through pictures and play, a story to listen to and join in with, six short
+activities, some talking, some tracing and writing, and a small piece of work
+to be proud of at the end.
 
-By the end of the year a child will have met **366 English words**, listened to
-and read **36 short texts**, and worked through **66 learning outcomes**. The
+By the end of the year a child will have met **330 English words**, listened to
+and read **30 short texts**, and worked through **60 learning outcomes**. The
 year closes with a capstone — a picture-and-word portfolio, a six-page mini-book
 and a one-minute presentation — and a final course quiz.
 
@@ -75,15 +78,17 @@ places, it does not judge. It reports one of four results, and each carries a
 next step rather than a verdict:
 
 - **Ready for Grade 1** — start at Unit 1.
-- **Ready, with review** — start at Unit 1, with Unit 0 alongside for the
-  letters still settling.
-- **Not yet ready** — begin at Unit 0, *Alphabet & Sounds*, which is part of
-  this course and needs no separate enrolment.
+- **Ready, with review** — start at Unit 1, with the *Alphabet & Sounds* review
+  programme alongside for the letters still settling, opened from the report.
+- **Not yet ready** — begin with *Alphabet & Sounds*, opened directly from the
+  readiness report; it needs no separate enrolment.
 - **A section needs attention** — the report names the section and links either
-  to Unit 0 or to the Intensive English foundation course.
+  to *Alphabet & Sounds* or to the Intensive English foundation course.
 
-A child who has not met the alphabet has not fallen behind. Unit 0 exists for
-exactly that child and runs for six weeks.
+A child who has not met the alphabet has not fallen behind. *Alphabet & Sounds*
+exists for exactly that child and runs for six weeks. It does not appear in the
+course's unit list — the readiness report is the door to it, so it is offered
+to the child it is for rather than walked by every child.
 
 ### Materials and equipment
 
@@ -109,11 +114,12 @@ than anything else on this list.
 
 ### Attendance
 
-The course runs **90 live sessions** across the year, of 30 and 50 minutes.
+The course runs **60 live sessions** across the year, of 30 and 50 minutes.
 
-- **Unit 0** carries 30 sessions across its six weeks — the heaviest teaching in
-  the year, because letters and sounds are taught, not discovered.
 - **Units 1–10** carry 6 sessions each, across two weeks per unit.
+- A child placed into the *Alphabet & Sounds* review programme by the readiness
+  check attends its further 30 sessions across six weeks — the heaviest
+  teaching offered, because letters and sounds are taught, not discovered.
 
 Attendance is expected at every session. A child of this age loses the thread
 quickly, and the sessions are where new words are first heard said correctly.
@@ -189,10 +195,10 @@ way that makes them reluctant to speak again.
 
 ### Support and communication
 
-**If a child is struggling**, say so early. Unit 0 stays open all year and can
-be revisited at any point; the readiness check can be retaken as often as
-useful; and the Intensive English foundation course is available for a child who
-needs a slower on-ramp to letters and sounds.
+**If a child is struggling**, say so early. The *Alphabet & Sounds* review
+programme stays available all year through the readiness report, which can be
+retaken as often as useful; and the Intensive English foundation course is
+available for a child who needs a slower on-ramp to letters and sounds.
 
 **Extra help available:**
 
@@ -223,9 +229,14 @@ objective import — if the rendered syllabus shows "Unit 3" rather than "Fun an
 Games", the objectives have not been imported and the page is falling back to
 gradebook item names ([syllabus_portallib.php:312](../src/moodle/local_hubredirect/syllabus_portallib.php:312)).
 
+Unit 0 (*Alphabet & Sounds*, 36 words, 30 live sessions) is withdrawn from the
+learner-facing unit list as of 2026-08-20 — reachable only through the
+readiness report's review links — so it is out of the spine and the totals. If
+the rendered syllabus lists it as a unit, the withdrawal has not reached that
+surface.
+
 | Unit | Term | Title | Words | Live sessions |
 |---|---|---|---|---|
-| 0 | Readiness | Alphabet & Sounds | 36 | 30 |
 | 1 | Term 1 | Welcome to School | 30 | 6 |
 | 2 | Term 1 | Family Time | 40 | 6 |
 | 3 | Term 1 | Fun and Games | 35 | 6 |
@@ -236,7 +247,7 @@ gradebook item names ([syllabus_portallib.php:312](../src/moodle/local_hubredire
 | 8 | Term 3 | Wonderful Water | 26 | 6 |
 | 9 | Term 3 | City Places | 29 | 6 |
 | 10 | Term 3 | My First English World (capstone) | 30 | 6 |
-| | | **Total** | **366** | **90** |
+| | | **Total** | **330** | **60** |
 
 Per unit, every one of Units 1–10 carries 6 learning outcomes, 6 speaking
 activities, 6 writing activities, 6 grammar items, 6 activities, 6

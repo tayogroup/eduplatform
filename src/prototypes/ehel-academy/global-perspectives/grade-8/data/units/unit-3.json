@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Global Perspectives Runtime v1.0",
-  "generatedAt": "2026-08-19T06:59:42.945Z",
+  "generatedAt": "2026-08-19T15:17:21.249Z",
   "stage": {
     "id": "s08",
     "label": "Stage 8"
@@ -1196,7 +1196,12 @@
       "id": "check-1",
       "title": "Checklist: Is this fact real or fake?",
       "intro": "Use this whenever a source states a striking fact, especially one from an advert or a viral post. The more boxes you cannot tick, the more likely the fact is fake, so check it in a trusted source before you believe or share it.",
-      "items": []
+      "items": [
+        "It appears on only one unknown website and nowhere trusted.",
+        "There is no named, real author, and the page is full of adverts.",
+        "It serves an obvious purpose, such as selling a product.",
+        "It sounds too dramatic, and no major news source mentions it."
+      ]
     }
   ],
   "challenge": {
@@ -2045,6 +2050,27 @@
         "id": "q12",
         "prompt": "Name one thing an effective argument does that a weak one does not.",
         "modelAnswer": "Any one of: gives reasons that truly justify the claim; backs them with reliable and relevant evidence; is honest about the other side.",
+        "responseMode": "text",
+        "part": 1
+      },
+      {
+        "id": "q13",
+        "prompt": "When you place two opposing arguments side by side and compare them, you are ______ them.",
+        "modelAnswer": "Weighing them.",
+        "responseMode": "text",
+        "part": 1
+      },
+      {
+        "id": "q14",
+        "prompt": "A balanced judgement should admit at least one good point from which side?",
+        "modelAnswer": "The other side (the weaker argument).",
+        "responseMode": "text",
+        "part": 1
+      },
+      {
+        "id": "q15",
+        "prompt": "Give one reason why being able to justify a judgement matters.",
+        "modelAnswer": "Any one of: it turns an opinion into a defendable conclusion; it lets others check your reasoning; it makes your judgement more convincing.",
         "responseMode": "text",
         "part": 1
       }

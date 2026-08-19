@@ -3521,7 +3521,7 @@ function renderWriting() {
 }
 
 // Shows what a finished response can look like, plus other answers that would
-// also count. Grade 1 tasks carry `completedExample`; other grades don't have
+// also count. Grades 1-4 tasks carry `completedExample`; Grades 5-8 don't have
 // it yet, so this renders nothing for them.
 function completedExampleHtml(task, esc, detailsClass = "") {
   if (!task.completedExample) return "";

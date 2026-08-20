@@ -144,7 +144,12 @@ export function createCourseApp(config) {
   // `readAlong` is a CSS selector naming the on-screen elements this button's
   // narration walks, in narration order — see the read-along block below. Omit
   // it and the button behaves exactly as it always has.
-  const voiceButton = (text, label = "Listen", readAlong = "") => `<button class="button secondary voice-button" data-speak="${escapeHtml(text)}"${readAlong ? ` data-readalong="${escapeHtml(readAlong)}"` : ""} type="button" aria-label="${escapeHtml(label)}">${icon("volume-2")} <span>${escapeHtml(label)}</span></button>`;
+  // `readAlong` names this button's narrated lines. `scope` narrows the search
+  // to the button's OWN card or slide via closest() — required whenever a page
+  // draws several narrated blocks, and required twice over in Computing, where
+  // Stages 1-4 draw the original page and a deck of the same content at once
+  // and a document-wide lookup would collect both halves' lines.
+  const voiceButton = (text, label = "Listen", readAlong = "", scope = "") => `<button class="button secondary voice-button" data-speak="${escapeHtml(text)}"${readAlong ? ` data-readalong="${escapeHtml(readAlong)}"` : ""}${scope ? ` data-readalong-scope="${escapeHtml(scope)}"` : ""} type="button" aria-label="${escapeHtml(label)}">${icon("volume-2")} <span>${escapeHtml(label)}</span></button>`;
 
   // --- read-along (shared, opt-in) ------------------------------------------
   // Marks the line being narrated. No clip in these courses carries word
@@ -176,6 +181,14 @@ export function createCourseApp(config) {
   // mode "lines": a document — a form or notice, where a printed line IS the
   // unit and splitting "Name: A. COSTA" on its full stop would be nonsense.
   // Newlines are kept verbatim so a <pre> still lines up.
+  // Just the sentence spans, no <p> around them, for a subject whose own
+  // richText() already owns the paragraph and its class.
+  function readAlongSpans(value) {
+    const sentences = readAlongSentences(value);
+    return (sentences.length ? sentences : [String(value || "").trim()])
+      .map((sentence) => `<span class="rd-line">${escapeHtml(sentence)}</span>`).join(" ");
+  }
+
   function readAlongLinesHtml(value, mode = "sentences") {
     const wrap = (line) => `<span class="rd-line">${escapeHtml(line)}</span>`;
     if (mode === "lines") {
@@ -198,10 +211,15 @@ export function createCourseApp(config) {
   // sourceRanges: when the narration is split across several files, the
   // [start, end) character window each file covers. Null when one file reads
   // everything, which is the case for 120 of the 122 Intensive English texts.
-  function startVoiceSync(selector, sourceRanges = null) {
+  function startVoiceSync({ selector, scope = "", button = null }, sourceRanges = null) {
     clearVoiceSync();
     if (!selector || !voicePlayer) return;
-    const elements = [...document.querySelectorAll(selector)];
+    // A scoped lookup that finds no ancestor must find no lines either —
+    // silently widening to the whole document is how one card's narration
+    // would come to highlight another card's text.
+    const root = scope ? button?.closest(scope) : document;
+    if (!root) return;
+    const elements = [...root.querySelectorAll(selector)];
     if (!elements.length) return;
     const segments = elements.map((el) => ({ el, chars: Math.max(1, el.textContent.replace(/\s+/g, " ").trim().length) }));
     let total = 0;
@@ -347,7 +365,7 @@ export function createCourseApp(config) {
       voicePlayer.play().catch(reject);
     });
   }
-  async function speakText(text, button, readAlong = "") {
+  async function speakText(text, button, readAlong = "", readAlongScope = "") {
     if (!voiceEnabled) return toast("Turn on Voice Guide first.");
     if (!voiceSupported) return toast("ElevenLabs Voice Guide is not supported by this browser.");
     if (speakingButton === button) { stopVoice(); return; }
@@ -360,7 +378,7 @@ export function createCourseApp(config) {
       const staticUrl = await staticVoiceUrl(text);
       if (staticUrl) {
         if (requestId !== voiceRequestId) return;
-        startVoiceSync(readAlong);
+        startVoiceSync({ selector: readAlong, scope: readAlongScope, button });
         await playVoiceSource(staticUrl, requestId);
       }
       else {
@@ -387,7 +405,7 @@ export function createCourseApp(config) {
         // Each file covers a slice of the text, so the highlight needs to know
         // which slice is playing — without this every chunk would restart the
         // highlight at the first line.
-        startVoiceSync(readAlong);
+        startVoiceSync({ selector: readAlong, scope: readAlongScope, button });
         if (voiceSync) voiceSync.sourceRanges = voiceChunkRanges(chunks.map((chunk) => Math.max(1, chunk.chars ?? String(chunk.text || "").length)), voiceSync.total);
         for (let index = 0; index < chunks.length; index += 1) {
           if (requestId !== voiceRequestId) return;
@@ -408,7 +426,7 @@ export function createCourseApp(config) {
       button.dataset.voiceBound = "true";
       button.dataset.voiceLabel = button.getAttribute("aria-label") || "Listen";
       button.disabled = !voiceSupported || !voiceEnabled;
-      button.addEventListener("click", () => speakText(button.hasAttribute("data-page-voice") ? collectPageNarration() : button.dataset.speak, button, button.dataset.readalong || ""));
+      button.addEventListener("click", () => speakText(button.hasAttribute("data-page-voice") ? collectPageNarration() : button.dataset.speak, button, button.dataset.readalong || "", button.dataset.readalongScope || ""));
     });
   }
   function updateVoiceUI() {
@@ -820,7 +838,7 @@ export function createCourseApp(config) {
     // readAlongLinesHtml: wraps a text's lines in the .rd-line spans a
     // voiceButton's data-readalong selector then walks. See the read-along
     // block above.
-    readAlongLinesHtml,
+    readAlongLinesHtml, readAlongSpans,
     complete, completeGradeSection, saveProgress, saveGradeProgress,
     // speakText: a word card's ♪ button narrates on demand rather than through
     // a voiceButton, so the renderer calls this directly. It was missing here,

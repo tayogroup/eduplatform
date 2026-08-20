@@ -28,13 +28,13 @@ let placementExam;
 let placement;
 
 // Shell-provided bindings (populated by bind(ctx)).
-let $, $$, escapeHtml, icon, voiceButton, pageHeader, toast;
+let $, $$, escapeHtml, icon, voiceButton, pageHeader, toast, readAlongSpans;
 let complete, completeGradeSection, saveProgress, saveGradeProgress, navigate, emitProgress;
 let bindVoiceControls, updateVoiceUI, stopVoice, renderNav, unitSectionIds, stageNumber, STAGE_STORAGE_KEY;
 let course, progress, gradeProgress, manifest, gradeCapstone, dataRootUrl;
 let shellCtx;
 function bind(ctx) {
-  ({ $, $$, escapeHtml, icon, voiceButton, pageHeader, toast, complete, completeGradeSection,
+  ({ $, $$, escapeHtml, icon, voiceButton, pageHeader, toast, readAlongSpans, complete, completeGradeSection,
      saveProgress, saveGradeProgress, navigate, emitProgress, bindVoiceControls, updateVoiceUI,
      stopVoice, renderNav, unitSectionIds, stageNumber, STAGE_STORAGE_KEY } = ctx);
   shellCtx = ctx;
@@ -59,13 +59,16 @@ function bind(ctx) {
 // Concept explanations and worked solutions carry the full source prose, with
 // paragraphs separated by a blank line. Render one <p> per paragraph so a long
 // explainer stays readable; a single escaped <p> would run it all together.
-function richText(value = "", className = "") {
+// `readAlong` wraps each sentence in a .rd-line span so a scoped Listen button
+// can highlight it as it is spoken. Opt-in: only the lesson prose is narrated
+// as a block, and a span nothing highlights is noise in every other caller.
+function richText(value = "", className = "", readAlong = false) {
   const attr = className ? ` class="${className}"` : "";
   return String(value)
     .split(/\n{2,}/)
     .map((part) => part.trim())
     .filter(Boolean)
-    .map((part) => `<p${attr}>${escapeHtml(part)}</p>`)
+    .map((part) => `<p${attr}>${readAlong ? readAlongSpans(part) : escapeHtml(part)}</p>`)
     .join("");
 }
 
@@ -458,8 +461,8 @@ const { mountDeck, deckFinish } = createDeck({
 // secondary` with a lucide glyph that never draws here. Same contract —
 // data-speak, bound by bindVoiceControls, marked .is-playing while it speaks —
 // in the deck's shape and size.
-function deckVoice(text, label = "Listen") {
-  return `<button class="gc-btn play" type="button" data-speak="${escapeHtml(spokenText(text))}" aria-label="${escapeHtml(label)}">${deckIcon("volume-2")} ${escapeHtml(label)}</button>`;
+function deckVoice(text, label = "Listen", readAlong = "", scope = "") {
+  return `<button class="gc-btn play" type="button" data-speak="${escapeHtml(spokenText(text))}"${readAlong ? ` data-readalong="${escapeHtml(readAlong)}"` : ""}${scope ? ` data-readalong-scope="${escapeHtml(scope)}"` : ""} aria-label="${escapeHtml(label)}">${deckIcon("volume-2")} ${escapeHtml(label)}</button>`;
 }
 function deckVoiceSmall(text, label = "Listen") {
   return `<button class="gc-btn ghost small" type="button" data-speak="${escapeHtml(spokenText(text))}" aria-label="${escapeHtml(label)}">${deckIcon("volume-2")} ${escapeHtml(label)}</button>`;
@@ -988,11 +991,11 @@ function renderLessonDeck() {
   const concepts = course.concepts;
   const slides = concepts.map((concept, index) => `<section class="gc-slide gc-v${index % 5}"><div class="gc-inner">
       <span class="gc-eyebrow">Concept ${index + 1} of ${concepts.length}</span>
-      <h3 class="gc-title">${esc(concept.title)}</h3>
+      <h3 class="gc-title"><span class="rd-line">${esc(concept.title)}</span></h3>
       ${mathDiagram(topic, index)}
-      <div class="gc-actions">${deckVoice(`${concept.title}. ${spokenText(concept.explanation)}${exampleClause(concept)}`, "Listen to concept")}</div>
-      <div class="gc-prose">${richText(concept.explanation)}</div>
-      ${concept.example ? `<p class="gc-note gc-try"><span class="field-label">Example:</span> ${esc(concept.example)}</p>` : ""}
+      <div class="gc-actions">${deckVoice(`${concept.title}. ${spokenText(concept.explanation)}${exampleClause(concept)}`, "Listen to concept", ".rd-line", ".gc-slide")}</div>
+      <div class="gc-prose">${richText(concept.explanation, "", true)}</div>
+      ${concept.example ? `<p class="gc-note gc-try"><span class="field-label">Example:</span> <span class="rd-line">${esc(concept.example)}</span></p>` : ""}
       ${grownUpGuide(concept)}
       ${index === concepts.length - 1 ? deckFinish("lesson", "I studied the concepts") : ""}
     </div></section>`);
@@ -1019,7 +1022,10 @@ function renderLesson() {
 function renderLessonClassic() {
   const { $, $$ } = classicScope();
   const topic = courseTopic();
-  const concepts = course.concepts.map((concept, index) => `<article class="panel concept-card"><span class="eyebrow">Concept ${index + 1}</span><h2>${escapeHtml(concept.title)}</h2>${mathDiagram(topic, index)}<div class="concept-body">${richText(concept.explanation)}</div>${concept.example ? `<p class="example"><span class="field-label">Example:</span> ${escapeHtml(concept.example)}</p>` : ""}${voiceButton(`${concept.title}. ${spokenText(concept.explanation)}${exampleClause(concept)}`, "Listen to concept")}${grownUpGuide(concept)}</article>`).join("");
+  // Title, explanation and example are all read-along lines because the
+  // narration says all three; a line missing here shows up as the highlight
+  // lagging behind the voice.
+  const concepts = course.concepts.map((concept, index) => `<article class="panel concept-card"><span class="eyebrow">Concept ${index + 1}</span><h2><span class="rd-line">${escapeHtml(concept.title)}</span></h2>${mathDiagram(topic, index)}<div class="concept-body">${richText(concept.explanation, "", true)}</div>${concept.example ? `<p class="example"><span class="field-label">Example:</span> <span class="rd-line">${escapeHtml(concept.example)}</span></p>` : ""}${voiceButton(`${concept.title}. ${spokenText(concept.explanation)}${exampleClause(concept)}`, "Listen to concept", ".rd-line", ".concept-card")}${grownUpGuide(concept)}</article>`).join("");
   $("#app").innerHTML = `${pageHeader("The lesson", course.unit.unitTitle, "Read the source-grounded concepts with a labelled diagram for each, and follow the complete ElevenLabs narration.")}
     <div class="concept-grid">${concepts}</div>
     <p><button class="button primary" id="lesson-done" type="button">I studied the concepts ✓</button></p>`;

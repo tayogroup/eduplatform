@@ -30,12 +30,12 @@ let placementExam;
 let placement;
 
 // Shell-provided bindings (populated by bind(ctx)).
-let $, $$, escapeHtml, icon, voiceButton, pageHeader, toast;
+let $, $$, escapeHtml, icon, voiceButton, pageHeader, toast, readAlongSpans;
 let complete, completeGradeSection, saveProgress, saveGradeProgress, navigate, emitProgress;
 let bindVoiceControls, updateVoiceUI, stopVoice, renderNav, unitSectionIds, stageNumber, STAGE_STORAGE_KEY, speakText;
 let course, progress, gradeProgress, manifest, gradeCapstone, dataRootUrl;
 function bind(ctx) {
-  ({ $, $$, escapeHtml, icon, voiceButton, pageHeader, toast, complete, completeGradeSection,
+  ({ $, $$, escapeHtml, icon, voiceButton, pageHeader, toast, readAlongSpans, complete, completeGradeSection,
      saveProgress, saveGradeProgress, navigate, emitProgress, bindVoiceControls, updateVoiceUI,
      stopVoice, renderNav, unitSectionIds, stageNumber, STAGE_STORAGE_KEY, speakText } = ctx);
   course = ctx.course; progress = ctx.progress; gradeProgress = ctx.gradeProgress;
@@ -103,13 +103,18 @@ const sections = [
 // Concept explanations and worked solutions carry the full source prose, with
 // paragraphs separated by a blank line. Render one <p> per paragraph so a long
 // explainer stays readable; a single escaped <p> would run it all together.
-function richText(value = "", className = "") {
+// `readAlong` wraps each sentence in a .rd-line span so a scoped Listen button
+// can highlight it as it is spoken. The scope matters more here than anywhere
+// else: Stages 1-4 draw the original page AND a deck of the same content, so
+// both halves carry .rd-line and a document-wide lookup would collect both.
+// Each button resolves inside its own .concept-card / .gc-slide.
+function richText(value = "", className = "", readAlong = false) {
   const attr = className ? ` class="${className}"` : "";
   return String(value)
     .split(/\n{2,}/)
     .map((part) => part.trim())
     .filter(Boolean)
-    .map((part) => `<p${attr}>${escapeHtml(part)}</p>`)
+    .map((part) => `<p${attr}>${readAlong ? readAlongSpans(part) : escapeHtml(part)}</p>`)
     .join("");
 }
 
@@ -318,8 +323,8 @@ const SAFETY_HELP_NARRATION = `If something goes wrong. ${SAFETY_HELP}`;
 // generated, uploaded and kept rather than falling to the paid runtime voice on
 // every press. Adding a Listen button to this file alone would have been the
 // expensive kind of improvement.
-function deckVoice(text, label = "Listen") {
-  return `<button class="gc-btn play" type="button" data-speak="${escapeHtml(text)}" aria-label="${escapeHtml(label)}">${deckIcon("volume-2")} ${escapeHtml(label)}</button>`;
+function deckVoice(text, label = "Listen", readAlong = "", scope = "") {
+  return `<button class="gc-btn play" type="button" data-speak="${escapeHtml(text)}"${readAlong ? ` data-readalong="${escapeHtml(readAlong)}"` : ""}${scope ? ` data-readalong-scope="${escapeHtml(scope)}"` : ""} aria-label="${escapeHtml(label)}">${deckIcon("volume-2")} ${escapeHtml(label)}</button>`;
 }
 function deckVoiceSmall(text, label = "Listen") {
   return `<button class="gc-btn ghost small" type="button" data-speak="${escapeHtml(text)}" aria-label="${escapeHtml(label)}">${deckIcon("volume-2")} ${escapeHtml(label)}</button>`;
@@ -1039,12 +1044,12 @@ function renderLessonDeck() {
   const concepts = course.concepts;
   const slides = concepts.map((concept, index) => `<section class="gc-slide gc-v${index % 5}"><div class="gc-inner">
       <span class="gc-eyebrow">Concept ${index + 1} of ${concepts.length}</span>
-      <h3 class="gc-title">${esc(concept.title)}</h3>
+      <h3 class="gc-title"><span class="rd-line">${esc(concept.title)}</span></h3>
       ${deckDiagram(topic, index)}
-      <div class="cmp-gc-prose">${richText(concept.explanation, "gc-lead")}</div>
-      <p class="gc-note"><span class="field-label">Example:</span> ${esc(concept.example)}</p>
+      <div class="cmp-gc-prose">${richText(concept.explanation, "gc-lead", true)}</div>
+      <p class="gc-note"><span class="field-label">Example:</span> <span class="rd-line">${esc(concept.example)}</span></p>
       ${concept.checkYourself ? `<p class="gc-note gc-try">${esc(concept.checkYourself)}</p>` : ""}
-      <div class="gc-actions">${deckVoice(`${concept.title}. ${spokenText(concept.explanation)}. Example: ${concept.example}`, "Listen to concept")}</div>
+      <div class="gc-actions">${deckVoice(`${concept.title}. ${spokenText(concept.explanation)}. Example: ${concept.example}`, "Listen to concept", ".rd-line", ".gc-slide")}</div>
       ${index === concepts.length - 1 ? deckFinish("lesson", "I studied the concepts") : ""}
     </div></section>`);
   mountSectionDeck({
@@ -1067,7 +1072,7 @@ function renderLesson() {
 
 function renderLessonClassic() {
   const topic = courseTopic();
-  const concepts = course.concepts.map((concept, index) => `<article class="panel concept-card"><span class="eyebrow">Concept ${index + 1}</span><h2>${escapeHtml(concept.title)}</h2>${computingDiagram(topic, index)}<div class="concept-body">${richText(concept.explanation)}</div><p class="example"><span class="field-label">Example:</span> ${escapeHtml(concept.example)}</p>${voiceButton(`${concept.title}. ${spokenText(concept.explanation)}. Example: ${concept.example}`, "Listen to concept")}</article>`).join("");
+  const concepts = course.concepts.map((concept, index) => `<article class="panel concept-card"><span class="eyebrow">Concept ${index + 1}</span><h2><span class="rd-line">${escapeHtml(concept.title)}</span></h2>${computingDiagram(topic, index)}<div class="concept-body">${richText(concept.explanation, "", true)}</div><p class="example"><span class="field-label">Example:</span> <span class="rd-line">${escapeHtml(concept.example)}</span></p>${voiceButton(`${concept.title}. ${spokenText(concept.explanation)}. Example: ${concept.example}`, "Listen to concept", ".rd-line", ".concept-card")}</article>`).join("");
   cRoot().innerHTML = `${pageHeader("The lesson", course.unit.unitTitle, "Every idea in this unit, explained in full with a diagram for each. Read it, listen to it, or both — you do not need anyone else to work through this.")}
     <div class="concept-grid">${concepts}</div>
     <p><button class="button primary" id="lesson-done" type="button">I studied the concepts ✓</button></p>`;

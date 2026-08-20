@@ -38,12 +38,12 @@ let placementExam;
 let placement;
 
 // Shell-provided bindings (populated by bind(ctx)).
-let $, $$, escapeHtml, icon, voiceButton, toast;
+let $, $$, escapeHtml, icon, voiceButton, toast, readAlongSpans;
 let complete, saveProgress, navigate, emitProgress;
 let bindVoiceControls, updateVoiceUI, stopVoice, renderNav, unitSectionIds, stageNumber;
 let course, progress, manifest, dataRootUrl;
 function bind(ctx) {
-  ({ $, $$, escapeHtml, icon, voiceButton, toast, complete, saveProgress, navigate,
+  ({ $, $$, escapeHtml, icon, voiceButton, toast, readAlongSpans, complete, saveProgress, navigate,
      emitProgress, bindVoiceControls, updateVoiceUI, stopVoice, renderNav, unitSectionIds,
      stageNumber } = ctx);
   course = ctx.course; progress = ctx.progress; manifest = ctx.manifest; dataRootUrl = ctx.dataRootUrl;
@@ -102,13 +102,16 @@ function availableSections() {
 // Explainer bodies carry the unit's full teaching prose with paragraphs
 // separated by a blank line. One escaped block would run it all together, so
 // each paragraph gets its own <p>.
-function richText(value = "", className = "") {
+// `readAlong` wraps each sentence in a .rd-line span so a scoped Listen button
+// can highlight it as it is spoken. Opt-in: only the lesson prose is narrated
+// as a block, and a span nothing highlights is noise in every other caller.
+function richText(value = "", className = "", readAlong = false) {
   const attr = className ? ` class="${className}"` : "";
   return String(value)
     .split(/\n{2,}/)
     .map((paragraph) => paragraph.trim())
     .filter(Boolean)
-    .map((paragraph) => `<p${attr}>${escapeHtml(paragraph)}</p>`)
+    .map((paragraph) => `<p${attr}>${readAlong ? readAlongSpans(paragraph) : escapeHtml(paragraph)}</p>`)
     .join("");
 }
 
@@ -425,10 +428,10 @@ function renderLessonDeck() {
   const slides = explainers.map((explainer, index) => `<section class="gc-slide gc-v${index % 5}"><div class="gc-inner">
       <span class="gc-eyebrow">Part ${index + 1} of ${explainers.length}</span>
       <h3 class="gc-title"><span class="gc-emoji" aria-hidden="true">${DECK_EMOJI[index % DECK_EMOJI.length]}</span> ${escapeHtml(explainer.title)}</h3>
-      ${richText(explainer.body, "gc-prose")}
+      ${richText(explainer.body, "gc-prose", true)}
       ${list(explainer.bullets, "gc-bullets")}
       ${(explainer.tables || []).map(table).join("")}
-      ${explainer.body ? voiceButton(explainer.body, "Listen to this part") : ""}
+      ${explainer.body ? voiceButton(explainer.body, "Listen to this part", ".rd-line", ".gc-slide") : ""}
       ${index === explainers.length - 1 ? deckFinish("lesson", "I have read the lesson") : ""}
     </div></section>`);
   mountDeck({
@@ -758,10 +761,10 @@ function renderLesson() {
   const cards = course.explainers.map((explainer) => `
     <article class="panel concept-card">
       <h2>${escapeHtml(explainer.title)}</h2>
-      <div class="concept-body">${richText(explainer.body)}</div>
+      <div class="concept-body">${richText(explainer.body, "", true)}</div>
       ${list(explainer.bullets)}
       ${(explainer.tables || []).map(table).join("")}
-      ${explainer.body ? voiceButton(explainer.body, "Listen to this part") : ""}
+      ${explainer.body ? voiceButton(explainer.body, "Listen to this part", ".rd-line", ".concept-card") : ""}
     </article>`).join("");
   return `
   ${pageHeader("The Lesson", course.unit.unitTitle, "Read this at your own pace. You can stop and come back at any time.")}

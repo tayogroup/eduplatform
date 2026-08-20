@@ -94,10 +94,10 @@ let activeRecordingId = null;
 let recordedChunks = [];
 const recordings = new Map();
 
-let progress, complete, saveProgress, navigate, renderNav, emitProgress, voiceButton, toast, pageHeader, PROGRESS_UNIT;
+let progress, complete, saveProgress, navigate, renderNav, emitProgress, voiceButton, toast, pageHeader, readAlongLinesHtml, PROGRESS_UNIT;
 let shellCtx;
 function bind(ctx) {
-  ({ complete, saveProgress, navigate, renderNav, emitProgress, voiceButton, toast, pageHeader, PROGRESS_UNIT } = ctx);
+  ({ complete, saveProgress, navigate, renderNav, emitProgress, voiceButton, toast, pageHeader, readAlongLinesHtml, PROGRESS_UNIT } = ctx);
   progress = ctx.progress;
   shellCtx = ctx;
   if (isPrereqUnit) {
@@ -406,12 +406,15 @@ function renderReading() {
     $("#reading-list").innerHTML = `<div class="ebook-library-title"><span>${icon("library-big")}</span><div><strong>Texts</strong><small>${course.readings.length} in this unit</small></div></div>${course.readings.map((item, n) => `<button class="reading-button ebook-spine ${selected === item.readingId ? "active" : ""}" data-reading="${escapeHtml(item.readingId)}" type="button"><span>${n + 1}</span><div><strong>${escapeHtml(item.title)}</strong><small>${escapeHtml(item.documentType || item.type)}</small></div>${icon("chevron-right")}</button>`).join("")}`;
     const isDocument = Boolean(reading.documentType);
     $("#reading-panel").innerHTML = `
-      <header class="ebook-toolbar"><div><span class="ebook-count">Text ${index + 1} of ${course.readings.length}</span><span>${String(reading.passageScript).trim().split(/\s+/).length} words</span></div><div class="audio-actions">${voiceButton(reading.passageScript, `Listen to ${reading.title}`)}</div></header>
+      <header class="ebook-toolbar"><div><span class="ebook-count">Text ${index + 1} of ${course.readings.length}</span><span>${String(reading.passageScript).trim().split(/\s+/).length} words</span></div><div class="audio-actions">${voiceButton(reading.passageScript, `Listen to ${reading.title}`, "#reading-panel .rd-line")}</div></header>
       <section class="ebook-page">
         <div class="ebook-page-heading"><span>${icon("bookmark")}</span><div><small>${escapeHtml(reading.type)}</small><h2>${escapeHtml(reading.title)}</h2></div></div>
         ${isDocument
-          ? `<p><span class="document-label">${icon("bookmark")} ${escapeHtml(reading.documentType)}</span></p><pre class="document">${escapeHtml(reading.passageScript)}</pre>`
-          : `<div class="reading-text ebook-copy">${String(reading.passageScript).split("\n").filter(Boolean).map((line) => `<p>${escapeHtml(line)}</p>`).join("")}</div>`}
+          // A document is read line by line, not sentence by sentence: "Name:
+          // A. COSTA" is one field, and splitting it on the full stop after the
+          // initial would highlight half a name. The <pre> keeps its newlines.
+          ? `<p><span class="document-label">${icon("bookmark")} ${escapeHtml(reading.documentType)}</span></p><pre class="document">${readAlongLinesHtml(reading.passageScript, "lines")}</pre>`
+          : `<div class="reading-text ebook-copy">${readAlongLinesHtml(reading.passageScript)}</div>`}
       </section>
       <footer class="ebook-footer">
         <button class="button secondary" data-step="-1" type="button" ${index === 0 ? "disabled" : ""}>${icon("arrow-left")} Previous</button>

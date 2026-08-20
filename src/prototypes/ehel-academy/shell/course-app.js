@@ -141,7 +141,102 @@ export function createCourseApp(config) {
 
   const escapeHtml = (v = "") => sharedEscapeHtml(v);
   const icon = (name, label = "") => sharedIcon(name, label);
-  const voiceButton = (text, label = "Listen") => `<button class="button secondary voice-button" data-speak="${escapeHtml(text)}" type="button" aria-label="${escapeHtml(label)}">${icon("volume-2")} <span>${escapeHtml(label)}</span></button>`;
+  // `readAlong` is a CSS selector naming the on-screen elements this button's
+  // narration walks, in narration order — see the read-along block below. Omit
+  // it and the button behaves exactly as it always has.
+  const voiceButton = (text, label = "Listen", readAlong = "") => `<button class="button secondary voice-button" data-speak="${escapeHtml(text)}"${readAlong ? ` data-readalong="${escapeHtml(readAlong)}"` : ""} type="button" aria-label="${escapeHtml(label)}">${icon("volume-2")} <span>${escapeHtml(label)}</span></button>`;
+
+  // --- read-along (shared, opt-in) ------------------------------------------
+  // Marks the line being narrated. No clip in these courses carries word
+  // timings — a reading is one recording of the whole text — so a line's window
+  // of the audio is estimated as its share of the narrated characters. Close
+  // enough to follow with a finger; it is a guide for the eye, not a caption
+  // track. Entirely inert unless a button carries data-readalong, so the four
+  // other shell-voice subjects are unaffected until they ask for it.
+  //
+  // English runs its own audio engine (config.disableShellVoice) and therefore
+  // carries its own copy of this in shell/subjects/english.js, where the line
+  // splitter also has to cope with the headings readingBlocks() emits. Two
+  // renderers, two copies — keep them in step by behaviour, not by sharing.
+  let voiceSync = null;
+
+  // A sentence, with any closing quote or bracket kept on the end of it, and
+  // never broken inside quoted speech: a fragment that starts lowercase is the
+  // back half of the sentence above it ("Hello!" / said the nurse.).
+  function readAlongSentences(value) {
+    const parts = String(value || "").match(/[^.!?]+[.!?]+[”’"')\]]*|[^.!?]+$/g)?.map((part) => part.trim()).filter(Boolean) || [];
+    return parts.reduce((kept, part) => {
+      if (kept.length && /^[a-z]/.test(part)) kept[kept.length - 1] += ` ${part}`;
+      else kept.push(part);
+      return kept;
+    }, []);
+  }
+
+  // mode "sentences": prose, one line per sentence, paragraphs preserved.
+  // mode "lines": a document — a form or notice, where a printed line IS the
+  // unit and splitting "Name: A. COSTA" on its full stop would be nonsense.
+  // Newlines are kept verbatim so a <pre> still lines up.
+  function readAlongLinesHtml(value, mode = "sentences") {
+    const wrap = (line) => `<span class="rd-line">${escapeHtml(line)}</span>`;
+    if (mode === "lines") {
+      return String(value || "").replace(/\r\n?/g, "\n").split("\n")
+        .map((line) => (line.trim() ? wrap(line) : line)).join("\n");
+    }
+    return String(value || "").replace(/\r\n?/g, "\n").split(/\n+/).map((line) => line.trim()).filter(Boolean)
+      .map((paragraph) => {
+        const sentences = readAlongSentences(paragraph);
+        return `<p>${(sentences.length ? sentences : [paragraph]).map(wrap).join(" ")}</p>`;
+      }).join("");
+  }
+
+  function clearVoiceSync() {
+    if (!voiceSync) return;
+    voiceSync.segments.forEach((segment) => segment.el.classList.remove("is-narrating"));
+    voiceSync = null;
+  }
+
+  // sourceRanges: when the narration is split across several files, the
+  // [start, end) character window each file covers. Null when one file reads
+  // everything, which is the case for 120 of the 122 Intensive English texts.
+  function startVoiceSync(selector, sourceRanges = null) {
+    clearVoiceSync();
+    if (!selector || !voicePlayer) return;
+    const elements = [...document.querySelectorAll(selector)];
+    if (!elements.length) return;
+    const segments = elements.map((el) => ({ el, chars: Math.max(1, el.textContent.replace(/\s+/g, " ").trim().length) }));
+    let total = 0;
+    const bounds = segments.map((segment) => { const range = [total, total + segment.chars]; total += segment.chars; return range; });
+    voiceSync = { segments, bounds, total, sourceRanges, sourceIndex: 0, active: -1 };
+  }
+
+  // Proportional rather than absolute: the chunker trims, re-joins and injects
+  // SSML break tags, so its character count and the on-screen one never agree
+  // exactly. Sharing one scale keeps them comparable.
+  function voiceChunkRanges(weights, total) {
+    const sum = weights.reduce((a, b) => a + b, 0) || 1;
+    let position = 0;
+    return weights.map((weight) => { const start = position; position += (weight / sum) * total; return [start, position]; });
+  }
+
+  function voiceSyncTick() {
+    if (!voiceSync || !voicePlayer || !voiceSync.total) return;
+    const duration = voicePlayer.duration;
+    if (!Number.isFinite(duration) || duration <= 0) return;
+    const fraction = Math.min(Math.max(voicePlayer.currentTime / duration, 0), 1);
+    const range = voiceSync.sourceRanges ? (voiceSync.sourceRanges[voiceSync.sourceIndex] || [0, voiceSync.total]) : [0, voiceSync.total];
+    const position = range[0] + fraction * (range[1] - range[0]);
+    let index = voiceSync.bounds.findIndex(([, end]) => position < end);
+    if (index === -1) index = voiceSync.segments.length - 1;
+    if (index === voiceSync.active) return;
+    voiceSync.segments[voiceSync.active]?.el.classList.remove("is-narrating");
+    voiceSync.active = index;
+    const el = voiceSync.segments[index]?.el;
+    if (el?.isConnected) {
+      el.classList.add("is-narrating");
+      el.scrollIntoView({ block: "nearest", behavior: "smooth" });
+    }
+  }
+  if (voicePlayer) voicePlayer.addEventListener("timeupdate", voiceSyncTick);
 
   // --- voice engine (shared) ------------------------------------------------
   function cyrb53(str, seed = 0) {
@@ -171,6 +266,7 @@ export function createCourseApp(config) {
   function stopVoice() {
     voiceRequestId += 1;
     if (voicePlayer) { voicePlayer.pause(); voicePlayer.removeAttribute("src"); voicePlayer.load(); }
+    clearVoiceSync();
     if (speakingButton) { speakingButton.classList.remove("is-playing"); speakingButton.setAttribute("aria-label", speakingButton.dataset.voiceLabel || "Listen"); speakingButton.title = "ElevenLabs · approved Ehel voice"; }
     speakingButton = null;
   }
@@ -251,7 +347,7 @@ export function createCourseApp(config) {
       voicePlayer.play().catch(reject);
     });
   }
-  async function speakText(text, button) {
+  async function speakText(text, button, readAlong = "") {
     if (!voiceEnabled) return toast("Turn on Voice Guide first.");
     if (!voiceSupported) return toast("ElevenLabs Voice Guide is not supported by this browser.");
     if (speakingButton === button) { stopVoice(); return; }
@@ -262,7 +358,11 @@ export function createCourseApp(config) {
     button.setAttribute("aria-label", "Stop ElevenLabs narration");
     try {
       const staticUrl = await staticVoiceUrl(text);
-      if (staticUrl) { if (requestId !== voiceRequestId) return; await playVoiceSource(staticUrl, requestId); }
+      if (staticUrl) {
+        if (requestId !== voiceRequestId) return;
+        startVoiceSync(readAlong);
+        await playVoiceSource(staticUrl, requestId);
+      }
       else {
         // Sentence-level mix: a text with no clip of its own may still contain
         // pre-recorded sentences — Wehel's stock phrases, or a quoted practice
@@ -279,13 +379,19 @@ export function createCourseApp(config) {
             chunks = [];
             let gap = [];
             const flush = () => { if (gap.length) { chunks.push(...narrationChunks(gap.join(" "))); gap = []; } };
-            sentences.forEach((sentence, index) => { if (urls[index]) { flush(); chunks.push({ url: urls[index] }); } else gap.push(sentence); });
+            sentences.forEach((sentence, index) => { if (urls[index]) { flush(); chunks.push({ url: urls[index], chars: sentence.length }); } else gap.push(sentence); });
             flush();
           }
         }
         if (!chunks) chunks = narrationChunks(text);
+        // Each file covers a slice of the text, so the highlight needs to know
+        // which slice is playing — without this every chunk would restart the
+        // highlight at the first line.
+        startVoiceSync(readAlong);
+        if (voiceSync) voiceSync.sourceRanges = voiceChunkRanges(chunks.map((chunk) => Math.max(1, chunk.chars ?? String(chunk.text || "").length)), voiceSync.total);
         for (let index = 0; index < chunks.length; index += 1) {
           if (requestId !== voiceRequestId) return;
+          if (voiceSync) voiceSync.sourceIndex = index;
           button.title = `ElevenLabs narration ${index + 1} of ${chunks.length}`;
           const source = chunks[index].url || await elevenLabsAudioUrl(chunks[index].text, chunks[index].speed);
           await playVoiceSource(source, requestId);
@@ -302,7 +408,7 @@ export function createCourseApp(config) {
       button.dataset.voiceBound = "true";
       button.dataset.voiceLabel = button.getAttribute("aria-label") || "Listen";
       button.disabled = !voiceSupported || !voiceEnabled;
-      button.addEventListener("click", () => speakText(button.hasAttribute("data-page-voice") ? collectPageNarration() : button.dataset.speak, button));
+      button.addEventListener("click", () => speakText(button.hasAttribute("data-page-voice") ? collectPageNarration() : button.dataset.speak, button, button.dataset.readalong || ""));
     });
   }
   function updateVoiceUI() {
@@ -711,6 +817,10 @@ export function createCourseApp(config) {
   // --- ctx: the surface the subject's renderers close over ------------------
   const ctx = {
     $, $$, escapeHtml, icon, voiceButton, pageHeader, toast,
+    // readAlongLinesHtml: wraps a text's lines in the .rd-line spans a
+    // voiceButton's data-readalong selector then walks. See the read-along
+    // block above.
+    readAlongLinesHtml,
     complete, completeGradeSection, saveProgress, saveGradeProgress,
     // speakText: a word card's ♪ button narrates on demand rather than through
     // a voiceButton, so the renderer calls this directly. It was missing here,

@@ -853,6 +853,22 @@ Two consequences worth knowing:
   ahead of its own commit. `git status` before a release, the same as before a
   commit.
 
+If that pre-release check finds someone else's work in the tree, **do not stash
+it and do not ask them to hurry** — build the release from HEAD instead:
+
+```bash
+git archive HEAD tools package.json src/prototypes/ehel-academy/shell \
+  src/prototypes/ehel-academy/shared src/prototypes/ehel-academy/english \
+  ':(exclude)src/prototypes/ehel-academy/english/media' | tar -x -C <tmpdir>
+```
+
+then run the deploy from `<tmpdir>`, copying `.env` and the two
+`.bunny-*-manifest.json` caches in so the uploader still skips what is already on
+storage. `git worktree add` is the obvious answer and the wrong one here: a full
+checkout of this repo is 1.4 GB of media, it takes minutes, and when it is killed
+part-way it leaves `tools/` missing and the index reporting tens of thousands of
+files as deleted — which reads as catastrophic damage and is not.
+
 ## Verification before committing
 
 1. `npm run validate:units` and `npm run check:alphabet` must pass.

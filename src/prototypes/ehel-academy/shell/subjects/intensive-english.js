@@ -20,6 +20,7 @@
 import { escapeHtml as sharedEscapeHtml, icon as sharedIcon } from "../../shared/course-shell.js?v=20260721a";
 import { createCourseApp } from "../course-app.js?v=t2";
 import { createPlacementUnit, placementCallout, PREREQ_UNIT } from "../placement.js?v=placement-1";
+import { renderStudyPlan } from "../study-plan.js?v=study-plan-1";
 import { mountWehelChat, modulesFromSections, outlineFromManifest, unitFetcher } from "../wehel.js?v=wehel-3";
 
 const $ = (selector, root = document) => root.querySelector(selector);
@@ -47,9 +48,12 @@ const requestedLevel = Number(routeParams.get("level") || document.documentEleme
 const levelNumber = requestedLevel >= 1 && requestedLevel <= 5 ? requestedLevel : 1;
 const defaultUnit = defaultUnitForLevel(levelNumber);
 const requestedUnit = Number(routeParams.get("unit") ?? defaultUnit);
-// Unit -1 is the Prerequisite unit (levels 2+ only): a placement exam over the
-// previous level, rendered by the shared shell/placement.js.
-const isPrereqUnit = requestedUnit === PREREQ_UNIT && levelNumber >= 2;
+// Unit -1 is the Prerequisite unit: a placement exam over the previous level
+// (Level 1's is a readiness check over getting-ready skills), rendered by the
+// shared shell/placement.js. The old `levelNumber >= 2` guard predated Level
+// 1's exam — placement-exam.json was authored for it on 2026-08-19 and the
+// guard left it unreachable.
+const isPrereqUnit = requestedUnit === PREREQ_UNIT;
 const unitNumber = isPrereqUnit ? PREREQ_UNIT : (Number.isFinite(requestedUnit) && requestedUnit >= 0 ? requestedUnit : defaultUnit);
 let placementExam;
 let placement;
@@ -149,7 +153,8 @@ function visibleSections() {
   if (isPrereqUnit) {
     return [
       ["overview", "layout-dashboard", "Overview"],
-      ["placement", "clipboard-check", "Placement exam"],
+      ["placement", "clipboard-check", placementExam?.kind === "readiness" ? "Readiness check" : "Placement exam"],
+      ["year-plan", "calendar-days", "Student Study Plan"],
     ];
   }
   return sections.filter(([id]) => {
@@ -625,7 +630,7 @@ const config = {
   stageDir: (level) => `level-${level}`,
   defaultUnit: defaultUnitForLevel,
   sections,
-  nonCountable: ["overview", "answers"],
+  nonCountable: ["overview", "answers", "year-plan"],
   gradeSections: [],
   progressDefaults: { completed: [], knownWords: [], self: {}, writing: {}, games: {}, aiMessages: [] },
   gradeDefaults: { completed: [] },
@@ -639,6 +644,30 @@ const config = {
   renderers: {
     overview: () => (isPrereqUnit ? placement.renderOverview() : renderOverview()),
     placement: () => (isPrereqUnit ? placement.renderExam() : navigate("overview")),
+    "year-plan": () => (isPrereqUnit ? renderStudyPlan({
+      deps: () => ({ $, $$, escapeHtml, icon, pageHeader, navigate }),
+      stageLabel: `Level ${levelNumber}`,
+      subjectLabel: "Intensive English",
+      units: () => manifest.units.filter((unit) => !String(unit.status).startsWith("Planned")),
+      unitDetailHeader: "New words",
+      unitDetail: (unit) => unit.vocabularyCount || null,
+      examLabel: () => (placementExam?.kind === "readiness" ? "Readiness check" : "Placement exam"),
+      firstUnitNumber: defaultUnit,
+      firstUnitHref: (route = "overview") => {
+        const url = new URL(location.href);
+        url.searchParams.set("level", levelNumber);
+        url.searchParams.set("unit", defaultUnit);
+        url.hash = route;
+        return url.href;
+      },
+      rhythm: [
+        ["Day 1", "Lesson", "Read the lesson and meet the unit's new words."],
+        ["Day 2", "Patterns", "Work through the unit's sentence patterns."],
+        ["Day 3", "Reading", "Read the passage and answer its comprehension questions."],
+        ["Day 4", "Speak & write", "Do the speaking and writing tasks."],
+        ["Day 5", "Check", "Finish the practice activities, take the quiz and check your answers."],
+      ],
+    }) : navigate("overview")),
     lecture: () => renderLecture(),
     dictionary: () => renderDictionary(),
     grammar: () => renderGrammar(),
@@ -684,8 +713,8 @@ const config = {
     return { manifest, course };
   },
   async onReady() {
-    if (isPrereqUnit && !["overview", "placement", "teacher"].includes(location.hash.slice(1))) location.hash = "overview";
-    if (!isPrereqUnit && location.hash.slice(1) === "placement") location.hash = "overview";
+    if (isPrereqUnit && !["overview", "placement", "year-plan", "teacher"].includes(location.hash.slice(1))) location.hash = "overview";
+    if (!isPrereqUnit && ["placement", "year-plan"].includes(location.hash.slice(1))) location.hash = "overview";
     document.title = `${course.level.label} | Unit ${course.unit.unitNo}: ${course.unit.unitTitle}`;
     $("#course-label").innerHTML = `${escapeHtml(course.level.label)} ${cefrChip(course.unit.cefr.band)}`;
     $("#unit-title").textContent = course.unit.unitTitle;
@@ -699,8 +728,14 @@ const config = {
 
     // A planned-but-unauthored unit is shown and disabled rather than hidden, so
     // the shape of the course is visible without pretending the content exists.
+    // The Student Study Plan rides in the picker under the Prerequisite entry;
+    // its option value is a route, not a unit number — the change handler
+    // routes it.
+    const onYearPlan = isPrereqUnit && location.hash.slice(1) === "year-plan";
+    const prereqLabel = isPrereqUnit && placementExam?.kind === "readiness" ? "Readiness check" : "Placement exam";
     const options = [
-      ...(levelNumber >= 2 ? [`<option value="${PREREQ_UNIT}" ${isPrereqUnit ? "selected" : ""}>Prerequisite: Placement exam</option>`] : []),
+      `<option value="${PREREQ_UNIT}" ${isPrereqUnit && !onYearPlan ? "selected" : ""}>Prerequisite: ${prereqLabel}</option>`,
+      `<option value="year-plan" ${onYearPlan ? "selected" : ""}>Student Study Plan</option>`,
       ...manifest.units.map((unit) => {
         const authored = !String(unit.status).startsWith("Planned");
         return `<option value="${unit.number}" ${unit.number === unitNumber ? "selected" : ""} ${authored ? "" : "disabled"}>Unit ${unit.number}: ${escapeHtml(unit.title)}${authored ? "" : " — not yet written"}</option>`;
@@ -708,7 +743,17 @@ const config = {
     ].join("");
     for (const picker of [$("#unit-select"), $("#top-unit-select")]) {
       picker.innerHTML = options;
-      picker.addEventListener("change", (event) => { location.href = unitLocation(event.target.value); });
+      picker.addEventListener("change", (event) => {
+        if (event.target.value === "year-plan") {
+          const url = new URL(location.href);
+          url.searchParams.set("level", levelNumber);
+          url.searchParams.set("unit", PREREQ_UNIT);
+          url.hash = "year-plan";
+          location.href = url.href;
+          return;
+        }
+        location.href = unitLocation(event.target.value);
+      });
     }
     shellCtx.updateVoiceUI();
   },

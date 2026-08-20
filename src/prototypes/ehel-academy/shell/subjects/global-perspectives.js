@@ -19,6 +19,7 @@
 import { createCourseApp } from "../course-app.js";
 import { createDeck, deckIcon } from "../deck.js";
 import { createPlacementUnit, placementCallout, placementCourseShell, PREREQ_UNIT } from "../placement.js?v=placement-1";
+import { renderStudyPlan } from "../study-plan.js?v=study-plan-1";
 import { mountWehelChat, modulesFromSections, outlineFromManifest, unitFetcher } from "../wehel.js?v=wehel-3";
 
 // Prerequisite unit (unit -1): a placement exam over the previous stages,
@@ -1128,18 +1129,37 @@ const config = {
   visibleSections: () => (withdrawal()
     ? [["overview", "alert-triangle", "Not available"]]
     : isPrereqUnit
-      ? [["overview", "layout-dashboard", "Unit Overview"], ["placement", "clipboard-check", "Placement exam"]]
+      ? [["overview", "layout-dashboard", "Unit Overview"], ["placement", "clipboard-check", "Placement exam"], ["year-plan", "calendar-days", "Student Study Plan"]]
       : availableSections()),
   // Everything available counts toward the bar except the progress page itself
   // — including the overview, which the other subjects exclude. In prereq mode
-  // only the exam counts, so finishing it reads as a complete unit.
-  nonCountable: isPrereqUnit ? ["overview"] : ["progress"],
+  // only the exam counts, so finishing it reads as a complete unit — the
+  // Student Study Plan is a reference page, not a step, so it never counts.
+  nonCountable: isPrereqUnit ? ["overview", "year-plan"] : ["progress"],
   progressDefaults: { completed: [], answersSeen: [], reflection: {}, quiz: {}, aiMessages: [] },
   keys: (s, u) => ({ progress: `ehel-gp-s${s}-u${u}-progress-v1` }),
   courseKey: (s) => `ehel-gp-g${String(s).padStart(2, "0")}`,
   renderers: whenWithdrawn({
     overview: () => (isPrereqUnit ? placement.renderOverview() : paint("overview", renderOverview)()),
     placement: () => (isPrereqUnit ? placement.renderExam() : paint("overview", renderOverview)()),
+    "year-plan": () => (isPrereqUnit ? renderStudyPlan({
+      deps: () => ({ $, $$, escapeHtml, icon, pageHeader, navigate }),
+      stageLabel: `Stage ${prereqStage}`,
+      subjectLabel: "Global Perspectives",
+      units: () => manifest.units,
+      unitDetailHeader: "Skill",
+      unitDetail: (unit) => unit.skill || null,
+      examLabel: () => "Placement exam",
+      firstUnitNumber: 1,
+      firstUnitHref: (route = "overview") => `?stage=${prereqStage}&unit=1#${route}`,
+      rhythm: [
+        ["Day 1", "Lesson", "Read the lesson and the big ideas."],
+        ["Day 2", "Toolkit", "Work through the skills toolkit and the unit's words."],
+        ["Day 3", "Activities", "Do the activities and the discussion challenge."],
+        ["Day 4", "Practice", "Answer the practice questions and work on the project."],
+        ["Day 5", "Reflect", "Reflect on the unit, check your answers and ask the tutor."],
+      ],
+    }) : navigate("overview")),
     // Every teaching section takes the slide deck at DECK_MAX_STAGE and below.
     // Four stay as pages on purpose: the overview and My Progress are summaries
     // rather than a sequence to walk through, My Learning Goals is a
@@ -1213,8 +1233,8 @@ const config = {
   },
   async onReady(ctx) {
     const course = ctx.course, manifest = ctx.manifest, esc = ctx.escapeHtml, s = ctx.stageNumber;
-    if (isPrereqUnit && !["overview", "placement"].includes(location.hash.slice(1))) location.hash = "overview";
-    if (!isPrereqUnit && location.hash.slice(1) === "placement") location.hash = "overview";
+    if (isPrereqUnit && !["overview", "placement", "year-plan"].includes(location.hash.slice(1))) location.hash = "overview";
+    if (!isPrereqUnit && ["placement", "year-plan"].includes(location.hash.slice(1))) location.hash = "overview";
     document.title = `${course.unit.unitTitle} · Ehel Academy Global Perspectives`;
     const label = ctx.$("#course-label");
     if (label) label.textContent = `${course.stage.label} · Global Perspectives`;
@@ -1230,15 +1250,20 @@ const config = {
         select.disabled = true;
         continue;
       }
+      // The Student Study Plan rides in the unit picker under the Prerequisite
+      // entry, one press away from anywhere in the course. Its option value is
+      // a route, not a unit number — the change handler routes it.
+      const onYearPlan = isPrereqUnit && location.hash.slice(1) === "year-plan";
       select.innerHTML = [
-        `<option value="${PREREQ_UNIT}" ${isPrereqUnit ? "selected" : ""}>Prerequisite — Placement exam</option>`,
+        `<option value="${PREREQ_UNIT}" ${isPrereqUnit && !onYearPlan ? "selected" : ""}>Prerequisite — Placement exam</option>`,
+        `<option value="year-plan" ${onYearPlan ? "selected" : ""}>Student Study Plan</option>`,
         ...manifest.units
           .map((unit) => `<option value="${unit.number}" ${!isPrereqUnit && unit.number === resolvedUnitNo ? "selected" : ""}>Unit ${unit.number} — ${esc(unit.title)}</option>`),
       ].join("");
       select.onchange = () => {
         const url = new URL(location.href);
-        url.searchParams.set("unit", select.value);
-        url.hash = "overview";
+        url.searchParams.set("unit", select.value === "year-plan" ? PREREQ_UNIT : select.value);
+        url.hash = select.value === "year-plan" ? "year-plan" : "overview";
         location.href = url.href;
       };
     }

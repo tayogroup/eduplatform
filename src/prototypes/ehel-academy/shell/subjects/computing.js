@@ -12,6 +12,7 @@ import { computingWordExplainer } from "../../computing/shared/computing-word-sc
 import { createCourseApp } from "../course-app.js";
 import { createDeck, deckIcon } from "../deck.js?v=deck-1";
 import { createPlacementUnit, placementCallout, placementCourseShell, PREREQ_UNIT } from "../placement.js?v=placement-1";
+import { renderStudyPlan } from "../study-plan.js?v=study-plan-1";
 import { mountWehelChat, modulesFromSections, outlineFromManifest, unitFetcher } from "../wehel.js?v=wehel-3";
 
 const pad2 = (n) => String(n).padStart(2, "0");
@@ -1902,7 +1903,7 @@ const config = {
   // one-word change with its own reasoning about billing/analytics history.
   ttsPurpose: "ehel_math",
   sections,
-  nonCountable: ["overview", "capstone", "capstonequiz"],
+  nonCountable: ["overview", "capstone", "capstonequiz", "year-plan"],
   gradeSections: ["capstone", "capstonequiz"],
   progressDefaults: { completed: [], practiceOpened: [], reflection: {}, aiMessages: [], games: {} },
   gradeDefaults: { completed: [], capstoneResponses: {}, capstoneEvidence: {}, quizBest: 0 },
@@ -1915,11 +1916,28 @@ const config = {
   courseKey: (s) => `ehel-comp-g${pad2(s)}`,
   extendSummary: (progress, base) => ({ ...base, knownWords: progress.knownWords ? [...progress.knownWords] : undefined }),
   visibleSections: () => (isPrereqUnit
-    ? [["overview", "layout-dashboard", "Unit Overview"], ["placement", "clipboard-check", "Placement exam"]]
+    ? [["overview", "layout-dashboard", "Unit Overview"], ["placement", "clipboard-check", "Placement exam"], ["year-plan", "calendar-days", "Student Study Plan"]]
     : sections),
   renderers: {
     overview: () => (isPrereqUnit ? placement.renderOverview() : renderOverview()),
     placement: () => (isPrereqUnit ? placement.renderExam() : navigate("overview")),
+    "year-plan": () => (isPrereqUnit ? renderStudyPlan({
+      deps: () => ({ $, $$, escapeHtml, icon, pageHeader, navigate }),
+      stageLabel: `Stage ${prereqStage}`,
+      subjectLabel: "Computing",
+      units: () => manifest.units,
+      examLabel: () => "Placement exam",
+      firstUnitNumber: 1,
+      firstUnitHref: (route = "overview") => `?stage=${prereqStage}&unit=1#${route}`,
+      rhythm: [
+        ["Day 1", "Lesson", "Read the lesson and meet the unit's computing words."],
+        ["Day 2", "Explore", "Explore the concept, the visual models and the code examples."],
+        ["Day 3", "Method", "Learn the method and walk the worked examples."],
+        ["Day 4", "Build", "Do the Build It activities, guided practice and Debug It."],
+        ["Day 5", "Check", "Play the games, solve real problems and take the unit challenge."],
+      ],
+      finalRow: () => (manifest.finalAssessment ? { title: `Stage capstone project & ${manifest.finalAssessment.title}`, note: `${manifest.finalAssessment.questionCount} questions, mastery at ${manifest.finalAssessment.passPercent}%` } : { title: "Stage capstone project", note: "brings the whole stage together" }),
+    }) : navigate("overview")),
     tools: renderToolkit, lesson: renderLesson, ai: renderAI,
     words: renderComputingWords, explore: renderExploreConcept, visuals: renderVisualModels,
     code: renderCodeExamples, method: renderLearnMethod, examples: renderExamples,
@@ -1971,19 +1989,24 @@ const config = {
   async onReady(ctx) {
     const course = ctx.course, manifest = ctx.manifest, esc = ctx.escapeHtml, s = ctx.stageNumber, u = ctx.unitNumber;
     const stage = course.stage || course.grade;
-    if (isPrereqUnit && !["overview", "placement", "teacher"].includes(location.hash.slice(1))) location.hash = "overview";
-    if (!isPrereqUnit && location.hash.slice(1) === "placement") location.hash = "overview";
+    if (isPrereqUnit && !["overview", "placement", "year-plan", "teacher"].includes(location.hash.slice(1))) location.hash = "overview";
+    if (!isPrereqUnit && ["placement", "year-plan"].includes(location.hash.slice(1))) location.hash = "overview";
     document.title = `${stage.label} Computing | Unit ${course.unit.unitNo}: ${course.unit.unitTitle}`;
     ctx.$("#course-label").textContent = `${stage.label} · ${course.subject} · ${course.term.label}`;
     ctx.$("#unit-title").textContent = course.unit.unitTitle;
     ctx.$("#stage-select").innerHTML = Array.from({ length: STAGE_COUNT }, (_, i) => i + 1).map((n) => `<option value="${n}" ${n === s ? "selected" : ""}>Stage ${n}</option>`).join("");
     ctx.$("#stage-select").addEventListener("change", () => { location.href = `?stage=${Number(ctx.$("#stage-select").value)}&unit=1#overview`; });
+    // The Student Study Plan rides in the unit picker under the Prerequisite
+    // entry, one press away from anywhere in the course. Its option value is a
+    // route, not a unit number — the change handler routes it.
+    const onYearPlan = isPrereqUnit && location.hash.slice(1) === "year-plan";
     const unitOptions = [
-      `<option value="${PREREQ_UNIT}" ${isPrereqUnit ? "selected" : ""}>Prerequisite: Placement exam</option>`,
+      `<option value="${PREREQ_UNIT}" ${isPrereqUnit && !onYearPlan ? "selected" : ""}>Prerequisite: Placement exam</option>`,
+      `<option value="year-plan" ${onYearPlan ? "selected" : ""}>Student Study Plan</option>`,
       ...manifest.units.map((unit) => `<option value="${unit.number}" ${unit.number === u ? "selected" : ""}>Unit ${unit.number}: ${esc(unit.title)}</option>`),
     ].join("");
     for (const picker of [ctx.$("#unit-select"), ctx.$("#top-unit-select")]) picker.innerHTML = unitOptions;
-    for (const picker of [ctx.$("#unit-select"), ctx.$("#top-unit-select")]) picker.addEventListener("change", () => { location.href = `?stage=${s}&unit=${Number(picker.value)}#overview`; });
+    for (const picker of [ctx.$("#unit-select"), ctx.$("#top-unit-select")]) picker.addEventListener("change", () => { location.href = picker.value === "year-plan" ? `?stage=${s}&unit=${PREREQ_UNIT}#year-plan` : `?stage=${s}&unit=${Number(picker.value)}#overview`; });
   },
 };
 

@@ -827,6 +827,32 @@ void with the visitors standing on nothing.
 - Primary remote `origin` → `https://github.com/tayogroup/eduplatform` (private). Push after significant work.
 - Local backup remote `backup` → `C:\Users\inawa\Documents\Claude Code\EduPlatform-backup\eduplatform.git`. Refresh both with `git push origin main --follow-tags` and `git push backup --all --follow-tags`.
 
+### Several sessions share this working tree — stage explicit pathspecs
+
+**Never `git add -A`, `git add .` or `git commit -a` here.** More than one session
+works in this checkout at once, so the tree routinely holds somebody else's
+half-finished change. Run `git status` before every commit and stage the paths you
+actually touched.
+
+This is not hypothetical. On 2026-08-20 two commits an hour apart
+(`b1b2d077c`, `716fcf128` — Grade 3 and Grade 4 picture books) each swept in
+another session's uncommitted work on
+`src/prototypes/ehel-academy/shell/subjects/english.js`, so a feature shipped
+under a commit message about something else and its own commit landed afterwards
+describing code already on main.
+
+Two consequences worth knowing:
+
+- **One file can carry two sessions' work** — `shell/subjects/english.js` is the
+  usual one. If `git diff` shows hunks you did not write, they are someone's work
+  in progress: leave the file out of that commit, or say so in the message. Never
+  revert them to "clean up".
+- **A release packages the working TREE, not HEAD.** `deploy-app-version.js` reads
+  the files on disk, so cutting a release from a shared tree publishes whatever
+  else is sitting in it — that is how v218 and v219 put a feature into production
+  ahead of its own commit. `git status` before a release, the same as before a
+  commit.
+
 ## Verification before committing
 
 1. `npm run validate:units` and `npm run check:alphabet` must pass.

@@ -43,6 +43,18 @@ Real uploads are `npm run deploy:integration|staging|production`. **Never run a 
 ## Hard rules
 
 - **Grades/Stages 5-8 keep their design**: the full-screen slide deck (`gc-*`, `shell/deck.js`) is for Grades/Stages 1-4 only. By Grade 5 a learner scans a page rather than being walked through it one item at a time, so the grids, tabs and two-column labs there are the intended design, not a backlog waiting to be converted. Gate on stage number, in ONE constant per subject, never per section — the name differs by subject — `DECK_MAX_STAGE` in Science, Mathematics and Global Perspectives, `BOTH_DESIGNS_MAX_STAGE` in Computing, `BOTH_DESIGNS` in English (a boolean, `gradeNumber <= 4`) — but the line is 4 in every one of them; keep every grid renderer byte-identical and give it only a one-line early return (Computing is the exception and says why below: showing both designs at once forced its originals to query inside a region, so they moved into `…Classic` functions behind a dispatcher — the upper stages still reach them unchanged); scope deck CSS to deck-only classes (`.gc-*`, `.wc-*`, `.<subject>-gc-*`) so no rule can match an upper-stage page. Verify at an upper stage in the browser — zero `gc-*` nodes and `body.gc-full` never set — not just by reading the diff. The upper stages carry known cosmetic defects that look like invitations (Science's `.method-example > strong` is 70px serif, a Mathematics size for `24 + 8`, applied to a whole investigation): flag them, never fix them in passing.
+- **The English picture-book shelf stops at Grade 4.** Decided by the owner on
+  2026-08-20, after Grades 1-4 shipped, and it is a decision rather than a gap —
+  do not "finish the set" at 5-8. Two reasons, both visible in the content: every
+  Grade 5 unit already carries its own serialised story (*The Burrow Discovery*,
+  *The Memory Wall*, *The Forgotten Mural* — three parts each), so another book
+  per unit would be a second narrative competing with the one the unit tells; and
+  Grade 5's units teach text *forms* (fable, information text, haiku, legend,
+  instructions, genre, point of view, persuasion, playscript), which ten
+  identical twelve-page picture books would flatten. It also sits against the rule
+  above: a page-turning book is exactly the one-item-at-a-time walk-through the
+  upper stages are meant not to have. `unitEbooks()` already filters by grade, so
+  the section simply does not appear at 5-8 and nothing needs gating.
 - **Generated bundle**: never edit `runtime.bundle.js` directly (`docs/generated-bundle-policy.md`).
 - **Stable filenames**: active JS/CSS filenames never contain versions, dates, or `locked`. Versions live in git tags (`alphabet-v1.0.0`, `shared-v1.0.0`) and manifests (`docs/naming-versioning.md`).
 - **Unit config schema**: `unit.config.js` must pass `npm run validate:units`; schema documented in `docs/unit-config-schema.md`.

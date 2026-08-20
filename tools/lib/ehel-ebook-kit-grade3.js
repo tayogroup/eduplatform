@@ -100,7 +100,15 @@ function person({
   const point = arms === "point";
   const skinShade = skin === G3.skinDeep ? "#5a3820" : skin === G3.skinWarm ? "#8a5a37" : "#6f4629";
 
-  const shoe = (sx) => `<path d="M ${sx - 13} -4 q 0 -12 13 -12 q 13 0 13 12 q 0 6 -13 6 q -13 0 -13 -6 z" fill="#4a3a2c"/>`;
+  // Shoes are drawn AFTER the legs (see the body below), so they read as feet
+  // rather than as a shadow under a stump. Drawn before, the leg rect covered
+  // all but ~6 units of the shoe, and whether that sliver was visible at all
+  // came down to the trouser colour: Sami's #6b5a44 and Omar's #6b5a44 against
+  // shoe #4a3a2c on an attic floor of #7d6a54 left three browns inside 40 points
+  // of each other, and their legs ended in nothing. Wider than the 24-unit leg,
+  // and outlined like every other part of the figure, so the foot reads on any
+  // trouser colour and any floor.
+  const shoe = (sx) => `<path d="M ${sx - 15} -4 q 0 -13 15 -13 q 15 0 15 13 q 0 7 -15 7 q -15 0 -15 -7 z" fill="#4a3a2c" stroke="${C.ink}" stroke-width="3"/>`;
   const leg = (lx) => (legs === "skirt"
     ? `<rect x="${lx - 9}" y="-56" width="18" height="52" rx="8" fill="${skin}"/>`
     : `<rect x="${lx - 12}" y="-62" width="24" height="58" rx="9" fill="${bottom}" stroke="${C.ink}" stroke-width="3.4"/>`);
@@ -136,8 +144,8 @@ function person({
     <ellipse cx="0" cy="2" rx="52" ry="12" fill="${C.ink}" opacity="0.10"/>
     <g class="tap-target" data-figure="${name}" data-tap="${name}" data-mood="${mood}">
     <g class="anim-idle" style="${delayAt(x, y, 2.2)}">
-    ${shoe(-19)}${shoe(19)}
     ${leg(-19)}${leg(19)}
+    ${shoe(-19)}${shoe(19)}
     ${longSkirt}
     <path d="M -34 -60 q 34 -12 68 0 l -4 -74 q -30 -10 -60 0 z" fill="${top}" stroke="${C.ink}" stroke-width="3.6"/>
     ${skirt}

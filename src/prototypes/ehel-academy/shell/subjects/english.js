@@ -1504,6 +1504,9 @@ let activeEbookPage = 0;
 const aiVoiceCache = new Map();
 const aiVoicePending = new Map();
 const readingVoiceSources = new Map();
+// The chunk texts behind each entry in readingVoiceSources, so the read-along
+// highlight knows which character range of the text each source file narrates.
+const readingVoiceChunks = new Map();
 const recordings = new Map();
 const speakingReviewState = new Map();
 
@@ -1744,6 +1747,38 @@ function collectPageNarration() {
     element.append(document.createTextNode("\n"));
   });
   return prepareNarrationText(copy.textContent) || prepareNarrationText(currentPageNarration);
+}
+
+// A sentence, with any closing quote or bracket kept on the end of it — a line
+// that stops before the “ of “Hello!” reads as a typo when it is the thing
+// being highlighted.
+function narrationSentences(value) {
+  const parts = String(value || "").match(/[^.!?]+[.!?]+[”’"')\]]*|[^.!?]+$/g)?.map((part) => part.trim()).filter(Boolean) || [];
+  // A break inside quoted speech is not a sentence break. These stories are
+  // mostly dialogue, and “Hello!” / said a kind lady at the door. splits the
+  // one thing the narrator says in a single breath across two highlights. A
+  // fragment starting lowercase is the back half of the sentence above it.
+  return parts.reduce((kept, part) => {
+    if (kept.length && /^[a-z]/.test(part)) kept[kept.length - 1] += ` ${part}`;
+    else kept.push(part);
+    return kept;
+  }, []);
+}
+
+// Where each narration file starts and ends in the character space the
+// highlight measures segments in. The chunk texts and the on-screen lines are
+// two descriptions of the same narration, so the ranges are proportional
+// rather than absolute — the chunker trims and rejoins, so the two character
+// counts never agree exactly.
+function narrationChunkRanges(chunks, total) {
+  const weights = chunks.map(narrationWeight);
+  const sum = weights.reduce((a, b) => a + b, 0) || 1;
+  let position = 0;
+  return weights.map((weight) => {
+    const start = position;
+    position += (weight / sum) * total;
+    return [start, position];
+  });
 }
 
 function narrationChunks(text, maximum = 620) {
@@ -2689,6 +2724,62 @@ function renderWordCarousel() {
   drawDeck();
 }
 
+// ===================== read-along line highlighting =====================
+// No clip in this course carries word timings — a reading is one recording of
+// the whole passage and a book page is one TTS render — so the highlight is
+// estimated: each line's window of the audio is its share of the narration
+// text's characters. That tracks a steady narrator closely enough to follow
+// with a finger, which is the job; it is a guide for the eye, not a caption
+// track.
+let narrationSync = null;
+
+function clearNarrationSync(player = null) {
+  if (!narrationSync) return;
+  if (player && narrationSync.player !== player) return;
+  narrationSync.segments.forEach((segment) => segment.el?.classList?.remove("is-narrating"));
+  narrationSync = null;
+}
+
+function narrationWeight(text) {
+  return Math.max(1, prepareNarrationText(text).length);
+}
+
+// segments: [{ el, chars }] in narration order (el may be null for narrated
+// text with no line on screen). sourceRanges: when the narration is split
+// across several files, the [start, end) character range each file covers;
+// null when one file reads everything.
+function startNarrationSync(player, segments, sourceRanges = null) {
+  clearNarrationSync();
+  let total = 0;
+  const bounds = segments.map((segment) => { const range = [total, total + segment.chars]; total += segment.chars; return range; });
+  narrationSync = { player, segments, bounds, total, sourceRanges, sourceIndex: 0, active: -1 };
+}
+
+function narrationSyncTick(player) {
+  const sync = narrationSync;
+  if (!sync || sync.player !== player || !sync.total) return;
+  const duration = player.duration;
+  if (!Number.isFinite(duration) || duration <= 0) return;
+  const fraction = Math.min(Math.max(player.currentTime / duration, 0), 1);
+  let position;
+  if (sync.sourceRanges) {
+    const range = sync.sourceRanges[sync.sourceIndex] || [0, sync.total];
+    position = range[0] + fraction * (range[1] - range[0]);
+  } else {
+    position = fraction * sync.total;
+  }
+  let index = sync.bounds.findIndex(([, end]) => position < end);
+  if (index === -1) index = sync.segments.length - 1;
+  if (index === sync.active) return;
+  sync.segments[sync.active]?.el?.classList?.remove("is-narrating");
+  sync.active = index;
+  const el = sync.segments[index]?.el;
+  if (el?.isConnected) {
+    el.classList.add("is-narrating");
+    el.scrollIntoView({ block: "nearest", behavior: "smooth" });
+  }
+}
+
 function setAudioButton(button, playing) {
   if (!button) return;
   button.classList.toggle("is-playing", playing);
@@ -2707,6 +2798,7 @@ function stopAudio() {
   // switch to another text in the shelf (which calls mountReadingAudioPlayer
   // again) brought it back. Pausing stops playback, which is the actual job.
   $("#ebook-reading-audio")?.pause();
+  clearNarrationSync();
   if (pageNarrationCancel) pageNarrationCancel();
   pageNarrationCancel = null;
   pageNarrationActive = false;
@@ -2786,7 +2878,7 @@ async function aiVoiceUrl(text) {
   return pending;
 }
 
-async function playPageNarration(button, narrationOverride = null) {
+async function playPageNarration(button, narrationOverride = null, readAlong = null) {
   if (!audioEnabled) { toast("Sound is muted. Use the sound button in the header to turn it on."); return false; }
   if (activeAudioButton === button) {
     stopAudio();
@@ -2808,9 +2900,13 @@ async function playPageNarration(button, narrationOverride = null) {
   icons();
   try {
     const chunks = narrationChunks(narration);
+    const segments = readAlong?.length ? readAlong : null;
+    const chunkRanges = segments ? narrationChunkRanges(chunks, segments.reduce((sum, segment) => sum + segment.chars, 0)) : null;
+    if (segments) startNarrationSync(player, segments, chunkRanges);
     for (let index = 0; index < chunks.length; index += 1) {
       const source = await aiVoiceUrl(chunks[index]);
       if (requestId !== audioRequestId || !button.isConnected) return;
+      if (segments && narrationSync?.player === player) narrationSync.sourceIndex = index;
       button.innerHTML = `${icon("square")} <span>Stop listening</span>`;
       button.setAttribute("aria-label", `Stop listening. Part ${index + 1} of ${chunks.length}`);
       button.classList.remove("loading");
@@ -2852,6 +2948,7 @@ async function prepareReadingNarration(reading, button) {
     const sources = [];
     for (const chunk of chunks) sources.push(await aiVoiceUrl(chunk));
     readingVoiceSources.set(reading.readingId, sources);
+    readingVoiceChunks.set(reading.readingId, chunks);
     if (button.isConnected) {
       button.hidden = true;
       const status = button.closest(".ebook-audio-wrap")?.querySelector("small");
@@ -2888,12 +2985,29 @@ function mountReadingAudioPlayer(reading) {
   player.src = sources[index];
   player.playbackRate = AI_NARRATION_RATE;
   player.defaultPlaybackRate = AI_NARRATION_RATE;
+
+  // Read-along. The recorded clip narrates the passage alone; the on-demand
+  // ElevenLabs render is asked for the title first (prepareReadingNarration),
+  // so that gets a title segment with no line on screen to highlight.
+  const segments = readAlongSegments($("#reading-panel"));
+  if (segments.length) {
+    if (!reading.audio?.available) segments.unshift({ el: null, chars: narrationWeight(reading.title) });
+    const chunks = reading.audio?.available ? null : readingVoiceChunks.get(reading.readingId);
+    const total = segments.reduce((sum, segment) => sum + segment.chars, 0);
+    const ranges = chunks?.length > 1 ? narrationChunkRanges(chunks, total) : null;
+    // Nothing clears the highlight on pause: the marked line is where the
+    // learner stopped, which is what they want to see when they come back.
+    const sync = () => { startNarrationSync(player, segments, ranges); if (narrationSync) narrationSync.sourceIndex = index; };
+    player.addEventListener("play", sync);
+    player.addEventListener("timeupdate", () => narrationSyncTick(player));
+  }
+
   player.addEventListener("play", () => {
     player.playbackRate = AI_NARRATION_RATE;
   });
   player.addEventListener("ended", () => {
     index += 1;
-    if (index >= sources.length) return;
+    if (index >= sources.length) return clearNarrationSync(player);
     player.src = sources[index];
     player.playbackRate = AI_NARRATION_RATE;
     player.play().catch(() => toast("Press Play to continue the reading."));
@@ -2924,6 +3038,7 @@ async function playAIMessage(index, button) {
 }
 
 $("#word-audio").addEventListener("timeupdate", (event) => {
+  narrationSyncTick(event.currentTarget);
   if (activeAudioEnd !== null && event.currentTarget.currentTime >= activeAudioEnd) stopAudio();
 });
 $("#word-audio").addEventListener("ended", () => {
@@ -2939,7 +3054,11 @@ function readingBlocks(value) {
   const lines = String(value || "").replace(/\r\n?/g, "\n").split(/\n+/).map((line) => line.trim()).filter(Boolean);
   const blocks = [];
   for (const line of lines) {
-    const isHeading = line.length <= 72 && (!/[.!?]$/.test(line) || /:$/.test(line));
+    // A sentence may close on its quotation mark. Requiring the terminator to
+    // be the LAST character called 483 lines of story dialogue headings —
+    // “Look!” said Amal. “A red book!” drawn gold-bordered as if it introduced
+    // a section, in every grade. The closing quote is part of the sentence end.
+    const isHeading = line.length <= 72 && (!/[.!?][”’"')\]]*$/.test(line) || /:$/.test(line));
     if (isHeading) {
       blocks.push({ heading: true, words: 0, html: `<h3 class="ebook-subheading">${escapeHtml(line.replace(/:$/, ""))}</h3>` });
       continue;
@@ -2948,13 +3067,29 @@ function readingBlocks(value) {
     const groups = line.length > 320
       ? Array.from({ length: Math.ceil(sentences.length / 3) }, (_, index) => sentences.slice(index * 3, index * 3 + 3).join(" ").trim())
       : [line];
-    groups.filter(Boolean).forEach((paragraph) => blocks.push({ heading: false, words: readingWordCount(paragraph), html: `<p>${escapeHtml(paragraph)}</p>` }));
+    // Each sentence is its own element so the read-along highlight has a line
+    // to land on. Spans are inline and unstyled by default, so the printed
+    // sheet and the deck draw exactly what they drew before.
+    groups.filter(Boolean).forEach((paragraph) => blocks.push({ heading: false, words: readingWordCount(paragraph), html: `<p>${readingLinesHtml(paragraph)}</p>` }));
   }
   return blocks;
 }
 
+function readingLinesHtml(value) {
+  const sentences = narrationSentences(value);
+  if (sentences.length < 2) return `<span class="rd-line">${escapeHtml(String(value).trim())}</span>`;
+  return sentences.map((sentence) => `<span class="rd-line">${escapeHtml(sentence)}</span>`).join(" ");
+}
+
 function readingBodyHtml(value) {
   return readingBlocks(value).map((block) => block.html).join("");
+}
+
+// The lines the highlight walks, in narration order. A heading is one line; a
+// paragraph is one line per sentence.
+function readAlongSegments(root, selector = ".ebook-copy .rd-line, .ebook-copy .ebook-subheading") {
+  if (!root) return [];
+  return [...root.querySelectorAll(selector)].map((el) => ({ el, chars: narrationWeight(el.textContent) }));
 }
 
 // The same blocks gathered into pages for the deck. A paragraph is never split
@@ -4873,6 +5008,9 @@ function openEbookReadAloud(book) {
         .copy { margin:0 18px; padding:20px clamp(20px,5vw,48px); border:1px solid var(--line); border-top:0; background:#fffdf7; }
         .copy span { color:var(--teal); font-size:11px; font-weight:850; text-transform:uppercase; }
         .copy p { margin:7px 0 0; font:700 clamp(21px,3vw,29px)/1.5 Georgia,serif; letter-spacing:0; }
+        .rd-line { padding:2px 4px; margin:0 -4px; border-radius:4px; transition:background-color .2s ease, color .2s ease; }
+        .rd-line.is-narrating { color:#0b3a35; background:var(--gold); box-shadow:0 0 0 2px var(--gold); }
+        @media (prefers-reduced-motion:reduce) { .rd-line { transition:none; } }
         .controls { min-height:72px; display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:12px; padding:14px 18px; border-top:1px solid var(--line); }
         .controls button,.start { min-height:42px; padding:9px 15px; border:1px solid var(--line); border-radius:6px; color:var(--ink); background:white; font-weight:750; cursor:pointer; }
         .controls button:first-child { justify-self:start; }
@@ -4899,7 +5037,7 @@ function openEbookReadAloud(book) {
         <div class="progress" role="progressbar" aria-label="Book progress" aria-valuemin="1" aria-valuemax="${book.pages.length}" aria-valuenow="1"><span></span></div>
         <div class="toolbar"><strong id="page-count">Page 1 of ${book.pages.length}</strong><audio id="reader-audio" controls preload="auto" aria-label="ElevenLabs book narration"></audio></div>
         <figure><img id="page-image" src="${ebookAsset(book, firstPage.image)}" alt="${escapeHtml(firstPage.alt)}"></figure>
-        <section class="copy"><span>Read along</span><p id="page-text">${escapeHtml(firstPage.text)}</p></section>
+        <section class="copy"><span>Read along</span><p id="page-text">${readingLinesHtml(firstPage.text)}</p></section>
         <div class="controls"><button id="previous-page" type="button" disabled>← Previous page</button><button class="start" id="start-audio" type="button" hidden>▶ Start narration</button><button id="next-page" type="button">Next page →</button></div>
         <footer><strong>Book credit</strong><p>${escapeHtml(book.attribution)}</p></footer>
       </article></main>
@@ -4914,11 +5052,31 @@ function openEbookReadAloud(book) {
   let pageIndex = 0;
   let playbackToken = 0;
 
+  // Read-along in the popup. It cannot reuse narrationSync — that tracks the
+  // app document's players and these elements live in another window — but it
+  // is the same estimate: a line's share of the page's characters is its share
+  // of the clip. One page is one clip here, so there are no chunk ranges.
+  let readerLines = [];
+  audio.addEventListener("timeupdate", () => {
+    const duration = audio.duration;
+    if (!readerLines.length || !Number.isFinite(duration) || duration <= 0) return;
+    const total = readerLines.reduce((sum, line) => sum + line.chars, 0);
+    const position = Math.min(Math.max(audio.currentTime / duration, 0), 1) * total;
+    let running = 0;
+    let active = readerLines.length - 1;
+    for (let index = 0; index < readerLines.length; index += 1) {
+      running += readerLines[index].chars;
+      if (position < running) { active = index; break; }
+    }
+    readerLines.forEach((line, index) => line.el.classList.toggle("is-narrating", index === active));
+  });
+
   const drawPage = () => {
     const page = book.pages[pageIndex];
     readerDocument.querySelector("#page-image").src = ebookAsset(book, page.image);
     readerDocument.querySelector("#page-image").alt = page.alt;
-    readerDocument.querySelector("#page-text").textContent = page.text;
+    readerDocument.querySelector("#page-text").innerHTML = readingLinesHtml(page.text);
+    readerLines = [...readerDocument.querySelectorAll("#page-text .rd-line")].map((el) => ({ el, chars: Math.max(1, el.textContent.length) }));
     readerDocument.querySelector("#page-count").textContent = `Page ${pageIndex + 1} of ${book.pages.length}`;
     const progressBar = readerDocument.querySelector(".progress");
     progressBar.setAttribute("aria-valuenow", String(pageIndex + 1));
@@ -5086,7 +5244,7 @@ function renderEbooks() {
         <button class="course-ebook-nav next" id="next-ebook-page" type="button" aria-label="Next page" ${isLastPage ? "disabled" : ""}>${icon("chevron-right")}</button>
         <figcaption class="sr-only">Original illustration by ${escapeHtml(book.illustrator)}.</figcaption>
       </figure>
-      <div class="course-ebook-transcript" aria-live="polite"><div class="course-ebook-transcript-head"><span>Read along</span><h3 tabindex="-1">Page ${activeEbookPage + 1}</h3></div><p>${escapeHtml(page.text)}</p></div>
+      <div class="course-ebook-transcript" aria-live="polite"><div class="course-ebook-transcript-head"><span>Read along</span><h3 tabindex="-1">Page ${activeEbookPage + 1}</h3></div><p>${readingLinesHtml(page.text)}</p></div>
       ${isLastPage ? `<div class="course-ebook-controls"><button class="button gold" id="finish-ebook" type="button">${icon("check")} Finish book</button></div>` : ""}`;
 
     const stage = $("#ebook-stage");
@@ -5125,9 +5283,10 @@ function renderEbooks() {
     $("#listen-ebook-page").addEventListener("click", async (event) => {
       if (ebookWatchActive) { stopEbookWatch(); return; }
       const listenButton = event.currentTarget;
-      if (activeAudioButton === listenButton) { playPageNarration(listenButton, page.text); return; }
+      const lines = () => readAlongSegments($("#course-ebook-page"), ".course-ebook-transcript .rd-line");
+      if (activeAudioButton === listenButton) { playPageNarration(listenButton, page.text, lines()); return; }
       await playStorySound(page.sound);
-      if (listenButton.isConnected) playPageNarration(listenButton, page.text);
+      if (listenButton.isConnected) playPageNarration(listenButton, page.text, lines());
     });
     $("#previous-ebook-page").addEventListener("click", () => { stopEbookWatch({ keepFullscreen: true }); activeEbookPage -= 1; drawPage(true); });
     $("#next-ebook-page").addEventListener("click", () => { stopEbookWatch({ keepFullscreen: true }); activeEbookPage += 1; drawPage(true); });
@@ -5158,7 +5317,7 @@ function renderEbooks() {
       if (!pageButton) break;
       await playStorySound(book.pages[activeEbookPage].sound);
       if (!ebookWatchActive || ebookWatchToken !== token) return;
-      const narrated = await playPageNarration(pageButton, book.pages[activeEbookPage].text);
+      const narrated = await playPageNarration(pageButton, book.pages[activeEbookPage].text, readAlongSegments($("#course-ebook-page"), ".course-ebook-transcript .rd-line"));
       if (!ebookWatchActive || ebookWatchToken !== token) return;
       if (!narrated) break;
       if (activeEbookPage >= book.pages.length - 1) {

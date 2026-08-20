@@ -231,12 +231,12 @@ const IS_STAFF = ["admin", "teacher", "staff"].includes(launchRole());
 // ===================== english body (verbatim) =====================
 const sections = [
   ["overview", "layout-dashboard", "Overview"],
-  // The unit-level Student Study Plan — Grade 1 only (visibleSections drops it
-  // elsewhere): the youngest learners are the ones walked week by week. A
-  // reference page, not a step: excluded from countableSectionIds and
-  // config.nonCountable-listed, and absent from SECTION_CHAIN, so it can
-  // neither gate nor count. The grade-level plan lives on the Prerequisite
-  // unit under the same name; this one plans the unit the learner is inside.
+  // The unit-level Student Study Plan, on every grade (Grade 1 first, the rest
+  // extended on the owner's request the same day). A reference page, not a
+  // step: excluded from countableSectionIds and config.nonCountable-listed,
+  // and absent from SECTION_CHAIN, so it can neither gate nor count. The
+  // grade-level plan lives on the Prerequisite unit under the same name; this
+  // one plans the unit the learner is inside.
   ["unit-plan", "calendar-days", "Student Study Plan"],
   // Only a handful of Grade 1 units carry a grownUpGuide (the Year 1 source
   // pack's own Teacher & Parent Guide docs; see
@@ -1579,7 +1579,7 @@ function visibleSections() {
   // unit's 100%, which is why those grades' progress bars stopped at 92% and
   // could never read complete. It is also what made the gate unsafe beyond
   // Grade 1: an uncompletable step in the chain shuts the learner out for good.
-  const available = sections.filter(([id]) => (id !== "games" || gamePack) && (id !== "ebooks" || unitEbooks().length) && (id !== "teacherguide" || hasGrownUpGuide()) && (id !== "unit-plan" || gradeNumber === 1));
+  const available = sections.filter(([id]) => (id !== "games" || gamePack) && (id !== "ebooks" || unitEbooks().length) && (id !== "teacherguide" || hasGrownUpGuide()));
   return unitNumber === 10 ? [...available, ["final-quiz", "trophy", "Final course quiz"]] : available;
 }
 
@@ -4381,7 +4381,7 @@ function renderYearPlan() {
   icons();
 }
 
-// ===================== unit study plan (Grade 1 only) ========================
+// ===================== unit study plan (every grade) =========================
 // The unit-level companion to the grade Student Study Plan above: the year plan
 // says WHERE each unit falls; this page says what the learner does on each day
 // of the weeks they are inside it. Drawn entirely from the loaded unit's own
@@ -4446,7 +4446,7 @@ function renderUnitStudyPlan() {
       <span class="eyebrow">${span ? `Week ${span.from + weekIndex} · Term ${span.termNo}` : `Week ${weekIndex + 1} of the review programme`}</span>
       <ol class="path-list">
         ${dayLine("Day 1 · Words", `${isFirst ? `Start with ${lectureLabel}. Then meet` : "Learn"} ${weekGroups.length ? `your new words: <strong>${titlesOf(weekGroups)}</strong>` : "no new words this week — go back over the ones you know"}.`)}
-        ${dayLine("Day 2 · Reading", weekReadings.length ? `Read <strong>${titlesOf(weekReadings)}</strong>, then answer its questions.` : "Read your favourite story from this unit again.")}
+        ${dayLine("Day 2 · Reading", weekReadings.length ? `Read <strong>${titlesOf(weekReadings)}</strong>, then answer ${weekReadings.length > 1 ? "their" : "its"} questions.` : "Read your favourite story from this unit again.")}
         ${dayLine("Day 3 · Grammar", grammar[weekIndex].length ? `${titlesOf(grammar[weekIndex])}.` : "Go back over the patterns you have learned.")}
         ${dayLine("Day 4 · Speak & write", speakWrite ? `${speakWrite}.` : "Practise saying and writing your favourite sentences.")}
         ${dayLine("Day 5 · Play & check", isLast ? "Play the games, take the quiz, hand in your assignment and fill in My progress." : `${activities[weekIndex].length ? `Do ${rangeText(activities, weekIndex, "activity").replace("activitys", "activities")}, and play` : "Play"} the games.`)}
@@ -5393,7 +5393,7 @@ const config = {
     if (location.hash.slice(1) === "games" && !gamePack) location.hash = "overview";
     if (isPrereqUnit && !["overview", "placement", "year-plan", "teacher"].includes(location.hash.slice(1))) location.hash = "overview";
     if (!isPrereqUnit && ["placement", "year-plan"].includes(location.hash.slice(1))) location.hash = "overview";
-    if (location.hash.slice(1) === "unit-plan" && (isPrereqUnit || gradeNumber !== 1)) location.hash = "overview";
+    if (location.hash.slice(1) === "unit-plan" && isPrereqUnit) location.hash = "overview";
     // Cosmetic only — the lock screen renders whatever the hash says. This just
     // stops the nav highlighting a section that is no longer on the page.
     if (unitIsLocked() && location.hash.slice(1) !== "overview") location.hash = "overview";

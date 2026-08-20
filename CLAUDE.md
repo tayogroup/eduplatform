@@ -701,6 +701,97 @@ surface. Regenerate deliberately, never to get green:
 node tools/check-english-content.mjs --write-baseline
 ```
 
+### The illustrated picture books (English "Books")
+
+Every English unit ends with an animated picture book — 23 of them, Grade 1 and
+Grade 2, one per unit plus the Grade 1 library shelf. They are **generated SVG**,
+not artwork files:
+
+```bash
+npm run build:ebooks          # both grades' pages + the companion docs
+npm run check:english-ebooks  # catalogue vs disk, and composition
+```
+
+Three files, one storyworld:
+
+- `tools/lib/ehel-ebook-kit.js` — the shared palette, the animation stylesheet,
+  the whole cast (Musa, Kiki, Duku, Lulu, Miss Twiga …) and the scenery.
+- `tools/lib/ehel-ebook-kit-grade2.js` — Grade 2's ADDITIONS: Zuri the meerkat,
+  the town, the classroom props, the bugs, the homes, the city, the aquarium.
+- `tools/create-{musa,grade2}-ebook-illustrations.js` — the page compositions.
+
+**Adding to the shared kit is safe; changing it is a content edit.** The Grade 1
+pages already shipped, so a tweak to the giraffe there repaints 156 pages a
+learner has read. The same goes for `STYLE`, which is embedded verbatim in every
+SVG: a new `@keyframes` rewrites all 156 files for a change nobody can see, which
+is why Grade 2 motion reuses the existing classes only. When the kit was
+extracted out of the Musa generator, the proof it was safe was that all 13 Grade
+1 books regenerated **byte-identical** — do that again after any refactor here.
+
+**An `anim-*` class and a `transform` attribute cannot share an element.** The
+animation animates the `transform` property, which replaces the attribute
+outright, so the element snaps to its parent's origin. Ten colour swatches
+stacked into one that way and the page rendered with a single square on a
+string. Put the translate on an outer `<g>` and the class on an inner one.
+
+**Story text lives in `ebookCatalog` (`shell/subjects/english.js`) and nowhere
+else.** The `STORY.txt` and `ATTRIBUTION.txt` beside each Grade 2 book are
+generated from it by `tools/write-english-ebook-docs.mjs`; only the per-book
+notes (unit, themes, cameos, vocabulary) are authored there. The Grade 1 folders
+still carry hand-typed copies, which is the thing being avoided — a hand copy of
+shipped text goes stale the first time a sentence is corrected, and the review
+workbook then shows a reviewer a story the app no longer tells.
+
+**Book narration is runtime TTS, not pre-rendered clips.** `renderEbooks` calls
+`aiVoiceUrl` per page, so a new book costs nothing to generate and none of the
+English audio tooling applies to it. What IS pre-rendered is the tap-and-story
+sound effects in `ebooks/tap-sounds/` — 34 clips, and **`playStorySound` takes
+the raw key while a tap goes through `TAP_SOUND_ALIASES`**, so a page `sound:`
+value that works as a `data-tap` can still be silent. The gate checks both paths
+separately for that reason. Zuri has no cue of her own and is aliased to the
+chick's chirp; three real ones are a paid ElevenLabs run away, and she must move
+into `TAP_SOUND_MOOD_TYPES` in the same commit that adds them, never before —
+the mood set asks for `zuri-happy.mp3`, and a missing file taps silently.
+
+#### Two gates, because "the file exists" is not "the page is right"
+
+`check-english-ebooks.mjs` reads the catalogue and the disk: missing
+illustrations, a stale `page-NN.svg` left behind when a story got shorter, a
+sound cue naming no clip, a `data-tap` that resolves to nothing, a book folder no
+entry claims. It carries one recorded exemption — Musa's twelve superseded
+`.webp` pages, kept because the (unwired) `validate-ehel-shared-english-ui.js`
+still asserts them — and an exemption that stops firing FAILS, so the list cannot
+rot.
+
+`check-ebook-composition.mjs` measures whether the characters are inside the
+frame. The kit multiplies the caller's `s` by `ANIMAL_SCALE` (2), so a figure at
+`s: 1.4` needs ~180px of headroom below its standing point — arithmetic you
+cannot eyeball while writing `y: 940`. The first Grade 2 draft had **147**
+characters standing with their feet below the bottom edge and every page still
+looked like a page. Grade 1 passes it clean, which is what calibrates the limit.
+
+It walks the group tree composing transforms rather than matching a `<g>` and
+looking ahead for a `data-tap` to name it. The lookahead version mis-read a small
+drawing inside another prop — a picture of Zuri on an easel — as an unrelated
+character, and reported four figures off-frame that were nothing of the kind.
+
+Both gates were mutation-tested: each invariant was broken in turn and the gate
+had to fail.
+
+Two repair tools exist for defects the gates found; both are idempotent and both
+print what they changed, so their output is the review surface:
+`repair-grade2-ebook-standing-lines.mjs` (lift a character back into frame) and
+`repair-grade2-ebook-shadow-lines.mjs` (put a cast shadow on its owner's ground
+line — which is `y + 112 * s`, not `y`).
+
+**Look at the pages.** Every defect above passed both gates at some point, and
+several were only visible in a rendered contact sheet: two suns in the sky on the
+pages about where the sun is (`basicScene()` draws one, and the page added
+another), a cast shadow that read as a stick, a hut whose walls sat a half-width
+left of its roof, a tree house floating above a trunk that stopped short of it, a
+white spider web invisible against a pale sky, and an aquarium hanging in a grey
+void with the visitors standing on nothing.
+
 ## Git
 
 - Work on `main` (or feature branches off it). History before 2026-07-16 lived on `codex/*` branches, now merged and deleted.

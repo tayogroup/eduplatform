@@ -85,9 +85,14 @@ const ebookCatalog = vm.runInNewContext(`(${literalBetweenBrackets(shellSource, 
 // copy is a copy that drifts.
 const aliasSource = shellSource.match(/const TAP_SOUND_ALIASES = (\{[^}]*\})/);
 const moodTypeSource = shellSource.match(/const TAP_SOUND_MOOD_TYPES = new Set\((\[[^\]]*\])\)/);
-if (!aliasSource || !moodTypeSource) fail("Could not read TAP_SOUND_ALIASES / TAP_SOUND_MOOD_TYPES out of english.js.");
+const voiceGroupSource = shellSource.match(/const TAP_VOICE_GROUPS = (\{[^}]*\})/);
+if (!aliasSource || !moodTypeSource || !voiceGroupSource) fail("Could not read TAP_SOUND_ALIASES / TAP_SOUND_MOOD_TYPES / TAP_VOICE_GROUPS out of english.js.");
 const aliases = aliasSource ? vm.runInNewContext(`(${aliasSource[1]})`) : {};
 const moodTypes = new Set(moodTypeSource ? vm.runInNewContext(moodTypeSource[1]) : []);
+// The third resolution path: several human characters share one voice, and the
+// mood still selects the clip. Read from english.js rather than restated here —
+// a second copy of the mapping is a copy free to drift from the one that ships.
+const voiceGroups = voiceGroupSource ? vm.runInNewContext(`(${voiceGroupSource[1]})`) : {};
 const MOODS = ["happy", "sad", "surprised"];
 
 // ---------------------------------------------------------------- superseded pages
@@ -176,7 +181,11 @@ for (const book of ebookCatalog) {
     const taps = new Set([...markup.matchAll(/data-tap="([^"]+)"/g)].map((match) => match[1]));
     for (const tap of taps) {
       tapTargetsChecked += 1;
-      const wanted = moodTypes.has(tap) ? MOODS.map((mood) => `${tap}-${mood}`) : [aliases[tap] || tap];
+      const wanted = voiceGroups[tap]
+        ? MOODS.map((mood) => `${voiceGroups[tap]}-${mood}`)
+        : moodTypes.has(tap)
+          ? MOODS.map((mood) => `${tap}-${mood}`)
+          : [aliases[tap] || tap];
       const missing = wanted.filter((name) => !clips.has(name));
       if (missing.length) fail(`${where} ${page.image}: data-tap="${tap}" wants ${missing.join(", ")}.mp3, which does not exist.`);
     }

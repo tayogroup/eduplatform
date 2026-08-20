@@ -19,11 +19,12 @@
 // Motion reuses the existing animation classes only — a new @keyframes in STYLE
 // would rewrite every SVG of every book for a change nobody can see.
 //
-// Figures carry `data-figure`, NOT `data-tap`. The two were the same thing while
-// every character was an animal with a recorded cue, but a tap value is a promise
-// that a clip exists, and there are no human voice clips on the shelf. The
-// composition lint reads either attribute, so people are still measured; add
-// data-tap to them only in the same change that adds the audio.
+// Figures carry BOTH `data-figure` and `data-tap`. data-figure is the identity the
+// composition lint measures; data-tap is the promise that a clip exists. They were
+// separated while the human cast had no voice clips — measuring a character must
+// not depend on whether anybody has paid for its audio — and rejoined on
+// 2026-08-20 when the nine child/woman/man cues were recorded. Resolution is
+// TAP_VOICE_GROUPS in english.js: several characters share one voice, moods intact.
 
 const kit2 = require("./ehel-ebook-kit-grade2.js");
 
@@ -133,7 +134,7 @@ function person({
 
   return `<g transform="translate(${x} ${y}) scale(${flip ? -scale : scale} ${scale})">
     <ellipse cx="0" cy="2" rx="52" ry="12" fill="${C.ink}" opacity="0.10"/>
-    <g data-figure="${name}">
+    <g class="tap-target" data-figure="${name}" data-tap="${name}" data-mood="${mood}">
     <g class="anim-idle" style="${delayAt(x, y, 2.2)}">
     ${shoe(-19)}${shoe(19)}
     ${leg(-19)}${leg(19)}

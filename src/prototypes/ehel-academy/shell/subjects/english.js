@@ -2201,6 +2201,21 @@ let ebookWatchToken = 0;
 const TAP_SOUND_MOOD_TYPES = new Set(["zebra", "elephant", "kiki", "duku", "lulu", "zuri"]);
 const TAP_SOUND_MOODS = new Set(["happy", "sad", "surprised"]);
 const TAP_SOUND_ALIASES = { kite: "wind", moon: "lullaby", carrot: "crunch", scarecrow: "tree", lake: "puddle", fish: "puddle", boat: "wind", clock: "bell" };
+// The Grade 3 and 4 casts are PEOPLE, and they share a voice by type rather than
+// one clip each. Fourteen separate child giggles would be indistinguishable from
+// one another on the page and cost fourteen times as much to record; three groups
+// keep every character's mood working with nine clips.
+//
+// This is a third resolution path, not a variant of the two above:
+// TAP_SOUND_MOOD_TYPES gives a character its OWN <name>-<mood>.mp3, and
+// TAP_SOUND_ALIASES swaps one tap for another clip and loses the mood. Neither
+// can express "several characters, one voice, moods intact".
+const TAP_VOICE_GROUPS = {
+  amal: "child", nora: "child", mina: "child", adam: "child", idris: "child",
+  noah: "child", sami: "child", maya: "child",
+  yasmin: "woman", mum: "woman", hana: "woman", salma: "woman",
+  omar: "man", dad: "man",
+};
 let tapSoundPlayer = null;
 
 function ensureTapSoundPlayer() {
@@ -2218,9 +2233,12 @@ function tapSoundUrl(soundKey) {
 
 function playTapSound(type, mood) {
   if (!audioEnabled || !type) return;
-  const soundKey = TAP_SOUND_MOOD_TYPES.has(type)
-    ? `${type}-${TAP_SOUND_MOODS.has(mood) ? mood : "happy"}`
-    : TAP_SOUND_ALIASES[type] || type;
+  const voiceGroup = TAP_VOICE_GROUPS[type];
+  const soundKey = voiceGroup
+    ? `${voiceGroup}-${TAP_SOUND_MOODS.has(mood) ? mood : "happy"}`
+    : TAP_SOUND_MOOD_TYPES.has(type)
+      ? `${type}-${TAP_SOUND_MOODS.has(mood) ? mood : "happy"}`
+      : TAP_SOUND_ALIASES[type] || type;
   try {
     const player = ensureTapSoundPlayer();
     player.pause();

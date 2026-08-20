@@ -60,6 +60,24 @@ const SOUNDS = [
   { key: "zuri-happy", seconds: 1.4, prompt: "One short bright cheerful meerkat peep chirp, small perky desert animal, quick and happy, cartoon style, child friendly, no background noise" },
   { key: "zuri-sad", seconds: 1.6, prompt: "One short soft sad little meerkat peep whine, small drooping chirp, gentle storybook sound, child friendly, no background noise" },
   { key: "zuri-surprised", seconds: 1.3, prompt: "One short startled meerkat alarm peep squeak, quick sharp and bright, cartoon style, child friendly, no background noise" },
+  // Grades 3 and 4 are people, not animals, and they share a voice by TYPE
+  // rather than one clip each. Fourteen separate child giggles would be
+  // indistinguishable from one another and cost fourteen times as much; three
+  // groups keep every character's mood working with nine clips. Resolution is
+  // TAP_VOICE_GROUPS in english.js.
+  //
+  // Every prompt says "no words": a sound-generation model asked for a human
+  // voice will otherwise produce speech, and a clip that says something in
+  // English is a clip that contradicts whatever the page says.
+  { key: "child-happy", seconds: 1.3, prompt: "One short cheerful laugh from a young child, bright and warm, no words, no speech, no background noise" },
+  { key: "child-sad", seconds: 1.5, prompt: "One short soft disappointed sigh from a young child, gentle and quiet, no words, no speech, no background noise" },
+  { key: "child-surprised", seconds: 1.2, prompt: "One short surprised gasp from a young child, quick and bright, no words, no speech, no background noise" },
+  { key: "woman-happy", seconds: 1.4, prompt: "One short warm friendly laugh from an adult woman, kind and gentle, no words, no speech, no background noise" },
+  { key: "woman-sad", seconds: 1.6, prompt: "One short soft sympathetic sigh from an adult woman, gentle and warm, no words, no speech, no background noise" },
+  { key: "woman-surprised", seconds: 1.2, prompt: "One short soft surprised gasp from an adult woman, quick and gentle, no words, no speech, no background noise" },
+  { key: "man-happy", seconds: 1.4, prompt: "One short warm friendly chuckle from an adult man, low and kind, no words, no speech, no background noise" },
+  { key: "man-sad", seconds: 1.6, prompt: "One short soft thoughtful sigh from an adult man, low and gentle, no words, no speech, no background noise" },
+  { key: "man-surprised", seconds: 1.2, prompt: "One short surprised gasp from an adult man, quick and low, no words, no speech, no background noise" },
 ];
 
 function loadDotEnv(filePath) {

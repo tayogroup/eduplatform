@@ -45,6 +45,12 @@
         <p id="unit-title">Preparing course...</p>
       </div>
       <nav id="section-nav" aria-label="Unit sections"></nav>
+      <!-- Grade 1 only, and shown by shell/subjects/english.js once the grade is
+           known — it ships hidden so no other grade ever flashes an entry to a
+           page it does not have. `hidden` alone would not hide it: .teacher-switch
+           sets display:grid, which outranks the attribute's UA rule, so the
+           stylesheet carries an explicit .student-switch[hidden] as well. -->
+      <button class="teacher-switch student-switch" id="student-switch" type="button" hidden><span aria-hidden="true">S</span><span>Student resources</span></button>
       <button class="teacher-switch" id="teacher-switch" type="button"><span aria-hidden="true">T</span><span>Teacher resources</span></button>
     </aside>
 

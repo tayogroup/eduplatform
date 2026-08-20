@@ -424,6 +424,13 @@ body.focus-mode.gc-full .wc-tools { position: fixed; left: 0; right: 0; bottom: 
 .nav-state { width: 18px; height: 18px; border: 1px solid #7694a6; border-radius: 50%; display: grid; place-items: center; font-size: 14px; }
 .nav-state.done { color: #0a392d; background: #6ee7b7; border-color: #6ee7b7; }
 .teacher-switch { margin-top: 8px; border-top: 1px solid rgba(255,255,255,.14); border-radius: 0; padding-top: 18px; grid-template-columns: 22px 1fr; }
+/* The two switches are one block under the section list, so the rule above them
+   is drawn once. When Student resources is showing it owns the rule and Teacher
+   resources tucks in under it; when it is hidden (every grade but 1) the teacher
+   button keeps its own, unchanged. `display:none` is spelled out because
+   .teacher-switch's display:grid beats the `hidden` attribute's UA style. */
+.student-switch[hidden] { display: none; }
+.student-switch:not([hidden]) + .teacher-switch { margin-top: 0; border-top: 0; padding-top: 9px; }
 .content { min-width: 0; padding: 30px clamp(20px, 4vw, 64px) 70px; }
 #app { max-width: 1180px; margin: 0 auto; }
 .loading { min-height: 70vh; display: grid; place-items: center; align-content: center; color: var(--muted); }
@@ -820,6 +827,13 @@ body.focus-mode.gc-full .wc-tools { position: fixed; left: 0; right: 0; bottom: 
 .final-section-card > span { display: inline-grid; width: 34px; height: 34px; place-items: center; border-radius: 50%; color: var(--teal); background: var(--teal-soft); font-weight: var(--weight-bold); }
 .final-section-card h3 { margin-top: 18px; }
 .final-section-card small { color: var(--teal); font-weight: var(--weight-medium); }
+/* Student resources cards: same card, but each one ends in its own control, so
+   the actions line up across a row whatever length the blurb runs to. */
+.student-resource-card { display: flex; flex-direction: column; }
+.student-resource-card p { margin-bottom: 16px; }
+.student-resource-card .button, .student-resource-card small { margin-top: auto; align-self: flex-start; display: inline-flex; align-items: center; gap: 6px; }
+.student-resource-card small svg { width: 16px; height: 16px; }
+.student-resource-card.is-locked { opacity: .72; }
 .final-quiz-shell { min-height: 470px; }
 .final-question-meta { min-height: 42px; margin-top: 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; color: var(--muted); font-size: 14px; }
 .final-quiz-actions { min-height: 50px; margin-top: 18px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
@@ -951,8 +965,38 @@ body.focus-mode.gc-full .wc-tools { position: fixed; left: 0; right: 0; bottom: 
   .brand > span:last-child, .profile-button small, .top-actions > .icon-button { display: none; }
   .app-shell { display: block; }
   .sidebar { position: fixed; z-index: 19; left: 0; right: 0; bottom: 0; top: auto; height: 66px; padding: 5px 8px; overflow: hidden; }
-  .course-context, .teacher-switch { display: none; }
+  .course-context { display: none; }
   #section-nav { display: flex; overflow-x: auto; padding: 0; gap: 1px; }
+  /* The two switches on a phone. The sidebar is the bottom rail here, and the
+     switches used to be hidden with it — so both rejoin as PINNED tiles beside
+     the scroller. Pinned, not scrolled: they sit outside #section-nav, and a
+     learner should not have to scroll a 16-tile rail to reach the page holding
+     their books, plans and games (nor a parent to reach the answer keys).
+     Pinned on the LEFT, and that is not cosmetic: the Wehel dock pill is fixed
+     at right:12px/bottom:10px with z-index 70 against this rail's 19, so it
+     covers the rail's right end — measured at 375px, the pill lands over
+     x 320-363 of a 375px rail. A tile pinned there would sit under it for good,
+     where a scrolling tile can at least be moved out from under.
+     Selectors are `.sidebar`-prefixed to outrank the desktop
+     `.student-switch:not([hidden]) + .teacher-switch` separator rule, which is
+     more specific than a bare class and would otherwise keep its 18px padding
+     here. `:not([hidden])` keeps the attribute in charge, so Grades 2-8 still
+     show the teacher tile alone. */
+  .sidebar { display: flex; align-items: center; gap: 6px; }
+  #section-nav { flex: 1 1 auto; min-width: 0; }
+  .sidebar .teacher-switch:not([hidden]) {
+    order: -1; flex: 0 0 auto; display: grid; width: 70px; min-height: 58px; margin: 0; padding: 6px 3px;
+    border: 0; border-radius: 6px; background: rgba(255,255,255,.1);
+    grid-template-columns: 1fr; grid-template-rows: 22px auto; gap: 2px; justify-items: center;
+  }
+  /* Student first, so the rail reads learner-then-grown-up. */
+  .sidebar .student-switch:not([hidden]) { order: -2; }
+  /* The ≤980px rule hides both switch labels; on the rail the label IS the
+     tile, so it comes back — over two lines, because "Student resources"
+     ellipsised to one reads "Student re…". */
+  .sidebar .teacher-switch:not([hidden]) span { display: block; }
+  .sidebar .teacher-switch:not([hidden]) > span[aria-hidden] { width: 22px; height: 22px; display: grid; place-items: center; border-radius: 50%; background: rgba(255,255,255,.16); font-size: 12px; font-weight: var(--weight-bold); }
+  .sidebar .teacher-switch:not([hidden]) > span:last-child { font-size: 11px; line-height: 1.08; text-align: center; }
   /* The bottom rail on a phone. Exempt from the 14px floor: the label is
      ellipsised to the tile width, so 14px would clip almost every section name
      to four characters. 12px is the largest size that still shows enough of
@@ -1035,6 +1079,16 @@ body.focus-mode.gc-full .wc-tools { position: fixed; left: 0; right: 0; bottom: 
   .memory-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .game-play-top { align-items: flex-start; }
   .game-play-top > div { display: grid; gap: 2px; text-align: right; }
+}
+
+/* On the smallest phones two labelled tiles cost the section rail too much: at
+   320px they leave 152px of it, under two of the 84px tiles a learner navigates
+   by. So they drop to the badge alone — the same letter-only form these two
+   buttons already take in the 82px sidebar column between 681 and 980px. The
+   full name stays in the accessible name, which is the button's own text. */
+@media (max-width: 360px) {
+  .sidebar .teacher-switch:not([hidden]) { width: 44px; grid-template-rows: 22px; }
+  .sidebar .teacher-switch:not([hidden]) > span:last-child { display: none; }
 }
 
 /* ===== Cambridge approval banner ===== */

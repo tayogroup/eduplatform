@@ -12,7 +12,7 @@ import { computingWordExplainer } from "../../computing/shared/computing-word-sc
 import { createCourseApp } from "../course-app.js";
 import { createDeck, deckIcon } from "../deck.js?v=deck-1";
 import { createPlacementUnit, placementCallout, placementCourseShell, PREREQ_UNIT } from "../placement.js?v=placement-1";
-import { renderStudyPlan } from "../study-plan.js?v=study-plan-1";
+import { renderStudyPlan, renderUnitStudyPlan } from "../study-plan.js?v=study-plan-2";
 import { mountWehelChat, modulesFromSections, outlineFromManifest, unitFetcher } from "../wehel.js?v=wehel-3";
 
 const pad2 = (n) => String(n).padStart(2, "0");
@@ -66,6 +66,12 @@ const STAGE_COUNT = 8;
 // project) sit where they are used, not in a block at the end.
 const sections = [
   ["overview", "layout-dashboard", "Unit Overview"],
+  // Per-unit Student Study Plan: what the learner does on each day of this
+  // unit's calendar weeks, rendered by the shared shell/study-plan.js. A
+  // reference page, not a step — in nonCountable, so it never counts toward
+  // the unit's 100%. The grade-level plan of the same name lives on the
+  // Prerequisite unit; this one plans the unit the learner is inside.
+  ["unit-plan", "calendar-days", "Student Study Plan"],
   ["tools", "wrench", "Tools & Setup"],
   ["lesson", "book-open", "The Lesson"],
   ["words", "braces", "Computing Words"],
@@ -1903,7 +1909,7 @@ const config = {
   // one-word change with its own reasoning about billing/analytics history.
   ttsPurpose: "ehel_math",
   sections,
-  nonCountable: ["overview", "capstone", "capstonequiz", "year-plan"],
+  nonCountable: ["overview", "capstone", "capstonequiz", "year-plan", "unit-plan"],
   gradeSections: ["capstone", "capstonequiz"],
   progressDefaults: { completed: [], practiceOpened: [], reflection: {}, aiMessages: [], games: {} },
   gradeDefaults: { completed: [], capstoneResponses: {}, capstoneEvidence: {}, quizBest: 0 },
@@ -1938,6 +1944,17 @@ const config = {
       ],
       finalRow: () => (manifest.finalAssessment ? { title: `Stage capstone project & ${manifest.finalAssessment.title}`, note: `${manifest.finalAssessment.questionCount} questions, mastery at ${manifest.finalAssessment.passPercent}%` } : { title: "Stage capstone project", note: "brings the whole stage together" }),
     }) : navigate("overview")),
+    "unit-plan": () => (isPrereqUnit ? navigate("overview") : renderUnitStudyPlan({
+      deps: () => ({ $, $$, escapeHtml, icon, pageHeader, navigate }),
+      stageLabel: `Stage ${stageNumber}`,
+      unitNumber: course.unit.unitNo,
+      unitTitle: course.unit.unitTitle,
+      units: () => manifest.units,
+      // The unit's own teaching walk, minus the entries that are not steps of
+      // it: the overview, this plan, the stage-level capstone pages, the live
+      // class and the progress report.
+      planSections: () => sections.filter(([id]) => !["overview", "unit-plan", "capstone", "capstonequiz", "live", "progress"].includes(id)),
+    })),
     tools: renderToolkit, lesson: renderLesson, ai: renderAI,
     words: renderComputingWords, explore: renderExploreConcept, visuals: renderVisualModels,
     code: renderCodeExamples, method: renderLearnMethod, examples: renderExamples,

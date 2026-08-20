@@ -20,7 +20,7 @@
 import { escapeHtml as sharedEscapeHtml, icon as sharedIcon } from "../../shared/course-shell.js?v=20260721a";
 import { createCourseApp } from "../course-app.js?v=t2";
 import { createPlacementUnit, placementCallout, PREREQ_UNIT } from "../placement.js?v=placement-1";
-import { renderStudyPlan } from "../study-plan.js?v=study-plan-1";
+import { renderStudyPlan, renderUnitStudyPlan } from "../study-plan.js?v=study-plan-2";
 import { mountWehelChat, modulesFromSections, outlineFromManifest, unitFetcher } from "../wehel.js?v=wehel-3";
 
 const $ = (selector, root = document) => root.querySelector(selector);
@@ -63,6 +63,12 @@ const NARRATION_RATE = 0.9;
 
 const sections = [
   ["overview", "layout-dashboard", "Overview"],
+  // Per-unit Student Study Plan: what the learner does on each day of this
+  // unit's calendar weeks, rendered by the shared shell/study-plan.js. A
+  // reference page, not a step — in nonCountable, so it never counts toward
+  // the unit's 100%. The level-wide plan of the same name lives on the
+  // Prerequisite unit; this one plans the unit the learner is inside.
+  ["unit-plan", "calendar-days", "Student Study Plan"],
   ["lecture", "play-square", "The lesson"],
   ["dictionary", "book-a", "Words"],
   ["grammar", "braces", "Patterns"],
@@ -630,7 +636,7 @@ const config = {
   stageDir: (level) => `level-${level}`,
   defaultUnit: defaultUnitForLevel,
   sections,
-  nonCountable: ["overview", "answers", "year-plan"],
+  nonCountable: ["overview", "answers", "year-plan", "unit-plan"],
   gradeSections: [],
   progressDefaults: { completed: [], knownWords: [], self: {}, writing: {}, games: {}, aiMessages: [] },
   gradeDefaults: { completed: [] },
@@ -668,6 +674,17 @@ const config = {
         ["Day 5", "Check", "Finish the practice activities, take the quiz and check your answers."],
       ],
     }) : navigate("overview")),
+    "unit-plan": () => (isPrereqUnit ? navigate("overview") : renderUnitStudyPlan({
+      deps: () => ({ $, $$, escapeHtml, icon, pageHeader, navigate }),
+      stageLabel: `Level ${levelNumber}`,
+      unitNumber: course.unit.unitNo,
+      unitTitle: course.unit.unitTitle,
+      units: () => manifest.units.filter((unit) => !String(unit.status).startsWith("Planned")),
+      // Only what this unit actually offers (visibleSections drops a missing
+      // reading), minus the entries that are not steps of its walk: the
+      // overview, this plan, the answer key and the progress report.
+      planSections: () => visibleSections().filter(([id]) => !["overview", "unit-plan", "answers", "reflect"].includes(id)),
+    })),
     lecture: () => renderLecture(),
     dictionary: () => renderDictionary(),
     grammar: () => renderGrammar(),

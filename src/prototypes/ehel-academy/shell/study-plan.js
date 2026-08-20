@@ -113,3 +113,87 @@ export function renderStudyPlan(options) {
     </div>`;
   for (const button of ui.$$("[data-go]")) button.addEventListener("click", () => ui.navigate(button.dataset.go));
 }
+
+// ===================== per-unit study plan ===================================
+// The unit-level companion to the grade plan above: that one says WHERE each
+// unit falls in the year; this one, an entry in the unit's own sidebar, says
+// what the learner does on each day of the weeks they are inside it. English
+// plans by naming the unit's items (word groups, story titles — its data
+// carries real names for everything); the five shared subjects' unit shapes
+// differ too much for that, so this plans by the unit's own teaching SECTIONS
+// — the sidebar walk the learner already follows, in its own order — spread
+// across the unit's calendar weeks, five days a week. The week span comes from
+// the same groupIntoTerms()/weekRows() the grade plan uses, so the two pages
+// cannot disagree about the calendar.
+//
+// options:
+//   deps()          — as renderStudyPlan
+//   stageLabel      — "Stage 5" / "Level 1"
+//   unitNumber      — the open unit's number
+//   unitTitle       — its title
+//   units()         — the manifest units the grade plan schedules (same list)
+//   planSections()  — the unit's teaching sections to spread, in walk order,
+//                     as [id, icon, label] tuples — pass the subject's own
+//                     visible list minus its non-teaching entries, so a
+//                     section this unit does not offer is never scheduled
+export function renderUnitStudyPlan(options) {
+  const ui = options.deps();
+  let span = null;
+  for (const term of groupIntoTerms(options.units())) {
+    const row = weekRows(term.units).find((entry) => Number(entry.unit.number) === Number(options.unitNumber));
+    if (row) { span = { termNo: term.termNo, from: row.from, to: row.to }; break; }
+  }
+  const weekCount = span ? span.to - span.from + 1 : 2;
+  const parts = options.planSections();
+  const partsPerWeek = (() => {
+    const base = Math.floor(parts.length / weekCount);
+    const extra = parts.length % weekCount;
+    let start = 0;
+    return Array.from({ length: weekCount }, (_, index) => {
+      const size = base + (index < extra ? 1 : 0);
+      const slice = parts.slice(start, start + size);
+      start += size;
+      return slice;
+    });
+  })();
+  const weekPanel = (weekIndex) => {
+    const weekParts = partsPerWeek[weekIndex];
+    const isLast = weekIndex === weekCount - 1;
+    // The week's sections across its five days, remainder early; a day with
+    // nothing new is for going back over what was.
+    const base = Math.floor(weekParts.length / 5);
+    const extra = weekParts.length % 5;
+    let start = 0;
+    const days = Array.from({ length: 5 }, (_, dayIndex) => {
+      const size = base + (dayIndex < extra ? 1 : 0);
+      const slice = weekParts.slice(start, start + size);
+      start += size;
+      const label = slice.map((part) => `<strong>${ui.escapeHtml(part[2])}</strong>`).join(" · ");
+      if (label) return label;
+      if (isLast && dayIndex === 4) return "Look back over the whole unit before you move on.";
+      return "Go back over what was new this week.";
+    });
+    return `<section class="panel">
+      <span class="eyebrow">${span ? `Week ${span.from + weekIndex} · Term ${span.termNo}` : `Week ${weekIndex + 1}`}</span>
+      <ol class="path-list">
+        ${days.map((what, dayIndex) => `<li>${ui.icon("circle-check-big")}<span><strong>Day ${dayIndex + 1}:</strong> ${what}</span></li>`).join("")}
+      </ol>
+    </section>`;
+  };
+  ui.$("#app").innerHTML = `${ui.pageHeader(
+    `${options.stageLabel} · Unit ${options.unitNumber}`,
+    `Your plan for ${ui.escapeHtml(options.unitTitle)}`,
+    span
+      ? `This unit takes ${weekCount} week${weekCount === 1 ? "" : "s"} — week${weekCount === 1 ? ` ${span.from}` : `s ${span.from} to ${span.to}`} of Term ${span.termNo}. Five short days a week; here is what each one brings.`
+      : `Five short days a week; here is what each one brings.`,
+    "Student Study Plan",
+  )}
+    <div class="final-quiz-intro">
+      <section class="panel">
+        <div class="final-quiz-facts"><span><strong>${weekCount}</strong> week${weekCount === 1 ? "" : "s"}</span><span><strong>${parts.length}</strong> parts</span><span><strong>5</strong> short sessions a week</span></div>
+      </section>
+      ${Array.from({ length: weekCount }, (_, index) => weekPanel(index)).join("")}
+      <div class="audio-actions"><button class="button gold" data-go="${parts.length ? parts[0][0] : "overview"}" type="button">Start with ${parts.length ? ui.escapeHtml(parts[0][2]) : "the overview"} ${ui.icon("arrow-right")}</button><button class="button secondary" data-go="overview" type="button">Back to the overview</button></div>
+    </div>`;
+  for (const button of ui.$$("[data-go]")) button.addEventListener("click", () => ui.navigate(button.dataset.go));
+}

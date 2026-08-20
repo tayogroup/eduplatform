@@ -19,7 +19,7 @@
 import { createCourseApp } from "../course-app.js";
 import { createDeck, deckIcon } from "../deck.js";
 import { createPlacementUnit, placementCallout, placementCourseShell, PREREQ_UNIT } from "../placement.js?v=placement-1";
-import { renderStudyPlan } from "../study-plan.js?v=study-plan-1";
+import { renderStudyPlan, renderUnitStudyPlan } from "../study-plan.js?v=study-plan-2";
 import { mountWehelChat, modulesFromSections, outlineFromManifest, unitFetcher } from "../wehel.js?v=wehel-3";
 
 // Prerequisite unit (unit -1): a placement exam over the previous stages,
@@ -72,6 +72,12 @@ let resolvedUnitNo = 1;
 // The predicate is what keeps one page honest across the two pack shapes.
 const SECTIONS = [
   ["overview", "layout-dashboard", "Unit Overview", () => true],
+  // Per-unit Student Study Plan: what the learner does on each day of this
+  // unit's calendar weeks, rendered by the shared shell/study-plan.js. A
+  // reference page, not a step — in nonCountable, so it never counts toward
+  // the unit's bar. The grade-level plan of the same name lives on the
+  // Prerequisite unit; this one plans the unit the learner is inside.
+  ["unit-plan", "calendar-days", "Student Study Plan", () => true],
   ["lesson", "book-open", "The Lesson", (c) => c.explainers?.length],
   ["bigideas", "lightbulb", "Big Ideas", (c) => c.bigIdeas?.length],
   ["models", "scan-search", "Worked Examples", (c) => c.models?.length],
@@ -1135,7 +1141,7 @@ const config = {
   // — including the overview, which the other subjects exclude. In prereq mode
   // only the exam counts, so finishing it reads as a complete unit — the
   // Student Study Plan is a reference page, not a step, so it never counts.
-  nonCountable: isPrereqUnit ? ["overview", "year-plan"] : ["progress"],
+  nonCountable: isPrereqUnit ? ["overview", "year-plan"] : ["progress", "unit-plan"],
   progressDefaults: { completed: [], answersSeen: [], reflection: {}, quiz: {}, aiMessages: [] },
   keys: (s, u) => ({ progress: `ehel-gp-s${s}-u${u}-progress-v1` }),
   courseKey: (s) => `ehel-gp-g${String(s).padStart(2, "0")}`,
@@ -1160,6 +1166,17 @@ const config = {
         ["Day 5", "Reflect", "Reflect on the unit, check your answers and ask the tutor."],
       ],
     }) : navigate("overview")),
+    "unit-plan": () => (isPrereqUnit ? navigate("overview") : renderUnitStudyPlan({
+      deps: () => ({ $, $$, escapeHtml, icon, pageHeader, navigate }),
+      stageLabel: `Stage ${stageNumber}`,
+      unitNumber: course.unit.unitNo,
+      unitTitle: course.unit.unitTitle,
+      units: () => manifest.units,
+      // Only what this unit actually offers (the predicates decide), minus the
+      // entries that are not steps of its walk: the overview, this plan, the
+      // teacher session, the grown-up guide and the progress report.
+      planSections: () => availableSections().filter(([id]) => !["overview", "unit-plan", "teacher", "grownup", "progress"].includes(id)),
+    })),
     // Every teaching section takes the slide deck at DECK_MAX_STAGE and below.
     // Four stay as pages on purpose: the overview and My Progress are summaries
     // rather than a sequence to walk through, My Learning Goals is a

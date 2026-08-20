@@ -16,6 +16,61 @@
 
 const pad = (n) => String(n).padStart(2, "0");
 
+// --- moving inside the course is not leaving ---------------------------------
+// Every page of a course app is a separate DOCUMENT: the unit picker, "Go on to
+// Unit N", the grade switch and the placement exam all assign location.href to
+// the same index.html with a different ?unit=. beforeunload cannot see where a
+// navigation is going, so all of those looked exactly like a learner walking
+// out — the browser raised its "Leave site?" dialog on every unit change, and
+// focus mode reported the same navigation to the teacher as leaving the lesson.
+// A learner who has to dismiss that dialog to change unit learns to dismiss it,
+// which is the one thing the warning cannot afford.
+//
+// So watch for the navigation BEFORE it starts and note when it stays inside
+// this app's own directory. The Navigation API is the only way to see a
+// scripted `location.href =` (window.location is unforgeable — it cannot be
+// wrapped); where it is missing, link clicks are still covered and a <select>
+// that navigates is not. That is a stale dialog on an old browser, not a
+// learner trapped.
+let courseNavAt = 0;
+let courseNavWatched = false;
+
+function staysInCourse(href) {
+  try {
+    const url = new URL(href, location.href);
+    if (url.origin !== location.origin) return false;
+    // The app's own directory. A per-grade stub (…/english/grade-1/index.html)
+    // redirects up into it, so its own segment must not narrow the root.
+    const root = location.pathname.replace(/[^/]*$/, "").replace(/(?:grade|stage|level)-\d+\/$/, "");
+    if (!url.pathname.startsWith(root)) return false;
+    // A hash-only move never unloads the page, so noting it would only blind
+    // the warning for the next few seconds.
+    return url.pathname !== location.pathname || url.search !== location.search;
+  } catch { return false; }
+}
+
+function watchCourseNavigation() {
+  if (courseNavWatched) return;
+  courseNavWatched = true;
+  const mark = () => { courseNavAt = Date.now(); };
+  const nav = window.navigation;
+  if (nav && typeof nav.addEventListener === "function") {
+    nav.addEventListener("navigate", (event) => {
+      const dest = event && event.destination && event.destination.url;
+      if (dest && staysInCourse(dest)) mark();
+    });
+  }
+  document.addEventListener("click", (event) => {
+    const link = event.target && event.target.closest && event.target.closest("a[href]");
+    if (link && staysInCourse(link.href)) mark();
+  }, true);
+}
+
+// A navigation that never happens (a cancelled link, a select set back to its
+// own value) must expire rather than disarm the warning for the rest of the
+// session.
+const movingInsideCourse = () => Date.now() - courseNavAt < 3000;
+
 function formatLeft(seconds) {
   const s = Math.max(0, Math.floor(seconds));
   const h = Math.floor(s / 3600);
@@ -145,8 +200,13 @@ export function mountSebSession() {
   // Finish/cap navigation must not trigger the leave dialog.
   if (btn) btn.addEventListener("click", disarmLeave);
   const timeDone = () => releaseAt && Date.now() >= releaseAt;
+  watchCourseNavigation();
 
   window.addEventListener("beforeunload", (e) => {
+    if (movingInsideCourse()) return; // another page of this same course
+    // The hard cap navigating to the release endpoint is the session ENDING,
+    // and a dialog there would hold a locked learner in past their own cap.
+    if (released) return;
     if (leaveArmed && !timeDone()) { e.preventDefault(); e.returnValue = ""; }
   });
 
@@ -271,6 +331,9 @@ export function mountSebSession() {
   };
 
   document.addEventListener("fullscreenchange", () => {
+    // Loading the next page of the course drops fullscreen on the way out. That
+    // is the navigation, not the learner pressing ESC.
+    if (movingInsideCourse()) return;
     if (!document.fullscreenElement && leaveArmed && !timeDone()) showLeaveWarning();
   });
 
@@ -316,10 +379,14 @@ function mountFocusMode(p, bar) {
 
   const broke = (kind) => { breaks += 1; paint(); report(kind); };
 
+  // A page of this course being replaced by another page of this course hides
+  // and blurs the document on its way out. Counting that as a break told the
+  // teacher a learner had left the lesson every time they changed unit.
   document.addEventListener("visibilitychange", () => {
+    if (movingInsideCourse()) return;
     if (document.visibilityState === "hidden") broke("hidden"); else report("return");
   });
-  window.addEventListener("blur", () => broke("blur"));
+  window.addEventListener("blur", () => { if (!movingInsideCourse()) broke("blur"); });
   // --- fullscreen: the default in focus mode -------------------------------
   // A browser will not grant fullscreen without a user gesture, so it cannot be
   // entered on load. Entering on the learner's FIRST interaction — a tap they

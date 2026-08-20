@@ -78,7 +78,11 @@ if ($role === '') {
     );
 }
 
-if ($role === 'student') {
+// Academy-ops managers stay on the management view even when they also hold
+// a student role here: dashboard.php sends them to role_redirect.php, which
+// sends canmanage users back to this page, so bouncing them out again on the
+// student role closes an infinite dashboard -> role_redirect -> here triangle.
+if ($role === 'student' && !pqh_can_manage_academy_operations((int)$USER->id)) {
     $studentparams = [];
     if ((string)($consumercontext->consumerslug ?? '') !== '') {
         $studentparams['consumer'] = (string)$consumercontext->consumerslug;

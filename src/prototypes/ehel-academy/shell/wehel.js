@@ -735,6 +735,15 @@ export function recognizeSpeech({ lang = "en-GB", onInterim } = {}) {
   });
 }
 
+// Some browsers ship the SpeechRecognition API surface without a working
+// engine behind it — Brave most of all: the constructor exists, and every use
+// fails with "network" because Brave deliberately has no Google speech
+// service. That is a property of the BROWSER, not of the moment, so once the
+// engine has failed like that it is remembered here and the mic goes straight
+// to the recorder path (MediaRecorder → ElevenLabs STT, the same pipeline the
+// pronunciation check runs on) on every later click.
+const RECOGNITION_BROKEN_KEY = "ehel-wehel-recognition-broken";
+
 // Live panels sharing one transcript. The dock drawer and the nav section can
 // both be mounted at once over the same store, so an append in either has to
 // repaint the other — otherwise the learner opens the drawer and finds the
@@ -1388,8 +1397,11 @@ export function mountWehelChat(options) {
 
   async function toggleMic(button) {
     // Browser speech recognition first: free, instant, and the learner sees
-    // their words appear in the input box while they are still talking.
-    if (speechRecognitionCtor()) {
+    // their words appear in the input box while they are still talking. But
+    // an engine that has already proved broken (see RECOGNITION_BROKEN_KEY —
+    // Brave fails every use with "network") is skipped, straight to the
+    // recorder below.
+    if (speechRecognitionCtor() && storageGet(RECOGNITION_BROKEN_KEY) !== "1") {
       if (listening) return; // recognition stops itself after a pause
       stopBrowserSpeech();   // never transcribe the tutor's own voice
       speakingIndex = null;
@@ -1403,16 +1415,25 @@ export function mountWehelChat(options) {
         const text = await recognizeSpeech({ onInterim: (interim) => { if (input) input.value = interim; } });
         if (text) { if (input) input.value = ""; submit(text, "voice"); }
         else if (ui.toast) ui.toast("I didn't hear anything — try again.");
+        return;
       } catch (error) {
-        if (ui.toast) ui.toast(error.message === "not-allowed"
-          ? "The microphone is blocked for this page."
-          : "Voice input is unavailable right now — you can type instead.");
+        // A denied microphone stops BOTH paths — the recorder needs the same
+        // permission — so that one ends here, with the reason.
+        if (error.message === "not-allowed") {
+          if (ui.toast) ui.toast("The microphone is blocked for this page.");
+          return;
+        }
+        // The engine exists but does not work ("network" on Brave's stub, an
+        // unreachable speech service). This used to dead-end on a "voice
+        // input is unavailable" toast while the recorder path below worked
+        // the whole time — so fall through to it NOW, in the same click, and
+        // remember to skip the doomed engine on every later one.
+        storageSet(RECOGNITION_BROKEN_KEY, "1");
       } finally {
         listening = false;
         button.classList.remove("is-recording");
         button.innerHTML = wehelIcon("mic");
       }
-      return;
     }
     // Fallback: record locally, transcribe server-side (ElevenLabs STT).
     if (recorder && recorder.state === "recording") { recorder.stop(); return; }

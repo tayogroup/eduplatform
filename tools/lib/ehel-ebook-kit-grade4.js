@@ -184,14 +184,38 @@ function stageScene({ open = true } = {}) {
 }
 
 // A telescope on a tripod.
+//
+// Three nested groups, and the nesting is the whole point — this drew a tube
+// hovering in mid-air above a tripod it never touched, on seven pages, in
+// production. The barrel carried `class="anim-idle"` and `transform="rotate(-26)"`
+// on ONE element: the idle animation animates the transform PROPERTY, which
+// replaces the attribute outright (the rule is in ehel-ebook-kit.js), so the
+// rotation was discarded the moment the animation ran and the barrel rendered at
+// its unrotated authored coordinates — y -236..-180, a clear 40 units above the
+// tripod apex at -140, and offset to the right of it.
+//
+// So: an outer group places and tilts, the animated group carries the class and
+// NOTHING else, and an inner group brings the tube's own centre (45, -208) onto
+// the pivot so the mount holds the middle of the tube rather than one end. The
+// bob then moves the tube against a mount that stays put, which is what an idle
+// animation should look like.
+//
+// The legs were also #6b5a44 against a #7d6a54 attic floor — nearly invisible,
+// so what a reader saw was a grey tube floating over a faint smudge. They take
+// the rafter colour now, and a mount cap covers the join.
 function telescope(x, y, s = 1) {
   return `<g transform="translate(${x} ${y}) scale(${s})">
-    <path d="M -70 0 L -12 -140 M 70 0 L 12 -140 M 0 0 L 0 -140" stroke="#6b5a44" stroke-width="12" stroke-linecap="round"/>
-    <g class="anim-idle" style="animation-duration:4s" transform="rotate(-26)">
-      <rect x="-30" y="-236" width="150" height="56" rx="26" fill="${G2.metalDark}" stroke="${C.ink}" stroke-width="5"/>
-      <rect x="104" y="-244" width="52" height="72" rx="14" fill="${G2.metal}" stroke="${C.ink}" stroke-width="4.5"/>
-      <ellipse cx="152" cy="-208" rx="9" ry="32" fill="${G3.teal}" stroke="${C.ink}" stroke-width="3.4"/>
-      <rect x="-58" y="-222" width="34" height="28" rx="10" fill="${G2.metal}" stroke="${C.ink}" stroke-width="4"/>
+    <path d="M -70 0 L -12 -140 M 70 0 L 12 -140 M 0 0 L 0 -140" stroke="#4f4237" stroke-width="12" stroke-linecap="round"/>
+    <circle cx="0" cy="-140" r="15" fill="#4f4237"/>
+    <g transform="translate(0 -140) rotate(-26)">
+      <g class="anim-idle" style="animation-duration:4s">
+        <g transform="translate(-45 208)">
+          <rect x="-30" y="-236" width="150" height="56" rx="26" fill="${G2.metalDark}" stroke="${C.ink}" stroke-width="5"/>
+          <rect x="104" y="-244" width="52" height="72" rx="14" fill="${G2.metal}" stroke="${C.ink}" stroke-width="4.5"/>
+          <ellipse cx="152" cy="-208" rx="9" ry="32" fill="${G3.teal}" stroke="${C.ink}" stroke-width="3.4"/>
+          <rect x="-58" y="-222" width="34" height="28" rx="10" fill="${G2.metal}" stroke="${C.ink}" stroke-width="4"/>
+        </g>
+      </g>
     </g>
   </g>`;
 }

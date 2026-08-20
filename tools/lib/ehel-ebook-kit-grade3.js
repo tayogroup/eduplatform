@@ -354,11 +354,25 @@ function hospital(x, y, s = 1) {
 }
 
 // A wall calendar showing a run of months — Unit 3's calendar on the wall.
-function monthWall(x, y, s = 1, { highlight = 0 } = {}) {
+// Twelve month cards on the classroom wall.
+//
+// `columns` exists because the six-across default is 700 units wide, and the
+// classroom's free wall — between the blackboard's right edge at ~668 and the
+// window's left at ~1102 — is 434. Every page that called this laid the cards
+// straight across the blackboard's writing and into the window frame; seven
+// pages shipped that way. Four across, three down is both a calendar's natural
+// shape and narrow enough to fit the gap.
+//
+// The grid is centred on (x, y) for any column count. The old six-across form
+// centred horizontally but not vertically (rows at -150 and -10, so the block
+// sat 80 units high of its anchor), which is why the call sites all carried a
+// y that looked low for where the cards landed.
+function monthWall(x, y, s = 1, { highlight = 0, columns = 6 } = {}) {
+  const rows = Math.ceil(12 / columns);
   let sheets = "";
   for (let i = 0; i < 12; i += 1) {
-    const cx = -300 + (i % 6) * 120;
-    const cy = -150 + Math.floor(i / 6) * 140;
+    const cx = -((columns - 1) * 120) / 2 + (i % columns) * 120;
+    const cy = -((rows - 1) * 140) / 2 + Math.floor(i / columns) * 140;
     sheets += `<g transform="translate(${cx} ${cy})">
       <rect x="-50" y="-56" width="100" height="112" rx="6" fill="${i === highlight ? "#fbe3df" : G3.cream}" stroke="${C.ink}" stroke-width="3.4"/>
       <rect x="-50" y="-56" width="100" height="26" rx="6" fill="${C.rainbow[i % C.rainbow.length]}"/>

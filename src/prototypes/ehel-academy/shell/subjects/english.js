@@ -916,7 +916,7 @@ function renderUnitPickers() {
   const onYearPlan = isPrereqUnit && location.hash.slice(1) === "year-plan";
   const options = [
     `<option value="${PREREQ_UNIT}" ${isPrereqUnit && !onYearPlan ? "selected" : ""}>Prerequisite: Placement exam</option>`,
-    `<option value="year-plan" ${onYearPlan ? "selected" : ""}>Year plan</option>`,
+    `<option value="year-plan" ${onYearPlan ? "selected" : ""}>Student Study Plan</option>`,
     // A unit below defaultUnit is withdrawn from learners (Grade 1 Unit 0).
     // It is listed only while it is the page actually open — a teacher preview
     // or a remediation visit — so the picker never contradicts where the
@@ -1561,7 +1561,7 @@ function visibleSections() {
       // read BEFORE the year is walked — the same reason the placement exam
       // lives here. It is a reference page, not a step: never counted, never
       // locked (sectionUnlocked already answers true for the whole prereq unit).
-      ["year-plan", "calendar-days", "Year plan"],
+      ["year-plan", "calendar-days", "Student Study Plan"],
     ];
   }
   // Books drops out the same way Games does, and for the same reason: a section
@@ -4354,9 +4354,9 @@ function renderYearPlan() {
   };
   $("#app").innerHTML = `${pageHeader(
     `${gradeLabel} · Prerequisite unit`,
-    `${gradeLabel} English year plan`,
+    `${gradeLabel} English Student Study Plan`,
     `Your year at a glance: ${terms.length} terms of three months, ${allUnits.length} units, and where each one falls. Every term is about ${YEAR_PLAN_TERM_WEEKS} teaching weeks, so there is room for holidays.`,
-    "Year plan",
+    "Student Study Plan",
   )}
     <div class="final-quiz-intro">
       <section class="panel">

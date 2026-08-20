@@ -69,3 +69,8 @@ src/prototypes/ehel-academy/intensive-english/media/audio/tts/
 # its full size to history permanently rather than replacing the last one.
 # Distribute the finished video from the CDN, not from a clone.
 docs/marketing/*.mp4
+
+# Claude Code session worktrees (git worktree add under .claude/worktrees/).
+# Nested inside the repo, so without this a whole-tree `git add` stages one as an
+# embedded repository. Several sessions share this checkout - see CLAUDE.md :: Git.
+.claude/worktrees/

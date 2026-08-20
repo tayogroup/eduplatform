@@ -21,7 +21,7 @@ import { escapeHtml as sharedEscapeHtml, icon as sharedIcon } from "../../shared
 import { createCourseApp } from "../course-app.js?v=t2";
 import { createPlacementUnit, placementCallout, PREREQ_UNIT } from "../placement.js?v=placement-1";
 import { renderStudyPlan, renderUnitStudyPlan } from "../study-plan.js?v=study-plan-2";
-import { mountWehelChat, modulesFromSections, outlineFromManifest, unitFetcher } from "../wehel.js?v=wehel-3";
+import { mountWehelChat, modulesFromSections, outlineFromManifest, unitFetcher } from "../wehel.js?v=wehel-4";
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];

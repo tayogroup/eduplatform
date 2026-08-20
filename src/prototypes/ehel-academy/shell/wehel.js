@@ -74,9 +74,13 @@ export function platformHeaders(extra = {}) {
 
 export const WEHEL_CHAT_ENDPOINT = DEV_API ? "/api/wehel-chat" : platformUrl("/local/hubredirect/wehel_chat.php");
 export const WEHEL_HOMEWORK_ENDPOINT = DEV_API ? "/api/wehel-homework" : platformUrl("/local/hubredirect/wehel_homework.php");
-export const WEHEL_STT_ENDPOINT = DEV_API ? "/api/elevenlabs-stt" : platformUrl("/local/hubredirect/quiz_stt.php");
+// Wehel's voice is Deepgram, and ONLY Wehel's (owner decision 2026-08-20):
+// spoken replies through wehel_speak.php (Aura-2, voice aura-2-thalia-en) and
+// mic input through wehel_listen.php. The lesson narration and pronunciation
+// check stay on ElevenLabs (quiz_tts/quiz_stt), Somali vocabulary on Azure.
+export const WEHEL_STT_ENDPOINT = DEV_API ? "/api/wehel-listen" : platformUrl("/local/hubredirect/wehel_listen.php");
 export const WEHEL_SOMALI_TTS_ENDPOINT = DEV_API ? "/api/somali-tts" : platformUrl("/local/hubredirect/somali_tts.php");
-export const WEHEL_TTS_ENDPOINT = DEV_API ? "/api/elevenlabs-tts" : platformUrl("/local/hubredirect/quiz_tts.php");
+export const WEHEL_TTS_ENDPOINT = DEV_API ? "/api/wehel-speak" : platformUrl("/local/hubredirect/wehel_speak.php");
 
 const HISTORY_LIMIT = 12;
 
@@ -574,12 +578,15 @@ export async function speakBrowser(text, { rate = 0.95, onStart, onEnd } = {}) {
   return true;
 }
 
-// --- Ehel reply audio (ElevenLabs Flash v2.5, the narration voice) -----------
+// --- Wehel reply audio (Deepgram Aura-2, voice aura-2-thalia-en) -------------
 // A chat reply does not exist until the model writes it, so no pre-rendered
-// clip can cover one — each spoken reply is a live render through the same
-// endpoint the runtime lesson voice uses (quiz_tts.php / the dev twin), on the
-// low-latency Flash model with the Ehel narration voice. Clips are cached per
-// text for the session so replaying a bubble is free.
+// clip can cover one — each spoken reply is a live render through Wehel's own
+// voice endpoint (wehel_speak.php / the dev twin), which proxies Deepgram's
+// /v1/speak with the Thalia voice. Wehel ONLY: the runtime lesson voice keeps
+// quiz_tts.php untouched. Aura has no speed control, so the per-grade rate
+// applies only to the browser fallback; it stays in the cache key so a rate
+// change still misses cleanly. Clips are cached per text for the session so
+// replaying a bubble is free.
 
 let replyAudio = null;
 const replyClipCache = new Map(); // "<rate>\n<text>" -> object URL
@@ -607,7 +614,7 @@ export async function speakEhelVoice(text, { rate = 1 } = {}) {
       method: "POST",
       credentials: DEV_API ? "same-origin" : "include",
       headers: platformHeaders({ Accept: "audio/mpeg", "Content-Type": "application/json" }),
-      body: JSON.stringify({ text: clean, purpose: "wehel_reply", speed: rate, wstoken }),
+      body: JSON.stringify({ text: clean, wstoken }),
     });
     if (!response.ok) {
       const result = await response.json().catch(() => ({}));
@@ -692,11 +699,14 @@ export async function speakSomali(text) {
 }
 
 // --- browser speech recognition ---------------------------------------------
-// Voice input mirrors voice output: the browser's own engine first. It is
-// free, starts instantly, and streams interim text while the learner is still
-// talking. The MediaRecorder → ElevenLabs STT path stays as the fallback for
-// browsers without SpeechRecognition. Looked up at call time, not import time,
-// so a test can stub it and so a browser that gains support mid-session wins.
+// NO LONGER USED BY THE WEHEL PANEL: since 2026-08-20 Wehel's voice input is
+// Deepgram only (owner decision) — the mic records with MediaRecorder and
+// transcribes through wehel_listen.php, every time, in every browser. That
+// also retires the Brave workaround this file briefly carried: Brave ships
+// this API's surface with no engine behind it, and skipping the engine
+// everywhere removes the failure class outright. The helpers stay exported
+// for any non-Wehel caller. Looked up at call time, not import time, so a
+// test can stub it and so a browser that gains support mid-session wins.
 export function speechRecognitionCtor() {
   return (typeof window !== "undefined" && (window.SpeechRecognition || window.webkitSpeechRecognition)) || null;
 }
@@ -734,15 +744,6 @@ export function recognizeSpeech({ lang = "en-GB", onInterim } = {}) {
     try { recognition.start(); } catch (error) { reject(error); }
   });
 }
-
-// Some browsers ship the SpeechRecognition API surface without a working
-// engine behind it — Brave most of all: the constructor exists, and every use
-// fails with "network" because Brave deliberately has no Google speech
-// service. That is a property of the BROWSER, not of the moment, so once the
-// engine has failed like that it is remembered here and the mic goes straight
-// to the recorder path (MediaRecorder → ElevenLabs STT, the same pipeline the
-// pronunciation check runs on) on every later click.
-const RECOGNITION_BROKEN_KEY = "ehel-wehel-recognition-broken";
 
 // Live panels sharing one transcript. The dock drawer and the nav section can
 // both be mounted at once over the same store, so an append in either has to
@@ -1081,10 +1082,10 @@ export function mountWehelChat(options) {
   const modules = (Array.isArray(meta.modules) ? meta.modules : []).filter((module) => module && module.id && module.label);
   if (!Array.isArray(store[key])) store[key] = [];
   const messages = store[key];
-  const micSupported = Boolean(speechRecognitionCtor())
-    || Boolean(navigator.mediaDevices?.getUserMedia && typeof MediaRecorder === "function");
+  // Wehel voice input is Deepgram only, so the mic needs exactly what the
+  // recorder path needs — the browser's own recognition engine is irrelevant.
+  const micSupported = Boolean(navigator.mediaDevices?.getUserMedia && typeof MediaRecorder === "function");
   let busy = false;
-  let listening = false;
   let recorder = null;
   let recordedChunks = [];
   let panel = null; // this panel's registry entry, assigned after first render
@@ -1396,47 +1397,15 @@ export function mountWehelChat(options) {
   }
 
   async function toggleMic(button) {
-    // Browser speech recognition first: free, instant, and the learner sees
-    // their words appear in the input box while they are still talking. But
-    // an engine that has already proved broken (see RECOGNITION_BROKEN_KEY —
-    // Brave fails every use with "network") is skipped, straight to the
-    // recorder below.
-    if (speechRecognitionCtor() && storageGet(RECOGNITION_BROKEN_KEY) !== "1") {
-      if (listening) return; // recognition stops itself after a pause
-      stopBrowserSpeech();   // never transcribe the tutor's own voice
-      speakingIndex = null;
-      somaliSpeakingIndex = null;
-      listening = true;
-      const input = container.querySelector("#wehel-input");
-      button.classList.add("is-recording");
-      button.innerHTML = wehelIcon("mic");
-      if (ui.toast) ui.toast("Listening — speak now.");
-      try {
-        const text = await recognizeSpeech({ onInterim: (interim) => { if (input) input.value = interim; } });
-        if (text) { if (input) input.value = ""; submit(text, "voice"); }
-        else if (ui.toast) ui.toast("I didn't hear anything — try again.");
-        return;
-      } catch (error) {
-        // A denied microphone stops BOTH paths — the recorder needs the same
-        // permission — so that one ends here, with the reason.
-        if (error.message === "not-allowed") {
-          if (ui.toast) ui.toast("The microphone is blocked for this page.");
-          return;
-        }
-        // The engine exists but does not work ("network" on Brave's stub, an
-        // unreachable speech service). This used to dead-end on a "voice
-        // input is unavailable" toast while the recorder path below worked
-        // the whole time — so fall through to it NOW, in the same click, and
-        // remember to skip the doomed engine on every later one.
-        storageSet(RECOGNITION_BROKEN_KEY, "1");
-      } finally {
-        listening = false;
-        button.classList.remove("is-recording");
-        button.innerHTML = wehelIcon("mic");
-      }
-    }
-    // Fallback: record locally, transcribe server-side (ElevenLabs STT).
+    // Wehel voice input is Deepgram only: record locally, transcribe through
+    // wehel_listen.php — every time, in every browser. The browser's own
+    // SpeechRecognition is deliberately not tried first any more; its engine
+    // is absent in Brave (API surface, no service) and its use here would
+    // put a second, different recogniser in front of the one the owner chose.
     if (recorder && recorder.state === "recording") { recorder.stop(); return; }
+    stopBrowserSpeech(); // never transcribe the tutor's own voice
+    speakingIndex = null;
+    somaliSpeakingIndex = null;
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       recordedChunks = [];

@@ -12,7 +12,7 @@ import { createCourseApp } from "../course-app.js?v=t2";
 import { createDeck } from "../deck.js?v=deck-1";
 import { wordPicture } from "./word-pictures.js?v=pictures-1";
 import { SCHOOL_CALENDAR, calendarTerm, termDatesLabel, termWeekTotal, halfTermRow, formatDay } from "../study-plan.js?v=study-plan-2";
-import { platformHeaders, askWehel, focusModule, setFocusModule, onFocusChange, modulesFromSections, outlineFromManifest, unitFetcher, browserSpeechSupported, speakBrowser, speechRateForGrade, stopBrowserSpeech, speechRecognitionCtor, recognizeSpeech, wehelIcon, platformUrl } from "../wehel.js?v=wehel-3";
+import { platformHeaders, askWehel, focusModule, setFocusModule, onFocusChange, modulesFromSections, outlineFromManifest, unitFetcher, browserSpeechSupported, speakBrowser, speechRateForGrade, stopBrowserSpeech, speechRecognitionCtor, recognizeSpeech, wehelIcon, platformUrl } from "../wehel.js?v=wehel-4";
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];

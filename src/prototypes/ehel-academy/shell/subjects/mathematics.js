@@ -11,7 +11,7 @@ import { createCourseApp } from "../course-app.js?v=t2";
 import { createDeck, deckIcon } from "../deck.js?v=deck-1";
 import { createPlacementUnit, placementCallout, placementCourseShell, PREREQ_UNIT } from "../placement.js?v=placement-1";
 import { renderStudyPlan, renderUnitStudyPlan } from "../study-plan.js?v=study-plan-2";
-import { mountWehelChat, modulesFromSections, outlineFromManifest, unitFetcher } from "../wehel.js?v=wehel-3";
+import { mountWehelChat, modulesFromSections, outlineFromManifest, unitFetcher } from "../wehel.js?v=wehel-4";
 
 const pad2 = (n) => String(n).padStart(2, "0");
 

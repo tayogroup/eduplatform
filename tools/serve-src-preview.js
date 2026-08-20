@@ -146,6 +146,12 @@ const handleWehelChat = createWehelChatHandler({
 // empty list otherwise — see the handler's own comment.
 const handleWehelHomework = createWehelHomeworkHandler({ enabled: () => process.env.WEHEL_DEV_HOMEWORK });
 
+// Wehel's Deepgram voice (Aura-2 Thalia replies, nova-3 mic transcription) —
+// Wehel ONLY; the lesson voice and pronunciation check stay on ElevenLabs.
+const { createWehelSpeakHandler, createWehelListenHandler } = require(path.join(__dirname, 'lib', 'wehel-deepgram.js'));
+const handleWehelSpeak = createWehelSpeakHandler({ apiKey: () => process.env.DEEPGRAM_API_KEY, model: () => process.env.WEHEL_SPEAK_MODEL });
+const handleWehelListen = createWehelListenHandler({ apiKey: () => process.env.DEEPGRAM_API_KEY, model: () => process.env.WEHEL_LISTEN_MODEL });
+
 // Somali vocabulary audio (Azure "Ubax"/Ubah voice) — the same shared handler
 // vite.config.js mounts at the production path /local/hubredirect/somali_tts.php.
 const { createSomaliTtsHandler } = require(path.join(__dirname, 'lib', 'azure-somali-tts.js'));
@@ -187,6 +193,8 @@ const apiRoutes = {
   '/api/elevenlabs-stt': handleElevenLabsStt,
   '/api/wehel-chat': handleWehelChat,
   '/api/wehel-homework': handleWehelHomework,
+  '/api/wehel-speak': handleWehelSpeak,
+  '/api/wehel-listen': handleWehelListen,
   '/api/somali-tts': handleSomaliTts
 };
 

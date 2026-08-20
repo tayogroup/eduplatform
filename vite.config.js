@@ -1,5 +1,6 @@
 import { defineConfig, loadEnv } from "vite";
 import { createWehelChatHandler, createWehelHomeworkHandler } from "./tools/lib/wehel-dev-chat.js";
+import { createWehelSpeakHandler, createWehelListenHandler } from "./tools/lib/wehel-deepgram.js";
 import { createSomaliTtsHandler } from "./tools/lib/azure-somali-tts.js";
 
 const EHEL_ENGLISH_VOICE_ID = "XfNU2rGpBa01ckF309OY";
@@ -90,6 +91,17 @@ function ehelEnglishVoicePlugin(env) {
       server.middlewares.use(
         "/local/hubredirect/wehel_homework.php",
         createWehelHomeworkHandler({ enabled: () => env.WEHEL_DEV_HOMEWORK }),
+      );
+      // Wehel's Deepgram voice (Aura-2 Thalia replies, nova-3 mic input) —
+      // Wehel ONLY; quiz_tts/quiz_stt below stay on ElevenLabs for the lesson
+      // voice and pronunciation check.
+      server.middlewares.use(
+        "/local/hubredirect/wehel_speak.php",
+        createWehelSpeakHandler({ apiKey: () => env.DEEPGRAM_API_KEY, model: () => env.WEHEL_SPEAK_MODEL }),
+      );
+      server.middlewares.use(
+        "/local/hubredirect/wehel_listen.php",
+        createWehelListenHandler({ apiKey: () => env.DEEPGRAM_API_KEY, model: () => env.WEHEL_LISTEN_MODEL }),
       );
       // Somali vocabulary audio for Wehel — Azure's "Ubax" (Ubah) voice, same
       // shared handler serve-src-preview mounts at /api/somali-tts.

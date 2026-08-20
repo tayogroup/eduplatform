@@ -51,7 +51,7 @@ const EXTENTS = {
 // shape. Top extent is the afro puffs (or a raised hand), bottom is the ground
 // shadow.
 const PERSON = [-52, -197, 52, 14];
-for (const who of ["amal", "nora", "mina", "adam", "idris", "noah", "yasmin", "mum", "dad", "hana", "omar"]) {
+for (const who of ["amal", "nora", "mina", "adam", "idris", "noah", "yasmin", "mum", "dad", "hana", "omar", "maya", "sami", "salma"]) {
   EXTENTS[who] = PERSON;
 }
 

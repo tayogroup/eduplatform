@@ -1885,6 +1885,263 @@ const ebookCatalog = [
       { image: "page-12.svg", sound: "bell", text: "Behind the ninth: a box of ideas. On Showcase Day I read mine out loud, and my voice did not shake.", alt: "Showcase Day with bunting and confetti, Amal reading aloud while Teacher Yasmin and Nora cheer" },
     ],
   },
+
+  // ---------------------------------------------------------------- Grade 4
+  // The same cast a year on — Amal, Nora, Teacher Yasmin, Omar, Sami and the
+  // family all continue through the Grade 4 readings — plus Maya, the young
+  // reporter Unit 4 introduces. Every book is built on its unit's own story
+  // device, so the shelf and the lesson are recognisably the same world.
+  // Illustrations: tools/create-grade4-ebook-illustrations.js.
+  {
+    id: "the-post-counter",
+    title: "The Post Counter",
+    grades: [4],
+    units: [1],
+    level: "Level 4",
+    description: "Omar sorts the town's mail, reads letters aloud for neighbours, and never leaves a job half finished.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "The Post Counter is an original Grade 4 story created for Ehel Academy in 2026, book one of the Grade 4 Amal series. Story and vector illustrations by Ehel Academy Learning Studio, using the cast and setting of the Grade 4 English readings. No third-party story wording or artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "bell", text: "The Post Counter. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Omar behind the town post counter with Amal holding her interview notes" },
+      { image: "page-02.svg", sound: "bell", text: "Omar runs the market shop, and the town post counter stands beside his till.", alt: "Omar at the post counter with the pigeonholes and shop shelves behind him" },
+      { image: "page-03.svg", sound: "bell", text: "Every morning he sorts the mail, weighs the parcels, and checks each address twice. A small mistake could send a letter to the wrong street.", alt: "Omar weighing a parcel on the counter scales beside a stack of parcels" },
+      { image: "page-04.svg", sound: "lullaby", text: "He reads letters aloud for neighbours who find long words difficult. Grandmother Salma listens for news of a cousin far away.", alt: "Omar reading an open letter aloud while Grandmother Salma listens at the counter" },
+      { image: "page-05.svg", sound: "market", text: "\"Not everyone owns a phone,\" Omar says. \"A letter can bring peace, and make somebody feel remembered.\"", alt: "Omar outside his market stall talking with Amal and Maya on the town street" },
+      { image: "page-06.svg", sound: "bell", text: "I came to interview him for the school paper. Maya lent me her list of questions.", alt: "Amal at the counter with her notes while Omar answers her" },
+      { image: "page-07.svg", sound: "hen", text: "\"How do you keep it fair?\" I asked. \"First come, first served,\" he said. \"Every parcel matters to somebody.\"", alt: "Amal writing up her notes at home in the kitchen with Mum" },
+      { image: "page-08.svg", sound: "bird", text: "At home I wrote up my notes. Mum said a good interview is mostly listening.", alt: "Amal and Nora sitting in the schoolyard going over the draft" },
+      { image: "page-09.svg", sound: "bell", text: "Nora read my draft and said the middle was slow. So I cut it, clearly and without arguing.", alt: "Omar working on at the counter with a taller stack of parcels" },
+      { image: "page-10.svg", sound: "bell", text: "On busy days Omar simply works a little longer, instead of leaving a job half finished.", alt: "Teacher Yasmin reading Amal's report to the class while Amal and Maya listen" },
+      { image: "page-11.svg", sound: "bell", text: "Teacher Yasmin read my report to the class. \"Daily effort,\" she said. \"That is the whole story.\"", alt: "Omar and Amal both cheering at the counter beside an open letter" },
+      { image: "page-12.svg", sound: "wind", text: "I posted a copy to my cousin. It is a small thing to send a letter - and a large thing to get one.", alt: "Amal walking home at sunset with her copy of the report under a lit street lamp" },
+    ],
+  },
+  {
+    id: "the-storm-and-the-science-tent",
+    title: "The Storm and the Science Tent",
+    grades: [4],
+    units: [2],
+    level: "Level 4",
+    description: "A science fair, a sky the colour of iron, and the one pupil who came prepared.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "The Storm and the Science Tent is an original Grade 4 story created for Ehel Academy in 2026, book two of the Grade 4 Amal series. Story and vector illustrations by Ehel Academy Learning Studio, using the cast and setting of the Grade 4 English readings. No third-party story wording or artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "rain", text: "The Storm and the Science Tent. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of the science tent in a rainstorm with lightning behind it and Amal and Nora outside" },
+      { image: "page-02.svg", sound: "bell", text: "Teacher Yasmin planned a science fair, and the whole class built a tent on the village field.", alt: "The science tent on the field under bunting with Teacher Yasmin and Amal" },
+      { image: "page-03.svg", sound: "bell", text: "Nora's project was the weather. Mine was moisture - how the air holds water you cannot see.", alt: "Nora holding her project book beside Amal and a globe on the field" },
+      { image: "page-04.svg", sound: "wind", text: "In the morning the sky was clear. By midday there were clouds the colour of iron.", alt: "Amal pointing up at heavy clouds gathering over the field" },
+      { image: "page-05.svg", sound: "wind", text: "We taped down our posters. The temperature dropped, and the air smelled of rain.", alt: "Teacher Yasmin and Nora securing the science tent as the weather turns" },
+      { image: "page-06.svg", sound: "rain", text: "Then the storm arrived. Hail rattled on the canvas like a drum, and everybody ran for the tent.", alt: "Amal and Nora startled in heavy rain beside the science tent" },
+      { image: "page-07.svg", sound: "rain", text: "Lightning split the sky. Nora counted the seconds until the thunder, the way her project said to.", alt: "Lightning above the science tent while Teacher Yasmin and Amal shelter" },
+      { image: "page-08.svg", sound: "rain", text: "\"Six seconds,\" she said. \"The storm is two kilometres away.\" Nobody laughed at the weather project after that.", alt: "Amal and Nora cheering in the rain beside the tent" },
+      { image: "page-09.svg", sound: "rain", text: "We waited it out together, twenty of us under one roof, dripping and delighted.", alt: "Teacher Yasmin, Amal and Nora standing together in the rain" },
+      { image: "page-10.svg", sound: "wind", text: "When it passed, the field was a lake, and every poster on the outside table was ruined.", alt: "The field after the storm with grey cloud clearing and the tent standing" },
+      { image: "page-11.svg", sound: "sun", text: "Nora's poster survived, because she had brought a plastic sleeve. Preparation is not luck.", alt: "Nora and Amal cheering in the sunshine beside the science tent" },
+      { image: "page-12.svg", sound: "bird", text: "The judges gave her first place. \"The weather did the demonstration,\" said Teacher Yasmin.", alt: "Amal and Nora at sunset with the science tent behind them" },
+    ],
+  },
+  {
+    id: "from-farm-to-plate",
+    title: "From Farm to Plate",
+    grades: [4],
+    units: [3],
+    level: "Level 4",
+    description: "Amal follows her dinner all the way back to the soil it started in.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "From Farm to Plate is an original Grade 4 story created for Ehel Academy in 2026, book three of the Grade 4 Amal series. Story and vector illustrations by Ehel Academy Learning Studio, using the cast and setting of the Grade 4 English readings. No third-party story wording or artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "bird", text: "From Farm to Plate. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Amal and her father at the edge of a ploughed field" },
+      { image: "page-02.svg", sound: "bird", text: "My father took me to the farm where our food begins.", alt: "Dad pointing out the furrows of the farm field to Amal" },
+      { image: "page-03.svg", sound: "goat", text: "The field was full of furrows. \"Everything you ate this week started in soil like this,\" he said.", alt: "Adam and Idris working along the furrows with a goat nearby" },
+      { image: "page-04.svg", sound: "market", text: "Adam and Idris helped gather the harvest. Labour, my father calls it - the work nobody sees on the plate.", alt: "Omar at his market stall with mangoes while Amal takes notes" },
+      { image: "page-05.svg", sound: "market", text: "At the market, Omar weighed the rice and told me the price had risen. Rain in the north, he said.", alt: "Mum and Amal choosing food at the market stall with a hen nearby" },
+      { image: "page-06.svg", sound: "hen", text: "Mum chose what was fresh, and left what was not. \"Look at food,\" she said. \"Do not just buy it.\"", alt: "Grandma Hana showing Amal the kitchen" },
+      { image: "page-07.svg", sound: "hen", text: "Grandma Hana showed me how she keeps a kitchen clean, because food that is not safe is not food.", alt: "Mum explaining something to little Mina in the kitchen" },
+      { image: "page-08.svg", sound: "bell", text: "Mina wanted only sweet things. Mum let her choose one, and no more.", alt: "Amal looking downcast with Mum outside the town clinic" },
+      { image: "page-09.svg", sound: "bell", text: "At the clinic the nurse explained what fresh food does for a growing brain and stomach.", alt: "Teacher Yasmin at a food poster in the classroom with Amal" },
+      { image: "page-10.svg", sound: "bell", text: "Cousin Noah asked why some families have plenty and some do not. Nobody had a short answer.", alt: "Amal and Noah talking at the family dining table" },
+      { image: "page-11.svg", sound: "river", text: "We planted a row of our own, so that at least one meal would begin in our yard.", alt: "Amal cheering beside a flowering plant at the edge of the ploughed field" },
+      { image: "page-12.svg", sound: "bird", text: "Now when I eat, I can see the whole trail behind it: a field, a market, a kitchen, a table.", alt: "Amal, Mum and Mina outside their house at sunset" },
+    ],
+  },
+  {
+    id: "the-library-that-came-by-cart",
+    title: "The Library That Came by Cart",
+    grades: [4],
+    units: [4],
+    level: "Level 4",
+    description: "A town with no library, a cart with two shelves, and a reporter who counted who was reading.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "The Library That Came by Cart is an original Grade 4 story created for Ehel Academy in 2026, book four of the Grade 4 Amal series, built on the travelling library and the young reporter of the Grade 4 Unit 4 readings. Story and vector illustrations by Ehel Academy Learning Studio. No third-party story wording or artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "market", text: "The Library That Came by Cart. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of the blue library cart on the town street with Maya and Amal beside it" },
+      { image: "page-02.svg", sound: "bell", text: "Our town has no library building. What it has is a cart.", alt: "Amal looking in surprise at the library cart on the street" },
+      { image: "page-03.svg", sound: "bell", text: "Every Thursday it arrives, painted blue, with two shelves of books and one squeaky wheel.", alt: "Teacher Yasmin and Nora choosing books from the library cart" },
+      { image: "page-04.svg", sound: "bell", text: "Teacher Yasmin says a library is a service, not a building. The cart proves her right.", alt: "Amal holding a book between the cart and a shelf of books" },
+      { image: "page-05.svg", sound: "market", text: "Maya writes for the town paper. She is twelve, and she has a notebook for everything.", alt: "Maya interviewing Omar beside the market stall" },
+      { image: "page-06.svg", sound: "bell", text: "She interviewed Omar about how many people ask him to read to them. The number surprised the whole town.", alt: "Maya presenting her notes to the class with Amal and Teacher Yasmin" },
+      { image: "page-07.svg", sound: "bell", text: "So Maya wrote an article: \"A town that wants to read.\" It was printed on the front page.", alt: "Teacher Yasmin and Maya beside the article pinned up on the wall" },
+      { image: "page-08.svg", sound: "bell", text: "At the town meeting, people argued about priorities. A road, a roof, or a room full of books?", alt: "Omar, Grandmother Salma, Dad, Amal and Maya standing together at the town meeting" },
+      { image: "page-09.svg", sound: "bell", text: "Little Mina asked why we could not simply keep the cart. That got the biggest laugh of the evening.", alt: "Amal pointing out the library cart to little Mina" },
+      { image: "page-10.svg", sound: "bell", text: "In the end the vote was for a community centre, with one room for the books.", alt: "Maya and Nora cheering outside the new library building under bunting" },
+      { image: "page-11.svg", sound: "bell", text: "The cart still comes on Thursdays. Nobody wanted to give it up.", alt: "Amal with a book between the library building and the old cart" },
+      { image: "page-12.svg", sound: "bird", text: "Maya kept the front page. \"Information,\" she says, \"is just knowledge that somebody bothered to share.\"", alt: "Maya and Amal at sunset outside the library" },
+    ],
+  },
+  {
+    id: "the-spiral-cave",
+    title: "The Spiral Cave",
+    grades: [4],
+    units: [5],
+    level: "Level 4",
+    description: "Adam is winning the race when the goat escapes. He stops anyway.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "The Spiral Cave is an original Grade 4 story created for Ehel Academy in 2026, book five of the Grade 4 Amal series, built on the village race, the lost goat and the spiral cave of the Grade 4 Unit 5 readings. Story and vector illustrations by Ehel Academy Learning Studio. No third-party story wording or artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "wind", text: "The Spiral Cave. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Amal, Nora and Adam inside a dark cave coiled like a shell" },
+      { image: "page-02.svg", sound: "ball", text: "It was race day at the village field, and my brother Adam was the fastest runner in town.", alt: "Amal, Nora and Adam at the start line under bunting on the village field" },
+      { image: "page-03.svg", sound: "ball", text: "I am not fast. But I can keep going, which is a different thing.", alt: "Nora running hard across the field with dust and motion lines behind her" },
+      { image: "page-04.svg", sound: "goat", text: "Halfway through the race, Idris shouted. The goat had escaped again.", alt: "Amal pointing at the escaped goat while a worried Idris stands beside her" },
+      { image: "page-05.svg", sound: "goat", text: "Adam stopped running. He was winning, and he stopped.", alt: "Adam and Amal turning away from the race to follow the goat" },
+      { image: "page-06.svg", sound: "wind", text: "We followed the goat up the hill, past the mountain trail, until it disappeared into a hole in the rock.", alt: "Amal and Nora on the mountain trail following the goat's path" },
+      { image: "page-07.svg", sound: "crickets", text: "Inside was a cave we had never seen: cool, dark, and coiled like a shell.", alt: "Amal and Nora amazed inside the spiral cave" },
+      { image: "page-08.svg", sound: "crickets", text: "Adam went first, and made us walk slowly. \"Never rush in a place you cannot see,\" he said.", alt: "Adam leading Amal and Idris carefully into the cave" },
+      { image: "page-09.svg", sound: "goat", text: "The goat was at the centre of the spiral, perfectly calm, chewing something it should not have.", alt: "Amal and Nora finding the goat calmly standing at the centre of the cave" },
+      { image: "page-10.svg", sound: "goat", text: "Idris carried it out. It weighed more than he did, and he refused to admit that.", alt: "Idris and Amal walking the goat back out of the cave" },
+      { image: "page-11.svg", sound: "ball", text: "We got back to the field long after the race had finished. Nobody had won it.", alt: "Amal, Adam and Idris back on the sunny field with the goat safe beside them" },
+      { image: "page-12.svg", sound: "wind", text: "\"You lost the race,\" I told Adam. \"I rescued a goat,\" he said. \"Ask me which one I will remember.\"", alt: "Amal and Nora talking at sunset under an acacia tree" },
+    ],
+  },
+  {
+    id: "the-community-parade",
+    title: "The Community Parade",
+    grades: [4],
+    units: [6],
+    level: "Level 4",
+    description: "Once a year the town marches for the people who keep it working - and Maya writes down every name.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "The Community Parade is an original Grade 4 story created for Ehel Academy in 2026, book six of the Grade 4 Amal series. Story and vector illustrations by Ehel Academy Learning Studio, using the cast and setting of the Grade 4 English readings. No third-party story wording or artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "market", text: "The Community Parade. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of the town parade under bunting with a banner, Amal, Maya and Omar" },
+      { image: "page-02.svg", sound: "bell", text: "Once a year our town holds a parade for the people who keep it working.", alt: "Teacher Yasmin explaining the parade route to Amal on the town street" },
+      { image: "page-03.svg", sound: "market", text: "The carpenter came first, then the engineer, then the caretaker who unlocks the school every morning at six.", alt: "Omar, Dad and Amal on the street beside the market stall" },
+      { image: "page-04.svg", sound: "bell", text: "Omar closed the shop for one hour - the only hour it closes all year.", alt: "Mum and Grandmother Salma outside the town hospital" },
+      { image: "page-05.svg", sound: "bell", text: "Maya walked the whole route with her notebook, asking everybody the same question: what do you do?", alt: "Maya interviewing Noah beside a poster on the wall" },
+      { image: "page-06.svg", sound: "bell", text: "Our neighbours carried a banner. One family arrived here as refugees; the other has farmed the same field for a hundred years.", alt: "Noah, Sami and Amal talking together in front of a house" },
+      { image: "page-07.svg", sound: "bell", text: "Sami's father is a nurse. Noah's mother is a lawyer. Both were marching.", alt: "Maya and Teacher Yasmin outside the town library" },
+      { image: "page-08.svg", sound: "bell", text: "Teacher Yasmin marched with the school. So did every child who wanted to.", alt: "Amal and Nora cheering under bunting beside a parade banner in the schoolyard" },
+      { image: "page-09.svg", sound: "market", text: "There was music, and there was too much of it, and nobody minded.", alt: "Sami and Noah cheering beside a parade banner in the street" },
+      { image: "page-10.svg", sound: "market", text: "At the end, the mayor gave the shortest speech I have ever heard: \"Thank you. Go home. Come back next year.\"", alt: "Confetti over the whole crowd: Omar, Salma, Maya, Amal and Mina together" },
+      { image: "page-11.svg", sound: "bell", text: "Maya's article was one page of names. Just names, and what each person does.", alt: "Maya showing Amal her notes beside a coral parade banner" },
+      { image: "page-12.svg", sound: "bird", text: "I read every one. It took a while. That was rather the point.", alt: "Amal and Maya cheering at sunset with bunting above them" },
+    ],
+  },
+  {
+    id: "the-day-of-the-play",
+    title: "The Day of the Play",
+    grades: [4],
+    units: [7],
+    level: "Level 4",
+    description: "Sami is the shyest person Amal knows, and Teacher Yasmin has given him the biggest part.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "The Day of the Play is an original Grade 4 story created for Ehel Academy in 2026, book seven of the Grade 4 Amal series, built on the school play of the Grade 4 Unit 7 readings. Story and vector illustrations by Ehel Academy Learning Studio. No third-party story wording or artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "bell", text: "The Day of the Play. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Sami on a curtained stage with Amal beside him under bunting" },
+      { image: "page-02.svg", sound: "bell", text: "Our class was putting on a play, and Teacher Yasmin gave Sami the biggest part.", alt: "Teacher Yasmin announcing the parts in the classroom while Amal listens" },
+      { image: "page-03.svg", sound: "wind", text: "Sami is the shyest person I know. He went white when she read out his name.", alt: "Sami alone at his classroom desk looking stricken" },
+      { image: "page-04.svg", sound: "bell", text: "\"I cannot do it,\" he told me. \"Everybody will look at me.\"", alt: "Amal and Nora with a downcast Sami in the classroom" },
+      { image: "page-05.svg", sound: "tree", text: "We practised in the yard, just the two of us, until he could say his lines to a tree.", alt: "Amal encouraging a nervous Sami on a schoolyard bench" },
+      { image: "page-06.svg", sound: "tree", text: "Then to me. Then to Nora. Then to three people, which was harder than one.", alt: "Sami reciting under the big schoolyard tree while Amal points him on" },
+      { image: "page-07.svg", sound: "bell", text: "\"Nervous is not the same as unable,\" said Teacher Yasmin. \"It only feels the same.\"", alt: "Teacher Yasmin talking to Sami and Amal in the classroom" },
+      { image: "page-08.svg", sound: "lullaby", text: "On the night, the hall was full. Behind the curtain Sami was terrified, and so was I.", alt: "Amal, Nora and Sami waiting behind a closed stage curtain" },
+      { image: "page-09.svg", sound: "bell", text: "The curtain opened.", alt: "Sami alone in the middle of the open stage" },
+      { image: "page-10.svg", sound: "bell", text: "He said every line. He said them well, and he said them loudly, and he did not stop once.", alt: "Sami performing on stage with Amal and Nora cheering beside him" },
+      { image: "page-11.svg", sound: "bell", text: "Afterwards he sat down very suddenly and laughed until he had to hold onto a chair.", alt: "Confetti on stage with Teacher Yasmin, Sami and Amal all celebrating" },
+      { image: "page-12.svg", sound: "bird", text: "Being brave is not feeling calm. It is doing the thing while you do not.", alt: "Sami and Amal walking home together at sunset" },
+    ],
+  },
+  {
+    id: "the-attic-clue",
+    title: "The Attic Clue",
+    grades: [4],
+    units: [8],
+    level: "Level 4",
+    description: "Three taped boxes, a brass telescope, and a letter addressed to nobody.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "The Attic Clue is an original Grade 4 story created for Ehel Academy in 2026, book eight of the Grade 4 Amal series, built on the attic and the telescope of the Grade 4 Unit 8 readings. Story and vector illustrations by Ehel Academy Learning Studio. No third-party story wording or artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "crickets", text: "The Attic Clue. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Amal and Idris in a dusty attic with old boxes and a brass telescope" },
+      { image: "page-02.svg", sound: "bell", text: "Dad said the attic needed clearing, which is how the whole thing started.", alt: "Dad pointing up towards the attic while Amal listens in the living room" },
+      { image: "page-03.svg", sound: "crunch", text: "Idris found the boxes first: three of them, taped shut, older than either of us.", alt: "A surprised Amal and Idris beside a stack of old boxes in the attic" },
+      { image: "page-04.svg", sound: "crickets", text: "Inside was a telescope. Brass, heavy, and folded up like a puzzle.", alt: "Amal holding a paper beside the opened boxes in the attic" },
+      { image: "page-05.svg", sound: "crickets", text: "There was also a letter, in handwriting we did not recognise, addressed to nobody.", alt: "Idris pointing at the telescope while a surprised Amal looks on" },
+      { image: "page-06.svg", sound: "crickets", text: "Idris wanted to use the telescope immediately. I wanted to know whose it was.", alt: "Amal pointing at the brass telescope standing in the attic light" },
+      { image: "page-07.svg", sound: "lullaby", text: "Grandma Hana put on her reading glasses and went very quiet.", alt: "Grandma Hana in her reading glasses talking to Amal in the living room" },
+      { image: "page-08.svg", sound: "bell", text: "It had belonged to her brother, who taught himself the names of the stars from a library book.", alt: "Teacher Yasmin at a globe in the classroom explaining to Amal" },
+      { image: "page-09.svg", sound: "crickets", text: "Teacher Yasmin helped us clean the lens with the right cloth and no shortcuts.", alt: "Amal and Sami with the cleaned telescope in the attic" },
+      { image: "page-10.svg", sound: "crickets", text: "That night we carried it into the yard. Idris found Orion in under a minute, which was infuriating.", alt: "Amal and Idris under a sky full of stars with the telescope set up in the yard" },
+      { image: "page-11.svg", sound: "crickets", text: "Grandma Hana looked last, and for a long time, and did not say anything at all.", alt: "Amal holding the old letter in the attic beside the telescope and boxes" },
+      { image: "page-12.svg", sound: "lullaby", text: "Some tools are just tools. And some of them are somebody, kept.", alt: "Amal, Idris and Grandma Hana outside the house at sunset" },
+    ],
+  },
+  {
+    id: "the-day-we-got-lost",
+    title: "The Day We Got Lost",
+    grades: [4],
+    units: [9],
+    level: "Level 4",
+    description: "A class trip to the capital, one wrong turn, and a map read properly for the first time.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "The Day We Got Lost is an original Grade 4 story created for Ehel Academy in 2026, book nine of the Grade 4 Amal series, built on the trip to the capital in the Grade 4 Unit 9 readings. Story and vector illustrations by Ehel Academy Learning Studio. No third-party story wording or artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "market", text: "The Day We Got Lost. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Amal, Nora and Teacher Yasmin on a capital-city street beside a signpost" },
+      { image: "page-02.svg", sound: "bell", text: "Our class took the train to the capital. It was four hours, and I did not sleep for one of them.", alt: "Teacher Yasmin at a map in the classroom with Amal holding her copy" },
+      { image: "page-03.svg", sound: "wind", text: "The station was the biggest room I had ever stood in.", alt: "Amal and Nora beside a red train at the station platform" },
+      { image: "page-04.svg", sound: "market", text: "Teacher Yasmin gave each pair a map and a meeting time. \"Do not be late. Do not go alone.\"", alt: "An amazed Amal looking up at the tall buildings of the capital with Nora" },
+      { image: "page-05.svg", sound: "bell", text: "Nora and I found the museum, the mall, and a restaurant that sold nothing we recognised.", alt: "Teacher Yasmin pointing out the museum to Amal in the capital" },
+      { image: "page-06.svg", sound: "market", text: "Then we took one wrong turn, and then another, and the street names stopped matching the map.", alt: "Nora pointing along a city street beside the shopping centre and a signpost" },
+      { image: "page-07.svg", sound: "wind", text: "We were lost. Properly lost, in a city of two million people.", alt: "A worried Amal and Nora at a four-armed signpost in the capital" },
+      { image: "page-08.svg", sound: "bell", text: "Nora did not panic. She found a signpost, then a street name, then the same name on our map.", alt: "Amal and Nora working out their position from the map" },
+      { image: "page-09.svg", sound: "bell", text: "We walked back the way the map said, not the way we felt like going. Those are rarely the same.", alt: "Amal pointing the way past the museum towards the signpost with Nora" },
+      { image: "page-10.svg", sound: "bell", text: "We reached the meeting point four minutes early. Teacher Yasmin never knew.", alt: "Teacher Yasmin, Amal and Nora all cheering outside the museum" },
+      { image: "page-11.svg", sound: "river", text: "On the train home Nora fell asleep against the window and I kept the map.", alt: "Amal holding a shell on the shore with a ferry out on the water" },
+      { image: "page-12.svg", sound: "wind", text: "I still have it. There is a small pencil cross where we worked out where we were.", alt: "Amal, Nora and Teacher Yasmin at sunset with the city skyline behind them" },
+    ],
+  },
+  {
+    id: "nine-rooms",
+    title: "Nine Rooms",
+    grades: [4],
+    units: [10],
+    level: "Level 4",
+    description: "Nine units, nine rooms, and everything Amal carried out of each one.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "Nine Rooms is an original Grade 4 story created for Ehel Academy in 2026, book ten of the Grade 4 Amal series and the close of the Grade 4 shelf, built on the Year 4 Exhibition and the poem \"Nine Rooms\" in the Grade 4 Unit 10 readings. Story and vector illustrations by Ehel Academy Learning Studio. No third-party story wording or artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "bell", text: "Nine Rooms. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of the Year 4 Exhibition with bunting, easels, Amal and Maya" },
+      { image: "page-02.svg", sound: "bell", text: "It was the last week of Year 4, and Teacher Yasmin gave us the Exhibition.", alt: "Teacher Yasmin presenting the project brief while Amal holds her notes" },
+      { image: "page-03.svg", sound: "bell", text: "\"Nine units,\" she said. \"Think of them as nine rooms. Show me what is in each one.\"", alt: "Nine numbered cutaway rooms across the wall with Teacher Yasmin pointing" },
+      { image: "page-04.svg", sound: "bell", text: "In the first room: Omar at the post counter, and a letter that made somebody feel remembered.", alt: "Amal with her exhibition page at the post counter beside Omar" },
+      { image: "page-05.svg", sound: "rain", text: "In the second: a storm, a tent, and a girl who brought a plastic sleeve.", alt: "Amal holding her page in front of the science tent on the field" },
+      { image: "page-06.svg", sound: "bird", text: "In the third: a field, a market, a kitchen, and everything in between.", alt: "Amal with her page beside the farm field and a mango" },
+      { image: "page-07.svg", sound: "market", text: "In the fourth: a library that arrives on Thursdays with one squeaky wheel.", alt: "Maya and Amal beside the library cart on the street" },
+      { image: "page-08.svg", sound: "market", text: "In the fifth: a race nobody won, and a goat worth more than winning. In the sixth: a parade, and a page of names.", alt: "Amal cheering beside a parade banner under bunting" },
+      { image: "page-09.svg", sound: "bell", text: "In the seventh: a curtain opening, and Sami saying every line.", alt: "Sami cheering on the stage with Amal holding her exhibition page" },
+      { image: "page-10.svg", sound: "crickets", text: "In the eighth: a telescope, an attic, and a great-uncle who learned the stars from a book.", alt: "Amal with her page in the attic beside the telescope and the old boxes" },
+      { image: "page-11.svg", sound: "market", text: "In the ninth: a map with a pencil cross on it.", alt: "Amal holding her page in the capital beside the museum and a signpost" },
+      { image: "page-12.svg", sound: "bell", text: "On Exhibition evening I walked people through all nine rooms. It took a while. I did not hurry once.", alt: "Exhibition evening with bunting and confetti, Amal presenting while Teacher Yasmin, Maya and Nora cheer" },
+    ],
+  },
 ];
 
 let course;
@@ -5928,19 +6185,31 @@ function gamesTeacherPanel() {
 }
 
 // ===================== student resources =====================
-// Grade 1's counterpart to the Teacher resources button, and the same shape: a
-// switch under the section list that leads to one page. It collects what a
-// learner (or the grown-up beside them) may want to reach DIRECTLY rather than
-// by walking the gated chain — the two study plans, the picture books, the word
-// cards, the games, the progress page.
+// The learner's counterpart to the Teacher resources button, and the same
+// shape: a switch under the section list that leads to one page. It collects
+// what a learner (or the grown-up beside them) may want to reach DIRECTLY
+// rather than by walking the gated chain — the two study plans, the books, the
+// word cards, the games, the progress page.
 //
 // It links; it never restates. Every card navigates to the section that already
 // owns the material, so nothing here can drift from what it describes. A card is
 // drawn only for material this unit actually has — the same rule
 // visibleSections() applies to the nav — and a card whose section is not open
 // yet says so rather than leading the learner to a locked page.
-const STUDENT_RESOURCES_GRADE = 1;
-const hasStudentResources = () => gradeNumber === STUDENT_RESOURCES_GRADE;
+//
+// Every grade, and the per-unit filtering is what makes that safe: Books appears
+// only where unitEbooks() finds one (Grades 1-3 today), Games only where the
+// unit ships a game pack. Nothing here is grade-gated by hand, so a grade that
+// gains books gains the card with them.
+//
+// One design at every grade, deliberately. This is a reference page like the
+// study plans, not a taught section, so it is outside the deck/original split
+// (BOTH_DESIGNS) entirely and draws no gc-* node at any stage.
+
+// Card titles come from the nav's own table rather than being retyped, so a
+// card and the entry it opens can never call the same thing two names — the
+// learner reads "Vocabulary" here and finds "Vocabulary" in the list.
+const navLabelOf = (id, fallback = "") => (sections.find(([sectionId]) => sectionId === id) || [])[2] || fallback;
 
 function studentResourceCards() {
   // The Prerequisite unit has no unit content to point at: its two pages are
@@ -5955,23 +6224,24 @@ function studentResourceCards() {
   }
   const books = unitEbooks().length;
   const cards = [
-    { route: "unit-plan", iconName: "calendar-days", title: "Unit Study Plan", blurb: "What to do each day of this unit, from the video lesson to the quiz." },
+    { route: "unit-plan", iconName: "calendar-days", title: navLabelOf("unit-plan", "Unit Study Plan"), blurb: "What to do each day of this unit, from the video lesson to the quiz." },
     // The grade plan lives on the Prerequisite unit, so this one leaves the
     // page rather than navigating — a route here would redirect (renderYearPlan
     // returns to the overview outside that unit).
     { href: courseLocation(PREREQ_UNIT, "year-plan"), iconName: "map", title: `${gradeLabel} Study Plan`, blurb: "The whole year at a glance: every unit and what it brings." },
-    { route: "dictionary", iconName: "book-a", title: "Word cards", blurb: "Every new word in this unit, with a picture, a meaning and a voice to listen to." },
+    // "with its meaning", not "with a picture": word-pictures.js only draws a
+    // picture where one can BE the word, which is a minority of the vocabulary
+    // once the words stop being concrete nouns.
+    { route: "dictionary", iconName: "book-a", title: navLabelOf("dictionary", "Vocabulary"), blurb: "Every new word in this unit, with its meaning and a voice to listen to." },
   ];
-  if (books) cards.push({ route: "ebooks", iconName: "library-big", title: "Picture books", blurb: `${books === 1 ? "A story book" : `${books} story books`} to read or listen to, with pictures that move when you tap them.` });
-  if (gamePack) cards.push({ route: "games", iconName: "gamepad-2", title: "Games", blurb: "Play with this unit's words and sentences until they stick." });
-  cards.push({ route: "reflect", iconName: "sparkles", title: "My progress", blurb: "See what you have finished in this unit, and what comes next." });
-  cards.push({ route: "live", iconName: "video", title: "Live sessions", blurb: "When your class meets your teacher online, the link is here." });
+  if (books) cards.push({ route: "ebooks", iconName: "library-big", title: navLabelOf("ebooks", "Books"), blurb: `${books === 1 ? "A story book" : `${books} story books`} to read or listen to, with pictures that move when you tap them.` });
+  if (gamePack) cards.push({ route: "games", iconName: "gamepad-2", title: navLabelOf("games", "Games"), blurb: "Play with this unit's words and sentences until they stick." });
+  cards.push({ route: "reflect", iconName: "sparkles", title: navLabelOf("reflect", "My progress"), blurb: "See what you have finished in this unit, and what comes next." });
+  cards.push({ route: "live", iconName: "video", title: navLabelOf("live", "Live sessions"), blurb: "When your class meets your teacher online, the link is here." });
   return cards;
 }
 
 function renderStudentResources() {
-  // Reachable by typing #student at any grade; only Grade 1 has the page.
-  if (!hasStudentResources()) return navigate("overview");
   const cards = studentResourceCards().map((card) => {
     const locked = card.route ? !sectionUnlocked(card.route) : false;
     const action = locked
@@ -6000,14 +6270,13 @@ function renderStudentResources() {
   icons();
 }
 
-// The switch itself. Hidden markup by default (english/index.html), shown here
-// once the grade is known, and repainted on every nav render for the same
-// reason the teacher switch is — the shell's `route` is current at nav time,
-// this module's copy is not set until onBeforeRender, which runs after.
+// The switch itself, repainted on every nav render for the same reason the
+// teacher switch is: the shell's `route` is current at nav time, this module's
+// copy is not set until onBeforeRender, which runs after. It is drawn by
+// english/index.html at every grade, so nothing here shows or hides it.
 function paintStudentSwitch() {
   const button = $("#student-switch");
   if (!button) return;
-  button.hidden = !hasStudentResources();
   button.classList.toggle("active", shellCtx?.route === "student");
 }
 

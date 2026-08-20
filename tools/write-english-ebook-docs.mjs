@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 // Writes the STORY.txt and ATTRIBUTION.txt that sit beside each original
-// picture book, for the Grade 2 (Zuri) and Grade 3 (Amal) shelves.
+// picture book, for the Grade 2 (Zuri) and Grade 3-4 (Amal) shelves.
 //
 // They are GENERATED, not hand-written, because the shipped words live in the
 // catalogue in shell/subjects/english.js and nowhere else. The Grade 1 folders
@@ -182,6 +182,67 @@ const NOTES = {
     vocabulary: "one door for each of Units 1-9: family, library, January, sailor, build, kindness, temperature, million, idea",
     themes: "gathering a year up and saying it out loud",
     cameos: "the Year 3 Showcase, from the Unit 10 readings; the whole cast returns.",
+  },
+  // ---- Grade 4: the same cast a year on, plus Maya the young reporter.
+  "the-post-counter": {
+    series: "Amal", book: 1, term: "Term 1", unit: "Unit 1: Daily Life & Communication",
+    vocabulary: "mail, language, citizen, agree, continue, gain, effort, master, maintain, daily, usual, fair, necessary, peace, really, clearly",
+    themes: "unglamorous daily effort; fairness as first come, first served",
+    cameos: "Omar's post counter and Grandmother Salma are both from the Unit 1 readings; Maya lends the questions.",
+  },
+  "the-storm-and-the-science-tent": {
+    series: "Amal", book: 2, term: "Term 1", unit: "Unit 2: Nature & Weather",
+    vocabulary: "storm, hail, hurricane, tornado, foggy, snowy, breath, moisture, surface, temperature, solar, roam",
+    themes: "preparation is not luck; a demonstration the weather gave for free",
+    cameos: "the science fair and the storm are the Unit 2 readings' own.",
+  },
+  "from-farm-to-plate": {
+    series: "Amal", book: 3, term: "Term 1", unit: "Unit 3: Food and Health",
+    vocabulary: "sandwich, lamb, rice, spice, bakery, fresh, chewy, gather, brain, stomach, cattle, labour, famine, debt",
+    themes: "seeing the whole trail behind a meal; who has plenty and who does not",
+    cameos: "Omar at the market, Grandma Hana's kitchen, the clinic — all from the Unit 3 readings.",
+  },
+  "the-library-that-came-by-cart": {
+    series: "Amal", book: 4, term: "Term 2", unit: "Unit 4: Community and Communication",
+    vocabulary: "service, deliver, information, thought, discover, knowledge, challenge, priority, quality, judge, location, population",
+    themes: "a library is a service, not a building; sharing what you find out",
+    cameos: "the travelling library, Maya the young reporter and the town meeting are all Unit 4's own.",
+  },
+  "the-spiral-cave": {
+    series: "Amal", book: 5, term: "Term 2", unit: "Unit 5: Action and Movement",
+    vocabulary: "gallop, accelerate, proceed, spiral, rate, peek, gaze, signal, squeeze, pressure, rescue, defend, prevent, admit",
+    themes: "stopping when you are winning; what you actually remember afterwards",
+    cameos: "the village race, the lost goat and the spiral cave are the Unit 5 readings' own.",
+  },
+  "the-community-parade": {
+    series: "Amal", book: 6, term: "Term 2", unit: "Unit 6: People in Society",
+    vocabulary: "janitor, carpenter, labourer, engineer, merchant, governor, lawyer, artist, photographer, messenger, hero, refugee, immigrant, tenant",
+    themes: "a town is the people who keep it working; a page of names",
+    cameos: "the parade and the refugee and immigrant neighbours are both from the Unit 6 readings.",
+  },
+  "the-day-of-the-play": {
+    series: "Amal", book: 7, term: "Term 3", unit: "Unit 7: Emotions, Behaviour, and Identity",
+    vocabulary: "nervous, anxious, terrified, doubtful, curious, proud, gentle, polite, generous, selfish, serious, shy",
+    themes: "brave is doing it WHILE you are frightened, not instead of",
+    cameos: "the school play is the Unit 7 readings' own; Sami is their character too.",
+  },
+  "the-attic-clue": {
+    series: "Amal", book: 8, term: "Term 3", unit: "Unit 8: Tools, Machines, and Everyday Items",
+    vocabulary: "equipment, folder, briefcase, stapler, hardware, machinery, resources, curtain, attic, telescope, crew",
+    themes: "an object that turns out to be a person, kept",
+    cameos: "the attic and the telescope are from the Unit 8 readings; Grandma Hana's reading glasses from Grade 3.",
+  },
+  "the-day-we-got-lost": {
+    series: "Amal", book: 9, term: "Term 3", unit: "Unit 9: Places, People, and Plans",
+    vocabulary: "tourism, airport, station, railroad, capital, nation, museum, mall, restaurant, entrance, hallway, elevator, arrive, horizon",
+    themes: "going the way the map says rather than the way you feel like going",
+    cameos: "the trip to the capital is the Unit 9 readings' own.",
+  },
+  "nine-rooms": {
+    series: "Amal", book: 10, term: "Term 3", unit: "Unit 10: My English Voice (capstone)",
+    vocabulary: "one room for each of Units 1-9: mail, moisture, rice, service, spiral, carpenter, terrified, equipment, station",
+    themes: "walking somebody else through a year you have had",
+    cameos: "the Year 4 Exhibition and the poem \"Nine Rooms\" are both from the Unit 10 readings.",
   },
 };
 

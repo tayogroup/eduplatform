@@ -703,9 +703,9 @@ node tools/check-english-content.mjs --write-baseline
 
 ### The illustrated picture books (English "Books")
 
-Every English unit ends with an animated picture book — 33 of them across Grades
-1, 2 and 3, one per unit plus the Grade 1 library shelf. They are **generated
-SVG**, not artwork files:
+Every English unit ends with an animated picture book — 43 of them across Grades
+1 to 4, one per unit plus the Grade 1 library shelf. They are **generated SVG**,
+not artwork files:
 
 ```bash
 npm run build:ebooks          # both grades' pages + the companion docs
@@ -720,16 +720,20 @@ Three files, one storyworld:
   the town, the classroom props, the bugs, the homes, the city, the aquarium.
 - `tools/lib/ehel-ebook-kit-grade3.js` — Grade 3's: the HUMAN cast, from one
   parametric `person()`, plus the classroom, coast, forest and mountain.
-- `tools/create-{musa,grade2,grade3}-ebook-illustrations.js` — the compositions.
+- `tools/lib/ehel-ebook-kit-grade4.js` — Grade 4's: Maya and Sami, the post
+  counter, the storm, the library cart, the cave, the stage, the attic and the
+  capital.
+- `tools/create-{musa,grade2,grade3,grade4}-ebook-illustrations.js` — the pages.
 
-**Grade 3 does not get a new animal, and its cast was not invented.** Amal, her
+**Grades 3 and 4 share one cast, and it was not invented.** Amal, her
 friend Nora, Teacher Yasmin and Omar the shopkeeper appear 604 times across the
-ten units of the Grade 3 readings, and Unit 7 is written as a trip "following
-Amal, Nora and Teacher Yasmin from the coast to the forest". A shelf starring
-anybody else would contradict the lesson beside it. Several books borrow their
-unit's own device on purpose — the spelling contest, the calendar on the wall,
-the wall behind the garden, the two roads to school, the million shells, the Box
-of Ideas, the Showcase.
+ten units of the Grade 3 readings and carry on through Grade 4, which adds Maya
+the young reporter. A shelf starring anybody else would contradict the lesson
+beside it. **Read the unit before inventing anything** — nearly every book
+borrows its unit's own device: the spelling contest, the calendar on the wall,
+the two roads to school, the million shells, the Box of Ideas, the post counter,
+the science-fair storm, the travelling library cart, the spiral cave, the
+community parade, the school play, the attic telescope, the trip to the capital.
 
 **How the people look was decided by the course's own artwork, not here.**
 `english/assets/unit-8-home.png` shows East African children with natural hair

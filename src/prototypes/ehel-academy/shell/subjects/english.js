@@ -11,6 +11,7 @@ import { grammarDiagram, phonicsDiagram } from "../../english/shared/grammar-vis
 import { createCourseApp } from "../course-app.js?v=t2";
 import { createDeck } from "../deck.js?v=deck-1";
 import { wordPicture } from "./word-pictures.js?v=pictures-1";
+import { SCHOOL_CALENDAR, calendarTerm, termDatesLabel, termWeekTotal, halfTermRow, formatDay } from "../study-plan.js?v=study-plan-2";
 import { platformHeaders, askWehel, focusModule, setFocusModule, onFocusChange, modulesFromSections, outlineFromManifest, unitFetcher, browserSpeechSupported, speakBrowser, speechRateForGrade, stopBrowserSpeech, speechRecognitionCtor, recognizeSpeech, wehelIcon, platformUrl } from "../wehel.js?v=wehel-3";
 
 const $ = (selector, root = document) => root.querySelector(selector);
@@ -4304,13 +4305,12 @@ function renderPrereqOverview() {
 // Prerequisite unit's nav because it is read before the year is walked, and it
 // is a reference page, not a step — never counted, never locked.
 //
-// Weeks are per-term teaching weeks on the standing school calendar — three
-// terms of three months, ~12 teaching weeks each — allocated evenly across the
-// term's units with the remainder given to the earlier units, so a term of
-// three units reads 4+4+4 and a term of four reads 3+3+3+3. Units below
-// defaultUnit are excluded the same way the pickers exclude them: Grade 1's
-// withdrawn Unit 0 must not reappear here as a scheduled week.
-const YEAR_PLAN_TERM_WEEKS = 12;
+// Weeks are the school calendar's real teaching weeks (SCHOOL_CALENDAR in
+// shell/study-plan.js — the one definition every subject's plans read),
+// allocated evenly across the term's units with the remainder given to the
+// earlier units. Units below defaultUnit are excluded the same way the
+// pickers exclude them: Grade 1's withdrawn Unit 0 must not reappear here as
+// a scheduled week.
 function yearPlanTerms() {
   const byTerm = new Map();
   for (const unit of manifest.units.filter((entry) => Number(entry.number) >= defaultUnit)) {
@@ -4320,9 +4320,9 @@ function yearPlanTerms() {
   }
   return [...byTerm.entries()].sort(([a], [b]) => a.localeCompare(b)).map(([termId, units], index) => ({ termNo: index + 1, units }));
 }
-function yearPlanWeekRows(units) {
-  const base = Math.floor(YEAR_PLAN_TERM_WEEKS / units.length);
-  const extra = YEAR_PLAN_TERM_WEEKS - base * units.length;
+function yearPlanWeekRows(units, weekTotal) {
+  const base = Math.floor(weekTotal / units.length);
+  const extra = weekTotal - base * units.length;
   let start = 1;
   return units.map((unit, index) => {
     const span = base + (index < extra ? 1 : 0);
@@ -4346,29 +4346,42 @@ function renderYearPlan() {
     ["Day 4", "Speak & write", "Do two speaking tasks and two writing tasks from the unit."],
     ["Day 5", "Play & check", "Play the unit games, try the quiz, and join the live session when one is scheduled."],
   ];
-  const weekLabel = (row) => (row.from === row.to ? `Week ${row.from}` : `Weeks ${row.from}–${row.to}`);
   const termTable = (term) => {
-    const rows = yearPlanWeekRows(term.units);
+    const cal = calendarTerm(term.termNo);
+    const weekTotal = termWeekTotal(term.termNo);
+    const rows = yearPlanWeekRows(term.units, weekTotal);
     const isFirstTerm = term.termNo === 1;
     const isLastTerm = term.termNo === terms.length;
+    // Week numbers carry their real week-commencing dates, and the half-term
+    // break is drawn as its own row at its calendar position.
+    const weekLabel = (row) => {
+      const range = row.from === row.to ? `Week ${row.from}` : `Weeks ${row.from}–${row.to}`;
+      if (!cal) return range;
+      return `${range}<br><small>${formatDay(cal.weeks[row.from - 1])} – ${formatDay(new Date(cal.weeks[row.to - 1].getTime() + 4 * 24 * 3600 * 1000))}</small>`;
+    };
+    const rowsHtml = rows.map((row) => {
+      const unitRow = `<tr><td>${weekLabel(row)}</td><td><strong>Unit ${row.unit.number}: ${escapeHtml(row.unit.title)}</strong></td><td>${Number(row.unit.vocabularyCount) || "—"}</td></tr>`;
+      const breakHere = cal && cal.halfIndex !== null && row.from <= cal.halfIndex && cal.halfIndex <= row.to && (row === rows[rows.length - 1] || cal.halfIndex < rows[rows.indexOf(row) + 1].from);
+      return unitRow + (breakHere ? halfTermRow(term.termNo, 3) : "");
+    }).join("");
     return `<section class="panel">
-      <span class="eyebrow">Term ${term.termNo} · Months ${(term.termNo - 1) * 3 + 1}–${term.termNo * 3}</span>
+      <span class="eyebrow">Term ${term.termNo}${cal ? ` · ${termDatesLabel(term.termNo)}` : ""}</span>
       <div class="teacher-table-scroll"><table class="teacher-table"><thead><tr><th>Weeks</th><th>Unit</th><th>New words</th></tr></thead><tbody>
-        ${isFirstTerm ? `<tr><td>Week 1</td><td><strong>${checkLabel}</strong> — finds your starting point before Unit ${defaultUnit}; it is never a fail</td><td>—</td></tr>` : ""}
-        ${rows.map((row) => `<tr><td>${weekLabel(row)}</td><td><strong>Unit ${row.unit.number}: ${escapeHtml(row.unit.title)}</strong></td><td>${Number(row.unit.vocabularyCount) || "—"}</td></tr>`).join("")}
-        ${isLastTerm && finalQuiz ? `<tr><td>Week ${YEAR_PLAN_TERM_WEEKS}</td><td><strong>${escapeHtml(finalQuiz.title || "Final course quiz")}</strong> — ${finalQuiz.questionCount} questions, mastery at ${finalQuiz.passPercent}%</td><td>—</td></tr>` : ""}
+        ${isFirstTerm ? `<tr><td>Week 1${cal ? `<br><small>from ${formatDay(cal.weeks[0])}</small>` : ""}</td><td><strong>${checkLabel}</strong> — finds your starting point before Unit ${defaultUnit}; it is never a fail</td><td>—</td></tr>` : ""}
+        ${rowsHtml}
+        ${isLastTerm && finalQuiz ? `<tr><td>Week ${weekTotal}${cal ? `<br><small>from ${formatDay(cal.weeks[weekTotal - 1])}</small>` : ""}</td><td><strong>${escapeHtml(finalQuiz.title || "Final course quiz")}</strong> — ${finalQuiz.questionCount} questions, mastery at ${finalQuiz.passPercent}%</td><td>—</td></tr>` : ""}
       </tbody></table></div>
     </section>`;
   };
   $("#app").innerHTML = `${pageHeader(
     `${gradeLabel} · Prerequisite unit`,
     `${gradeLabel} English Study Plan`,
-    `Your year at a glance: ${terms.length} terms of three months, ${allUnits.length} units, and where each one falls. Every term is about ${YEAR_PLAN_TERM_WEEKS} teaching weeks, so there is room for holidays.`,
+    `Your ${SCHOOL_CALENDAR.yearLabel} year at a glance: ${terms.length} terms, ${allUnits.length} units, and where each one falls. The dates follow the school calendar, half terms included.`,
     "Grade Study Plan",
   )}
     <div class="final-quiz-intro">
       <section class="panel">
-        <div class="final-quiz-facts"><span><strong>${allUnits.length}</strong> units</span><span><strong>${totalWords}</strong> new words</span><span><strong>${terms.length}</strong> terms</span><span><strong>5</strong> short sessions a week</span></div>
+        <div class="final-quiz-facts"><span><strong>${SCHOOL_CALENDAR.yearLabel}</strong> school year</span><span><strong>${allUnits.length}</strong> units</span><span><strong>${totalWords}</strong> new words</span><span><strong>${terms.length}</strong> terms</span><span><strong>5</strong> short sessions a week</span></div>
         ${isReadiness && gradeNumber === 1 ? `<p>If the readiness check finds the letters are still new, it opens the Alphabet &amp; Sounds review programme for you — six extra weeks on letters and sounds, alongside or ahead of Unit 1.</p>` : ""}
       </section>
       ${terms.map(termTable).join("")}
@@ -4391,8 +4404,8 @@ function renderYearPlan() {
 // plan draws, so the two pages always agree about the calendar.
 function unitPlanWeekSpan() {
   for (const term of yearPlanTerms()) {
-    const row = yearPlanWeekRows(term.units).find((entry) => Number(entry.unit.number) === unitNumber);
-    if (row) return { termNo: term.termNo, from: row.from, to: row.to };
+    const row = yearPlanWeekRows(term.units, termWeekTotal(term.termNo)).find((entry) => Number(entry.unit.number) === unitNumber);
+    if (row) return { termNo: term.termNo, from: row.from, to: row.to, cal: calendarTerm(term.termNo) };
   }
   // Unit 0, reached through a review door: not in the year's terms, so it has
   // no calendar slot — it runs alongside the regular units for six weeks.
@@ -4443,7 +4456,7 @@ function renderUnitStudyPlan() {
       writing[weekIndex].length ? `writing ${rangeText(writing, weekIndex, "task")}` : "",
     ].filter(Boolean).join(", then ");
     return `<section class="panel">
-      <span class="eyebrow">${span ? `Week ${span.from + weekIndex} · Term ${span.termNo}` : `Week ${weekIndex + 1} of the review programme`}</span>
+      <span class="eyebrow">${span ? `Week ${span.from + weekIndex} · Term ${span.termNo}${span.cal ? ` · week of ${formatDay(span.cal.weeks[span.from + weekIndex - 1])}${span.cal.halfIndex === span.from + weekIndex - 1 ? " (after half term)" : ""}` : ""}` : `Week ${weekIndex + 1} of the review programme`}</span>
       <ol class="path-list">
         ${dayLine("Day 1 · Words", `${isFirst ? `Start with ${lectureLabel}. Then meet` : "Learn"} ${weekGroups.length ? `your new words: <strong>${titlesOf(weekGroups)}</strong>` : "no new words this week — go back over the ones you know"}.`)}
         ${dayLine("Day 2 · Reading", weekReadings.length ? `Read <strong>${titlesOf(weekReadings)}</strong>, then answer ${weekReadings.length > 1 ? "their" : "its"} questions.` : "Read your favourite story from this unit again.")}
@@ -4457,7 +4470,7 @@ function renderUnitStudyPlan() {
     `${gradeLabel} · Unit ${course.unit.unitNo}`,
     `Your plan for ${escapeHtml(course.unit.unitTitle)}`,
     span
-      ? `This unit takes ${weekCount} weeks — weeks ${span.from} to ${span.to} of Term ${span.termNo}. Five short days a week; here is what each one brings.`
+      ? `This unit takes ${weekCount} weeks — weeks ${span.from} to ${span.to} of Term ${span.termNo}${span.cal ? ` (${formatDay(span.cal.weeks[span.from - 1])} – ${formatDay(new Date(span.cal.weeks[span.to - 1].getTime() + 4 * 24 * 3600 * 1000))})` : ""}. Five short days a week; here is what each one brings.`
       : `This review programme runs for ${weekCount} weeks alongside your regular units. Five short days a week; here is what each one brings.`,
     "Unit Study Plan",
   )}

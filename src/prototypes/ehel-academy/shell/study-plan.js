@@ -9,16 +9,74 @@
 // because it is read before the year is walked. It is a reference page, not a
 // step: subjects must keep its route ("year-plan") out of anything countable.
 //
-// Weeks are per-term teaching weeks on the standing school calendar — three
-// terms of three months, ~12 teaching weeks each — allocated evenly across a
-// term's units with the remainder given to the earlier units. Units are
-// grouped into terms by their manifest termId when the data names all three
-// terms; a subject whose manifest carries no term metadata (Global
-// Perspectives) or spans fewer terms than the school year (some Computing
-// stages) gets its units distributed evenly across the three school terms
-// instead, because the calendar is the school's, not the pack's.
+// Weeks are the school calendar's real teaching weeks — SCHOOL_CALENDAR below
+// — allocated evenly across a term's units with the remainder given to the
+// earlier units. Units are grouped into terms by their manifest termId when
+// the data names all three terms; a subject whose manifest carries no term
+// metadata (Global Perspectives) or spans fewer terms than the school year
+// (some Computing stages) gets its units distributed evenly across the three
+// school terms instead, because the calendar is the school's, not the pack's.
 
-const TERM_WEEKS = 12;
+// The school's academic calendar as published for 2026-27, half terms
+// included. A term's teaching weeks are the Mondays from its opening week to
+// its closing week with the half-term week removed — so the three terms
+// really hold 14, 11 and 10 teaching weeks, not a nominal 12. English's own
+// renderers import these too, so every plan reads one calendar. When the
+// school publishes the next year's dates, this constant is the one place to
+// change.
+export const SCHOOL_CALENDAR = {
+  yearLabel: "2026–27",
+  terms: [
+    { termNo: 1, opens: "2026-08-25", ends: "2026-12-04", halfTerm: { from: "2026-10-12", to: "2026-10-16" } },
+    { termNo: 2, opens: "2027-01-05", ends: "2027-03-25", halfTerm: { from: "2027-02-15", to: "2027-02-19" } },
+    { termNo: 3, opens: "2027-04-20", ends: "2027-07-02", halfTerm: { from: "2027-05-24", to: "2027-05-28" } },
+  ],
+};
+const WEEK_MS = 7 * 24 * 3600 * 1000;
+function mondayOf(iso) {
+  const date = new Date(`${iso}T00:00:00Z`);
+  date.setUTCDate(date.getUTCDate() - ((date.getUTCDay() + 6) % 7));
+  return date;
+}
+const MONTH_NAMES = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+export function formatDay(date, { long = false } = {}) {
+  return `${date.getUTCDate()} ${long ? MONTH_NAMES[date.getUTCMonth()] : MONTH_NAMES[date.getUTCMonth()].slice(0, 3)}`;
+}
+// { ...term, weeks: [Monday, …] teaching weeks only, halfIndex: how many
+// teaching weeks come before the half-term break } — or null for a term
+// number the calendar does not know.
+export function calendarTerm(termNo) {
+  const term = SCHOOL_CALENDAR.terms.find((entry) => entry.termNo === Number(termNo));
+  if (!term) return null;
+  const halfMonday = mondayOf(term.halfTerm.from).getTime();
+  const end = new Date(`${term.ends}T00:00:00Z`);
+  const weeks = [];
+  let halfIndex = null;
+  for (let date = mondayOf(term.opens); date <= end; date = new Date(date.getTime() + WEEK_MS)) {
+    if (date.getTime() === halfMonday) { halfIndex = weeks.length; continue; }
+    weeks.push(date);
+  }
+  return { ...term, weeks, halfIndex };
+}
+export function termDatesLabel(termNo) {
+  const term = SCHOOL_CALENDAR.terms.find((entry) => entry.termNo === Number(termNo));
+  if (!term) return "";
+  const opens = new Date(`${term.opens}T00:00:00Z`);
+  const ends = new Date(`${term.ends}T00:00:00Z`);
+  return `${formatDay(opens, { long: true })} – ${formatDay(ends, { long: true })} ${ends.getUTCFullYear()}`;
+}
+export function halfTermRow(termNo, columns) {
+  const cal = calendarTerm(termNo);
+  if (!cal || cal.halfIndex === null) return "";
+  const from = new Date(`${cal.halfTerm.from}T00:00:00Z`);
+  const to = new Date(`${cal.halfTerm.to}T00:00:00Z`);
+  return `<tr><td>—</td><td><strong>Half term</strong> — ${formatDay(from)} to ${formatDay(to)}: no lessons this week</td>${columns > 2 ? "<td>—</td>" : ""}</tr>`;
+}
+// Fallback for a term number outside the published calendar.
+const FALLBACK_TERM_WEEKS = 12;
+export function termWeekTotal(termNo) {
+  return calendarTerm(termNo)?.weeks.length ?? FALLBACK_TERM_WEEKS;
+}
 
 function groupIntoTerms(units) {
   const byTerm = new Map();
@@ -45,9 +103,9 @@ function groupIntoTerms(units) {
     .filter((term) => term.units.length);
 }
 
-function weekRows(units) {
-  const base = Math.floor(TERM_WEEKS / units.length);
-  const extra = TERM_WEEKS - base * units.length;
+function weekRows(units, weekTotal) {
+  const base = Math.floor(weekTotal / units.length);
+  const extra = weekTotal - base * units.length;
   let start = 1;
   return units.map((unit, index) => {
     const span = Math.max(1, base + (index < extra ? 1 : 0));
@@ -80,31 +138,48 @@ export function renderStudyPlan(options) {
   const detailHeader = options.unitDetailHeader || "";
   const finalRow = options.finalRow ? options.finalRow() : null;
   const headerNote = options.headerNote ? options.headerNote() : null;
-  const weekLabel = (row) => (row.from === row.to ? `Week ${row.from}` : `Weeks ${row.from}–${row.to}`);
   const termTable = (term) => {
-    const rows = weekRows(term.units);
+    const cal = calendarTerm(term.termNo);
+    const weekTotal = cal?.weeks.length ?? FALLBACK_TERM_WEEKS;
+    const rows = weekRows(term.units, weekTotal);
     const isFirstTerm = term.termNo === terms[0].termNo;
     const isLastTerm = term.termNo === terms[terms.length - 1].termNo;
+    // Week numbers carry their real week-commencing dates, and the half-term
+    // break is drawn as its own row at its calendar position — inside a
+    // unit's span when that is where it falls.
+    const weekLabel = (row) => {
+      const range = row.from === row.to ? `Week ${row.from}` : `Weeks ${row.from}–${row.to}`;
+      if (!cal) return range;
+      return `${range}<br><small>${formatDay(cal.weeks[row.from - 1])} – ${formatDay(new Date(cal.weeks[row.to - 1].getTime() + 4 * 24 * 3600 * 1000))}</small>`;
+    };
+    const columns = hasDetail ? 3 : 2;
+    const rowsHtml = rows.map((row) => {
+      const unitRow = `<tr><td>${weekLabel(row)}</td><td><strong>Unit ${row.unit.number}: ${ui.escapeHtml(row.unit.title)}</strong></td>${hasDetail ? `<td>${ui.escapeHtml(String(options.unitDetail(row.unit) ?? "—"))}</td>` : ""}</tr>`;
+      // The break lands after teaching week `halfIndex`; draw it under the
+      // unit row whose span contains that boundary.
+      const breakHere = cal && cal.halfIndex !== null && row.from <= cal.halfIndex && cal.halfIndex <= row.to && (row === rows[rows.length - 1] || cal.halfIndex < rows[rows.indexOf(row) + 1].from);
+      return unitRow + (breakHere ? halfTermRow(term.termNo, columns) : "");
+    }).join("");
     return `<section class="panel">
-      <span class="eyebrow">Term ${term.termNo} · Months ${(term.termNo - 1) * 3 + 1}–${term.termNo * 3}</span>
+      <span class="eyebrow">Term ${term.termNo}${cal ? ` · ${termDatesLabel(term.termNo)}` : ""}</span>
       <div class="teacher-table-scroll"><table class="teacher-table"><thead><tr><th>Weeks</th><th>Unit</th>${hasDetail ? `<th>${ui.escapeHtml(detailHeader)}</th>` : ""}</tr></thead><tbody>
-        ${isFirstTerm ? `<tr><td>Week 1</td><td><strong>${ui.escapeHtml(options.examLabel())}</strong> — finds your starting point before Unit ${options.firstUnitNumber}; it is never a fail</td>${hasDetail ? "<td>—</td>" : ""}</tr>` : ""}
-        ${rows.map((row) => `<tr><td>${weekLabel(row)}</td><td><strong>Unit ${row.unit.number}: ${ui.escapeHtml(row.unit.title)}</strong></td>${hasDetail ? `<td>${ui.escapeHtml(String(options.unitDetail(row.unit) ?? "—"))}</td>` : ""}</tr>`).join("")}
-        ${isLastTerm && finalRow ? `<tr><td>Week ${TERM_WEEKS}</td><td><strong>${ui.escapeHtml(finalRow.title)}</strong>${finalRow.note ? ` — ${ui.escapeHtml(finalRow.note)}` : ""}</td>${hasDetail ? "<td>—</td>" : ""}</tr>` : ""}
+        ${isFirstTerm ? `<tr><td>Week 1${cal ? `<br><small>from ${formatDay(cal.weeks[0])}</small>` : ""}</td><td><strong>${ui.escapeHtml(options.examLabel())}</strong> — finds your starting point before Unit ${options.firstUnitNumber}; it is never a fail</td>${hasDetail ? "<td>—</td>" : ""}</tr>` : ""}
+        ${rowsHtml}
+        ${isLastTerm && finalRow ? `<tr><td>Week ${weekTotal}${cal ? `<br><small>from ${formatDay(cal.weeks[weekTotal - 1])}</small>` : ""}</td><td><strong>${ui.escapeHtml(finalRow.title)}</strong>${finalRow.note ? ` — ${ui.escapeHtml(finalRow.note)}` : ""}</td>${hasDetail ? "<td>—</td>" : ""}</tr>` : ""}
       </tbody></table></div>
     </section>`;
   };
   ui.$("#app").innerHTML = `${ui.pageHeader(
     `${options.stageLabel} · Prerequisite unit`,
     `${options.stageLabel} ${options.subjectLabel} Study Plan`,
-    `Your year at a glance: ${terms.length} terms of three months, ${allUnits.length} units, and where each one falls. Every term is about ${TERM_WEEKS} teaching weeks, so there is room for holidays.`,
+    `Your ${SCHOOL_CALENDAR.yearLabel} year at a glance: ${terms.length} terms, ${allUnits.length} units, and where each one falls. The dates follow the school calendar, half terms included.`,
     // "Stage Study Plan" for the staged subjects, "Level Study Plan" for
     // Intensive English — each subject passes its own word.
     options.planName || "Study Plan",
   )}
     <div class="final-quiz-intro">
       <section class="panel">
-        <div class="final-quiz-facts"><span><strong>${allUnits.length}</strong> units</span><span><strong>${terms.length}</strong> terms</span><span><strong>5</strong> short sessions a week</span></div>
+        <div class="final-quiz-facts"><span><strong>${SCHOOL_CALENDAR.yearLabel}</strong> school year</span><span><strong>${allUnits.length}</strong> units</span><span><strong>${terms.length}</strong> terms</span><span><strong>5</strong> short sessions a week</span></div>
         ${headerNote ? `<p>${ui.escapeHtml(headerNote)}</p>` : ""}
       </section>
       ${terms.map(termTable).join("")}
@@ -142,8 +217,8 @@ export function renderUnitStudyPlan(options) {
   const ui = options.deps();
   let span = null;
   for (const term of groupIntoTerms(options.units())) {
-    const row = weekRows(term.units).find((entry) => Number(entry.unit.number) === Number(options.unitNumber));
-    if (row) { span = { termNo: term.termNo, from: row.from, to: row.to }; break; }
+    const row = weekRows(term.units, termWeekTotal(term.termNo)).find((entry) => Number(entry.unit.number) === Number(options.unitNumber));
+    if (row) { span = { termNo: term.termNo, from: row.from, to: row.to, cal: calendarTerm(term.termNo) }; break; }
   }
   const weekCount = span ? span.to - span.from + 1 : 2;
   const parts = options.planSections();
@@ -192,8 +267,20 @@ export function renderUnitStudyPlan(options) {
     lines.push("Look back over the whole unit before you move on.");
     return lines.slice(0, totalDays);
   })();
+  // Each week names its real week-commencing date from the school calendar,
+  // and a week that follows straight after the half-term break says so.
+  const weekEyebrow = (weekIndex) => {
+    if (!span) return `Week ${weekIndex + 1}`;
+    const weekNo = span.from + weekIndex;
+    let label = `Week ${weekNo} · Term ${span.termNo}`;
+    if (span.cal) {
+      label += ` · week of ${formatDay(span.cal.weeks[weekNo - 1])}`;
+      if (span.cal.halfIndex === weekNo - 1) label += " (after half term)";
+    }
+    return label;
+  };
   const weekPanel = (weekIndex) => `<section class="panel">
-      <span class="eyebrow">${span ? `Week ${span.from + weekIndex} · Term ${span.termNo}` : `Week ${weekIndex + 1}`}</span>
+      <span class="eyebrow">${weekEyebrow(weekIndex)}</span>
       <ol class="path-list">
         ${dayLines.slice(weekIndex * 5, weekIndex * 5 + 5).map((what, dayIndex) => `<li>${ui.icon("circle-check-big")}<span><strong>Day ${dayIndex + 1}:</strong> ${what}</span></li>`).join("")}
       </ol>
@@ -202,7 +289,7 @@ export function renderUnitStudyPlan(options) {
     `${options.stageLabel} · Unit ${options.unitNumber}`,
     `Your plan for ${ui.escapeHtml(options.unitTitle)}`,
     span
-      ? `This unit takes ${weekCount} week${weekCount === 1 ? "" : "s"} — week${weekCount === 1 ? ` ${span.from}` : `s ${span.from} to ${span.to}`} of Term ${span.termNo}. Five short days a week; here is what each one brings.`
+      ? `This unit takes ${weekCount} week${weekCount === 1 ? "" : "s"} — week${weekCount === 1 ? ` ${span.from}` : `s ${span.from} to ${span.to}`} of Term ${span.termNo}${span.cal ? ` (${formatDay(span.cal.weeks[span.from - 1])} – ${formatDay(new Date(span.cal.weeks[span.to - 1].getTime() + 4 * 24 * 3600 * 1000))})` : ""}. Five short days a week; here is what each one brings.`
       : `Five short days a week; here is what each one brings.`,
     "Unit Study Plan",
   )}

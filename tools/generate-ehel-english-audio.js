@@ -201,7 +201,11 @@ function glossaryItems(glossary, grade) {
     const prevWord = entry.wordAudio || {};
     items.push({
       id, ref: entry, title: word,
-      text: narration(word),
+      // Same trade dictionaryItems() makes: `speechSpelling` changes only what
+      // is SENT to ElevenLabs, never the word the popover displays. "toe" is
+      // read back as "two" by this voice regardless of source data, so a
+      // glossary "toe" needs the same escape hatch the master dictionary has.
+      text: narration(entry.speechSpelling || word),
       minChars: 1, // a single word is the whole point here, same as dictionary
       source: wordSource,
       output: path.join(ENGLISH, dir, `${id}.mp3`),
@@ -223,6 +227,10 @@ function glossaryItems(glossary, grade) {
     items.push({
       id: defId, ref: entry, title: word,
       text: narration(entry.definition),
+      // The generic 8-char floor exists to skip near-empty placeholder text,
+      // but a glossary definition can legitimately BE this short ("do not",
+      // "starts.") -- a complete, narratable answer, not a fragment.
+      minChars: 1,
       source: defSource,
       output: path.join(ENGLISH, dir, `${defId}.mp3`),
       done: prevDef.available === true && prevDef.source === defSource,

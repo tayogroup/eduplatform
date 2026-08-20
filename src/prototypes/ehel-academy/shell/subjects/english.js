@@ -2198,7 +2198,15 @@ let activeEbookId = ebookCatalog[0].id;
 let ebookWatchActive = false;
 let ebookWatchToken = 0;
 
-const TAP_SOUND_MOOD_TYPES = new Set(["zebra", "elephant", "kiki", "duku", "lulu", "zuri"]);
+// goat, hen and monkey joined on 2026-08-20. They were always DRAWN with three
+// moods — the kit emits data-mood for them like any other character — but had a
+// single clip each, so a sad goat played a cheerful bleat. Adding them here needs
+// no change to the art at all.
+//
+// The plain goat.mp3 / hen.mp3 / monkey.mp3 stay on disk and are NOT orphans:
+// thirty page story cues name them directly, and playStorySound takes the raw key
+// without going near this table.
+const TAP_SOUND_MOOD_TYPES = new Set(["zebra", "elephant", "kiki", "duku", "lulu", "zuri", "goat", "hen", "monkey"]);
 const TAP_SOUND_MOODS = new Set(["happy", "sad", "surprised"]);
 const TAP_SOUND_ALIASES = { kite: "wind", moon: "lullaby", carrot: "crunch", scarecrow: "tree", lake: "puddle", fish: "puddle", boat: "wind", clock: "bell" };
 // The Grade 3 and 4 casts are PEOPLE, and they share a voice by type rather than

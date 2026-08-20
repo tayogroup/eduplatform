@@ -78,6 +78,24 @@ const SOUNDS = [
   { key: "man-happy", seconds: 1.4, prompt: "One short warm friendly chuckle from an adult man, low and kind, no words, no speech, no background noise" },
   { key: "man-sad", seconds: 1.6, prompt: "One short soft thoughtful sigh from an adult man, low and gentle, no words, no speech, no background noise" },
   { key: "man-surprised", seconds: 1.2, prompt: "One short surprised gasp from an adult man, quick and low, no words, no speech, no background noise" },
+  // Goat, hen and the adult monkey are DRAWN with three moods each but had a
+  // single clip, so a sad goat played a cheerful bleat. These are the mood sets
+  // that fix it. The plain goat.mp3 / hen.mp3 / monkey.mp3 stay: thirty page
+  // story cues name them directly, and playStorySound takes the raw key without
+  // going near the mood resolution a tap uses.
+  //
+  // "monkey" is the ADULT vervet, not Kiki — she already has her own kiki-*
+  // clips as a small young monkey, so these are pitched lower and fuller or the
+  // two are indistinguishable on the page they share.
+  { key: "goat-happy", seconds: 1.4, prompt: "One short cheerful goat bleat, meeeh, bright and playful farm sound, child friendly, no background noise" },
+  { key: "goat-sad", seconds: 1.6, prompt: "One short soft sad goat bleat, low and gentle, drooping at the end, storybook farm sound, no background noise" },
+  { key: "goat-surprised", seconds: 1.3, prompt: "One short startled goat bleat, quick and sharp, cartoon style, child friendly, no background noise" },
+  { key: "hen-happy", seconds: 1.5, prompt: "One short friendly hen clucking, buk buk buk, warm and content farm sound, child friendly, no background noise" },
+  { key: "hen-sad", seconds: 1.6, prompt: "One short soft worried hen clucking, low and slow, gentle storybook farm sound, no background noise" },
+  { key: "hen-surprised", seconds: 1.3, prompt: "One short startled hen squawk and quick cluck, cartoon style, child friendly, no background noise" },
+  { key: "monkey-happy", seconds: 1.6, prompt: "One short cheerful adult vervet monkey chatter, warm and full, deeper than a baby monkey, child friendly, no background noise" },
+  { key: "monkey-sad", seconds: 1.7, prompt: "One short soft sad adult monkey murmur whimper, low and gentle, deeper than a baby monkey, no background noise" },
+  { key: "monkey-surprised", seconds: 1.3, prompt: "One short startled adult monkey chatter screech, quick and full, deeper than a baby monkey, child friendly, no background noise" },
 ];
 
 function loadDotEnv(filePath) {

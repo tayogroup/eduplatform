@@ -425,10 +425,11 @@ body.focus-mode.gc-full .wc-tools { position: fixed; left: 0; right: 0; bottom: 
 .nav-state.done { color: #0a392d; background: #6ee7b7; border-color: #6ee7b7; }
 .teacher-switch { margin-top: 8px; border-top: 1px solid rgba(255,255,255,.14); border-radius: 0; padding-top: 18px; grid-template-columns: 22px 1fr; }
 /* The two switches are one block under the section list, so the rule above them
-   is drawn once. When Student resources is showing it owns the rule and Teacher
-   resources tucks in under it; when it is hidden (every grade but 1) the teacher
-   button keeps its own, unchanged. `display:none` is spelled out because
-   .teacher-switch's display:grid beats the `hidden` attribute's UA style. */
+   is drawn once: Student resources owns it and Teacher resources tucks in under.
+   Both are drawn at every grade; the `[hidden]` pair is kept because the markup
+   is the only thing that decides, and `display:none` has to be spelled out for
+   it — .teacher-switch's display:grid beats the `hidden` attribute's UA style,
+   so a future `hidden` would otherwise leave the button on screen. */
 .student-switch[hidden] { display: none; }
 .student-switch:not([hidden]) + .teacher-switch { margin-top: 0; border-top: 0; padding-top: 9px; }
 .content { min-width: 0; padding: 30px clamp(20px, 4vw, 64px) 70px; }
@@ -980,8 +981,8 @@ body.focus-mode.gc-full .wc-tools { position: fixed; left: 0; right: 0; bottom: 
      Selectors are `.sidebar`-prefixed to outrank the desktop
      `.student-switch:not([hidden]) + .teacher-switch` separator rule, which is
      more specific than a bare class and would otherwise keep its 18px padding
-     here. `:not([hidden])` keeps the attribute in charge, so Grades 2-8 still
-     show the teacher tile alone. */
+     here. `:not([hidden])` is part of that specificity as well as the guard, so
+     do not drop it as dead weight when both switches are showing. */
   .sidebar { display: flex; align-items: center; gap: 6px; }
   #section-nav { flex: 1 1 auto; min-width: 0; }
   .sidebar .teacher-switch:not([hidden]) {

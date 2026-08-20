@@ -231,13 +231,13 @@ const IS_STAFF = ["admin", "teacher", "staff"].includes(launchRole());
 // ===================== english body (verbatim) =====================
 const sections = [
   ["overview", "layout-dashboard", "Overview"],
-  // The unit-level Student Study Plan, on every grade (Grade 1 first, the rest
+  // The unit-level Study Plan, on every grade (Grade 1 first, the rest
   // extended on the owner's request the same day). A reference page, not a
   // step: excluded from countableSectionIds and config.nonCountable-listed,
   // and absent from SECTION_CHAIN, so it can neither gate nor count. The
   // grade-level plan lives on the Prerequisite unit under the same name; this
   // one plans the unit the learner is inside.
-  ["unit-plan", "calendar-days", "Student Study Plan"],
+  ["unit-plan", "calendar-days", "Unit Study Plan"],
   // Only a handful of Grade 1 units carry a grownUpGuide (the Year 1 source
   // pack's own Teacher & Parent Guide docs; see
   // tools/build-ehel-grade1-teacher-guides.js) — every other unit in every
@@ -924,7 +924,7 @@ function renderUnitPickers() {
   const onYearPlan = isPrereqUnit && location.hash.slice(1) === "year-plan";
   const options = [
     `<option value="${PREREQ_UNIT}" ${isPrereqUnit && !onYearPlan ? "selected" : ""}>Prerequisite: Placement exam</option>`,
-    `<option value="year-plan" ${onYearPlan ? "selected" : ""}>Student Study Plan</option>`,
+    `<option value="year-plan" ${onYearPlan ? "selected" : ""}>Grade Study Plan</option>`,
     // A unit below defaultUnit is withdrawn from learners (Grade 1 Unit 0).
     // It is listed only while it is the page actually open — a teacher preview
     // or a remediation visit — so the picker never contradicts where the
@@ -1569,7 +1569,7 @@ function visibleSections() {
       // read BEFORE the year is walked — the same reason the placement exam
       // lives here. It is a reference page, not a step: never counted, never
       // locked (sectionUnlocked already answers true for the whole prereq unit).
-      ["year-plan", "calendar-days", "Student Study Plan"],
+      ["year-plan", "calendar-days", "Grade Study Plan"],
     ];
   }
   // Books drops out the same way Games does, and for the same reason: a section
@@ -4362,9 +4362,9 @@ function renderYearPlan() {
   };
   $("#app").innerHTML = `${pageHeader(
     `${gradeLabel} · Prerequisite unit`,
-    `${gradeLabel} English Student Study Plan`,
+    `${gradeLabel} English Study Plan`,
     `Your year at a glance: ${terms.length} terms of three months, ${allUnits.length} units, and where each one falls. Every term is about ${YEAR_PLAN_TERM_WEEKS} teaching weeks, so there is room for holidays.`,
-    "Student Study Plan",
+    "Grade Study Plan",
   )}
     <div class="final-quiz-intro">
       <section class="panel">
@@ -4382,7 +4382,7 @@ function renderYearPlan() {
 }
 
 // ===================== unit study plan (every grade) =========================
-// The unit-level companion to the grade Student Study Plan above: the year plan
+// The unit-level companion to the grade Study Plan above: the year plan
 // says WHERE each unit falls; this page says what the learner does on each day
 // of the weeks they are inside it. Drawn entirely from the loaded unit's own
 // data — word group, reading, grammar, speaking and writing titles are read,
@@ -4459,7 +4459,7 @@ function renderUnitStudyPlan() {
     span
       ? `This unit takes ${weekCount} weeks — weeks ${span.from} to ${span.to} of Term ${span.termNo}. Five short days a week; here is what each one brings.`
       : `This review programme runs for ${weekCount} weeks alongside your regular units. Five short days a week; here is what each one brings.`,
-    "Student Study Plan",
+    "Unit Study Plan",
   )}
     <div class="final-quiz-intro">
       <section class="panel">

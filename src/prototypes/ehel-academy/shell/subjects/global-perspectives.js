@@ -72,12 +72,12 @@ let resolvedUnitNo = 1;
 // The predicate is what keeps one page honest across the two pack shapes.
 const SECTIONS = [
   ["overview", "layout-dashboard", "Unit Overview", () => true],
-  // Per-unit Student Study Plan: what the learner does on each day of this
+  // Per-unit Study Plan: what the learner does on each day of this
   // unit's calendar weeks, rendered by the shared shell/study-plan.js. A
   // reference page, not a step — in nonCountable, so it never counts toward
   // the unit's bar. The grade-level plan of the same name lives on the
   // Prerequisite unit; this one plans the unit the learner is inside.
-  ["unit-plan", "calendar-days", "Student Study Plan", () => true],
+  ["unit-plan", "calendar-days", "Unit Study Plan", () => true],
   ["lesson", "book-open", "The Lesson", (c) => c.explainers?.length],
   ["bigideas", "lightbulb", "Big Ideas", (c) => c.bigIdeas?.length],
   ["models", "scan-search", "Worked Examples", (c) => c.models?.length],
@@ -1135,12 +1135,12 @@ const config = {
   visibleSections: () => (withdrawal()
     ? [["overview", "alert-triangle", "Not available"]]
     : isPrereqUnit
-      ? [["overview", "layout-dashboard", "Unit Overview"], ["placement", "clipboard-check", "Placement exam"], ["year-plan", "calendar-days", "Student Study Plan"]]
+      ? [["overview", "layout-dashboard", "Unit Overview"], ["placement", "clipboard-check", "Placement exam"], ["year-plan", "calendar-days", "Stage Study Plan"]]
       : availableSections()),
   // Everything available counts toward the bar except the progress page itself
   // — including the overview, which the other subjects exclude. In prereq mode
   // only the exam counts, so finishing it reads as a complete unit — the
-  // Student Study Plan is a reference page, not a step, so it never counts.
+  // Study Plan is a reference page, not a step, so it never counts.
   nonCountable: isPrereqUnit ? ["overview", "year-plan"] : ["progress", "unit-plan"],
   progressDefaults: { completed: [], answersSeen: [], reflection: {}, quiz: {}, aiMessages: [] },
   keys: (s, u) => ({ progress: `ehel-gp-s${s}-u${u}-progress-v1` }),
@@ -1152,6 +1152,7 @@ const config = {
       deps: () => ({ $, $$, escapeHtml, icon, pageHeader, navigate }),
       stageLabel: `Stage ${prereqStage}`,
       subjectLabel: "Global Perspectives",
+      planName: "Stage Study Plan",
       units: () => manifest.units,
       unitDetailHeader: "Skill",
       unitDetail: (unit) => unit.skill || null,
@@ -1267,13 +1268,13 @@ const config = {
         select.disabled = true;
         continue;
       }
-      // The Student Study Plan rides in the unit picker under the Prerequisite
+      // The Study Plan rides in the unit picker under the Prerequisite
       // entry, one press away from anywhere in the course. Its option value is
       // a route, not a unit number — the change handler routes it.
       const onYearPlan = isPrereqUnit && location.hash.slice(1) === "year-plan";
       select.innerHTML = [
         `<option value="${PREREQ_UNIT}" ${isPrereqUnit && !onYearPlan ? "selected" : ""}>Prerequisite — Placement exam</option>`,
-        `<option value="year-plan" ${onYearPlan ? "selected" : ""}>Student Study Plan</option>`,
+        `<option value="year-plan" ${onYearPlan ? "selected" : ""}>Stage Study Plan</option>`,
         ...manifest.units
           .map((unit) => `<option value="${unit.number}" ${!isPrereqUnit && unit.number === resolvedUnitNo ? "selected" : ""}>Unit ${unit.number} — ${esc(unit.title)}</option>`),
       ].join("");

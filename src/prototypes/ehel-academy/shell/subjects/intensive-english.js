@@ -63,12 +63,12 @@ const NARRATION_RATE = 0.9;
 
 const sections = [
   ["overview", "layout-dashboard", "Overview"],
-  // Per-unit Student Study Plan: what the learner does on each day of this
+  // Per-unit Study Plan: what the learner does on each day of this
   // unit's calendar weeks, rendered by the shared shell/study-plan.js. A
   // reference page, not a step — in nonCountable, so it never counts toward
   // the unit's 100%. The level-wide plan of the same name lives on the
   // Prerequisite unit; this one plans the unit the learner is inside.
-  ["unit-plan", "calendar-days", "Student Study Plan"],
+  ["unit-plan", "calendar-days", "Unit Study Plan"],
   ["lecture", "play-square", "The lesson"],
   ["dictionary", "book-a", "Words"],
   ["grammar", "braces", "Patterns"],
@@ -160,7 +160,7 @@ function visibleSections() {
     return [
       ["overview", "layout-dashboard", "Overview"],
       ["placement", "clipboard-check", placementExam?.kind === "readiness" ? "Readiness check" : "Placement exam"],
-      ["year-plan", "calendar-days", "Student Study Plan"],
+      ["year-plan", "calendar-days", "Level Study Plan"],
     ];
   }
   return sections.filter(([id]) => {
@@ -654,6 +654,7 @@ const config = {
       deps: () => ({ $, $$, escapeHtml, icon, pageHeader, navigate }),
       stageLabel: `Level ${levelNumber}`,
       subjectLabel: "Intensive English",
+      planName: "Level Study Plan",
       units: () => manifest.units.filter((unit) => !String(unit.status).startsWith("Planned")),
       unitDetailHeader: "New words",
       unitDetail: (unit) => unit.vocabularyCount || null,
@@ -745,14 +746,14 @@ const config = {
 
     // A planned-but-unauthored unit is shown and disabled rather than hidden, so
     // the shape of the course is visible without pretending the content exists.
-    // The Student Study Plan rides in the picker under the Prerequisite entry;
+    // The Study Plan rides in the picker under the Prerequisite entry;
     // its option value is a route, not a unit number — the change handler
     // routes it.
     const onYearPlan = isPrereqUnit && location.hash.slice(1) === "year-plan";
     const prereqLabel = isPrereqUnit && placementExam?.kind === "readiness" ? "Readiness check" : "Placement exam";
     const options = [
       `<option value="${PREREQ_UNIT}" ${isPrereqUnit && !onYearPlan ? "selected" : ""}>Prerequisite: ${prereqLabel}</option>`,
-      `<option value="year-plan" ${onYearPlan ? "selected" : ""}>Student Study Plan</option>`,
+      `<option value="year-plan" ${onYearPlan ? "selected" : ""}>Level Study Plan</option>`,
       ...manifest.units.map((unit) => {
         const authored = !String(unit.status).startsWith("Planned");
         return `<option value="${unit.number}" ${unit.number === unitNumber ? "selected" : ""} ${authored ? "" : "disabled"}>Unit ${unit.number}: ${escapeHtml(unit.title)}${authored ? "" : " — not yet written"}</option>`;

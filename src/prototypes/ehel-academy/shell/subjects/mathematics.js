@@ -89,12 +89,12 @@ let capstoneQuizIndex = 0, capstoneQuizScore = 0, capstoneQuizLocked = false;
 
 const sections = [
   ["overview", "layout-dashboard", "Unit Overview"],
-  // Per-unit Student Study Plan: what the learner does on each day of this
+  // Per-unit Study Plan: what the learner does on each day of this
   // unit's calendar weeks, rendered by the shared shell/study-plan.js. A
   // reference page, not a step — in nonCountable, so it never counts toward
   // the unit's 100%. The grade-level plan of the same name lives on the
   // Prerequisite unit; this one plans the unit the learner is inside.
-  ["unit-plan", "calendar-days", "Student Study Plan"],
+  ["unit-plan", "calendar-days", "Unit Study Plan"],
   // "The Lesson", not "Teacher Lesson". These courses are self-paced, and a
   // learner working alone should not be told the explainer belongs to someone
   // else. Computing and Global Perspectives renamed theirs for that reason;
@@ -1860,7 +1860,7 @@ const config = {
   }),
   courseKey: (s) => `ehel-math-g${pad2(s)}`,
   visibleSections: () => (isPrereqUnit
-    ? [["overview", "layout-dashboard", "Unit Overview"], ["placement", "clipboard-check", "Placement exam"], ["year-plan", "calendar-days", "Student Study Plan"]]
+    ? [["overview", "layout-dashboard", "Unit Overview"], ["placement", "clipboard-check", "Placement exam"], ["year-plan", "calendar-days", "Stage Study Plan"]]
     : sections),
   renderers: {
     overview: () => (isPrereqUnit ? placement.renderOverview() : renderOverview()),
@@ -1869,6 +1869,7 @@ const config = {
       deps: () => ({ $, $$, escapeHtml, icon, pageHeader, navigate }),
       stageLabel: `Stage ${prereqStage}`,
       subjectLabel: "Mathematics",
+      planName: "Stage Study Plan",
       units: () => manifest.units,
       examLabel: () => "Placement exam",
       firstUnitNumber: 1,
@@ -1947,13 +1948,13 @@ const config = {
     ctx.$("#unit-title").textContent = course.unit.unitTitle;
     ctx.$("#stage-select").innerHTML = Array.from({ length: 8 }, (_, i) => i + 1).map((n) => `<option value="${n}" ${n === s ? "selected" : ""}>Stage ${n}</option>`).join("");
     ctx.$("#stage-select").addEventListener("change", () => { location.href = `?stage=${Number(ctx.$("#stage-select").value)}&unit=1#overview`; });
-    // The Student Study Plan rides in the unit picker under the Prerequisite
+    // The Study Plan rides in the unit picker under the Prerequisite
     // entry, one press away from anywhere in the course. Its option value is a
     // route, not a unit number — the change handler routes it.
     const onYearPlan = isPrereqUnit && location.hash.slice(1) === "year-plan";
     const unitOptions = [
       `<option value="${PREREQ_UNIT}" ${isPrereqUnit && !onYearPlan ? "selected" : ""}>Prerequisite: Placement exam</option>`,
-      `<option value="year-plan" ${onYearPlan ? "selected" : ""}>Student Study Plan</option>`,
+      `<option value="year-plan" ${onYearPlan ? "selected" : ""}>Stage Study Plan</option>`,
       ...manifest.units.map((unit) => `<option value="${unit.number}" ${unit.number === u ? "selected" : ""}>Unit ${unit.number}: ${esc(unit.title)}</option>`),
     ].join("");
     for (const picker of [ctx.$("#unit-select"), ctx.$("#top-unit-select")]) picker.innerHTML = unitOptions;

@@ -1,4 +1,4 @@
-// Shared Student Study Plan page for the course-app shell — the year at a
+// Shared Study Plan page for the course-app shell — the year at a
 // glance, drawn from the course manifest at render time so it can never
 // disagree with the course it describes. English grew the page first
 // (subjects/english.js :: renderYearPlan) and the other subjects share this
@@ -96,9 +96,11 @@ export function renderStudyPlan(options) {
   };
   ui.$("#app").innerHTML = `${ui.pageHeader(
     `${options.stageLabel} · Prerequisite unit`,
-    `${options.stageLabel} ${options.subjectLabel} Student Study Plan`,
+    `${options.stageLabel} ${options.subjectLabel} Study Plan`,
     `Your year at a glance: ${terms.length} terms of three months, ${allUnits.length} units, and where each one falls. Every term is about ${TERM_WEEKS} teaching weeks, so there is room for holidays.`,
-    "Student Study Plan",
+    // "Stage Study Plan" for the staged subjects, "Level Study Plan" for
+    // Intensive English — each subject passes its own word.
+    options.planName || "Study Plan",
   )}
     <div class="final-quiz-intro">
       <section class="panel">
@@ -202,7 +204,7 @@ export function renderUnitStudyPlan(options) {
     span
       ? `This unit takes ${weekCount} week${weekCount === 1 ? "" : "s"} — week${weekCount === 1 ? ` ${span.from}` : `s ${span.from} to ${span.to}`} of Term ${span.termNo}. Five short days a week; here is what each one brings.`
       : `Five short days a week; here is what each one brings.`,
-    "Student Study Plan",
+    "Unit Study Plan",
   )}
     <div class="final-quiz-intro">
       <section class="panel">

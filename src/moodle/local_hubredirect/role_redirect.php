@@ -62,7 +62,10 @@ if ($workspaceid > 0) {
     if ($role === '') {
         $userconsumer = pqh_user_primary_consumer_context((int)$USER->id);
         if ($userconsumer && (string)($userconsumer->consumerslug ?? '') !== '' && (string)($userconsumer->consumerslug ?? '') !== $slug) {
-            redirect(pqh_user_consumer_dashboard_url($userconsumer));
+            $userconsumerurl = pqh_user_consumer_dashboard_url_offhost($userconsumer);
+            if ($userconsumerurl) {
+                redirect($userconsumerurl);
+            }
         }
         if ($consumertype === 'academy_consumer' && $requestedworkspaceid <= 0) {
             $academyparams = [];

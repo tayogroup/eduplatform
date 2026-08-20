@@ -849,6 +849,25 @@ function pqh_user_consumer_dashboard_url(stdClass $context): moodle_url {
 }
 
 /**
+ * The user's own consumer dashboard, but only when it lives on a different
+ * host than the current request. pqh_user_consumer_dashboard_url() falls back
+ * to a path-only URL when the consumer has no active domain row, and wwwroot
+ * follows the request host, so following that fallback from another
+ * consumer's domain sends the page straight back to itself: the host still
+ * resolves to the foreign consumer, the same branch fires again, and the
+ * browser reports a redirect loop. Returns null when the target would stay on
+ * this host; callers must fall through to their access-denied path.
+ */
+function pqh_user_consumer_dashboard_url_offhost(stdClass $context): ?moodle_url {
+    $url = pqh_user_consumer_dashboard_url($context);
+    $targethost = pqh_normalize_consumer_host((string)parse_url($url->out(false), PHP_URL_HOST));
+    if ($targethost === '' || $targethost === pqh_request_host()) {
+        return null;
+    }
+    return $url;
+}
+
+/**
  * Which consumer_domain domain_type a workspace role should live on after
  * login, e.g. 'teacher'/'assistant_teacher' -> 'teacher_portal'. Roles with
  * no mapping (registrar, support, sponsor, unassigned) return '' so callers

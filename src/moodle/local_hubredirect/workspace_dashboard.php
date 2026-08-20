@@ -19,7 +19,10 @@ if ($workspaceid <= 0) {
     $userconsumer = pqh_user_primary_consumer_context((int)$USER->id);
     if ($userconsumer && (string)($userconsumer->consumerslug ?? '') !== ''
             && (string)($userconsumer->consumerslug ?? '') !== (string)($consumercontext->consumerslug ?? '')) {
-        redirect(pqh_user_consumer_dashboard_url($userconsumer));
+        $userconsumerurl = pqh_user_consumer_dashboard_url_offhost($userconsumer);
+        if ($userconsumerurl) {
+            redirect($userconsumerurl);
+        }
     }
     if ($isacademyconsumer) {
         $academyparams = [];
@@ -56,7 +59,10 @@ if ($role === '') {
     $userconsumer = pqh_user_primary_consumer_context((int)$USER->id);
     if ($userconsumer && (string)($userconsumer->consumerslug ?? '') !== ''
             && (string)($userconsumer->consumerslug ?? '') !== (string)($consumercontext->consumerslug ?? '')) {
-        redirect(pqh_user_consumer_dashboard_url($userconsumer));
+        $userconsumerurl = pqh_user_consumer_dashboard_url_offhost($userconsumer);
+        if ($userconsumerurl) {
+            redirect($userconsumerurl);
+        }
     }
     if ($isacademyconsumer && $explicitworkspaceid <= 0) {
         $academyparams = [];

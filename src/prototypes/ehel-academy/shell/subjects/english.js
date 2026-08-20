@@ -909,13 +909,25 @@ function paintSectionLocks() {
 let announcedOpenUnit = null;
 function renderUnitPickers() {
   if (!manifest) return;
+  // The Year plan rides in the unit picker directly under the Prerequisite
+  // entry, so it is one press away from anywhere in the course rather than
+  // only from the Prerequisite unit's own sidebar. Its option value is a
+  // route, not a unit number — the change handler below the pickers routes it.
+  const onYearPlan = isPrereqUnit && location.hash.slice(1) === "year-plan";
   const options = [
-    `<option value="${PREREQ_UNIT}" ${isPrereqUnit ? "selected" : ""}>Prerequisite: Placement exam</option>`,
+    `<option value="${PREREQ_UNIT}" ${isPrereqUnit && !onYearPlan ? "selected" : ""}>Prerequisite: Placement exam</option>`,
+    `<option value="year-plan" ${onYearPlan ? "selected" : ""}>Year plan</option>`,
     // A unit below defaultUnit is withdrawn from learners (Grade 1 Unit 0).
     // It is listed only while it is the page actually open — a teacher preview
     // or a remediation visit — so the picker never contradicts where the
-    // visitor is standing; every other render leaves it out entirely.
+    // visitor is standing; every other render leaves it out entirely. Even
+    // then it is drawn selected and DISABLED with a "review only" marker, the
+    // withdrawn-stage treatment Global Perspectives uses, so it cannot be read
+    // as a live unit of the year.
     ...manifest.units.filter((unit) => Number(unit.number) >= defaultUnit || Number(unit.number) === unitNumber).map((unit) => {
+      if (Number(unit.number) < defaultUnit) {
+        return `<option value="${unit.number}" selected disabled>Unit ${unit.number}: ${escapeHtml(unit.title)} — review only</option>`;
+      }
       // The unit a remediation link opened is not drawn as locked, or the page
       // contradicts itself: the lesson renders while its own picker calls it shut.
       // Only that one — the rest of the grade stays locked in the list.
@@ -5311,7 +5323,7 @@ const config = {
     for (const picker of [$("#unit-select"), $("#top-unit-select")]) {
       if (picker.dataset.unitPickerBound) continue;
       picker.dataset.unitPickerBound = "true";
-      picker.addEventListener("change", (event) => { location.href = courseLocation(event.target.value); });
+      picker.addEventListener("change", (event) => { location.href = event.target.value === "year-plan" ? courseLocation(PREREQ_UNIT, "year-plan") : courseLocation(event.target.value); });
     }
     // English-only listeners (the shell handles teacher-switch + hashchange).
     $("#sound-toggle").addEventListener("click", () => {

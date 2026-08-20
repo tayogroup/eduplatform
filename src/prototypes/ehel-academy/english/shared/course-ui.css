@@ -642,6 +642,47 @@ body.focus-mode.gc-full .wc-tools { position: fixed; left: 0; right: 0; bottom: 
 .ebook-footer .button:first-child { justify-self: start; }
 .ebook-footer .button:last-child { justify-self: end; }
 .ebook-footer .button:disabled { opacity: .42; cursor: not-allowed; }
+
+/* --- Story Library (Grades 5-8) ------------------------------------------
+   The shelf and the reader are the Reading section's own .ebook-* furniture,
+   reused rather than re-drawn: it is the same act (pick a text, read it, listen
+   to it) and two stylesheets for it would drift apart. Only three things here
+   are new — a locked spine, a typographic cover, and the heading that separates
+   one part of a story from the next. */
+
+/* A locked story is a div, not a button: it is not clickable, and styling a
+   disabled button to look inert still leaves it in the tab order of a shelf
+   most of which a learner cannot reach yet. */
+.ebook-spine.is-locked { border-left-color: var(--line); background: var(--canvas); color: var(--muted); cursor: default; }
+.ebook-spine.is-locked strong { font-weight: var(--weight-medium); }
+.ebook-spine.is-locked > span { background: transparent; color: var(--muted); }
+.ebook-spine.is-read > span { background: var(--teal-soft); color: var(--teal); }
+
+/* No artwork exists for these stories — english/assets holds one set of nine
+   primary-school illustrations that every grade reuses, and a Grade 1 picture
+   over a Grade 8 story is worse than none. So the cover is type on a colour
+   field: it reads as the front of a book without claiming to be a picture of
+   anything. Five fields, cycled by shelf position, so adjacent stories differ. */
+.story-cover { position: relative; min-height: 190px; margin: 0; display: grid; align-items: end; overflow: hidden; border-bottom: 1px solid #cbd7df; background: var(--ink); }
+.story-cover::after { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(115deg, rgba(255, 255, 255, .07) 0 2px, transparent 2px 22px); pointer-events: none; }
+.story-cover-v0 { background: linear-gradient(135deg, #17324d, #2b5876); }
+.story-cover-v1 { background: linear-gradient(135deg, #0b5f59, #2f8f7c); }
+.story-cover-v2 { background: linear-gradient(135deg, #6b2f3f, #a8556a); }
+.story-cover-v3 { background: linear-gradient(135deg, #4a3b7a, #7b6bb5); }
+.story-cover-v4 { background: linear-gradient(135deg, #7a4a1f, #b9803c); }
+.story-cover figcaption { position: relative; z-index: 1; padding: 28px; color: white; }
+.story-cover figcaption span { color: var(--gold); font-size: 13px; font-weight: var(--weight-bold); text-transform: uppercase; letter-spacing: .05em; }
+.story-cover figcaption h2 { margin: 8px 0 6px; max-width: 22ch; font-family: var(--font-serif); font-size: clamp(26px, 4vw, 38px); line-height: 1.1; letter-spacing: 0; }
+.story-cover figcaption p { margin: 0; color: #dce8ef; font-size: 15px; }
+
+/* Deliberately NOT .ebook-subheading: that class is one of the lines the
+   read-along highlight walks, and the narration never says "Part 2" — a
+   highlighted heading with nothing being read would put the whole story a line
+   out of step. This is a seam between clips, not narrated text. */
+.story-part-heading { margin: 2.2em 0 1em; padding-top: 1.1em; border-top: 1px solid var(--line); color: var(--teal); font: var(--weight-bold) 13px/1.4 var(--font-sans, sans-serif); text-transform: uppercase; letter-spacing: .06em; }
+.ebook-copy > .story-part-heading:first-child { margin-top: 0; padding-top: 0; border-top: 0; }
+.story-held { display: flex; align-items: center; gap: 9px; margin: 26px 0 0; padding: 14px 16px; border: 1px dashed var(--line); border-radius: 8px; color: var(--muted); background: var(--canvas); font-size: 15px; }
+.story-held i { color: var(--muted); }
 .course-ebook-layout { display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 18px; align-items: start; }
 .course-ebook-layout.compact { display: block; }
 .course-ebook-shelfbar { position: relative; margin-bottom: 16px; z-index: 30; }

@@ -230,6 +230,16 @@ function launchRole() {
 const IS_STAFF = ["admin", "teacher", "staff"].includes(launchRole());
 
 // ===================== english body (verbatim) =====================
+
+// The grades with a Story Library (renderStoryLibrary, far below). Declared up
+// here rather than beside its renderer for the same reason the `unitIsLocked`
+// comment gives: visibleSections() is reached while this module is still being
+// evaluated, and a `const` it reads from 4,000 lines further down is a temporal
+// dead zone ReferenceError that blanks the whole page. tools/check-english-story-library.mjs
+// reads this array by name and fails if it disagrees with the builder's.
+const STORY_LIBRARY_GRADES = [5, 6, 7, 8];
+const hasStoryLibrary = () => STORY_LIBRARY_GRADES.includes(gradeNumber);
+
 const sections = [
   ["overview", "layout-dashboard", "Overview"],
   // The unit-level Study Plan, on every grade (Grade 1 first, the rest
@@ -262,6 +272,14 @@ const sections = [
   ["games", "gamepad-2", "Games"],
   ["quiz", "badge-check", "Quiz"],
   ["ebooks", "library-big", "Books"],
+  // Grades 5-8 only, and it is the counterpart to Books rather than a copy of
+  // it: those grades' stories already exist inside the units, so this shelves
+  // what is there instead of adding illustrated books the owner has ruled out
+  // above Grade 4. Reference reading, never a step — excluded from
+  // countableSectionIds and nonCountable-listed, and absent from SECTION_CHAIN,
+  // so it can neither gate nor count. Free reading that decides whether a unit
+  // is finished is not free reading.
+  ["story-library", "book-marked", "Story Library"],
   ["live", "video", "Live sessions"],
   ["reflect", "sparkles", "My progress"],
 ];
@@ -274,6 +292,7 @@ const sections = [
 // youngest reader who meets it (Grade 1), so every grade gets the plain form.
 const SECTION_HINTS = {
   "unit-plan": "See what you will do each week of this unit — it is not required to move on.",
+  "story-library": "Every story from your grade, whole and in one place. Nothing here is marked — read one because you want to.",
   teacherguide: "Read this whenever it helps — it is not required to move on.",
   lecture: "Watch the video to the end. Listen and read the captions.",
   dictionary: "Learn each word and press “I know this word”, until all the words are learned.",
@@ -752,7 +771,7 @@ const unitProgressKey = (unit) => `ehel-english-g${gradeNumber}-u${unit}-progres
 // leaving it demanded here would have made the bar read 100% while the gate held
 // the next unit shut.
 const countableSectionIds = () => sections
-  .filter(([id]) => !["overview", "live", "teacherguide", "unit-plan"].includes(id))
+  .filter(([id]) => !["overview", "live", "teacherguide", "unit-plan", "story-library"].includes(id))
   .filter(([id]) => (id !== "games" || gamePack) && (id !== "ebooks" || unitEbooks().length))
   .map(([id]) => id);
 // The server's view of every unit, handed over by the shell before load() and
@@ -2391,7 +2410,7 @@ function visibleSections() {
   // unit's 100%, which is why those grades' progress bars stopped at 92% and
   // could never read complete. It is also what made the gate unsafe beyond
   // Grade 1: an uncompletable step in the chain shuts the learner out for good.
-  const available = sections.filter(([id]) => (id !== "games" || gamePack) && (id !== "ebooks" || unitEbooks().length) && (id !== "teacherguide" || hasGrownUpGuide()));
+  const available = sections.filter(([id]) => (id !== "games" || gamePack) && (id !== "ebooks" || unitEbooks().length) && (id !== "teacherguide" || hasGrownUpGuide()) && (id !== "story-library" || hasStoryLibrary()));
   return unitNumber === 10 ? [...available, ["final-quiz", "trophy", "Final course quiz"]] : available;
 }
 
@@ -4154,6 +4173,282 @@ function renderReadingClassic() {
     icons();
   };
   draw();
+}
+
+// ===================== the Story Library (Grades 5-8) =====================
+// A Grade 1-4 unit ends with an illustrated picture book. Grades 5-8 have none
+// and, by the owner's decision of 2026-08-20, never will — see CLAUDE.md, which
+// gives the reasons and is not being relitigated here.
+//
+// What those grades DO have is already written and already recorded: 41 original
+// short stories across the four grades, ~41,900 words, every one of the 95 parts
+// narrated. And every one of them sits three readings deep inside a single
+// unit's Reading section, chopped into "part 1 / part 2 / part 3", reachable
+// only while that unit is the unit you happen to be in.
+//
+// This section shelves them. It writes no text and buys no audio: the index is
+// derived from the units by tools/build-english-story-library.mjs and the clips
+// are the reading clips. What it adds is that a story can be found, read whole,
+// and read again after its unit has gone by — reading for its own sake, which is
+// the thing that quietly disappears at Grade 5.
+//
+// Three rules it holds to:
+//
+//  - It is not a walk-through. No deck, no page turn, no one-item-at-a-time —
+//    a shelf you scan and a story you read down the page, which is what an
+//    upper-stage page is supposed to be (CLAUDE.md, Grades/Stages 5-8).
+//  - It is not assessed. Nothing here is marked, and finishing a story
+//    completes nothing: the moment free reading counts toward a unit it stops
+//    being free reading. Hence its own storage key rather than complete().
+//  - It does not leak locked units. A story is shelved from the unit it belongs
+//    to, so a shelf that ignored the gate would hand a learner in Unit 2 the
+//    story from Unit 9. Locked ones show as locked, which also makes the shelf
+//    fill up as the year is walked.
+let storyLibrary = null;
+let storyLibraryPending = null;
+let activeStoryId = null;
+
+const storyReadKey = () => `ehel-english-g${gradeNumber}-story-library-v1`;
+
+function storiesRead() {
+  try {
+    const stored = JSON.parse(localStorage.getItem(storyReadKey()) || "{}");
+    return Array.isArray(stored.read) ? stored.read : [];
+  } catch {
+    return [];
+  }
+}
+
+function markStoryRead(storyId) {
+  const read = [...new Set([...storiesRead(), storyId])];
+  localStorage.setItem(storyReadKey(), JSON.stringify({ read }));
+}
+
+// Fetched on first open, not in load(): a learner who never opens the shelf
+// should not pay ~90 KB for it on every unit page they visit. Cached on the
+// module, so moving between sections re-reads it for free.
+function loadStoryLibrary() {
+  if (storyLibrary) return Promise.resolve(storyLibrary);
+  if (!storyLibraryPending) {
+    storyLibraryPending = fetch(new URL("story-library.json", dataRootUrl))
+      .then((response) => {
+        if (!response.ok) throw new Error(`${response.status} ${response.url}`);
+        return response.json();
+      })
+      .then((library) => { storyLibrary = library; return library; })
+      // Cleared so a learner who lost the network for one tap can simply open
+      // the section again, rather than being stuck with a rejected promise for
+      // the life of the page.
+      .catch((error) => { storyLibraryPending = null; throw error; });
+  }
+  return storyLibraryPending;
+}
+
+// TEACHER_PREVIEW, not REVIEW_VISIT. A teacher planning ahead needs the whole
+// shelf; a remediation link opens ONE named unit and travels no further, and a
+// shelf is exactly the "travelling further" that link is built to prevent.
+const storyPartOpen = (unit) => TEACHER_PREVIEW || unitIsUnlocked(unit);
+const storyMinutes = (words) => Math.max(1, Math.ceil(words / (gradeNumber <= 2 ? 100 : gradeNumber <= 4 ? 135 : 170)));
+
+async function renderStoryLibrary() {
+  const { $, $$ } = classicScope();
+  const header = pageHeader(
+    "Read for the pleasure of it",
+    "Story Library",
+    `Every story from your Grade ${gradeNumber} units, gathered in one place and joined back together. Nothing here is marked — read for the story.`,
+    "Reading for pleasure",
+  );
+  $("#app").innerHTML = `${header}<section class="panel"><p>Opening your shelf…</p></section>`;
+
+  let library;
+  try {
+    library = await loadStoryLibrary();
+  } catch (error) {
+    $("#app").innerHTML = `${header}<section class="panel empty-library"><span>${icon("book-marked")}</span><h2>The shelf could not be opened</h2><p>${escapeHtml(String(error.message || error))}</p></section>`;
+    icons();
+    return;
+  }
+  // The fetch is slower than a tap. Without this the shelf paints itself over
+  // whatever section the learner moved on to while it was in flight.
+  if (route !== "story-library") return;
+
+  const stories = library.stories || [];
+  if (!stories.length) {
+    $("#app").innerHTML = `${header}<section class="panel empty-library"><span>${icon("book-marked")}</span><h2>No stories yet</h2><p>This grade's stories will appear here as they are approved.</p></section>`;
+    icons();
+    return;
+  }
+
+  const draw = () => {
+    const read = storiesRead();
+    const open = stories.filter((story) => storyPartOpen(story.unitNumber));
+    const story = stories.find((item) => item.storyId === activeStoryId && storyPartOpen(item.unitNumber)) || open[0] || null;
+    activeStoryId = story ? story.storyId : null;
+    const openIndex = story ? open.indexOf(story) : -1;
+
+    const spine = (item, index) => {
+      const unlocked = storyPartOpen(item.unitNumber);
+      const done = read.includes(item.storyId);
+      const meta = `Unit ${item.unitNumber} · ${item.parts.length} part${item.parts.length === 1 ? "" : "s"} · ${storyMinutes(item.words)} min`;
+      if (!unlocked) {
+        return `<div class="reading-button ebook-spine is-locked" aria-disabled="true"><span>${icon("lock")}</span><div><strong>${escapeHtml(item.title)}</strong><small>Opens when you reach Unit ${item.unitNumber}</small></div></div>`;
+      }
+      return `<button class="reading-button ebook-spine ${item.storyId === activeStoryId ? "active" : ""} ${done ? "is-read" : ""}" data-story="${escapeHtml(item.storyId)}" type="button" aria-current="${item.storyId === activeStoryId ? "page" : "false"}"><span>${done ? icon("check") : index + 1}</span><div><strong>${escapeHtml(item.title)}</strong><small>${meta}</small></div>${icon("chevron-right")}</button>`;
+    };
+
+    $("#story-shelf").innerHTML = `<div class="ebook-library-title"><span>${icon("book-marked")}</span><div><strong>My story shelf</strong><small>${read.length} of ${stories.length} read</small></div></div>${stories.map(spine).join("")}`;
+
+    if (!story) {
+      $("#story-panel").innerHTML = `<section class="ebook-page"><p>Your stories open as you work through the units.</p></section>`;
+      icons();
+      return;
+    }
+
+    // Only the parts this learner has reached. The two Grade 5 stories whose
+    // ending was printed in the review unit are the reason this is per PART and
+    // not per story: "The Silence After the Rumble" is two parts in Unit 1 and
+    // finishes in Unit 10, and holding the whole story back until then would
+    // hide a story the learner has already been taught.
+    const readable = story.parts.filter((part) => storyPartOpen(part.unitNumber));
+    const held = story.parts.filter((part) => !storyPartOpen(part.unitNumber));
+    const readableWords = readable.reduce((sum, part) => sum + part.words, 0);
+    const narrated = readable.filter((part) => part.audio);
+    const partHeading = (part) => (story.parts.length === 1 ? "" : `<h3 class="story-part-heading">Part ${part.part}${part.subtitle ? ` · ${escapeHtml(part.subtitle)}` : ""}</h3>`);
+
+    $("#story-panel").innerHTML = `<div class="ebook-progress" aria-label="Story ${openIndex + 1} of ${open.length}"><span style="width:${((openIndex + 1) / open.length) * 100}%"></span></div>
+      <header class="ebook-toolbar">
+        <div><span class="ebook-count">Story ${openIndex + 1} of ${open.length}</span><span>${readableWords} words · about ${storyMinutes(readableWords)} min${story.parts.length > 1 ? ` · ${readable.length} of ${story.parts.length} parts` : ""}</span></div>
+        <div class="ebook-toolbar-actions">
+          <button class="button secondary" id="print-story" type="button" aria-label="Print ${escapeHtml(story.title)} as a PDF">${icon("printer")} Print</button>
+          <div class="ebook-audio-wrap"><small>ElevenLabs · recorded · ${AI_NARRATION_RATE.toFixed(2)}x</small><audio id="story-audio" class="ebook-native-audio" controls ${narrated.length ? "" : "hidden"} aria-label="Narration for ${escapeHtml(story.title)}"></audio></div>
+        </div>
+      </header>
+      <figure class="story-cover story-cover-v${openIndex % 5}">
+        <figcaption>
+          <span>${escapeHtml(story.genre)}</span>
+          <h2>${escapeHtml(story.title)}</h2>
+          <p>Unit ${story.unitNumber} · ${escapeHtml(story.unitTitle)}</p>
+        </figcaption>
+      </figure>
+      <section class="ebook-page">
+        <div class="ebook-page-heading"><span>${icon("bookmark")}</span><div><small>${escapeHtml(story.theme || story.genre)}</small><h2>${escapeHtml(story.title)}</h2>${story.setting ? `<p>${icon("map-pin")} ${escapeHtml(story.setting)}</p>` : ""}</div></div>
+        <div class="reading-text ebook-copy">${readable.map((part) => `${partHeading(part)}${readingBodyHtml(part.passageScript)}`).join("")}</div>
+        ${held.length ? `<p class="story-held">${icon("lock")} ${held.length === 1 ? "The ending of this story arrives" : `${held.length} more parts arrive`} with Unit ${held[0].unitNumber}.</p>` : ""}
+      </section>
+      <footer class="ebook-footer">
+        <button class="button secondary" data-story-step="-1" type="button" ${openIndex <= 0 ? "disabled" : ""}>${icon("arrow-left")} Previous story</button>
+        <button class="button primary" id="story-read" type="button" ${read.includes(story.storyId) ? "disabled" : ""}>${read.includes(story.storyId) ? `Read ${icon("check")}` : `I have read this ${icon("check")}`}</button>
+        <button class="button secondary" data-story-step="1" type="button" ${openIndex === open.length - 1 ? "disabled" : ""}>Next story ${icon("arrow-right")}</button>
+      </footer>`;
+
+    const go = (storyId) => {
+      activeStoryId = storyId;
+      stopAudio();
+      draw();
+      focusDynamicContent("#story-panel .ebook-page-heading h2", `Story selected. ${$("#story-panel .ebook-page-heading h2").textContent}`);
+    };
+    $$("[data-story]").forEach((button) => button.addEventListener("click", () => go(button.dataset.story)));
+    $$("[data-story-step]").forEach((button) => button.addEventListener("click", () => {
+      const next = open[openIndex + Number(button.dataset.storyStep)];
+      if (!next) return;
+      go(next.storyId);
+      $("#story-panel").scrollIntoView({ behavior: "smooth", block: "start" });
+    }));
+    $("#print-story").addEventListener("click", () => printStory(story, readable));
+    // Marks the shelf, and nothing else. No complete(), no progress event: this
+    // section is nonCountable and outside SECTION_CHAIN, so a story read (or
+    // never read) cannot move a unit one way or the other.
+    $("#story-read").addEventListener("click", () => {
+      markStoryRead(story.storyId);
+      toast(`“${story.title}” added to your read shelf.`);
+      draw();
+    });
+    if (narrated.length) mountStoryAudioPlayer(story, narrated);
+    icons();
+  };
+
+  $("#app").innerHTML = `${header}<div class="reading-layout ebook-layout"><nav class="reading-list ebook-library" id="story-shelf" aria-label="Story library"></nav><article class="ebook-reader" id="story-panel"></article></div>`;
+  draw();
+  prepareScreenReaderView();
+}
+
+// One player for the whole story, playing its parts back to back — the point of
+// the shelf is that the story is one thing again, and three separate players
+// would put the seams back.
+//
+// The read-along highlight follows across the join. narrationChunkRanges maps
+// each clip onto its slice of the on-screen lines, which is the same machinery
+// that already carries a reading split into several on-demand renders; without
+// the ranges the highlight would restart at line one on every part.
+function mountStoryAudioPlayer(story, parts) {
+  const player = $("#story-audio");
+  if (!player) return;
+  const sources = parts.map((part) => resolveMediaUrl(part.audio.source));
+  let index = 0;
+  player.hidden = false;
+  player.src = sources[index];
+  player.playbackRate = AI_NARRATION_RATE;
+  player.defaultPlaybackRate = AI_NARRATION_RATE;
+
+  const segments = readAlongSegments($("#story-panel"));
+  if (segments.length) {
+    const total = segments.reduce((sum, segment) => sum + segment.chars, 0);
+    const ranges = parts.length > 1 ? narrationChunkRanges(parts.map((part) => part.passageScript), total) : null;
+    const sync = () => { startNarrationSync(player, segments, ranges); if (narrationSync) narrationSync.sourceIndex = index; };
+    player.addEventListener("play", sync);
+    player.addEventListener("timeupdate", () => narrationSyncTick(player));
+  }
+
+  player.addEventListener("play", () => { player.playbackRate = AI_NARRATION_RATE; });
+  player.addEventListener("ended", () => {
+    index += 1;
+    if (index >= sources.length) return clearNarrationSync(player);
+    player.src = sources[index];
+    player.playbackRate = AI_NARRATION_RATE;
+    if (narrationSync) narrationSync.sourceIndex = index;
+    player.play().catch(() => toast("Press Play to continue the story."));
+  });
+}
+
+// The whole story on paper, parts joined, in a window of its own — the same
+// choice printReading makes above and for the same reason: its own document
+// means the app chrome never has to be fought with @media print rules.
+function printStory(story, parts) {
+  const printWindow = window.open("", "_blank", "popup=yes,width=860,height=1000,resizable=yes,scrollbars=yes");
+  if (!printWindow) {
+    toast("Allow pop-ups to print this story.");
+    return;
+  }
+  printWindow.document.open();
+  printWindow.document.write(`<!doctype html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <title>${escapeHtml(story.title)} | Ehel Academy English</title>
+      <style>
+        :root { color-scheme: light; }
+        * { box-sizing: border-box; }
+        body { margin: 0; padding: 40px 48px; color: #17324d; background: white; font: 17px/1.75 Georgia, "Times New Roman", serif; }
+        header { margin-bottom: 26px; padding-bottom: 16px; border-bottom: 2px solid #dce4ea; }
+        header span { display: block; color: #0f766e; font: 700 12px/1.4 Arial, sans-serif; text-transform: uppercase; letter-spacing: .05em; }
+        header h1 { margin: 6px 0 0; font-size: 30px; line-height: 1.15; }
+        header p { margin: 8px 0 0; color: #64748b; font: 14px/1.4 Arial, sans-serif; }
+        h2 { margin: 1.6em 0 .6em; color: #0f766e; font: 700 15px/1.3 Arial, sans-serif; text-transform: uppercase; letter-spacing: .05em; }
+        .body p { margin: 0 0 1.1em; }
+        .print-footer { margin-top: 34px; padding-top: 14px; border-top: 1px solid #dce4ea; color: #64748b; font: 12px/1.4 Arial, sans-serif; }
+        @page { margin: 18mm; }
+      </style>
+    </head>
+    <body>
+      <header><span>${escapeHtml(story.genre)} · Unit ${story.unitNumber}, ${escapeHtml(story.unitTitle)}</span><h1>${escapeHtml(story.title)}</h1>${story.setting ? `<p>${escapeHtml(story.setting)}</p>` : ""}</header>
+      <div class="body">${parts.map((part) => `${parts.length > 1 ? `<h2>Part ${part.part}${part.subtitle ? ` · ${escapeHtml(part.subtitle)}` : ""}</h2>` : ""}${readingBodyHtml(part.passageScript)}`).join("")}</div>
+      <div class="print-footer">Ehel Academy English · Grade ${gradeNumber} · Story Library</div>
+    </body>
+    </html>`);
+  printWindow.document.close();
+  printWindow.focus();
+  printWindow.onload = () => printWindow.print();
+  printWindow.addEventListener("afterprint", () => printWindow.close());
 }
 
 function renderComprehension() {
@@ -6341,7 +6636,7 @@ const config = {
   // 92% and could not open the next unit — a support tool gating progression.
   // It stays in the nav and still ticks when used; it just no longer decides
   // whether a unit is finished.
-  nonCountable: ["overview", "live", "final-quiz", "teacherguide", "year-plan", "unit-plan"],
+  nonCountable: ["overview", "live", "final-quiz", "teacherguide", "year-plan", "unit-plan", "story-library"],
   gradeSections: [],
   // English draws its own card (renderSectionCompletion): its sections open
   // in a gated chain and its units unlock one another, which the shell's
@@ -6385,6 +6680,7 @@ const config = {
     games: () => renderGames(),
     quiz: () => renderQuiz(),
     ebooks: () => renderEbooks(),
+    "story-library": () => renderStoryLibrary(),
     live: () => renderLive(),
     reflect: () => renderReflect(),
     "final-quiz": () => renderFinalQuiz(),

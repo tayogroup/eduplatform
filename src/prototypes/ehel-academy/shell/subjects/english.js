@@ -231,6 +231,13 @@ const IS_STAFF = ["admin", "teacher", "staff"].includes(launchRole());
 // ===================== english body (verbatim) =====================
 const sections = [
   ["overview", "layout-dashboard", "Overview"],
+  // The unit-level Student Study Plan — Grade 1 only (visibleSections drops it
+  // elsewhere): the youngest learners are the ones walked week by week. A
+  // reference page, not a step: excluded from countableSectionIds and
+  // config.nonCountable-listed, and absent from SECTION_CHAIN, so it can
+  // neither gate nor count. The grade-level plan lives on the Prerequisite
+  // unit under the same name; this one plans the unit the learner is inside.
+  ["unit-plan", "calendar-days", "Student Study Plan"],
   // Only a handful of Grade 1 units carry a grownUpGuide (the Year 1 source
   // pack's own Teacher & Parent Guide docs; see
   // tools/build-ehel-grade1-teacher-guides.js) — every other unit in every
@@ -265,6 +272,7 @@ const sections = [
 // its renderer is telling the learner the wrong thing. Written for the
 // youngest reader who meets it (Grade 1), so every grade gets the plain form.
 const SECTION_HINTS = {
+  "unit-plan": "See what you will do each week of this unit — it is not required to move on.",
   teacherguide: "Read this whenever it helps — it is not required to move on.",
   lecture: "Watch the video to the end. Listen and read the captions.",
   dictionary: "Learn each word and press “I know this word”, until all the words are learned.",
@@ -743,7 +751,7 @@ const unitProgressKey = (unit) => `ehel-english-g${gradeNumber}-u${unit}-progres
 // leaving it demanded here would have made the bar read 100% while the gate held
 // the next unit shut.
 const countableSectionIds = () => sections
-  .filter(([id]) => !["overview", "live", "teacherguide"].includes(id))
+  .filter(([id]) => !["overview", "live", "teacherguide", "unit-plan"].includes(id))
   .filter(([id]) => (id !== "games" || gamePack) && (id !== "ebooks" || unitEbooks().length))
   .map(([id]) => id);
 // The server's view of every unit, handed over by the shell before load() and
@@ -1571,7 +1579,7 @@ function visibleSections() {
   // unit's 100%, which is why those grades' progress bars stopped at 92% and
   // could never read complete. It is also what made the gate unsafe beyond
   // Grade 1: an uncompletable step in the chain shuts the learner out for good.
-  const available = sections.filter(([id]) => (id !== "games" || gamePack) && (id !== "ebooks" || unitEbooks().length) && (id !== "teacherguide" || hasGrownUpGuide()));
+  const available = sections.filter(([id]) => (id !== "games" || gamePack) && (id !== "ebooks" || unitEbooks().length) && (id !== "teacherguide" || hasGrownUpGuide()) && (id !== "unit-plan" || gradeNumber === 1));
   return unitNumber === 10 ? [...available, ["final-quiz", "trophy", "Final course quiz"]] : available;
 }
 
@@ -4373,6 +4381,97 @@ function renderYearPlan() {
   icons();
 }
 
+// ===================== unit study plan (Grade 1 only) ========================
+// The unit-level companion to the grade Student Study Plan above: the year plan
+// says WHERE each unit falls; this page says what the learner does on each day
+// of the weeks they are inside it. Drawn entirely from the loaded unit's own
+// data — word group, reading, grammar, speaking and writing titles are read,
+// not restated — so it can never disagree with the unit it plans. The unit's
+// week span comes from the same yearPlanTerms()/yearPlanWeekRows() the grade
+// plan draws, so the two pages always agree about the calendar.
+function unitPlanWeekSpan() {
+  for (const term of yearPlanTerms()) {
+    const row = yearPlanWeekRows(term.units).find((entry) => Number(entry.unit.number) === unitNumber);
+    if (row) return { termNo: term.termNo, from: row.from, to: row.to };
+  }
+  // Unit 0, reached through a review door: not in the year's terms, so it has
+  // no calendar slot — it runs alongside the regular units for six weeks.
+  return null;
+}
+// Even shares, remainder to the earlier weeks — one array of items per week.
+function spreadAcrossWeeks(items, weeks) {
+  const list = items || [];
+  const base = Math.floor(list.length / weeks);
+  const extra = list.length % weeks;
+  let start = 0;
+  return Array.from({ length: weeks }, (_, index) => {
+    const size = base + (index < extra ? 1 : 0);
+    const slice = list.slice(start, start + size);
+    start += size;
+    return slice;
+  });
+}
+function renderUnitStudyPlan() {
+  const span = unitPlanWeekSpan();
+  const weekCount = span ? span.to - span.from + 1 : Math.max(3, (course.readings || []).length);
+  const titlesOf = (items) => items.map((item) => item.title).filter(Boolean).map((title) => escapeHtml(title)).join(" · ");
+  // Speaking, writing and activities carry formulaic titles ("Speaking 1 —
+  // Listen and point"), so the plan names them by number range instead; words,
+  // readings and grammar have real titles worth printing.
+  const rangeText = (slices, weekIndex, word) => {
+    const before = slices.slice(0, weekIndex).reduce((sum, slice) => sum + slice.length, 0);
+    const count = slices[weekIndex].length;
+    if (!count) return "";
+    return count === 1 ? `${word} ${before + 1}` : `${word}s ${before + 1}–${before + count}`;
+  };
+  const groups = spreadAcrossWeeks(course.vocabularyGroups, weekCount);
+  const readings = spreadAcrossWeeks(course.readings, weekCount);
+  const grammar = spreadAcrossWeeks(course.grammar, weekCount);
+  const speaking = spreadAcrossWeeks(course.speaking, weekCount);
+  const writing = spreadAcrossWeeks(course.writing, weekCount);
+  const activities = spreadAcrossWeeks(course.activities, weekCount);
+  const vocabularyCount = Number(manifest.units.find((unit) => Number(unit.number) === unitNumber)?.vocabularyCount) || null;
+  const lectureLabel = unitNumber === CAPSTONE_UNIT ? "the capstone launch" : "the video lesson";
+  const dayLine = (name, what) => `<li>${icon("circle-check-big")}<span><strong>${name}:</strong> ${what}</span></li>`;
+  const weekPanel = (weekIndex) => {
+    const isFirst = weekIndex === 0;
+    const isLast = weekIndex === weekCount - 1;
+    const weekReadings = readings[weekIndex];
+    const weekGroups = groups[weekIndex];
+    const speakWrite = [
+      speaking[weekIndex].length ? `Do speaking ${rangeText(speaking, weekIndex, "task")}` : "",
+      writing[weekIndex].length ? `writing ${rangeText(writing, weekIndex, "task")}` : "",
+    ].filter(Boolean).join(", then ");
+    return `<section class="panel">
+      <span class="eyebrow">${span ? `Week ${span.from + weekIndex} · Term ${span.termNo}` : `Week ${weekIndex + 1} of the review programme`}</span>
+      <ol class="path-list">
+        ${dayLine("Day 1 · Words", `${isFirst ? `Start with ${lectureLabel}. Then meet` : "Learn"} ${weekGroups.length ? `your new words: <strong>${titlesOf(weekGroups)}</strong>` : "no new words this week — go back over the ones you know"}.`)}
+        ${dayLine("Day 2 · Reading", weekReadings.length ? `Read <strong>${titlesOf(weekReadings)}</strong>, then answer its questions.` : "Read your favourite story from this unit again.")}
+        ${dayLine("Day 3 · Grammar", grammar[weekIndex].length ? `${titlesOf(grammar[weekIndex])}.` : "Go back over the patterns you have learned.")}
+        ${dayLine("Day 4 · Speak & write", speakWrite ? `${speakWrite}.` : "Practise saying and writing your favourite sentences.")}
+        ${dayLine("Day 5 · Play & check", isLast ? "Play the games, take the quiz, hand in your assignment and fill in My progress." : `${activities[weekIndex].length ? `Do ${rangeText(activities, weekIndex, "activity").replace("activitys", "activities")}, and play` : "Play"} the games.`)}
+      </ol>
+    </section>`;
+  };
+  $("#app").innerHTML = `${pageHeader(
+    `${gradeLabel} · Unit ${course.unit.unitNo}`,
+    `Your plan for ${escapeHtml(course.unit.unitTitle)}`,
+    span
+      ? `This unit takes ${weekCount} weeks — weeks ${span.from} to ${span.to} of Term ${span.termNo}. Five short days a week; here is what each one brings.`
+      : `This review programme runs for ${weekCount} weeks alongside your regular units. Five short days a week; here is what each one brings.`,
+    "Student Study Plan",
+  )}
+    <div class="final-quiz-intro">
+      <section class="panel">
+        <div class="final-quiz-facts"><span><strong>${weekCount}</strong> weeks</span>${vocabularyCount ? `<span><strong>${vocabularyCount}</strong> new words</span>` : ""}<span><strong>${(course.readings || []).length}</strong> readings</span><span><strong>${(course.grammar || []).length}</strong> grammar lessons</span></div>
+      </section>
+      ${Array.from({ length: weekCount }, (_, index) => weekPanel(index)).join("")}
+      <div class="audio-actions"><button class="button gold" data-go="lecture" type="button">Start with ${lectureLabel} ${icon("arrow-right")}</button><button class="button secondary" data-go="overview" type="button">Back to the overview</button></div>
+    </div>`;
+  $$('[data-go]').forEach((button) => button.addEventListener("click", () => navigate(button.dataset.go)));
+  icons();
+}
+
 function renderPlacementExam() {
   if (!isPrereqUnit) return navigate("overview");
   if (placementProgress.submitted) return renderPlacementResults(calculatePlacementResults());
@@ -5154,7 +5253,7 @@ const config = {
   // 92% and could not open the next unit — a support tool gating progression.
   // It stays in the nav and still ticks when used; it just no longer decides
   // whether a unit is finished.
-  nonCountable: ["overview", "live", "final-quiz", "teacherguide", "year-plan"],
+  nonCountable: ["overview", "live", "final-quiz", "teacherguide", "year-plan", "unit-plan"],
   gradeSections: [],
   // English draws its own card (renderSectionCompletion): its sections open
   // in a gated chain and its units unlock one another, which the shell's
@@ -5185,6 +5284,7 @@ const config = {
     overview: () => (isPrereqUnit ? renderPrereqOverview() : renderOverview()),
     placement: () => renderPlacementExam(),
     "year-plan": () => renderYearPlan(),
+    "unit-plan": () => renderUnitStudyPlan(),
     teacherguide: () => renderTeacherGuide(),
     lecture: () => renderLecture(),
     dictionary: () => renderDictionary(),
@@ -5293,6 +5393,7 @@ const config = {
     if (location.hash.slice(1) === "games" && !gamePack) location.hash = "overview";
     if (isPrereqUnit && !["overview", "placement", "year-plan", "teacher"].includes(location.hash.slice(1))) location.hash = "overview";
     if (!isPrereqUnit && ["placement", "year-plan"].includes(location.hash.slice(1))) location.hash = "overview";
+    if (location.hash.slice(1) === "unit-plan" && (isPrereqUnit || gradeNumber !== 1)) location.hash = "overview";
     // Cosmetic only — the lock screen renders whatever the hash says. This just
     // stops the nav highlighting a section that is no longer on the page.
     if (unitIsLocked() && location.hash.slice(1) !== "overview") location.hash = "overview";

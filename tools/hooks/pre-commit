@@ -1,0 +1,89 @@
+#!/bin/sh
+# Pre-commit guard for files that more than one session edits at once.
+#
+# Installed into .git/hooks/pre-commit as a one-line shim by tools/hooks/install.sh.
+# The logic lives here, in the repo, so it is reviewable and shared; the shim is
+# what git actually runs.
+#
+# NOT installed via core.hooksPath, deliberately: Git LFS owns post-checkout,
+# post-commit, post-merge and pre-push in .git/hooks/, and setting core.hooksPath
+# makes git stop looking in that directory entirely — which would disable all
+# four without saying so. LFS ships no pre-commit, so this one slots in beside
+# them with no conflict.
+#
+# ---------------------------------------------------------------- what it does
+#
+# On 2026-08-20 two commits swept another session's uncommitted work out of
+# src/prototypes/ehel-academy/shell/subjects/english.js and shipped it to
+# production under the wrong commit message. Nobody used `git add -A`; the paths
+# were staged explicitly. The gap is that `git add <path>` is explicit about the
+# FILE and says nothing about the HUNKS, and that file holds two sessions' work.
+#
+# A hook cannot tell whose hunks are whose — nothing in git records that. So this
+# does not try to guess. It fires exactly when the risk is present (a co-edited
+# file is staged), shows what is about to be committed, and makes you say you
+# looked. That is a few seconds against a feature reaching production under
+# somebody else's name.
+#
+# To proceed once you have checked:
+#     EHEL_COMMIT_REVIEWED=1 git commit ...
+#
+# Use --no-verify only if you also intend to skip the LFS and CI expectations
+# CLAUDE.md sets out; it is not the way past this check.
+
+set -e
+
+here=$(git rev-parse --show-toplevel)
+list="$here/tools/hooks/co-edited-files"
+
+[ -f "$list" ] || exit 0
+
+staged=$(git diff --cached --name-only --diff-filter=ACM)
+[ -n "$staged" ] || exit 0
+
+hits=""
+while IFS= read -r pattern; do
+  case "$pattern" in ""|\#*) continue ;; esac
+  for file in $staged; do
+    [ "$file" = "$pattern" ] && hits="$hits $file"
+  done
+done < "$list"
+
+[ -n "$hits" ] || exit 0
+
+if [ -n "$EHEL_COMMIT_REVIEWED" ]; then
+  exit 0
+fi
+
+echo ""
+echo "──────── co-edited file staged ────────"
+echo ""
+echo "More than one session edits these files. Staging the path stages the whole"
+echo "file, including hunks another session has not committed yet."
+echo ""
+for file in $hits; do
+  added=$(git diff --cached --numstat -- "$file" | awk '{print $1}')
+  removed=$(git diff --cached --numstat -- "$file" | awk '{print $2}')
+  echo "  $file  (+$added -$removed)"
+  git diff --cached -U0 -- "$file" \
+    | grep '^@@' \
+    | sed 's/^@@[^@]*@@ *//' \
+    | grep -v '^$' \
+    | sort -u \
+    | sed 's/^/      in: /' \
+    | head -20
+  echo ""
+done
+echo "Check every hunk is yours:"
+for file in $hits; do
+  echo "    git diff --cached -- $file"
+done
+echo ""
+echo "If some are not, leave that file out of this commit (git restore --staged <file>)"
+echo "or name the borrowed work in the message. Never revert it to tidy up — the"
+echo "other session is mid-flight."
+echo ""
+echo "Then commit again with:"
+echo "    EHEL_COMMIT_REVIEWED=1 git commit ..."
+echo ""
+exit 1

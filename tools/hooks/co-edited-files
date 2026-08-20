@@ -1,0 +1,14 @@
+# Files that more than one session edits at the same time, one exact repo-relative
+# path per line. tools/hooks/pre-commit stops a commit that stages any of them
+# until you confirm every staged hunk is yours.
+#
+# Keep this list SHORT. A path here costs a few seconds on every commit that
+# touches it; a list that grows to cover everything gets routed around with
+# EHEL_COMMIT_REVIEWED=1 as a reflex, and then it protects nothing.
+#
+# Add a path when two sessions are genuinely working in one file at once.
+# Remove it when they are not.
+
+# The English course UI: the ebookCatalog (picture-book shelves) and the
+# student-resources block live in the same file and have been edited in parallel.
+src/prototypes/ehel-academy/shell/subjects/english.js

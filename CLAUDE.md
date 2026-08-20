@@ -834,6 +834,23 @@ works in this checkout at once, so the tree routinely holds somebody else's
 half-finished change. Run `git status` before every commit and stage the paths you
 actually touched.
 
+A pre-commit hook enforces the part of this that can be enforced. It blocks any
+commit that stages a file listed in `tools/hooks/co-edited-files`, prints the
+hunks going in, and asks you to confirm they are yours:
+
+```bash
+sh tools/hooks/install.sh                    # once per clone; hooks are not tracked
+EHEL_COMMIT_REVIEWED=1 git commit …          # once you have actually looked
+```
+
+It cannot tell whose hunks are whose — git records nothing about that — so it
+does not guess: it fires whenever the risk is present and makes you look. Keep
+that list short. A list that grows to cover everything gets routed around with
+`EHEL_COMMIT_REVIEWED=1` as a reflex, and then it protects nothing. Note it is
+installed into `.git/hooks/` rather than via `core.hooksPath`, because Git LFS
+owns four hooks in that directory and pointing `hooksPath` elsewhere disables all
+four without saying so.
+
 This is not hypothetical. On 2026-08-20 two commits an hour apart
 (`b1b2d077c`, `716fcf128` — Grade 3 and Grade 4 picture books) each swept in
 another session's uncommitted work on

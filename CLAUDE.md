@@ -703,9 +703,9 @@ node tools/check-english-content.mjs --write-baseline
 
 ### The illustrated picture books (English "Books")
 
-Every English unit ends with an animated picture book — 23 of them, Grade 1 and
-Grade 2, one per unit plus the Grade 1 library shelf. They are **generated SVG**,
-not artwork files:
+Every English unit ends with an animated picture book — 33 of them across Grades
+1, 2 and 3, one per unit plus the Grade 1 library shelf. They are **generated
+SVG**, not artwork files:
 
 ```bash
 npm run build:ebooks          # both grades' pages + the companion docs
@@ -718,7 +718,32 @@ Three files, one storyworld:
   the whole cast (Musa, Kiki, Duku, Lulu, Miss Twiga …) and the scenery.
 - `tools/lib/ehel-ebook-kit-grade2.js` — Grade 2's ADDITIONS: Zuri the meerkat,
   the town, the classroom props, the bugs, the homes, the city, the aquarium.
-- `tools/create-{musa,grade2}-ebook-illustrations.js` — the page compositions.
+- `tools/lib/ehel-ebook-kit-grade3.js` — Grade 3's: the HUMAN cast, from one
+  parametric `person()`, plus the classroom, coast, forest and mountain.
+- `tools/create-{musa,grade2,grade3}-ebook-illustrations.js` — the compositions.
+
+**Grade 3 does not get a new animal, and its cast was not invented.** Amal, her
+friend Nora, Teacher Yasmin and Omar the shopkeeper appear 604 times across the
+ten units of the Grade 3 readings, and Unit 7 is written as a trip "following
+Amal, Nora and Teacher Yasmin from the coast to the forest". A shelf starring
+anybody else would contradict the lesson beside it. Several books borrow their
+unit's own device on purpose — the spelling contest, the calendar on the wall,
+the wall behind the garden, the two roads to school, the million shells, the Box
+of Ideas, the Showcase.
+
+**How the people look was decided by the course's own artwork, not here.**
+`english/assets/unit-8-home.png` shows East African children with natural hair
+and bright everyday clothes and no headscarf; `english/assets/teacher-nuur.png`
+shows the adult teacher in a hijab, cardigan and long skirt. The readings
+describe almost nothing (only "Grandma Hana sat in the corner with her reading
+glasses"), so the pictures are the source of truth. Check them before changing a
+character.
+
+**People carry `data-figure`, not `data-tap`.** A tap value promises a clip
+exists, and there are no human voice clips on the shelf — the Grade 3 taps are on
+objects and scenery only. The composition lint reads either attribute, so people
+are still measured; give a person a `data-tap` only in the same change that adds
+the audio.
 
 **Adding to the shared kit is safe; changing it is a content edit.** The Grade 1
 pages already shipped, so a tweak to the giraffe there repaints 156 pages a

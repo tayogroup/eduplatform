@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 // Writes the STORY.txt and ATTRIBUTION.txt that sit beside each original
-// picture book, for the Grade 2 (Zuri) shelf.
+// picture book, for the Grade 2 (Zuri) and Grade 3 (Amal) shelves.
 //
 // They are GENERATED, not hand-written, because the shipped words live in the
 // catalogue in shell/subjects/english.js and nowhere else. The Grade 1 folders
@@ -62,64 +62,126 @@ const catalog = vm.runInNewContext(`(${literalBetweenBrackets(shellSource, "cons
 // its revision job, so it must name the unit's own words, not a summary.
 const NOTES = {
   "zuris-first-week": {
-    book: 1, term: "Term 1", unit: "Unit 1: Welcome and Calendar",
+    series: "Zuri", book: 1, term: "Term 1", unit: "Unit 1: Welcome and Calendar",
     vocabulary: "name, spell, hello, goodbye, partner, friend, like, calendar, day, week, month, date, birthday, book, tablet, chart, word, the colours, one to twelve, first, second, twelfth",
     themes: "starting somewhere new, making the first friend of the year",
     cameos: "Miss Twiga, Kiki, the little elephant and the ostrich from the Grade 1 books.",
   },
   "who-helps-our-street": {
-    book: 2, term: "Term 1", unit: "Unit 2: Good Neighbours and Jobs",
+    series: "Zuri", book: 2, term: "Term 1", unit: "Unit 2: Good Neighbours and Jobs",
     vocabulary: "neighbour, bus driver, window cleaner, police officer, firefighter, helmet, boots, gloves, doctor, nurse, teacher, farmer, shopkeeper, reporter, helping, teaching, rescuing, growing, driving",
     themes: "a neighbourhood is the people in it; wanting to help in your turn",
     cameos: "Duku the donkey as the farmer, Koko the hen as the shopkeeper, Miss Twiga teaching.",
   },
   "move-like-me": {
-    book: 3, term: "Term 1", unit: "Unit 3: Ready, Steady, Go!",
+    series: "Zuri", book: 3, term: "Term 1", unit: "Unit 3: Ready, Steady, Go!",
     vocabulary: "head, arm, hand, finger, tummy, toe, wave, hop, jump, clap, wiggle, nod, touch, turn, stand, reach, flap, exercise, healthy, strong, water, sleep, energy",
     themes: "moving every day, eating well, sleeping well",
     cameos: "Musa the zebra running the field; the little elephant and the ostrich join in.",
   },
   "zuri-and-her-shadow": {
-    book: 4, term: "Term 2", unit: "Unit 4: The Big Sky",
+    series: "Zuri", book: 4, term: "Term 2", unit: "Unit 4: The Big Sky",
     vocabulary: "shadow, light, sun, block, sky, morning, midday, evening, sunrise, sunset, moon, star, cloud, day, night, long, short, high, low, bright, dark, grey, cloudy, sunny",
     themes: "noticing something ordinary and asking why; a whole day and night",
     cameos: "Miss Twiga explains the light; Zuri's mama at the burrow.",
   },
   "how-tall-how-long": {
-    book: 5, term: "Term 2", unit: "Unit 5: Let's Measure",
+    series: "Zuri", book: 5, term: "Term 2", unit: "Unit 5: Let's Measure",
     vocabulary: "measure, ruler, centimetre, metre, length, height, weight, size, circle, square, triangle, rectangle, heart, pattern, big, small, tall, short, heavy, light, wide, narrow, ten to one hundred",
     themes: "measuring turns 'bigger' into a number you can say",
     cameos: "Miss Twiga is the tall one; the chick from The Little Lost Chick is the small one.",
   },
   "the-six-leg-club": {
-    book: 6, term: "Term 2", unit: "Unit 6: All About Bugs",
+    series: "Zuri", book: 6, term: "Term 2", unit: "Unit 6: All About Bugs",
     vocabulary: "butterfly, cricket, ant, bee, spider, worm, insect, legs, wings, antennae, anthill, web, on, under, in, between, above, in front of, fly, jump, crawl, spin, chirp, collect",
     themes: "looking closely; a rule that decides what counts as an insect",
     cameos: "Kiki names the rule; Miss Twiga rules the spider out of the club.",
   },
   "one-small-seed": {
-    book: 7, term: "Term 3", unit: "Unit 7: The World Around Us",
+    series: "Zuri", book: 7, term: "Term 3", unit: "Unit 7: The World Around Us",
     vocabulary: "planting, watering, picking up, litter, recycling, roots, stem, leaves, flower, seeds, tree, air, water, soil, earth, glad, thankful, important",
     themes: "patience; looking after a place you share",
     cameos: "Miss Twiga hands out the seeds; Zuri's mama explains the roots.",
   },
   "every-home-is-different": {
-    book: 8, term: "Term 3", unit: "Unit 8: Home, Sweet Home",
+    series: "Zuri", book: 8, term: "Term 3", unit: "Unit 8: Home, Sweet Home",
     vocabulary: "house, flat, hut, tree house, nest, hive, hole, bedroom, kitchen, bathroom, living room, dining room, bed, table, chair, sofa, sink, rug, window, adobe house, stilt house, cave house, skyscraper",
     themes: "difference without ranking; belonging",
     cameos: "Kiki's tree house in the baobab, Musa on the open savanna.",
   },
   "a-day-in-the-big-city": {
-    book: 9, term: "Term 3", unit: "Unit 9: Let's Explore the City!",
+    series: "Zuri", book: 9, term: "Term 3", unit: "Unit 9: Let's Explore the City!",
     vocabulary: "library, market, shopping centre, underground, ferry, Ferris wheel, traffic, helicopter, bus, map, directions, straight ahead, aquarium, octopus, penguin, turtle, shark, amazing, beautiful, clever, dangerous, huge, scary",
     themes: "a big place is findable if you can read the map",
     cameos: "Lulu the swallow over the water, closing the journey she began in Grade 1.",
   },
   "zuris-book-of-the-year": {
-    book: 10, term: "Term 3", unit: "Unit 10: My English World (capstone)",
+    series: "Zuri", book: 10, term: "Term 3", unit: "Unit 10: My English World (capstone)",
     vocabulary: "one page for each of Units 1-9: name, neighbour, head, shadow, ten, butterfly, planting, house, library",
     themes: "gathering a year up; looking forward to the next one",
     cameos: "the whole cast — Musa, Kiki, Duku, Lulu, Miss Twiga, the elephant and the ostrich.",
+  },
+  // ---- Grade 3: the Amal series. The cast is the course's own, so these notes
+  // name the unit reading each book leans on, not just the theme.
+  "the-family-who-helps": {
+    series: "Amal", book: 1, term: "Term 1", unit: "Unit 1: All About Me and My Family",
+    vocabulary: "family, parent, friend, student, junior, senior, behave, behaviour, respect, honour, duty, health, safety, private, public",
+    themes: "a household where everybody is needed; respect as small daily acts",
+    cameos: "Adam, Idris, Mina and Grandma Hana from the Unit 1 readings; Teacher Yasmin and Nora at school.",
+  },
+  "the-spelling-contest": {
+    series: "Amal", book: 2, term: "Term 1", unit: "Unit 2: School and Learning",
+    vocabulary: "teacher, author, library, graduate, mathematics, grammar, lesson, education, study, prepare, contest, report, topic, details, supply, eraser",
+    themes: "effort beats talent; losing well",
+    cameos: "Grandma Hana gives the advice; Idris lends the eraser. Amal does NOT win — the ending is deliberate.",
+  },
+  "the-calendar-on-the-wall": {
+    series: "Amal", book: 3, term: "Term 1", unit: "Unit 3: Time and Daily Life",
+    vocabulary: "January to December, calendar, hour, century, vacation, future, soon, sooner",
+    themes: "a year is a thing you can hold; using the hours you have",
+    cameos: "the poem on the last page is the one Amal writes in the Unit 3 reading.",
+  },
+  "the-places-that-help-us": {
+    series: "Amal", book: 4, term: "Term 2", unit: "Unit 4: Places and Community",
+    vocabulary: "doctor, officer, sailor, hospital, court, college, market, garden, exit, village, county, border, address",
+    themes: "a community is the jobs its places do",
+    cameos: "Omar the shopkeeper, calling out beside his baskets, exactly as in the Unit 4 reading.",
+  },
+  "the-wall-behind-the-garden": {
+    series: "Amal", book: 5, term: "Term 2", unit: "Unit 5: Actions and Activities",
+    vocabulary: "discuss, listen, offer, build, complete, remove, develop, protect, travel, escape, search, celebrate, happen",
+    themes: "work shared out; a result you can point at",
+    cameos: "the wall behind the garden is the Unit 5 reading's own; Nora, Omar and Grandma Hana all help.",
+  },
+  "the-girl-who-carried-kindness": {
+    series: "Amal", book: 6, term: "Term 2", unit: "Unit 6: Describing People and Things",
+    vocabulary: "kind, friendly, honest, kindness, care, busy, calm, able, careless, popular, rough, tough, similar, alive, favourite, extra",
+    themes: "kindness as a choice you make again each morning, not a character trait",
+    cameos: "cousin Noah and the two roads to school, both from the Unit 6 readings.",
+  },
+  "from-coast-to-forest": {
+    series: "Amal", book: 7, term: "Term 3", unit: "Unit 7: Nature and the Environment",
+    vocabulary: "climate, weather, temperature, sunshine, froze, mountain, forest, beach, coast, nature, explore, energy, matter, metal, planet",
+    themes: "one planet seen three ways in a morning",
+    cameos: "the trip is the Unit 7 reading's own — Amal, Nora and Teacher Yasmin, coast to forest to mountain.",
+  },
+  "the-mystery-of-the-million-shells": {
+    series: "Amal", book: 8, term: "Term 3", unit: "Unit 8: Numbers, Shapes, and Measurement",
+    vocabulary: "number, million, fact, pattern, straight, addition, subtraction, multiplication, division, measure, size, metre, height, weight, distance",
+    themes: "measuring instead of counting; the size of a big number",
+    cameos: "the million shells are the Unit 8 reading's own. The answer is 384,000 — deliberately not a million.",
+  },
+  "the-box-of-ideas": {
+    series: "Amal", book: 9, term: "Term 3", unit: "Unit 9: Thinking, Feelings, and Imagination",
+    vocabulary: "idea, imagine, reason, purpose, choice, sense, sadness, experience, sincere, thoughtful, hopeless, enjoyable, allow, suggest, enjoy, believe",
+    themes: "naming a feeling makes it lighter; sadness as information",
+    cameos: "the Box of Ideas and Sami's one line are both from the Unit 9 readings.",
+  },
+  "nine-doors": {
+    series: "Amal", book: 10, term: "Term 3", unit: "Unit 10: My Year of Words (capstone)",
+    vocabulary: "one door for each of Units 1-9: family, library, January, sailor, build, kindness, temperature, million, idea",
+    themes: "gathering a year up and saying it out loud",
+    cameos: "the Year 3 Showcase, from the Unit 10 readings; the whole cast returns.",
   },
 };
 
@@ -132,8 +194,8 @@ for (const book of catalog) {
 
   const story = [
     book.title.toUpperCase(),
-    `Grade 2 - ${book.level}`,
-    `Zuri series, book ${notes.book} (${notes.term}, ${notes.unit})`,
+    `Grade ${book.grades.join(" and ")} - ${book.level}`,
+    `${notes.series} series, book ${notes.book} (${notes.term}, ${notes.unit})`,
     "",
     ...book.pages.map((page, index) => `${index + 1}. ${page.text}`),
     "",

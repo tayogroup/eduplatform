@@ -1618,6 +1618,273 @@ const ebookCatalog = [
       { image: "page-12.svg", sound: "bell", text: "On the last page Zuri drew all her friends. \"Goodbye, Year 2,\" she said. \"Hello, Year 3!\"", alt: "All the friends together under bunting and confetti with Zuri and Kiki cheering" },
     ],
   },
+
+  // ---------------------------------------------------------------- Grade 3
+  // Grade 3 keeps the one-book-per-unit shape and drops the animals, because by
+  // Grade 3 the course has a cast of its own: Amal, her friend Nora, Teacher
+  // Yasmin and Omar the shopkeeper run through all ten units of the readings —
+  // 604 mentions — and Unit 7 is written as a trip "following Amal, Nora and
+  // Teacher Yasmin from the coast to the forest". A shelf starring anybody else
+  // would contradict the lesson beside it.
+  //
+  // Several books borrow their unit's own device on purpose — the spelling
+  // contest, the calendar on the wall, the wall behind the garden, the two roads
+  // to school, the million shells, the Box of Ideas, the Showcase — so a learner
+  // recognises the book from the unit they just read.
+  //
+  // The stories are longer than Grade 2's and carry a real turn: Amal does not
+  // win the contest, and the page says so. Illustrations:
+  // tools/create-grade3-ebook-illustrations.js.
+  {
+    id: "the-family-who-helps",
+    title: "The Family Who Helps",
+    grades: [3],
+    units: [1],
+    level: "Level 3",
+    description: "Amal's house is full of people, and everybody in it has a job to do - including her.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "The Family Who Helps is an original Grade 3 story created for Ehel Academy in 2026, book one of the Amal series. Story and vector illustrations by Ehel Academy Learning Studio, using the cast and setting of the Grade 3 English readings. No third-party story wording or artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "bell", text: "The Family Who Helps. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Amal's whole family together at home: Grandma Hana, Dad, Mum, Adam, Amal, Idris and little Mina" },
+      { image: "page-02.svg", sound: "bird", text: "My name is Amal. I am eight years old, and I live with my family in a small house near the town centre.", alt: "Amal standing outside her family's house with her arms raised" },
+      { image: "page-03.svg", sound: "bell", text: "There are a lot of us. Adam is my older brother, Idris is younger, and Mina is the littlest of all.", alt: "Adam, Idris and Mina lined up in the front room while Amal points them out" },
+      { image: "page-04.svg", sound: "lullaby", text: "Grandma Hana lives with us too. At night she tells us stories - some of them true, some brand new.", alt: "Grandma Hana reading to Mina, Idris and Amal in a lamplit room at night" },
+      { image: "page-05.svg", sound: "hen", text: "Every evening we eat together. Dad asks each of us to name one good thing that happened that day.", alt: "The family around the dining table while Dad asks each child a question" },
+      { image: "page-06.svg", sound: "bell", text: "It is my duty to keep my room tidy. It is Adam's duty to help Idris with his reading.", alt: "Amal beside a tidy bedroom while Adam reads with Idris" },
+      { image: "page-07.svg", sound: "chick", text: "Mum says a family is a place where everybody is needed. Even Mina has a job: she puts her toys away.", alt: "Mum pointing out the living room while little Mina raises her arms" },
+      { image: "page-08.svg", sound: "bell", text: "At school we show respect too. We listen when other people talk, even when we are bursting to speak.", alt: "Teacher Yasmin talking to the class while Amal and Nora listen at their desks" },
+      { image: "page-09.svg", sound: "wind", text: "In a public place we walk calmly. In our own rooms at home we can be as noisy as we like.", alt: "Amal and Nora walking quietly across the schoolyard with a house behind them" },
+      { image: "page-10.svg", sound: "bell", text: "Nora and I walk the junior students to their classrooms. It can feel confusing to be new at a big school.", alt: "Amal and Nora walking a small junior student across the schoolyard" },
+      { image: "page-11.svg", sound: "bell", text: "Teacher Yasmin says good listening means \"I care what you think.\" I am practising every day.", alt: "Teacher Yasmin explaining to Amal and Nora in the classroom" },
+      { image: "page-12.svg", sound: "bird", text: "My family helps me, and I help them. That is what makes our house feel warm.", alt: "Amal, Mina and Mum outside their house at sunset" },
+    ],
+  },
+  {
+    id: "the-spelling-contest",
+    title: "The Spelling Contest",
+    grades: [3],
+    units: [2],
+    level: "Level 3",
+    description: "Thirty words, one week, and a lesson about what studying actually looks like.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "The Spelling Contest is an original Grade 3 story created for Ehel Academy in 2026, book two of the Amal series. Story and vector illustrations by Ehel Academy Learning Studio, using the cast and setting of the Grade 3 English readings. No third-party story wording or artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "bell", text: "The Spelling Contest. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Amal and Nora in the classroom under bunting with Teacher Yasmin and the word list" },
+      { image: "page-02.svg", sound: "bell", text: "Our class was getting ready for the spelling contest. Teacher Yasmin gave us a practice list on Monday.", alt: "Teacher Yasmin handing out the practice list while Amal and Nora cheer" },
+      { image: "page-03.svg", sound: "bell", text: "The list had thirty words on it. Some of them were easy. Some were not easy at all.", alt: "Amal looking up in alarm at a long word list pinned to the classroom wall" },
+      { image: "page-04.svg", sound: "market", text: "Nora studied at the library after school. I studied at home with Adam.", alt: "Nora and Amal outside the town library, each holding a book" },
+      { image: "page-05.svg", sound: "bell", text: "I lost my eraser on Tuesday, so Idris lent me his. A good brother is a good supply.", alt: "A downcast Amal at her desk while Idris offers her his eraser" },
+      { image: "page-06.svg", sound: "bell", text: "On Wednesday we wrote a short report about spelling rules and read it out to the class.", alt: "Amal reading her report aloud while Teacher Yasmin and Nora listen" },
+      { image: "page-07.svg", sound: "bell", text: "Teacher Yasmin taught us a rule: \"i before e, most of the time.\" Rules have exceptions.", alt: "Teacher Yasmin pointing at a spelling rule written on the board" },
+      { image: "page-08.svg", sound: "wind", text: "On Thursday I got three words wrong. I wanted to give up.", alt: "Amal alone at her desk in the empty classroom, looking sad" },
+      { image: "page-09.svg", sound: "lullaby", text: "Grandma Hana said, \"An author does not write a book in one night. Study a little, every day.\"", alt: "Grandma Hana in her reading glasses talking to a downcast Amal beside a shelf of books" },
+      { image: "page-10.svg", sound: "bell", text: "So I studied the details. Just five words each evening, until I knew every one of them.", alt: "Amal working through her book at home while Adam sits with her" },
+      { image: "page-11.svg", sound: "bell", text: "On Friday the contest began. When my word came, I closed my eyes and spelled it slowly.", alt: "Amal standing to spell her word while Teacher Yasmin holds the list and Nora cheers" },
+      { image: "page-12.svg", sound: "bell", text: "I did not win. But I knew every word on my card, and Teacher Yasmin said that is what learning looks like.", alt: "Confetti in the classroom with Amal and Nora celebrating and Teacher Yasmin applauding" },
+    ],
+  },
+  {
+    id: "the-calendar-on-the-wall",
+    title: "The Calendar on the Wall",
+    grades: [3],
+    units: [3],
+    level: "Level 3",
+    description: "Twelve months go up on the classroom wall, and Amal learns how fast a year can go.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "The Calendar on the Wall is an original Grade 3 story created for Ehel Academy in 2026, book three of the Amal series. Story and vector illustrations by Ehel Academy Learning Studio, using the cast and setting of the Grade 3 English readings. No third-party story wording or artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "bell", text: "The Calendar on the Wall. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of the class calendar of twelve months on the wall with Amal and Nora beside it" },
+      { image: "page-02.svg", sound: "bell", text: "Our class made a calendar and hung it on the wall. It had all twelve months, from January to December.", alt: "The full twelve-month calendar on the classroom wall with Teacher Yasmin pointing at it" },
+      { image: "page-03.svg", sound: "bell", text: "January, February, March. I wrote the first three months in my very best handwriting.", alt: "Amal writing on the calendar with January ringed in red" },
+      { image: "page-04.svg", sound: "rain", text: "April, May, June. Nora drew rain on one month and sunshine on the next.", alt: "Nora pointing at the spring months on the class calendar" },
+      { image: "page-05.svg", sound: "wind", text: "July, August, September. Idris drew a kite on every single page, because he likes kites.", alt: "Idris holding his drawing beside the calendar while a kite flies above" },
+      { image: "page-06.svg", sound: "bell", text: "October, November, December. Mina coloured the very last month completely purple.", alt: "Little Mina cheering beside the calendar with December ringed" },
+      { image: "page-07.svg", sound: "bell", text: "Teacher Yasmin said, \"A year has twelve months. A day has twenty-four hours. Use them well.\"", alt: "Teacher Yasmin beside a globe, explaining to the class" },
+      { image: "page-08.svg", sound: "hen", text: "Every morning I get up at six. I eat at seven, and by eight o'clock I am at school.", alt: "Amal and Mum in the kitchen early in the morning" },
+      { image: "page-09.svg", sound: "bell", text: "Yesterday I finished my homework early. Today I am helping Mina with hers.", alt: "Amal helping Mina with her book at the table" },
+      { image: "page-10.svg", sound: "bird", text: "Tomorrow the vacation begins, and I will read all the books I have been saving up.", alt: "Amal cheering in the schoolyard beside a shelf of books" },
+      { image: "page-11.svg", sound: "lullaby", text: "Grandma Hana laughed. \"A century is a hundred years,\" she said, \"and it still goes by.\"", alt: "Grandma Hana laughing with Amal and Idris at home" },
+      { image: "page-12.svg", sound: "bell", text: "On the last page I wrote a poem: \"The months go fast, the hours too - so do the thing you mean to do.\"", alt: "Amal holding her poem beside it pinned up on the classroom wall" },
+    ],
+  },
+  {
+    id: "the-places-that-help-us",
+    title: "The Places That Help Us",
+    grades: [3],
+    units: [4],
+    level: "Level 3",
+    description: "A walk through the whole community, and the job that every place in it does.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "The Places That Help Us is an original Grade 3 story created for Ehel Academy in 2026, book four of the Amal series. Story and vector illustrations by Ehel Academy Learning Studio, using the cast and setting of the Grade 3 English readings. No third-party story wording or artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "market", text: "The Places That Help Us. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Amal and Nora in town between the hospital and the library" },
+      { image: "page-02.svg", sound: "bell", text: "A community is a place where people live together and help one another.", alt: "Teacher Yasmin showing Amal the houses, the flats and the crossing in town" },
+      { image: "page-03.svg", sound: "bell", text: "At the hospital, doctors and nurses look after people who are sick or hurt.", alt: "The town hospital with its green cross, and Mum and Amal outside it" },
+      { image: "page-04.svg", sound: "market", text: "At the market, Omar calls out beside his baskets of bananas, maize and rice.", alt: "Omar the shopkeeper at his market stall while Amal writes it down" },
+      { image: "page-05.svg", sound: "bell", text: "A police officer stands at the corner of the road and helps everybody cross safely.", alt: "An officer at the zebra crossing with Amal and Mina waiting, and a bus behind" },
+      { image: "page-06.svg", sound: "river", text: "Down at the coast, a sailor ties up his boat and carries the day's catch to the market.", alt: "A sailor on the shore holding a shell, with a ferry out on the water and Amal beside him" },
+      { image: "page-07.svg", sound: "bell", text: "The college is where Adam will study when he is older. The court is where people settle what is fair.", alt: "Adam with a book in front of the college and the courthouse" },
+      { image: "page-08.svg", sound: "bell", text: "The library has the door I like best. It is the quietest door in the whole county.", alt: "Amal holding a book outside the tall columns of the town library" },
+      { image: "page-09.svg", sound: "bell", text: "Teacher Yasmin showed us a map. \"Here is our village. Here is our county. Here is the border.\"", alt: "Teacher Yasmin pointing at a folded map with a route marked on it" },
+      { image: "page-10.svg", sound: "bell", text: "She asked us to learn our address by heart, in case we are ever lost.", alt: "Amal and Nora writing their addresses at their desks" },
+      { image: "page-11.svg", sound: "bell", text: "We found the exit signs in every building. Knowing the way out is part of being safe.", alt: "Amal pointing at a green exit sign outside the hospital" },
+      { image: "page-12.svg", sound: "market", text: "Every place has its own job to do. So does every person in it - including me.", alt: "Amal and Nora cheering at sunset with the hospital, the market and the library behind them" },
+    ],
+  },
+  {
+    id: "the-wall-behind-the-garden",
+    title: "The Wall Behind the Garden",
+    grades: [3],
+    units: [5],
+    level: "Level 3",
+    description: "A fallen wall, one hot Saturday, and a whole family that will not leave it fallen.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "The Wall Behind the Garden is an original Grade 3 story created for Ehel Academy in 2026, book five of the Amal series. Story and vector illustrations by Ehel Academy Learning Studio, using the cast and setting of the Grade 3 English readings. No third-party story wording or artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "bird", text: "The Wall Behind the Garden. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Dad, Amal, Adam and Idris in the garden beside a low brick wall" },
+      { image: "page-02.svg", sound: "hen", text: "On Saturday our family had a busy day. Mum said we should work together before the sun got too hot.", alt: "Mum giving out the jobs in the garden while Amal and Adam listen" },
+      { image: "page-03.svg", sound: "wind", text: "First we cleaned the yard. Dad swept the path while I picked up the loose leaves.", alt: "Dad sweeping the path while Amal points out the litter to be cleared" },
+      { image: "page-04.svg", sound: "bird", text: "Then we discussed the garden. Adam wanted maize. Mina wanted flowers. We decided to plant both.", alt: "Adam, Mina and Amal discussing the garden beside a seed row and a flowering plant" },
+      { image: "page-05.svg", sound: "tree", text: "But we could not plant anything yet, because the old wall behind the garden had fallen down.", alt: "A surprised Amal in front of a heap of tumbled bricks where the wall used to stand" },
+      { image: "page-06.svg", sound: "bell", text: "So we built it again, stone by stone. Idris carried, Adam lifted, and I fitted the stones together.", alt: "Idris, Adam and Amal rebuilding the low brick wall together" },
+      { image: "page-07.svg", sound: "river", text: "Nora came to help. Omar brought us water, and Grandma Hana told us where the wall used to end.", alt: "Grandma Hana pointing along the wall while Nora and Omar help" },
+      { image: "page-08.svg", sound: "wind", text: "By noon we had a heap of broken stones to remove. It was hot, and my arms ached.", alt: "A tired Amal and Idris in the midday sun beside a cloud of dust" },
+      { image: "page-09.svg", sound: "bell", text: "\"Nearly done,\" said Dad. \"A wall protects a garden. A garden feeds a family.\"", alt: "Dad explaining to Amal beside the half-built wall" },
+      { image: "page-10.svg", sound: "bell", text: "In the afternoon we completed it. The wall stood straight, and the garden was safe.", alt: "Amal and Adam cheering at either end of the finished wall" },
+      { image: "page-11.svg", sound: "bird", text: "Then we planted: maize along one side and flowers along the other, because that is what we agreed.", alt: "Amal and Mina planting a seed row and flowers beside the new wall" },
+      { image: "page-12.svg", sound: "lullaby", text: "That evening we celebrated with sweet tea. It happened because we did it together.", alt: "Dad, Mum, Amal and Adam together at sunset beside the finished wall" },
+    ],
+  },
+  {
+    id: "the-girl-who-carried-kindness",
+    title: "The Girl Who Carried Kindness",
+    grades: [3],
+    units: [6],
+    level: "Level 3",
+    description: "Two roads to school, and the reason Nora always takes the long one.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "The Girl Who Carried Kindness is an original Grade 3 story created for Ehel Academy in 2026, book six of the Amal series. Story and vector illustrations by Ehel Academy Learning Studio, using the cast and setting of the Grade 3 English readings. No third-party story wording or artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "bird", text: "The Girl Who Carried Kindness. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Amal and Nora standing where the two roads to school divide" },
+      { image: "page-02.svg", sound: "bell", text: "My cousin Noah is my favourite person in the family. He is kind and honest, and he never says one thing while thinking another.", alt: "Noah at home with Amal pointing him out" },
+      { image: "page-03.svg", sound: "bird", text: "Nora is my favourite person outside it. She is friendly and calm, even when everybody else is busy.", alt: "Nora standing calmly in the schoolyard with Amal beside her" },
+      { image: "page-04.svg", sound: "wind", text: "There are two roads to school. One is short and rough. The other is long and smooth.", alt: "Amal looking at the place where the short rough road and the long smooth road divide" },
+      { image: "page-05.svg", sound: "wind", text: "I always take the short one, because I am always late. Nora always takes the long one.", alt: "Amal hurrying up the short road while Nora walks the long one" },
+      { image: "page-06.svg", sound: "bell", text: "One morning I found out why. A junior student walks that way, and Nora walks beside her.", alt: "Nora walking with a small junior student while a surprised Amal watches" },
+      { image: "page-07.svg", sound: "bell", text: "\"Is that not a lot of extra walking?\" I asked. \"It is,\" said Nora. \"But she is small, and the road is busy.\"", alt: "Amal and Nora talking beside a crossing with a bus going past" },
+      { image: "page-08.svg", sound: "wind", text: "I thought about that all day. Being clever is not the same thing as being kind.", alt: "Amal alone at her desk in the classroom, thinking" },
+      { image: "page-09.svg", sound: "wind", text: "The next morning I was careless and left late again. But this time I took the long road.", alt: "Amal running up the long road with dust behind her" },
+      { image: "page-10.svg", sound: "bird", text: "Nora was already there. We walked together, all three of us, and we were not late at all.", alt: "Nora, the junior student and Amal walking the long road together" },
+      { image: "page-11.svg", sound: "tree", text: "Later that day, Nora and I sat together under the tall tree. Nothing needed to be said.", alt: "Nora and Amal sitting quietly together under the big schoolyard tree" },
+      { image: "page-12.svg", sound: "bird", text: "Kind is not a thing you are. It is a thing you carry, and you can pick it up any morning you like.", alt: "Amal and Nora together at sunset with their arms raised" },
+    ],
+  },
+  {
+    id: "from-coast-to-forest",
+    title: "From Coast to Forest",
+    grades: [3],
+    units: [7],
+    level: "Level 3",
+    description: "One morning, three places: the coast, the forest and the top of the mountain.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "From Coast to Forest is an original Grade 3 story created for Ehel Academy in 2026, book seven of the Amal series, following the class trip described in the Grade 3 Unit 7 readings. Story and vector illustrations by Ehel Academy Learning Studio. No third-party story wording or artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "river", text: "From Coast to Forest. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Teacher Yasmin, Amal and Nora on the shore with shells in the sand" },
+      { image: "page-02.svg", sound: "bell", text: "Teacher Yasmin planned a trip. \"We will start at the coast,\" she said, \"and finish on the mountain.\"", alt: "Teacher Yasmin at the classroom map and globe, explaining the route" },
+      { image: "page-03.svg", sound: "wind", text: "We packed water and hats. The weather can change from morning to night, even when the climate stays the same.", alt: "Amal and Nora getting ready in the schoolyard under a drifting cloud" },
+      { image: "page-04.svg", sound: "river", text: "At the beach the sunshine warmed the sand. The sea went out and came back, out and back.", alt: "Amal on the shore with her arms raised and shells scattered in the sand" },
+      { image: "page-05.svg", sound: "puddle", text: "Nora had never seen the sea before. \"Have you ever tasted it?\" she asked. She tasted it once, and only once.", alt: "A startled Nora at the water's edge with Amal laughing beside her" },
+      { image: "page-06.svg", sound: "river", text: "We found metal bottle tops in the sand and carried them away in a bag.", alt: "Amal pointing out litter on the beach while Nora helps collect it" },
+      { image: "page-07.svg", sound: "tree", text: "Then the forest. Under the trees the temperature dropped, and it was suddenly cool and green.", alt: "Teacher Yasmin, Amal and Nora walking a trail between tall forest trees" },
+      { image: "page-08.svg", sound: "tree", text: "\"Everything here is matter,\" said Teacher Yasmin. \"And everything here uses energy. Even the trees.\"", alt: "Teacher Yasmin explaining in the forest while a butterfly passes and Amal takes notes" },
+      { image: "page-09.svg", sound: "crickets", text: "We have seen a beetle carry a leaf twice its size. We have heard a bird we could not find.", alt: "Nora pointing up into the forest canopy at a bird, with a bee nearby" },
+      { image: "page-10.svg", sound: "wind", text: "The trail went up. Higher and higher, until the trees were below us instead of above us.", alt: "The three of them climbing the mountain path with the ridges rising behind" },
+      { image: "page-11.svg", sound: "wind", text: "Near the top, the water in our bottles was so cold it almost froze. We could see the whole coast.", alt: "An amazed Amal high on the mountain with a cloud beside her" },
+      { image: "page-12.svg", sound: "bird", text: "\"One planet,\" said Teacher Yasmin. \"Coast, forest and mountain, all in one morning.\" I have never forgotten it.", alt: "Teacher Yasmin, Amal and Nora at the top of the mountain in the sunshine" },
+    ],
+  },
+  {
+    id: "the-mystery-of-the-million-shells",
+    title: "The Mystery of the Million Shells",
+    grades: [3],
+    units: [8],
+    level: "Level 3",
+    description: "How many shells are on the beach? Amal finds out without counting a single one.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "The Mystery of the Million Shells is an original Grade 3 story created for Ehel Academy in 2026, book eight of the Amal series. Story and vector illustrations by Ehel Academy Learning Studio, using the cast and setting of the Grade 3 English readings. No third-party story wording or artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "river", text: "The Mystery of the Million Shells. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Teacher Yasmin and Amal on a beach covered in shells" },
+      { image: "page-02.svg", sound: "river", text: "Teacher Yasmin asked us a question. \"How many shells are on our beach? Give me a number.\"", alt: "Teacher Yasmin on the shore asking the class a question" },
+      { image: "page-03.svg", sound: "bell", text: "\"A hundred,\" said Idris. \"A thousand,\" said Nora. \"A million,\" I said, because it was the biggest number I knew.", alt: "Idris, Nora and Amal all guessing at once with their arms in the air" },
+      { image: "page-04.svg", sound: "wind", text: "\"Good,\" she said. \"Now prove it.\"", alt: "Teacher Yasmin standing calmly while a surprised Amal looks at her" },
+      { image: "page-05.svg", sound: "river", text: "So we measured one square metre of sand with a straight tape, and counted the shells inside it.", alt: "Amal and Nora measuring a square of sand with a metre stick and a ruler" },
+      { image: "page-06.svg", sound: "river", text: "There were sixty-four. Sixty-four shells in one single square metre.", alt: "A marked-out square of beach full of shells with Amal writing the number down" },
+      { image: "page-07.svg", sound: "river", text: "Then we measured the beach itself: two hundred metres long, and thirty metres wide.", alt: "Nora pointing along the beach beside a long measuring tape" },
+      { image: "page-08.svg", sound: "bell", text: "Multiplication is faster than counting. Two hundred times thirty is six thousand square metres.", alt: "Teacher Yasmin working the multiplication on the classroom board" },
+      { image: "page-09.svg", sound: "bell", text: "Six thousand times sixty-four. Adam did the addition twice, to check the fact.", alt: "Adam checking his working at a desk while Amal watches" },
+      { image: "page-10.svg", sound: "bell", text: "Three hundred and eighty-four thousand. Not a million - but much closer to a million than to a hundred.", alt: "Amal cheering beside a number line on the classroom wall" },
+      { image: "page-11.svg", sound: "river", text: "\"You did not count them,\" said Teacher Yasmin. \"You measured. That is what maths is for.\"", alt: "Teacher Yasmin and Amal back on the shell-covered shore" },
+      { image: "page-12.svg", sound: "river", text: "I looked at the whole beach and, for the very first time, I could see the size of it.", alt: "Amal alone on the beach looking out over the shells and the sea" },
+    ],
+  },
+  {
+    id: "the-box-of-ideas",
+    title: "The Box of Ideas",
+    grades: [3],
+    units: [9],
+    level: "Level 3",
+    description: "One idea each - a dream, a memory or a hope - and the hardest one to write is Amal's.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "The Box of Ideas is an original Grade 3 story created for Ehel Academy in 2026, book nine of the Amal series, built on the Box of Ideas described in the Grade 3 Unit 9 readings. Story and vector illustrations by Ehel Academy Learning Studio. No third-party story wording or artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "bell", text: "The Box of Ideas. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of the bright Box of Ideas on a classroom desk with Teacher Yasmin and Amal beside it" },
+      { image: "page-02.svg", sound: "bell", text: "Teacher Yasmin brought a bright box into class. \"This is our Box of Ideas,\" she said.", alt: "Teacher Yasmin setting the Box of Ideas down in front of the class" },
+      { image: "page-03.svg", sound: "bell", text: "\"Every child will add one idea. It can be a dream, a memory, or a hope.\"", alt: "Teacher Yasmin explaining the box while Amal and Nora listen" },
+      { image: "page-04.svg", sound: "wind", text: "The whole room went quiet. An idea is easy to have and hard to write down.", alt: "A hushed classroom with Amal looking uncertain at her desk" },
+      { image: "page-05.svg", sound: "bell", text: "Nora wrote about a library with no walls at all. That was her dream.", alt: "Nora holding her written idea beside a shelf of books" },
+      { image: "page-06.svg", sound: "rain", text: "Idris wrote about the smell of rain on hot ground. That was his memory.", alt: "Idris holding up his idea beside a pinned-up drawing" },
+      { image: "page-07.svg", sound: "wind", text: "I could not choose. I had three ideas, and not one of them felt sincere enough.", alt: "Amal alone at her desk with a blank paper, looking sad" },
+      { image: "page-08.svg", sound: "lullaby", text: "Sami wrote one line: \"I hope my sister gets well.\" Nobody said anything for a moment.", alt: "A quiet classroom as Sami holds his single line of writing, with Amal listening" },
+      { image: "page-09.svg", sound: "bell", text: "Teacher Yasmin said, \"Feelings are not good or bad. Sadness is not a mistake. It is information.\"", alt: "Teacher Yasmin explaining gently to Amal and Nora" },
+      { image: "page-10.svg", sound: "bell", text: "So I wrote what I actually felt, which was that I was scared about the contest next week.", alt: "Amal writing her real idea down at her desk" },
+      { image: "page-11.svg", sound: "bell", text: "We read them out loud, and nobody laughed. Every single idea was allowed.", alt: "The class reading their ideas aloud around the Box of Ideas" },
+      { image: "page-12.svg", sound: "bird", text: "An idea is small until you say it. Then it belongs to everybody, and it is not heavy any more.", alt: "Amal with her arms raised beside the Box of Ideas in the sunlight" },
+    ],
+  },
+  {
+    id: "nine-doors",
+    title: "Nine Doors",
+    grades: [3],
+    units: [10],
+    level: "Level 3",
+    description: "Nine units, nine doors, and everything Amal found behind them in one year.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "Nine Doors is an original Grade 3 story created for Ehel Academy in 2026, book ten of the Amal series and the close of the Grade 3 shelf, built on the Year 3 Showcase described in the Grade 3 Unit 10 readings. Story and vector illustrations by Ehel Academy Learning Studio. No third-party story wording or artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "bell", text: "Nine Doors. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of the Year 3 Showcase with bunting, two easels, and Amal and Nora presenting" },
+      { image: "page-02.svg", sound: "bell", text: "It was the last week of Year 3. Teacher Yasmin gave us a project: the Year 3 Showcase.", alt: "Teacher Yasmin presenting the project brief on the classroom wall" },
+      { image: "page-03.svg", sound: "bell", text: "\"Nine units,\" she said. \"Nine doors. Choose what you learned behind each one.\"", alt: "Nine numbered coloured doors in rows across the classroom wall" },
+      { image: "page-04.svg", sound: "hen", text: "Behind the first door: my family, and the duty I keep at home.", alt: "Amal with her showcase page beside the dining room, with Mina nearby" },
+      { image: "page-05.svg", sound: "bell", text: "Behind the second: the spelling contest, and studying a little every day.", alt: "Amal holding a book beside her contest page pinned to the wall" },
+      { image: "page-06.svg", sound: "bell", text: "Behind the third: twelve months, and a poem about the hours going by.", alt: "Amal with her poem beside the twelve-month calendar" },
+      { image: "page-07.svg", sound: "market", text: "Behind the fourth: the market, the hospital, and the sailor down at the coast.", alt: "Omar at his market stall with the hospital behind and Amal holding her page" },
+      { image: "page-08.svg", sound: "bird", text: "Behind the fifth: a wall we built together, and the garden it keeps safe.", alt: "Amal cheering beside the finished garden wall and the planted garden" },
+      { image: "page-09.svg", sound: "wind", text: "Behind the sixth: the long road to school, and my friend Nora walking it.", alt: "Nora and Amal on the long road to school" },
+      { image: "page-10.svg", sound: "wind", text: "Behind the seventh: coast, forest and mountain, all in one single morning.", alt: "Amal and Nora high on the mountain trail" },
+      { image: "page-11.svg", sound: "river", text: "Behind the eighth: a beach I measured instead of counting.", alt: "Amal holding a shell on the measured beach with a metre stick beside her" },
+      { image: "page-12.svg", sound: "bell", text: "Behind the ninth: a box of ideas. On Showcase Day I read mine out loud, and my voice did not shake.", alt: "Showcase Day with bunting and confetti, Amal reading aloud while Teacher Yasmin and Nora cheer" },
+    ],
+  },
 ];
 
 let course;
@@ -2091,7 +2358,7 @@ function focusDynamicContent(selector, message) {
 }
 
 function prepareScreenReaderView() {
-  const sectionLabel = visibleSections().find(([id]) => id === route)?.[2] || (route === "teacher" ? "Teacher resources" : "Overview");
+  const sectionLabel = visibleSections().find(([id]) => id === route)?.[2] || (route === "teacher" ? "Teacher resources" : route === "student" ? "Student resources" : "Overview");
   const heading = $("#app h1");
   $$('[id$="feedback"], #save-status, #video-status, [data-record-status]', $("#app")).forEach((element) => {
     element.setAttribute("role", "status");
@@ -5452,6 +5719,18 @@ function printBook(book) {
   printWindow.addEventListener("afterprint", () => printWindow.close());
 }
 
+// "recommended for early readers" was hard-coded here while Grade 1 was the only
+// shelf. It now reaches Grade 3, where telling an eight-year-old reading a
+// twelve-page chapter story that she is an early reader is simply wrong — and it
+// is the kind of wrong a learner notices about themselves. Derived from the
+// book's own grades so a new shelf cannot inherit the wrong label again.
+function readerLabel(book) {
+  const lowest = Math.min(...book.grades);
+  if (lowest <= 2) return "recommended for early readers";
+  if (lowest <= 4) return "recommended for growing readers";
+  return "recommended for confident readers";
+}
+
 function renderEbooks() {
   ebookWatchActive = false;
   ebookWatchToken += 1;
@@ -5480,7 +5759,7 @@ function renderEbooks() {
     <div class="course-ebook-layout compact">
       <section class="course-ebook-reader" aria-label="${escapeHtml(book.title)} eBook reader">
         <header class="course-ebook-header">
-          <div><span class="eyebrow">${escapeHtml(book.level)} · recommended for early readers</span><h2>${escapeHtml(book.title)}</h2><p>${escapeHtml(book.description)}</p></div>
+          <div><span class="eyebrow">${escapeHtml(book.level)} · ${readerLabel(book)}</span><h2>${escapeHtml(book.title)}</h2><p>${escapeHtml(book.description)}</p></div>
           <div class="course-ebook-header-actions">
             <button class="button primary" id="watch-ebook" type="button" aria-label="Watch the story: narrated pages that turn by themselves">${icon("play")} Watch the story</button>
             <span class="course-ebook-pagecount" id="ebook-page-count" aria-live="polite"></span>
@@ -5648,6 +5927,90 @@ function gamesTeacherPanel() {
   return `<section class="panel"><span class="eyebrow">Gamified practice</span><h2>Game mastery</h2><p>Best scores and attempts saved for this learner on this device.</p><div class="teacher-table-scroll"><table class="teacher-table"><thead><tr><th>Game</th><th>Skill</th><th>Best</th><th>Attempts</th><th>XP</th><th>Teaching response</th></tr></thead><tbody>${rows}</tbody></table></div></section>`;
 }
 
+// ===================== student resources =====================
+// Grade 1's counterpart to the Teacher resources button, and the same shape: a
+// switch under the section list that leads to one page. It collects what a
+// learner (or the grown-up beside them) may want to reach DIRECTLY rather than
+// by walking the gated chain — the two study plans, the picture books, the word
+// cards, the games, the progress page.
+//
+// It links; it never restates. Every card navigates to the section that already
+// owns the material, so nothing here can drift from what it describes. A card is
+// drawn only for material this unit actually has — the same rule
+// visibleSections() applies to the nav — and a card whose section is not open
+// yet says so rather than leading the learner to a locked page.
+const STUDENT_RESOURCES_GRADE = 1;
+const hasStudentResources = () => gradeNumber === STUDENT_RESOURCES_GRADE;
+
+function studentResourceCards() {
+  // The Prerequisite unit has no unit content to point at: its two pages are
+  // the exam and the year plan, and renderYearPlan/renderPlacementExam bounce
+  // any other unit back to the overview, so the normal list would be links to
+  // pages that redirect.
+  if (isPrereqUnit) {
+    return [
+      { route: "placement", iconName: "clipboard-check", title: placementExam?.kind === "readiness" ? "Readiness check" : "Placement exam", blurb: "A short exam that finds the best place for you to start. You can try it as many times as you like." },
+      { route: "year-plan", iconName: "calendar-days", title: `${gradeLabel} Study Plan`, blurb: "The whole year: every unit, the weeks it takes and the words it teaches." },
+    ];
+  }
+  const books = unitEbooks().length;
+  const cards = [
+    { route: "unit-plan", iconName: "calendar-days", title: "Unit Study Plan", blurb: "What to do each day of this unit, from the video lesson to the quiz." },
+    // The grade plan lives on the Prerequisite unit, so this one leaves the
+    // page rather than navigating — a route here would redirect (renderYearPlan
+    // returns to the overview outside that unit).
+    { href: courseLocation(PREREQ_UNIT, "year-plan"), iconName: "map", title: `${gradeLabel} Study Plan`, blurb: "The whole year at a glance: every unit and what it brings." },
+    { route: "dictionary", iconName: "book-a", title: "Word cards", blurb: "Every new word in this unit, with a picture, a meaning and a voice to listen to." },
+  ];
+  if (books) cards.push({ route: "ebooks", iconName: "library-big", title: "Picture books", blurb: `${books === 1 ? "A story book" : `${books} story books`} to read or listen to, with pictures that move when you tap them.` });
+  if (gamePack) cards.push({ route: "games", iconName: "gamepad-2", title: "Games", blurb: "Play with this unit's words and sentences until they stick." });
+  cards.push({ route: "reflect", iconName: "sparkles", title: "My progress", blurb: "See what you have finished in this unit, and what comes next." });
+  cards.push({ route: "live", iconName: "video", title: "Live sessions", blurb: "When your class meets your teacher online, the link is here." });
+  return cards;
+}
+
+function renderStudentResources() {
+  // Reachable by typing #student at any grade; only Grade 1 has the page.
+  if (!hasStudentResources()) return navigate("overview");
+  const cards = studentResourceCards().map((card) => {
+    const locked = card.route ? !sectionUnlocked(card.route) : false;
+    const action = locked
+      ? `<small>${icon("lock")} Opens when you get there</small>`
+      : card.href
+        ? `<a class="button secondary" href="${card.href}">Open ${icon("arrow-right")}</a>`
+        : `<button class="button secondary" data-go="${escapeHtml(card.route)}" type="button">Open ${icon("arrow-right")}</button>`;
+    return `<article class="panel final-section-card student-resource-card${locked ? " is-locked" : ""}">
+      <span>${icon(card.iconName)}</span>
+      <h3>${escapeHtml(card.title)}</h3>
+      <p>${escapeHtml(card.blurb)}</p>
+      ${action}
+    </article>`;
+  }).join("");
+  $("#app").innerHTML = `${pageHeader(
+    `${gradeLabel} · ${isPrereqUnit ? "Prerequisite unit" : `Unit ${course.unit.unitNo}`}`,
+    "Student resources",
+    "Everything here is for you. Open any of them whenever you like — none of them is a step you have to finish first.",
+    "For learners",
+  )}
+    <div class="final-quiz-intro">
+      <div class="final-section-grid">${cards}</div>
+      <section class="panel"><h2>Stuck on something?</h2><p>Press <strong>Wehel Tutor</strong> at the bottom of any page and ask. Wehel knows which page you are on, so you can say “I don't understand this” and get help there and then.</p></section>
+    </div>`;
+  $$('[data-go]').forEach((button) => button.addEventListener("click", () => navigate(button.dataset.go)));
+  icons();
+}
+
+// The switch itself. Hidden markup by default (english/index.html), shown here
+// once the grade is known, and repainted on every nav render for the same
+// reason the teacher switch is — the shell's `route` is current at nav time,
+// this module's copy is not set until onBeforeRender, which runs after.
+function paintStudentSwitch() {
+  const button = $("#student-switch");
+  if (!button) return;
+  button.hidden = !hasStudentResources();
+  button.classList.toggle("active", shellCtx?.route === "student");
+}
+
 function renderTeacher() {
   const assignment = course.assignments[0];
   $("#app").innerHTML = `${pageHeader("Teacher view", `Unit ${course.unit.unitNo} teaching resources`, "Implementation view for lesson delivery, assessment evidence and curriculum alignment.", "AI-assisted review · sign-off pending")}
@@ -5702,7 +6065,7 @@ const config = {
   // paint into a region the previous section left behind.
   onBeforeRender: () => { route = shellCtx.route; stopAudio(); document.body.classList.remove("gc-full"); classicRegion = null; deckMount = null; activeDeck = null; showWordInDeck = null; showReadingInDeck = null; showWritingInDeck = null; showComprehensionGroupInDeck = null; $("#app").setAttribute("aria-busy", "true"); },
   onAfterRender: () => { $("#app").setAttribute("aria-busy", "false"); renderSectionGuide(); renderSectionCompletion(); prepareScreenReaderView(); icons(); },
-  onNavRendered: () => { renderUnitPickers(); paintSectionLocks(); icons(); },
+  onNavRendered: () => { renderUnitPickers(); paintSectionLocks(); paintStudentSwitch(); icons(); },
   // Every route draws the locked page while a unit is locked. The check is
   // inside each entry, not a swapped-out map: the lock is not settled until
   // load() has heard from the progress gateway, and this object is built while
@@ -5731,6 +6094,7 @@ const config = {
     reflect: () => renderReflect(),
     "final-quiz": () => renderFinalQuiz(),
     teacher: () => (isPrereqUnit ? renderPrereqTeacher() : renderTeacher()),
+    student: () => renderStudentResources(),
   }),
   bind,
   wehelOptions,
@@ -5821,7 +6185,7 @@ const config = {
     }
     if (location.hash.slice(1) === "final-quiz" && unitNumber !== 10) location.hash = "overview";
     if (location.hash.slice(1) === "games" && !gamePack) location.hash = "overview";
-    if (isPrereqUnit && !["overview", "placement", "year-plan", "teacher"].includes(location.hash.slice(1))) location.hash = "overview";
+    if (isPrereqUnit && !["overview", "placement", "year-plan", "teacher", "student"].includes(location.hash.slice(1))) location.hash = "overview";
     if (!isPrereqUnit && ["placement", "year-plan"].includes(location.hash.slice(1))) location.hash = "overview";
     if (location.hash.slice(1) === "unit-plan" && isPrereqUnit) location.hash = "overview";
     // Cosmetic only — the lock screen renders whatever the hash says. This just
@@ -5857,6 +6221,13 @@ const config = {
       picker.addEventListener("change", (event) => { location.href = event.target.value === "year-plan" ? courseLocation(PREREQ_UNIT, "year-plan") : courseLocation(event.target.value); });
     }
     // English-only listeners (the shell handles teacher-switch + hashchange).
+    // The student switch is English's own — bound once here, shown or hidden by
+    // paintStudentSwitch() on every nav render.
+    const studentSwitch = $("#student-switch");
+    if (studentSwitch) {
+      paintStudentSwitch();
+      studentSwitch.addEventListener("click", () => navigate("student"));
+    }
     $("#sound-toggle").addEventListener("click", () => {
       audioEnabled = !audioEnabled;
       $("#sound-toggle").innerHTML = icon(audioEnabled ? "volume-2" : "volume-x");

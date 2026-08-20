@@ -45,6 +45,16 @@ const EXTENTS = {
   bird: [-40, -26, 36, 22],
 };
 
+// The Grade 3 cast are people, and people are built from ONE parametric figure,
+// so they all share a box. The adult/child difference is a scale factor inside
+// the transform, which the walk below already composes — it is not a different
+// shape. Top extent is the afro puffs (or a raised hand), bottom is the ground
+// shadow.
+const PERSON = [-52, -197, 52, 14];
+for (const who of ["amal", "nora", "mina", "adam", "idris", "noah", "yasmin", "mum", "dad", "hana", "omar"]) {
+  EXTENTS[who] = PERSON;
+}
+
 // A character is allowed to run off the SIDES — a half-visible friend at the
 // edge of the frame is a normal picture-book composition, and the Grade 1 books
 // do it. Running off the BOTTOM is never intentional: it cuts the feet off a
@@ -93,9 +103,13 @@ function characterCalls(markup, where) {
     // Self-closing <g/> never happens in this kit, but guard anyway so the
     // stack cannot drift and silently shift every later measurement.
     if (!whole.endsWith("/>")) stack.push(node);
-    const tap = attrs.match(/data-tap="([^"]+)"/);
-    if (!tap || !EXTENTS[tap[1]]) continue;
-    results.push({ name: tap[1], x: node.x, y: node.y, sx: Math.abs(node.sx), sy: Math.abs(node.sy), where });
+    // `data-figure` first: the Grade 3 people carry it INSTEAD of a data-tap,
+    // because a tap value promises a sound clip and there are no human voice
+    // clips on the shelf. Measuring a character must not depend on whether
+    // somebody has paid for its audio yet.
+    const id = attrs.match(/data-figure="([^"]+)"/) || attrs.match(/data-tap="([^"]+)"/);
+    if (!id || !EXTENTS[id[1]]) continue;
+    results.push({ name: id[1], x: node.x, y: node.y, sx: Math.abs(node.sx), sy: Math.abs(node.sy), where });
   }
   return results;
 }

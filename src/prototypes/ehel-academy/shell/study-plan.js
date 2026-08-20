@@ -145,41 +145,57 @@ export function renderUnitStudyPlan(options) {
   }
   const weekCount = span ? span.to - span.from + 1 : 2;
   const parts = options.planSections();
-  const partsPerWeek = (() => {
-    const base = Math.floor(parts.length / weekCount);
-    const extra = parts.length % weekCount;
-    let start = 0;
-    return Array.from({ length: weekCount }, (_, index) => {
-      const size = base + (index < extra ? 1 : 0);
-      const slice = parts.slice(start, start + size);
-      start += size;
-      return slice;
-    });
+  // One line per day, computed over the WHOLE unit rather than week by week.
+  // Two shapes, chosen by which side is scarcer:
+  //  - more parts than days → several parts share a day, named together;
+  //  - more days than parts (a guided Global Perspectives unit offers four
+  //    parts across six weeks) → each part gets a RUN of days — "Start /
+  //    Carry on with / Finish" — because a Mini-Project genuinely spans
+  //    weeks. The first cut of this page gave every part one day and filled
+  //    the rest with "go back over" lines, which read as five empty weeks.
+  // The unit's final day is always the look-back.
+  const totalDays = weekCount * 5;
+  const dayLines = (() => {
+    const lines = [];
+    if (parts.length >= totalDays) {
+      const base = Math.floor(parts.length / totalDays);
+      const extra = parts.length % totalDays;
+      let start = 0;
+      for (let day = 0; day < totalDays; day += 1) {
+        const size = base + (day < extra ? 1 : 0);
+        lines.push(parts.slice(start, start + size).map((part) => `<strong>${ui.escapeHtml(part[2])}</strong>`).join(" · "));
+        start += size;
+      }
+      return lines;
+    }
+    if (!parts.length) {
+      while (lines.length < totalDays - 1) lines.push("Go back over what was new this week.");
+      lines.push("Look back over the whole unit before you move on.");
+      return lines;
+    }
+    const workDays = Math.max(parts.length, totalDays - 1);
+    const base = Math.floor(workDays / parts.length);
+    const extra = workDays % parts.length;
+    for (let index = 0; index < parts.length; index += 1) {
+      const label = `<strong>${ui.escapeHtml(parts[index][2])}</strong>`;
+      const spanDays = base + (index < extra ? 1 : 0);
+      for (let day = 0; day < spanDays; day += 1) {
+        if (spanDays === 1) lines.push(label);
+        else if (day === 0) lines.push(`Start ${label}.`);
+        else if (day === spanDays - 1) lines.push(`Finish ${label}.`);
+        else lines.push(`Carry on with ${label}.`);
+      }
+    }
+    while (lines.length < totalDays - 1) lines.push("Go back over what was new this week.");
+    lines.push("Look back over the whole unit before you move on.");
+    return lines.slice(0, totalDays);
   })();
-  const weekPanel = (weekIndex) => {
-    const weekParts = partsPerWeek[weekIndex];
-    const isLast = weekIndex === weekCount - 1;
-    // The week's sections across its five days, remainder early; a day with
-    // nothing new is for going back over what was.
-    const base = Math.floor(weekParts.length / 5);
-    const extra = weekParts.length % 5;
-    let start = 0;
-    const days = Array.from({ length: 5 }, (_, dayIndex) => {
-      const size = base + (dayIndex < extra ? 1 : 0);
-      const slice = weekParts.slice(start, start + size);
-      start += size;
-      const label = slice.map((part) => `<strong>${ui.escapeHtml(part[2])}</strong>`).join(" · ");
-      if (label) return label;
-      if (isLast && dayIndex === 4) return "Look back over the whole unit before you move on.";
-      return "Go back over what was new this week.";
-    });
-    return `<section class="panel">
+  const weekPanel = (weekIndex) => `<section class="panel">
       <span class="eyebrow">${span ? `Week ${span.from + weekIndex} · Term ${span.termNo}` : `Week ${weekIndex + 1}`}</span>
       <ol class="path-list">
-        ${days.map((what, dayIndex) => `<li>${ui.icon("circle-check-big")}<span><strong>Day ${dayIndex + 1}:</strong> ${what}</span></li>`).join("")}
+        ${dayLines.slice(weekIndex * 5, weekIndex * 5 + 5).map((what, dayIndex) => `<li>${ui.icon("circle-check-big")}<span><strong>Day ${dayIndex + 1}:</strong> ${what}</span></li>`).join("")}
       </ol>
     </section>`;
-  };
   ui.$("#app").innerHTML = `${ui.pageHeader(
     `${options.stageLabel} · Unit ${options.unitNumber}`,
     `Your plan for ${ui.escapeHtml(options.unitTitle)}`,

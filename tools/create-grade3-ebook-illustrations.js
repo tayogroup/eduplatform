@@ -223,34 +223,34 @@ const contestPages = [
 const calendarPages = [
   // 1 cover: the class calendar, all twelve months
   `${classroomScene()}
-   ${monthWall(820, 400, 0.86, { highlight: 0 })}
+   ${monthWall(886, 380, 0.86, { columns: 4, highlight: 0 })}
    ${figure("amal", { x: 380, y: 950, s: 1.625, holding: heldPaper })}
    ${figure("nora", { x: 1240, y: 950, s: 1.575, arms: "up" })}`,
 
   // 2 twelve months, January to December
   `${classroomScene()}
-   ${monthWall(800, 380, 0.95)}
+   ${monthWall(886, 380, 0.86, { columns: 4 })}
    ${figure("yasmin", { x: 1300, y: 950, s: 1.6, arms: "point" })}`,
 
   // 3 January, February, March
   `${classroomScene()}${desk(1180, 950, 1.3, { item: heldPaper })}
-   ${monthWall(620, 340, 0.72, { highlight: 1 })}
+   ${monthWall(886, 380, 0.86, { columns: 4, highlight: 1 })}
    ${figure("amal", { x: 620, y: 950, s: 1.7, holding: heldPaper })}`,
 
   // 4 April, May, June — rain on one, sunshine on another
   `${classroomScene()}
-   ${monthWall(700, 350, 0.76, { highlight: 4 })}
+   ${monthWall(886, 380, 0.86, { columns: 4, highlight: 4 })}
    ${figure("nora", { x: 1180, y: 950, s: 1.7, arms: "point" })}`,
 
   // 5 July, August, September — Idris draws a kite on every page
   `${classroomScene()}
-   ${monthWall(760, 350, 0.76, { highlight: 7 })}
+   ${monthWall(886, 380, 0.86, { columns: 4, highlight: 7 })}
    ${kite(1300, 300, 0.66)}
    ${figure("idris", { x: 520, y: 950, s: 1.5, holding: heldPaper })}`,
 
   // 6 October, November, December — Mina colours the last one purple
   `${classroomScene()}
-   ${monthWall(760, 350, 0.76, { highlight: 11 })}
+   ${monthWall(886, 380, 0.86, { columns: 4, highlight: 11 })}
    ${figure("mina", { x: 520, y: 952, s: 1.3, arms: "up" })}
    ${figure("amal", { x: 1240, y: 950, s: 1.55 })}`,
 
@@ -730,7 +730,7 @@ const nineDoorsPages = [
    ${figure("amal", { x: 660, y: 950, s: 1.7, holding: heldBook })}`,
 
   // 6 door three: twelve months, and a poem
-  `${classroomScene()}${monthWall(880, 380, 0.78)}
+  `${classroomScene()}${monthWall(886, 380, 0.86, { columns: 4 })}
    ${figure("amal", { x: 400, y: 950, s: 1.675, holding: heldPaper })}`,
 
   // 7 door four: the market, the hospital, the coast

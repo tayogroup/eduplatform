@@ -1,7 +1,12 @@
 #!/usr/bin/env node
 
 // Writes the STORY.txt and ATTRIBUTION.txt that sit beside each original
-// picture book, for the Grade 2 (Zuri) and Grade 3-4 (Amal) shelves.
+// picture book, for the Grade 1 second book (the Amal series), the Grade 2
+// (Zuri) shelf and the Grade 3-4 (Amal) shelves.
+//
+// The Grade 1 FIRST book per unit is the animal storyworld (Kiki, Duku, Lulu)
+// and still carries hand-typed copies; those are the ones this file exists to
+// stop anybody writing more of.
 //
 // They are GENERATED, not hand-written, because the shipped words live in the
 // catalogue in shell/subjects/english.js and nowhere else. The Grade 1 folders
@@ -243,6 +248,67 @@ const NOTES = {
     vocabulary: "one room for each of Units 1-9: mail, moisture, rice, service, spiral, carpenter, terrified, equipment, station",
     themes: "walking somebody else through a year you have had",
     cameos: "the Year 4 Exhibition and the poem \"Nine Rooms\" are both from the Unit 10 readings.",
+  },
+
+  "amals-first-day": {
+    series: "Amal (Grade 1)", book: 1, term: "Term 1", unit: "Unit 1: Welcome to School",
+    vocabulary: "table, chair, whiteboard, abc chart, clock, book, pencil, ruler, crayon, lunchbox, red, blue, green, yellow, teacher, friend, boy, girl, read, write, draw, sing, listen, point",
+    themes: "a first day somewhere new; saying your own name out loud",
+    cameos: "Adam, Samira and the teacher are the Unit 1 reading's own characters; Amal returns here every unit and again in the Grade 3 and Grade 4 books.",
+  },
+  "breakfast-at-grandmas-house": {
+    series: "Amal (Grade 1)", book: 2, term: "Term 1", unit: "Unit 2: Family Time",
+    vocabulary: "mother, mum, father, dad, sister, brother, grandma, grandpa, family, baby, grown-ups, children, cereal, milk, fruit, mango, banana, grapes, strawberries, one to ten, help, eat, talk, laugh, lay the table",
+    themes: "a big family around one table; helping without being asked",
+    cameos: "baby Idris, Ayeeyo and Grandpa come from the Unit 2 reading; Idris grows into the Grade 3 cast.",
+  },
+  "amal-and-the-big-ball": {
+    series: "Amal (Grade 1)", book: 3, term: "Term 1", unit: "Unit 3: Fun and Games",
+    vocabulary: "bounce, roll, throw, catch, run, jump, shake, share, take turns, big, red, ball, tree, branch, up, down",
+    themes: "letting the smallest player join; the game is better shared",
+    cameos: "Samira and little Leo are named in the Unit 3 reading; Adam is the same big brother as in Units 4, 5 and 9.",
+  },
+  "amal-makes-a-mat": {
+    series: "Amal (Grade 1)", book: 4, term: "Term 2", unit: "Unit 4: Making Things",
+    vocabulary: "make, weave, cut, draw, try, circle, square, triangle, rectangle, red, blue, green, yellow, grass, mat, paper, crayons, neat, bumpy",
+    themes: "the first try is allowed to be bad; patience is how good things get made",
+    cameos: "Ayeeyo the grandmother and little Hodan are both from the Unit 4 reading.",
+  },
+  "amal-and-the-little-hen": {
+    series: "Amal (Grade 1)", book: 5, term: "Term 2", unit: "Unit 5: On the Farm",
+    vocabulary: "cow, hen, chick, sheep, goat, moo, baa, cluck, farm, barn, field, seed, egg, tractor, feeding, planting, growing, milk, bread",
+    themes: "kindness to animals comes back to you; everything on a farm grows",
+    cameos: "Ayeeyo keeps the farm in the Unit 5 reading; Adam drives the tractor there too.",
+  },
+  "amal-at-the-market": {
+    series: "Amal (Grade 1)", book: 6, term: "Term 2", unit: "Unit 6: My Five Senses",
+    vocabulary: "see, hear, smell, taste, touch, eyes, ears, nose, tongue, hands, soft, hard, loud, sweet, cold, juicy, big, bigger",
+    themes: "one busy place, met five different ways; being thankful for the senses",
+    cameos: "Omar the shopkeeper is named in the Unit 6 reading and returns in Unit 9 and in the Grade 3 books.",
+  },
+  "amals-big-bus-ride": {
+    series: "Amal (Grade 1)", book: 7, term: "Term 3", unit: "Unit 7: Let's Go!",
+    vocabulary: "walk, bus, car, bicycle, boat, wheels, seat, drive, ride, float, road, town, sea, fast, slow, sit down",
+    themes: "a journey told by what goes past the window",
+    cameos: "Adam on his bicycle and Samira on her way to school both wave from the Unit 7 reading.",
+  },
+  "the-well-in-the-village": {
+    series: "Amal (Grade 1)", book: 8, term: "Term 3", unit: "Unit 8: Wonderful Water",
+    vocabulary: "water, well, rain, drop, pot, wet, dry, clean, drink, wash, cook, grow, share, river, cloud, grey",
+    themes: "sharing a scarce thing; the relief when the rain finally comes",
+    cameos: "Adam carries the pot and little Hodan drinks the first cup, both from the Unit 8 reading.",
+  },
+  "a-walk-around-town": {
+    series: "Amal (Grade 1)", book: 9, term: "Term 3", unit: "Unit 9: City Places",
+    vocabulary: "school, market, hospital, library, park, road, shop, bin, teacher, doctor, shopkeeper, neighbour, red, green, stop, go, clean, busy, quiet, polite",
+    themes: "a town is the people who help in it; everyone keeps it clean",
+    cameos: "Omar the shopkeeper, Faduma the doctor and Leo are all named in the Unit 9 reading; Ayeeyo is waiting in the library.",
+  },
+  "amals-english-year": {
+    series: "Amal (Grade 1)", book: 10, term: "Term 3", unit: "Unit 10: My First English World",
+    vocabulary: "a review of the year: letters, family, colours, shapes, numbers, farm animals, the five senses, vehicles, water and town places",
+    themes: "looking back at a whole year of work; being proud of it out loud",
+    cameos: "every earlier book in the series is in the folder Amal opens - the alphabet from Unit 1, the farm from Unit 5, the senses from Unit 6, the bus from Unit 7.",
   },
 };
 

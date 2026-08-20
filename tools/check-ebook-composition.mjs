@@ -51,7 +51,11 @@ const EXTENTS = {
 // shape. Top extent is the afro puffs (or a raised hand), bottom is the ground
 // shadow.
 const PERSON = [-52, -197, 52, 14];
-for (const who of ["amal", "nora", "mina", "adam", "idris", "noah", "yasmin", "mum", "dad", "hana", "omar", "maya", "sami", "salma"]) {
+// The baby is not a short adult. babyIdris() draws its own shape and carries
+// data-figure="baby" so it is measured against that shape rather than against
+// a standing child's, which would report it as taller than it is.
+EXTENTS.baby = [-70, -162, 70, 8];
+for (const who of ["amal", "nora", "mina", "adam", "idris", "noah", "yasmin", "mum", "dad", "hana", "omar", "maya", "sami", "salma", "samira", "hodan", "leo", "faduma", "grandpa", "daniel", "theo", "nadia", "sarah", "rami"]) {
   EXTENTS[who] = PERSON;
 }
 

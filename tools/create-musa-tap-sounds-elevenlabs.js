@@ -52,6 +52,14 @@ const SOUNDS = [
   { key: "river", seconds: 2, prompt: "A gentle small river flowing and babbling over stones, soft and fresh, no other sounds" },
   { key: "rain", seconds: 2, prompt: "Gentle soft rain pattering on leaves, calm and cozy, child friendly, no thunder" },
   { key: "market", seconds: 1.8, prompt: "A short cheerful busy market ambience, soft friendly chatter and bustle, warm and happy, child friendly" },
+  // Zuri, the Grade 2 lead. A meerkat's own call is a high sharp peep, close to
+  // a small bird's — which is why she borrowed the chick's chirp until these
+  // existed. She is in TAP_SOUND_MOOD_TYPES in english.js, so all three moods
+  // must be present: that set asks for zuri-<mood>.mp3 by name, and a missing
+  // one taps silently rather than falling back.
+  { key: "zuri-happy", seconds: 1.4, prompt: "One short bright cheerful meerkat peep chirp, small perky desert animal, quick and happy, cartoon style, child friendly, no background noise" },
+  { key: "zuri-sad", seconds: 1.6, prompt: "One short soft sad little meerkat peep whine, small drooping chirp, gentle storybook sound, child friendly, no background noise" },
+  { key: "zuri-surprised", seconds: 1.3, prompt: "One short startled meerkat alarm peep squeak, quick sharp and bright, cartoon style, child friendly, no background noise" },
 ];
 
 function loadDotEnv(filePath) {

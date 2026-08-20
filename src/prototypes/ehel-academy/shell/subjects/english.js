@@ -1674,15 +1674,9 @@ let activeEbookId = ebookCatalog[0].id;
 let ebookWatchActive = false;
 let ebookWatchToken = 0;
 
-const TAP_SOUND_MOOD_TYPES = new Set(["zebra", "elephant", "kiki", "duku", "lulu"]);
+const TAP_SOUND_MOOD_TYPES = new Set(["zebra", "elephant", "kiki", "duku", "lulu", "zuri"]);
 const TAP_SOUND_MOODS = new Set(["happy", "sad", "surprised"]);
-// `zuri` is the Grade 2 lead and has no recorded cue of her own, so she borrows
-// the chick's chirp — the closest thing on the shelf to a meerkat's peep. She is
-// deliberately NOT in TAP_SOUND_MOOD_TYPES: a mood suffix would ask for
-// zuri-happy.mp3, which does not exist, and the tap would fall silent. Three
-// real cues (zuri-happy/sad/surprised) are a paid ElevenLabs run away; add them
-// and move her into the mood set together, never one without the other.
-const TAP_SOUND_ALIASES = { kite: "wind", moon: "lullaby", carrot: "crunch", scarecrow: "tree", lake: "puddle", fish: "puddle", boat: "wind", clock: "bell", zuri: "chick" };
+const TAP_SOUND_ALIASES = { kite: "wind", moon: "lullaby", carrot: "crunch", scarecrow: "tree", lake: "puddle", fish: "puddle", boat: "wind", clock: "bell" };
 let tapSoundPlayer = null;
 
 function ensureTapSoundPlayer() {

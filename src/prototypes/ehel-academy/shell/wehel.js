@@ -188,6 +188,39 @@ export function focusPrompts(label) {
   ];
 }
 
+// --- persona: Tutor | Virtual teacher ------------------------------------------
+// Tutor (the default) waits for questions. Virtual teacher LEADS: it frames the
+// activity on screen the way a classroom teacher would, then walks the learner
+// through it one step at a time, saying what is expected at each step, until it
+// is complete — and then tells them to press the page's own Check/Done/Record,
+// because the record of their work comes from doing it on the page, never
+// from the tutor (owner decision 2026-08-20: guide to completion, never mark
+// complete). The role is a prompt block (modeHints.virtual-teacher) plus this
+// chip set; the transcript rules and the cached core prompt are untouched.
+//
+// Stored per subject AND per unit like Focus: a role chosen for this activity
+// does not silently carry into another unit's page.
+const personaStorageKey = (meta) => `ehel-wehel-persona-${meta.subject}-u${meta.unitNo}`;
+export function wehelPersona(meta) {
+  return storageGet(personaStorageKey(meta)) === "teacher" ? "teacher" : "tutor";
+}
+export function setWehelPersona(meta, persona) {
+  storageSet(personaStorageKey(meta), persona === "teacher" ? "teacher" : "tutor");
+}
+
+// The flow itself, as chips: every one carries the virtual-teacher mode so the
+// playbook is in force whichever the learner presses, and the wording says the
+// move in the learner's own voice.
+export function teacherPrompts() {
+  return [
+    { label: "Start this activity", mode: "virtual-teacher", message: "Please be my teacher for this activity: explain what it is and why we are doing it, then take me through it step by step — one step at a time — and tell me what you expect from me at each step." },
+    { label: "What's expected of me?", mode: "virtual-teacher", message: "What exactly are you expecting from me in this activity? Tell me what a good piece of work looks like here." },
+    { label: "Done — next step", mode: "virtual-teacher", message: "I have done that step. Please check it and give me the next step." },
+    { label: "I'm stuck", mode: "virtual-teacher", message: "I am stuck on this step. Help me with a hint, not the answer." },
+    { label: "Explain that again", mode: "virtual-teacher", message: "Please explain that step again, a different way and more simply." },
+  ];
+}
+
 // "Soomaali:" lines are the prompt's contract for Somali vocabulary: the only
 // part of a reply the Somali voice reads, and the part the English browser
 // voice must skip. Tolerates the bullets/bold the model sometimes adds even
@@ -333,6 +366,41 @@ export function withoutMediaPlumbing(value) {
   return value;
 }
 
+// English's `dictionaryLinks` is one entry per vocabulary word, and since the
+// 2026-08-21 vocabulary expansion the Grade 2-8 units carry 160 to 420 of
+// them. Each entry is mostly what the app's dictionary feature needs and the
+// tutor cannot use — nine identifier fields, the audio descriptors (already
+// stripped above), the learner-facing "try this with the tutor" prompt, the
+// spelling split, the practice sentences the page prints — and the rest is the
+// ONLY copy of the word's meaning in the unit: vocabularyGroups holds ids
+// alone. Sent as-is, the biggest unit is 577KB against the 200KB cap, which
+// cut the tutor off from everything after the word list — the exact defect the
+// cap was raised to end. Dropping the field whole would blind it to every
+// meaning instead. So the tutor gets the teaching text alone, grouped the way
+// the unit groups it: vocabularyDictionary: { "<group>": ["word : meaning :
+// example", …] }. Biggest unit after this: 193KB. The contract gate proves the
+// projection keeps every word, meaning and example, touches nothing outside
+// dictionaryLinks, and that every unit in the academy fits.
+export function compactDictionaryLinks(unit) {
+  if (!unit || typeof unit !== "object" || !Array.isArray(unit.dictionaryLinks)) return unit;
+  const groups = {};
+  for (const entry of unit.dictionaryLinks) {
+    if (!entry || typeof entry !== "object") continue;
+    const group = String(entry.groupTitle || "Words");
+    const line = [entry.masterWord, entry.childMeaning, entry.exampleSentence].filter(Boolean).join(" : ");
+    if (line) (groups[group] ||= []).push(line);
+  }
+  const { dictionaryLinks, ...rest } = unit;
+  return { ...rest, vocabularyDictionary: groups };
+}
+
+// What the tutor is actually sent: the unit minus media plumbing, with the
+// dictionary compacted. Both call sites (the open unit and get_unit) use this
+// one function, so the gate's "every unit fits" check measures the real payload.
+export function unitForTutor(unit) {
+  return compactDictionaryLinks(withoutMediaPlumbing(unit));
+}
+
 // One cap, matching wehel_chat.php's. Raised from 120000 with the strip above:
 // every one of the academy's 410 units now fits whole, with room to spare.
 export const UNIT_JSON_LIMIT = 200000;
@@ -428,11 +496,11 @@ async function handleGetUnit(meta, fetchUnit, input) {
   const label = `Unit ${input?.unitNo} of ${ref.subject} grade ${ref.grade}`;
   if (ref.subject === meta.subject && ref.grade === Number(meta.grade) && fetchUnit) {
     const unit = await fetchUnit(unitNo);
-    return unit ? JSON.stringify(withoutMediaPlumbing(unit)).slice(0, UNIT_JSON_LIMIT) : `${label} does not exist — only the units in the year outline.`;
+    return unit ? JSON.stringify(unitForTutor(unit)).slice(0, UNIT_JSON_LIMIT) : `${label} does not exist — only the units in the year outline.`;
   }
   const response = await fetch(new URL(`units/unit-${unitNo}.json`, courseDataRoot(ref.subject, ref.grade)));
   if (!response.ok) return `${label} is not available.`;
-  return JSON.stringify(withoutMediaPlumbing(await response.json())).slice(0, UNIT_JSON_LIMIT);
+  return JSON.stringify(unitForTutor(await response.json())).slice(0, UNIT_JSON_LIMIT);
 }
 
 async function handleGetCourseOutline(meta, input) {
@@ -758,7 +826,7 @@ function syncPanels(source) {
   }
 }
 
-export async function askWehel({ meta, messages, channel = "text", mode = "", sectionHint = "", focus = null, fetchUnit = null, attachments = null }) {
+export async function askWehel({ meta, messages, channel = "text", mode = "", sectionHint = "", activityHint = "", focus = null, fetchUnit = null, attachments = null }) {
   const wstoken = new URLSearchParams(location.search).get("wstoken") || undefined;
   // The learner's real homework rides with every question (memoised fetch, so
   // this await is instant after the first call) — the tutor can then answer
@@ -778,11 +846,14 @@ export async function askWehel({ meta, messages, channel = "text", mode = "", se
         unitTitle: meta.unitTitle,
         learnerName: meta.learnerName || "",
         courseOutline: meta.courseOutline || "",
-        unit: withoutMediaPlumbing(meta.unit),
+        unit: unitForTutor(meta.unit),
         teachingLanguage: preferredTeachingLanguage(),
         channel,
         mode: mode || undefined,
         sectionHint: sectionHint || undefined,
+        // The exact item on screen (a deck's current slide) — what "this
+        // activity" means to the virtual teacher. Empty on grid pages.
+        activityHint: activityHint || undefined,
         // Label only — the endpoints name the module in the prompt, and the
         // unit's own content is already there for the model to find it in.
         focus: focus?.label ? { label: focus.label } : undefined,
@@ -1059,6 +1130,10 @@ async function prepareAttachment(file) {
 //   placeholder    — input placeholder
 //   quickPrompts   — [{ label, message }]
 //   mode           — optional mode hint forwarded to the server
+//   sectionHint    — string or () => string: the page the learner is on
+//   activityHint   — string or () => string: the exact item on screen (a
+//                    deck's current slide), read at send time; what "this
+//                    activity" means to the Virtual teacher persona
 //   fetchUnit      — optional (unitNo) => unit JSON, enables the get_unit tool
 //   fallbackReply  — (message) => canned text when Wehel is unreachable
 //   onExchange     — (exchangeCount) => void, for section completion
@@ -1184,11 +1259,21 @@ export function mountWehelChat(options) {
     // be live over one store, and syncPanels repaints the sibling — so changing
     // Focus in either is immediately true in both.
     const focus = focusModule(meta, modules);
-    let greeting = greetingFor(focus);
-    if (homeworkItems.length) greeting += " I can also see homework your teacher set — want to work on it together?";
-    // Focused, the subject's own quick prompts step aside for the three the
-    // learner asked for. Unfocused, nothing about this changes.
-    const prompts = focus ? focusPrompts(focus.label) : [...(options.quickPrompts || [])];
+    // Read at render time like Focus and the language: the drawer and a
+    // subject's own tutor page can both be live, and syncPanels repaints the
+    // sibling, so a role switched in either is immediately true in both.
+    const persona = wehelPersona(meta);
+    let greeting = persona === "teacher"
+      ? `Hello! I am ${tutorLabel}, and today I am your teacher for this activity. Press "Start this activity" and I will explain what we are doing, then take you through it step by step.`
+      : greetingFor(focus);
+    if (homeworkItems.length && persona !== "teacher") greeting += " I can also see homework your teacher set — want to work on it together?";
+    // Virtual teacher: the chips ARE the flow, and they take precedence over
+    // Focus's three and the subject's own. Tutor: focused, the subject's own
+    // quick prompts step aside for the three the learner asked for; unfocused,
+    // nothing about this changes.
+    const prompts = persona === "teacher"
+      ? teacherPrompts()
+      : (focus ? focusPrompts(focus.label) : [...(options.quickPrompts || [])]);
     // The Somali option is vocabulary-only, so the extra quick prompt asks for
     // exactly that — key words with their Somali translations, from the focused
     // module when there is one.
@@ -1201,7 +1286,7 @@ export function mountWehelChat(options) {
     // actually has homework on record for this learner. The modes reach the
     // matching modeHints in wehel_prompt.json (coaching, and the worked-
     // solutions exception written into Academic honesty).
-    if (homeworkItems.length) {
+    if (homeworkItems.length && persona !== "teacher") {
       prompts.push(
         { label: "Coach me through my homework", mode: "homework-coach", message: "Help me with my homework. Coach me through it step by step — I want to do it myself." },
         { label: "Show my homework step by step", mode: "homework-solutions", message: "Help me with my homework. Show me how to do it with a full worked solution, step by step, and explain each step." },
@@ -1210,6 +1295,12 @@ export function mountWehelChat(options) {
     container.innerHTML = `
       <div class="ai-voice-row">
         ${browserSpeechSupported ? `<button class="button secondary" id="wehel-voice-toggle" type="button" aria-pressed="${speakReplies}" title="${speakReplies ? `${escapeHtml(tutorLabel)} reads replies aloud` : "Replies are silent"}">${speakReplies ? `${wehelIcon("volume")} Voice on` : `${wehelIcon("volumeOff")} Voice off`}</button>` : ""}
+        <label for="wehel-persona">Wehel is
+          <select id="wehel-persona">
+            <option value="tutor"${persona === "tutor" ? " selected" : ""}>Tutor</option>
+            <option value="teacher"${persona === "teacher" ? " selected" : ""}>Virtual teacher</option>
+          </select>
+        </label>
         ${modules.length ? `<label for="wehel-focus">Focus
           <select id="wehel-focus">
             <option value="">Whole unit</option>
@@ -1231,7 +1322,7 @@ export function mountWehelChat(options) {
       ${pendingAttachments.length ? `<div class="w-attach-row">${pendingAttachments.map((file, index) => `<span class="w-attach-chip"><span>${escapeHtml(file.name)}</span><button type="button" data-wehel-detach="${index}" aria-label="Remove ${escapeHtml(file.name)}">×</button></span>`).join("")}</div>` : ""}
       <form class="ai-compose" id="wehel-form">
         <label class="sr-only" for="wehel-input">Ask ${escapeHtml(tutorLabel)}</label>
-        <input id="wehel-input" maxlength="500" placeholder="${escapeHtml(focus ? `Ask about ${focus.label}…` : (options.placeholder || `Ask about ${meta.unitTitle}…`))}" ${busy ? "disabled" : ""} autocomplete="off">
+        <input id="wehel-input" maxlength="500" placeholder="${escapeHtml(persona === "teacher" ? "Tell your teacher what you did, or ask…" : (focus ? `Ask about ${focus.label}…` : (options.placeholder || `Ask about ${meta.unitTitle}…`)))}" ${busy ? "disabled" : ""} autocomplete="off">
         <button class="button secondary${pendingAttachments.length ? " has-files" : ""}" id="wehel-attach" type="button" aria-label="Attach a homework photo or PDF" title="Attach a homework photo or PDF (up to ${WEHEL_ATTACH_PER_MESSAGE} per message, ${WEHEL_ATTACH_DAILY_LIMIT} a day)" ${busy ? "disabled" : ""}>${wehelIcon("paperclip")}</button>
         <input id="wehel-attach-input" type="file" accept="image/*,application/pdf" multiple hidden>
         ${micSupported ? `<button class="button secondary" id="wehel-mic" type="button" aria-label="Ask by voice" title="Ask by voice" ${busy ? "disabled" : ""}>${wehelIcon("mic")}</button>` : ""}
@@ -1278,6 +1369,18 @@ export function mountWehelChat(options) {
       if (ui.toast) ui.toast(languageSelect.value === "somali"
         ? "Wehel will add Somali for key words — erayada oo af-Soomaali ah."
         : "Wehel will use English only.");
+    });
+    const personaSelect = container.querySelector("#wehel-persona");
+    if (personaSelect) personaSelect.addEventListener("change", () => {
+      setWehelPersona(meta, personaSelect.value);
+      stopBrowserSpeech();
+      speakingIndex = null;
+      somaliSpeakingIndex = null;
+      render();
+      syncPanels(panel);
+      if (ui.toast) ui.toast(personaSelect.value === "teacher"
+        ? `${tutorLabel} is now your virtual teacher — press "Start this activity".`
+        : `${tutorLabel} is back to tutor mode — ask anything.`);
     });
     const focusSelect = container.querySelector("#wehel-focus");
     if (focusSelect) focusSelect.addEventListener("change", () => {
@@ -1347,8 +1450,13 @@ export function mountWehelChat(options) {
     render();
     let reply;
     let offline = false;
-    const ask = () => askWehel({ meta, messages, channel, mode: modeHint || options.mode,
+    // Virtual teacher is a standing role: a typed message carries its mode
+    // too, not only the chips — otherwise "I did it" between chips would drop
+    // the teacher back into answering-questions tutor posture.
+    const ask = () => askWehel({ meta, messages, channel,
+      mode: modeHint || (wehelPersona(meta) === "teacher" ? "virtual-teacher" : options.mode),
       sectionHint: typeof options.sectionHint === "function" ? options.sectionHint() : options.sectionHint,
+      activityHint: typeof options.activityHint === "function" ? options.activityHint() : (options.activityHint || ""),
       focus: focusModule(meta, modules),
       fetchUnit: options.fetchUnit || null,
       attachments });

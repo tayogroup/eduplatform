@@ -180,8 +180,10 @@ function createWehelChatHandler({ apiKey, model: modelOverride = () => undefined
       // questions in the same unit, so it stays out of the cached block above.
       // Mirrored in wehel_chat.php.
       let volatileTail = "";
+      // A hint is one string, or an array of lines for the long ones (the
+      // virtual-teacher playbook). Mirrored in wehel_chat.php.
       const modeHint = (promptData.modeHints || {})[String(payload.mode || "")];
-      if (modeHint) volatileTail += `\n\n${modeHint}`;
+      if (modeHint) volatileTail += `\n\n${Array.isArray(modeHint) ? modeHint.join("\n") : modeHint}`;
       // Preferred teaching language — only languages the prompt source defines
       // are honoured, and the block itself (e.g. Somali-for-vocabulary-only)
       // lives in wehel_prompt.json. Mirrored in wehel_chat.php.
@@ -200,6 +202,10 @@ function createWehelChatHandler({ apiKey, model: modelOverride = () => undefined
       // lesson page, so "I don't get this" has a referent.
       const sectionHint = clean(payload.sectionHint, 80);
       if (sectionHint) volatileTail += `\n\nThe learner is on the "${sectionHint}" page of this unit right now — useful context for what they may mean, but their own words always come first: answer what they asked, not the page.`;
+      // The exact item on screen (a deck's current slide) — what "this
+      // activity" means to the virtual teacher. Mirrored in wehel_chat.php.
+      const activityHint = clean(payload.activityHint, 200);
+      if (activityHint) volatileTail += `\n\nThe exact item on their screen right now is: "${activityHint}".`;
       // The stable block is cached; a learner's later questions in the same
       // unit read ~30k tokens from cache instead of re-sending them.
       const systemBlocks = [{ type: "text", text: system, cache_control: { type: "ephemeral" } }];

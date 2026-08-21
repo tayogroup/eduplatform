@@ -511,3 +511,29 @@ Dev twins: `/api/wehel-homework` (and the vite production-path mount) serve
 sample assignments **only when `WEHEL_DEV_HOMEWORK` is set** — unset, dev
 behaves like a learner with no homework, so normal dev sessions never send
 fake homework context to the real API.
+
+## Virtual teacher (added 2026-08-20)
+
+A PERSONA, switched in the panel toolbar ("Wehel is: Tutor | Virtual
+teacher"), remembered per subject and unit like Focus. Tutor waits for
+questions; the Virtual teacher leads the activity on screen the way a
+classroom teacher would: frame it (what, why, goal, what you need — 3 to 5
+sentences, then straight into step 1), walk it one step per message saying
+what is EXPECTED at each step (the unit's own `successCriteria`, `objectives`,
+`teacherNotes`, and any `grownUpGuide` turned into teacher-to-learner speech),
+check each step before the next, then declare it complete with a reflection
+question. Owner decisions: **guide to completion, never mark complete** (the
+teacher tells the learner to press the page's own Check/Done/Record — progress
+comes from doing the activity, not from the tutor); **graded activities get
+the approach only, never answers**; all six subjects via the shared panel.
+
+Mechanics: `modeHints["virtual-teacher"]` (an array of lines — both servers
+now join array hints); every chip of the flow (Start this activity / What's
+expected of me? / Done — next step / I'm stuck / Explain that again) and every
+typed message in the persona carries that mode. "Current activity" arrives two
+ways: `sectionHint` (the page, as before) and the new `activityHint` — the
+dock reads the Grade 1-4 deck's visible slide (`.gc-slide:not([inert])`, its
+aria-label "Question 3 of 6", heading and first words) at send time, capped at
+200 chars in both servers; Grades 5-8 grid pages have no `gc-*` nodes by rule,
+so it is empty there and the teacher works from the section. The contract gate
+holds the role's three rules and the chip modes.

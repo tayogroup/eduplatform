@@ -464,7 +464,10 @@ $system = strtr($system, [
 $volatile = '';
 $modehints = (array)($promptdata['modeHints'] ?? []);
 if ($modehint !== '' && isset($modehints[$modehint])) {
-    $volatile .= "\n\n" . (string)$modehints[$modehint];
+    // A hint is one string, or an array of lines for the long ones (the
+    // virtual-teacher playbook) — joined exactly as the template's arrays are.
+    $hint = $modehints[$modehint];
+    $volatile .= "\n\n" . (is_array($hint) ? implode("\n", array_map('strval', $hint)) : (string)$hint);
 }
 // Preferred teaching language — only languages the prompt source defines are
 // honoured, and the block itself (e.g. Somali-for-vocabulary-only) lives in
@@ -493,6 +496,14 @@ if ($homeworkcontext !== '' && !empty($promptdata['homeworkBlock'])) {
 $sectionhint = $clean($payload['sectionHint'] ?? '', 80);
 if ($sectionhint !== '') {
     $volatile .= "\n\nThe learner is on the \"" . $sectionhint . "\" page of this unit right now — useful context for what they may mean, but their own words always come first: answer what they asked, not the page.";
+}
+// Finer than the page: the exact item on screen — the current slide of a
+// Grade 1-4 deck ("Question 3 of 6 — …"), read by the dock at send time.
+// This is what "this activity" means to the virtual teacher. Mirror of the
+// same step in tools/lib/wehel-dev-chat.js.
+$activityhint = $clean($payload['activityHint'] ?? '', 200);
+if ($activityhint !== '') {
+    $volatile .= "\n\nThe exact item on their screen right now is: \"" . $activityhint . "\".";
 }
 
 // --- call the Anthropic API ---------------------------------------------------

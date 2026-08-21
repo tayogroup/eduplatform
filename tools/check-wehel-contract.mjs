@@ -44,8 +44,8 @@ globalThis.location = { hostname: "localhost", port: "4287", search: "", href: "
 globalThis.localStorage = { getItem: () => null, setItem: () => {} };
 
 const wehel = await import(pathToFileURL(SHELL).href);
-const { apiMessages, withoutMediaPlumbing, UNIT_JSON_LIMIT, withAttachmentBlocks, homeworkContextText, HOMEWORK_CONTEXT_LIMIT, WEHEL_ATTACH_DAILY_LIMIT } = wehel;
-for (const [name, value] of Object.entries({ apiMessages, withoutMediaPlumbing, UNIT_JSON_LIMIT, withAttachmentBlocks, homeworkContextText, HOMEWORK_CONTEXT_LIMIT, WEHEL_ATTACH_DAILY_LIMIT })) {
+const { apiMessages, withoutMediaPlumbing, unitForTutor, UNIT_JSON_LIMIT, withAttachmentBlocks, homeworkContextText, HOMEWORK_CONTEXT_LIMIT, WEHEL_ATTACH_DAILY_LIMIT, teacherPrompts } = wehel;
+for (const [name, value] of Object.entries({ apiMessages, withoutMediaPlumbing, unitForTutor, UNIT_JSON_LIMIT, withAttachmentBlocks, homeworkContextText, HOMEWORK_CONTEXT_LIMIT, WEHEL_ATTACH_DAILY_LIMIT, teacherPrompts })) {
   if (value === undefined) fail("shell/wehel.js no longer exports what this gate checks", `${name} is missing — restore the export rather than deleting the check`);
 }
 if (failures.length) { report(); process.exit(1); }
@@ -193,7 +193,8 @@ if (phpCap !== UNIT_JSON_LIMIT || devCap !== UNIT_JSON_LIMIT) {
         if (!file.endsWith(".json")) continue;
         counted += 1;
         const parsed = JSON.parse(fs.readFileSync(path.join(dir, file), "utf8"));
-        const length = JSON.stringify(withoutMediaPlumbing(parsed)).length;
+        // Measure the REAL payload — unitForTutor is what both call sites send.
+        const length = JSON.stringify(unitForTutor(parsed)).length;
         if (length > UNIT_JSON_LIMIT) over.push(`${subject}/${grade}/${file} is ${Math.round(length / 1024)}KB`);
       }
     }
@@ -213,6 +214,43 @@ if (phpCap !== UNIT_JSON_LIMIT || devCap !== UNIT_JSON_LIMIT) {
   if (after.readings[0].text !== "Amal walks to school." || after.readings[0].title !== "Words Around Us") fail("The media strip is eating teaching content", JSON.stringify(after.readings[0]));
   if (!after.answerKey) fail("The media strip is eating the answer key", JSON.stringify(after));
   if (after.readings[0].audio || after.overviewAudio) fail("The media strip is not removing audio descriptors", JSON.stringify(after));
+}
+
+// The dictionary projection: English's dictionaryLinks (160-420 per-word
+// entries, 577KB in the biggest unit) is compacted to the teaching text alone,
+// because the word meanings live NOWHERE else in the unit (vocabularyGroups is
+// ids only) — dropping the field whole would blind the tutor to every meaning,
+// and sending it whole cut the tutor off from everything after the word list.
+{
+  const before = {
+    vocabularyGroups: [{ id: "g1", title: "Greetings", vocabularyIds: ["u1-name"] }],
+    dictionaryLinks: [{
+      vocabularyId: "u1-name", dictionaryEntryId: "ehel-dict-en-name-noun-01", senseId: "s-01", groupId: "g1", groupTitle: "Greetings", sequence: 1,
+      masterWord: "name", childMeaning: "The word that people call you.", exampleSentence: "My name is Amal.",
+      practiceSentences: ["Amal writes her name."], aiTutorPrompt: "Say your name to the tutor.", spellingPractice: "n - a - m - e",
+      sentenceAudio: [{ source: "a.mp3" }], meaningAudio: { source: "b.mp3" }, reviewStatus: "approved",
+    }],
+    readings: [{ title: "Words Around Us", text: "Amal walks to school.", audio: { url: "a.mp3" } }],
+    answerKey: { q1: "b" },
+  };
+  const after = unitForTutor(before);
+  if (after.dictionaryLinks) fail("dictionaryLinks still travels in full", "the per-word plumbing is what pushed 45 English units past the cap");
+  const lines = after.vocabularyDictionary && after.vocabularyDictionary.Greetings;
+  if (!lines || !/\bname\b/.test(lines[0]) || !/people call you/.test(lines[0]) || !/My name is Amal/.test(lines[0])) {
+    fail("The dictionary projection loses a word, its meaning or its example", JSON.stringify(after.vocabularyDictionary));
+  }
+  // Quoted key names: vocabularyGroups legitimately keeps "vocabularyIds".
+  if (/"(senseId|vocabularyId|dictionaryEntryId|sentenceAudio|meaningAudio|aiTutorPrompt|reviewStatus)"/.test(JSON.stringify(after))) {
+    fail("The dictionary projection keeps plumbing the tutor cannot use", JSON.stringify(after.vocabularyDictionary));
+  }
+  if (after.readings[0].text !== "Amal walks to school." || !after.answerKey || !after.vocabularyGroups) {
+    fail("The dictionary projection touched content outside dictionaryLinks", JSON.stringify(after));
+  }
+  // A unit with no dictionaryLinks (every non-English subject) is untouched.
+  const plain = { readings: [{ text: "x", audio: { url: "a" } }], answerKey: { q1: "a" } };
+  if (JSON.stringify(unitForTutor(plain)) !== JSON.stringify(withoutMediaPlumbing(plain))) {
+    fail("The dictionary projection changes units that have no dictionary", JSON.stringify(unitForTutor(plain)));
+  }
 }
 
 // --- 3. the prompt still says to answer the question -------------------------
@@ -239,6 +277,29 @@ if (phpCap !== UNIT_JSON_LIMIT || devCap !== UNIT_JSON_LIMIT) {
   }
   if (!/worked-solutions homework mode/i.test(template)) {
     fail("The Academic honesty exception for worked solutions is gone", "without it the system prompt forbids what the homework-solutions mode asks for, and the model splits the difference unpredictably");
+  }
+  // Virtual teacher: the role exists, every chip of the flow carries it, and
+  // the owner's three rules are still written into it — one step at a time,
+  // graded answers protected, and guide-to-completion WITHOUT marking anything
+  // complete (the record of work comes from the learner doing it on the page).
+  const teacher = hints["virtual-teacher"];
+  const teacherText = Array.isArray(teacher) ? teacher.join("\n") : String(teacher || "");
+  if (!teacherText) {
+    fail("The virtual-teacher mode is gone from the prompt", "the persona's chips all send mode virtual-teacher — without the hint the teacher is an unhinted tutor");
+  } else {
+    if (!/one step/i.test(teacherText)) fail("The virtual teacher no longer walks one step at a time", "the owner's spec is step by step, with what is expected at each step");
+    if (!/never give the answers/i.test(teacherText) || !/quiz|checkpoint|exam/i.test(teacherText)) fail("The virtual teacher no longer protects graded answers", "owner decision: on quizzes, checkpoints and placement exams the teacher explains the approach only");
+    if (!/do NOT mark anything complete/.test(teacherText)) fail("The virtual teacher may claim to mark an activity complete", "owner decision: guide to completion, never mark — progress must come from the learner doing the activity on the page");
+  }
+  const chips = teacherPrompts();
+  if (!Array.isArray(chips) || chips.length < 3 || chips.some((chip) => chip.mode !== "virtual-teacher")) {
+    fail("A virtual-teacher chip does not carry the virtual-teacher mode", JSON.stringify(chips.map((chip) => [chip.label, chip.mode])));
+  }
+  // The activity-hint cap lives in both servers; keep them equal.
+  const phpActivity = capIn(PHP, /\$clean\(\$payload\['activityHint'\][^,]*,\s*(\d+)\)/);
+  const devActivity = capIn(DEV, /clean\(payload\.activityHint,\s*(\d+)\)/);
+  if (phpActivity === null || phpActivity !== devActivity) {
+    fail("The two activity-hint caps disagree or are missing", `wehel_chat.php ${phpActivity}, wehel-dev-chat.js ${devActivity}`);
   }
 }
 

@@ -780,6 +780,26 @@ export function createCourseApp(config) {
       const match = (config.visibleSections ? config.visibleSections() : sections).find(([id]) => id === route);
       return match ? match[2] : "";
     };
+    // Finer than the page: the exact item on screen, for the Virtual teacher
+    // persona. A Grade 1-4 deck marks the visible slide by leaving it the only
+    // one NOT inert (deck.js :: syncReachable) and labels every slide
+    // ("Question 3 of 6"); the slide's heading and first words name the item.
+    // Nothing is read from the deck's own "How to use these slides" intro.
+    // Grades 5-8 grid pages carry no gc-* nodes by rule, so this is the empty
+    // string there and the teacher works from the section. Read at send time.
+    const activityHint = () => {
+      const slide = document.querySelector(".gc-slide:not([inert])");
+      if (!slide) return "";
+      const label = (slide.getAttribute("aria-label") || "").trim();
+      if (/^How to use/i.test(label)) return "";
+      const title = slide.querySelector(".gc-title, h2, h3")?.textContent?.replace(/\s+/g, " ").trim() || "";
+      // The slide's eyebrow repeats the label and its heading repeats the
+      // title — drop both from the snippet so the 200 chars carry the item.
+      let rest = (slide.textContent || "").replace(/\s+/g, " ").trim();
+      for (const piece of [label, title]) if (piece) rest = rest.split(piece).join(" ");
+      rest = rest.replace(/\s+/g, " ").trim();
+      return [label, title, rest.slice(0, 140)].filter(Boolean).join(" — ").slice(0, 200);
+    };
 
     function close() {
       if (!drawer) return;
@@ -815,6 +835,7 @@ export function createCourseApp(config) {
         chatPanel = mountWehelChat({
           container: drawer.querySelector(".wehel-drawer-body"),
           sectionHint,
+          activityHint,
           ...config.wehelOptions(),
         });
       } catch (error) {

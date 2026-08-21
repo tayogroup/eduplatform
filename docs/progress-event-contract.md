@@ -45,7 +45,7 @@ Every event is scoped by four keys (the app already has all of them at launch):
 | `unit.completed` | durable | `sectionsDone`, `total` |
 | `capstone.submitted` | durable | `artifactRef` (Bunny/upload key), `rubricSelfScore?` |
 | `section.completed` | durable | — (marks a section done) |
-| `progress.summary` | state | `sectionsDone[]`, `resume` {section, pos}, `knownWords?`, `xp?` |
+| `progress.summary` | state | `sectionsDone[]`, `resume` {section, pos}, `knownWords?`, `xp?`, `attempted?` |
 | `draft.saved` | state | `section`, `text` *(or `blobRef` if large)*, `words` |
 | `section.viewed` | ephemeral | `dwellMs?` |
 | `media.played` | ephemeral | `mediaId`, `ms` |
@@ -55,6 +55,29 @@ Every event is scoped by four keys (the app already has all of them at launch):
 > **The taxonomy is load-bearing:** a mis-tagged durable event that gets dropped is
 > a real bug. When unsure, tag `durable`. Never let a gradebook-critical result be
 > filtered.
+
+### `attempted` — how much was written, for a course with nothing to score
+
+```json
+"attempted": { "quiz": { "answered": 7, "total": 12 }, "reflect": { "answered": 1, "total": 5 } }
+```
+
+Global Perspectives only. All 315 of its assessment questions are
+`responseMode: "text"` with a model answer the learner marks themselves, so the
+course has no score to send — and a percentage derived from self-marking would
+report mastery nobody measured.
+
+It rides on `progress.summary` and **must never be carried by
+`checkpoint.result`**. That is structural, not stylistic: `checkpoint.result`
+means `score` + `passed`, the family portal renders it as a coloured percentage
+pill, and `push_gradebook()` writes any score it sees to a grade item. A count
+sent down that path becomes a fabricated grade.
+
+Whole-map last-write-wins, like `xp` and `knownWords`. It measures **engagement,
+not quality** — a learner who types one character counts as having answered — so
+anything built on it says "answered", never "correct". The ingest clamps
+`answered` to `total`, drops a section claiming no questions, and caps the map;
+see `sanitise_attempted()` in `externallib_progress.php`.
 
 ## Batch envelope — client → edge (`POST /progress/ingest`)
 

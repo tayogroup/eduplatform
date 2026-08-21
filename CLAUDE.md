@@ -986,3 +986,30 @@ a freshly winget-installed PHP updates the persistent user PATH but not
 already-running shells. If no PHP is found the gate **fails** rather than
 skipping: a gate that passes without running is worse than none. Install with
 `winget install --id PHP.PHP.8.4 --scope user` (the 8.3 manifest currently 404s).
+
+`check:php` also runs `check-progress-attempted.php`, the one behavioural test
+of the progress reducer. Global Perspectives has no score to report — its 315
+questions are self-marked free text — so it sends `attempted`
+(`{section: {answered, total}}`) on `progress.summary` instead. The property
+worth gating is that this can never become a grade: a count reaching
+`checkpoint.result` is a coloured percentage in the family portal and a row in
+the gradebook, reporting mastery nobody measured. That lives in the reducer's
+behaviour, not in any file's shape, so the gate loads the real
+`externallib_progress.php` and calls its real private statics by reflection —
+a copy of the logic would pass while the shipped code was broken.
+
+**Mutation-tested**, and one mutation survived the first version: deleting the
+`sanitise_attempted()` call from `apply_event()` entirely changed nothing,
+because every `apply_event` case fed an already-clean payload while the
+sanitiser was only tested in isolation. The two were never tested as
+*connected*. The fix is the hostile-input-through-the-event-path case — assert
+on what is STORED, never on what a helper returns on its own. Same lesson as
+the Wehel gate's message-count check, found the same way.
+
+It also pins a pre-existing quirk rather than leaving it to be rediscovered:
+`apply_event` ends with `$state['checkpoints'] = (array)…`, and
+`(array)new stdClass()` is `[]`, so an untouched checkpoints map serialises as
+`[]` rather than `{}` once any event lands. `sql/verify_progress_curriculum_map.sql`
+check 7 already works around it. `attempted` does not share the quirk — it is
+only ever the untouched `stdClass` or a non-empty map — and the gate asserts
+both halves of that.

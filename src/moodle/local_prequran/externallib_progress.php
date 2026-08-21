@@ -25,6 +25,9 @@ class local_prequran_progress_external extends external_api {
     /** Keep at most this many recent durable ids per unit for idempotency. */
     const MAX_APPLIED_IDS = 250;
 
+    /** Cap on how many sections one `attempted` map may carry. See sanitise_attempted(). */
+    const MAX_ATTEMPTED_SECTIONS = 20;
+
     // ---- shared helpers ----------------------------------------------------
 
     private static function set_environment_override(string $env): void {
@@ -81,10 +84,56 @@ class local_prequran_progress_external extends external_api {
             'xp' => 0,
             'knownWords' => [],
             'drafts' => new stdClass(),
+            // Written-answer counts, {section: {answered, total}}. stdClass, not
+            // [], so an untouched unit encodes as {} rather than a JSON array —
+            // same reason checkpoints and drafts above are objects.
+            'attempted' => new stdClass(),
             'completed' => false,
             '_lastAt' => '',
             '_appliedIds' => [],
         ];
+    }
+
+    /**
+     * Written-answer counts off a progress.summary: {section: {answered, total}}.
+     *
+     * Global Perspectives is the only sender. Its 315 assessment questions are
+     * all self-marked free text, so it has no score to report and sends how much
+     * was WRITTEN instead — a count, never a percentage, and deliberately not a
+     * pass flag. It must not reach the gradebook: push_gradebook() is driven by
+     * checkpoint.result and nothing here feeds it.
+     *
+     * Sanitised rather than stored as it arrives, because this lands in
+     * statejson and two portals render it. A client is not trusted to bound its
+     * own payload: section names are restricted, counts are cast and clamped,
+     * and the map is capped. `answered` is clamped to `total` so nothing
+     * downstream can be handed a figure that reads as more than everything.
+     * A section claiming no questions is dropped — the app already omits those,
+     * so seeing one means the payload is wrong rather than merely empty.
+     */
+    private static function sanitise_attempted($raw): array {
+        if (!is_array($raw)) {
+            return [];
+        }
+        $out = [];
+        foreach ($raw as $section => $counts) {
+            if (count($out) >= self::MAX_ATTEMPTED_SECTIONS) {
+                break;
+            }
+            $section = (string)$section;
+            if (!preg_match('/^[a-z0-9][a-z0-9_-]{0,39}$/i', $section) || !is_array($counts)) {
+                continue;
+            }
+            $total = max(0, (int)($counts['total'] ?? 0));
+            if ($total <= 0) {
+                continue;
+            }
+            $out[$section] = [
+                'answered' => min(max(0, (int)($counts['answered'] ?? 0)), $total),
+                'total' => $total,
+            ];
+        }
+        return $out;
     }
 
     /** Apply one event onto a unit-state array. Returns [changed, isDurable]. */
@@ -146,6 +195,17 @@ class local_prequran_progress_external extends external_api {
                 }
                 if (!empty($ev['knownWords']) && is_array($ev['knownWords'])) {
                     $state['knownWords'] = array_values($ev['knownWords']);
+                }
+                // Whole-map last-write-wins, like xp and knownWords: the sender
+                // always reports every written section it has, so a partial
+                // merge would strand a section the learner has since cleared.
+                // Out-of-order summaries are already dropped by the _lastAt
+                // guard at the top of this method, so this cannot go backwards.
+                if (array_key_exists('attempted', $ev)) {
+                    $attempted = self::sanitise_attempted($ev['attempted']);
+                    if ($attempted) {
+                        $state['attempted'] = $attempted;
+                    }
                 }
                 break;
             case 'draft.saved':

@@ -699,6 +699,33 @@ body.focus-mode.gc-full .wc-tools { position: fixed; left: 0; right: 0; bottom: 
 .course-ebook-pagecount { align-self: center; color: var(--muted); font-size: 14px; font-weight: var(--weight-bold); }
 .course-ebook-reader:fullscreen { overflow: auto; border: 0; border-radius: 0; background: white; }
 .course-ebook-reader:fullscreen .course-ebook-illustration img, .course-ebook-reader:fullscreen svg.course-ebook-stage-svg { max-height: 54vh; }
+/* Books — theatre mode: "Watch the story" leaves ONLY the story on screen.
+   It still asks for real fullscreen on the reader, but the Fullscreen API is
+   not something this can be built on:
+     - iPhone Safari has no Element.requestFullscreen at all (lesson-gate.js and
+       seb-session.js both say so and skip it), and an embed without
+       allow="fullscreen" is refused outright;
+     - focus mode and the lesson gate BOTH put <html> into fullscreen on the
+       learner's first pointerdown, and pointerdown beats click — so by the time
+       the Watch handler ran, something already held fullscreen, the reader's own
+       request was skipped, and what filled the screen was the whole page:
+       "How to use this page", the Books header, the shelf, the lot.
+   So the stripping is CSS, driven by body.ebook-watching, and fullscreen is a
+   bonus on top. These rules mirror the :fullscreen block above so a learner sees
+   the same thing whether or not the browser granted it. */
+body.ebook-watching { overflow: hidden; }
+body.ebook-watching .topbar,
+body.ebook-watching .sidebar,
+body.ebook-watching .focus-exit,
+body.ebook-watching .wehel-dock-button,
+body.ebook-watching #section-guide,
+body.ebook-watching #section-complete,
+body.ebook-watching .books-header { display: none; }
+body.ebook-watching .content { padding: 0; }
+body.ebook-watching #app { max-width: none; margin: 0; padding-bottom: 0; }
+body.ebook-watching .course-ebook-layout { display: block; margin: 0; }
+body.ebook-watching .course-ebook-reader { position: fixed; inset: 0; z-index: 70; overflow: auto; border: 0; border-radius: 0; background: white; box-shadow: none; }
+body.ebook-watching .course-ebook-illustration img, body.ebook-watching svg.course-ebook-stage-svg { max-height: 54vh; }
 .course-ebook-shelf { position: sticky; top: 86px; display: grid; gap: 9px; }
 .course-ebook-shelf-title { min-height: 68px; display: grid; grid-template-columns: 36px 1fr; align-items: center; gap: 10px; padding: 12px; border-radius: 8px; color: white; background: var(--ink); }
 .course-ebook-shelf-title > i { width: 36px; height: 36px; display: grid; place-items: center; border-radius: 6px; color: var(--ink); background: var(--gold); }

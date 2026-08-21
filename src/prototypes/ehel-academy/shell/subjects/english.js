@@ -4846,10 +4846,22 @@ function playStorySound(soundKey) {
   });
 }
 
+// Theatre mode: the body class that leaves only the story on screen. It is what
+// actually delivers "Watch the story shows the story and nothing else" — see the
+// body.ebook-watching block in english/shared/course-ui.css for why this cannot
+// be left to the Fullscreen API. Turning a page keeps it on (the learner is
+// still inside the reader); ending the watch takes it off.
+let ebookFullscreenBound = false;
+let ebookHadFullscreen = false;
+
 function stopEbookWatch({ keepFullscreen = false } = {}) {
   ebookWatchActive = false;
   ebookWatchToken += 1;
   if (tapSoundPlayer) tapSoundPlayer.pause();
+  if (!keepFullscreen) {
+    document.body.classList.remove("ebook-watching");
+    ebookHadFullscreen = false;
+  }
   if (!keepFullscreen && document.fullscreenElement?.classList?.contains("course-ebook-reader") && document.exitFullscreen) {
     document.exitFullscreen().catch(() => {});
   }
@@ -8844,9 +8856,31 @@ function readerLabel(book) {
   return "recommended for confident readers";
 }
 
+// Esc, or the browser's own "exit fullscreen" control, ends the story as surely
+// as the Stop button does — so theatre mode has to come off with it, or the page
+// stays stripped around a story that is no longer filling the screen. Bound once
+// rather than per render, and it only acts when fullscreen was ours to lose:
+// on a platform with no Fullscreen API nothing here ever fires, which is the
+// point of not building theatre mode on top of it.
+function bindEbookFullscreenExit() {
+  if (ebookFullscreenBound) return;
+  ebookFullscreenBound = true;
+  document.addEventListener("fullscreenchange", () => {
+    const reader = $(".course-ebook-reader");
+    if (reader && document.fullscreenElement === reader) { ebookHadFullscreen = true; return; }
+    if (!ebookHadFullscreen) return;
+    ebookHadFullscreen = false;
+    if (document.body.classList.contains("ebook-watching")) stopEbookWatch();
+  });
+}
+
 function renderEbooks() {
   ebookWatchActive = false;
   ebookWatchToken += 1;
+  // Leaving the reader — a page change, another section — must not leave the
+  // rest of the course hidden behind a theatre mode nobody can now switch off.
+  document.body.classList.remove("ebook-watching");
+  ebookHadFullscreen = false;
   const gradeEbooks = unitEbooks();
   if (!gradeEbooks.length) {
     $("#app").innerHTML = `${pageHeader("Independent reading library", "Books", `Grade ${gradeNumber} illustrated books for this unit will appear here as they are approved.`, "Library being prepared")}
@@ -8955,8 +8989,19 @@ function renderEbooks() {
     watchButton.innerHTML = `${icon("square")} Stop watching`;
     watchButton.setAttribute("aria-label", "Stop watching the story");
     icons();
+    // Only the story on screen, whether or not the browser grants fullscreen.
+    document.body.classList.add("ebook-watching");
+    bindEbookFullscreenExit();
     const readerElement = $(".course-ebook-reader");
-    if (readerElement?.requestFullscreen && !document.fullscreenElement) {
+    // The old guard was `!document.fullscreenElement`, and it never let this
+    // run: focus mode (seb-session.js) and the lesson gate both request
+    // fullscreen on <html> from a CAPTURE-phase pointerdown, which fires before
+    // this click — so something always held fullscreen already and the reader
+    // never got it. What the learner saw full-screen was the whole page, guide
+    // and all. Requesting on a descendant while an ancestor holds it pushes onto
+    // the fullscreen element stack, so exitFullscreen() below pops back to the
+    // document-level fullscreen rather than dropping the learner out of it.
+    if (readerElement?.requestFullscreen && document.fullscreenElement !== readerElement) {
       readerElement.requestFullscreen({ navigationUI: "hide" }).catch(() => {});
     }
     $("#ebook-stage")?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -9188,7 +9233,7 @@ const config = {
   // classicRegion and deckMount are per-render state: a section that draws both
   // designs sets them, and every other section must find them clear or it would
   // paint into a region the previous section left behind.
-  onBeforeRender: () => { route = shellCtx.route; stopAudio(); document.body.classList.remove("gc-full"); classicRegion = null; deckMount = null; activeDeck = null; showWordInDeck = null; showReadingInDeck = null; showWritingInDeck = null; showComprehensionGroupInDeck = null; $("#app").setAttribute("aria-busy", "true"); },
+  onBeforeRender: () => { route = shellCtx.route; stopAudio(); stopEbookWatch(); document.body.classList.remove("gc-full"); classicRegion = null; deckMount = null; activeDeck = null; showWordInDeck = null; showReadingInDeck = null; showWritingInDeck = null; showComprehensionGroupInDeck = null; $("#app").setAttribute("aria-busy", "true"); },
   onAfterRender: () => { $("#app").setAttribute("aria-busy", "false"); renderSectionGuide(); renderSectionCompletion(); prepareScreenReaderView(); icons(); },
   onNavRendered: () => { renderUnitPickers(); paintSectionLocks(); paintStudentSwitch(); icons(); },
   // Every route draws the locked page while a unit is locked. The check is

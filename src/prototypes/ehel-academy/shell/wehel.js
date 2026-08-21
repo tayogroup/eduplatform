@@ -1233,32 +1233,17 @@ export function mountWehelChat(options) {
       + `${offlineNote}<p class="w-text">${escapeHtml(item.text)}</p>${tools}</div></article>`;
   };
 
-  // Speak one stored reply aloud; index -1 marks the greeting bubble.
-  //
-  // The reply voice follows the Teaching language (owner decision
-  // 2026-08-20): Soomaali → the whole reply is read by the Azure Ubah voice,
-  // "Soomaali:" lines included; English → Wehel's Deepgram voice, with the
-  // Somali lines dropped first because the English voice mangles them (the
-  // bubble's own Soomaali button still replays just the vocabulary lines).
-  // The Somali endpoint takes 600 characters per request — sized for word
-  // lines — so a reply goes to Ubah in sentence chunks under that cap, one
-  // after another, stopping the moment this bubble is no longer the speaker.
-  // Either way the browser engine steps in only when the voice endpoint
+  // Speak one stored reply aloud; index -1 marks the greeting bubble. The
+  // "Soomaali:" lines are dropped first — the English voice mangles Somali,
+  // and the bubble's own Soomaali button owns those lines. The Ehel voice
+  // speaks first; the browser engine steps in only when the voice endpoint
   // cannot be reached, so an offline hint is still read aloud.
   async function speakReply(index, text) {
-    const somaliVoice = preferredTeachingLanguage() === "somali";
-    const clean = somaliVoice ? speakableText(text) : withoutSomaliLines(text);
+    const clean = withoutSomaliLines(text);
     speakingIndex = index;
     render();
     try {
-      if (somaliVoice) {
-        for (const chunk of speechChunks(clean, 550)) {
-          if (speakingIndex !== index) break; // stopped, or another bubble took over
-          await speakSomali(chunk);
-        }
-      } else {
-        await speakEhelVoice(clean, { rate: speechRate });
-      }
+      await speakEhelVoice(clean, { rate: speechRate });
     } catch {
       await speakBrowser(clean, { rate: speechRate });
     } finally {

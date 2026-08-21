@@ -1,7 +1,19 @@
 -- One-time migration: Intensive English progress rows from the app's old
 -- coursekey (ehel-ien-lNN) onto the catalogue's canonical one
 -- (ehel-intensive-eng-lNN).
--- Replace mdlgx_ with the production table prefix if needed.
+-- Replace mdlgx_ with the production table prefix if needed (mdlgx_ is correct
+-- on the live K-12 install).
+--
+-- PREFER THE CLI: cli/merge_intensive_english_coursekey.php does the same
+-- migration but takes the database and prefix from $CFG, so it cannot be run
+-- against the wrong install — the live box hosts nine Moodles and picking the
+-- wrong one in phpMyAdmin is a real hazard. It also dry-runs by default:
+--
+--   php local/prequran/cli/merge_intensive_english_coursekey.php
+--   php local/prequran/cli/merge_intensive_english_coursekey.php --dry-run=0
+--
+-- Keep this file for a site with no CLI access, and for the read-only checks in
+-- section 1, which are useful on their own.
 --
 -- WHY. The learner app emitted ehel-ien-lNN while catalog.json publishes
 -- ehel-intensive-eng-lNN, so every Intensive English progress row missed the

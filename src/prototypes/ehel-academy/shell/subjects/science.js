@@ -1576,8 +1576,34 @@ function renderGradeCapstone() {
     const stagesDone = project.stages.every((stage) => (gradeProgress.capstoneResponses[stage.id] || "").length >= 20);
     const evidenceDone = project.evidenceChecklist.every((_, index) => gradeProgress.capstoneEvidence[index]);
     saveGradeProgress();
+    // The work itself, not a pointer to it. capstone.submitted used to carry
+    // artifactRef: `local:${STAGE_STORAGE_KEY}` — a key in THIS browser's
+    // storage, naming something nobody else could fetch. Nothing uploaded what
+    // it pointed at, so a whole stage's authentic assessment never left the
+    // device, and a teacher saw neither the text nor a tick. Wiping the browser
+    // erased it.
+    //
+    // draft.saved is the contract's existing channel for written work and the
+    // ingest already stores it per unit (unit.drafts), so each stage travels as
+    // one draft under unit "capstone" — no new event type, no server change.
+    //
+    // Emitted on EVERY save, not only on completion: a capstone abandoned
+    // half-written is precisely the one worth seeing. Empty stages are skipped
+    // so an untouched capstone sends nothing at all.
+    for (const stage of project.stages) {
+      const text = gradeProgress.capstoneResponses[stage.id] || "";
+      if (!text) continue;
+      emitProgress({
+        type: "draft.saved", unit: "capstone", section: `capstone:${stage.id}`, text,
+        words: text.trim().split(/\s+/).filter(Boolean).length,
+      });
+    }
     if (stagesDone && evidenceDone) {
-      emitProgress({ type: "capstone.submitted", unit: "capstone", artifactRef: `local:${STAGE_STORAGE_KEY}` });
+      // No artifactRef: there is no artifact store, and a field that names a
+      // device key reads as though there were. Omitted, the ingest records null
+      // and the event keeps the one thing it can honestly say — that this
+      // learner finished, and when.
+      emitProgress({ type: "capstone.submitted", unit: "capstone" });
       completeGradeSection("capstone", `${course.stage.label} Science Capstone completed.`);
     }
     else toast("Progress saved. Complete every stage and evidence item to finish the capstone.");

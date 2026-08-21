@@ -11,8 +11,9 @@
 // Re-deploy safe: a content-hash manifest means only changed files are sent.
 // Access key from env (BUNNY_KEY), never hard-coded.
 //
-// Usage: BUNNY_KEY=… node tools/upload-content-to-bunny.js [subject …]
+// Usage: BUNNY_KEY=… node tools/upload-content-to-bunny.js [subject …] [--dry]
 //   (no args = every subject below)
+//   --dry  lists what a run would upload and exits, without contacting Bunny.
 
 const fs = require("fs"), path = require("path"), crypto = require("crypto");
 const { requireTiersInStep } = require("./lib/require-tiers-in-step");
@@ -39,7 +40,21 @@ function loadDotEnv() {
 loadDotEnv();
 const KEY = process.env.BUNNY_KEY;
 
-if (!KEY) { console.error("BUNNY_KEY not set (checked the environment and .env)"); process.exit(1); }
+// --dry lists what a run would upload and exits, without contacting Bunny. The
+// same flag upload-app-to-bunny.js carries; upload-media-to-bunny.js still has
+// none, so do not assume it there.
+//
+// Not having it here was a trap rather than an omission. An unrecognised
+// `--dry` is filtered out with the subject arguments below, and the key is read
+// from .env rather than the command line — so `… --dry` ran a REAL upload of 47
+// files on 2026-08-21 while reporting what looked like a preview. Nothing in
+// the output said otherwise: the word "uploaded" in the summary was the only
+// clue, and it reads the same either way.
+const DRY = process.argv.slice(2).includes("--dry");
+
+// The key is only needed for a real run. Saying so in the message means a
+// reader who has no key still discovers the flag that works without one.
+if (!KEY && !DRY) { console.error("BUNNY_KEY not set (checked the environment and .env; use --dry to preview without uploading)"); process.exit(1); }
 const SUBJECTS = ["english", "mathematics", "science", "computing", "global-perspectives",
   "intensive-english"];
 
@@ -106,6 +121,11 @@ async function put(remote, buf) {
   const todo = all.filter((x) => manifest[x.remote] !== x.hash);
   const bytes = todo.reduce((s, x) => s + fs.statSync(x.local).size, 0);
   console.log(`subjects: ${subjectList.join(",")} | total: ${all.length} | unchanged: ${all.length - todo.length} | to upload: ${todo.length} (${(bytes / 1048576).toFixed(1)} MB)`);
+  if (DRY) {
+    for (const item of todo) console.log(`  ${item.remote}`);
+    console.log("\n(dry run — nothing uploaded)");
+    return;
+  }
   let done = 0, failed = 0, since = 0, idx = 0;
   const save = () => fs.writeFileSync(MANIFEST, JSON.stringify(manifest, null, 0));
   async function worker() {

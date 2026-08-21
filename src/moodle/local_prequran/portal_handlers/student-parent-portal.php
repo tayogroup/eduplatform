@@ -245,7 +245,7 @@ if ($progressrows) {
             continue;
         }
         if (!isset($bycourse[$key])) {
-            $bycourse[$key] = ['done' => 0, 'seen' => 0, 'checkpoints' => []];
+            $bycourse[$key] = ['done' => 0, 'seen' => 0, 'checkpoints' => [], 'attempts' => []];
         }
         $bycourse[$key]['seen']++;
         $state = json_decode((string)$row->statejson, true);
@@ -258,6 +258,13 @@ if ($progressrows) {
         $bycourse[$key]['checkpoints'] = array_merge(
             $bycourse[$key]['checkpoints'],
             pqpr_checkpoints_from_state($state, (string)$row->unit, (int)$row->timemodified)
+        );
+        // Kept in its OWN bucket, never merged into checkpoints: these rows have
+        // no score and no pass flag, and the quiz renderer above would print a
+        // coloured percentage pill for anything it finds in that list.
+        $bycourse[$key]['attempts'] = array_merge(
+            $bycourse[$key]['attempts'],
+            pqpr_attempts_from_state($state, (string)$row->unit, (int)$row->timemodified)
         );
     }
     $courselabels = pqpr_course_labels(array_keys($bycourse));
@@ -276,9 +283,10 @@ if ($progressrows) {
             'units_completed' => $counts['done'],
             'units_total' => $total,
             'percent' => (int)round(100 * $counts['done'] / $total),
-        ], pqpr_summarise($counts['checkpoints']), [
+        ], pqpr_summarise($counts['checkpoints']), pqpr_summarise_attempts($counts['attempts']), [
             // Capped so a long course cannot balloon the family's payload.
             'checkpoints' => array_slice(pqpr_sort_checkpoints($counts['checkpoints']), 0, 40),
+            'attempts' => array_slice(pqpr_sort_checkpoints($counts['attempts']), 0, 40),
         ]);
     }
 }

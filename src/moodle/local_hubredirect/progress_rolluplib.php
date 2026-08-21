@@ -49,6 +49,10 @@ function pqpr_section_label(string $section): string {
     $known = [
         'quiz' => 'Quiz', 'course-quiz' => 'Course quiz', 'placement-exam' => 'Placement exam',
         'assessment' => 'Assessment', 'challenge' => 'Challenge', '_' => 'Checkpoint',
+        // Written-answer sections (see pqpr_attempts_from_state). Without this,
+        // 'reflect' falls through to the ucfirst below and reads as "Reflect",
+        // an instruction rather than the name of a section.
+        'reflect' => 'Reflection',
     ];
     return $known[$section] ?? ucfirst(str_replace('-', ' ', $section));
 }
@@ -84,7 +88,74 @@ function pqpr_checkpoints_from_state(array $state, string $unit, int $unitupdate
     return $out;
 }
 
-/** Newest unit first, then a stable unit/section order within a unit. */
+/**
+ * Written-answer counts inside one unit's reduced state, as flat display rows.
+ *
+ * The counterpart to pqpr_checkpoints_from_state() for a course that has no
+ * score to report. Global Perspectives is the only sender: all 315 of its
+ * assessment questions are self-marked free text, so it emits how much was
+ * WRITTEN (`attempted` on progress.summary) rather than a percentage.
+ *
+ * These rows deliberately carry NO `score` and NO `passed`. That is the whole
+ * point and it must survive future edits: a `score` here would be rendered as a
+ * coloured percentage pill by both portals, which is mastery nobody measured.
+ * They are also returned to the pages under their own `attempts` key, never
+ * merged into `checkpoints`, so no existing renderer can pick them up by
+ * accident.
+ *
+ * It measures ENGAGEMENT, not quality — a learner who types one character
+ * counts as having answered — so every label built from this says "answered"
+ * and never "correct".
+ */
+function pqpr_attempts_from_state(array $state, string $unit, int $unitupdated): array {
+    $out = [];
+    foreach ((array)($state['attempted'] ?? []) as $section => $counts) {
+        $section = (string)$section;
+        $counts = (array)$counts;
+        $total = (int)($counts['total'] ?? 0);
+        if ($total <= 0) {
+            continue;
+        }
+        // Clamped again here, not only at ingest: this row set is also built
+        // from state written before the ingest clamp existed.
+        $answered = max(0, min((int)($counts['answered'] ?? 0), $total));
+        $out[] = [
+            'unit' => $unit,
+            'section' => $section,
+            'label' => pqpr_unit_label($unit) . ' · ' . pqpr_section_label($section),
+            'answered' => $answered,
+            'total' => $total,
+            'unit_updated' => $unitupdated,
+        ];
+    }
+    return $out;
+}
+
+/**
+ * answered / total across a set of attempt rows, plus how many sections asked
+ * for writing. No average and no pass count — there is nothing being marked.
+ */
+function pqpr_summarise_attempts(array $attempts): array {
+    $answered = 0;
+    $total = 0;
+    foreach ($attempts as $row) {
+        $answered += (int)$row['answered'];
+        $total += (int)$row['total'];
+    }
+    return [
+        'questions_answered' => $answered,
+        'questions_total' => $total,
+        'written_sections' => count($attempts),
+    ];
+}
+
+/**
+ * Newest unit first, then a stable unit/section order within a unit.
+ *
+ * Also used for the attempt rows above: they carry the same `unit_updated`,
+ * `unit` and `section` keys this sorts on, so a second near-identical function
+ * would only be somewhere for the two orders to drift apart.
+ */
 function pqpr_sort_checkpoints(array $checkpoints): array {
     usort($checkpoints, static function (array $a, array $b): int {
         return [$b['unit_updated'], $a['unit'], $a['section']] <=> [$a['unit_updated'], $b['unit'], $b['section']];

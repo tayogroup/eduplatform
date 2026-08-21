@@ -204,12 +204,30 @@
           + `<span>${esc(q.label || "Checkpoint")}</span>`
           + `<span class="muted">${esc((q.passed ? "passed" : "not passed") + retry)}</span></div>`;
       }).join("");
+      // Written answers, for a course that has nothing to mark. Separate list,
+      // separate render: no coloured pill and no pass/fail, because nothing
+      // scored these — the child wrote an answer and compared it with a model
+      // one. "answered" is the only claim the number supports.
+      const written = (c.attempts || []).map((a) => {
+        const answered = Number(a.answered) || 0;
+        const total = Number(a.total) || 0;
+        return `<div class="pqsp-quiz"><span class="pill">${esc(answered + " / " + total)}</span>`
+          + `<span>${esc(a.label || "Section")}</span>`
+          + `<span class="muted">answered</span></div>`;
+      }).join("");
       const taken = Number(c.quizzes_taken) || 0;
+      const qtotal = Number(c.questions_total) || 0;
+      // "No quizzes yet" is true of Global Perspectives for ever, and reads as
+      // "your child has not done anything" — the opposite of what is happening.
+      // A course that reports written answers and no scores is self-assessed by
+      // design, so say that instead of reporting an absence.
       const quizsummary = taken > 0
         ? esc(taken + (taken === 1 ? " quiz · " : " quizzes · ") + (Number(c.quizzes_passed) || 0) + " passed"
             + (c.average_score === null || c.average_score === undefined ? "" : " · avg " + Number(c.average_score) + "%"))
-        : "No quizzes yet";
-      return `<tr><td><strong>${label}</strong><div class="pqsp-bar"><div class="pqsp-bar-fill" style="width:${pct}%"></div></div>${quizzes}</td>`
+        : qtotal > 0
+          ? esc("Self-assessed · " + (Number(c.questions_answered) || 0) + " of " + qtotal + " questions answered")
+          : "No quizzes yet";
+      return `<tr><td><strong>${label}</strong><div class="pqsp-bar"><div class="pqsp-bar-fill" style="width:${pct}%"></div></div>${quizzes}${written}</td>`
         + `<td class="muted">${esc((c.units_completed ?? 0) + " / " + (c.units_total ?? 0) + " units · " + pct + "%")}<div class="muted">${quizsummary}</div></td></tr>`;
     }).join("") || emptyRow(2, "No course progress recorded yet.");
 

@@ -171,11 +171,32 @@
     });
   }
 
+  // What the child WROTE, for a course with nothing to mark. Global
+  // Perspectives is self-assessed end to end — the learner writes an answer and
+  // compares it with a model one — so it has no score to send and would
+  // otherwise read as "No app quizzes yet" for ever, which looks like a child
+  // who has done nothing rather than a subject that is not marked.
+  //
+  // No pill colour and no pass/fail: nothing scored these. It also measures
+  // engagement rather than quality, so it says "answered", never "correct", and
+  // it never feeds needs_support — that flag is a judgement about marked work.
+  function writtenCell(s) {
+    const total = Number(s.questions_total) || 0;
+    if (total < 1) return `<span class="muted">No app quizzes yet</span>`;
+    const answered = Number(s.questions_answered) || 0;
+    const head = `<span class="pill">${esc("Self-assessed · " + answered + " of " + total + " answered")}</span>`;
+    const rows = (s.recent_written || []).map((a) =>
+      `<div class="quiz-line"><span class="pill">${esc((Number(a.answered) || 0) + " / " + (Number(a.total) || 0))}</span>`
+      + `<span>${esc(a.label || "Section")}</span>`
+      + `<span class="muted">${esc(a.course || "")}</span></div>`).join("");
+    return head + rows;
+  }
+
   // What the child scored in the learner app: the headline, then the five most
   // recent quizzes (newest unit first) with course, attempt and pass/fail.
   function quizCell(s) {
     const taken = Number(s.quizzes_taken) || 0;
-    if (taken < 1) return `<span class="muted">No app quizzes yet</span>`;
+    if (taken < 1) return writtenCell(s);
     const avg = (s.average_score === null || s.average_score === undefined) ? null : Number(s.average_score);
     const head = `<span class="pill ${s.needs_support ? "warn" : "good"}">`
       + esc(taken + (taken === 1 ? " quiz" : " quizzes") + " · " + (Number(s.quizzes_passed) || 0) + " passed"

@@ -288,6 +288,10 @@ $rosterids = array_map(static function ($student): int {
     return (int)$student->studentid;
 }, $roster);
 $quizbystudent = [];
+// Written-answer rows, kept in a SEPARATE index from $quizbystudent: they carry
+// no score and no pass flag, and quizCell() prints a coloured percentage pill
+// for everything it finds in the quiz list.
+$writtenbystudent = [];
 $progressrows = pqpr_progress_rows($rosterids);
 if ($progressrows) {
     $courselabels = pqpr_course_labels(array_map(static function ($row): string {
@@ -305,6 +309,11 @@ if ($progressrows) {
             $cp['course'] = $course;
             $quizbystudent[(int)$row->userid][] = $cp;
         }
+        foreach (pqpr_attempts_from_state($state, (string)$row->unit, (int)$row->timemodified) as $att) {
+            $att['coursekey'] = $coursekey;
+            $att['course'] = $course;
+            $writtenbystudent[(int)$row->userid][] = $att;
+        }
     }
 }
 $rosterout = [];
@@ -312,14 +321,20 @@ foreach ($roster as $student) {
     $studentid = (int)$student->studentid;
     $checkpoints = pqpr_sort_checkpoints($quizbystudent[$studentid] ?? []);
     $summary = pqpr_summarise($checkpoints);
+    $written = pqpr_sort_checkpoints($writtenbystudent[$studentid] ?? []);
     $rosterout[] = array_merge([
         'studentid' => $studentid,
         'name' => fullname($student),
         'email' => (string)$student->email,
         'profileurl' => (new moodle_url('/local/hubredirect/workspace_student.php', ['workspaceid' => $workspaceid, 'studentid' => $studentid]))->out(false),
-    ], $summary, [
+    ], $summary, pqpr_summarise_attempts($written), [
+        // Unchanged, and deliberately: needs_support is a judgement about
+        // MARKED work. A self-assessed course cannot feed it, because nothing
+        // marked the answers — flagging a learner off a count of how much they
+        // typed would be the fabricated assessment this whole field avoids.
         'needs_support' => $summary['average_score'] !== null && $summary['average_score'] < PQPR_SUPPORT_THRESHOLD,
         'recent_quizzes' => array_slice($checkpoints, 0, 5),
+        'recent_written' => array_slice($written, 0, 5),
     ]);
 }
 // Class-level cut of the same checkpoints: one row per quiz, every roster

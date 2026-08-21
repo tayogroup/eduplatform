@@ -44,8 +44,8 @@ globalThis.location = { hostname: "localhost", port: "4287", search: "", href: "
 globalThis.localStorage = { getItem: () => null, setItem: () => {} };
 
 const wehel = await import(pathToFileURL(SHELL).href);
-const { apiMessages, withoutMediaPlumbing, unitForTutor, UNIT_JSON_LIMIT, withAttachmentBlocks, homeworkContextText, HOMEWORK_CONTEXT_LIMIT, WEHEL_ATTACH_DAILY_LIMIT, teacherPrompts } = wehel;
-for (const [name, value] of Object.entries({ apiMessages, withoutMediaPlumbing, unitForTutor, UNIT_JSON_LIMIT, withAttachmentBlocks, homeworkContextText, HOMEWORK_CONTEXT_LIMIT, WEHEL_ATTACH_DAILY_LIMIT, teacherPrompts })) {
+const { apiMessages, withoutMediaPlumbing, unitForTutor, UNIT_JSON_LIMIT, withAttachmentBlocks, homeworkContextText, HOMEWORK_CONTEXT_LIMIT, WEHEL_ATTACH_DAILY_LIMIT, teacherPrompts, voiceSegments } = wehel;
+for (const [name, value] of Object.entries({ apiMessages, withoutMediaPlumbing, unitForTutor, UNIT_JSON_LIMIT, withAttachmentBlocks, homeworkContextText, HOMEWORK_CONTEXT_LIMIT, WEHEL_ATTACH_DAILY_LIMIT, teacherPrompts, voiceSegments })) {
   if (value === undefined) fail("shell/wehel.js no longer exports what this gate checks", `${name} is missing — restore the export rather than deleting the check`);
 }
 if (failures.length) { report(); process.exit(1); }
@@ -134,6 +134,32 @@ const text = (sent) => sent.map((m) => m.content).join(" | ");
   const pdfSent = withAttachmentBlocks(conversation, [{ name: "hw.pdf", mediaType: "application/pdf", data: "aGVsbG8=" }]);
   const doc = pdfSent[pdfSent.length - 1].content.find((block) => block.type === "document");
   if (!doc || doc.source?.media_type !== "application/pdf") fail("A PDF attachment is not sent as a document block", JSON.stringify(pdfSent[pdfSent.length - 1]));
+}
+
+// --- 1b2. narration switches voice at the Soomaali part ----------------------
+// The owner's sample, verbatim shape: English, the Somali sentence INLINE in
+// the same paragraph, English carrying on after it. The English voice must
+// never read the Somali; the Somali voice must get exactly the Somali; and
+// a two-sentence Somali meaning must not be cut in half by its own full stop.
+{
+  const sample = 'Press Hear it and listen carefully. bus means a long vehicle that carries many people at once. Soomaali: bas waa gaari dheer oo dad badan qaada. I expect you to listen once, then tell me "done" when you have heard it. 🚌';
+  const segments = voiceSegments(sample);
+  const voices = segments.map((segment) => segment.voice).join(",");
+  if (voices !== "english,somali,english") fail("Inline Soomaali is not cut into English → Somali → English", `got ${voices}: ${JSON.stringify(segments)}`);
+  const somali = segments.find((segment) => segment.voice === "somali");
+  if (!somali || somali.text !== "bas waa gaari dheer oo dad badan qaada.") fail("The Somali segment is not exactly the Somali sentence", JSON.stringify(somali));
+  if (segments.some((segment) => segment.voice === "english" && /bas waa|dad badan/.test(segment.text))) fail("Somali leaked into an English segment", JSON.stringify(segments));
+  if (!segments[2] || !/^I expect you/.test(segments[2].text)) fail("The English after the Somali part is lost or mis-split", JSON.stringify(segments));
+  // Own-line form (the prompt's preferred shape) still works.
+  const lined = voiceSegments("Alive means living.\nSoomaali: nool waxay ka dhigan tahay wax nool.\nNow you try one.");
+  if (lined.map((segment) => segment.voice).join(",") !== "english,somali,english" || !/^nool waxay/.test(lined[1].text)) fail("Own-line Soomaali is not segmented", JSON.stringify(lined));
+  // A two-sentence Somali meaning stays whole until English resumes.
+  const twoSentence = voiceSegments("Bus means a vehicle. Soomaali: Bas waa gaari. Waa gaari dheer oo dad badan qaada. Now press Hear it.");
+  const somaliTwo = twoSentence.find((segment) => segment.voice === "somali");
+  if (!somaliTwo || !/Waa gaari dheer/.test(somaliTwo.text) || /Now press/.test(somaliTwo.text)) fail("A two-sentence Somali meaning is cut in half, or swallows the English after it", JSON.stringify(twoSentence));
+  // No Soomaali at all → one English segment, untouched.
+  const plain = voiceSegments("Great question! A goat is alive.");
+  if (plain.length !== 1 || plain[0].voice !== "english") fail("A reply with no Somali is split anyway", JSON.stringify(plain));
 }
 
 // --- 1c. the homework context carries the teacher's words, capped ------------

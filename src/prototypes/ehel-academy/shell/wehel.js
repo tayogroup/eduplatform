@@ -221,20 +221,66 @@ export function teacherPrompts() {
   ];
 }
 
-// "Soomaali:" lines are the prompt's contract for Somali vocabulary: the only
-// part of a reply the Somali voice reads, and the part the English browser
-// voice must skip. Tolerates the bullets/bold the model sometimes adds even
-// though the prompt asks for the bare form.
-const SOMALI_LINE = /^\s*(?:[-*•]\s*)*\**\s*Soomaali\s*\**\s*:\s*\**\s*(.+?)\s*$/;
-export function somaliLines(text) {
-  return String(text || "").split("\n")
-    .map((line) => SOMALI_LINE.exec(line)?.[1])
-    .filter(Boolean)
-    .map((somali) => somali.replace(/\*+$/, "").trim())
-    .filter(Boolean);
+// "Soomaali:" marks the Somali vocabulary in a reply — the prompt's contract.
+// The Somali voice (Azure Ubah) reads exactly that part; the English voice
+// must never touch it. The prompt asks for it on its own line, but the model
+// also writes it INLINE, mid-paragraph, with English carrying on after the
+// Somali sentence ("bus means a long vehicle… Soomaali: bas waa gaari dheer oo
+// dad badan qaada. I expect you to listen once…"). So a reply is cut into
+// VOICE SEGMENTS, in reading order: English → the Somali part → English again,
+// and narration switches voice at each boundary (owner decision 2026-08-20:
+// "when you get to the Soomaali part, switch to Ubah").
+//
+// Where the Somali part ENDS when it is inline: at the end of the line, or
+// earlier at a sentence end where what follows reads as English — the next
+// sentence carries an English function word. Somali sentences start with
+// capitals too, so a bare "capital after full stop" would cut a two-sentence
+// Somali meaning in half and hand the second half to the English voice.
+// Tolerates the bullets/bold the model sometimes adds around the marker.
+const SOMALI_MARKER = /(?:[-*•]\s*)*\**\s*Soomaali\s*\**\s*:\s*\**\s*/gi;
+const ENGLISH_RESUMES = /\b(the|is|are|you|your|we|it|to|and|of|on|for|this|that|when|now|press|tell|listen|step|word|words|means|say|look|hear|next|done|great|good|well)\b/i;
+export function voiceSegments(text) {
+  const source = String(text || "");
+  const segments = [];
+  const push = (voice, value) => { if (value && value.trim()) segments.push({ voice, text: value.trim() }); };
+  let cursor = 0;
+  SOMALI_MARKER.lastIndex = 0;
+  let match;
+  while ((match = SOMALI_MARKER.exec(source))) {
+    push("english", source.slice(cursor, match.index));
+    const start = match.index + match[0].length;
+    const lineEnd = source.indexOf("\n", start);
+    const limit = lineEnd === -1 ? source.length : lineEnd;
+    // Walk the sentence boundaries on this line; the Somali part ends at the
+    // first boundary whose NEXT SENTENCE (that sentence alone — not a fixed
+    // window, which would see an English sentence two sentences on and cut a
+    // two-sentence Somali meaning in half) reads as English.
+    let end = limit;
+    const boundary = /[.!?…]+\s+/g;
+    boundary.lastIndex = start;
+    const stops = [];
+    let stop;
+    while ((stop = boundary.exec(source)) && stop.index < limit) stops.push(stop);
+    for (let at = 0; at < stops.length; at++) {
+      const nextStart = stops[at].index + stops[at][0].length;
+      if (nextStart >= limit) break;
+      const nextEnd = at + 1 < stops.length ? stops[at + 1].index + stops[at + 1][0].length : limit;
+      if (ENGLISH_RESUMES.test(source.slice(nextStart, nextEnd))) { end = stops[at].index + stops[at][0].trimEnd().length; break; }
+    }
+    push("somali", source.slice(start, end).replace(/\*+$/, ""));
+    cursor = end;
+    SOMALI_MARKER.lastIndex = cursor;
+  }
+  push("english", source.slice(cursor));
+  return segments;
 }
+// The Somali parts alone — what the bubble's Soomaali button replays.
+export function somaliLines(text) {
+  return voiceSegments(text).filter((segment) => segment.voice === "somali").map((segment) => segment.text);
+}
+// The English alone — what the English voice may read.
 function withoutSomaliLines(text) {
-  return String(text || "").split("\n").filter((line) => !SOMALI_LINE.test(line)).join("\n");
+  return voiceSegments(text).filter((segment) => segment.voice === "english").map((segment) => segment.text).join("\n");
 }
 
 // One line per unit of the loaded course manifest, so Wehel knows where the
@@ -1260,13 +1306,36 @@ export function mountWehelChat(options) {
       }
       return;
     }
-    const clean = withoutSomaliLines(text);
+    // Everything else: narrate the reply in reading order, switching voice at
+    // each segment — Thalia for the English, Ubah for the "Soomaali:" part,
+    // Thalia again for whatever follows (owner decision 2026-08-20). The
+    // browser engine steps in for an English segment only when the voice
+    // endpoint cannot be reached; a Somali segment that cannot be voiced is
+    // skipped with a notice rather than mangled by an English voice.
     speakingIndex = index;
     render();
     try {
-      await speakEhelVoice(clean, { rate: speechRate });
-    } catch {
-      await speakBrowser(clean, { rate: speechRate });
+      for (const segment of voiceSegments(text)) {
+        if (speakingIndex !== index) break; // stopped, or another bubble took over
+        const clean = speakableText(segment.text);
+        if (!clean) continue;
+        if (segment.voice === "somali") {
+          try {
+            for (const chunk of speechChunks(clean, 550)) {
+              if (speakingIndex !== index) break;
+              await speakSomali(chunk);
+            }
+          } catch (error) {
+            if (ui.toast) ui.toast(error.message || "The Somali voice is unavailable right now.");
+          }
+        } else {
+          try {
+            await speakEhelVoice(clean, { rate: speechRate });
+          } catch {
+            await speakBrowser(clean, { rate: speechRate });
+          }
+        }
+      }
     } finally {
       // Another bubble may have taken over while this one played — only the
       // still-current speaker clears the highlight.

@@ -28,12 +28,12 @@ let placement;
 // Shell-provided bindings (populated by bind(ctx)).
 let $, $$, escapeHtml, icon, voiceButton, pageHeader, toast, readAlongSpans;
 let complete, completeGradeSection, saveProgress, saveGradeProgress, navigate, emitProgress;
-let bindVoiceControls, updateVoiceUI, stopVoice, renderNav, unitSectionIds, stageNumber, STAGE_STORAGE_KEY, speakText;
+let bindVoiceControls, updateVoiceUI, stopVoice, renderNav, unitSectionIds, stageNumber, STAGE_STORAGE_KEY, PROGRESS_UNIT, speakText;
 let course, progress, gradeProgress, manifest, gradeCapstone, dataRootUrl;
 function bind(ctx) {
   ({ $, $$, escapeHtml, icon, voiceButton, pageHeader, toast, readAlongSpans, complete, completeGradeSection,
      saveProgress, saveGradeProgress, navigate, emitProgress, bindVoiceControls, updateVoiceUI,
-     stopVoice, renderNav, unitSectionIds, stageNumber, STAGE_STORAGE_KEY, speakText } = ctx);
+     stopVoice, renderNav, unitSectionIds, stageNumber, STAGE_STORAGE_KEY, PROGRESS_UNIT, speakText } = ctx);
   course = ctx.course; progress = ctx.progress; gradeProgress = ctx.gradeProgress;
   manifest = ctx.manifest; gradeCapstone = ctx.gradeCapstone; dataRootUrl = ctx.dataRootUrl;
   if (isPrereqUnit) {
@@ -1504,6 +1504,15 @@ function renderLiveClass() {
   $$('[data-live-ready]').forEach(button=>button.addEventListener("click",()=>{button.disabled=true;button.textContent="Ready ✓";if($$('[data-live-ready]').every(item=>item.disabled))complete("live","Live Math Class preparation complete.");}));
 }
 
+// The Unit Challenge passes at 60%, NOT at the 80% `assessment.passPercent` the
+// page header calls the "approved mastery target". The two have always been
+// different numbers here, and the section guide tells the learner the lower one
+// ("passed with more than half"). Named because it is now read three times: the
+// two section ticks below and the `passed` flag on the checkpoint this section
+// emits. Those three have to move together, or a learner is told the challenge
+// is complete while their teacher is shown a failed quiz for the same attempt.
+const CHALLENGE_PASS_PERCENT = 60;
+
 function renderAssessment() {
   assessmentIndex = 0;
   assessmentScore = 0;
@@ -1516,10 +1525,23 @@ function drawAssessmentQuestion() {
   const shell = $("#quiz-shell");
   if (assessmentIndex >= course.assessment.questions.length) {
     const percent = Math.round(assessmentScore / course.assessment.questions.length * 100);
+    // The score itself, not just the tick. complete() records a boolean, so a
+    // whole stage of Unit Challenges reached a teacher as done/not-done while
+    // the percentage was computed here, printed on the page and thrown away —
+    // the stage capstone quiz was the only number this subject ever emitted.
+    //
+    // This fires on EVERY finished attempt, including the ones under the pass
+    // mark: an attempt that did not pass is the one a teacher most needs to
+    // see, and complete() cannot carry it. `attempt` is persisted rather than
+    // counted in a module variable, which would restart every learner at
+    // attempt 1 after a reload.
+    progress.challengeAttempts = (progress.challengeAttempts || 0) + 1;
+    saveProgress();
+    emitProgress({ type: "checkpoint.result", unit: PROGRESS_UNIT, section: "challenge", score: percent, passed: percent >= CHALLENGE_PASS_PERCENT, attempt: progress.challengeAttempts });
     shell.innerHTML = `<div class="quiz-result"><div class="score-ring">${assessmentScore}/${course.assessment.questions.length}</div><span class="eyebrow">Checkpoint complete</span><h2>${percent >= course.assessment.passPercent ? "Mastery target reached" : "Review and try again"}</h2><p>You scored ${percent}%. Use the feedback to choose your next learning step.</p><div class="audio-actions" style="justify-content:center"><button class="button secondary" id="retry-assessment" type="button">Try again</button><button class="button primary" id="finish-assessment" type="button">Continue →</button></div></div>`;
     $("#retry-assessment").addEventListener("click", renderAssessment);
-    $("#finish-assessment").addEventListener("click", () => { if (percent >= 60) complete("challenge"); navigate("progress"); });
-    if (percent >= 60) complete("challenge", "Unit Challenge recorded on this device.");
+    $("#finish-assessment").addEventListener("click", () => { if (percent >= CHALLENGE_PASS_PERCENT) complete("challenge"); navigate("progress"); });
+    if (percent >= CHALLENGE_PASS_PERCENT) complete("challenge", "Unit Challenge recorded on this device.");
     return;
   }
   const item = course.assessment.questions[assessmentIndex];
@@ -1700,7 +1722,7 @@ const config = {
   sections,
   nonCountable: ["overview", "capstone", "capstonequiz", "year-plan", "unit-plan"],
   gradeSections: ["capstone", "capstonequiz"],
-  progressDefaults: { completed: [], practiceOpened: [], reflection: {}, aiMessages: [], games: {} },
+  progressDefaults: { completed: [], practiceOpened: [], reflection: {}, aiMessages: [], games: {}, challengeAttempts: 0 },
   gradeDefaults: { completed: [], capstoneResponses: {}, capstoneEvidence: {}, quizBest: 0 },
   keys: (s, u) => ({
     progress: `ehel-sci-s${s}-u${u}-progress-v1`,

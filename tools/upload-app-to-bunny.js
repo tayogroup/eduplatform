@@ -32,8 +32,12 @@ const DRY = process.argv.slice(2).includes("--dry");
 // path contains one of these. Added 2026-08-17 to ship 256 re-rendered lecture
 // files (grade-N/media/unit-N/) without also sending the two live code files
 // (shared/course-ui.css, shared/grade-redirect.js) that happened to differ from
-// the manifest — code goes out through deploy-app-version.js, on purpose. Same
-// shape as upload-media-to-bunny.js's --only.
+// the manifest — code goes out through deploy-app-version.js, on purpose.
+//
+// This is the only uploader that has it. The comment here used to say the flag
+// was "the same shape as upload-media-to-bunny.js's --only", and that tool has
+// never had one — `git log -S'--only'` against it returns nothing. Do not reach
+// for --only in the content or media uploaders; all three do share --dry.
 const onlyArg = process.argv.indexOf("--only");
 const ONLY = onlyArg >= 0 ? String(process.argv[onlyArg + 1] || "").split(",").map((s) => s.trim()).filter(Boolean) : null;
 if (!KEY && !DRY) { console.error("BUNNY_KEY not set (use --dry to preview without uploading)"); process.exit(1); }

@@ -12,6 +12,82 @@
 // mountDeck; two subjects on this design would have restarted that split, and a
 // deck whose arrows behave differently in Mathematics than in English is exactly
 // the drift the single definition exists to prevent.
+
+// --- theatre mode: the deck, and nothing else -------------------------------
+//
+// At Grades/Stages 1-4 every subject mounts its deck INLINE — under the page
+// header, and in English and Mathematics under "How to use this page" as well.
+// Measured, not assumed: on Mathematics Grade 2 all ten deck routes render
+// gc-full=false with the guide 297px tall above them. This button is how the
+// deck gets the screen.
+//
+// It is deliberately NOT the older `gc-full` body class. That one means "this
+// deck was mounted with fullBleed, so it IS the page" — a layout decision the
+// subject makes at mount time, not something the learner asks for — and ten of
+// its eleven CSS rules are gated on body.focus-mode, so outside a focus-mode
+// session it does almost nothing. `deck-theatre` is only ever set by the button
+// below, which exists only where a deck does, which is Grades/Stages 1-4. That
+// is what keeps this off the upper stages: no rule here can match a page that
+// never mounts a deck.
+//
+// Real fullscreen is asked for on top, as a bonus rather than the mechanism.
+// The API cannot be built on: iPhone Safari has no Element.requestFullscreen,
+// an embed without allow="fullscreen" is refused, and focus mode
+// (shared/seb-session.js) and the lesson gate both take fullscreen on <html>
+// from a CAPTURE-phase pointerdown, which beats any click. That last one is why
+// the test below is "is the DECK the fullscreen element", not "is anything
+// fullscreen" — the naive guard is what left the eBook reader showing the whole
+// page, guide and all, until it was fixed the same way.
+let theatreRoot = null;
+let theatreBound = false;
+let theatreHadFullscreen = false;
+
+function leaveTheatre({ keepFullscreen = false } = {}) {
+  document.body.classList.remove("deck-theatre");
+  if (theatreRoot) {
+    theatreRoot.classList.remove("is-theatre");
+    const button = theatreRoot.querySelector(".gc-theatre");
+    if (button) {
+      button.setAttribute("aria-pressed", "false");
+      button.innerHTML = `${deckIcon("maximize")}<span>Full screen</span>`;
+    }
+  }
+  if (!keepFullscreen && theatreHadFullscreen && document.fullscreenElement === theatreRoot && document.exitFullscreen) {
+    document.exitFullscreen().catch(() => {});
+  }
+  theatreHadFullscreen = false;
+  theatreRoot = null;
+}
+
+export function mountTheatre(root, button) {
+  // A freshly mounted deck starts windowed: a filter or a section change must
+  // never land the learner inside a full screen they did not ask for.
+  leaveTheatre();
+  if (!root || !button) return;
+  button.addEventListener("click", () => {
+    if (document.body.classList.contains("deck-theatre")) { leaveTheatre(); return; }
+    theatreRoot = root;
+    document.body.classList.add("deck-theatre");
+    root.classList.add("is-theatre");
+    button.setAttribute("aria-pressed", "true");
+    button.innerHTML = `${deckIcon("minimize")}<span>Leave full screen</span>`;
+    if (root.requestFullscreen && document.fullscreenElement !== root) {
+      root.requestFullscreen({ navigationUI: "hide" }).catch(() => {});
+    }
+  });
+  if (theatreBound) return;
+  theatreBound = true;
+  // Escape, or the browser's own exit control, ends full screen as surely as the
+  // button does; and leaving the section must not strip a page the deck has gone
+  // from. Bound once, and the fullscreen half only acts when it was ours to lose.
+  document.addEventListener("fullscreenchange", () => {
+    if (theatreRoot && document.fullscreenElement === theatreRoot) { theatreHadFullscreen = true; return; }
+    if (!theatreHadFullscreen) return;
+    leaveTheatre({ keepFullscreen: true });
+  });
+  window.addEventListener("hashchange", () => leaveTheatre());
+}
+
 //
 // A subject supplies only its slides, plus the four things a deck cannot know:
 //
@@ -57,7 +133,7 @@ export function createDeck({ $, escapeHtml, icon, stopAudio = () => {}, afterPai
     const host = typeof mount === "string" ? $(mount) : mount;
     host.innerHTML = `
     <div class="gc-wrap">
-      <div class="gc-top"><h2 class="gc-heading">${escapeHtml(heading)}</h2><span class="gc-count" id="gc-count" aria-live="polite" aria-atomic="true"></span></div>
+      <div class="gc-top"><h2 class="gc-heading">${escapeHtml(heading)}</h2><span class="gc-count" id="gc-count" aria-live="polite" aria-atomic="true"></span><button class="gc-theatre" type="button" aria-pressed="false">${deckIcon("maximize")}<span>Full screen</span></button></div>
       <div class="gc-carousel" role="group" aria-roledescription="carousel" aria-label="${escapeHtml(heading)}">
         <button class="gc-arrow prev" type="button" aria-label="Previous ${lower}">${icon("chevron-left")}</button>
         <div class="gc-viewport"><div class="gc-track" id="gc-track"></div></div>
@@ -77,6 +153,7 @@ export function createDeck({ $, escapeHtml, icon, stopAudio = () => {}, afterPai
     // to the first markup that happened to match.
     const find = (selector) => host.querySelector(selector);
     const root = find(".gc-wrap");
+    mountTheatre(root, find(".gc-theatre"));
     const track = find("#gc-track");
     const dotsRow = find("#gc-dots");
     const prevArrow = find(".gc-arrow.prev");
@@ -235,6 +312,12 @@ const DECK_ICON_PATHS = {
   "arrow-right": '<path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>',
   eye: '<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/>',
   pencil: '<path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>',
+  // The theatre toggle draws these through deckIcon rather than the subject's
+  // own icon(): four of the six subjects never load the lucide runtime, so a
+  // <i data-lucide> there is an empty 28px box, and the one control that gets a
+  // learner out of full screen is the last place to risk an invisible glyph.
+  maximize: '<path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M21 8V5a2 2 0 0 0-2-2h-3"/><path d="M3 16v3a2 2 0 0 0 2 2h3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/>',
+  minimize: '<path d="M8 3v3a2 2 0 0 1-2 2H3"/><path d="M21 8h-3a2 2 0 0 1-2-2V3"/><path d="M3 16h3a2 2 0 0 1 2 2v3"/><path d="M16 21v-3a2 2 0 0 1 2-2h3"/>',
 };
 export function deckIcon(name, label = "") {
   const accessible = label ? ` role="img" aria-label="${label}"` : ' aria-hidden="true"';

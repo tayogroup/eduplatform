@@ -186,6 +186,46 @@ body.focus-mode .focus-exit:hover { background: #1d4360; }
 .gc-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; flex-wrap: wrap; }
 .gc-heading { margin: 0; font-size: 22px; }
 .gc-count { color: #64748b; font-size: 14px; font-weight: var(--weight-medium); }
+/* The deck's own full-screen toggle. Sits in .gc-top beside the count, and is
+   the only way in AND out, so it stays visible in theatre mode below. */
+.gc-theatre { display: inline-flex; align-items: center; gap: 7px; min-height: 38px; padding: 0 13px; border: 1px solid var(--line); border-radius: 999px; background: white; color: var(--ink); font: inherit; font-size: 14px; font-weight: var(--weight-medium); cursor: pointer; }
+.gc-theatre:hover { border-color: var(--teal); color: var(--teal-dark); }
+.gc-theatre svg { width: 17px; height: 17px; }
+/* Theatre mode: the deck, and nothing else.
+   Every rule is under body.deck-theatre, which only the deck's own button sets
+   and which therefore cannot exist on a Grade/Stage 5-8 page — those never mount
+   a deck, so there is no button and no class. That is what keeps this off the
+   upper-stage designs. Shared by all six subjects: the other five @import this
+   stylesheet. Mirrors body.ebook-watching above, deliberately — a learner should
+   not meet two different full-screen behaviours in one course. */
+body.deck-theatre { overflow: hidden; }
+body.deck-theatre .topbar,
+body.deck-theatre .sidebar,
+body.deck-theatre .focus-exit,
+body.deck-theatre .wehel-dock-button,
+body.deck-theatre #section-guide,
+body.deck-theatre #section-complete,
+body.deck-theatre .page-header { display: none; }
+body.deck-theatre .content { padding: 0; }
+body.deck-theatre #app { max-width: none; margin: 0; padding-bottom: 0; }
+/* Only the deck that was actually opened. A page can carry the original design
+   and the deck at once (Computing Stages 1-4 draw both), and pinning every
+   .gc-wrap would pin one the learner never pressed. */
+/* 100vh, not the windowed `calc(100vh - var(--gc-page-chrome))`: the chrome that
+   variable subtracts is exactly what theatre mode has just hidden. Left at auto
+   the wrap collapsed to its content and left a 200px band of empty page under
+   the slides. */
+body.deck-theatre .gc-wrap.is-theatre { position: fixed; inset: 0; z-index: 70; box-sizing: border-box; max-width: none; height: 100vh; margin: 0; padding: 14px 16px 10px; background: var(--paper, #f4f7f9); }
+/* An inline deck is bounded by `.deck-design .gc-carousel { flex: none; height:
+   min(68vh, 620px) }` so it does not run to 100vh under the page above it. In
+   theatre mode there IS no page above it, and that bound is what left 180px of
+   empty ground under the slides. Higher specificity than the .deck-design pair,
+   so it wins wherever the deck is mounted. */
+body.deck-theatre .gc-wrap.is-theatre .gc-carousel { flex: 1; height: auto; min-height: 0; }
+body.deck-theatre .gc-wrap.is-theatre .gc-top { display: flex; margin-bottom: 10px; }
+body.deck-theatre .gc-wrap.is-theatre .gc-viewport { border-radius: 14px; }
+body.deck-theatre .gc-wrap.is-theatre .gc-dots { margin-top: 12px; }
+body.deck-theatre .gc-wrap:not(.is-theatre) { display: none; }
 /* min-height: 0 on both, or a flex item refuses to shrink below its content and
    the deck grows the page again — the default min-height:auto is exactly the
    behaviour being fixed here. */

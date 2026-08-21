@@ -18,6 +18,7 @@
 // level-N/ folders — and outcomes carry both frameworks, with the CEFR band
 // shown wherever a claim is made about what the learner can do.
 import { escapeHtml as sharedEscapeHtml, icon as sharedIcon } from "../../shared/course-shell.js?v=20260721a";
+import { deckIcon, mountTheatre } from "../deck.js?v=deck-1";
 import { createCourseApp } from "../course-app.js?v=t2";
 import { createPlacementUnit, placementCallout, PREREQ_UNIT } from "../placement.js?v=placement-1";
 import { renderStudyPlan, renderUnitStudyPlan } from "../study-plan.js?v=study-plan-2";
@@ -356,7 +357,7 @@ function renderGrammar() {
 
   $("#app").innerHTML = `
     <div class="gc-wrap">
-      <div class="gc-top"><h2 class="gc-heading">Patterns</h2><span class="gc-count" id="gc-count">Pattern 1 of ${lessons.length}</span></div>
+      <div class="gc-top"><h2 class="gc-heading">Patterns</h2><span class="gc-count" id="gc-count">Pattern 1 of ${lessons.length}</span><button class="gc-theatre" type="button" aria-pressed="false">${deckIcon("maximize")}<span>Full screen</span></button></div>
       <div class="gc-carousel">
         <button class="gc-arrow prev" type="button" aria-label="Previous pattern">${icon("chevron-left")}</button>
         <div class="gc-viewport"><div class="gc-track">${slides}</div></div>
@@ -365,6 +366,10 @@ function renderGrammar() {
       <div class="gc-dots">${lessons.map((_, index) => `<button class="gc-dot" type="button" data-dot="${index}" aria-label="Pattern ${index + 1}"></button>`).join("")}</div>
     </div>`;
   document.body.classList.add("gc-full");
+  // This deck is written out by hand rather than through mountDeck, so the
+  // shared full-screen toggle has to be wired here as well — same button, same
+  // helper, same CSS as the other five subjects.
+  mountTheatre($(".gc-wrap"), $(".gc-theatre"));
 
   const track = $(".gc-track");
   const dots = $$("[data-dot]");

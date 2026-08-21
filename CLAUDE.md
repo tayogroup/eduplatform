@@ -872,6 +872,40 @@ left of its roof, a tree house floating above a trunk that stopped short of it, 
 white spider web invisible against a pale sky, and an aquarium hanging in a grey
 void with the visitors standing on nothing.
 
+### The portal pages are a deploy channel too, and it had no tool
+
+`src/portal/*.html` (~150 pages) are served from Bunny at `platform/portal/`,
+the second half of the manual Moodle release — plugin PHP to the server, portal
+HTML here. Every other tier had an uploader; this one had none, and the cost was
+measurable. On 2026-08-21 the two live pages were serving **2026-07-22 and
+2026-07-31** builds, three merged commits behind, including the fix that first
+showed families any app quiz score at all. Nothing in the repo could say so.
+
+```bash
+node tools/upload-portal-to-bunny.js                       # drift report, uploads nothing
+node tools/upload-portal-to-bunny.js --upload <page.html>  # named pages
+node tools/upload-portal-to-bunny.js --upload --all        # everything that differs
+```
+
+**The default is a drift report, not an upload** — "what is stale?" had no
+answer before, and it is the question worth asking most often. Assume nothing
+about the other ~150 pages; ask the tool.
+
+Two things learned the hard way here, both now in the tool:
+
+- **Verify storage first, the edge second.** Pages are `max-age=300` with warm
+  entries, so straight after a PUT the edge legitimately still serves the old
+  copy. The first version checked only the edge and reported a perfectly good
+  deploy as `✗ STILL STALE` — a false alarm that, left in, teaches whoever runs
+  it to ignore the check. Storage answers "did the write land" immediately; the
+  edge answers "what does a parent see" after the TTL.
+- **Prove the origin before believing a stale read.** When the edge kept serving
+  old bytes after a confirmed write, the decisive test was writing a
+  uniquely-named probe file to storage and fetching it through the CDN: it came
+  back instantly, which proved the origin was right and the staleness was only
+  cache. Without that, the obvious next guess — "I uploaded to the wrong zone" —
+  would have sent a re-upload somewhere worse.
+
 ## Git
 
 - Work on `main` (or feature branches off it). History before 2026-07-16 lived on `codex/*` branches, now merged and deleted.

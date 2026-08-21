@@ -187,7 +187,7 @@
     "check:english-story-library": "node tools/check-english-story-library.mjs",
     "build:english-story-library": "node tools/build-english-story-library.mjs",
     "check:english-ebooks": "node tools/check-english-ebooks.mjs && node tools/check-ebook-composition.mjs",
-    "build:ebooks": "node tools/create-musa-ebook-illustrations.js all && node tools/create-grade2-ebook-illustrations.js all && node tools/create-grade3-ebook-illustrations.js all && node tools/create-grade4-ebook-illustrations.js all && node tools/create-amal-ebook-illustrations.js all && node tools/write-english-ebook-docs.mjs",
+    "build:ebooks": "node tools/create-musa-ebook-illustrations.js all && node tools/create-grade2-ebook-illustrations.js all && node tools/create-grade3-ebook-illustrations.js all && node tools/create-grade3-ebook-illustrations-2.js all && node tools/create-grade3-ebook-illustrations-3.js all && node tools/create-grade3-ebook-illustrations-4.js all && node tools/create-grade4-ebook-illustrations.js all && node tools/create-amal-ebook-illustrations.js all && node tools/write-english-ebook-docs.mjs",
     "build:intensive": "node tools/build-intensive-units.js",
     "check:intensive": "node tools/build-intensive-units.js && node tools/check-intensive-audio-coverage.mjs",
     "check:courses": "node tools/check-science-content.mjs && node tools/check-science-webgl-scenes.mjs && node tools/check-math-content.mjs && node tools/check-computing-content.mjs && node tools/check-computing-webgl-scenes.mjs",

@@ -188,6 +188,190 @@ const NOTES = {
     themes: "gathering a year up and saying it out loud",
     cameos: "the Year 3 Showcase, from the Unit 10 readings; the whole cast returns.",
   },
+  // ---- Grade 3, books 2, 3 and 4 of each unit. The `book` field names the slot
+  // and the source text, because the four books of a unit are not a series in
+  // reading order — a reviewer needs to know which of the unit's five texts each
+  // one retells before they can judge whether it does its revision job.
+  "junior": {
+    series: "Amal", book: "2 of 4, from the story \"Amal's Big Day\"", term: "Term 1", unit: "Unit 1: All About Me and My Family",
+    vocabulary: "junior, senior, student, behave, behaviour, respect, honour, duty, health, safety, public, private",
+    themes: "being the youngest; a nickname that changes meaning because you did something",
+    cameos: "the drama club and the health-and-safety play are the Unit 1 story's own; Adam joined the club first, as the reading says.",
+  },
+  "the-interview": {
+    series: "Amal", book: "3 of 4, from the listening text \"Amal Talks About Her Family\"", term: "Term 1", unit: "Unit 1: All About Me and My Family",
+    vocabulary: "family, parent, student, role model, respect, honour, duty",
+    themes: "a question you cannot answer in the abstract; answering it by describing what people actually do",
+    cameos: "Maya asks the questions; the answers are Amal's own from the Unit 1 interview.",
+  },
+  "minas-two-voices": {
+    series: "Amal", book: "4 of 4, from the listening text \"Public and Private\"", term: "Term 1", unit: "Unit 1: All About Me and My Family",
+    vocabulary: "public, private, behave, behaviour, safety, calm, respect",
+    themes: "the rule is about the people around you, not about volume",
+    cameos: "Mina's promise to remember at the market tomorrow is the last line of the Unit 1 listening text. This book is that tomorrow.",
+  },
+  "a-normal-day-at-school": {
+    series: "Amal", book: "2 of 4, from the reading \"A Day at School\"", term: "Term 1", unit: "Unit 2: School and Learning",
+    vocabulary: "teacher, author, library, graduate, mathematics, grammar, lesson, education, study, prepare, topic, details, eraser",
+    themes: "an ordinary day is the thing that adds up; wanting the teacher's job",
+    cameos: "told by Adam, whose reading it is; Maya, Daniel, Theo and Nora are his classmates in it.",
+  },
+  "the-grammar-champions": {
+    series: "Amal", book: "3 of 4, from the story of the same name", term: "Term 1", unit: "Unit 2: School and Learning",
+    vocabulary: "contest, report, topic, details, supply, prepare, study, grammar, author, library, graduate",
+    themes: "a group that wins because its lesson was clear, not because it was clever",
+    cameos: "Daniel and Nora are the group; this is the contest Amal WINS, which is why book two of the shelf gives her one she does not.",
+  },
+  "the-quietest-room": {
+    series: "Amal", book: "4 of 4, from the listening dialogue \"In the Classroom\"", term: "Term 1", unit: "Unit 2: School and Learning",
+    vocabulary: "author, library, topic, details, report, eraser, prepare, study, lesson",
+    themes: "a topic is not found on a shelf; it is the thing you already thought and had not said",
+    cameos: "Maya's clever camel and Daniel's scientist are both books from the Unit 2 dialogue.",
+  },
+  "six-oclock-seven-oclock": {
+    series: "Amal", book: "2 of 4, from the reading \"My Day, Hour by Hour\"", term: "Term 1", unit: "Unit 3: Time and Daily Life",
+    vocabulary: "hour, o'clock, calendar, soon, sooner, future",
+    themes: "a day has room in it if the things go in order",
+    cameos: "told by Idris, whose reading it is; Sami walks to school with him, exactly as the text says.",
+  },
+  "twelve-months-of-work": {
+    series: "Amal", book: "3 of 4, from the reading \"The Twelve Months\"", term: "Term 1", unit: "Unit 3: Time and Daily Life",
+    vocabulary: "January to December, calendar, hour, century, vacation, future",
+    themes: "the same twelve months, doing different work for a school, a family and a farm",
+    cameos: "the school year running January to November, with the long holiday in December, is the Unit 3 reading's own.",
+  },
+  "samis-calendar": {
+    series: "Amal", book: "4 of 4, from the listening text \"Making a Calendar\"", term: "Term 1", unit: "Unit 3: Time and Daily Life",
+    vocabulary: "January to December, calendar, future, soon, sooner",
+    themes: "two calendars with the same twelve months and completely different years in them",
+    cameos: "Amal's June football, August house and October mangoes are the three she describes in the Unit 3 text.",
+  },
+  "the-bus-to-the-county": {
+    series: "Amal", book: "2 of 4, from the story \"From Our Village to the County\"", term: "Term 2", unit: "Unit 4: Places and Community",
+    vocabulary: "doctor, officer, sailor, hospital, court, college, market, garden, exit, village, county, border, address",
+    themes: "the county is the village, only bigger; every place doing one job",
+    cameos: "Nadia the driver, Doctor Sarah and Officer Rami are all named in the Unit 4 story; Adam meets the class at the college gate there too.",
+  },
+  "places-i-know": {
+    series: "Amal", book: "3 of 4, from the poem \"Places I Know\"", term: "Term 2", unit: "Unit 4: Places and Community",
+    vocabulary: "village, market, court, garden, hospital, college, library, officer, doctor, address, county",
+    themes: "a poem naming the place you actually live; then your own verse under it",
+    cameos: "pages 2 to 6 are the unit's poem itself, one line to a page; the rest is Amal's own list.",
+  },
+  "friday-at-the-market": {
+    series: "Amal", book: "4 of 4, from the listening text \"At the Market\"", term: "Term 2", unit: "Unit 4: Places and Community",
+    vocabulary: "market, garden, exit, village, county, address, doctor, officer",
+    themes: "a crowd is only a crowd if you have no plan",
+    cameos: "the eight o'clock meeting at the gate and the basket for the rice are the last lines of the Unit 4 dialogue.",
+  },
+  "helping-hands": {
+    series: "Amal", book: "2 of 4, from the reading of the same name", term: "Term 2", unit: "Unit 5: Actions and Activities",
+    vocabulary: "offer, listen, discuss, complete, celebrate, happen, protect",
+    themes: "one small offer of help, and the feeling that stays with you afterwards",
+    cameos: "Nora and Omar's heavy basket is the Unit 5 reading, told from Nora's side.",
+  },
+  "first-the-seeds": {
+    series: "Amal", book: "3 of 4, from the listening plan \"Planning the Garden\"", term: "Term 2", unit: "Unit 5: Actions and Activities",
+    vocabulary: "search, build, protect, develop, complete, celebrate, discuss, offer",
+    themes: "a plan you can say in order is a plan you can finish; waiting is one of the steps",
+    cameos: "Leo's four steps - seeds, fence, water, celebration - are the Unit 5 spoken plan, in its own order.",
+  },
+  "the-night-the-wall-shook": {
+    series: "Amal", book: "4 of 4, from the listening recount \"What Happened?\"", term: "Term 2", unit: "Unit 5: Actions and Activities",
+    vocabulary: "happen, complete, build, protect, remove, discuss, offer, listen",
+    themes: "finishing the part nobody sees; the repair is the story, not the rescue",
+    cameos: "Sami and Leo holding the frame, and the support they did not complete, are both from the Unit 5 recount.",
+  },
+  "my-cousin-noah": {
+    series: "Amal", book: "2 of 4, from the reading of the same name", term: "Term 2", unit: "Unit 6: Describing People and Things",
+    vocabulary: "kind, friendly, honest, kindness, care, busy, calm, able, popular",
+    themes: "admiring somebody, and then doing one small thing about it",
+    cameos: "Noah is Amal's cousin in the Unit 6 reading; every quality here is one the text gives him.",
+  },
+  "two-roads": {
+    series: "Amal", book: "3 of 4, from the reading of the same name", term: "Term 2", unit: "Unit 6: Describing People and Things",
+    vocabulary: "rough, tough, smooth, similar, favourite, extra, careless, able",
+    themes: "comparing two things properly instead of ranking them",
+    cameos: "the paved road, the stony one, the father's tough boots and the sister's scooter are all the Unit 6 reading's own.",
+  },
+  "who-is-kinder": {
+    series: "Amal", book: "4 of 4, from the listening comparison of the same name", term: "Term 2", unit: "Unit 6: Describing People and Things",
+    vocabulary: "kind, kinder, friendly, friendlier, honest, kindness, care, popular, tough",
+    themes: "a comparison that cannot be won, and does not need to be",
+    cameos: "Sami and Leo's argument about their brothers is the Unit 6 dialogue; Noah stands in as the brother on the page.",
+  },
+  "today-and-always": {
+    series: "Amal", book: "2 of 4, from the reading \"Our Wonderful Nature\"", term: "Term 3", unit: "Unit 7: Nature and the Environment",
+    vocabulary: "climate, weather, temperature, sunshine, froze, mountain, forest, beach, coast, nature, explore, energy, matter, metal, planet",
+    themes: "the difference between what today is doing and what a place always does",
+    cameos: "the frozen pond, the metal, the energy and the one planet are all the Unit 7 reading's own examples.",
+  },
+  "nature-is-our-home": {
+    series: "Amal", book: "3 of 4, from the poem of the same name", term: "Term 3", unit: "Unit 7: Nature and the Environment",
+    vocabulary: "nature, water, trees, air, sun, sea, mountain, coast, forest, explore",
+    themes: "a four-line poem given a page each; sharing something means leaving it for whoever comes next",
+    cameos: "pages 2 to 8 are the unit's poem itself; \"take only pictures, leave only footprints\" is Teacher Yasmin's line from Unit 7.",
+  },
+  "have-you-ever": {
+    series: "Amal", book: "4 of 4, from the listening dialogue \"Have You Ever...?\"", term: "Term 3", unit: "Unit 7: Nature and the Environment",
+    vocabulary: "explore, forest, mountain, beach, coast, nature, sunshine, weather; and the present perfect the unit teaches",
+    themes: "\"not yet\" is a different word from \"never\"",
+    cameos: "every exchange is from the Unit 7 dialogue - Leo's forest, Nora's mountain trail and rock pools, Amal's pictures.",
+  },
+  "maths-before-dinner": {
+    series: "Amal", book: "2 of 4, from the reading \"Maths Is Everywhere\"", term: "Term 3", unit: "Unit 8: Numbers, Shapes, and Measurement",
+    vocabulary: "number, fact, addition, division, measure, size, weight, distance, pattern",
+    themes: "using maths all day without opening a maths book",
+    cameos: "the eggs, the market prices, the dates split between four cousins and the counted steps home are the Unit 8 reading's own.",
+  },
+  "the-measuring-challenge": {
+    series: "Amal", book: "3 of 4, from the listening instructions of the same name", term: "Term 3", unit: "Unit 8: Numbers, Shapes, and Measurement",
+    vocabulary: "measure, size, height, weight, distance, straight, metre, number, fact",
+    themes: "three jobs, three tools; a fact is a fact, heavy or light",
+    cameos: "the desk, the door-to-window distance and the school bag are the three tasks of the Unit 8 instructions, in that order.",
+  },
+  "ten-to-a-million": {
+    series: "Amal", book: "4 of 4, from the listening text \"Numbers Big and Small\"", term: "Term 3", unit: "Unit 8: Numbers, Shapes, and Measurement",
+    vocabulary: "number, million, fact, pattern, multiplication, measure",
+    themes: "climbing place value one step at a time until a million is a picture, not a word",
+    cameos: "the ladder from ten to a million, and the thousand shells on the beach, are both from the Unit 8 counting text.",
+  },
+  "rain-is-a-kind-of-weather": {
+    series: "Amal", book: "2 of 4, from the reading \"Feelings Are Not Bad or Good\"", term: "Term 3", unit: "Unit 9: Thinking, Feelings, and Imagination",
+    vocabulary: "sadness, hopeless, sincere, thoughtful, experience, enjoyable, believe, allow",
+    themes: "sadness as weather rather than as a fault; saying it out loud makes it lighter",
+    cameos: "Nora's lost cat and her mother putting down her book to listen are the Unit 9 reading's own.",
+  },
+  "what-sami-said": {
+    series: "Amal", book: "3 of 4, from the listening dialogue of the same name", term: "Term 3", unit: "Unit 9: Thinking, Feelings, and Imagination",
+    vocabulary: "imagine, idea, reason, purpose, choice, sincere, thoughtful, suggest, believe",
+    themes: "an idea grows because somebody listened to it properly",
+    cameos: "Sami's flight to the lighthouse, and Amal's suggestion that he draw it, are both from the Unit 9 dialogue.",
+  },
+  "everyone-gets-a-turn": {
+    series: "Amal", book: "4 of 4, from the listening dialogue \"A Group Discussion\"", term: "Term 3", unit: "Unit 9: Thinking, Feelings, and Imagination",
+    vocabulary: "suggest, allow, idea, reason, choice, enjoy, believe, thoughtful",
+    themes: "allowing everybody a turn is what makes the plan good, not only what makes it fair",
+    cameos: "Leo's tomatoes, Maya's flowers and Adam's mint are the three suggestions of the Unit 9 discussion, with their reasons.",
+  },
+  "the-green-folder": {
+    series: "Amal", book: "2 of 4, from the story \"Amal's Year of Words\"", term: "Term 3", unit: "Unit 10: My Year of Words (capstone)",
+    vocabulary: "one page per unit: family, calendar, hospital, climate, temperature, million, kindness",
+    themes: "seeing a year from the outside, in one folder",
+    cameos: "the family tree, the calendar chart, the hospital report, the climate poster, the million page and the kindness jar are the six pages Unit 10 names.",
+  },
+  "the-last-friday": {
+    series: "Amal", book: "3 of 4, from the instructions \"The Year 3 Showcase: Project Brief\"", term: "Term 3", unit: "Unit 10: My Year of Words (capstone)",
+    vocabulary: "author, report, details, topic, present, reflect, goal",
+    themes: "four parts, done in order; reading aloud to find your own mistakes",
+    cameos: "the four parts, the word Author under your name, and the two-minute talk are the brief's own instructions.",
+  },
+  "showcase-day": {
+    series: "Amal", book: "4 of 4, from the listening dialogues \"Planning the Showcase\" and \"Showcase Day\"", term: "Term 3", unit: "Unit 10: My Year of Words (capstone)",
+    vocabulary: "measure, metre, centimetre, build, offer, discuss, listen, temperature",
+    themes: "the questions turn out to be the best part of presenting",
+    cameos: "Maya's two metres forty, the twenty-eight chairs, the folder stand and the questions from Grandma Hana and Doctor Sarah are all from the Unit 10 dialogues.",
+  },
   // ---- Grade 4: the same cast a year on, plus Maya the young reporter.
   "the-post-counter": {
     series: "Amal", book: 1, term: "Term 1", unit: "Unit 1: Daily Life & Communication",
@@ -335,14 +519,36 @@ for (const book of catalog) {
     "",
   ].join("\n");
 
+  // Which kit and which generator actually drew this book. It used to name the
+  // Grade 2 pair for every book on the shelf, which was true of Zuri's ten and
+  // of nothing else: the Grade 3 and Grade 4 pages come from their own kits and
+  // their own generators, and an attribution that names the wrong tool sends
+  // the next person to a file that cannot produce the picture in front of them.
+  // A grade with no entry here keeps the shared-kit wording, which is the most
+  // that can be said without guessing.
+  const DRAWN_BY = {
+    1: ["the shared series kit in tools/lib/ehel-ebook-kit.js and the Amal-series",
+      "cast in tools/lib/ehel-ebook-kit-amal.js, composed by",
+      "tools/create-amal-ebook-illustrations.js."],
+    2: ["the shared series kit in tools/lib/ehel-ebook-kit.js and",
+      "tools/lib/ehel-ebook-kit-grade2.js, composed by",
+      "tools/create-grade2-ebook-illustrations.js."],
+    3: ["the shared series kit in tools/lib/ehel-ebook-kit.js and the Grade 3",
+      "cast in tools/lib/ehel-ebook-kit-grade3.js, composed by",
+      "tools/create-grade3-ebook-illustrations.js and its -2, -3 and -4",
+      "companions."],
+    4: ["the shared series kit in tools/lib/ehel-ebook-kit.js and the Grade 4",
+      "additions in tools/lib/ehel-ebook-kit-grade4.js, composed by",
+      "tools/create-grade4-ebook-illustrations.js."],
+  };
+  const drawnBy = DRAWN_BY[book.grades[0]] || ["the shared series kit in tools/lib/ehel-ebook-kit.js."];
+
   const attribution = [
     `${book.attribution}`,
     "",
     `Story: ${book.author}`,
     `Illustrations: ${book.illustrator} - original animated vector pages from`,
-    "the shared series kit in tools/lib/ehel-ebook-kit.js and",
-    "tools/lib/ehel-ebook-kit-grade2.js, composed by",
-    "tools/create-grade2-ebook-illustrations.js.",
+    ...drawnBy,
     "",
     "GENERATED by tools/write-english-ebook-docs.mjs.",
     "",

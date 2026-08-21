@@ -88,11 +88,27 @@ function hijab(colour, shade) {
     <path d="M -34 -4 a 34 34 0 0 1 68 0 l 0 9 q -34 -21 -68 0 z" fill="${colour}"/>`;
 }
 
+// A peaked cap, for the working adults who wear one — the bus driver and the
+// road officer of the Unit 4 readings. Drawn over the hair rather than instead
+// of it, so a character keeps their own head under it.
+//
+// It is an OPTION with a null default, not a new shape: every page written
+// before it exists passes no `cap`, renders no cap, and its file does not move.
+function capShape(colour, band) {
+  // Sits ON the head, not over the eyes. The first version put the band at the
+  // eye line and the peak across the face: the officer and the bus driver both
+  // rendered with a yellow bar where their eyes are, which reads as a blindfold
+  // rather than as a uniform cap.
+  return `<path d="M -31 -20 a 31 34 0 0 1 62 0 z" fill="${colour}" stroke="${C.ink}" stroke-width="3.4"/>
+    <path d="M -33 -21 h 66 v 11 h -66 z" fill="${band || colour}" stroke="${C.ink}" stroke-width="3"/>
+    <path d="M 5 -19 q 34 2 41 11 q -20 7 -43 2 z" fill="${band || colour}" stroke="${C.ink}" stroke-width="3"/>`;
+}
+
 function person({
   x, y, s = 1, flip = false, mood = "happy",
   skin = G3.skin, hair = G3.hair, style = "crop",
   top = G3.teal, bottom = G3.coral, legs = "trousers",
-  scarf = null, glasses = false, adult = false, coat = null, apron = null,
+  scarf = null, glasses = false, adult = false, coat = null, apron = null, cap = null,
   arms = "down", holding = null, name = "",
 } = {}) {
   const scale = s * (adult ? 1.26 : 1);
@@ -129,7 +145,7 @@ function person({
   const head = `<g transform="translate(0 -156)">
     ${scarf ? hijab(scarf.colour, scarf.shade) : ""}
     <circle cx="0" cy="0" r="30" fill="${skin}" stroke="${C.ink}" stroke-width="3.6"/>
-    ${scarf ? "" : hairShape(style, hair)}
+    ${scarf ? "" : hairShape(style, hair)}${cap ? capShape(cap.colour, cap.band) : ""}
     <path d="M -30 2 a 30 30 0 0 0 60 0" fill="none"/>
     <g transform="translate(-12 -2)">${face(mood, 0.78)}</g>
     <g transform="translate(12 -2)">${face(mood, 0.78)}</g>
@@ -176,6 +192,25 @@ const CAST = {
   dad: { adult: true, skin: G3.skinDeep, hair: G3.hair, style: "crop", top: G3.sky, bottom: "#3d4a5c", legs: "trousers" },
   hana: { adult: true, skin: G3.skinWarm, style: "bun", top: G3.cream, bottom: "#9a8f7a", legs: "long", scarf: { colour: "#c9bda8", shade: "#a89c86" }, glasses: true },
   omar: { adult: true, skin: G3.skin, hair: G3.hair, style: "crop", top: G3.gold, bottom: "#6b5a44", legs: "trousers", apron: "#8a9a5b" },
+  // The rest of the class, and the three working adults of the Unit 4 trip.
+  // Added for the second, third and fourth book of each unit: Sami is named 137
+  // times across the Grade 3 readings and Leo 55, so a shelf without them would
+  // be telling the unit's story with the wrong children in it.
+  //
+  // maya and sami are copied EXACTLY from CAST4 in ehel-ebook-kit-grade4.js,
+  // which spreads this object and then redefines them. Same values means Grade
+  // 4's pages cannot move — and the same child looks the same in both years,
+  // which is the point of a preset. Change one, change both.
+  maya: { skin: G3.skinWarm, hair: G3.hair, style: "bun", top: G3.cream, bottom: "#3d4a5c", legs: "trousers", coat: G3.coralDark },
+  sami: { skin: G3.skinDeep, hair: G3.hair, style: "crop", top: "#4d9d94", bottom: "#6b5a44", legs: "trousers" },
+  leo: { skin: G3.skinLight, hair: G3.hairSoft, style: "crop", top: G3.plum, bottom: "#4a5b6b", legs: "trousers" },
+  daniel: { skin: G3.skinWarm, hair: G3.hair, style: "crop", top: G3.gold, bottom: G3.tealDark, legs: "trousers" },
+  theo: { skin: G3.skin, hair: G3.hair, style: "crop", top: G3.leafy, bottom: "#5c4a3a", legs: "trousers" },
+  // Nadia drives the school bus, Doctor Sarah meets the class at the hospital
+  // and Officer Rami at the court — all three by name, in the Unit 4 story.
+  nadia: { adult: true, skin: G3.skinWarm, style: "bun", top: "#4a5b6b", bottom: "#3d4a5c", legs: "trousers", cap: { colour: "#3d4a5c", band: "#2b3541" } },
+  sarah: { adult: true, skin: G3.skinDeep, style: "bun", top: G3.teal, bottom: "#5f6b7a", legs: "long", coat: "#f2f5f8" },
+  rami: { adult: true, skin: G3.skin, hair: G3.hair, style: "crop", top: "#4f86c6", bottom: "#3d4a5c", legs: "trousers", cap: { colour: "#3d4a5c" } },
 };
 
 // figure("amal", { x, y, s, mood, arms, ... }) — the preset, with per-page overrides.
@@ -402,10 +437,226 @@ function poster(x, y, s = 1, { colour = G3.gold, lines = 4 } = {}) {
   </g>`;
 }
 
+// ------------------------------------------------- props for books 2, 3 and 4
+//
+// Everything below was added for the three extra books per unit. It is ADDITIVE
+// only: no existing shape is touched, so the ten first books regenerate byte for
+// byte. Motion reuses the animation classes already in STYLE — a new @keyframes
+// would rewrite every SVG of every book on the shelf for a change nobody can
+// see.
+
+// A round wall clock reading a whole hour. Unit 3 is told in o'clocks — six,
+// seven, eight, one, four — and a clock that cannot show one is no use there.
+function hourClock(x, y, s = 1, { hour = 6 } = {}) {
+  const angle = (hour % 12) * 30;
+  return `<g transform="translate(${x} ${y}) scale(${s})">
+    <circle cx="0" cy="0" r="62" fill="${G3.cream}" stroke="${C.ink}" stroke-width="5"/>
+    <circle cx="0" cy="0" r="52" fill="none" stroke="#c9bda8" stroke-width="3"/>
+    ${Array.from({ length: 12 }, (unused, i) => {
+    const a = (i * 30 * Math.PI) / 180;
+    return `<circle cx="${Math.round(Math.sin(a) * 44)}" cy="${Math.round(-Math.cos(a) * 44)}" r="${i % 3 ? 3 : 5}" fill="${C.ink}"/>`;
+  }).join("")}
+    <g transform="rotate(${angle})"><path d="M 0 6 v -34" stroke="${C.ink}" stroke-width="8" stroke-linecap="round"/></g>
+    <path d="M 0 6 v -46" stroke="${G3.coral}" stroke-width="5" stroke-linecap="round"/>
+    <circle cx="0" cy="0" r="7" fill="${C.ink}"/>
+  </g>`;
+}
+
+// A microphone on a short stand — the class interview corner in Unit 1.
+function microphone(x, y, s = 1) {
+  return `<g transform="translate(${x} ${y}) scale(${s})">
+    <ellipse cx="0" cy="0" rx="46" ry="12" fill="#5f6b7a" stroke="${C.ink}" stroke-width="4"/>
+    <rect x="-7" y="-104" width="14" height="106" fill="#7d8ba0" stroke="${C.ink}" stroke-width="3.6"/>
+    <g class="anim-idle" style="${delayAt(x, y, 3)}">
+      <rect x="-24" y="-166" width="48" height="66" rx="24" fill="#4a5560" stroke="${C.ink}" stroke-width="4"/>
+      ${[0, 1, 2, 3].map((i) => `<path d="M -18 ${-152 + i * 14} h 36" stroke="#8f9aa8" stroke-width="3.4"/>`).join("")}
+    </g>
+  </g>`;
+}
+
+// A stage: two drawn-back curtains and a valance. The Unit 1 drama club rehearses
+// under it, and the Unit 10 showcase presents under it.
+function stageCurtain(x, y, s = 1, { span = 1000 } = {}) {
+  const half = span / 2;
+  const drape = (dx, dir) => `<g transform="translate(${dx} 0)">
+    <path d="M 0 0 q ${dir * 34} 220 ${dir * 8} 520 l ${dir * -120} 0 q ${dir * -24} -300 ${dir * 4} -520 z" fill="${G3.coralDark}" stroke="${C.ink}" stroke-width="5"/>
+    ${[0, 1, 2].map((i) => `<path d="M ${dir * (-20 - i * 30)} 20 q ${dir * -12} 250 ${dir * 2} 480" stroke="${G3.coral}" stroke-width="6" fill="none" opacity="0.7"/>`).join("")}
+  </g>`;
+  return `<g transform="translate(${x} ${y}) scale(${s})">
+    <rect x="${-half}" y="-40" width="${span}" height="46" rx="10" fill="${G3.coralDark}" stroke="${C.ink}" stroke-width="5"/>
+    ${Array.from({ length: Math.round(span / 70) }, (unused, i) => `<path d="M ${-half + 20 + i * 70} 6 q 18 34 36 0" fill="${G3.coral}" stroke="${C.ink}" stroke-width="3.4"/>`).join("")}
+    ${drape(-half + 40, -1)}${drape(half - 40, 1)}
+  </g>`;
+}
+
+// A market basket. Unit 4 meets at the gate "with a basket for carrying the
+// rice"; Unit 5 has Omar's basket that is heavier than he expected.
+function basketProp(x, y, s = 1, { kind = "fruit" } = {}) {
+  const fill = {
+    fruit: `<circle cx="-26" cy="-64" r="20" fill="${G3.gold}" stroke="${C.ink}" stroke-width="3.4"/>
+      <circle cx="8" cy="-70" r="22" fill="${G3.coral}" stroke="${C.ink}" stroke-width="3.4"/>
+      <circle cx="38" cy="-60" r="18" fill="${G3.leafy}" stroke="${C.ink}" stroke-width="3.4"/>`,
+    // The heap has to clear the rim at -58, or a full basket renders as an empty
+    // one: the first version rose 15 units above the rim and was invisible at
+    // page scale.
+    grain: `<path d="M -46 -54 q 46 -66 92 0 z" fill="#e0cfa4" stroke="${C.ink}" stroke-width="3.4"/>
+      <path d="M -22 -74 h 10 M 2 -84 h 10 M 24 -72 h 10" stroke="#c2ab78" stroke-width="3.4"/>`,
+    empty: "",
+  };
+  return `<g transform="translate(${x} ${y}) scale(${s})">
+    ${fill[kind] || ""}
+    <path d="M -52 -58 h 104 l -12 58 h -80 z" fill="#c99a5c" stroke="${C.ink}" stroke-width="4.5"/>
+    ${[0, 1, 2].map((i) => `<path d="M ${-46 + i * 32} -56 l -4 54" stroke="#a8763f" stroke-width="4"/>`).join("")}
+    <path d="M -52 -58 h 104" stroke="#a8763f" stroke-width="7" stroke-linecap="round"/>
+    <path d="M -40 -60 q 40 -52 80 0" fill="none" stroke="#a8763f" stroke-width="6"/>
+  </g>`;
+}
+
+// The county court of Unit 4: white, columned, and a sign that names it.
+function courtHouse(x, y, s = 1) {
+  return `<g transform="translate(${x} ${y}) scale(${s})">
+    <rect x="-200" y="-250" width="400" height="250" rx="6" fill="#f2f0e8" stroke="${C.ink}" stroke-width="5"/>
+    ${[0, 1, 2, 3, 4].map((i) => `<rect x="${-166 + i * 78}" y="-232" width="42" height="232" rx="6" fill="${G3.cream}" stroke="${C.ink}" stroke-width="4"/>`).join("")}
+    <path d="M -228 -250 h 456 l -228 -132 z" fill="#e4e0d2" stroke="${C.ink}" stroke-width="5"/>
+    <rect x="-120" y="-320" width="240" height="40" rx="8" fill="${G3.plum}" stroke="${C.ink}" stroke-width="4"/>
+    <text x="0" y="-291" text-anchor="middle" font-family="Georgia, serif" font-size="28" fill="${G3.cream}">COURT</text>
+    <g transform="translate(0 -196)">
+      <path d="M 0 -30 v 60 M -54 -22 h 108" stroke="#8a6242" stroke-width="6" stroke-linecap="round"/>
+      <path d="M -54 -22 l -18 34 h 36 z" fill="${G3.gold}" stroke="${C.ink}" stroke-width="3"/>
+      <path d="M 54 -22 l -18 34 h 36 z" fill="${G3.gold}" stroke="${C.ink}" stroke-width="3"/>
+    </g>
+  </g>`;
+}
+
+// The college of Unit 4, where Adam studies health and safety: a long block with
+// a gate and a name board.
+function collegeFront(x, y, s = 1) {
+  return `<g transform="translate(${x} ${y}) scale(${s})">
+    <rect x="-230" y="-230" width="460" height="230" rx="8" fill="#dfd3bb" stroke="${C.ink}" stroke-width="5"/>
+    <rect x="-244" y="-268" width="488" height="42" rx="8" fill="${G3.tealDark}" stroke="${C.ink}" stroke-width="4.5"/>
+    <text x="0" y="-238" text-anchor="middle" font-family="Georgia, serif" font-size="26" fill="${G3.cream}">COLLEGE</text>
+    ${[0, 1, 2, 3, 4].map((i) => `<rect x="${-196 + i * 82}" y="-190" width="56" height="70" rx="5" fill="${G2.glass}" stroke="${C.ink}" stroke-width="3.6"/>`).join("")}
+    <rect x="-58" y="-104" width="116" height="104" rx="6" fill="#8a6242" stroke="${C.ink}" stroke-width="4.5"/>
+    <path d="M 0 -104 v 104" stroke="${C.ink}" stroke-width="4"/>
+    <circle cx="-16" cy="-50" r="6" fill="${G3.gold}"/><circle cx="16" cy="-50" r="6" fill="${G3.gold}"/>
+  </g>`;
+}
+
+// A thermometer, for the Unit 7 temperature readings and the Unit 10 chart.
+function thermometerProp(x, y, s = 1, { level = 0.6 } = {}) {
+  const height = 150 * Math.min(1, Math.max(0.05, level));
+  return `<g transform="translate(${x} ${y}) scale(${s})">
+    <rect x="-15" y="-190" width="30" height="166" rx="15" fill="${G3.cream}" stroke="${C.ink}" stroke-width="4"/>
+    <circle cx="0" cy="-16" r="26" fill="${G3.coral}" stroke="${C.ink}" stroke-width="4"/>
+    <rect x="-7" y="${-24 - height}" width="14" height="${height + 10}" rx="7" fill="${G3.coral}"/>
+    ${[0, 1, 2, 3, 4].map((i) => `<path d="M 15 ${-58 - i * 30} h 18" stroke="${C.ink}" stroke-width="3.4"/>`).join("")}
+  </g>`;
+}
+
+// Frost on the ground: the white patch that surprises the class in the forest,
+// where "water here froze one very cold night".
+function frostPatch(x, y, s = 1) {
+  const star = (sx, sy, sc) => `<g transform="translate(${sx} ${sy}) scale(${sc})">
+    <path d="M 0 -18 v 36 M -16 -9 l 32 18 M -16 9 l 32 -18" stroke="#7fb0c8" stroke-width="5" stroke-linecap="round"/>
+  </g>`;
+  return `<g transform="translate(${x} ${y}) scale(${s})">
+    <ellipse cx="0" cy="0" rx="150" ry="34" fill="#e8f4fb" stroke="#8fb8cd" stroke-width="4.5"/>
+    <g class="anim-shimmer">${star(-84, -6, 0.9)}${star(-6, 6, 1.1)}${star(76, -4, 0.85)}</g>
+  </g>`;
+}
+
+// The place-value ladder of Unit 8: ten, a hundred, a thousand, and on up to a
+// million. `lit` is how many steps have been climbed so far.
+const LADDER_STEPS = ["10", "100", "1,000", "10,000", "100,000", "1,000,000"];
+function numberLadder(x, y, s = 1, { lit = 6 } = {}) {
+  // Drawn as a staircase standing on its own ground line. Six labelled cards
+  // floating in a diagonal read as confetti; a step needs a riser under it and
+  // something to stand on, or the page has no idea where the numbers are.
+  const steps = LADDER_STEPS.map((label, i) => {
+    const on = i < lit;
+    return `<g transform="translate(${-330 + i * 132} ${-i * 74})">
+      <rect x="-64" y="-58" width="128" height="58" rx="8" fill="${on ? C.rainbow[i % C.rainbow.length] : "#d8d2c4"}" stroke="${C.ink}" stroke-width="4.5"/>
+      <rect x="-64" y="0" width="128" height="${8 + i * 74}" fill="${on ? "#e8dcc2" : "#ded8ca"}" stroke="${C.ink}" stroke-width="4"/>
+      <text x="0" y="-18" text-anchor="middle" font-family="Georgia, serif" font-size="${label.length > 6 ? 26 : 32}" fill="${C.ink}">${label}</text>
+    </g>`;
+  }).join("");
+  return `<g transform="translate(${x} ${y}) scale(${s})">
+    ${steps}
+    <path d="M -400 8 h 800" stroke="${C.ink}" stroke-width="5" stroke-linecap="round"/>
+  </g>`;
+}
+
+// The big green folder every desk gets in the last week of Year 3.
+function folderProp(x, y, s = 1, { colour = G3.leafy } = {}) {
+  return `<g transform="translate(${x} ${y}) scale(${s})">
+    <rect x="-70" y="-96" width="140" height="96" rx="8" fill="${colour}" stroke="${C.ink}" stroke-width="4.5"/>
+    <path d="M -70 -96 h 62 l 14 -18 h 64 v 18" fill="${colour}" stroke="${C.ink}" stroke-width="4.5"/>
+    <rect x="-46" y="-74" width="92" height="60" rx="4" fill="${G3.cream}" stroke="${C.ink}" stroke-width="3.4"/>
+    <path d="M -30 -56 h 60 M -30 -42 h 60 M -30 -28 h 38" stroke="#9fb4c6" stroke-width="4"/>
+  </g>`;
+}
+const heldFolder = `<g transform="translate(0 8) rotate(-4)"><rect x="-32" y="-24" width="64" height="48" rx="5" fill="${G3.leafy}" stroke="${C.ink}" stroke-width="3.4"/><rect x="-20" y="-14" width="40" height="28" rx="3" fill="${G3.cream}" stroke="${C.ink}" stroke-width="3"/></g>`;
+const heldBasket = `<g transform="translate(0 16) scale(0.62)">${basketProp(0, 0, 1, { kind: "fruit" })}</g>`;
+
+// Nora's cat, from Unit 9 — the one that goes missing, and the one in the old
+// photographs her mother looks at with her.
+function catProp(x, y, s = 1, { flip = false, curled = false } = {}) {
+  const body = curled
+    ? `<ellipse cx="0" cy="-22" rx="46" ry="30" fill="#9a7f5f" stroke="${C.ink}" stroke-width="4"/>
+       <path d="M 40 -30 q 26 6 18 24 q -12 8 -20 -6" fill="#9a7f5f" stroke="${C.ink}" stroke-width="3.6"/>`
+    : `<path d="M -40 0 v -34 q 0 -22 40 -22 q 40 0 40 22 v 34 z" fill="#9a7f5f" stroke="${C.ink}" stroke-width="4"/>
+       <path d="M 38 -46 q 34 -14 24 -46 q -16 -6 -20 18" fill="none" stroke="${C.ink}" stroke-width="7" stroke-linecap="round"/>`;
+  return `<g transform="translate(${x} ${y}) scale(${flip ? -s : s} ${s})">
+    ${body}
+    <g transform="translate(-16 ${curled ? -40 : -66})">
+      <circle cx="0" cy="0" r="24" fill="#a98d69" stroke="${C.ink}" stroke-width="4"/>
+      <path d="M -20 -14 l -6 -22 l 22 10 z M 20 -14 l 6 -22 l -22 10 z" fill="#a98d69" stroke="${C.ink}" stroke-width="3.4"/>
+      <circle cx="-9" cy="-2" r="4" fill="${C.ink}"/><circle cx="9" cy="-2" r="4" fill="${C.ink}"/>
+      <path d="M 0 6 l -6 6 h 12 z" fill="${G3.coral}"/>
+      <path d="M -30 8 h 16 M -30 16 h 16 M 30 8 h -16 M 30 16 h -16" stroke="${C.ink}" stroke-width="2.6"/>
+    </g>
+  </g>`;
+}
+
+// The lighthouse Sami flies to in his Box of Ideas paper.
+function lighthouse(x, y, s = 1) {
+  return `<g transform="translate(${x} ${y}) scale(${s})">
+    <path d="M -54 0 l 14 -210 h 80 l 14 210 z" fill="${G3.cream}" stroke="${C.ink}" stroke-width="5"/>
+    ${[0, 1, 2].map((i) => `<path d="M ${-48 + i * 3} ${-40 - i * 62} h ${96 - i * 6}" stroke="${G3.coral}" stroke-width="22"/>`).join("")}
+    <rect x="-40" y="-262" width="80" height="54" rx="6" fill="${G2.glass}" stroke="${C.ink}" stroke-width="4.5"/>
+    <path d="M -50 -262 h 100 l -10 -22 h -80 z" fill="${G3.tealDark}" stroke="${C.ink}" stroke-width="4"/>
+    <g class="anim-glow"><path d="M 40 -236 l 150 -46 l 0 92 z" fill="${G3.gold}" opacity="0.55"/></g>
+    <ellipse cx="0" cy="0" rx="72" ry="14" fill="${G3.stone}" stroke="${C.ink}" stroke-width="4"/>
+  </g>`;
+}
+
+// A framed photograph, for the pages that look back at something.
+function photoFrame(x, y, s = 1, { inner = "", colour = "#8a6242" } = {}) {
+  return `<g transform="translate(${x} ${y}) scale(${s})">
+    <rect x="-84" y="-104" width="168" height="164" rx="8" fill="${colour}" stroke="${C.ink}" stroke-width="5"/>
+    <rect x="-66" y="-86" width="132" height="112" rx="4" fill="#dfeef7" stroke="${C.ink}" stroke-width="3.6"/>
+    <g transform="translate(0 -20) scale(0.52)">${inner}</g>
+    <path d="M -30 44 h 60" stroke="${colour}" stroke-width="6"/>
+  </g>`;
+}
+
+// A roadside sign on a post: the county border of Unit 4, the market gate, the
+// school gate. The label is short by design — a picture book is not a notice.
+function signPost(x, y, s = 1, { label = "", colour = G3.teal } = {}) {
+  return `<g transform="translate(${x} ${y}) scale(${s})">
+    <rect x="-8" y="-160" width="16" height="160" fill="#8a6242" stroke="${C.ink}" stroke-width="3.6"/>
+    <rect x="-110" y="-238" width="220" height="80" rx="8" fill="${colour}" stroke="${C.ink}" stroke-width="4.5"/>
+    <text x="0" y="-186" text-anchor="middle" font-family="Georgia, serif" font-size="30" fill="${G3.cream}">${label}</text>
+  </g>`;
+}
+
 module.exports = {
   ...kit2,
-  G3, person, figure, CAST, hairShape, hijab,
-  heldBook, heldPaper, heldShell,
+  G3, person, figure, CAST, hairShape, hijab, capShape,
+  heldBook, heldPaper, heldShell, heldFolder, heldBasket,
   classroomScene, plainRoomScene, townScene, coastScene, forestScene, mountainScene,
   gardenWall, boxOfIdeas, desk, globeProp, shells, hospital, monthWall, poster,
+  hourClock, microphone, stageCurtain, basketProp, courtHouse, collegeFront,
+  thermometerProp, frostPatch, numberLadder, folderProp, catProp, lighthouse,
+  photoFrame, signPost,
 };

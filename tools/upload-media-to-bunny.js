@@ -4,8 +4,9 @@
 // reaped run resumes without re-sending. Access key comes from env (BUNNY_KEY),
 // never hard-coded.
 //
-// Usage: BUNNY_KEY=… node tools/upload-media-to-bunny.js [english|mathematics|science|computing]…
+// Usage: BUNNY_KEY=… node tools/upload-media-to-bunny.js [english|mathematics|science|computing]… [--dry]
 //   (no subject args = all four)
+//   --dry  lists what a run would upload and exits, without contacting Bunny.
 
 const fs = require("fs"), path = require("path"), crypto = require("crypto");
 const { readManifest, writeManifest } = require("./lib/upload-manifest");
@@ -31,7 +32,20 @@ function loadDotEnv() {
 loadDotEnv();
 const KEY = process.env.BUNNY_KEY;
 
-if (!KEY) { console.error("BUNNY_KEY not set (checked the environment and .env)"); process.exit(1); }
+// --dry lists what a run would upload and exits, without contacting Bunny. The
+// same flag upload-app-to-bunny.js and upload-content-to-bunny.js carry.
+//
+// This tool needed it most and got it last. An unrecognised argument starting
+// with `--` is filtered out with the subject arguments below, and the key comes
+// from .env rather than the command line, so a mistyped preview runs a real
+// upload with nothing in the output to say so. That is exactly what happened to
+// upload-content-to-bunny.js on 2026-08-21, 47 files into production; here the
+// same slip moves ~17k English clips.
+const DRY = process.argv.slice(2).includes("--dry");
+
+// The key is only needed for a real run. Naming the flag in the message means a
+// reader who has no key still discovers the one that works without it.
+if (!KEY && !DRY) { console.error("BUNNY_KEY not set (checked the environment and .env; use --dry to preview without uploading)"); process.exit(1); }
 const SUBJECTS = ["english", "mathematics", "science", "computing", "intensive-english", "global-perspectives"];
 // An unrecognised argument used to be dropped by this filter, so a typo — or a
 // subject nobody had wired up yet — ran to completion, reported success, and
@@ -212,6 +226,11 @@ const sha1 = (buf) => crypto.createHash("sha1").update(buf).digest("hex");
   if (legacy) {
     console.log(`  ${legacy} of those were recorded before the manifest stored hashes, so their contents cannot be`);
     console.log(`  verified from here. They upload once and gain a hash; subsequent runs skip them normally.`);
+  }
+  if (DRY) {
+    for (const item of todo) console.log(`  ${item.remote}`);
+    console.log("\n(dry run — nothing uploaded)");
+    return;
   }
   let done = 0, failed = 0, since = 0;
   const save = () => writeManifest(MANIFEST, manifest);

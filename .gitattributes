@@ -1,32 +1,64 @@
-# Line endings for the GENERATED runtime bundle and the fragments it is built
-# from. Nothing else — see the note at the bottom before widening this.
+# Line endings.
 #
-# The problem this fixes, measured 2026-08-21:
+# Text is stored LF in the repository and checked out LF, whatever the machine
+# says. This matters here because Git for Windows ships core.autocrlf=true in
+# C:/Program Files/Git/etc/gitconfig; .git/config sets false, but a local
+# setting cannot undo a working tree that was already written CRLF by an earlier
+# checkout — and that is how the problem below survived unnoticed.
+#
+# What it fixed, measured 2026-08-21:
 #
 #   src/shared/js/runtime/runtime.bundle.js is a concatenation of the fragments
 #   beside it (tools/build-unit-runtime-bundle.js, `parts.join('\n')`). The
-#   fragments were on disk as CRLF while their committed blobs were LF, so every
-#   rebuild produced a CRLF bundle and `git diff` reported 16,158 insertions and
+#   fragments sat on disk as CRLF while their committed blobs were LF, so every
+#   rebuild wrote a CRLF bundle and `git diff` reported 16,158 insertions and
 #   16,158 deletions with ZERO content change — CRLF-normalised, the rebuilt file
 #   was byte-identical to HEAD.
 #
-#   Git never reported the fragments themselves, which is why this survived: the
-#   index held each CRLF file's stat (speak.js: size 87,188) against its LF blob
-#   (84,547), so a refresh compared stat, matched, and never re-hashed. They read
-#   as clean while differing from HEAD at byte 3 of line 1. That is the signature
-#   of a checkout made while core.autocrlf was true — which is still the value in
-#   C:/Program Files/Git/etc/gitconfig; .git/config later set false, and a local
-#   setting cannot undo a working tree that was already written.
+#   Git never flagged the fragments, which is why it lasted: the index held each
+#   CRLF file's stat (speak.js: 87,188 bytes) against its LF blob (84,547), so a
+#   refresh compared stat, matched, and never re-hashed. They read as clean while
+#   `git show HEAD:… | cmp -` put the first difference at byte 3 of line 1.
 #
-#   It matters because CLAUDE.md requires a changed fragment and the regenerated
-#   bundle to be committed together, and a one-line fragment change is invisible
-#   inside a 16,158-line line-ending diff.
-src/shared/js/runtime/*.js text eol=lf
+#   It matters beyond tidiness: CLAUDE.md requires a changed fragment and the
+#   regenerated bundle to be committed together, and a one-line fragment change
+#   is invisible inside a 16,158-line line-ending diff.
+#
+# The sweep that came with this rule touched 226 files — 136 .vtt, 77 .json,
+# 9 .js, 3 .py and 1 .php — every tracked blob that contained a CR, found two
+# independent ways (a raw byte read of every blob, and `git grep -I`) which
+# agreed exactly. Each was checked to differ from HEAD by line endings ALONE
+# before it was staged, because `git add --renormalize` stages the WORKING copy:
+# a file with real uncommitted edits would have had them swept into an
+# "endings only" commit.
+#
+# An earlier note in this file said 2,455 files. That was wrong — the command
+# behind it matched every file of each extension rather than the ones containing
+# CR, which is visible in hindsight because its per-extension counts were the
+# totals for those extensions.
+* text=auto eol=lf
 
-# NOT widened to `* text=auto eol=lf` on purpose. 2,455 files are committed with
-# CRLF today — 868 .json, 620 .php (src/moodle included), 303 .js, 278 .html,
-# 46 .py, 43 .css — and a repo-wide rule marks every one of them for
-# renormalisation at once. That is a legitimate change to make, but it is a
-# deliberate one-commit sweep on a quiet tree, not something to inherit from a
-# fix to the runtime bundle. Widen it when somebody is in a position to review
-# 2,455 files, and re-run npm run check:php afterwards.
+# Binary, so git never applies the rule above to them. `text=auto` would already
+# spot these by their NUL bytes, but naming them saves it reading 67,943 mp3s
+# and removes any doubt about a heuristic on 1.4 GB of media.
+*.mp3   -text
+*.mp4   -text
+*.wav   -text
+*.m4a   -text
+*.png   -text
+*.PNG   -text
+*.jpg   -text
+*.jpeg  -text
+*.webp  -text
+*.gif   -text
+*.ico   -text
+*.pdf   -text
+*.docx  -text
+*.pptx  -text
+*.xlsx  -text
+*.zip   -text
+*.tar   -text
+*.lnk   -text
+*.woff2 -text
+*.ttf   -text
+*.otf   -text

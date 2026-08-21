@@ -55,7 +55,11 @@ const PERSON = [-52, -197, 52, 14];
 // data-figure="baby" so it is measured against that shape rather than against
 // a standing child's, which would report it as taller than it is.
 EXTENTS.baby = [-70, -162, 70, 8];
-for (const who of ["amal", "nora", "mina", "adam", "idris", "noah", "yasmin", "mum", "dad", "hana", "omar", "maya", "sami", "salma", "samira", "hodan", "leo", "faduma", "grandpa", "daniel", "theo", "nadia", "sarah", "rami"]) {
+// The list must hold EVERY name person() can be called with, or a character is
+// silently not measured — and "not measured" prints the same ✓ as "outside the
+// frame" never firing. The last ten arrived with the Grade 4 second-to-fifth
+// books; keep this in step with CAST (grade 3), CAST4 and CAST_SHELF.
+for (const who of ["amal", "nora", "mina", "adam", "idris", "noah", "yasmin", "mum", "dad", "hana", "omar", "maya", "sami", "salma", "samira", "hodan", "leo", "faduma", "grandpa", "daniel", "theo", "nadia", "sarah", "rami", "elena", "talia", "librarian", "mayor", "karim", "uncle", "governor", "lawyer", "caretaker", "labourer"]) {
   EXTENTS[who] = PERSON;
 }
 

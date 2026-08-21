@@ -715,9 +715,13 @@ node tools/check-english-content.mjs --write-baseline
 
 ### The illustrated picture books (English "Books")
 
-Every English unit ends with an animated picture book — 43 of them across Grades
-1 to 4, one per unit plus the Grade 1 library shelf. They are **generated SVG**,
-not artwork files:
+Every English unit ends with a shelf of animated picture books, across Grades 1
+to 4 only (see the Grade 5 rule above). A unit's shelf holds more than one book,
+and how many differs by grade — Grade 4 carries **five per unit** since
+2026-08-21. Do not hard-code the number anywhere: `unitEbooks()` resolves a
+shelf from `ebookCatalog` by grade and unit, and `check-english-ebooks.mjs`
+prints the per-grade totals, so ask the catalogue rather than a count written
+down here. They are **generated SVG**, not artwork files:
 
 ```bash
 npm run build:ebooks          # both grades' pages + the companion docs
@@ -735,7 +739,42 @@ Three files, one storyworld:
 - `tools/lib/ehel-ebook-kit-grade4.js` — Grade 4's: Maya and Sami, the post
   counter, the storm, the library cart, the cave, the stage, the attic and the
   capital.
+- `tools/lib/ehel-ebook-kit-grade4-shelf.js` — the props and the extra cast for
+  Grade 4's books two to five: the radio weather desk, the canyon, the bakery,
+  the circular news wheel, the bridge under construction, the microwave and its
+  worktop, the observatory, the ambulance, the station, the mall — plus Elena,
+  Talia, the librarian, the mayor, Karim, the uncle, the governor, the lawyer,
+  the caretaker and the labourer, and the four Unit 5 animals.
 - `tools/create-{musa,grade2,grade3,grade4}-ebook-illustrations.js` — the pages.
+- `tools/create-grade4-shelf-ebook-illustrations.js` — the other forty Grade 4
+  pages, one book per remaining reading in each unit.
+
+**Grade 4 is drawn by two generators, not one.** The first book on every unit
+comes from `create-grade4-ebook-illustrations.js` and is built on that unit's
+closing narrative; books two to five come from
+`create-grade4-shelf-ebook-illustrations.js`, one per reading the first book
+left undrawn. Four of the forty had no reading left to take (Units 1, 4, 5 and 6
+carry four readings, not five) and are the next scene of one that is there —
+Omar's second language, Sami's promised story, the posters for Simba, the
+caretaker the parade story ends on. `write-english-ebook-docs.mjs` reads the
+second generator's own book map to decide which tool an ATTRIBUTION.txt names,
+so the list cannot drift from the generator.
+
+**Look at the Grade 3 cast before adding a person.** `CAST` in
+`ehel-ebook-kit-grade3.js` is longer than the Grade 4 additions suggest — Leo,
+Theo, Daniel, Nadia, Doctor Sarah and Officer Rami are already there. Redefining
+one in a later kit makes the same child two different children between shelves;
+that was caught in review, not by a gate. Every NEW name needs three edits in
+one commit: the preset, `TAP_VOICE_GROUPS` in `shell/subjects/english.js` (or
+`check-english-ebooks.mjs` fails on the unresolvable `data-tap`), and the
+`EXTENTS` list in `check-ebook-composition.mjs` — that last one silently prints
+✓ for a character it has never heard of.
+
+**A scene that draws its own sky furniture cannot also be given one.**
+`nightScene()` includes a moon, so the Unit 8 star book — whose whole subject is
+looking at the moon — put two moons on four pages. `starrySky()` in the shelf
+kit is the same night without one. Same failure as the two suns on the Grade 2
+shelf; check what the scene already contains before adding to it.
 
 **Grades 3 and 4 share one cast, and it was not invented.** Amal, her
 friend Nora, Teacher Yasmin and Omar the shopkeeper appear 604 times across the

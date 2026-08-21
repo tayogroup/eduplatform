@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" role="img">
+<style>
+@media (prefers-reduced-motion: no-preference) {
+  .anim-idle { animation: idle 3.8s ease-in-out infinite alternate; }
+  @keyframes idle { from { transform: translateY(0); } to { transform: translateY(-6px); } }
+  .anim-tail { transform-box: fill-box; transform-origin: 100% 20%; animation: tail 2.6s ease-in-out infinite alternate; }
+  @keyframes tail { from { transform: rotate(-6deg); } to { transform: rotate(8deg); } }
+  .anim-blink { transform-box: fill-box; transform-origin: center; animation: blink 5.2s infinite; }
+  @keyframes blink { 0%, 93%, 100% { transform: scaleY(1); } 95%, 97% { transform: scaleY(0.12); } }
+  .anim-glow { transform-box: fill-box; transform-origin: center; animation: glow 4.2s ease-in-out infinite alternate; }
+  @keyframes glow { from { transform: scale(1); opacity: 0.5; } to { transform: scale(1.08); opacity: 0.75; } }
+  .anim-shimmer { animation: shimmer 5s ease-in-out infinite alternate; }
+  @keyframes shimmer { from { opacity: 0.62; } to { opacity: 0.92; } }
+  .anim-grass { transform-box: fill-box; transform-origin: 50% 100%; animation: sway 3.2s ease-in-out infinite alternate; }
+  .anim-canopy { transform-box: fill-box; transform-origin: 50% 100%; animation: sway 5.6s ease-in-out infinite alternate; }
+  @keyframes sway { from { transform: rotate(-1.8deg); } to { transform: rotate(2.2deg); } }
+  .anim-rain { animation: rainfall 1.15s linear infinite; }
+  @keyframes rainfall { from { transform: translateY(-32px); opacity: 0.85; } 75% { opacity: 0.55; } to { transform: translateY(72px); opacity: 0; } }
+  .anim-ripple { transform-box: fill-box; transform-origin: center; animation: ripple 3.4s ease-in-out infinite alternate; }
+  @keyframes ripple { from { transform: scale(1); opacity: 0.8; } to { transform: scale(1.18); opacity: 0.55; } }
+  .anim-drip { animation: drip 1s ease-in infinite; }
+  @keyframes drip { from { transform: translateY(-12px); opacity: 0.95; } to { transform: translateY(28px); opacity: 0; } }
+  .anim-flow { stroke-dasharray: 26 20; animation: flow 0.8s linear infinite; }
+  @keyframes flow { from { stroke-dashoffset: 0; } to { stroke-dashoffset: -46; } }
+  .anim-splash { transform-box: fill-box; transform-origin: 50% 100%; animation: splashPulse 1.7s ease-in-out infinite alternate; }
+  @keyframes splashPulse { from { transform: scale(0.97); } to { transform: scale(1.05); } }
+  .anim-strain { transform-box: fill-box; transform-origin: center; animation: strain 0.9s ease-in-out infinite alternate; }
+  @keyframes strain { from { transform: translateX(-5px); } to { transform: translateX(4px); } }
+  .anim-float { transform-box: fill-box; transform-origin: center; animation: floaty 2.6s ease-in-out infinite alternate; }
+  @keyframes floaty { from { transform: translateY(0) scale(1); } to { transform: translateY(-12px) scale(1.08); } }
+  .anim-wave { animation: wave 2.4s ease-in-out infinite; opacity: 0; }
+  @keyframes wave { 0% { opacity: 0; } 30% { opacity: 0.9; } 60%, 100% { opacity: 0; } }
+  .anim-cloud { animation: cloudDrift 9s ease-in-out infinite alternate; }
+  @keyframes cloudDrift { from { transform: translateX(-18px); } to { transform: translateX(22px); } }
+  .tap-target { cursor: pointer; }
+  .tap-target.tap-play { transform-box: fill-box; transform-origin: 50% 85%; animation: tapWiggle 0.7s ease-in-out; }
+  .tap-target[data-tap="puddle"].tap-play { transform-origin: center; animation: tapSplash 0.85s ease-out; }
+  .tap-target[data-tap="sun"].tap-play { transform-origin: center; animation: tapPulse 0.6s ease-in-out; }
+  .tap-target[data-tap="tree"].tap-play { transform-origin: 50% 100%; animation: tapShake 0.7s ease-in-out; }
+  @keyframes tapWiggle { 0% { transform: rotate(0); } 25% { transform: rotate(-4deg) scale(1.03); } 55% { transform: rotate(3deg) scale(1.04); } 80% { transform: rotate(-1.5deg); } 100% { transform: rotate(0); } }
+  @keyframes tapSplash { 0% { transform: scale(1); } 40% { transform: scale(1.06, 0.94); } 70% { transform: scale(0.97, 1.03); } 100% { transform: scale(1); } }
+  @keyframes tapPulse { 0% { transform: scale(1); } 50% { transform: scale(1.12); } 100% { transform: scale(1); } }
+  @keyframes tapShake { 0% { transform: rotate(0); } 20% { transform: rotate(2.4deg); } 45% { transform: rotate(-2deg); } 70% { transform: rotate(1.2deg); } 100% { transform: rotate(0); } }
+  .tap-burst { opacity: 0; }
+  .tap-target.tap-play .tap-burst { opacity: 1; }
+  .tap-target.tap-play .tap-burst circle { animation: burstUp 0.6s ease-out forwards; }
+  @keyframes burstUp { from { transform: translateY(0); opacity: 0.95; } to { transform: translateY(-90px); opacity: 0; } }
+}
+</style>
+<defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#bfe0f4"/><stop offset="1" stop-color="#e6f2e2"/></linearGradient></defs>
+    <rect width="1600" height="1000" fill="url(#sky)"/>
+    <g transform="translate(120 720) scale(1.05)">
+    <path d="M -16 0 q -6 -120 4 -190" stroke="#6b4a30" stroke-width="30" fill="none" stroke-linecap="round"/>
+    <g class="anim-canopy" style="animation-delay:1.00s">
+      <ellipse cx="-40" cy="-220" rx="86" ry="70" fill="#2c4d29"/>
+      <ellipse cx="46" cy="-262" rx="96" ry="78" fill="#3f6b3a"/>
+      <ellipse cx="10" cy="-320" rx="70" ry="56" fill="#2c4d29"/>
+    </g>
+  </g><g transform="translate(430 720) scale(0.86)">
+    <path d="M -16 0 q -6 -120 4 -190" stroke="#6b4a30" stroke-width="30" fill="none" stroke-linecap="round"/>
+    <g class="anim-canopy" style="animation-delay:3.50s">
+      <ellipse cx="-40" cy="-220" rx="86" ry="70" fill="#3f6b3a"/>
+      <ellipse cx="46" cy="-262" rx="96" ry="78" fill="#4e7f45"/>
+      <ellipse cx="10" cy="-320" rx="70" ry="56" fill="#3f6b3a"/>
+    </g>
+  </g><g transform="translate(1180 720) scale(0.94)">
+    <path d="M -16 0 q -6 -120 4 -190" stroke="#6b4a30" stroke-width="30" fill="none" stroke-linecap="round"/>
+    <g class="anim-canopy" style="animation-delay:2.00s">
+      <ellipse cx="-40" cy="-220" rx="86" ry="70" fill="#3f6b3a"/>
+      <ellipse cx="46" cy="-262" rx="96" ry="78" fill="#4e7f45"/>
+      <ellipse cx="10" cy="-320" rx="70" ry="56" fill="#3f6b3a"/>
+    </g>
+  </g><g transform="translate(1490 720) scale(1.1)">
+    <path d="M -16 0 q -6 -120 4 -190" stroke="#6b4a30" stroke-width="30" fill="none" stroke-linecap="round"/>
+    <g class="anim-canopy" style="animation-delay:4.50s">
+      <ellipse cx="-40" cy="-220" rx="86" ry="70" fill="#2c4d29"/>
+      <ellipse cx="46" cy="-262" rx="96" ry="78" fill="#3f6b3a"/>
+      <ellipse cx="10" cy="-320" rx="70" ry="56" fill="#2c4d29"/>
+    </g>
+  </g>
+    <rect x="0" y="700" width="1600" height="300" fill="#7a8f5c"/>
+    <path d="M 0 780 q 400 -46 800 0 q 400 46 800 0 L 1600 1000 L 0 1000 Z" fill="#8fa06a"/>
+    <path d="M 500 1000 q 120 -170 300 -230 q 180 -60 300 -70" stroke="#c9b98f" stroke-width="70" fill="none" stroke-linecap="round" opacity="0.85"/><g transform="translate(1240 940) scale(1.2)">
+    <path d="M -130 10 q 90 -26 260 -6" stroke="#8a6242" stroke-width="26" fill="none" stroke-linecap="round"/>
+    <path d="M -40 -2 l -26 -38 M 60 -6 l 20 -40 M -100 4 l -18 -28" stroke="#8a6242" stroke-width="12" fill="none" stroke-linecap="round"/>
+    <ellipse cx="-14" cy="34" rx="150" ry="14" fill="#2b2b33" opacity="0.08"/>
+  </g>
+   <g transform="translate(760 900) scale(2.1 2.1)">
+    <path d="M -54 0 q -12 -22 8 -26 q 28 -6 52 0 l 0 26 z" fill="#dcc9a8" stroke="#2b2b33" stroke-width="3.4"/>
+    <g transform="translate(4 -32)"><circle cx="0" cy="0" r="36" fill="#e0c08a" stroke="#2b2b33" stroke-width="4"/><path d="M -34 0 a 34 34 0 1 1 68 0 a 34 34 0 1 1 -68 0" fill="none" stroke="#c99a5c" stroke-width="7"/><path d="M -26 0 a 26 26 0 1 1 52 0 a 26 26 0 1 1 -52 0" fill="none" stroke="#a8763f" stroke-width="7"/><path d="M -18 0 a 18 18 0 1 1 36 0 a 18 18 0 1 1 -36 0" fill="none" stroke="#c99a5c" stroke-width="7"/><path d="M -10 0 a 10 10 0 1 1 20 0 a 10 10 0 1 1 -20 0" fill="none" stroke="#a8763f" stroke-width="7"/></g>
+    <g transform="translate(-52 -14)">
+      <path d="M -6 0 q -14 -18 -4 -26" stroke="#2b2b33" stroke-width="3.4" fill="none" stroke-linecap="round"/>
+      <path d="M 4 -2 q -8 -22 2 -30" stroke="#2b2b33" stroke-width="3.4" fill="none" stroke-linecap="round"/>
+      <circle cx="-11" cy="-28" r="4" fill="#2b2b33"/><circle cx="6" cy="-33" r="4" fill="#2b2b33"/>
+    </g>
+  </g>
+</svg>

@@ -61,6 +61,15 @@ function literalBetweenBrackets(source, declaration) {
 
 const catalog = vm.runInNewContext(`(${literalBetweenBrackets(shellSource, "const ebookCatalog = [")})`);
 
+// Which Grade 4 books the shelf generator draws, read out of that generator's
+// own book map. Requiring the module is not an option — it writes 480 files on
+// import — and restating the list here would be a second copy free to drift
+// from the one that actually draws the pages.
+const shelfSource = fs.readFileSync(path.join(root, "tools", "create-grade4-shelf-ebook-illustrations.js"), "utf8");
+const shelfMap = shelfSource.slice(shelfSource.indexOf("const books = {"));
+const shelfBookIds = [...shelfMap.matchAll(/dir: "([a-z0-9-]+)"/g)].map((match) => match[1]);
+if (shelfBookIds.length !== 40) throw new Error(`Expected 40 Grade 4 shelf books, read ${shelfBookIds.length}.`);
+
 // The only authored content in this file: what each book is FOR. The unit
 // vocabulary lines are the words the story deliberately reuses, taken from that
 // unit's vocabularyGroups — a reviewer reads this to check the story is doing
@@ -494,6 +503,249 @@ const NOTES = {
     themes: "looking back at a whole year of work; being proud of it out loud",
     cameos: "every earlier book in the series is in the folder Amal opens - the alphabet from Unit 1, the farm from Unit 5, the senses from Unit 6, the bus from Unit 7.",
   },
+  // ---- Grade 4, books two to five of every unit. Each is built on one of the
+  // unit's remaining readings, so the numbering below is "n of 5 for Unit N"
+  // rather than a position in one long series.
+  "amals-steady-day": {
+    series: "Amal (Grade 4)", book: 2, term: "Term 1", unit: "Unit 1: Daily Life & Communication",
+    vocabulary: "daily, usual, effort, balance, speed, maintain, continue, gain, fair, really, clearly",
+    themes: "an ordinary day done properly; time used well rather than time filled",
+    cameos: "Maya walks to school with her and Theo is at break, both from the Unit 1 readings.",
+  },
+  "may-i-interview-you": {
+    series: "Amal (Grade 4)", book: 3, term: "Term 1", unit: "Unit 1: Daily Life & Communication",
+    vocabulary: "mail, language, citizen, agree, continue, master, necessary, peace, speed, fair",
+    themes: "asking one question and then stopping to listen",
+    cameos: "the whole book is the Unit 1 playscript; Grandmother Salma and Karim appear where the script puts them.",
+  },
+  "the-writing-contest": {
+    series: "Amal (Grade 4)", book: 4, term: "Term 1", unit: "Unit 1: Daily Life & Communication",
+    vocabulary: "effort, gain, master, balance, cancel, continue, purpose, fair, clearly, daily",
+    themes: "fitting one more thing into a full week; a prize that is a tool, not a trophy",
+    cameos: "Nora forgets two lines and Sami announces the cancellation, both from the Unit 1 story.",
+  },
+  "two-languages-at-the-counter": {
+    series: "Amal (Grade 4)", book: 5, term: "Term 1", unit: "Unit 1: Daily Life & Communication",
+    vocabulary: "language, master, necessary, citizen, effort, daily, continue, leave, clearly",
+    themes: "learning something hard so that somebody else does not have to struggle",
+    cameos: "Theo is the customer; Omar's second language is his own answer in the Unit 1 interview.",
+  },
+  "weather-around-the-world": {
+    series: "Amal (Grade 4)", book: 2, term: "Term 1", unit: "Unit 2: Nature & Weather",
+    vocabulary: "foggy, snowy, moisture, canyon, meadow, bay, storm, hail, hurricane, tornado, surface, roam",
+    themes: "the same sky doing eight different things; watching it and learning",
+    cameos: "Amal and Nora build the display the Unit 2 story is about.",
+  },
+  "the-foggy-morning": {
+    series: "Amal (Grade 4)", book: 3, term: "Term 1", unit: "Unit 2: Nature & Weather",
+    vocabulary: "foggy, moisture, meadow, surface, breath, calm",
+    themes: "fog hides a thing, it does not take it away; noticing turned into a poem",
+    cameos: "the four lines on the last page are the Unit 2 poem, word for word.",
+  },
+  "the-weather-report": {
+    series: "Amal (Grade 4)", book: 4, term: "Term 1", unit: "Unit 2: Nature & Weather",
+    vocabulary: "foggy, storm, hail, moisture, surface, canyon, meadow, bay, calm",
+    themes: "a forecast is advice, and advice is only useful if you act on it",
+    cameos: "the broadcast is the Unit 2 listening text; Amal holds the script.",
+  },
+  "the-science-fair-poster": {
+    series: "Amal (Grade 4)", book: 5, term: "Term 1", unit: "Unit 2: Nature & Weather",
+    vocabulary: "tornado, hurricane, volcano, canyon, moisture, bay, meadow, hail, roam",
+    themes: "practising until you can explain it instead of read it",
+    cameos: "the dialogue is the Unit 2 listening text \"Two Friends at the Science Fair\"; Idris collects the hail.",
+  },
+  "the-bitter-lunch": {
+    series: "Amal (Grade 4)", book: 2, term: "Term 1", unit: "Unit 3: Food and Health",
+    vocabulary: "sandwich, lamb, rice, spice, bakery, fresh, chewy, cattle, labour, stomach, chemicals, gather",
+    themes: "the warning you were given and ignored; writing the mistake down afterwards",
+    cameos: "Omar warns her, Noah smells it first and Doctor Sarah names it — all from the Unit 3 story.",
+  },
+  "the-poster-on-the-wall": {
+    series: "Amal (Grade 4)", book: 3, term: "Term 1", unit: "Unit 3: Food and Health",
+    vocabulary: "fresh, rice, lamb, bakery, gather, brain, stomach, pesticide, comma",
+    themes: "advice you can follow the same afternoon",
+    cameos: "the eight lines are the Unit 3 poster, including Teacher Yasmin's line in red pen.",
+  },
+  "at-the-clinic": {
+    series: "Amal (Grade 4)", book: 4, term: "Term 1", unit: "Unit 3: Food and Health",
+    vocabulary: "stomach, fresh, chewy, spice, chemicals, gather, deadly",
+    themes: "telling a doctor the honest version",
+    cameos: "the whole book is the Unit 3 dialogue with Doctor Sarah.",
+  },
+  "the-market-song": {
+    series: "Amal (Grade 4)", book: 5, term: "Term 1", unit: "Unit 3: Food and Health",
+    vocabulary: "rice, lamb, fresh, gather, bakery, pesticide, comma, labour",
+    themes: "a rhyme that turns out to be a rule you can shop by",
+    cameos: "the two rhyming lines are the Unit 3 rhyme; Grandma Hana sets the one instruction.",
+  },
+  "maya-the-young-reporter": {
+    series: "Amal (Grade 4)", book: 2, term: "Term 2", unit: "Unit 4: Community and Communication",
+    vocabulary: "information, discover, knowledge, challenge, quality, judge, population, erase, tease, scientist",
+    themes: "teasing stops when somebody actually reads the work",
+    cameos: "Sami's change of mind is the Unit 4 reading's own ending.",
+  },
+  "the-town-meeting": {
+    series: "Amal (Grade 4)", book: 3, term: "Term 2", unit: "Unit 4: Community and Communication",
+    vocabulary: "service, information, priority, population, deliver, location, communication",
+    themes: "a public building that belongs to everybody, with no list at the door",
+    cameos: "the mayor's answers are the Unit 4 listening text; the librarian and Doctor Sarah staff the new rooms.",
+  },
+  "the-circular-plan": {
+    series: "Amal (Grade 4)", book: 4, term: "Term 2", unit: "Unit 4: Community and Communication",
+    vocabulary: "circular, plain, service, location, quantity, quality, priority, information, fiction, erase",
+    themes: "a small thing in the right place beats a big thing nobody stops at",
+    cameos: "Leo, Nora and the librarian are all from the Unit 4 story.",
+  },
+  "samis-first-story": {
+    series: "Amal (Grade 4)", book: 5, term: "Term 2", unit: "Unit 4: Community and Communication",
+    vocabulary: "information, quality, discover, challenge, erase, tease, population",
+    themes: "a fact is where a story begins; keeping a promise you made as a joke",
+    cameos: "Karim the carpenter answers the question; the promise itself is Sami's last line in the Unit 4 reading.",
+  },
+  "the-race-at-the-village-field": {
+    series: "Amal (Grade 4)", book: 2, term: "Term 2", unit: "Unit 5: Action and Movement",
+    vocabulary: "gallop, accelerate, rate, pressure, proceed, excite, signal",
+    themes: "pacing yourself; not looking back",
+    cameos: "the horse beside the fence is the Unit 5 recount's own; Idris waves the homemade flag.",
+  },
+  "how-animals-move": {
+    series: "Amal (Grade 4)", book: 3, term: "Term 2", unit: "Unit 5: Action and Movement",
+    vocabulary: "gallop, spiral, squeeze, signal, prevent, suffer, proceed, describe",
+    themes: "every movement has a purpose; four animals, four reasons",
+    cameos: "horse, snail, cat and flock are exactly the four the Unit 5 information text names.",
+  },
+  "the-lost-goat": {
+    series: "Amal (Grade 4)", book: 4, term: "Term 2", unit: "Unit 5: Action and Movement",
+    vocabulary: "gaze, peek, proceed, rescue, defend, pressure, check",
+    themes: "searching properly instead of searching fast",
+    cameos: "Adam and the goat are the Unit 5 listening script's own.",
+  },
+  "the-posters-for-simba": {
+    series: "Amal (Grade 4)", book: 5, term: "Term 2", unit: "Unit 5: Action and Movement",
+    vocabulary: "describe, rescue, defend, check, admit, suffer, signal",
+    themes: "doing the honest thing even when you hope it fails; a home that was already given",
+    cameos: "Talia, Simba and the poster plan all come from the Unit 5 story \"The Spiral Cave\".",
+  },
+  "the-people-of-our-town": {
+    series: "Amal (Grade 4)", book: 2, term: "Term 2", unit: "Unit 6: People in Society",
+    vocabulary: "caretaker, carpenter, merchant, labourer, engineer, governor, lawyer, article, personal",
+    themes: "a town is the jobs its people do, from first light to the streetlamps",
+    cameos: "the caretaker, Omar, Karim, Elena and the governor are all named in the Unit 6 reading. The governor is a woman there and is drawn as one.",
+  },
+  "two-neighbours": {
+    series: "Amal (Grade 4)", book: 3, term: "Term 2", unit: "Unit 6: People in Society",
+    vocabulary: "refugee, immigrant, tenant, neighbour, merchant, personal, hero",
+    themes: "one family ran from danger, one walked towards a dream; both are welcome",
+    cameos: "Theo, his mother and Omar are the Unit 6 reading's own; the tomato garden is hers too.",
+  },
+  "elenas-bridge": {
+    series: "Amal (Grade 4)", book: 4, term: "Term 2", unit: "Unit 6: People in Society",
+    vocabulary: "engineer, labourer, carpenter, article, hero, personal",
+    themes: "planning carefully and checking twice; six months is not a long time for a bridge",
+    cameos: "the interview is the Unit 6 listening text; the last page keeps the seat Elena asks Nora to save.",
+  },
+  "the-caretakers-keys": {
+    series: "Amal (Grade 4)", book: 5, term: "Term 2", unit: "Unit 6: People in Society",
+    vocabulary: "caretaker, hero, respect, article, personal",
+    themes: "noticing the work that is only visible when it stops",
+    cameos: "the eleven years and the closing line about brooms are both from the Unit 6 readings.",
+  },
+  "the-day-before-the-test": {
+    series: "Amal (Grade 4)", book: 2, term: "Term 3", unit: "Unit 7: Emotions, Behaviour, and Identity",
+    vocabulary: "nervous, anxious, doubtful, gentle, polite, proud, calm",
+    themes: "a worry you can be polite to and then put to bed",
+    cameos: "Adam's advice and Mum's line about the worry are both from the Unit 7 reading.",
+  },
+  "where-my-family-comes-from": {
+    series: "Amal (Grade 4)", book: 3, term: "Term 3", unit: "Unit 7: Emotions, Behaviour, and Identity",
+    vocabulary: "proud, generous, polite, curious, ethnic, gentle",
+    themes: "difference without ranking; a guest is a gift",
+    cameos: "this is Nora's own Unit 7 recount, told by her; Maya and Sami are her classmates in it.",
+  },
+  "getting-ready-for-the-play": {
+    series: "Amal (Grade 4)", book: 4, term: "Term 3", unit: "Unit 7: Emotions, Behaviour, and Identity",
+    vocabulary: "nervous, gentle, polite, selfish, proud, shy, serious",
+    themes: "three things to remember, and permission to make a small mistake",
+    cameos: "Sami's question about forgetting his lines is his own, from the Unit 7 talk.",
+  },
+  "the-cultural-fair": {
+    series: "Amal (Grade 4)", book: 5, term: "Term 3", unit: "Unit 7: Emotions, Behaviour, and Identity",
+    vocabulary: "curious, proud, nervous, shy, polite, generous, ethnic",
+    themes: "curiosity as a way of being brave in a room full of strangers",
+    cameos: "the conversation is the Unit 7 dialogue \"A Chat About Feelings\"; the fair is the one they are discussing.",
+  },
+  "the-right-tool-for-the-job": {
+    series: "Amal (Grade 4)", book: 2, term: "Term 3", unit: "Unit 8: Tools, Machines, and Everyday Items",
+    vocabulary: "stapler, folder, briefcase, shield, microwave, hardware, machinery, resources, crew, equipment",
+    themes: "the right tool used the right way; small jobs and huge ones share one rule",
+    cameos: "every tool named here is named in the Unit 8 information text.",
+  },
+  "a-look-at-the-stars": {
+    series: "Amal (Grade 4)", book: 3, term: "Term 3", unit: "Unit 8: Tools, Machines, and Everyday Items",
+    vocabulary: "telescope, equipment, plastic, machinery, resources",
+    themes: "a machine that changes nothing up there and everything down here",
+    cameos: "Noah shares the telescope. The night sky here is drawn WITHOUT the kit's own moon, so the moon on the page is the one the telescope is pointed at.",
+  },
+  "the-careful-cook": {
+    series: "Amal (Grade 4)", book: 4, term: "Term 3", unit: "Unit 8: Tools, Machines, and Everyday Items",
+    vocabulary: "microwave, utensil, plastic, ingredient, equipment, crew",
+    themes: "ten steps in order, and an adult in the room for all of them",
+    cameos: "the safety talk is the Unit 8 listening text; Leo cooks the cocoa there too.",
+  },
+  "the-helper-vehicles": {
+    series: "Amal (Grade 4)", book: 5, term: "Term 3", unit: "Unit 8: Tools, Machines, and Everyday Items",
+    vocabulary: "helicopter, ambulance, equipment, machinery, crew, shield",
+    themes: "the machines are the easy part; the people who keep them ready are the point",
+    cameos: "the four sung lines are the Unit 8 song; Doctor Sarah rides with the helicopter.",
+  },
+  "a-trip-to-the-capital": {
+    series: "Amal (Grade 4)", book: 2, term: "Term 3", unit: "Unit 9: Places, People, and Plans",
+    vocabulary: "station, railway, capital, museum, tourism, entrance, lift, horizon, restaurant, arrive",
+    themes: "a day that is too big to hold, and a little brother asleep before the end of it",
+    cameos: "the trip is the Unit 9 recount's own, down to the vendor selling bread on the platform.",
+  },
+  "living-near-the-equator": {
+    series: "Amal (Grade 4)", book: 3, term: "Term 3", unit: "Unit 9: Places, People, and Plans",
+    vocabulary: "equator, horizon, nation, factories, neighbourhood, railway, mall, museum",
+    themes: "long warm days, and a working country inside them",
+    cameos: "the crops, the railway, the ships and the lorries are all in the Unit 9 information text.",
+  },
+  "making-a-plan": {
+    series: "Amal (Grade 4)", book: 4, term: "Term 3", unit: "Unit 9: Places, People, and Plans",
+    vocabulary: "museum, restaurant, station, neighbourhood, horizon, arrive, event",
+    themes: "deciding the order before you go, and who brings what",
+    cameos: "the whole book is the Unit 9 listening script; Nora's notebook and Leo's map are theirs in it.",
+  },
+  "directions-at-the-mall": {
+    series: "Amal (Grade 4)", book: 5, term: "Term 3", unit: "Unit 9: Places, People, and Plans",
+    vocabulary: "mall, lift, corridor, entrance, restaurant, customer, arrive",
+    themes: "following directions one step at a time in a place you do not know",
+    cameos: "the announcement is the Unit 9 listening script; Amal and Noah are the pair who got lost in Mombasa.",
+  },
+  "amals-english-voice": {
+    series: "Amal (Grade 4)", book: 2, term: "Term 3", unit: "Unit 10: My English Voice (capstone)",
+    vocabulary: "one page for each unit she keeps: mail, moisture, rice, spiral, engineer, equipment",
+    themes: "choosing six pages out of a year; keeping the dull one because of one good sentence",
+    cameos: "the folder, the attic list and Grandma Hana's line are all from the Unit 10 story.",
+  },
+  "four-parts-and-a-friday": {
+    series: "Amal (Grade 4)", book: 3, term: "Term 3", unit: "Unit 10: My English Voice (capstone)",
+    vocabulary: "the brief's own words: pages, board, paragraph, label, talk, reflection, draft",
+    themes: "a big task read as four small ones with dates on them",
+    cameos: "every deadline and mark on these pages is the Unit 10 project brief's own.",
+  },
+  "planning-the-exhibition": {
+    series: "Amal (Grade 4)", book: 4, term: "Term 3", unit: "Unit 10: My English Voice (capstone)",
+    vocabulary: "engineer, carpenter, deliver, mail, nervous, metre, centimetre",
+    themes: "measuring the wall before arguing about the boards",
+    cameos: "Elena's tent-frame answer and the caretaker's early key are both in the Unit 10 dialogue.",
+  },
+  "exhibition-evening": {
+    series: "Amal (Grade 4)", book: 5, term: "Term 3", unit: "Unit 10: My English Voice (capstone)",
+    vocabulary: "equipment, nervous, proud, breath, information, service",
+    themes: "answering questions about your own work in front of the people in it",
+    cameos: "Grandma Hana, Doctor Sarah, Omar, Elena and Idris each ask the question they ask in the Unit 10 dialogue.",
+  },
 };
 
 let written = 0;
@@ -541,7 +793,17 @@ for (const book of catalog) {
       "additions in tools/lib/ehel-ebook-kit-grade4.js, composed by",
       "tools/create-grade4-ebook-illustrations.js."],
   };
-  const drawnBy = DRAWN_BY[book.grades[0]] || ["the shared series kit in tools/lib/ehel-ebook-kit.js."];
+  // Grade 4 is drawn by two generators, not one: the first book on each unit
+  // came from create-grade4-ebook-illustrations.js, and books two to five from
+  // create-grade4-shelf-ebook-illustrations.js with its own additive kit. The
+  // set below is which books belong to the second one, and it is read off that
+  // generator's own book map so it cannot drift from it.
+  const GRADE4_SHELF = new Set(shelfBookIds);
+  const drawnBy = GRADE4_SHELF.has(book.id)
+    ? ["the shared series kit in tools/lib/ehel-ebook-kit.js and the Grade 4",
+      "shelf additions in tools/lib/ehel-ebook-kit-grade4-shelf.js, composed by",
+      "tools/create-grade4-shelf-ebook-illustrations.js."]
+    : DRAWN_BY[book.grades[0]] || ["the shared series kit in tools/lib/ehel-ebook-kit.js."];
 
   const attribution = [
     `${book.attribution}`,

@@ -291,6 +291,11 @@ if (phpCap !== UNIT_JSON_LIMIT || devCap !== UNIT_JSON_LIMIT) {
     if (!/never give the answers/i.test(teacherText) || !/quiz|checkpoint|exam/i.test(teacherText)) fail("The virtual teacher no longer protects graded answers", "owner decision: on quizzes, checkpoints and placement exams the teacher explains the approach only");
     if (!/do NOT mark anything complete/.test(teacherText)) fail("The virtual teacher may claim to mark an activity complete", "owner decision: guide to completion, never mark — progress must come from the learner doing the activity on the page");
   }
+  // Erayada af-Soomaali: the one sanctioned whole-reply Somali — the chip's
+  // mode must exist and must say the vocabulary-only rule resumes after it.
+  if (!hints["somali-translate"] || !/resumes/i.test(String(hints["somali-translate"]))) {
+    fail("The somali-translate mode is gone or no longer scoped to one reply", "the Erayada af-Soomaali chip sends it; without it the model either refuses (vocabulary-only rule) or stays in Somali afterwards");
+  }
   const chips = teacherPrompts();
   if (!Array.isArray(chips) || chips.length < 3 || chips.some((chip) => chip.mode !== "virtual-teacher")) {
     fail("A virtual-teacher chip does not carry the virtual-teacher mode", JSON.stringify(chips.map((chip) => [chip.label, chip.mode])));

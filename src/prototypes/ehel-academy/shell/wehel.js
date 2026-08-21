@@ -1210,7 +1210,9 @@ export function mountWehelChat(options) {
     // Somali vocabulary lines get their own Listen button (the Azure Ubah
     // voice) — the browser's English voice never reads them.
     const somaliPlaying = somaliSpeakingIndex === index;
-    const somali = item.role === "assistant" && preferredTeachingLanguage() === "somali" && somaliLines(item.text).length
+    // A translated (somali) bubble is read whole by Ubah from its Listen
+    // button, so the vocabulary-lines button would be redundant there.
+    const somali = item.role === "assistant" && !item.somali && preferredTeachingLanguage() === "somali" && somaliLines(item.text).length
       ? `<button class="button secondary voice-button${somaliPlaying ? " is-playing" : ""}" data-wehel-somali="${index}" type="button" aria-label="${somaliPlaying ? "Stop the Somali voice" : "Listen in Somali (Ubah)"}">${somaliPlaying ? `${wehelIcon("stop")} Jooji` : `${wehelIcon("volume")} Soomaali`}</button>`
       : "";
     // Structure only: the article keeps its .ai-message/.user/.assistant classes
@@ -1239,6 +1241,25 @@ export function mountWehelChat(options) {
   // speaks first; the browser engine steps in only when the voice endpoint
   // cannot be reached, so an offline hint is still read aloud.
   async function speakReply(index, text) {
+    // A Somali translation (the Erayada af-Soomaali chip): the whole bubble is
+    // Somali, so the Azure Ubah voice reads all of it — in sentence chunks
+    // under the Somali endpoint's 600-character cap, one after another,
+    // stopping the moment this bubble is no longer the speaker.
+    if (index >= 0 && messages[index]?.somali) {
+      speakingIndex = index;
+      render();
+      try {
+        for (const chunk of speechChunks(speakableText(text), 550)) {
+          if (speakingIndex !== index) break;
+          await speakSomali(chunk);
+        }
+      } catch (error) {
+        if (ui.toast) ui.toast(error.message || "The Somali voice is unavailable right now.");
+      } finally {
+        if (speakingIndex === index) { speakingIndex = null; render(); }
+      }
+      return;
+    }
     const clean = withoutSomaliLines(text);
     speakingIndex = index;
     render();
@@ -1278,9 +1299,20 @@ export function mountWehelChat(options) {
     // exactly that — key words with their Somali translations, from the focused
     // module when there is one.
     if (teachingLanguage === "somali") {
-      prompts.push({ label: "Erayada af-Soomaali", message: focus
-        ? `Teach me the key words in "${focus.label}" and give the Somali translation for each one.`
-        : "Teach me this unit's key words and give the Somali translation for each one." });
+      // Erayada af-Soomaali (owner decision 2026-08-20): with a reply on
+      // screen, one tap asks Wehel for that SAME reply in Somali and the Azure
+      // Ubah voice narrates it — for a learner who did not follow the English.
+      // The translated bubble is marked `somali`, which is what routes its
+      // narration to Ubah (see speakReply). With nothing to translate yet, the
+      // chip keeps its original job: the unit's key words with their Somali
+      // translations.
+      const lastReply = [...messages].reverse().find((item) => item.role === "assistant" && !item.offline && !item.somali);
+      prompts.push(lastReply
+        ? { label: "Erayada af-Soomaali", mode: "somali-translate", somaliReply: true,
+          message: "Please say your last message again in Somali — translate the whole of it into simple, natural Somali for me." }
+        : { label: "Erayada af-Soomaali", message: focus
+          ? `Teach me the key words in "${focus.label}" and give the Somali translation for each one.`
+          : "Teach me this unit's key words and give the Somali translation for each one." });
     }
     // Homework chips — both sanctioned ways in, shown only when the platform
     // actually has homework on record for this learner. The modes reach the
@@ -1318,7 +1350,7 @@ export function mountWehelChat(options) {
         ${messages.length ? messages.map(bubble).join("") : bubble({ role: "assistant", text: greeting }, -1)}
         ${busy ? `<article class="ai-message assistant is-thinking"><span class="w-avatar" role="img" aria-label="${escapeHtml(tutorLabel)}">${wehelIcon("sparkle")}</span><div class="w-body"><strong class="w-who">${escapeHtml(tutorLabel)}</strong><p class="w-text"><span class="w-dot"></span><span class="w-dot"></span><span class="w-dot"></span><span class="sr-only">is thinking…</span></p></div></article>` : ""}
       </div>
-      <div class="ai-prompts">${prompts.map((prompt) => `<button data-wehel-prompt="${escapeHtml(prompt.message)}" data-wehel-mode="${escapeHtml(prompt.mode || "")}" type="button" ${busy ? "disabled" : ""}>${escapeHtml(prompt.label)}</button>`).join("")}</div>
+      <div class="ai-prompts">${prompts.map((prompt) => `<button data-wehel-prompt="${escapeHtml(prompt.message)}" data-wehel-mode="${escapeHtml(prompt.mode || "")}"${prompt.somaliReply ? ' data-wehel-somali-reply="1"' : ""} type="button" ${busy ? "disabled" : ""}>${escapeHtml(prompt.label)}</button>`).join("")}</div>
       ${pendingAttachments.length ? `<div class="w-attach-row">${pendingAttachments.map((file, index) => `<span class="w-attach-chip"><span>${escapeHtml(file.name)}</span><button type="button" data-wehel-detach="${index}" aria-label="Remove ${escapeHtml(file.name)}">×</button></span>`).join("")}</div>` : ""}
       <form class="ai-compose" id="wehel-form">
         <label class="sr-only" for="wehel-input">Ask ${escapeHtml(tutorLabel)}</label>
@@ -1392,7 +1424,7 @@ export function mountWehelChat(options) {
         ? `${tutorLabel} is staying on ${chosen.label} — still happy to answer anything else.`
         : `${tutorLabel} is back to the whole unit.`);
     });
-    container.querySelectorAll("[data-wehel-prompt]").forEach((button) => button.addEventListener("click", () => submit(button.dataset.wehelPrompt, "text", button.dataset.wehelMode || "")));
+    container.querySelectorAll("[data-wehel-prompt]").forEach((button) => button.addEventListener("click", () => submit(button.dataset.wehelPrompt, "text", button.dataset.wehelMode || "", { somaliReply: button.dataset.wehelSomaliReply === "1" })));
     container.querySelector("#wehel-form").addEventListener("submit", (event) => {
       event.preventDefault();
       const input = container.querySelector("#wehel-input");
@@ -1436,7 +1468,10 @@ export function mountWehelChat(options) {
 
   // modeHint: a focused quick prompt names its own mode ("teach", "practice",
   // "help"); a typed message falls back to the panel's mode as before.
-  async function submit(text, channel, modeHint = "") {
+  // somaliReply: the Erayada af-Soomaali chip — the reply is a Somali
+  // translation, stored marked `somali` so its narration goes to the Azure
+  // Ubah voice (whole bubble), and narrated right away.
+  async function submit(text, channel, modeHint = "", { somaliReply = false } = {}) {
     if (busy) return;
     stopBrowserSpeech();
     speakingIndex = null;
@@ -1492,11 +1527,17 @@ export function mountWehelChat(options) {
         if (ui.toast) ui.toast("Wehel is offline right now — showing a built-in hint instead.");
       }
     }
-    append({ role: "assistant", text: reply, offline });
+    append({ role: "assistant", text: reply, offline, ...(somaliReply && !offline ? { somali: true } : {}) });
     busy = false;
     render();
     const exchanges = messages.filter((item) => item.role === "assistant" && !item.offline).length;
     if (!offline && options.onExchange) options.onExchange(exchanges);
+    // A Somali translation the learner asked for is narrated by Ubah at once —
+    // hearing it is the point of the tap, whatever the voice toggle says.
+    if (somaliReply && !offline) {
+      speakReply(messages.length - 1, reply);
+      return;
+    }
     // Speak the reply with the browser voice — always after a spoken question,
     // and after typed ones too while the voice toggle is on.
     if (browserSpeechSupported && (channel === "voice" || speakReplies)) {

@@ -1,0 +1,32 @@
+# Line endings for the GENERATED runtime bundle and the fragments it is built
+# from. Nothing else — see the note at the bottom before widening this.
+#
+# The problem this fixes, measured 2026-08-21:
+#
+#   src/shared/js/runtime/runtime.bundle.js is a concatenation of the fragments
+#   beside it (tools/build-unit-runtime-bundle.js, `parts.join('\n')`). The
+#   fragments were on disk as CRLF while their committed blobs were LF, so every
+#   rebuild produced a CRLF bundle and `git diff` reported 16,158 insertions and
+#   16,158 deletions with ZERO content change — CRLF-normalised, the rebuilt file
+#   was byte-identical to HEAD.
+#
+#   Git never reported the fragments themselves, which is why this survived: the
+#   index held each CRLF file's stat (speak.js: size 87,188) against its LF blob
+#   (84,547), so a refresh compared stat, matched, and never re-hashed. They read
+#   as clean while differing from HEAD at byte 3 of line 1. That is the signature
+#   of a checkout made while core.autocrlf was true — which is still the value in
+#   C:/Program Files/Git/etc/gitconfig; .git/config later set false, and a local
+#   setting cannot undo a working tree that was already written.
+#
+#   It matters because CLAUDE.md requires a changed fragment and the regenerated
+#   bundle to be committed together, and a one-line fragment change is invisible
+#   inside a 16,158-line line-ending diff.
+src/shared/js/runtime/*.js text eol=lf
+
+# NOT widened to `* text=auto eol=lf` on purpose. 2,455 files are committed with
+# CRLF today — 868 .json, 620 .php (src/moodle included), 303 .js, 278 .html,
+# 46 .py, 43 .css — and a repo-wide rule marks every one of them for
+# renormalisation at once. That is a legitimate change to make, but it is a
+# deliberate one-commit sweep on a quiet tree, not something to inherit from a
+# fix to the runtime bundle. Widen it when somebody is in a position to review
+# 2,455 files, and re-run npm run check:php afterwards.

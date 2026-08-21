@@ -649,7 +649,28 @@ const config = {
   progressDefaults: { completed: [], knownWords: [], self: {}, writing: {}, games: {}, aiMessages: [] },
   gradeDefaults: { completed: [] },
   keys: (level, unit) => ({ progress: `ehel-intensive-l${level}-u${unit}-progress-v1` }),
-  courseKey: (level) => `ehel-ien-l${String(level).padStart(2, "0")}`,
+  // `ehel-intensive-eng-lNN`, matching catalog.json — NOT the `ehel-ien-lNN`
+  // this emitted until 2026-08-21. The key is looked up as a Moodle course
+  // idnumber, and catalog_sync writes the catalogue's form, so the catalogue is
+  // canonical and the app was the odd one out (progress_gatewaylib.php says so
+  // where it accepts both).
+  //
+  // The short form was not cosmetic. It missed the curriculum-map join twice
+  // over, and both misses are silent:
+  //   • pqpr_course_labels() found no row, so a family saw the raw string
+  //     "ehel-ien-l01" as the course name, and pqpr_* fell back to counting the
+  //     units the learner had OPENED instead of the 20 the level holds — which
+  //     reads as near-complete after three units.
+  //   • push_gradebook() resolves the course by idnumber and soft-skips when it
+  //     is absent, so every quiz score this course emitted went nowhere near a
+  //     grade item.
+  //
+  // Rows already stored under the old key are NOT rewritten by this change and
+  // stay unmapped until sql/merge_intensive_english_coursekey.sql is run — see
+  // that file. Run it soon: the unique key (environment, userid, coursekey,
+  // unit) means a learner who accumulates rows under BOTH keys can no longer be
+  // migrated by a plain UPDATE.
+  courseKey: (level) => `ehel-intensive-eng-l${String(level).padStart(2, "0")}`,
   extendSummary: (state, base) => ({ ...base, knownWords: state.knownWords ? [...state.knownWords] : undefined }),
   visibleSections,
   onBeforeRender: () => { route = shellCtx.route; document.body.classList.remove("gc-full"); $("#app").setAttribute("aria-busy", "true"); },

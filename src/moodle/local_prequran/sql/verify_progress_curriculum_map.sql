@@ -12,8 +12,14 @@
 -- Verified statically on 2026-08-06 against the live catalog feed
 -- (https://ehelacademy.b-cdn.net/Ehel%20Primary/catalog.json, 42 courses):
 -- every app coursekey matches an idnumber EXCEPT Intensive English, where the
--- app emits ehel-ien-lNN and the catalog publishes ehel-intensive-eng-lNN.
+-- app emitted ehel-ien-lNN and the catalog publishes ehel-intensive-eng-lNN.
 -- These queries confirm that against the database and catch anything else.
+--
+-- 2026-08-21: the app now emits the canonical ehel-intensive-eng-lNN, so check
+-- 2 below only lists rows written BEFORE that release. Move them with
+-- merge_intensive_english_coursekey.sql — promptly, because the unique key on
+-- (environment, userid, coursekey, unit) means a learner who later accumulates
+-- rows under both keys can no longer be migrated by an UPDATE.
 
 -- 1) Required table availability. A zero here explains an empty result below —
 -- but a zero is NOT proof the table is missing. On the shared cPanel host this

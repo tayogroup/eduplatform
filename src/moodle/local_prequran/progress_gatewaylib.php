@@ -146,12 +146,19 @@ function pqpg_ehel_app_base(string $coursekey): ?array {
         'gp'   => ['global-perspectives', 'stage', 'g'],
         // Intensive English is published by the catalog as ehel-intensive-eng-lNN
         // and that is the canonical form, because this function is looked up by
-        // a Moodle course idnumber and that is what catalog_sync writes. The
-        // app's own courseKey() emits ehel-ien-lNN instead — a known, deliberate
-        // mismatch that is an open data decision, NOT a typo to correct here.
-        // Both are accepted so a launch resolves whichever form reaches it;
-        // resolving the mismatch is a separate call about the catalog.
+        // a Moodle course idnumber and that is what catalog_sync writes.
         'intensive-eng' => ['intensive-english', 'level', 'l'],
+        // The app emitted ehel-ien-lNN until 2026-08-21, which missed both the
+        // curriculum-map join and the Moodle course lookup — a family saw the
+        // raw key with an inflated percent, and push_gradebook() soft-skipped
+        // every score. shell/subjects/intensive-english.js now emits the
+        // canonical form above, and sql/merge_intensive_english_coursekey.sql
+        // moves the rows written before that.
+        //
+        // This alias STAYS. It is what resolves a launch URL minted before the
+        // fix, or one from a browser still holding the old app bundle, and both
+        // outlive the release. It costs one array entry; dropping it turns an
+        // old link into a course that opens on its default level.
         'ien'  => ['intensive-english', 'level', 'l'],
     ];
     if (!preg_match('/^ehel-([a-z-]+)-([gl])(\d{2})$/', $coursekey, $m)) {

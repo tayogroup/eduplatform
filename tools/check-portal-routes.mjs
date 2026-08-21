@@ -36,10 +36,11 @@ const LAUNCH = path.join(ROOT, "src", "moodle", "local_prequran", "portal_launch
 // from src/portal/. Each needs a reason, and an exemption that STOPS firing is
 // itself a failure — otherwise the list rots into a permanent amnesty. Same rule
 // as check-english-ebooks.mjs.
-const MISSING_FILE_EXEMPT = {
-  "dashboard-19.html":
-    "Live on the CDN with no source in the repo — one of 18 dashboard-N.html design variants uploaded during the 2026-07 portal build and never committed. portal_launch.php routes report=dashboard at it, so it is reachable; nothing can edit it. Delete this exemption when a source lands, or repoint the allowlist at dashboard.html.",
-};
+// Empty, and that is the goal state. It held one entry for the length of a
+// single session: dashboard-19.html, a page live on the CDN with no source in
+// the repo that report=dashboard routed at. Repointing the route at
+// dashboard.html and deleting the orphans retired it.
+const MISSING_FILE_EXEMPT = {};
 
 const argv = process.argv.slice(2);
 const WITH_CDN = argv.includes("--cdn");
@@ -91,15 +92,32 @@ console.log(`A. linked ids missing from the allowlist : ${dead.length === 0 ? "n
 // --- B: every allowlist entry has a page file ------------------------------
 const missing = [];
 const staleExemptions = [];
+// An exemption earns its place only while it is actually SUPPRESSING something:
+// some allowlist entry points at the file AND the file is absent. Tracking which
+// ones got used is what makes "an exemption that stops firing fails" true.
+//
+// The first version only checked the file-now-exists case, and missed the other
+// way an exemption dies: repointing the allowlist away from the file means no
+// entry examines it, so the exemption is never consulted, never fires and never
+// complains. That happened immediately — on the commit that repointed
+// report=dashboard away from dashboard-19.html — and the gate went green with a
+// dead exemption still in it. Found by using it, not by writing it.
+const usedExemptions = new Set();
 for (const [id, entry] of allow) {
   const exists = fs.existsSync(path.join(PORTAL_DIR, entry.file));
   const exempt = Object.prototype.hasOwnProperty.call(MISSING_FILE_EXEMPT, entry.file);
   if (!exists && !exempt) missing.push(`${id} -> ${entry.file} (no such file in src/portal/)`);
-  if (exists && exempt) staleExemptions.push(entry.file);
+  if (!exists && exempt) usedExemptions.add(entry.file);
+  if (exists && exempt) staleExemptions.push(`${entry.file} — the file exists now`);
+}
+for (const f of Object.keys(MISSING_FILE_EXEMPT)) {
+  if (!usedExemptions.has(f) && !staleExemptions.some((s) => s.startsWith(f))) {
+    staleExemptions.push(`${f} — no allowlist entry points at it any more`);
+  }
 }
 for (const m of missing) note(fail, `allowlist entry ${m}`);
 for (const f of staleExemptions) {
-  note(fail, `MISSING_FILE_EXEMPT still lists ${f}, but that file now exists — delete the exemption.`);
+  note(fail, `MISSING_FILE_EXEMPT still lists ${f}. Delete the exemption — a list that cannot expire is an amnesty.`);
 }
 console.log(`B. allowlist entries with no page file  : ${missing.length === 0 ? "none ✓" : missing.length + " ✗"}${Object.keys(MISSING_FILE_EXEMPT).length ? `  (${Object.keys(MISSING_FILE_EXEMPT).length} exempt)` : ""}`);
 

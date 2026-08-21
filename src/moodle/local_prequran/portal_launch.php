@@ -24,7 +24,14 @@ $reports = [
     // report id => [access callback, page filename]
     'live-reports' => ['pqh_can_manage_academy_operations', 'live-reports.html'],
     'managed-reports' => ['pqpl_any_authenticated', 'managed-reports.html'],
-    'dashboard' => ['pqpl_any_authenticated', 'dashboard-19.html'],
+    // dashboard.html, not dashboard-19.html. The two were byte-identical when
+    // this was repointed on 2026-08-21 — dashboard-19 was the last of eighteen
+    // numbered iterations uploaded during the 2026-07 portal build, none of
+    // which was ever committed. So this route opened a live page that nothing
+    // in the repo could edit, while dashboard.html, the file everyone edits,
+    // sat beside it a month stale. The orphans are deleted; dashboard.html is
+    // the only dashboard now.
+    'dashboard' => ['pqpl_any_authenticated', 'dashboard.html'],
     'intake-requests' => ['pqh_can_manage_academy_operations', 'intake-requests.html'],
     'workspace-reports' => ['pqpl_any_authenticated', 'workspace-reports.html'],
     'live-schedule' => ['pqpl_any_authenticated', 'live-schedule.html'],

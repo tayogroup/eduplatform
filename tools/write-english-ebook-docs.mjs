@@ -81,11 +81,35 @@ const NOTES = {
     themes: "starting somewhere new, making the first friend of the year",
     cameos: "Miss Twiga, Kiki, the little elephant and the ostrich from the Grade 1 books.",
   },
+  "the-word-hunt": {
+    series: "Zuri", book: "1b", term: "Term 1", unit: "Unit 1: Welcome and Calendar",
+    vocabulary: "book, tablet, chart, picture, word, red, blue, green, yellow, pink, one to twelve, spell",
+    themes: "English is not only in the lesson; noticing is a skill you can practise",
+    cameos: "Miss Twiga sets the hunt; Kiki finds the last two; the shopkeeper hen at her stall.",
+  },
+  "this-is-my-partner": {
+    series: "Zuri", book: "1c", term: "Term 1", unit: "Unit 1: Welcome and Calendar",
+    vocabulary: "name, spell, partner, friend, like, likes, hello, goodbye, the days of the week, the months of the year, first, second, third",
+    themes: "listening well enough to speak for somebody else",
+    cameos: "Miss Twiga sets the task; the little elephant, the ostrich, a goat and a hen make up the class.",
+  },
   "who-helps-our-street": {
     series: "Zuri", book: 2, term: "Term 1", unit: "Unit 2: Good Neighbours and Jobs",
     vocabulary: "neighbour, bus driver, window cleaner, police officer, firefighter, helmet, boots, gloves, doctor, nurse, teacher, farmer, shopkeeper, reporter, helping, teaching, rescuing, growing, driving",
     themes: "a neighbourhood is the people in it; wanting to help in your turn",
     cameos: "Duku the donkey as the farmer, Koko the hen as the shopkeeper, Miss Twiga teaching.",
+  },
+  "the-day-the-fire-bell-rang": {
+    series: "Zuri", book: "2b", term: "Term 1", unit: "Unit 2: Good Neighbours and Jobs",
+    vocabulary: "firefighter, helmet, boots, gloves, ladder, hose, equipment, rescuing, heavy, safe",
+    themes: "equipment is not a costume; wanting the job in your turn",
+    cameos: "the window cleaner monkey up the ladder; the shopkeeper hen; Miss Twiga's follow-up lesson.",
+  },
+  "zuri-asks-the-questions": {
+    series: "Zuri", book: "2c", term: "Term 1", unit: "Unit 2: Good Neighbours and Jobs",
+    vocabulary: "reporter, interview, question, answer, driving, cleaning, selling, growing, helping, teaching, rescuing",
+    themes: "a question is a tool; a job is what somebody is doing right now",
+    cameos: "every helper from Who Helps Our Street? answers in their own words - Duku the donkey farming, Koko the hen selling.",
   },
   "move-like-me": {
     series: "Zuri", book: 3, term: "Term 1", unit: "Unit 3: Ready, Steady, Go!",
@@ -93,11 +117,35 @@ const NOTES = {
     themes: "moving every day, eating well, sleeping well",
     cameos: "Musa the zebra running the field; the little elephant and the ostrich join in.",
   },
+  "sports-day-at-the-tree-school": {
+    series: "Zuri", book: "3b", term: "Term 1", unit: "Unit 3: Ready, Steady, Go!",
+    vocabulary: "run, hop, jump, throw, clap, water, fruit, energy, healthy, strong, fast, last",
+    themes: "finishing is the achievement; fast is a separate thing from strong",
+    cameos: "Musa the zebra and the ostrich race; the little elephant throws; Miss Twiga starts and closes the day. Zuri comes LAST - the ending is deliberate.",
+  },
+  "miss-twiga-says": {
+    series: "Zuri", book: "3c", term: "Term 1", unit: "Unit 3: Ready, Steady, Go!",
+    vocabulary: "stand, sit, touch, clap, wiggle, nod, turn, reach, head, hands, fingers",
+    themes: "an instruction is heard, then done; giving one is harder than following one",
+    cameos: "Miss Twiga leads and then hands the front of the class to Zuri; Kiki is the one still reaching.",
+  },
   "zuri-and-her-shadow": {
     series: "Zuri", book: 4, term: "Term 2", unit: "Unit 4: The Big Sky",
     vocabulary: "shadow, light, sun, block, sky, morning, midday, evening, sunrise, sunset, moon, star, cloud, day, night, long, short, high, low, bright, dark, grey, cloudy, sunny",
     themes: "noticing something ordinary and asking why; a whole day and night",
     cameos: "Miss Twiga explains the light; Zuri's mama at the burrow.",
+  },
+  "what-is-the-weather-today": {
+    series: "Zuri", book: "4b", term: "Term 2", unit: "Unit 4: The Big Sky",
+    vocabulary: "weather, sunny, cloudy, rainy, windy, hot, cold, cloud, rain, rainbow, star, chart",
+    themes: "weather changes and that is normal; a chart turns a week into something you can read",
+    cameos: "Miss Twiga names the words; Kiki asks the last question.",
+  },
+  "where-does-the-sun-go": {
+    series: "Zuri", book: "4c", term: "Term 2", unit: "Unit 4: The Big Sky",
+    vocabulary: "sunrise, morning, midday, evening, sunset, night, moon, star, shadow, long, short, high, low, turn",
+    themes: "the answer is not where the sun goes but what WE do; day and night as one motion",
+    cameos: "Miss Twiga's ball-as-the-Earth explanation is the Unit 4 listening's own.",
   },
   "how-tall-how-long": {
     series: "Zuri", book: 5, term: "Term 2", unit: "Unit 5: Let's Measure",
@@ -105,11 +153,35 @@ const NOTES = {
     themes: "measuring turns 'bigger' into a number you can say",
     cameos: "Miss Twiga is the tall one; the chick from The Little Lost Chick is the small one.",
   },
+  "the-shape-hunt": {
+    series: "Zuri", book: "5b", term: "Term 2", unit: "Unit 5: Let's Measure",
+    vocabulary: "circle, square, triangle, rectangle, heart, shape, pattern, next, roof, window, door, wheel",
+    themes: "a shape is a way of looking, not a thing on a worksheet",
+    cameos: "Miss Twiga starts the hunt; Kiki sets the harder pattern and gets the rectangle wrong on purpose.",
+  },
+  "ten-twenty-one-hundred": {
+    series: "Zuri", book: "5c", term: "Term 2", unit: "Unit 5: Let's Measure",
+    vocabulary: "ten to one hundred, count, big, small, tall, short, heavy, light, long, wide, narrow, metre",
+    themes: "counting in tens is a shortcut you can prove; opposites come in pairs",
+    cameos: "the little elephant and the chick are the big and the small; Miss Twiga is the tall one, as she is in How Tall? How Long?",
+  },
   "the-six-leg-club": {
     series: "Zuri", book: 6, term: "Term 2", unit: "Unit 6: All About Bugs",
     vocabulary: "butterfly, cricket, ant, bee, spider, worm, insect, legs, wings, antennae, anthill, web, on, under, in, between, above, in front of, fly, jump, crawl, spin, chirp, collect",
     themes: "looking closely; a rule that decides what counts as an insect",
     cameos: "Kiki names the rule; Miss Twiga rules the spider out of the club.",
+  },
+  "where-is-the-cricket": {
+    series: "Zuri", book: "6b", term: "Term 2", unit: "Unit 6: All About Bugs",
+    vocabulary: "on, under, in, between, above, in front of, behind, cricket, ant, butterfly, bee, worm, spider, chirp, listen",
+    themes: "a search is a list of places; watching beats catching",
+    cameos: "the whole Six-Leg Club cast returns as wrong answers, one per position word. Kiki is there but Zuri finds it alone.",
+  },
+  "the-ants-and-the-big-crumb": {
+    series: "Zuri", book: "6c", term: "Term 2", unit: "Unit 6: All About Bugs",
+    vocabulary: "crawl, carry, push, lift, collect, ant, anthill, crumb, heavy, together, over, under, into",
+    themes: "one is not enough and ten is; going for help is not giving up",
+    cameos: "the anthill and the marching line are the Six-Leg Club's own; the crumb is Zuri's breakfast.",
   },
   "one-small-seed": {
     series: "Zuri", book: 7, term: "Term 3", unit: "Unit 7: The World Around Us",
@@ -117,11 +189,35 @@ const NOTES = {
     themes: "patience; looking after a place you share",
     cameos: "Miss Twiga hands out the seeds; Zuri's mama explains the roots.",
   },
+  "the-stream-clean-up": {
+    series: "Zuri", book: "7b", term: "Term 3", unit: "Unit 7: The World Around Us",
+    vocabulary: "litter, picking up, recycling, paper, tins, glass, clean, water, bank, thankful, important",
+    themes: "somebody made the mess and we can still be the ones who clear it",
+    cameos: "Miss Twiga asks the two questions; the little elephant carries what nobody else can.",
+  },
+  "thank-you-tree": {
+    series: "Zuri", book: "7c", term: "Term 3", unit: "Unit 7: The World Around Us",
+    vocabulary: "roots, stem, leaves, flower, seeds, tree, air, water, soil, shade, planting, watering, thankful",
+    themes: "an ordinary tree doing five jobs at once; noticing what is already working",
+    cameos: "the acacia is the tree school's own; the nest and the bees return from Every Home Is Different.",
+  },
   "every-home-is-different": {
     series: "Zuri", book: 8, term: "Term 3", unit: "Unit 8: Home, Sweet Home",
     vocabulary: "house, flat, hut, tree house, nest, hive, hole, bedroom, kitchen, bathroom, living room, dining room, bed, table, chair, sofa, sink, rug, window, adobe house, stilt house, cave house, skyscraper",
     themes: "difference without ranking; belonging",
     cameos: "Kiki's tree house in the baobab, Musa on the open savanna.",
+  },
+  "a-room-for-everything": {
+    series: "Zuri", book: "8b", term: "Term 3", unit: "Unit 8: Home, Sweet Home",
+    vocabulary: "kitchen, dining room, living room, bedroom, bathroom, bed, table, chair, sofa, sink, rug, window, shelf",
+    themes: "five rooms and one room are both enough; comparing without ranking",
+    cameos: "Kiki's tree house in the baobab and Zuri's burrow, both from Every Home Is Different.",
+  },
+  "far-away-homes": {
+    series: "Zuri", book: "8c", term: "Term 3", unit: "Unit 8: Home, Sweet Home",
+    vocabulary: "adobe house, stilt house, cave house, skyscraper, nest, hive, burrow, hut, flat, walls, roof, door",
+    themes: "a home is shaped by the place it stands in; the same welcome inside every one",
+    cameos: "Miss Twiga's big book of homes; the nest, the hive and the burrow return from Every Home Is Different.",
   },
   "a-day-in-the-big-city": {
     series: "Zuri", book: 9, term: "Term 3", unit: "Unit 9: Let's Explore the City!",
@@ -129,11 +225,35 @@ const NOTES = {
     themes: "a big place is findable if you can read the map",
     cameos: "Lulu the swallow over the water, closing the journey she began in Grade 1.",
   },
+  "ten-oclock-at-the-aquarium": {
+    series: "Zuri", book: "9b", term: "Term 3", unit: "Unit 9: Let's Explore the City!",
+    vocabulary: "aquarium, schedule, o'clock, octopus, penguin, turtle, shark, fish, clever, fast, slow, huge, scary, beautiful",
+    themes: "a timetable is a promise you can read; standing next to a frightened friend",
+    cameos: "the aquarium is the Unit 9 reading's own. Kiki is the one who is frightened - and it is not treated as funny.",
+  },
+  "which-way-to-the-library": {
+    series: "Zuri", book: "9c", term: "Term 3", unit: "Unit 9: Let's Explore the City!",
+    vocabulary: "map, directions, straight ahead, left, right, cross, library, market, shopping centre, clock tower, traffic",
+    themes: "trusting the map over the feeling; a big place is findable",
+    cameos: "the zebra crossing is the Unit 9 poem's own; the library closes the journey A Day in the Big City started.",
+  },
   "zuris-book-of-the-year": {
     series: "Zuri", book: 10, term: "Term 3", unit: "Unit 10: My English World (capstone)",
     vocabulary: "one page for each of Units 1-9: name, neighbour, head, shadow, ten, butterfly, planting, house, library",
     themes: "gathering a year up; looking forward to the next one",
     cameos: "the whole cast — Musa, Kiki, Duku, Lulu, Miss Twiga, the elephant and the ostrich.",
+  },
+  "zuri-makes-a-plan": {
+    series: "Zuri", book: "10b", term: "Term 3", unit: "Unit 10: My English World (capstone)",
+    vocabulary: "plan, choose, collect, draw, write, check, page, step, first, next, last, mistake",
+    themes: "the plan is the work; checking somebody else's page is easier than checking your own",
+    cameos: "the project brief is the Unit 10 reading's own; Kiki is the second pair of eyes.",
+  },
+  "the-day-of-the-showcase": {
+    series: "Zuri", book: "10c", term: "Term 3", unit: "Unit 10: My English World (capstone)",
+    vocabulary: "showcase, present, page, easel, family, clap, card, name, spell, goodbye, hello",
+    themes: "doing it while your hands shake; a year said out loud to somebody else",
+    cameos: "Showcase Day is the Unit 10 listening's own; Musa, Duku, Lulu, Miss Twiga and Zuri's mama all come.",
   },
   // ---- Grade 3: the Amal series. The cast is the course's own, so these notes
   // name the unit reading each book leans on, not just the theme.

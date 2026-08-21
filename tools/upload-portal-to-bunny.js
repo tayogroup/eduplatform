@@ -127,6 +127,21 @@ async function put(page, buf, key) {
     return;
   }
 
+  // Gate BEFORE the PUT, not after. A `portal:` target that is not in
+  // portal_launch.php's allowlist does not 404 — the launcher falls through to
+  // its default and the user silently lands on a different page. Once that is
+  // on the CDN the only symptom is somebody saying "that button goes to the
+  // wrong place", so the moment to catch it is here.
+  if (!argv.includes("--skip-route-check")) {
+    const { spawnSync } = require("child_process");
+    console.log("\nchecking portal: routes resolve…");
+    const gate = spawnSync(process.execPath, [path.join(__dirname, "check-portal-routes.mjs")], { stdio: "inherit" });
+    if (gate.status !== 0) {
+      console.error("\n✗ route check failed — nothing uploaded. Fix the links, or pass --skip-route-check if you know why.");
+      process.exit(1);
+    }
+  }
+
   const key = bunnyKey();
   console.log(`\nuploading ${queue.length} page(s)…`);
   for (const { page, local } of queue) {

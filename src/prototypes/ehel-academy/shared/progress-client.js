@@ -71,6 +71,15 @@ function applyEvent(state, ev) {
       if (ev.resume !== undefined) unit.resume = ev.resume;
       if (typeof ev.xp === "number") unit.xp = ev.xp;
       if (Array.isArray(ev.knownWords)) unit.knownWords = ev.knownWords;
+      // Written-answer counts, {section: {answered, total}}. Global
+      // Perspectives is the only sender: its 315 questions are all self-marked
+      // text, so it has no score to report and sends how much was WRITTEN
+      // instead. Deliberately not a score and never a pass flag — see
+      // attemptedCounts() in shell/subjects/global-perspectives.js.
+      //
+      // Last-write-wins on the whole object, like xp and knownWords, because
+      // the sender always reports every written section it has.
+      if (ev.attempted && typeof ev.attempted === "object") unit.attempted = ev.attempted;
       break;
     case "draft.saved":
       unit.drafts = unit.drafts || {};

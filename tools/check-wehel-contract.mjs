@@ -324,6 +324,13 @@ if (phpCap !== UNIT_JSON_LIMIT || devCap !== UNIT_JSON_LIMIT) {
   if (!/weedh/.test(somaliBlock) || !/jumlad/.test(somaliBlock) || !/weedhaada/.test(somaliBlock)) {
     fail("The Somali word-choice rule is gone from the language block", "owner correction: sentence = weedh (never jumlad), your own sentence = weedhaada");
   }
+  // …and the languages never mix inside one sentence — the first version of
+  // the rule made the model write "use it in weedhaada — your own sentence"
+  // INSIDE English prose. The block must say Somali words never go inside
+  // English, and where Somali is allowed at all.
+  if (!/never go inside English/i.test(somaliBlock) || !/Never mix the two languages/i.test(somaliBlock)) {
+    fail("The no-mixing rule is gone from the Somali block", "without it the word list reads as licence to drop Somali words into English sentences");
+  }
   // Erayada af-Soomaali: the one sanctioned whole-reply Somali — the chip's
   // mode must exist and must say the vocabulary-only rule resumes after it.
   if (!hints["somali-translate"] || !/resumes/i.test(String(hints["somali-translate"]))) {

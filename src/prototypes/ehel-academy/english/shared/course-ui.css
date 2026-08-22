@@ -980,6 +980,7 @@ body.ebook-watching .course-ebook-illustration img, body.ebook-watching svg.cour
 
 /* The handwriting animation. Stroke geometry lives in shell/subjects/cursive-strokes.js
    and the SVG is built in english.js; only presentation is here. */
+.hw-search { margin-top: 14px; max-width: 320px; }
 .hw-words { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
 .hw-word { padding: 7px 13px; border: 1px solid var(--line); border-radius: 999px; background: var(--paper); color: var(--ink); cursor: pointer; font-size: 15px; }
 .hw-word:hover { border-color: var(--teal); }
@@ -988,7 +989,14 @@ body.ebook-watching .course-ebook-illustration img, body.ebook-watching svg.cour
 .hw-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
 .hw-head h2 { margin: 0; }
 .hw-actions { display: flex; gap: 8px; }
-.hw-svg { display: block; width: 100%; height: auto; margin: 14px 0 4px; overflow: visible; }
+/* Bounded on BOTH axes, not stretched to the panel. Stretching to width alone
+   made the model size depend on how long the word happens to be: "day" rendered
+   827x725 and "interviewer" 827x238, so the same letter was three times bigger
+   in one word than another — the opposite of what a handwriting model should do.
+   The cap on height holds short words to a sane size; max-width still keeps long
+   ones whole rather than scrolling. */
+.hw-svg { display: block; width: auto; max-width: 100%; height: auto; max-height: 280px;
+          margin: 14px auto 4px; overflow: visible; }
 .hw-rule { stroke: #cfdbe4; stroke-width: 1.5; }
 .hw-dash { stroke-dasharray: 7 7; }
 .hw-base { stroke: var(--ink); stroke-width: 2; }

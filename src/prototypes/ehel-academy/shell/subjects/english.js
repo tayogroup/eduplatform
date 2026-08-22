@@ -9583,17 +9583,22 @@ function printCursiveWorksheet(chosenGroups, size, widths) {
 // learner where the ink ends up and nothing about where to start or which way to
 // go, which is exactly what they get wrong.
 //
-// Grades 1-2 only. The printable worksheet runs to Grade 4; this goes to 2,
-// because it covers the "Words from our stories" glossary — 283 words at Grade 1
-// and 653 at Grade 2 — and those are the words a learner meets in a reading
-// without ever being taught to write them.
+// Grades 1-4, the same line the printable worksheet draws. It covers the "Words
+// from our stories" glossary — 283 / 653 / 727 / 847 distinct words by grade —
+// which are the words a learner meets in a reading without ever being taught to
+// write them, and that is as true at Grade 4 as at Grade 1.
+//
+// Grades 3-4 needed no new letterforms: their glossary uses the same a-z and the
+// apostrophe, checked across all 1,574 of their distinct words. It is the word
+// LISTS that grow — one Grade 3 unit carries 183 — which is why the list is
+// searchable from here up rather than a flat run of chips.
 //
 // The letterforms are NOT the printed font. A glyph is a filled contour, so
 // stroking it traces the letter's edge — up one side and back down the other,
 // with the dot of an i as a separate ring — and no centreline can be recovered
 // from it. cursive-strokes.js authors the pen path instead; see its header.
 
-const HANDWRITING_MAX_GRADE = 2;
+const HANDWRITING_MAX_GRADE = 4;
 
 // The glossary group, by the same exact title the worksheet uses. Both read the
 // same constant so a rename cannot leave one of them pointing at nothing.
@@ -9731,7 +9736,8 @@ function renderHandwriting() {
       <section class="panel">
         <h2>${escapeHtml(title || "Words from our stories")}</h2>
         <p>${writable.length} word${writable.length === 1 ? "" : "s"} from this unit's stories. Tap one to see it written.</p>
-        <div class="hw-words">${writable.map((word) => `<button class="hw-word${word === active ? " active" : ""}" data-hw="${escapeHtml(word)}" type="button">${escapeHtml(word)}</button>`).join("")}</div>
+        <label class="search-box hw-search">${icon("search")}<input id="hw-filter" type="search" placeholder="Find a word" aria-label="Find a word to write" aria-controls="hw-words"></label>
+        <div class="hw-words" id="hw-words"></div>
         ${skipped ? `<p class="hw-note">${skipped} word${skipped === 1 ? " is" : "s are"} not shown — they use a letter this animation cannot write yet.</p>` : ""}
       </section>
       <section class="panel" id="hw-stage"></section>
@@ -9770,11 +9776,25 @@ function renderHandwriting() {
     play();
   };
 
-  $$("[data-hw]").forEach((button) => button.addEventListener("click", () => {
+  // The chips are redrawn on every keystroke, so the click handler is delegated
+  // rather than rebound — rebinding per chip leaks a listener per keystroke on a
+  // 183-word Grade 3 list, and the handler would be lost on the next filter.
+  const drawWords = (query = "") => {
+    const needle = query.trim().toLowerCase();
+    const shown = needle ? writable.filter((word) => word.toLowerCase().includes(needle)) : writable;
+    $("#hw-words").innerHTML = shown.length
+      ? shown.map((word) => `<button class="hw-word${word === active ? " active" : ""}" data-hw="${escapeHtml(word)}" type="button">${escapeHtml(word)}</button>`).join("")
+      : `<p class="hw-note">No word here matches “${escapeHtml(query.trim())}”.</p>`;
+  };
+  $("#hw-words").addEventListener("click", (event) => {
+    const button = event.target.closest("[data-hw]");
+    if (!button) return;
     active = button.dataset.hw;
-    $$("[data-hw]").forEach((other) => other.classList.toggle("active", other === button));
+    $$("#hw-words [data-hw]").forEach((other) => other.classList.toggle("active", other === button));
     drawStage();
-  }));
+  });
+  $("#hw-filter").addEventListener("input", (event) => drawWords(event.target.value));
+  drawWords();
   drawStage();
   icons();
 }

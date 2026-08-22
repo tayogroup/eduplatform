@@ -611,6 +611,79 @@ export const WORD_PICTURES = {
   millimetres: "📏", writer: "✍🏾", signature: "✍🏾",
   invitation: "✉️", thumbs: "👍🏾", locker: "🔒", disaster: "🌪️",
   quotation: "🗨️", sandal: "👡",
+
+  // === Intensive English ====================================================
+  // A different course and a different reader: CEFR A1-B1, and its manifest
+  // says "adults and older teenagers of any first language". Pictures are not a
+  // concession to age here — intensive-english/shared/course-ui.css says the
+  // Grade 1 design was chosen deliberately as "the right shape for adult
+  // beginners with low print literacy", and a picture is worth most to exactly
+  // that reader.
+  //
+  // Level 1 (A1-A2) is the richest seam in the whole file: it teaches travel,
+  // work, shopping, health and directions as concrete everyday nouns, so a
+  // fire extinguisher, a receipt, a boarding gate and a zebra crossing all
+  // earn a picture. Level 2 (B1) goes the way Grade 8 does — manufacture,
+  // compliance, proportion, rapport — and most of it stays bare.
+  //
+  // Nothing here is level-specific except where a sense collides; those live in
+  // GRADE_WORD_PICTURES under "ien1"/"ien2" rather than under a number, so
+  // English's grade senses can never be applied to a level by accident.
+
+  // --- travel and getting about --------------------------------------------
+  coach: "🚌", taxi: "🚕", route: "🗺️", platform: "🚉", timetable: "🕐",
+  departure: "🛫", ticket: "🎫", fare: "💰", luggage: "🧳", suitcase: "🧳",
+  trolley: "🛒", delay: "⏳", journey: "🧳", crossing: "🚸",
+  "traffic lights": "🚦", "post office": "📮", "car park": "🅿️",
+  follow: "👣", door: "🚪", entry: "🚪", key: "🔑",
+
+  // --- work and the paperwork around it ------------------------------------
+  job: "💼", employer: "🧑🏾‍💼", team: "👥", assemble: "👥", repair: "🔧",
+  serve: "🛎️", supervise: "👀", salary: "💰", overtime: "⏰",
+  qualification: "🎓", confident: "💪🏾", postcode: "📮", deadline: "⏰",
+  attach: "📎", department: "🏢", submit: "📤", progress: "📈",
+  memorise: "🧠", homework: "📝", paper: "📄", notebook: "📓", note: "🗒️",
+  form: "📋", letter: "✉️", surname: "📛", delete: "🗑️", sign: "🪧",
+  invoice: "🧾", portfolio: "💼", technician: "🔧", electrician: "⚡",
+
+  // --- safety, health and the body -----------------------------------------
+  warning: "⚠️", safe: "🛡️", forbidden: "🚫", extinguisher: "🧯",
+  leak: "💧", emergency: "🚨", tooth: "🦷", hurt: "🤕", cough: "🤧",
+  symptom: "🤒", dose: "💊", appointment: "📅", surgery: "🏥", rest: "😴",
+  coat: "🧥",
+
+  // --- shopping, money and food --------------------------------------------
+  price: "🏷️", pay: "💰", card: "💳", cash: "💵", change: "🪙",
+  // NOT bank: the money sense is Intensive English's alone — English Grade 5
+  // teaches "the raised land along the side of a river", so 🏦 lives in the
+  // ien1 override rather than here.
+  receipt: "🧾", buy: "🛒", kilo: "⚖️", bread: "🍞", vegetables: "🥕",
+  tin: "🥫", add: "➕", mix: "🥣", heat: "🔥", pan: "🍳", plate: "🍽️",
+  spoon: "🥄", lunch: "🍱", dinner: "🍽️", exchange: "🔄",
+
+  // --- the words a beginner course needs early ------------------------------
+  sit: "🪑", live: "🏠", born: "👶🏾", old: "🧓🏾", young: "🧒🏾",
+  please: "🙏🏾", apologise: "🙇🏾", ask: "❓", question: "❓", answer: "💬",
+  speak: "🗣️", say: "🗣️", give: "🤲🏾", find: "🔍", think: "💭",
+  again: "🔁", start: "▶️", finish: "🏁", break: "⏸️", ready: "✅",
+  valid: "✅", accept: "👍🏾", invite: "✉️", join: "🤝", party: "🎉",
+  diary: "📔", tonight: "🌙", midnight: "🕛", luckily: "🍀",
+  quickly: "💨", quietly: "🤫", loudly: "🔊", boring: "😐",
+  wind: "🌬️", snow: "❄️", hill: "⛰️", desert: "🏜️", island: "🏝️",
+  silence: "🤫", darkness: "🌑", slam: "🚪",
+
+  // --- Level 2 (B1), what little of it can be pictured ----------------------
+  // The rest of this level is deduce, infer, mitigate, exonerate, plausible,
+  // rapport, proportion — B1 is where English vocabulary stops being things.
+  glance: "👀", oversee: "👀", pause: "⏸️", gasp: "😲", notification: "🔔",
+  archive: "🗄️", emissions: "💨", pollutant: "☣️", contamination: "☣️",
+  habitat: "🌿", ecosystem: "🌿", trend: "📈", indicator: "📊",
+  analyst: "📊", batch: "📦", compensation: "💰", reimburse: "💰",
+  outlet: "📰", byline: "✍🏾", readership: "👥", anonymous: "🕵🏾",
+  consultant: "🧑🏾‍💼", referee: "🧑🏾‍💼", negotiate: "🤝", recommend: "👍🏾",
+  fail: "❌", correspondence: "✉️", enquire: "❓", warranty: "📜",
+  clause: "📜",
+  // bank is deliberately absent — see the note above.
 };
 
 // Where one lemma is two different words.
@@ -705,22 +778,62 @@ export const GRADE_WORD_PICTURES = {
     like: "", kind: "", play: "",
     back: "", hard: "", left: "", lift: "", may: "", round: "", stand: "",
     right: "✅", stop: "🚏",
+    // added with the Intensive English pass, see the note below
+    entry: "", serve: "",
   },
   6: {
     like: "", kind: "", square: "", ruler: "👑", hunt: "🏹", play: "⚽",
     back: "", hard: "", left: "", may: "", right: "", stand: "", turn: "",
     spin: "🧵",
+    plate: "", platform: "", sit: "",
   },
   7: {
     like: "", point: "", square: "", roll: "", play: "⚽",
     hard: "", left: "", lift: "", may: "", right: "", round: "", well: "",
-    stop: "🚏",
+    stop: "🚏", sign: "",
   },
   8: {
     like: "", kind: "", point: "", book: "", draw: "", drawn: "", play: "⚽",
     hard: "", left: "", may: "", round: "", turn: "", well: "", little: "",
     travel: "", right: "✅",
+    // Added with the Intensive English pass: those words entered the shared map
+    // for a beginner course and English teaches four of them differently.
+    platform: "", serve: "",
   },
+};
+
+// Intensive English keys off "ien1"/"ien2" rather than a number, so English's
+// grade senses can never be applied to a level by accident — level 1 is not
+// Grade 1 and nothing about their vocabulary lines up.
+//
+// This half of the map is what stops a shared file becoming a shared bug. The
+// Intensive English pass put ~129 everyday words into WORD_PICTURES, and 32 of
+// them are ALSO taught in English — a live course. Six were taught with a
+// different sense, so without the English-side entries above (plate, platform,
+// entry, sit, sign, serve) this pass would have shipped a wrong picture into a
+// course it was not even about: a dinner plate beside Grade 6's sheet of metal,
+// a railway platform beside Grade 8's broadcast platform.
+//
+// So: when adding to the shared map for one subject, audit the OTHER direction
+// too. The tooling for it is a meaning comparison, the same one that finds the
+// per-grade collisions.
+GRADE_WORD_PICTURES.ien1 = {
+  bank: "🏦",          // the money sense, English's is a riverbank
+  flat: "🏢",          // a home, as at English Grade 2
+  tablet: "💊",        // the medicine, not the screen
+  patient: "🤒",       // the person, not the virtue
+  offer: "🏷️",         // a price offer, not offering something kindly
+  exercise: "📝",      // a practice task, not physical exercise
+  catch: "",           // "catch a bus" — nothing thrown
+  round: "",           // "round the corner" — not the shape
+  serious: "",         // "serious enough to worry about" — not the manner
+};
+GRADE_WORD_PICTURES.ien2 = {
+  platform: "💻",      // a publishing platform, not the railway one
+  circular: "",        // circular reasoning, not the shape
+  maintain: "",        // to insist, not to keep in repair
+  add: "",             // to say something more, not arithmetic
+  voice: "",           // an author's voice, not the sound
 };
 
 /**

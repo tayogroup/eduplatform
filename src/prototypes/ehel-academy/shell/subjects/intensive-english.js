@@ -22,6 +22,7 @@ import { deckIcon, mountTheatre } from "../deck.js?v=deck-1";
 import { createCourseApp } from "../course-app.js?v=t2";
 import { createPlacementUnit, placementCallout, PREREQ_UNIT } from "../placement.js?v=placement-1";
 import { renderStudyPlan, renderUnitStudyPlan } from "../study-plan.js?v=study-plan-2";
+import { wordPicture } from "./word-pictures.js?v=pictures-1";
 import { mountWehelChat, modulesFromSections, outlineFromManifest, unitFetcher } from "../wehel.js?v=wehel-4";
 
 const $ = (selector, root = document) => root.querySelector(selector);
@@ -266,6 +267,18 @@ function renderLecture() {
   shellCtx.bindVoiceControls();
 }
 
+// The picture beside a word, shared with English through word-pictures.js.
+//
+// The key is "ien1"/"ien2", NOT the level number. Passing levelNumber would ask
+// for English GRADE 1's senses — where "light" is a traffic signal and "may" is
+// the month — and nothing about a CEFR level lines up with a school grade. The
+// levels get their own entries for the words this course teaches differently:
+// its "tablet" is medicine, its "patient" is a person, its "bank" holds money.
+//
+// masterWord is preferred over displayWord because the link carries both and the
+// master entry is the lemma the map is keyed on.
+const dictionaryPicture = (item) => (item ? wordPicture(item.masterWord, `ien${levelNumber}`) || wordPicture(item.displayWord, `ien${levelNumber}`) : "");
+
 function renderDictionary() {
   const words = course.dictionaryLinks;
   if (!words.some((word) => word.vocabularyId === activeWordId)) activeWordId = words[0].vocabularyId;
@@ -279,8 +292,13 @@ function renderDictionary() {
     const filtered = words.filter((item) => (group === "all" || item.groupId === group)
       && (!query || `${item.displayWord} ${item.childMeaning}`.toLowerCase().includes(query)));
     $("#dictionary-count").textContent = `${filtered.length} words`;
+    // Decided from the WHOLE list, never from the filtered view: a gutter
+    // computed from `filtered` appears and disappears as the learner types,
+    // shifting every word sideways. Same rule as the English lab.
+    const pictured = words.some(dictionaryPicture);
+    $("#word-list").classList.toggle("pictured", pictured);
     $("#word-list").innerHTML = filtered.length
-      ? filtered.map((item) => `<button class="word-row ${item.vocabularyId === activeWordId ? "active" : ""}" data-word="${escapeHtml(item.vocabularyId)}" type="button"><span><strong>${escapeHtml(item.displayWord)}</strong><small>${escapeHtml(item.groupTitle)}</small></span>${progress.knownWords.includes(item.vocabularyId) ? "<span>LEARNED</span>" : ""}</button>`).join("")
+      ? filtered.map((item) => `<button class="word-row ${item.vocabularyId === activeWordId ? "active" : ""}" data-word="${escapeHtml(item.vocabularyId)}" type="button">${pictured ? `<span class="word-row-picture" aria-hidden="true">${dictionaryPicture(item)}</span>` : ""}<span><strong>${escapeHtml(item.displayWord)}</strong><small>${escapeHtml(item.groupTitle)}</small></span>${progress.knownWords.includes(item.vocabularyId) ? "<span>LEARNED</span>" : ""}</button>`).join("")
       : `<div class="empty">No matching words.</div>`;
     $$("[data-word]").forEach((button) => button.addEventListener("click", () => { activeWordId = button.dataset.word; activeSentence = 0; drawList(); drawWord(); }));
   };
@@ -291,6 +309,7 @@ function renderDictionary() {
     if (activeSentence >= sentences.length) activeSentence = 0;
     $("#word-card").innerHTML = `
       <div class="word-card-head">
+        ${dictionaryPicture(item) ? `<div class="word-card-picture" aria-hidden="true">${dictionaryPicture(item)}</div>` : ""}
         <div><span class="word-type">${escapeHtml(item.partOfSpeech)}</span><h2>${escapeHtml(item.displayWord)}</h2></div>
         <div class="audio-actions">${voiceButton(item.displayWord, `Listen to ${item.displayWord}`)}</div>
       </div>

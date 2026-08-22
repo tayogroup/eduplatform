@@ -72,6 +72,17 @@ async function render(text) {
   return Buffer.concat(parts);
 }
 
+// Deepgram synthesises ~45 seconds of speech per script and answers in one
+// piece, so a render takes tens of seconds; four in flight keeps a subject's
+// run to minutes instead of hours without leaning on the API.
+const CONCURRENCY = 4;
+async function mapLimit(items, limit, fn) {
+  let at = 0;
+  await Promise.all(Array.from({ length: Math.min(limit, items.length) }, async () => {
+    while (at < items.length) { const index = at++; await fn(items[index]); }
+  }));
+}
+
 (async () => {
   let planned = 0, rendered = 0, skipped = 0, chars = 0, failed = 0;
   for (const subject of SUBJECTS) {
@@ -82,6 +93,7 @@ async function render(text) {
     const audioDir = audioDirFor(subject);
     fs.mkdirSync(audioDir, { recursive: true });
     const wanted = new Set();
+    const jobs = [];
     for (const [unitNo, sections] of Object.entries(scripts.units || {})) {
       for (const [sectionId, entry] of Object.entries(sections)) {
         // The hash is over the text the voice will read — so a script whose
@@ -97,17 +109,20 @@ async function render(text) {
         if (fs.existsSync(file) && fs.statSync(file).size > 1024 && !FORCE) { skipped += 1; continue; }
         chars += spoken.length;
         if (DRY || ORPHANS) continue;
-        if (!process.env.DEEPGRAM_API_KEY) { console.error("DEEPGRAM_API_KEY is not set (.env)"); process.exit(2); }
-        try {
-          fs.writeFileSync(file, await render(spoken));
-          rendered += 1;
-          console.log(`  ✓ ${subject} u${unitNo} ${sectionId} → ${hash}.mp3 (${spoken.length} chars)`);
-        } catch (error) {
-          failed += 1;
-          console.error(`  ✗ ${subject} u${unitNo} ${sectionId}: ${error.message}`);
-        }
+        jobs.push({ unitNo, sectionId, spoken, hash, file });
       }
     }
+    if (jobs.length && !process.env.DEEPGRAM_API_KEY) { console.error("DEEPGRAM_API_KEY is not set (.env)"); process.exit(2); }
+    await mapLimit(jobs, CONCURRENCY, async (job) => {
+      try {
+        fs.writeFileSync(job.file, await render(job.spoken));
+        rendered += 1;
+        console.log(`  ✓ ${subject} u${job.unitNo} ${job.sectionId} → ${job.hash}.mp3 (${job.spoken.length} chars)`);
+      } catch (error) {
+        failed += 1;
+        console.error(`  ✗ ${subject} u${job.unitNo} ${job.sectionId}: ${error.message}`);
+      }
+    });
     // Write back any hash the loop corrected.
     fs.writeFileSync(scriptsFile, `${JSON.stringify(scripts, null, 2)}\n`);
     if (ORPHANS) {

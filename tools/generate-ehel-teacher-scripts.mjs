@@ -113,8 +113,14 @@ for (const [subject, def] of Object.entries(SUBJECTS)) {
     if (ONLY_SECTION && item.sectionId !== ONLY_SECTION) continue;
     planned += 1;
     const existing = out.units?.[item.unitNo]?.[item.sectionId];
-    if (existing?.text && !FORCE) { kept += 1; continue; }
-    jobs.push(item);
+    // A stored script is current only if it answered the ask the outline
+    // produces TODAY: each entry records `ask` = hash of its message, so a
+    // changed outline (or a failed regeneration that left the old text in
+    // place) is regenerated exactly where it applies, and nothing else is
+    // paid for twice. An entry without `ask` predates this and is stale.
+    const ask = scriptHash(teachMessageFor(subject, item.sectionId, item.label, item.unit));
+    if (existing?.text && existing.ask === ask && !FORCE) { kept += 1; continue; }
+    jobs.push({ ...item, ask });
   }
   console.log(`${subject}: ${jobs.length} to generate, ${Object.values(out.units || {}).reduce((n, u) => n + Object.keys(u).length, 0)} already stored`);
   if (DRY || !jobs.length) continue;
@@ -131,7 +137,7 @@ for (const [subject, def] of Object.entries(SUBJECTS)) {
       });
       const text = String(reply).trim();
       out.units[job.unitNo] ||= {};
-      out.units[job.unitNo][job.sectionId] = { label: job.label, text, hash: scriptHash(text) };
+      out.units[job.unitNo][job.sectionId] = { label: job.label, text, hash: scriptHash(text), ask: job.ask };
       generated += 1;
       // Write after every script so a killed run loses nothing.
       fs.writeFileSync(outFile, `${JSON.stringify(out, null, 2)}\n`);

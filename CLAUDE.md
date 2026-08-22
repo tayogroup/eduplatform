@@ -998,12 +998,50 @@ git archive HEAD tools package.json src/prototypes/ehel-academy/shell \
   ':(exclude)src/prototypes/ehel-academy/english/media' | tar -x -C <tmpdir>
 ```
 
-then run the deploy from `<tmpdir>`, copying `.env` and the two
+then run the deploy from `<tmpdir>`, copying `.env` and the
 `.bunny-*-manifest.json` caches in so the uploader still skips what is already on
 storage. `git worktree add` is the obvious answer and the wrong one here: a full
 checkout of this repo is 1.4 GB of media, it takes minutes, and when it is killed
 part-way it leaves `tools/` missing and the index reporting tens of thousands of
 files as deleted — which reads as catastrophic damage and is not.
+
+**Copy THREE manifests for an app release, because the upload and the check that
+follows it read different ones.** `deploy-app-version.js` skips what is already
+on storage using `.bunny-appver-manifest.json` alone; the post-deploy tier check
+reads that one **plus** `.bunny-content-manifest.json` and
+`.bunny-upload-manifest.json`. Copy only the uploader's — which is what "the two
+caches" used to read as — and the check has nothing to compare. English v238 and
+v239 both shipped that way; both times the missing one was
+`.bunny-upload-manifest.json`. (`.bunny-app-manifest.json` is a fourth file and
+belongs to the older `upload-app-to-bunny.js` path — copying it does nothing for
+a versioned release, which is a way to believe you have brought the manifests
+along when you have not.)
+
+Until 2026-08-22 that failure was **invisible and looked like success**:
+`check-ehel-deploy-sync.mjs` exits 0 when the tree has no manifests, which is
+correct on its own (a fresh checkout genuinely has deployed nothing), and
+`require-tiers-in-step.js` read that 0 as agreement. So a real production upload
+ended with
+
+```
+No deploy manifests present — nothing has been deployed from this checkout. Skipping.
+✓ app, content and audio agree for everything this deploy touched.
+```
+
+— a tick over a comparison that never ran, printed at the moment an operator is
+most likely to believe it. The tiers were out of step both times.
+
+The check now takes `--after-deploy`, which the wrapper passes: with it a missing
+manifest is **exit 3** and the wrapper says the tiers were NOT checked, which is
+neither agreement nor drift because either would be a guess. Standalone
+behaviour is unchanged. **A release from a temporary tree without all four
+manifests therefore ends non-zero now** — the upload still stands, since this is
+a post-step, but you no longer get to mistake it for a pass. If you see exit 3,
+the answer is to re-run the check from the repo:
+
+```bash
+node tools/check-ehel-deploy-sync.mjs english
+```
 
 **HEAD is a cleaner input, not a safety property.** The recipe above keeps
 somebody else's uncommitted work out of a release. It does NOT make the release

@@ -88,6 +88,47 @@ const speakable = (text) => clean(String(text || "")
   .replace(/[*_`#]+/g, " "));
 const scriptHash = (text) => cyrb53(speakable(text));
 
+// ACTIVITY OUTLINES — what a page actually asks the learner to do, in order,
+// written from the page's own controls (shell/subjects/*.js), so the stored
+// teacher walkthrough names the buttons that are really there and covers
+// every activity: listening, reading, saying, spelling, writing, marking done.
+// Owner decision 2026-08-20: "Teach me the activity" must be COMPLETE — not a
+// framing plus step 1 — starting with Grade 1 Unit 1 Vocabulary as the model.
+// A section with an outline gets the full walkthrough in ONE message; a
+// section without one keeps the shorter opening until its outline is written.
+// `{count}` is replaced with the number of items on the page when known.
+const ACTIVITY_OUTLINES = {
+  english: {
+    dictionary: {
+      items: (unit) => (unit.dictionaryLinks || []).length,
+      itemNoun: "words",
+      activities: [
+        "The word list is on the left: press a word to open its card. You will work through every one of the {count} words, one at a time.",
+        "Hear it and Again: press Hear it to listen to the word, say it out loud yourself, then press Again and say it once more — out loud, not in your head.",
+        "Meaning: read the meaning on the card, press its speaker to hear it read, then say in your own words what the word means.",
+        "In a sentence: read each practice sentence, press Hear sentence to listen to it, and use the arrows to go through every sentence; read one of them out loud yourself.",
+        "Spelling: look at the letters shown on the card, say them one by one, and say the whole word again.",
+        "Write your own sentence: type a sentence with the word in the box (the grey words give you a start), press Check sentence, read what the checker says and fix anything it points out.",
+        "I know this word: when you can say it, know its meaning and have written a sentence, press I know this word — it gets a LEARNED tag in the list.",
+        "Next word: press the next word in the list and do the same steps. The page is finished when every word has a LEARNED tag.",
+      ],
+    },
+  },
+};
+
+// The chip message for one activity. A section with an outline asks for the
+// complete walkthrough in one message — this is the written guide for the
+// whole page, not a live turn — naming every activity in order, with what to
+// press, how to do it well and what is expected, then how the learner knows
+// the page is finished. Without an outline it is TEACH_ME_MESSAGE alone.
+function teachMessageFor(subject, sectionId, label, unit) {
+  const outline = ACTIVITY_OUTLINES[subject]?.[sectionId];
+  if (!outline) return TEACH_ME_MESSAGE;
+  const count = typeof outline.items === "function" ? outline.items(unit) : 0;
+  const lines = outline.activities.map((line, index) => `${index + 1}. ${line.replace(/\{count\}/g, String(count || "the"))}`);
+  return `${TEACH_ME_MESSAGE}\n\nThis is the written guide for the WHOLE "${label}" page, so unlike a live turn, give ALL the steps in this one message — numbered, one short paragraph each, in plain text with a line break between steps. The activities on this page, in order, are:\n${lines.join("\n")}\nCover every one of them: for each, say exactly what to press or do (use the button names as written), how to do it well, and what you expect from me. Then say how I will know the page is finished. Keep every sentence short and in words a Grade 1 child understands, and speak as my teacher, warmly.`;
+}
+
 const dataDirFor = (subject) => path.join(EHEL, subject, "grade-1", "data");
 const scriptsFileFor = (subject) => path.join(dataDirFor(subject), "teacher-scripts.json");
 const audioDirFor = (subject) => path.join(dataDirFor(subject), "teacher-audio");
@@ -114,4 +155,4 @@ function expectedScripts(subject) {
   return { manifest, expected: out };
 }
 
-module.exports = { SUBJECTS, TEACH_ME_MESSAGE, dataDirFor, scriptsFileFor, audioDirFor, expectedScripts, speakable, scriptHash };
+module.exports = { SUBJECTS, TEACH_ME_MESSAGE, ACTIVITY_OUTLINES, teachMessageFor, dataDirFor, scriptsFileFor, audioDirFor, expectedScripts, speakable, scriptHash };

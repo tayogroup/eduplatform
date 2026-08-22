@@ -49,6 +49,7 @@ const DRY = flag("--dry");
 const FORCE = flag("--force");
 const ONLY_SUBJECT = opt("--subject", null);
 const ONLY_UNIT = opt("--unit", null);
+const ONLY_SECTION = opt("--section", null);
 const CONCURRENCY = Number(opt("--concurrency", 3));
 const MODEL = opt("--model", "claude-opus-5");
 
@@ -56,7 +57,7 @@ const MODEL = opt("--model", "claude-opus-5");
 // ONE definition in tools/lib/ehel-teacher-scripts.js, shared with the
 // narrator and the check tool so what is generated, voiced and proved never
 // drift apart.
-const { SUBJECTS, TEACH_ME_MESSAGE, expectedScripts, scriptsFileFor, scriptHash } = require("./lib/ehel-teacher-scripts.js");
+const { SUBJECTS, teachMessageFor, expectedScripts, scriptsFileFor, scriptHash } = require("./lib/ehel-teacher-scripts.js");
 
 // wehel.js is a browser module — shim just enough for a side-effect-free
 // import; unitForTutor is the exact projection the app sends, and
@@ -109,6 +110,7 @@ for (const [subject, def] of Object.entries(SUBJECTS)) {
   const jobs = [];
   for (const item of expected) {
     if (ONLY_UNIT && String(item.unitNo) !== String(ONLY_UNIT)) continue;
+    if (ONLY_SECTION && item.sectionId !== ONLY_SECTION) continue;
     planned += 1;
     const existing = out.units?.[item.unitNo]?.[item.sectionId];
     if (existing?.text && !FORCE) { kept += 1; continue; }
@@ -123,7 +125,9 @@ for (const [subject, def] of Object.entries(SUBJECTS)) {
         subject, subjectLabel: def.label, grade: 1, unitNo: job.unitNo, unitTitle: job.unitTitle,
         courseOutline: outline, unit: unitForTutor(job.unit), teachingLanguage: "english", channel: "text",
         mode: "virtual-teacher", sectionHint: job.label,
-        messages: [{ role: "user", content: TEACH_ME_MESSAGE }],
+        // A section with an activity outline gets the complete walkthrough;
+        // the rest keep the shorter opening until their outlines are written.
+        messages: [{ role: "user", content: teachMessageFor(subject, job.sectionId, job.label, job.unit) }],
       });
       const text = String(reply).trim();
       out.units[job.unitNo] ||= {};

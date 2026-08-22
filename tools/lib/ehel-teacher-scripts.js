@@ -111,6 +111,9 @@ const ACTIVITY_OUTLINES = {
         "Write your own sentence: type a sentence with the word in the box (the grey words give you a start), press Check sentence, read what the checker says and fix anything it points out.",
         "I know this word: when you can say it, know its meaning and have written a sentence, press I know this word — it gets a LEARNED tag in the list.",
         "Next word: press the next word in the list and do the same steps. The page is finished when every word has a LEARNED tag.",
+        // Grade 1 pages show BOTH designs (BOTH_DESIGNS in english.js): the
+        // list-and-card above, and the same words as a slide deck underneath.
+        "The slides at the bottom of the page: under the word list there is a deck of slides with the same words, one word per slide. Start it with the Start button on its first slide, which says Say the words. On each slide press Hear it and Again to listen and say the word, press Meaning to hear the meaning, read the sentences and press Hear sentence, look at the Spelling line, open Write your own sentence to type your sentence and press Check sentence, then press I know this word. Press the arrow on the right to go to the next slide (the dots under the slide show where you are). On the last slide, when every word is marked, press the finish button. You can learn the words either way — the card at the top or the slides at the bottom — the words are the same.",
       ],
     },
   },

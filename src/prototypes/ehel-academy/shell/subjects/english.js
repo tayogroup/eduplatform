@@ -9583,22 +9583,29 @@ function printCursiveWorksheet(chosenGroups, size, widths) {
 // learner where the ink ends up and nothing about where to start or which way to
 // go, which is exactly what they get wrong.
 //
-// Grades 1-4, the same line the printable worksheet draws. It covers the "Words
-// from our stories" glossary — 283 / 653 / 727 / 847 distinct words by grade —
-// which are the words a learner meets in a reading without ever being taught to
-// write them, and that is as true at Grade 4 as at Grade 1.
+// Every grade, 1 to 8. It covers the "Words from our stories" glossary — 283 /
+// 653 / 727 / 847 / 1,023 / 1,270 / 1,398 / 1,905 distinct words by grade — which
+// are the words a learner meets in a reading without ever being taught to write
+// them, and that is as true at Grade 8 as at Grade 1.
 //
-// Grades 3-4 needed no new letterforms: their glossary uses the same a-z and the
-// apostrophe, checked across all 1,574 of their distinct words. It is the word
-// LISTS that grow — one Grade 3 unit carries 183 — which is why the list is
-// searchable from here up rather than a flat run of chips.
+// This is NOT the deck, and going past Grade 4 does not touch the rule that keeps
+// the upper stages' design. It is a standalone reference page like the study
+// plans: outside the BOTH_DESIGNS split entirely, drawing no gc-* node at any
+// grade — asserted in the browser at every one of the eight, not reasoned about.
+//
+// No grade needed a new letterform: all 6,418 distinct words across the eight
+// grades use the same a-z and the apostrophe. The single exception is "POV" at
+// Grade 5 Unit 9, an acronym — see the note beside `skipped`.
+//
+// What grows is the LISTS. Grade 8 Unit 4 carries 392 words against 91 at Grade 2,
+// which is why the list is searchable.
 //
 // The letterforms are NOT the printed font. A glyph is a filled contour, so
 // stroking it traces the letter's edge — up one side and back down the other,
 // with the dot of an i as a separate ring — and no centreline can be recovered
 // from it. cursive-strokes.js authors the pen path instead; see its header.
 
-const HANDWRITING_MAX_GRADE = 4;
+const HANDWRITING_MAX_GRADE = 8;
 
 // The glossary group, by the same exact title the worksheet uses. Both read the
 // same constant so a rename cannot leave one of them pointing at nothing.
@@ -9606,12 +9613,19 @@ function handwritingWords() {
   const groups = worksheetGroups();
   const glossary = groups.find((group) => group.title === GLOSSARY_GROUP_TITLE);
   // Every word the stroke alphabet can actually write. It covers a-z and the
-  // apostrophe, which is all 851 distinct Grade 1-2 glossary words — but a word
-  // it cannot compose must be dropped rather than drawn wrong, and counted so the
-  // page can say so.
+  // apostrophe, which across all eight grades is 6,417 of the 6,418 distinct
+  // glossary words — but a word it cannot compose must be dropped rather than
+  // drawn wrong, and NAMED rather than merely counted.
+  //
+  // The one exception in the whole course is "POV" at Grade 5 Unit 9. It is an
+  // acronym, so it is not a gap in the alphabet waiting to be filled: capitals are
+  // printed rather than joined, and writing POV in joined lowercase would teach
+  // the wrong thing. The page says which word and why, because "1 word is not
+  // shown" invites someone to go looking for a missing letterform.
   const all = (glossary?.words || []);
   const writable = all.filter((word) => cursiveCanWrite(word));
-  return { all, writable, skipped: all.length - writable.length, title: glossary?.title || "" };
+  const skippedWords = all.filter((word) => !cursiveCanWrite(word));
+  return { all, writable, skippedWords, skipped: skippedWords.length, title: glossary?.title || "" };
 }
 
 // One word, drawn as the sequence of strokes the pen makes. Every stroke is its
@@ -9721,7 +9735,7 @@ function handwritingSteps(composed) {
 
 function renderHandwriting() {
   if (gradeNumber > HANDWRITING_MAX_GRADE) return navigate("overview");
-  const { writable, skipped, title } = handwritingWords();
+  const { writable, skipped, skippedWords, title } = handwritingWords();
   let active = writable[0] || null;
   let speed = 1;
   let running = null;
@@ -9738,7 +9752,7 @@ function renderHandwriting() {
         <p>${writable.length} word${writable.length === 1 ? "" : "s"} from this unit's stories. Tap one to see it written.</p>
         <label class="search-box hw-search">${icon("search")}<input id="hw-filter" type="search" placeholder="Find a word" aria-label="Find a word to write" aria-controls="hw-words"></label>
         <div class="hw-words" id="hw-words"></div>
-        ${skipped ? `<p class="hw-note">${skipped} word${skipped === 1 ? " is" : "s are"} not shown — they use a letter this animation cannot write yet.</p>` : ""}
+        ${skipped ? `<p class="hw-note">${skipped === 1 ? "One word is" : `${skipped} words are`} not shown here: ${escapeHtml(skippedWords.join(", "))}. ${skipped === 1 ? "It is written" : "They are written"} in capitals, which are printed rather than joined up.</p>` : ""}
       </section>
       <section class="panel" id="hw-stage"></section>
     </div>`;

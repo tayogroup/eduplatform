@@ -145,7 +145,17 @@ export const CURSIVE_LETTERS = {
 export const CURSIVE_APOSTROPHE = { w: 30, exitY: 187, d: "", say: "Lift the pen and make a comma up high.", marks: [{ d: "M14,20 C16,32 14,42 8,50", say: "Add the apostrophe." }] };
 
 export const cursiveGlyph = (ch) => (ch === "'" || ch === "’" ? CURSIVE_APOSTROPHE : CURSIVE_LETTERS[ch] || null);
-export const cursiveCanWrite = (word) => [...word.toLowerCase()].every((ch) => cursiveGlyph(ch));
+
+// Asks whether the word can be written AS SPELLED, so it must not lower-case
+// first. It used to, which made every word writable — "POV" (Grade 5 Unit 9, the
+// only capitalised word in the whole glossary) came back writable and would have
+// animated as a joined lowercase "pov", teaching the opposite of how an acronym
+// is written. Capitals are printed, not joined, and this alphabet has none; a
+// word carrying one belongs in the caller's skipped list, named.
+export const cursiveCanWrite = (word) => {
+  const chars = [...String(word)];
+  return chars.length > 0 && chars.every((ch) => cursiveGlyph(ch));
+};
 
 // ── composing a word ─────────────────────────────────────────────────────────
 // Letters are placed left to right and a CONNECTOR is drawn from where the pen

@@ -317,6 +317,13 @@ if (phpCap !== UNIT_JSON_LIMIT || devCap !== UNIT_JSON_LIMIT) {
     if (!/never give the answers/i.test(teacherText) || !/quiz|checkpoint|exam/i.test(teacherText)) fail("The virtual teacher no longer protects graded answers", "owner decision: on quizzes, checkpoints and placement exams the teacher explains the approach only");
     if (!/do NOT mark anything complete/.test(teacherText)) fail("The virtual teacher may claim to mark an activity complete", "owner decision: guide to completion, never mark — progress must come from the learner doing the activity on the page");
   }
+  // Somali word choices the owner corrected (2026-08-20): "sentence" is weedh,
+  // never jumlad — the rule must stay in the Somali language block, which is
+  // the one block every Somali-producing reply receives.
+  const somaliBlock = ((prompt.languageSupport || {}).somali || []).join("\n");
+  if (!/weedh/.test(somaliBlock) || !/jumlad/.test(somaliBlock) || !/weedhaada/.test(somaliBlock)) {
+    fail("The Somali word-choice rule is gone from the language block", "owner correction: sentence = weedh (never jumlad), your own sentence = weedhaada");
+  }
   // Erayada af-Soomaali: the one sanctioned whole-reply Somali — the chip's
   // mode must exist and must say the vocabulary-only rule resumes after it.
   if (!hints["somali-translate"] || !/resumes/i.test(String(hints["somali-translate"]))) {

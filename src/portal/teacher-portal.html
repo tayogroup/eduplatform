@@ -46,6 +46,10 @@
   .pill.bad{background:var(--red-bg);color:var(--red)}
   .pill.warn{background:var(--amber-bg);color:var(--amber)}
   .quiz-line{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:5px;font-size:12px}
+  .capstone-stage{margin-top:8px;padding-left:10px;border-left:2px solid var(--line)}
+  .capstone-stage strong{font-size:12px;margin-right:6px}
+  .capstone-stage span{font-size:11px}
+  .capstone-stage p{margin:3px 0 0;font-size:12px;line-height:1.5;white-space:pre-wrap;max-width:62ch}
   a.btn{display:inline-block;border:1px solid var(--line);border-radius:8px;padding:6px 11px;background:var(--sky);color:var(--blue);text-decoration:none;font-weight:800;font-size:12px}
   a.btn:hover{border-color:var(--blue2);color:var(--blue2)}
 </style>
@@ -171,6 +175,36 @@
     });
   }
 
+  // The stage capstone — the authentic assessment Science, Mathematics and
+  // Computing each end a stage with, and the only place a teacher can read what
+  // a learner actually wrote rather than what they scored.
+  //
+  // Collapsed behind a summary, like the class-quiz results: four paragraphs per
+  // learner would bury the roster otherwise. The headline says how much is there
+  // and whether it is finished, so a teacher can decide whether to open it.
+  //
+  // An unfinished capstone is shown, deliberately — it is the one worth reading
+  // first, and until 2026-08-21 none of this text left the learner's device at
+  // all, finished or not.
+  function capstoneCell(s) {
+    const items = s.capstones || [];
+    if (!items.length) return "";
+    return items.map((c) => {
+      const stages = Number(c.stage_count) || 0;
+      const words = Number(c.words) || 0;
+      const state = c.submitted
+        ? `<span class="pill good">${esc("Submitted" + (c.submitted_at ? " · " + when(c.submitted_at) : ""))}</span>`
+        : `<span class="pill warn">In progress</span>`;
+      const body = (c.stages || []).map((st) =>
+        `<div class="capstone-stage"><strong>${esc(st.stage || "Stage")}</strong>`
+        + `<span class="muted">${esc((st.words ? st.words + " words" : "") + (st.truncated ? " · shown in part" : ""))}</span>`
+        + `<p>${esc(st.text || "")}</p></div>`).join("");
+      return `<div class="quiz-line">${state}<span>${esc(c.course || "Capstone")}</span>`
+        + `<span class="muted">${esc(stages + (stages === 1 ? " stage" : " stages") + (words ? " · " + words + " words" : ""))}</span></div>`
+        + `<details><summary class="muted">Read the capstone</summary>${body}</details>`;
+    }).join("");
+  }
+
   // What the child WROTE, for a course with nothing to mark. Global
   // Perspectives is self-assessed end to end — the learner writes an answer and
   // compares it with a model one — so it has no score to send and would
@@ -182,7 +216,9 @@
   // it never feeds needs_support — that flag is a judgement about marked work.
   function writtenCell(s) {
     const total = Number(s.questions_total) || 0;
-    if (total < 1) return `<span class="muted">No app quizzes yet</span>`;
+    // A learner with a capstone but no quizzes has plainly done work, so the
+    // capstone below speaks for them instead of "No app quizzes yet".
+    if (total < 1) return (s.capstones || []).length ? "" : `<span class="muted">No app quizzes yet</span>`;
     const answered = Number(s.questions_answered) || 0;
     const head = `<span class="pill">${esc("Self-assessed · " + answered + " of " + total + " answered")}</span>`;
     const rows = (s.recent_written || []).map((a) =>
@@ -247,7 +283,7 @@
     ).join("") || `<tr><td colspan="3" class="muted">No classes scheduled today.</td></tr>`;
 
     $("#roster-body").innerHTML = (d.roster || []).map((s) =>
-      `<tr><td><strong>${esc(s.name)}</strong><div class="muted">${esc(s.email)}</div></td><td>${quizCell(s)}</td><td><a class="btn" href="${esc(s.profileurl)}">Profile</a></td></tr>`
+      `<tr><td><strong>${esc(s.name)}</strong><div class="muted">${esc(s.email)}</div></td><td>${quizCell(s)}${capstoneCell(s)}</td><td><a class="btn" href="${esc(s.profileurl)}">Profile</a></td></tr>`
     ).join("") || `<tr><td colspan="3" class="muted">No assigned students found.</td></tr>`;
 
     const classquizzes = d.classquizzes || [];

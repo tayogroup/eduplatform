@@ -132,6 +132,74 @@ function pqpr_attempts_from_state(array $state, string $unit, int $unitupdated):
 }
 
 /**
+ * Cap on how much of one capstone stage travels to a portal. Generous enough
+ * that a teacher reads the whole thing in practice — the stages run to a
+ * paragraph or two — while stopping one learner's runaway textarea from
+ * ballooning a roster payload that carries up to 120 students at once. A
+ * truncated stage says so rather than trailing off silently.
+ */
+const PQPR_CAPSTONE_TEXT_MAX = 4000;
+
+/**
+ * The stage capstone a learner actually wrote, out of one unit's reduced state.
+ *
+ * Science, Mathematics and Computing each end a stage with a capstone: four
+ * written stages and a six-item evidence checklist, the authentic assessment of
+ * the whole stage. Until 2026-08-21 none of it left the device — the app emitted
+ * `capstone.submitted` carrying `artifactRef: "local:<device key>"`, a pointer
+ * into the learner's own browser that named nothing anyone could fetch. The
+ * stages now travel as ordinary `draft.saved` events under unit `capstone`,
+ * section `capstone:<stageId>`, which is why this reads `drafts` rather than a
+ * field of its own.
+ *
+ * Returns null when the learner has written nothing, so a capstone nobody has
+ * started adds no weight to the payload and draws no empty panel.
+ *
+ * `submitted` is the durable marker and is deliberately separate from the text:
+ * a half-written capstone is worth showing precisely because it is unfinished,
+ * and it arrives here the same way a finished one does.
+ */
+function pqpr_capstone_from_state(array $state, int $unitupdated): ?array {
+    $stages = [];
+    $words = 0;
+    foreach ((array)($state['drafts'] ?? []) as $section => $draft) {
+        $section = (string)$section;
+        if (strpos($section, 'capstone:') !== 0) {
+            continue;
+        }
+        $draft = (array)$draft;
+        $text = (string)($draft['text'] ?? '');
+        if (trim($text) === '') {
+            continue;
+        }
+        $length = core_text::strlen($text);
+        $stagewords = isset($draft['words']) ? (int)$draft['words'] : null;
+        $words += (int)$stagewords;
+        $stages[] = [
+            // `capstone:` is 9 characters; what follows is the stage id the
+            // content pack chose (foundations, investigation, plan, build …).
+            'stage' => ucfirst(str_replace(['-', '_'], ' ', substr($section, 9))),
+            'text' => $length > PQPR_CAPSTONE_TEXT_MAX ? core_text::substr($text, 0, PQPR_CAPSTONE_TEXT_MAX) : $text,
+            'truncated' => $length > PQPR_CAPSTONE_TEXT_MAX,
+            'words' => $stagewords,
+            'at' => $draft['at'] ?? null,
+        ];
+    }
+    if (!$stages) {
+        return null;
+    }
+    $capstone = (array)($state['capstone'] ?? []);
+    return [
+        'stages' => $stages,
+        'stage_count' => count($stages),
+        'words' => $words,
+        'submitted' => !empty($capstone),
+        'submitted_at' => $capstone['at'] ?? null,
+        'updated' => $unitupdated,
+    ];
+}
+
+/**
  * answered / total across a set of attempt rows, plus how many sections asked
  * for writing. No average and no pass count — there is nothing being marked.
  */

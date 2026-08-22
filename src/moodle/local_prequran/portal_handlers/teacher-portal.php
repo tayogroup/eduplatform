@@ -292,6 +292,10 @@ $quizbystudent = [];
 // no score and no pass flag, and quizCell() prints a coloured percentage pill
 // for everything it finds in the quiz list.
 $writtenbystudent = [];
+// Stage capstones, per learner. Separate again from both indexes above: the
+// capstone is written work with no score at all, so it belongs beside neither
+// the quiz list nor the answered-counts list.
+$capstonebystudent = [];
 $progressrows = pqpr_progress_rows($rosterids);
 if ($progressrows) {
     $courselabels = pqpr_course_labels(array_map(static function ($row): string {
@@ -314,6 +318,15 @@ if ($progressrows) {
             $att['course'] = $course;
             $writtenbystudent[(int)$row->userid][] = $att;
         }
+        // The stage capstone, one per course. Keyed by course rather than
+        // appended to a list: a learner has at most one capstone per subject,
+        // and the teacher needs to know which subject's it is.
+        $capstone = pqpr_capstone_from_state($state, (int)$row->timemodified);
+        if ($capstone !== null) {
+            $capstone['coursekey'] = $coursekey;
+            $capstone['course'] = $course;
+            $capstonebystudent[(int)$row->userid][] = $capstone;
+        }
     }
 }
 $rosterout = [];
@@ -335,6 +348,10 @@ foreach ($roster as $student) {
         'needs_support' => $summary['average_score'] !== null && $summary['average_score'] < PQPR_SUPPORT_THRESHOLD,
         'recent_quizzes' => array_slice($checkpoints, 0, 5),
         'recent_written' => array_slice($written, 0, 5),
+        // Not sliced: a learner has one capstone per subject and at most a
+        // handful of subjects run one, so the list is short by construction.
+        // Truncation happens per stage, in pqpr_capstone_from_state().
+        'capstones' => array_values($capstonebystudent[$studentid] ?? []),
     ]);
 }
 // Class-level cut of the same checkpoints: one row per quiz, every roster

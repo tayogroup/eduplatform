@@ -1034,7 +1034,7 @@ most likely to believe it. The tiers were out of step both times.
 The check now takes `--after-deploy`, which the wrapper passes: with it a missing
 manifest is **exit 3** and the wrapper says the tiers were NOT checked, which is
 neither agreement nor drift because either would be a guess. Standalone
-behaviour is unchanged. **A release from a temporary tree without all four
+behaviour is unchanged. **A release from a temporary tree without all three
 manifests therefore ends non-zero now** — the upload still stands, since this is
 a post-step, but you no longer get to mistake it for a pass. If you see exit 3,
 the answer is to re-run the check from the repo:
@@ -1042,6 +1042,57 @@ the answer is to re-run the check from the repo:
 ```bash
 node tools/check-ehel-deploy-sync.mjs english
 ```
+
+Two more things the archive recipe does not cover, both found by releasing a
+NON-English subject through it:
+
+- **`git archive HEAD` as written above is English-shaped.** Intensive English's
+  tier check reads `src/moodle/local_hubredirect/wehel_prompt.json` through
+  `tools/lib/ehel-intensive-narration.js`, which the pathspec list does not
+  include, so the check dies with `ENOENT` after a perfectly good upload. Add
+  `src/moodle` to the archive for those subjects, or accept that the check has
+  to be run from the repo afterwards.
+- **A check that CRASHES is still reported as drift.** The exit-3 path above
+  covers a missing manifest; an uncaught exception exits 1, and the wrapper then
+  prints "this deploy leaves the tiers out of step", which is a verdict it never
+  reached. Same class as the ✓-after-skip, one case short. If you see that
+  message with a stack trace above it, the tiers were not compared at all.
+
+### The release tag is ONE GLOBAL number, shared by every subject
+
+`v{TAG}` is a release number for the platform, not a per-subject counter. A
+release with no subject named stamps all six subjects with the same tag, so the
+same number exists under several `app/{subject}/v{TAG}/` directories and means
+the same release. Naming a subject leaves the others behind, which is where the
+gaps come from — on 2026-08-22 English stood at v242 while Mathematics, Science,
+Computing and Global Perspectives all sat at v237 from the last full release.
+
+Measured, not inferred: **38 tag numbers exist in both `app/english/` and
+`app/intensive-english/`**, and the other four subjects share v233-v237 exactly.
+`nextFreeTag()` in `check-ehel-deploy-sync.mjs` matches that — it scans
+`app/[a-z-]+/v(\d+)/` across EVERY subject in the manifest and returns the
+global maximum plus one.
+
+So the rule is the simple one: **take the highest v{N} across ALL subjects and
+add one.** Do not reason from a single subject's own series. Intensive English's
+highest was v237 on 2026-08-22 and v238 was NOT free — English was already four
+releases past it.
+
+Two ways to get this wrong, both seen the same day:
+
+- **Trusting the tool's number without checking storage.** It reads
+  `.bunny-appver-manifest.json`, which is per-worktree, so it reports whatever
+  this checkout happens to have released. It said "next free: v241" while
+  English's v241 was already live from another session. The manifest is a local
+  cache; storage is the fact. List all six subjects and take the true maximum.
+- **Two sessions releasing at once.** Both compute the same next number from the
+  same storage state and both write it. That happened: Intensive English v242
+  and English v242 were released an hour apart by different sessions, each
+  correct in isolation. Nothing broke — the directories never meet, and each
+  release verifies clean — but the global sequence now has a duplicate, and
+  "v242" no longer identifies a release without naming the subject too. **If
+  another session may be releasing, say which tag you are taking before you
+  take it.**
 
 **HEAD is a cleaner input, not a safety property.** The recipe above keeps
 somebody else's uncommitted work out of a release. It does NOT make the release

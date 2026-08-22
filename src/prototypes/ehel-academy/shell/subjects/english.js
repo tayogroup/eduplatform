@@ -5738,6 +5738,19 @@ function renderDictionary() {
   return renderDictionaryClassic();
 }
 
+// The picture beside a word, wherever the dictionary draws one. The lemma is
+// tried first so that "feet" and "foot" — one master entry — get one picture,
+// and a word with no honest picture in word-pictures.js gets none rather than a
+// decorative stand-in.
+//
+// Pictures are a Grades 1-4 thing, on the same line as the deck: at Grade 1 the
+// picture is doing most of the teaching, and by Grade 5 a learner is looking a
+// word UP in a list of seventy. Upper stages render byte-identically to before.
+// The grade goes in because a few lemmas are two different words across the
+// course — Grade 1's "light" is a traffic signal and Grade 3's "march" is a
+// month — and word-pictures.js resolves that per grade.
+const dictionaryPicture = (entry) => (BOTH_DESIGNS && entry ? wordPicture(entry.lemma, gradeNumber) || wordPicture(entry.displayWord, gradeNumber) : "");
+
 function renderDictionaryClassic() {
   const { $, $$ } = classicScope();
   const words = linkedWords();
@@ -5750,7 +5763,17 @@ function renderDictionaryClassic() {
     const group = $("#group-filter").value;
     const filtered = words.filter((item) => (group === "all" || item.groupId === group) && (!query || `${item.master.displayWord} ${item.childMeaning}`.toLowerCase().includes(query)));
     $("#dictionary-count").textContent = `${filtered.length} words`;
-    $("#word-list").innerHTML = filtered.length ? filtered.map((item) => `<button class="word-row ${item.vocabularyId === activeWordId ? "active" : ""}" data-word="${item.vocabularyId}" type="button"><span><strong>${escapeHtml(item.master.displayWord)}</strong><small>${escapeHtml(item.master.partOfSpeech)} · ${escapeHtml(item.groupTitle)}</small></span>${progress.knownWords.includes(item.vocabularyId) ? "<span>LEARNED</span>" : ""}</button>`).join("") : `<div class="empty">No matching words found.</div>`;
+    // The picture column is decided for the LIST, not per row: about a fifth of
+    // Grade 1's words have no honest picture, and giving only the pictured rows
+    // a gutter left the words themselves on a ragged left edge, which is harder
+    // to scan than a blank square. So once any word in view has a picture every
+    // row reserves the same column, and the ones without simply leave it empty.
+    // A list where nothing is pictured — every grade from 5 up — keeps the
+    // original two-column row untouched.
+    const pictures = new Map(filtered.map((item) => [item.vocabularyId, dictionaryPicture(item.master)]));
+    const pictured = [...pictures.values()].some(Boolean);
+    $("#word-list").classList.toggle("pictured", pictured);
+    $("#word-list").innerHTML = filtered.length ? filtered.map((item) => `<button class="word-row ${item.vocabularyId === activeWordId ? "active" : ""}" data-word="${item.vocabularyId}" type="button">${pictured ? `<span class="word-row-picture" aria-hidden="true">${pictures.get(item.vocabularyId)}</span>` : ""}<span><strong>${escapeHtml(item.master.displayWord)}</strong><small>${escapeHtml(item.master.partOfSpeech)} · ${escapeHtml(item.groupTitle)}</small></span>${progress.knownWords.includes(item.vocabularyId) ? "<span>LEARNED</span>" : ""}</button>`).join("") : `<div class="empty">No matching words found.</div>`;
     $$('[data-word]').forEach((button) => button.addEventListener("click", () => { activeWordId = button.dataset.word; activeSentence = 0; drawList(); drawWord(); showWordInDeck?.(activeWordId); }));
   };
   const drawWord = () => {
@@ -5761,7 +5784,10 @@ function renderDictionaryClassic() {
     // a newly-added word with no recording yet shows no control that could
     // only ever fail to play.
     const wordAudioActions = item.master.audio?.available ? `<div class="audio-actions"><button class="icon-button" id="listen-word" type="button" title="Listen at 0.90x" aria-label="Listen to ${escapeHtml(item.master.displayWord)} at 0.90x">${icon("volume-2")}</button><button class="icon-button" id="slow-word" type="button" title="Replay at 0.90x" aria-label="Replay at 0.90x">${icon("rotate-ccw")}</button></div>` : "";
-    $("#word-card").innerHTML = `<div class="word-card-head"><div><span class="word-type">${escapeHtml(item.master.partOfSpeech)}</span><h2>${escapeHtml(item.master.displayWord)}</h2><small>${escapeHtml(item.master.partOfSpeechDefinition)}</small></div>${wordAudioActions}</div><p class="meaning"><span class="field-label">Meaning:</span> ${escapeHtml(item.childMeaning)}${item.meaningAudio?.available ? ` <button class="icon-button" id="hear-meaning" type="button" title="Listen to the meaning" aria-label="Listen to the meaning of ${escapeHtml(item.master.displayWord)}">${icon("volume-2")}</button>` : ""}</p><div class="sentence-card"><small>In a sentence · ${activeSentence + 1} of ${item.practiceSentences.length}</small><p>${linkGlossaryWords(sentence, item.master.displayWord)}</p><div class="sentence-controls"><button class="icon-button" id="previous-sentence" type="button" aria-label="Previous sentence">${icon("arrow-left")}</button><div class="sentence-dots">${item.practiceSentences.map((_, index) => `<button class="sentence-dot ${index === activeSentence ? "active" : ""}" data-sentence="${index}" type="button" aria-label="Sentence ${index + 1}"></button>`).join("")}</div><button class="button ghost" id="hear-sentence" type="button">${icon("volume-2")} Hear sentence</button><button class="icon-button" id="next-sentence" type="button" aria-label="Next sentence">${icon("arrow-right")}</button></div></div><div><span class="field-label">Spelling:</span> ${escapeHtml(item.spellingPractice)}</div><div class="practice-box"><input id="word-sentence" maxlength="180" placeholder="${escapeHtml(item.sentenceStarter)}…" aria-label="Write your own sentence"><button class="button primary" id="check-word-sentence" type="button">Check sentence</button></div><div id="word-feedback" role="status" aria-live="polite" aria-atomic="true"></div><button class="button secondary" id="know-word" type="button">${progress.knownWords.includes(item.vocabularyId) ? icon("check-circle") + " Learned" : icon("bookmark-plus") + " I know this word"}</button>`;
+    // The picture leads the card, ahead of the part of speech: a Grade 1 reader
+    // recognises the thing before they can read "noun · a naming word".
+    const cardPicture = dictionaryPicture(item.master);
+    $("#word-card").innerHTML = `<div class="word-card-head">${cardPicture ? `<div class="word-card-picture" aria-hidden="true">${cardPicture}</div>` : ""}<div><span class="word-type">${escapeHtml(item.master.partOfSpeech)}</span><h2>${escapeHtml(item.master.displayWord)}</h2><small>${escapeHtml(item.master.partOfSpeechDefinition)}</small></div>${wordAudioActions}</div><p class="meaning"><span class="field-label">Meaning:</span> ${escapeHtml(item.childMeaning)}${item.meaningAudio?.available ? ` <button class="icon-button" id="hear-meaning" type="button" title="Listen to the meaning" aria-label="Listen to the meaning of ${escapeHtml(item.master.displayWord)}">${icon("volume-2")}</button>` : ""}</p><div class="sentence-card"><small>In a sentence · ${activeSentence + 1} of ${item.practiceSentences.length}</small><p>${linkGlossaryWords(sentence, item.master.displayWord)}</p><div class="sentence-controls"><button class="icon-button" id="previous-sentence" type="button" aria-label="Previous sentence">${icon("arrow-left")}</button><div class="sentence-dots">${item.practiceSentences.map((_, index) => `<button class="sentence-dot ${index === activeSentence ? "active" : ""}" data-sentence="${index}" type="button" aria-label="Sentence ${index + 1}"></button>`).join("")}</div><button class="button ghost" id="hear-sentence" type="button">${icon("volume-2")} Hear sentence</button><button class="icon-button" id="next-sentence" type="button" aria-label="Next sentence">${icon("arrow-right")}</button></div></div><div><span class="field-label">Spelling:</span> ${escapeHtml(item.spellingPractice)}</div><div class="practice-box"><input id="word-sentence" maxlength="180" placeholder="${escapeHtml(item.sentenceStarter)}…" aria-label="Write your own sentence"><button class="button primary" id="check-word-sentence" type="button">Check sentence</button></div><div id="word-feedback" role="status" aria-live="polite" aria-atomic="true"></div><button class="button secondary" id="know-word" type="button">${progress.knownWords.includes(item.vocabularyId) ? icon("check-circle") + " Learned" : icon("bookmark-plus") + " I know this word"}</button>`;
     if (item.master.audio?.available) {
       const play = (button = null) => playAudio(item.master.audio.normal, {
         rate: AI_NARRATION_RATE,
@@ -5953,9 +5979,7 @@ function renderWordCarousel() {
     const position = Math.min(sentenceAt.get(item.vocabularyId) || 0, Math.max(0, sentences.length - 1));
     const known = progress.knownWords.includes(item.vocabularyId);
     const sentenceAudio = item.sentenceAudio?.[position];
-    // The lemma, not the displayed form: "feet" and "foot" are one entry, and a
-    // word with no honest picture shows none rather than a decorative stand-in.
-    const picture = wordPicture(item.master.lemma) || wordPicture(item.master.displayWord);
+    const picture = dictionaryPicture(item.master);
     return `<section class="gc-slide gc-v${index % 5}" data-slide="${esc(item.vocabularyId)}"><div class="gc-inner">
       <span class="gc-eyebrow">Word ${index + 1} of ${words.length} · ${esc(item.master.partOfSpeech)}${item.groupTitle ? ` · ${esc(item.groupTitle)}` : ""}</span>
       ${picture ? `<div class="wc-picture" aria-hidden="true">${picture}</div>` : ""}
@@ -9137,10 +9161,11 @@ function studentResourceCards() {
     // page rather than navigating — a route here would redirect (renderYearPlan
     // returns to the overview outside that unit).
     { href: courseLocation(PREREQ_UNIT, "year-plan"), iconName: "map", title: `${gradeLabel} Study Plan`, blurb: "The whole year at a glance: every unit and what it brings." },
-    // "with its meaning", not "with a picture": word-pictures.js only draws a
-    // picture where one can BE the word, which is a minority of the vocabulary
-    // once the words stop being concrete nouns.
-    { route: "dictionary", iconName: "book-a", title: navLabelOf("dictionary", "Vocabulary"), blurb: "Every new word in this unit, with its meaning and a voice to listen to." },
+    // "a picture where there is one", not "with a picture": word-pictures.js
+    // only draws a picture that can BE the word, so the promise has to survive
+    // the words it cannot describe. Grade 1 is pictured at 82%; the grades above
+    // it are lower until the same pass is done for their vocabulary.
+    { route: "dictionary", iconName: "book-a", title: navLabelOf("dictionary", "Vocabulary"), blurb: BOTH_DESIGNS ? "Every new word in this unit, with a picture where there is one, its meaning and a voice to listen to." : "Every new word in this unit, with its meaning and a voice to listen to." },
   ];
   if (books) cards.push({ route: "ebooks", iconName: "library-big", title: navLabelOf("ebooks", "Books"), blurb: `${books === 1 ? "A story book" : `${books} story books`} to read or listen to, with pictures that move when you tap them.` });
   if (gamePack) cards.push({ route: "games", iconName: "gamepad-2", title: navLabelOf("games", "Games"), blurb: "Play with this unit's words and sentences until they stick." });

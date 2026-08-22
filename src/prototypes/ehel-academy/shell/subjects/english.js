@@ -5777,14 +5777,21 @@ function renderDictionaryClassic() {
     // The picture column is decided for the LIST, not per row: about a fifth of
     // Grade 1's words have no honest picture, and giving only the pictured rows
     // a gutter left the words themselves on a ragged left edge, which is harder
-    // to scan than a blank square. So once any word in view has a picture every
-    // row reserves the same column, and the ones without simply leave it empty.
-    // A list where nothing is pictured — every grade from 5 up — keeps the
-    // original two-column row untouched.
-    const pictures = new Map(filtered.map((item) => [item.vocabularyId, dictionaryPicture(item.master)]));
-    const pictured = [...pictures.values()].some(Boolean);
+    // to scan than a blank square. So once any word in the section has a
+    // picture every row reserves the same column, and the ones without simply
+    // leave it empty. A section where nothing is pictured keeps the original
+    // two-column row untouched.
+    //
+    // Decided from the WHOLE section, never from the filtered view. Filtering is
+    // what the search box and the group menu do on every keystroke, and a gutter
+    // computed from `filtered` appears and disappears as a learner types —
+    // every word in the list jumping 45px sideways when a query happens to
+    // match nothing pictured. That is most visible at Grades 7-8, where under a
+    // third of the words carry a picture, so the empty-view case is common
+    // rather than a curiosity.
+    const pictured = words.some((item) => dictionaryPicture(item.master));
     $("#word-list").classList.toggle("pictured", pictured);
-    $("#word-list").innerHTML = filtered.length ? filtered.map((item) => `<button class="word-row ${item.vocabularyId === activeWordId ? "active" : ""}" data-word="${item.vocabularyId}" type="button">${pictured ? `<span class="word-row-picture" aria-hidden="true">${pictures.get(item.vocabularyId)}</span>` : ""}<span><strong>${escapeHtml(item.master.displayWord)}</strong><small>${escapeHtml(item.master.partOfSpeech)} · ${escapeHtml(item.groupTitle)}</small></span>${progress.knownWords.includes(item.vocabularyId) ? "<span>LEARNED</span>" : ""}</button>`).join("") : `<div class="empty">No matching words found.</div>`;
+    $("#word-list").innerHTML = filtered.length ? filtered.map((item) => `<button class="word-row ${item.vocabularyId === activeWordId ? "active" : ""}" data-word="${item.vocabularyId}" type="button">${pictured ? `<span class="word-row-picture" aria-hidden="true">${dictionaryPicture(item.master)}</span>` : ""}<span><strong>${escapeHtml(item.master.displayWord)}</strong><small>${escapeHtml(item.master.partOfSpeech)} · ${escapeHtml(item.groupTitle)}</small></span>${progress.knownWords.includes(item.vocabularyId) ? "<span>LEARNED</span>" : ""}</button>`).join("") : `<div class="empty">No matching words found.</div>`;
     $$('[data-word]').forEach((button) => button.addEventListener("click", () => { activeWordId = button.dataset.word; activeSentence = 0; drawList(); drawWord(); showWordInDeck?.(activeWordId); }));
   };
   const drawWord = () => {
@@ -9829,9 +9836,10 @@ function studentResourceCards() {
     { href: courseLocation(PREREQ_UNIT, "year-plan"), iconName: "map", title: `${gradeLabel} Study Plan`, blurb: "The whole year at a glance: every unit and what it brings." },
     // "a picture where there is one", not "with a picture": word-pictures.js
     // only draws a picture that can BE the word, so the promise has to survive
-    // the words it cannot describe. Grade 1 is pictured at 82%; the grades above
-    // it are lower until the same pass is done for their vocabulary.
-    { route: "dictionary", iconName: "book-a", title: navLabelOf("dictionary", "Vocabulary"), blurb: BOTH_DESIGNS ? "Every new word in this unit, with a picture where there is one, its meaning and a voice to listen to." : "Every new word in this unit, with its meaning and a voice to listen to." },
+    // the words it cannot describe — which is most of them by Grade 8, where the
+    // vocabulary is abstract. One wording for all eight grades, because it is
+    // true at all eight.
+    { route: "dictionary", iconName: "book-a", title: navLabelOf("dictionary", "Vocabulary"), blurb: "Every new word in this unit, with a picture where there is one, its meaning and a voice to listen to." },
   ];
   if (books) cards.push({ route: "ebooks", iconName: "library-big", title: navLabelOf("ebooks", "Books"), blurb: `${books === 1 ? "A story book" : `${books} story books`} to read or listen to, with pictures that move when you tap them.` });
   if (gamePack) cards.push({ route: "games", iconName: "gamepad-2", title: navLabelOf("games", "Games"), blurb: "Play with this unit's words and sentences until they stick." });

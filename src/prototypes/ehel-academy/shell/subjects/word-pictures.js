@@ -469,6 +469,7 @@ export const WORD_PICTURES = {
   // Moving, and the parade and race units
   greet: "👋🏾", rushing: "💨", swiftly: "💨", accelerate: "💨",
   escaped: "🏃🏾", wander: "🚶🏾", roamed: "🚶🏾", marching: "🚶🏾",
+  // (Grades 5-8 continue after the Grade 4 block below.)
   travels: "🧳", travelled: "🧳", direction: "🧭", flies: "🕊️",
   drives: "🚗", rescued: "🛟", coiled: "🌀", spun: "🌀",
   squeezing: "🤏🏾", handed: "🤲🏾", handful: "✋🏾", handfuls: "✋🏾",
@@ -477,6 +478,139 @@ export const WORD_PICTURES = {
   chosen: "☑️", hoping: "🤞🏾", trading: "🔄", frequently: "🔁",
   practised: "🔁", frowned: "☹️", powerful: "💪🏾", dresses: "👗",
   borders: "🛂", problems: "🧩", planned: "📋",
+
+  // === Grades 5-8, the picture-dictionary pass ==============================
+  // Same rules again, and the yield is far lower — deliberately so. By Grade 8
+  // the vocabulary is largely abstract (concise, zeal, plausible, dissent,
+  // pervasive, conscientious), and there is no honest picture of any of it. The
+  // words that DO earn one up here are concrete nouns from the science, trade
+  // and East African life units, and they cluster: 🐆 cheetah, 🦀 crab, 🫓
+  // canjeero, 🛺 bajaaj, 🪡 needle, ☄️ meteorite.
+  //
+  // Expect roughly a third of cards to carry a picture at these grades against
+  // four fifths at Grade 1. That is the content, not the effort — and it is why
+  // the list gutter is drawn only where a section actually has pictures.
+  //
+  // Two words are bare by choice rather than for want of an emoji, for the same
+  // reason as "alcohol" above: "guns"/"weapons" (Grade 6 war unit) and
+  // "refugee"/"refugees" (a suitcase describes neither, and glibly picturing it
+  // is worse than leaving it).
+
+  // --- Grade 5 -------------------------------------------------------------
+  pouch: "👝", misty: "🌫️", marine: "🌊", species: "🐾", silvery: "🥈",
+  rural: "🌾", urban: "🏙️", residence: "🏠", rubble: "🧱", rumble: "⛈️",
+  rumbled: "⛈️", tortoise: "🐢", continent: "🌍", continental: "🌍",
+  sparrow: "🐦", sandstorm: "🌪️", roar: "🦁", roared: "🦁", timber: "🪵",
+  chirped: "🐦", swooped: "🦅", thirst: "🥤", wisdom: "🦉", jug: "🏺",
+  broom: "🧹", sweep: "🧹", delivery: "📦", ill: "🤒", women: "👩🏾",
+  verdict: "⚖️", unlock: "🔓", unlocking: "🔓", document: "📄", empire: "👑",
+  constitution: "📜", charter: "📃", furious: "😠", communicate: "💬",
+  quote: "🗨️", uneasy: "😟", unexpected: "😲", local: "📍",
+  intelligence: "🧠", citizenship: "🪪", glare: "🔆", brightness: "🔆",
+  cooperate: "🤝", cooperation: "🤝", cooperated: "🤝", collaborative: "🤝",
+  boycott: "🚫", avoid: "🚫", destroy: "💥", hoist: "🏋🏾", announce: "📢",
+  towering: "🗼", drowsy: "😴", booming: "🔊", approval: "👍🏾",
+  contract: "📝", consume: "🍽️", brilliant: "🌟", telescopes: "🔭",
+  observatories: "🔭", astronomy: "🌌", observers: "👀", observation: "👀",
+  observe: "👀", tracked: "👣", mapped: "🗺️", regions: "🗺️",
+  instruments: "🧰", angles: "📐", launched: "🚀", astronaut: "🧑🏾‍🚀",
+  exploration: "🧭", marvels: "🤩", fault: "❌", damp: "💦", moist: "💦",
+  crowding: "👥", blog: "💻", blogs: "💻", typing: "⌨️", typed: "⌨️",
+  keyboard: "⌨️", tablets: "📱", meteorite: "☄️", wire: "🔌", bulbs: "💡",
+  erupted: "🌋", reduce: "📉", environment: "🌿", recycled: "♻️",
+  legislative: "⚖️", mission: "🎯", aim: "🎯", function: "⚙️",
+  expansion: "📈", growth: "📈", increase: "📈", comprehension: "📖",
+  tension: "😬", dimension: "📐", infection: "🦠", protective: "🛡️",
+  competitive: "🏆", alternative: "🔀", fracture: "🦴", posture: "🧍🏾",
+  artefacts: "🏺", artefact: "🏺", architect: "📐", reeds: "🌾",
+  moans: "😩", rains: "🌧️", hurries: "💨", hasty: "💨", generosity: "🎁",
+  friendship: "🧑🏾‍🤝‍🧑🏾", collecting: "🧺", blown: "🌬️", broad: "↔️",
+  lowered: "⬇️", stirred: "🥄", names: "📛", value: "💎", adjusted: "🔧",
+  resting: "😴", dining: "🍽️", conflict: "⚔️", checklist: "📋",
+  policy: "📋", anxiety: "😰", artificial: "🤖", nutrition: "🥗",
+  reluctant: "🤨", unsuccessful: "❌", finest: "🥇", wondered: "🤔",
+  sheeko: "📖",
+
+  // --- Grade 6 -------------------------------------------------------------
+  illegal: "🚫", ban: "🚫", refuse: "❌", harmony: "☮️", warfare: "⚔️",
+  battlefield: "⚔️", metamorphosis: "🦋", juror: "⚖️", justice: "⚖️",
+  courtroom: "⚖️", courtrooms: "⚖️", prosecution: "⚖️", bailiff: "⚖️",
+  courthouse: "🏛️", parliament: "🏛️", minister: "🏛️", ministers: "🏛️",
+  civilisation: "🏛️", architecture: "🏛️", politician: "🏛️",
+  blockade: "🚧", barricade: "🚧", voltage: "⚡", electric: "⚡",
+  generator: "⚡", weaving: "🧶", wove: "🧶", woven: "🧶", weaver: "🧶",
+  threads: "🧵", thread: "🧵", seam: "🧵", needle: "🪡", stitched: "🪡",
+  seamstress: "🪡", merchants: "🏪", kiosk: "🏪", swirling: "🌀",
+  shimmer: "✨", flashing: "✨", spark: "✨", doorstep: "🚪",
+  soaked: "💦", wreckage: "🧱", brick: "🧱", monsoon: "🌧️",
+  rainfall: "🌧️", howling: "🐺", packs: "🐺", force: "💪🏾",
+  muscle: "💪🏾", husband: "👨🏾", men: "👨🏾", planks: "🪵", sticks: "🪵",
+  stumps: "🪵", fisherman: "🎣", donated: "🎁", bushes: "🌿",
+  shrubs: "🌿", branches: "🌿", herbalists: "🌿", tendril: "🌿",
+  flag: "🏳️", builder: "👷🏾", shore: "🏖️", shoreline: "🏖️",
+  speech: "🎤", truth: "✅", pounding: "💓", pump: "💓", puzzled: "😕",
+  discussion: "💬", dialogue: "💬", copper: "🥉", parchment: "📜",
+  chronicle: "📜", joyful: "😄", anger: "😠", aggressive: "😠",
+  threat: "⚠️", straits: "🌊", ocean: "🌊", underwater: "🌊",
+  explorer: "🧭", expeditions: "🧭", navigation: "🧭", excursion: "🧳",
+  traveller: "🧳", migration: "🧳", porter: "🧳", caravan: "🐪",
+  camelback: "🐪", nomad: "🐪", commentary: "🎙️", commentator: "🎙️",
+  pollination: "🐝", excavation: "⛏️", rehearsal: "🎭", sculpture: "🗿",
+  supernova: "💥", radiation: "☢️", bacteria: "🦠", plague: "🦠",
+  typhoid: "🦠", mollusc: "🐚", basketball: "🏀", sport: "⚽",
+  oxygen: "💨", dust: "💨", diet: "🥗", lentils: "🫘", hygiene: "🧼",
+  unwell: "🤒", pain: "🤕", exhaustion: "😩", concentration: "🎯",
+  champions: "🏆", swimming: "🏊🏾", riding: "🚴🏾", archery: "🏹",
+  cycle: "🔁", physics: "⚛️", physicist: "⚛️", biologist: "🔬",
+  fertile: "🌱", root: "🌱", grass: "🌱", photosynthesis: "🌱",
+  seedling: "🌱", plant: "🌱", data: "📊", graphs: "📊", smog: "🌫️",
+  floating: "🛟", predictions: "🔮", evidence: "🔍", rustled: "🍃",
+  funeral: "⚰️", bury: "⚰️", mourn: "😢", grief: "😢", sorrow: "😢",
+  crimson: "🟥", arid: "🏜️", grasslands: "🌾", grassland: "🌾",
+  flour: "🌾", thorny: "🌵", graze: "🐄", herbivore: "🐄",
+  livestock: "🐄", predators: "🦁", zoo: "🦁", gazelle: "🦌",
+  gerenuk: "🦌", meat: "🍖", cheetahs: "🐆", chase: "🏃🏾",
+  eagles: "🦅", reptiles: "🦎", toads: "🐸", amphibians: "🐸",
+  snakes: "🐍", herons: "🐦", crabs: "🦀", turtles: "🐢", sharks: "🦈",
+  baskets: "🧺", mangoes: "🥭", shawls: "🧣", scarf: "🧣", unity: "🤝",
+  assistant: "🤝", fire: "🔥", bonfire: "🔥", streams: "🏞️",
+  riverbed: "🏞️", territory: "🗺️", meteorology: "🌦️", monitor: "🖥️",
+  magnetic: "🧲", print: "🖨️", teenager: "🧒🏾", cousin: "🧒🏾",
+  chargers: "🔌", phones: "📱", phone: "📱", hook: "🪝",
+  candles: "🕯️", satellites: "🛰️", satellite: "🛰️",
+  translator: "🗣️", narrator: "🗣️", glory: "🏅", terrain: "⛰️",
+  ridge: "⛰️", sour: "🍋", batteries: "🔋", cloak: "🧥", jumper: "🧥",
+  skulls: "💀", universities: "🎓", scholar: "🎓", frustrated: "😤",
+  hospitable: "🤗", massive: "🐘", bags: "👜", dormitory: "🛏️",
+  dormitories: "🛏️", bedding: "🛏️", shelf: "📚", textbook: "📚",
+  candidate: "🗳️", representative: "🗳️", trembled: "😰",
+  organise: "🗂️", briefcases: "💼", toolboxes: "🧰", toolkit: "🧰",
+  physician: "🧑🏾‍⚕️", pharmacist: "💊", driver: "🚗", mechanic: "🔧",
+  radio: "📻", broadcast: "📻", documents: "📄",
+  sambusas: "🥟", canjeero: "🫓", chapati: "🫓", injera: "🫓",
+  cooking: "🍳", ingredients: "🥣", mixture: "🥣", listeners: "👂🏾",
+  motorbikes: "🏍️", motorcycle: "🏍️", boda: "🏍️", cassava: "🥔",
+  arrested: "🚨", alert: "🚨", witness: "👁️", eyewitness: "👁️",
+  container: "📦", carton: "📦", illustration: "🖼️", gallery: "🖼️",
+  mural: "🖼️", congregation: "👥", sunglasses: "🕶️", suit: "👔",
+
+  // --- Grades 7-8 ----------------------------------------------------------
+  stool: "🪑", camp: "⛺", knife: "🔪", feast: "🍽️",
+  procession: "🚶🏾", footpath: "🚶🏾", festival: "🎉", ceremony: "🎉",
+  dusk: "🌆", spinach: "🥬", sukuma: "🥬", wiki: "🥬",
+  grandson: "👦🏾", wife: "👩🏾", billion: "🔢", tote: "👜", bag: "👜",
+  skirt: "👗", denim: "👖", wool: "🐑", outfit: "👕", clay: "🏺",
+  mosquito: "🦟", tarmac: "🛣️", minibus: "🚐", bajaaj: "🛺",
+  backpack: "🎒", balloon: "🎈", rollercoaster: "🎢", canopy: "🌳",
+  mangrove: "🌳", sunlight: "☀️", toilet: "🚽", port: "⚓", quay: "⚓",
+  trader: "💰", buyer: "🛒", biography: "📖", definition: "📖",
+  liar: "🤥", gratitude: "🙏🏾", campaign: "📢", kerosene: "⛽",
+  chain: "⛓️", software: "💻", internet: "🌐", link: "🔗", ink: "🖊️",
+  lip: "👄", tyres: "🛞", selfie: "🤳", marker: "🖍️", hashtag: "#️⃣",
+  destination: "📍", font: "🔤", vocabulary: "🔤", layout: "📐",
+  millimetres: "📏", writer: "✍🏾", signature: "✍🏾",
+  invitation: "✉️", thumbs: "👍🏾", locker: "🔒", disaster: "🌪️",
+  quotation: "🗨️", sandal: "👡",
 };
 
 // Where one lemma is two different words.
@@ -548,6 +682,44 @@ export const GRADE_WORD_PICTURES = {
     light: "", well: "", may: "",
     left: "", right: "", hard: "", point: "", square: "", turn: "",
     underground: "", mask: "🎭",
+  },
+  // Grades 5-8 re-teach a third wave of these, and the pattern is consistent
+  // enough to be worth naming: the upper grades take a concrete word a young
+  // learner already knows and teach its ABSTRACT sense. "like" stops being
+  // enjoyment and becomes "similar to" from Grade 5 on; "kind" becomes a type
+  // rather than a feeling; "point" becomes the purpose; "draw" becomes drawing
+  // a line between ideas; "square" becomes a place in a town; "roll" becomes a
+  // print run; and Grade 8's "book" is the stage manager's record of a show.
+  //
+  // The picture that was right at Grade 1 is therefore not just imprecise up
+  // here, it teaches the wrong sense of the word the lesson is about — which is
+  // worse than no picture at exactly the age the learner is being asked to
+  // notice the difference.
+  //
+  // "play" is the one that gets a new picture rather than none: a teddy bear is
+  // honest for Grade 1's play and wrong for a Grade 8 who plays sport.
+  // "may" is the clearest case of the pattern and the easiest to miss: it is the
+  // month only at Grade 3. At 1, 2, 4, 5, 6, 7 and 8 it is the modal verb, and a
+  // calendar beside it teaches the wrong word in seven grades out of eight.
+  5: {
+    like: "", kind: "", play: "",
+    back: "", hard: "", left: "", lift: "", may: "", round: "", stand: "",
+    right: "✅", stop: "🚏",
+  },
+  6: {
+    like: "", kind: "", square: "", ruler: "👑", hunt: "🏹", play: "⚽",
+    back: "", hard: "", left: "", may: "", right: "", stand: "", turn: "",
+    spin: "🧵",
+  },
+  7: {
+    like: "", point: "", square: "", roll: "", play: "⚽",
+    hard: "", left: "", lift: "", may: "", right: "", round: "", well: "",
+    stop: "🚏",
+  },
+  8: {
+    like: "", kind: "", point: "", book: "", draw: "", drawn: "", play: "⚽",
+    hard: "", left: "", may: "", round: "", turn: "", well: "", little: "",
+    travel: "", right: "✅",
   },
 };
 

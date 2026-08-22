@@ -34,10 +34,23 @@ function requireTiersInStep(subjects) {
 
   const check = path.join(__dirname, "..", "check-ehel-deploy-sync.mjs");
   console.log(`\n──────── tiers ──────── checking app, content and audio agree for: ${scope.join(", ")}`);
-  const run = spawnSync(process.execPath, [check, ...scope], { stdio: "inherit" });
+  // --after-deploy tells the check that "no manifests in this tree" cannot mean
+  // "nothing has been deployed", because we just deployed. Without it the check
+  // exits 0 on that path and the tick below went out over a comparison that
+  // never happened — see the note beside its manifest guard.
+  const run = spawnSync(process.execPath, [check, ...scope, "--after-deploy"], { stdio: "inherit" });
 
   // A check that cannot run must not read as agreement — the whole failure this
   // guards is two sides each looking fine on their own.
+  //
+  // Exit 3 is that case reported deliberately rather than by crashing: the check
+  // started, found it had nothing to compare against, and said so. It is neither
+  // agreement nor drift, and calling it either would be a guess.
+  if (run.status === 3) {
+    console.error("\n✗ the tiers were NOT checked — see above. Your upload stands; nothing confirmed the rest agrees.");
+    process.exitCode = 1;
+    return false;
+  }
   if (run.error || run.status === null) {
     console.error(`\n✗ could not run check-ehel-deploy-sync.mjs (${run.error ? run.error.message : "no exit status"}).`);
     console.error("  The deploy stands, but nothing confirmed the tiers agree. Run it by hand before walking away.");

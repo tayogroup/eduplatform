@@ -31,16 +31,25 @@
 //                    content found to compare them against. Reported as
 //                    unchecked, never as agreement
 //
-//   node tools/check-ehel-deploy-sync.mjs [mathematics|science|computing|global-perspectives|english|intensive-english]…
+//   node tools/check-ehel-deploy-sync.mjs [mathematics|science|computing|global-perspectives|english|intensive-english]… [--after-deploy]
 //
 // All six subjects get the content and app checks. English skips the audio half
 // and says so: its clips are named after the item id rather than a hash of the
 // text, so staleness there needs a different shape.
 //
-// Exits non-zero if content is stale, the tiers are split, audio is missing, or a
-// subject was passed without being compared. Skips a subject whose manifests do
-// not exist yet — a fresh checkout has not deployed anything, and that is not a
-// failure.
+// Exit codes:
+//   0  everything compared agreed
+//   1  content stale, tiers split, audio missing, or a subject passed without
+//      being compared
+//   2  unknown subject name
+//   3  --after-deploy only: nothing could be compared at all, because this tree
+//      has no manifests. Standalone that is exit 0, since a fresh checkout has
+//      genuinely deployed nothing and saying so is not a failure.
+//
+// Exit 3 exists because the per-subject rule three paragraphs up — "reported as
+// unchecked, never as agreement" — was not being applied to the WHOLE RUN. When
+// every manifest was absent this exited 0, and require-tiers-in-step.js printed
+// "✓ app, content and audio agree" over a comparison that never happened.
 
 import fs from "node:fs";
 import path from "node:path";
@@ -102,9 +111,40 @@ const unknown = asked.filter((s) => !ALL.includes(s));
 if (unknown.length) { console.error(`unknown subject(s): ${unknown.join(", ")}`); process.exit(2); }
 const subjects = asked.length ? asked : ALL;
 
+// --after-deploy is passed by require-tiers-in-step.js, and it changes what a
+// MISSING MANIFEST means.
+//
+// Standalone, "no manifests here" is honest and harmless: a fresh checkout has
+// not deployed anything, there is nothing to compare, and exiting 0 keeps that
+// from reading as drift. That is the documented behaviour above and it stays.
+//
+// After a deploy it is a contradiction — something was just uploaded from this
+// tree — and it is the one case where skipping is dangerous, because the caller
+// prints a tick underneath whatever this exits 0 with. That is not theoretical:
+// English v238 and v239 both shipped from a `git archive HEAD` tree built for
+// the release, which carried no .bunny-upload-manifest.json, so this bailed
+// here and the deploy reported "✓ app, content and audio agree" having compared
+// nothing. The tiers were in fact out of step both times, and only a hand-run
+// from the repo said so.
+//
+// So the skip keeps exit 0 standalone and becomes exit 3 after a deploy, which
+// the caller reports as "nothing was compared" rather than as agreement or as
+// drift — the operator needs to know the question went unanswered, and telling
+// them the tiers disagree would be its own lie.
+const AFTER_DEPLOY = process.argv.slice(2).includes("--after-deploy");
 if (!fs.existsSync(CONTENT_MANIFEST) || !fs.existsSync(MEDIA_MANIFEST)) {
-  console.log("No deploy manifests present — nothing has been deployed from this checkout. Skipping.");
-  process.exit(0);
+  const missing = [[CONTENT_MANIFEST, ".bunny-content-manifest.json"], [MEDIA_MANIFEST, ".bunny-upload-manifest.json"]]
+    .filter(([p]) => !fs.existsSync(p)).map(([, name]) => name);
+  if (!AFTER_DEPLOY) {
+    console.log("No deploy manifests present — nothing has been deployed from this checkout. Skipping.");
+    process.exit(0);
+  }
+  console.error(`\n✗ nothing was compared: ${missing.join(" and ")} ${missing.length > 1 ? "are" : "is"} not in this tree.`);
+  console.error("  Something was just deployed from here, so this cannot mean 'nothing has been deployed'.");
+  console.error("  The usual cause is releasing from a temporary tree (git archive HEAD) without copying the");
+  console.error("  manifests in. Your upload stands; the tiers are simply unverified. Run this from the repo:");
+  console.error(`    node tools/check-ehel-deploy-sync.mjs ${subjects.join(" ")}`);
+  process.exit(3);
 }
 const content = JSON.parse(fs.readFileSync(CONTENT_MANIFEST, "utf8"));
 const media = new Set(readManifestPaths(MEDIA_MANIFEST));

@@ -9116,6 +9116,337 @@ function gamesTeacherPanel() {
   return `<section class="panel"><span class="eyebrow">Gamified practice</span><h2>Game mastery</h2><p>Best scores and attempts saved for this learner on this device.</p><div class="teacher-table-scroll"><table class="teacher-table"><thead><tr><th>Game</th><th>Skill</th><th>Best</th><th>Attempts</th><th>XP</th><th>Teaching response</th></tr></thead><tbody>${rows}</tbody></table></div></section>`;
 }
 
+// ===================== the cursive handwriting worksheet =====================
+// A printable, not a section. The learner prints it once and writes on paper as
+// the unit's words are met, so it is reached only from Student resources, never
+// from the nav, and it ticks nothing — the same standing the two study plans
+// have (nonCountable, absent from SECTION_CHAIN, so sectionUnlocked() finds no
+// index for it and it is always open).
+//
+// Grades 1-4 only, the line the picture dictionary and the picture books already
+// draw. Handwriting is not being taught by Grade 5, and a Grade 8 unit carries
+// up to 423 words — a print job nobody wants.
+//
+// A PRINT WINDOW, not a generated PDF file. printReading() above made this
+// choice first and for the same reasons: the popup owns its document, so the app
+// chrome never has to be fought with @media print rules, and a popup-blocked
+// user gets the recovery that button already established. The browser's own
+// "Save as PDF" is the PDF; nothing here writes one.
+
+// The one cursive face, self-hosted beside Inter and Fraunces. The CSS generic
+// `cursive` is Comic Sans on Windows — unjoined print — so shipping the font is
+// what makes this a cursive worksheet at all rather than a page of ruled lines.
+//
+// Edu NSW ACT Cursive (OFL-1.1, AU School Handwriting Fonts Project). Picked by
+// rendering all five OFL school hands on Google Fonts and LOOKING at them: it is
+// the only one that joins, and it carries lead-in strokes, which is what UK
+// continuous cursive means. Edu VIC WA NT, Edu AU VIC WA NT, Edu QLD and Edu SA
+// are all pre-cursive — entry and exit flicks, letters never touching —
+// whatever their names suggest. Do not swap it for one of those on the strength
+// of a style name.
+//
+// `../../shared/fonts/` resolves to the same folder from both layouts: in dev
+// shell/subjects/ → ehel-academy/shared/fonts/, and in a release
+// app/english/v{TAG}/ → app/shared/fonts/. deploy-app-version.js already exempts
+// that one prefix from its "reference escapes the version path" warning, because
+// a woff2 is immutable under its own name.
+const CURSIVE_FONT_URL = new URL("../../shared/fonts/EduNSWACTCursive-normal-400-700.woff2", import.meta.url).href;
+const CURSIVE_FAMILY = "Ehel Cursive";
+
+// Measured off the shipped woff2 with canvas TextMetrics at 100px, NOT taken
+// from the family's design notes: the rules have to sit where this file's
+// outlines actually sit, or every model letter floats above its baseline and the
+// sheet teaches the wrong thing. baseline→midline .54em, baseline→ascender
+// 1.01em, baseline→descender .47em. Re-measure if the woff2 is ever replaced.
+const CURSIVE_X_HEIGHT = 0.54, CURSIVE_ASCENDER = 1.01, CURSIVE_DESCENDER = 0.47;
+
+// A4 portrait at 14mm margins. Every length below is millimetres, and the ruled
+// lines are drawn as SVG in a viewBox whose user unit IS one millimetre — so a
+// baseline is an `y` attribute rather than something inferred from line-height,
+// which is the only way to put the letters ON the rule instead of near it.
+const SHEET_W = 182, SHEET_H = 269, SHEET_HEADER = 26;
+
+// x-height in mm. Sized the way school handwriting paper is: a beginner needs a
+// tall band, and the band shrinks as the hand steadies.
+const WORKSHEET_SIZES = {
+  large: { label: "Large", xMm: 7, note: "for a hand still learning to join" },
+  medium: { label: "Medium", xMm: 5.5, note: "the usual size for Grades 3-4" },
+  small: { label: "Small", xMm: 4.5, note: "more words on a page" },
+};
+const defaultWorksheetSize = () => (gradeNumber <= 2 ? "large" : "medium");
+
+function worksheetGeometry(sizeKey) {
+  const em = (WORKSHEET_SIZES[sizeKey] || WORKSHEET_SIZES.medium).xMm / CURSIVE_X_HEIGHT;
+  const band = em * (CURSIVE_ASCENDER + CURSIVE_DESCENDER);
+  // The trace line and the write line need to read as a PAIR, and the pair needs
+  // to separate from the next word. At 1mm apart the trace line's descender rule
+  // and the write line's ascender rule printed as one doubled grey line and the
+  // whole sheet read as an undifferentiated block of ruling — a learner could not
+  // see which line was theirs. The gap between words has to stay clearly larger
+  // than the gap inside one.
+  const label = 3.4, gapLines = 3, gapWords = 8;
+  return { em, band, label, gapLines, gapWords, row: label + band + gapLines + band + gapWords };
+}
+
+// The font has to be in the DOCUMENT before anything measures or draws with it.
+// A FontFace rather than an injected @font-face rule so the same promise covers
+// the on-page preview and the canvas measuring, and so nothing is added to the
+// shared stylesheet for a page five subjects never open.
+let cursiveFacePromise = null;
+function loadCursiveFace() {
+  if (!cursiveFacePromise) {
+    cursiveFacePromise = new FontFace(CURSIVE_FAMILY, `url("${CURSIVE_FONT_URL}") format("woff2")`, { weight: "400 700" })
+      .load()
+      .then((face) => { document.fonts.add(face); return face; })
+      .catch((error) => { cursiveFacePromise = null; throw error; });
+  }
+  return cursiveFacePromise;
+}
+
+// Widths in em, measured with the real font. A count of characters will not do:
+// this face runs .44em per character on average but "understanding" is 7.13em,
+// and at the large size that is 93mm of a 182mm line — so a fixed two ghosts
+// would push the third copy through the right margin on the longest words in
+// every grade.
+function measureCursive(words) {
+  const context = document.createElement("canvas").getContext("2d");
+  context.font = `400 100px "${CURSIVE_FAMILY}"`;
+  const widths = new Map();
+  for (const word of words) if (!widths.has(word)) widths.set(word, context.measureText(word).width / 100);
+  return widths;
+}
+
+// The model plus as many trace ghosts as genuinely fit, and never more than two:
+// the rest of the line is left blank on purpose, because a line packed edge to
+// edge with ghosts is a tracing exercise and the second line below is where the
+// learner writes it alone.
+function traceCopies(widthEm, geo) {
+  const wordMm = widthEm * geo.em;
+  const gap = geo.em * 0.7;
+  return Math.max(1, Math.min(3, Math.floor((SHEET_W + gap) / (wordMm + gap))));
+}
+
+// One ruled line. `y` in the viewBox is the baseline, so the four rules and the
+// text share one coordinate system and cannot drift apart.
+function worksheetLineSvg(geo, word = "", widthEm = 0) {
+  const baseline = geo.em * CURSIVE_ASCENDER;
+  const midline = geo.em * (CURSIVE_ASCENDER - CURSIVE_X_HEIGHT);
+  const foot = geo.band;
+  const copies = [];
+  if (word) {
+    const gap = geo.em * 0.7;
+    const step = widthEm * geo.em + gap;
+    for (let index = 0; index < traceCopies(widthEm, geo); index += 1) {
+      copies.push(`<text x="${(index * step).toFixed(2)}" y="${baseline.toFixed(2)}" class="${index ? "cw-ghost" : "cw-model"}">${escapeHtml(word)}</text>`);
+    }
+  }
+  return `<svg class="cw-svg" viewBox="0 0 ${SHEET_W} ${foot.toFixed(2)}" preserveAspectRatio="xMinYMin meet" aria-hidden="true" focusable="false">
+    <line class="cw-rule" x1="0" y1="0" x2="${SHEET_W}" y2="0"></line>
+    <line class="cw-rule cw-dashed" x1="0" y1="${midline.toFixed(2)}" x2="${SHEET_W}" y2="${midline.toFixed(2)}"></line>
+    <line class="cw-baseline" x1="0" y1="${baseline.toFixed(2)}" x2="${SHEET_W}" y2="${baseline.toFixed(2)}"></line>
+    <line class="cw-rule" x1="0" y1="${foot.toFixed(2)}" x2="${SHEET_W}" y2="${foot.toFixed(2)}"></line>
+    ${copies.join("")}
+  </svg>`;
+}
+
+// A word is two lines: trace, then write it alone. One line carrying the model
+// and a blank remainder was the alternative and it is worse — how much blank
+// space a learner gets would then depend on how long the word happens to be,
+// which is exactly the wrong thing to vary.
+function worksheetRowHtml(word, widths, geo) {
+  return `<div class="cw-row">
+    <p class="cw-label">${escapeHtml(word)}</p>
+    ${worksheetLineSvg(geo, word, widths.get(word) || 0)}
+    ${worksheetLineSvg(geo)}
+  </div>`;
+}
+
+// One stylesheet, used by the on-page preview AND by the print document, so the
+// preview cannot promise something the printed sheet does not deliver. Sizes are
+// in mm throughout; the svg carries its own viewBox, so `width` is all the print
+// side has to pin.
+function worksheetCss(geo, { print }) {
+  return `
+    .cw-row { break-inside: avoid; page-break-inside: avoid; margin: 0 0 ${geo.gapWords}mm; }
+    .cw-label { margin: 0 0 .8mm; color: #5d6b80; letter-spacing: .04em;
+                font: 500 ${print ? "2.7mm" : "12px"}/1.2 Arial, Helvetica, sans-serif; }
+    .cw-svg { display: block; width: ${print ? `${SHEET_W}mm` : "100%"}; height: auto; overflow: visible; }
+    .cw-svg + .cw-svg { margin-top: ${geo.gapLines}mm; }
+    .cw-rule { stroke: #b9c7d2; stroke-width: .18; }
+    .cw-dashed { stroke: #ccd8e0; stroke-dasharray: 1.6 1.6; }
+    .cw-baseline { stroke: #17324d; stroke-width: .3; }
+    .cw-model, .cw-ghost { font-family: "${CURSIVE_FAMILY}", cursive; font-size: ${geo.em.toFixed(3)}px; }
+    .cw-model { fill: #17324d; }
+    .cw-ghost { fill: #c2ced8; }`;
+}
+
+// Vocabulary groups, each with its words, in the unit's own order.
+function worksheetGroups() {
+  const words = linkedWords();
+  return course.vocabularyGroups.map((group) => ({
+    id: group.id,
+    title: group.title,
+    words: words.filter((item) => item.groupId === group.id)
+      .map((item) => item.master?.displayWord)
+      .filter(Boolean),
+  })).filter((group) => group.words.length);
+}
+
+// Which groups start ticked. The unit's LAST group is a glossary harvested from
+// the readings — 18 to 231 words of it — rather than words the unit teaches, and
+// printing it by default turns a 4-page sheet into a 40-page one.
+//
+// It is matched by its exact title, and that is a deliberate second choice: a
+// size threshold was measured against all 41 Grade 1-4 units and does not
+// separate them. Taught groups reach 30 words ("Order Words for Dates", the two
+// Review Words groups) while "Words from our stories" drops to 18, so any cutoff
+// mislabels one or the other. Nothing in the data marks the group structurally.
+//
+// Getting this wrong only changes which box starts ticked — every group is
+// listed with its word count and the learner can tick anything — so a title
+// match is an acceptable default here in a way it would not be in a gate.
+const GLOSSARY_GROUP_TITLE = "Words from our stories";
+
+function worksheetPageCount(wordCount, geo) {
+  if (!wordCount) return 0;
+  const first = Math.max(1, Math.floor((SHEET_H - SHEET_HEADER) / geo.row));
+  const rest = Math.max(1, Math.floor(SHEET_H / geo.row));
+  return wordCount <= first ? 1 : 1 + Math.ceil((wordCount - first) / rest);
+}
+
+function renderCursiveWorksheet() {
+  // Grades 5-8 have no card for this page, but a hidden card is not a closed
+  // route — the hash is typeable and was reachable at every grade. renderYearPlan
+  // bounces the same way for the same reason: the decision is "this page does not
+  // exist here", and a page that only LOOKS absent drifts back into use.
+  if (!BOTH_DESIGNS) return navigate("overview");
+  const groups = worksheetGroups();
+  const chosen = new Set(groups.filter((group) => group.title !== GLOSSARY_GROUP_TITLE).map((group) => group.id));
+  if (!chosen.size && groups.length) chosen.add(groups[0].id);
+  let size = defaultWorksheetSize();
+  let widths = new Map();
+
+  $("#app").innerHTML = `${pageHeader(
+    `${gradeLabel} · Unit ${course.unit.unitNo}`,
+    "Cursive writing worksheet",
+    "Print this and write each word by hand as you learn it. Trace the grey words first, then write the word yourself on the line underneath.",
+    "For learners",
+  )}
+    <div class="section-stack">
+      <section class="panel">
+        <h2>Choose your words</h2>
+        <p>Tick the word groups you want on the sheet.</p>
+        <div class="cw-groups">${groups.map((group) => `<label class="cw-check"><input type="checkbox" data-cw-group="${escapeHtml(group.id)}" ${chosen.has(group.id) ? "checked" : ""}><span><strong>${escapeHtml(group.title)}</strong><small>${group.words.length} word${group.words.length === 1 ? "" : "s"}</small></span></label>`).join("")}</div>
+      </section>
+      <section class="panel">
+        <h2>Choose your line size</h2>
+        <div class="cw-sizes">${Object.entries(WORKSHEET_SIZES).map(([key, value]) => `<label class="cw-check"><input type="radio" name="cw-size" value="${key}" ${key === size ? "checked" : ""}><span><strong>${escapeHtml(value.label)}</strong><small>${escapeHtml(value.note)}</small></span></label>`).join("")}</div>
+      </section>
+      <section class="panel">
+        <h2>Your sheet</h2>
+        <p id="cw-summary" role="status" aria-live="polite">Getting the handwriting ready…</p>
+        <div class="cw-preview" id="cw-preview"></div>
+        <button class="button primary" id="cw-print" type="button" disabled>${icon("printer")} Print worksheet</button>
+      </section>
+    </div>
+    <style id="cw-style"></style>`;
+
+  const selectedWords = () => groups.filter((group) => chosen.has(group.id)).flatMap((group) => group.words);
+
+  const draw = () => {
+    const geo = worksheetGeometry(size);
+    const words = selectedWords();
+    const pages = worksheetPageCount(words.length, geo);
+    $("#cw-style").textContent = worksheetCss(geo, { print: false });
+    $("#cw-summary").textContent = words.length
+      ? `${words.length} word${words.length === 1 ? "" : "s"} · about ${pages} page${pages === 1 ? "" : "s"} of A4.`
+      : "Tick at least one group of words to make a sheet.";
+    // Two words, so the preview stays a preview. It is drawn by the same
+    // builders the print document uses, so it cannot show a sheet the printer
+    // will not produce.
+    $("#cw-preview").innerHTML = words.slice(0, 2).map((word) => worksheetRowHtml(word, widths, geo)).join("");
+    $("#cw-print").disabled = !words.length;
+  };
+
+  const refreshWidths = () => { widths = measureCursive(selectedWords()); };
+
+  loadCursiveFace().then(() => { refreshWidths(); draw(); }).catch(() => {
+    $("#cw-summary").textContent = "The handwriting font could not be loaded, so the worksheet cannot be drawn. Check your connection and open this page again.";
+  });
+
+  $$('[data-cw-group]').forEach((box) => box.addEventListener("change", () => {
+    if (box.checked) chosen.add(box.dataset.cwGroup); else chosen.delete(box.dataset.cwGroup);
+    refreshWidths();
+    draw();
+  }));
+  $$('input[name="cw-size"]').forEach((radio) => radio.addEventListener("change", () => { size = radio.value; draw(); }));
+  $("#cw-print").addEventListener("click", () => printCursiveWorksheet(selectedWords(), size, widths));
+  icons();
+}
+
+function printCursiveWorksheet(words, size, widths) {
+  if (!words.length) return;
+  const printWindow = window.open("", "_blank", "popup=yes,width=900,height=1000,resizable=yes,scrollbars=yes");
+  if (!printWindow) {
+    toast("Allow pop-ups to print this worksheet.");
+    return;
+  }
+  const geo = worksheetGeometry(size);
+  const title = `Cursive writing · ${gradeLabel} Unit ${course.unit.unitNo}`;
+  printWindow.document.open();
+  printWindow.document.write(`<!doctype html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <title>${escapeHtml(title)} | Ehel Academy English</title>
+      <style>
+        /* font-display:block, not swap: a fallback flash is cosmetic on screen
+           but on paper it is the whole worksheet printed in the wrong hand. The
+           print() call below waits on document.fonts.ready for the same reason. */
+        @font-face { font-family: "${CURSIVE_FAMILY}"; font-weight: 400 700; font-display: block;
+                     src: url("${CURSIVE_FONT_URL}") format("woff2"); }
+        :root { color-scheme: light; }
+        * { box-sizing: border-box; }
+        @page { size: A4 portrait; margin: 14mm; }
+        body { margin: 0; color: #17324d; background: white;
+               font: 3mm/1.4 Arial, Helvetica, sans-serif; }
+        .cw-head { margin: 0 0 6mm; padding-bottom: 3mm; border-bottom: .4mm solid #dce4ea; }
+        .cw-head span { display: block; color: #0f766e; font-weight: 700; font-size: 2.6mm;
+                        text-transform: uppercase; letter-spacing: .06em; }
+        .cw-head h1 { margin: 1.5mm 0 0; font-size: 6mm; line-height: 1.1; }
+        .cw-head p { margin: 1.5mm 0 0; color: #5d6b80; font-size: 2.8mm; }
+        .cw-name { display: flex; gap: 8mm; margin: 3mm 0 0; color: #5d6b80; font-size: 2.8mm; }
+        .cw-name span { flex: 1; border-bottom: .3mm solid #b9c7d2; padding-bottom: 1mm; }
+        .cw-foot { margin-top: 5mm; padding-top: 2mm; border-top: .3mm solid #dce4ea;
+                   color: #5d6b80; font-size: 2.4mm; }
+        ${worksheetCss(geo, { print: true })}
+      </style>
+    </head>
+    <body>
+      <header class="cw-head">
+        <span>${escapeHtml(gradeLabel)} · Unit ${course.unit.unitNo} · ${escapeHtml(course.unit.unitTitle)}</span>
+        <h1>Cursive writing practice</h1>
+        <p>Trace the grey words, then write each word yourself on the line underneath.</p>
+        <div class="cw-name"><span>Name</span><span>Date</span></div>
+      </header>
+      ${words.map((word) => worksheetRowHtml(word, widths, geo)).join("")}
+      <div class="cw-foot">Ehel Academy English · ${escapeHtml(gradeLabel)} · Unit ${course.unit.unitNo} · ${words.length} word${words.length === 1 ? "" : "s"}</div>
+    </body>
+    </html>`);
+  printWindow.document.close();
+  printWindow.focus();
+  // Wait for the face, never for onload alone: a document that has finished
+  // loading has not necessarily finished loading its FONTS, and printing early
+  // renders the whole sheet in the fallback hand.
+  const send = () => {
+    const ready = printWindow.document.fonts?.ready || Promise.resolve();
+    ready.then(() => printWindow.print()).catch(() => printWindow.print());
+  };
+  if (printWindow.document.readyState === "complete") send();
+  else printWindow.addEventListener("load", send);
+  printWindow.addEventListener("afterprint", () => printWindow.close());
+}
+
 // ===================== student resources =====================
 // The learner's counterpart to the Teacher resources button, and the same
 // shape: a switch under the section list that leads to one page. It collects
@@ -9142,6 +9473,16 @@ function gamesTeacherPanel() {
 // card and the entry it opens can never call the same thing two names — the
 // learner reads "Vocabulary" here and finds "Vocabulary" in the list.
 const navLabelOf = (id, fallback = "") => (sections.find(([sectionId]) => sectionId === id) || [])[2] || fallback;
+
+// The page is grouped into categories, in this order. A card carries a
+// `category`; one that names none falls into the first, so a card added later
+// lands somewhere sensible rather than vanishing. A category with no cards is
+// not drawn at all — which is what keeps Worksheets off the page at Grades 5-8
+// and on the Prerequisite unit, with no grade test written here.
+const STUDENT_CATEGORIES = [
+  ["learning", "Learning", "Open any of these whenever you like."],
+  ["worksheets", "Worksheets", "Pages to print and write on by hand."],
+];
 
 function studentResourceCards() {
   // The Prerequisite unit has no unit content to point at: its two pages are
@@ -9171,11 +9512,14 @@ function studentResourceCards() {
   if (gamePack) cards.push({ route: "games", iconName: "gamepad-2", title: navLabelOf("games", "Games"), blurb: "Play with this unit's words and sentences until they stick." });
   cards.push({ route: "reflect", iconName: "sparkles", title: navLabelOf("reflect", "My progress"), blurb: "See what you have finished in this unit, and what comes next." });
   cards.push({ route: "live", iconName: "video", title: navLabelOf("live", "Live sessions"), blurb: "When your class meets your teacher online, the link is here." });
+  // Grades 1-4 only, on the same line the picture dictionary and the picture
+  // books already draw — see the worksheet section above for why.
+  if (BOTH_DESIGNS) cards.push({ category: "worksheets", route: "worksheet", iconName: "pen-line", title: "Cursive writing worksheet", blurb: "Print this unit's words on handwriting lines. Trace each word, then write it yourself." });
   return cards;
 }
 
 function renderStudentResources() {
-  const cards = studentResourceCards().map((card) => {
+  const cardHtml = (card) => {
     const locked = card.route ? !sectionUnlocked(card.route) : false;
     const action = locked
       ? `<small>${icon("lock")} Opens when you get there</small>`
@@ -9188,6 +9532,18 @@ function renderStudentResources() {
       <p>${escapeHtml(card.blurb)}</p>
       ${action}
     </article>`;
+  };
+  const all = studentResourceCards();
+  const groups = STUDENT_CATEGORIES.map(([id, title, blurb]) => {
+    // A card with no category belongs to the first one, so nothing can be added
+    // later and quietly disappear off the page.
+    const cards = all.filter((card) => (card.category || STUDENT_CATEGORIES[0][0]) === id);
+    if (!cards.length) return "";
+    return `<section class="student-resource-group">
+      <h2>${escapeHtml(title)}</h2>
+      <p>${escapeHtml(blurb)}</p>
+      <div class="final-section-grid">${cards.map(cardHtml).join("")}</div>
+    </section>`;
   }).join("");
   $("#app").innerHTML = `${pageHeader(
     `${gradeLabel} · ${isPrereqUnit ? "Prerequisite unit" : `Unit ${course.unit.unitNo}`}`,
@@ -9196,7 +9552,7 @@ function renderStudentResources() {
     "For learners",
   )}
     <div class="final-quiz-intro">
-      <div class="final-section-grid">${cards}</div>
+      ${groups}
       <section class="panel"><h2>Stuck on something?</h2><p>Press <strong>Wehel Tutor</strong> at the bottom of any page and ask. Wehel knows which page you are on, so you can say “I don't understand this” and get help there and then.</p></section>
     </div>`;
   $$('[data-go]').forEach((button) => button.addEventListener("click", () => navigate(button.dataset.go)));
@@ -9248,7 +9604,7 @@ const config = {
   // 92% and could not open the next unit — a support tool gating progression.
   // It stays in the nav and still ticks when used; it just no longer decides
   // whether a unit is finished.
-  nonCountable: ["overview", "live", "final-quiz", "teacherguide", "year-plan", "unit-plan", "story-library"],
+  nonCountable: ["overview", "live", "final-quiz", "teacherguide", "year-plan", "unit-plan", "story-library", "worksheet"],
   gradeSections: [],
   // English draws its own card (renderSectionCompletion): its sections open
   // in a gated chain and its units unlock one another, which the shell's
@@ -9297,6 +9653,7 @@ const config = {
     reflect: () => renderReflect(),
     "final-quiz": () => renderFinalQuiz(),
     teacher: () => (isPrereqUnit ? renderPrereqTeacher() : renderTeacher()),
+    worksheet: () => renderCursiveWorksheet(),
     student: () => renderStudentResources(),
   }),
   bind,

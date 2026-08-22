@@ -957,6 +957,26 @@ body.ebook-watching .course-ebook-illustration img, body.ebook-watching svg.cour
 .student-resource-card .button, .student-resource-card small { margin-top: auto; align-self: flex-start; display: inline-flex; align-items: center; gap: 6px; }
 .student-resource-card small svg { width: 16px; height: 16px; }
 .student-resource-card.is-locked { opacity: .72; }
+/* The Learning / Worksheets split. A heading and a lead line above each grid,
+   drawn only for a category that has cards (renderStudentResources) — so at
+   Grades 5-8, where no worksheet card exists, the page is one group and looks
+   exactly as it did before. */
+.student-resource-group + .student-resource-group { margin-top: 30px; }
+.student-resource-group > h2 { margin: 0 0 4px; }
+.student-resource-group > p { margin: 0 0 14px; color: var(--muted); }
+
+/* The cursive worksheet page. The ruled lines themselves are SVG built in
+   shell/subjects/english.js and styled by the stylesheet it emits into #cw-style,
+   so that geometry is NOT repeated here — only the chrome around it. */
+.cw-groups, .cw-sizes { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 10px; margin-top: 14px; }
+.cw-check { display: flex; align-items: flex-start; gap: 10px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 10px; cursor: pointer; }
+.cw-check:hover { border-color: var(--teal); }
+.cw-check input { margin-top: 3px; flex: none; width: 18px; height: 18px; accent-color: var(--teal); }
+.cw-check span { display: block; min-width: 0; }
+.cw-check strong { display: block; }
+.cw-check small { color: var(--muted); }
+.cw-preview { margin: 16px 0 20px; padding: 18px 20px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); overflow-x: auto; }
+#cw-summary { color: var(--muted); }
 .final-quiz-shell { min-height: 470px; }
 .final-question-meta { min-height: 42px; margin-top: 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; color: var(--muted); font-size: 14px; }
 .final-quiz-actions { min-height: 50px; margin-top: 18px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }

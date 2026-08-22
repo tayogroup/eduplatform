@@ -1078,8 +1078,16 @@ add one.** Do not reason from a single subject's own series. Intensive English's
 highest was v237 on 2026-08-22 and v238 was NOT free — English was already four
 releases past it.
 
-Two ways to get this wrong, both seen the same day:
+Three ways to get this wrong, all seen the same day:
 
+- **Listing ONE subject's directory and adding one.** This is the trap, because
+  it is right about as often as it is wrong and nothing tells you which case you
+  are in. Two sessions used exactly this method within an hour: listing
+  `app/english/` gave v242, which was correct only because English happened to
+  hold the global maximum; listing `app/intensive-english/` gave v238, which was
+  four releases stale. Same method, opposite outcomes, decided entirely by which
+  subject was in front of you. A number that is right by luck is worse than one
+  that is plainly wrong.
 - **Trusting the tool's number without checking storage.** It reads
   `.bunny-appver-manifest.json`, which is per-worktree, so it reports whatever
   this checkout happens to have released. It said "next free: v241" while

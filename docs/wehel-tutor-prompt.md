@@ -537,3 +537,34 @@ aria-label "Question 3 of 6", heading and first words) at send time, capped at
 200 chars in both servers; Grades 5-8 grid pages have no `gc-*` nodes by rule,
 so it is empty there and the teacher works from the section. The contract gate
 holds the role's three rules and the chip modes.
+
+## Grade 1 stored "Teach me the activity" scripts (added 2026-08-20)
+
+Owner decisions, all as recommended: the Virtual teacher's two opening chips
+("Start this activity" + "What's expected of me?") are ONE chip, **Teach me
+the activity**; for Grade/Stage 1 of English, Science, Mathematics, Computing
+and Global Perspectives (not Intensive English — adults) that opening reply is
+**generated once, narrated once, saved and reused** — per unit per section,
+Opus, committed and narrated straight away, English only (Somali via the live
+Erayada af-Soomaali chip). A Grade 1 learner who taps the chip gets the stored
+text and its Thalia clip instantly; the steps after it stay live because they
+depend on what the learner does. Grades 2-8 answer the chip live.
+
+Pieces — `tools/lib/ehel-teacher-scripts.js` is the one definition (section
+rules per subject = the nav lists minus reference/adult/stage pages; the
+combined chip message, held equal to `TEACH_ME_MESSAGE` in shell/wehel.js by
+the contract gate; the speakable-text hash that names a clip):
+`generate-ehel-teacher-scripts.mjs` (drives the dev chat handler in-process —
+the production prompt assembly — writing `<subject>/grade-1/data/
+teacher-scripts.json`, idempotent, `--dry` counts), `generate-ehel-teacher-audio.js`
+(Deepgram Thalia → `teacher-audio/<hash>.mp3` beside the scripts; `--dry`,
+`--orphans --prune`), `check-ehel-teacher-scripts.mjs` (`npm run
+check:teacher-scripts`: every expected activity has a script, hashed to its
+text, with a clip). Both ride the content tier — `upload-content-to-bunny.js`
+carries `teacher-audio/*.mp3` as its one non-JSON exception — and the app
+resolves both from the same data root it reads units from (`courseDataRoot`).
+The stored reply enters the transcript as a real assistant turn (never an
+offline hint) so the live steps continue from it; a missing file, section or
+clip falls back to the live path. The trade-off named in design: a stored
+frame cannot name the exact slide ("word 2, chair") — it addresses the
+section's activity generically and the live step 1 names the card.

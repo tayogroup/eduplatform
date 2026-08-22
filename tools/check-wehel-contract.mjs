@@ -44,8 +44,8 @@ globalThis.location = { hostname: "localhost", port: "4287", search: "", href: "
 globalThis.localStorage = { getItem: () => null, setItem: () => {} };
 
 const wehel = await import(pathToFileURL(SHELL).href);
-const { apiMessages, withoutMediaPlumbing, unitForTutor, UNIT_JSON_LIMIT, withAttachmentBlocks, homeworkContextText, HOMEWORK_CONTEXT_LIMIT, WEHEL_ATTACH_DAILY_LIMIT, teacherPrompts, voiceSegments } = wehel;
-for (const [name, value] of Object.entries({ apiMessages, withoutMediaPlumbing, unitForTutor, UNIT_JSON_LIMIT, withAttachmentBlocks, homeworkContextText, HOMEWORK_CONTEXT_LIMIT, WEHEL_ATTACH_DAILY_LIMIT, teacherPrompts, voiceSegments })) {
+const { apiMessages, withoutMediaPlumbing, unitForTutor, UNIT_JSON_LIMIT, withAttachmentBlocks, homeworkContextText, HOMEWORK_CONTEXT_LIMIT, WEHEL_ATTACH_DAILY_LIMIT, teacherPrompts, voiceSegments, storedTeacherScript } = wehel;
+for (const [name, value] of Object.entries({ apiMessages, withoutMediaPlumbing, unitForTutor, UNIT_JSON_LIMIT, withAttachmentBlocks, homeworkContextText, HOMEWORK_CONTEXT_LIMIT, WEHEL_ATTACH_DAILY_LIMIT, teacherPrompts, voiceSegments, storedTeacherScript })) {
   if (value === undefined) fail("shell/wehel.js no longer exports what this gate checks", `${name} is missing — restore the export rather than deleting the check`);
 }
 if (failures.length) { report(); process.exit(1); }
@@ -340,6 +340,21 @@ if (phpCap !== UNIT_JSON_LIMIT || devCap !== UNIT_JSON_LIMIT) {
   if (!Array.isArray(chips) || chips.length < 3 || chips.some((chip) => chip.mode !== "virtual-teacher")) {
     fail("A virtual-teacher chip does not carry the virtual-teacher mode", JSON.stringify(chips.map((chip) => [chip.label, chip.mode])));
   }
+  // The opening chip is ONE chip ("Teach me the activity" — Start + What's
+  // expected, merged on the owner's instruction), marked `teach` so Grade 1
+  // can answer it from the stored script; the two it replaced must not return.
+  const labels = chips.map((chip) => chip.label);
+  const teachChip = chips.find((chip) => chip.teach);
+  if (!teachChip || teachChip.label !== "Teach me the activity") fail("The combined 'Teach me the activity' chip is missing or not marked teach", JSON.stringify(labels));
+  if (labels.some((label) => /Start this activity|expected of me/i.test(label))) fail("The merged chips came back", JSON.stringify(labels));
+  // The live ask and the stored-script generator must ask the same thing.
+  const libMessage = (fs.readFileSync(path.join(ROOT, "tools", "lib", "ehel-teacher-scripts.js"), "utf8").match(/TEACH_ME_MESSAGE = "([^"]+)"/) || [])[1];
+  if (!teachChip || libMessage !== teachChip.message) fail("TEACH_ME_MESSAGE differs between shell/wehel.js and tools/lib/ehel-teacher-scripts.js", `a stored Grade 1 script would answer a different ask than the live chip sends`);
+  // Stored-script lookup is by unit number and section id, and tolerates every
+  // missing layer — a miss is the live path, never a throw.
+  if (storedTeacherScript(null, 1, "words") !== null || storedTeacherScript({}, 1, "words") !== null) fail("storedTeacherScript does not tolerate a missing scripts file", "a Grade 1 unit with no scripts yet must fall back to the live path");
+  const found = storedTeacherScript({ units: { 3: { words: { text: "Hello class.", hash: "abc" } } } }, 3, "words");
+  if (!found || found.text !== "Hello class.") fail("storedTeacherScript does not find a stored entry by unit and section", JSON.stringify(found));
   // The activity-hint cap lives in both servers; keep them equal.
   const phpActivity = capIn(PHP, /\$clean\(\$payload\['activityHint'\][^,]*,\s*(\d+)\)/);
   const devActivity = capIn(DEV, /clean\(payload\.activityHint,\s*(\d+)\)/);

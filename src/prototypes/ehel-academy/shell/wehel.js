@@ -208,13 +208,20 @@ export function setWehelPersona(meta, persona) {
   storageSet(personaStorageKey(meta), persona === "teacher" ? "teacher" : "tutor");
 }
 
+// The combined opening chip — "Start this activity" and "What's expected of
+// me?" in one (owner decision 2026-08-20). The same message the Grade 1
+// generator sends when it pre-generates this reply (tools/
+// generate-ehel-teacher-scripts.mjs, TEACH_ME_MESSAGE — the gate holds the
+// two equal), so a stored script and a live one answer the same ask.
+export const TEACH_ME_MESSAGE = "Be my teacher for this activity: explain what it is and why we are doing it, tell me what you expect from me, then take me through it step by step — one step at a time.";
+
 // The flow itself, as chips: every one carries the virtual-teacher mode so the
 // playbook is in force whichever the learner presses, and the wording says the
-// move in the learner's own voice.
+// move in the learner's own voice. `teach` marks the opening chip, which for
+// Grade 1 is answered from the stored script when one exists (see submit).
 export function teacherPrompts() {
   return [
-    { label: "Start this activity", mode: "virtual-teacher", message: "Please be my teacher for this activity: explain what it is and why we are doing it, then take me through it step by step — one step at a time — and tell me what you expect from me at each step." },
-    { label: "What's expected of me?", mode: "virtual-teacher", message: "What exactly are you expecting from me in this activity? Tell me what a good piece of work looks like here." },
+    { label: "Teach me the activity", mode: "virtual-teacher", teach: true, message: TEACH_ME_MESSAGE },
     { label: "Done — next step", mode: "virtual-teacher", message: "I have done that step. Please check it and give me the next step." },
     { label: "I'm stuck", mode: "virtual-teacher", message: "I am stuck on this step. Help me with a hint, not the answer." },
     { label: "Explain that again", mode: "virtual-teacher", message: "Please explain that step again, a different way and more simply." },
@@ -714,6 +721,30 @@ function stopReplyAudio() {
   if (audio.onended) audio.onended();
 }
 
+/** Play a pre-rendered clip by URL (a stored Grade 1 teacher script's audio).
+ * Resolves when it finishes; rejects when it cannot load or play so the
+ * caller can fall back to the live voice. Shares replyAudio so Stop, a new
+ * question and a route change all silence it like any other reply. */
+export async function playClipUrl(url) {
+  stopBrowserSpeech();
+  await new Promise((resolve, reject) => {
+    const audio = new Audio(url);
+    let settled = false;
+    const finish = (failed) => () => {
+      if (settled) return;
+      settled = true;
+      if (replyAudio === audio) replyAudio = null;
+      if (failed) reject(new Error("The stored clip could not be played."));
+      else resolve();
+    };
+    audio.onended = finish(false);
+    audio.onerror = finish(true);
+    replyAudio = audio;
+    audio.play().catch(finish(true));
+  });
+  return true;
+}
+
 /** Speak text in the Ehel voice. Resolves when the clip finishes; rejects when
  * the voice endpoint cannot be reached so the caller can fall back. */
 export async function speakEhelVoice(text, { rate = 1 } = {}) {
@@ -1115,6 +1146,36 @@ function ensurePanelStyle() {
   document.head.appendChild(style);
 }
 
+// --- stored Grade 1 teacher scripts --------------------------------------------
+// For Grade/Stage 1 the Virtual teacher's opening reply is generated once,
+// narrated once, saved, and reused (owner decision 2026-08-20): a learner who
+// taps "Teach me the activity" gets the stored text and its clip instantly —
+// no model call, no TTS call, no wait, the same quality every time. The
+// scripts live on the content tier beside the units
+// (<data root>/teacher-scripts.json, written by
+// tools/generate-ehel-teacher-scripts.mjs) and their clips beside them
+// (teacher-audio/<hash>.mp3, tools/generate-ehel-teacher-audio.js). Only the
+// opening is stored — the steps after it depend on what the learner does and
+// stay live. A missing file, section or clip falls back to the live path, so
+// nothing can dead-end. Fetched once per course per page load.
+const teacherScriptsPromises = new Map();
+export function fetchTeacherScripts(meta) {
+  const key = `${meta.subject}/${meta.grade}`;
+  if (!teacherScriptsPromises.has(key)) {
+    teacherScriptsPromises.set(key, fetch(new URL("teacher-scripts.json", courseDataRoot(meta.subject, meta.grade)))
+      .then((response) => (response.ok ? response.json() : null))
+      .catch(() => null));
+  }
+  return teacherScriptsPromises.get(key);
+}
+export function storedTeacherScript(scripts, unitNo, sectionId) {
+  const entry = scripts?.units?.[String(unitNo)]?.[String(sectionId)];
+  return entry && entry.text && entry.hash ? entry : null;
+}
+export function teacherClipUrl(meta, entry) {
+  return new URL(`teacher-audio/${entry.hash}.mp3`, courseDataRoot(meta.subject, meta.grade)).href;
+}
+
 // --- attachment preparation ----------------------------------------------------
 // A phone photo of a worksheet is 3-8MB; the homework on it is perfectly
 // readable at 1400px, and the server caps each block anyway. So photos are
@@ -1225,6 +1286,9 @@ export function mountWehelChat(options) {
   // Files picked but not yet sent. They ride the next message, then clear;
   // they are never persisted (see withAttachmentBlocks for why).
   let pendingAttachments = [];
+  // Warm the stored Grade 1 teacher scripts so the first "Teach me the
+  // activity" tap is instant; a miss just leaves the live path.
+  if (Number(meta.grade) === 1) fetchTeacherScripts(meta);
 
   // Replies are spoken with the Ehel narration voice (ElevenLabs Flash v2.5,
   // rendered per reply through the quiz TTS endpoint); the browser engine is
@@ -1287,6 +1351,22 @@ export function mountWehelChat(options) {
   // speaks first; the browser engine steps in only when the voice endpoint
   // cannot be reached, so an offline hint is still read aloud.
   async function speakReply(index, text) {
+    // A stored Grade 1 teacher script: play its pre-rendered clip (Thalia,
+    // rendered once by generate-ehel-teacher-audio.js). If the clip cannot be
+    // fetched or played, fall through to the live voice below — the text is
+    // the same either way.
+    if (index >= 0 && messages[index]?.clip) {
+      speakingIndex = index;
+      render();
+      try {
+        await playClipUrl(messages[index].clip);
+        if (speakingIndex === index) { speakingIndex = null; render(); }
+        return;
+      } catch {
+        // Fall through to the live path with the same text; its own finally
+        // clears the highlight.
+      }
+    }
     // A Somali translation (the Erayada af-Soomaali chip): the whole bubble is
     // Somali, so the Azure Ubah voice reads all of it — in sentence chunks
     // under the Somali endpoint's 600-character cap, one after another,
@@ -1419,7 +1499,7 @@ export function mountWehelChat(options) {
         ${messages.length ? messages.map(bubble).join("") : bubble({ role: "assistant", text: greeting }, -1)}
         ${busy ? `<article class="ai-message assistant is-thinking"><span class="w-avatar" role="img" aria-label="${escapeHtml(tutorLabel)}">${wehelIcon("sparkle")}</span><div class="w-body"><strong class="w-who">${escapeHtml(tutorLabel)}</strong><p class="w-text"><span class="w-dot"></span><span class="w-dot"></span><span class="w-dot"></span><span class="sr-only">is thinking…</span></p></div></article>` : ""}
       </div>
-      <div class="ai-prompts">${prompts.map((prompt) => `<button data-wehel-prompt="${escapeHtml(prompt.message)}" data-wehel-mode="${escapeHtml(prompt.mode || "")}"${prompt.somaliReply ? ' data-wehel-somali-reply="1"' : ""} type="button" ${busy ? "disabled" : ""}>${escapeHtml(prompt.label)}</button>`).join("")}</div>
+      <div class="ai-prompts">${prompts.map((prompt) => `<button data-wehel-prompt="${escapeHtml(prompt.message)}" data-wehel-mode="${escapeHtml(prompt.mode || "")}"${prompt.somaliReply ? ' data-wehel-somali-reply="1"' : ""}${prompt.teach ? ' data-wehel-teach="1"' : ""} type="button" ${busy ? "disabled" : ""}>${escapeHtml(prompt.label)}</button>`).join("")}</div>
       ${pendingAttachments.length ? `<div class="w-attach-row">${pendingAttachments.map((file, index) => `<span class="w-attach-chip"><span>${escapeHtml(file.name)}</span><button type="button" data-wehel-detach="${index}" aria-label="Remove ${escapeHtml(file.name)}">×</button></span>`).join("")}</div>` : ""}
       <form class="ai-compose" id="wehel-form">
         <label class="sr-only" for="wehel-input">Ask ${escapeHtml(tutorLabel)}</label>
@@ -1493,7 +1573,7 @@ export function mountWehelChat(options) {
         ? `${tutorLabel} is staying on ${chosen.label} — still happy to answer anything else.`
         : `${tutorLabel} is back to the whole unit.`);
     });
-    container.querySelectorAll("[data-wehel-prompt]").forEach((button) => button.addEventListener("click", () => submit(button.dataset.wehelPrompt, "text", button.dataset.wehelMode || "", { somaliReply: button.dataset.wehelSomaliReply === "1" })));
+    container.querySelectorAll("[data-wehel-prompt]").forEach((button) => button.addEventListener("click", () => submit(button.dataset.wehelPrompt, "text", button.dataset.wehelMode || "", { somaliReply: button.dataset.wehelSomaliReply === "1", teach: button.dataset.wehelTeach === "1" })));
     container.querySelector("#wehel-form").addEventListener("submit", (event) => {
       event.preventDefault();
       const input = container.querySelector("#wehel-input");
@@ -1540,11 +1620,29 @@ export function mountWehelChat(options) {
   // somaliReply: the Erayada af-Soomaali chip — the reply is a Somali
   // translation, stored marked `somali` so its narration goes to the Azure
   // Ubah voice (whole bubble), and narrated right away.
-  async function submit(text, channel, modeHint = "", { somaliReply = false } = {}) {
+  // teach: the "Teach me the activity" chip — on Grade 1, answered from the
+  // stored script for this unit and section when one exists (text + clip,
+  // no network); otherwise the live path below.
+  async function submit(text, channel, modeHint = "", { somaliReply = false, teach = false } = {}) {
     if (busy) return;
     stopBrowserSpeech();
     speakingIndex = null;
     somaliSpeakingIndex = null;
+    if (teach && Number(meta.grade) === 1) {
+      const sectionId = typeof options.sectionId === "function" ? options.sectionId() : options.sectionId;
+      const entry = storedTeacherScript(await fetchTeacherScripts(meta), meta.unitNo, sectionId);
+      if (entry) {
+        // A real assistant turn, not an offline hint: the model sees it as its
+        // own opening when the live steps continue from here.
+        append({ role: "user", text });
+        append({ role: "assistant", text: entry.text, stored: true, clip: teacherClipUrl(meta, entry) });
+        render();
+        const exchanges = messages.filter((item) => item.role === "assistant" && !item.offline).length;
+        if (options.onExchange) options.onExchange(exchanges);
+        if (browserSpeechSupported && speakReplies) speakReply(messages.length - 1, entry.text);
+        return;
+      }
+    }
     // Attachments ride this one message. The marker keeps them visible in the
     // transcript (and tells the model on later turns that a file accompanied
     // this question) without a megabyte of base64 entering localStorage.

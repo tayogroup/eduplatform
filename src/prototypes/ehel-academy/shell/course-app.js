@@ -835,6 +835,9 @@ export function createCourseApp(config) {
         chatPanel = mountWehelChat({
           container: drawer.querySelector(".wehel-drawer-body"),
           sectionHint,
+          // The section's id as well as its label: the stored Grade 1 teacher
+          // scripts are keyed by id, read at send time like the hint.
+          sectionId: () => route,
           activityHint,
           ...config.wehelOptions(),
         });

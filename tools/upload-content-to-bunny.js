@@ -87,7 +87,11 @@ function walk(dir, rel = "") {
     const childRel = rel ? `${rel}/${name}` : name;
     const st = fs.statSync(path.join(dir, childRel));
     if (st.isDirectory()) out.push(...walk(dir, childRel));
-    else if (st.isFile() && name.endsWith(".json")) out.push(childRel);
+    // JSON is the content tier. The one audio exception lives here on purpose:
+    // the Grade 1 "Teach me the activity" clips (teacher-audio/<hash>.mp3,
+    // generate-ehel-teacher-audio.js) sit beside the scripts they voice, so the
+    // app resolves both from one data root and one upload carries both.
+    else if (st.isFile() && (name.endsWith(".json") || (name.endsWith(".mp3") && /(^|\/)teacher-audio\//.test(childRel)))) out.push(childRel);
   }
   return out;
 }

@@ -401,6 +401,54 @@ function local_prequran_uses_branded_login(?stdClass $consumer): bool {
 }
 
 /**
+ * The branded change-password page for the current request, or null.
+ *
+ * A forced password change is a new learner's very first screen after signing
+ * in, so it should not be Moodle's. This deliberately does NOT gate on
+ * local_prequran_uses_branded_login(): that resolves the consumer from the
+ * request host, and a host missing from local_prequran_consumer_domain would
+ * silently drop the learner back onto the Moodle page — the exact failure this
+ * exists to remove. The branded page brands itself from the consumer when one
+ * resolves and from the site otherwise.
+ *
+ * Null means "leave this to Moodle": site admins, "logged in as" sessions, and
+ * any auth plugin that owns its own password change (LDAP and friends) must
+ * keep the core page, which is the only one that handles them correctly.
+ */
+function local_prequran_branded_change_password_url(): ?moodle_url {
+    global $USER;
+
+    if (!isloggedin() || isguestuser() || is_siteadmin($USER)) {
+        return null;
+    }
+
+    if (\core\session\manager::is_loggedinas()) {
+        return null;
+    }
+
+    $consumer = local_prequran_host_consumer_context();
+
+    try {
+        $userauth = get_auth_plugin((string)$USER->auth);
+        if (!$userauth->can_change_password() || $userauth->change_password_url()) {
+            return null;
+        }
+    } catch (Throwable $e) {
+        return null;
+    }
+
+    $params = [];
+    if ((string)($consumer->slug ?? '') !== '') {
+        $params['consumer'] = (string)$consumer->slug;
+    }
+    if ((int)($consumer->workspaceid ?? 0) > 0) {
+        $params['workspaceid'] = (int)$consumer->workspaceid;
+    }
+
+    return new moodle_url('/local/hubredirect/change_password.php', $params);
+}
+
+/**
  * Keep Pre-Quraan learners out of Moodle's generic pages.
  *
  * Administrators stay in Moodle. Teachers and parents go to the Moodle
@@ -414,6 +462,27 @@ function local_prequran_before_http_headers(): void {
         || (defined('AJAX_SCRIPT') && AJAX_SCRIPT)
         || (defined('WS_SERVER') && WS_SERVER)) {
         return;
+    }
+
+    // Moodle's own change-password page is never shown to a learner. This sits
+    // above the redirect_moodle_dashboard switch because it is a branding rule,
+    // not part of keeping learners out of Moodle's generic pages;
+    // require_login() sends every forced user to that one URL, so this is the
+    // only place the whole flow can be caught.
+    //
+    // `return=1` is core's post-change hand-off and `pqhcore=1` is the branded
+    // page's own escape hatch for accounts it declines to handle; both must
+    // reach the core page or they would bounce straight back here.
+    $requestscript = str_replace('\\', '/', (string)($_SERVER['SCRIPT_NAME'] ?? ''));
+    $requestpath = parse_url((string)($_SERVER['REQUEST_URI'] ?? ''), PHP_URL_PATH) ?: $requestscript;
+    $requestpath = '/' . ltrim(str_replace('\\', '/', $requestpath), '/');
+    if (($requestpath === '/login/change_password.php' || $requestscript === '/login/change_password.php')
+        && !optional_param('return', 0, PARAM_BOOL)
+        && !optional_param('pqhcore', 0, PARAM_BOOL)) {
+        $brandedurl = local_prequran_branded_change_password_url();
+        if ($brandedurl) {
+            redirect($brandedurl);
+        }
     }
 
     if ((string)get_config('local_prequran', 'redirect_moodle_dashboard') === '0') {

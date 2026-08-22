@@ -51,6 +51,13 @@ const KEY = process.env.BUNNY_KEY;
 // the output said otherwise: the word "uploaded" in the summary was the only
 // clue, and it reads the same either way.
 const DRY = process.argv.slice(2).includes("--dry");
+// --only <substring>: upload only remote paths containing it. Exists because a
+// subject's data tree is shared by several sessions, and "upload everything
+// that differs for english" ships whatever else is sitting there — the Grade 1
+// teacher scripts/clips release needed to carry exactly teacher-* and nothing
+// another session had not itself chosen to ship.
+const onlyAt = process.argv.indexOf("--only");
+const ONLY = onlyAt !== -1 ? String(process.argv[onlyAt + 1] || "") : "";
 
 // The key is only needed for a real run. Saying so in the message means a
 // reader who has no key still discovers the flag that works without one.
@@ -71,7 +78,7 @@ const stageDirFor = (subject, n) => (STAGE_DIR[subject] || ((x) => `grade-${x}`)
 // subject nobody had wired up yet — ran to completion, reported success, and
 // uploaded the default set instead of what was asked for. Same guard the media
 // uploader already carries.
-const unknown = process.argv.slice(2).filter((s) => !s.startsWith("--") && !SUBJECTS.includes(s));
+const unknown = process.argv.slice(2).filter((s, i, all) => !s.startsWith("--") && all[i - 1] !== "--only" && !SUBJECTS.includes(s));
 if (unknown.length) {
   console.error(`unknown subject(s): ${unknown.join(", ")}\nknown: ${SUBJECTS.join(", ")}`);
   process.exit(1);
@@ -109,6 +116,13 @@ function buildList() {
         list.push({ local, remote: `content/${subject}/g${gg}/${rel}`, hash: sha1(fs.readFileSync(local)) });
       }
     }
+  }
+  // --only narrows to matching remote paths; the count of what it dropped is
+  // printed so a narrowed run never reads as "everything is up to date".
+  if (ONLY) {
+    const kept = list.filter((item) => item.remote.includes(ONLY));
+    console.log(`--only ${ONLY}: ${kept.length} of ${list.length} candidate file(s) kept`);
+    return kept;
   }
   return list;
 }

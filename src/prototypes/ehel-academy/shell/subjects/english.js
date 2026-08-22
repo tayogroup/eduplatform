@@ -9261,12 +9261,50 @@ function worksheetRowHtml(word, widths, geo) {
   </div>`;
 }
 
+// A vocabulary group is a page of its own: its heading, then its words. The unit
+// teaches these as sets — "Jobs and Equipment", "Numbers 1 to 12" — and a learner
+// working through one sitting wants the set in front of them, not a page that
+// ends halfway through one group and starts another. A group longer than a page
+// runs on; only the START of a group is forced to a page break.
+// The heading also carries the grade and unit, which a footer used to. A footer
+// sits after the last row, so on a sheet whose last group just fills its page it
+// was pushed onto a page of its own — a whole sheet of paper for one grey line.
+// Every group starts a page, so putting the identification here puts it on the
+// first page of every group instead, and it cannot orphan.
+// `rows` draws fewer rows than the group holds — the on-page preview shows two.
+// The heading still counts the WHOLE group: it is describing the group, not the
+// sample, and a preview headed "2 words" over a seven-word group misreports what
+// will print.
+function worksheetGroupHtml(group, widths, geo, { first, rows = group.words.length }) {
+  return `<section class="cw-group${first ? " is-first" : ""}">
+    <header class="cw-group-head">
+      <span>${escapeHtml(group.title)}</span>
+      <small>${group.words.length} word${group.words.length === 1 ? "" : "s"}</small>
+      <em>${escapeHtml(gradeLabel)} · Unit ${course.unit.unitNo}</em>
+    </header>
+    ${group.words.slice(0, rows).map((word) => worksheetRowHtml(word, widths, geo)).join("")}
+  </section>`;
+}
+
 // One stylesheet, used by the on-page preview AND by the print document, so the
 // preview cannot promise something the printed sheet does not deliver. Sizes are
 // in mm throughout; the svg carries its own viewBox, so `width` is all the print
 // side has to pin.
 function worksheetCss(geo, { print }) {
   return `
+    /* break-before on the ADJACENT sibling selector, not on every group: putting it
+       on all of them makes the printer emit a blank leading page before the first.
+       No backticks in this comment — the whole stylesheet is a template literal, so
+       one would end the string and take the rest of the module with it. */
+    .cw-group + .cw-group { break-before: page; page-break-before: always; }
+    .cw-group-head { display: flex; align-items: baseline; gap: 3mm;
+                     margin: 0 0 ${print ? "4mm" : "12px"}; padding-bottom: ${print ? "1.5mm" : "6px"};
+                     border-bottom: ${print ? ".3mm" : "1px"} solid #dce4ea; }
+    .cw-group-head span { color: #0f766e; font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
+                          font-size: ${print ? "3mm" : "13px"}; }
+    .cw-group-head small { color: #5d6b80; font-size: ${print ? "2.6mm" : "12px"}; }
+    .cw-group-head em { margin-left: auto; color: #5d6b80; font-style: normal;
+                        font-size: ${print ? "2.4mm" : "12px"}; }
     .cw-row { break-inside: avoid; page-break-inside: avoid; margin: 0 0 ${geo.gapWords}mm; }
     .cw-label { margin: 0 0 .8mm; color: #5d6b80; letter-spacing: .04em;
                 font: 500 ${print ? "2.7mm" : "12px"}/1.2 Arial, Helvetica, sans-serif; }
@@ -9307,11 +9345,100 @@ function worksheetGroups() {
 // match is an acceptable default here in a way it would not be in a gate.
 const GLOSSARY_GROUP_TITLE = "Words from our stories";
 
-function worksheetPageCount(wordCount, geo) {
-  if (!wordCount) return 0;
-  const first = Math.max(1, Math.floor((SHEET_H - SHEET_HEADER) / geo.row));
-  const rest = Math.max(1, Math.floor(SHEET_H / geo.row));
-  return wordCount <= first ? 1 : 1 + Math.ceil((wordCount - first) / rest);
+// The chrome of the printed sheet, and the CSS for it. Both are builders rather
+// than inline markup because worksheetPageCount() below renders them into an
+// off-screen probe to measure their real heights — a second copy would drift and
+// the page count would quietly start lying.
+function worksheetPrintChromeCss() {
+  return `
+    :root { color-scheme: light; }
+    * { box-sizing: border-box; }
+    @page { size: A4 portrait; margin: 14mm; }
+    body { margin: 0; color: #17324d; background: white;
+           font: 3mm/1.4 Arial, Helvetica, sans-serif; }
+    .cw-head { margin: 0 0 6mm; padding-bottom: 3mm; border-bottom: .4mm solid #dce4ea; }
+    .cw-head span { display: block; color: #0f766e; font-weight: 700; font-size: 2.6mm;
+                    text-transform: uppercase; letter-spacing: .06em; }
+    .cw-head h1 { margin: 1.5mm 0 0; font-size: 6mm; line-height: 1.1; }
+    .cw-head p { margin: 1.5mm 0 0; color: #5d6b80; font-size: 2.8mm; }
+    .cw-name { display: flex; gap: 8mm; margin: 3mm 0 0; color: #5d6b80; font-size: 2.8mm; }
+    .cw-name span { flex: 1; border-bottom: .3mm solid #b9c7d2; padding-bottom: 1mm; }
+`;
+}
+
+function worksheetSheetHeaderHtml() {
+  return `<header class="cw-head">
+    <span>${escapeHtml(gradeLabel)} · Unit ${course.unit.unitNo} · ${escapeHtml(course.unit.unitTitle)}</span>
+    <h1>Cursive writing practice</h1>
+    <p>Trace the grey words, then write each word yourself on the line underneath.</p>
+    <div class="cw-name"><span>Name</span><span>Date</span></div>
+  </header>`;
+}
+
+// Pages, counted per GROUP because each one starts on a fresh page.
+//
+// The heights are MEASURED, not derived from the geometry constants above. The
+// arithmetic version was two pages out of seventeen on a six-group Grade 2 sheet,
+// and the reasons are all things arithmetic cannot see: a row's trailing margin is
+// dropped where a page breaks, a heading's height is its line box rather than the
+// millimetres it was specified in, and the engine rounds. So the probe renders the
+// real chrome, the real group heading and one real row into an off-screen 182mm
+// box — mm resolve at 96dpi on screen exactly as they do in print — and asks the
+// engine the question the engine will answer at print time.
+//
+// The probe is built and thrown away per call. It is one layout of three small
+// elements, and caching it across size changes was the alternative — which is a
+// stale-cache bug waiting for the first person to add a control.
+function worksheetProbe(geo) {
+  const probe = document.createElement("div");
+  probe.setAttribute("aria-hidden", "true");
+  probe.style.cssText = "position:absolute;left:-10000mm;top:0;width:182mm;visibility:hidden;pointer-events:none";
+  probe.innerHTML = `<style>${worksheetPrintChromeCss()}${worksheetCss(geo, { print: true })}</style>`
+    + `<div style="width:100mm" id="cw-probe-mm"></div>`
+    + worksheetSheetHeaderHtml()
+    + worksheetGroupHtml({ title: "Probe", words: ["probe"] }, new Map([["probe", 2.2]]), geo, { first: true });
+  document.body.appendChild(probe);
+  // WITH margins. getBoundingClientRect excludes them, and taking the row's height
+  // from it while separately allowing for the gap discounted that gap twice — the
+  // estimate then claimed 8 rows on a page that holds 6, and ran 8 pages short on a
+  // 183-word group. The row is the one box measured bare, because its bottom margin
+  // is exactly what does NOT have to fit before a break.
+  const withMargins = (selector) => {
+    const element = probe.querySelector(selector);
+    const style = getComputedStyle(element);
+    return element.getBoundingClientRect().height
+      + (parseFloat(style.marginTop) || 0) + (parseFloat(style.marginBottom) || 0);
+  };
+  const row = probe.querySelector(".cw-row");
+  const measurement = {
+    perMm: probe.querySelector("#cw-probe-mm").getBoundingClientRect().width / 100,
+    sheetHeader: withMargins(".cw-head"),
+    groupHeader: withMargins(".cw-group-head"),
+    row: row.getBoundingClientRect().height,
+    rowGap: parseFloat(getComputedStyle(row).marginBottom) || 0,
+  };
+  probe.remove();
+  return measurement;
+}
+
+function worksheetPageCount(chosenGroups, geo) {
+  if (!chosenGroups.length) return 0;
+  const probe = worksheetProbe(geo);
+  if (!probe.perMm || !probe.row) return 0;
+  const pageHeight = SHEET_H * probe.perMm;
+  let pages = 0;
+  chosenGroups.forEach((group, index) => {
+    // Every group starts a page; the first shares its page with the sheet header.
+    pages += 1;
+    let left = pageHeight - probe.groupHeader - (index === 0 ? probe.sheetHeader : 0);
+    for (let word = 0; word < group.words.length; word += 1) {
+      // The row itself has to fit; the gap after it does not, so it is only ever
+      // subtracted from what remains.
+      if (probe.row > left) { pages += 1; left = pageHeight; }
+      left -= probe.row + probe.rowGap;
+    }
+  });
+  return pages;
 }
 
 function renderCursiveWorksheet() {
@@ -9351,20 +9478,23 @@ function renderCursiveWorksheet() {
     </div>
     <style id="cw-style"></style>`;
 
-  const selectedWords = () => groups.filter((group) => chosen.has(group.id)).flatMap((group) => group.words);
+  const selectedGroups = () => groups.filter((group) => chosen.has(group.id));
+  const selectedWords = () => selectedGroups().flatMap((group) => group.words);
 
   const draw = () => {
     const geo = worksheetGeometry(size);
+    const picked = selectedGroups();
     const words = selectedWords();
-    const pages = worksheetPageCount(words.length, geo);
+    const pages = worksheetPageCount(picked, geo);
     $("#cw-style").textContent = worksheetCss(geo, { print: false });
     $("#cw-summary").textContent = words.length
-      ? `${words.length} word${words.length === 1 ? "" : "s"} · about ${pages} page${pages === 1 ? "" : "s"} of A4.`
+      ? `${words.length} word${words.length === 1 ? "" : "s"} in ${picked.length} group${picked.length === 1 ? "" : "s"} · about ${pages} page${pages === 1 ? "" : "s"} of A4. Each group starts on its own page.`
       : "Tick at least one group of words to make a sheet.";
-    // Two words, so the preview stays a preview. It is drawn by the same
-    // builders the print document uses, so it cannot show a sheet the printer
-    // will not produce.
-    $("#cw-preview").innerHTML = words.slice(0, 2).map((word) => worksheetRowHtml(word, widths, geo)).join("");
+    // The first group's heading and its first two words, so the preview shows the
+    // shape of a page rather than a pair of loose lines. Drawn by the same builders
+    // the print document uses, so it cannot show a sheet the printer will not
+    // produce.
+    $("#cw-preview").innerHTML = picked[0] ? worksheetGroupHtml(picked[0], widths, geo, { first: true, rows: 2 }) : "";
     $("#cw-print").disabled = !words.length;
   };
 
@@ -9380,11 +9510,12 @@ function renderCursiveWorksheet() {
     draw();
   }));
   $$('input[name="cw-size"]').forEach((radio) => radio.addEventListener("change", () => { size = radio.value; draw(); }));
-  $("#cw-print").addEventListener("click", () => printCursiveWorksheet(selectedWords(), size, widths));
+  $("#cw-print").addEventListener("click", () => printCursiveWorksheet(selectedGroups(), size, widths));
   icons();
 }
 
-function printCursiveWorksheet(words, size, widths) {
+function printCursiveWorksheet(chosenGroups, size, widths) {
+  const words = chosenGroups.flatMap((group) => group.words);
   if (!words.length) return;
   const printWindow = window.open("", "_blank", "popup=yes,width=900,height=1000,resizable=yes,scrollbars=yes");
   if (!printWindow) {
@@ -9405,32 +9536,13 @@ function printCursiveWorksheet(words, size, widths) {
            print() call below waits on document.fonts.ready for the same reason. */
         @font-face { font-family: "${CURSIVE_FAMILY}"; font-weight: 400 700; font-display: block;
                      src: url("${CURSIVE_FONT_URL}") format("woff2"); }
-        :root { color-scheme: light; }
-        * { box-sizing: border-box; }
-        @page { size: A4 portrait; margin: 14mm; }
-        body { margin: 0; color: #17324d; background: white;
-               font: 3mm/1.4 Arial, Helvetica, sans-serif; }
-        .cw-head { margin: 0 0 6mm; padding-bottom: 3mm; border-bottom: .4mm solid #dce4ea; }
-        .cw-head span { display: block; color: #0f766e; font-weight: 700; font-size: 2.6mm;
-                        text-transform: uppercase; letter-spacing: .06em; }
-        .cw-head h1 { margin: 1.5mm 0 0; font-size: 6mm; line-height: 1.1; }
-        .cw-head p { margin: 1.5mm 0 0; color: #5d6b80; font-size: 2.8mm; }
-        .cw-name { display: flex; gap: 8mm; margin: 3mm 0 0; color: #5d6b80; font-size: 2.8mm; }
-        .cw-name span { flex: 1; border-bottom: .3mm solid #b9c7d2; padding-bottom: 1mm; }
-        .cw-foot { margin-top: 5mm; padding-top: 2mm; border-top: .3mm solid #dce4ea;
-                   color: #5d6b80; font-size: 2.4mm; }
+        ${worksheetPrintChromeCss()}
         ${worksheetCss(geo, { print: true })}
       </style>
     </head>
     <body>
-      <header class="cw-head">
-        <span>${escapeHtml(gradeLabel)} · Unit ${course.unit.unitNo} · ${escapeHtml(course.unit.unitTitle)}</span>
-        <h1>Cursive writing practice</h1>
-        <p>Trace the grey words, then write each word yourself on the line underneath.</p>
-        <div class="cw-name"><span>Name</span><span>Date</span></div>
-      </header>
-      ${words.map((word) => worksheetRowHtml(word, widths, geo)).join("")}
-      <div class="cw-foot">Ehel Academy English · ${escapeHtml(gradeLabel)} · Unit ${course.unit.unitNo} · ${words.length} word${words.length === 1 ? "" : "s"}</div>
+      ${worksheetSheetHeaderHtml()}
+      ${chosenGroups.map((group, index) => worksheetGroupHtml(group, widths, geo, { first: index === 0 })).join("")}
     </body>
     </html>`);
   printWindow.document.close();

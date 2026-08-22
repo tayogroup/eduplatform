@@ -977,6 +977,36 @@ body.ebook-watching .course-ebook-illustration img, body.ebook-watching svg.cour
 .cw-check small { color: var(--muted); }
 .cw-preview { margin: 16px 0 20px; padding: 18px 20px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); overflow-x: auto; }
 #cw-summary { color: var(--muted); }
+
+/* The handwriting animation. Stroke geometry lives in shell/subjects/cursive-strokes.js
+   and the SVG is built in english.js; only presentation is here. */
+.hw-words { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.hw-word { padding: 7px 13px; border: 1px solid var(--line); border-radius: 999px; background: var(--paper); color: var(--ink); cursor: pointer; font-size: 15px; }
+.hw-word:hover { border-color: var(--teal); }
+.hw-word.active { border-color: var(--teal); background: var(--teal-soft); color: var(--teal-dark); font-weight: var(--weight-bold); }
+.hw-note { margin-top: 12px; color: var(--muted); font-size: 14px; }
+.hw-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
+.hw-head h2 { margin: 0; }
+.hw-actions { display: flex; gap: 8px; }
+.hw-svg { display: block; width: 100%; height: auto; margin: 14px 0 4px; overflow: visible; }
+.hw-rule { stroke: #cfdbe4; stroke-width: 1.5; }
+.hw-dash { stroke-dasharray: 7 7; }
+.hw-base { stroke: var(--ink); stroke-width: 2; }
+/* The finished word, faint, so the stroke has somewhere visible to go. */
+.hw-ghost { fill: none; stroke: #e2eaf0; stroke-width: 7; stroke-linecap: round; stroke-linejoin: round; }
+.hw-stroke { fill: none; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
+.hw-body { stroke: var(--teal); }
+/* A join is travel between letters, not part of a letter — dashed so a learner
+   can see it is the pen moving rather than a stroke to copy. */
+.hw-join { stroke: #8fbcb4; stroke-width: 4; }
+/* A mark comes after the pen lifts: the dot of an i, the cross of a t. */
+.hw-mark { stroke: #c2410c; }
+.hw-pen { fill: var(--teal); }
+.hw-steps { margin: 14px 0 0; padding-left: 0; list-style: none; display: grid; gap: 6px; }
+.hw-steps li { display: flex; gap: 10px; align-items: baseline; padding: 7px 11px; border-radius: 8px; border: 1px solid transparent; color: var(--muted); }
+.hw-steps li b { min-width: 22px; color: var(--ink); font-size: 17px; }
+.hw-steps li.is-now { border-color: var(--teal); background: var(--teal-soft); color: var(--ink); }
+@media (prefers-reduced-motion: reduce) { .hw-pen { display: none; } }
 .final-quiz-shell { min-height: 470px; }
 .final-question-meta { min-height: 42px; margin-top: 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; color: var(--muted); font-size: 14px; }
 .final-quiz-actions { min-height: 50px; margin-top: 18px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }

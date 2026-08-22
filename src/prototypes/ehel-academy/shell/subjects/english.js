@@ -11,6 +11,7 @@ import { grammarDiagram, phonicsDiagram } from "../../english/shared/grammar-vis
 import { createCourseApp } from "../course-app.js?v=t2";
 import { createDeck } from "../deck.js?v=deck-1";
 import { wordPicture } from "./word-pictures.js?v=pictures-1";
+import { cursiveWord, cursiveCanWrite } from "./cursive-strokes.js?v=cursive-1";
 import { SCHOOL_CALENDAR, calendarTerm, termDatesLabel, termWeekTotal, halfTermRow, formatDay } from "../study-plan.js?v=study-plan-2";
 import { platformHeaders, askWehel, focusModule, setFocusModule, onFocusChange, modulesFromSections, outlineFromManifest, unitFetcher, browserSpeechSupported, speakBrowser, speechRateForGrade, stopBrowserSpeech, speechRecognitionCtor, recognizeSpeech, wehelIcon, platformUrl } from "../wehel.js?v=wehel-4";
 
@@ -5743,13 +5744,23 @@ function renderDictionary() {
 // and a word with no honest picture in word-pictures.js gets none rather than a
 // decorative stand-in.
 //
-// Pictures are a Grades 1-4 thing, on the same line as the deck: at Grade 1 the
-// picture is doing most of the teaching, and by Grade 5 a learner is looking a
-// word UP in a list of seventy. Upper stages render byte-identically to before.
+// EVERY grade draws pictures, 1 through 8. This started as a Grades 1-4 feature
+// on the same line as the deck and was extended on request; the line was never
+// load-bearing, because a picture beside a word is not the slide deck the upper
+// stages are gated against. What the upper stages actually keep is their layout
+// — the two-column lab, no gc-* nodes, no body.gc-full — and a picture column
+// inside that lab does not touch any of it.
+//
+// What DOES differ by grade is how much of the vocabulary can honestly carry a
+// picture: about four fifths at Grade 1 against roughly a third at Grade 8,
+// because the words turn abstract. That is why the gutter is decided per list
+// rather than per grade (see drawList) — a section with nothing picturable in
+// it keeps the original two-column row.
+//
 // The grade goes in because a few lemmas are two different words across the
 // course — Grade 1's "light" is a traffic signal and Grade 3's "march" is a
 // month — and word-pictures.js resolves that per grade.
-const dictionaryPicture = (entry) => (BOTH_DESIGNS && entry ? wordPicture(entry.lemma, gradeNumber) || wordPicture(entry.displayWord, gradeNumber) : "");
+const dictionaryPicture = (entry) => (entry ? wordPicture(entry.lemma, gradeNumber) || wordPicture(entry.displayWord, gradeNumber) : "");
 
 function renderDictionaryClassic() {
   const { $, $$ } = classicScope();
@@ -9559,6 +9570,208 @@ function printCursiveWorksheet(chosenGroups, size, widths) {
   printWindow.addEventListener("afterprint", () => printWindow.close());
 }
 
+// ===================== the handwriting animation =====================
+// The worksheet's companion on screen: the same words, but showing HOW the pen
+// moves rather than what the finished letter looks like. A printed model tells a
+// learner where the ink ends up and nothing about where to start or which way to
+// go, which is exactly what they get wrong.
+//
+// Grades 1-2 only. The printable worksheet runs to Grade 4; this goes to 2,
+// because it covers the "Words from our stories" glossary — 283 words at Grade 1
+// and 653 at Grade 2 — and those are the words a learner meets in a reading
+// without ever being taught to write them.
+//
+// The letterforms are NOT the printed font. A glyph is a filled contour, so
+// stroking it traces the letter's edge — up one side and back down the other,
+// with the dot of an i as a separate ring — and no centreline can be recovered
+// from it. cursive-strokes.js authors the pen path instead; see its header.
+
+const HANDWRITING_MAX_GRADE = 2;
+
+// The glossary group, by the same exact title the worksheet uses. Both read the
+// same constant so a rename cannot leave one of them pointing at nothing.
+function handwritingWords() {
+  const groups = worksheetGroups();
+  const glossary = groups.find((group) => group.title === GLOSSARY_GROUP_TITLE);
+  // Every word the stroke alphabet can actually write. It covers a-z and the
+  // apostrophe, which is all 851 distinct Grade 1-2 glossary words — but a word
+  // it cannot compose must be dropped rather than drawn wrong, and counted so the
+  // page can say so.
+  const all = (glossary?.words || []);
+  const writable = all.filter((word) => cursiveCanWrite(word));
+  return { all, writable, skipped: all.length - writable.length, title: glossary?.title || "" };
+}
+
+// One word, drawn as the sequence of strokes the pen makes. Every stroke is its
+// own <path> so each can be revealed in turn and the pen dot can ride along it.
+function handwritingSvg(composed, { id }) {
+  const frame = composed.frame;
+  const pad = 26;
+  const width = composed.width + pad * 2;
+  const height = frame.desc + 40;
+  const strokes = composed.strokes.map((stroke, index) => `
+    <g transform="translate(${stroke.dx},0)">
+      <path id="${id}-s${index}" class="hw-stroke hw-${stroke.kind}" d="${stroke.d}"/>
+    </g>`).join("");
+  // Ghost of the finished word, so the learner can see where the stroke is going
+  // before it gets there. Drawn from the same paths — it cannot disagree.
+  const ghost = composed.strokes.map((stroke) => `
+    <g transform="translate(${stroke.dx},0)"><path class="hw-ghost" d="${stroke.d}"/></g>`).join("");
+  return `<svg class="hw-svg" viewBox="${-pad} -12 ${width} ${height}" role="img"
+      aria-label="How to write ${escapeHtml(composed.word)} in cursive">
+    <line class="hw-rule" x1="${-pad}" y1="${frame.asc}" x2="${width - pad}" y2="${frame.asc}"/>
+    <line class="hw-rule hw-dash" x1="${-pad}" y1="${frame.mid}" x2="${width - pad}" y2="${frame.mid}"/>
+    <line class="hw-base" x1="${-pad}" y1="${frame.base}" x2="${width - pad}" y2="${frame.base}"/>
+    <line class="hw-rule" x1="${-pad}" y1="${frame.desc}" x2="${width - pad}" y2="${frame.desc}"/>
+    ${ghost}
+    ${strokes}
+    <circle class="hw-pen" id="${id}-pen" r="9" cx="0" cy="${frame.base}" opacity="0"/>
+  </svg>`;
+}
+
+// Drives one word's animation. Returns a handle so the page can restart it, slow
+// it down, or stop it when the learner picks another word — an animation left
+// running against a detached SVG keeps calling getPointAtLength on nodes nobody
+// can see, and on a 30-word page that is 30 timers.
+function runHandwriting(root, composed, { id, speed = 1, onStep }) {
+  const paths = composed.strokes.map((_, index) => root.querySelector(`#${id}-s${index}`));
+  const pen = root.querySelector(`#${id}-pen`);
+  if (paths.some((path) => !path) || !pen) return { stop() {} };
+  const lengths = paths.map((path) => path.getTotalLength());
+  paths.forEach((path, index) => {
+    path.style.strokeDasharray = `${lengths[index]}`;
+    path.style.strokeDashoffset = `${lengths[index]}`;
+  });
+  let frame = 0;
+  let stopped = false;
+  let index = 0;
+  let drawn = 0;
+  let last = null;
+
+  const step = (now) => {
+    if (stopped) return;
+    if (last === null) last = now;
+    const delta = now - last;
+    last = now;
+    const stroke = composed.strokes[index];
+    // A join is travel, not writing, so it goes at three times the pace — the
+    // pen really does move faster between letters than through them.
+    const pace = (stroke.kind === "join" ? 1.1 : 0.38) * speed;
+    drawn += delta * pace;
+    const total = lengths[index];
+    const shown = Math.min(drawn, total);
+    paths[index].style.strokeDashoffset = `${total - shown}`;
+    const point = paths[index].getPointAtLength(shown);
+    pen.setAttribute("cx", point.x + stroke.dx);
+    pen.setAttribute("cy", point.y);
+    pen.setAttribute("opacity", "1");
+    if (shown >= total) {
+      index += 1;
+      drawn = 0;
+      if (index >= paths.length) {
+        pen.setAttribute("opacity", "0");
+        onStep?.(null);
+        return;
+      }
+      onStep?.(index);
+      // The pen LIFTS before a mark, so pause and hide it rather than sliding
+      // across — the lift is the thing being taught.
+      if (composed.strokes[index].kind === "mark") {
+        pen.setAttribute("opacity", "0");
+        frame = setTimeout(() => { last = null; frame = requestAnimationFrame(step); }, 520 / speed);
+        return;
+      }
+    }
+    frame = requestAnimationFrame(step);
+  };
+  onStep?.(0);
+  frame = requestAnimationFrame(step);
+  return {
+    stop() {
+      stopped = true;
+      cancelAnimationFrame(frame);
+      clearTimeout(frame);
+    },
+  };
+}
+
+// The steps in words, one line per thing the pen does. Joins are folded into the
+// letter they lead to rather than listed — "travel to the next letter" is not an
+// instruction a learner acts on, and listing it doubles the length of every list.
+function handwritingSteps(composed) {
+  const steps = [];
+  composed.strokes.forEach((stroke, index) => {
+    if (stroke.kind === "join") return;
+    steps.push({ index, ch: stroke.ch, say: stroke.say || "", lift: stroke.kind === "mark" });
+  });
+  return steps;
+}
+
+function renderHandwriting() {
+  if (gradeNumber > HANDWRITING_MAX_GRADE) return navigate("overview");
+  const { writable, skipped, title } = handwritingWords();
+  let active = writable[0] || null;
+  let speed = 1;
+  let running = null;
+
+  $("#app").innerHTML = `${pageHeader(
+    `${gradeLabel} · Unit ${course.unit.unitNo}`,
+    "How to write it",
+    "Watch the pen write each word, then copy it. The green dot shows where to start and which way to go.",
+    "For learners",
+  )}
+    <div class="section-stack">
+      <section class="panel">
+        <h2>${escapeHtml(title || "Words from our stories")}</h2>
+        <p>${writable.length} word${writable.length === 1 ? "" : "s"} from this unit's stories. Tap one to see it written.</p>
+        <div class="hw-words">${writable.map((word) => `<button class="hw-word${word === active ? " active" : ""}" data-hw="${escapeHtml(word)}" type="button">${escapeHtml(word)}</button>`).join("")}</div>
+        ${skipped ? `<p class="hw-note">${skipped} word${skipped === 1 ? " is" : "s are"} not shown — they use a letter this animation cannot write yet.</p>` : ""}
+      </section>
+      <section class="panel" id="hw-stage"></section>
+    </div>`;
+
+  const drawStage = () => {
+    running?.stop();
+    running = null;
+    if (!active) { $("#hw-stage").innerHTML = `<p>No words from the stories in this unit yet.</p>`; return; }
+    const composed = cursiveWord(active);
+    if (!composed) { $("#hw-stage").innerHTML = `<p>${escapeHtml(active)} cannot be drawn yet.</p>`; return; }
+    const steps = handwritingSteps(composed);
+    $("#hw-stage").innerHTML = `
+      <div class="hw-head"><h2>${escapeHtml(active)}</h2>
+        <div class="hw-actions">
+          <button class="button secondary" id="hw-replay" type="button">${icon("rotate-ccw")} Watch again</button>
+          <button class="button secondary" id="hw-slow" type="button" aria-pressed="${speed < 1}">${icon("gauge")} ${speed < 1 ? "Normal speed" : "Slower"}</button>
+        </div>
+      </div>
+      ${handwritingSvg(composed, { id: "hw" })}
+      <ol class="hw-steps">${steps.map((step) => `<li data-step="${step.index}"><b>${escapeHtml(step.ch)}</b><span>${escapeHtml(step.say)}</span></li>`).join("")}</ol>`;
+    const markStep = (strokeIndex) => {
+      $$("#hw-stage .hw-steps li").forEach((li) => li.classList.remove("is-now"));
+      if (strokeIndex === null) return;
+      // A join has no step of its own, so highlight the letter it leads to.
+      const next = steps.find((step) => step.index >= strokeIndex);
+      if (next) $(`#hw-stage .hw-steps li[data-step="${next.index}"]`)?.classList.add("is-now");
+    };
+    const play = () => {
+      running?.stop();
+      running = runHandwriting($("#hw-stage"), composed, { id: "hw", speed, onStep: markStep });
+    };
+    $("#hw-replay").addEventListener("click", play);
+    $("#hw-slow").addEventListener("click", () => { speed = speed < 1 ? 1 : 0.45; drawStage(); });
+    icons();
+    play();
+  };
+
+  $$("[data-hw]").forEach((button) => button.addEventListener("click", () => {
+    active = button.dataset.hw;
+    $$("[data-hw]").forEach((other) => other.classList.toggle("active", other === button));
+    drawStage();
+  }));
+  drawStage();
+  icons();
+}
+
 // ===================== student resources =====================
 // The learner's counterpart to the Teacher resources button, and the same
 // shape: a switch under the section list that leads to one page. It collects
@@ -9593,7 +9806,7 @@ const navLabelOf = (id, fallback = "") => (sections.find(([sectionId]) => sectio
 // and on the Prerequisite unit, with no grade test written here.
 const STUDENT_CATEGORIES = [
   ["learning", "Learning", "Open any of these whenever you like."],
-  ["worksheets", "Worksheets", "Pages to print and write on by hand."],
+  ["worksheets", "Handwriting", "Learn to write this unit's words — on screen, or printed to write on by hand."],
 ];
 
 function studentResourceCards() {
@@ -9627,6 +9840,9 @@ function studentResourceCards() {
   // Grades 1-4 only, on the same line the picture dictionary and the picture
   // books already draw — see the worksheet section above for why.
   if (BOTH_DESIGNS) cards.push({ category: "worksheets", route: "worksheet", iconName: "pen-line", title: "Cursive writing worksheet", blurb: "Print this unit's words on handwriting lines. Trace each word, then write it yourself." });
+  // Grades 1-2 only, and its own constant rather than BOTH_DESIGNS: the printable
+  // runs to Grade 4, this covers the story glossary and stops at 2.
+  if (gradeNumber <= HANDWRITING_MAX_GRADE) cards.push({ category: "worksheets", route: "handwriting", iconName: "pen-tool", title: "How to write it", blurb: "Watch the pen write each word from this unit's stories, and see where to start." });
   return cards;
 }
 
@@ -9716,7 +9932,7 @@ const config = {
   // 92% and could not open the next unit — a support tool gating progression.
   // It stays in the nav and still ticks when used; it just no longer decides
   // whether a unit is finished.
-  nonCountable: ["overview", "live", "final-quiz", "teacherguide", "year-plan", "unit-plan", "story-library", "worksheet"],
+  nonCountable: ["overview", "live", "final-quiz", "teacherguide", "year-plan", "unit-plan", "story-library", "worksheet", "handwriting"],
   gradeSections: [],
   // English draws its own card (renderSectionCompletion): its sections open
   // in a gated chain and its units unlock one another, which the shell's
@@ -9766,6 +9982,7 @@ const config = {
     "final-quiz": () => renderFinalQuiz(),
     teacher: () => (isPrereqUnit ? renderPrereqTeacher() : renderTeacher()),
     worksheet: () => renderCursiveWorksheet(),
+    handwriting: () => renderHandwriting(),
     student: () => renderStudentResources(),
   }),
   bind,

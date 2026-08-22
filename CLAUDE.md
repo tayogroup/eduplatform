@@ -1005,6 +1005,33 @@ checkout of this repo is 1.4 GB of media, it takes minutes, and when it is kille
 part-way it leaves `tools/` missing and the index reporting tens of thousands of
 files as deleted — which reads as catastrophic damage and is not.
 
+**HEAD is a cleaner input, not a safety property.** The recipe above keeps
+somebody else's uncommitted work out of a release. It does NOT make the release
+safe, and reading it that way is how the content tier nearly shipped broken on
+2026-08-22. What is committed can be just as far from the CDN as what is not:
+that day HEAD carried five master-dictionaries and 50 unit JSONs that had never
+been deployed, so the "57 committed files" a release was scoped to were 62.
+
+**Diff against the LIVE copies and ship only if the deploy introduces nothing.**
+For content, that means resolving every audio path the shipping files reference
+against storage, then fetching each file's deployed copy and comparing:
+
+- 272 of 10,535 references pointed at clips not on the CDN — a silent fallback to
+  the PAID runtime TTS endpoint, one per reference, that nothing in the repo
+  reports.
+- Every one of them was **already** broken in the deployed copy. 0 introduced,
+  0 fixed. That is what made the deploy safe — not where the tree came from.
+
+Had that number been non-zero, HEAD would have been exactly as unsafe as the
+dirty tree. Run the comparison; do not infer it from provenance.
+
+The same day's dirty tree is the other half of the lesson: 8 uncommitted
+master-dictionaries had moved from 25 renamed clip references to **8,134 added**
+ones (4,774 distinct basenames — a word taught in eight grades is eight
+references and one file), essentially all of them 404 on the CDN. A "small
+spelling migration" by description; thousands of silent paid fallbacks in fact.
+Count the references, never the description.
+
 ## Verification before committing
 
 1. `npm run validate:units` and `npm run check:alphabet` must pass.

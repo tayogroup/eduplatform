@@ -123,8 +123,24 @@ async function mapLimit(items, limit, fn) {
         console.error(`  ✗ ${subject} u${job.unitNo} ${job.sectionId}: ${error.message}`);
       }
     });
-    // Write back any hash the loop corrected.
-    fs.writeFileSync(scriptsFile, `${JSON.stringify(scripts, null, 2)}\n`);
+    // Write back any hash the loop corrected — by RE-READING the file first and
+    // changing only `hash` fields. A narration run takes a long time, and the
+    // generator (or a backfill) may have written the same file meanwhile;
+    // writing this run's stale in-memory copy back whole would erase that work.
+    // (It did: the `ask` markers on 121 English scripts were wiped this way.)
+    const corrections = [];
+    for (const [unitNo, sections] of Object.entries(scripts.units || {})) {
+      for (const [sectionId, entry] of Object.entries(sections)) corrections.push([unitNo, sectionId, entry.hash]);
+    }
+    const fresh = JSON.parse(fs.readFileSync(scriptsFile, "utf8"));
+    let changed = false;
+    for (const [unitNo, sectionId, hash] of corrections) {
+      const entry = fresh.units?.[unitNo]?.[sectionId];
+      // Only correct an entry whose text still matches what this run hashed —
+      // a regenerated entry (different text) keeps its own hash and marker.
+      if (entry && entry.hash !== hash && scriptHash(entry.text) === hash) { entry.hash = hash; changed = true; }
+    }
+    if (changed) fs.writeFileSync(scriptsFile, `${JSON.stringify(fresh, null, 2)}\n`);
     if (ORPHANS) {
       const orphans = fs.readdirSync(audioDir).filter((f) => f.endsWith(".mp3") && !wanted.has(f.slice(0, -4)));
       console.log(`${subject}: ${orphans.length} orphan clip(s)${orphans.length ? ` — ${orphans.slice(0, 5).join(", ")}${orphans.length > 5 ? " …" : ""}` : ""}`);

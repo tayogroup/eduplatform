@@ -27,6 +27,22 @@ const PROMPT_FILE = path.resolve(__dirname, "..", "..", "src", "moodle", "local_
 const CLIP_SUBJECTS = ["science", "mathematics", "computing", "global-perspectives", "intensive-english"];
 
 function loadBank() {
+  // The raw ENOENT here is unhelpful in the one place it actually fires: a
+  // release built with `git archive HEAD <pathspecs>`, where src/moodle was not
+  // in the pathspec list. The operator sees a Moodle path in the middle of a
+  // Bunny deploy and has no reason to connect the two, so say it.
+  //
+  // Every subject but English needs this file — see CLIP_SUBJECTS above — which
+  // is why the archive recipe in CLAUDE.md went years working for English and
+  // died the first time a non-English subject was released through it.
+  if (!fs.existsSync(PROMPT_FILE)) {
+    throw new Error(
+      `Wehel phrase bank not found: ${PROMPT_FILE}\n` +
+      "  Every subject except English resolves its narration hashes through this file.\n" +
+      "  If you are running from a temporary release tree, add src/moodle to the git archive pathspecs,\n" +
+      "  or run this from the repo instead.",
+    );
+  }
   const prompt = JSON.parse(fs.readFileSync(PROMPT_FILE, "utf8"));
   return prompt.phraseBank || { global: [], subjects: {} };
 }

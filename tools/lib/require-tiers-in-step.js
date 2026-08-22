@@ -46,7 +46,12 @@ function requireTiersInStep(subjects) {
   // Exit 3 is that case reported deliberately rather than by crashing: the check
   // started, found it had nothing to compare against, and said so. It is neither
   // agreement nor drift, and calling it either would be a guess.
-  if (run.status === 3) {
+  // 3 = it started and found nothing to compare (no manifests in this tree).
+  // 4 = it threw before reaching a verdict. Both are "did not run", not drift:
+  //     4 exists because an uncaught throw exits 1 on its own, and 1 is the
+  //     code for "compared, and they disagree" — so a crash used to be reported
+  //     as a drift verdict the check never reached.
+  if (run.status === 3 || run.status === 4) {
     console.error("\n✗ the tiers were NOT checked — see above. Your upload stands; nothing confirmed the rest agrees.");
     process.exitCode = 1;
     return false;

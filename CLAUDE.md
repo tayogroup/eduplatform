@@ -993,10 +993,35 @@ If that pre-release check finds someone else's work in the tree, **do not stash
 it and do not ask them to hurry** — build the release from HEAD instead:
 
 ```bash
-git archive HEAD tools package.json src/prototypes/ehel-academy/shell \
-  src/prototypes/ehel-academy/shared src/prototypes/ehel-academy/english \
-  ':(exclude)src/prototypes/ehel-academy/english/media' | tar -x -C <tmpdir>
+git archive HEAD tools package.json src/moodle/local_hubredirect \
+  src/prototypes/ehel-academy/shell src/prototypes/ehel-academy/shared \
+  src/prototypes/ehel-academy/english/shared \
+  src/prototypes/ehel-academy/<subject> \
+  ':(exclude)src/prototypes/ehel-academy/<subject>/media' | tar -x -C <tmpdir>
 ```
+
+**Two of those paths look unrelated to the subject you are releasing, and both
+are load-bearing for the post-deploy tier check:**
+
+- `src/moodle/local_hubredirect` holds `wehel_prompt.json`, the Wehel phrase
+  bank, and every subject EXCEPT English resolves its narration hashes through
+  it (`tools/lib/ehel-wehel-phrases.js`, `CLIP_SUBJECTS`). Without it the check
+  dies on a Moodle path in the middle of a Bunny deploy.
+- `english/shared` holds `course-ui.css`, which the other subjects `@import`
+  and which `deploy-app-version.js` bundles into each release as
+  `design-system.css`. Without it `--plan-json` cannot build the release plan,
+  so the app tier goes uncompared.
+
+The recipe went years working because English needs neither — it IS the shared
+stylesheet, and it is the one subject with no phrase-bank lookup. It broke the
+first time a non-English subject was released through it. Verify by running the
+check inside `<tmpdir>` and confirming it reports the same file count as the
+repo does; anything less means it compared less.
+
+That English stylesheet is also a live coupling worth knowing: an English CSS
+change makes every other subject's app tier stale, because their bundled
+`design-system.css` came from it. Intensive English v242 went stale exactly that
+way an hour after release, when an English commit touched `course-ui.css`.
 
 then run the deploy from `<tmpdir>`, copying `.env` and the
 `.bunny-*-manifest.json` caches in so the uploader still skips what is already on

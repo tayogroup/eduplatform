@@ -58,6 +58,31 @@ import { fileURLToPath } from "node:url";
 import { createRequire } from "node:module";
 import { spawnSync } from "node:child_process";
 
+// A CRASH IS NOT A VERDICT — exit 4 rather than the 1 an uncaught throw gives.
+//
+// Exit 1 means "compared, and they disagree". An uncaught exception also exits
+// 1, so require-tiers-in-step.js printed "this deploy leaves the tiers out of
+// step" over a check that died before comparing anything. That happened on
+// 2026-08-22 releasing intensive-english from an archive tree with no
+// src/moodle in it: ENOENT on the Wehel phrase bank, stack trace, exit 1, and a
+// drift verdict the check never reached.
+//
+// Same family as the ✓-after-skip this file already guards (see the manifest
+// note below) and the same rule: a check that did not run must not report a
+// result, whether the result would have been agreement or disagreement.
+//
+// Installed before any other work so it covers module-scope throws too, and via
+// process events rather than a try/catch because the body is top-level await —
+// a rejection there never reaches a surrounding catch.
+for (const signal of ["uncaughtException", "unhandledRejection"]) {
+  process.on(signal, (error) => {
+    console.error(`\n✗ the tier check could not finish — it did not compare anything.`);
+    console.error(`  ${error && error.stack ? error.stack.split("\n").slice(0, 6).join("\n  ") : error}`);
+    console.error("\n  This is NOT a drift verdict. Nothing was checked, so the tiers may or may not agree.");
+    process.exit(4);
+  });
+}
+
 const require = createRequire(import.meta.url);
 // The media manifest's shape is owned by tools/lib/upload-manifest.js. Reading
 // it directly here is what broke this check when the format gained hashes.
@@ -412,6 +437,24 @@ for (const subject of subjects) {
     console.error(`  ✗ audio is behind — run: node tools/upload-media-to-bunny.js ${subject}`);
     failed = true;
   }
+  // The app-tier twin of the `vacuous` backstop above, and it was missing.
+  //
+  // Every downstream test here is guarded on `app.known`, so when the app tier
+  // could NOT be compared all of them were skipped — including the ✓ line's own
+  // condition, which then printed "app, content — all in step" and exited 0
+  // over an app tier nobody had looked at. This file's header already promises
+  // the opposite ("exits non-zero if … a subject was passed without being
+  // compared"); the promise just was not kept for this half.
+  //
+  // Found on 2026-08-22 by testing the fix for the crash above: with src/moodle
+  // restored the check stopped dying, and reported ✓ while printing
+  // "app : not checked — deploy-app-version.js --plan-json failed" two lines
+  // earlier. A green tick directly beneath the words "not checked".
+  if (!app.known) {
+    console.error(`  ✗ the app tier was NOT compared: ${app.why}`);
+    console.error("    Treat this as unchecked, not as agreement — the app and content may or may not match.");
+    failed = true;
+  }
   // Both behind is coherent — nothing has been released since the working tree
   // moved, and a learner sees an older but self-consistent course. It is the
   // SPLIT that is dangerous, so only the split is called out here.
@@ -432,7 +475,7 @@ for (const subject of subjects) {
     }
     failed = true;
   }
-  if (!contentStale && !contentNew && !audioMissing && !(app.known && app.stale !== contentBehind)) {
+  if (app.known && !contentStale && !contentNew && !audioMissing && app.stale === contentBehind) {
     console.log(`  ✓ app${app.known ? ` (${app.tag})` : ""}, content${narration ? ", audio" : ""} — all in step${narration ? "" : " (audio not covered by this tick)"}`);
   }
 }

@@ -13,6 +13,32 @@
 // file exists to prevent.
 //
 // Keyed by lemma, lowercased. Shared across grades, because the lemmas are.
+//
+// PEOPLE CARRY A SKIN TONE: medium-dark, U+1F3FE. The learners are East African
+// and the course's own artwork is the source of truth for how people look here —
+// english/assets/unit-8-home.png draws the children warm dark brown, which is
+// what U+1F3FE matches; U+1F3FF is darker than the illustration. Default emoji
+// yellow beside that artwork made the word cards the only place in the course
+// where the people were not the children reading it.
+//
+// Three things follow, and all three are deliberate rather than oversights:
+//
+//   - Only figures and body parts take it. Smiley faces (😊 😄 😳 🤗 🤔 🤒) have
+//     no skin-tone form in Unicode at all — they are not human-figure emoji —
+//     so they stay yellow, as do 👀 👅 👄 👁️ 🦷 🧠 and the 👥 silhouette.
+//   - The tone goes on the PERSON inside a ZWJ sequence, not on the end:
+//     🧑🏾‍🏫, and 🧑🏾‍🤝‍🧑🏾 where the handshake joins two people and is not a third.
+//   - Which emoji accept a modifier was measured, not assumed. An unsupported
+//     one does not fall back gracefully — it renders as the emoji FOLLOWED BY A
+//     BROWN SQUARE, which is worse than leaving it yellow. Every sequence here
+//     was width-tested to confirm it draws as one glyph, against controls (🐈,
+//     🧠, 👀) that must double in width. That test is also what caught 💪 🧍 🧎
+//     🫃 ✊ 🤏 🚣 as people, and rejected the "1000" keycap run as a false
+//     positive — it is already four glyphs wide, so a ratio test cannot see it.
+//
+// Re-run that measurement before adding a person: support is per-font, and the
+// newest sequences here (the four-person families, 🤝🏾) are the ones most likely
+// to degrade on an older device.
 export const WORD_PICTURES = {
   // --- animals -------------------------------------------------------------
   cat: "🐈", dog: "🐕", puppy: "🐶", elephant: "🐘", fish: "🐟", goat: "🐐",
@@ -37,15 +63,15 @@ export const WORD_PICTURES = {
   field: "🌾", tractor: "🚜", sink: "🚰", river: "🏞️", sea: "🌊", well: "🪣",
 
   // --- people --------------------------------------------------------------
-  teacher: "🧑‍🏫", friend: "🧑‍🤝‍🧑", boy: "👦", girl: "👧", mother: "👩", mum: "👩",
-  father: "👨", dad: "👨", sister: "👧", brother: "👦", grandma: "👵",
-  grandpa: "👴", family: "👨‍👩‍👧‍👦", baby: "👶", children: "🧒", queen: "👑",
-  clown: "🤡", princess: "👸", superhero: "🦸", pilot: "🧑‍✈️", cook: "🧑‍🍳",
-  doctor: "🧑‍⚕️",
+  teacher: "🧑🏾‍🏫", friend: "🧑🏾‍🤝‍🧑🏾", boy: "👦🏾", girl: "👧🏾", mother: "👩🏾", mum: "👩🏾",
+  father: "👨🏾", dad: "👨🏾", sister: "👧🏾", brother: "👦🏾", grandma: "👵🏾",
+  grandpa: "👴🏾", family: "👨🏾‍👩🏾‍👧🏾‍👦🏾", baby: "👶🏾", children: "🧒🏾", queen: "👑",
+  clown: "🤡", princess: "👸🏾", superhero: "🦸🏾", pilot: "🧑🏾‍✈️", cook: "🧑🏾‍🍳",
+  doctor: "🧑🏾‍⚕️",
 
   // --- body ----------------------------------------------------------------
-  hand: "✋", hands: "✋", foot: "🦶", feet: "🦶", ear: "👂", ears: "👂",
-  nose: "👃", finger: "👆", fingers: "👆", arm: "💪", leg: "🦵", eyes: "👀",
+  hand: "✋🏾", hands: "✋🏾", foot: "🦶🏾", feet: "🦶🏾", ear: "👂🏾", ears: "👂🏾",
+  nose: "👃🏾", finger: "👆🏾", fingers: "👆🏾", arm: "💪🏾", leg: "🦵🏾", eyes: "👀",
   tongue: "👅", mouth: "👄",
 
   // --- clothes -------------------------------------------------------------
@@ -69,43 +95,43 @@ export const WORD_PICTURES = {
   seven: "7️⃣", eight: "8️⃣", nine: "9️⃣", ten: "🔟",
 
   // --- doing words ---------------------------------------------------------
-  like: "👍", read: "📖", write: "✍️", draw: "🎨", paint: "🎨", sing: "🎤",
-  listen: "👂", hear: "👂", smell: "👃", taste: "👅", point: "👉", help: "🤝",
+  like: "👍🏾", read: "📖", write: "✍🏾", draw: "🎨", paint: "🎨", sing: "🎤",
+  listen: "👂🏾", hear: "👂🏾", smell: "👃🏾", taste: "👅", point: "👉🏾", help: "🤝🏾",
   work: "🛠️", play: "🧸", eat: "🍽️", drink: "🥤", talk: "💬", laugh: "😄",
-  bounce: "⛹️", roll: "🎳", throw: "🤾", catch: "🥎", run: "🏃", jump: "🤸",
-  clap: "👏", cut: "✂️", make: "🔨", wear: "👕", thank: "🙏", sell: "💰",
+  bounce: "⛹🏾", roll: "🎳", throw: "🤾🏾", catch: "🥎", run: "🏃🏾", jump: "🤸🏾",
+  clap: "👏🏾", cut: "✂️", make: "🔨", wear: "👕", thank: "🙏🏾", sell: "💰",
   planting: "🌱", growing: "🌱", "grow plants": "🌱", picking: "🧺",
-  driving: "🚗", drive: "🚗", carrying: "🧳", travel: "🧳", ride: "🚴",
-  fly: "🕊️", float: "🛟", walk: "🚶", wash: "🧼", "sit down": "🪑",
+  driving: "🚗", drive: "🚗", carrying: "🧳", travel: "🧳", ride: "🚴🏾",
+  fly: "🕊️", float: "🛟", walk: "🚶🏾", wash: "🧼", "sit down": "🪑",
   "lay the table": "🍽️", "tidy your room": "🧹",
 
   // --- describing words ----------------------------------------------------
   soft: "🧸", hard: "🪨", loud: "🔊", louder: "🔊", quiet: "🤫", quieter: "🤫",
   sweet: "🍬", sweeter: "🍬", cold: "🥶", colder: "🥶", hot: "🥵", juicy: "🧃",
   juicier: "🧃", round: "⚪", wet: "💦", dry: "🌵", clean: "🧼", dirty: "🧹",
-  big: "🐘", little: "🐁", small: "🐁", fast: "🏃", faster: "🏃", slow: "🐢",
+  big: "🐘", little: "🐁", small: "🐁", fast: "🏃🏾", faster: "🏃🏾", slow: "🐢",
   stop: "🛑", go: "🟢", up: "⬆️", down: "⬇️", left: "⬅️", right: "➡️",
 
   // === Grade 2 =============================================================
   calendar: "📅", day: "🌞", week: "📆", month: "📅", date: "📅", birthday: "🎂",
   tablet: "📱", chart: "📊", picture: "🖼️", eleven: "1️⃣1️⃣", twelve: "1️⃣2️⃣",
   first: "🥇", second: "🥈", third: "🥉", "one hundred": "💯",
-  "police officer": "👮", officer: "👮", reporter: "🎙️", "bus driver": "🧑‍✈️",
-  firefighter: "🧑‍🚒", "window cleaner": "🧽", helmet: "⛑️", gloves: "🧤",
-  mask: "😷", uniform: "👔", nurse: "🧑‍⚕️", farmer: "🧑‍🌾",
-  head: "🙂", tummy: "🫃", toe: "🦶", wave: "👋", hop: "🦘", exercise: "🏋️",
-  healthy: "💪", strong: "💪", sleep: "😴", energy: "⚡", turn: "🔄",
-  stand: "🧍", flap: "🪽", light: "💡", sky: "🌌", morning: "🌅", midday: "🌞",
+  "police officer": "👮🏾", officer: "👮🏾", reporter: "🎙️", "bus driver": "🧑🏾‍✈️",
+  firefighter: "🧑🏾‍🚒", "window cleaner": "🧽", helmet: "⛑️", gloves: "🧤",
+  mask: "😷", uniform: "👔", nurse: "🧑🏾‍⚕️", farmer: "🧑🏾‍🌾",
+  head: "🙂", tummy: "🫃🏾", toe: "🦶🏾", wave: "👋🏾", hop: "🦘", exercise: "🏋🏾",
+  healthy: "💪🏾", strong: "💪🏾", sleep: "😴", energy: "⚡", turn: "🔄",
+  stand: "🧍🏾", flap: "🪽", light: "💡", sky: "🌌", morning: "🌅", midday: "🌞",
   evening: "🌆", sunrise: "🌅", sunset: "🌇", star: "⭐", cloud: "☁️",
   night: "🌙", earth: "🌍", high: "⬆️", low: "⬇️", bright: "🔆", dark: "🌑",
   heart: "❤️", measure: "📏", centimetre: "📏", metre: "📏", length: "📏",
-  height: "📐", weight: "⚖️", size: "📏", tall: "🦒", heavy: "🏋️", wide: "↔️",
+  height: "📐", weight: "⚖️", size: "📏", tall: "🦒", heavy: "🏋🏾", wide: "↔️",
   butterfly: "🦋", cricket: "🦗", ant: "🐜", spider: "🕷️", worm: "🪱",
-  insect: "🐛", legs: "🦵", wings: "🪽", anthill: "🐜", web: "🕸️",
+  insect: "🐛", legs: "🦵🏾", wings: "🪽", anthill: "🐜", web: "🕸️",
   crawl: "🐛", spin: "🌀", chirp: "🐦", collect: "🧺", watering: "💧",
   litter: "🗑️", recycling: "♻️", roots: "🌱", stem: "🌿", leaves: "🍃",
   flower: "🌸", seeds: "🌱", air: "💨", soil: "🪴",
-  happy: "😊", glad: "😊", thankful: "🙏",
+  happy: "😊", glad: "😊", thankful: "🙏🏾",
   house: "🏠", apartment: "🏢", hut: "🛖", "tree house": "🏡", hive: "🐝",
   hole: "🕳️", bedroom: "🛏️", kitchen: "🍳", bathroom: "🛁",
   "living room": "🛋️", "dining room": "🍽️", bed: "🛏️", table: "🍽️",
@@ -123,7 +149,7 @@ export const WORD_PICTURES = {
   november: "📅", december: "📅",
   hour: "⏰", vacation: "🏖️", future: "🔮", sailor: "⚓", court: "⚖️",
   college: "🎓", graduate: "🎓", garden: "🌷", exit: "🚪", village: "🏘️",
-  address: "📮", build: "🏗️", protect: "🛡️", escape: "🏃", search: "🔍",
+  address: "📮", build: "🏗️", protect: "🛡️", escape: "🏃🏾", search: "🔍",
   celebrate: "🎉", friendly: "😊", care: "❤️", calm: "😌",
   climate: "🌡️", weather: "🌦️", temperature: "🌡️", sunshine: "☀️",
   froze: "🧊", mountain: "⛰️", forest: "🌲", beach: "🏖️", coast: "🏖️",
@@ -131,7 +157,7 @@ export const WORD_PICTURES = {
   mathematics: "🔢", number: "🔢", million: "🔢", addition: "➕",
   subtraction: "➖", multiplication: "✖️", division: "➗", distance: "📏",
   idea: "💡", imagine: "💭", sadness: "😢", study: "📖", lesson: "📚",
-  education: "🎓", grammar: "✍️", eraser: "🧽", report: "📋", supply: "📦",
+  education: "🎓", grammar: "✍🏾", eraser: "🧽", report: "📋", supply: "📦",
   health: "💚", safety: "🦺", contest: "🏆",
 
   // === Grade 4 =============================================================
@@ -145,11 +171,11 @@ export const WORD_PICTURES = {
   circular: "⭕", population: "👥", gallop: "🐎", spiral: "🌀",
   peek: "👀", gaze: "👀", check: "✅", signal: "🚦", rescue: "🛟",
   rescuing: "🛟", defend: "🛡️", janitor: "🧹", carpenter: "🔨",
-  engineer: "👷", merchant: "🏪", governor: "🏛️", senator: "🏛️",
+  engineer: "👷🏾", merchant: "🏪", governor: "🏛️", senator: "🏛️",
   lawyer: "⚖️", military: "🎖️", artist: "🎨", photographer: "📷",
-  messenger: "📨", article: "📰", hero: "🦸", consumer: "🛒",
+  messenger: "📨", article: "📰", hero: "🦸🏾", consumer: "🛒",
   nervous: "😰", anxious: "😟", terrified: "😱", curious: "🤔", proud: "😌",
-  gentle: "🤲", polite: "🙇", generous: "🎁", serious: "😐", humorous: "😄",
+  gentle: "🤲🏾", polite: "🙇🏾", generous: "🎁", serious: "😐", humorous: "😄",
   // shy was a smiling face, which is the picture for "happy" a few lines up and
   // says nothing about feeling nervous with new people — the sense all three
   // grades that teach it give. The flushed face is the shy one.
@@ -162,7 +188,7 @@ export const WORD_PICTURES = {
   railroad: "🛤️", capital: "🏛️", nation: "🏳️", museum: "🏛️", mall: "🏬",
   restaurant: "🍽️", office: "🏢", factories: "🏭", neighbourhood: "🏘️",
   entrance: "🚪", elevator: "🛗", customer: "🛒", arrive: "🛬",
-  horizon: "🌅", equator: "🌐", teaching: "🧑‍🏫", helping: "🤝",
+  horizon: "🌅", equator: "🌐", teaching: "🧑🏾‍🏫", helping: "🤝🏾",
 
   // === Grades 3-4, second pass ============================================
   // The concrete words the first pass missed, plus the abstract ones where a
@@ -171,19 +197,19 @@ export const WORD_PICTURES = {
   // careless, similar, quantity-as-a-concept, priority and comma are left
   // bare on purpose — there is no picture of them, only a picture of
   // something nearby, which is what this file exists to avoid.
-  parent: "👨‍👩‍👦", student: "🧑‍🎓", author: "✍️", "(december)": "📅",
-  respect: "🙇", honour: "🏅", private: "🔒", public: "👥", border: "🛂",
-  discuss: "💬", complete: "✅", kind: "🤗", kindness: "🤗", able: "💪",
+  parent: "👨🏾‍👩🏾‍👦🏾", student: "🧑🏾‍🎓", author: "✍🏾", "(december)": "📅",
+  respect: "🙇🏾", honour: "🏅", private: "🔒", public: "👥", border: "🛂",
+  discuss: "💬", complete: "✅", kind: "🤗", kindness: "🤗", able: "💪🏾",
   tough: "🦾", rough: "🪨", favourite: "⭐", extra: "➕", straight: "📏",
   meter: "📏", purpose: "🎯", thoughtful: "💭", suggest: "💡",
   enjoy: "😄", enjoyable: "😄", soon: "⏳",
 
-  agree: "🤝", continue: "➡️", gain: "📈", effort: "💪", maintain: "🔧",
+  agree: "🤝🏾", continue: "➡️", gain: "📈", effort: "💪🏾", maintain: "🔧",
   daily: "📆", cancel: "❌", leave: "🚪", peace: "☮️", moisture: "💧",
-  roam: "🚶", fresh: "🥬", chewy: "🍬", deadly: "☠️", gather: "🧺",
-  labor: "🛠️", laborer: "🧑‍🏭", pesticide: "🧪", chemicals: "⚗️",
-  service: "🛎️", information: "ℹ️", challenge: "🧗", location: "📍",
-  quantity: "🔢", erase: "🧽", divorce: "💔", rate: "📊", squeeze: "🤏",
+  roam: "🚶🏾", fresh: "🥬", chewy: "🍬", deadly: "☠️", gather: "🧺",
+  labor: "🛠️", laborer: "🧑🏾‍🏭", pesticide: "🧪", chemicals: "⚗️",
+  service: "🛎️", information: "ℹ️", challenge: "🧗🏾", location: "📍",
+  quantity: "🔢", erase: "🧽", divorce: "💔", rate: "📊", squeeze: "🤏🏾",
   suffer: "😣", excite: "🎉", prevent: "🛑", doubtful: "🤨", evil: "😈",
   attract: "🧲", risky: "⚠️", frequent: "🔁", plastic: "🧴", rental: "🔑",
   tourism: "🧳",
@@ -226,8 +252,8 @@ export const WORD_PICTURES = {
   treasure: "💎", piece: "🧩", bobbin: "🧵", silver: "🥈", spices: "🌶️",
 
   // People and body
-  king: "🤴", man: "👨", lady: "👩", families: "👨‍👩‍👧‍👦", everyone: "👥",
-  toes: "🦶", knees: "🦵", body: "🧍",
+  king: "🤴🏾", man: "👨🏾", lady: "👩🏾", families: "👨🏾‍👩🏾‍👧🏾‍👦🏾", everyone: "👥",
+  toes: "🦶🏾", knees: "🦵🏾", body: "🧍🏾",
 
   // Music and sound
   piano: "🎹", pia: "🎹", drum: "🥁", violin: "🎻", instrument: "🎺",
@@ -245,17 +271,17 @@ export const WORD_PICTURES = {
   minute: "⏱️", year: "📅", afternoon: "🌤️",
 
   // Doing words, including the past tenses Grade 1 teaches as their own entries
-  see: "👀", touch: "👆", touched: "👆", wore: "👕", wearing: "👕",
-  sang: "🎤", sat: "🪑", walked: "🚶", ran: "🏃", ate: "🍽️", drank: "🥤",
-  drove: "🚗", threw: "🤾", waved: "👋", flew: "🕊️", slept: "😴",
+  see: "👀", touch: "👆🏾", touched: "👆🏾", wore: "👕", wearing: "👕",
+  sang: "🎤", sat: "🪑", walked: "🚶🏾", ran: "🏃🏾", ate: "🍽️", drank: "🥤",
+  drove: "🚗", threw: "🤾🏾", waved: "👋🏾", flew: "🕊️", slept: "😴",
   talked: "💬", saying: "💬", tell: "🗣️", played: "🧸", worked: "🛠️",
   planted: "🌱", cooked: "🍳", stir: "🥄", washed: "🧼", carried: "🧳",
-  danced: "💃", laughed: "😄", cried: "😢", crying: "😢", smelled: "👃",
-  tasted: "👅", heard: "👂", liked: "👍", loved: "❤️", hugged: "🤗",
+  danced: "💃🏾", laughed: "😄", cried: "😢", crying: "😢", smelled: "👃🏾",
+  tasted: "👅", heard: "👂🏾", liked: "👍🏾", loved: "❤️", hugged: "🤗",
   kiss: "💋", drawn: "🎨", making: "🔨", cutting: "✂️", selling: "💰",
-  hid: "🙈", followed: "👣", sailed: "⛵", rowing: "🚣", waited: "⏳",
-  stood: "🧍", pointed: "👉", chose: "☑️", choose: "☑️", gave: "🤲",
-  hunt: "🔍", act: "🎭", pretend: "🎭", action: "🤸", weave: "🧶",
+  hid: "🙈", followed: "👣", sailed: "⛵", rowing: "🚣🏾", waited: "⏳",
+  stood: "🧍🏾", pointed: "👉🏾", chose: "☑️", choose: "☑️", gave: "🤲🏾",
+  hunt: "🔍", act: "🎭", pretend: "🎭", action: "🤸🏾", weave: "🧶",
   // The musical-statues sense Grade 1 teaches — stop still — not ice.
   freeze: "🛑", rush: "💨", back: "🔙", backwards: "🔙", falling: "⬇️",
   dream: "💭", dreamed: "💭", woke: "⏰", started: "▶️", end: "🏁",
@@ -263,10 +289,10 @@ export const WORD_PICTURES = {
 
   // Feelings and describing words
   sad: "😔", smile: "😊", smiled: "😊", happily: "😊", merrily: "😄",
-  frown: "☹️", sillier: "🤪", patient: "⏳", politely: "🙇", special: "⭐",
+  frown: "☹️", sillier: "🤪", patient: "⏳", politely: "🙇🏾", special: "⭐",
   colourful: "🌈", best: "🥇", luck: "🍀", lucky: "🍀", yum: "😋",
-  mmm: "😋", hooray: "🎉", celebration: "🎉", whee: "🎢", hello: "👋",
-  goodbye: "👋", yes: "✅",
+  mmm: "😋", hooray: "🎉", celebration: "🎉", whee: "🎢", hello: "👋🏾",
+  goodbye: "👋🏾", yes: "✅",
 
   // === Grades 2-4, the picture-dictionary pass =============================
   // The same pass as Grade 1 above, run over the three grades that also draw
@@ -295,11 +321,11 @@ export const WORD_PICTURES = {
 
   // --- Grade 2 -------------------------------------------------------------
   // People and school
-  partner: "🧑‍🤝‍🧑", pupil: "🧑‍🎓", classmates: "🧑‍🎓", adult: "🧑", tutor: "🧑‍🏫",
-  taught: "🧑‍🏫", teaches: "🧑‍🏫", grandmas: "👵", grandpas: "👴", dads: "👨",
-  mama: "👩", aunt: "👩", uncle: "👨", daughter: "👧", grandchild: "🧒",
+  partner: "🧑🏾‍🤝‍🧑🏾", pupil: "🧑🏾‍🎓", classmates: "🧑🏾‍🎓", adult: "🧑🏾", tutor: "🧑🏾‍🏫",
+  taught: "🧑🏾‍🏫", teaches: "🧑🏾‍🏫", grandmas: "👵🏾", grandpas: "👴🏾", dads: "👨🏾",
+  mama: "👩🏾", aunt: "👩🏾", uncle: "👨🏾", daughter: "👧🏾", grandchild: "🧒🏾",
   crowd: "👥", gathers: "👥", gathered: "👥", pet: "🐕", monkey: "🐒",
-  monkeys: "🐒", kings: "🤴", trains: "🚆", passengers: "🚌",
+  monkeys: "🐒", kings: "🤴🏾", trains: "🚆", passengers: "🚌",
   // Words about words
   spell: "🔤", spelled: "🔤", chapter: "📖", plan: "📋", instruction: "📋",
   notepad: "🗒️", text: "📄", revising: "📝", labelling: "🏷️", asking: "❓",
@@ -311,23 +337,23 @@ export const WORD_PICTURES = {
   loudest: "🔊", ring: "🔔", humming: "🎵", laughs: "😄", funny: "😄",
   enjoyed: "😄", grinned: "😁", smiling: "😊", happiest: "😊", silly: "🤪",
   scared: "😨", worried: "😟", worry: "😟", poorly: "🤒", yawn: "🥱",
-  hope: "🤞", surprise: "😲", wow: "😲", amazing: "🤩", excellent: "🌟",
+  hope: "🤞🏾", surprise: "😲", wow: "😲", amazing: "🤩", excellent: "🌟",
   wish: "🌟", important: "❗", forever: "♾️", true: "✅", checked: "✅",
-  wrong: "❌", mistake: "❌", ticked: "✔️", trust: "🤝", agrees: "🤝",
-  agreed: "🤝", shared: "🤝", sorry: "🙇", appreciate: "🙏", kindest: "🤗",
-  hugging: "🤗", cared: "❤️", welcome: "👋", waving: "👋", call: "📞",
-  clapping: "👏", listening: "👂", listener: "👂", sees: "👀", noticed: "👀",
-  peeking: "👀", tapped: "👆", poked: "👆", palm: "✋", eye: "👁️",
-  heels: "🦶", heel: "🦶", stomach: "🫃", bodies: "🧍", breathing: "😮‍💨",
+  wrong: "❌", mistake: "❌", ticked: "✔️", trust: "🤝🏾", agrees: "🤝🏾",
+  agreed: "🤝🏾", shared: "🤝🏾", sorry: "🙇🏾", appreciate: "🙏🏾", kindest: "🤗",
+  hugging: "🤗", cared: "❤️", welcome: "👋🏾", waving: "👋🏾", call: "📞",
+  clapping: "👏🏾", listening: "👂🏾", listener: "👂🏾", sees: "👀", noticed: "👀",
+  peeking: "👀", tapped: "👆🏾", poked: "👆🏾", palm: "✋🏾", eye: "👁️",
+  heels: "🦶🏾", heel: "🦶🏾", stomach: "🫃🏾", bodies: "🧍🏾", breathing: "😮‍💨",
   breathed: "😮‍💨", lungs: "🫁", clue: "🔍", hunting: "🔍", solve: "🧩",
   problem: "🧩", invented: "💡", wise: "🦉",
   // Moving, playing, winning
-  jumping: "🤸", hopping: "🦘", hopped: "🦘", hoop: "⭕", hoops: "⭕",
-  dance: "💃", cycling: "🚴", rode: "🚴", swam: "🏊", dived: "🤿",
-  raced: "🏃", relay: "🏃", fastest: "🏃", quick: "🏃", hurried: "💨",
+  jumping: "🤸🏾", hopping: "🦘", hopped: "🦘", hoop: "⭕", hoops: "⭕",
+  dance: "💃🏾", cycling: "🚴🏾", rode: "🚴🏾", swam: "🏊🏾", dived: "🤿",
+  raced: "🏃🏾", relay: "🏃🏾", fastest: "🏃🏾", quick: "🏃🏾", hurried: "💨",
   hurry: "💨", crawled: "🐛", spinning: "🌀", rolled: "🎳", catches: "🥎",
   fell: "⬇️", win: "🏆", winning: "🏆", won: "🏆", winner: "🥇",
-  cheering: "📣", bouncy: "⛹️", smallest: "🐁", giant: "🐘", taller: "🦒",
+  cheering: "📣", bouncy: "⛹🏾", smallest: "🐁", giant: "🐘", taller: "🦒",
   highest: "⬆️", rising: "⬆️", darkening: "🌑", shining: "✨", glowed: "✨",
   // Home, town and the wider world
   // stall, flat and lift each mean something else at another grade — see
@@ -346,10 +372,10 @@ export const WORD_PICTURES = {
   width: "↔️", tools: "🧰", fix: "🔧", fixed: "🔧", fixing: "🔧",
   working: "🛠️", dig: "⛏️", load: "📦", sorted: "🗂️", protects: "🛡️",
   protecting: "🛡️", recycle: "♻️", weeds: "🌿", petals: "🌸",
-  stronger: "💪", dried: "🌵", gas: "💨", blew: "🌬️", blow: "🌬️",
+  stronger: "💪🏾", dried: "🌵", gas: "💨", blew: "🌬️", blow: "🌬️",
   rained: "🌧️", waiting: "⏳", footsteps: "👣", footstep: "👣",
-  "soldier's": "🎖️", creature: "🐾", sting: "🐝", marched: "🚶",
-  kneeling: "🧎", great: "👍", pretty: "🌺", beauty: "🌺", dreams: "💭",
+  "soldier's": "🎖️", creature: "🐾", sting: "🐝", marched: "🚶🏾",
+  kneeling: "🧎🏾", great: "👍🏾", pretty: "🌺", beauty: "🌺", dreams: "💭",
   twenty: "2️⃣0️⃣", thirty: "3️⃣0️⃣", forty: "4️⃣0️⃣", fifty: "5️⃣0️⃣",
   sixty: "6️⃣0️⃣", seventy: "7️⃣0️⃣", eighty: "8️⃣0️⃣", ninety: "9️⃣0️⃣",
   fourteen: "1️⃣4️⃣", thousand: "1️⃣0️⃣0️⃣0️⃣",
@@ -361,10 +387,10 @@ export const WORD_PICTURES = {
   cleaned: "🧼", fields: "🌾", crops: "🌾", golden: "🟡", rivers: "🏞️",
   birthdays: "🎂", coldest: "🥶", frozen: "🧊", frost: "❄️", holiday: "🏖️",
   "o'clock": "🕐", street: "🛣️", lane: "🛣️", centre: "🎯", middle: "🎯",
-  focus: "🎯", junior: "🧒", senior: "🧓", elderly: "🧓", youngest: "🧒",
-  nurses: "🧑‍⚕️", nursing: "🧑‍⚕️", medicine: "💊", sick: "🤒",
-  sellers: "💰", prices: "💰", shoppers: "🛒", builders: "👷",
-  climbed: "🧗", rabbits: "🐇", bird: "🐦", seagulls: "🐦",
+  focus: "🎯", junior: "🧒🏾", senior: "🧓🏾", elderly: "🧓🏾", youngest: "🧒🏾",
+  nurses: "🧑🏾‍⚕️", nursing: "🧑🏾‍⚕️", medicine: "💊", sick: "🤒",
+  sellers: "💰", prices: "💰", shoppers: "🛒", builders: "👷🏾",
+  climbed: "🧗🏾", rabbits: "🐇", bird: "🐦", seagulls: "🐦",
   seashells: "🐚", cliffs: "🏔️", hillside: "⛰️", coastal: "🏖️",
   waterfall: "🌊", splash: "💦", foam: "🫧", herbs: "🌿", natural: "🌿",
   leaf: "🍃", dirt: "🪴", breeze: "🌬️", blows: "🌬️", raining: "🌧️",
@@ -373,28 +399,28 @@ export const WORD_PICTURES = {
   shout: "📣", laughter: "😄", laughing: "😄", joy: "😄", drums: "🥁",
   bang: "💥", painting: "🎨", props: "🎭", perform: "🎭", vest: "🦺",
   nickname: "📛", tick: "✔️", correct: "✅", completed: "✅",
-  reflect: "🤔", journal: "📓", studying: "📖", classmate: "🧑‍🎓",
+  reflect: "🤔", journal: "📓", studying: "📖", classmate: "🧑🏾‍🎓",
   graduated: "🎓", competition: "🏆", prize: "🎁", winners: "🥇",
-  teamwork: "🤝", meet: "🤝", grateful: "🙏", proudly: "😌",
+  teamwork: "🤝🏾", meet: "🤝🏾", grateful: "🙏🏾", proudly: "😌",
   proudest: "😌", pleased: "😊", happiness: "😊", quietest: "🤫",
   noisiest: "🔊", decorations: "🎊", celebrated: "🎉", event: "🎉",
   judges: "⚖️", compare: "⚖️", grams: "⚖️", collected: "🧺",
-  supplies: "📦", sort: "🗂️", lent: "🤲", offered: "🤲", offer: "🤲",
-  vote: "🗳️", raise: "✋", decide: "☑️", decided: "☑️",
+  supplies: "📦", sort: "🗂️", lent: "🤲🏾", offered: "🤲🏾", offer: "🤲🏾",
+  vote: "🗳️", raise: "✋🏾", decide: "☑️", decided: "☑️",
   suggestion: "💡", thinking: "💭", imagination: "💭", imagining: "💭",
   memories: "🧠", smart: "🧠", blank: "📄", design: "📐",
   // The body, the outdoors, getting about
-  face: "🙂", arms: "💪", strength: "💪", amazed: "🤩", freedom: "🕊️",
-  standing: "🧍", stepped: "👣", step: "👣", footprints: "👣",
-  joggers: "🏃", chased: "🏃", cyclists: "🚴", scooter: "🛴",
+  face: "🙂", arms: "💪🏾", strength: "💪🏾", amazed: "🤩", freedom: "🕊️",
+  standing: "🧍🏾", stepped: "👣", step: "👣", footprints: "👣",
+  joggers: "🏃🏾", chased: "🏃🏾", cyclists: "🚴🏾", scooter: "🛴",
   adventure: "🧭", explored: "🧭", tour: "🧳", hike: "🥾", pack: "🎒",
-  slowly: "🐢", searched: "🔍", hiding: "🙈", grab: "✊", grabbed: "✊",
-  fist: "✊", fallen: "🍂", heavier: "🏋️", lifted: "🏋️", wiped: "🧽",
+  slowly: "🐢", searched: "🔍", hiding: "🙈", grab: "✊🏾", grabbed: "✊🏾",
+  fist: "✊🏾", fallen: "🍂", heavier: "🏋🏾", lifted: "🏋🏾", wiped: "🧽",
   wires: "🔌", power: "⚡", machines: "⚙️", thirsty: "🥤", meal: "🍽️",
   lunchtime: "🍱", bowl: "🥣", maths: "🔢", tool: "🧰", shoe: "👟",
   sharp: "🔪", photographs: "📷", photograph: "📷", stared: "👀",
-  seen: "👀", glancing: "👀", asleep: "😴", dancing: "💃",
-  swapping: "🔄", develop: "📈", discussed: "💬", listened: "👂",
+  seen: "👀", glancing: "👀", asleep: "😴", dancing: "💃🏾",
+  swapping: "🔄", develop: "📈", discussed: "💬", listened: "👂🏾",
   breathe: "😮‍💨", bigger: "🐘", pausing: "⏸️", opened: "🚪", shuts: "🚪",
   kinder: "🤗", "don": "👕", unsure: "🤨", glisten: "✨",
 
@@ -405,7 +431,7 @@ export const WORD_PICTURES = {
   dripping: "💧", choppy: "🌊", ripple: "🌊", howl: "🐺", frightening: "😨",
   frightened: "😨", fear: "😨", fright: "😱", panic: "😱", shivering: "🥶",
   hotter: "🥵", steaming: "♨️", boil: "♨️", washing: "🧺", basket: "🧺",
-  countryside: "🌾", maize: "🌽", coffee: "☕", cows: "🐄", farmed: "🧑‍🌾",
+  countryside: "🌾", maize: "🌽", coffee: "☕", cows: "🐄", farmed: "🧑🏾‍🌾",
   bleat: "🐑", barked: "🐕", paw: "🐾", predator: "🦁", bugs: "🐛",
   // Work, tools and making
   hammer: "🔨", bolt: "🔩", iron: "🔩", rope: "🪢", ladder: "🪜",
@@ -416,40 +442,40 @@ export const WORD_PICTURES = {
   observatory: "🔭", astronomers: "🔭", sparks: "✨", twinkling: "✨",
   glow: "✨", glowing: "✨", magic: "🪄", cones: "🚧", banner: "🚩",
   signpost: "🪧", railway: "🛤️", lorries: "🚚", cities: "🏙️",
-  streetlamps: "💡", caretaker: "🧹", chores: "🧹", labourer: "🧑‍🏭",
+  streetlamps: "💡", caretaker: "🧹", chores: "🧹", labourer: "🧑🏾‍🏭",
   labour: "🛠️", law: "⚖️", weigh: "⚖️", weighing: "⚖️", weighed: "⚖️",
   vendor: "🏪", stallholder: "🏪", seller: "💰", shopping: "🛒",
   // Reading, speaking and the newsroom unit
   dictionary: "📕", leaflet: "📄", paragraphs: "📄", script: "📜",
   headline: "📰", announcement: "📢", presenter: "🎤", song: "🎵",
-  applause: "👏", clapped: "👏", praises: "👏", communication: "💬",
+  applause: "👏🏾", clapped: "👏🏾", praises: "👏🏾", communication: "💬",
   interviewed: "🎙️", improve: "📈", improved: "📈", risen: "📈",
-  written: "✍️", metres: "📏", centimetres: "📏", kilometres: "📏",
+  written: "✍🏾", metres: "📏", centimetres: "📏", kilometres: "📏",
   miles: "📏", inch: "📏", cancelled: "❌", refused: "❌", file: "📁",
   addressed: "📮", keyrings: "🔑", badge: "📛", souvenirs: "🎁",
-  okay: "👌", teach: "🧑‍🏫", students: "🧑‍🎓", childhood: "🧒",
-  grandparents: "🧓", woman: "👩", son: "👦", helper: "🤝",
-  promising: "🤝", audience: "👥", actors: "🎭", costume: "🎭",
-  costumes: "🎭", dancers: "💃", crown: "👑", capes: "🦸", posed: "📷",
+  okay: "👌🏾", teach: "🧑🏾‍🏫", students: "🧑🏾‍🎓", childhood: "🧒🏾",
+  grandparents: "🧓🏾", woman: "👩🏾", son: "👦🏾", helper: "🤝🏾",
+  promising: "🤝🏾", audience: "👥", actors: "🎭", costume: "🎭",
+  costumes: "🎭", dancers: "💃🏾", crown: "👑", capes: "🦸🏾", posed: "📷",
   // Health, feeling and the market unit
   disease: "🦠", poisoning: "🤢", sickness: "🤒", illness: "🤒",
   sore: "🤕", dizzy: "😵‍💫", unhappy: "😔", confused: "😕",
   infuriating: "😠", surprised: "😲", gasped: "😲", delighted: "😄",
   giggled: "🤭", grinning: "😁", excited: "🎉", exciting: "🎉",
   calmer: "😌", peaceful: "☮️", curiosity: "🤔", sleeping: "😴",
-  belly: "🫃", chewing: "🦷", tastes: "👅", salty: "🧂", spiced: "🌶️",
+  belly: "🫃🏾", chewing: "🦷", tastes: "👅", salty: "🧂", spiced: "🌶️",
   freshest: "🥬", sweetest: "🍬", bakes: "🥖", stove: "🍳",
   precious: "💎", valuable: "💎", bracelet: "📿", harmful: "⚠️",
   // Moving, and the parade and race units
-  greet: "👋", rushing: "💨", swiftly: "💨", accelerate: "💨",
-  escaped: "🏃", wander: "🚶", roamed: "🚶", marching: "🚶",
+  greet: "👋🏾", rushing: "💨", swiftly: "💨", accelerate: "💨",
+  escaped: "🏃🏾", wander: "🚶🏾", roamed: "🚶🏾", marching: "🚶🏾",
   travels: "🧳", travelled: "🧳", direction: "🧭", flies: "🕊️",
   drives: "🚗", rescued: "🛟", coiled: "🌀", spun: "🌀",
-  squeezing: "🤏", handed: "🤲", handful: "✋", handfuls: "✋",
+  squeezing: "🤏🏾", handed: "🤲🏾", handful: "✋🏾", handfuls: "✋🏾",
   higher: "⬆️", wider: "↔️", enormous: "🐘", hundred: "💯",
   sixteen: "1️⃣6️⃣", nineteen: "1️⃣9️⃣", staring: "👀", choosing: "☑️",
-  chosen: "☑️", hoping: "🤞", trading: "🔄", frequently: "🔁",
-  practised: "🔁", frowned: "☹️", powerful: "💪", dresses: "👗",
+  chosen: "☑️", hoping: "🤞🏾", trading: "🔄", frequently: "🔁",
+  practised: "🔁", frowned: "☹️", powerful: "💪🏾", dresses: "👗",
   borders: "🛂", problems: "🧩", planned: "📋",
 };
 
@@ -508,7 +534,7 @@ export const WORD_PICTURES = {
 // does not, "" is the answer, and the word simply loses its picture in the
 // grade that means something else by it.
 export const GRADE_WORD_PICTURES = {
-  1: { light: "🚦", march: "🚶", earth: "🪴", may: "", sink: "", stall: "" },
+  1: { light: "🚦", march: "🚶🏾", earth: "🪴", may: "", sink: "", stall: "" },
   2: {
     may: "", well: "", flat: "🏢",
     left: "", right: "✅", hard: "", drop: "", round: "", picking: "", spin: "🕸️",

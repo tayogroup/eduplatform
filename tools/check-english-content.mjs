@@ -126,6 +126,36 @@ const MARKER_INSTRUCTION = /(?:^|[.!?]\s+)(?:Accept|Award|Allow|Credit|Mark)\s+(
 // answerKey or a teacherNote, and neither is drawn on a learner's page.
 const GUIDANCE_FIELDS = { comprehension: ["correctAnswer", "explanation"] };
 
+// ── the taught vocabulary, and the glossary that is not it ──────────────────
+// english.js completes the Vocabulary section on the words a unit TEACHES, and
+// identifies them by excluding one group title (english.js ::
+// STORY_GLOSSARY_GROUP). Vocabulary sits in front of Reading in SECTION_CHAIN,
+// so this one string decides how many words a learner must mark before the app
+// lets them read the story — 31 at Grade 8 Unit 1 with the rule holding, 423
+// without it.
+//
+// A title match is a wording check, and this file's own rule is that a check
+// keyed on wording can only find what has already gone wrong once. So it is
+// paired with a STRUCTURAL half that needs no vocabulary of its own: a unit's
+// last group must not be a large majority of its list. That is what a glossary
+// looks like whatever it is called, and it is the shape that turns the gate
+// back into a 400-word wall — which is exactly what a rename would do, in
+// silence, because the title rule would simply stop matching and every check
+// here would still pass.
+const STORY_GLOSSARY_GROUP = "Words from our stories";
+// Above this the taught set is no longer a week's work and the unit Study Plan,
+// which schedules all of it on Day 1 of Week 1, is describing something nobody
+// can do. Today's worst unit is Grade 2 Unit 1 at 70. A ceiling that may not
+// rise, in the spirit of the coverage floors elsewhere in this repo.
+const TAUGHT_WORDS_CEILING = 80;
+// The structural half. Both conditions must hold to fail: the majority share on
+// its own flags Grade 6 Unit 10, a legitimate 30-word single-group review unit
+// whose one group is 100% of the list and is entirely taught. The absolute size
+// is what separates "small unit with one group" from "glossary under a new
+// name" — a glossary is never small, because it is a gloss of whole passages.
+const GLOSSARY_SHAPE_SHARE = 0.5;
+const GLOSSARY_SHAPE_WORDS = 80;
+
 // The id field each section uses, in the order they are looked for. One list,
 // because every failure message needs to name the item it is about.
 //
@@ -260,6 +290,8 @@ let questionCount = 0;
 let learnerChars = 0;
 let missingSection = 0;
 let displayPhonemes = 0;
+let taughtVocabulary = 0;
+let glossaryVocabulary = 0;
 const unsigned = new Map();      // reviewStatus -> count
 const bannerImages = new Map();  // image path -> [unit labels]
 
@@ -307,6 +339,32 @@ for (const gradeDir of grades) {
     }
     const gamePack = path.join(dataDir, "games", `unit-${entry.number}.json`);
     if (!fs.existsSync(gamePack)) fail(label, "no games/unit-N.json — Games is countable when a pack exists and this unit would offer none");
+
+    // ── the words Vocabulary actually asks for ──────────────────────────────
+    const groups = unit.vocabularyGroups || [];
+    const sizeOf = (group) => group.vocabularyIds?.length || 0;
+    const unitWords = groups.reduce((sum, group) => sum + sizeOf(group), 0);
+    const taught = groups.filter((group) => group.title !== STORY_GLOSSARY_GROUP);
+    const taughtWords = taught.reduce((sum, group) => sum + sizeOf(group), 0);
+    taughtVocabulary += taughtWords;
+    glossaryVocabulary += unitWords - taughtWords;
+    if (!groups.length) {
+      fail(label, "no vocabularyGroups — Vocabulary has nothing to complete on and it gates Reading");
+    } else if (!taught.length) {
+      // english.js falls back to the whole list here, so the unit still gates
+      // rather than opening on sight — but it gates on the glossary, which is
+      // the wall this rule exists to remove.
+      fail(label, `every vocabularyGroup is "${STORY_GLOSSARY_GROUP}" — the taught set is empty and Vocabulary falls back to gating on all ${unitWords} words`);
+    } else if (taughtWords > TAUGHT_WORDS_CEILING) {
+      fail(label, `${taughtWords} taught words (ceiling ${TAUGHT_WORDS_CEILING}) — Vocabulary gates Reading on all of them and the unit Study Plan schedules them in one week`);
+    }
+    // The structural half, which knows no titles: a big trailing group that is
+    // most of the unit IS a story glossary, whatever it has been renamed to.
+    const last = groups[groups.length - 1];
+    if (last && last.title !== STORY_GLOSSARY_GROUP
+      && sizeOf(last) >= GLOSSARY_SHAPE_WORDS && sizeOf(last) >= GLOSSARY_SHAPE_SHARE * unitWords) {
+      fail(label, `last vocabularyGroup ${JSON.stringify(last.title)} holds ${sizeOf(last)} of ${unitWords} words — that is a story glossary under another name, and Vocabulary is counting it as taught`);
+    }
 
     // ── who is being spoken to, and in what notation ────────────────────────
     for (const [section, fields] of Object.entries(LEARNER_FIELDS)) {
@@ -557,6 +615,85 @@ function checkWorksheetAnswerKeys() {
   note("worksheet grammar: answer runs are only checked at Grades 1-4, the grades the sheet prints — above that the same shape is the exercise list itself, so extending the sheet upward needs this detector recalibrated first");
 }
 
+// The comprehension half of the same page, and it fails DIFFERENTLY from the
+// grammar half above, which is why it is a second function rather than a wider
+// version of the first.
+//
+// A comprehension answer is its own field — correctAnswer, beside the question,
+// never inside it — so there is no string to parse and no wording that can drift.
+// Nothing here can leak by mis-parsing. The only way a mark scheme reaches a
+// learner is if the CODE puts it there, so that is what is checked: the builder
+// that draws the questions must not so much as mention the answer.
+//
+// It also holds the line the sheet draws at Grade 1, on the same evidence the
+// grammar filter does. All 132 of Grade 1's comprehension questions are oral —
+// "Point to the picture and say the word" — and a narrowed filter would print
+// those above ruled lines, telling a child to write down something the course
+// asks them to say. That defect is invisible to every other check here.
+function checkWorksheetComprehension() {
+  const label = "worksheet comprehension";
+  const source = path.join(here, "..", "src", "prototypes", "ehel-academy", "shell", "subjects", "english.js");
+  if (!fs.existsSync(source)) { fail(label, "shell/subjects/english.js not found — cannot check the comprehension section"); return; }
+  const text = fs.readFileSync(source, "utf8");
+
+  const declared = text.match(/const COMPREHENSION_ORAL_TYPES = \/(.+)\/([a-z]*);/);
+  if (!declared) { fail(label, "COMPREHENSION_ORAL_TYPES is not declared in english.js — the filter that keeps oral work off the sheet has moved or gone"); return; }
+  let oral;
+  try { oral = new RegExp(declared[1], declared[2]); }
+  catch (error) { fail(label, `COMPREHENSION_ORAL_TYPES does not compile: ${error.message}`); return; }
+
+  // The learner-facing builder, read as source. Asserting on the FUNCTION BODY
+  // rather than on the file: english.js legitimately mentions correctAnswer in
+  // several places (the on-screen comprehension page reveals it on request), so a
+  // whole-file search would be permanently red and would have to be ignored.
+  const builder = text.match(/function worksheetComprehensionHtml\([^)]*\) \{[\s\S]*?\n\}/);
+  if (!builder) { fail(label, "worksheetComprehensionHtml is not declared in english.js — the printed comprehension section has moved or gone"); return; }
+  if (/\bcorrectAnswer\b|\.answer\b|\banswer:/.test(builder[0])) {
+    fail(label, "worksheetComprehensionHtml references the answer — a mark scheme belongs in worksheetAnswerKeyHtml, at the back, not beside the question a learner is about to write on");
+  }
+
+  let total = 0;
+  let written = 0;
+  let writtenAtGradeOne = 0;
+  let missingAnswer = 0;
+  for (const gradeDir of grades) {
+    const grade = Number(gradeDir.slice(6));
+    if (grade > 4) continue;
+    const unitsDir = path.join(root, gradeDir, "data", "units");
+    if (!fs.existsSync(unitsDir)) continue;
+    for (const file of fs.readdirSync(unitsDir).filter((n) => n.endsWith(".json"))) {
+      const unit = readJson(path.join(unitsDir, file));
+      const readings = new Set((unit.readings || []).map((reading) => reading.readingId));
+      for (const question of unit.comprehension || []) {
+        total += 1;
+        if (oral.test(question.questionType || "")) continue;
+        written += 1;
+        if (grade === 1) {
+          writtenAtGradeOne += 1;
+          if (writtenAtGradeOne <= 5) fail(label, `${gradeDir}/${file} would print an oral question on the sheet: ${JSON.stringify(String(question.question || "").slice(0, 80))} (${question.questionType})`);
+        }
+        // A question whose reading is not in its own unit would print with no text
+        // above it — an unanswerable page rather than a hard one.
+        if (!readings.has(question.readingId)) {
+          fail(label, `${gradeDir}/${file} has a comprehension question whose readingId ${JSON.stringify(question.readingId)} is not a reading in this unit, so the sheet would print it with no passage`);
+        }
+        if (!String(question.correctAnswer || "").trim()) missingAnswer += 1;
+      }
+    }
+  }
+  if (writtenAtGradeOne > 5) fail(label, `${writtenAtGradeOne - 5} further oral question(s) would print at Grade 1`);
+
+  // A floor, for the same reason the grammar filter has one: a filter that has
+  // stopped matching and a filter with nothing to match look identical from
+  // outside. If this drops, either the content lost questions or the oral pattern
+  // widened and is silently emptying the section.
+  const FLOOR = 426;
+  if (written < FLOOR) {
+    fail(label, `only ${written} of ${total} comprehension questions survive COMPREHENSION_ORAL_TYPES at Grades 1-4, was ${FLOOR} — either questions were removed, or the oral filter widened and is cutting written work off the sheet. Check which before lowering this floor.`);
+  }
+  note(`worksheet comprehension: ${written} of ${total} questions at Grades 1-4 are written work and reach the sheet; the other ${total - written} are oral and are all at Grade 1, which prints no comprehension section${missingAnswer ? `. ${missingAnswer} carry no correctAnswer, so the answer key skips them` : ""}`);
+}
+
 function walkAudio(value, visit, where = "") {
   if (Array.isArray(value)) { value.forEach((item, index) => walkAudio(item, visit, `${where}[${index}]`)); return; }
   if (!value || typeof value !== "object") return;
@@ -581,6 +718,14 @@ function walkReviewStatus(value, visit) {
 console.log(
   `english content: ${unitCount} units across ${grades.length} grades, `
   + `${questionCount} unit quiz questions, ${learnerChars.toLocaleString()} chars of learner-facing text`
+);
+// Printed, not merely checked. This is the number Vocabulary gates on and the
+// number the unit Study Plan schedules, and a drift in the split is the first
+// sign the title rule has stopped matching somewhere.
+console.log(
+  `vocabulary: ${taughtVocabulary.toLocaleString()} taught, `
+  + `${glossaryVocabulary.toLocaleString()} story glossary `
+  + `(${Math.round((100 * glossaryVocabulary) / Math.max(1, taughtVocabulary + glossaryVocabulary))}% reference, not gated)`
 );
 
 if (missingSection) {
@@ -608,6 +753,7 @@ if (unsigned.size) {
 // reports nothing and looks like it never ran. That is how this one was first
 // wired, and the silence was indistinguishable from a clean pass.
 checkWorksheetAnswerKeys();
+checkWorksheetComprehension();
 
 if (notes.length) {
   console.log("\nNotes (need a human eye, not a build failure):");

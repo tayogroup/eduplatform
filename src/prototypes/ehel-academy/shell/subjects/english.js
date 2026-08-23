@@ -6483,7 +6483,7 @@ function readingBlocks(value) {
     // a section, in every grade. The closing quote is part of the sentence end.
     const isHeading = line.length <= 72 && (!/[.!?][”’"')\]]*$/.test(line) || /:$/.test(line));
     if (isHeading) {
-      blocks.push({ heading: true, words: 0, html: `<h3 class="ebook-subheading">${escapeHtml(line.replace(/:$/, ""))}</h3>` });
+      blocks.push({ heading: true, words: 0, text: line.replace(/:$/, ""), html: `<h3 class="ebook-subheading">${escapeHtml(line.replace(/:$/, ""))}</h3>` });
       continue;
     }
     const sentences = line.match(/[^.!?]+[.!?]+|[^.!?]+$/g) || [line];
@@ -6493,7 +6493,11 @@ function readingBlocks(value) {
     // Each sentence is its own element so the read-along highlight has a line
     // to land on. Spans are inline and unstyled by default, so the printed
     // sheet and the deck draw exactly what they drew before.
-    groups.filter(Boolean).forEach((paragraph) => blocks.push({ heading: false, words: readingWordCount(paragraph), html: `<p>${readingLinesHtml(paragraph)}</p>` }));
+    // `text` is the plain string the block was built from, carried alongside the
+    // markup so a consumer that cannot use these classes — the printed worksheet,
+    // whose window has none of this stylesheet — draws the SAME segmentation
+    // rather than re-deriving the heading heuristic above and drifting from it.
+    groups.filter(Boolean).forEach((paragraph) => blocks.push({ heading: false, words: readingWordCount(paragraph), text: paragraph, html: `<p>${readingLinesHtml(paragraph)}</p>` }));
   }
   return blocks;
 }
@@ -9510,6 +9514,105 @@ function worksheetGrammar() {
     .filter((item) => item.prompts.length);
 }
 
+// READING COMPREHENSION — a passage and the questions about it, on the same pages.
+//
+// GRADES 2-4 ONLY, and Grade 1 is excluded on the evidence rather than by taste,
+// exactly as its grammar is. Of the 558 comprehension questions across Grades
+// 1-4, 132 are questionType "Oral response", "Point, act or say", "Oral, point or
+// choose", "Listen, point and say" or "Do and explain" — and every one of the 132
+// is at Grade 1, which has no other kind. So the filter is on the type and Grade
+// 1 ends up with no comprehension box on its worksheet at all, which is the
+// honest outcome: an empty section on a printable is a page of nothing.
+const COMPREHENSION_ORAL_TYPES = /^(Oral response|Point, act or say|Oral, point or choose|Listen, point and say|Do and explain)$/;
+
+// THE PASSAGE IS PRINTED, and it is the expensive decision on this page. It runs
+// to about 7,000 characters per unit — three or four pages before a single
+// question — where every other option on the sheet costs a line or two per word.
+//
+// It is printed anyway because a comprehension question without its text is not
+// a harder exercise, it is an impossible one: "The text names four places where
+// we can see words. What are they?" cannot be answered away from the screen, and
+// away from the screen is the entire point of a sheet you print. The page count
+// shown beside the tick box includes the passages, so nobody meets the cost at
+// the printer.
+//
+// Grouped by READING, not by the section the app groups by on screen. 42 of the
+// 77 question sections at Grades 2-4 draw on more than one reading, so a section
+// is not something that can sit under one passage. A reading is.
+const comprehensionAnswerLines = (marks) => (Number(marks) >= 2 ? 3 : 2);
+
+function worksheetComprehension() {
+  const written = (course.comprehension || [])
+    .filter((question) => !COMPREHENSION_ORAL_TYPES.test(question.questionType || ""));
+  if (!written.length) return [];
+  // Driven from course.readings so the passages come out in the unit's own order
+  // and a reading nothing asks about is simply not printed. Every one of the 558
+  // questions resolves to a reading in its own unit — checked across all 41 units
+  // of Grades 1-4, none orphaned — so no question is lost by keying on that.
+  return (course.readings || [])
+    .map((reading) => {
+      const questions = written.filter((question) => question.readingId === reading.readingId);
+      if (!questions.length) return null;
+      return {
+        title: reading.title || "",
+        type: reading.type || "",
+        // 50 of the readings at Grades 2-4 are type "Listening", and printing one
+        // hands the learner the script of something they were meant to HEAR —
+        // which quietly turns a listening exercise into a reading one and reports
+        // nothing wrong, because every question still has its text.
+        //
+        // Dropping them instead would drop their questions with them, so the sheet
+        // says what the text is and who should read it: the grown-up reads it
+        // aloud, the learner listens and answers. That is what the exercise is,
+        // moved onto paper, rather than a different exercise wearing its name.
+        listening: /listening/i.test(reading.type || ""),
+        blocks: readingBlocks(reading.passageScript).map((block) => ({ heading: block.heading, text: block.text })),
+        questions: questions.map((question) => ({
+          text: question.question || "",
+          marks: Number(question.marks) || 1,
+          lines: comprehensionAnswerLines(question.marks),
+          // Read by the answer-key builder and by nothing else. correctAnswer is
+          // the mark scheme — "Any two real places that are not in the text, such
+          // as…" — and beside the question it is simply the answer, printed on
+          // the learner's own page above the lines they were going to write it
+          // on. Same objection as the grammar keys above, and the same remedy:
+          // it goes to the back of the sheet, behind its own tick box.
+          answer: String(question.correctAnswer || "").trim(),
+        })),
+      };
+    })
+    .filter(Boolean);
+}
+
+// One section per reading, so each passage opens a fresh page with its own
+// questions under it — .cw-group + .cw-group already breaks the page, which is
+// the same rule that gives every vocabulary group a page of its own.
+//
+// The passage is set in PRINT, not on the ruled lines in cursive. It is there to
+// be read, and cursive on the rules is this sheet's signal for "copy this".
+function worksheetComprehensionHtml(readings, geo) {
+  if (!readings.length) return "";
+  return readings.map((reading, index) => `<section class="cw-group cw-comp">
+    <header class="cw-group-head">
+      <!-- The ordinal counts TEXTS, and it is kept out of the eyebrow on purpose:
+           "Listening 4" for the fourth text of five reads as the fourth listening,
+           which it is not — the readings and the listenings are interleaved. -->
+      <span>${reading.listening ? "Listening" : "Reading"}</span>
+      <small>Text ${index + 1} of ${readings.length} · ${escapeHtml(reading.title)}${reading.type ? ` · ${escapeHtml(reading.type)}` : ""}</small>
+      <em>${escapeHtml(gradeLabel)} · Unit ${course.unit.unitNo}</em>
+    </header>
+    ${reading.listening ? `<p class="cw-comp-aloud">This is a listening text. Ask a grown-up to read it aloud to you — listen to the whole thing before you look at the questions.</p>` : ""}
+    <div class="cw-comp-passage">${reading.blocks.map((block) => (block.heading
+      ? `<h3 class="cw-comp-head">${escapeHtml(block.text)}</h3>`
+      : `<p class="cw-comp-para">${escapeHtml(block.text)}</p>`)).join("")}</div>
+    <p class="cw-comp-instruction">${reading.listening ? "Now answer the questions in your best handwriting." : "Read the text above, then answer the questions in your best handwriting."}</p>
+    ${reading.questions.map((question, order) => `<div class="cw-comp-item">
+      <p class="cw-comp-question"><span class="cw-comp-no">${order + 1}.</span> ${escapeHtml(question.text)} <span class="cw-comp-marks">[${question.marks} mark${question.marks === 1 ? "" : "s"}]</span></p>
+      ${Array.from({ length: question.lines }, () => worksheetTextLineSvg(geo, "", { model: false })).join("")}
+    </div>`).join("")}
+  </section>`).join("");
+}
+
 // The answer key, on its own pages at the very end and addressed to the adult
 // rather than the learner. Deliberately the plainest thing on the sheet: no ruled
 // lines, no room to write, nothing that reads as an exercise — it is a mark scheme,
@@ -9518,19 +9621,30 @@ function worksheetGrammar() {
 // It is LAST on purpose. A learner who turns the page mid-exercise should meet more
 // exercises, not the answers, and the sheet's own pagination puts every group on a
 // fresh page so this cannot creep up behind the questions.
-function worksheetAnswerKeyHtml(items, geo) {
-  const withAnswers = items.filter((item) => item.answers.length);
-  if (!withAnswers.length) return "";
+function worksheetAnswerKeyHtml(items, readings, geo) {
+  const withAnswers = (items || []).filter((item) => item.answers.length);
+  // A comprehension question always carries a correctAnswer — all 558 of them do,
+  // checked, not assumed — but the filter stays because a reading whose answers
+  // were all blank would otherwise print a heading with nothing under it.
+  const withGuidance = (readings || []).filter((reading) => reading.questions.some((question) => question.answer));
+  if (!withAnswers.length && !withGuidance.length) return "";
+  const covers = [withAnswers.length && "grammar", withGuidance.length && "comprehension"].filter(Boolean);
   return `<section class="cw-group cw-answers">
     <header class="cw-group-head">
       <span>Answer key</span>
       <small>for the grown-up marking this</small>
       <em>${escapeHtml(gradeLabel)} · Unit ${course.unit.unitNo}</em>
     </header>
-    <p class="cw-answers-note">These are the answers to the grammar pages. They are printed here, at the back, so the learner meets the questions first.</p>
+    <p class="cw-answers-note">These are the answers to the ${covers.join(" and ")} page${covers.length === 1 ? "s" : "s"}. They are printed here, at the back, so the learner meets the questions first.</p>
     ${withAnswers.map((item) => `<div class="cw-answers-item">
       <h3 class="cw-gram-title">${escapeHtml(item.title)}</h3>
       ${item.answers.map((answer) => `<p class="cw-answers-line">${escapeHtml(answer)}</p>`).join("")}
+    </div>`).join("")}
+    ${withGuidance.map((reading) => `<div class="cw-answers-item">
+      <h3 class="cw-gram-title">${escapeHtml(reading.title)}</h3>
+      ${reading.questions.map((question, order) => (question.answer
+        ? `<p class="cw-answers-line">${order + 1}. ${escapeHtml(question.answer)}</p>`
+        : "")).join("")}
     </div>`).join("")}
   </section>`;
 }
@@ -9628,6 +9742,26 @@ function worksheetCss(geo, { print }) {
     .cw-gram-task { margin-top: ${(geo.gapWords * 0.5).toFixed(1)}mm; break-inside: avoid; page-break-inside: avoid; }
     .cw-gram-prompt { margin: 0 0 1.2mm; color: #17324d;
                       font: 400 ${print ? "3.1mm" : "15px"}/1.4 Arial, Helvetica, sans-serif; }
+    /* The passage is the one block on the sheet that is ALLOWED to break — it runs
+       to several pages on its own and break-inside: avoid on something taller than
+       a page is ignored anyway, so saying so would only be a lie in the stylesheet.
+       Its questions each stay whole, the way a grammar task does. */
+    .cw-comp-aloud { margin: 0 0 2.5mm; padding: ${print ? "1.8mm 2.4mm" : "8px 10px"};
+                     border-left: ${print ? ".8mm" : "3px"} solid #0f766e; background: #f2f8f7; color: #17324d;
+                     font: 400 ${print ? "2.9mm" : "14px"}/1.4 Arial, Helvetica, sans-serif; }
+    .cw-comp-passage { margin: 0 0 ${geo.gapWords}mm; }
+    .cw-comp-head { margin: ${(geo.gapWords * 0.5).toFixed(1)}mm 0 1mm; color: #17324d;
+                    font: 700 ${print ? "3.4mm" : "16px"}/1.25 Arial, Helvetica, sans-serif; }
+    .cw-comp-para { margin: 0 0 1.8mm; color: #17324d;
+                    font: 400 ${print ? "3.1mm" : "15px"}/1.5 Arial, Helvetica, sans-serif; }
+    .cw-comp-instruction { margin: 0 0 ${(geo.gapWords * 0.7).toFixed(1)}mm; color: #17324d; font-weight: 700;
+                           font-size: ${print ? "3.1mm" : "15px"}; font-family: Arial, Helvetica, sans-serif; }
+    .cw-comp-item { break-inside: avoid; page-break-inside: avoid; margin: 0 0 ${geo.gapWords}mm; }
+    .cw-comp-question { margin: 0 0 1.2mm; color: #17324d;
+                        font: 400 ${print ? "3.1mm" : "15px"}/1.4 Arial, Helvetica, sans-serif; }
+    .cw-comp-no { font-weight: 700; }
+    .cw-comp-marks { color: #5d6b80; white-space: nowrap;
+                     font-size: ${print ? "2.6mm" : "12px"}; }
     .cw-punct { break-inside: avoid; page-break-inside: avoid; margin-top: ${(geo.gapWords * 0.6).toFixed(1)}mm; }
     .cw-punct-label { margin: 0 0 .8mm; color: #5d6b80; letter-spacing: .04em;
                       font: 500 ${print ? "2.7mm" : "12px"}/1.2 Arial, Helvetica, sans-serif; }
@@ -9718,11 +9852,11 @@ function worksheetPrintChromeCss() {
 `;
 }
 
-function worksheetSheetHeaderHtml({ sentences = false, spelling = false, punctuation = false, answerKey = false } = {}) {
+function worksheetSheetHeaderHtml({ sentences = false, spelling = false, punctuation = false, comprehension = false, answerKey = false } = {}) {
   return `<header class="cw-head">
     <span>${escapeHtml(gradeLabel)} · Unit ${course.unit.unitNo} · ${escapeHtml(course.unit.unitTitle)}</span>
     <h1>Cursive writing practice</h1>
-    <p>Trace the grey words, then write each word yourself on the line underneath.${spelling ? " Say the letters, cover the word, and write it again from memory." : ""}${sentences ? " Then copy the sentence onto the empty lines." : ""}${punctuation ? " Where a sentence has lost its capital letters and punctuation, write it out again with them put back." : ""}${answerKey ? " The answers are on the last pages — leave those to the grown-up until you have finished." : ""}</p>
+    <p>Trace the grey words, then write each word yourself on the line underneath.${spelling ? " Say the letters, cover the word, and write it again from memory." : ""}${sentences ? " Then copy the sentence onto the empty lines." : ""}${punctuation ? " Where a sentence has lost its capital letters and punctuation, write it out again with them put back." : ""}${comprehension ? " At the end there are texts to read with questions underneath — read each one all the way through before you answer." : ""}${answerKey ? " The answers are on the last pages — leave those to the grown-up until you have finished." : ""}</p>
     <div class="cw-name"><span>Name</span><span>Date</span></div>
   </header>`;
 }
@@ -9749,7 +9883,7 @@ function worksheetSheetHeaderHtml({ sentences = false, spelling = false, punctua
 const PROBE_SHORT = "a b";
 const PROBE_LONG = "wrap ".repeat(80).trim();
 
-function worksheetProbe(geo, { sentences = false, spelling = false, punctuation = false, grammar = null, answerKey = false } = {}) {
+function worksheetProbe(geo, { sentences = false, spelling = false, punctuation = false, grammar = null, comprehension = null, answerKey = false } = {}) {
   const probe = document.createElement("div");
   probe.setAttribute("aria-hidden", "true");
   probe.style.cssText = "position:absolute;left:-10000mm;top:0;width:182mm;visibility:hidden;pointer-events:none";
@@ -9765,7 +9899,8 @@ function worksheetProbe(geo, { sentences = false, spelling = false, punctuation 
     + probeGroup("Probe", ["probe"], null, null, null)
     + (spelling ? `<div id="cw-probe-spell">${probeGroup("P", ["sp"], null, new Map([["sp", "s - p"]]), null)}</div>` : "")
     + (grammar && grammar.length ? `<div id="cw-probe-grammar">${worksheetGrammarHtml(grammar, geo)}</div>` : "")
-    + (answerKey && grammar && grammar.length ? `<div id="cw-probe-answers">${worksheetAnswerKeyHtml(grammar, geo)}</div>` : "")
+    + (comprehension && comprehension.length ? `<div id="cw-probe-comp">${worksheetComprehensionHtml(comprehension, geo)}</div>` : "")
+    + (answerKey ? `<div id="cw-probe-answers">${worksheetAnswerKeyHtml(grammar, comprehension, geo)}</div>` : "")
     + (punctuation
       ? `<div id="cw-probe-pshort">${probeGroup("U", ["u1"], null, null, new Map([["u1", PROBE_SHORT]]))}</div>`
         + `<div id="cw-probe-plong">${probeGroup("V", ["u2"], null, null, new Map([["u2", PROBE_LONG]]))}</div>`
@@ -9800,10 +9935,44 @@ function worksheetProbe(geo, { sentences = false, spelling = false, punctuation 
     punctLine: 0,
     grammarHeader: 0,
     grammarItems: [],
+    compReadings: [],
     answerHeader: 0,
     answerItems: [],
   };
-  if (answerKey && grammar && grammar.length) {
+  // Every one of these is measured the same way and for the same reason: the
+  // block's own box PLUS its margins, because a margin is height the packer has
+  // to account for and getBoundingClientRect does not report it.
+  const boxHeight = (element) => {
+    if (!element) return 0;
+    const style = getComputedStyle(element);
+    return element.getBoundingClientRect().height
+      + (parseFloat(style.marginTop) || 0) + (parseFloat(style.marginBottom) || 0);
+  };
+  if (comprehension && comprehension.length) {
+    // Per READING, because each one is a section and so starts its own page. Its
+    // "head" is everything above the first question — the heading, the whole
+    // passage and the instruction — and that is routinely taller than a page,
+    // which the page counter below handles rather than assuming away.
+    measurement.compReadings = [...probe.querySelectorAll("#cw-probe-comp .cw-comp")].map((section) => ({
+      head: boxHeight(section.querySelector(".cw-group-head"))
+        + boxHeight(section.querySelector(".cw-comp-aloud"))
+        + boxHeight(section.querySelector(".cw-comp-passage"))
+        + boxHeight(section.querySelector(".cw-comp-instruction")),
+      // A question is measured WITHOUT its trailing margin, and that margin is
+      // carried separately — the same split the word rows make, for the same
+      // reason: the gap after the last item on a page is dropped at the break, so
+      // requiring it to fit pushes an item to the next page that would have fitted
+      // on this one. Grade 2 Unit 7 on large lines was one page over because of it.
+      items: [...section.querySelectorAll(".cw-comp-item")].map((el) => {
+        const style = getComputedStyle(el);
+        return {
+          height: el.getBoundingClientRect().height + (parseFloat(style.marginTop) || 0),
+          gap: parseFloat(style.marginBottom) || 0,
+        };
+      }),
+    }));
+  }
+  if (answerKey) {
     const section = probe.querySelector("#cw-probe-answers .cw-answers");
     if (section) {
       const head = section.querySelector(".cw-group-head");
@@ -9873,9 +10042,9 @@ function worksheetProbe(geo, { sentences = false, spelling = false, punctuation 
   return measurement;
 }
 
-function worksheetPageCount(chosenGroups, geo, { sentences = false, spelling = false, punctuation = false, grammar = null, answerKey = false } = {}) {
-  if (!chosenGroups.length && !(grammar && grammar.length)) return 0;
-  const probe = worksheetProbe(geo, { sentences, spelling, punctuation, grammar, answerKey });
+function worksheetPageCount(chosenGroups, geo, { sentences = false, spelling = false, punctuation = false, grammar = null, comprehension = null, answerKey = false } = {}) {
+  if (!chosenGroups.length && !(grammar && grammar.length) && !(comprehension && comprehension.length)) return 0;
+  const probe = worksheetProbe(geo, { sentences, spelling, punctuation, grammar, comprehension, answerKey });
   if (!probe.perMm || !probe.row) return 0;
   const pageHeight = SHEET_H * probe.perMm;
   // A row is taller when it carries a sentence, and taller again for every line
@@ -9931,6 +10100,32 @@ function worksheetPageCount(chosenGroups, geo, { sentences = false, spelling = f
       }
     }
   }
+  // Comprehension follows the grammar. Each reading is its own section, so each
+  // opens a page; what is different here is that the thing above the questions is
+  // a whole passage, and a passage is routinely taller than the page it starts on.
+  // The same spill arithmetic the oversized grammar item needed applies to it —
+  // treating the head as "fits by definition" would run several pages short on
+  // every unit, since the passages average about 7,000 characters.
+  for (const reading of probe.compReadings) {
+    pages += 1;
+    let left = pageHeight - reading.head;
+    if (left < 0) {
+      const spilled = Math.ceil(reading.head / pageHeight) - 1;
+      pages += spilled;
+      left = pageHeight - (reading.head - spilled * pageHeight);
+    }
+    for (const item of reading.items) {
+      if (item.height > left) { pages += 1; left = pageHeight; }
+      if (item.height > pageHeight) {
+        const spilled = Math.ceil(item.height / pageHeight) - 1;
+        pages += spilled;
+        left = pageHeight - (item.height - spilled * pageHeight);
+      } else {
+        left -= item.height;
+      }
+      left -= item.gap;
+    }
+  }
   if (probe.answerItems.length) {
     pages += 1;
     let left = pageHeight - probe.answerHeader;
@@ -9964,8 +10159,16 @@ function renderCursiveWorksheet() {
   let spelling = false;
   let punctuation = false;
   let grammar = false;
+  let comprehension = false;
   let answerKey = false;
   const grammarItems = worksheetGrammar();
+  const compReadings = worksheetComprehension();
+  const compQuestions = compReadings.reduce((total, reading) => total + reading.questions.length, 0);
+  // The answer key covers whichever of the two is switched on, so its box needs
+  // both to have something to answer before it can offer anything.
+  const hasGrammarAnswers = grammarItems.some((item) => item.answers.length);
+  const hasCompAnswers = compReadings.some((reading) => reading.questions.some((question) => question.answer));
+  const keyAvailable = () => (grammar && hasGrammarAnswers) || (comprehension && hasCompAnswers);
   let widths = new Map();
 
   $("#app").innerHTML = `${pageHeader(
@@ -9992,7 +10195,8 @@ function renderCursiveWorksheet() {
           <label class="cw-check"><input type="checkbox" id="cw-opt-sentences" ${sentences ? "checked" : ""}><span><strong>A sentence to copy</strong><small>the sentence the word comes from — a much longer sheet</small></span></label>
           <label class="cw-check"><input type="checkbox" id="cw-opt-punctuation" ${punctuation ? "checked" : ""}><span><strong>Punctuation</strong><small>the same sentence with its capitals and stops taken out, to put back</small></span></label>
           ${grammarItems.length ? `<label class="cw-check"><input type="checkbox" id="cw-opt-grammar" ${grammar ? "checked" : ""}><span><strong>Grammar</strong><small>this unit's ${grammarItems.length} grammar exercises, on their own pages at the end</small></span></label>` : ""}
-          ${grammarItems.some((item) => item.answers.length) ? `<label class="cw-check${grammar ? "" : " is-disabled"}"><input type="checkbox" id="cw-opt-answers" ${answerKey && grammar ? "checked" : ""} ${grammar ? "" : "disabled"}><span><strong>Answer key</strong><small>${grammar ? "the answers to the grammar pages, at the very back, for whoever marks it" : "turn on Grammar first — the answers are to those exercises"}</small></span></label>` : ""}
+          ${compReadings.length ? `<label class="cw-check"><input type="checkbox" id="cw-opt-comprehension" ${comprehension ? "checked" : ""}><span><strong>Reading comprehension</strong><small>${compReadings.length} text${compReadings.length === 1 ? "" : "s"} printed in full with ${compQuestions} question${compQuestions === 1 ? "" : "s"} — much the longest thing you can add</small></span></label>` : ""}
+          ${hasGrammarAnswers || hasCompAnswers ? `<label class="cw-check is-disabled"><input type="checkbox" id="cw-opt-answers" disabled><span><strong>Answer key</strong><small></small></span></label>` : ""}
         </div>
       </section>
       <section class="panel">
@@ -10011,11 +10215,17 @@ function renderCursiveWorksheet() {
     const geo = worksheetGeometry(size);
     const picked = selectedGroups();
     const words = selectedWords();
-    const pages = worksheetPageCount(picked, geo, { sentences, spelling, punctuation, grammar: grammar ? grammarItems : null, answerKey: answerKey && grammar });
+    const pages = worksheetPageCount(picked, geo, { sentences, spelling, punctuation, grammar: grammar ? grammarItems : null, comprehension: comprehension ? compReadings : null, answerKey: answerKey && keyAvailable() });
     $("#cw-style").textContent = worksheetCss(geo, { print: false });
     const extras = [spelling && "spelling practice", sentences && "a sentence to copy", punctuation && "punctuation to put back"].filter(Boolean);
-    const tail = grammar && grammarItems.length
-      ? ` Grammar practice adds ${grammarItems.length} more at the end${answerKey ? ", and the answer key follows it" : ""}.`
+    const added = [
+      grammar && grammarItems.length && `${grammarItems.length} grammar exercise${grammarItems.length === 1 ? "" : "s"}`,
+      comprehension && compReadings.length && `${compReadings.length} text${compReadings.length === 1 ? "" : "s"} to read with ${compQuestions} question${compQuestions === 1 ? "" : "s"}`,
+    ].filter(Boolean);
+    // Phrased as a list rather than a sentence with a verb: the parts are counts
+    // that can each be one or many, and every verb form is wrong for one of them.
+    const tail = added.length
+      ? ` At the end: ${added.join(" and ")}${answerKey ? ", then the answer key" : ""}.`
       : "";
     $("#cw-summary").textContent = words.length
       ? `${words.length} word${words.length === 1 ? "" : "s"}${extras.length ? ", each with " + (extras.length > 1 ? extras.slice(0, -1).join(", ") + " and " + extras[extras.length - 1] : extras[0]) : ""} in ${picked.length} group${picked.length === 1 ? "" : "s"} · about ${pages} page${pages === 1 ? "" : "s"} of A4. Each group starts on its own page.${tail}`
@@ -10051,23 +10261,31 @@ function renderCursiveWorksheet() {
   const drawOptions = () => {
     const box = $("#cw-opt-answers");
     if (!box) return;
-    box.disabled = !grammar;
-    box.closest(".cw-check")?.classList.toggle("is-disabled", !grammar);
-    if (!grammar) { answerKey = false; box.checked = false; }
+    const available = keyAvailable();
+    box.disabled = !available;
+    box.closest(".cw-check")?.classList.toggle("is-disabled", !available);
+    if (!available) { answerKey = false; box.checked = false; }
     const hint = box.closest(".cw-check")?.querySelector("small");
     if (hint) {
-      hint.textContent = grammar
-        ? "the answers to the grammar pages, at the very back, for whoever marks it"
-        : "turn on Grammar first — the answers are to those exercises";
+      const covers = [grammar && hasGrammarAnswers && "grammar", comprehension && hasCompAnswers && "comprehension"].filter(Boolean);
+      const offer = [hasGrammarAnswers && "Grammar", hasCompAnswers && "Reading comprehension"].filter(Boolean);
+      hint.textContent = available
+        ? `the answers to the ${covers.join(" and ")} pages, at the very back, for whoever marks it`
+        : `turn on ${offer.join(" or ")} first — the answers are to those exercises`;
     }
   };
   $("#cw-opt-grammar")?.addEventListener("change", (event) => { grammar = event.target.checked; drawOptions(); draw(); });
+  $("#cw-opt-comprehension")?.addEventListener("change", (event) => { comprehension = event.target.checked; drawOptions(); draw(); });
   $("#cw-opt-answers")?.addEventListener("change", (event) => { answerKey = event.target.checked; draw(); });
-  $("#cw-print").addEventListener("click", () => printCursiveWorksheet(selectedGroups(), size, widths, { sentences, spelling, punctuation, grammar: grammar ? grammarItems : null, answerKey: answerKey && grammar }));
+  // The hint above is written by drawOptions rather than by the markup, because it
+  // now names whichever sources are switched on. Run it once so the box does not
+  // sit there disabled with an empty explanation.
+  drawOptions();
+  $("#cw-print").addEventListener("click", () => printCursiveWorksheet(selectedGroups(), size, widths, { sentences, spelling, punctuation, grammar: grammar ? grammarItems : null, comprehension: comprehension ? compReadings : null, answerKey: answerKey && keyAvailable() }));
   icons();
 }
 
-function printCursiveWorksheet(chosenGroups, size, widths, { sentences = false, spelling = false, punctuation = false, grammar = null, answerKey = false } = {}) {
+function printCursiveWorksheet(chosenGroups, size, widths, { sentences = false, spelling = false, punctuation = false, grammar = null, comprehension = null, answerKey = false } = {}) {
   const words = chosenGroups.flatMap((group) => group.words);
   if (!words.length) return;
   const printWindow = window.open("", "_blank", "popup=yes,width=900,height=1000,resizable=yes,scrollbars=yes");
@@ -10094,10 +10312,11 @@ function printCursiveWorksheet(chosenGroups, size, widths, { sentences = false, 
       </style>
     </head>
     <body>
-      ${worksheetSheetHeaderHtml({ sentences, spelling, punctuation, answerKey: answerKey && grammar })}
+      ${worksheetSheetHeaderHtml({ sentences, spelling, punctuation, comprehension: !!(comprehension && comprehension.length), answerKey })}
       ${chosenGroups.map((group, index) => worksheetGroupHtml(group, widths, geo, { first: index === 0, sentences, spelling, punctuation })).join("")}
       ${grammar && grammar.length ? worksheetGrammarHtml(grammar, geo) : ""}
-      ${answerKey && grammar && grammar.length ? worksheetAnswerKeyHtml(grammar, geo) : ""}
+      ${comprehension && comprehension.length ? worksheetComprehensionHtml(comprehension, geo) : ""}
+      ${answerKey ? worksheetAnswerKeyHtml(grammar, comprehension, geo) : ""}
     </body>
     </html>`);
   printWindow.document.close();

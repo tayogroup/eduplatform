@@ -713,6 +713,50 @@ surface. Regenerate deliberately, never to get green:
 node tools/check-english-content.mjs --write-baseline
 ```
 
+#### Writing the gate is what finds the bug — the worked example
+
+The cursive worksheet prints a unit's grammar exercises with lines to write on,
+and 149 of its 1,047 practice pieces carry the ANSWER KEY. `english.js` cuts each
+piece at the key marker so the answers do not print on the learner's own page.
+
+The first version of that filter was anchored with `^`. It matched the **45**
+pieces that START with a key and missed the **104** that append one to the last
+question — `5. ______ is your teacher? Check yourself: 1. Who 2. What…`. Those
+104 printed the answers, on children's worksheets, in production.
+
+**Nothing found it, because nothing was looking.** The sheet rendered. The page
+count was exact to the page. Every other check passed. The only thing inspecting
+that filter was the filter itself. It surfaced within an hour of somebody sitting
+down to write a gate for it — not from suspecting the filter, but from being made
+to state its behaviour precisely enough to test. Every other gate in this file was
+written after something broke; this one broke something by being written.
+
+**A floor is only half a gate, and it is the half that cannot find anything new.**
+The obvious check is to record the count and fail if it drops. That catches a
+pattern which STOPS matching. It cannot catch a new wording in new content,
+because the existing matches keep matching and the number never falls. So
+`check-english-content.mjs` carries two halves:
+
+- the floor, which tests the filter that was already written, and
+- an **independent detector keyed on STRUCTURE, not wording** — a dense run of
+  three or more numbered short answers is an answer key whatever it calls itself.
+
+The structural half earned its place immediately, finding `Answer key, Part A: 1.
+visited, 2. gave…` where a comma and a part label sit between the words and the
+answers so the marker never matched. Keying that detector on wording was tried
+and is useless: "then check yourself against the answers" is an ordinary
+instruction, and four of five flags were those.
+
+The general rule, and it is the same one the deploy section reaches from the
+other direction: **a check that must be told what to look for can only find what
+has already gone wrong once.** Structure is what you can test without knowing the
+wording; wording is what you can only test in hindsight.
+
+One calibration is recorded in the code and matters if the sheet ever grows: the
+answer-run detector runs at Grades 1-4 only, the grades the worksheet prints.
+Above that the same shape IS the exercise list, so extending the sheet upward
+needs the detector recalibrated first.
+
 ### The one print path, and the page count that runs short
 
 `printCursiveWorksheet` in `shell/subjects/english.js` is the **only** thing in

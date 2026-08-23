@@ -1043,6 +1043,40 @@ works in this checkout at once, so the tree routinely holds somebody else's
 half-finished change. Run `git status` before every commit and stage the paths you
 actually touched.
 
+**And then commit with a pathspec, because staging them is not enough.** The
+index is shared state and `git add` is not atomic with `git commit`, so between
+your add and your commit another session can add its own files — and your commit
+takes them. Use the one-command form, which reads the working tree for the paths
+you name and ignores whatever else is staged:
+
+```bash
+git commit -F <message-file> -- <paths>      # flags BEFORE the --
+```
+
+Not `git add <paths> && git commit`. The gap between those two is the whole bug,
+and it is milliseconds wide rather than theoretically wide: on 2026-08-24 it fired
+twice within minutes, in both directions — one `git add` of two files reported
+seven staged, a later `git add` of five also reported seven. Note the shape,
+because it is not the one the section above describes: **neither session staged
+the other's work.** Each added its OWN files to an index that already held
+somebody else's. So "check what your add picked up" is the weak version of this
+rule, and `EHEL_COMMIT_REVIEWED=1` cannot see it either — the hook fires on paths,
+and by then the paths are already wrong.
+
+Two mechanical notes, both of which cost a failed command or a wrong belief:
+
+- `git commit -- <paths> -F-` fails with "pathspec '-F-' did not match any
+  file(s)". Everything after `--` is a path. Message first, or in a file.
+- An untracked file has to be `git add`ed before a pathspec commit will see it,
+  which reopens the window for exactly one command. Put the `add` and the
+  `commit` in one invocation.
+
+The full incident, including the verification trap that follows a `reset --soft`
+(**an orphaned commit still answers `git show`** — use `git merge-base
+--is-ancestor`), is under "Ask storage properly, and ask it late" below. Worth
+reading before a release, because the two failures compound: the thing being
+swept in and out of commits that night was the release lock.
+
 A pre-commit hook enforces the part of this that can be enforced. It blocks any
 commit that stages a file listed in `tools/hooks/co-edited-files`, prints the
 hunks going in, and asks you to confirm they are yours:

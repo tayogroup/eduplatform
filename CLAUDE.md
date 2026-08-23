@@ -1397,9 +1397,10 @@ numbers inside the words" — release-safety work committed under a message abou
 vocabulary, because `git add` is not atomic with `git commit` and the index is
 shared. Its author then noticed (`git show --stat` reported seven staged files
 where five were asked for), ran `reset --soft` and re-committed their own five
-as `cbd49170d`. **So `5236df358` is not on main at all, and as of this writing
-neither fix is: HEAD still has `tagAlreadyWritten(items)` and `release-lock.js`
-is untracked.**
+as `cbd49170d`. **So `5236df358` is not on main at all** — and for about twenty
+minutes neither fix was, while its author believed both were. They are on main
+now, re-committed properly scoped as `a73840ab8` ("Refuse to start a release
+while another one holds the zone", two files, nothing else swept in).
 
 Two things to take from that, both of which cost somebody an hour:
 
@@ -1408,12 +1409,28 @@ Two things to take from that, both of which cost somebody an hour:
   the suite green, and reported the hole closed on main. Every step was correct
   and the conclusion was wrong, because `5236df358` had already been reset out
   of the branch. `git merge-base --is-ancestor <sha> HEAD` is the question;
-  `git show <sha>` is not.
-- **Explicit pathspecs do not protect the index.** `git add <paths>` by one
-  session and `git commit` by another interleave, and the second sweeps up the
-  first. `git commit -- <paths>` is the form that is safe for both; failing
-  that, read `git show --stat` after every commit and confirm the file count is
-  the one you asked for. That is what caught this one.
+  `git show <sha>` is not — nor are `git show --stat` or
+  `git log --oneline -- <path>`, which answer just as happily for a commit that
+  has been reset away. The same trap caught the person writing this section
+  down, twice: the paragraph above first claimed the fixes WERE on main, from a
+  `git show --stat` run while that commit was still HEAD; the correction then
+  went stale within twenty minutes when they genuinely landed. **The shelf-life
+  rule this section opens with applies to these notes too** — state the sha and
+  let the reader check it, rather than writing a present-tense claim about the
+  branch that expires.
+- **Explicit pathspecs do not protect the INDEX.** The rule further up — stage
+  the paths you actually touched — is about your own `git add`, and it is not
+  enough, because the index is shared state and `git add` is not atomic with
+  `git commit`. Note the shape carefully: neither session staged the other's
+  work. Each added its OWN files to an index that already held somebody else's,
+  and it happened in both directions within minutes — one `git add` of two files
+  reported seven staged, and a later `git add` of five also reported seven. So
+  "check what your add picked up" is the weak version of the rule. `git commit
+  -- <paths>` is the form that is safe for both parties; failing that, read
+  `git show --stat` after every commit and confirm the file count is the one you
+  asked for. That is what caught this one. (Put the message before the `--`, or
+  in a file: `git commit -- <paths> -F-` reads the flag as a pathspec and
+  fails.)
 
 **And a reading trap that cost a wrong claim that night:** in a tree several
 sessions share, the working copy is not evidence about the shipped code. A grep

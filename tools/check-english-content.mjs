@@ -778,6 +778,82 @@ if (unsigned.size) {
 checkWorksheetAnswerKeys();
 checkWorksheetComprehension();
 
+// The answer key section itself, which now has THREE sources — grammar,
+// comprehension and spelling — and one property that matters more with each one
+// added: it is a mark scheme, and a mark scheme must not look like an exercise.
+function checkWorksheetAnswerKey() {
+  const label = "worksheet answer key";
+  const source = path.join(here, "..", "src", "prototypes", "ehel-academy", "shell", "subjects", "english.js");
+  if (!fs.existsSync(source)) { fail(label, "shell/subjects/english.js not found — cannot check the answer key"); return; }
+  const text = fs.readFileSync(source, "utf8");
+  // Extract a function body by MATCHING BRACES, not by a regex ending at the
+  // first `\n}`. Two reasons, both hit while writing this:
+  //
+  //  - A regex built with `new RegExp` from a template literal needs every
+  //    backslash doubled, and `\b` written singly is a backspace character, so
+  //    the pattern silently matches nothing. A gate that finds nothing reports
+  //    "the function has moved or gone" — a confident failure about the wrong
+  //    thing, which is worse than the bug it was looking for.
+  //  - Ending at `\n}` assumes the author never indents a closing brace to
+  //    column 0 inside the function, which is a formatting convention, not a
+  //    fact. Brace counting asks the question directly.
+  const bodyOf = (name) => {
+    const declaration = new RegExp(`(?:function |const )${name}\\b`).exec(text);
+    if (!declaration) return null;
+    const open = text.indexOf("{", declaration.index);
+    if (open === -1) return null;
+    let depth = 0;
+    for (let index = open; index < text.length; index += 1) {
+      if (text[index] === "{") depth += 1;
+      else if (text[index] === "}") {
+        depth -= 1;
+        if (depth === 0) return text.slice(declaration.index, index + 1);
+      }
+    }
+    return null;
+  };
+
+  // 1. NOTHING TO WRITE ON. Every ruled line on this sheet is an invitation to
+  //    write, and the key is the one section where writing is the wrong response
+  //    — it is for whoever marks. Checked as "does not draw rules" rather than by
+  //    counting SVGs on a rendered page, because the rendered check needs a
+  //    browser and this is the property, not its symptom.
+  const key = bodyOf("worksheetAnswerKeyHtml");
+  if (!key) { fail(label, "worksheetAnswerKeyHtml is not declared in english.js — the answer key has moved or gone"); return; }
+  const drawsRules = key.match(/worksheet(?:TextLine|Line|Spell)Svg\s*\(/);
+  if (drawsRules) {
+    fail(label, `worksheetAnswerKeyHtml draws ruled lines (${drawsRules[0].trim()}) — the answer key is a mark scheme, and anything that looks like a task invites the learner to do it`);
+  }
+
+  // 2. THE SPELLING KEY MAY ONLY LIST WORDS THE SHEET SET. The spelling exercise
+  //    is per word and optional per group, so a key built from the group's words
+  //    rather than from the words that actually got a spelling block would list
+  //    words the learner was never asked to spell — and a marker would mark them.
+  const spellingKey = bodyOf("worksheetSpellingKey");
+  if (!spellingKey) { fail(label, "worksheetSpellingKey is not declared in english.js — the spelling half of the answer key has moved or gone"); return; }
+  if (!/\bspellings\b/.test(spellingKey)) {
+    fail(label, "worksheetSpellingKey does not consult group.spellings — it would list every word in the group, including ones the sheet set no spelling exercise for");
+  }
+
+  // 3. THE PRINTED NOTE AND THE ON-SCREEN HINT MUST SHARE ONE SOURCE. They are
+  //    the same sentence shown in two places, they were written separately, and
+  //    they drifted within the hour: the note was corrected to stop calling
+  //    spelling "pages" — spelling has none, it sits under each word — while the
+  //    hint went on promising "the answers to the spelling pages", in the one
+  //    place a learner reads BEFORE ticking the box. Nothing rendered was wrong,
+  //    so nothing else here could have seen it.
+  const options = bodyOf("drawOptions");
+  if (!options) { fail(label, "drawOptions is not declared in english.js — cannot check that the answer-key hint and the printed note agree"); return; }
+  if (!/answerKeyCovers\s*\(/.test(options)) {
+    fail(label, "the answer-key hint in drawOptions does not call answerKeyCovers — the hint and the printed note must be built from one function, or they describe different sheets");
+  }
+  if (/the answers to the /.test(options)) {
+    fail(label, "drawOptions builds its own \"the answers to the …\" wording — that phrase belongs to answerKeyCovers alone, so the hint cannot drift from the note");
+  }
+}
+
+checkWorksheetAnswerKey();
+
 if (notes.length) {
   console.log("\nNotes (need a human eye, not a build failure):");
   for (const message of notes) console.log(`   note  ${message}`);

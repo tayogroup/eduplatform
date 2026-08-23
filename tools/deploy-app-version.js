@@ -16,7 +16,12 @@
 // by the other tools and are unaffected. Shared modules (course-shell.js,
 // progress-client.js) go to app/shared/ (short-cached; imported via ../../shared/).
 //
-// Usage: BUNNY_KEY=… node tools/deploy-app-version.js [v2] [--shell] [--verify] [--dry] [--force-tag] [subject…]
+// Usage: BUNNY_KEY=… node tools/deploy-app-version.js [v2] [--shell] [--verify] [--dry] [--force-tag] [--force-lock] [subject…]
+//   A real upload takes a machine-wide lock on the storage zone first (see
+//   lib/release-lock.js) and holds it until the manifest is written back, so two
+//   releases on one machine cannot interleave. --dry and --plan-json neither take
+//   it nor wait for it. --force-lock overrides a live holder and is the one flag
+//   here that can cause the damage the lock prevents.
 //   --verify  after uploading, read the release back through the CDN and fail if
 //             the edge does not serve it (catches a version path poisoned by a
 //             cached 404 — see docs/bunny-cache-config.md). Recommended always.
@@ -33,6 +38,7 @@
 
 const fs = require("fs"), path = require("path"), crypto = require("crypto");
 const { requireTiersInStep } = require("./lib/require-tiers-in-step");
+const { acquireReleaseLock } = require("./lib/release-lock");
 const ROOT = path.resolve(__dirname, "..");
 const EHEL = path.join(ROOT, "src", "prototypes", "ehel-academy");
 const ZONE = "ehelacademy";
@@ -356,7 +362,7 @@ async function put(remote, buf) {
 // checksum falls back to length alone, and an unreadable listing is reported
 // as such rather than treated as "free" — the tool would rather stop on a
 // storage hiccup than mint a second release onto a taken tag.
-async function tagAlreadyWritten(items) {
+async function tagAlreadyWritten(items, manifest) {
   const found = [];
   const bySubject = new Map();
   for (const item of items) {
@@ -382,7 +388,29 @@ async function tagAlreadyWritten(items) {
       const same = entry.Checksum
         ? entry.Checksum.toLowerCase() === crypto.createHash("sha256").update(buf).digest("hex")
         : entry.Length === buf.length;
-      if (!same) found.push(`app/${subject}/${TAG}/${entry.ObjectName} (on storage since ${entry.DateCreated}, ${entry.Length}B; this release: ${buf.length}B)`);
+      if (!same) {
+        found.push(`app/${subject}/${TAG}/${entry.ObjectName} (on storage since ${entry.DateCreated}, ${entry.Length}B; this release: ${buf.length}B)`);
+        continue;
+      }
+      // SAME bytes, and this checkout has no record of putting them there.
+      //
+      // "Same bytes are allowed: a retry after a failed upload is not a second
+      // release" was true for one writer and false for two. On 2026-08-24 two
+      // sessions were separately told to release english v261 from the same
+      // HEAD; their bundles were byte-identical (both af28fd9d…), so every
+      // check here passed for the second one and the only damage would have
+      // been a silently clobbered manifest. Byte equality proves the release is
+      // correct, not that it is ours.
+      //
+      // The manifest is what tells them apart. Our own retry has the record —
+      // we wrote it when the PUT succeeded — and somebody else's release does
+      // not. That is why the temp-tree recipe in CLAUDE.md copies the manifest
+      // in and back out; a release tree without it fails this check, which is
+      // the right outcome for a tree that cannot tell whose release it is
+      // resuming.
+      if (manifest[`app/${subject}/${TAG}/${entry.ObjectName}`] === undefined) {
+        found.push(`app/${subject}/${TAG}/${entry.ObjectName} (identical bytes, on storage since ${entry.DateCreated}, but this checkout never uploaded it — another release wrote this tag)`);
+      }
     }
   }
   return found;
@@ -501,7 +529,39 @@ async function verifyRelease(items) {
   return broken.length > 0;
 }
 
+// Held from before the manifest is read to after it is written back. Set by the
+// upload path only: --dry and --plan-json touch nothing, so they must neither
+// block a real release nor be blocked by one — a plan is exactly what somebody
+// waiting for the lock wants to be able to run.
+let releaseLock = null;
+const dropReleaseLock = () => { if (releaseLock) releaseLock(); releaseLock = null; };
+// A release killed with ctrl-C must not wedge the next one. The staleness check
+// in release-lock.js would eventually free it anyway; this makes the common case
+// immediate. Re-raising after cleanup keeps the exit code honest.
+for (const signal of ["SIGINT", "SIGTERM"]) {
+  process.on(signal, () => { dropReleaseLock(); process.exit(130); });
+}
+process.on("exit", dropReleaseLock);
+
 (async () => {
+  // BEFORE the manifest is read. The manifest is a read-modify-write across the
+  // whole run — read here, written back after the last PUT — so a lock taken
+  // after the read would protect the uploads and lose the record of them, which
+  // is the half that fails silently.
+  if (!DRY && !PLAN_JSON) {
+    try {
+      releaseLock = acquireReleaseLock({
+        zone: ZONE,
+        what: `${TAG} → ${SUBJECTS.join(",")}`,
+        tree: ROOT,
+        force: argv.includes("--force-lock"),
+      });
+    } catch (e) {
+      if (e.code !== "ERELEASELOCKED") throw e;
+      console.error(`\nREFUSING: ${e.message}`);
+      process.exit(1);
+    }
+  }
   const manifest = fs.existsSync(MANIFEST) ? JSON.parse(fs.readFileSync(MANIFEST, "utf8")) : {};
   let all;
   // A contract failure is a configuration mistake, not a crash — report it as
@@ -548,7 +608,7 @@ async function verifyRelease(items) {
   // caches nothing, so the question is free; a probe against the edge is what
   // mints the cached 404s the manifest warning below is about. Same bytes are
   // allowed: a retry after a failed upload is not a second release.
-  const taken = await tagAlreadyWritten(all);
+  const taken = await tagAlreadyWritten(all, manifest);
   if (taken.length && !argv.includes("--force-tag")) {
     console.error(`\nREFUSING: ${TAG} already exists on storage with different bytes:`);
     for (const t of taken) console.error(`  ${t}`);

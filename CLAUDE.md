@@ -1173,6 +1173,43 @@ NON-English subject through it:
   reached. Same class as the ✓-after-skip, one case short. If you see that
   message with a stack trace above it, the tiers were not compared at all.
 
+#### Committing half a co-edited file: `git apply --cached`
+
+`git add <path>` is all-or-nothing, so the first bullet above — "leave the file
+out of that commit" — is the only advice the tooling supports, and it means your
+work waits on somebody else finishing theirs. It does not have to. Generate the
+diff, classify each hunk, write a patch of your hunks alone, and stage that:
+
+```bash
+git diff -U3 -- <path> > /tmp/all.patch     # then keep only your hunks
+git apply --cached /tmp/mine.patch          # stages those hunks, tree untouched
+```
+
+The working tree keeps the other session's edits; only the index gets yours.
+
+**Then grep the STAGED diff for their identifiers.** This is the step that
+matters, and skipping it staged the wrong hunks on 2026-08-24:
+
+```bash
+git diff --cached -- <path> | grep -nE 'taughtWords|STORY_GLOSSARY_GROUP|…'
+```
+
+Two ways the classification goes wrong, both of which look right while doing it:
+
+- **Line numbers are not stable.** They are a function of the context width, so
+  every hunk start shifts the moment you regenerate at a different `-U`. A
+  classifier keyed on them silently retargets.
+- **"Everything after my first hunk" is proximity pretending to be ownership.**
+  It fails on the real layout of these files rather than on a contrived one: in
+  `shell/subjects/english.js` the shell's `config` object sits BELOW the
+  worksheet code, so another session's `onBeforeRender` edit was *after* the
+  first worksheet hunk and sailed through on position alone.
+
+Same shape as the recognition-check trap recorded below — a heuristic that
+happens to agree with the answer on the cases you built it from. The difference
+is that here you can check it directly, because the index is readable: after
+`--cached`, ask what is actually staged rather than what you meant to stage.
+
 ### Diff the BUNDLE with --plan-json, never the files on disk
 
 `deploy-app-version.js --plan-json` prints `{remote, sha1}` for every item a

@@ -844,6 +844,14 @@ export const GRADE_WORD_PICTURES = {
 // too. The tooling for it is a meaning comparison, the same one that finds the
 // per-grade collisions.
 GRADE_WORD_PICTURES.ien1 = {
+  // Found by auditing all 411 Intensive English pictures against their own
+  // meanings. Five of these are the ADJECTIVE-vs-OBJECT trap: this course
+  // teaches the everyday adverb or adjective where English teaches a thing.
+  well: "",            // "in a good way" — English Grade 1's is the water well
+  hard: "",            // "needing a lot of effort", not the opposite of soft
+  light: "",           // "not weighing much", not brightness
+  back: "",            // the part of your body, not the direction
+  smart: "👔",         // "neat and well dressed", not clever
   bank: "🏦",          // the money sense, English's is a riverbank
   flat: "🏢",          // a home, as at English Grade 2
   tablet: "💊",        // the medicine, not the screen
@@ -855,6 +863,8 @@ GRADE_WORD_PICTURES.ien1 = {
   serious: "",         // "serious enough to worry about" — not the manner
 };
 GRADE_WORD_PICTURES.ien2 = {
+  leak: "",            // information released without authorisation, not water
+  monitor: "👀",       // to watch over time — the verb, not the screen
   platform: "💻",      // a publishing platform, not the railway one
   circular: "",        // circular reasoning, not the shape
   maintain: "",        // to insist, not to keep in repair

@@ -579,6 +579,25 @@ and `preferredTeachingLanguage`, the vocabulary-only Somali block
 segmenter and the Azure Ubah narration paths (`speakSomali`, the Soomaali
 button, translated bubbles), and the Somali word-choice rules. The contract
 gate now fails if `languageSupport.somali`, `modeHints.somali-translate`,
-`preferredTeachingLanguage`, `speakSomali` or `voiceSegments` reappear. The
-`somali_tts.php` endpoint and its dev twin remain in place but nothing in
-Wehel calls them. Stored Grade 1 teacher scripts were always English-only.
+`preferredTeachingLanguage`, `speakSomali` or `voiceSegments` reappear.
+Stored Grade 1 teacher scripts were always English-only.
+
+The `somali_tts.php` endpoint and its dev twin were left in place at first and
+were **deleted on 2026-08-23**, once it was confirmed nothing reached them:
+`src/moodle/local_hubredirect/somali_tts.php` and `tools/lib/azure-somali-tts.js`,
+along with their two dev mounts (`vite.config.js` at the production path, and
+`/api/somali-tts` in `tools/serve-src-preview.js`). Both dev servers *imported*
+the handler at module scope, so the file was never as dead as it looked —
+deleting it without unwiring them would have stopped `npm run dev` from booting
+at all.
+
+Two copies survive on purpose and must not be tidied away: the shipped release
+archive `deploy/ehel-ai-endpoint-auth-20260812-v01/`, which is a record of what
+went out and would be falsified by an edit, and any file under
+`.claude/worktrees/`, which belongs to another session. The narrative comment in
+`accesslib.php` still names `somali_tts` because it is describing a CORS
+measurement taken on the live box in August, and that measurement happened.
+
+**The endpoint may still be live on the Moodle server.** These plugins deploy by
+hand, so removing the file here does not remove it there; it will keep answering
+until the next `local_hubredirect` release replaces the directory.

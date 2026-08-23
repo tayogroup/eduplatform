@@ -4,9 +4,8 @@
 // The owner's decision of 2026-08-20: Wehel's voice input and spoken replies
 // use Deepgram (Aura-2, voice aura-2-thalia-en); every other voice in the
 // platform is unchanged — the runtime lesson narration and pronunciation
-// check stay on ElevenLabs (quiz_tts.php / quiz_stt.php), and the Somali
-// vocabulary voice stays on Azure (somali_tts.php). That is why this is a
-// separate endpoint rather than a new purpose on quiz_tts.php: the two
+// check stay on ElevenLabs (quiz_tts.php / quiz_stt.php). That is why this is
+// a separate endpoint rather than a new purpose on quiz_tts.php: the two
 // providers' keys, models and failure modes stay apart, and "Wehel only"
 // stays true by construction.
 //

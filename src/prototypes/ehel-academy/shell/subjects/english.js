@@ -9293,6 +9293,34 @@ function worksheetTextLineSvg(geo, text, { model }) {
   </svg>`;
 }
 
+// The spelling line: one ruled line divided into the SAME slots the trace line
+// puts its copies in, so the learner writes the word from memory in the positions
+// they just traced it. Reusing that rhythm is why spelling costs one band rather
+// than the three a "write it three times" block would take on its own lines.
+//
+// The dividers are faint and stop at the baseline — a full-height rule would read
+// as a column edge and box the letters in, which is the opposite of joined writing.
+function worksheetSpellSvg(geo, widthEm) {
+  const baseline = geo.em * CURSIVE_ASCENDER;
+  const midline = geo.em * (CURSIVE_ASCENDER - CURSIVE_X_HEIGHT);
+  const foot = geo.band;
+  const gap = geo.em * 0.7;
+  const step = widthEm * geo.em + gap;
+  const slots = traceCopies(widthEm, geo);
+  const dividers = [];
+  for (let index = 1; index < slots; index += 1) {
+    const x = (index * step - gap / 2).toFixed(2);
+    dividers.push(`<line class="cw-slot" x1="${x}" y1="${(baseline - geo.em * CURSIVE_X_HEIGHT * 1.15).toFixed(2)}" x2="${x}" y2="${baseline.toFixed(2)}"></line>`);
+  }
+  return `<svg class="cw-svg" viewBox="0 0 ${SHEET_W} ${foot.toFixed(2)}" preserveAspectRatio="xMinYMin meet" aria-hidden="true" focusable="false">
+    <line class="cw-rule" x1="0" y1="0" x2="${SHEET_W}" y2="0"></line>
+    <line class="cw-rule cw-dashed" x1="0" y1="${midline.toFixed(2)}" x2="${SHEET_W}" y2="${midline.toFixed(2)}"></line>
+    <line class="cw-baseline" x1="0" y1="${baseline.toFixed(2)}" x2="${SHEET_W}" y2="${baseline.toFixed(2)}"></line>
+    <line class="cw-rule" x1="0" y1="${foot.toFixed(2)}" x2="${SHEET_W}" y2="${foot.toFixed(2)}"></line>
+    ${dividers.join("")}
+  </svg>`;
+}
+
 // Greedy wrap to the width of one ruled line. Never breaks inside a word, which
 // is safe rather than hopeful: the widest single token in the whole course is
 // "great-great-grandparents." at 11.76em — 152mm of a 182mm line even at the
@@ -9319,7 +9347,17 @@ function wrapCursive(text, geo, widthOf) {
 // learner is writing sentences the thing being practised is reading a model and
 // reproducing it. The blank lines match the model's line count exactly, so the
 // space to write in never depends on how long the sentence happens to be.
-function worksheetRowHtml(word, widths, geo, { sentence = "", widthOf = null } = {}) {
+// With spelling practice on, the word's authored spellingPractice line comes
+// first — verbatim, not rewritten. It is the content team's wording and it varies
+// by grade on purpose: "Say, tap and trace: t - a - b - l - e" at Grade 1, a bare
+// "n - a - m - e" higher up, and "Clap the parts, then copy: whiteboard" for the
+// compounds. Every one of the 3,563 Grade 1-4 links has one.
+function worksheetRowHtml(word, widths, geo, { sentence = "", spelling = "", widthOf = null } = {}) {
+  const widthEm = widths.get(word) || 0;
+  const spellingHtml = spelling ? `<div class="cw-spell">
+    <p class="cw-spell-label">${escapeHtml(spelling)}</p>
+    ${worksheetSpellSvg(geo, widthEm)}
+  </div>` : "";
   const lines = sentence && widthOf ? wrapCursive(sentence, geo, widthOf) : [];
   const sentenceHtml = lines.length ? `<div class="cw-sentence">
     <p class="cw-sentence-label">Now write this sentence.</p>
@@ -9328,8 +9366,9 @@ function worksheetRowHtml(word, widths, geo, { sentence = "", widthOf = null } =
   </div>` : "";
   return `<div class="cw-row">
     <p class="cw-label">${escapeHtml(word)}</p>
-    ${worksheetLineSvg(geo, word, widths.get(word) || 0)}
+    ${worksheetLineSvg(geo, word, widthEm)}
     ${worksheetLineSvg(geo)}
+    ${spellingHtml}
     ${sentenceHtml}
   </div>`;
 }
@@ -9348,7 +9387,7 @@ function worksheetRowHtml(word, widths, geo, { sentence = "", widthOf = null } =
 // The heading still counts the WHOLE group: it is describing the group, not the
 // sample, and a preview headed "2 words" over a seven-word group misreports what
 // will print.
-function worksheetGroupHtml(group, widths, geo, { first, rows = group.words.length, sentences = false }) {
+function worksheetGroupHtml(group, widths, geo, { first, rows = group.words.length, sentences = false, spelling = false }) {
   return `<section class="cw-group${first ? " is-first" : ""}">
     <header class="cw-group-head">
       <span>${escapeHtml(group.title)}</span>
@@ -9357,6 +9396,7 @@ function worksheetGroupHtml(group, widths, geo, { first, rows = group.words.leng
     </header>
     ${group.words.slice(0, rows).map((word) => worksheetRowHtml(word, widths, geo, {
       sentence: sentences ? group.sentences?.get(word) || "" : "",
+      spelling: spelling ? group.spellings?.get(word) || "" : "",
       widthOf: cursiveWidthOf,
     })).join("")}
   </section>`;
@@ -9386,6 +9426,13 @@ function worksheetCss(geo, { print }) {
        model on one page and its blank copy lines on the next is unusable. It is
        inside .cw-row, which already avoids breaking, so this only has to hold the
        block together if that ever changes. */
+    .cw-spell { break-inside: avoid; page-break-inside: avoid; margin-top: ${(geo.gapWords * 0.6).toFixed(1)}mm; }
+    .cw-spell-label { margin: 0 0 .8mm; color: #5d6b80; letter-spacing: .06em;
+                      font: 500 ${print ? "2.7mm" : "12px"}/1.2 Arial, Helvetica, sans-serif; }
+    /* Slot dividers: faint, and stopping at the baseline. A full-height rule reads
+       as a column edge and boxes the letters in, which is the opposite of joined
+       writing — the point is three places to write, not three cells. */
+    .cw-slot { stroke: #dbe6ee; stroke-width: .25; }
     .cw-sentence { break-inside: avoid; page-break-inside: avoid; margin-top: ${(geo.gapWords * 0.6).toFixed(1)}mm; }
     .cw-sentence-label { margin: 0 0 .8mm; color: #5d6b80; letter-spacing: .04em;
                          font: 500 ${print ? "2.7mm" : "12px"}/1.2 Arial, Helvetica, sans-serif; }
@@ -9418,6 +9465,10 @@ function worksheetGroups() {
     sentences: new Map(words
       .filter((item) => item.groupId === group.id && item.master?.displayWord && item.exampleSentence)
       .map((item) => [item.master.displayWord, item.exampleSentence])),
+    // The authored spelling prompt, same shape and same guarantee.
+    spellings: new Map(words
+      .filter((item) => item.groupId === group.id && item.master?.displayWord && item.spellingPractice)
+      .map((item) => [item.master.displayWord, item.spellingPractice])),
   })).filter((group) => group.words.length);
 }
 
@@ -9457,11 +9508,11 @@ function worksheetPrintChromeCss() {
 `;
 }
 
-function worksheetSheetHeaderHtml({ sentences = false } = {}) {
+function worksheetSheetHeaderHtml({ sentences = false, spelling = false } = {}) {
   return `<header class="cw-head">
     <span>${escapeHtml(gradeLabel)} · Unit ${course.unit.unitNo} · ${escapeHtml(course.unit.unitTitle)}</span>
     <h1>Cursive writing practice</h1>
-    <p>Trace the grey words, then write each word yourself on the line underneath.${sentences ? " Then copy the sentence onto the empty lines." : ""}</p>
+    <p>Trace the grey words, then write each word yourself on the line underneath.${spelling ? " Say the letters, cover the word, and write it again from memory." : ""}${sentences ? " Then copy the sentence onto the empty lines." : ""}</p>
     <div class="cw-name"><span>Name</span><span>Date</span></div>
   </header>`;
 }
@@ -9488,23 +9539,24 @@ function worksheetSheetHeaderHtml({ sentences = false } = {}) {
 const PROBE_SHORT = "a b";
 const PROBE_LONG = "wrap ".repeat(80).trim();
 
-function worksheetProbe(geo, { sentences = false } = {}) {
+function worksheetProbe(geo, { sentences = false, spelling = false } = {}) {
   const probe = document.createElement("div");
   probe.setAttribute("aria-hidden", "true");
   probe.style.cssText = "position:absolute;left:-10000mm;top:0;width:182mm;visibility:hidden;pointer-events:none";
-  const probeGroup = (title, words, sentenceMap) => worksheetGroupHtml(
-    { title, words, sentences: sentenceMap },
+  const probeGroup = (title, words, sentenceMap, spellMap) => worksheetGroupHtml(
+    { title, words, sentences: sentenceMap, spellings: spellMap },
     new Map(words.map((w) => [w, 2.2])),
     geo,
-    { first: title === "Probe", sentences: !!sentenceMap },
+    { first: title === "Probe", sentences: !!sentenceMap, spelling: !!spellMap },
   );
   probe.innerHTML = `<style>${worksheetPrintChromeCss()}${worksheetCss(geo, { print: true })}</style>`
     + `<div style="width:100mm" id="cw-probe-mm"></div>`
     + worksheetSheetHeaderHtml()
-    + probeGroup("Probe", ["probe"], null)
+    + probeGroup("Probe", ["probe"], null, null)
+    + (spelling ? `<div id="cw-probe-spell">${probeGroup("P", ["sp"], null, new Map([["sp", "s - p"]]))}</div>` : "")
     + (sentences
-      ? `<div id="cw-probe-short">${probeGroup("S", ["s1"], new Map([["s1", PROBE_SHORT]]))}</div>`
-        + `<div id="cw-probe-long">${probeGroup("L", ["s2"], new Map([["s2", PROBE_LONG]]))}</div>`
+      ? `<div id="cw-probe-short">${probeGroup("S", ["s1"], new Map([["s1", PROBE_SHORT]]), null)}</div>`
+        + `<div id="cw-probe-long">${probeGroup("L", ["s2"], new Map([["s2", PROBE_LONG]]), null)}</div>`
       : "");
   document.body.appendChild(probe);
   // WITH margins. getBoundingClientRect excludes them, and taking the row's height
@@ -9527,7 +9579,12 @@ function worksheetProbe(geo, { sentences = false } = {}) {
     rowGap: parseFloat(getComputedStyle(row).marginBottom) || 0,
     sentenceOne: 0,
     sentenceLine: 0,
+    spellBlock: 0,
   };
+  if (spelling) {
+    const spellRow = probe.querySelector("#cw-probe-spell .cw-row");
+    if (spellRow) measurement.spellBlock = spellRow.getBoundingClientRect().height - measurement.row;
+  }
   if (sentences) {
     const shortRow = probe.querySelector("#cw-probe-short .cw-row");
     const longRow = probe.querySelector("#cw-probe-long .cw-row");
@@ -9547,19 +9604,25 @@ function worksheetProbe(geo, { sentences = false } = {}) {
   return measurement;
 }
 
-function worksheetPageCount(chosenGroups, geo, { sentences = false } = {}) {
+function worksheetPageCount(chosenGroups, geo, { sentences = false, spelling = false } = {}) {
   if (!chosenGroups.length) return 0;
-  const probe = worksheetProbe(geo, { sentences });
+  const probe = worksheetProbe(geo, { sentences, spelling });
   if (!probe.perMm || !probe.row) return 0;
   const pageHeight = SHEET_H * probe.perMm;
   // A row is taller when it carries a sentence, and taller again for every line
   // that sentence wraps to — so the height is per WORD now, not one figure for
   // the sheet.
   const heightOf = (group, word) => {
+    let height = probe.row;
+    // Spelling is one label and one ruled band whatever the word, so it is a
+    // constant rather than a per-word measurement.
+    if (spelling && group.spellings?.get(word)) height += probe.spellBlock;
     const sentence = sentences ? group.sentences?.get(word) : "";
-    if (!sentence) return probe.row;
-    return probe.row + probe.sentenceOne
-      + probe.sentenceLine * (wrapCursive(sentence, geo, cursiveWidthOf).length - 1);
+    if (sentence) {
+      height += probe.sentenceOne
+        + probe.sentenceLine * (wrapCursive(sentence, geo, cursiveWidthOf).length - 1);
+    }
+    return height;
   };
   let pages = 0;
   chosenGroups.forEach((group, index) => {
@@ -9590,6 +9653,7 @@ function renderCursiveWorksheet() {
   // Off by default: a sentence under every word roughly triples the sheet, and a
   // learner who wanted the words alone should not have to turn it off.
   let sentences = false;
+  let spelling = false;
   let widths = new Map();
 
   $("#app").innerHTML = `${pageHeader(
@@ -9609,11 +9673,11 @@ function renderCursiveWorksheet() {
         <div class="cw-sizes">${Object.entries(WORKSHEET_SIZES).map(([key, value]) => `<label class="cw-check"><input type="radio" name="cw-size" value="${key}" ${key === size ? "checked" : ""}><span><strong>${escapeHtml(value.label)}</strong><small>${escapeHtml(value.note)}</small></span></label>`).join("")}</div>
       </section>
       <section class="panel">
-        <h2>Sentence practice</h2>
-        <p>Under each word you can add the sentence it comes from, set out to read, with empty lines to copy it onto.</p>
+        <h2>What to practise</h2>
+        <p>Every word is traced and written on its own. You can add more under each one.</p>
         <div class="cw-sizes">
-          <label class="cw-check"><input type="radio" name="cw-sentences" value="off" ${sentences ? "" : "checked"}><span><strong>Words only</strong><small>just the word to trace and write</small></span></label>
-          <label class="cw-check"><input type="radio" name="cw-sentences" value="on" ${sentences ? "checked" : ""}><span><strong>Add a sentence</strong><small>one sentence under every word — a much longer sheet</small></span></label>
+          <label class="cw-check"><input type="checkbox" id="cw-opt-spelling" ${spelling ? "checked" : ""}><span><strong>Spelling</strong><small>say the letters, then write the word from memory</small></span></label>
+          <label class="cw-check"><input type="checkbox" id="cw-opt-sentences" ${sentences ? "checked" : ""}><span><strong>A sentence to copy</strong><small>the sentence the word comes from — a much longer sheet</small></span></label>
         </div>
       </section>
       <section class="panel">
@@ -9632,16 +9696,17 @@ function renderCursiveWorksheet() {
     const geo = worksheetGeometry(size);
     const picked = selectedGroups();
     const words = selectedWords();
-    const pages = worksheetPageCount(picked, geo, { sentences });
+    const pages = worksheetPageCount(picked, geo, { sentences, spelling });
     $("#cw-style").textContent = worksheetCss(geo, { print: false });
+    const extras = [spelling && "spelling practice", sentences && "a sentence to copy"].filter(Boolean);
     $("#cw-summary").textContent = words.length
-      ? `${words.length} word${words.length === 1 ? "" : "s"}${sentences ? " and a sentence each" : ""} in ${picked.length} group${picked.length === 1 ? "" : "s"} · about ${pages} page${pages === 1 ? "" : "s"} of A4. Each group starts on its own page.`
+      ? `${words.length} word${words.length === 1 ? "" : "s"}${extras.length ? ", each with " + extras.join(" and ") : ""} in ${picked.length} group${picked.length === 1 ? "" : "s"} · about ${pages} page${pages === 1 ? "" : "s"} of A4. Each group starts on its own page.`
       : "Tick at least one group of words to make a sheet.";
     // The first group's heading and its first two words, so the preview shows the
     // shape of a page rather than a pair of loose lines. Drawn by the same builders
     // the print document uses, so it cannot show a sheet the printer will not
     // produce.
-    $("#cw-preview").innerHTML = picked[0] ? worksheetGroupHtml(picked[0], widths, geo, { first: true, rows: 2, sentences }) : "";
+    $("#cw-preview").innerHTML = picked[0] ? worksheetGroupHtml(picked[0], widths, geo, { first: true, rows: 2, sentences, spelling }) : "";
     $("#cw-print").disabled = !words.length;
   };
 
@@ -9657,12 +9722,13 @@ function renderCursiveWorksheet() {
     draw();
   }));
   $$('input[name="cw-size"]').forEach((radio) => radio.addEventListener("change", () => { size = radio.value; draw(); }));
-  $$('input[name="cw-sentences"]').forEach((radio) => radio.addEventListener("change", () => { sentences = radio.value === "on"; draw(); }));
-  $("#cw-print").addEventListener("click", () => printCursiveWorksheet(selectedGroups(), size, widths, { sentences }));
+  $("#cw-opt-sentences").addEventListener("change", (event) => { sentences = event.target.checked; draw(); });
+  $("#cw-opt-spelling").addEventListener("change", (event) => { spelling = event.target.checked; draw(); });
+  $("#cw-print").addEventListener("click", () => printCursiveWorksheet(selectedGroups(), size, widths, { sentences, spelling }));
   icons();
 }
 
-function printCursiveWorksheet(chosenGroups, size, widths, { sentences = false } = {}) {
+function printCursiveWorksheet(chosenGroups, size, widths, { sentences = false, spelling = false } = {}) {
   const words = chosenGroups.flatMap((group) => group.words);
   if (!words.length) return;
   const printWindow = window.open("", "_blank", "popup=yes,width=900,height=1000,resizable=yes,scrollbars=yes");
@@ -9689,8 +9755,8 @@ function printCursiveWorksheet(chosenGroups, size, widths, { sentences = false }
       </style>
     </head>
     <body>
-      ${worksheetSheetHeaderHtml({ sentences })}
-      ${chosenGroups.map((group, index) => worksheetGroupHtml(group, widths, geo, { first: index === 0, sentences })).join("")}
+      ${worksheetSheetHeaderHtml({ sentences, spelling })}
+      ${chosenGroups.map((group, index) => worksheetGroupHtml(group, widths, geo, { first: index === 0, sentences, spelling })).join("")}
     </body>
     </html>`);
   printWindow.document.close();
@@ -9943,6 +10009,114 @@ function renderHandwriting() {
   icons();
 }
 
+// ===================== the grade dictionary =====================
+// Every word the grade teaches, in one alphabetical list, reachable without
+// walking the units.
+//
+// The per-unit Vocabulary section owns the TEACHING — the practice sentences,
+// the spelling drill, "I know this word" — and this owns LOOKING SOMETHING UP.
+// They are not the same job, and until now only the first existed: a learner
+// who meets a word in Unit 9 and half-remembers it from Unit 2 had nowhere to
+// go, because dictionaryLinks are per unit and a unit only ever shows its own.
+// That gap widened with the Reading & Story expansion — Grade 8 now teaches
+// 2,184 words and no single unit shows more than a tenth of them.
+//
+// It reads `dictionary` (the master file) directly rather than linkedWords(),
+// which is what makes it grade-wide: load() already fetches the whole file for
+// the grade, so the page costs no extra request.
+//
+// Deliberately NOT a teaching step: nonCountable, and absent from
+// SECTION_CHAIN, so sectionUnlocked() finds no index for it and it is always
+// open — the standing the two study plans and the worksheet already have.
+// Nothing here ticks, so nothing here moves a percentage.
+//
+// One design at every grade, like the study plans. A reference page is scanned,
+// not walked, so it is outside the deck/original split (BOTH_DESIGNS) entirely
+// and draws no gc-* node at any stage.
+//
+// NO word pictures, unlike the per-unit page. That page draws one because it
+// shows one unit's words; this shows the grade's, and 2,184 inline SVGs is a
+// page that takes seconds to paint for a picture beside maybe a third of them.
+// The picture belongs where the word is taught.
+
+// Sorted by the word as it is SHOWN. Sorting on `lemma` looks equivalent and is
+// not: where displayWord differs from lemma the entry would file under a letter
+// the learner cannot see, and they would look for it where it is not.
+function gradeDictionaryEntries() {
+  const seen = new Set();
+  return (dictionary.entries || [])
+    .filter((entry) => {
+      if (!entry?.displayWord) return false;
+      // One row per word AND part of speech: the master file carries a separate
+      // entry per sense (…-noun-01, …-verb-01) and both belong here, but a word
+      // taught in two units arrives twice identically, and a dictionary that
+      // lists "harvest" twice under "noun" reads as a bug rather than a sense.
+      const key = `${String(entry.displayWord).toLowerCase()}|${entry.partOfSpeech || ""}`;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    })
+    .sort((a, b) => String(a.displayWord).localeCompare(String(b.displayWord), "en", { sensitivity: "base" }));
+}
+
+function renderGradeDictionary() {
+  const esc = escapeHtml;
+  const entries = gradeDictionaryEntries();
+  const letterOf = (entry) => {
+    const first = String(entry.displayWord).trim().charAt(0).toUpperCase();
+    return /[A-Z]/.test(first) ? first : "#";
+  };
+  // Grouped in one pass over the already-sorted list, so the headings follow the
+  // sort rather than being a second opinion about it.
+  const groups = [];
+  entries.forEach((entry, index) => {
+    const letter = letterOf(entry);
+    if (!groups.length || groups[groups.length - 1].letter !== letter) groups.push({ letter, rows: [] });
+    groups[groups.length - 1].rows.push({ entry, index });
+  });
+  // `.word-row` gives the two-column row and `.icon-button` the speaker, both
+  // already in the shared stylesheet — this page adds no CSS, which matters
+  // because course-ui.css is @imported by the other five subjects and editing it
+  // makes every one of their app tiers stale.
+  //
+  // The inline text-transform is the one exception: `.word-row small` is
+  // capitalize, which is right for the part of speech it was built for and wrong
+  // for a sentence-shaped meaning ("A Small Soft Bag Or Pocket").
+  const rowHtml = ({ entry, index }) => `<div class="word-row" data-gd-row="${index}" data-gd-term="${esc(`${entry.displayWord} ${entry.canonicalMeaning || ""}`.toLowerCase())}">
+      <span><strong lang="en">${esc(entry.displayWord)}</strong><small style="text-transform: none;">${esc(entry.partOfSpeech || "")}${entry.canonicalMeaning ? ` · ${esc(entry.canonicalMeaning)}` : ""}</small></span>
+      ${entry.audio?.available ? `<button class="icon-button" type="button" data-gd-audio="${index}" aria-label="Listen to ${esc(entry.displayWord)}">${icon("volume-2")}</button>` : "<span></span>"}
+    </div>`;
+  const groupsHtml = groups.map((group) => `<div class="gd-group" data-gd-group="${esc(group.letter)}"><h3>${esc(group.letter)}</h3>${group.rows.map(rowHtml).join("")}</div>`).join("");
+  $("#app").innerHTML = `${pageHeader(
+    `${gradeLabel} · Dictionary`,
+    `Every word in ${gradeLabel}`,
+    "Look up any word this grade teaches, from any unit. Search for it, or scroll to its letter. This page is only for looking things up — nothing here is a step you have to finish.",
+    `${entries.length} words`,
+  )}
+    <div class="toolbar"><label class="search-box">${icon("search")}<input id="gd-search" type="search" placeholder="Search any word or meaning" aria-label="Search the grade dictionary"></label><span id="gd-count" class="status-chip">${entries.length} words</span></div>
+    <section class="panel word-list" id="gd-list">${groupsHtml || `<div class="empty">This grade has no dictionary words yet.</div>`}</section>`;
+  const rows = $$("[data-gd-row]");
+  const search = $("#gd-search");
+  const applyFilter = () => {
+    const query = search.value.trim().toLowerCase();
+    let shown = 0;
+    rows.forEach((row) => {
+      const match = !query || row.dataset.gdTerm.includes(query);
+      row.hidden = !match;
+      if (match) shown += 1;
+    });
+    // A letter heading with nothing under it is a heading that lies about what
+    // the page holds, so it goes when its last row does.
+    $$("[data-gd-group]").forEach((group) => { group.hidden = !group.querySelector("[data-gd-row]:not([hidden])"); });
+    $("#gd-count").textContent = `${shown} word${shown === 1 ? "" : "s"}`;
+  };
+  search.addEventListener("input", applyFilter);
+  $$("[data-gd-audio]").forEach((button) => button.addEventListener("click", () => {
+    const entry = entries[Number(button.dataset.gdAudio)];
+    if (entry?.audio?.available) playAudio(entry.audio.normal, { button });
+  }));
+}
+
 // ===================== student resources =====================
 // The learner's counterpart to the Teacher resources button, and the same
 // shape: a switch under the section list that leads to one page. It collects
@@ -10004,6 +10178,12 @@ function studentResourceCards() {
     // vocabulary is abstract. One wording for all eight grades, because it is
     // true at all eight.
     { route: "dictionary", iconName: "book-a", title: navLabelOf("dictionary", "Vocabulary"), blurb: "Every new word in this unit, with a picture where there is one, its meaning and a voice to listen to." },
+    // The grade's whole word list, and always open — unlike the card above,
+    // which is this unit's words and locks with the section. Looking a word up
+    // is the case the unit page cannot serve: a learner who half-remembers a
+    // word has usually met it in some OTHER unit, and by Grade 8 no single unit
+    // holds more than a tenth of what the grade teaches.
+    { route: "grade-dictionary", iconName: "book-open-text", title: `${gradeLabel} Dictionary`, blurb: `Look up any word ${gradeLabel} teaches, from any unit — its meaning, and a voice to listen to.` },
   ];
   if (books) cards.push({ route: "ebooks", iconName: "library-big", title: navLabelOf("ebooks", "Books"), blurb: `${books === 1 ? "A story book" : `${books} story books`} to read or listen to, with pictures that move when you tap them.` });
   if (gamePack) cards.push({ route: "games", iconName: "gamepad-2", title: navLabelOf("games", "Games"), blurb: "Play with this unit's words and sentences until they stick." });
@@ -10104,7 +10284,7 @@ const config = {
   // 92% and could not open the next unit — a support tool gating progression.
   // It stays in the nav and still ticks when used; it just no longer decides
   // whether a unit is finished.
-  nonCountable: ["overview", "live", "final-quiz", "teacherguide", "year-plan", "unit-plan", "story-library", "worksheet", "handwriting"],
+  nonCountable: ["overview", "live", "final-quiz", "teacherguide", "year-plan", "unit-plan", "story-library", "worksheet", "handwriting", "grade-dictionary"],
   gradeSections: [],
   // English draws its own card (renderSectionCompletion): its sections open
   // in a gated chain and its units unlock one another, which the shell's
@@ -10155,6 +10335,7 @@ const config = {
     teacher: () => (isPrereqUnit ? renderPrereqTeacher() : renderTeacher()),
     worksheet: () => renderCursiveWorksheet(),
     handwriting: () => renderHandwriting(),
+    "grade-dictionary": () => renderGradeDictionary(),
     student: () => renderStudentResources(),
   }),
   bind,

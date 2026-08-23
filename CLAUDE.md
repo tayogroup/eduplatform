@@ -1390,13 +1390,30 @@ trap is that an archive tree is a snapshot of HEAD, so it cannot contain the
 uncommitted change you are trying to exercise — testing new tooling from one
 tests the old tooling.
 
-**Two of these fixes reached main inside somebody else's commit.**
-`release-lock.js` and the `tagAlreadyWritten` change are in `5236df358`, whose
-message is "English: Grade 8 Unit 7 kept its source list's numbers inside the
-words". The release-safety work shipped under a commit about vocabulary, on the
-same night, in the same shared tree, for the reason the co-edited-file section
-above gives. If you go looking for when a tooling fix landed, the commit message
-is not evidence.
+**Two of these fixes were swept into somebody else's commit, and then vanished
+with it.** `release-lock.js` and the `tagAlreadyWritten` change landed in
+`5236df358`, whose message is "English: Grade 8 Unit 7 kept its source list's
+numbers inside the words" — release-safety work committed under a message about
+vocabulary, because `git add` is not atomic with `git commit` and the index is
+shared. Its author then noticed (`git show --stat` reported seven staged files
+where five were asked for), ran `reset --soft` and re-committed their own five
+as `cbd49170d`. **So `5236df358` is not on main at all, and as of this writing
+neither fix is: HEAD still has `tagAlreadyWritten(items)` and `release-lock.js`
+is untracked.**
+
+Two things to take from that, both of which cost somebody an hour:
+
+- **An orphaned commit still answers `git show`.** The lock's author verified
+  the committed blobs against their tested copies, got byte-identical, re-ran
+  the suite green, and reported the hole closed on main. Every step was correct
+  and the conclusion was wrong, because `5236df358` had already been reset out
+  of the branch. `git merge-base --is-ancestor <sha> HEAD` is the question;
+  `git show <sha>` is not.
+- **Explicit pathspecs do not protect the index.** `git add <paths>` by one
+  session and `git commit` by another interleave, and the second sweeps up the
+  first. `git commit -- <paths>` is the form that is safe for both; failing
+  that, read `git show --stat` after every commit and confirm the file count is
+  the one you asked for. That is what caught this one.
 
 **And a reading trap that cost a wrong claim that night:** in a tree several
 sessions share, the working copy is not evidence about the shipped code. A grep

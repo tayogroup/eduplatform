@@ -9321,6 +9321,25 @@ function worksheetSpellSvg(geo, widthEm) {
   </svg>`;
 }
 
+// The punctuation exercise: the word's own sentence with its capitals and its
+// punctuation taken out, for the learner to put back.
+//
+// APOSTROPHES AND HYPHENS SURVIVE. Stripping them would turn "didn't" into "didnt"
+// and "great-great-grandparents" into one run of letters — that is a spelling
+// question, not a punctuation one, and a learner cannot restore an apostrophe from
+// a non-word by reasoning about punctuation. 208 of the 3,563 sentences carry one.
+//
+// Capitals ARE stripped, including mid-sentence ones. 401 sentences have a capital
+// after the first letter — "Amal", "Miss Twiga", "I" — and knowing those take one
+// is the same skill as knowing a sentence opens with one. That is the exercise.
+function stripPunctuation(sentence) {
+  return String(sentence)
+    .replace(/[.,!?;:"“”]/g, "")
+    .toLowerCase()
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 // Greedy wrap to the width of one ruled line. Never breaks inside a word, which
 // is safe rather than hopeful: the widest single token in the whole course is
 // "great-great-grandparents." at 11.76em — 152mm of a 182mm line even at the
@@ -9352,7 +9371,7 @@ function wrapCursive(text, geo, widthOf) {
 // by grade on purpose: "Say, tap and trace: t - a - b - l - e" at Grade 1, a bare
 // "n - a - m - e" higher up, and "Clap the parts, then copy: whiteboard" for the
 // compounds. Every one of the 3,563 Grade 1-4 links has one.
-function worksheetRowHtml(word, widths, geo, { sentence = "", spelling = "", widthOf = null } = {}) {
+function worksheetRowHtml(word, widths, geo, { sentence = "", spelling = "", punctuation = "", widthOf = null } = {}) {
   const widthEm = widths.get(word) || 0;
   const spellingHtml = spelling ? `<div class="cw-spell">
     <p class="cw-spell-label">${escapeHtml(spelling)}</p>
@@ -9364,12 +9383,24 @@ function worksheetRowHtml(word, widths, geo, { sentence = "", spelling = "", wid
     ${lines.map((line) => worksheetTextLineSvg(geo, line, { model: true })).join("")}
     ${lines.map(() => worksheetTextLineSvg(geo, "", { model: false })).join("")}
   </div>` : "";
+  // The prompt is set in PRINT, not on the rules in cursive. A stripped sentence
+  // laid out like a model invites tracing, which is the one thing this exercise
+  // must not accept — the learner has to write it out changed, not copied. The
+  // blank lines are counted from the CORRECT sentence, which is the longer of the
+  // two, so restoring the capitals and stops can never run out of room.
+  const punctLines = punctuation && widthOf ? wrapCursive(punctuation, geo, widthOf) : [];
+  const punctuationHtml = punctLines.length ? `<div class="cw-punct">
+    <p class="cw-punct-label">Write this again with the capital letters and punctuation put back.</p>
+    <p class="cw-punct-prompt">${escapeHtml(stripPunctuation(punctuation))}</p>
+    ${punctLines.map(() => worksheetTextLineSvg(geo, "", { model: false })).join("")}
+  </div>` : "";
   return `<div class="cw-row">
     <p class="cw-label">${escapeHtml(word)}</p>
     ${worksheetLineSvg(geo, word, widthEm)}
     ${worksheetLineSvg(geo)}
     ${spellingHtml}
     ${sentenceHtml}
+    ${punctuationHtml}
   </div>`;
 }
 
@@ -9387,7 +9418,7 @@ function worksheetRowHtml(word, widths, geo, { sentence = "", spelling = "", wid
 // The heading still counts the WHOLE group: it is describing the group, not the
 // sample, and a preview headed "2 words" over a seven-word group misreports what
 // will print.
-function worksheetGroupHtml(group, widths, geo, { first, rows = group.words.length, sentences = false, spelling = false }) {
+function worksheetGroupHtml(group, widths, geo, { first, rows = group.words.length, sentences = false, spelling = false, punctuation = false }) {
   return `<section class="cw-group${first ? " is-first" : ""}">
     <header class="cw-group-head">
       <span>${escapeHtml(group.title)}</span>
@@ -9397,6 +9428,7 @@ function worksheetGroupHtml(group, widths, geo, { first, rows = group.words.leng
     ${group.words.slice(0, rows).map((word) => worksheetRowHtml(word, widths, geo, {
       sentence: sentences ? group.sentences?.get(word) || "" : "",
       spelling: spelling ? group.spellings?.get(word) || "" : "",
+      punctuation: punctuation ? group.sentences?.get(word) || "" : "",
       widthOf: cursiveWidthOf,
     })).join("")}
   </section>`;
@@ -9426,6 +9458,14 @@ function worksheetCss(geo, { print }) {
        model on one page and its blank copy lines on the next is unusable. It is
        inside .cw-row, which already avoids breaking, so this only has to hold the
        block together if that ever changes. */
+    .cw-punct { break-inside: avoid; page-break-inside: avoid; margin-top: ${(geo.gapWords * 0.6).toFixed(1)}mm; }
+    .cw-punct-label { margin: 0 0 .8mm; color: #5d6b80; letter-spacing: .04em;
+                      font: 500 ${print ? "2.7mm" : "12px"}/1.2 Arial, Helvetica, sans-serif; }
+    /* The stripped sentence is set in PRINT, deliberately unlike every other line
+       on the sheet. In cursive on the rules it would read as a model to trace, and
+       this is the one exercise where copying the prompt is the wrong answer. */
+    .cw-punct-prompt { margin: 0 0 1.6mm; color: #17324d;
+                       font: 400 ${print ? "3.2mm" : "15px"}/1.4 Arial, Helvetica, sans-serif; }
     .cw-spell { break-inside: avoid; page-break-inside: avoid; margin-top: ${(geo.gapWords * 0.6).toFixed(1)}mm; }
     .cw-spell-label { margin: 0 0 .8mm; color: #5d6b80; letter-spacing: .06em;
                       font: 500 ${print ? "2.7mm" : "12px"}/1.2 Arial, Helvetica, sans-serif; }
@@ -9508,11 +9548,11 @@ function worksheetPrintChromeCss() {
 `;
 }
 
-function worksheetSheetHeaderHtml({ sentences = false, spelling = false } = {}) {
+function worksheetSheetHeaderHtml({ sentences = false, spelling = false, punctuation = false } = {}) {
   return `<header class="cw-head">
     <span>${escapeHtml(gradeLabel)} · Unit ${course.unit.unitNo} · ${escapeHtml(course.unit.unitTitle)}</span>
     <h1>Cursive writing practice</h1>
-    <p>Trace the grey words, then write each word yourself on the line underneath.${spelling ? " Say the letters, cover the word, and write it again from memory." : ""}${sentences ? " Then copy the sentence onto the empty lines." : ""}</p>
+    <p>Trace the grey words, then write each word yourself on the line underneath.${spelling ? " Say the letters, cover the word, and write it again from memory." : ""}${sentences ? " Then copy the sentence onto the empty lines." : ""}${punctuation ? " Where a sentence has lost its capital letters and punctuation, write it out again with them put back." : ""}</p>
     <div class="cw-name"><span>Name</span><span>Date</span></div>
   </header>`;
 }
@@ -9539,24 +9579,28 @@ function worksheetSheetHeaderHtml({ sentences = false, spelling = false } = {}) 
 const PROBE_SHORT = "a b";
 const PROBE_LONG = "wrap ".repeat(80).trim();
 
-function worksheetProbe(geo, { sentences = false, spelling = false } = {}) {
+function worksheetProbe(geo, { sentences = false, spelling = false, punctuation = false } = {}) {
   const probe = document.createElement("div");
   probe.setAttribute("aria-hidden", "true");
   probe.style.cssText = "position:absolute;left:-10000mm;top:0;width:182mm;visibility:hidden;pointer-events:none";
-  const probeGroup = (title, words, sentenceMap, spellMap) => worksheetGroupHtml(
-    { title, words, sentences: sentenceMap, spellings: spellMap },
+  const probeGroup = (title, words, sentenceMap, spellMap, punctMap) => worksheetGroupHtml(
+    { title, words, sentences: punctMap || sentenceMap, spellings: spellMap },
     new Map(words.map((w) => [w, 2.2])),
     geo,
-    { first: title === "Probe", sentences: !!sentenceMap, spelling: !!spellMap },
+    { first: title === "Probe", sentences: !!sentenceMap, spelling: !!spellMap, punctuation: !!punctMap },
   );
   probe.innerHTML = `<style>${worksheetPrintChromeCss()}${worksheetCss(geo, { print: true })}</style>`
     + `<div style="width:100mm" id="cw-probe-mm"></div>`
     + worksheetSheetHeaderHtml()
-    + probeGroup("Probe", ["probe"], null, null)
-    + (spelling ? `<div id="cw-probe-spell">${probeGroup("P", ["sp"], null, new Map([["sp", "s - p"]]))}</div>` : "")
+    + probeGroup("Probe", ["probe"], null, null, null)
+    + (spelling ? `<div id="cw-probe-spell">${probeGroup("P", ["sp"], null, new Map([["sp", "s - p"]]), null)}</div>` : "")
+    + (punctuation
+      ? `<div id="cw-probe-pshort">${probeGroup("U", ["u1"], null, null, new Map([["u1", PROBE_SHORT]]))}</div>`
+        + `<div id="cw-probe-plong">${probeGroup("V", ["u2"], null, null, new Map([["u2", PROBE_LONG]]))}</div>`
+      : "")
     + (sentences
-      ? `<div id="cw-probe-short">${probeGroup("S", ["s1"], new Map([["s1", PROBE_SHORT]]), null)}</div>`
-        + `<div id="cw-probe-long">${probeGroup("L", ["s2"], new Map([["s2", PROBE_LONG]]), null)}</div>`
+      ? `<div id="cw-probe-short">${probeGroup("S", ["s1"], new Map([["s1", PROBE_SHORT]]), null, null)}</div>`
+        + `<div id="cw-probe-long">${probeGroup("L", ["s2"], new Map([["s2", PROBE_LONG]]), null, null)}</div>`
       : "");
   document.body.appendChild(probe);
   // WITH margins. getBoundingClientRect excludes them, and taking the row's height
@@ -9580,10 +9624,26 @@ function worksheetProbe(geo, { sentences = false, spelling = false } = {}) {
     sentenceOne: 0,
     sentenceLine: 0,
     spellBlock: 0,
+    punctOne: 0,
+    punctLine: 0,
   };
   if (spelling) {
     const spellRow = probe.querySelector("#cw-probe-spell .cw-row");
     if (spellRow) measurement.spellBlock = spellRow.getBoundingClientRect().height - measurement.row;
+  }
+  if (punctuation) {
+    const shortRow = probe.querySelector("#cw-probe-pshort .cw-row");
+    const longRow = probe.querySelector("#cw-probe-plong .cw-row");
+    const shortLines = wrapCursive(PROBE_SHORT, geo, cursiveWidthOf).length;
+    const longLines = wrapCursive(PROBE_LONG, geo, cursiveWidthOf).length;
+    if (shortRow && longRow && longLines > shortLines) {
+      const shortHeight = shortRow.getBoundingClientRect().height;
+      const longHeight = longRow.getBoundingClientRect().height;
+      // One extra wrapped line costs ONE blank band here, not two — the exercise
+      // has no model lines, only the lines to write the corrected sentence on.
+      measurement.punctLine = (longHeight - shortHeight) / (longLines - shortLines);
+      measurement.punctOne = shortHeight - measurement.row - measurement.punctLine * (shortLines - 1);
+    }
   }
   if (sentences) {
     const shortRow = probe.querySelector("#cw-probe-short .cw-row");
@@ -9604,9 +9664,9 @@ function worksheetProbe(geo, { sentences = false, spelling = false } = {}) {
   return measurement;
 }
 
-function worksheetPageCount(chosenGroups, geo, { sentences = false, spelling = false } = {}) {
+function worksheetPageCount(chosenGroups, geo, { sentences = false, spelling = false, punctuation = false } = {}) {
   if (!chosenGroups.length) return 0;
-  const probe = worksheetProbe(geo, { sentences, spelling });
+  const probe = worksheetProbe(geo, { sentences, spelling, punctuation });
   if (!probe.perMm || !probe.row) return 0;
   const pageHeight = SHEET_H * probe.perMm;
   // A row is taller when it carries a sentence, and taller again for every line
@@ -9621,6 +9681,11 @@ function worksheetPageCount(chosenGroups, geo, { sentences = false, spelling = f
     if (sentence) {
       height += probe.sentenceOne
         + probe.sentenceLine * (wrapCursive(sentence, geo, cursiveWidthOf).length - 1);
+    }
+    const punct = punctuation ? group.sentences?.get(word) : "";
+    if (punct) {
+      height += probe.punctOne
+        + probe.punctLine * (wrapCursive(punct, geo, cursiveWidthOf).length - 1);
     }
     return height;
   };
@@ -9654,6 +9719,7 @@ function renderCursiveWorksheet() {
   // learner who wanted the words alone should not have to turn it off.
   let sentences = false;
   let spelling = false;
+  let punctuation = false;
   let widths = new Map();
 
   $("#app").innerHTML = `${pageHeader(
@@ -9678,6 +9744,7 @@ function renderCursiveWorksheet() {
         <div class="cw-sizes">
           <label class="cw-check"><input type="checkbox" id="cw-opt-spelling" ${spelling ? "checked" : ""}><span><strong>Spelling</strong><small>say the letters, then write the word from memory</small></span></label>
           <label class="cw-check"><input type="checkbox" id="cw-opt-sentences" ${sentences ? "checked" : ""}><span><strong>A sentence to copy</strong><small>the sentence the word comes from — a much longer sheet</small></span></label>
+          <label class="cw-check"><input type="checkbox" id="cw-opt-punctuation" ${punctuation ? "checked" : ""}><span><strong>Punctuation</strong><small>the same sentence with its capitals and stops taken out, to put back</small></span></label>
         </div>
       </section>
       <section class="panel">
@@ -9696,17 +9763,17 @@ function renderCursiveWorksheet() {
     const geo = worksheetGeometry(size);
     const picked = selectedGroups();
     const words = selectedWords();
-    const pages = worksheetPageCount(picked, geo, { sentences, spelling });
+    const pages = worksheetPageCount(picked, geo, { sentences, spelling, punctuation });
     $("#cw-style").textContent = worksheetCss(geo, { print: false });
-    const extras = [spelling && "spelling practice", sentences && "a sentence to copy"].filter(Boolean);
+    const extras = [spelling && "spelling practice", sentences && "a sentence to copy", punctuation && "punctuation to put back"].filter(Boolean);
     $("#cw-summary").textContent = words.length
-      ? `${words.length} word${words.length === 1 ? "" : "s"}${extras.length ? ", each with " + extras.join(" and ") : ""} in ${picked.length} group${picked.length === 1 ? "" : "s"} · about ${pages} page${pages === 1 ? "" : "s"} of A4. Each group starts on its own page.`
+      ? `${words.length} word${words.length === 1 ? "" : "s"}${extras.length ? ", each with " + (extras.length > 1 ? extras.slice(0, -1).join(", ") + " and " + extras[extras.length - 1] : extras[0]) : ""} in ${picked.length} group${picked.length === 1 ? "" : "s"} · about ${pages} page${pages === 1 ? "" : "s"} of A4. Each group starts on its own page.`
       : "Tick at least one group of words to make a sheet.";
     // The first group's heading and its first two words, so the preview shows the
     // shape of a page rather than a pair of loose lines. Drawn by the same builders
     // the print document uses, so it cannot show a sheet the printer will not
     // produce.
-    $("#cw-preview").innerHTML = picked[0] ? worksheetGroupHtml(picked[0], widths, geo, { first: true, rows: 2, sentences, spelling }) : "";
+    $("#cw-preview").innerHTML = picked[0] ? worksheetGroupHtml(picked[0], widths, geo, { first: true, rows: 2, sentences, spelling, punctuation }) : "";
     $("#cw-print").disabled = !words.length;
   };
 
@@ -9724,11 +9791,12 @@ function renderCursiveWorksheet() {
   $$('input[name="cw-size"]').forEach((radio) => radio.addEventListener("change", () => { size = radio.value; draw(); }));
   $("#cw-opt-sentences").addEventListener("change", (event) => { sentences = event.target.checked; draw(); });
   $("#cw-opt-spelling").addEventListener("change", (event) => { spelling = event.target.checked; draw(); });
-  $("#cw-print").addEventListener("click", () => printCursiveWorksheet(selectedGroups(), size, widths, { sentences, spelling }));
+  $("#cw-opt-punctuation").addEventListener("change", (event) => { punctuation = event.target.checked; draw(); });
+  $("#cw-print").addEventListener("click", () => printCursiveWorksheet(selectedGroups(), size, widths, { sentences, spelling, punctuation }));
   icons();
 }
 
-function printCursiveWorksheet(chosenGroups, size, widths, { sentences = false, spelling = false } = {}) {
+function printCursiveWorksheet(chosenGroups, size, widths, { sentences = false, spelling = false, punctuation = false } = {}) {
   const words = chosenGroups.flatMap((group) => group.words);
   if (!words.length) return;
   const printWindow = window.open("", "_blank", "popup=yes,width=900,height=1000,resizable=yes,scrollbars=yes");
@@ -9755,8 +9823,8 @@ function printCursiveWorksheet(chosenGroups, size, widths, { sentences = false, 
       </style>
     </head>
     <body>
-      ${worksheetSheetHeaderHtml({ sentences, spelling })}
-      ${chosenGroups.map((group, index) => worksheetGroupHtml(group, widths, geo, { first: index === 0, sentences, spelling })).join("")}
+      ${worksheetSheetHeaderHtml({ sentences, spelling, punctuation })}
+      ${chosenGroups.map((group, index) => worksheetGroupHtml(group, widths, geo, { first: index === 0, sentences, spelling, punctuation })).join("")}
     </body>
     </html>`);
   printWindow.document.close();

@@ -5,6 +5,7 @@
 // section labels, storage keys, and the knownWords summary field.
 import { initScienceWebGL } from "../../science/shared/science-webgl.js?v=science-20260801a";
 import { unitTopic, scienceDiagram } from "../../science/shared/science-visuals.js?v=science-20260801a";
+import { scienceWordPicture } from "../../science/shared/science-word-pictures.js?v=pictures-1";
 import { createCourseApp } from "../course-app.js?v=t2";
 import { createDeck, deckIcon } from "../deck.js?v=deck-1";
 import { createPlacementUnit, placementCallout, placementCourseShell, PREREQ_UNIT } from "../placement.js?v=placement-1";
@@ -379,6 +380,11 @@ function renderScienceWordsClassic() {
   let query = "";
   let activeIndex = 0;
   const idFor = (index) => `w${index}`;
+  // The gutter is asked of the WHOLE unit, never of the filtered rows, so the
+  // list does not change width while a learner types in the search box. A unit
+  // whose words are all abstract — most of Stage 7's chemistry — keeps the
+  // original two-column row and shows no empty column.
+  const pictured = vocab.some((entry) => scienceWordPicture(entry.term, stageNumber));
 
   const draw = () => {
     const filtered = vocab.map((entry, index) => ({ entry, index }))
@@ -387,12 +393,12 @@ function renderScienceWordsClassic() {
     const current = vocab[activeIndex];
     $("#app").innerHTML = `${pageHeader("Language for science", "Science Words", `Learn and explore the key words for ${escapeHtml(course.unit.unitTitle)}. ${known.size} of ${vocab.length} marked learned.`)}
       <div class="dictionary-layout">
-        <section class="panel word-list">
+        <section class="panel word-list ${pictured ? "pictured" : ""}">
           <label class="search-box">${icon("search")}<input id="word-search" type="search" placeholder="Search words or meanings" aria-label="Search science words" value="${escapeHtml(query)}"></label>
-          <div id="word-rows">${filtered.length ? filtered.map(({ entry, index }) => `<button class="word-row ${index === activeIndex ? "active" : ""}" data-word="${index}" type="button"><span><strong>${escapeHtml(entry.term)}</strong><small>${escapeHtml(entry.meaning.slice(0, 46))}${entry.meaning.length > 46 ? "…" : ""}</small></span>${known.has(idFor(index)) ? "<span>LEARNED</span>" : ""}</button>`).join("") : `<div class="empty">No matching words found.</div>`}</div>
+          <div id="word-rows">${filtered.length ? filtered.map(({ entry, index }) => `<button class="word-row ${index === activeIndex ? "active" : ""}" data-word="${index}" type="button">${pictured ? `<span class="word-row-picture" aria-hidden="true">${scienceWordPicture(entry.term, stageNumber)}</span>` : ""}<span><strong>${escapeHtml(entry.term)}</strong><small>${escapeHtml(entry.meaning.slice(0, 46))}${entry.meaning.length > 46 ? "…" : ""}</small></span>${known.has(idFor(index)) ? "<span>LEARNED</span>" : ""}</button>`).join("") : `<div class="empty">No matching words found.</div>`}</div>
         </section>
         <section class="panel word-card" id="word-card">
-          <div class="word-card-head"><div><span class="word-type">Science word</span><h2>${escapeHtml(current.term)}</h2></div><button class="icon-button" id="listen-word" type="button" title="Listen" aria-label="Listen to ${escapeHtml(current.term)}">♪</button></div>
+          <div class="word-card-head">${scienceWordPicture(current.term, stageNumber) ? `<div class="word-card-picture" aria-hidden="true">${scienceWordPicture(current.term, stageNumber)}</div>` : ""}<div><span class="word-type">Science word</span><h2>${escapeHtml(current.term)}</h2></div><button class="icon-button" id="listen-word" type="button" title="Listen" aria-label="Listen to ${escapeHtml(current.term)}">♪</button></div>
           <p class="meaning"><span class="field-label">Meaning:</span> ${escapeHtml(current.meaning)}</p>
           ${current.example ? `<div class="sentence-card"><small>Used in the lesson</small><p>“${escapeHtml(current.example)}”</p>${voiceButton(current.example, "Hear the example")}</div>` : ""}
           <div class="practice-box"><input id="word-sentence" maxlength="180" placeholder="Write your own sentence using ${escapeHtml(current.term.toLowerCase())}…" aria-label="Write your own sentence"><button class="button primary" id="check-word-sentence" type="button">Check sentence</button></div>
@@ -452,6 +458,7 @@ function renderScienceWordsDeck() {
   // `current.example` are the two texts a science word has clips for.
   const wordSlide = ({ current, index }, position) => `<section class="gc-slide gc-v${position % 5}"><div class="gc-inner">
       <span class="gc-eyebrow">Word ${position + 1} of ${shown.length} · Science word</span>
+      ${scienceWordPicture(current.term, stageNumber) ? `<div class="wc-picture" aria-hidden="true">${scienceWordPicture(current.term, stageNumber)}</div>` : ""}
       <div class="gc-pattern" lang="en">${esc(current.term)}</div>
       <p class="gc-lead">${esc(current.meaning)}</p>
       <div class="gc-actions">${deckVoice(`${current.term}. ${current.meaning}`, `Listen to ${current.term}`)}</div>

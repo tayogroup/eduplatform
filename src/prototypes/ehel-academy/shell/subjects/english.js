@@ -639,10 +639,27 @@ function completionCopy({ buttons = { primary: "button primary", gold: "button g
     // the first one still to do — its own page explains what stands in the way.
     const pending = sectionChain().filter((id) => countable.includes(id) && !progress.completed.includes(id));
     const next = pending.find((id) => sectionUnlocked(id)) || pending[0];
+    // `next` is the FIRST gap in the chain, not the section after this one, so it
+    // can sit BEHIND the learner: finish Reading & story with Video lesson still
+    // open and the earliest gap is two steps back. Pointing there is right — the
+    // unit cannot reach 100% while it is open, and the alternative walks the
+    // learner past sections they never did — but "Next up" then describes it
+    // wrongly, and a card that says "next" while sending you backwards reads as
+    // the app having lost its place. So the same pick gets different words.
+    //
+    // Only reachable with the unit gate suspended (or in teacher preview): with
+    // it on, sectionUnlocked() would not have let the learner open a section
+    // whose earlier steps are unfinished, so the first gap is always ahead.
+    const chain = sectionChain();
+    const here = chain.indexOf(route);
+    const behind = next && here > 0 && chain.indexOf(next) > -1 && chain.indexOf(next) < here;
     eyebrow = "Section finished";
     title = `Well done! ${sectionLabel(route)} is finished.`;
-    body = `That is ${done.length} of ${countable.length} sections in Unit ${course.unit.unitNo} ticked.${next ? ` Next up: ${sectionLabel(next)}.` : ""}`;
-    action = next ? `<button class="${buttons.primary}" type="button" data-complete-go="${escapeHtml(next)}">Continue to ${escapeHtml(sectionLabel(next))} ${icon("arrow-right")}</button>` : "";
+    const whereNext = !next ? ""
+      : behind ? ` ${sectionLabel(next)} is still to do — it comes earlier in this unit.`
+      : ` Next up: ${sectionLabel(next)}.`;
+    body = `That is ${done.length} of ${countable.length} sections in Unit ${course.unit.unitNo} ticked.${whereNext}`;
+    action = next ? `<button class="${buttons.primary}" type="button" data-complete-go="${escapeHtml(next)}">${behind ? "Go back to" : "Continue to"} ${escapeHtml(sectionLabel(next))} ${icon("arrow-right")}</button>` : "";
   }
   return { unitDone, countable, eyebrow, title, body, action };
 }

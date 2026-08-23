@@ -691,7 +691,7 @@ function renderComputingWordsDeck(vocab) {
 
   const wordSlide = ({ entry, index }, position) => `<section class="gc-slide gc-v${position % 5}"><div class="gc-inner">
       <span class="gc-eyebrow">Word ${position + 1} of ${shown.length} · Computing word</span>
-      ${computingWordPicture(entry.term) ? `<div class="wc-picture" aria-hidden="true">${computingWordPicture(entry.term)}</div>` : ""}
+      ${computingWordPicture(entry.term, stageNumber) ? `<div class="wc-picture" aria-hidden="true">${computingWordPicture(entry.term, stageNumber)}</div>` : ""}
       <div class="gc-pattern" lang="en">${esc(entry.term)}</div>
       <p class="gc-lead">${esc(entry.meaning)}</p>
       <div class="gc-actions">${deckVoice(`${entry.term}. ${entry.meaning}`, `Listen to ${entry.term}`)}</div>
@@ -777,6 +777,11 @@ function renderComputingWordsClassic(vocab) {
   let query = "";
   let activeIndex = 0;
   const idFor = (index) => `w${index}`;
+  // The gutter is asked of the WHOLE unit, never of the filtered rows, so the
+  // list does not change width while a learner types in the search box. Most
+  // Stage 5-8 vocabulary is abstract, so those units keep the original
+  // two-column row and show no empty column.
+  const pictured = vocab.some((entry) => computingWordPicture(entry.term, stageNumber));
 
   const draw = () => {
     const filtered = vocab.map((entry, index) => ({ entry, index }))
@@ -785,12 +790,12 @@ function renderComputingWordsClassic(vocab) {
     const current = vocab[activeIndex];
     cRoot().innerHTML = `${pageHeader("Language for computing", "Computing Words", `Learn and explore the key words for ${escapeHtml(course.unit.unitTitle)}. ${known.size} of ${vocab.length} marked learned.`)}
       <div class="dictionary-layout">
-        <section class="panel word-list">
+        <section class="panel word-list ${pictured ? "pictured" : ""}">
           <label class="search-box">${icon("search")}<input id="word-search" type="search" placeholder="Search words or meanings" aria-label="Search computing words" value="${escapeHtml(query)}"></label>
-          <div id="word-rows">${filtered.length ? filtered.map(({ entry, index }) => `<button class="word-row ${index === activeIndex ? "active" : ""}" data-word="${index}" type="button"><span><strong>${escapeHtml(entry.term)}</strong><small>${escapeHtml(entry.meaning.slice(0, 46))}${entry.meaning.length > 46 ? "…" : ""}</small></span>${known.has(idFor(index)) ? "<span>LEARNED</span>" : ""}</button>`).join("") : `<div class="empty">No matching words found.</div>`}</div>
+          <div id="word-rows">${filtered.length ? filtered.map(({ entry, index }) => `<button class="word-row ${index === activeIndex ? "active" : ""}" data-word="${index}" type="button">${pictured ? `<span class="word-row-picture" aria-hidden="true">${computingWordPicture(entry.term, stageNumber)}</span>` : ""}<span><strong>${escapeHtml(entry.term)}</strong><small>${escapeHtml(entry.meaning.slice(0, 46))}${entry.meaning.length > 46 ? "…" : ""}</small></span>${known.has(idFor(index)) ? "<span>LEARNED</span>" : ""}</button>`).join("") : `<div class="empty">No matching words found.</div>`}</div>
         </section>
         <section class="panel word-card" id="word-card">
-          <div class="word-card-head"><div><span class="word-type">Computing word</span><h2>${escapeHtml(current.term)}</h2></div><button class="icon-button" id="listen-word" type="button" title="Listen" aria-label="Listen to ${escapeHtml(current.term)}">♪</button></div>
+          <div class="word-card-head">${computingWordPicture(current.term, stageNumber) ? `<div class="word-card-picture" aria-hidden="true">${computingWordPicture(current.term, stageNumber)}</div>` : ""}<div><span class="word-type">Computing word</span><h2>${escapeHtml(current.term)}</h2></div><button class="icon-button" id="listen-word" type="button" title="Listen" aria-label="Listen to ${escapeHtml(current.term)}">♪</button></div>
           <p class="meaning"><span class="field-label">Meaning:</span> ${escapeHtml(current.meaning)}</p>
           ${bothDesigns() ? computingWordExplainer(current.term) : ""}
           ${current.example ? `<div class="sentence-card"><small>Used in the lesson</small><p>“${escapeHtml(current.example)}”</p>${voiceButton(current.example, "Hear the example")}</div>` : ""}

@@ -32,7 +32,9 @@ export const COMPUTING_WORD_PICTURES = {
   "computer-controlled device": "🤖",
   // "standalone device" is defined by what it is NOT — a device off the network.
   // A laptop pictures a laptop, not the absence of a connection.
-  laptop: "💻", desktop: "🖥️", tablet: "📱", smartphone: "📱", android: "📱",
+  laptop: "💻", desktop: "🖥️", tablet: "📱", smartphone: "📱",
+  // "android" is Stage 1's "a robot that looks like a person", NOT the phone OS.
+  android: "🤖",
   screen: "🖥️", monitor: "🖥️", keyboard: "⌨️", mouse: "🖱️",
   printer: "🖨️", "multifunction machine": "🖨️",
   robot: "🤖", drone: "🚁", "driverless vehicle": "🚗",
@@ -55,7 +57,10 @@ export const COMPUTING_WORD_PICTURES = {
   decrypt: "🔓", decode: "🔓", private: "🔒", "personal information": "🔒",
 
   // --- files ---------------------------------------------------------------
-  file: "📄", "text file": "📄", text: "📄", page: "📄", document: "📄",
+  file: "📄", "text file": "📄", text: "📄", document: "📄",
+  // No picture for "page". Stage 2 defines it as "a scene in the story. A new
+  // page is a new place" — a ScratchJr scene, not a sheet of paper. This is the
+  // exact trap the header warns about, and it got in anyway.
   "image file": "🖼️", "audio file": "🎵", "video file": "🎬", animation: "🎬",
   music: "🎵", melody: "🎵", note: "🎵", beat: "🥁", volume: "🔊", audio: "🔊",
 
@@ -69,7 +74,10 @@ export const COMPUTING_WORD_PICTURES = {
   "start program": "▶️", run: "▶️", pause: "⏸️", "stop program": "⏹️",
   reset: "🔄", loop: "🔁", repeat: "🔁", "repeat loop": "🔁", "forever loop": "🔁",
   "repeat block": "🔁", "forever block": "🔁", "repeat until loop": "🔁",
-  "count-controlled loop": "🔁", edit: "✏️", correct: "✅", scratch: "🐱",
+  "count-controlled loop": "🔁", edit: "✏️", scratch: "🐱",
+  // No picture for "correct". Stage 3 teaches it as a VERB — "to fix a mistake",
+  // debugging vocabulary — and a tick mark says "right answer", which is the
+  // adjective. The part of speech is the whole lesson there.
   scratchjr: "🐱",
   // No picture for program / app. Stage 1 defines it as "a set of steps a
   // computer follows", and 📱 draws the device an app runs ON — a learner would
@@ -88,15 +96,39 @@ export const COMPUTING_WORD_PICTURES = {
   "robotics engineer": "🧑‍🔧",
 };
 
+// Per-stage senses, on the model of STAGE_WORD_PICTURES in
+// science/shared/science-word-pictures.js. An empty string means "this stage
+// teaches a sense the shared picture is wrong for", so the card shows none.
+//
+// Both entries here are ambiguous WITHIN one stage, taught by two different
+// units, so no stage entry can be right for both and the stage shows nothing:
+//
+//   key        Stage 3 "Be a Data Expert" means a chart LEGEND — "it tells you
+//              what each picture or colour means". Stage 3 "Sending Secret
+//              Messages" means the cipher key. A padlock key is wrong for the
+//              first; Stage 5 confirms the reading by defining "legend" as "a
+//              key on a chart". Stage 4's cipher key keeps it.
+//   bar chart  Stage 3 "Be a Data Expert" teaches it AGAINST "column chart" in
+//              the same list — "bars lying down (across)" versus "columns
+//              standing up". The emoji draws vertical bars, so it is right for
+//              the column chart and wrong for the bar chart, and putting it on
+//              both teaches that the distinction the unit is making does not
+//              exist. Stage 5's generic bar chart keeps it.
+export const STAGE_WORD_PICTURES = {
+  3: { key: "", "bar chart": "" },
+};
+
 // A term is looked up on its own, then with the asides this vocabulary carries
 // stripped. The source packs write several entries as a word plus an
 // explanation — "program (app)", "screen (a screen for a computer is called a
 // monitor)", "wi-fi (little curved lines, like a fan)" — and a few as a pair,
 // "marker down / up", "test / testing". Both forms are tried before giving up,
 // and giving up means no picture rather than a guess.
-export function computingWordPicture(term) {
+export function computingWordPicture(term, stage) {
   const clean = String(term || "").toLowerCase().trim();
   if (!clean) return "";
+  const perStage = STAGE_WORD_PICTURES[stage];
+  if (perStage && Object.prototype.hasOwnProperty.call(perStage, clean)) return perStage[clean];
   const candidates = [clean];
   const withoutAside = clean.replace(/\(.*?\)/g, " ").replace(/\s+/g, " ").trim();
   if (withoutAside) candidates.push(withoutAside);
@@ -111,6 +143,7 @@ export function computingWordPicture(term) {
     else candidates.push(`${base}s`);
   }
   for (const candidate of candidates) {
+    if (perStage && Object.prototype.hasOwnProperty.call(perStage, candidate)) return perStage[candidate];
     const hit = COMPUTING_WORD_PICTURES[candidate];
     if (hit) return hit;
   }

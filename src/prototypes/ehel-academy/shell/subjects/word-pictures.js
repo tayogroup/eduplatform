@@ -128,7 +128,10 @@ export const WORD_PICTURES = {
   height: "📐", weight: "⚖️", size: "📏", tall: "🦒", heavy: "🏋🏾", wide: "↔️",
   butterfly: "🦋", cricket: "🦗", ant: "🐜", spider: "🕷️", worm: "🪱",
   insect: "🐛", legs: "🦵🏾", wings: "🪽", anthill: "🐜", web: "🕸️",
-  crawl: "🐛", spin: "🌀", chirp: "🐦", collect: "🧺", watering: "💧",
+  // chirp is a CRICKET here, not a bird: Grade 2 teaches it as "a short, high
+  // sound, like a cricket at night", in the minibeasts unit. A bird beside it
+  // pictured a different animal from the one the lesson is about.
+  crawl: "🐛", spin: "🌀", chirp: "🦗", collect: "🧺", watering: "💧",
   litter: "🗑️", recycling: "♻️", roots: "🌱", stem: "🌿", leaves: "🍃",
   flower: "🌸", seeds: "🌱", air: "💨", soil: "🪴",
   happy: "😊", glad: "😊", thankful: "🙏🏾",
@@ -325,7 +328,9 @@ export const WORD_PICTURES = {
   taught: "🧑🏾‍🏫", teaches: "🧑🏾‍🏫", grandmas: "👵🏾", grandpas: "👴🏾", dads: "👨🏾",
   mama: "👩🏾", aunt: "👩🏾", uncle: "👨🏾", daughter: "👧🏾", grandchild: "🧒🏾",
   crowd: "👥", gathers: "👥", gathered: "👥", pet: "🐕", monkey: "🐒",
-  monkeys: "🐒", kings: "🤴🏾", trains: "🚆", passengers: "🚌",
+  // NOT passengers: a bus is the vehicle, not the people travelling in it, and
+  // this file's rule is that the picture must BE the word.
+  monkeys: "🐒", kings: "🤴🏾", trains: "🚆",
   // Words about words
   spell: "🔤", spelled: "🔤", chapter: "📖", plan: "📋", instruction: "📋",
   notepad: "🗒️", text: "📄", revising: "📝", labelling: "🏷️", asking: "❓",
@@ -397,7 +402,9 @@ export const WORD_PICTURES = {
   // Talking, showing, deciding
   interview: "🎙️", interviewer: "🎙️", microphone: "🎙️", newspaper: "📰",
   shout: "📣", laughter: "😄", laughing: "😄", joy: "😄", drums: "🥁",
-  bang: "💥", painting: "🎨", props: "🎭", perform: "🎭", vest: "🦺",
+  // vest is "a piece of clothing worn on the top of your body" at Grade 3 — a
+  // plain garment. 🦺 is the hi-vis safety vest, which is a different object.
+  bang: "💥", painting: "🎨", props: "🎭", perform: "🎭", vest: "👕",
   nickname: "📛", tick: "✔️", correct: "✅", completed: "✅",
   reflect: "🤔", journal: "📓", studying: "📖", classmate: "🧑🏾‍🎓",
   graduated: "🎓", competition: "🏆", prize: "🎁", winners: "🥇",

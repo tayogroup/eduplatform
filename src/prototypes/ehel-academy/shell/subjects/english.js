@@ -9404,6 +9404,94 @@ function worksheetRowHtml(word, widths, geo, { sentence = "", spelling = "", pun
   </div>`;
 }
 
+// ── grammar practice ─────────────────────────────────────────────────────────
+// Unlike spelling, sentences and punctuation, grammar is NOT per word — a unit has
+// six grammar items and they belong to the unit, not to any one word in it. So it
+// is a section of its own at the end of the sheet rather than a block under each
+// row, and it reuses .cw-group so it gets the same fresh page every group gets.
+//
+// GRADES 2-4 ONLY, and Grade 1 is excluded on the evidence rather than by taste:
+// all 66 of its grammar items are practiceType "Listen, point and choose" or
+// "Say, build and use". That grammar is spoken work — "Hum the mmm sound slowly",
+// "Hiss like a snake for three seconds" — and printing it above a ruled line would
+// tell a learner to write down something the course asks them to say.
+const GRAMMAR_ORAL_TYPES = /^(Listen, point and choose|Say, build and use)$/;
+
+// The practice string holds its exercises in one of three layouts and the split has
+// to cover all of them: pipe-separated (114 of 246 items), newline-numbered (35),
+// both (6), and 91 with no separator at all. Those 91 are single tasks rather than
+// several run together — checked by reading them, and all of them are Grades 1-2 —
+// so one piece is the honest answer there, not a parser that found nothing.
+const splitGrammarPractice = (practice) => String(practice || "").split(/\n|\|/).map((part) => part.trim()).filter(Boolean);
+
+// 45 of the 981 practice pieces are the ANSWER KEY — "Check yourself: 1. He 2. She
+// 3. He 4. She." — in four wordings. On screen the learner reveals them after
+// trying; printed straight under the questions they are simply the answers, on the
+// learner's own page, with blank lines inviting them to copy them down.
+//
+// So they are dropped rather than laid out. This is the one place the sheet leaves
+// authored content out on purpose, and it is worth being explicit that nothing else
+// is: no other exercise is capped, sampled or truncated. A learner loses the
+// answers, not the practice.
+const GRAMMAR_ANSWER_KEY = /^(check yourself|answers?|answer key|check your work|self[- ]check)\b[:\-—]?/i;
+
+// A gap-fill wants one line to answer on; an open task wants room to write. The
+// prompt's own shape decides, which is a proxy but a legible one — 647 of the 981
+// prompts carry a gap marker and 334 do not.
+const grammarPromptLines = (prompt) => (/_{2,}|\(.+\/.+\)/.test(prompt) ? 1 : 3);
+
+// The first piece is usually the INSTRUCTION for the ones after it — "Write he or
+// she in each gap.", "Rewrite each pair so the second sentence starts with…" —
+// and it is not itself a question. 135 of the 155 multi-piece items are that shape.
+// Left as a prompt it collected three blank lines nobody should write on.
+//
+// It is only treated as an instruction when the pieces after it actually look like
+// exercises, so the 20 items that open with a real question keep their lines.
+function grammarInstructionSplit(pieces) {
+  if (pieces.length < 2) return { instruction: "", prompts: pieces };
+  const isExercise = (piece) => /_{2,}|\(.+\/.+\)/.test(piece) || /^\d+[.)]/.test(piece);
+  const rest = pieces.slice(1);
+  const restAreExercises = rest.filter(isExercise).length >= Math.ceil(rest.length * 0.6);
+  if (!isExercise(pieces[0]) && restAreExercises) return { instruction: pieces[0], prompts: rest };
+  return { instruction: "", prompts: pieces };
+}
+
+function worksheetGrammar() {
+  return (course.grammar || [])
+    .filter((item) => !GRAMMAR_ORAL_TYPES.test(item.practiceType || ""))
+    .map((item) => {
+      const pieces = splitGrammarPractice(item.practice).filter((piece) => !GRAMMAR_ANSWER_KEY.test(piece));
+      const { instruction, prompts } = grammarInstructionSplit(pieces);
+      return {
+        title: item.title || "",
+        rule: String(item.ruleAndExamples || item.explanation || "").split(/\n+/).map((line) => line.trim()).filter(Boolean),
+        instruction,
+        prompts: prompts.map((text) => ({ text, lines: grammarPromptLines(text) })),
+      };
+    })
+    .filter((item) => item.prompts.length);
+}
+
+function worksheetGrammarHtml(items, geo) {
+  if (!items.length) return "";
+  return `<section class="cw-group cw-grammar">
+    <header class="cw-group-head">
+      <span>Grammar</span>
+      <small>${items.length} thing${items.length === 1 ? "" : "s"} to practise</small>
+      <em>${escapeHtml(gradeLabel)} · Unit ${course.unit.unitNo}</em>
+    </header>
+    ${items.map((item) => `<div class="cw-gram-item">
+      <h3 class="cw-gram-title">${escapeHtml(item.title)}</h3>
+      ${item.rule.map((line) => `<p class="cw-gram-rule">${escapeHtml(line)}</p>`).join("")}
+      ${item.instruction ? `<p class="cw-gram-instruction">${escapeHtml(item.instruction)}</p>` : ""}
+      ${item.prompts.map((prompt) => `<div class="cw-gram-task">
+        <p class="cw-gram-prompt">${escapeHtml(prompt.text)}</p>
+        ${Array.from({ length: prompt.lines }, () => worksheetTextLineSvg(geo, "", { model: false })).join("")}
+      </div>`).join("")}
+    </div>`).join("")}
+  </section>`;
+}
+
 // A vocabulary group is a page of its own: its heading, then its words. The unit
 // teaches these as sets — "Jobs and Equipment", "Numbers 1 to 12" — and a learner
 // working through one sitting wants the set in front of them, not a page that
@@ -9458,6 +9546,18 @@ function worksheetCss(geo, { print }) {
        model on one page and its blank copy lines on the next is unusable. It is
        inside .cw-row, which already avoids breaking, so this only has to hold the
        block together if that ever changes. */
+    /* A grammar item stays whole. Splitting a rule from the exercise it explains,
+       or a prompt from the line it is answered on, makes the page unusable. */
+    .cw-gram-item { break-inside: avoid; page-break-inside: avoid; margin: 0 0 ${geo.gapWords}mm; }
+    .cw-gram-title { margin: 0 0 1.2mm; color: #17324d;
+                     font: 700 ${print ? "3.6mm" : "17px"}/1.25 Arial, Helvetica, sans-serif; }
+    .cw-gram-rule { margin: 0 0 1mm; color: #5d6b80;
+                    font: 400 ${print ? "2.9mm" : "14px"}/1.35 Arial, Helvetica, sans-serif; }
+    .cw-gram-instruction { margin: 1.4mm 0 0; color: #17324d; font-weight: 700;
+                           font-size: ${print ? "3.1mm" : "15px"}; font-family: Arial, Helvetica, sans-serif; }
+    .cw-gram-task { margin-top: ${(geo.gapWords * 0.5).toFixed(1)}mm; break-inside: avoid; page-break-inside: avoid; }
+    .cw-gram-prompt { margin: 0 0 1.2mm; color: #17324d;
+                      font: 400 ${print ? "3.1mm" : "15px"}/1.4 Arial, Helvetica, sans-serif; }
     .cw-punct { break-inside: avoid; page-break-inside: avoid; margin-top: ${(geo.gapWords * 0.6).toFixed(1)}mm; }
     .cw-punct-label { margin: 0 0 .8mm; color: #5d6b80; letter-spacing: .04em;
                       font: 500 ${print ? "2.7mm" : "12px"}/1.2 Arial, Helvetica, sans-serif; }
@@ -9579,7 +9679,7 @@ function worksheetSheetHeaderHtml({ sentences = false, spelling = false, punctua
 const PROBE_SHORT = "a b";
 const PROBE_LONG = "wrap ".repeat(80).trim();
 
-function worksheetProbe(geo, { sentences = false, spelling = false, punctuation = false } = {}) {
+function worksheetProbe(geo, { sentences = false, spelling = false, punctuation = false, grammar = null } = {}) {
   const probe = document.createElement("div");
   probe.setAttribute("aria-hidden", "true");
   probe.style.cssText = "position:absolute;left:-10000mm;top:0;width:182mm;visibility:hidden;pointer-events:none";
@@ -9594,6 +9694,7 @@ function worksheetProbe(geo, { sentences = false, spelling = false, punctuation 
     + worksheetSheetHeaderHtml()
     + probeGroup("Probe", ["probe"], null, null, null)
     + (spelling ? `<div id="cw-probe-spell">${probeGroup("P", ["sp"], null, new Map([["sp", "s - p"]]), null)}</div>` : "")
+    + (grammar && grammar.length ? `<div id="cw-probe-grammar">${worksheetGrammarHtml(grammar, geo)}</div>` : "")
     + (punctuation
       ? `<div id="cw-probe-pshort">${probeGroup("U", ["u1"], null, null, new Map([["u1", PROBE_SHORT]]))}</div>`
         + `<div id="cw-probe-plong">${probeGroup("V", ["u2"], null, null, new Map([["u2", PROBE_LONG]]))}</div>`
@@ -9626,7 +9727,23 @@ function worksheetProbe(geo, { sentences = false, spelling = false, punctuation 
     spellBlock: 0,
     punctOne: 0,
     punctLine: 0,
+    grammarHeader: 0,
+    grammarItems: [],
   };
+  if (grammar && grammar.length) {
+    const section = probe.querySelector("#cw-probe-grammar .cw-grammar");
+    if (section) {
+      const head = section.querySelector(".cw-group-head");
+      const style = head && getComputedStyle(head);
+      measurement.grammarHeader = head
+        ? head.getBoundingClientRect().height + (parseFloat(style.marginTop) || 0) + (parseFloat(style.marginBottom) || 0)
+        : 0;
+      measurement.grammarItems = [...section.querySelectorAll(".cw-gram-item")].map((el) => {
+        const s2 = getComputedStyle(el);
+        return el.getBoundingClientRect().height + (parseFloat(s2.marginTop) || 0) + (parseFloat(s2.marginBottom) || 0);
+      });
+    }
+  }
   if (spelling) {
     const spellRow = probe.querySelector("#cw-probe-spell .cw-row");
     if (spellRow) measurement.spellBlock = spellRow.getBoundingClientRect().height - measurement.row;
@@ -9664,9 +9781,9 @@ function worksheetProbe(geo, { sentences = false, spelling = false, punctuation 
   return measurement;
 }
 
-function worksheetPageCount(chosenGroups, geo, { sentences = false, spelling = false, punctuation = false } = {}) {
-  if (!chosenGroups.length) return 0;
-  const probe = worksheetProbe(geo, { sentences, spelling, punctuation });
+function worksheetPageCount(chosenGroups, geo, { sentences = false, spelling = false, punctuation = false, grammar = null } = {}) {
+  if (!chosenGroups.length && !(grammar && grammar.length)) return 0;
+  const probe = worksheetProbe(geo, { sentences, spelling, punctuation, grammar });
   if (!probe.perMm || !probe.row) return 0;
   const pageHeight = SHEET_H * probe.perMm;
   // A row is taller when it carries a sentence, and taller again for every line
@@ -9702,6 +9819,26 @@ function worksheetPageCount(chosenGroups, geo, { sentences = false, spelling = f
       left -= rowHeight + probe.rowGap;
     }
   });
+  // Grammar follows the word groups on a page of its own, and its items are
+  // packed the same way rows are — each measured, each unsplittable.
+  if (probe.grammarItems.length) {
+    pages += 1;
+    let left = pageHeight - probe.grammarHeader;
+    for (const itemHeight of probe.grammarItems) {
+      if (itemHeight > left) { pages += 1; left = pageHeight; }
+      if (itemHeight > pageHeight) {
+        // An item taller than a whole page cannot honour break-inside: avoid — the
+        // engine breaks it anyway and it spans several pages. Counting it as one
+        // put the Grade 4 small sheet a page short: its longest item measures
+        // 1,697px against a 1,017px page. Measured, not assumed to be impossible.
+        const spilled = Math.ceil(itemHeight / pageHeight) - 1;
+        pages += spilled;
+        left = pageHeight - (itemHeight - spilled * pageHeight);
+      } else {
+        left -= itemHeight;
+      }
+    }
+  }
   return pages;
 }
 
@@ -9720,6 +9857,8 @@ function renderCursiveWorksheet() {
   let sentences = false;
   let spelling = false;
   let punctuation = false;
+  let grammar = false;
+  const grammarItems = worksheetGrammar();
   let widths = new Map();
 
   $("#app").innerHTML = `${pageHeader(
@@ -9745,6 +9884,7 @@ function renderCursiveWorksheet() {
           <label class="cw-check"><input type="checkbox" id="cw-opt-spelling" ${spelling ? "checked" : ""}><span><strong>Spelling</strong><small>say the letters, then write the word from memory</small></span></label>
           <label class="cw-check"><input type="checkbox" id="cw-opt-sentences" ${sentences ? "checked" : ""}><span><strong>A sentence to copy</strong><small>the sentence the word comes from — a much longer sheet</small></span></label>
           <label class="cw-check"><input type="checkbox" id="cw-opt-punctuation" ${punctuation ? "checked" : ""}><span><strong>Punctuation</strong><small>the same sentence with its capitals and stops taken out, to put back</small></span></label>
+          ${grammarItems.length ? `<label class="cw-check"><input type="checkbox" id="cw-opt-grammar" ${grammar ? "checked" : ""}><span><strong>Grammar</strong><small>this unit's ${grammarItems.length} grammar exercises, on their own pages at the end</small></span></label>` : ""}
         </div>
       </section>
       <section class="panel">
@@ -9763,11 +9903,12 @@ function renderCursiveWorksheet() {
     const geo = worksheetGeometry(size);
     const picked = selectedGroups();
     const words = selectedWords();
-    const pages = worksheetPageCount(picked, geo, { sentences, spelling, punctuation });
+    const pages = worksheetPageCount(picked, geo, { sentences, spelling, punctuation, grammar: grammar ? grammarItems : null });
     $("#cw-style").textContent = worksheetCss(geo, { print: false });
     const extras = [spelling && "spelling practice", sentences && "a sentence to copy", punctuation && "punctuation to put back"].filter(Boolean);
+    const tail = grammar && grammarItems.length ? ` Grammar practice adds ${grammarItems.length} more at the end.` : "";
     $("#cw-summary").textContent = words.length
-      ? `${words.length} word${words.length === 1 ? "" : "s"}${extras.length ? ", each with " + (extras.length > 1 ? extras.slice(0, -1).join(", ") + " and " + extras[extras.length - 1] : extras[0]) : ""} in ${picked.length} group${picked.length === 1 ? "" : "s"} · about ${pages} page${pages === 1 ? "" : "s"} of A4. Each group starts on its own page.`
+      ? `${words.length} word${words.length === 1 ? "" : "s"}${extras.length ? ", each with " + (extras.length > 1 ? extras.slice(0, -1).join(", ") + " and " + extras[extras.length - 1] : extras[0]) : ""} in ${picked.length} group${picked.length === 1 ? "" : "s"} · about ${pages} page${pages === 1 ? "" : "s"} of A4. Each group starts on its own page.${tail}`
       : "Tick at least one group of words to make a sheet.";
     // The first group's heading and its first two words, so the preview shows the
     // shape of a page rather than a pair of loose lines. Drawn by the same builders
@@ -9792,11 +9933,12 @@ function renderCursiveWorksheet() {
   $("#cw-opt-sentences").addEventListener("change", (event) => { sentences = event.target.checked; draw(); });
   $("#cw-opt-spelling").addEventListener("change", (event) => { spelling = event.target.checked; draw(); });
   $("#cw-opt-punctuation").addEventListener("change", (event) => { punctuation = event.target.checked; draw(); });
-  $("#cw-print").addEventListener("click", () => printCursiveWorksheet(selectedGroups(), size, widths, { sentences, spelling, punctuation }));
+  $("#cw-opt-grammar")?.addEventListener("change", (event) => { grammar = event.target.checked; draw(); });
+  $("#cw-print").addEventListener("click", () => printCursiveWorksheet(selectedGroups(), size, widths, { sentences, spelling, punctuation, grammar: grammar ? grammarItems : null }));
   icons();
 }
 
-function printCursiveWorksheet(chosenGroups, size, widths, { sentences = false, spelling = false, punctuation = false } = {}) {
+function printCursiveWorksheet(chosenGroups, size, widths, { sentences = false, spelling = false, punctuation = false, grammar = null } = {}) {
   const words = chosenGroups.flatMap((group) => group.words);
   if (!words.length) return;
   const printWindow = window.open("", "_blank", "popup=yes,width=900,height=1000,resizable=yes,scrollbars=yes");
@@ -9825,6 +9967,7 @@ function printCursiveWorksheet(chosenGroups, size, widths, { sentences = false, 
     <body>
       ${worksheetSheetHeaderHtml({ sentences, spelling, punctuation })}
       ${chosenGroups.map((group, index) => worksheetGroupHtml(group, widths, geo, { first: index === 0, sentences, spelling, punctuation })).join("")}
+      ${grammar && grammar.length ? worksheetGrammarHtml(grammar, geo) : ""}
     </body>
     </html>`);
   printWindow.document.close();

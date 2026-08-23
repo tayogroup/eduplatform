@@ -1384,8 +1384,27 @@ its user v261 was free. From the third session's side the release was
 unannounced and its verified number went stale; from the first session's side it
 had announced. Nobody can distinguish "not announced" from "not announced TO
 ME", and a convention requiring every session to broadcast to every other fails
-silently the first time one pair is missed. Announce anyway — it is cheap and it
-worked once that night — but do not treat it as a control.
+silently the first time one pair is missed.
+
+**Then it failed with both parties complying, which is the case that settles
+it.** Later the same night two sessions took v263 for English, for the same
+commit, minutes apart. Both announced before writing. Both listed all six
+subjects on storage and both got the right answer. Both said which subject and
+which tag. Each did everything this section asks — and they announced to
+DISJOINT sets of peers, so neither heard the other, and both proceeded believing
+they had coordinated. It was caught only because a third session happened to
+receive both messages and warned them; without that accident the second write
+would have gone out. There is no broadcast channel here, and no session can see
+the set of sessions, so "I announced" cannot be strengthened into "everyone
+knows" by trying harder.
+
+So: **announce anyway** — name the subject, the tag and the moment it lands; it
+costs nothing, and it is what stopped the v261 collision. But it is a courtesy
+that reduces the odds, not a control that prevents the failure. The controls are
+the two things that reach a session nobody can enumerate: the zone lock below,
+which is in the tool every release runs, and the take-the-global-maximum rule
+above, which is in this file every session reads at startup. A convention lives
+only in the messages people remember to send.
 
 **The control is `tools/lib/release-lock.js`**, one lock per storage ZONE, held
 from before `.bunny-appver-manifest.json` is read to after it is written back

@@ -713,6 +713,35 @@ surface. Regenerate deliberately, never to get green:
 node tools/check-english-content.mjs --write-baseline
 ```
 
+### The one print path, and the page count that runs short
+
+`printCursiveWorksheet` in `shell/subjects/english.js` is the **only** thing in
+this repo that prints — the sole `@page` rules, the sole `window.print()`, the
+sole `break-inside: avoid`. So anything learned about pagination here has no
+second example to compare against, and is worth writing down the first time.
+
+**`break-inside: avoid` cannot save an element taller than the page.** The engine
+breaks it regardless, and it spans as many pages as it needs. A page counter that
+treats every item as unsplittable therefore runs SHORT — it counted one page for
+something occupying two. Grade 4's longest grammar item measures 1,697px against
+a 1,017px page, and the small sheet came out a page under. The fix is in
+`worksheetPageCount` (`if (itemHeight > pageHeight)`, spilling by
+`Math.ceil(itemHeight / pageHeight) - 1`).
+
+Two things about how it was found, which is the transferable half:
+
+- It surfaced as an **11-vs-12 mismatch between the estimate and the produced
+  sheet**, not by reading the CSS. The stylesheet says `break-inside: avoid` and
+  looks correct; the rule is simply not honourable at that size. Reading the
+  declaration tells you the intent, never whether the engine can meet it.
+- The estimate and the output are two independent computations of the same
+  number, which is the only reason a discrepancy could show up at all. Keep them
+  independent — a page count derived from the rendered output would have agreed
+  with itself and been wrong in silence.
+
+If a second print path is ever added, this is the first thing to check, and
+`worksheetPageCount` is the worked example.
+
 ### The illustrated picture books (English "Books")
 
 Every English unit ends with a shelf of animated picture books, across Grades 1

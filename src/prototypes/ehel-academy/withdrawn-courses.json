@@ -4,7 +4,8 @@
   "alsoEnforcedIn": [
     "src/prototypes/ehel-academy/shell/subjects/global-perspectives.js — WITHDRAWN_STAGES, which stops the app serving the stage on any route. A browser module cannot read this file at load time, so that list is a deliberate second copy; keep the two in step.",
     "inputs/ehel-global-perspectives-source/source-manifest.json — knownGaps, which is what check:global-perspectives reads to report the shortfall.",
-    "docs/ehel-global-perspectives-stage-5-syllabus.md — the syllabus is marked HELD and is not for publication."
+    "docs/ehel-global-perspectives-stage-5-syllabus.md — the syllabus is marked HELD and is not for publication.",
+    "src/prototypes/ehel-academy/cohorts.json — NOT a second copy to maintain: it is generated FROM catalog.json, so it is already correct the moment tools/generate-ehel-cohorts.js is re-run. What it is not is automatic. It went two weeks still enrolling the Stage 5 pilot into ehel-gp-g05 because nothing re-ran the generator after this entry was added. `npm run check:cohorts` now fails on that, in both directions — a cohort naming a course the catalogue dropped, and a catalogue course no cohort carries."
   ],
   "withdrawn": {
     "ehel-gp-g05": {
@@ -12,7 +13,7 @@
       "subject": "Global Perspectives",
       "stage": 5,
       "reason": "Teaches 2 of the subject's 6 skills. Evaluation, Reflection, Collaboration and Communication are not built, and a re-export on 2026-08-09 returned the same two units byte for byte, so this is not waiting on a rebuild.",
-      "restore": "Locate or author Units 3-6, run extract -> build -> check, then delete this entry, the WITHDRAWN_STAGES entry, and the knownGaps entry, and lift the hold on the syllabus."
+      "restore": "Locate or author Units 3-6, run extract -> build -> check, then delete this entry, the WITHDRAWN_STAGES entry, and the knownGaps entry, and lift the hold on the syllabus. Then re-run generate-ehel-catalog.js AND generate-ehel-cohorts.js, in that order, or the Stage 5 pilot keeps teaching four subjects while the catalogue advertises five — `npm run check:cohorts` fails until you do."
     }
   }
 }

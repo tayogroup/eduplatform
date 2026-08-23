@@ -1,10 +1,21 @@
 #!/usr/bin/env node
 // Generates cohorts.json — the pilot enrolment roster the Moodle cohort-sync task
 // (P1.7) reads to create cohorts, add members, and cohort-enrol them into the
-// synced courses. One cohort per grade (ehel-pilot-gNN) mapped to that grade's
-// three subject courses (ehel-{eng,math,sci}-gNN). Members are authored by hand;
+// synced courses. One cohort per grade (ehel-pilot-gNN) mapped to every
+// school-tier course the CATALOGUE carries for that grade — five subjects today
+// (comp, eng, gp, math, sci), not a fixed list. Members are authored by hand;
 // this tool only scaffolds the cohort→course structure from catalog.json and
 // PRESERVES any members already filled in on rerun.
+//
+// Because the courses come from catalog.json, and the catalogue already leaves
+// out anything in withdrawn-courses.json, a withdrawal reaches the cohorts for
+// free — but only when this is RE-RUN. It was not, after Global Perspectives
+// Stage 5 was withdrawn on 2026-08-09, and the Stage 5 cohort went on enrolling
+// into ehel-gp-g05 for a fortnight. `npm run check:cohorts` fails on that now.
+//
+// Note --out: rosters and adult intakes are preserved by reading the OUTPUT
+// file, so pointing --out at a fresh path does not "dry run" — it silently
+// drops every intake. To preview, copy cohorts.json to the target path first.
 //
 // Usage: node tools/generate-ehel-cohorts.js [--out <path>] [--catalog <path>]
 //                                            [--year <YYYY>] [--intake <YYYY-MM>]

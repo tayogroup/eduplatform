@@ -296,7 +296,7 @@ const SECTION_HINTS = {
   "story-library": "Every story from your grade, whole and in one place. Nothing here is marked — read one because you want to.",
   teacherguide: "Read this whenever it helps — it is not required to move on.",
   lecture: "Watch the video to the end. Listen and read the captions.",
-  dictionary: "Learn each word and press “I know this word”, until all the words are learned.",
+  dictionary: "Learn the new words and press “I know this word” on each one. The story words are there to look up while you read.",
   reading: "Read the story, or listen to it. Then press the button to say you have read it.",
   comprehension: "Answer the questions about the story, then press the button to finish.",
   grammar: "Look at the pattern and try the practice, then press the button to finish.",
@@ -310,12 +310,53 @@ const SECTION_HINTS = {
 };
 // Unit 10 has no video: its first step is a page that launches the capstone.
 const CAPSTONE_LAUNCH_HINT = "Read about your capstone project, then press the button to start.";
-// Vocabulary completes when EVERY word in the unit has been marked known — the
-// one rule for both designs (the lab and the deck), so they cannot finish the
-// section at different points. It was 80% of the words; the guide now tells the
-// learner "all the words", and a tick that arrived at 56 of 70 would have made
-// that a lie. Checked by id, not by count: knownWords is per unit, but an id
-// list is what "every word" means.
+// Vocabulary completes when every word the unit TEACHES has been marked known —
+// the one rule for both designs (the lab and the deck), so they cannot finish
+// the section at different points. It was 80% of the words; a tick that arrived
+// at 56 of 70 made the guide's "all the words" a lie, so it became all of them.
+// Checked by id, not by count: knownWords is per unit, but an id list is what
+// "every word" means.
+//
+// TAUGHT is the load-bearing word, and it is not the whole list. 79 of the 81
+// units end with a group titled "Words from our stories" — a glossary of that
+// unit's passages, laid out in reading order — and it is 79% of all the
+// vocabulary in the course: 8,107 glossary words against 2,211 taught. Counting
+// it made Vocabulary a 198-word gate at Grade 3 Unit 1 and a 423-word one at
+// Grade 8 Unit 1, and Vocabulary sits in front of Reading in SECTION_CHAIN. So
+// a learner had to press "I know this word" on every word of a story before
+// being allowed to read it — the story's own glossary was a prerequisite for
+// the story — and the unit Study Plan's week-by-week word chunks could not be
+// walked at all, because week 1's reading needed week 4's words.
+//
+// Outside the glossary a unit holds 13-70 words (median 29), which is the range
+// the deck's own note was written for and a section a learner can finish in the
+// week the plan allots it.
+//
+// The glossary is not hidden and not un-markable. Every word stays in the list,
+// stays searchable, stays filterable by its group and stays reachable from the
+// passage through linkGlossaryWords — it is reference, and reference does not
+// gate. Marking one still counts toward My Word Book.
+//
+// Monotone in the safe direction: this asks for FEWER words than before, so no
+// learner who had already finished the section is un-finished by the change.
+const STORY_GLOSSARY_GROUP = "Words from our stories";
+const taughtGroups = () => (course.vocabularyGroups || []).filter((group) => group.title !== STORY_GLOSSARY_GROUP);
+// Two units have no glossary group at all (Grade 1 Unit 0, Grade 6 Unit 10) and
+// both are wholly taught, so the filter is a no-op there. The second guard is
+// for the shape that would be silent rather than wrong: a unit that is NOTHING
+// but a glossary would come back with an empty taught set, and an empty set
+// completes the section on sight — allWordsKnown() answers false for it, but
+// only by the length test that exists for exactly this reason. Falling back to
+// the whole list keeps such a unit gated as it is today. check-english-content
+// fails on both shapes, so neither can arrive unannounced.
+function taughtWords() {
+  const groups = taughtGroups();
+  const words = linkedWords();
+  if (groups.length === (course.vocabularyGroups || []).length) return words;
+  const ids = new Set(groups.map((group) => group.id));
+  const taught = words.filter((item) => ids.has(item.groupId));
+  return taught.length ? taught : words;
+}
 const allWordsKnown = (words) => words.length > 0 && words.every((item) => progress.knownWords.includes(item.vocabularyId));
 
 // The one line for a section, with the two per-unit exceptions applied — used
@@ -4724,6 +4765,14 @@ let activeWordId;
 // onBeforeRender with the other region state — a handler in the lab must never
 // reach into a deck belonging to a section that has already been replaced.
 let showWordInDeck = null;
+// The other direction, and the same contract. Both designs draw the same
+// section, so a word marked in the lab is marked in the deck too — but only the
+// deck repaints its own chip, and the chip now names a TARGET ("12 of 15 new
+// words") rather than a running total. A learner who works in the lab would
+// otherwise finish the section under a chip still reading "14 of 15", which is
+// the section's completion rule appearing to be broken. Published by
+// renderWordCarousel, cleared with the rest of the region state.
+let refreshDeckWordCount = null;
 // Same contract for the other three sections whose classic half has a selector:
 // the shelf in Reading, the task subtabs in Writing, the group subtabs in
 // Comprehension. Each is published by its own carousel and cleared with the rest.
@@ -5765,6 +5814,8 @@ const dictionaryPicture = (entry) => (entry ? wordPicture(entry.lemma, gradeNumb
 function renderDictionaryClassic() {
   const { $, $$ } = classicScope();
   const words = linkedWords();
+  // The lab LISTS every word and COMPLETES on the taught ones (see taughtWords).
+  const taught = taughtWords();
   activeWordId = activeWordId || words[0].vocabularyId;
   $("#app").innerHTML = `${pageHeader("Linked master dictionary", "Vocabulary lab", `Search the ${gradeLabel} sub-dictionary. Every word links to one reusable master entry and approved pronunciation.`, `${dictionary.entryCount} master entries`)}
     <div class="toolbar"><label class="search-box">${icon("search")}<input id="word-search" type="search" placeholder="Search words or meanings" aria-label="Search dictionary"></label><select id="group-filter" aria-label="Filter vocabulary group"><option value="all">All vocabulary groups</option>${course.vocabularyGroups.map((group) => `<option value="${group.id}">${escapeHtml(group.title)}</option>`).join("")}</select><span id="dictionary-count" class="status-chip">${words.length} words</span></div>
@@ -5851,7 +5902,8 @@ function renderDictionaryClassic() {
     });
     $("#know-word").addEventListener("click", () => {
       if (!progress.knownWords.includes(item.vocabularyId)) progress.knownWords.push(item.vocabularyId);
-      if (allWordsKnown(words)) complete("dictionary"); else saveProgress();
+      if (allWordsKnown(taught)) complete("dictionary"); else saveProgress();
+      refreshDeckWordCount?.();
       drawList(); drawWord(); icons(); toast(`${item.master.displayWord} added to My Word Book.`);
     });
     icons();
@@ -5981,11 +6033,18 @@ const deckIntro = (id) => DECK_INTROS[id] || null;
 // and its definition, the child-facing meaning, all five practice sentences with
 // their own audio, the spelling practice, the write-your-own-sentence check and
 // "I know this word" — only the layout changes. What does NOT carry over from
-// grammar is the assumption of six items: a unit holds 13-70 words, so the
-// search and group filter come with it and narrow the deck itself. They sit
-// under the dots rather than in .gc-top, which the full-bleed CSS hid.
+// grammar is the assumption of six items: a unit holds 30-423 words once the
+// story glossary is counted (13-70 without it), so the search and group filter
+// come with it and narrow the deck itself. They sit under the dots rather than
+// in .gc-top, which the full-bleed CSS hid.
 function renderWordCarousel() {
   const allWords = linkedWords();
+  // Same split as the lab: the deck WALKS every word and COMPLETES on the taught
+  // ones. The two lists are already in the right order — the glossary group is
+  // last in every unit that has one — so a learner meets the section's own words
+  // before the reference and never has to reach slide 400 to earn the tick.
+  const taught = taughtWords();
+  const learnedTaught = () => taught.filter((item) => progress.knownWords.includes(item.vocabularyId)).length;
   const esc = escapeHtml;
   // One sentence position per word: in a deck each word keeps its own place,
   // where the lab had a single cursor because only one word was ever on screen.
@@ -6056,6 +6115,13 @@ function renderWordCarousel() {
     const position = words.findIndex((item) => item.vocabularyId === id);
     if (position >= 0) deck.goTo(position);
   };
+  // Reads through inDeck, so it writes into THIS deck's chip and never the
+  // lab's — and it is a no-op before mountDeck has painted, which is why it
+  // guards rather than assuming the node is there.
+  refreshDeckWordCount = () => {
+    const chip = inDeck("#wc-known");
+    if (chip) chip.textContent = `${learnedTaught()} of ${taught.length} new words`;
+  };
 
   const deck = mountDeck({
     heading: "Say the words",
@@ -6064,11 +6130,11 @@ function renderWordCarousel() {
     finish: ["dictionary", "I have learned these words"],
     emptyMessage: "No matching words. Clear the search to see them all.",
     // Sits below the dots, not in .gc-top, which the full-bleed CSS hides. A unit
-    // holds 13-70 words, so the deck itself is what the search narrows.
+    // holds up to 423 words, so the deck itself is what the search narrows.
     tools: `<div class="wc-tools">
         <label class="search-box">${icon("search")}<input id="word-search" type="search" placeholder="Search words or meanings" aria-label="Search vocabulary"></label>
         <select id="group-filter" aria-label="Filter vocabulary group"><option value="all">All vocabulary groups</option>${course.vocabularyGroups.map((group) => `<option value="${group.id}">${esc(group.title)}</option>`).join("")}</select>
-        <span class="status-chip" id="wc-known">${progress.knownWords.length} learned</span>
+        <span class="status-chip" id="wc-known">${learnedTaught()} of ${taught.length} new words</span>
       </div>`,
     onSlide: (position) => { activeWordId = words[position]?.vocabularyId || activeWordId; },
     onClick: (event) => {
@@ -6082,9 +6148,9 @@ function renderWordCarousel() {
       // used to complete the section outright, which let a learner swipe to the
       // end and take the tick with no word marked. Now it names what is left.
       if (target.dataset.deckFinish) {
-        if (allWordsKnown(allWords)) return complete("dictionary", "Vocabulary complete. Well done!");
-        const left = allWords.filter((word) => !progress.knownWords.includes(word.vocabularyId)).length;
-        return toast(`Mark every word with “I know this word” first — ${left} to go.`);
+        if (allWordsKnown(taught)) return complete("dictionary", "Vocabulary complete. Well done!");
+        const left = taught.length - learnedTaught();
+        return toast(`Mark every new word with “I know this word” first — ${left} to go.`);
       }
       if (!item) return undefined;
       if (target.dataset.wordAudio) {
@@ -6119,10 +6185,12 @@ function renderWordCarousel() {
       }
       if (target.dataset.know) {
         if (!progress.knownWords.includes(id)) progress.knownWords.push(id);
-        // Same rule as the lab: the section completes when every word in the unit is known,
-        // counted over every word in the unit, not just the filtered deck.
-        if (allWordsKnown(allWords)) complete("dictionary"); else saveProgress();
-        inDeck("#wc-known").textContent = `${progress.knownWords.length} learned`;
+        // Same rule as the lab: the section completes when every word the unit
+        // TEACHES is known, counted over the whole taught set and never over the
+        // filtered deck — a learner who has searched down to one word would
+        // otherwise finish the section on it.
+        if (allWordsKnown(taught)) complete("dictionary"); else saveProgress();
+        refreshDeckWordCount();
         redrawWord(id);
         toast(`${item.master.displayWord} added to My Word Book.`);
       }
@@ -8197,6 +8265,13 @@ function renderYearPlan() {
       if (!cal) return range;
       return `${range}<br><small>${formatDay(cal.weeks[row.from - 1])} – ${formatDay(new Date(cal.weeks[row.to - 1].getTime() + 4 * 24 * 3600 * 1000))}</small>`;
     };
+    // The column is "Words in the unit", not "New words". manifest
+    // vocabularyCount is every dictionaryLink, and most of those are the story
+    // glossary rather than words the unit teaches (see STORY_GLOSSARY_GROUP) —
+    // at Grade 8 Unit 1 it is 423 against 31 taught. This page reads the
+    // manifest and never opens a unit, so it cannot split the two; the unit
+    // Study Plan can and does. Naming the column honestly is what keeps the two
+    // pages from contradicting each other over the same unit.
     const rowsHtml = rows.map((row) => {
       const unitRow = `<tr><td>${weekLabel(row)}</td><td><strong>Unit ${row.unit.number}: ${escapeHtml(row.unit.title)}</strong></td><td>${Number(row.unit.vocabularyCount) || "—"}</td></tr>`;
       const breakHere = cal && cal.halfIndex !== null && row.from <= cal.halfIndex && cal.halfIndex <= row.to && (row === rows[rows.length - 1] || cal.halfIndex < rows[rows.indexOf(row) + 1].from);
@@ -8204,7 +8279,7 @@ function renderYearPlan() {
     }).join("");
     return `<section class="panel">
       <span class="eyebrow">Term ${term.termNo}${cal ? ` · ${termDatesLabel(term.termNo)}` : ""}</span>
-      <div class="teacher-table-scroll"><table class="teacher-table"><thead><tr><th>Weeks</th><th>Unit</th><th>New words</th></tr></thead><tbody>
+      <div class="teacher-table-scroll"><table class="teacher-table"><thead><tr><th>Weeks</th><th>Unit</th><th>Words in the unit</th></tr></thead><tbody>
         ${isFirstTerm ? `<tr><td>Week 1${cal ? `<br><small>from ${formatDay(cal.weeks[0])}</small>` : ""}</td><td><strong>${checkLabel}</strong> — finds your starting point before Unit ${defaultUnit}; it is never a fail</td><td>—</td></tr>` : ""}
         ${rowsHtml}
         ${isLastTerm && finalQuiz ? `<tr><td>Week ${weekTotal}${cal ? `<br><small>from ${formatDay(cal.weeks[weekTotal - 1])}</small>` : ""}</td><td><strong>${escapeHtml(finalQuiz.title || "Final course quiz")}</strong> — ${finalQuiz.questionCount} questions, mastery at ${finalQuiz.passPercent}%</td><td>—</td></tr>` : ""}
@@ -8219,7 +8294,7 @@ function renderYearPlan() {
   )}
     <div class="final-quiz-intro">
       <section class="panel">
-        <div class="final-quiz-facts"><span><strong>${SCHOOL_CALENDAR.yearLabel}</strong> school year</span><span><strong>${allUnits.length}</strong> units</span><span><strong>${totalWords}</strong> new words</span><span><strong>${terms.length}</strong> terms</span><span><strong>5</strong> short sessions a week</span></div>
+        <div class="final-quiz-facts"><span><strong>${SCHOOL_CALENDAR.yearLabel}</strong> school year</span><span><strong>${allUnits.length}</strong> units</span><span><strong>${totalWords}</strong> words in all</span><span><strong>${terms.length}</strong> terms</span><span><strong>5</strong> short sessions a week</span></div>
         ${isReadiness && gradeNumber === 1 ? `<p>If the readiness check finds the letters are still new, it opens the Alphabet &amp; Sounds review programme for you — six extra weeks on letters and sounds, alongside or ahead of Unit 1.</p>` : ""}
       </section>
       ${terms.map(termTable).join("")}
@@ -8275,20 +8350,36 @@ function renderUnitStudyPlan() {
     if (!count) return "";
     return count === 1 ? `${word} ${before + 1}` : `${word}s ${before + 1}–${before + count}`;
   };
-  const groups = spreadAcrossWeeks(course.vocabularyGroups, weekCount);
+  // Vocabulary is scheduled ALL IN WEEK 1 rather than a group per week, because
+  // Vocabulary is one step in SECTION_CHAIN and Reading sits directly behind it:
+  // whatever this page says, the app opens Reading only once every taught word
+  // is marked. A group-per-week plan therefore described a walk nobody could
+  // take — Week 1 Day 2 sent the learner to a padlock and every day after it was
+  // unreachable — and it read as chunking while doing none, because the chunks
+  // were GROUPS and one group is most of the list. Grade 8 Unit 1 came out as
+  // 31 words, then 392, then three weeks of "no new words this week".
+  //
+  // The story glossary is not scheduled at all: 79% of the unit's list is
+  // reference (see STORY_GLOSSARY_GROUP), so the plan names it once as something
+  // to look up rather than booking a week to "learn" 392 words in.
+  //
+  // The fallback mirrors taughtWords() exactly — a unit that is nothing but a
+  // glossary schedules the whole list, because that is what its gate asks for.
+  const newWordGroups = taughtGroups().length ? taughtGroups() : (course.vocabularyGroups || []);
+  const wordsIn = (groups) => groups.reduce((sum, group) => sum + (group.vocabularyIds?.length || 0), 0);
+  const newWordCount = wordsIn(newWordGroups);
+  const storyWordCount = wordsIn(course.vocabularyGroups || []) - newWordCount;
   const readings = spreadAcrossWeeks(course.readings, weekCount);
   const grammar = spreadAcrossWeeks(course.grammar, weekCount);
   const speaking = spreadAcrossWeeks(course.speaking, weekCount);
   const writing = spreadAcrossWeeks(course.writing, weekCount);
   const activities = spreadAcrossWeeks(course.activities, weekCount);
-  const vocabularyCount = Number(manifest.units.find((unit) => Number(unit.number) === unitNumber)?.vocabularyCount) || null;
   const lectureLabel = unitNumber === CAPSTONE_UNIT ? "the capstone launch" : "the video lesson";
   const dayLine = (name, what) => `<li>${icon("circle-check-big")}<span><strong>${name}:</strong> ${what}</span></li>`;
   const weekPanel = (weekIndex) => {
     const isFirst = weekIndex === 0;
     const isLast = weekIndex === weekCount - 1;
     const weekReadings = readings[weekIndex];
-    const weekGroups = groups[weekIndex];
     const speakWrite = [
       speaking[weekIndex].length ? `Do speaking ${rangeText(speaking, weekIndex, "task")}` : "",
       writing[weekIndex].length ? `writing ${rangeText(writing, weekIndex, "task")}` : "",
@@ -8296,7 +8387,9 @@ function renderUnitStudyPlan() {
     return `<section class="panel">
       <span class="eyebrow">${span ? `Week ${span.from + weekIndex} · Term ${span.termNo}${span.cal ? ` · week of ${formatDay(span.cal.weeks[span.from + weekIndex - 1])}${span.cal.halfIndex === span.from + weekIndex - 1 ? " (after half term)" : ""}` : ""}` : `Week ${weekIndex + 1} of the review programme`}</span>
       <ol class="path-list">
-        ${dayLine("Day 1 · Words", `${isFirst ? `Start with ${lectureLabel}. Then meet` : "Learn"} ${weekGroups.length ? `your new words: <strong>${titlesOf(weekGroups)}</strong>` : "no new words this week — go back over the ones you know"}.`)}
+        ${dayLine("Day 1 · Words", isFirst
+          ? `Start with ${lectureLabel}. Then meet all this unit's new words${newWordGroups.length ? ` — <strong>${titlesOf(newWordGroups)}</strong>` : ""} — and mark every one, which is what opens the reading.`
+          : `Go back over your new words${storyWordCount ? ", and look up any story word you meet while you read" : ""}.`)}
         ${dayLine("Day 2 · Reading", weekReadings.length ? `Read <strong>${titlesOf(weekReadings)}</strong>, then answer ${weekReadings.length > 1 ? "their" : "its"} questions.` : "Read your favourite story from this unit again.")}
         ${dayLine("Day 3 · Grammar", grammar[weekIndex].length ? `${titlesOf(grammar[weekIndex])}.` : "Go back over the patterns you have learned.")}
         ${dayLine("Day 4 · Speak & write", speakWrite ? `${speakWrite}.` : "Practise saying and writing your favourite sentences.")}
@@ -8314,7 +8407,7 @@ function renderUnitStudyPlan() {
   )}
     <div class="final-quiz-intro">
       <section class="panel">
-        <div class="final-quiz-facts"><span><strong>${weekCount}</strong> weeks</span>${vocabularyCount ? `<span><strong>${vocabularyCount}</strong> new words</span>` : ""}<span><strong>${(course.readings || []).length}</strong> readings</span><span><strong>${(course.grammar || []).length}</strong> grammar lessons</span></div>
+        <div class="final-quiz-facts"><span><strong>${weekCount}</strong> weeks</span>${newWordCount ? `<span><strong>${newWordCount}</strong> new words</span>` : ""}${storyWordCount > 0 ? `<span><strong>${storyWordCount}</strong> story words to look up</span>` : ""}<span><strong>${(course.readings || []).length}</strong> readings</span><span><strong>${(course.grammar || []).length}</strong> grammar lessons</span></div>
       </section>
       ${Array.from({ length: weekCount }, (_, index) => weekPanel(index)).join("")}
       <div class="audio-actions"><button class="button gold" data-go="lecture" type="button">Start with ${lectureLabel} ${icon("arrow-right")}</button><button class="button secondary" data-go="overview" type="button">Back to the overview</button></div>
@@ -10861,7 +10954,7 @@ const config = {
   // classicRegion and deckMount are per-render state: a section that draws both
   // designs sets them, and every other section must find them clear or it would
   // paint into a region the previous section left behind.
-  onBeforeRender: () => { route = shellCtx.route; stopAudio(); stopEbookWatch(); document.body.classList.remove("gc-full"); classicRegion = null; deckMount = null; activeDeck = null; showWordInDeck = null; showReadingInDeck = null; showWritingInDeck = null; showComprehensionGroupInDeck = null; $("#app").setAttribute("aria-busy", "true"); },
+  onBeforeRender: () => { route = shellCtx.route; stopAudio(); stopEbookWatch(); document.body.classList.remove("gc-full"); classicRegion = null; deckMount = null; activeDeck = null; showWordInDeck = null; refreshDeckWordCount = null; showReadingInDeck = null; showWritingInDeck = null; showComprehensionGroupInDeck = null; $("#app").setAttribute("aria-busy", "true"); },
   onAfterRender: () => { $("#app").setAttribute("aria-busy", "false"); renderSectionGuide(); renderSectionCompletion(); prepareScreenReaderView(); icons(); },
   onNavRendered: () => { renderUnitPickers(); paintSectionLocks(); paintStudentSwitch(); icons(); },
   // Every route draws the locked page while a unit is locked. The check is

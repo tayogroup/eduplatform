@@ -757,6 +757,23 @@ answer-run detector runs at Grades 1-4 only, the grades the worksheet prints.
 Above that the same shape IS the exercise list, so extending the sheet upward
 needs the detector recalibrated first.
 
+**Mutation-tested five ways**, each of which must fail the gate: revert the filter
+to the `^`-anchored version, a pattern that matches nothing, drop one wording from
+it, drop the comma-and-part-label tolerance, and rename the declaration so the gate
+cannot read it. All five caught, and the gate passes again on restore.
+
+**But note what that suite does NOT prove.** Every one of those mutations damages
+the PATTERN, so every one lowers the match count, so the floor alone catches all
+five — the structural half is redundant against its own mutation suite. The case it
+exists for is a new wording in NEW content, where the existing matches keep matching
+and the count never moves, and no mutation of the pattern can simulate that.
+
+So the structural half's necessity is not established by the mutations; it is
+established by what it actually found — three leaks the pattern had never
+anticipated, including the comma form that was printing at Grade 4. Worth stating
+plainly, because "mutation-tested, all caught" reads as proof that every part of a
+gate is pulling its weight, and here it is not.
+
 ### The one print path, and the page count that runs short
 
 `printCursiveWorksheet` in `shell/subjects/english.js` is the **only** thing in

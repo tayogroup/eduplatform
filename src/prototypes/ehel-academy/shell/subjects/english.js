@@ -9226,11 +9226,21 @@ function loadCursiveFace() {
 // and at the large size that is 93mm of a 182mm line — so a fixed two ghosts
 // would push the third copy through the right margin on the longest words in
 // every grade.
+// One measuring context, cached. Wrapping a sentence asks for the width of a
+// growing prefix once per word, so building a canvas per call would mean a new
+// 2d context for every word of every sentence on the sheet.
+let cursiveMeasureContext = null;
+function cursiveWidthOf(text) {
+  if (!cursiveMeasureContext) {
+    cursiveMeasureContext = document.createElement("canvas").getContext("2d");
+    cursiveMeasureContext.font = `400 100px "${CURSIVE_FAMILY}"`;
+  }
+  return cursiveMeasureContext.measureText(String(text)).width / 100;
+}
+
 function measureCursive(words) {
-  const context = document.createElement("canvas").getContext("2d");
-  context.font = `400 100px "${CURSIVE_FAMILY}"`;
   const widths = new Map();
-  for (const word of words) if (!widths.has(word)) widths.set(word, context.measureText(word).width / 100);
+  for (const word of words) if (!widths.has(word)) widths.set(word, cursiveWidthOf(word));
   return widths;
 }
 
@@ -9267,15 +9277,60 @@ function worksheetLineSvg(geo, word = "", widthEm = 0) {
   </svg>`;
 }
 
+// A whole line of text on the rules, left-aligned, rather than a word repeated
+// across it. Used for a sentence, where the point is to read it and copy it
+// underneath — not to trace it.
+function worksheetTextLineSvg(geo, text, { model }) {
+  const baseline = geo.em * CURSIVE_ASCENDER;
+  const midline = geo.em * (CURSIVE_ASCENDER - CURSIVE_X_HEIGHT);
+  const foot = geo.band;
+  return `<svg class="cw-svg" viewBox="0 0 ${SHEET_W} ${foot.toFixed(2)}" preserveAspectRatio="xMinYMin meet" aria-hidden="true" focusable="false">
+    <line class="cw-rule" x1="0" y1="0" x2="${SHEET_W}" y2="0"></line>
+    <line class="cw-rule cw-dashed" x1="0" y1="${midline.toFixed(2)}" x2="${SHEET_W}" y2="${midline.toFixed(2)}"></line>
+    <line class="cw-baseline" x1="0" y1="${baseline.toFixed(2)}" x2="${SHEET_W}" y2="${baseline.toFixed(2)}"></line>
+    <line class="cw-rule" x1="0" y1="${foot.toFixed(2)}" x2="${SHEET_W}" y2="${foot.toFixed(2)}"></line>
+    ${text && model ? `<text x="0" y="${baseline.toFixed(2)}" class="cw-model">${escapeHtml(text)}</text>` : ""}
+  </svg>`;
+}
+
+// Greedy wrap to the width of one ruled line. Never breaks inside a word, which
+// is safe rather than hopeful: the widest single token in the whole course is
+// "great-great-grandparents." at 11.76em — 152mm of a 182mm line even at the
+// large size — measured across all 12,952 tokens in all eight grades.
+function wrapCursive(text, geo, widthOf) {
+  const lines = [];
+  let line = "";
+  for (const word of String(text).split(/\s+/).filter(Boolean)) {
+    const next = line ? `${line} ${word}` : word;
+    if (line && widthOf(next) * geo.em > SHEET_W) { lines.push(line); line = word; } else line = next;
+  }
+  if (line) lines.push(line);
+  return lines;
+}
+
 // A word is two lines: trace, then write it alone. One line carrying the model
 // and a blank remainder was the alternative and it is worse — how much blank
 // space a learner gets would then depend on how long the word happens to be,
 // which is exactly the wrong thing to vary.
-function worksheetRowHtml(word, widths, geo) {
+//
+// With sentence practice on, the word's own sentence follows: the sentence set
+// on the rules to READ, then the same number of blank lines to copy it onto.
+// Not traced — a sentence traced in grey is a tracing exercise, and by the time a
+// learner is writing sentences the thing being practised is reading a model and
+// reproducing it. The blank lines match the model's line count exactly, so the
+// space to write in never depends on how long the sentence happens to be.
+function worksheetRowHtml(word, widths, geo, { sentence = "", widthOf = null } = {}) {
+  const lines = sentence && widthOf ? wrapCursive(sentence, geo, widthOf) : [];
+  const sentenceHtml = lines.length ? `<div class="cw-sentence">
+    <p class="cw-sentence-label">Now write this sentence.</p>
+    ${lines.map((line) => worksheetTextLineSvg(geo, line, { model: true })).join("")}
+    ${lines.map(() => worksheetTextLineSvg(geo, "", { model: false })).join("")}
+  </div>` : "";
   return `<div class="cw-row">
     <p class="cw-label">${escapeHtml(word)}</p>
     ${worksheetLineSvg(geo, word, widths.get(word) || 0)}
     ${worksheetLineSvg(geo)}
+    ${sentenceHtml}
   </div>`;
 }
 
@@ -9293,14 +9348,17 @@ function worksheetRowHtml(word, widths, geo) {
 // The heading still counts the WHOLE group: it is describing the group, not the
 // sample, and a preview headed "2 words" over a seven-word group misreports what
 // will print.
-function worksheetGroupHtml(group, widths, geo, { first, rows = group.words.length }) {
+function worksheetGroupHtml(group, widths, geo, { first, rows = group.words.length, sentences = false }) {
   return `<section class="cw-group${first ? " is-first" : ""}">
     <header class="cw-group-head">
       <span>${escapeHtml(group.title)}</span>
       <small>${group.words.length} word${group.words.length === 1 ? "" : "s"}</small>
       <em>${escapeHtml(gradeLabel)} · Unit ${course.unit.unitNo}</em>
     </header>
-    ${group.words.slice(0, rows).map((word) => worksheetRowHtml(word, widths, geo)).join("")}
+    ${group.words.slice(0, rows).map((word) => worksheetRowHtml(word, widths, geo, {
+      sentence: sentences ? group.sentences?.get(word) || "" : "",
+      widthOf: cursiveWidthOf,
+    })).join("")}
   </section>`;
 }
 
@@ -9324,6 +9382,13 @@ function worksheetCss(geo, { print }) {
     .cw-group-head em { margin-left: auto; color: #5d6b80; font-style: normal;
                         font-size: ${print ? "2.4mm" : "12px"}; }
     .cw-row { break-inside: avoid; page-break-inside: avoid; margin: 0 0 ${geo.gapWords}mm; }
+    /* The sentence block sits under its word and must not be split from it — a
+       model on one page and its blank copy lines on the next is unusable. It is
+       inside .cw-row, which already avoids breaking, so this only has to hold the
+       block together if that ever changes. */
+    .cw-sentence { break-inside: avoid; page-break-inside: avoid; margin-top: ${(geo.gapWords * 0.6).toFixed(1)}mm; }
+    .cw-sentence-label { margin: 0 0 .8mm; color: #5d6b80; letter-spacing: .04em;
+                         font: 500 ${print ? "2.7mm" : "12px"}/1.2 Arial, Helvetica, sans-serif; }
     .cw-label { margin: 0 0 .8mm; color: #5d6b80; letter-spacing: .04em;
                 font: 500 ${print ? "2.7mm" : "12px"}/1.2 Arial, Helvetica, sans-serif; }
     .cw-svg { display: block; width: ${print ? `${SHEET_W}mm` : "100%"}; height: auto; overflow: visible; }
@@ -9345,6 +9410,14 @@ function worksheetGroups() {
     words: words.filter((item) => item.groupId === group.id)
       .map((item) => item.master?.displayWord)
       .filter(Boolean),
+    // Each word's own example sentence, for sentence practice. exampleSentence is
+    // present on every dictionaryLink in every unit of every grade — checked
+    // across all eight, not assumed — so a word never loses its sentence, and a
+    // word that somehow had none simply gets no sentence block rather than an
+    // empty pair of ruled lines.
+    sentences: new Map(words
+      .filter((item) => item.groupId === group.id && item.master?.displayWord && item.exampleSentence)
+      .map((item) => [item.master.displayWord, item.exampleSentence])),
   })).filter((group) => group.words.length);
 }
 
@@ -9384,11 +9457,11 @@ function worksheetPrintChromeCss() {
 `;
 }
 
-function worksheetSheetHeaderHtml() {
+function worksheetSheetHeaderHtml({ sentences = false } = {}) {
   return `<header class="cw-head">
     <span>${escapeHtml(gradeLabel)} · Unit ${course.unit.unitNo} · ${escapeHtml(course.unit.unitTitle)}</span>
     <h1>Cursive writing practice</h1>
-    <p>Trace the grey words, then write each word yourself on the line underneath.</p>
+    <p>Trace the grey words, then write each word yourself on the line underneath.${sentences ? " Then copy the sentence onto the empty lines." : ""}</p>
     <div class="cw-name"><span>Name</span><span>Date</span></div>
   </header>`;
 }
@@ -9407,14 +9480,32 @@ function worksheetSheetHeaderHtml() {
 // The probe is built and thrown away per call. It is one layout of three small
 // elements, and caching it across size changes was the alternative — which is a
 // stale-cache bug waiting for the first person to add a control.
-function worksheetProbe(geo) {
+// With sentence practice on, a row's height depends on how far its sentence wraps,
+// so one row height is no longer enough. The probe therefore renders a plain row
+// AND two sentence rows whose wrap counts it knows, and derives the cost of one
+// extra wrapped line by subtraction. Derived from two real layouts rather than
+// from the CSS, for the same reason the rest of this probe exists.
+const PROBE_SHORT = "a b";
+const PROBE_LONG = "wrap ".repeat(80).trim();
+
+function worksheetProbe(geo, { sentences = false } = {}) {
   const probe = document.createElement("div");
   probe.setAttribute("aria-hidden", "true");
   probe.style.cssText = "position:absolute;left:-10000mm;top:0;width:182mm;visibility:hidden;pointer-events:none";
+  const probeGroup = (title, words, sentenceMap) => worksheetGroupHtml(
+    { title, words, sentences: sentenceMap },
+    new Map(words.map((w) => [w, 2.2])),
+    geo,
+    { first: title === "Probe", sentences: !!sentenceMap },
+  );
   probe.innerHTML = `<style>${worksheetPrintChromeCss()}${worksheetCss(geo, { print: true })}</style>`
     + `<div style="width:100mm" id="cw-probe-mm"></div>`
     + worksheetSheetHeaderHtml()
-    + worksheetGroupHtml({ title: "Probe", words: ["probe"] }, new Map([["probe", 2.2]]), geo, { first: true });
+    + probeGroup("Probe", ["probe"], null)
+    + (sentences
+      ? `<div id="cw-probe-short">${probeGroup("S", ["s1"], new Map([["s1", PROBE_SHORT]]))}</div>`
+        + `<div id="cw-probe-long">${probeGroup("L", ["s2"], new Map([["s2", PROBE_LONG]]))}</div>`
+      : "");
   document.body.appendChild(probe);
   // WITH margins. getBoundingClientRect excludes them, and taking the row's height
   // from it while separately allowing for the gap discounted that gap twice — the
@@ -9434,26 +9525,53 @@ function worksheetProbe(geo) {
     groupHeader: withMargins(".cw-group-head"),
     row: row.getBoundingClientRect().height,
     rowGap: parseFloat(getComputedStyle(row).marginBottom) || 0,
+    sentenceOne: 0,
+    sentenceLine: 0,
   };
+  if (sentences) {
+    const shortRow = probe.querySelector("#cw-probe-short .cw-row");
+    const longRow = probe.querySelector("#cw-probe-long .cw-row");
+    const shortLines = wrapCursive(PROBE_SHORT, geo, cursiveWidthOf).length;
+    const longLines = wrapCursive(PROBE_LONG, geo, cursiveWidthOf).length;
+    if (shortRow && longRow && longLines > shortLines) {
+      const shortHeight = shortRow.getBoundingClientRect().height;
+      const longHeight = longRow.getBoundingClientRect().height;
+      // One extra wrapped line costs a model line AND its blank twin.
+      measurement.sentenceLine = (longHeight - shortHeight) / (longLines - shortLines);
+      // What a one-line sentence adds on top of a plain row: the label and the
+      // first model/blank pair.
+      measurement.sentenceOne = shortHeight - measurement.row - measurement.sentenceLine * (shortLines - 1);
+    }
+  }
   probe.remove();
   return measurement;
 }
 
-function worksheetPageCount(chosenGroups, geo) {
+function worksheetPageCount(chosenGroups, geo, { sentences = false } = {}) {
   if (!chosenGroups.length) return 0;
-  const probe = worksheetProbe(geo);
+  const probe = worksheetProbe(geo, { sentences });
   if (!probe.perMm || !probe.row) return 0;
   const pageHeight = SHEET_H * probe.perMm;
+  // A row is taller when it carries a sentence, and taller again for every line
+  // that sentence wraps to — so the height is per WORD now, not one figure for
+  // the sheet.
+  const heightOf = (group, word) => {
+    const sentence = sentences ? group.sentences?.get(word) : "";
+    if (!sentence) return probe.row;
+    return probe.row + probe.sentenceOne
+      + probe.sentenceLine * (wrapCursive(sentence, geo, cursiveWidthOf).length - 1);
+  };
   let pages = 0;
   chosenGroups.forEach((group, index) => {
     // Every group starts a page; the first shares its page with the sheet header.
     pages += 1;
     let left = pageHeight - probe.groupHeader - (index === 0 ? probe.sheetHeader : 0);
-    for (let word = 0; word < group.words.length; word += 1) {
+    for (const word of group.words) {
+      const rowHeight = heightOf(group, word);
       // The row itself has to fit; the gap after it does not, so it is only ever
       // subtracted from what remains.
-      if (probe.row > left) { pages += 1; left = pageHeight; }
-      left -= probe.row + probe.rowGap;
+      if (rowHeight > left) { pages += 1; left = pageHeight; }
+      left -= rowHeight + probe.rowGap;
     }
   });
   return pages;
@@ -9469,6 +9587,9 @@ function renderCursiveWorksheet() {
   const chosen = new Set(groups.filter((group) => group.title !== GLOSSARY_GROUP_TITLE).map((group) => group.id));
   if (!chosen.size && groups.length) chosen.add(groups[0].id);
   let size = defaultWorksheetSize();
+  // Off by default: a sentence under every word roughly triples the sheet, and a
+  // learner who wanted the words alone should not have to turn it off.
+  let sentences = false;
   let widths = new Map();
 
   $("#app").innerHTML = `${pageHeader(
@@ -9488,6 +9609,14 @@ function renderCursiveWorksheet() {
         <div class="cw-sizes">${Object.entries(WORKSHEET_SIZES).map(([key, value]) => `<label class="cw-check"><input type="radio" name="cw-size" value="${key}" ${key === size ? "checked" : ""}><span><strong>${escapeHtml(value.label)}</strong><small>${escapeHtml(value.note)}</small></span></label>`).join("")}</div>
       </section>
       <section class="panel">
+        <h2>Sentence practice</h2>
+        <p>Under each word you can add the sentence it comes from, set out to read, with empty lines to copy it onto.</p>
+        <div class="cw-sizes">
+          <label class="cw-check"><input type="radio" name="cw-sentences" value="off" ${sentences ? "" : "checked"}><span><strong>Words only</strong><small>just the word to trace and write</small></span></label>
+          <label class="cw-check"><input type="radio" name="cw-sentences" value="on" ${sentences ? "checked" : ""}><span><strong>Add a sentence</strong><small>one sentence under every word — a much longer sheet</small></span></label>
+        </div>
+      </section>
+      <section class="panel">
         <h2>Your sheet</h2>
         <p id="cw-summary" role="status" aria-live="polite">Getting the handwriting ready…</p>
         <div class="cw-preview" id="cw-preview"></div>
@@ -9503,16 +9632,16 @@ function renderCursiveWorksheet() {
     const geo = worksheetGeometry(size);
     const picked = selectedGroups();
     const words = selectedWords();
-    const pages = worksheetPageCount(picked, geo);
+    const pages = worksheetPageCount(picked, geo, { sentences });
     $("#cw-style").textContent = worksheetCss(geo, { print: false });
     $("#cw-summary").textContent = words.length
-      ? `${words.length} word${words.length === 1 ? "" : "s"} in ${picked.length} group${picked.length === 1 ? "" : "s"} · about ${pages} page${pages === 1 ? "" : "s"} of A4. Each group starts on its own page.`
+      ? `${words.length} word${words.length === 1 ? "" : "s"}${sentences ? " and a sentence each" : ""} in ${picked.length} group${picked.length === 1 ? "" : "s"} · about ${pages} page${pages === 1 ? "" : "s"} of A4. Each group starts on its own page.`
       : "Tick at least one group of words to make a sheet.";
     // The first group's heading and its first two words, so the preview shows the
     // shape of a page rather than a pair of loose lines. Drawn by the same builders
     // the print document uses, so it cannot show a sheet the printer will not
     // produce.
-    $("#cw-preview").innerHTML = picked[0] ? worksheetGroupHtml(picked[0], widths, geo, { first: true, rows: 2 }) : "";
+    $("#cw-preview").innerHTML = picked[0] ? worksheetGroupHtml(picked[0], widths, geo, { first: true, rows: 2, sentences }) : "";
     $("#cw-print").disabled = !words.length;
   };
 
@@ -9528,11 +9657,12 @@ function renderCursiveWorksheet() {
     draw();
   }));
   $$('input[name="cw-size"]').forEach((radio) => radio.addEventListener("change", () => { size = radio.value; draw(); }));
-  $("#cw-print").addEventListener("click", () => printCursiveWorksheet(selectedGroups(), size, widths));
+  $$('input[name="cw-sentences"]').forEach((radio) => radio.addEventListener("change", () => { sentences = radio.value === "on"; draw(); }));
+  $("#cw-print").addEventListener("click", () => printCursiveWorksheet(selectedGroups(), size, widths, { sentences }));
   icons();
 }
 
-function printCursiveWorksheet(chosenGroups, size, widths) {
+function printCursiveWorksheet(chosenGroups, size, widths, { sentences = false } = {}) {
   const words = chosenGroups.flatMap((group) => group.words);
   if (!words.length) return;
   const printWindow = window.open("", "_blank", "popup=yes,width=900,height=1000,resizable=yes,scrollbars=yes");
@@ -9559,8 +9689,8 @@ function printCursiveWorksheet(chosenGroups, size, widths) {
       </style>
     </head>
     <body>
-      ${worksheetSheetHeaderHtml()}
-      ${chosenGroups.map((group, index) => worksheetGroupHtml(group, widths, geo, { first: index === 0 })).join("")}
+      ${worksheetSheetHeaderHtml({ sentences })}
+      ${chosenGroups.map((group, index) => worksheetGroupHtml(group, widths, geo, { first: index === 0, sentences })).join("")}
     </body>
     </html>`);
   printWindow.document.close();

@@ -77,9 +77,10 @@ export const WEHEL_HOMEWORK_ENDPOINT = DEV_API ? "/api/wehel-homework" : platfor
 // Wehel's voice is Deepgram, and ONLY Wehel's (owner decision 2026-08-20):
 // spoken replies through wehel_speak.php (Aura-2, voice aura-2-thalia-en) and
 // mic input through wehel_listen.php. The lesson narration and pronunciation
-// check stay on ElevenLabs (quiz_tts/quiz_stt), Somali vocabulary on Azure.
+// check stay on ElevenLabs (quiz_tts/quiz_stt). Wehel is English-only: the
+// Somali vocabulary lines, the Teaching-language switch and the Azure Ubah
+// narration were removed on the owner's instruction (2026-08-23).
 export const WEHEL_STT_ENDPOINT = DEV_API ? "/api/wehel-listen" : platformUrl("/local/hubredirect/wehel_listen.php");
-export const WEHEL_SOMALI_TTS_ENDPOINT = DEV_API ? "/api/somali-tts" : platformUrl("/local/hubredirect/somali_tts.php");
 export const WEHEL_TTS_ENDPOINT = DEV_API ? "/api/wehel-speak" : platformUrl("/local/hubredirect/wehel_speak.php");
 
 const HISTORY_LIMIT = 12;
@@ -92,22 +93,6 @@ const HISTORY_LIMIT = 12;
 // uncaught on every toggle.
 const storageGet = (key) => { try { return localStorage.getItem(key); } catch { return null; } };
 const storageSet = (key, value) => { try { localStorage.setItem(key, value); } catch { /* the choice just won't persist */ } };
-
-// --- preferred teaching language ---------------------------------------------
-// "somali" makes Wehel add Somali FOR VOCABULARY ONLY — the prompt's
-// languageSupport block has it translate key words on "Soomaali:" lines while
-// every other part of the tutoring stays in English, because English is the
-// language of the course. Stored per browser like the voice toggle; Moodle's
-// intake field preferred_teaching_language can prefill it later.
-const TEACHING_LANGUAGE_KEY = "ehel-teaching-language";
-export function preferredTeachingLanguage() {
-  try { return localStorage.getItem(TEACHING_LANGUAGE_KEY) === "somali" ? "somali" : "english"; }
-  catch { return "english"; }
-}
-export function setPreferredTeachingLanguage(value) {
-  try { localStorage.setItem(TEACHING_LANGUAGE_KEY, value === "somali" ? "somali" : "english"); }
-  catch { /* private mode — the choice just won't persist */ }
-}
 
 // --- focus -------------------------------------------------------------------
 // Focus narrows Wehel's ATTENTION, never its knowledge. The full unit still
@@ -228,67 +213,6 @@ export function teacherPrompts() {
   ];
 }
 
-// "Soomaali:" marks the Somali vocabulary in a reply — the prompt's contract.
-// The Somali voice (Azure Ubah) reads exactly that part; the English voice
-// must never touch it. The prompt asks for it on its own line, but the model
-// also writes it INLINE, mid-paragraph, with English carrying on after the
-// Somali sentence ("bus means a long vehicle… Soomaali: bas waa gaari dheer oo
-// dad badan qaada. I expect you to listen once…"). So a reply is cut into
-// VOICE SEGMENTS, in reading order: English → the Somali part → English again,
-// and narration switches voice at each boundary (owner decision 2026-08-20:
-// "when you get to the Soomaali part, switch to Ubah").
-//
-// Where the Somali part ENDS when it is inline: at the end of the line, or
-// earlier at a sentence end where what follows reads as English — the next
-// sentence carries an English function word. Somali sentences start with
-// capitals too, so a bare "capital after full stop" would cut a two-sentence
-// Somali meaning in half and hand the second half to the English voice.
-// Tolerates the bullets/bold the model sometimes adds around the marker.
-const SOMALI_MARKER = /(?:[-*•]\s*)*\**\s*Soomaali\s*\**\s*:\s*\**\s*/gi;
-const ENGLISH_RESUMES = /\b(the|is|are|you|your|we|it|to|and|of|on|for|this|that|when|now|press|tell|listen|step|word|words|means|say|look|hear|next|done|great|good|well)\b/i;
-export function voiceSegments(text) {
-  const source = String(text || "");
-  const segments = [];
-  const push = (voice, value) => { if (value && value.trim()) segments.push({ voice, text: value.trim() }); };
-  let cursor = 0;
-  SOMALI_MARKER.lastIndex = 0;
-  let match;
-  while ((match = SOMALI_MARKER.exec(source))) {
-    push("english", source.slice(cursor, match.index));
-    const start = match.index + match[0].length;
-    const lineEnd = source.indexOf("\n", start);
-    const limit = lineEnd === -1 ? source.length : lineEnd;
-    // Walk the sentence boundaries on this line; the Somali part ends at the
-    // first boundary whose NEXT SENTENCE (that sentence alone — not a fixed
-    // window, which would see an English sentence two sentences on and cut a
-    // two-sentence Somali meaning in half) reads as English.
-    let end = limit;
-    const boundary = /[.!?…]+\s+/g;
-    boundary.lastIndex = start;
-    const stops = [];
-    let stop;
-    while ((stop = boundary.exec(source)) && stop.index < limit) stops.push(stop);
-    for (let at = 0; at < stops.length; at++) {
-      const nextStart = stops[at].index + stops[at][0].length;
-      if (nextStart >= limit) break;
-      const nextEnd = at + 1 < stops.length ? stops[at + 1].index + stops[at + 1][0].length : limit;
-      if (ENGLISH_RESUMES.test(source.slice(nextStart, nextEnd))) { end = stops[at].index + stops[at][0].trimEnd().length; break; }
-    }
-    push("somali", source.slice(start, end).replace(/\*+$/, ""));
-    cursor = end;
-    SOMALI_MARKER.lastIndex = cursor;
-  }
-  push("english", source.slice(cursor));
-  return segments;
-}
-// The Somali parts alone — what the bubble's Soomaali button replays.
-export function somaliLines(text) {
-  return voiceSegments(text).filter((segment) => segment.voice === "somali").map((segment) => segment.text);
-}
-// The English alone — what the English voice may read.
-function withoutSomaliLines(text) {
-  return voiceSegments(text).filter((segment) => segment.voice === "english").map((segment) => segment.text).join("\n");
-}
 
 // One line per unit of the loaded course manifest, so Wehel knows where the
 // open unit sits in the year and can point ahead or back. Titles only — the
@@ -658,9 +582,8 @@ let speechToken = 0;
 export function stopBrowserSpeech() {
   speechToken += 1;
   if (browserSpeechSupported) speechSynthesis.cancel();
-  // One stop for all tutor speech: the Ehel clip, the Somali clip and the
-  // browser voice never talk over each other.
-  stopSomaliAudio();
+  // One stop for all tutor speech: the reply clip and the browser voice never
+  // talk over each other.
   stopReplyAudio();
 }
 // Route changes are hash-based in the shell — leaving the tutor page must not
@@ -786,63 +709,6 @@ export async function speakEhelVoice(text, { rate = 1 } = {}) {
   return true;
 }
 
-// --- Somali vocabulary audio (Azure "Ubax"/Ubah voice) -----------------------
-// The browser ships no Somali speechSynthesis voice, so the "Soomaali:" lines
-// go to the Azure Speech proxy instead — short vocabulary lines only, fetched
-// on an explicit Listen tap, never whole replies and never auto-spoken. Clips
-// are cached per text for the session so replaying a bubble is free.
-
-let somaliAudio = null;
-const somaliClipCache = new Map(); // text -> object URL
-
-function stopSomaliAudio() {
-  if (!somaliAudio) return;
-  const audio = somaliAudio;
-  somaliAudio = null;
-  audio.pause();
-  // pause() never fires onended, so release the caller awaiting this clip.
-  if (audio.onended) audio.onended();
-}
-
-/** Speak Somali text through the Ubah voice. Resolves when the clip finishes. */
-export async function speakSomali(text) {
-  const clean = String(text || "").replace(/\s+/g, " ").trim();
-  if (!clean) return false;
-  stopBrowserSpeech();
-  let url = somaliClipCache.get(clean);
-  if (!url) {
-    const wstoken = new URLSearchParams(location.search).get("wstoken") || undefined;
-    const response = await fetch(WEHEL_SOMALI_TTS_ENDPOINT, {
-      method: "POST",
-      credentials: DEV_API ? "same-origin" : "include",
-      headers: platformHeaders({ Accept: "audio/mpeg", "Content-Type": "application/json" }),
-      body: JSON.stringify({ text: clean, wstoken }),
-    });
-    if (!response.ok) {
-      const result = await response.json().catch(() => ({}));
-      throw new Error(result.message || `The Somali voice is unavailable (${response.status}).`);
-    }
-    url = URL.createObjectURL(await response.blob());
-    somaliClipCache.set(clean, url);
-  }
-  await new Promise((resolve, reject) => {
-    const audio = new Audio(url);
-    let settled = false;
-    const finish = (failed) => () => {
-      if (settled) return;
-      settled = true;
-      if (somaliAudio === audio) somaliAudio = null;
-      if (failed) reject(new Error("The Somali clip could not be played."));
-      else resolve();
-    };
-    audio.onended = finish(false);
-    audio.onerror = finish(true);
-    somaliAudio = audio;
-    audio.play().catch(finish(true));
-  });
-  return true;
-}
-
 // --- browser speech recognition ---------------------------------------------
 // NO LONGER USED BY THE WEHEL PANEL: since 2026-08-20 Wehel's voice input is
 // Deepgram only (owner decision) — the mic records with MediaRecorder and
@@ -924,7 +790,6 @@ export async function askWehel({ meta, messages, channel = "text", mode = "", se
         learnerName: meta.learnerName || "",
         courseOutline: meta.courseOutline || "",
         unit: unitForTutor(meta.unit),
-        teachingLanguage: preferredTeachingLanguage(),
         channel,
         mode: mode || undefined,
         sectionHint: sectionHint || undefined,
@@ -1298,7 +1163,6 @@ export function mountWehelChat(options) {
   const speechRate = speechRateForGrade(meta.grade);
   let speakReplies = browserSpeechSupported && storageGet(speechKey) !== "off";
   let speakingIndex = null;
-  let somaliSpeakingIndex = null;
 
   const bubble = (item, index) => {
     // An offline bubble used to differ from a real answer by the two words
@@ -1317,21 +1181,11 @@ export function mountWehelChat(options) {
     const speak = item.role === "assistant" && browserSpeechSupported
       ? `<button class="button secondary voice-button${playing ? " is-playing" : ""}" data-wehel-speak="${index}" type="button" aria-label="${playing ? "Stop" : `Listen to ${escapeHtml(tutorLabel)}`}">${playing ? `${wehelIcon("stop")} Stop` : `${wehelIcon("volume")} Listen`}</button>`
       : "";
-    // Somali vocabulary lines get their own Listen button (the Azure Ubah
-    // voice) — the browser's English voice never reads them.
-    const somaliPlaying = somaliSpeakingIndex === index;
-    // A translated (somali) bubble is read whole by Ubah from its Listen
-    // button, so the vocabulary-lines button would be redundant there.
-    const somali = item.role === "assistant" && !item.somali && preferredTeachingLanguage() === "somali" && somaliLines(item.text).length
-      ? `<button class="button secondary voice-button${somaliPlaying ? " is-playing" : ""}" data-wehel-somali="${index}" type="button" aria-label="${somaliPlaying ? "Stop the Somali voice" : "Listen in Somali (Ubah)"}">${somaliPlaying ? `${wehelIcon("stop")} Jooji` : `${wehelIcon("volume")} Soomaali`}</button>`
-      : "";
     // Structure only: the article keeps its .ai-message/.user/.assistant classes
-    // and both buttons keep their exact classes, data attributes and wording —
+    // and the button keeps its exact classes, data attributes and wording —
     // the handlers and the audio-coverage checks read those.
     const avatar = item.role === "user" ? "You" : tutorLabel;
-    const tools = speak || somali
-      ? `<div class="w-tools">${speak}${somali}</div>`
-      : "";
+    const tools = speak ? `<div class="w-tools">${speak}</div>` : "";
     // Said in the bubble, not only in the name line: this is not Wehel's answer.
     const offlineNote = item.offline
       ? `<p class="w-offline-note" style="margin:0 0 6px;padding:7px 10px;border-radius:8px;`
@@ -1345,11 +1199,10 @@ export function mountWehelChat(options) {
       + `${offlineNote}<p class="w-text">${escapeHtml(item.text)}</p>${tools}</div></article>`;
   };
 
-  // Speak one stored reply aloud; index -1 marks the greeting bubble. The
-  // "Soomaali:" lines are dropped first — the English voice mangles Somali,
-  // and the bubble's own Soomaali button owns those lines. The Ehel voice
-  // speaks first; the browser engine steps in only when the voice endpoint
-  // cannot be reached, so an offline hint is still read aloud.
+  // Speak one stored reply aloud; index -1 marks the greeting bubble. Wehel's
+  // Deepgram voice (Thalia) reads the whole reply; the browser engine steps in
+  // only when the voice endpoint cannot be reached, so an offline hint is
+  // still read aloud.
   async function speakReply(index, text) {
     // A stored Grade 1 teacher script: play its pre-rendered clip (Thalia,
     // rendered once by generate-ehel-teacher-audio.js). If the clip cannot be
@@ -1367,55 +1220,13 @@ export function mountWehelChat(options) {
         // clears the highlight.
       }
     }
-    // A Somali translation (the Erayada af-Soomaali chip): the whole bubble is
-    // Somali, so the Azure Ubah voice reads all of it — in sentence chunks
-    // under the Somali endpoint's 600-character cap, one after another,
-    // stopping the moment this bubble is no longer the speaker.
-    if (index >= 0 && messages[index]?.somali) {
-      speakingIndex = index;
-      render();
-      try {
-        for (const chunk of speechChunks(speakableText(text), 550)) {
-          if (speakingIndex !== index) break;
-          await speakSomali(chunk);
-        }
-      } catch (error) {
-        if (ui.toast) ui.toast(error.message || "The Somali voice is unavailable right now.");
-      } finally {
-        if (speakingIndex === index) { speakingIndex = null; render(); }
-      }
-      return;
-    }
-    // Everything else: narrate the reply in reading order, switching voice at
-    // each segment — Thalia for the English, Ubah for the "Soomaali:" part,
-    // Thalia again for whatever follows (owner decision 2026-08-20). The
-    // browser engine steps in for an English segment only when the voice
-    // endpoint cannot be reached; a Somali segment that cannot be voiced is
-    // skipped with a notice rather than mangled by an English voice.
+    const clean = speakableText(text);
     speakingIndex = index;
     render();
     try {
-      for (const segment of voiceSegments(text)) {
-        if (speakingIndex !== index) break; // stopped, or another bubble took over
-        const clean = speakableText(segment.text);
-        if (!clean) continue;
-        if (segment.voice === "somali") {
-          try {
-            for (const chunk of speechChunks(clean, 550)) {
-              if (speakingIndex !== index) break;
-              await speakSomali(chunk);
-            }
-          } catch (error) {
-            if (ui.toast) ui.toast(error.message || "The Somali voice is unavailable right now.");
-          }
-        } else {
-          try {
-            await speakEhelVoice(clean, { rate: speechRate });
-          } catch {
-            await speakBrowser(clean, { rate: speechRate });
-          }
-        }
-      }
+      if (clean) await speakEhelVoice(clean, { rate: speechRate });
+    } catch {
+      await speakBrowser(clean, { rate: speechRate });
     } finally {
       // Another bubble may have taken over while this one played — only the
       // still-current speaker clears the highlight.
@@ -1424,7 +1235,6 @@ export function mountWehelChat(options) {
   }
 
   function render() {
-    const teachingLanguage = preferredTeachingLanguage();
     // Read at render time, not at mount: the drawer and the Tutor page can both
     // be live over one store, and syncPanels repaints the sibling — so changing
     // Focus in either is immediately true in both.
@@ -1444,25 +1254,6 @@ export function mountWehelChat(options) {
     const prompts = persona === "teacher"
       ? teacherPrompts()
       : (focus ? focusPrompts(focus.label) : [...(options.quickPrompts || [])]);
-    // The Somali option is vocabulary-only, so the extra quick prompt asks for
-    // exactly that — key words with their Somali translations, from the focused
-    // module when there is one.
-    if (teachingLanguage === "somali") {
-      // Erayada af-Soomaali (owner decision 2026-08-20): with a reply on
-      // screen, one tap asks Wehel for that SAME reply in Somali and the Azure
-      // Ubah voice narrates it — for a learner who did not follow the English.
-      // The translated bubble is marked `somali`, which is what routes its
-      // narration to Ubah (see speakReply). With nothing to translate yet, the
-      // chip keeps its original job: the unit's key words with their Somali
-      // translations.
-      const lastReply = [...messages].reverse().find((item) => item.role === "assistant" && !item.offline && !item.somali);
-      prompts.push(lastReply
-        ? { label: "Erayada af-Soomaali", mode: "somali-translate", somaliReply: true,
-          message: "Please say your last message again in Somali — translate the whole of it into simple, natural Somali for me." }
-        : { label: "Erayada af-Soomaali", message: focus
-          ? `Teach me the key words in "${focus.label}" and give the Somali translation for each one.`
-          : "Teach me this unit's key words and give the Somali translation for each one." });
-    }
     // Homework chips — both sanctioned ways in, shown only when the platform
     // actually has homework on record for this learner. The modes reach the
     // matching modeHints in wehel_prompt.json (coaching, and the worked-
@@ -1488,18 +1279,12 @@ export function mountWehelChat(options) {
             ${modules.map((module) => `<option value="${escapeHtml(module.id)}"${focus && focus.id === module.id ? " selected" : ""}>${escapeHtml(module.label)}</option>`).join("")}
           </select>
         </label>` : ""}
-        <label for="wehel-language" style="margin-left:auto">Teaching language
-          <select id="wehel-language">
-            <option value="english"${teachingLanguage === "english" ? " selected" : ""}>English</option>
-            <option value="somali"${teachingLanguage === "somali" ? " selected" : ""}>Soomaali (erayada)</option>
-          </select>
-        </label>
       </div>
       <div class="ai-conversation" id="wehel-conversation" aria-live="polite">
         ${messages.length ? messages.map(bubble).join("") : bubble({ role: "assistant", text: greeting }, -1)}
         ${busy ? `<article class="ai-message assistant is-thinking"><span class="w-avatar" role="img" aria-label="${escapeHtml(tutorLabel)}">${wehelIcon("sparkle")}</span><div class="w-body"><strong class="w-who">${escapeHtml(tutorLabel)}</strong><p class="w-text"><span class="w-dot"></span><span class="w-dot"></span><span class="w-dot"></span><span class="sr-only">is thinking…</span></p></div></article>` : ""}
       </div>
-      <div class="ai-prompts">${prompts.map((prompt) => `<button data-wehel-prompt="${escapeHtml(prompt.message)}" data-wehel-mode="${escapeHtml(prompt.mode || "")}"${prompt.somaliReply ? ' data-wehel-somali-reply="1"' : ""}${prompt.teach ? ' data-wehel-teach="1"' : ""} type="button" ${busy ? "disabled" : ""}>${escapeHtml(prompt.label)}</button>`).join("")}</div>
+      <div class="ai-prompts">${prompts.map((prompt) => `<button data-wehel-prompt="${escapeHtml(prompt.message)}" data-wehel-mode="${escapeHtml(prompt.mode || "")}"${prompt.teach ? ' data-wehel-teach="1"' : ""} type="button" ${busy ? "disabled" : ""}>${escapeHtml(prompt.label)}</button>`).join("")}</div>
       ${pendingAttachments.length ? `<div class="w-attach-row">${pendingAttachments.map((file, index) => `<span class="w-attach-chip"><span>${escapeHtml(file.name)}</span><button type="button" data-wehel-detach="${index}" aria-label="Remove ${escapeHtml(file.name)}">×</button></span>`).join("")}</div>` : ""}
       <form class="ai-compose" id="wehel-form">
         <label class="sr-only" for="wehel-input">Ask ${escapeHtml(tutorLabel)}</label>
@@ -1521,42 +1306,13 @@ export function mountWehelChat(options) {
     container.querySelectorAll("[data-wehel-speak]").forEach((button) => button.addEventListener("click", () => {
       const index = Number(button.dataset.wehelSpeak);
       if (speakingIndex === index) { stopBrowserSpeech(); speakingIndex = null; render(); return; }
-      somaliSpeakingIndex = null;
       speakReply(index, index === -1 ? greeting : messages[index]?.text || "");
     }));
-    container.querySelectorAll("[data-wehel-somali]").forEach((button) => button.addEventListener("click", async () => {
-      const index = Number(button.dataset.wehelSomali);
-      if (somaliSpeakingIndex === index) { stopBrowserSpeech(); somaliSpeakingIndex = null; render(); return; }
-      const text = somaliLines(index === -1 ? greeting : messages[index]?.text || "").join(". ");
-      speakingIndex = null;
-      somaliSpeakingIndex = index;
-      render();
-      try {
-        await speakSomali(text);
-      } catch (error) {
-        if (ui.toast) ui.toast(error.message || "The Somali voice is unavailable right now.");
-      } finally {
-        if (somaliSpeakingIndex === index) { somaliSpeakingIndex = null; render(); }
-      }
-    }));
-    const languageSelect = container.querySelector("#wehel-language");
-    if (languageSelect) languageSelect.addEventListener("change", () => {
-      setPreferredTeachingLanguage(languageSelect.value);
-      stopBrowserSpeech();
-      speakingIndex = null;
-      somaliSpeakingIndex = null;
-      render();
-      syncPanels(panel);
-      if (ui.toast) ui.toast(languageSelect.value === "somali"
-        ? "Wehel will add Somali for key words — erayada oo af-Soomaali ah."
-        : "Wehel will use English only.");
-    });
     const personaSelect = container.querySelector("#wehel-persona");
     if (personaSelect) personaSelect.addEventListener("change", () => {
       setWehelPersona(meta, personaSelect.value);
       stopBrowserSpeech();
       speakingIndex = null;
-      somaliSpeakingIndex = null;
       render();
       syncPanels(panel);
       if (ui.toast) ui.toast(personaSelect.value === "teacher"
@@ -1573,7 +1329,7 @@ export function mountWehelChat(options) {
         ? `${tutorLabel} is staying on ${chosen.label} — still happy to answer anything else.`
         : `${tutorLabel} is back to the whole unit.`);
     });
-    container.querySelectorAll("[data-wehel-prompt]").forEach((button) => button.addEventListener("click", () => submit(button.dataset.wehelPrompt, "text", button.dataset.wehelMode || "", { somaliReply: button.dataset.wehelSomaliReply === "1", teach: button.dataset.wehelTeach === "1" })));
+    container.querySelectorAll("[data-wehel-prompt]").forEach((button) => button.addEventListener("click", () => submit(button.dataset.wehelPrompt, "text", button.dataset.wehelMode || "", { teach: button.dataset.wehelTeach === "1" })));
     container.querySelector("#wehel-form").addEventListener("submit", (event) => {
       event.preventDefault();
       const input = container.querySelector("#wehel-input");
@@ -1617,17 +1373,13 @@ export function mountWehelChat(options) {
 
   // modeHint: a focused quick prompt names its own mode ("teach", "practice",
   // "help"); a typed message falls back to the panel's mode as before.
-  // somaliReply: the Erayada af-Soomaali chip — the reply is a Somali
-  // translation, stored marked `somali` so its narration goes to the Azure
-  // Ubah voice (whole bubble), and narrated right away.
   // teach: the "Teach me the activity" chip — on Grade 1, answered from the
   // stored script for this unit and section when one exists (text + clip,
   // no network); otherwise the live path below.
-  async function submit(text, channel, modeHint = "", { somaliReply = false, teach = false } = {}) {
+  async function submit(text, channel, modeHint = "", { teach = false } = {}) {
     if (busy) return;
     stopBrowserSpeech();
     speakingIndex = null;
-    somaliSpeakingIndex = null;
     if (teach && Number(meta.grade) === 1) {
       const sectionId = typeof options.sectionId === "function" ? options.sectionId() : options.sectionId;
       const entry = storedTeacherScript(await fetchTeacherScripts(meta), meta.unitNo, sectionId);
@@ -1694,17 +1446,11 @@ export function mountWehelChat(options) {
         if (ui.toast) ui.toast("Wehel is offline right now — showing a built-in hint instead.");
       }
     }
-    append({ role: "assistant", text: reply, offline, ...(somaliReply && !offline ? { somali: true } : {}) });
+    append({ role: "assistant", text: reply, offline });
     busy = false;
     render();
     const exchanges = messages.filter((item) => item.role === "assistant" && !item.offline).length;
     if (!offline && options.onExchange) options.onExchange(exchanges);
-    // A Somali translation the learner asked for is narrated by Ubah at once —
-    // hearing it is the point of the tap, whatever the voice toggle says.
-    if (somaliReply && !offline) {
-      speakReply(messages.length - 1, reply);
-      return;
-    }
     // Speak the reply with the browser voice — always after a spoken question,
     // and after typed ones too while the voice toggle is on.
     if (browserSpeechSupported && (channel === "voice" || speakReplies)) {
@@ -1721,7 +1467,6 @@ export function mountWehelChat(options) {
     if (recorder && recorder.state === "recording") { recorder.stop(); return; }
     stopBrowserSpeech(); // never transcribe the tutor's own voice
     speakingIndex = null;
-    somaliSpeakingIndex = null;
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       recordedChunks = [];

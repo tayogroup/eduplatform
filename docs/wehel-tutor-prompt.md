@@ -568,3 +568,17 @@ offline hint) so the live steps continue from it; a missing file, section or
 clip falls back to the live path. The trade-off named in design: a stored
 frame cannot name the exact slide ("word 2, chair") — it addresses the
 section's activity generically and the live step 1 names the card.
+
+## Somali removed (2026-08-23)
+
+Owner instruction: "remove somali translation and audio from all wehel tutor
+responses." Wehel is English-only again. Removed: the Teaching-language switch
+and `preferredTeachingLanguage`, the vocabulary-only Somali block
+(`languageSupport.somali`) and the `somali-translate` mode hint in the prompt
+(now version wehel-7), the Erayada af-Soomaali chip, the "Soomaali:" voice
+segmenter and the Azure Ubah narration paths (`speakSomali`, the Soomaali
+button, translated bubbles), and the Somali word-choice rules. The contract
+gate now fails if `languageSupport.somali`, `modeHints.somali-translate`,
+`preferredTeachingLanguage`, `speakSomali` or `voiceSegments` reappear. The
+`somali_tts.php` endpoint and its dev twin remain in place but nothing in
+Wehel calls them. Stored Grade 1 teacher scripts were always English-only.

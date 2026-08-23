@@ -44,8 +44,8 @@ globalThis.location = { hostname: "localhost", port: "4287", search: "", href: "
 globalThis.localStorage = { getItem: () => null, setItem: () => {} };
 
 const wehel = await import(pathToFileURL(SHELL).href);
-const { apiMessages, withoutMediaPlumbing, unitForTutor, UNIT_JSON_LIMIT, withAttachmentBlocks, homeworkContextText, HOMEWORK_CONTEXT_LIMIT, WEHEL_ATTACH_DAILY_LIMIT, teacherPrompts, voiceSegments, storedTeacherScript } = wehel;
-for (const [name, value] of Object.entries({ apiMessages, withoutMediaPlumbing, unitForTutor, UNIT_JSON_LIMIT, withAttachmentBlocks, homeworkContextText, HOMEWORK_CONTEXT_LIMIT, WEHEL_ATTACH_DAILY_LIMIT, teacherPrompts, voiceSegments, storedTeacherScript })) {
+const { apiMessages, withoutMediaPlumbing, unitForTutor, UNIT_JSON_LIMIT, withAttachmentBlocks, homeworkContextText, HOMEWORK_CONTEXT_LIMIT, WEHEL_ATTACH_DAILY_LIMIT, teacherPrompts, storedTeacherScript } = wehel;
+for (const [name, value] of Object.entries({ apiMessages, withoutMediaPlumbing, unitForTutor, UNIT_JSON_LIMIT, withAttachmentBlocks, homeworkContextText, HOMEWORK_CONTEXT_LIMIT, WEHEL_ATTACH_DAILY_LIMIT, teacherPrompts, storedTeacherScript })) {
   if (value === undefined) fail("shell/wehel.js no longer exports what this gate checks", `${name} is missing — restore the export rather than deleting the check`);
 }
 if (failures.length) { report(); process.exit(1); }
@@ -134,32 +134,6 @@ const text = (sent) => sent.map((m) => m.content).join(" | ");
   const pdfSent = withAttachmentBlocks(conversation, [{ name: "hw.pdf", mediaType: "application/pdf", data: "aGVsbG8=" }]);
   const doc = pdfSent[pdfSent.length - 1].content.find((block) => block.type === "document");
   if (!doc || doc.source?.media_type !== "application/pdf") fail("A PDF attachment is not sent as a document block", JSON.stringify(pdfSent[pdfSent.length - 1]));
-}
-
-// --- 1b2. narration switches voice at the Soomaali part ----------------------
-// The owner's sample, verbatim shape: English, the Somali sentence INLINE in
-// the same paragraph, English carrying on after it. The English voice must
-// never read the Somali; the Somali voice must get exactly the Somali; and
-// a two-sentence Somali meaning must not be cut in half by its own full stop.
-{
-  const sample = 'Press Hear it and listen carefully. bus means a long vehicle that carries many people at once. Soomaali: bas waa gaari dheer oo dad badan qaada. I expect you to listen once, then tell me "done" when you have heard it. 🚌';
-  const segments = voiceSegments(sample);
-  const voices = segments.map((segment) => segment.voice).join(",");
-  if (voices !== "english,somali,english") fail("Inline Soomaali is not cut into English → Somali → English", `got ${voices}: ${JSON.stringify(segments)}`);
-  const somali = segments.find((segment) => segment.voice === "somali");
-  if (!somali || somali.text !== "bas waa gaari dheer oo dad badan qaada.") fail("The Somali segment is not exactly the Somali sentence", JSON.stringify(somali));
-  if (segments.some((segment) => segment.voice === "english" && /bas waa|dad badan/.test(segment.text))) fail("Somali leaked into an English segment", JSON.stringify(segments));
-  if (!segments[2] || !/^I expect you/.test(segments[2].text)) fail("The English after the Somali part is lost or mis-split", JSON.stringify(segments));
-  // Own-line form (the prompt's preferred shape) still works.
-  const lined = voiceSegments("Alive means living.\nSoomaali: nool waxay ka dhigan tahay wax nool.\nNow you try one.");
-  if (lined.map((segment) => segment.voice).join(",") !== "english,somali,english" || !/^nool waxay/.test(lined[1].text)) fail("Own-line Soomaali is not segmented", JSON.stringify(lined));
-  // A two-sentence Somali meaning stays whole until English resumes.
-  const twoSentence = voiceSegments("Bus means a vehicle. Soomaali: Bas waa gaari. Waa gaari dheer oo dad badan qaada. Now press Hear it.");
-  const somaliTwo = twoSentence.find((segment) => segment.voice === "somali");
-  if (!somaliTwo || !/Waa gaari dheer/.test(somaliTwo.text) || /Now press/.test(somaliTwo.text)) fail("A two-sentence Somali meaning is cut in half, or swallows the English after it", JSON.stringify(twoSentence));
-  // No Soomaali at all → one English segment, untouched.
-  const plain = voiceSegments("Great question! A goat is alive.");
-  if (plain.length !== 1 || plain[0].voice !== "english") fail("A reply with no Somali is split anyway", JSON.stringify(plain));
 }
 
 // --- 1c. the homework context carries the teacher's words, capped ------------
@@ -317,24 +291,14 @@ if (phpCap !== UNIT_JSON_LIMIT || devCap !== UNIT_JSON_LIMIT) {
     if (!/never give the answers/i.test(teacherText) || !/quiz|checkpoint|exam/i.test(teacherText)) fail("The virtual teacher no longer protects graded answers", "owner decision: on quizzes, checkpoints and placement exams the teacher explains the approach only");
     if (!/do NOT mark anything complete/.test(teacherText)) fail("The virtual teacher may claim to mark an activity complete", "owner decision: guide to completion, never mark — progress must come from the learner doing the activity on the page");
   }
-  // Somali word choices the owner corrected (2026-08-20): "sentence" is weedh,
-  // never jumlad — the rule must stay in the Somali language block, which is
-  // the one block every Somali-producing reply receives.
-  const somaliBlock = ((prompt.languageSupport || {}).somali || []).join("\n");
-  if (!/weedh/.test(somaliBlock) || !/jumlad/.test(somaliBlock) || !/weedhaada/.test(somaliBlock)) {
-    fail("The Somali word-choice rule is gone from the language block", "owner correction: sentence = weedh (never jumlad), your own sentence = weedhaada");
+  // Wehel is English-only (owner, 2026-08-23): the Somali vocabulary block,
+  // the Erayada af-Soomaali translate hint and the Teaching-language switch
+  // were removed. They must not quietly return.
+  if ((prompt.languageSupport && prompt.languageSupport.somali) || hints["somali-translate"]) {
+    fail("Somali support is back in the prompt", "owner removed Somali translation and audio from every Wehel reply on 2026-08-23 — remove languageSupport.somali and modeHints.somali-translate");
   }
-  // …and the languages never mix inside one sentence — the first version of
-  // the rule made the model write "use it in weedhaada — your own sentence"
-  // INSIDE English prose. The block must say Somali words never go inside
-  // English, and where Somali is allowed at all.
-  if (!/never go inside English/i.test(somaliBlock) || !/Never mix the two languages/i.test(somaliBlock)) {
-    fail("The no-mixing rule is gone from the Somali block", "without it the word list reads as licence to drop Somali words into English sentences");
-  }
-  // Erayada af-Soomaali: the one sanctioned whole-reply Somali — the chip's
-  // mode must exist and must say the vocabulary-only rule resumes after it.
-  if (!hints["somali-translate"] || !/resumes/i.test(String(hints["somali-translate"]))) {
-    fail("The somali-translate mode is gone or no longer scoped to one reply", "the Erayada af-Soomaali chip sends it; without it the model either refuses (vocabulary-only rule) or stays in Somali afterwards");
+  if (typeof wehel.preferredTeachingLanguage === "function" || typeof wehel.speakSomali === "function" || typeof wehel.voiceSegments === "function") {
+    fail("Somali client paths are back in shell/wehel.js", "the Teaching-language switch, the Ubah voice and the Soomaali segmenter were removed on 2026-08-23");
   }
   const chips = teacherPrompts();
   if (!Array.isArray(chips) || chips.length < 3 || chips.some((chip) => chip.mode !== "virtual-teacher")) {

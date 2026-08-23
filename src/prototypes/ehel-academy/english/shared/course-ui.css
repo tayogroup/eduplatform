@@ -971,6 +971,9 @@ body.ebook-watching .course-ebook-illustration img, body.ebook-watching svg.cour
 .cw-groups, .cw-sizes { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 10px; margin-top: 14px; }
 .cw-check { display: flex; align-items: flex-start; gap: 10px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 10px; cursor: pointer; }
 .cw-check:hover { border-color: var(--teal); }
+/* A control that cannot do anything yet, saying so rather than disappearing. */
+.cw-check.is-disabled { opacity: .55; cursor: default; }
+.cw-check.is-disabled:hover { border-color: var(--line); }
 .cw-check input { margin-top: 3px; flex: none; width: 18px; height: 18px; accent-color: var(--teal); }
 .cw-check span { display: block; min-width: 0; }
 .cw-check strong { display: block; }

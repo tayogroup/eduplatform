@@ -548,7 +548,12 @@ function checkWorksheetAnswerKeys() {
     fail(label, `only ${carried} practice pieces match GRAMMAR_ANSWER_KEY, was ${FLOOR} — either keys were removed from the content, or a new wording is not being matched and is printing. Check which before lowering this floor.`);
   }
   if (runsInPrinted > 5) fail(label, `${runsInPrinted - 5} further answer run(s) reach the printed sheet`);
-  note(`worksheet grammar: ${carried} of ${pieces} practice pieces carry an answer key across all eight grades; every one cut before printing`);
+  // "Cut from the questions", not "not printed". The sheet has an optional Answer
+  // key section that prints these deliberately, on its own pages at the back, for
+  // whoever marks the work. What this gate guarantees is narrower and is the thing
+  // that matters: no key reaches a QUESTION. Saying "never printed" would be a
+  // comforting sentence that stopped being true the day that option was added.
+  note(`worksheet grammar: ${carried} of ${pieces} practice pieces carry an answer key across all eight grades; every one cut away from its question (the optional Answer key section prints them separately at the back)`);
   note("worksheet grammar: answer runs are only checked at Grades 1-4, the grades the sheet prints — above that the same shape is the exercise list itself, so extending the sheet upward needs this detector recalibrated first");
 }
 

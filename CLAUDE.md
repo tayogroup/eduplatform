@@ -1083,6 +1083,66 @@ NON-English subject through it:
   reached. Same class as the ✓-after-skip, one case short. If you see that
   message with a stack trace above it, the tiers were not compared at all.
 
+### Diff the BUNDLE with --plan-json, never the files on disk
+
+`deploy-app-version.js --plan-json` prints `{remote, sha1}` for every item a
+release would write, needs no `BUNNY_KEY`, and uploads nothing. Compare those
+hashes against the live `v{TAG}/` equivalents to see what a release actually
+changes.
+
+**Comparing a live bundle against its repo source instead gives false
+positives**, because the build rewrites imports on the way in:
+`shellSubjectModule()` and `shellCore()` (`deploy-app-version.js`) rewrite
+`../../{subject}/shared/X.js` and `../../shared/X.js` to `./X.js` so they
+resolve inside the version path. So `course-ui.js` and `course-app.js` are NEVER
+byte-identical to the files they were built from. Only verbatim-copied
+components — `wehel.js`, `deck.js`, `word-pictures.js`, `lucide.min.js` — can be
+compared that way, which is exactly why grepping a live bundle for a marker
+string appears to work right up until it silently does not.
+
+This is the form of "verify what shipped, not what you wrote" that survives a
+build step. The weaker form — grep the deployed file for a string you expect —
+is fine for a verbatim component and misleading everywhere else.
+
+### `.bunny-appver-manifest.json` is CONTENDED, and a wrong entry is silent
+
+Several sessions share this checkout, so they share this file, and
+`deploy-app-version.js:520` is why that matters:
+
+```js
+const todo = all.filter((x) => x.always || manifest[x.remote] !== sha1(x.buf));
+```
+
+The manifest decides what a future upload **skips**. A wrong entry is therefore
+not noisy — the file simply never goes up, and `--verify` still passes, because
+it only confirms that the bytes at that path arrive, not that they are the
+current bytes. Identical shape to the `.bunny-upload-manifest.json` trap
+recorded above for re-recorded audio, and to the ✓-after-skip: silence read as
+success.
+
+Treat it as shared. Copy it into a release tree and back out again if you must,
+but know that writing it while another session is mid-release overwrites their
+record of what they just uploaded. That happened on 2026-08-22 with two other
+releases in flight; nothing broke, and nothing would have said so if it had.
+
+### A pre-commit check shaped like recognition cannot see a new feature
+
+Three sessions swept each other's work into their commits over 2026-08-21/22 —
+twice a single line, once a whole feature (211 insertions of another session's
+grade dictionary, under a commit message about handwriting). The instinct after
+the first two was to grep the staged diff for the markers that had already
+caught people: `dictionaryPicture`, `wordPicture`, `wehel`. That grep came back
+clean on the third, because **an allowlist of yesterday's accidents can only
+find yesterday's accidents.**
+
+What worked was the opposite move: reading the hunk headers and stopping at
+function names the author did not recognise. Scan for the UNFAMILIAR, and treat
+"I do not know what this is" as the signal — it is the only check here that does
+not require having been burned by the specific thing first.
+
+The same shape runs through every deploy bug in this file: a check that can only
+see what it was told to look for, reporting silence as a pass.
+
 ### The release tag is ONE GLOBAL number, shared by every subject
 
 `v{TAG}` is a release number for the platform, not a per-subject counter. A

@@ -9659,6 +9659,20 @@ function worksheetComprehension() {
   // and a reading nothing asks about is simply not printed. Every one of the 558
   // questions resolves to a reading in its own unit — checked across all 41 units
   // of Grades 1-4, none orphaned — so no question is lost by keying on that.
+  // Questions are numbered CONTINUOUSLY across the whole section — 1 to 17 for a
+  // Grade 2 unit — not 1..n restarting under each text.
+  //
+  // Restarting is what an exam paper does, and it works there because the answers
+  // are printed under the same section headings the questions were. Here the two
+  // are pages apart: the questions are spread over four or five texts and the key
+  // is one block at the very back. "Question 2" then names five different
+  // questions, and whoever is marking has to match on the reading title to know
+  // which. A number that does not identify the thing it numbers is decoration.
+  //
+  // The key keeps its per-reading headings, so it is still browsable by text; what
+  // changes is that each line's number is unique in the unit, so a number alone is
+  // enough to find it from either direction.
+  let number = 0;
   return (course.readings || [])
     .map((reading) => {
       const questions = written.filter((question) => question.readingId === reading.readingId);
@@ -9678,6 +9692,11 @@ function worksheetComprehension() {
         listening: /listening/i.test(reading.type || ""),
         blocks: readingBlocks(reading.passageScript).map((block) => ({ heading: block.heading, text: block.text })),
         questions: questions.map((question) => ({
+          // Assigned here, in the ONE place that walks every question in order, so
+          // the questions and the answer key cannot disagree about what a number
+          // means — each reads `number` rather than deriving one from its own
+          // position in its own loop.
+          number: (number += 1),
           text: question.question || "",
           marks: Number(question.marks) || 1,
           lines: comprehensionAnswerLines(question.marks),
@@ -9716,8 +9735,8 @@ function worksheetComprehensionHtml(readings, geo) {
       ? `<h3 class="cw-comp-head">${escapeHtml(block.text)}</h3>`
       : `<p class="cw-comp-para">${escapeHtml(block.text)}</p>`)).join("")}</div>
     <p class="cw-comp-instruction">${reading.listening ? "Now answer the questions in your best handwriting." : "Read the text above, then answer the questions in your best handwriting."}</p>
-    ${reading.questions.map((question, order) => `<div class="cw-comp-item">
-      <p class="cw-comp-question"><span class="cw-comp-no">${order + 1}.</span> ${escapeHtml(question.text)} <span class="cw-comp-marks">[${question.marks} mark${question.marks === 1 ? "" : "s"}]</span></p>
+    ${reading.questions.map((question) => `<div class="cw-comp-item">
+      <p class="cw-comp-question"><span class="cw-comp-no">${question.number}.</span> ${escapeHtml(question.text)} <span class="cw-comp-marks">[${question.marks} mark${question.marks === 1 ? "" : "s"}]</span></p>
       ${Array.from({ length: question.lines }, () => worksheetTextLineSvg(geo, "", { model: false })).join("")}
     </div>`).join("")}
   </section>`).join("");
@@ -9751,9 +9770,12 @@ function worksheetAnswerKeyHtml(items, readings, geo) {
       ${item.answers.map((answer) => `<p class="cw-answers-line">${escapeHtml(answer)}</p>`).join("")}
     </div>`).join("")}
     ${withGuidance.map((reading) => `<div class="cw-answers-item">
-      <h3 class="cw-gram-title">${escapeHtml(reading.title)}</h3>
-      ${reading.questions.map((question, order) => (question.answer
-        ? `<p class="cw-answers-line">${order + 1}. ${escapeHtml(question.answer)}</p>`
+      <!-- The range is here so the key can be navigated from either direction: by
+           text, for somebody marking one passage, and by number, for somebody
+           holding a sheet that says 11. -->
+      <h3 class="cw-gram-title">${escapeHtml(reading.title)} <span class="cw-answers-range">questions ${reading.questions[0].number}${reading.questions.length > 1 ? `–${reading.questions[reading.questions.length - 1].number}` : ""}</span></h3>
+      ${reading.questions.map((question) => (question.answer
+        ? `<p class="cw-answers-line">${question.number}. ${escapeHtml(question.answer)}</p>`
         : "")).join("")}
     </div>`).join("")}
   </section>`;
@@ -9840,6 +9862,8 @@ function worksheetCss(geo, { print }) {
     .cw-answers-note { margin: 0 0 4mm; color: #5d6b80;
                        font: 400 ${print ? "2.9mm" : "14px"}/1.4 Arial, Helvetica, sans-serif; }
     .cw-answers-item { break-inside: avoid; page-break-inside: avoid; margin: 0 0 ${(geo.gapWords * 0.7).toFixed(1)}mm; }
+    .cw-answers-range { color: #5d6b80; font-weight: 400;
+                        font-size: ${print ? "2.7mm" : "13px"}; }
     .cw-answers-line { margin: .6mm 0 0; color: #17324d;
                        font: 400 ${print ? "3mm" : "15px"}/1.45 Arial, Helvetica, sans-serif; }
     .cw-gram-item { break-inside: avoid; page-break-inside: avoid; margin: 0 0 ${geo.gapWords}mm; }

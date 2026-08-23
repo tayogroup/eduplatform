@@ -652,6 +652,29 @@ function checkWorksheetComprehension() {
     fail(label, "worksheetComprehensionHtml references the answer — a mark scheme belongs in worksheetAnswerKeyHtml, at the back, not beside the question a learner is about to write on");
   }
 
+  // The questions and the answer key are drawn by two different functions and
+  // print the same numbers. They agree only because both READ the number that
+  // worksheetComprehension assigned; the moment either derives one from its own
+  // loop position, they agree by coincidence — and they did, at first, when both
+  // used `order + 1` over their own arrays. That was correct for exactly as long
+  // as both iterated identically, which is not a property anything enforces.
+  //
+  // A drift here is quiet and expensive: the sheet still prints, every number
+  // still looks plausible, and the key simply points at the wrong question.
+  const keyBuilder = text.match(/function worksheetAnswerKeyHtml\([^)]*\) \{[\s\S]*?\n\}/);
+  if (!keyBuilder) { fail(label, "worksheetAnswerKeyHtml is not declared in english.js — the answer key has moved or gone"); return; }
+  for (const [name, body] of [["worksheetComprehensionHtml", builder[0]], ["worksheetAnswerKeyHtml", keyBuilder[0]]]) {
+    if (!/question\.number/.test(body)) {
+      fail(label, `${name} does not print question.number — the questions and the answer key must both read the number assigned once in worksheetComprehension, not each count its own way`);
+    }
+    // The second parameter of a .map over the questions IS the positional index,
+    // and reintroducing it is the whole failure mode above.
+    const positional = body.match(/\.questions\.map\(\((?:[^)]*),\s*[A-Za-z_$][\w$]*\)/);
+    if (positional) {
+      fail(label, `${name} takes a positional index over reading.questions (${JSON.stringify(positional[0])}) — number the questions from question.number so the two halves cannot disagree`);
+    }
+  }
+
   let total = 0;
   let written = 0;
   let writtenAtGradeOne = 0;

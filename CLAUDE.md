@@ -1314,6 +1314,99 @@ Three ways to get this wrong, all seen the same day:
   another session may be releasing, say which tag you are taking before you
   take it.**
 
+#### Ask storage properly, and ask it late (2026-08-24)
+
+Six app releases landed on the night of 2026-08-24 — v257 through v262, four of
+them English — from several sessions sharing this checkout, and every rule above
+was exercised. What follows is what they added. (How many sessions is
+deliberately not stated: peer session names are opaque and two of them claimed
+the same tag, so the count is not something that was ever established.)
+
+**A tag verified free has a shelf life measured in MINUTES.** Three separate
+"next free" answers went stale that night between being measured and being
+used — v259, v261 and v262 — each because another session released in the gap.
+One of them was passed to a user as free in the same message it stopped being
+true. So re-measure at the point of use, not the point of planning: the listing
+belongs immediately before `deploy-app-version.js`, not in the paragraph where
+you decided to release.
+
+**Probing a candidate path does not answer the question, and answers it wrongly.**
+`GET app/<subject>/v{N}/` returns **HTTP 200 with an empty JSON array** for a
+directory that does not exist. Measured: a probe of a then-unwritten tag across
+all six subjects returned 200 six times out of six, and the same listing showed
+0 objects in every body. So a status check reports EVERY candidate tag as taken,
+including free ones. Read the body and
+count objects: a real tag holds 15-ish, a free one holds 0. This is the concrete
+mechanism behind "list storage, never probe"; the rule was written from the
+CDN-side hazard (a probe against the edge mints a cached 404 that cannot be
+purged with the key in `.env`) and the storage side fails differently and just
+as silently.
+
+**Announcing is point-to-point, so "I announced" and "nobody was told" are both
+true at once.** This is the finding, and it is worth more than the convention it
+kills. That night one session announced v261 to a second session — which is the
+only reason those two did not collide — and not to a third, which had just told
+its user v261 was free. From the third session's side the release was
+unannounced and its verified number went stale; from the first session's side it
+had announced. Nobody can distinguish "not announced" from "not announced TO
+ME", and a convention requiring every session to broadcast to every other fails
+silently the first time one pair is missed. Announce anyway — it is cheap and it
+worked once that night — but do not treat it as a control.
+
+**The control is `tools/lib/release-lock.js`**, one lock per storage ZONE, held
+from before `.bunny-appver-manifest.json` is read to after it is written back
+(the read-modify-write is half of what is being protected). It lives in the OS
+temp dir, deliberately NOT in the repo: releases here run from `git archive`
+temp trees, so two concurrent releases have two different repo roots and a lock
+beside the manifest would be a lock each session held against itself — it would
+contend with nothing and pass every test. Stale locks break on a dead pid or a
+30-minute TTL and always report it; `--dry` and `--plan-json` neither take it
+nor wait for it, because a plan is exactly what somebody blocked by the lock
+wants to run.
+
+**Byte equality proves a release is correct, not that it is YOURS.** The old
+guard refused a tag that existed with DIFFERENT bytes and let identical bytes
+through, reasoning that a retry after a failed upload is not a second release —
+true for one writer, false for two. Two sessions told to release english v261
+from the same HEAD produced byte-identical bundles, so every check passed for
+the second one, and the damage would have been a silently clobbered
+`.bunny-appver-manifest.json`, which decides what a FUTURE upload skips: the
+loss surfaces weeks later as a file that never deploys. `tagAlreadyWritten` now
+takes the manifest and refuses identical bytes that this checkout has no record
+of writing, which separates our retry from a stranger's release without breaking
+retries. It also makes the temp-tree recipe's "copy the manifests in and back
+out" load-bearing rather than housekeeping — a release tree without them now
+fails this check, correctly, because it genuinely cannot tell whose release it
+is resuming.
+
+**Do not test release tooling with a real release.** `v262` exists because a
+session testing a new lock planted a held lock and ran a real release to watch
+it refuse — from a `git archive HEAD` tree built BEFORE the lock existed, so the
+old tool ran, with a real key and a real tag, and shipped. It is byte-identical
+to v261 so nothing regressed, and it is deliberately NOT deleted: a version path
+is edge-cached for a year, so deleting it converts a harmless duplicate into an
+unpurgeable 404. A spent tag number is much the cheaper failure. The general
+trap is that an archive tree is a snapshot of HEAD, so it cannot contain the
+uncommitted change you are trying to exercise — testing new tooling from one
+tests the old tooling.
+
+**Two of these fixes reached main inside somebody else's commit.**
+`release-lock.js` and the `tagAlreadyWritten` change are in `5236df358`, whose
+message is "English: Grade 8 Unit 7 kept its source list's numbers inside the
+words". The release-safety work shipped under a commit about vocabulary, on the
+same night, in the same shared tree, for the reason the co-edited-file section
+above gives. If you go looking for when a tooling fix landed, the commit message
+is not evidence.
+
+**And a reading trap that cost a wrong claim that night:** in a tree several
+sessions share, the working copy is not evidence about the shipped code. A grep
+of `tools/deploy-app-version.js` found a comment line stating the old behaviour
+and it was reported as current — but the file was being rewritten at that
+moment, and the line survived only as a QUOTATION inside its own replacement,
+which existed to say it was wrong. `git show HEAD:<path>` is the check; grep of
+the working tree is not, and it is worse than relaying because it comes with a
+claim of having verified.
+
 **HEAD is a cleaner input, not a safety property.** The recipe above keeps
 somebody else's uncommitted work out of a release. It does NOT make the release
 safe, and reading it that way is how the content tier nearly shipped broken on

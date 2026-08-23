@@ -451,6 +451,107 @@ for (const gradeDir of grades) {
   }
 }
 
+// ── the printable worksheet's answer-key filter ─────────────────────────────
+// The cursive worksheet prints a unit's grammar exercises with lines to write on,
+// and 149 of the 1,047 practice pieces carry the ANSWER KEY. Printed under the
+// questions those are the answers, on the learner's own page. english.js cuts each
+// piece at the key marker; this is the check that it still does.
+//
+// It exists because the FIRST version of that filter was anchored with ^, which
+// matched the 45 pieces that START with a key and missed the 104 that append one to
+// the last question — "5. ______ is your teacher? Check yourself: 1. Who 2. What…".
+// Those printed. Nothing said so: the sheet rendered, the page count was exact,
+// every other check passed. A filter that silently stops matching is
+// indistinguishable from a filter with nothing to do, which is the failure this
+// whole file exists for.
+//
+// THE PATTERN IS READ OUT OF english.js, never copied. A copy is a second thing to
+// keep in step, and the copy is always the one that goes stale — the same reason
+// check-ehel-audio-coverage.mjs reads its templates out of the generator source.
+// If it cannot be found, that is a failure and not a skip: a gate that quietly
+// checks nothing is worse than no gate.
+function checkWorksheetAnswerKeys() {
+  const label = "worksheet grammar";
+  const source = path.join(here, "..", "src", "prototypes", "ehel-academy", "shell", "subjects", "english.js");
+  if (!fs.existsSync(source)) { fail(label, "shell/subjects/english.js not found — cannot check the answer-key filter"); return; }
+  const text = fs.readFileSync(source, "utf8");
+  const declared = text.match(/const GRAMMAR_ANSWER_KEY = \/(.+)\/([a-z]*);/);
+  if (!declared) { fail(label, "GRAMMAR_ANSWER_KEY is not declared in english.js — the filter it checks has moved or gone"); return; }
+  let marker;
+  try { marker = new RegExp(declared[1], declared[2]); }
+  catch (error) { fail(label, `GRAMMAR_ANSWER_KEY does not compile: ${error.message}`); return; }
+
+  const split = (practice) => String(practice || "").split(/\n|\|/).map((part) => part.trim()).filter(Boolean);
+  const strip = (piece) => { const hit = piece.match(marker); return hit ? piece.slice(0, hit.index).trim() : piece; };
+
+  // An INDEPENDENT detector, deliberately not keyed on the wording: a dense run of
+  // numbered short answers is an answer key whatever it calls itself. This is the
+  // half that can catch a NEW wording — the floor below cannot, because the
+  // existing matches keep matching and the count never drops.
+  //
+  // It earned its place immediately. It found "Answer key, Part A: 1. visited, 2.
+  // gave…" and "Answers, Part B: 1. Wash 2. Put away", where a comma and a part
+  // label sit between the words and the answers, so the pattern's colon never
+  // matched and three of them were printing at Grade 4.
+  // Keyed on the numbering, not the words. Keying it on the wording instead was
+  // tried and is useless: "then check yourself against the answers" and "Check your
+  // answers before you finish" are ordinary instructions, and four of the five
+  // things it flagged were those rather than leaks.
+  //
+  // It is only meaningful for the grades the worksheet PRINTS. Above Grade 4 the
+  // same shape is the numbered exercise list itself, so it is not evaluated there —
+  // an honest nothing rather than a number that looks like 183 leaks and is not.
+  const looksLikeAnswerRun = (text) => (text.match(/\b\(?\d+[.)]\s*[A-Za-z'’“-]/g) || []).length >= 3;
+
+  let pieces = 0;
+  let carried = 0;
+  let survived = 0;
+  let runsInPrinted = 0;
+  for (const gradeDir of grades) {
+    const unitsDir = path.join(root, gradeDir, "data", "units");
+    if (!fs.existsSync(unitsDir)) continue;
+    for (const file of fs.readdirSync(unitsDir).filter((n) => n.endsWith(".json"))) {
+      const unit = readJson(path.join(unitsDir, file));
+      for (const item of unit.grammar || []) {
+        for (const piece of split(item.practice)) {
+          pieces += 1;
+          if (marker.test(piece)) carried += 1;
+          const kept = strip(piece);
+          // The one thing that must never be true: a piece that reaches the sheet
+          // still carrying the answers.
+          if (kept && marker.test(kept)) {
+            survived += 1;
+            if (survived <= 5) fail(label, `${gradeDir}/${file} prints an answer key: ${JSON.stringify(kept.slice(0, 90))}`);
+          }
+          // The worksheet prints Grades 1-4 only (BOTH_DESIGNS). A surviving answer
+          // run there reaches a learner and is a failure; above it, nothing prints
+          // yet, so it is reported as the work waiting if the sheet is extended.
+          if (kept && Number(gradeDir.slice(6)) <= 4 && looksLikeAnswerRun(kept)) {
+            runsInPrinted += 1;
+            if (runsInPrinted <= 5) fail(label, `${gradeDir}/${file} prints what reads as an answer run the filter did not catch: ${JSON.stringify(kept.slice(0, 90))}`);
+          }
+        }
+      }
+    }
+  }
+  if (survived > 5) fail(label, `${survived - 5} further answer key(s) reach the printed sheet`);
+  // A count that cannot fall quietly. If a new wording is authored and the pattern
+  // stops matching it, `carried` drops and this fires — otherwise a filter with
+  // nothing to do and a filter that has stopped working look identical.
+  //
+  // Counted across ALL EIGHT grades even though the worksheet only prints Grades
+  // 1-4 (149 of the 1,047 pieces there). The extra cost is nothing and it means the
+  // day someone extends the sheet upward, the filter has already been under watch
+  // rather than meeting 1,300 unchecked pieces for the first time.
+  const FLOOR = 403;
+  if (carried < FLOOR) {
+    fail(label, `only ${carried} practice pieces match GRAMMAR_ANSWER_KEY, was ${FLOOR} — either keys were removed from the content, or a new wording is not being matched and is printing. Check which before lowering this floor.`);
+  }
+  if (runsInPrinted > 5) fail(label, `${runsInPrinted - 5} further answer run(s) reach the printed sheet`);
+  note(`worksheet grammar: ${carried} of ${pieces} practice pieces carry an answer key across all eight grades; every one cut before printing`);
+  note("worksheet grammar: answer runs are only checked at Grades 1-4, the grades the sheet prints — above that the same shape is the exercise list itself, so extending the sheet upward needs this detector recalibrated first");
+}
+
 function walkAudio(value, visit, where = "") {
   if (Array.isArray(value)) { value.forEach((item, index) => walkAudio(item, visit, `${where}[${index}]`)); return; }
   if (!value || typeof value !== "object") return;
@@ -496,6 +597,12 @@ if (unsigned.size) {
   note(`${total} item(s) are not signed off by a curriculum reviewer, by status: `
     + [...unsigned.entries()].sort((a, b) => b[1] - a[1]).map(([status, n]) => `${n} ${JSON.stringify(status)}`).join(", "));
 }
+
+// Before the summary, not after it: a check that runs later still records its
+// failures but its note is added once the notes have already been printed, so it
+// reports nothing and looks like it never ran. That is how this one was first
+// wired, and the silence was indistinguishable from a clean pass.
+checkWorksheetAnswerKeys();
 
 if (notes.length) {
   console.log("\nNotes (need a human eye, not a build failure):");

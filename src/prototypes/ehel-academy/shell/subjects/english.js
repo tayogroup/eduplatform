@@ -9424,16 +9424,44 @@ const GRAMMAR_ORAL_TYPES = /^(Listen, point and choose|Say, build and use)$/;
 // so one piece is the honest answer there, not a parser that found nothing.
 const splitGrammarPractice = (practice) => String(practice || "").split(/\n|\|/).map((part) => part.trim()).filter(Boolean);
 
-// 45 of the 981 practice pieces are the ANSWER KEY — "Check yourself: 1. He 2. She
-// 3. He 4. She." — in four wordings. On screen the learner reveals them after
-// trying; printed straight under the questions they are simply the answers, on the
-// learner's own page, with blank lines inviting them to copy them down.
+// 149 of the 1,047 practice pieces carry the ANSWER KEY — "Check yourself: 1. He
+// 2. She 3. He 4. She." On screen the learner reveals it after trying; printed
+// under the questions it is simply the answers, on the learner's own page, with
+// blank lines inviting them to be copied down.
 //
-// So they are dropped rather than laid out. This is the one place the sheet leaves
-// authored content out on purpose, and it is worth being explicit that nothing else
-// is: no other exercise is capped, sampled or truncated. A learner loses the
-// answers, not the practice.
-const GRAMMAR_ANSWER_KEY = /^(check yourself|answers?|answer key|check your work|self[- ]check)\b[:\-—]?/i;
+// THE KEY IS NOT ALWAYS ITS OWN PIECE. 104 of the 149 are appended to the LAST
+// QUESTION on the same line — "5. ______ is your teacher? Check yourself: 1. Who
+// 2. What…" — so a pattern anchored with ^ matches only the 45 that start one, and
+// the other 104 print. That is exactly what the first version of this did.
+//
+// So the marker is found ANYWHERE and the piece is cut at it. A piece that opens
+// with the marker cuts to nothing and drops; a question with the key stuck on the
+// end keeps the question and loses the answers. Three wordings appear inline
+// (answer key 45, check yourself 30, self-check 29) and the anchored ones add
+// "answers:"; all are in the one pattern.
+//
+// This is the one place the sheet leaves authored content out on purpose, and it is
+// worth being explicit that nothing else is: no other exercise is capped, sampled or
+// truncated. A learner loses the answers, not the practice. check-english-content.mjs
+// fails if a key ever survives into a prompt, so a fifth wording cannot start
+// printing quietly.
+// The separator is rarely a plain colon. What actually appears between the words
+// and the answers: ", Part A:", ", examples only:", " (self-check) —", and a
+// parenthetical long enough to run to sixty characters. Three widenings were needed
+// and each was driven by a leak the pattern had not anticipated, not by re-reading
+// it — which is why the gate's detector is keyed on the ANSWER RUN rather than on
+// the wording, and found every one of them.
+//
+// The two halves are not symmetrical, on purpose. The multi-word phrases are
+// unambiguous, so anything up to the colon may sit between them and the answers.
+// Bare "answers" is an ordinary word — "Ask and answer three times:", "Write each
+// answer in two ways:" are INSTRUCTIONS — so it keeps a strict separator. Loosening
+// that half cut 84 pieces, and the extras were real teaching text.
+const GRAMMAR_ANSWER_KEY = /(?:\b(?:check yourself|check your work|answer key|self[- ]check)\b[^:\n]{0,60}[:\-—])|(?:\banswers?\b\s*(?:,?\s*part\s+[a-z0-9]+)?\s*[:\-—])/i;
+const stripGrammarAnswerKey = (piece) => {
+  const found = piece.match(GRAMMAR_ANSWER_KEY);
+  return found ? piece.slice(0, found.index).trim() : piece;
+};
 
 // A gap-fill wants one line to answer on; an open task wants room to write. The
 // prompt's own shape decides, which is a proxy but a legible one — 647 of the 981
@@ -9460,7 +9488,7 @@ function worksheetGrammar() {
   return (course.grammar || [])
     .filter((item) => !GRAMMAR_ORAL_TYPES.test(item.practiceType || ""))
     .map((item) => {
-      const pieces = splitGrammarPractice(item.practice).filter((piece) => !GRAMMAR_ANSWER_KEY.test(piece));
+      const pieces = splitGrammarPractice(item.practice).map(stripGrammarAnswerKey).filter(Boolean);
       const { instruction, prompts } = grammarInstructionSplit(pieces);
       return {
         title: item.title || "",

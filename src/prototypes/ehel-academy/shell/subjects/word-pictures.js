@@ -514,7 +514,7 @@ export const WORD_PICTURES = {
   constitution: "📜", charter: "📃", furious: "😠", communicate: "💬",
   quote: "🗨️", uneasy: "😟", unexpected: "😲", local: "📍",
   intelligence: "🧠", citizenship: "🪪", glare: "🔆", brightness: "🔆",
-  cooperate: "🤝", cooperation: "🤝", cooperated: "🤝", collaborative: "🤝",
+  cooperate: "🤝🏾", cooperation: "🤝🏾", cooperated: "🤝🏾", collaborative: "🤝🏾",
   boycott: "🚫", avoid: "🚫", destroy: "💥", hoist: "🏋🏾", announce: "📢",
   towering: "🗼", drowsy: "😴", booming: "🔊", approval: "👍🏾",
   contract: "📝", consume: "🍽️", brilliant: "🌟", telescopes: "🔭",
@@ -579,8 +579,8 @@ export const WORD_PICTURES = {
   gerenuk: "🦌", meat: "🍖", cheetahs: "🐆", chase: "🏃🏾",
   eagles: "🦅", reptiles: "🦎", toads: "🐸", amphibians: "🐸",
   snakes: "🐍", herons: "🐦", crabs: "🦀", turtles: "🐢", sharks: "🦈",
-  baskets: "🧺", mangoes: "🥭", shawls: "🧣", scarf: "🧣", unity: "🤝",
-  assistant: "🤝", fire: "🔥", bonfire: "🔥", streams: "🏞️",
+  baskets: "🧺", mangoes: "🥭", shawls: "🧣", scarf: "🧣", unity: "🤝🏾",
+  assistant: "🤝🏾", fire: "🔥", bonfire: "🔥", streams: "🏞️",
   riverbed: "🏞️", territory: "🗺️", meteorology: "🌦️", monitor: "🖥️",
   magnetic: "🧲", print: "🖨️", teenager: "🧒🏾", cousin: "🧒🏾",
   chargers: "🔌", phones: "📱", phone: "📱", hook: "🪝",
@@ -673,7 +673,7 @@ export const WORD_PICTURES = {
   please: "🙏🏾", apologise: "🙇🏾", ask: "❓", question: "❓", answer: "💬",
   speak: "🗣️", say: "🗣️", give: "🤲🏾", find: "🔍", think: "💭",
   again: "🔁", start: "▶️", finish: "🏁", break: "⏸️", ready: "✅",
-  valid: "✅", accept: "👍🏾", invite: "✉️", join: "🤝", party: "🎉",
+  valid: "✅", accept: "👍🏾", invite: "✉️", join: "🤝🏾", party: "🎉",
   diary: "📔", tonight: "🌙", midnight: "🕛", luckily: "🍀",
   quickly: "💨", quietly: "🤫", loudly: "🔊", boring: "😐",
   wind: "🌬️", snow: "❄️", hill: "⛰️", desert: "🏜️", island: "🏝️",
@@ -687,7 +687,7 @@ export const WORD_PICTURES = {
   habitat: "🌿", ecosystem: "🌿", trend: "📈", indicator: "📊",
   analyst: "📊", batch: "📦", compensation: "💰", reimburse: "💰",
   outlet: "📰", byline: "✍🏾", readership: "👥", anonymous: "🕵🏾",
-  consultant: "🧑🏾‍💼", referee: "🧑🏾‍💼", negotiate: "🤝", recommend: "👍🏾",
+  consultant: "🧑🏾‍💼", referee: "🧑🏾‍💼", negotiate: "🤝🏾", recommend: "👍🏾",
   fail: "❌", correspondence: "✉️", enquire: "❓", warranty: "📜",
   clause: "📜",
   // bank is deliberately absent — see the note above.
@@ -793,11 +793,20 @@ export const GRADE_WORD_PICTURES = {
     back: "", hard: "", left: "", may: "", right: "", stand: "", turn: "",
     spin: "🧵",
     plate: "", platform: "", sit: "",
+    // Grade 6 re-teaches two more as objects rather than actions, found by the
+    // Grades 5-8 picture audit: its "ring" is a circle, not a bell ringing, and
+    // its "markers" are boundary posts, not the coloured pens of Grade 4.
+    ring: "⭕", markers: "🪧",
   },
   7: {
     like: "", point: "", square: "", roll: "", play: "⚽",
     hard: "", left: "", lift: "", may: "", right: "", round: "", well: "",
     stop: "🚏", sign: "",
+    // Three more from the Grades 5-8 audit, all the same re-teaching pattern:
+    // Grade 7's "palm" is the TREE, not the hand; its "leaves" is the verb, what
+    // a person passes on after they are gone; its "drive" is an organised
+    // campaign, not driving a car. Only the tree has an honest picture.
+    palm: "🌴", leaves: "", drive: "", gas: "",
   },
   8: {
     like: "", kind: "", point: "", book: "", draw: "", drawn: "", play: "⚽",
@@ -806,6 +815,16 @@ export const GRADE_WORD_PICTURES = {
     // Added with the Intensive English pass: those words entered the shared map
     // for a beginner course and English teaches four of them differently.
     platform: "", serve: "",
+    // Grade 8 is where this pattern peaks, and the Grades 5-8 audit found ten of
+    // them at this grade alone. It re-teaches concrete words in FIGURATIVE
+    // senses, and the picture kept following the concrete one: a bird beside
+    // "swallow" that means to swallow food, a locomotive beside "trains" that
+    // means to train somebody, a knife beside "sharp" meaning clever, an insect
+    // beside "bugs" meaning faults in a program, a postbox beside "addressed"
+    // meaning spoke to an audience. None has an honest picture of the sense
+    // being taught, except "body" — a group of people is 👥, not one figure.
+    swallow: "", trains: "", crown: "", sharp: "", bugs: "", addressed: "",
+    boil: "", border: "", frozen: "", body: "👥",
   },
 };
 

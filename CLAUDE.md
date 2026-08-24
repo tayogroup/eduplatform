@@ -760,9 +760,41 @@ The other five subjects have no such stamp. If one ever re-renders audio without
 changing the text, it needs one — copying English's is a few lines — or a purge,
 which needs an account-level key that is not in `.env`.
 
-#### No pruner covers English, so a deleted clip lives on the CDN for ever
+#### The English CDN orphan pruner, and why it needed writing
 
-Both pruners take the same five subjects, and English is not one of them:
+**`tools/prune-english-audio-on-bunny.mjs`** now covers this. Report by default,
+`--delete` to remove, `--json` for the numbers. First run on 2026-08-24: 93,086
+files on the zone, 93,591 reachable paths, **57 named by no descriptor (12.4 MB),
+all 57 since deleted — the zone reports 0 orphans.**
+
+The 57 were three groups, and their coherence is what made them safe to remove:
+36 US spellings stranded by the UK-vocabulary decision of 2026-08-17 (verified,
+not inferred — `apartment`/`elevator`/`janitor`/`mold`/`railroad`/`emphasize`
+all unclaimed while `flat`/`lift`/`caretaker`/`mould`/`railway`/`emphasise` are
+all claimed), 12 `conclusion` clips from the duplicate-word repair, and 9 whose
+text moved.
+
+**Reachability is the claim map, and BOTH halves of it.** `clipGradeMap()` is
+what the app will play; `suppressed()` is descriptors carrying
+`available: false`, and those are NOT orphans — they are the state a repair
+leaves between deleting a wrong recording and paying for its replacement.
+Mutation-testing that rule is what proved it load-bearing: unprotecting
+`suppressed` moves the count 57 → 63, so the tool would have deleted six clips
+somebody was about to re-record. Two other mutations must also fail — an
+unrecognised argument (exit 2, because the default action here deletes from live
+storage) and a claim map that resolves nothing (exit 1 below a 5,000 floor,
+rather than reporting the whole course orphaned).
+
+**Run the deployed check separately; the tool cannot do it for you.** It reasons
+from the repo, and the repo is not evidence about the CDN — a content file may
+not have been re-uploaded. Before the deletion above, all 223 deployed Grade 1-8
+content files were enumerated from storage and fetched through the edge: zero
+references to any of the 57. Without that, a clip the deployed content still
+named would have become a silent fallback to the paid runtime TTS endpoint, on a
+404 Bunny caches and the key in `.env` cannot purge.
+
+Why it had to exist at all: both older pruners take the same five subjects, and
+English is not one of them:
 
 ```js
 // tools/prune-ehel-course-audio.mjs  AND  tools/prune-ehel-course-audio-on-bunny.mjs
@@ -776,14 +808,15 @@ search path as well as outside the subject list — two independent reasons the
 tooling cannot see them.
 
 The consequence is only on the CDN. A stranded English clip on DISK shows up in
-`git status`, because English clips are committed; a stranded clip on STORAGE is
+`git status`, because English clips are committed; a stranded clip on STORAGE was
 reported by nothing, costs a paid upload once and storage for ever, and — the
 part that matters — **is the last surviving copy of audio that was deleted for
 being wrong.** `32-connoisseur-meaning.mp3` sat on the zone from 2026-08-20
 saying an invented definition, through the repair that deleted it locally and
 the re-record that replaced it, until it was removed by hand on 2026-08-24.
+Doing that by hand is what prompted the tool.
 
-Doing it by hand is fine; getting the ORDER wrong is not. Dereference first,
+If you ever do it by hand again, getting the ORDER wrong is the thing to avoid. Dereference first,
 delete second, because Bunny caches a 404 on a path that cannot be purged with
 the key in `.env` — so a file deleted while something still asks for it becomes
 a permanent hole rather than a recoverable mistake. The sequence that worked:

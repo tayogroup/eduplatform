@@ -592,11 +592,43 @@ python tools/check-english-word-audio.py             # the single-word clips
   the audio ranks the right word above its rivals instead. Homophones are
   undecidable by anything that listens, so a clip passes within a margin.
 
-**A re-recorded clip keeps its filename, so `.bunny-upload-manifest.json` still
-lists it as uploaded and the uploader will skip it** — reporting success while
-leaving the old audio live. Drop those entries before uploading a repair. This
-bit three separate repairs in one session; for a *new* clip the manifest merely
-delays a deploy, but for a re-recorded one it preserves the wrong audio forever.
+**A re-recorded clip uploads normally, and this note used to say the opposite.**
+The manifest stores a CONTENT HASH, and the skip decision is a comparison, not a
+lookup:
+
+```js
+// tools/upload-media-to-bunny.js
+for (const item of all) item.hash = sha1(fs.readFileSync(item.local));
+const todo = all.filter((x) => manifest[x.remote] !== x.hash);
+```
+
+New bytes mean a new sha1, so a re-recorded clip lands in `todo` even though its
+path is in the manifest. Verified rather than reasoned — `upload-media-to-bunny.js
+english --dry` after a Grade 8 repair queued both re-recorded clips, including the
+one that kept its exact filename. **Do not drop manifest entries before a repair;
+there is nothing to drop.**
+
+What IS still exposed is the narrow legacy case, and the tool says so itself
+rather than leaving it to be discovered: entries written before the manifest
+stored hashes carry no hash to compare, so their contents cannot be verified from
+here. They upload once, gain a hash, and behave normally afterwards. The run
+above reported exactly one.
+
+The correction is worth the space because of how the wrong version survived. It
+was true when written, the behaviour changed under it, and on 2026-08-24 it cost
+two sessions a wrong conclusion within minutes — one warned the other about the
+trap, the other "confirmed" it, and **both had checked whether the path was
+PRESENT in the manifest** when the tool compares hashes. Presence is a true fact
+about the wrong property. Agreement between two people checking the same wrong
+property is not a second opinion, and it reads exactly like verification.
+
+**The half of the old note that WAS right is about browsers, not the manifest,
+and it is unchanged**: a re-recorded clip that keeps its filename keeps its URL,
+so every learner who has already played it holds the old audio for up to a year
+whatever the uploader does. `AUDIO_RELEASE` in `shell/subjects/english.js` is the
+only lever — see "Re-rendering without a text change strands every learner who
+already listened" below. A repair that renames the file is immune to that for
+free, which is a real reason to prefer one, and is unrelated to the manifest.
 
 #### The defect no check here can catch: the voice says the wrong word
 
@@ -1278,8 +1310,17 @@ The manifest decides what a future upload **skips**. A wrong entry is therefore
 not noisy — the file simply never goes up, and `--verify` still passes, because
 it only confirms that the bytes at that path arrive, not that they are the
 current bytes. Identical shape to the `.bunny-upload-manifest.json` trap
-recorded above for re-recorded audio, and to the ✓-after-skip: silence read as
-success.
+recorded above for Computing — "a local cache, not a record of the CDN", where
+630 clips sat generated-but-undeployed behind entries claiming they were up —
+and to the ✓-after-skip: silence read as success.
+
+Note what this is NOT. Both manifests compare a content hash, so neither can be
+fooled by a file whose CONTENTS changed under an unchanged name; that was the
+old claim about re-recorded audio and it was wrong (corrected above). The live
+failure is the opposite direction — an entry that is *right about the bytes* and
+wrong about whether they ever reached storage. Nothing local can tell those
+apart, which is why the repair is to list storage and compare, not to reason
+about the manifest.
 
 Treat it as shared. Copy it into a release tree and back out again if you must,
 but know that writing it while another session is mid-release overwrites their

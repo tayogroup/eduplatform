@@ -729,11 +729,31 @@ english --dry` after a Grade 8 repair queued both re-recorded clips, including t
 one that kept its exact filename. **Do not drop manifest entries before a repair;
 there is nothing to drop.**
 
-What IS still exposed is the narrow legacy case, and the tool says so itself
-rather than leaving it to be discovered: entries written before the manifest
+A narrow legacy case exists in principle — entries written before the manifest
 stored hashes carry no hash to compare, so their contents cannot be verified from
-here. They upload once, gain a hash, and behave normally afterwards. The run
-above reported exactly one.
+here; they upload once, gain a hash, and behave normally afterwards.
+
+**But the tool's own count of them is wrong, and the run above did NOT report a
+real one.** `upload-media-to-bunny.js:223` is
+
+```js
+const legacy = todo.filter((x) => x.remote in manifest).length;
+```
+
+which tests key PRESENCE. A re-recorded clip is in `todo` precisely because its
+stored hash no longer matches, and its key is of course still present — so it is
+counted and then described as "recorded before the manifest stored hashes", which
+is the opposite of its state. The single entry that run reported was the
+re-recorded connoisseur clip, whose stored value was
+`de8f342ca360ff4c34c358a021da3163979ef586`: forty hex characters, a perfectly
+good sha1. Telling the two apart needs a test on the stored VALUE
+(`/^[0-9a-f]{40}$/`), not on the key.
+
+The uploads are correct either way; only the sentence is wrong. It is recorded
+here because this passage is about not being fooled by a true fact about the
+wrong property, and the count fooled the person writing the passage — the "one"
+was cited as evidence of the exposed class while being an instance of the class
+that had just been proved safe.
 
 The correction is worth the space because of how the wrong version survived. It
 was true when written, the behaviour changed under it, and on 2026-08-24 it cost

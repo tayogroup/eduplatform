@@ -800,7 +800,29 @@ function checkWorksheetAnswerKey() {
   const bodyOf = (name) => {
     const declaration = new RegExp(`(?:function |const )${name}\\b`).exec(text);
     if (!declaration) return null;
-    const open = text.indexOf("{", declaration.index);
+    let cursor = declaration.index + declaration[0].length;
+    // SKIP THE PARAMETER LIST FIRST. A destructured parameter opens a brace before
+    // the body does — worksheetAnswerKeyHtml takes ({ grammar, comprehension, … },
+    // geo) — so matching the first brace after the name returns the ARGUMENTS. The
+    // ruled-lines check below then inspected a parameter list, found no drawing
+    // calls in it, and passed a mutation that adds ruled lines to the real body.
+    //
+    // The gate was written before that refactor and was correct until it; nothing
+    // about it changed, and it silently stopped checking. Found by re-running the
+    // mutation suite after an unrelated signature change, which is the argument
+    // for keeping the suite runnable rather than running it once at the start.
+    const paren = text.indexOf("(", cursor);
+    const firstBrace = text.indexOf("{", cursor);
+    if (paren !== -1 && (firstBrace === -1 || paren < firstBrace)) {
+      let parens = 0;
+      let index = paren;
+      for (; index < text.length; index += 1) {
+        if (text[index] === "(") parens += 1;
+        else if (text[index] === ")") { parens -= 1; if (parens === 0) break; }
+      }
+      cursor = index + 1;
+    }
+    const open = text.indexOf("{", cursor);
     if (open === -1) return null;
     let depth = 0;
     for (let index = open; index < text.length; index += 1) {
@@ -833,6 +855,32 @@ function checkWorksheetAnswerKey() {
   if (!spellingKey) { fail(label, "worksheetSpellingKey is not declared in english.js — the spelling half of the answer key has moved or gone"); return; }
   if (!/\bspellings\b/.test(spellingKey)) {
     fail(label, "worksheetSpellingKey does not consult group.spellings — it would list every word in the group, including ones the sheet set no spelling exercise for");
+  }
+
+  // 2b. AND THE SAME FOR PUNCTUATION, whose answer is the word's own sentence.
+  //     Built from the wrong map it would print sentences for words the sheet set
+  //     no punctuation exercise for, or miss ones it did.
+  const punctuationKey = bodyOf("worksheetPunctuationKey");
+  if (!punctuationKey) { fail(label, "worksheetPunctuationKey is not declared in english.js - the punctuation half of the answer key has moved or gone"); return; }
+  if (!/sentences/.test(punctuationKey)) {
+    fail(label, "worksheetPunctuationKey does not consult group.sentences - it cannot be reading the same map the punctuation exercise itself is built from");
+  }
+
+  // 2c. EVERY SOURCE THAT IS NOT ITS OWN PAGES MUST SAY SO. Spelling and
+  //     punctuation are blocks under a word, not sections at the end, and
+  //     describing either as "pages" invents part of the sheet - which is exactly
+  //     what shipped for spelling. KEY_INLINE_PHRASES is where that distinction
+  //     lives, so a third inline source cannot be added without a phrase.
+  const phrases = bodyOf("KEY_INLINE_PHRASES");
+  if (!phrases) { fail(label, "KEY_INLINE_PHRASES is not declared in english.js - the answer key can no longer tell a section with pages from a block under a word"); return; }
+  for (const source of ["spelling", "punctuation"]) {
+    // Plain string search, not a built regex. `\b` inside a template literal is a
+    // backspace character rather than a word boundary, so a pattern written that
+    // way compiles fine and matches nothing — a check that silently tests false.
+    // That happened three times while writing this file; a substring test cannot.
+    if (!phrases.includes(`${source}:`)) {
+      fail(label, `KEY_INLINE_PHRASES has no wording for "${source}", so the answer key would describe it as pages of its own`);
+    }
   }
 
   // 3. THE PRINTED NOTE AND THE ON-SCREEN HINT MUST SHARE ONE SOURCE. They are

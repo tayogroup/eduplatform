@@ -760,6 +760,54 @@ The other five subjects have no such stamp. If one ever re-renders audio without
 changing the text, it needs one — copying English's is a few lines — or a purge,
 which needs an account-level key that is not in `.env`.
 
+#### No pruner covers English, so a deleted clip lives on the CDN for ever
+
+Both pruners take the same five subjects, and English is not one of them:
+
+```js
+// tools/prune-ehel-course-audio.mjs  AND  tools/prune-ehel-course-audio-on-bunny.mjs
+const SUBJECTS = ["science", "mathematics", "computing", "global-perspectives", "intensive-english"];
+```
+
+They also only ever look inside `media/<subject>/g<NN>/audio/tts/`, the
+hash-named tree. English clips are named for their content slot and live under
+`media/english/g<NN>/audio/{glossary,vocabulary,…}/`, so they are outside the
+search path as well as outside the subject list — two independent reasons the
+tooling cannot see them.
+
+The consequence is only on the CDN. A stranded English clip on DISK shows up in
+`git status`, because English clips are committed; a stranded clip on STORAGE is
+reported by nothing, costs a paid upload once and storage for ever, and — the
+part that matters — **is the last surviving copy of audio that was deleted for
+being wrong.** `32-connoisseur-meaning.mp3` sat on the zone from 2026-08-20
+saying an invented definition, through the repair that deleted it locally and
+the re-record that replaced it, until it was removed by hand on 2026-08-24.
+
+Doing it by hand is fine; getting the ORDER wrong is not. Dereference first,
+delete second, because Bunny caches a 404 on a path that cannot be purged with
+the key in `.env` — so a file deleted while something still asks for it becomes
+a permanent hole rather than a recoverable mistake. The sequence that worked:
+
+1. Confirm zero **exact** references in the repo's data for that grade.
+2. Confirm zero exact references in each **deployed** file of that grade —
+   `sentence-glossary`, the unit, `master-dictionary`, `games/<unit>`,
+   `course-manifest`. The repo is not evidence about the CDN; a file may not
+   have been re-uploaded.
+3. `DELETE` the object through the storage API, then re-list the directory and
+   check the count fell by exactly one.
+4. Drop the path from `.bunny-upload-manifest.json` — same reason the math
+   pruner does it, so a later regeneration of that exact text uploads instead of
+   being skipped as already sent. Splice the entry out rather than
+   re-serialising: that file is one 13.8 MB line and several sessions write it.
+
+**Match exact quoted paths, never substrings.** This vocabulary is built to
+defeat a substring grep, and it did so three times in one session:
+`32-connoisseur-meaning.mp3` is a substring of the live
+`u7-g1-32-32-connoisseur-meaning.mp3`, and it differs from the live word clip
+`32-connoisseur.mp3` by one suffix. A `grep -c` for the orphan's name reported
+references that were not references, in the repo and again in the deployed unit.
+Extract `"([^"]*)"` and compare whole paths.
+
 ### The English content gate
 
 ```bash

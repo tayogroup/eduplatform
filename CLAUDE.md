@@ -672,7 +672,8 @@ changes:
 
 - **Text edited** — a hash-named subject (Science, Mathematics, Computing,
   Global Perspectives, Intensive English) mints a new filename, so the URL
-  changes and the learner refetches. Safe by construction.
+  changes and the learner refetches. Safe by construction. **English is not one
+  of those subjects and this bullet does not cover it** — see below.
 - **Text unchanged, clip re-rendered** — same hash, same filename, same URL. The
   CDN is correct, the manifest hash matches, every check passes, and the learner
   keeps the old audio for a year. Nothing in the repo can see it.
@@ -681,6 +682,29 @@ The realistic trigger is a **voice change** (a new `VOICE_ID`, or regenerating a
 grade), and `speechSpelling` is the other: it exists to fix a mispronunciation
 *without* changing the displayed text, so a respelling applied to a clip already
 in production is exactly this case.
+
+**In English the commonest trigger is an ordinary content repair, and it fires
+even though the text DID change.** English names its clips for their content slot
+(`eng-g05-t01-u03-read01.mp3`, `u7-g1-32-32-connoisseur-meaning.mp3`), not for a
+hash of what they say. So correcting a wrong definition re-records onto the same
+filename: the words changed, the URL did not, and every learner who already
+played it keeps hearing the old wording for a year. The five hash-named subjects
+get a new filename from the same edit and are immune; English is the one subject
+where "the text changed" does not imply "the URL moved", and it is the one
+subject the stamp exists for. Worked example on 2026-08-24: Grade 8 Unit 7's
+`connoisseur` had been teaching an invented meaning, `55c0d2ed7` restored it from
+source and `08ecfbb66` re-recorded, and `AUDIO_RELEASE` went `20260819a` →
+`20260824a` in English v264 — the repair itself reached storage and the edge
+correctly and would still have reached nobody who had listened.
+
+**Exposure is per CLIP, not per repair, so ask it of each file.** That same
+repair touched two meaning clips and only one of them needed the stamp: the
+glossary clip was RENAMED (`32-connoisseur-meaning.mp3` →
+`connoisseur-meaning.mp3`), which moves the URL and busts browser caches for
+free, while the vocabulary clip kept its filename and did not. One repair, two
+clips, two different answers. A rename is the cheaper fix wherever the filename
+is not load-bearing; the stamp is what covers the ones that must keep their
+name.
 
 English hit the general version of this and carries the fix: `AUDIO_RELEASE` in
 `shell/subjects/english.js` stamps audio URLs with `?a=<date>`, bumped whenever

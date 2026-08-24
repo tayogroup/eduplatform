@@ -192,6 +192,28 @@ def _worktree_at(commit: str):
     return target
 
 
+# Categories whose narrated text is COMPOSED rather than stored in a field, so
+# the only way to know what a clip said at a past commit is to ask the generator
+# as it was then.
+#
+# `glossary` is here because a glossary clip's text is not reachable from the
+# object the descriptor sits in. sentence-glossary.json keys its entries BY THE
+# WORD, so the word clip narrates the map key while narrated_fields() only ever
+# looks at the entry's own values — no field holds it, so every one of them fell
+# through to `unmapped`. That was 35,314 clips, every glossary clip in the
+# course, reported as unexamined behind a "174 stale" headline that was a result
+# over 62% of it.
+#
+# Asking the generator rather than rebuilding the rule is not fastidiousness
+# here, it is the difference between a check and a false alarm: the word clip
+# narrates `narration(entry.speechSpelling || word)`, and speechSpelling exists
+# precisely to send a DIFFERENT string from the one on the page ("toe" is sent
+# as "tow" because the voice reads the real spelling as "two"). A local
+# reimplementation that narrated the key would report every respelled clip as
+# stale — the clips that are correct BECAUSE somebody fixed them.
+COMPOSED_CATEGORIES = ("overview", "glossary")
+
+
 @functools.lru_cache(maxsize=None)
 def composed_scripts_at(commit: str, grade: int) -> tuple:
     """{clip_id: script} the generator would narrate for `grade` at `commit`.
@@ -201,15 +223,21 @@ def composed_scripts_at(commit: str, grade: int) -> tuple:
     target = _worktree_at(commit)
     if target is None:
         return ()
+    merged = {}
     with tempfile.TemporaryDirectory() as tmp:
-        out = Path(tmp) / "overview.json"
-        subprocess.run(
-            ["node", "tools/generate-ehel-english-audio.js", "overview", str(grade),
-             "--emit-scripts", str(out)],
-            cwd=target, capture_output=True, text=True, encoding="utf-8", errors="replace")
-        if not out.exists():
-            return ()
-        return tuple(json.loads(out.read_text(encoding="utf-8")).items())
+        for category in COMPOSED_CATEGORIES:
+            out = Path(tmp) / f"{category}.json"
+            subprocess.run(
+                ["node", "tools/generate-ehel-english-audio.js", category, str(grade),
+                 "--emit-scripts", str(out)],
+                cwd=target, capture_output=True, text=True, encoding="utf-8", errors="replace")
+            # One category failing must not discard the other. A commit that
+            # predates sentence-glossary.json emits no glossary and still has
+            # overviews worth comparing, and returning () for both would put the
+            # overviews back into `unmapped` — trading one blind spot for another.
+            if out.exists():
+                merged.update(json.loads(out.read_text(encoding="utf-8")))
+    return tuple(merged.items())
 
 
 def clip_objects(node, parent=None, found=None):
@@ -411,8 +439,30 @@ def main() -> None:
         data_dir = ENGLISH / f"grade-{grade}" / "data"
         if not data_dir.exists():
             continue
-        scripts = {clip_id: script for _, _, clip_id, script, _ in
-                   audit.clips_for_grade(grade, audit.CATEGORIES)}
+        # Keyed by the clip's PATH, not by its bare id, because ids are only
+        # unique within a category and the categories share a grade.
+        #
+        # A word can be both a master-dictionary headword and a sentence-glossary
+        # entry, and then both narrate a clip whose basename is the same slug —
+        # media/audio/grade-2/dictionary/adobe-house.mp3 and
+        # .../glossary/adobe-house.mp3. Keyed by id, the second wins and the
+        # first is compared against the other one's script. They are usually the
+        # same string, which is what makes this quiet: it only shows up where the
+        # two spellings differ, and then it shows up as a clip that was never
+        # touched being reported stale. Grade 2 alone has 246 such collisions and
+        # every one of the 22 "stale" glossary clips a path-blind run reported
+        # was one of them — the dictionary says "adobe house", the glossary key
+        # is "adobe-house", and neither recording had changed.
+        #
+        # The path is what the descriptor actually points at, so it cannot
+        # collide. Paths are normalised to repo-relative posix on both sides.
+        scripts = {}
+        for _, _, _clip_id, script, clip_mp3 in audit.clips_for_grade(grade, audit.CATEGORIES):
+            try:
+                key = Path(clip_mp3).resolve().relative_to(ROOT.resolve()).as_posix()
+            except ValueError:
+                key = Path(clip_mp3).as_posix()
+            scripts[key] = script
         for path in sorted(data_dir.rglob("*.json")):
             rel = path.relative_to(ROOT).as_posix()
             try:
@@ -443,14 +493,14 @@ def main() -> None:
                 if was_pair is None:
                     continue
                 then = was_pair[0]
-                fields = narrated_fields(obj, scripts.get(clip_id, ""))
+                fields = narrated_fields(obj, scripts.get(mp3, ""))
                 if not fields:
                     # No field carries this clip's text, so the script is composed
                     # rather than stored. Ask the generator what it narrated then
                     # and what it narrates now, instead of giving up on the clip.
                     category = mp3.split("/")[-2]
                     then_scripts = dict(composed_scripts_at(commit, grade))
-                    now_script = scripts.get(clip_id)
+                    now_script = scripts.get(mp3)
                     then_script = then_scripts.get(clip_id)
                     if not now_script or then_script is None:
                         unmapped[category] += 1

@@ -339,7 +339,7 @@ def missing_names(script: str, heard: str) -> list:
 CATEGORIES = (
     "sentences", "meanings", "words", "readings", "grammar",
     "grammar-practice", "speaking", "writing", "activities", "quiz",
-    "overview",
+    "overview", "glossary",
 )
 
 
@@ -377,6 +377,51 @@ def overview_clips(grade: int):
         mp3 = directory / f"{clip_id}.mp3"
         if mp3.exists():
             yield ("overview", "overview", clip_id, script, mp3)
+
+
+def glossary_clips(grade: int):
+    """The sentence-glossary word and definition clips, scripts from the generator.
+
+    Same reason overview_clips asks rather than rebuilds, arrived at from a
+    different direction. sentence-glossary.json keys its entries BY THE WORD, so
+    the word clip's text is the map key and not a field of the entry — anything
+    walking the entry's own values cannot see it. That is why every one of these
+    was invisible to the staleness check: 35,314 clips, the whole category.
+
+    The definition clip's text IS a field, but asking for both keeps one rule in
+    one place, and the word half genuinely cannot be derived here: it narrates
+    `speechSpelling` when the entry has one, which deliberately differs from the
+    printed word ("toe" is sent as "tow" because the voice reads the real
+    spelling as "two"). Reimplementing that would report every respelled clip —
+    the ones somebody fixed on purpose — as stale.
+
+    NOTE for transcription callers: half of these are single words, where
+    Whisper hallucinates on ~0.6s of audio ("mouth" comes back as "Please
+    subscribe"). check-english-word-audio.py exists for that case and ranks the
+    word against rivals instead of transcribing. Treat a transcription pass over
+    the word half as indicative, not authoritative; the definition half is
+    ordinary prose and audits normally.
+    """
+    import subprocess
+    import tempfile
+
+    with tempfile.TemporaryDirectory() as tmp:
+        out = Path(tmp) / "glossary.json"
+        result = subprocess.run(
+            ["node", "tools/generate-ehel-english-audio.js",
+             "glossary", str(grade), "--emit-scripts", str(out)],
+            cwd=ROOT, capture_output=True, text=True, encoding="utf-8", errors="replace")
+        if not out.exists():
+            print(f"  glossary g{grade}: generator emitted nothing "
+                  f"({result.stderr.strip()[:120] or 'no error reported'})")
+            return
+        scripts = json.loads(out.read_text(encoding="utf-8"))
+
+    directory = ENGLISH / "media" / "audio" / f"grade-{grade}" / "glossary"
+    for clip_id, script in sorted(scripts.items()):
+        mp3 = directory / f"{clip_id}.mp3"
+        if mp3.exists():
+            yield ("glossary", "sentence-glossary", clip_id, script, mp3)
 
 
 def _live(descriptor):
@@ -443,6 +488,9 @@ def clips_for_grade(grade: int, categories=("sentences",)):
     # the generator's own dictionary and final-quiz branches read them.
     if "overview" in wanted:
         yield from overview_clips(grade)
+
+    if "glossary" in wanted:
+        yield from glossary_clips(grade)
 
     if "words" in wanted:
         master = ENGLISH / f"grade-{grade}" / "data" / f"master-dictionary.grade{grade}.json"

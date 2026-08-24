@@ -151,6 +151,59 @@ always, and must never reach the school's gradebook; and "AI could not unstick
 me → book a human tutor" is part of the design, so help sessions keep a record
 a handoff can carry.
 
+### The human-tutor handoff, proven on the live marketplace (2026-08-24)
+
+The whole chain was exercised on production with a QA tutor: help-session
+wrap-up → "Find a human tutor" (summary copied) → `teacher_marketplace.php`
+→ guest "Start a new request" → `marketplace_enrollment.php` → the summary
+pasted into Learning goals landed verbatim in `local_prequran_teacher_request`
+row `message` — the text a tutor and admin read. So the handoff's delivery
+contract is real, and it is the WHOLE contract: the enrollment form serialises
+every field into that one message column, guests included (`require_login` is
+deliberately absent; a guest gets the request row and admin identity notes,
+only the comm thread needs a login).
+
+What gates a tutor into the marketplace, all at once: profile `status=active`
++ `marketplace_visible=1` + `marketplace_status='published'` +
+`vetting_status='approved'`, user not suspended/deleted, `consumerid` matching
+the consumer context (default resolves to `ehel-k12`, id 8). On test day the
+live marketplace had ZERO published tutors in every consumer context — the
+handoff lands on a working page with nobody in it until the business publishes
+vetted profiles. That is the open item, and it is not an engineering one.
+
+Server-side work on the K-12 Moodle from this machine goes through one loop —
+there is no SSH: stage a script on the Bunny zone under `Ehel Primary/qa/`,
+the operator curls it in cPanel Terminal INTO THE DOCROOT
+(`/home/ehelacad/quraantest.academy` — the script does
+`require(__DIR__ . '/config.php')`, so a home-directory run fails loudly),
+runs it, and both sides delete their copies after. A re-staged fix must take a
+NEW filename: the edge cached the broken first upload, which is this repo's
+own same-path-new-bytes lesson arriving on a new tier.
+
+Three traps from that loop, each of which cost a failed run:
+
+- **Identify the install by its DATABASE, never by `$CFG->wwwroot`.** The box
+  hosts nine Moodles, and the K-12 config serves many hostnames, so wwwroot is
+  host-dependent — from the CLI it reads `https://eduplatform.ai`, and a
+  wwwroot guard fires falsely on the RIGHT install. The identity that holds is
+  the `ehel-k12` row in `local_prequran_consumer` (db `ehelacad_quraantest`).
+  Finding the docroot by grepping config.php for `app.k-12.ehelacademy.org`
+  still works — the hostname is in the config's host list, just not in
+  CLI-resolved wwwroot.
+- **`cli_error()` does not exist after a bare `require(config.php)`** — it
+  lives in clilib.php. A CLI helper script should carry its own fail function
+  rather than pull in more of Moodle.
+- **A destructive row delete on production wants two fences, not an id.** The
+  QA request was removed only after the row proved itself twice — addressed to
+  the QA tutor's userid AND carrying the QA marker text in its message — with
+  refusal the default. An id alone is one typo away from a real family's
+  request.
+
+The QA fixtures are kept, withdrawn: user `qa.test.tutor` (#1330, suspended,
+random unknown password) and profile row 120 (every visibility gate failed).
+A future marketplace test reactivates them by flipping the gates back rather
+than creating new rows.
+
 ## Curriculum validation
 
 Before merging a change to a Cambridge framework file (`src/curriculum/cambridge-english-*.json`) or to unit objective mappings, both of these must exit 0:

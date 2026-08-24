@@ -177,7 +177,7 @@
     "refresh:math-modules": "node tools/refresh-ehel-math-modules.mjs",
     "build:topic-index": "node tools/build-topic-index.mjs",
     "check:topic-index": "node tools/check-topic-index.mjs",
-    "check:wehel": "node tools/check-wehel-audio-coverage.mjs && node tools/check-wehel-contract.mjs",
+    "check:wehel": "node tools/check-wehel-audio-coverage.mjs && node tools/check-wehel-contract.mjs && node tools/check-ehel-teacher-scripts.mjs",
     "check:wehel-contract": "node tools/check-wehel-contract.mjs",
     "check:cohorts": "node tools/check-ehel-cohorts.mjs",
     "check:math": "node tools/check-math-content.mjs && node tools/check-math-answer-keys.mjs && node tools/check-math-cambridge.mjs && node tools/check-math-answer-grading.mjs && node tools/check-math-progress-integrity.mjs && node tools/check-ehel-audio-coverage.mjs mathematics",

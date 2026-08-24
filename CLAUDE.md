@@ -66,9 +66,22 @@ Real uploads are `npm run deploy:integration|staging|production`. **Never run a 
 ## Wehel, the AI tutor, and the contract that holds it
 
 ```bash
-npm run check:wehel          # phrase-audio drift + the contract below
+npm run check:wehel          # phrase-audio drift + the contract below + teacher scripts
 npm run check:wehel-contract # the contract alone
+npm run check:teacher-scripts # the teacher scripts alone
 ```
+
+`check-ehel-teacher-scripts.mjs` was chained in on 2026-08-24. It existed, it
+passed, and **nothing aggregated it** — it ran only if somebody typed its exact
+name, which is a gate that does not run. It was found by accident: a stray
+untracked copy of `package.json` in `src/prototypes/ehel-academy/` turned out to
+differ from the real one in exactly one script, and that script was a `check:wehel`
+with this third step chained on. `git log -S` shows that form never existed in the
+repo's history, so somebody had intended it and it never landed.
+
+Worth stating because the discovery route does not generalise and the failure does:
+a gate reachable only by hand is indistinguishable from one that is wired, right
+up until the day it matters, and nothing in the repo reports the difference.
 
 Wehel spent 2026-08-14 giving learners confidently wrong answers, and **not one
 existing gate could see any of it** — every failure was in data the model

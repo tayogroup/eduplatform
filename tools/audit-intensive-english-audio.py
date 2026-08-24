@@ -94,7 +94,7 @@ WORD_RE = re.compile(r"[a-z0-9']+")
 _WORD_TOKEN = re.compile("[a-z]+")
 
 # A printed form: a run of capitalised column headers, or a price/time table.
-FORM_RE = re.compile(r"(?:[A-Z]{3,}.*){2,}|\d{1,2}:\d{2}")
+FORM_RE = re.compile("(?:[A-Z]{3,}[^a-z]*){2,}|[0-9]{1,2}:[0-9]{2}")
 
 # Below this many words, one wrong word is a defect rather than noise.
 SHORT_WORDS = 12

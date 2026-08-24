@@ -117,6 +117,40 @@ Two things it cannot see, both server-side config: the model
 (`wehel_chat_rate_limit`, 0 = off — the machinery is intact, set it to restore
 the cap on a paid endpoint).
 
+## The tutoring topic index
+
+```bash
+npm run build:topic-index   # derive <subject>/<stageDir>/data/topic-index.json from the unit JSONs
+npm run check:topic-index   # re-derive and byte-compare; withdrawn content absent; sections resolve; floors
+```
+
+The tutoring add-on starts from a problem ("percentages homework"), not a
+course position, so it needs an answer to "where does Ehel teach this?" —
+which nothing else in the repo holds. `tools/lib/ehel-topic-index.js` is the
+one definition, shared by builder and gate; the output is a pure function of
+the content (no timestamps), so the gate rebuilds and byte-compares — a
+content rebuild without a re-run of `build:topic-index` fails it. The files
+live inside the `data/` trees the content uploader already walks, so they
+deploy as ordinary content-tier files, all 41 of them.
+
+Three decisions are encoded and gated, not just implemented: Global
+Perspectives Stage 5 (withdrawn) and English units below 1 are never indexed —
+asserted against `withdrawn-courses.json` independently of the lib that
+enforces them; every topic's section id must be one its subject's shell
+actually renders, read from the shell source (a wrong id is not a 404, it is a
+silent landing on the overview — the portal-allowlist failure shape); and
+per-subject topic totals may not fall below the recorded floor, because a
+parser that quietly stops extracting one category passes every other check.
+Mutation-tested six ways (stale byte, deleted file, planted withdrawn file,
+bogus section id, unit 0 indexed, dropped category) — all caught.
+
+Product decisions recorded 2026-08-24 for the surfaces this index feeds: the
+±2-grade help window is a default view with "show all grades" available, never
+a hard cap; tutoring progress is recorded separately from course progress,
+always, and must never reach the school's gradebook; and "AI could not unstick
+me → book a human tutor" is part of the design, so help sessions keep a record
+a handoff can carry.
+
 ## Curriculum validation
 
 Before merging a change to a Cambridge framework file (`src/curriculum/cambridge-english-*.json`) or to unit objective mappings, both of these must exit 0:
@@ -316,35 +350,45 @@ The generator **rejects an unrecognised argument** rather than ignoring it: a ty
 
 Clips are committed (as Science's are, unlike Computing's and Mathematics'), so an orphan is free to delete while git still holds it. **All eight grades are generated**: 2,684 clips on disk, ~832k characters, and `prune-ehel-course-audio.mjs` reports 0 orphans. The per-grade totals sum to 2,733 rather than 2,684 because a text shared by two grades is one file claimed twice — a dry run reporting more clips than the directory holds is that overlap, not a gap. Guided grades produce no `words` clips — those packs carry no glossary.
 
-#### Which subjects' clips git actually holds — and the Intensive English gap
+#### Which subjects' clips git actually holds
 
 "An orphan is free to delete while git still holds it" is true per subject, not
-in general. Measured 2026-08-24:
+in general. Measured 2026-08-24, after Intensive English's 848 were brought in:
 
 | subject | in git | on disk | outside git |
 | --- | --- | --- | --- |
 | english | 93,065 | 93,065 | 0 |
 | science | 6,483 | 6,483 | 0 |
 | global-perspectives | 2,685 | 2,685 | 0 |
-| **intensive-english** | **4,744** | **5,592** | **848** |
+| intensive-english | 5,592 | 5,592 | 0 |
 | mathematics | 0 | 17,806 | all |
 | computing | 0 | 7,827 | all |
 
-Mathematics and Computing being wholly untracked is deliberate and already
-recorded. **Intensive English is the one that misleads**, because it is the only
-MIXED case: `git ls-files …/intensive-english/media/audio` returns 4,744 clips,
-which reads as "this subject's audio is in git", and 848 of the files beside them
-are not. `.gitignore:64` ignores
-`src/prototypes/ehel-academy/intensive-english/media/audio/tts/`, and gitignore
-does not retroactively untrack — so everything committed before that rule landed
-stays tracked forever while everything generated after it is invisible. Nothing
-in `git status` shows this; ignored files are exactly the ones it does not print.
+Mathematics and Computing being wholly untracked is deliberate and recorded in
+`.gitignore` beside each rule. **Intensive English used to be the one that
+misled**, and the shape of that is worth keeping because it can recur wherever an
+ignore rule is added to a directory that already has tracked files in it.
 
-Verified, so this is a resilience note and not a loss: **all 848 have a CDN
-copy** (remote g01+g02 hold 5,592 distinct names, covering every local clip), so
-none is gone. What they have is exactly one recoverable copy. If the storage zone
-loses them they are re-paid for by the character, and this checkout is the only
-other place they exist.
+It was the only MIXED case: `git ls-files …/intensive-english/media/audio`
+returned 4,744 clips, which reads as "this subject's audio is in git", while 848
+files beside them were not. `git status` cannot show that either — ignored files
+are precisely what it does not print — so three separate signals all read "fine".
+
+The cause was an ignore rule written against a state that had already changed.
+`345966ad4` (2026-08-02) ignored the tree on the stated basis that the clips
+"were untracked and undecided: 5,275 files, 507 MB"; 4,752 of them had been
+committed the day before in `54ca560d5`. gitignore does not retroactively
+untrack, so the rule only ever hid the remainder plus everything generated
+afterwards. **Check `git ls-files <dir>` before adding an ignore rule for a
+directory** — an empty result is the only thing that makes the rule mean what it
+says.
+
+Closed on 2026-08-24 by removing the rule and committing the 848 (163.9 MB), so
+the subject now matches Science, Global Perspectives and English. Untracking the
+4,744 instead would not have shrunk history by a byte — the blobs stay — so it
+would have bought only a stop to future growth while leaving the audio on one
+copy. Before the fix all 848 did have a CDN copy, so nothing was ever at risk of
+being lost outright; what they lacked was a second one.
 
 The practical consequence is in the pruner. `prune-ehel-course-audio.mjs`
 "refuses to remove anything git cannot restore unless `--force`" — so for

@@ -51,17 +51,29 @@ src/prototypes/ehel-academy/computing/media/audio/tts/
 # media/mathematics/gNN/audio/tts/, the path course-ui.js builds off localhost.
 src/prototypes/ehel-academy/mathematics/media/audio/tts/
 
-# Intensive English narration, ignored for the same reason: 5,275 clips / 507 MB
-# for two levels, and a clip is named by a hash of its Listen button's text, so
-# every wording fix strands the previous file rather than replacing it. Tracking
-# them would grow the pack by the full size of the audio on each pass.
+# Intensive English narration is TRACKED, unlike Computing's and Mathematics'
+# above. It was ignored here from 2026-08-02 (345966ad4) for their reason, and
+# the rule was removed on 2026-08-24 because it never delivered it.
 #
-# tools/generate-ehel-intensive-audio.js makes them and
-# tools/upload-media-to-bunny.js intensive-english ships them to
-# media/intensive-english/gNN/audio/tts/, the path course-app.js builds off
-# localhost. The CDN is the store; a fresh clone regenerates or re-uploads
-# rather than re-buying, since the clips are already live.
-src/prototypes/ehel-academy/intensive-english/media/audio/tts/
+# That commit ignored the clips on the stated basis that they "were untracked
+# and undecided: 5,275 files, 507 MB". They were not: 4,752 of them had been
+# committed the day before, in 54ca560d5. gitignore does not retroactively
+# untrack, so the rule only ever hid the ~500 not yet added plus everything
+# generated afterwards — 848 files by 2026-08-24. The saving it was written for
+# was already spent: 439.8 MB sat in history regardless, and removing the rule
+# costs 163.9 MB on top of it rather than the 507 MB the comment implied.
+#
+# So the choice was consistency in one direction or the other, and this subject
+# now matches Science, Global Perspectives and English, which all commit their
+# clips. Untracking the 4,744 instead would not shrink history by a byte — the
+# blobs stay — so it would have bought only a stop to future growth, at the cost
+# of leaving the one subject with two copies down to one.
+#
+# The growth argument itself is real and still applies: a clip is named by a
+# hash of its Listen button's text, so every wording fix strands the previous
+# file rather than replacing it. Run tools/prune-ehel-course-audio.mjs
+# intensive-english after any content change; now that git holds the clips it
+# will delete orphans without --force, which is the thing tracking buys.
 
 # Rendered marketing video. The 15 MB infomercial is a build of
 # docs/marketing/ehel-academy-infomercial.html and its script, both of which are

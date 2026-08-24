@@ -318,19 +318,60 @@ Clips are committed (as Science's are, unlike Computing's and Mathematics'), so 
 
 Stage 5's 158 clips (40,251 characters) narrate a **withdrawn** stage. Leave them — they are committed, so they cost nothing to keep and would have to be paid for again — but do not regenerate them while the hold stands.
 
-#### Deploying Global Perspectives — what the CDN actually does (re-measured 2026-08-11)
+#### Deploying Global Perspectives — what the CDN actually does (re-measured 2026-08-24)
 
-**Every `.js`, `.css` and `.html` under `app/` is now served `max-age=300`, in all five subjects.** Edge Rule 4's general `*/app/*` pattern is live; `docs/bunny-cache-config.md` recorded it as NOT live when it measured on 2026-08-02, so the 30-day exposure the notes below were written about is five minutes today. `current.json` is the exception and is still `max-age=2592000`.
+**The split is by PATH SHAPE, not by file extension: unversioned entry paths are
+`max-age=300`, and `v{TAG}/` bundles are `max-age=31536000`.** Measured across
+three subjects on 2026-08-24:
 
-**Measure before trusting either number.** The window is set by an edge rule, not by the path, so it changes under the repo with no commit to notice — which is what happened here. Reading the figure out of a doc instead of the CDN is how a five-minute cache got written up as a thirty-day one:
+| path | cache-control |
+| --- | --- |
+| `app/{subject}/` (the directory form) | `max-age=300` |
+| `app/{subject}/index.html` | `max-age=300` |
+| `app/{subject}/current.json` | `max-age=300` |
+| `app/{subject}/shared/*.js`, `shared/*.css` | `max-age=300` |
+| `app/{subject}/v{TAG}/*.js`, `v{TAG}/*.css` | **`max-age=31536000`** |
+| `content/{subject}/gNN/*.json` | `max-age=300` |
+| `media/…/*.mp3` | `max-age=31536000` |
+
+That is the design working: the pointers are short so a release is visible in
+five minutes, and the bundles are pinned for a year so a version path can be
+treated as immutable.
+
+**Two things this file said until 2026-08-24 were wrong, and both were stale
+rather than wrong when written.** They are recorded because the shape of the
+error matters more than the numbers:
+
+- "Every `.js`, `.css` and `.html` under `app/` is now served `max-age=300`" —
+  true of the entry paths, false of `v{TAG}/`, which is the half the whole
+  immutable-release scheme rests on. Read literally it says a released bundle
+  refreshes in five minutes; it is pinned for a year, which is exactly why a bad
+  release is abandoned and rolled forward under a new tag rather than overwritten.
+- "`current.json` is the exception and is still `max-age=2592000`" — it is 300,
+  on english, science and computing alike. The 30-day warning attached to it (it
+  "can misreport the live version for up to 30 days") no longer holds. What DOES
+  still hold is the reason not to trust it: **nothing in the app reads
+  `current.json`.** `index.html` is the pointer, and the app loading is the proof.
+
+Also corrected: "all five subjects" — `app/` holds **six** (computing, english,
+global-perspectives, intensive-english, mathematics, science), plus `shared/`
+and `shell/`, which are not subjects.
+
+**Measure before trusting any of the numbers above, including these.** The window
+is set by an edge rule, not by the path, so it changes under the repo with no
+commit to notice — which has now happened twice, in both directions. Reading the
+figure out of a doc instead of the CDN is how a five-minute cache got written up
+as a thirty-day one, and then how a one-year cache got written up as five
+minutes:
 
 ```bash
 curl -sI "https://ehelacademy.b-cdn.net/Ehel%20Primary/app/global-perspectives/shared/grade-redirect.js" | grep -i cache-control
+curl -sI "https://ehelacademy.b-cdn.net/Ehel%20Primary/app/english/current.json" | grep -i cache-control
 ```
 
 - **A `shared/` filename is not immutable on the CDN, dated or not.** Query strings are ignored (a never-before-seen `?probe=` returns `CDN-Cache: HIT` off the bare URL's entry), so `?v=` busting never worked and dated names were the workaround. Only `v{TAG}/` is genuinely immutable. GP's releases go through the versioned flow (`deploy-app-version.js`, `--shell`), never a bare `upload-app-to-bunny.js global-perspectives`.
 - **`app/english/shared/course-ui-20260723e.css` is the 1.3 KB local alias, not the full snapshot the convention promises.** It `@import`s the live `app/english/shared/course-ui.css`, so edits to the English stylesheet propagate into every subject importing the dated alias — GP included. The dated name buys nothing; a `v{TAG}/` bundle does. (`deploy-app-version.js` rewrites that `@import` to a bundled `design-system.css`, so a versioned release is already immune.)
-- **`app/{subject}/shared/grade-redirect.js` is deliberately not versioned, and that is safe only because of the edge rule above.** `grade-N/index.html` loads `../shared/grade-redirect.js` and that entry path has to stay stable across releases, so `deploy-app-version.js` uploads the stub outside `v{TAG}/`. At `max-age=300` a release ships it within five minutes. If rule 4 is ever narrowed again it silently returns to 30 days, and a release *depending* on new redirect behaviour would work locally and not on the CDN. All five subjects with per-grade stubs share this.
+- **`app/{subject}/shared/grade-redirect.js` is deliberately not versioned, and that is safe only because of the edge rule above.** `grade-N/index.html` loads `../shared/grade-redirect.js` and that entry path has to stay stable across releases, so `deploy-app-version.js` uploads the stub outside `v{TAG}/`. At `max-age=300` a release ships it within five minutes — measured again 2026-08-24, still 300. If the rule is ever narrowed it silently returns to 30 days, and a release *depending* on new redirect behaviour would work locally and not on the CDN. Every subject with per-grade stubs shares this.
 
 ### Science answer keys and Cambridge mapping are gated
 

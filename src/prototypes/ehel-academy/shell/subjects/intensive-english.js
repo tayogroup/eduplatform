@@ -699,6 +699,7 @@ const config = {
     deps: () => ({ $, escapeHtml, icon, pageHeader }),
     subjectKey: "intensive-english", subjectLabel: "Intensive English", param: "level", stageWord: "Level", maxStage: 2,
     stage: () => levelNumber,
+    course: () => course,
     sections: () => sections,
     stageDir: (n) => `level-${n}`,
     examples: ["past tense", "greetings", "filling in a form"],

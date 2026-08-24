@@ -632,7 +632,15 @@ export function createCourseApp(config) {
     // stays out of course progress by decision (2026-08-24). Subjects opt in by
     // passing config.getHelp (a createGetHelp instance); done is always false
     // because there is nothing to complete.
-    if (config.getHelp) navItems.push({ id: "get-help", iconName: "life-buoy", label: "Get help", active: route === "get-help", done: false });
+    if (config.getHelp) {
+      navItems.push({ id: "get-help", iconName: "life-buoy", label: "Get help", active: route === "get-help", done: false });
+      // The active help session's home, shown only on its own target unit —
+      // elsewhere the Get help page's resume card is the way back. Guarded:
+      // sessionHere reads the loaded course, which a booting page lacks.
+      let sessionHere = false;
+      try { sessionHere = Boolean(config.getHelp.sessionHere?.()); } catch { /* not loaded yet */ }
+      if (sessionHere) navItems.push({ id: "help-session", iconName: "compass", label: "Help session", active: route === "help-session", done: false });
+    }
     $("#section-nav").innerHTML = sectionNavigation(navItems);
     $$('[data-route]').forEach((button) => button.addEventListener("click", () => navigate(button.dataset.route)));
     const teacherSwitch = $("#teacher-switch");
@@ -719,6 +727,7 @@ export function createCourseApp(config) {
     // teaches nothing itself, it only points at units, and every link it emits
     // goes through the subject's own door (English's carry ?review=1).
     if (route === "get-help" && config.getHelp) config.getHelp.render();
+    else if (route === "help-session" && config.getHelp) config.getHelp.renderSession();
     else (config.renderers[route] || config.renderers.overview)();
     if (!config.disableShellVoice) bindVoiceControls();
     renderCompletionCard();

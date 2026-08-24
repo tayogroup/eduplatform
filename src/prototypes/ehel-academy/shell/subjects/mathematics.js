@@ -1921,6 +1921,7 @@ const config = {
     deps: () => ({ $, escapeHtml, icon, pageHeader }),
     subjectKey: "mathematics", subjectLabel: "Mathematics", param: "stage", stageWord: "Stage", maxStage: 8,
     stage: () => stageNumber,
+    course: () => course,
     sections: () => sections,
     examples: ["percentages", "long division", "area and perimeter"],
   }),

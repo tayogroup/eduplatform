@@ -1986,6 +1986,7 @@ const config = {
     deps: () => ({ $, escapeHtml, icon, pageHeader }),
     subjectKey: "computing", subjectLabel: "Computing", param: "stage", stageWord: "Stage", maxStage: 8,
     stage: () => stageNumber,
+    course: () => course,
     sections: () => sections,
     examples: ["algorithms", "networks", "variables"],
   }),

@@ -11125,8 +11125,16 @@ const config = {
     deps: () => ({ $, escapeHtml, icon, pageHeader }),
     subjectKey: "english", subjectLabel: "English", param: "grade", stageWord: "Grade", maxStage: 8,
     stage: () => gradeNumber,
+    course: () => course,
     sections: () => sections,
     hrefFor: (targetGrade, targetUnit) => placementLocation(targetGrade, targetUnit, "overview", { review: true }),
+    // The help session's own route rides the same review door — the shell
+    // dispatches it ahead of the gated renderers, so it renders on a locked
+    // unit; every link it then emits lands on the overview per hrefFor above.
+    sessionHref: (targetGrade, targetUnit) => placementLocation(targetGrade, targetUnit, "help-session", { review: true }),
+    // Sections are chained here, so the session names its stops instead of
+    // deep-linking them, and sends the learner through the overview in order.
+    orderedUnit: true,
     examples: ["adverbs", "persuasive writing", "reading a story"],
   }),
   extendSummary: (p, base) => ({ ...base, knownWords: p.knownWords ? [...p.knownWords] : undefined }),

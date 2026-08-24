@@ -1206,6 +1206,7 @@ const config = {
     deps: () => ({ $, escapeHtml, icon, pageHeader }),
     subjectKey: "global-perspectives", subjectLabel: "Global Perspectives", param: "stage", stageWord: "Stage", maxStage: 8,
     stage: () => stageNumber,
+    course: () => course,
     sections: () => SECTIONS,
     examples: ["asking good questions", "bar charts", "checking sources"],
   }),

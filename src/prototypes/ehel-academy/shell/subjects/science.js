@@ -1772,6 +1772,7 @@ const config = {
     deps: () => ({ $, escapeHtml, icon, pageHeader }),
     subjectKey: "science", subjectLabel: "Science", param: "stage", stageWord: "Stage", maxStage: 8,
     stage: () => stageNumber,
+    course: () => course,
     sections: () => sections,
     examples: ["food chains", "evaporation", "electric circuits"],
   }),

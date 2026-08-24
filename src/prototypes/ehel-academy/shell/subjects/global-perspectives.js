@@ -20,7 +20,7 @@ import { createCourseApp } from "../course-app.js";
 import { createDeck, deckIcon } from "../deck.js";
 import { createPlacementUnit, placementCallout, placementCourseShell, PREREQ_UNIT } from "../placement.js?v=placement-1";
 import { renderStudyPlan, renderUnitStudyPlan } from "../study-plan.js?v=study-plan-2";
-import { mountWehelChat, modulesFromSections, outlineFromManifest, unitFetcher } from "../wehel.js?v=wehel-4";
+import { mountWehelChat, modulesFromSections, outlineFromManifest, unitFetcher, PLATFORM_ORIGIN } from "../wehel.js?v=wehel-4";
 import { createGetHelp } from "../get-help.js?v=get-help-1";
 
 // Prerequisite unit (unit -1): a placement exam over the previous stages,
@@ -1207,6 +1207,7 @@ const config = {
     subjectKey: "global-perspectives", subjectLabel: "Global Perspectives", param: "stage", stageWord: "Stage", maxStage: 8,
     stage: () => stageNumber,
     course: () => course,
+    marketplaceHref: () => (PLATFORM_ORIGIN ? `${PLATFORM_ORIGIN}/local/hubredirect/teacher_marketplace.php?q=${encodeURIComponent("Global Perspectives")}` : ""),
     sections: () => SECTIONS,
     examples: ["asking good questions", "bar charts", "checking sources"],
   }),

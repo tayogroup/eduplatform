@@ -140,6 +140,18 @@ const LEARN_ROUTES = [
 //   orderedUnit   — true for a subject whose sections are chained (English):
 //                   the learn and practice steps then NAME the stops instead
 //                   of linking them, and point at the overview to walk in order.
+//   marketplaceHref?() — late-bound URL of the human-tutor marketplace
+//                   (teacher_marketplace.php on the Moodle host, resolved from
+//                   the launch's pwsEndpoint origin via wehel.js). Returns ""
+//                   when the launch carries no platform origin — local dev, a
+//                   direct CDN visit — and the marketplace buttons then simply
+//                   do not render, because a root-relative link would 404 on
+//                   the CDN origin. The handoff channel is deliberately the
+//                   clipboard: the summary is learner performance data, and
+//                   this repo's rule is that personal data never rides a URL.
+//                   Pasted into the request form's "Learning goals" field it
+//                   lands in the tutor's own message thread —
+//                   marketplace_enrollment.php already carries it there.
 export function createGetHelp(options) {
   const indexCache = new Map(); // stage -> index | null (null = not offered)
   let showAllStages = false;
@@ -356,13 +368,47 @@ export function createGetHelp(options) {
     </section>`;
   }
 
+  const marketplaceHref = () => (options.marketplaceHref ? options.marketplaceHref() : "");
+
+  // Finished sessions, newest first — the shelf a parent comes back to when
+  // booking a tutor after the fact. Each carries the summary captured at
+  // wrap-up; a record from before summaries were stored simply offers no copy.
+  function recentSessionsHtml(ui) {
+    const finished = store.sessions.filter((s) => s.status === "finished").slice(-4).reverse();
+    if (!finished.length) return "";
+    const esc = ui.escapeHtml;
+    const market = marketplaceHref();
+    return `<section class="panel">
+      <span class="eyebrow">Recent help sessions</span>
+      <p class="gh-note">What was worked on and how it went — copy a summary to share with a tutor when you book one.</p>
+      ${finished.map((s) => `<article class="gh-hit">
+        <p class="gh-recent-line"><strong>${esc(s.topicLabel)}</strong> — ${esc(`${options.stageWord} ${s.target.stage}`)} · Unit ${s.target.unit}${s.finishedAt ? ` <small>${esc(s.finishedAt.slice(0, 10))}</small>` : ""}</p>
+        <div class="gh-actions">
+          ${s.summary ? `<button class="button secondary" data-gh-recent-copy="${esc(s.id)}" type="button">${ui.icon("copy")} Copy the summary</button>` : ""}
+          ${market ? `<a class="button secondary" href="${esc(market)}" target="_blank" rel="noopener">${ui.icon("users")} Find a tutor</a>` : ""}
+        </div>
+      </article>`).join("")}
+    </section>`;
+  }
+
   function introHtml(ui) {
     const esc = ui.escapeHtml;
-    return `${resumeCardHtml(ui)}<section class="panel">
+    return `${resumeCardHtml(ui)}${recentSessionsHtml(ui)}<section class="panel">
       <span class="eyebrow">How this works</span>
       <p class="gh-note">Type what you are stuck on — a topic, a word from your homework, anything. Results come from every unit of ${esc(options.subjectLabel)}, grouped as <strong>Foundations</strong> (earlier work that builds up to it), <strong>your level</strong>, and <strong>next steps</strong>. <strong>Start a help session</strong> on a result and it walks you through: a quick check, the lesson, practice, then a check again.</p>
       <div class="gh-chips">${(options.examples || []).map((example) => `<button class="gh-chip" data-gh-example="${esc(example)}" type="button">${ui.icon("search")}<span>${esc(example)}</span></button>`).join("")}</div>
     </section>`;
+  }
+
+  // Copy with a visible fallback: clipboard access is refusable and refusal
+  // is silent, so a denied write opens a prompt holding the same text.
+  async function copyText(text, button, doneLabel) {
+    try {
+      await navigator.clipboard.writeText(text);
+      if (button) button.textContent = doneLabel;
+    } catch {
+      window.prompt("Copy this summary for your tutor:", text);
+    }
   }
 
   function bindIntro(ui) {
@@ -372,6 +418,12 @@ export function createGetHelp(options) {
         input.value = button.dataset.ghExample;
         input.focus();
         runSearch(input.value, ui);
+      });
+    }
+    for (const button of document.querySelectorAll("[data-gh-recent-copy]")) {
+      button.addEventListener("click", () => {
+        const session = store.sessions.find((s) => s.id === button.dataset.ghRecentCopy);
+        if (session?.summary) copyText(session.summary, button, "✓ Copied");
       });
     }
   }
@@ -417,6 +469,7 @@ export function createGetHelp(options) {
     .gh-learn-item:last-of-type { border-bottom: 0; }
     .gh-learn-item input { width: 17px; height: 17px; flex: none; }
     .gh-learn-item a { color: inherit; }
+    .gh-recent-line { margin: 0; } .gh-recent-line small { color: var(--muted); margin-left: 6px; }
     .gh-score { display: flex; gap: 14px; flex-wrap: wrap; margin: 10px 0; }
     .gh-score span { background: var(--teal-soft, #e6f7f5); border-radius: 10px; padding: 10px 14px; font-size: 14px; }
   </style>`;
@@ -595,7 +648,12 @@ export function createGetHelp(options) {
           }).join("")}
           <div class="gh-actions"><button class="button primary" data-gh-practice-done type="button">Continue ${ui.icon("arrow-right")}</button></div>`;
       }
-      // wrap
+      // wrap. Reaching here means the record is complete, so this is where the
+      // summary is captured ONTO the session: the Recent sessions shelf reads
+      // it long after this unit's data has left memory.
+      const summary = tutorSummary(session, { checkSet, recheckSet, scored });
+      if (session.summary !== summary) { session.summary = summary; saveStore(); }
+      const market = marketplaceHref();
       const practiced = Object.values(session.practice.marks);
       const better = scored && session.recheck.submitted && session.check.submitted && session.recheck.score > session.check.score;
       return `<div class="gh-score">
@@ -603,12 +661,14 @@ export function createGetHelp(options) {
             : `<span>Questions attempted: <strong>${session.check.attempted + session.recheck.attempted}</strong></span>`}
           ${practiced.length ? `<span>Practice: <strong>${practiced.filter((m) => m === "right").length} of ${practiced.length}</strong> right</span>` : ""}
         </div>
-        <p class="gh-note">${scored ? (better ? "You improved — that is the whole point. " : "") : ""}Still stuck on part of it? Ask Wehel about exactly that part, or take this summary to a tutor — it says what you tried and where it is still hard.</p>
+        <p class="gh-note">${scored ? (better ? "You improved — that is the whole point. " : "") : ""}Still stuck on part of it? Ask Wehel about exactly that part, or take it to a human tutor — the summary says what you tried and where it is still hard.</p>
         <div class="gh-actions">
           <button class="button primary" data-gh-wehel type="button">${ui.icon("sparkles")} Ask Wehel about this</button>
+          ${market ? `<a class="button primary" data-gh-market href="${esc(market)}" target="_blank" rel="noopener">${ui.icon("users")} Find a human tutor</a>` : ""}
           <button class="button secondary" data-gh-copy type="button">${ui.icon("copy")} Copy a summary for a tutor</button>
           <button class="button gold" data-gh-finish type="button">Finish the session ${ui.icon("check")}</button>
-        </div>`;
+        </div>
+        ${market ? `<p class="gh-note">Find a human tutor opens the tutor marketplace and copies your summary — paste it into “Learning goals” when you request a tutor, and it reaches them with your request.</p>` : ""}`;
     };
 
     app.innerHTML = `${STYLE}${ui.pageHeader(
@@ -703,17 +763,16 @@ export function createGetHelp(options) {
       const dock = document.querySelector(".wehel-dock-button");
       if (dock && !dock.hidden) dock.click();
     });
-    document.querySelector("[data-gh-copy]")?.addEventListener("click", async (event) => {
-      const text = tutorSummary(session, sets);
-      const button = event.target.closest("button");
-      try {
-        await navigator.clipboard.writeText(text);
-        button.textContent = "✓ Copied — paste it to your tutor";
-      } catch {
-        // Clipboard access is refusable and refusal is silent — the prompt
-        // shows the text so it can still be copied by hand.
-        window.prompt("Copy this summary for your tutor:", text);
-      }
+    document.querySelector("[data-gh-copy]")?.addEventListener("click", (event) => {
+      copyText(tutorSummary(session, sets), event.target.closest("button"), "✓ Copied — paste it to your tutor");
+    });
+    // The marketplace anchor navigates on its own (target=_blank, so this page
+    // and the session survive); the handler only rides the same gesture to put
+    // the summary on the clipboard. No prompt fallback here — a dialog would
+    // fight the opening tab, and the Copy button beside it still covers a
+    // refused clipboard.
+    document.querySelector("[data-gh-market]")?.addEventListener("click", () => {
+      navigator.clipboard?.writeText(tutorSummary(session, sets)).catch(() => { /* Copy button covers it */ });
     });
     document.querySelector("[data-gh-finish]")?.addEventListener("click", () => {
       session.status = "finished";

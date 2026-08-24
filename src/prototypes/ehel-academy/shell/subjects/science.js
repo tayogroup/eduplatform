@@ -10,7 +10,7 @@ import { createCourseApp } from "../course-app.js?v=t2";
 import { createDeck, deckIcon } from "../deck.js?v=deck-1";
 import { createPlacementUnit, placementCallout, placementCourseShell, PREREQ_UNIT } from "../placement.js?v=placement-1";
 import { renderStudyPlan, renderUnitStudyPlan } from "../study-plan.js?v=study-plan-2";
-import { mountWehelChat, modulesFromSections, outlineFromManifest, unitFetcher } from "../wehel.js?v=wehel-4";
+import { mountWehelChat, modulesFromSections, outlineFromManifest, unitFetcher, PLATFORM_ORIGIN } from "../wehel.js?v=wehel-4";
 import { createGetHelp } from "../get-help.js?v=get-help-1";
 
 const pad2 = (n) => String(n).padStart(2, "0");
@@ -1773,6 +1773,7 @@ const config = {
     subjectKey: "science", subjectLabel: "Science", param: "stage", stageWord: "Stage", maxStage: 8,
     stage: () => stageNumber,
     course: () => course,
+    marketplaceHref: () => (PLATFORM_ORIGIN ? `${PLATFORM_ORIGIN}/local/hubredirect/teacher_marketplace.php?q=${encodeURIComponent("Science")}` : ""),
     sections: () => sections,
     examples: ["food chains", "evaporation", "electric circuits"],
   }),

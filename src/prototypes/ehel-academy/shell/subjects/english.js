@@ -13,7 +13,7 @@ import { createDeck } from "../deck.js?v=deck-1";
 import { wordPicture } from "./word-pictures.js?v=pictures-1";
 import { cursiveWord, cursiveCanWrite } from "./cursive-strokes.js?v=cursive-1";
 import { SCHOOL_CALENDAR, calendarTerm, termDatesLabel, termWeekTotal, halfTermRow, formatDay } from "../study-plan.js?v=study-plan-2";
-import { platformHeaders, askWehel, focusModule, setFocusModule, onFocusChange, modulesFromSections, outlineFromManifest, unitFetcher, browserSpeechSupported, speakBrowser, speechRateForGrade, stopBrowserSpeech, speechRecognitionCtor, recognizeSpeech, wehelIcon, platformUrl } from "../wehel.js?v=wehel-4";
+import { platformHeaders, askWehel, focusModule, setFocusModule, onFocusChange, modulesFromSections, outlineFromManifest, unitFetcher, browserSpeechSupported, speakBrowser, speechRateForGrade, stopBrowserSpeech, speechRecognitionCtor, recognizeSpeech, wehelIcon, platformUrl, PLATFORM_ORIGIN } from "../wehel.js?v=wehel-4";
 import { createGetHelp } from "../get-help.js?v=get-help-1";
 
 const $ = (selector, root = document) => root.querySelector(selector);
@@ -11126,6 +11126,7 @@ const config = {
     subjectKey: "english", subjectLabel: "English", param: "grade", stageWord: "Grade", maxStage: 8,
     stage: () => gradeNumber,
     course: () => course,
+    marketplaceHref: () => (PLATFORM_ORIGIN ? `${PLATFORM_ORIGIN}/local/hubredirect/teacher_marketplace.php?q=${encodeURIComponent("English")}` : ""),
     sections: () => sections,
     hrefFor: (targetGrade, targetUnit) => placementLocation(targetGrade, targetUnit, "overview", { review: true }),
     // The help session's own route rides the same review door — the shell

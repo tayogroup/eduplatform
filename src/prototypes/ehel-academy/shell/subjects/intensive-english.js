@@ -23,7 +23,7 @@ import { createCourseApp } from "../course-app.js?v=t2";
 import { createPlacementUnit, placementCallout, PREREQ_UNIT } from "../placement.js?v=placement-1";
 import { renderStudyPlan, renderUnitStudyPlan } from "../study-plan.js?v=study-plan-2";
 import { wordPicture } from "./word-pictures.js?v=pictures-1";
-import { mountWehelChat, modulesFromSections, outlineFromManifest, unitFetcher } from "../wehel.js?v=wehel-4";
+import { mountWehelChat, modulesFromSections, outlineFromManifest, unitFetcher, PLATFORM_ORIGIN } from "../wehel.js?v=wehel-4";
 import { createGetHelp } from "../get-help.js?v=get-help-1";
 
 const $ = (selector, root = document) => root.querySelector(selector);
@@ -700,6 +700,7 @@ const config = {
     subjectKey: "intensive-english", subjectLabel: "Intensive English", param: "level", stageWord: "Level", maxStage: 2,
     stage: () => levelNumber,
     course: () => course,
+    marketplaceHref: () => (PLATFORM_ORIGIN ? `${PLATFORM_ORIGIN}/local/hubredirect/teacher_marketplace.php?q=${encodeURIComponent("Intensive English")}` : ""),
     sections: () => sections,
     stageDir: (n) => `level-${n}`,
     examples: ["past tense", "greetings", "filling in a form"],

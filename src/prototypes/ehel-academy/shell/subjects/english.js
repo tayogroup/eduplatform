@@ -83,7 +83,15 @@ const AUDIO_IS_DEV = ["localhost", "127.0.0.1"].includes(location.hostname);
 // once per bump, which is the correct trade for audio that is otherwise wrong
 // for a year. upload-media-to-bunny.js prints a reminder when it sends English
 // clips, because a stamp nobody remembers to bump is worse than none.
-const AUDIO_RELEASE = "20260819a";
+// 20260824a: Grade 8 Unit 7's connoisseur meaning was re-recorded onto its own
+// filename. The unit taught a definition authored onto a cross-reference the
+// build mistook for a word, and the restored text needed new audio; the
+// vocabulary clip kept its path, so every browser that played the wrong one
+// still holds it. The glossary clip moved to a new name and never needed this.
+// Two clips is a small reason to make the whole course refetch once, and it is
+// still the correct trade — the alternative is a definition nobody can hear
+// corrected, for a year, on a word the unit is teaching.
+const AUDIO_RELEASE = "20260824a";
 function withAudioRelease(url) {
   // Dev serves from disk with no caching worth defeating, and a bare filename
   // is easier to grep for in the network panel.

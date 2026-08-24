@@ -857,13 +857,24 @@ function checkWorksheetAnswerKey() {
     fail(label, "worksheetSpellingKey does not consult group.spellings — it would list every word in the group, including ones the sheet set no spelling exercise for");
   }
 
-  // 2b. AND THE SAME FOR PUNCTUATION, whose answer is the word's own sentence.
+  // 2b. AND THE SAME FOR THE SENTENCES, whose answers serve two exercises. The word's own sentence.
   //     Built from the wrong map it would print sentences for words the sheet set
   //     no punctuation exercise for, or miss ones it did.
-  const punctuationKey = bodyOf("worksheetPunctuationKey");
-  if (!punctuationKey) { fail(label, "worksheetPunctuationKey is not declared in english.js - the punctuation half of the answer key has moved or gone"); return; }
-  if (!/sentences/.test(punctuationKey)) {
-    fail(label, "worksheetPunctuationKey does not consult group.sentences - it cannot be reading the same map the punctuation exercise itself is built from");
+  const sentenceAnswers = bodyOf("worksheetSentenceAnswers");
+  if (!sentenceAnswers) { fail(label, "worksheetSentenceAnswers is not declared in english.js - the sentence half of the answer key has moved or gone"); return; }
+  if (!/sentences/.test(sentenceAnswers)) {
+    fail(label, "worksheetSentenceAnswers does not consult group.sentences - it cannot be reading the same map the copying and punctuation exercises are built from");
+  }
+
+  // 2b-ii. THE SENTENCES ARE PRINTED ONCE, however many exercises they answer.
+  //     "A sentence to copy" and "Punctuation" are different exercises built from
+  //     the SAME map, so their answers are the same list. A key that renders one
+  //     block per source prints every sentence twice under two headings, in the
+  //     one section whose whole job is to be quick to look something up in.
+  const keyBody = bodyOf("worksheetAnswerKeyHtml") || "";
+  const sentenceBlocks = (keyBody.match(/withSentences\.map\(/g) || []).length;
+  if (sentenceBlocks !== 1) {
+    fail(label, `worksheetAnswerKeyHtml renders the sentence answers ${sentenceBlocks} time(s) - it must render them exactly once, whichever of the two exercises are switched on`);
   }
 
   // 2c. EVERY SOURCE THAT IS NOT ITS OWN PAGES MUST SAY SO. Spelling and
@@ -873,7 +884,7 @@ function checkWorksheetAnswerKey() {
   //     lives, so a third inline source cannot be added without a phrase.
   const phrases = bodyOf("KEY_INLINE_PHRASES");
   if (!phrases) { fail(label, "KEY_INLINE_PHRASES is not declared in english.js - the answer key can no longer tell a section with pages from a block under a word"); return; }
-  for (const source of ["spelling", "punctuation"]) {
+  for (const source of ["spelling", "sentences", "punctuation"]) {
     // Plain string search, not a built regex. `\b` inside a template literal is a
     // backspace character rather than a word boundary, so a pattern written that
     // way compiles fine and matches nothing — a check that silently tests false.

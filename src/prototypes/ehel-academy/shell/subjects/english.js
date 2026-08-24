@@ -9776,14 +9776,28 @@ const listPhrase = (parts) => (parts.length > 1
 // spelling was added, so the distinction is a table now rather than a condition.
 const KEY_INLINE_PHRASES = {
   spelling: "the correct spellings of the words this sheet set",
-  punctuation: "the sentences written out with their capital letters and punctuation put back",
+  sentences: "the sentences the words come from",
+  punctuation: "the sentences with their capital letters and punctuation put back",
 };
+
+// The two sentence exercises share ONE block of answers, so when both are on the
+// note describes it once. Two phrases side by side either repeat "the sentences"
+// twice or lean on "those sentences" to refer back — and the second reads as a
+// dangling reference the moment punctuation is on by itself, which is exactly what
+// it did. A pair gets its own sentence rather than a conjunction of two.
+const KEY_SENTENCE_PAIR_PHRASE = "the sentences the words come from, for the copying and the punctuation";
 
 function answerKeyCovers(covers) {
   const paged = covers.filter((part) => !KEY_INLINE_PHRASES[part]);
   const parts = [];
   if (paged.length) parts.push(`the answers to the ${listPhrase(paged)} pages`);
-  for (const part of covers) if (KEY_INLINE_PHRASES[part]) parts.push(KEY_INLINE_PHRASES[part]);
+  const bothSentenceExercises = covers.includes("sentences") && covers.includes("punctuation");
+  for (const part of covers) {
+    if (!KEY_INLINE_PHRASES[part]) continue;
+    if (bothSentenceExercises && part === "sentences") { parts.push(KEY_SENTENCE_PAIR_PHRASE); continue; }
+    if (bothSentenceExercises && part === "punctuation") continue;
+    parts.push(KEY_INLINE_PHRASES[part]);
+  }
   return listPhrase(parts);
 }
 
@@ -9823,7 +9837,14 @@ function worksheetSpellingKey(chosenGroups) {
     .filter((group) => group.words.length);
 }
 
-// The punctuation half. The answer is the word's own sentence, correctly written.
+// The sentence half, serving BOTH the copying exercise and the punctuation one.
+//
+// ONE BLOCK, NOT TWO, and this is the whole design decision. "A sentence to copy"
+// and "Punctuation" are different exercises but they are built from the same map —
+// group.sentences — so their answers are the same list of sentences. Keyed
+// separately they would print every sentence twice, under two headings, in a
+// section whose only job is to be quick to look something up in. The heading says
+// which exercises the block serves; the sentences appear once.
 //
 // UNLIKE SPELLING, THIS IS A REAL REVEAL, and the difference is worth knowing
 // before deciding what the section is for. The spelling prompt spells its answer
@@ -9833,7 +9854,7 @@ function worksheetSpellingKey(chosenGroups) {
 // the only copy of the answer for a learner practising punctuation alone, and
 // redundant for one doing both. Both are legitimate sheets, so it is offered
 // either way rather than guessed at.
-function worksheetPunctuationKey(chosenGroups) {
+function worksheetSentenceAnswers(chosenGroups) {
   return (chosenGroups || [])
     .map((group) => ({
       title: group.title,
@@ -9850,7 +9871,7 @@ function worksheetPunctuationKey(chosenGroups) {
 // arrays in a row is how a call site comes to pass comprehension where spelling
 // was expected: every one of them is an array of objects, so nothing would throw
 // and the key would simply print the wrong section.
-function worksheetAnswerKeyHtml({ grammar, comprehension, spelling, punctuation } = {}, geo) {
+function worksheetAnswerKeyHtml({ grammar, comprehension, spelling, sentenceAnswers, sentenceLabels = [] } = {}, geo) {
   const items = grammar;
   const readings = comprehension;
   const withAnswers = (items || []).filter((item) => item.answers.length);
@@ -9859,14 +9880,20 @@ function worksheetAnswerKeyHtml({ grammar, comprehension, spelling, punctuation 
   // were all blank would otherwise print a heading with nothing under it.
   const withGuidance = (readings || []).filter((reading) => reading.questions.some((question) => question.answer));
   const withSpelling = spelling || [];
-  const withPunctuation = punctuation || [];
-  if (!withAnswers.length && !withGuidance.length && !withSpelling.length && !withPunctuation.length) return "";
+  const withSentences = sentenceLabels.length ? (sentenceAnswers || []) : [];
+  if (!withAnswers.length && !withGuidance.length && !withSpelling.length && !withSentences.length) return "";
   const covers = [
     withAnswers.length && "grammar",
     withGuidance.length && "comprehension",
     withSpelling.length && "spelling",
-    withPunctuation.length && "punctuation",
+    withSentences.length && sentenceLabels.includes("copy") && "sentences",
+    withSentences.length && sentenceLabels.includes("punctuate") && "punctuation",
   ].filter(Boolean);
+  // "6 sentences to copy and punctuate" — the heading is where the two exercises
+  // are distinguished, since the sentences under it answer both.
+  const sentenceWhat = sentenceLabels.length > 1
+    ? `${sentenceLabels[0]} and ${sentenceLabels[1]}`
+    : sentenceLabels[0] || "";
   return `<section class="cw-group cw-answers">
     <header class="cw-group-head">
       <span>Answer key</span>
@@ -9891,8 +9918,8 @@ function worksheetAnswerKeyHtml({ grammar, comprehension, spelling, punctuation 
       <h3 class="cw-gram-title">${escapeHtml(group.title)} <span class="cw-answers-range">${group.words.length} word${group.words.length === 1 ? "" : "s"} to spell</span></h3>
       <p class="cw-answers-line cw-answers-words">${group.words.map((word) => escapeHtml(word)).join(" · ")}</p>
     </div>`).join("")}
-    ${withPunctuation.map((group) => `<div class="cw-answers-item">
-      <h3 class="cw-gram-title">${escapeHtml(group.title)} <span class="cw-answers-range">${group.items.length} sentence${group.items.length === 1 ? "" : "s"} to punctuate</span></h3>
+    ${withSentences.map((group) => `<div class="cw-answers-item">
+      <h3 class="cw-gram-title">${escapeHtml(group.title)} <span class="cw-answers-range">${group.items.length} sentence${group.items.length === 1 ? "" : "s"} to ${escapeHtml(sentenceWhat)}</span></h3>
       ${group.items.map((item) => `<p class="cw-answers-line"><span class="cw-answers-key">${escapeHtml(item.word)}</span> ${escapeHtml(item.sentence)}</p>`).join("")}
     </div>`).join("")}
   </section>`;
@@ -10139,7 +10166,7 @@ function worksheetSheetHeaderHtml({ sentences = false, spelling = false, punctua
 // extra wrapped line by subtraction. Derived from two real layouts rather than
 // from the CSS, for the same reason the rest of this probe exists.
 
-function worksheetProbe(geo, { groups = [], widths = new Map(), sentences = false, spelling = false, punctuation = false, grammar = null, comprehension = null, spellingKey = null, punctuationKey = null, answerKey = false } = {}) {
+function worksheetProbe(geo, { groups = [], widths = new Map(), sentences = false, spelling = false, punctuation = false, grammar = null, comprehension = null, spellingKey = null, sentenceKey = null, sentenceLabels = [], answerKey = false } = {}) {
   const probe = document.createElement("div");
   probe.setAttribute("aria-hidden", "true");
   probe.style.cssText = "position:absolute;left:-10000mm;top:0;width:182mm;visibility:hidden;pointer-events:none";
@@ -10158,7 +10185,7 @@ function worksheetProbe(geo, { groups = [], widths = new Map(), sentences = fals
     + `</div>`
     + (grammar && grammar.length ? `<div id="cw-probe-grammar">${worksheetGrammarHtml(grammar, geo)}</div>` : "")
     + (comprehension && comprehension.length ? `<div id="cw-probe-comp">${worksheetComprehensionHtml(comprehension, geo)}</div>` : "")
-    + (answerKey ? `<div id="cw-probe-answers">${worksheetAnswerKeyHtml({ grammar, comprehension, spelling: spellingKey, punctuation: punctuationKey }, geo)}</div>` : "");
+    + (answerKey ? `<div id="cw-probe-answers">${worksheetAnswerKeyHtml({ grammar, comprehension, spelling: spellingKey, sentenceAnswers: sentenceKey, sentenceLabels }, geo)}</div>` : "");
   document.body.appendChild(probe);
   // WITH margins. getBoundingClientRect excludes them, and taking the row's height
   // from it while separately allowing for the gap discounted that gap twice — the
@@ -10272,9 +10299,9 @@ function worksheetProbe(geo, { groups = [], widths = new Map(), sentences = fals
   return measurement;
 }
 
-function worksheetPageCount(chosenGroups, geo, { widths = new Map(), sentences = false, spelling = false, punctuation = false, grammar = null, comprehension = null, spellingKey = null, punctuationKey = null, answerKey = false } = {}) {
+function worksheetPageCount(chosenGroups, geo, { widths = new Map(), sentences = false, spelling = false, punctuation = false, grammar = null, comprehension = null, spellingKey = null, sentenceKey = null, sentenceLabels = [], answerKey = false } = {}) {
   if (!chosenGroups.length && !(grammar && grammar.length) && !(comprehension && comprehension.length)) return 0;
-  const probe = worksheetProbe(geo, { groups: chosenGroups, widths, sentences, spelling, punctuation, grammar, comprehension, spellingKey, punctuationKey, answerKey });
+  const probe = worksheetProbe(geo, { groups: chosenGroups, widths, sentences, spelling, punctuation, grammar, comprehension, spellingKey, sentenceKey, sentenceLabels, answerKey });
   if (!probe.perMm) return 0;
   const pageHeight = SHEET_H * probe.perMm;
   // One packer, over measured boxes. Every section is the same shape now — a
@@ -10364,19 +10391,28 @@ function renderCursiveWorksheet() {
   // depends on WHICH groups are ticked — untick every group with spelling words
   // and there is nothing to key, so it is asked at draw time rather than once.
   const spellingKeyOf = (picked) => (spelling ? worksheetSpellingKey(picked) : []);
-  const punctuationKeyOf = (picked) => (punctuation ? worksheetPunctuationKey(picked) : []);
+  // Either exercise wants the same answers, so one lookup serves both and the
+  // labels say which are switched on.
+  const sentenceAnswersOf = (picked) => ((sentences || punctuation) ? worksheetSentenceAnswers(picked) : []);
+  const sentenceLabelsNow = () => [sentences && "copy", punctuation && "punctuate"].filter(Boolean);
   // WHAT THE KEY ACTUALLY COVERS, asked of the currently ticked options and the
   // currently ticked groups. Three things read this — the summary above the print
   // button, the hint under the tick box and the note printed at the top of the key
   // — and they must agree, because they are three descriptions of one section.
   // The hint and the note drifted apart when spelling was added; a third
   // hand-written copy for the summary would have been the same defect again.
-  const keyCoversOf = (picked) => [
-    grammar && hasGrammarAnswers && "grammar",
-    comprehension && hasCompAnswers && "comprehension",
-    spelling && spellingKeyOf(picked).length && "spelling",
-    punctuation && punctuationKeyOf(picked).length && "punctuation",
-  ].filter(Boolean);
+  const keyCoversOf = (picked) => {
+    const hasSentenceAnswers = sentenceAnswersOf(picked).length > 0;
+    return [
+      grammar && hasGrammarAnswers && "grammar",
+      comprehension && hasCompAnswers && "comprehension",
+      spelling && spellingKeyOf(picked).length && "spelling",
+      // Named per EXERCISE even though they share one block, because the learner
+      // ticked two different boxes and the key has to answer for both by name.
+      hasSentenceAnswers && sentences && "sentences",
+      hasSentenceAnswers && punctuation && "punctuation",
+    ].filter(Boolean);
+  };
   const keyAvailable = () => keyCoversOf(selectedGroups()).length > 0;
   let widths = new Map();
 
@@ -10424,7 +10460,7 @@ function renderCursiveWorksheet() {
     const geo = worksheetGeometry(size);
     const picked = selectedGroups();
     const words = selectedWords();
-    const pages = worksheetPageCount(picked, geo, { widths, sentences, spelling, punctuation, grammar: grammar ? grammarItems : null, comprehension: comprehension ? compReadings : null, spellingKey: spellingKeyOf(picked), punctuationKey: punctuationKeyOf(picked), answerKey: answerKey && keyAvailable() });
+    const pages = worksheetPageCount(picked, geo, { widths, sentences, spelling, punctuation, grammar: grammar ? grammarItems : null, comprehension: comprehension ? compReadings : null, spellingKey: spellingKeyOf(picked), sentenceKey: sentenceAnswersOf(picked), sentenceLabels: sentenceLabelsNow(), answerKey: answerKey && keyAvailable() });
     $("#cw-style").textContent = worksheetCss(geo, { print: false });
     const extras = [spelling && "spelling practice", sentences && "a sentence to copy", punctuation && "punctuation to put back"].filter(Boolean);
     const added = [
@@ -10471,7 +10507,7 @@ function renderCursiveWorksheet() {
     draw();
   }));
   $$('input[name="cw-size"]').forEach((radio) => radio.addEventListener("change", () => { size = radio.value; draw(); }));
-  $("#cw-opt-sentences").addEventListener("change", (event) => { sentences = event.target.checked; draw(); });
+  $("#cw-opt-sentences").addEventListener("change", (event) => { sentences = event.target.checked; drawOptions(); draw(); });
   $("#cw-opt-spelling").addEventListener("change", (event) => { spelling = event.target.checked; drawOptions(); draw(); });
   $("#cw-opt-punctuation").addEventListener("change", (event) => { punctuation = event.target.checked; drawOptions(); draw(); });
   // The answer key follows the grammar exercises, so its control follows the
@@ -10489,7 +10525,7 @@ function renderCursiveWorksheet() {
     const hint = box.closest(".cw-check")?.querySelector("small");
     if (hint) {
       const covers = keyCoversOf(selectedGroups());
-      const offer = [hasGrammarAnswers && "Grammar", hasCompAnswers && "Reading comprehension", hasSpellingWords && "Spelling", hasPunctuationSentences && "Punctuation"].filter(Boolean);
+    const offer = [hasGrammarAnswers && "Grammar", hasCompAnswers && "Reading comprehension", hasSpellingWords && "Spelling", hasPunctuationSentences && "A sentence to copy", hasPunctuationSentences && "Punctuation"].filter(Boolean);
       hint.textContent = available
         ? `${answerKeyCovers(covers)}, at the very back, for whoever marks it`
         : `turn on ${offer.length > 1 ? `${offer.slice(0, -1).join(", ")} or ${offer[offer.length - 1]}` : offer[0]} first — the answers are to those exercises`;
@@ -10502,11 +10538,11 @@ function renderCursiveWorksheet() {
   // now names whichever sources are switched on. Run it once so the box does not
   // sit there disabled with an empty explanation.
   drawOptions();
-  $("#cw-print").addEventListener("click", () => printCursiveWorksheet(selectedGroups(), size, widths, { sentences, spelling, punctuation, grammar: grammar ? grammarItems : null, comprehension: comprehension ? compReadings : null, spellingKey: spellingKeyOf(selectedGroups()), punctuationKey: punctuationKeyOf(selectedGroups()), answerKey: answerKey && keyAvailable() }));
+  $("#cw-print").addEventListener("click", () => printCursiveWorksheet(selectedGroups(), size, widths, { sentences, spelling, punctuation, grammar: grammar ? grammarItems : null, comprehension: comprehension ? compReadings : null, spellingKey: spellingKeyOf(selectedGroups()), sentenceKey: sentenceAnswersOf(selectedGroups()), sentenceLabels: sentenceLabelsNow(), answerKey: answerKey && keyAvailable() }));
   icons();
 }
 
-function printCursiveWorksheet(chosenGroups, size, widths, { sentences = false, spelling = false, punctuation = false, grammar = null, comprehension = null, spellingKey = null, punctuationKey = null, answerKey = false } = {}) {
+function printCursiveWorksheet(chosenGroups, size, widths, { sentences = false, spelling = false, punctuation = false, grammar = null, comprehension = null, spellingKey = null, sentenceKey = null, sentenceLabels = [], answerKey = false } = {}) {
   const words = chosenGroups.flatMap((group) => group.words);
   if (!words.length) return;
   const printWindow = window.open("", "_blank", "popup=yes,width=900,height=1000,resizable=yes,scrollbars=yes");
@@ -10537,7 +10573,7 @@ function printCursiveWorksheet(chosenGroups, size, widths, { sentences = false, 
       ${chosenGroups.map((group, index) => worksheetGroupHtml(group, widths, geo, { first: index === 0, sentences, spelling, punctuation })).join("")}
       ${grammar && grammar.length ? worksheetGrammarHtml(grammar, geo) : ""}
       ${comprehension && comprehension.length ? worksheetComprehensionHtml(comprehension, geo) : ""}
-      ${answerKey ? worksheetAnswerKeyHtml({ grammar, comprehension, spelling: spellingKey, punctuation: punctuationKey }, geo) : ""}
+      ${answerKey ? worksheetAnswerKeyHtml({ grammar, comprehension, spelling: spellingKey, sentenceAnswers: sentenceKey, sentenceLabels }, geo) : ""}
     </body>
     </html>`);
   printWindow.document.close();

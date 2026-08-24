@@ -14,6 +14,7 @@ import { wordPicture } from "./word-pictures.js?v=pictures-1";
 import { cursiveWord, cursiveCanWrite } from "./cursive-strokes.js?v=cursive-1";
 import { SCHOOL_CALENDAR, calendarTerm, termDatesLabel, termWeekTotal, halfTermRow, formatDay } from "../study-plan.js?v=study-plan-2";
 import { platformHeaders, askWehel, focusModule, setFocusModule, onFocusChange, modulesFromSections, outlineFromManifest, unitFetcher, browserSpeechSupported, speakBrowser, speechRateForGrade, stopBrowserSpeech, speechRecognitionCtor, recognizeSpeech, wehelIcon, platformUrl } from "../wehel.js?v=wehel-4";
+import { createGetHelp } from "../get-help.js?v=get-help-1";
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
@@ -11111,6 +11112,23 @@ const config = {
   gradeDefaults: { completed: [] },
   keys: (g, u) => ({ progress: `ehel-english-g${g}-u${u}-progress-v1` }),
   courseKey: (g) => `ehel-eng-g${String(g).padStart(2, "0")}`,
+  // "Get help with…" — the tutoring search page (shell/get-help.js). The shell
+  // appends its nav entry and dispatches its route ahead of the gated
+  // renderers, so it is reachable from a locked unit too — it teaches nothing
+  // itself. Every link it emits goes through placementLocation with
+  // review: true and lands on the unit's OVERVIEW: sections stay chained
+  // inside a review visit (sectionUnlocked knows no REVIEW_VISIT exemption),
+  // so a section deep-link would draw a padlock — the remediation contract,
+  // "open ONE unit at its overview", is the door that works. The topic chips
+  // still name what to look for once inside.
+  getHelp: createGetHelp({
+    deps: () => ({ $, escapeHtml, icon, pageHeader }),
+    subjectKey: "english", subjectLabel: "English", param: "grade", stageWord: "Grade", maxStage: 8,
+    stage: () => gradeNumber,
+    sections: () => sections,
+    hrefFor: (targetGrade, targetUnit) => placementLocation(targetGrade, targetUnit, "overview", { review: true }),
+    examples: ["adverbs", "persuasive writing", "reading a story"],
+  }),
   extendSummary: (p, base) => ({ ...base, knownWords: p.knownWords ? [...p.knownWords] : undefined }),
   visibleSections: () => visibleSections().map(([id, ic, lb]) => (id === "lecture" && unitNumber === 10 ? [id, ic, "Capstone launch"] : [id, ic, lb])),
   isSectionDone: (id) => (id === "final-quiz" ? finalQuizProgress.completed : id === "placement" ? placementProgress.completed : progress.completed.includes(id)),

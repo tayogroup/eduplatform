@@ -21,6 +21,7 @@ import { createDeck, deckIcon } from "../deck.js";
 import { createPlacementUnit, placementCallout, placementCourseShell, PREREQ_UNIT } from "../placement.js?v=placement-1";
 import { renderStudyPlan, renderUnitStudyPlan } from "../study-plan.js?v=study-plan-2";
 import { mountWehelChat, modulesFromSections, outlineFromManifest, unitFetcher } from "../wehel.js?v=wehel-4";
+import { createGetHelp } from "../get-help.js?v=get-help-1";
 
 // Prerequisite unit (unit -1): a placement exam over the previous stages,
 // rendered by the shared shell/placement.js from placement-exam.json.
@@ -1197,6 +1198,17 @@ const config = {
   progressDefaults: { completed: [], answersSeen: [], reflection: {}, quiz: {}, aiMessages: [] },
   keys: (s, u) => ({ progress: `ehel-gp-s${s}-u${u}-progress-v1` }),
   courseKey: (s) => `ehel-gp-g${String(s).padStart(2, "0")}`,
+  // "Get help with…" — the tutoring search page (shell/get-help.js). The shell
+  // appends its nav entry and dispatches its route; it is never in SECTIONS,
+  // so it cannot gate or count. Stage 5 contributes nothing because its
+  // topic-index.json does not exist — the withdrawal needs no second gate here.
+  getHelp: createGetHelp({
+    deps: () => ({ $, escapeHtml, icon, pageHeader }),
+    subjectKey: "global-perspectives", subjectLabel: "Global Perspectives", param: "stage", stageWord: "Stage", maxStage: 8,
+    stage: () => stageNumber,
+    sections: () => SECTIONS,
+    examples: ["asking good questions", "bar charts", "checking sources"],
+  }),
   // The other subjects extend the summary with `knownWords`; this one has no
   // vocabulary cards and sends written-answer counts instead. See
   // attemptedCounts above for why it is a count and not a score.

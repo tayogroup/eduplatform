@@ -625,7 +625,15 @@ export function createCourseApp(config) {
   }
 
   function renderNav() {
-    $("#section-nav").innerHTML = sectionNavigation(navSections().map(([id, sectionIcon, label]) => ({ id, iconName: sectionIcon, label, active: route === id, done: isSectionDone(id) })));
+    const navItems = navSections().map(([id, sectionIcon, label]) => ({ id, iconName: sectionIcon, label, active: route === id, done: isSectionDone(id) }));
+    // "Get help with…" — the tutoring add-on's search page (shell/get-help.js).
+    // Appended here rather than listed in any subject's sections so it can
+    // neither gate nor count: it is a reference surface, and tutoring activity
+    // stays out of course progress by decision (2026-08-24). Subjects opt in by
+    // passing config.getHelp (a createGetHelp instance); done is always false
+    // because there is nothing to complete.
+    if (config.getHelp) navItems.push({ id: "get-help", iconName: "life-buoy", label: "Get help", active: route === "get-help", done: false });
+    $("#section-nav").innerHTML = sectionNavigation(navItems);
     $$('[data-route]').forEach((button) => button.addEventListener("click", () => navigate(button.dataset.route)));
     const teacherSwitch = $("#teacher-switch");
     if (teacherSwitch) {
@@ -705,7 +713,13 @@ export function createCourseApp(config) {
   function renderRoute() {
     if (config.onBeforeRender) config.onBeforeRender();
     $("#app").innerHTML = "";
-    (config.renderers[route] || config.renderers.overview)();
+    // The shared help page dispatches ahead of the subject's renderers, so it
+    // is reachable from anywhere — including a unit English's gate has locked.
+    // Deliberate, and the same standing #teacher has always had: the page
+    // teaches nothing itself, it only points at units, and every link it emits
+    // goes through the subject's own door (English's carry ?review=1).
+    if (route === "get-help" && config.getHelp) config.getHelp.render();
+    else (config.renderers[route] || config.renderers.overview)();
     if (!config.disableShellVoice) bindVoiceControls();
     renderCompletionCard();
     if (config.onAfterRender) config.onAfterRender();

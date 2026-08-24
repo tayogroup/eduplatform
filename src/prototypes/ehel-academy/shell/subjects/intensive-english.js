@@ -24,6 +24,7 @@ import { createPlacementUnit, placementCallout, PREREQ_UNIT } from "../placement
 import { renderStudyPlan, renderUnitStudyPlan } from "../study-plan.js?v=study-plan-2";
 import { wordPicture } from "./word-pictures.js?v=pictures-1";
 import { mountWehelChat, modulesFromSections, outlineFromManifest, unitFetcher } from "../wehel.js?v=wehel-4";
+import { createGetHelp } from "../get-help.js?v=get-help-1";
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
@@ -690,6 +691,18 @@ const config = {
   // unit) means a learner who accumulates rows under BOTH keys can no longer be
   // migrated by a plain UPDATE.
   courseKey: (level) => `ehel-intensive-eng-l${String(level).padStart(2, "0")}`,
+  // "Get help with…" — the tutoring search page (shell/get-help.js). The shell
+  // appends its nav entry and dispatches its route; it is never in `sections`,
+  // so it cannot gate or count. Levels are CEFR tracks in level-N/ folders —
+  // the same stageDir exception the content uploader carries.
+  getHelp: createGetHelp({
+    deps: () => ({ $, escapeHtml, icon, pageHeader }),
+    subjectKey: "intensive-english", subjectLabel: "Intensive English", param: "level", stageWord: "Level", maxStage: 2,
+    stage: () => levelNumber,
+    sections: () => sections,
+    stageDir: (n) => `level-${n}`,
+    examples: ["past tense", "greetings", "filling in a form"],
+  }),
   extendSummary: (state, base) => ({ ...base, knownWords: state.knownWords ? [...state.knownWords] : undefined }),
   visibleSections,
   onBeforeRender: () => { route = shellCtx.route; document.body.classList.remove("gc-full"); $("#app").setAttribute("aria-busy", "true"); },

@@ -14,6 +14,7 @@ import { createDeck, deckIcon } from "../deck.js?v=deck-1";
 import { createPlacementUnit, placementCallout, placementCourseShell, PREREQ_UNIT } from "../placement.js?v=placement-1";
 import { renderStudyPlan, renderUnitStudyPlan } from "../study-plan.js?v=study-plan-2";
 import { mountWehelChat, modulesFromSections, outlineFromManifest, unitFetcher } from "../wehel.js?v=wehel-4";
+import { createGetHelp } from "../get-help.js?v=get-help-1";
 
 const pad2 = (n) => String(n).padStart(2, "0");
 
@@ -1978,6 +1979,16 @@ const config = {
     legacyGrade: `ehel-comp-g${s}-capstone-progress-v1`,
   }),
   courseKey: (s) => `ehel-comp-g${pad2(s)}`,
+  // "Get help with…" — the tutoring search page (shell/get-help.js). The shell
+  // appends its nav entry and dispatches its route; it is never in `sections`,
+  // so it cannot gate or count.
+  getHelp: createGetHelp({
+    deps: () => ({ $, escapeHtml, icon, pageHeader }),
+    subjectKey: "computing", subjectLabel: "Computing", param: "stage", stageWord: "Stage", maxStage: 8,
+    stage: () => stageNumber,
+    sections: () => sections,
+    examples: ["algorithms", "networks", "variables"],
+  }),
   extendSummary: (progress, base) => ({ ...base, knownWords: progress.knownWords ? [...progress.knownWords] : undefined }),
   visibleSections: () => (isPrereqUnit
     ? [["overview", "layout-dashboard", "Unit Overview"], ["placement", "clipboard-check", "Placement exam"], ["year-plan", "calendar-days", "Stage Study Plan"]]

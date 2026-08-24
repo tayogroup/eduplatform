@@ -92,7 +92,7 @@ const AUDIO_IS_DEV = ["localhost", "127.0.0.1"].includes(location.hostname);
 // Two clips is a small reason to make the whole course refetch once, and it is
 // still the correct trade — the alternative is a definition nobody can hear
 // corrected, for a year, on a word the unit is teaching.
-const AUDIO_RELEASE = "20260824a";
+const AUDIO_RELEASE = "20260824b";
 function withAudioRelease(url) {
   // Dev serves from disk with no caching worth defeating, and a bare filename
   // is easier to grep for in the network panel.

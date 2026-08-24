@@ -316,6 +316,42 @@ The generator **rejects an unrecognised argument** rather than ignoring it: a ty
 
 Clips are committed (as Science's are, unlike Computing's and Mathematics'), so an orphan is free to delete while git still holds it. **All eight grades are generated**: 2,684 clips on disk, ~832k characters, and `prune-ehel-course-audio.mjs` reports 0 orphans. The per-grade totals sum to 2,733 rather than 2,684 because a text shared by two grades is one file claimed twice — a dry run reporting more clips than the directory holds is that overlap, not a gap. Guided grades produce no `words` clips — those packs carry no glossary.
 
+#### Which subjects' clips git actually holds — and the Intensive English gap
+
+"An orphan is free to delete while git still holds it" is true per subject, not
+in general. Measured 2026-08-24:
+
+| subject | in git | on disk | outside git |
+| --- | --- | --- | --- |
+| english | 93,065 | 93,065 | 0 |
+| science | 6,483 | 6,483 | 0 |
+| global-perspectives | 2,685 | 2,685 | 0 |
+| **intensive-english** | **4,744** | **5,592** | **848** |
+| mathematics | 0 | 17,806 | all |
+| computing | 0 | 7,827 | all |
+
+Mathematics and Computing being wholly untracked is deliberate and already
+recorded. **Intensive English is the one that misleads**, because it is the only
+MIXED case: `git ls-files …/intensive-english/media/audio` returns 4,744 clips,
+which reads as "this subject's audio is in git", and 848 of the files beside them
+are not. `.gitignore:64` ignores
+`src/prototypes/ehel-academy/intensive-english/media/audio/tts/`, and gitignore
+does not retroactively untrack — so everything committed before that rule landed
+stays tracked forever while everything generated after it is invisible. Nothing
+in `git status` shows this; ignored files are exactly the ones it does not print.
+
+Verified, so this is a resilience note and not a loss: **all 848 have a CDN
+copy** (remote g01+g02 hold 5,592 distinct names, covering every local clip), so
+none is gone. What they have is exactly one recoverable copy. If the storage zone
+loses them they are re-paid for by the character, and this checkout is the only
+other place they exist.
+
+The practical consequence is in the pruner. `prune-ehel-course-audio.mjs`
+"refuses to remove anything git cannot restore unless `--force`" — so for
+Mathematics, Computing and these 848, an orphan is **not** free to delete, and a
+`--force` there is spending money to undo a mistake, not tidying. That guard is
+the reason the distinction is worth knowing before reaching for the flag.
+
 Stage 5's 158 clips (40,251 characters) narrate a **withdrawn** stage. Leave them — they are committed, so they cost nothing to keep and would have to be paid for again — but do not regenerate them while the hold stands.
 
 #### Deploying Global Perspectives — what the CDN actually does (re-measured 2026-08-24)

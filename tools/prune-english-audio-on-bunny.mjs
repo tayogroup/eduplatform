@@ -124,6 +124,7 @@ async function del(remote) {
 }
 
 const orphans = [];
+const onCdnPaths = new Set();
 let remoteTotal = 0;
 const perGrade = [];
 let listFailed = false;
@@ -151,6 +152,7 @@ for (let g = 1; g <= 12; g += 1) {
       if (f.IsDirectory) continue;
       onCdn += 1;
       const remote = `${dir}/${f.ObjectName}`;
+      onCdnPaths.add(remote);
       // EXACT path comparison. This vocabulary is built to defeat a substring
       // match — "32-connoisseur-meaning.mp3" is a substring of the live
       // "u7-g1-32-32-connoisseur-meaning.mp3" and differs from the live word
@@ -163,8 +165,37 @@ for (let g = 1; g <= 12; g += 1) {
   orphans.push(...stray);
 }
 
+// The MIRROR of an orphan, and it must be COMPUTED rather than inferred from
+// the totals. Subtracting `filesOnCdn` from `reachableRemotePaths` answers a
+// different question and answers it wrongly twice: the orphan count inflates the
+// file total, and `reachable` deliberately includes the owed (`available: false`)
+// paths, which are SUPPOSED to have no file. Doing exactly that on 2026-08-24
+// turned 0 real defects into a reported 505.
+//
+// Only a PLAYABLE claim with no file is a defect: the app asks, the CDN 404s,
+// and it falls back to the paid runtime TTS endpoint once per request, silently.
+//
+// One caveat on trusting the zero this currently prints. While the true count is
+// 0, a version of this that always returned 0 would look identical — mutating
+// `missing` to a constant empty array changes nothing on screen. What DOES prove
+// the check is wired to real data is breaking the other side: drop
+// `onCdnPaths.add(remote)` and it reports all 93,023 as missing. So the zero is
+// only evidence while that second mutation still fires; if this is ever
+// refactored, re-run it rather than trusting a green line.
+const playablePaths = new Set();
+for (const [clip, grades] of narration.clipGradeMap(COURSE)) {
+  for (const g of grades) playablePaths.add(narration.remoteFor(g, clip));
+}
+const missing = [...playablePaths].filter((x) => !onCdnPaths.has(x));
+const owedPresent = [...owed].filter((x) => onCdnPaths.has(x));
+const owedMissing = [...owed].filter((x) => !onCdnPaths.has(x));
+
 const summary = {
   playableClaims: playable,
+  playableMissingFromCdn: missing.length,
+  owedMissing: owedMissing.length,
+  owedPresent: owedPresent.length,
+  missing,
   owedClaims: owed.size,
   reachableRemotePaths: expected.size,
   filesOnCdn: remoteTotal,
@@ -184,6 +215,14 @@ console.log(`descriptor claims, playable : ${playable}`);
 console.log(`descriptor claims, owed     : ${owed.size}  (available:false — protected, not orphans)`);
 console.log(`reachable remote paths      : ${expected.size}`);
 console.log(`files on the CDN            : ${remoteTotal}`);
+console.log(`playable but NOT on the CDN : ${missing.length}${missing.length ? "  <-- each is a silent paid-TTS fallback" : ""}`);
+console.log(`owed and absent             : ${owedMissing.length}  (correct — awaiting a re-record)`);
+console.log(`owed but present            : ${owedPresent.length}  (file exists; the app draws no button)`);
+if (missing.length) {
+  for (const m of missing.slice(0, 20)) console.log(`   missing  ${m}`);
+  if (missing.length > 20) console.log(`   … and ${missing.length - 20} more`);
+  console.log("   Fix by uploading, not deleting: node tools/upload-media-to-bunny.js english");
+}
 console.log(`named by no descriptor      : ${orphans.length}  (${(summary.orphanBytes / 1048576).toFixed(1)} MB)`);
 
 if (!orphans.length) { console.log("\nNothing to prune."); process.exit(0); }

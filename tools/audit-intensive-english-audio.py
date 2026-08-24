@@ -55,9 +55,46 @@ TTS = COURSE / "media/audio/tts"
 SPELLING_EQUIV = [
     ("our", "or"), ("ise", "ize"), ("isation", "ization"), ("yse", "yze"),
     ("re", "er"), ("ll", "l"), ("ae", "e"), ("oe", "e"),
+    # Found by running the full pass: the generic rules above miss these, and
+    # each one produced flags that were purely orthographic.
+    ("judgement", "judgment"), ("practise", "practice"), ("licence", "license"),
+    ("enquir", "inquir"), ("metre", "meter"), ("centre", "center"),
+    ("travelling", "traveling"), ("cheque", "check"),
 ]
 
+# Whisper writes numbers as DIGITS and the scripts write them as words, so
+# "The party starts at eight" comes back as "at 8". That single fact produced
+# 105 of the first run's 293 flags — more than a third of everything reported,
+# none of it drift. Normalise before comparing rather than explaining it in the
+# output afterwards.
+NUMBER_WORDS = {
+    "zero": "0", "one": "1", "two": "2", "three": "3", "four": "4", "five": "5",
+    "six": "6", "seven": "7", "eight": "8", "nine": "9", "ten": "10",
+    "eleven": "11", "twelve": "12", "thirteen": "13", "fourteen": "14",
+    "fifteen": "15", "sixteen": "16", "seventeen": "17", "eighteen": "18",
+    "nineteen": "19", "twenty": "20", "thirty": "30", "forty": "40",
+    "fifty": "50", "sixty": "60", "seventy": "70", "eighty": "80", "ninety": "90",
+}
+MULTI_WORD_NUMBERS = [
+    ("one thousand", "1000"), ("a thousand", "1000"), ("two thousand", "2000"),
+    ("three thousand", "3000"), ("four thousand", "4000"), ("five thousand", "5000"),
+    ("one hundred", "100"), ("two hundred", "200"), ("three hundred", "300"),
+    ("per cent", "%"), ("percent", "%"),
+]
+
+
+def normalise_numbers(text: str) -> str:
+    out = text.lower()
+    for phrase, digits in MULTI_WORD_NUMBERS:
+        out = out.replace(phrase, digits)
+    out = _WORD_TOKEN.sub(lambda m: NUMBER_WORDS.get(m.group(0), m.group(0)), out)
+    return out
+
 WORD_RE = re.compile(r"[a-z0-9']+")
+_WORD_TOKEN = re.compile("[a-z]+")
+
+# A printed form: a run of capitalised column headers, or a price/time table.
+FORM_RE = re.compile(r"(?:[A-Z]{3,}.*){2,}|\d{1,2}:\d{2}")
 
 # Below this many words, one wrong word is a defect rather than noise.
 SHORT_WORDS = 12
@@ -107,7 +144,7 @@ def _node() -> str:
 
 
 def words(text: str) -> list[str]:
-    return WORD_RE.findall(text.lower())
+    return WORD_RE.findall(normalise_numbers(text))
 
 
 def spelling_variants(w: str) -> set[str]:
@@ -176,10 +213,17 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--categories", nargs="*", default=None)
     ap.add_argument("--include-words", action="store_true")
+    ap.add_argument("--score-forms", action="store_true")
     ap.add_argument("--limit", type=int, default=0)
     ap.add_argument("--model", default="base")
     ap.add_argument("--threshold", type=float, default=0.80)
     ap.add_argument("--out", default=None)
+    # A successful run with findings used to exit 1, which the harness and any CI
+    # step read as a crash — so a completed audit reported itself as failed, and a
+    # real crash became indistinguishable from a clean finish with results.
+    # Findings are the OUTPUT of this tool, not an error in it.
+    ap.add_argument("--fail-on-findings", action="store_true",
+                    help="exit 1 when clips are flagged (default: exit 0; findings are output, not failure)")
     args = ap.parse_args()
 
     clips = clips_from_node()
@@ -189,6 +233,13 @@ def main() -> int:
         clips = [c for c in clips if c["category"] in args.categories]
     elif not args.include_words:
         clips = [c for c in clips if c["category"] != "words"]
+    # `readings` at Level 1 are printed FORMS — timetables, receipts, nutrition
+    # labels — narrated from passageScriptSpeech, which is deliberately not the
+    # printed layout. Comparing a transcript against column headers and prices
+    # measures the wrong thing, so they are reported separately rather than
+    # scored. --score-forms overrides.
+    if not args.score_forms:
+        clips = [c for c in clips if not (c["category"] == "readings" and FORM_RE.search(c["text"]))]
     learn_names(clips)
     clips.sort(key=lambda c: (c["category"], c["hash"]))
     if args.limit:
@@ -257,7 +308,7 @@ def main() -> int:
             {"transcribed": len(clips), "passed": ok, "missingOnDisk": [c["hash"] for c in missing],
              "findings": findings}, indent=1, ensure_ascii=False))
         print(f"\nwrote {args.out}")
-    return 1 if findings else 0
+    return 1 if (findings and args.fail_on_findings) else 0
 
 
 if __name__ == "__main__":

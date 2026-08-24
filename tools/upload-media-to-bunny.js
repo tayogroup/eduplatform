@@ -220,12 +220,35 @@ const sha1 = (buf) => crypto.createHash("sha1").update(buf).digest("hex");
   // only way to know whether a same-named file has changed.
   for (const item of all) item.hash = sha1(fs.readFileSync(item.local));
   const todo = all.filter((x) => manifest[x.remote] !== x.hash);
-  const legacy = todo.filter((x) => x.remote in manifest).length;
+  // A queued file is in the manifest for one of TWO reasons, and they mean
+  // opposite things. Keying on `x.remote in manifest` conflated them and
+  // reported the wrong one: it is true both for a legacy entry with no hash AND
+  // for a perfectly good hash that has since CHANGED, which is what every
+  // re-recorded clip is. On 2026-08-24 a 183-clip repair printed "183 of those
+  // were recorded before the manifest stored hashes, so their contents cannot
+  // be verified from here" — for 183 files whose stored hashes were present,
+  // correct, and had simply moved. The manifest held zero hashless entries at
+  // the time. It reads as a data-integrity warning and was the opposite: proof
+  // the comparison had worked.
+  //
+  // readManifest maps a legacy array entry to null ("uploaded, contents
+  // unknown"), so the value is what distinguishes them, never the key.
+  const legacy = todo.filter((x) => manifest[x.remote] === null).length;
+  const rerecorded = todo.filter((x) => typeof manifest[x.remote] === "string").length;
   const bytes = todo.reduce((s, x) => s + fs.statSync(x.local).size, 0);
   console.log(`subjects: ${subjectList.join(",")} | total: ${all.length} | already uploaded: ${all.length - todo.length} | to upload: ${todo.length} (${(bytes / 1048576).toFixed(0)} MB)`);
   if (legacy) {
     console.log(`  ${legacy} of those were recorded before the manifest stored hashes, so their contents cannot be`);
     console.log(`  verified from here. They upload once and gain a hash; subsequent runs skip them normally.`);
+  }
+  // Reported because its absence is what made the mislabelled line above read as
+  // alarming. This is the reassuring case and the common one after a repair: the
+  // file changed under a name that did not, the hash caught it, and the clip is
+  // queued rather than skipped — which is the whole reason the manifest stores
+  // hashes instead of paths.
+  if (rerecorded) {
+    console.log(`  ${rerecorded} of those are already-uploaded files whose CONTENTS changed — the stored hash caught`);
+    console.log(`  it and they will be re-sent. Expected after re-recording a clip under its existing name.`);
   }
   if (DRY) {
     for (const item of todo) console.log(`  ${item.remote}`);

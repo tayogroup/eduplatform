@@ -10365,10 +10365,19 @@ function renderCursiveWorksheet() {
   // and there is nothing to key, so it is asked at draw time rather than once.
   const spellingKeyOf = (picked) => (spelling ? worksheetSpellingKey(picked) : []);
   const punctuationKeyOf = (picked) => (punctuation ? worksheetPunctuationKey(picked) : []);
-  const keyAvailable = () => (grammar && hasGrammarAnswers)
-    || (comprehension && hasCompAnswers)
-    || (spelling && spellingKeyOf(selectedGroups()).length > 0)
-    || (punctuation && punctuationKeyOf(selectedGroups()).length > 0);
+  // WHAT THE KEY ACTUALLY COVERS, asked of the currently ticked options and the
+  // currently ticked groups. Three things read this — the summary above the print
+  // button, the hint under the tick box and the note printed at the top of the key
+  // — and they must agree, because they are three descriptions of one section.
+  // The hint and the note drifted apart when spelling was added; a third
+  // hand-written copy for the summary would have been the same defect again.
+  const keyCoversOf = (picked) => [
+    grammar && hasGrammarAnswers && "grammar",
+    comprehension && hasCompAnswers && "comprehension",
+    spelling && spellingKeyOf(picked).length && "spelling",
+    punctuation && punctuationKeyOf(picked).length && "punctuation",
+  ].filter(Boolean);
+  const keyAvailable = () => keyCoversOf(selectedGroups()).length > 0;
   let widths = new Map();
 
   $("#app").innerHTML = `${pageHeader(
@@ -10424,9 +10433,18 @@ function renderCursiveWorksheet() {
     ].filter(Boolean);
     // Phrased as a list rather than a sentence with a verb: the parts are counts
     // that can each be one or many, and every verb form is wrong for one of them.
+    //
+    // The answer key is named SEPARATELY from that list, and says what it covers.
+    // It used to be a suffix on the list — so with Spelling and the answer key on
+    // and no grammar or comprehension, the list was empty, the whole clause was
+    // dropped and the summary never mentioned the key at all, while quietly
+    // counting its pages. And when it did appear it said only "then the answer
+    // key", which is the one thing about it nobody needs telling.
+    const keyParts = answerKey ? keyCoversOf(picked) : [];
+    const keyPhrase = keyParts.length ? `the answer key — ${listPhrase(keyParts)}` : "";
     const tail = added.length
-      ? ` At the end: ${added.join(" and ")}${answerKey ? ", then the answer key" : ""}.`
-      : "";
+      ? ` At the end: ${listPhrase(added)}${keyPhrase ? `, then ${keyPhrase}` : ""}.`
+      : keyPhrase ? ` At the back: ${keyPhrase}.` : "";
     $("#cw-summary").textContent = words.length
       ? `${words.length} word${words.length === 1 ? "" : "s"}${extras.length ? ", each with " + (extras.length > 1 ? extras.slice(0, -1).join(", ") + " and " + extras[extras.length - 1] : extras[0]) : ""} in ${picked.length} group${picked.length === 1 ? "" : "s"} · about ${pages} page${pages === 1 ? "" : "s"} of A4. Each group starts on its own page.${tail}`
       : "Tick at least one group of words to make a sheet.";
@@ -10470,12 +10488,7 @@ function renderCursiveWorksheet() {
     if (!available) { answerKey = false; box.checked = false; }
     const hint = box.closest(".cw-check")?.querySelector("small");
     if (hint) {
-      const covers = [
-        grammar && hasGrammarAnswers && "grammar",
-        comprehension && hasCompAnswers && "comprehension",
-        spelling && spellingKeyOf(selectedGroups()).length && "spelling",
-        punctuation && punctuationKeyOf(selectedGroups()).length && "punctuation",
-      ].filter(Boolean);
+      const covers = keyCoversOf(selectedGroups());
       const offer = [hasGrammarAnswers && "Grammar", hasCompAnswers && "Reading comprehension", hasSpellingWords && "Spelling", hasPunctuationSentences && "Punctuation"].filter(Boolean);
       hint.textContent = available
         ? `${answerKeyCovers(covers)}, at the very back, for whoever marks it`

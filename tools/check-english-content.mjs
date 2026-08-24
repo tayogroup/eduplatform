@@ -895,6 +895,22 @@ function checkWorksheetAnswerKey() {
   if (!/answerKeyCovers\s*\(/.test(options)) {
     fail(label, "the answer-key hint in drawOptions does not call answerKeyCovers — the hint and the printed note must be built from one function, or they describe different sheets");
   }
+  // 3b. AND THE SUMMARY ABOVE THE PRINT BUTTON IS THE THIRD DESCRIPTION of the
+  //     same section. The key is described in three places — the printed note,
+  //     the hint under the tick box, and the summary that says what the sheet
+  //     will contain — and they have to name the same sources. Two of them
+  //     already drifted once. The list is built in ONE place; a second copy
+  //     compiles, renders and is wrong only in the combinations nobody opens.
+  const render = bodyOf("renderCursiveWorksheet");
+  if (!render) { fail(label, "renderCursiveWorksheet is not declared in english.js - cannot check that the summary and the answer-key hint agree"); return; }
+  const coversBuilds = (render.match(/hasGrammarAnswers && "grammar"/g) || []).length;
+  if (coversBuilds !== 1) {
+    fail(label, `the answer-key coverage list is built ${coversBuilds} time(s) in renderCursiveWorksheet - it must be built once (keyCoversOf) and read by the summary, the hint and the printed note, or they will describe different sections`);
+  }
+  if (!/keyCoversOf\s*\(/.test(render)) {
+    fail(label, "renderCursiveWorksheet does not call keyCoversOf - the summary, the hint and the printed note must read one list");
+  }
+
   if (/the answers to the /.test(options)) {
     fail(label, "drawOptions builds its own \"the answers to the …\" wording — that phrase belongs to answerKeyCovers alone, so the hint cannot drift from the note");
   }

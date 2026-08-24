@@ -10138,36 +10138,27 @@ function worksheetSheetHeaderHtml({ sentences = false, spelling = false, punctua
 // AND two sentence rows whose wrap counts it knows, and derives the cost of one
 // extra wrapped line by subtraction. Derived from two real layouts rather than
 // from the CSS, for the same reason the rest of this probe exists.
-const PROBE_SHORT = "a b";
-const PROBE_LONG = "wrap ".repeat(80).trim();
 
-function worksheetProbe(geo, { sentences = false, spelling = false, punctuation = false, grammar = null, comprehension = null, spellingKey = null, punctuationKey = null, answerKey = false } = {}) {
+function worksheetProbe(geo, { groups = [], widths = new Map(), sentences = false, spelling = false, punctuation = false, grammar = null, comprehension = null, spellingKey = null, punctuationKey = null, answerKey = false } = {}) {
   const probe = document.createElement("div");
   probe.setAttribute("aria-hidden", "true");
   probe.style.cssText = "position:absolute;left:-10000mm;top:0;width:182mm;visibility:hidden;pointer-events:none";
-  const probeGroup = (title, words, sentenceMap, spellMap, punctMap) => worksheetGroupHtml(
-    { title, words, sentences: punctMap || sentenceMap, spellings: spellMap },
-    new Map(words.map((w) => [w, 2.2])),
-    geo,
-    { first: title === "Probe", sentences: !!sentenceMap, spelling: !!spellMap, punctuation: !!punctMap },
-  );
   probe.innerHTML = `<style>${worksheetPrintChromeCss()}${worksheetCss(geo, { print: true })}</style>`
     + `<div style="width:100mm" id="cw-probe-mm"></div>`
-    + worksheetSheetHeaderHtml()
-    + probeGroup("Probe", ["probe"], null, null, null)
-    + (spelling ? `<div id="cw-probe-spell">${probeGroup("P", ["sp"], null, new Map([["sp", "s - p"]]), null)}</div>` : "")
+    // THE SAME HEADER THE SHEET WILL PRINT, not the bare one. It gains a sentence
+    // per option — "Say the letters, cover the word…", "Then copy the sentence…" —
+    // and those wrap, so the printed header is TALLER than the default. Measuring
+    // the default made the estimate believe there was more room on page one than
+    // there is: at Grade 4 on large lines the first row misses the page by 13px and
+    // the whole sheet came out a page short. The probe was measuring a header that
+    // never gets printed.
+    + worksheetSheetHeaderHtml({ sentences, spelling, punctuation, comprehension: !!(comprehension && comprehension.length), answerKey })
+    + `<div id="cw-probe-groups">`
+    + groups.map((group, index) => worksheetGroupHtml(group, widths, geo, { first: index === 0, sentences, spelling, punctuation })).join("")
+    + `</div>`
     + (grammar && grammar.length ? `<div id="cw-probe-grammar">${worksheetGrammarHtml(grammar, geo)}</div>` : "")
     + (comprehension && comprehension.length ? `<div id="cw-probe-comp">${worksheetComprehensionHtml(comprehension, geo)}</div>` : "")
-    + (answerKey ? `<div id="cw-probe-answers">${worksheetAnswerKeyHtml({ grammar, comprehension, spelling: spellingKey, punctuation: punctuationKey }, geo)}</div>` : "")
-    + (punctuation
-      ? `<div id="cw-probe-pshort">${probeGroup("U", ["u1"], null, null, new Map([["u1", PROBE_SHORT]]))}</div>`
-        + `<div id="cw-probe-plong">${probeGroup("V", ["u2"], null, null, new Map([["u2", PROBE_LONG]]))}</div>`
-      : "")
-    + (sentences
-      ? `<div id="cw-probe-short">${probeGroup("S", ["s1"], new Map([["s1", PROBE_SHORT]]), null, null)}</div>`
-        + `<div id="cw-probe-long">${probeGroup("L", ["s2"], new Map([["s2", PROBE_LONG]]), null, null)}</div>`
-      : "")
-;
+    + (answerKey ? `<div id="cw-probe-answers">${worksheetAnswerKeyHtml({ grammar, comprehension, spelling: spellingKey, punctuation: punctuationKey }, geo)}</div>` : "");
   document.body.appendChild(probe);
   // WITH margins. getBoundingClientRect excludes them, and taking the row's height
   // from it while separately allowing for the gap discounted that gap twice — the
@@ -10180,18 +10171,10 @@ function worksheetProbe(geo, { sentences = false, spelling = false, punctuation 
     return element.getBoundingClientRect().height
       + (parseFloat(style.marginTop) || 0) + (parseFloat(style.marginBottom) || 0);
   };
-  const row = probe.querySelector(".cw-row");
   const measurement = {
     perMm: probe.querySelector("#cw-probe-mm").getBoundingClientRect().width / 100,
     sheetHeader: withMargins(".cw-head"),
-    groupHeader: withMargins(".cw-group-head"),
-    row: row.getBoundingClientRect().height,
-    rowGap: parseFloat(getComputedStyle(row).marginBottom) || 0,
-    sentenceOne: 0,
-    sentenceLine: 0,
-    spellBlock: 0,
-    punctOne: 0,
-    punctLine: 0,
+    groups: [],
     grammarHeader: 0,
     grammarItems: [],
     compReadings: [],
@@ -10201,6 +10184,17 @@ function worksheetProbe(geo, { sentences = false, spelling = false, punctuation 
   // Every one of these is measured the same way and for the same reason: the
   // block's own box PLUS its margins, because a margin is height the packer has
   // to account for and getBoundingClientRect does not report it.
+  // eslint-disable-next-line no-unused-vars
+  // An ITEM: the height that must fit before a page break, and the gap after it,
+  // which must not. The gap is dropped where a break lands, so folding it into the
+  // height pushes an item onto the next page that would have fitted on this one.
+  const itemBox = (element) => {
+    const style = getComputedStyle(element);
+    return {
+      height: element.getBoundingClientRect().height + (parseFloat(style.marginTop) || 0),
+      gap: parseFloat(style.marginBottom) || 0,
+    };
+  };
   const boxHeight = (element) => {
     if (!element) return 0;
     const style = getComputedStyle(element);
@@ -10222,13 +10216,7 @@ function worksheetProbe(geo, { sentences = false, spelling = false, punctuation 
       // reason: the gap after the last item on a page is dropped at the break, so
       // requiring it to fit pushes an item to the next page that would have fitted
       // on this one. Grade 2 Unit 7 on large lines was one page over because of it.
-      items: [...section.querySelectorAll(".cw-comp-item")].map((el) => {
-        const style = getComputedStyle(el);
-        return {
-          height: el.getBoundingClientRect().height + (parseFloat(style.marginTop) || 0),
-          gap: parseFloat(style.marginBottom) || 0,
-        };
-      }),
+      items: [...section.querySelectorAll(".cw-comp-item")].map(itemBox),
     }));
   }
   if (answerKey) {
@@ -10239,10 +10227,7 @@ function worksheetProbe(geo, { sentences = false, spelling = false, punctuation 
       measurement.answerHeader = head
         ? head.getBoundingClientRect().height + (parseFloat(style.marginTop) || 0) + (parseFloat(style.marginBottom) || 0)
         : 0;
-      measurement.answerItems = [...section.querySelectorAll(".cw-answers-item")].map((el) => {
-        const s2 = getComputedStyle(el);
-        return el.getBoundingClientRect().height + (parseFloat(s2.marginTop) || 0) + (parseFloat(s2.marginBottom) || 0);
-      });
+      measurement.answerItems = [...section.querySelectorAll(".cw-answers-item")].map(itemBox);
       const intro = section.querySelector(".cw-answers-note");
       if (intro) {
         const s3 = getComputedStyle(intro);
@@ -10258,164 +10243,90 @@ function worksheetProbe(geo, { sentences = false, spelling = false, punctuation 
       measurement.grammarHeader = head
         ? head.getBoundingClientRect().height + (parseFloat(style.marginTop) || 0) + (parseFloat(style.marginBottom) || 0)
         : 0;
-      measurement.grammarItems = [...section.querySelectorAll(".cw-gram-item")].map((el) => {
-        const s2 = getComputedStyle(el);
-        return el.getBoundingClientRect().height + (parseFloat(s2.marginTop) || 0) + (parseFloat(s2.marginBottom) || 0);
-      });
+      measurement.grammarItems = [...section.querySelectorAll(".cw-gram-item")].map(itemBox);
     }
   }
-  if (spelling) {
-    const spellRow = probe.querySelector("#cw-probe-spell .cw-row");
-    if (spellRow) measurement.spellBlock = spellRow.getBoundingClientRect().height - measurement.row;
-  }
-  if (punctuation) {
-    const shortRow = probe.querySelector("#cw-probe-pshort .cw-row");
-    const longRow = probe.querySelector("#cw-probe-plong .cw-row");
-    const shortLines = wrapCursive(PROBE_SHORT, geo, cursiveWidthOf).length;
-    const longLines = wrapCursive(PROBE_LONG, geo, cursiveWidthOf).length;
-    if (shortRow && longRow && longLines > shortLines) {
-      const shortHeight = shortRow.getBoundingClientRect().height;
-      const longHeight = longRow.getBoundingClientRect().height;
-      // One extra wrapped line costs ONE blank band here, not two — the exercise
-      // has no model lines, only the lines to write the corrected sentence on.
-      measurement.punctLine = (longHeight - shortHeight) / (longLines - shortLines);
-      measurement.punctOne = shortHeight - measurement.row - measurement.punctLine * (shortLines - 1);
-    }
-  }
-  if (sentences) {
-    const shortRow = probe.querySelector("#cw-probe-short .cw-row");
-    const longRow = probe.querySelector("#cw-probe-long .cw-row");
-    const shortLines = wrapCursive(PROBE_SHORT, geo, cursiveWidthOf).length;
-    const longLines = wrapCursive(PROBE_LONG, geo, cursiveWidthOf).length;
-    if (shortRow && longRow && longLines > shortLines) {
-      const shortHeight = shortRow.getBoundingClientRect().height;
-      const longHeight = longRow.getBoundingClientRect().height;
-      // One extra wrapped line costs a model line AND its blank twin.
-      measurement.sentenceLine = (longHeight - shortHeight) / (longLines - shortLines);
-      // What a one-line sentence adds on top of a plain row: the label and the
-      // first model/blank pair.
-      measurement.sentenceOne = shortHeight - measurement.row - measurement.sentenceLine * (shortLines - 1);
-    }
-  }
+  // EVERY ROW OF EVERY CHOSEN GROUP, measured as rendered.
+  //
+  // This used to be a model: one bare row, plus a measured delta for spelling, plus
+  // one for the first sentence line and one for each extra, plus the same pair for
+  // punctuation — and a word's height was the sum. The parts were all measured, so
+  // it looked like measurement, but the SUM was an assumption: that the add-ons do
+  // not interact, and that no row can exceed a page. Both fail once spelling, a
+  // sentence and a punctuation exercise stack on one row. At Grade 4 on large lines
+  // the tallest such row is 1,099px against a 1,017px page, break-inside: avoid
+  // cannot hold it, and the sheet ran a page short — while every single-option
+  // configuration stayed exact, which is why it survived so long.
+  //
+  // Now the probe renders the same builder the print document uses, with the same
+  // groups and the same measured widths, and asks the engine for each row's height.
+  // There is nothing left to model, so there is nothing left to be wrong about.
+  measurement.groups = [...probe.querySelectorAll("#cw-probe-groups .cw-group")].map((section) => ({
+    header: boxHeight(section.querySelector(".cw-group-head")),
+    // Height WITHOUT the trailing margin, and that margin carried separately: the
+    // gap after the last row on a page is dropped at the break, so requiring it to
+    // fit pushes a row onto the next page that would have fitted on this one.
+    rows: [...section.querySelectorAll(".cw-row")].map(itemBox),
+  }));
   probe.remove();
   return measurement;
 }
 
-function worksheetPageCount(chosenGroups, geo, { sentences = false, spelling = false, punctuation = false, grammar = null, comprehension = null, spellingKey = null, punctuationKey = null, answerKey = false } = {}) {
+function worksheetPageCount(chosenGroups, geo, { widths = new Map(), sentences = false, spelling = false, punctuation = false, grammar = null, comprehension = null, spellingKey = null, punctuationKey = null, answerKey = false } = {}) {
   if (!chosenGroups.length && !(grammar && grammar.length) && !(comprehension && comprehension.length)) return 0;
-  const probe = worksheetProbe(geo, { sentences, spelling, punctuation, grammar, comprehension, spellingKey, punctuationKey, answerKey });
-  if (!probe.perMm || !probe.row) return 0;
+  const probe = worksheetProbe(geo, { groups: chosenGroups, widths, sentences, spelling, punctuation, grammar, comprehension, spellingKey, punctuationKey, answerKey });
+  if (!probe.perMm) return 0;
   const pageHeight = SHEET_H * probe.perMm;
-  // A row is taller when it carries a sentence, and taller again for every line
-  // that sentence wraps to — so the height is per WORD now, not one figure for
-  // the sheet.
-  const heightOf = (group, word) => {
-    let height = probe.row;
-    // Spelling is one label and one ruled band whatever the word, so it is a
-    // constant rather than a per-word measurement.
-    if (spelling && group.spellings?.get(word)) height += probe.spellBlock;
-    const sentence = sentences ? group.sentences?.get(word) : "";
-    if (sentence) {
-      height += probe.sentenceOne
-        + probe.sentenceLine * (wrapCursive(sentence, geo, cursiveWidthOf).length - 1);
-    }
-    const punct = punctuation ? group.sentences?.get(word) : "";
-    if (punct) {
-      height += probe.punctOne
-        + probe.punctLine * (wrapCursive(punct, geo, cursiveWidthOf).length - 1);
-    }
-    return height;
-  };
-  let pages = 0;
-  chosenGroups.forEach((group, index) => {
-    // Every group starts a page; the first shares its page with the sheet header.
-    pages += 1;
-    let left = pageHeight - probe.groupHeader - (index === 0 ? probe.sheetHeader : 0);
-    for (const word of group.words) {
-      const rowHeight = heightOf(group, word);
-      // The row itself has to fit; the gap after it does not, so it is only ever
-      // subtracted from what remains.
-      if (rowHeight > left) { pages += 1; left = pageHeight; }
-      // A ROW CAN NOW BE TALLER THAN A PAGE, and break-inside: avoid does not
-      // survive that — the engine breaks it anyway and it spans two pages. This is
-      // the same defect already fixed for grammar items, recurring here because a
-      // row was small until spelling, a sentence to copy and a punctuation
-      // exercise could all stack on one: at Grade 4 on large lines the tallest
-      // measures 1,099px against a 1,017px page.
-      //
-      // It is invisible at every smaller combination, so it only shows on the
-      // maximal sheet — the one least likely to be the case anybody checks, and
-      // the one where being a page out matters least and is noticed least.
-      if (rowHeight > pageHeight) {
-        const spilled = Math.ceil(rowHeight / pageHeight) - 1;
-        pages += spilled;
-        left = pageHeight - (rowHeight - spilled * pageHeight);
-      } else {
-        left -= rowHeight;
-      }
-      left -= probe.rowGap;
-    }
-  });
-  // Grammar follows the word groups on a page of its own, and its items are
-  // packed the same way rows are — each measured, each unsplittable.
-  if (probe.grammarItems.length) {
-    pages += 1;
-    let left = pageHeight - probe.grammarHeader;
-    for (const itemHeight of probe.grammarItems) {
-      if (itemHeight > left) { pages += 1; left = pageHeight; }
-      if (itemHeight > pageHeight) {
-        // An item taller than a whole page cannot honour break-inside: avoid — the
-        // engine breaks it anyway and it spans several pages. Counting it as one
-        // put the Grade 4 small sheet a page short: its longest item measures
-        // 1,697px against a 1,017px page. Measured, not assumed to be impossible.
-        const spilled = Math.ceil(itemHeight / pageHeight) - 1;
-        pages += spilled;
-        left = pageHeight - (itemHeight - spilled * pageHeight);
-      } else {
-        left -= itemHeight;
-      }
-    }
-  }
-  // Comprehension follows the grammar. Each reading is its own section, so each
-  // opens a page; what is different here is that the thing above the questions is
-  // a whole passage, and a passage is routinely taller than the page it starts on.
-  // The same spill arithmetic the oversized grammar item needed applies to it —
-  // treating the head as "fits by definition" would run several pages short on
-  // every unit, since the passages average about 7,000 characters.
-  for (const reading of probe.compReadings) {
-    pages += 1;
-    let left = pageHeight - reading.head;
+  // One packer, over measured boxes. Every section is the same shape now — a
+  // header, then a run of items that each have to fit whole — so grammar,
+  // comprehension, the answer key and the word groups all go through this.
+  const pack = (header, items, extraLead = 0) => {
+    let pages = 1;
+    let left = pageHeight - header - extraLead;
+    // A lead taller than the page — a comprehension passage — spills like an item.
     if (left < 0) {
-      const spilled = Math.ceil(reading.head / pageHeight) - 1;
+      const spilled = Math.ceil((header + extraLead) / pageHeight) - 1;
       pages += spilled;
-      left = pageHeight - (reading.head - spilled * pageHeight);
+      left = pageHeight - ((header + extraLead) - spilled * pageHeight);
     }
-    for (const item of reading.items) {
+    for (const item of items) {
       if (item.height > left) { pages += 1; left = pageHeight; }
+      // An item taller than a whole page cannot honour break-inside: avoid — the
+      // engine breaks it regardless and it spans as many pages as it needs.
       if (item.height > pageHeight) {
-        const spilled = Math.ceil(item.height / pageHeight) - 1;
-        pages += spilled;
-        left = pageHeight - (item.height - spilled * pageHeight);
+        // AN OVERSIZED ITEM DOES NOT SHARE ITS LAST PAGE. break-inside: avoid
+        // cannot hold a block taller than the page, so the engine breaks it — but
+        // it does not then flow the next item alongside the remainder. Modelling
+        // the leftover as usable space (pageHeight minus the overhang) was one
+        // page short per oversized row, which is how a Grade 4 sheet on large
+        // lines came out four pages under across 156 rows.
+        //
+        // Derived from the produced PDFs, not from the spec: the two groups that
+        // disagreed predict 8 and 162 under this rule and 7 and 158 under the
+        // sharing one, and the PDFs are 8 and 162.
+        pages += Math.ceil(item.height / pageHeight) - 1;
+        left = 0;
       } else {
         left -= item.height;
-      }
-      left -= item.gap;
-    }
-  }
-  if (probe.answerItems.length) {
-    pages += 1;
-    let left = pageHeight - probe.answerHeader;
-    for (const itemHeight of probe.answerItems) {
-      if (itemHeight > left) { pages += 1; left = pageHeight; }
-      if (itemHeight > pageHeight) {
-        const spilled = Math.ceil(itemHeight / pageHeight) - 1;
-        pages += spilled;
-        left = pageHeight - (itemHeight - spilled * pageHeight);
-      } else {
-        left -= itemHeight;
+        left -= item.gap || 0;
       }
     }
-  }
+    return pages;
+  };
+  let pages = 0;
+  // Every group starts a page; the first shares its page with the sheet header.
+  probe.groups.forEach((group, index) => {
+    pages += pack(group.header, group.rows, index === 0 ? probe.sheetHeader : 0);
+  });
+  // Grammar follows the word groups on a page of its own; each reading of the
+  // comprehension is a section of its own after that; the answer key is last. All
+  // three are a header and a run of unsplittable items, which is what the word
+  // groups are, so all four go through the same packer over the same measured
+  // boxes. There is one page-breaking rule on this sheet now, not four copies of
+  // it that could drift.
+  if (probe.grammarItems.length) pages += pack(probe.grammarHeader, probe.grammarItems);
+  for (const reading of probe.compReadings) pages += pack(reading.head, reading.items);
+  if (probe.answerItems.length) pages += pack(probe.answerHeader, probe.answerItems);
   return pages;
 }
 
@@ -10504,7 +10415,7 @@ function renderCursiveWorksheet() {
     const geo = worksheetGeometry(size);
     const picked = selectedGroups();
     const words = selectedWords();
-    const pages = worksheetPageCount(picked, geo, { sentences, spelling, punctuation, grammar: grammar ? grammarItems : null, comprehension: comprehension ? compReadings : null, spellingKey: spellingKeyOf(picked), punctuationKey: punctuationKeyOf(picked), answerKey: answerKey && keyAvailable() });
+    const pages = worksheetPageCount(picked, geo, { widths, sentences, spelling, punctuation, grammar: grammar ? grammarItems : null, comprehension: comprehension ? compReadings : null, spellingKey: spellingKeyOf(picked), punctuationKey: punctuationKeyOf(picked), answerKey: answerKey && keyAvailable() });
     $("#cw-style").textContent = worksheetCss(geo, { print: false });
     const extras = [spelling && "spelling practice", sentences && "a sentence to copy", punctuation && "punctuation to put back"].filter(Boolean);
     const added = [

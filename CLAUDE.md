@@ -217,6 +217,17 @@ npm run validate:curriculum-units -- --strict-cambridge
 
 A framework failure usually means the extracted JSON is wrong, not the unit. The frameworks are parsed out of Cambridge's PDFs and the source documents are not in the repo, so fix the framework before re-pointing any mapping at it.
 
+## The Ehel Academy shell keeps TWO progress stores per learner, and only one drives the UI
+
+Shared across all six subjects (`shell/course-app.js` + `shared/progress-client.js`), found while seeding `localStorage` in the browser to test a completion-card wording change and finding more keys than expected.
+
+- **`config.keys(grade, unit).progress`** — a per-subject, per-UNIT key (English: `ehel-english-g{g}-u{u}-progress-v1`). Holds the `progress` object directly: `completed` (the array everything gates on), `knownWords`, `self`, `writing`, `games`. Written by `saveProgress()` on every completion action. **This is the only store anything reads.** Nav ticks, `sectionUnlocked()`, the unit gate, the progress bar %, and the "Next up" / "Go back to" completion card all read `progress.completed` from this key alone. To reproduce a progress state for testing, seed THIS key and reload the page (a hash-only `location.href` change is a same-document navigation and will not re-read it — use `location.reload()` or a fresh tab).
+- **`ehel-progress:{course}:{student}`** (`shared/progress-client.js`) — one key per COURSE (English: `ehel-eng-g{gg}`, `student` from `?studentid=` or `"local"`), holding the P1.4 Progress Event Contract's reduced document: `{course, student, stateVersion, units: {u01: {sectionsDone, resume, checkpoints, xp, knownWords}, ...}}`. Populated by reducing `emitProgress()` events (`section.completed`, `unit.completed`, `progress.summary`, ...) through `applyEvent()`. `saveProgress()` calls `emitProgressSummary()`, so both stores are written together on every save — but they are shaped differently and keyed at different granularity, so they are never byte-comparable.
+
+**The second store is write-only in local-dev and in a plain student launch.** `hydrateRemoteResume()` (`course-app.js`) reads it back to seed `progress.completed` — but it opens with `if (progressWS.backend !== "remote") return`, and the backend is `"remote"` only when the launch URL carries `pwsEndpoint`/`pwsToken` (the school's actual production launch path through Moodle). Without a launch token — which is every local-dev session and every console experiment — the backend is `"local"`, so `ehel-progress:{course}:{student}` accumulates a faithful mirror of every event ever emitted and nothing in the app ever reads it back. Writing to it does nothing observable; a UI change has to go through the per-unit key.
+
+A third key, `ehel-progress-outbox:{course}:{student}`, exists only for the remote backend (durable events queue there until a POST to `/progress/ingest` succeeds; the local backend applies events straight into its document instead). Irrelevant to local testing for the same reason.
+
 ## Ehel Academy subject pipelines
 
 Science, Computing and Global Perspectives are built from Word source packs in `~/Downloads`, not hand-edited. Each is `extract → build → check`:

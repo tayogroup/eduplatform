@@ -755,7 +755,18 @@ export function createGetHelp(options) {
           .map((p, at) => ({ id: String(p.id || at), prompt: p.prompt, answer: p.answer, hint: typeof p.hint === "string" ? p.hint : "" }))
       : [];
     const practice = lessonPractice.length ? lessonPractice.slice(0, 12) : practicePool(unit).slice(0, 3);
-    const openStep = session.stepOpen || firstOpenStep(session, steps);
+    // A session with a lesson OPENS ON THE LESSON. The card's button promises
+    // "Teach me this, then practise", and the walk's first step is a
+    // five-question check — so landing there delivered a test to a learner who
+    // asked to be taught, and buried the lesson two steps down where the owner
+    // could not find it. Teaching first is also the whole reason these lessons
+    // exist (owner, 2026-08-26): the child is here because a lesson did not
+    // land, so quizzing them before teaching is both discouraging and beside
+    // the point. The Quick check stays as step 1 — reachable, and still the
+    // "before" half of the before/after if they want it — it is simply no
+    // longer in the way.
+    const opensOnLesson = lesson && !session.understand?.completed && !session.check.submitted;
+    const openStep = session.stepOpen || (opensOnLesson ? "understand" : firstOpenStep(session, steps));
 
     const stepBody = (id) => {
       if (id === "check" || id === "recheck") {
@@ -1025,7 +1036,11 @@ export function createGetHelp(options) {
       lines.push(`Studied the topic lesson (a from-zero second teaching) before practising.`);
     }
     if (sets.scored) {
-      lines.push(`Quick check before studying: ${session.check.score}/${session.check.total || sets.checkSet.length}`);
+      // Only report a before-score that was actually taken. A lesson-bearing
+      // session opens on the lesson, so the check is genuinely optional now —
+      // and printing "0/5" for a quiz nobody sat would tell a parent, and any
+      // human tutor reading this, that the child scored nothing.
+      if (session.check.submitted) lines.push(`Quick check before studying: ${session.check.score}/${session.check.total || sets.checkSet.length}`);
       if (session.recheck.submitted) lines.push(`Check after studying: ${session.recheck.score}/${session.recheck.total || sets.recheckSet.length}`);
       const stillWrong = sets.recheckSet.filter((q) => session.recheck.submitted && norm(session.recheck.answers[q.id]) !== norm(q.answer));
       if (stillWrong.length) lines.push(`Still finds hard:`, ...stillWrong.map((q) => `  - ${q.prompt}`));

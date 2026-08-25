@@ -218,6 +218,9 @@
         { name: "age_years", label: "Age", type: "number", min: 1, max: 99 },
         { name: "gender", label: "Gender", kind: "select", opts: { female: "Female", male: "Male" } },
         { name: "current_grade", label: "Current grade/year", kind: "select", optkey: "primary_grade_levels" },
+        // Tutoring-support track: full_school changes nothing; tutoring_support
+        // marks every child on the submission for the tutoring category.
+        { name: "enrolment_purpose", label: "How will your child use Ehel Academy?", kind: "select", opts: { full_school: "Full school enrolment", tutoring_support: "Tutoring & homework support (child stays at their current school)" } },
         { name: "school_curriculum", label: "School curriculum", kind: "select", optkey: "primary_curricula" },
         { name: "current_school_name", label: "Current school name" },
         { name: "student_lives_with", label: "Student lives with", kind: "select", optkey: "student_lives_with_options" },

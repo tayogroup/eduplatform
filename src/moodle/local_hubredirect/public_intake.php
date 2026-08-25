@@ -869,6 +869,10 @@ $form = [
     // Additional children on this submission; each becomes its own request row.
     'siblings' => [],
     'course_type' => '',
+    // Tutoring-support track (2026-08-25): how the family means to use the
+    // school. full_school is the default and changes nothing; tutoring_support
+    // marks every child on this submission for the tutoring category.
+    'enrolment_purpose' => 'full_school',
     'country' => '',
     'city' => '',
     'city_other' => '',
@@ -1025,6 +1029,7 @@ if ($ready && !$needsschoolselection && $_SERVER['REQUEST_METHOD'] === 'POST') {
         'adult_support_needs' => pqpir_limit_text(pqpir_trim('adult_support_needs'), 2000),
         'adult_notes' => pqpir_limit_text(pqpir_trim('adult_notes'), 2000),
         'course_type' => pqpir_trim('course_type'),
+        'enrolment_purpose' => pqpir_trim('enrolment_purpose'),
         'country' => pqpir_trim('country'),
         'city' => pqpir_trim('city'),
         'city_other' => pqpir_trim('city_other'),
@@ -1116,6 +1121,11 @@ if ($ready && !$needsschoolselection && $_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors['course_type'] = 'Please select the course.';
     }
     if ($isprimaryeducation) {
+        // The tutoring-support track selector posts one of exactly two values;
+        // anything else is tampering, not a family.
+        if (!in_array(pqpir_value($form, 'enrolment_purpose'), ['full_school', 'tutoring_support'], true)) {
+            $errors['enrolment_purpose'] = 'Please choose how your child will use Ehel Academy.';
+        }
         // Date of birth is deliberately absent from this list and from the form.
         // Age carries the placement check on its own; asking a family to fetch a
         // birth certificate before they can submit cost more than it returned.
@@ -1487,6 +1497,16 @@ foreach ([
         }
         if (pqpir_table_has_column('local_prequran_intake_request', 'course_type')) {
             $requestrecord->course_type = pqpir_value($form, 'course_type');
+            // Primary education leaves course_type '' by convention (no course
+            // selector on that branch), which makes it the vessel for the
+            // tutoring-support track: 'tutoring_support' rides here, '' still
+            // means full school. Siblings clone this record, so one family-level
+            // choice marks every child on the submission. student_intake.php
+            // reads it at conversion and adds the child to the ehel-tutoring
+            // cohort, which IS the category (launch claim + all six courses).
+            if ($isprimaryeducation) {
+                $requestrecord->course_type = pqpir_value($form, 'enrolment_purpose') === 'tutoring_support' ? 'tutoring_support' : '';
+            }
         }
         foreach ([
             'parent_relationship',
@@ -1895,6 +1915,7 @@ body.pqh-public-intake-page #page-wrapper,body.pqh-public-intake-page #page,body
               <div class="pqpir-field<?php echo isset($errors['age_years']) ? ' pqpir-field--error' : ''; ?>"><label>Age</label><?php echo pqpir_hint("The student's age in whole years today. We use it to check the grade is right for their age."); ?><input class="pqpir-input" name="age_years" type="number" min="1" max="99" value="<?php echo s(pqpir_value($form, 'age_years')); ?>"><?php echo pqpir_error($errors, 'age_years'); ?></div>
               <div class="pqpir-field<?php echo isset($errors['gender']) ? ' pqpir-field--error' : ''; ?>"><label>Gender</label><?php echo pqpir_hint('Used for class grouping and, where you ask for it below, for matching a teacher of the same gender.'); ?><select class="pqpir-input" name="gender"><option value="">Select</option><option value="female"<?php echo pqpir_selected($form, 'gender', 'female'); ?>>Female</option><option value="male"<?php echo pqpir_selected($form, 'gender', 'male'); ?>>Male</option></select><?php echo pqpir_error($errors, 'gender'); ?></div>
               <div class="pqpir-field<?php echo isset($errors['current_grade']) ? ' pqpir-field--error' : ''; ?>"><label>Current grade/year</label><?php echo pqpir_hint('The grade the student is in right now — not the one they are moving up to. Choose "Other / not sure" if the student is between schools or systems.'); ?><?php echo pqpir_select('current_grade', $options['primary_grade_levels'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field<?php echo isset($errors['enrolment_purpose']) ? ' pqpir-field--error' : ''; ?>"><label>How will your child use Ehel Academy?</label><?php echo pqpir_hint('Choose Tutoring & homework support if your child stays enrolled at their current school and uses Ehel for extra help. They get all six subjects, help sessions, and the AI tutor — organised around what they need help with, not our school year.'); ?><?php echo pqpir_select('enrolment_purpose', ['full_school' => 'Full school enrolment', 'tutoring_support' => 'Tutoring & homework support (child stays at their current school)'], $form, $errors); ?></div>
               <div class="pqpir-field<?php echo isset($errors['school_curriculum']) ? ' pqpir-field--error' : ''; ?>"><label>School curriculum</label><?php echo pqpir_hint('The curriculum the student\'s current school follows. Pick the closest match — it tells us how their grade compares to ours.'); ?><?php echo pqpir_select('school_curriculum', $options['primary_curricula'] ?? [], $form, $errors); ?></div>
               <div class="pqpir-field<?php echo isset($errors['current_school_name']) ? ' pqpir-field--error' : ''; ?>"><label>Current school name</label><?php echo pqpir_hint('The school the student attends now. Write "Home schooled" or "Not in school" if that is the case.'); ?><input class="pqpir-input" name="current_school_name" value="<?php echo s(pqpir_value($form, 'current_school_name')); ?>"><?php echo pqpir_error($errors, 'current_school_name'); ?></div>
               <div class="pqpir-field<?php echo isset($errors['student_lives_with']) ? ' pqpir-field--error' : ''; ?>"><label>Student lives with</label><?php echo pqpir_hint('Who the student lives with day to day. It tells us who to speak to about attendance and progress.'); ?><?php echo pqpir_select('student_lives_with', $options['student_lives_with_options'] ?? [], $form, $errors); ?></div>

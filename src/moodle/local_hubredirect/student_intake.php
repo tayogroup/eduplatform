@@ -2204,6 +2204,36 @@ foreach ([
                 $request->reviewedat = time();
                 $request->timemodified = time();
                 $DB->update_record('local_prequran_intake_request', $request);
+                // The tutoring-support track (2026-08-25): the family chose it
+                // on the public intake, and it rode here in course_type — the
+                // column primary education otherwise leaves ''. Cohort
+                // membership IS the whole category: the ehel-tutoring cohort
+                // mints the launch claim (pqpg_launch_category) and cohort-sync
+                // enrols the child in all six Tutoring courses. Best-effort
+                // like everything around it — a missing cohort is a note for
+                // the admin, never a failed conversion.
+                if ((string)($request->course_type ?? '') === 'tutoring_support') {
+                    try {
+                        $tutcohortid = (int)$DB->get_field('cohort', 'id', ['idnumber' => 'ehel-tutoring'], IGNORE_MISSING);
+                        if ($tutcohortid > 0) {
+                            require_once($CFG->dirroot . '/cohort/lib.php');
+                            if (!$DB->record_exists('cohort_members', ['cohortid' => $tutcohortid, 'userid' => $studentid])) {
+                                cohort_add_member($tutcohortid, $studentid);
+                            }
+                            $request->admin_notes = trim((string)($request->admin_notes ?? '')) . "\nTutoring support track: added to the ehel-tutoring cohort (all six Tutoring courses via cohort sync).";
+                        } else {
+                            $request->admin_notes = trim((string)($request->admin_notes ?? '')) . "\nTutoring support track chosen, but the ehel-tutoring cohort does not exist — run setup-tutoring-category.php, then add the student by hand.";
+                        }
+                        $request->timemodified = time();
+                        $DB->update_record('local_prequran_intake_request', $request);
+                    } catch (Throwable $tutex) {
+                        debugging('Tutoring cohort add failed: ' . $tutex->getMessage(), DEBUG_DEVELOPER);
+                    }
+                    pqsi_audit('student_intake_tutoring_track', 'intake_request', $requestid, [
+                        'studentid' => $studentid,
+                        'cohortid' => $tutcohortid ?? 0,
+                    ]);
+                }
                 $teacherrequestid = 0;
                 if ($preferredteacherid > 0) {
                     $teacherrequestid = pqsi_upsert_teacher_marketplace_request(

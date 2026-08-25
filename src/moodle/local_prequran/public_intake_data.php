@@ -371,6 +371,8 @@ $form = [
     'adult_support_needs' => pqpirl_limit_text(pqpirl_trim('adult_support_needs'), 2000),
     'adult_notes' => pqpirl_limit_text(pqpirl_trim('adult_notes'), 2000),
     'course_type' => pqpirl_trim('course_type'),
+    // Tutoring-support track — mirrors public_intake.php exactly.
+    'enrolment_purpose' => pqpirl_trim('enrolment_purpose') !== '' ? pqpirl_trim('enrolment_purpose') : 'full_school',
     'country' => pqpirl_trim('country'),
     'city' => pqpirl_trim('city'),
     'city_other' => pqpirl_trim('city_other'),
@@ -470,6 +472,11 @@ $siblinginput = ($isprimaryeducation && is_array($body['siblings'] ?? null))
     : [];
 
 if ($isprimaryeducation) {
+    // The tutoring-support track selector posts one of exactly two values;
+    // anything else is tampering, not a family. Mirrors public_intake.php.
+    if (!in_array(pqpirl_value($form, 'enrolment_purpose'), ['full_school', 'tutoring_support'], true)) {
+        $errors['enrolment_purpose'] = 'Please choose how your child will use Ehel Academy.';
+    }
     // Date of birth is deliberately absent from this list and from the form.
     // Age carries the placement check on its own; asking a family to fetch a
     // birth certificate before they can submit cost more than it returned.
@@ -839,6 +846,13 @@ if (pqpirl_table_has_column('local_prequran_intake_request', 'special_needs')) {
 }
 if (pqpirl_table_has_column('local_prequran_intake_request', 'course_type')) {
     $requestrecord->course_type = pqpirl_value($form, 'course_type');
+    // Primary education leaves course_type '' by convention, which makes it
+    // the tutoring-support track's vessel: 'tutoring_support' rides here, ''
+    // still means full school. Siblings clone this record, so one family-level
+    // choice marks every child. Mirrors public_intake.php exactly.
+    if ($isprimaryeducation) {
+        $requestrecord->course_type = pqpirl_value($form, 'enrolment_purpose') === 'tutoring_support' ? 'tutoring_support' : '';
+    }
 }
 foreach ([
     'parent_relationship',

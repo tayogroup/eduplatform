@@ -293,6 +293,7 @@ export function createGetHelp(options) {
       from: { stage: Number(options.stage()) },
       startedAt: new Date().toISOString(),
       check: { answers: {}, submitted: false, score: 0, total: 0, attempted: 0 },
+      understand: { completed: false },
       learn: { done: [], completed: false },
       practice: { marks: {}, completed: false },
       recheck: { answers: {}, submitted: false, score: 0, total: 0, attempted: 0 },
@@ -586,14 +587,20 @@ export function createGetHelp(options) {
 
   const STEPS = [
     { id: "check", icon: "list-checks" },
+    { id: "understand", icon: "lightbulb" },
     { id: "learn", icon: "book-open" },
     { id: "practice", icon: "pencil-line" },
     { id: "recheck", icon: "badge-check" },
     { id: "wrap", icon: "flag" },
   ];
+  // "understand" exists only where an authored TOPIC LESSON does — see
+  // tutorLesson() below. A unit with no lesson keeps the original five-step
+  // walk byte-for-byte, which is every unit until its lesson is written.
+  const sessionSteps = (lesson) => STEPS.filter((s) => s.id !== "understand" || lesson);
 
   function stepTitle(id, scored) {
     if (id === "check") return scored ? "Quick check" : "Try it first";
+    if (id === "understand") return "Understand it";
     if (id === "learn") return "Learn it";
     if (id === "practice") return "Practise it";
     if (id === "recheck") return scored ? "Check again" : "Try it again";
@@ -602,12 +609,58 @@ export function createGetHelp(options) {
 
   function stepDone(session, id) {
     if (id === "check") return session.check.submitted;
+    if (id === "understand") return Boolean(session.understand && session.understand.completed);
     if (id === "learn") return session.learn.completed;
     if (id === "practice") return session.practice.completed;
     if (id === "recheck") return session.recheck.submitted;
     return session.status === "finished";
   }
-  const firstOpenStep = (session) => (STEPS.find((s) => !stepDone(session, s.id)) || STEPS[STEPS.length - 1]).id;
+  const firstOpenStep = (session, steps) => (steps.find((s) => !stepDone(session, s.id)) || steps[steps.length - 1]).id;
+
+  // --- the topic lesson ------------------------------------------------------
+  // An authored, reviewed SECOND TEACHING of the unit's topic, written from
+  // zero for the learner whose school already taught this and it did not land
+  // (owner decision 2026-08-26: pre-authored content, not Wehel improvisation,
+  // is the primary teacher — consistent between children, instant, and paid
+  // for once instead of per question). Lives beside the unit's own data at
+  // tutor-lessons/unit-N.json so the content uploader deploys it with the
+  // rest; a 404 means the unit's lesson is not written yet and the session
+  // simply keeps its original shape. The lesson also carries its own check
+  // and practice pools, so the before/after score finally measures the TOPIC
+  // rather than the whole unit it happens to live in.
+  const lessonCache = new Map(); // "stage:unit" -> lesson | null (null = none)
+  function tutorLesson(session) {
+    const key = `${session.target.stage}:${session.target.unit}`;
+    if (lessonCache.has(key)) {
+      const cached = lessonCache.get(key);
+      return cached && typeof cached.then === "function" ? null : cached;
+    }
+    const pending = fetch(new URL(`tutor-lessons/unit-${session.target.unit}.json`, dataRoot(session.target.stage)))
+      .then((response) => (response.ok ? response.json() : null))
+      .catch(() => null)
+      .then((lesson) => {
+        lessonCache.set(key, lesson && typeof lesson === "object" ? lesson : null);
+        // The step appears once loaded; only repaint if the learner is still
+        // looking at this session's page.
+        if (lesson && location.hash.slice(1) === "help-session" && activeSession()?.id === session.id) renderSession();
+        return lesson;
+      });
+    lessonCache.set(key, pending);
+    return null;
+  }
+  // The lesson's own MCQs, in the session's scorable shape. Needs at least 6
+  // so evens/odds still yields two disjoint five-question sets.
+  function lessonCheckPool(lesson) {
+    if (!lesson || !Array.isArray(lesson.check)) return null;
+    const out = [];
+    for (const q of lesson.check) {
+      const options = optionsOf(q);
+      if (options.length >= 2 && q.question && q.answer != null && options.some((o) => norm(o) === norm(q.answer))) {
+        out.push({ id: String(q.id || out.length), prompt: String(q.question), options, answer: String(q.answer), explanation: String(q.explanation || "") });
+      }
+    }
+    return out.length >= 6 ? out : null;
+  }
 
   function learnItems(unit) {
     const available = new Set(options.sections().map(([id]) => id));
@@ -643,13 +696,24 @@ export function createGetHelp(options) {
       return;
     }
 
-    const scorable = scorablePool(unit);
+    // The topic lesson's own pools take over when the lesson exists: the
+    // before/after score then measures the TOPIC the child searched for,
+    // not the whole unit it lives in — which is what made "before 3/5" mean
+    // something on a session about letter-writing that used to open with
+    // FANBOYS questions. The unit's pools stay the fallback everywhere else.
+    const lesson = tutorLesson(session);
+    const steps = sessionSteps(lesson);
+    const scorable = lessonCheckPool(lesson) || scorablePool(unit);
     const scored = scorable.length >= 6;
     const open = scored ? [] : openPool(unit);
     const checkSet = scored ? evens(scorable, 5) : open.slice(0, 3);
     const recheckSet = scored ? odds(scorable, 5) : open.slice(3, 6);
-    const practice = practicePool(unit).slice(0, 3);
-    const openStep = session.stepOpen || firstOpenStep(session);
+    const lessonPractice = Array.isArray(lesson?.practice)
+      ? lesson.practice.filter((p) => typeof p.prompt === "string" && typeof p.answer === "string" && p.prompt && p.answer)
+          .map((p, at) => ({ id: String(p.id || at), prompt: p.prompt, answer: p.answer, hint: typeof p.hint === "string" ? p.hint : "" }))
+      : [];
+    const practice = lessonPractice.length ? lessonPractice.slice(0, 12) : practicePool(unit).slice(0, 3);
+    const openStep = session.stepOpen || firstOpenStep(session, steps);
 
     const stepBody = (id) => {
       if (id === "check" || id === "recheck") {
@@ -682,6 +746,26 @@ export function createGetHelp(options) {
           ${part.submitted
             ? `<div class="gh-score"><span><strong>${part.attempted} of ${set.length}</strong> attempted</span></div><div class="gh-actions"><button class="button primary" data-gh-skip="${id}" type="button">Continue ${ui.icon("arrow-right")}</button></div>`
             : `<div class="gh-actions"><button class="button primary" data-gh-submit-open="${id}" type="button">Show the model answers</button></div>`}`;
+      }
+      if (id === "understand") {
+        // The authored second teaching, from zero — read before the unit's
+        // own pages so those land as reinforcement rather than the teaching.
+        // Listen buttons render only once the lesson is narrated: an
+        // un-narrated lesson with data-speak buttons would fall back to the
+        // PAID runtime voice on every press, silently.
+        const speak = (text) => (lesson.narrated ? `<button class="button secondary voice-button" data-speak="${esc(text)}" type="button" aria-label="Listen">${ui.icon("volume-2")} <span>Listen</span></button>` : "");
+        const sections = (lesson.sections || []).map((s, at) => `<div class="gh-q">
+            <p><strong>${at + 1}. ${esc(s.heading)}</strong></p>
+            ${String(s.body || "").split("\n").filter(Boolean).map((line) => `<p>${esc(line)}</p>`).join("")}
+            ${s.example ? `<div class="gh-model"><strong>Example:</strong> ${esc(s.example)}</div>` : ""}
+            ${speak(`${s.heading}. ${s.body}${s.example ? ` For example: ${s.example}` : ""}`)}
+          </div>`).join("");
+        const mistakes = (lesson.mistakes || []).length ? `<div class="gh-q"><p><strong>Watch out for these</strong></p>
+            ${lesson.mistakes.map((m) => `<p>✗ ${esc(m.wrong)}<br>✓ ${esc(m.right)}${m.why ? `<br><small class="gh-note">${esc(m.why)}</small>` : ""}</p>`).join("")}
+          </div>` : "";
+        return `<p class="gh-note">${esc(lesson.promise || "Read this first — it starts from the very beginning, then the lesson pages will make sense.")}</p>
+          ${sections}${mistakes}
+          <div class="gh-actions"><button class="button primary" data-gh-understood type="button">I understand this ${ui.icon("arrow-right")}</button></div>`;
       }
       if (id === "learn") {
         const items = learnItems(unit);
@@ -740,10 +824,10 @@ export function createGetHelp(options) {
       `${session.query ? `From your search for “${esc(session.query)}”. ` : ""}A short walk: check what you know, learn it, practise it, check again.`,
       "Help session",
     )}
-      ${STEPS.map((step, at) => {
+      ${steps.map((step, at) => {
         const done = stepDone(session, step.id);
         const isOpen = openStep === step.id;
-        const reachable = done || isOpen || STEPS.slice(0, at).every((s) => stepDone(session, s.id));
+        const reachable = done || isOpen || steps.slice(0, at).every((s) => stepDone(session, s.id));
         return `<section class="gh-step">
           <button class="gh-step-head" data-gh-step="${step.id}" type="button" ${reachable ? "" : "disabled"}>
             ${ui.icon(done ? "circle-check-big" : step.icon)}<strong>${at + 1}. ${esc(stepTitle(step.id, scored))}</strong>
@@ -807,6 +891,13 @@ export function createGetHelp(options) {
         saveStore(); // no re-render: keep the learner's place mid-list
       });
     }
+    document.querySelector("[data-gh-understood]")?.addEventListener("click", () => {
+      // Older active sessions (started before topic lessons existed) carry no
+      // understand slot; create it rather than assume it.
+      session.understand = { completed: true };
+      session.stepOpen = null;
+      rerender();
+    });
     document.querySelector("[data-gh-learn-done]")?.addEventListener("click", () => { session.learn.completed = true; session.stepOpen = null; rerender(); });
     for (const button of document.querySelectorAll("[data-gh-show]")) {
       button.addEventListener("click", () => { session.practice[`show-${button.dataset.ghShow}`] = true; session.stepOpen = "practice"; rerender(); });
@@ -880,6 +971,9 @@ export function createGetHelp(options) {
       `Lesson used: ${options.stageWord} ${session.target.stage}, Unit ${session.target.unit}: ${session.target.title}`,
       `Learner's own level: ${options.stageWord} ${session.from.stage}`,
     ];
+    if (session.understand && session.understand.completed) {
+      lines.push(`Studied the topic lesson (a from-zero second teaching) before practising.`);
+    }
     if (sets.scored) {
       lines.push(`Quick check before studying: ${session.check.score}/${session.check.total || sets.checkSet.length}`);
       if (session.recheck.submitted) lines.push(`Check after studying: ${session.recheck.score}/${session.recheck.total || sets.recheckSet.length}`);

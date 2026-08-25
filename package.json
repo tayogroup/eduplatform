@@ -148,7 +148,7 @@
     "extract:science-content": "python tools/extract-ehel-science-content.py --output outputs/science-content/science-content-model.json",
     "build:science": "node tools/build-ehel-science-runtime.js",
     "check:science-webgl": "node tools/check-science-webgl-scenes.mjs",
-    "check:science": "node tools/check-science-content.mjs && node tools/check-science-answer-keys.mjs && node tools/check-science-cambridge-objectives.mjs && node tools/check-science-answer-grading.mjs && node tools/check-science-progress-integrity.mjs && node tools/check-science-webgl-scenes.mjs && node tools/check-ehel-audio-coverage.mjs science",
+    "check:science": "node tools/check-science-content.mjs && node tools/check-science-answer-keys.mjs && node tools/check-science-cambridge-objectives.mjs && node tools/check-science-answer-grading.mjs && node tools/check-science-progress-integrity.mjs && node tools/check-science-webgl-scenes.mjs && node tools/check-ehel-audio-coverage.mjs science && node tools/check-tutor-lessons.mjs science",
     "check:science-grading": "node tools/check-science-answer-grading.mjs",
     "check:science-progress": "node tools/check-science-progress-integrity.mjs",
     "check:science-answer-keys": "node tools/check-science-answer-keys.mjs",
@@ -180,7 +180,7 @@
     "check:wehel": "node tools/check-wehel-audio-coverage.mjs && node tools/check-wehel-contract.mjs && node tools/check-ehel-teacher-scripts.mjs",
     "check:wehel-contract": "node tools/check-wehel-contract.mjs",
     "check:cohorts": "node tools/check-ehel-cohorts.mjs",
-    "check:math": "node tools/check-math-content.mjs && node tools/check-math-answer-keys.mjs && node tools/check-math-cambridge.mjs && node tools/check-math-answer-grading.mjs && node tools/check-math-progress-integrity.mjs && node tools/check-ehel-audio-coverage.mjs mathematics",
+    "check:math": "node tools/check-math-content.mjs && node tools/check-math-answer-keys.mjs && node tools/check-math-cambridge.mjs && node tools/check-math-answer-grading.mjs && node tools/check-math-progress-integrity.mjs && node tools/check-ehel-audio-coverage.mjs mathematics && node tools/check-tutor-lessons.mjs mathematics",
     "check:math-grading": "node tools/check-math-answer-grading.mjs",
     "check:math-progress": "node tools/check-math-progress-integrity.mjs",
     "check:math-answer-keys": "node tools/check-math-answer-keys.mjs",
@@ -199,7 +199,8 @@
     "check:progress-attempted": "php tools/check-progress-attempted.php",
     "lint:php": "node tools/check-php-syntax.mjs",
     "fix:verb-agreement": "node tools/fix-ehel-verb-agreement.mjs",
-    "check:teacher-scripts": "node tools/check-ehel-teacher-scripts.mjs"
+    "check:teacher-scripts": "node tools/check-ehel-teacher-scripts.mjs",
+    "check:tutor-lessons": "node tools/check-tutor-lessons.mjs mathematics && node tools/check-tutor-lessons.mjs science"
   },
   "devDependencies": {
     "@playwright/test": "^1.58.2",

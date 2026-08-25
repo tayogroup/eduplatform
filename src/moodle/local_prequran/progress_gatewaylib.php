@@ -61,6 +61,32 @@ function pqpg_launch_role(int $userid): string {
 }
 
 /**
+ * The learner's category, or null for a regular student.
+ *
+ * 'tutoring' marks the tutoring-support learners (owner decision 2026-08-25):
+ * children at other schools whose families use Ehel as tutoring. They are real
+ * accounts in the `ehel-tutoring` cohort inside the ehel-k12 consumer — the
+ * cohort IS the category, so membership is the whole test. The claim rides in
+ * the signed token beside `role` and carries the same weight: the app reads it
+ * to draw the subject-first tutoring UI (Get-help as the home page, school-run
+ * chrome hidden, English's sequential gate down); entitlement stays with
+ * enrolment. A missing cohort or a lookup failure returns null — a learner we
+ * cannot categorise is a regular student, the UI that assumes the least.
+ */
+function pqpg_launch_category(int $userid): ?string {
+    global $DB;
+    try {
+        $cohortid = (int)$DB->get_field('cohort', 'id', ['idnumber' => 'ehel-tutoring'], IGNORE_MISSING);
+        if ($cohortid > 0 && $DB->record_exists('cohort_members', ['cohortid' => $cohortid, 'userid' => $userid])) {
+            return 'tutoring';
+        }
+    } catch (Throwable $e) {
+        // Fall through: uncategorised is the safe answer.
+    }
+    return null;
+}
+
+/**
  * Whether an admin has suspended sequential locking for this course.
  *
  * Settings are per English grade (local_prequran/gating_suspend_eng_gNN), so the
@@ -95,6 +121,10 @@ function pqpg_mint_token(int $userid, string $coursekey, string $env = '', int $
     $payload = pqpg_b64url(json_encode([
         'sub' => $userid, 'course' => $coursekey, 'env' => $env, 'iat' => $now, 'exp' => $now + $ttl, 'jti' => $jti,
         'role' => pqpg_launch_role($userid),
+        // 'tutoring' for the tutoring-support cohort, null for everyone else —
+        // the app draws the subject-first tutoring UI on it (see
+        // pqpg_launch_category). Same presentation-only weight as role.
+        'category' => pqpg_launch_category($userid),
         // Present only when an admin has suspended this course, so a token
         // minted before the setting existed simply has no opinion and the
         // app falls through to gating.json.

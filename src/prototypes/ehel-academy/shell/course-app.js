@@ -53,6 +53,42 @@ export function createCourseApp(config) {
   const stageNumber = Number(params.get(config.param) || params.get("stage") || params.get("grade") || document.documentElement.dataset[config.param] || document.documentElement.dataset.stage || document.documentElement.dataset.grade || 2);
   const unitNumber = Number(params.get("unit") ?? (config.defaultUnit ? config.defaultUnit(stageNumber) : 1));
 
+  // --- learner category ------------------------------------------------------
+  // "tutoring" marks the tutoring-support learners: children at OTHER schools
+  // whose families use Ehel as tutoring (owner decision 2026-08-25 — real
+  // accounts in a cohort inside ehel-k12, all-subjects bundle, all content).
+  // They have no position in our school year, so their front door is the
+  // Get-help search, the school-run chrome (study plans, live class, capstones)
+  // is hidden, and English's sequential gate stands down — a search-driven
+  // learner opens the unit their problem lives in, not Unit 1.
+  //
+  // The claim rides in the SIGNED launch token, minted by the gateway from
+  // cohort membership (progress_gatewaylib.php :: pqpg_launch_category); the
+  // bare ?category= param is the dev/QA door. Read here, never verified — the
+  // app holds no secret — so it decides what is DRAWN and nothing else, the
+  // same weight the role claim carries. Entitlement is enforced by Moodle
+  // enrolment at launch, not by this flag. The decoder twins english.js ::
+  // launchClaims() — one shape, kept in step by behaviour.
+  const launchCategory = () => {
+    const token = params.get("pwsToken") || "";
+    const [, payload] = token.split(".");
+    if (payload) {
+      try {
+        const base64 = payload.replace(/-/g, "+").replace(/_/g, "/").padEnd(Math.ceil(payload.length / 4) * 4, "=");
+        const claims = JSON.parse(atob(base64));
+        if (claims && typeof claims.category === "string" && claims.category) return claims.category;
+      } catch { /* not a token we can read — fall through */ }
+    }
+    return params.get("category") || "";
+  };
+  const IS_TUTORING = launchCategory() === "tutoring";
+  // The school-run sections a tutoring learner never walks. Hidden from the nav
+  // AND dropped from the countable list in one place, because several subjects
+  // count "live" toward a unit's 100% — hiding it while still counting it would
+  // make every unit permanently incompletable for this category.
+  const TUTORING_HIDDEN = ["unit-plan", "year-plan", "live", "capstone", "capstonequiz"];
+  const tutoringVisible = (id) => !IS_TUTORING || !TUTORING_HIDDEN.includes(id);
+
   // Welcome gate: mounted immediately, before any data load, so the learner sees
   // it instantly rather than after a fetch.
   mountLessonGate({ subjectKey: config.subjectKey, stage: stageNumber });
@@ -82,7 +118,9 @@ export function createCourseApp(config) {
 
   // --- state ---------------------------------------------------------------
   let manifest, course, gradeCapstone;
-  let route = location.hash.slice(1) || "overview";
+  // Tutoring learners land on the search, not the unit overview — coming with
+  // a problem rather than a curriculum position is their defining trait.
+  let route = location.hash.slice(1) || (IS_TUTORING && config.getHelp ? "get-help" : "overview");
   let currentPageNarration = "";
   let speakingButton = null;
   let voiceRequestId = 0;
@@ -137,7 +175,7 @@ export function createCourseApp(config) {
     saveGradeProgress();
     if (message) toast(message);
   };
-  const unitSectionIds = () => (config.visibleSections ? config.visibleSections() : sections).map(([id]) => id).filter((id) => !nonCountable.includes(id));
+  const unitSectionIds = () => (config.visibleSections ? config.visibleSections() : sections).map(([id]) => id).filter((id) => !nonCountable.includes(id) && tutoringVisible(id));
 
   const escapeHtml = (v = "") => sharedEscapeHtml(v);
   const icon = (name, label = "") => sharedIcon(name, label);
@@ -625,7 +663,7 @@ export function createCourseApp(config) {
   }
 
   function renderNav() {
-    const navItems = navSections().map(([id, sectionIcon, label]) => ({ id, iconName: sectionIcon, label, active: route === id, done: isSectionDone(id) }));
+    const navItems = navSections().filter(([id]) => tutoringVisible(id)).map(([id, sectionIcon, label]) => ({ id, iconName: sectionIcon, label, active: route === id, done: isSectionDone(id) }));
     // "Get help with…" — the tutoring add-on's search page (shell/get-help.js).
     // Appended here rather than listed in any subject's sections so it can
     // neither gate nor count: it is a reference surface, and tutoring activity
@@ -882,6 +920,11 @@ export function createCourseApp(config) {
   // --- ctx: the surface the subject's renderers close over ------------------
   const ctx = {
     $, $$, escapeHtml, icon, voiceButton, pageHeader, toast,
+    // "tutoring" for the tutoring-support category (see launchCategory above),
+    // "" for a regular learner. Subjects read it for their own category
+    // behaviour — English stands its sequential gate down and shows the grade
+    // picker, because this learner roams grades by design.
+    learnerCategory: IS_TUTORING ? "tutoring" : "",
     // readAlongLinesHtml: wraps a text's lines in the .rd-line spans a
     // voiceButton's data-readalong selector then walks. See the read-along
     // block above.

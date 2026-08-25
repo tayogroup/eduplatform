@@ -238,6 +238,13 @@ function launchRole() {
   return "student";
 }
 const IS_STAFF = ["admin", "teacher", "staff"].includes(launchRole());
+// The tutoring-support category (owner decision 2026-08-25): children at other
+// schools using Ehel as tutoring. Same two doors the shell reads — the signed
+// token's `category` claim on a real launch, the bare param for dev/QA. It
+// decides presentation only, like `role` above: the gate stands down and the
+// grade picker shows, because this learner arrives by search and roams grades
+// by design (the ±2 help window is their whole premise).
+const IS_TUTORING = LAUNCH_CLAIMS?.category === "tutoring" || routeParams.get("category") === "tutoring";
 
 // ===================== english body (verbatim) =====================
 
@@ -763,6 +770,16 @@ let gatingSuspendedReason = "";
 // case-insensitively after trimming — an admin editing JSON by hand should not
 // be defeated by " Suspended".
 async function applyCourseGating(ctx) {
+  // The learner category first: a tutoring-support learner is search-driven —
+  // the Get-help results and help sessions open the unit their problem lives
+  // in, whatever its number, so walking units in order is not their course.
+  // This is the category's DESIGN, not an admin suspension, which is why it
+  // does not wait on the claim or the file.
+  if (IS_TUTORING) {
+    UNIT_GATE_ENABLED = false;
+    gatingSuspendedReason = "Tutoring support — units open from search and help sessions";
+    return;
+  }
   // The Moodle setting first. It rides in the signed token as `gate`, set by the
   // admin screen (local_prequran :: Sequential locking), and it is checked before
   // the file because it is the lever with a human behind it and no CDN in the
@@ -11289,7 +11306,9 @@ const config = {
     // removed so the markup stays identical across subjects, and hidden without
     // being built at all — an option list nobody can see is work for nothing.
     const gradePicker = $("#grade-select");
-    if (IS_STAFF) {
+    // Staff plan across grades; tutoring learners ROAM them — the picker is
+    // their chrome too, not somebody else's job.
+    if (IS_STAFF || IS_TUTORING) {
       gradePicker.innerHTML = Array.from({ length: 8 }, (_, index) => index + 1).map((grade) => `<option value="${grade}" ${grade === gradeNumber ? "selected" : ""}>Grade ${grade}</option>`).join("");
       gradePicker.addEventListener("change", (event) => { location.href = gradeLocation(event.target.value); });
     } else {

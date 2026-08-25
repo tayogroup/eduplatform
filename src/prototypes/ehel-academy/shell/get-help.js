@@ -753,12 +753,20 @@ export function createGetHelp(options) {
         // Listen buttons render only once the lesson is narrated: an
         // un-narrated lesson with data-speak buttons would fall back to the
         // PAID runtime voice on every press, silently.
+        //
+        // The spoken text's composition is a CONTRACT: the maths narration
+        // lib's textsForTutorLessons() buys clips under the hash of exactly
+        // this string, and check-tutor-lessons.mjs holds the two (and itself)
+        // equal. exampleTail is a helper rather than a ternary inside the
+        // template for the same reason the lib's exampleClause is — the flat
+        // template is what the gate compares.
+        const exampleTail = (s) => (s.example ? ` For example: ${s.example}` : "");
         const speak = (text) => (lesson.narrated ? `<button class="button secondary voice-button" data-speak="${esc(text)}" type="button" aria-label="Listen">${ui.icon("volume-2")} <span>Listen</span></button>` : "");
         const sections = (lesson.sections || []).map((s, at) => `<div class="gh-q">
             <p><strong>${at + 1}. ${esc(s.heading)}</strong></p>
             ${String(s.body || "").split("\n").filter(Boolean).map((line) => `<p>${esc(line)}</p>`).join("")}
             ${s.example ? `<div class="gh-model"><strong>Example:</strong> ${esc(s.example)}</div>` : ""}
-            ${speak(`${s.heading}. ${s.body}${s.example ? ` For example: ${s.example}` : ""}`)}
+            ${speak(`${s.heading}. ${s.body}${exampleTail(s)}`)}
           </div>`).join("");
         const mistakes = (lesson.mistakes || []).length ? `<div class="gh-q"><p><strong>Watch out for these</strong></p>
             ${lesson.mistakes.map((m) => `<p>✗ ${esc(m.wrong)}<br>✓ ${esc(m.right)}${m.why ? `<br><small class="gh-note">${esc(m.why)}</small>` : ""}</p>`).join("")}

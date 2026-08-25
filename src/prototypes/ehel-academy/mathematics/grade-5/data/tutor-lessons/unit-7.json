@@ -7,7 +7,7 @@
   "area": "fractions-decimals-percentages",
   "title": "Understand fractions, decimals and percentages",
   "promise": "This starts from the very beginning: fractions, decimals and percentages are the SAME numbers wearing three different outfits. Once you can change one outfit into another, every question in this topic gets easier.",
-  "narrated": false,
+  "narrated": true,
   "sections": [
     {
       "heading": "One number, three outfits",
@@ -58,29 +58,211 @@
     }
   ],
   "check": [
-    { "id": "c1", "question": "Which percentage is the same as 0.7?", "options": ["70%", "7%", "0.7%", "17%"], "answer": "70%", "explanation": "0.7 is 7 tenths, which is 70 hundredths — 70%." },
-    { "id": "c2", "question": "Which decimal is the same as 3/10?", "options": ["0.3", "3.10", "0.03", "3.0"], "answer": "0.3", "explanation": "The first place after the decimal point counts tenths, so 3 tenths is 0.3." },
-    { "id": "c3", "question": "Write 45% as a decimal.", "options": ["0.45", "4.5", "45.0", "0.045"], "answer": "0.45", "explanation": "45% is 45 hundredths, and 45 hundredths is written 0.45." },
-    { "id": "c4", "question": "Which percentage is the same as 1/5?", "options": ["20%", "15%", "5%", "51%"], "answer": "20%", "explanation": "1/5 = 2/10 = 20/100 = 20%. The 5 counts pieces, it is not the percentage." },
-    { "id": "c5", "question": "Which is the LARGEST: 0.6, 55%, or 1/2?", "options": ["0.6", "55%", "1/2", "They are all equal"], "answer": "0.6", "explanation": "Convert to one costume: 0.6 = 60%, and 1/2 = 50%. 60% beats 55% and 50%." },
-    { "id": "c6", "question": "What is 30% of 60?", "options": ["18", "30", "20", "12"], "answer": "18", "explanation": "10% of 60 is 6, and 30% is three of those blocks: 6 + 6 + 6 = 18." },
-    { "id": "c7", "question": "Which decimal is the same as 3/4?", "options": ["0.75", "0.34", "0.43", "0.8"], "answer": "0.75", "explanation": "3/4 = 75/100 (multiply top and bottom by 25), and 75 hundredths is 0.75." },
-    { "id": "c8", "question": "What is 5% of 80?", "options": ["4", "8", "16", "5"], "answer": "4", "explanation": "10% of 80 is 8, and 5% is half of that: 4." },
-    { "id": "c9", "question": "Which percentage is the same as 0.09?", "options": ["9%", "90%", "0.9%", "99%"], "answer": "9%", "explanation": "0.09 is 9 hundredths — 9%. The zero after the point means there are no tenths." },
-    { "id": "c10", "question": "Which percentage is the same as 2/5?", "options": ["40%", "25%", "2.5%", "52%"], "answer": "40%", "explanation": "2/5 = 4/10 = 40/100 = 40%." }
+    {
+      "id": "c1",
+      "question": "Which percentage is the same as 0.7?",
+      "options": [
+        "70%",
+        "7%",
+        "0.7%",
+        "17%"
+      ],
+      "answer": "70%",
+      "explanation": "0.7 is 7 tenths, which is 70 hundredths — 70%."
+    },
+    {
+      "id": "c2",
+      "question": "Which decimal is the same as 3/10?",
+      "options": [
+        "0.3",
+        "3.10",
+        "0.03",
+        "3.0"
+      ],
+      "answer": "0.3",
+      "explanation": "The first place after the decimal point counts tenths, so 3 tenths is 0.3."
+    },
+    {
+      "id": "c3",
+      "question": "Write 45% as a decimal.",
+      "options": [
+        "0.45",
+        "4.5",
+        "45.0",
+        "0.045"
+      ],
+      "answer": "0.45",
+      "explanation": "45% is 45 hundredths, and 45 hundredths is written 0.45."
+    },
+    {
+      "id": "c4",
+      "question": "Which percentage is the same as 1/5?",
+      "options": [
+        "20%",
+        "15%",
+        "5%",
+        "51%"
+      ],
+      "answer": "20%",
+      "explanation": "1/5 = 2/10 = 20/100 = 20%. The 5 counts pieces, it is not the percentage."
+    },
+    {
+      "id": "c5",
+      "question": "Which is the LARGEST: 0.6, 55%, or 1/2?",
+      "options": [
+        "0.6",
+        "55%",
+        "1/2",
+        "They are all equal"
+      ],
+      "answer": "0.6",
+      "explanation": "Convert to one costume: 0.6 = 60%, and 1/2 = 50%. 60% beats 55% and 50%."
+    },
+    {
+      "id": "c6",
+      "question": "What is 30% of 60?",
+      "options": [
+        "18",
+        "30",
+        "20",
+        "12"
+      ],
+      "answer": "18",
+      "explanation": "10% of 60 is 6, and 30% is three of those blocks: 6 + 6 + 6 = 18."
+    },
+    {
+      "id": "c7",
+      "question": "Which decimal is the same as 3/4?",
+      "options": [
+        "0.75",
+        "0.34",
+        "0.43",
+        "0.8"
+      ],
+      "answer": "0.75",
+      "explanation": "3/4 = 75/100 (multiply top and bottom by 25), and 75 hundredths is 0.75."
+    },
+    {
+      "id": "c8",
+      "question": "What is 5% of 80?",
+      "options": [
+        "4",
+        "8",
+        "16",
+        "5"
+      ],
+      "answer": "4",
+      "explanation": "10% of 80 is 8, and 5% is half of that: 4."
+    },
+    {
+      "id": "c9",
+      "question": "Which percentage is the same as 0.09?",
+      "options": [
+        "9%",
+        "90%",
+        "0.9%",
+        "99%"
+      ],
+      "answer": "9%",
+      "explanation": "0.09 is 9 hundredths — 9%. The zero after the point means there are no tenths."
+    },
+    {
+      "id": "c10",
+      "question": "Which percentage is the same as 2/5?",
+      "options": [
+        "40%",
+        "25%",
+        "2.5%",
+        "52%"
+      ],
+      "answer": "40%",
+      "explanation": "2/5 = 4/10 = 40/100 = 40%."
+    }
   ],
   "practice": [
-    { "id": "p1", "level": "warm", "prompt": "What is 10% of 80?", "answer": "8", "hint": "10% is one tenth — divide by 10." },
-    { "id": "p2", "level": "warm", "prompt": "Write 1/2 as a decimal.", "answer": "0.5", "hint": "One half is 5 tenths." },
-    { "id": "p3", "level": "warm", "prompt": "What is 25% of 44?", "answer": "11", "hint": "25% is a quarter — halve 44, then halve again." },
-    { "id": "p4", "level": "warm", "prompt": "Write 0.4 as a percentage.", "answer": "40%", "hint": "0.4 is 4 tenths — how many hundredths is that?" },
-    { "id": "p5", "level": "core", "prompt": "What is 30% of 40?", "answer": "12", "hint": "Find 10% first, then take three blocks of it." },
-    { "id": "p6", "level": "core", "prompt": "Write 3/5 as a percentage.", "answer": "60%", "hint": "Turn fifths into tenths first: 3/5 = 6/10." },
-    { "id": "p7", "level": "core", "prompt": "What is 15% of 60?", "answer": "9", "hint": "15% is one 10% block plus half a block: 6 + 3." },
-    { "id": "p8", "level": "core", "prompt": "Write 0.35 as a fraction out of 100.", "answer": "35/100", "hint": "0.35 is 35 hundredths." },
-    { "id": "p9", "level": "core", "prompt": "Which is the largest: 0.7, 65%, or 3/4?", "answer": "3/4", "hint": "Change all three into percentages, then compare: 70%, 65% and 75%." },
-    { "id": "p10", "level": "stretch", "prompt": "What is 20% of 350?", "answer": "70", "hint": "10% of 350 is 35 — take two blocks." },
-    { "id": "p11", "level": "stretch", "prompt": "What is 5% of 260?", "answer": "13", "hint": "10% of 260 is 26. 5% is half of that." },
-    { "id": "p12", "level": "stretch", "prompt": "What is 90% of 40?", "answer": "36", "hint": "90% is the whole thing minus 10%: 40 − 4." }
+    {
+      "id": "p1",
+      "level": "warm",
+      "prompt": "What is 10% of 80?",
+      "answer": "8",
+      "hint": "10% is one tenth — divide by 10."
+    },
+    {
+      "id": "p2",
+      "level": "warm",
+      "prompt": "Write 1/2 as a decimal.",
+      "answer": "0.5",
+      "hint": "One half is 5 tenths."
+    },
+    {
+      "id": "p3",
+      "level": "warm",
+      "prompt": "What is 25% of 44?",
+      "answer": "11",
+      "hint": "25% is a quarter — halve 44, then halve again."
+    },
+    {
+      "id": "p4",
+      "level": "warm",
+      "prompt": "Write 0.4 as a percentage.",
+      "answer": "40%",
+      "hint": "0.4 is 4 tenths — how many hundredths is that?"
+    },
+    {
+      "id": "p5",
+      "level": "core",
+      "prompt": "What is 30% of 40?",
+      "answer": "12",
+      "hint": "Find 10% first, then take three blocks of it."
+    },
+    {
+      "id": "p6",
+      "level": "core",
+      "prompt": "Write 3/5 as a percentage.",
+      "answer": "60%",
+      "hint": "Turn fifths into tenths first: 3/5 = 6/10."
+    },
+    {
+      "id": "p7",
+      "level": "core",
+      "prompt": "What is 15% of 60?",
+      "answer": "9",
+      "hint": "15% is one 10% block plus half a block: 6 + 3."
+    },
+    {
+      "id": "p8",
+      "level": "core",
+      "prompt": "Write 0.35 as a fraction out of 100.",
+      "answer": "35/100",
+      "hint": "0.35 is 35 hundredths."
+    },
+    {
+      "id": "p9",
+      "level": "core",
+      "prompt": "Which is the largest: 0.7, 65%, or 3/4?",
+      "answer": "3/4",
+      "hint": "Change all three into percentages, then compare: 70%, 65% and 75%."
+    },
+    {
+      "id": "p10",
+      "level": "stretch",
+      "prompt": "What is 20% of 350?",
+      "answer": "70",
+      "hint": "10% of 350 is 35 — take two blocks."
+    },
+    {
+      "id": "p11",
+      "level": "stretch",
+      "prompt": "What is 5% of 260?",
+      "answer": "13",
+      "hint": "10% of 260 is 26. 5% is half of that."
+    },
+    {
+      "id": "p12",
+      "level": "stretch",
+      "prompt": "What is 90% of 40?",
+      "answer": "36",
+      "hint": "90% is the whole thing minus 10%: 40 − 4."
+    }
   ]
 }

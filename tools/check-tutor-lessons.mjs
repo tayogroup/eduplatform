@@ -103,19 +103,33 @@ function answerMatches(answer, expected) {
 }
 
 // --- the narration composition contract --------------------------------------
-// The UI composes each section's spoken text as `${heading}. ${body}` plus
-// ` For example: ${example}`. The gate composes the same way for the clip
-// check below, so the template in shell/get-help.js must not drift.
-const COMPOSE_SNIPPET = "`${s.heading}. ${s.body}${s.example ? ` For example: ${s.example}` : \"\"}`";
+// THREE places compose a section's spoken text, and a clip only plays if all
+// three agree: the UI's data-speak (shell/get-help.js), the generator's
+// template (tools/lib/ehel-<subject>-narration.js :: textsForTutorLessons,
+// which is what the clip is BOUGHT under), and this gate's own copy (which the
+// clips-on-disk check below hashes). This section is the coverage gate for the
+// Understand step's Listen button — it is raw data-speak markup, so the
+// generic check-ehel-audio-coverage voiceButton scan never sees it.
+const COMPOSE_TEMPLATE = "`${s.heading}. ${s.body}${";
+const HELPER_BODY = "(s.example ? ` For example: ${s.example}` : \"\")";
 const shellSource = fs.readFileSync(path.join(EHEL, "shell", "get-help.js"), "utf8");
-if (!shellSource.includes(COMPOSE_SNIPPET)) {
+if (!shellSource.includes("`${s.heading}. ${s.body}${exampleTail(s)}`") || !shellSource.includes(`const exampleTail = (s) => ${HELPER_BODY};`)) {
   fail("shell/get-help.js no longer composes section narration the way this gate hashes it",
     "the Understand step's data-speak text and the generated clip's hash must come from the same composition, or every Listen press falls back to the paid runtime voice");
 }
+const NARRATION_LIBS = { mathematics: "ehel-math-narration.js", science: "ehel-science-narration.js" };
+const libPath = path.join(ROOT, "tools", "lib", NARRATION_LIBS[subject]);
+const libSource = fs.existsSync(libPath) ? fs.readFileSync(libPath, "utf8") : "";
+// The lib only owes the template once the subject narrates lessons — science's
+// lib gains it with science's first narrated lesson, not before.
+const libHasTemplate = libSource.includes("`${s.heading}. ${s.body}${tutorLessonExampleTail(s)}`")
+  && libSource.includes(`const tutorLessonExampleTail = (s) => ${HELPER_BODY};`);
 const composeNarration = (s) => `${s.heading}. ${s.body}${s.example ? ` For example: ${s.example}` : ""}`;
-// cyrb53, the platform's clip-naming hash (tools/lib/ehel-narration-hash.js).
-const { cyrb53 } = await import(url.pathToFileURL(path.join(ROOT, "tools", "lib", "ehel-narration-hash.js")).href)
-  .catch(() => ({ cyrb53: null }));
+// The clip pipeline's real naming: clean() then cyrb53, same as the UI's
+// staticVoiceKey and the generator's enqueue — hashing the raw text here
+// would demand clips under names nothing ever writes.
+const { cyrb53, clean, MIN_CHARS } = await import(url.pathToFileURL(path.join(ROOT, "tools", "lib", "ehel-narration-hash.js")).href)
+  .catch(() => ({ cyrb53: null, clean: null, MIN_CHARS: 8 }));
 
 // --- walk the lessons --------------------------------------------------------
 let lessons = 0;
@@ -175,10 +189,13 @@ for (const gradeDir of grades) {
     }
 
     if (lesson.narrated === true) {
-      if (!cyrb53) fail(`${where}: narrated:true but the narration hash library could not be loaded`);
+      if (!cyrb53 || !clean) fail(`${where}: narrated:true but the narration hash library could not be loaded`);
+      else if (!libHasTemplate) fail(`${where}: narrated:true but ${NARRATION_LIBS[subject]} carries no textsForTutorLessons template`, "the generator would never have bought these clips — add the category to the subject's narration lib first");
       else {
         for (const [at, s] of sections.entries()) {
-          const clip = path.join(EHEL, subject, "media", "audio", "tts", `${cyrb53(composeNarration(s))}.mp3`);
+          const text = clean(composeNarration(s));
+          if (text.length < MIN_CHARS) continue;
+          const clip = path.join(EHEL, subject, "media", "audio", "tts", `${cyrb53(text)}.mp3`);
           if (!fs.existsSync(clip)) fail(`${where}: narrated:true but section ${at + 1} has no clip on disk`, `expected ${path.relative(ROOT, clip)} — every Listen press there is a silent paid fallback`);
         }
       }

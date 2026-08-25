@@ -7,7 +7,7 @@
   "area": "fractions-and-percentages",
   "title": "Understand fractions and percentages",
   "promise": "This starts from the very beginning — what a fraction really is, and what the % sign really means. Read it slowly, say the examples out loud, and the lesson pages after this will make much more sense.",
-  "narrated": false,
+  "narrated": true,
   "sections": [
     {
       "heading": "A fraction is a fair share",
@@ -58,29 +58,211 @@
     }
   ],
   "check": [
-    { "id": "c1", "question": "What does the % sign mean?", "options": ["Out of every 100", "Out of every 10", "Times 100", "A kind of decimal point"], "answer": "Out of every 100", "explanation": "Per cent means for every hundred — 37% is 37 out of every 100, the same as 37/100." },
-    { "id": "c2", "question": "What is 50% of 18?", "options": ["9", "8", "36", "5"], "answer": "9", "explanation": "50% is one half, and half of 18 is 9." },
-    { "id": "c3", "question": "Which fraction is the same as 25%?", "options": ["1/4", "1/2", "2/5", "1/25"], "answer": "1/4", "explanation": "25% means 25 out of 100, and 25/100 is the same as one quarter." },
-    { "id": "c4", "question": "What is 10% of 70?", "options": ["7", "10", "60", "17"], "answer": "7", "explanation": "10% is one tenth, and 70 ÷ 10 = 7." },
-    { "id": "c5", "question": "A 10-by-10 grid has 37 squares coloured in. What percentage of the grid is coloured?", "options": ["37%", "63%", "3.7%", "73%"], "answer": "37%", "explanation": "The grid has 100 squares, so 37 coloured squares is 37 out of 100 — which is exactly 37%." },
-    { "id": "c6", "question": "Which fraction is the same as 75%?", "options": ["3/4", "1/4", "7/5", "3/5"], "answer": "3/4", "explanation": "75% is 75 out of 100 — three lots of 25, and each 25% is one quarter, so 75% is three quarters." },
-    { "id": "c7", "question": "What is 25% of 20?", "options": ["5", "10", "4", "15"], "answer": "5", "explanation": "Halve twice: half of 20 is 10, half of 10 is 5." },
-    { "id": "c8", "question": "Which percentage is the same as one half?", "options": ["50%", "25%", "12%", "2%"], "answer": "50%", "explanation": "One half is 50 out of 100, which is 50%." },
-    { "id": "c9", "question": "What is 100% of 45?", "options": ["45", "100", "4.5", "145"], "answer": "45", "explanation": "100% means the whole thing — all of it. The whole of 45 is 45." },
-    { "id": "c10", "question": "What is 10% of 240?", "options": ["24", "240", "2.4", "48"], "answer": "24", "explanation": "10% is one tenth: 240 ÷ 10 = 24. Every digit slides one place to the right." }
+    {
+      "id": "c1",
+      "question": "What does the % sign mean?",
+      "options": [
+        "Out of every 100",
+        "Out of every 10",
+        "Times 100",
+        "A kind of decimal point"
+      ],
+      "answer": "Out of every 100",
+      "explanation": "Per cent means for every hundred — 37% is 37 out of every 100, the same as 37/100."
+    },
+    {
+      "id": "c2",
+      "question": "What is 50% of 18?",
+      "options": [
+        "9",
+        "8",
+        "36",
+        "5"
+      ],
+      "answer": "9",
+      "explanation": "50% is one half, and half of 18 is 9."
+    },
+    {
+      "id": "c3",
+      "question": "Which fraction is the same as 25%?",
+      "options": [
+        "1/4",
+        "1/2",
+        "2/5",
+        "1/25"
+      ],
+      "answer": "1/4",
+      "explanation": "25% means 25 out of 100, and 25/100 is the same as one quarter."
+    },
+    {
+      "id": "c4",
+      "question": "What is 10% of 70?",
+      "options": [
+        "7",
+        "10",
+        "60",
+        "17"
+      ],
+      "answer": "7",
+      "explanation": "10% is one tenth, and 70 ÷ 10 = 7."
+    },
+    {
+      "id": "c5",
+      "question": "A 10-by-10 grid has 37 squares coloured in. What percentage of the grid is coloured?",
+      "options": [
+        "37%",
+        "63%",
+        "3.7%",
+        "73%"
+      ],
+      "answer": "37%",
+      "explanation": "The grid has 100 squares, so 37 coloured squares is 37 out of 100 — which is exactly 37%."
+    },
+    {
+      "id": "c6",
+      "question": "Which fraction is the same as 75%?",
+      "options": [
+        "3/4",
+        "1/4",
+        "7/5",
+        "3/5"
+      ],
+      "answer": "3/4",
+      "explanation": "75% is 75 out of 100 — three lots of 25, and each 25% is one quarter, so 75% is three quarters."
+    },
+    {
+      "id": "c7",
+      "question": "What is 25% of 20?",
+      "options": [
+        "5",
+        "10",
+        "4",
+        "15"
+      ],
+      "answer": "5",
+      "explanation": "Halve twice: half of 20 is 10, half of 10 is 5."
+    },
+    {
+      "id": "c8",
+      "question": "Which percentage is the same as one half?",
+      "options": [
+        "50%",
+        "25%",
+        "12%",
+        "2%"
+      ],
+      "answer": "50%",
+      "explanation": "One half is 50 out of 100, which is 50%."
+    },
+    {
+      "id": "c9",
+      "question": "What is 100% of 45?",
+      "options": [
+        "45",
+        "100",
+        "4.5",
+        "145"
+      ],
+      "answer": "45",
+      "explanation": "100% means the whole thing — all of it. The whole of 45 is 45."
+    },
+    {
+      "id": "c10",
+      "question": "What is 10% of 240?",
+      "options": [
+        "24",
+        "240",
+        "2.4",
+        "48"
+      ],
+      "answer": "24",
+      "explanation": "10% is one tenth: 240 ÷ 10 = 24. Every digit slides one place to the right."
+    }
   ],
   "practice": [
-    { "id": "p1", "level": "warm", "prompt": "What is 50% of 10?", "answer": "5", "hint": "50% is one half — halve the number." },
-    { "id": "p2", "level": "warm", "prompt": "What is 50% of 22?", "answer": "11", "hint": "Half of 22." },
-    { "id": "p3", "level": "warm", "prompt": "Write 1/2 as a percentage.", "answer": "50%", "hint": "One half is 50 out of every 100." },
-    { "id": "p4", "level": "warm", "prompt": "What is 10% of 30?", "answer": "3", "hint": "10% is one tenth — divide by 10." },
-    { "id": "p5", "level": "core", "prompt": "What is 25% of 40?", "answer": "10", "hint": "Halve twice: half of 40, then half again." },
-    { "id": "p6", "level": "core", "prompt": "What is 10% of 250?", "answer": "25", "hint": "Divide by 10 — every digit slides one place right." },
-    { "id": "p7", "level": "core", "prompt": "What is 75% of 8?", "answer": "6", "hint": "75% is three quarters. Find one quarter of 8 first, then take it three times." },
-    { "id": "p8", "level": "core", "prompt": "What is 50% of 90?", "answer": "45", "hint": "Half of 90." },
-    { "id": "p9", "level": "core", "prompt": "Write 1/10 as a percentage.", "answer": "10%", "hint": "One tenth of 100 is 10." },
-    { "id": "p10", "level": "stretch", "prompt": "What is 25% of 60?", "answer": "15", "hint": "Half of 60 is 30, and half of 30 is..." },
-    { "id": "p11", "level": "stretch", "prompt": "What is 10% of 450?", "answer": "45", "hint": "450 ÷ 10." },
-    { "id": "p12", "level": "stretch", "prompt": "What is 75% of 40?", "answer": "30", "hint": "One quarter of 40 is 10. Three quarters is three of those." }
+    {
+      "id": "p1",
+      "level": "warm",
+      "prompt": "What is 50% of 10?",
+      "answer": "5",
+      "hint": "50% is one half — halve the number."
+    },
+    {
+      "id": "p2",
+      "level": "warm",
+      "prompt": "What is 50% of 22?",
+      "answer": "11",
+      "hint": "Half of 22."
+    },
+    {
+      "id": "p3",
+      "level": "warm",
+      "prompt": "Write 1/2 as a percentage.",
+      "answer": "50%",
+      "hint": "One half is 50 out of every 100."
+    },
+    {
+      "id": "p4",
+      "level": "warm",
+      "prompt": "What is 10% of 30?",
+      "answer": "3",
+      "hint": "10% is one tenth — divide by 10."
+    },
+    {
+      "id": "p5",
+      "level": "core",
+      "prompt": "What is 25% of 40?",
+      "answer": "10",
+      "hint": "Halve twice: half of 40, then half again."
+    },
+    {
+      "id": "p6",
+      "level": "core",
+      "prompt": "What is 10% of 250?",
+      "answer": "25",
+      "hint": "Divide by 10 — every digit slides one place right."
+    },
+    {
+      "id": "p7",
+      "level": "core",
+      "prompt": "What is 75% of 8?",
+      "answer": "6",
+      "hint": "75% is three quarters. Find one quarter of 8 first, then take it three times."
+    },
+    {
+      "id": "p8",
+      "level": "core",
+      "prompt": "What is 50% of 90?",
+      "answer": "45",
+      "hint": "Half of 90."
+    },
+    {
+      "id": "p9",
+      "level": "core",
+      "prompt": "Write 1/10 as a percentage.",
+      "answer": "10%",
+      "hint": "One tenth of 100 is 10."
+    },
+    {
+      "id": "p10",
+      "level": "stretch",
+      "prompt": "What is 25% of 60?",
+      "answer": "15",
+      "hint": "Half of 60 is 30, and half of 30 is..."
+    },
+    {
+      "id": "p11",
+      "level": "stretch",
+      "prompt": "What is 10% of 450?",
+      "answer": "45",
+      "hint": "450 ÷ 10."
+    },
+    {
+      "id": "p12",
+      "level": "stretch",
+      "prompt": "What is 75% of 40?",
+      "answer": "30",
+      "hint": "One quarter of 40 is 10. Three quarters is three of those."
+    }
   ]
 }

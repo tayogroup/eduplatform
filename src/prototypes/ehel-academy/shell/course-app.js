@@ -748,15 +748,17 @@ export function createCourseApp(config) {
     document.addEventListener("keydown", (event) => { if (event.key === "Escape") exitFocusMode(); });
   }
   function enterFocusMode() {
-    ensureFocusChrome();
     // The tutoring category hides the SIDEBAR only and keeps the topbar: its
     // grade and unit pickers are the roaming chrome this category was
-    // deliberately given, and putting them behind the Menu button would charge
-    // a tap for every hop. Same Menu button either way, so the section list is
-    // never more than one tap from a learner who wants it. No fullscreen
-    // request here — the page is not taking the screen, only dropping a
-    // column, and a fullscreen flip on every nav click would be jarring.
+    // deliberately given, and putting them behind a button would charge a tap
+    // for every hop. It gets NO Menu button (owner, 2026-08-25) — hence no
+    // ensureFocusChrome() here, so neither the button nor its Escape binding
+    // exists for them, and nothing can reveal the sidebar this category is
+    // meant not to have. No fullscreen request either: the page is not taking
+    // the screen, only dropping a column, and a flip on every nav click would
+    // be jarring. Their way around is the search, which is their home route.
     if (IS_TUTORING) { document.body.classList.add("tutoring-nav"); return; }
+    ensureFocusChrome();
     document.body.classList.add("focus-mode");
     // True fullscreen: the nav click is a user gesture, so the request is
     // allowed. Browsers that refuse (e.g. iPhone Safari) keep the CSS-only

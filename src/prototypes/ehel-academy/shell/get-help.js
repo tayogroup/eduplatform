@@ -249,6 +249,14 @@ export function createGetHelp(options) {
     return entry ? entry[2] : id;
   };
 
+  // What this walk calls the thing it is walking. The tutoring category
+  // arrived by searching a topic and holds no position in the course, so its
+  // instructions say "lesson" — the same reframing Wehel makes for them
+  // (course-app.js :: tutoringWehelOptions, and categoryNotes.tutoring in
+  // wehel_prompt.json). Read at render time, not captured: shellHooks is set
+  // by attachShell at boot, before anything renders.
+  const unitNoun = () => (shellHooks?.tutoring ? "lesson" : "unit");
+
   // --- the session store -------------------------------------------------------
   // The subject's OWN tutoring key. Deliberately not the course progress key,
   // and nothing here calls emitProgress: tutoring is recorded beside the
@@ -449,7 +457,7 @@ export function createGetHelp(options) {
     const esc = ui.escapeHtml;
     return `${resumeCardHtml(ui)}${recentSessionsHtml(ui)}<section class="panel">
       <span class="eyebrow">How this works</span>
-      <p class="gh-note">Type what you are stuck on — a topic, a word from your homework, anything. Results come from every unit of ${esc(options.subjectLabel)}, grouped as <strong>Foundations</strong> (earlier work that builds up to it), <strong>your level</strong>, and <strong>next steps</strong>. <strong>Start a help session</strong> on a result and it walks you through: a quick check, the lesson, practice, then a check again.</p>
+      <p class="gh-note">Type what you are stuck on — a topic, a word from your homework, anything. Results come from every ${unitNoun()} of ${esc(options.subjectLabel)}, grouped as <strong>Foundations</strong> (earlier work that builds up to it), <strong>your level</strong>, and <strong>next steps</strong>. <strong>Start a help session</strong> on a result and it walks you through: a quick check, the lesson, practice, then a check again.</p>
       <div class="gh-chips">${(options.examples || []).map((example) => `<button class="gh-chip" data-gh-example="${esc(example)}" type="button">${ui.icon("search")}<span>${esc(example)}</span></button>`).join("")}</div>
     </section>`;
   }
@@ -647,10 +655,10 @@ export function createGetHelp(options) {
       if (id === "check" || id === "recheck") {
         const part = session[id === "check" ? "check" : "recheck"];
         const set = id === "check" ? checkSet : recheckSet;
-        if (!set.length) return `<p class="gh-note">This unit has no questions for this step — carry on to the next one.</p>
+        if (!set.length) return `<p class="gh-note">This ${unitNoun()} has no questions for this step — carry on to the next one.</p>
           <div class="gh-actions"><button class="button primary" data-gh-skip="${id}" type="button">Continue ${ui.icon("arrow-right")}</button></div>`;
         if (scored) {
-          return `<p class="gh-note">${id === "check" ? "Five quick questions from this unit, before you study — so you can see how far you come." : "Five different questions from the same unit — compare with your first try."}</p>
+          return `<p class="gh-note">${id === "check" ? `Five quick questions from this ${unitNoun()}, before you study — so you can see how far you come.` : `Five different questions from the same ${unitNoun()} — compare with your first try.`}</p>
             ${set.map((q, at) => {
               const picked = part.answers[q.id];
               const markedRight = part.submitted && norm(picked) === norm(q.answer);
@@ -678,8 +686,8 @@ export function createGetHelp(options) {
       if (id === "learn") {
         const items = learnItems(unit);
         const linky = !options.orderedUnit;
-        return `<p class="gh-note">${linky ? "Work through these stops in this unit — tick each one as you finish it. Your topic's stop is first." : `This unit opens from its Overview and is walked in order — the stops below are what you will meet. Tick them off as you go.`}</p>
-          ${!linky ? `<div class="gh-actions"><a class="button secondary" href="${esc(hrefFor(session.target.stage, session.target.unit, "overview"))}">Open the unit overview ${ui.icon("arrow-right")}</a></div>` : ""}
+        return `<p class="gh-note">${linky ? `Work through these stops in this ${unitNoun()} — tick each one as you finish it. Your topic's stop is first.` : `This ${unitNoun()} opens from its Overview and is walked in order — the stops below are what you will meet. Tick them off as you go.`}</p>
+          ${!linky ? `<div class="gh-actions"><a class="button secondary" href="${esc(hrefFor(session.target.stage, session.target.unit, "overview"))}">Open the ${unitNoun()} overview ${ui.icon("arrow-right")}</a></div>` : ""}
           ${items.map((item) => `<div class="gh-learn-item"><input type="checkbox" data-gh-learn="${esc(item.route)}" id="gh-learn-${esc(item.route)}" ${session.learn.done.includes(item.route) ? "checked" : ""} aria-label="Done with ${esc(item.label)}">
             ${linky ? `<a href="#${esc(item.route)}">${esc(item.label)} →</a>` : `<label for="gh-learn-${esc(item.route)}">${esc(item.label)}</label>`}
           </div>`).join("")}
@@ -687,7 +695,7 @@ export function createGetHelp(options) {
       }
       if (id === "practice") {
         if (!practice.length) {
-          return `<p class="gh-note">Practise inside the unit${options.orderedUnit ? " as you walk it in order" : ""} — then come back and carry on.</p>
+          return `<p class="gh-note">Practise inside the ${unitNoun()}${options.orderedUnit ? " as you walk it in order" : ""} — then come back and carry on.</p>
             <div class="gh-actions"><button class="button primary" data-gh-practice-done type="button">I have practised ${ui.icon("arrow-right")}</button></div>`;
         }
         return `<p class="gh-note">Try each one on paper first, then show the answer and mark yourself honestly.</p>

@@ -27,7 +27,32 @@ const CATEGORIES = ["concepts", "explorations", "explorationQuestions", "visualM
 // Categories with no Listen button (fluency, the reference rule cards) are
 // absent on purpose, as is the AI tutor, whose text does not exist until a
 // learner types.
+// The spoken form of a text: paragraph breaks become sentence pauses, and the
+// two pieces of printed notation that reach the voice as typography become
+// words — `a(n)` / `a/an` say "a", and a written blank line (three or more
+// underscores) says "blank". Applied to every narrated text; it is the
+// identity for text carrying none of the patterns.
+//
+// KEPT BYTE-IDENTICAL with spokenText() in shell/subjects/science.js. A clip
+// is named cyrb53 of the spoken text, so if the two copies disagree the app
+// asks for a file this generator never wrote and falls back to the paid
+// runtime voice. The coverage gate compares call-site templates, not this
+// function — it cannot catch the drift for you.
+function spokenText(value = "") {
+  return String(value).split(/\n{2,}/).map((part) => part.trim()).filter(Boolean).join(" ")
+    .replace(/\b([Aa])\(n\)/g, "$1")
+    .replace(/\b([Aa])\/an\b/g, "$1")
+    .replace(/_{3,}/g, "blank");
+}
+
 function textsForUnit(unit, category) {
+  return rawTextsForUnit(unit, category).map(spokenText);
+}
+
+// The raw compositions, one per Listen button — see the header comment. Kept as
+// its own function so the template literals the coverage gate reads stay
+// byte-for-byte what they were; the spoken-form transform is applied above.
+function rawTextsForUnit(unit, category) {
   switch (category) {
     // renderConcepts: `${title}. ${spokenText(explanation)}. Example: ${example}`
     case "concepts": return (unit.concepts || []).map((c) => `${c.title}. ${c.explanation}. Example: ${c.example}`);
@@ -56,6 +81,10 @@ function textsForUnit(unit, category) {
 
 // The grade capstone lives beside the units, not inside one.
 function textsForCapstone(capstone, category) {
+  return rawTextsForCapstone(capstone, category).map(spokenText);
+}
+
+function rawTextsForCapstone(capstone, category) {
   if (category !== "capstone") return [];
   const project = capstone.project || {};
   return [`${project.drivingQuestion} ${project.finalProduct}`,
@@ -102,4 +131,4 @@ function hashGradeMap(scienceRoot, categories = CATEGORIES) {
   return map;
 }
 
-module.exports = { cyrb53, clean, MIN_CHARS, CATEGORIES, textsForUnit, textsForCapstone, hashesForGrade, hashGradeMap };
+module.exports = { cyrb53, clean, MIN_CHARS, CATEGORIES, spokenText, textsForUnit, textsForCapstone, hashesForGrade, hashGradeMap };

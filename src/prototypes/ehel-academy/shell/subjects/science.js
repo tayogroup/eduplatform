@@ -36,6 +36,13 @@ function bind(ctx) {
   ({ $, $$, escapeHtml, icon, voiceButton, pageHeader, toast, readAlongSpans, complete, completeGradeSection,
      saveProgress, saveGradeProgress, navigate, emitProgress, bindVoiceControls, updateVoiceUI,
      stopVoice, renderNav, unitSectionIds, stageNumber, STAGE_STORAGE_KEY, PROGRESS_UNIT, speakText } = ctx);
+  // Every spoken string passes through spokenText() before it reaches the
+  // voice engine — one choke point instead of a wrapper at forty call sites,
+  // so a renderer added later is covered without remembering to. The lib
+  // applies the same transform to every generated clip, so the hashes agree.
+  const shellVoiceButton = voiceButton, shellSpeakText = speakText;
+  voiceButton = (text, label, readAlong, scope) => shellVoiceButton(spokenText(text), label, readAlong, scope);
+  speakText = (text, button) => shellSpeakText(spokenText(text), button);
   course = ctx.course; progress = ctx.progress; gradeProgress = ctx.gradeProgress;
   manifest = ctx.manifest; gradeCapstone = ctx.gradeCapstone; dataRootUrl = ctx.dataRootUrl;
   if (isPrereqUnit) {
@@ -72,8 +79,25 @@ function richText(value = "", className = "", readAlong = false) {
 
 // Narration reads the prose straight through, so collapse the paragraph breaks
 // into sentence pauses rather than feeding literal newlines to the voice engine.
+//
+// It also says WORDS where the page prints notation: `a(n)` and `a/an` become
+// "a", and a written blank line (three or more underscores) becomes the word
+// "blank" — a teacher reads "turns ______ into electricity" as "turns blank
+// into electricity", not as six underscores. The display text keeps its
+// notation; only the spoken form changes, the same trade speechSpelling makes
+// for an English dictionary word. Every replacement is idempotent, because
+// deck slides and concept templates apply this twice.
+//
+// KEPT BYTE-IDENTICAL with the copy in tools/lib/ehel-science-narration.js.
+// A clip is named cyrb53 of the spoken text, so if the two copies ever
+// disagree the app asks for a file the generator never wrote and falls back
+// to the paid runtime voice — and the coverage gate compares call-site
+// templates, not this function, so it cannot catch that drift for you.
 function spokenText(value = "") {
-  return String(value).split(/\n{2,}/).map((part) => part.trim()).filter(Boolean).join(" ");
+  return String(value).split(/\n{2,}/).map((part) => part.trim()).filter(Boolean).join(" ")
+    .replace(/\b([Aa])\(n\)/g, "$1")
+    .replace(/\b([Aa])\/an\b/g, "$1")
+    .replace(/_{3,}/g, "blank");
 }
 
 function cambridgeFramework(stage) {
@@ -241,17 +265,20 @@ const deckDiagram = (topic, index) => scienceDiagram(topic, index, { interactive
 // data-speak, bound by bindVoiceControls, marked .is-playing while it speaks —
 // in the deck's shape and size.
 //
-// The text is passed through untouched, exactly as voiceButton passes it. Every
+// The text passes through spokenText(), exactly as the wrapped voiceButton
+// passes it — the two designs MUST transform identically, or a deck button
+// would hash a different string than its grid twin and ask for a file that was
+// never generated. Beyond that transform the text is untouched. Every
 // narration clip is looked up by cyrb53 of this string, so a deck button that
 // normalised its text even slightly would ask for a file that was never
 // generated and fall back to the paid runtime voice. Callers therefore hand
 // these the SAME expressions the grid renderers hand voiceButton, and the two
 // designs resolve to the same pre-rendered clip.
 function deckVoice(text, label = "Listen", readAlong = "", scope = "") {
-  return `<button class="gc-btn play" type="button" data-speak="${escapeHtml(text)}"${readAlong ? ` data-readalong="${escapeHtml(readAlong)}"` : ""}${scope ? ` data-readalong-scope="${escapeHtml(scope)}"` : ""} aria-label="${escapeHtml(label)}">${deckIcon("volume-2")} ${escapeHtml(label)}</button>`;
+  return `<button class="gc-btn play" type="button" data-speak="${escapeHtml(spokenText(text))}"${readAlong ? ` data-readalong="${escapeHtml(readAlong)}"` : ""}${scope ? ` data-readalong-scope="${escapeHtml(scope)}"` : ""} aria-label="${escapeHtml(label)}">${deckIcon("volume-2")} ${escapeHtml(label)}</button>`;
 }
 function deckVoiceSmall(text, label = "Listen") {
-  return `<button class="gc-btn ghost small" type="button" data-speak="${escapeHtml(text)}" aria-label="${escapeHtml(label)}">${deckIcon("volume-2")} ${escapeHtml(label)}</button>`;
+  return `<button class="gc-btn ghost small" type="button" data-speak="${escapeHtml(spokenText(text))}" aria-label="${escapeHtml(label)}">${deckIcon("volume-2")} ${escapeHtml(label)}</button>`;
 }
 
 // Answer checking is one rule, in one place, for both designs and both halves.

@@ -710,16 +710,28 @@ export function createCourseApp(config) {
   // (topbar + sidebar hidden via body.focus-mode; the floating Menu button or
   // Escape restores the navigation without changing the route).
   //
-  // Focus mode is entered by a LEFT-NAV CLICK and nothing else. Not by the
-  // lesson gate's Start tile, which lands the learner on the overview where
-  // the grade and unit pickers still need to be reachable — the gate takes
-  // the browser fullscreen, this layout waits for the learner to choose a
-  // section. (The reverse coupling is real: leaving fullscreen always drops
-  // focus mode, so the two can never strand the learner in a page with no
-  // navigation and no browser chrome.)
+  // Focus mode is entered by a LEFT-NAV CLICK, or by booting on a URL that
+  // carries ?focus=1 (get-help.js stamps every link it emits with this — a
+  // tutoring visit is a targeted stop on one topic, never a browse of the
+  // whole grade, so its destination should not hand the learner the full
+  // topbar/sidebar/picker chrome). It is NOT entered by the lesson gate's
+  // Start tile, which lands the learner on the overview where the grade and
+  // unit pickers still need to be reachable — the gate takes the browser
+  // fullscreen, this layout waits for the learner to choose a section or
+  // arrive already knowing where they are going. (The reverse coupling is
+  // real: leaving fullscreen always drops focus mode, so the two can never
+  // strand the learner in a page with no navigation and no browser chrome.)
   function exitFocusMode() {
     document.body.classList.remove("focus-mode");
     if (document.fullscreenElement) document.exitFullscreen?.().catch(() => {});
+    // A manual exit is a standing choice — strip the URL's own door back to
+    // focus mode so reloading this page (or coming back to it later) does
+    // not silently re-enter a layout the learner just left.
+    if (params.get("focus") === "1") {
+      const url = new URL(location.href);
+      url.searchParams.delete("focus");
+      history.replaceState(null, "", url.href);
+    }
   }
   // The Menu button is the only way back while the lesson gate's Keyboard Lock
   // is swallowing Escape, so it has to exist before the navigation disappears.
@@ -853,6 +865,12 @@ export function createCourseApp(config) {
     // reports to Wehel as context. Read at send time, not at mount time, so it
     // stays right as the learner moves around with the drawer open.
     const sectionHint = () => {
+      // The help-session route never equals a real section id — the walk
+      // stays on "help-session" throughout — so the generic lookup below
+      // always misses here. get-help.js's own hint carries the section the
+      // session's search actually landed on.
+      const session = route === "help-session" ? config.getHelp?.sessionHint?.() : null;
+      if (session) return session.label;
       const match = (config.visibleSections ? config.visibleSections() : sections).find(([id]) => id === route);
       return match ? match[2] : "";
     };
@@ -864,6 +882,12 @@ export function createCourseApp(config) {
     // Grades 5-8 grid pages carry no gc-* nodes by rule, so this is the empty
     // string there and the teacher works from the section. Read at send time.
     const activityHint = () => {
+      // Finer still than the section: the exact topic the learner searched
+      // for, plus the words they searched with — what "this activity" means
+      // for a help session, the same way a deck's current slide names it for
+      // a Grades 1-4 lesson page.
+      const session = route === "help-session" ? config.getHelp?.sessionHint?.() : null;
+      if (session) return [session.label, session.query ? `searched: "${session.query}"` : ""].filter(Boolean).join(" — ");
       const slide = document.querySelector(".gc-slide:not([inert])");
       if (!slide) return "";
       const label = (slide.getAttribute("aria-label") || "").trim();
@@ -1020,6 +1044,11 @@ export function createCourseApp(config) {
       $("#app").hidden = false;
       renderNav(); updateProgress(); renderRoute();
       mountWehelDock();
+      // A get-help link opens straight into focus mode — see enterFocusMode's
+      // comment. Fullscreen itself is refused this way (no user gesture on a
+      // page load), which enterFocusMode already treats as fine: the CSS-only
+      // chrome-hidden layout still applies either way.
+      if (params.get("focus") === "1") enterFocusMode();
     } catch (error) {
       console.error(error);
       const target = $("#loading") || $("#app");

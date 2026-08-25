@@ -838,6 +838,17 @@ const TEACHER_PREVIEW = location.hash.slice(1) === "teacher";
 // and the gate is back. Finishing this unit opens nothing either: unitIsUnlocked
 // still counts every earlier unit, and this learner has not done them.
 const REVIEW_VISIT = new URLSearchParams(location.search).get("review") === "1";
+// The ONE section a get-help topic link may open directly, inside a review
+// visit, regardless of chain progress — sections otherwise stay chained (see
+// sectionUnlocked below), so without this every topic chip landed on the
+// overview no matter which topic it named. Deliberately narrower than
+// REVIEW_VISIT: it names a single id, not "the unit is open now", so every
+// OTHER section stays exactly as locked as it always was — this does not
+// reopen the "revisiting is free" hole sectionUnlocked's own history warns
+// about. Read once per page load, same as REVIEW_VISIT, and stripped by
+// courseLocation()/gradeLocation() the same way: navigate anywhere else and
+// the exemption is gone.
+const REVIEW_TOPIC = REVIEW_VISIT ? new URLSearchParams(location.search).get("topic") : null;
 const unitProgressKey = (unit) => `ehel-english-g${gradeNumber}-u${unit}-progress-v1`;
 // Everything the shell counts toward 100%: the section list minus the two it
 // never counts, minus the two a unit can fail to offer. `final-quiz` is
@@ -961,6 +972,7 @@ const sectionChain = () => SECTION_CHAIN.filter((id) => visibleSections().some((
 // one press away and must read as open, not padlocked behind the page it is on.
 function sectionUnlocked(id, { fromOverview = false } = {}) {
   if (!UNIT_GATE_ENABLED || isPrereqUnit || TEACHER_PREVIEW) return true;
+  if (REVIEW_TOPIC && id === REVIEW_TOPIC) return true;
   const chain = sectionChain();
   const index = chain.indexOf(id);
   if (index <= 0) return true; // not a step, or the first one
@@ -5323,6 +5335,10 @@ function courseLocation(nextUnit, nextRoute = "overview") {
   url.searchParams.set("grade", gradeNumber);
   url.searchParams.set("unit", nextUnit);
   url.searchParams.delete("review");
+  // A get-help visit's own markers — see placementLocation. Neither should
+  // ride along to a unit/grade the learner reached by navigating normally.
+  url.searchParams.delete("topic");
+  url.searchParams.delete("focus");
   url.hash = nextRoute;
   return url.href;
 }
@@ -5332,6 +5348,8 @@ function gradeLocation(nextGrade) {
   url.searchParams.set("grade", nextGrade);
   url.searchParams.set("unit", Number(nextGrade) === 1 ? 0 : 1);
   url.searchParams.delete("review");
+  url.searchParams.delete("topic");
+  url.searchParams.delete("focus");
   url.hash = "overview";
   return url.href;
 }
@@ -8141,7 +8159,7 @@ function renderFinalQuizResults(results) {
 // remediation links) lives in grade-N/data/placement-exam.json — the UI only
 // applies it, so curriculum can retune bands without a code change.
 
-function placementLocation(targetGrade, targetUnit, nextRoute = "overview", { review = false } = {}) {
+function placementLocation(targetGrade, targetUnit, nextRoute = "overview", { review = false, focus = false, topic = "" } = {}) {
   const url = new URL(location.href);
   url.searchParams.set("grade", targetGrade);
   // Every grade opens at Unit 1 now that Grade 1's Unit 0 is withdrawn from
@@ -8153,6 +8171,17 @@ function placementLocation(targetGrade, targetUnit, nextRoute = "overview", { re
   // reopen, so it must not inherit the marker from a url that carries one.
   if (review) url.searchParams.set("review", "1");
   else url.searchParams.delete("review");
+  // Get-help's own door: opens the destination straight into focus mode
+  // (course-app.js reads it at boot) so a tutoring visit lands on just the
+  // one unit, not the full grade chrome. Never set for ordinary remediation
+  // links, which still want the pickers reachable.
+  if (focus) url.searchParams.set("focus", "1");
+  else url.searchParams.delete("focus");
+  // Names the ONE section REVIEW_TOPIC may open directly (see its own
+  // comment) — only ever set alongside nextRoute pointing at that same
+  // section, from a get-help topic chip.
+  if (topic) url.searchParams.set("topic", topic);
+  else url.searchParams.delete("topic");
   url.hash = nextRoute;
   return url.href;
 }
@@ -8761,6 +8790,13 @@ async function checkWritingWithWehel(prompt, button, target) {
 // drawer and the page are one conversation — a question asked in the drawer is
 // still there when the learner opens the full tutor page.
 function wehelOptions() {
+  // A help session names an exact topic, not just the unit it lives in — see
+  // get-help.js :: sessionHint. Reading it here means the very first thing
+  // Wehel says already knows what the search was about; the shell's own
+  // sectionHint/activityHint (course-app.js :: mountWehelDock) carry the same
+  // hint into every message sent afterwards, from either the greeting's open
+  // or a later one from the same visit.
+  const session = route === "help-session" ? config.getHelp?.sessionHint?.() : null;
   return {
     meta: {
       subject: "english", subjectLabel: "English", grade: gradeNumber,
@@ -8780,12 +8816,14 @@ function wehelOptions() {
     key: "messages",
     ui: { escapeHtml, toast },
     tutorLabel: "Wehel Tutor",
-    greeting: `Hello! I am Wehel Tutor. Ask me anything about Unit ${course.unit.unitNo}: ${course.unit.unitTitle}.`,
-    placeholder: `Ask about ${course.unit.unitTitle}…`,
+    greeting: session
+      ? `Hello! I am Wehel Tutor. I can see you are working on "${session.label}" in Unit ${course.unit.unitNo}: ${course.unit.unitTitle}${session.query ? ` — you searched for "${session.query}"` : ""}. What would you like help with?`
+      : `Hello! I am Wehel Tutor. Ask me anything about Unit ${course.unit.unitNo}: ${course.unit.unitTitle}.`,
+    placeholder: session ? `Ask about ${session.label}…` : `Ask about ${course.unit.unitTitle}…`,
     quickPrompts: [
-      { label: "Explain this", message: "Can you explain what is on this page in a simpler way?" },
+      { label: "Explain this", message: session ? `Can you explain ${session.label} in a simpler way?` : "Can you explain what is on this page in a simpler way?" },
       { label: "Teach me words", message: "Teach me three words from this unit." },
-      { label: "Quiz me", message: "Quiz me on this unit, one question at a time." },
+      { label: "Quiz me", message: session ? `Quiz me on ${session.label}, one question at a time.` : "Quiz me on this unit, one question at a time." },
       { label: "Check my sentence", message: "I will write a sentence. Please help me make it better." },
     ],
     mode: aiState.mode,
@@ -11133,11 +11171,10 @@ const config = {
   // appends its nav entry and dispatches its route ahead of the gated
   // renderers, so it is reachable from a locked unit too — it teaches nothing
   // itself. Every link it emits goes through placementLocation with
-  // review: true and lands on the unit's OVERVIEW: sections stay chained
-  // inside a review visit (sectionUnlocked knows no REVIEW_VISIT exemption),
-  // so a section deep-link would draw a padlock — the remediation contract,
-  // "open ONE unit at its overview", is the door that works. The topic chips
-  // still name what to look for once inside.
+  // review: true. A topic chip also carries topic: <section> — the door
+  // REVIEW_TOPIC opens (see its own comment) — so it lands directly on the
+  // section it named instead of the unit's overview; the plain unit-title
+  // link still lands on the overview, since it names no one section.
   getHelp: createGetHelp({
     deps: () => ({ $, escapeHtml, icon, pageHeader }),
     subjectKey: "english", subjectLabel: "English", param: "grade", stageWord: "Grade", maxStage: 8,
@@ -11145,11 +11182,14 @@ const config = {
     course: () => course,
     marketplaceHref: () => (PLATFORM_ORIGIN ? `${PLATFORM_ORIGIN}/local/hubredirect/teacher_marketplace.php?q=${encodeURIComponent("English")}` : ""),
     sections: () => sections,
-    hrefFor: (targetGrade, targetUnit) => placementLocation(targetGrade, targetUnit, "overview", { review: true }),
+    hrefFor: (targetGrade, targetUnit, section) => {
+      const target = section || "overview";
+      return placementLocation(targetGrade, targetUnit, target, { review: true, focus: true, topic: target !== "overview" ? target : "" });
+    },
     // The help session's own route rides the same review door — the shell
     // dispatches it ahead of the gated renderers, so it renders on a locked
     // unit; every link it then emits lands on the overview per hrefFor above.
-    sessionHref: (targetGrade, targetUnit) => placementLocation(targetGrade, targetUnit, "help-session", { review: true }),
+    sessionHref: (targetGrade, targetUnit) => placementLocation(targetGrade, targetUnit, "help-session", { review: true, focus: true }),
     // Sections are chained here, so the session names its stops instead of
     // deep-linking them, and sends the learner through the overview in order.
     orderedUnit: true,

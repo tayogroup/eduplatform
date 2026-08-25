@@ -206,6 +206,11 @@ export function createGetHelp(options) {
     // Never inherited: this builder is also used by subjects that know no
     // review marker, and a stale one on the URL would ride along forever.
     url.searchParams.delete("review");
+    // Every link this page emits is a targeted visit, not a browse of the
+    // whole grade — the shell reads this at boot and opens straight into
+    // focus mode (topbar + sidebar hidden), so the destination is just the
+    // one topic, not the full course chrome. course-app.js :: init().
+    url.searchParams.set("focus", "1");
     url.hash = section || "overview";
     return url.href;
   }
@@ -316,15 +321,22 @@ export function createGetHelp(options) {
   function resultCard(hit, at, ui) {
     const esc = ui.escapeHtml;
     const overviewHref = hrefFor(hit.stage, hit.unit.unit, "overview");
-    // Chips deep-link into the unit's own sections; a subject whose hrefFor
-    // lands everything on the overview (English) still shows the topic labels,
-    // so the learner knows what to look for once inside.
+    // Chips deep-link into the unit's own sections. English's hrefFor opens
+    // that exact section too (its own review-topic exemption), so the label
+    // is never just a hint here — worst case, a subject with no such
+    // exemption still shows the topic labels, so the learner knows what to
+    // look for once inside.
     const chips = hit.topics.slice(0, 5).map((t) =>
       `<a class="gh-chip" href="${esc(hrefFor(hit.stage, hit.unit.unit, t.section))}">${ui.icon("corner-down-right")}<span>${esc(t.label)}</span><small>${esc(sectionLabel(t.section))}</small></a>`).join("");
+    // The help session is the targeted path — a focused walk on just this
+    // topic, opened in focus mode — so it leads, styled primary and placed
+    // first. The unit link and chips still work, for a learner who would
+    // rather browse the unit itself; they carry the same focus-mode door.
     return `<article class="gh-hit">
-      <a class="gh-hit-title" href="${esc(overviewHref)}"><strong>${esc(`${options.stageWord} ${hit.stage}`)} · Unit ${hit.unit.unit}:</strong> ${esc(hit.unit.title)} ${ui.icon("arrow-right")}</a>
+      <p class="gh-hit-heading"><strong>${esc(`${options.stageWord} ${hit.stage}`)} · Unit ${hit.unit.unit}:</strong> ${esc(hit.unit.title)}</p>
+      <button class="button primary gh-start" data-gh-start="${at}" type="button">${ui.icon("compass")} <span>Start a help session on this</span></button>
+      <a class="gh-hit-browse" href="${esc(overviewHref)}">${ui.icon("arrow-right")} <span>Or open the unit yourself</span></a>
       ${chips ? `<div class="gh-chips">${chips}</div>` : ""}
-      <button class="button secondary gh-start" data-gh-start="${at}" type="button">${ui.icon("compass")} <span>Start a help session</span></button>
     </article>`;
   }
 
@@ -446,16 +458,17 @@ export function createGetHelp(options) {
     .gh-note { color: var(--muted); font-size: 14px; margin: 4px 0 12px; }
     .gh-hit { padding: 12px 0; border-top: 1px solid var(--line); }
     .gh-hit:first-of-type { border-top: 0; }
-    .gh-hit-title { display: inline-flex; gap: 6px; align-items: baseline; flex-wrap: wrap; text-decoration: none; color: inherit; font-size: 15px; }
-    .gh-hit-title:hover { text-decoration: underline; }
-    .gh-hit-title i { width: 15px; height: 15px; align-self: center; }
+    .gh-hit-heading { margin: 0 0 10px; font-size: 15px; }
+    .gh-hit-browse { display: inline-flex; gap: 6px; align-items: baseline; flex-wrap: wrap; text-decoration: none; color: var(--muted); font-size: 13px; margin-top: 10px; }
+    .gh-hit-browse:hover { text-decoration: underline; }
+    .gh-hit-browse i { width: 13px; height: 13px; align-self: center; }
     .gh-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 9px; }
     .gh-chip { display: inline-flex; align-items: center; gap: 6px; padding: 7px 11px; border: 1px solid var(--line); border-radius: 99px; background: #fff; color: inherit; text-decoration: none; font-size: 13px; cursor: pointer; }
     .gh-chip:hover { border-color: var(--teal); }
     .gh-chip i { width: 13px; height: 13px; color: var(--teal); }
     .gh-chip small { color: var(--muted); }
     .gh-status p { display: flex; gap: 8px; align-items: center; color: var(--muted); }
-    .gh-start { margin-top: 10px; }
+    .gh-start { width: 100%; justify-content: center; }
     .gh-step { border: 1px solid var(--line); border-radius: 12px; margin-bottom: 12px; overflow: hidden; }
     .gh-step-head { display: flex; align-items: center; gap: 10px; width: 100%; padding: 13px 15px; background: none; border: 0; text-align: left; font: inherit; cursor: pointer; }
     .gh-step-head[disabled] { cursor: default; color: var(--muted); }
@@ -831,5 +844,20 @@ export function createGetHelp(options) {
     return lines.join("\n");
   }
 
-  return { render, renderSession, sessionHere, attachShell };
+  // What the shell's Wehel dock reads while the learner is on the help-session
+  // route (course-app.js :: mountWehelDock's sectionHint/activityHint) — finer
+  // than the section id a normal page visit reports, because the SEARCH that
+  // started this session named an exact topic ("pronouns"), not just the
+  // section it lives in ("Grammar"). Without this, Wehel opened from a help
+  // session's wrap-up inferred nothing beyond whichever unit the page loaded —
+  // the same way it would for any ordinary in-unit visit — because the route
+  // stays "help-session" for the whole walk and never becomes the section id
+  // sectionHint's default lookup keys on.
+  function sessionHint() {
+    const session = activeSession();
+    if (!session || !sessionHere()) return null;
+    return { id: session.section, label: session.topicLabel, query: session.query };
+  }
+
+  return { render, renderSession, sessionHere, attachShell, sessionHint };
 }

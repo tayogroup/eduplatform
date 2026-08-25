@@ -2312,6 +2312,12 @@ foreach ([
             'parentid' => $parentid,
             'parentaccountid' => $parentaccountid,
             'parentcreated' => $parentcreated,
+            // Read from the user record, not the local variable: a created
+            // parent may have been renamed to the standard username just above,
+            // and a linked existing parent never had a local variable at all —
+            // which is why the summary used to show a linked parent with no
+            // username anywhere on the screen.
+            'parentusername' => $parentid > 0 ? (string)$DB->get_field('user', 'username', ['id' => $parentid], IGNORE_MISSING) : '',
             'parentpassword' => $parentpassword,
             'enrollmentapprovalstatus' => $data['enrollment_approval_status'],
             'approvalurl' => $approvalurl,
@@ -2430,7 +2436,7 @@ body.pqh-student-intake-page #page,body.pqh-student-intake-page #page-content,bo
           <h2>Created Accounts</h2>
           <div class="pqsi-result">
             <div><strong>Student</strong>ID <?php echo s((string)($created['studentaccountid'] ?? '')); ?><br>User ID: <?php echo (int)$created['studentid']; ?><br>Username: <?php echo s($created['studentusername']); ?><?php if (empty($created['existingstudent'])): ?><br>Temporary password: <?php echo s($created['studentpassword']); ?><?php else: ?><br>Existing account linked.<?php endif; ?></div>
-            <div><strong>Parent/guardian</strong><?php if (!empty($created['parentid'])): ?>ID <?php echo s((string)($created['parentaccountid'] ?? '')); ?><br>User ID: <?php echo (int)$created['parentid']; ?><br><?php echo !empty($created['parentcreated']) ? 'Parent/guardian account created.' : 'Existing parent/guardian account linked.'; ?><?php if (!empty($created['parentpassword'])): ?><br>Temporary password: <?php echo s($created['parentpassword']); ?><?php endif; ?><br>Email: <?php echo !empty($created['parentemailattempted']) ? (!empty($created['parentemailsent']) ? 'sent' : 'attempted but not confirmed') : 'not sent'; ?><?php else: ?><br>Not required for this adult student.<?php endif; ?></div>
+            <div><strong>Parent/guardian</strong><?php if (!empty($created['parentid'])): ?>ID <?php echo s((string)($created['parentaccountid'] ?? '')); ?><br>User ID: <?php echo (int)$created['parentid']; ?><?php if (!empty($created['parentusername'])): ?><br>Username: <?php echo s($created['parentusername']); ?><?php endif; ?><br><?php echo !empty($created['parentcreated']) ? 'Parent/guardian account created.' : 'Existing parent/guardian account linked.'; ?><?php if (!empty($created['parentpassword'])): ?><br>Temporary password: <?php echo s($created['parentpassword']); ?><?php endif; ?><br>Email: <?php echo !empty($created['parentemailattempted']) ? (!empty($created['parentemailsent']) ? 'sent' : 'attempted but not confirmed') : 'not sent'; ?><?php else: ?><br>Not required for this adult student.<?php endif; ?></div>
             <div><strong>Referrer</strong><?php if (!empty($created['referralid'])): ?><?php echo s((string)($created['referrername'] ?? '')); ?><br>Code: <?php echo s((string)($created['referrercode'] ?? '')); ?><br>Referral ID: <?php echo (int)$created['referralid']; ?><?php else: ?>No referrer linked.<?php endif; ?></div>
             <?php if (!empty($created['workspaceid'])): ?><div><strong>Workspace</strong>Linked to workspace ID <?php echo (int)$created['workspaceid']; ?>.<br>Student and parent membership rows were created or reactivated.</div><?php endif; ?>
           </div>

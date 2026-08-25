@@ -33,9 +33,16 @@ function qa_fail(string $message): void {
 }
 
 // --- 1. the right install, by database ---------------------------------------
+// The column is `slug`, not `shortname` — revision 1 guessed and was refused by
+// the identity check itself, which is the guard working: it failed before
+// touching a file. Authority is the live code's own queries
+// (accesslib.php :: get_record('local_prequran_consumer', ['slug' => …]) and
+// consumer_diagnostics.php), plus PQPIR_DEFAULT_SCHOOL_SLUG = 'ehel-k12' in
+// public_intake.php. Deliberately NOT filtered on status: the question here is
+// "is this the K-12 database", not "is that consumer currently active".
 global $DB, $CFG;
 try {
-    $consumer = $DB->get_record('local_prequran_consumer', ['shortname' => 'ehel-k12']);
+    $consumer = $DB->get_record('local_prequran_consumer', ['slug' => 'ehel-k12']);
 } catch (Throwable $e) {
     qa_fail("cannot read local_prequran_consumer — wrong install or wrong directory: " . $e->getMessage());
 }

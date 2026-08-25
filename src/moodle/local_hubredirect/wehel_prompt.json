@@ -294,6 +294,21 @@
     "- Your knowledge is NOT narrowed. You still hold this whole unit, the year outline, and every other course in the academy. If they ask about an earlier unit, another subject, or anything their curiosity lands on, answer it properly and well — then bring them back to \"{{FOCUS_LABEL}}\" in a sentence.",
     "- Focus is a setting they chose, not a topic. Never mention it, never explain it, never say you are \"focusing\" — just stay where they put you."
   ],
+  "categoryNote": "Appended to the CACHED system block (after template substitution, so it must carry no {{placeholders}}) when the client's learnerCategory names a key below. Per-learner-stable, so it caches with the template. 'tutoring' is the tutoring-support category: a child at ANOTHER school using Ehel as add-on tutoring, who reached this lesson by searching a topic — the intensive-english audience correction in subjectNotes is the precedent for overriding the template's framing this way. An unknown or absent learnerCategory appends nothing, so every existing learner builds byte-identical to before this existed.",
+  "categoryNotes": {
+    "tutoring": [
+      "# Framing correction — tutoring-support learner",
+      "",
+      "This learner attends a DIFFERENT school and uses Ehel Academy as add-on tutoring. They arrived at this lesson by SEARCHING for a topic they are stuck on — not by walking this course in order — so this course's positions mean nothing to them. This overrides the unit framing above:",
+      "",
+      "- Never say \"unit\" or name a unit number to them, and never refer to their position in this course. Say \"this lesson\", or name the topic itself.",
+      "- Do not assume they have met earlier units, and do not send them to other units by number. If other material here would help, name its TOPIC and offer to teach it right now.",
+      "- Their grade is an approximate level used to pick this lesson. Their school's year names, terms and sequence may differ — never tell them what \"their class\" or \"their course\" covers, and never speak of \"this year's units\".",
+      "- \"My homework\" means homework from THEIR school. Work from what they show or tell you; the assigned-homework list, when present, is from Ehel and may not be what they mean.",
+      "",
+      "Everything else stands: the lesson content below (labelled UNIT CONTENT) is still your ground truth and you still teach it exactly as the rules above say. Only the FRAMING changes — the child is a guest with a question, not a student of this course."
+    ]
+  },
   "homeworkNote": "Substituted into the VOLATILE tail (never the cached template) when the client sends a homework context — the learner's real assigned homework, fetched from the platform by wehel_homework.php and formatted by homeworkContextText in shell/wehel.js. {{HOMEWORK_LIST}} is that formatted list. Absent, nothing is appended, so a learner with no homework builds byte-identical to before this existed. The two homework modeHints below are the matching quick-prompt modes; the worked-solutions one is the sanctioned exception written into the Academic honesty section.",
   "homeworkBlock": [
     "# This learner's assigned homework",

@@ -8809,11 +8809,18 @@ function wehelOptions() {
   // hint into every message sent afterwards, from either the greeting's open
   // or a later one from the same visit.
   const session = route === "help-session" ? config.getHelp?.sessionHint?.() : null;
+  // The tutoring category never hears "unit" — see the shell dock's overlay
+  // (course-app.js :: tutoringWehelOptions), which rewrites these for the
+  // drawer. This module's own copies matter because English ALSO has its own
+  // tutor page and its own askWehel call sites, which read this function
+  // directly rather than through the dock.
+  const unitWord = IS_TUTORING ? "this lesson" : "this unit";
   return {
     meta: {
       subject: "english", subjectLabel: "English", grade: gradeNumber,
       cambridgeCode: cambridgeLabel(gradeNumber),
       unitNo: course.unit.unitNo, unitTitle: course.unit.unitTitle,
+      learnerCategory: IS_TUTORING ? "tutoring" : "",
       courseOutline: outlineFromManifest(manifest), unit: course,
       // What the Focus control offers: the unit's teaching pages, from the same
       // filter the nav uses. Read by the shared panel the shell's dock mounts;
@@ -8829,13 +8836,15 @@ function wehelOptions() {
     ui: { escapeHtml, toast },
     tutorLabel: "Wehel Tutor",
     greeting: session
-      ? `Hello! I am Wehel Tutor. I can see you are working on "${session.label}" in Unit ${course.unit.unitNo}: ${course.unit.unitTitle}${session.query ? ` — you searched for "${session.query}"` : ""}. What would you like help with?`
-      : `Hello! I am Wehel Tutor. Ask me anything about Unit ${course.unit.unitNo}: ${course.unit.unitTitle}.`,
-    placeholder: session ? `Ask about ${session.label}…` : `Ask about ${course.unit.unitTitle}…`,
+      ? `Hello! I am Wehel Tutor. I can see you are working on "${session.label}"${IS_TUTORING ? "" : ` in Unit ${course.unit.unitNo}: ${course.unit.unitTitle}`}${session.query ? ` — you searched for "${session.query}"` : ""}. What would you like help with?`
+      : IS_TUTORING
+        ? `Hello! I am Wehel Tutor. Tell me what you are stuck on — a topic, a homework question, anything.`
+        : `Hello! I am Wehel Tutor. Ask me anything about Unit ${course.unit.unitNo}: ${course.unit.unitTitle}.`,
+    placeholder: session ? `Ask about ${session.label}…` : IS_TUTORING ? "Ask about anything you are stuck on…" : `Ask about ${course.unit.unitTitle}…`,
     quickPrompts: [
       { label: "Explain this", message: session ? `Can you explain ${session.label} in a simpler way?` : "Can you explain what is on this page in a simpler way?" },
-      { label: "Teach me words", message: "Teach me three words from this unit." },
-      { label: "Quiz me", message: session ? `Quiz me on ${session.label}, one question at a time.` : "Quiz me on this unit, one question at a time." },
+      { label: "Teach me words", message: `Teach me three words from ${unitWord}.` },
+      { label: "Quiz me", message: session ? `Quiz me on ${session.label}, one question at a time.` : `Quiz me on ${unitWord}, one question at a time.` },
       { label: "Check my sentence", message: "I will write a sentence. Please help me make it better." },
     ],
     mode: aiState.mode,

@@ -455,6 +455,19 @@ $system = strtr($system, [
     '{{UNIT_CONTENT}}' => $unitcontent,
     '{{FOCUS}}' => $focusblock,
 ]);
+// The learner-category framing correction (categoryNotes in wehel_prompt.json)
+// — "tutoring" learners hear "this lesson", never "this unit", because they
+// reached this lesson by searching a topic and hold no position in this
+// course. Appended to the CACHED block, not the volatile tail: the category is
+// per-learner-stable, so it caches with the template, and it must sit ABOVE
+// the volatile hints it reframes. Only categories the prompt source defines
+// append anything, so an absent or unknown value builds byte-identical to
+// before this existed. Mirror of the same step in tools/lib/wehel-dev-chat.js.
+$learnercategory = $clean($payload['learnerCategory'] ?? '', 20);
+$categorynote = ($promptdata['categoryNotes'] ?? [])[$learnercategory] ?? null;
+if (is_array($categorynote) && $categorynote) {
+    $system .= "\n\n" . implode("\n", array_map('strval', $categorynote));
+}
 // Everything from here down is the VOLATILE tail: it changes between questions
 // in the same unit (the page the learner is on, the mode a quick prompt asked
 // for). It is kept out of $system so the big stable block above — template plus
@@ -492,10 +505,13 @@ if ($homeworkcontext !== '' && !empty($promptdata['homeworkBlock'])) {
     ]);
 }
 // Where the learner is standing right now. The dock opens over any lesson
-// page, so "I don't get this" has a referent.
+// page, so "I don't get this" has a referent. For the tutoring category the
+// wrapper drops "of this unit" — their hint may be a search page, and the
+// framing correction above forbids the word anyway.
 $sectionhint = $clean($payload['sectionHint'] ?? '', 80);
 if ($sectionhint !== '') {
-    $volatile .= "\n\nThe learner is on the \"" . $sectionhint . "\" page of this unit right now — useful context for what they may mean, but their own words always come first: answer what they asked, not the page.";
+    $pageof = $learnercategory === 'tutoring' ? 'page' : 'page of this unit';
+    $volatile .= "\n\nThe learner is on the \"" . $sectionhint . "\" " . $pageof . " right now — useful context for what they may mean, but their own words always come first: answer what they asked, not the page.";
 }
 // Finer than the page: the exact item on screen — the current slide of a
 // Grade 1-4 deck ("Question 3 of 6 — …"), read by the dock at send time.

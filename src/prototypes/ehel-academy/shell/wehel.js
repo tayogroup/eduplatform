@@ -165,11 +165,15 @@ export function modulesFromSections(sections) {
 // system prompt already defines (its EXPLAIN and QUIZ ME playbooks, and the
 // teach/practice/help modeHints) instead of depending on the learner happening
 // to type the right words.
-export function focusPrompts(label) {
+// `scope` is the word for where the material lives — "this unit" for a school
+// learner walking their course, "this lesson" for the tutoring category, who
+// arrived at this page by searching a topic and has no unit position for the
+// word to mean anything against. Callers pass it from unitWord() below.
+export function focusPrompts(label, scope = "this unit") {
   return [
-    { label: "Teach me", mode: "teach", message: `Teach me "${label}" from this unit, step by step, starting from the beginning.` },
-    { label: "Quiz me", mode: "practice", message: `Quiz me on "${label}" from this unit, one question at a time.` },
-    { label: "Explain", mode: "help", message: `Explain "${label}" from this unit a different way from the way the lesson explains it.` },
+    { label: "Teach me", mode: "teach", message: `Teach me "${label}" from ${scope}, step by step, starting from the beginning.` },
+    { label: "Quiz me", mode: "practice", message: `Quiz me on "${label}" from ${scope}, one question at a time.` },
+    { label: "Explain", mode: "help", message: `Explain "${label}" from ${scope} a different way from the way the lesson explains it.` },
   ];
 }
 
@@ -788,6 +792,12 @@ export async function askWehel({ meta, messages, channel = "text", mode = "", se
         unitNo: meta.unitNo,
         unitTitle: meta.unitTitle,
         learnerName: meta.learnerName || "",
+        // "tutoring" for the tutoring-support category — a child at another
+        // school who arrived by searching a topic. The endpoint turns it into
+        // a framing correction in the system prompt (categoryNotes in
+        // wehel_prompt.json): say "this lesson", never "this unit", and assume
+        // no position in our course. Absent for school learners.
+        learnerCategory: meta.learnerCategory || undefined,
         courseOutline: meta.courseOutline || "",
         unit: unitForTutor(meta.unit),
         channel,
@@ -1119,12 +1129,23 @@ export function mountWehelChat(options) {
   const key = options.key || "aiMessages";
   const escapeHtml = ui.escapeHtml;
   const tutorLabel = options.tutorLabel || "Wehel Tutor";
-  const baseGreeting = options.greeting || `Hi! I am ${tutorLabel}, your ${meta.subjectLabel} companion. What would you like to do with Unit ${meta.unitNo}: ${meta.unitTitle}?`;
+  // The tutoring-support category: a child at another school who arrived by
+  // SEARCHING a topic, not by walking a course — so "Unit N" is a coordinate
+  // in somebody else's map and every string here that would print it says
+  // "this lesson" instead. School learners keep the unit framing, which for
+  // them is their actual position. Read from meta (where the shell's dock and
+  // English's own config set it, and where askWehel reads it for the server)
+  // with a top-level override for any caller that has no meta of its own.
+  const isTutoring = (options.learnerCategory || meta.learnerCategory) === "tutoring";
+  const unitWord = isTutoring ? "this lesson" : "this unit";
+  const baseGreeting = options.greeting || (isTutoring
+    ? `Hi! I am ${tutorLabel}, your ${meta.subjectLabel} companion. Tell me what you are stuck on — a topic, a homework question, anything.`
+    : `Hi! I am ${tutorLabel}, your ${meta.subjectLabel} companion. What would you like to do with Unit ${meta.unitNo}: ${meta.unitTitle}?`);
   // A focused learner is greeted by where they are, and offered the same three
   // things the focused quick prompts do — the greeting is the first place the
   // setting has to be visible, or Focus looks like it did nothing.
   const greetingFor = (focus) => (focus
-    ? `Hi! I am ${tutorLabel}. We are on "${focus.label}" in Unit ${meta.unitNo}: ${meta.unitTitle}. Shall I teach it, quiz you on it, or explain it a different way?`
+    ? `Hi! I am ${tutorLabel}. We are on "${focus.label}"${isTutoring ? "" : ` in Unit ${meta.unitNo}: ${meta.unitTitle}`}. Shall I teach it, quiz you on it, or explain it a different way?`
     : baseGreeting);
   const modules = (Array.isArray(meta.modules) ? meta.modules : []).filter((module) => module && module.id && module.label);
   if (!Array.isArray(store[key])) store[key] = [];
@@ -1190,7 +1211,7 @@ export function mountWehelChat(options) {
     const offlineNote = item.offline
       ? `<p class="w-offline-note" style="margin:0 0 6px;padding:7px 10px;border-radius:8px;`
         + `background:#fff4e5;border:1px solid #e0b070;color:#7a4a00;font-size:13px;">`
-        + `Wehel could not be reached, so this is a hint from the unit — not Wehel's answer. `
+        + `Wehel could not be reached, so this is a hint from ${isTutoring ? "the lesson" : "the unit"} — not Wehel's answer. `
         + `Ask again in a moment.</p>`
       : "";
     return `<article class="ai-message ${item.role}${item.offline ? " offline" : ""}">`
@@ -1253,7 +1274,7 @@ export function mountWehelChat(options) {
     // nothing about this changes.
     const prompts = persona === "teacher"
       ? teacherPrompts()
-      : (focus ? focusPrompts(focus.label) : [...(options.quickPrompts || [])]);
+      : (focus ? focusPrompts(focus.label, unitWord) : [...(options.quickPrompts || [])]);
     // Homework chips — both sanctioned ways in, shown only when the platform
     // actually has homework on record for this learner. The modes reach the
     // matching modeHints in wehel_prompt.json (coaching, and the worked-
@@ -1275,7 +1296,7 @@ export function mountWehelChat(options) {
         </label>
         ${modules.length ? `<label for="wehel-focus">Focus
           <select id="wehel-focus">
-            <option value="">Whole unit</option>
+            <option value="">${isTutoring ? "The whole lesson" : "Whole unit"}</option>
             ${modules.map((module) => `<option value="${escapeHtml(module.id)}"${focus && focus.id === module.id ? " selected" : ""}>${escapeHtml(module.label)}</option>`).join("")}
           </select>
         </label>` : ""}
@@ -1288,7 +1309,7 @@ export function mountWehelChat(options) {
       ${pendingAttachments.length ? `<div class="w-attach-row">${pendingAttachments.map((file, index) => `<span class="w-attach-chip"><span>${escapeHtml(file.name)}</span><button type="button" data-wehel-detach="${index}" aria-label="Remove ${escapeHtml(file.name)}">×</button></span>`).join("")}</div>` : ""}
       <form class="ai-compose" id="wehel-form">
         <label class="sr-only" for="wehel-input">Ask ${escapeHtml(tutorLabel)}</label>
-        <input id="wehel-input" maxlength="500" placeholder="${escapeHtml(persona === "teacher" ? "Tell your teacher what you did, or ask…" : (focus ? `Ask about ${focus.label}…` : (options.placeholder || `Ask about ${meta.unitTitle}…`)))}" ${busy ? "disabled" : ""} autocomplete="off">
+        <input id="wehel-input" maxlength="500" placeholder="${escapeHtml(persona === "teacher" ? "Tell your teacher what you did, or ask…" : (focus ? `Ask about ${focus.label}…` : (options.placeholder || (isTutoring ? "Ask about anything you are stuck on…" : `Ask about ${meta.unitTitle}…`))))}" ${busy ? "disabled" : ""} autocomplete="off">
         <button class="button secondary${pendingAttachments.length ? " has-files" : ""}" id="wehel-attach" type="button" aria-label="Attach a homework photo or PDF" title="Attach a homework photo or PDF (up to ${WEHEL_ATTACH_PER_MESSAGE} per message, ${WEHEL_ATTACH_DAILY_LIMIT} a day)" ${busy ? "disabled" : ""}>${wehelIcon("paperclip")}</button>
         <input id="wehel-attach-input" type="file" accept="image/*,application/pdf" multiple hidden>
         ${micSupported ? `<button class="button secondary" id="wehel-mic" type="button" aria-label="Ask by voice" title="Ask by voice" ${busy ? "disabled" : ""}>${wehelIcon("mic")}</button>` : ""}
@@ -1327,7 +1348,7 @@ export function mountWehelChat(options) {
       const chosen = modules.find((module) => module.id === focusSelect.value);
       if (ui.toast) ui.toast(chosen
         ? `${tutorLabel} is staying on ${chosen.label} — still happy to answer anything else.`
-        : `${tutorLabel} is back to the whole unit.`);
+        : `${tutorLabel} is back to ${isTutoring ? "the whole lesson" : "the whole unit"}.`);
     });
     container.querySelectorAll("[data-wehel-prompt]").forEach((button) => button.addEventListener("click", () => submit(button.dataset.wehelPrompt, "text", button.dataset.wehelMode || "", { teach: button.dataset.wehelTeach === "1" })));
     container.querySelector("#wehel-form").addEventListener("submit", (event) => {

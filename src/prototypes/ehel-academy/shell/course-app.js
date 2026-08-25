@@ -926,6 +926,36 @@ export function createCourseApp(config) {
       return [label, title, rest.slice(0, 140)].filter(Boolean).join(" — ").slice(0, 200);
     };
 
+    // The tutoring category never hears "unit": those learners arrived by
+    // SEARCHING a topic, not by walking a course, so "Unit N" is a coordinate
+    // in somebody else's map. One overlay here rewrites every subject's
+    // greeting/placeholder/quick prompts for that category — built from the
+    // same topic context the hints above carry — instead of six subject files
+    // each maintaining a second voice. School learners get the subject's own
+    // options untouched. meta.learnerCategory also rides to the endpoint
+    // (askWehel), where the prompt's framing correction reads it.
+    const tutoringWehelOptions = (base) => {
+      if (!IS_TUTORING || !base) return base;
+      const hint = (route === "help-session" ? config.getHelp?.sessionHint?.() : null) || ghHint() || searchHint();
+      const topic = hint && hint.label !== "Get help search" ? hint.label : "";
+      const query = hint?.query || "";
+      const name = topic || query;
+      return {
+        ...base,
+        meta: { ...base.meta, learnerCategory: "tutoring" },
+        greeting: name
+          ? `Hello! I am Wehel Tutor. I can see you are working on "${name}"${topic && query && query !== topic ? ` — you searched for "${query}"` : ""}. Want me to teach it, quiz you on it, or explain it another way?`
+          : `Hello! I am Wehel Tutor. Tell me what you are stuck on — a topic, a homework question, anything — and we will work on it together.`,
+        placeholder: name ? `Ask about ${name}…` : "Ask about anything you are stuck on…",
+        quickPrompts: [
+          { label: "Teach me this", message: name ? `Teach me about ${name}, step by step.` : "Teach me the topic I am stuck on, step by step — I will tell you what it is." },
+          { label: "Quiz me", message: name ? `Quiz me on ${name}, one question at a time.` : "Quiz me on this lesson, one question at a time." },
+          { label: "Explain more simply", message: name ? `Can you explain ${name} in a simpler way?` : "Can you explain this lesson in a simpler way?" },
+          { label: "Help with homework", message: "Can you help me with my homework? I will tell you the question." },
+        ],
+      };
+    };
+
     function close() {
       if (!drawer) return;
       drawer.remove(); backdrop?.remove();
@@ -964,7 +994,7 @@ export function createCourseApp(config) {
           // scripts are keyed by id, read at send time like the hint.
           sectionId: () => route,
           activityHint,
-          ...config.wehelOptions(),
+          ...tutoringWehelOptions(config.wehelOptions()),
         });
       } catch (error) {
         console.error(error);

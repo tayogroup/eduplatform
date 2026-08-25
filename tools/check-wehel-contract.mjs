@@ -325,6 +325,53 @@ if (phpCap !== UNIT_JSON_LIMIT || devCap !== UNIT_JSON_LIMIT) {
   if (phpActivity === null || phpActivity !== devActivity) {
     fail("The two activity-hint caps disagree or are missing", `wehel_chat.php ${phpActivity}, wehel-dev-chat.js ${devActivity}`);
   }
+  // The tutoring-category framing correction (2026-08-25): a tutoring-support
+  // learner reached the lesson by SEARCHING a topic and holds no position in
+  // the course, so the prompt must reframe "unit" as "lesson" for them. Four
+  // links in the chain, each of which can silently drop out on its own:
+  // the note in the prompt source, the injection in each server, and the
+  // client actually sending the field.
+  const tutoringNote = Array.isArray(prompt.categoryNotes?.tutoring) ? prompt.categoryNotes.tutoring.join("\n") : "";
+  if (!tutoringNote) {
+    fail("The tutoring framing correction is gone from the prompt", "categoryNotes.tutoring is what stops Wehel talking to a tutoring-support learner about units they have no position in");
+  } else {
+    if (!/this lesson/i.test(tutoringNote) || !/never say "unit"/i.test(tutoringNote)) {
+      fail("The tutoring note no longer reframes unit as lesson", "it must forbid the word \"unit\" and offer \"this lesson\" — that reframing is its whole job");
+    }
+    // Appended AFTER template substitution in both servers, so a placeholder
+    // in it would print literally to the model.
+    if (/\{\{[A-Z_]+\}\}/.test(tutoringNote)) {
+      fail("The tutoring note carries a {{placeholder}}", "categoryNotes are appended after substitution — a placeholder reaches the model as literal braces");
+    }
+  }
+  const phpCategory = capIn(PHP, /\$clean\(\$payload\['learnerCategory'\][^,]*,\s*(\d+)\)/);
+  const devCategory = capIn(DEV, /clean\(payload\.learnerCategory,\s*(\d+)\)/);
+  if (phpCategory === null || phpCategory !== devCategory) {
+    fail("The two learner-category reads disagree or are missing", `wehel_chat.php ${phpCategory}, wehel-dev-chat.js ${devCategory} — without the read, the note above exists but nothing injects it`);
+  }
+  const phpSource = fs.readFileSync(PHP, "utf8");
+  const devSource = fs.readFileSync(DEV, "utf8");
+  if (!/categorynote/i.test(phpSource) || !/\$system\s*\.=/.test(phpSource)) {
+    fail("wehel_chat.php no longer appends the category note to the cached block", "reading learnerCategory without appending categoryNotes is the field arriving and doing nothing");
+  }
+  if (!/categoryNote/.test(devSource) || !/system\s*\+=/.test(devSource)) {
+    fail("wehel-dev-chat.js no longer appends the category note", "the dev twin must mirror wehel_chat.php or local testing proves nothing about production");
+  }
+  // The volatile section-hint wrapper must drop "of this unit" for tutoring in
+  // BOTH servers — a search-page hint framed as a unit page contradicts the
+  // correction the same prompt just made.
+  if (!/'tutoring'\s*\?\s*'page'\s*:\s*'page of this unit'/.test(phpSource)) {
+    fail("wehel_chat.php's section-hint wrapper is not category-aware", "for tutoring it must say \"page\", not \"page of this unit\"");
+  }
+  if (!/"tutoring"\s*\?\s*"page"\s*:\s*"page of this unit"/.test(devSource)) {
+    fail("wehel-dev-chat.js's section-hint wrapper is not category-aware", "must mirror wehel_chat.php");
+  }
+  // And the client must actually send the field, or every check above guards
+  // a path nothing reaches.
+  const shellSource = fs.readFileSync(path.join(ROOT, "src", "prototypes", "ehel-academy", "shell", "wehel.js"), "utf8");
+  if (!/learnerCategory:\s*meta\.learnerCategory/.test(shellSource)) {
+    fail("shell/wehel.js no longer sends learnerCategory", "askWehel must carry meta.learnerCategory or the servers' category handling is unreachable");
+  }
 }
 
 function report() {

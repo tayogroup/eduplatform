@@ -176,6 +176,15 @@ function createWehelChatHandler({ apiKey, model: modelOverride = () => undefined
         "{{FOCUS}}": focusBlock,
       };
       let system = promptData.template.join("\n").replace(/\{\{[A-Z_]+\}\}/g, (token) => replacements[token] ?? token);
+      // The learner-category framing correction (categoryNotes in
+      // wehel_prompt.json) — "tutoring" learners hear "this lesson", never
+      // "this unit". Appended to the CACHED block, not the volatile tail: the
+      // category is per-learner-stable and must sit above the hints it
+      // reframes. Only categories the prompt source defines append anything.
+      // Mirrored in wehel_chat.php.
+      const learnerCategory = clean(payload.learnerCategory, 20);
+      const categoryNote = (promptData.categoryNotes || {})[learnerCategory];
+      if (Array.isArray(categoryNote) && categoryNote.length) system += `\n\n${categoryNote.join("\n")}`;
       // Everything appended from here is the VOLATILE tail — it varies between
       // questions in the same unit, so it stays out of the cached block above.
       // Mirrored in wehel_chat.php.
@@ -199,9 +208,13 @@ function createWehelChatHandler({ apiKey, model: modelOverride = () => undefined
         volatileTail += `\n\n${promptData.homeworkBlock.join("\n").split("{{HOMEWORK_LIST}}").join(homeworkContext)}`;
       }
       // Where the learner is standing right now. The dock opens over any
-      // lesson page, so "I don't get this" has a referent.
+      // lesson page, so "I don't get this" has a referent. For the tutoring
+      // category the wrapper drops "of this unit" — their hint may be a
+      // search page, and the framing correction above forbids the word.
+      // Mirrored in wehel_chat.php.
       const sectionHint = clean(payload.sectionHint, 80);
-      if (sectionHint) volatileTail += `\n\nThe learner is on the "${sectionHint}" page of this unit right now — useful context for what they may mean, but their own words always come first: answer what they asked, not the page.`;
+      const pageOf = learnerCategory === "tutoring" ? "page" : "page of this unit";
+      if (sectionHint) volatileTail += `\n\nThe learner is on the "${sectionHint}" ${pageOf} right now — useful context for what they may mean, but their own words always come first: answer what they asked, not the page.`;
       // The exact item on screen (a deck's current slide) — what "this
       // activity" means to the virtual teacher. Mirrored in wehel_chat.php.
       const activityHint = clean(payload.activityHint, 200);

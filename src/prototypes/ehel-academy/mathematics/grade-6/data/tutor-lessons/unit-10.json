@@ -1,0 +1,263 @@
+{
+  "schemaVersion": 1,
+  "subject": "mathematics",
+  "stage": 6,
+  "unit": 10,
+  "unitTitle": "Multiplication and Division (1)",
+  "area": "multiplication-and-division",
+  "title": "Understand long multiplication and long division",
+  "promise": "This starts from the moves you already own — partitioning and sharing place by place — and turns them into the two big written methods: long multiplication, and long division by a two-digit number. Estimate first, every time, and no wrong answer can hide.",
+  "narrated": true,
+  "sections": [
+    {
+      "heading": "Long multiplication is two easy rows",
+      "body": "To multiply 46 × 32, split the 32, not the 46. Work out 46 × 2, then 46 × 30, then add the two rows.\n46 × 2 = 92. And 46 × 30 is 46 × 3 with a zero on the end: 1,380. Add them: 92 + 1,380 = 1,472.\nThat is the whole method. However large the numbers get, long multiplication is always one row per digit, each row a single-digit multiplication with the right number of zeros, then one addition.",
+      "example": "58 × 34: 58 × 4 = 232, and 58 × 30 = 1,740. Total: 1,972."
+    },
+    {
+      "heading": "Long division: estimate, multiply, subtract, bring down",
+      "body": "To divide 672 by 21, you cannot use a 21 times table you never learned — so you estimate your way down.\nHow many 21s in 67? Think of it as: how many 20s in 67 — about 3. Check: 3 × 21 = 63. Subtract: 67 − 63 = 4. Bring down the 2 to make 42. How many 21s in 42? Exactly 2, because 2 × 21 = 42. Subtract: nothing left.\nRead the answer: 32. The rhythm never changes — estimate, multiply, subtract, bring down — around and around until the digits run out.",
+      "example": "851 ÷ 23: how many 23s in 85? Three (69). Left over 16; bring down the 1 to make 161. How many 23s in 161? Seven (161). Answer: 37."
+    },
+    {
+      "heading": "Estimating is the engine of long division",
+      "body": "Every step of long division starts with a guess, and the guess comes from rounding the divisor to a friendly number.\nDividing by 19? Guess with 20. Dividing by 32? Guess with 30. If your guess turns out one too big (the subtraction would go negative), drop it by one; one too small (the leftover is bigger than the divisor), raise it by one.\nGuess, test, adjust is not cheating — it IS the method. Nobody carries a 23 times table in their head; everyone estimates and corrects.",
+      "example": "How many 29s in 200? Guess with 30: about 6. Test: 6 × 29 = 174, leftover 26 — good, since 26 is less than 29."
+    },
+    {
+      "heading": "Remainders can be fractions or decimals",
+      "body": "At this level a remainder can do more than sit at the end with an r.\n19 ÷ 2 = 9 r 1 — but the leftover 1 is genuinely being divided by 2, so you can write it as the fraction 1/2 and say 19 ÷ 2 = 9 1/2. As a decimal, that is 9.5.\nThe same works for any division: the remainder becomes remainder OVER divisor. 17 ÷ 4 = 4 r 1 = 4 1/4 = 4.25.\nWhich form to give depends on the question — money wants decimals, measuring often wants fractions, and \"how many buses\" still wants a rounded-up whole number.",
+      "example": "22 ÷ 8 = 2 r 6 = 2 6/8 = 2 3/4 = 2.75."
+    },
+    {
+      "heading": "Divisibility: spotting clean divisions before you start",
+      "body": "A few quick tests tell you whether a division will come out exact.\nA number divides by 2 if it ends in 0, 2, 4, 6 or 8. By 5 if it ends in 0 or 5. By 10 if it ends in 0. By 3 if its DIGITS add to a multiple of 3 — 741 gives 7 + 4 + 1 = 12, so 741 divides by 3. By 9 if the digits add to a multiple of 9. By 4 if its last two digits divide by 4.\nThese tests turn \"will this share evenly?\" from a full division into a two-second glance.",
+      "example": "Does 528 divide by 3? Digits: 5 + 2 + 8 = 15 — yes. And its last two digits, 28, divide by 4 — so 528 divides by 4 too."
+    }
+  ],
+  "mistakes": [
+    {
+      "wrong": "In 46 × 32, working 46 × 2 and 46 × 3 and adding 92 + 138.",
+      "right": "The 3 in 32 is thirty: 46 × 30 = 1,380, so the total is 92 + 1,380 = 1,472.",
+      "why": "Each row of long multiplication multiplies by the digit's full VALUE — the tens row must carry its zero."
+    },
+    {
+      "wrong": "In long division, keeping a leftover bigger than the divisor and carrying on.",
+      "right": "If the leftover is bigger than the divisor, the guess was one too small — raise it and redo that step.",
+      "why": "A leftover that still contains the divisor means a whole group went unshared; every later digit would then be wrong."
+    },
+    {
+      "wrong": "Writing 19 ÷ 2 = 9.1 because the remainder is 1.",
+      "right": "19 ÷ 2 = 9 1/2 = 9.5. The remainder 1 still has to be divided by 2.",
+      "why": "A remainder is not a decimal digit — it becomes remainder over divisor: 1/2, which is 0.5."
+    }
+  ],
+  "check": [
+    {
+      "id": "c1",
+      "question": "What is 672 ÷ 21?",
+      "options": [
+        "32",
+        "31",
+        "33",
+        "42"
+      ],
+      "answer": "32",
+      "explanation": "Three 21s make 63, leaving 4; bring down the 2 for 42, which is exactly two 21s. Answer 32."
+    },
+    {
+      "id": "c2",
+      "question": "What is 46 × 32?",
+      "options": [
+        "1472",
+        "1372",
+        "1462",
+        "230"
+      ],
+      "answer": "1472",
+      "explanation": "46 × 2 = 92 and 46 × 30 = 1,380; the rows add to 1,472."
+    },
+    {
+      "id": "c3",
+      "question": "What is 851 ÷ 23?",
+      "options": [
+        "37",
+        "36",
+        "38",
+        "27"
+      ],
+      "answer": "37",
+      "explanation": "23 × 37 = 851: three 23s in 85 leaves 16, bring down for 161, exactly seven 23s."
+    },
+    {
+      "id": "c4",
+      "question": "What is 900 ÷ 25?",
+      "options": [
+        "36",
+        "34",
+        "35",
+        "40"
+      ],
+      "answer": "36",
+      "explanation": "Four 25s make 100, so 900 holds 9 × 4 = 36 of them."
+    },
+    {
+      "id": "c5",
+      "question": "What is 58 × 34?",
+      "options": [
+        "1972",
+        "1872",
+        "1962",
+        "2032"
+      ],
+      "answer": "1972",
+      "explanation": "58 × 4 = 232 and 58 × 30 = 1,740; together 1,972."
+    },
+    {
+      "id": "c6",
+      "question": "What is 750 ÷ 15?",
+      "options": [
+        "50",
+        "45",
+        "55",
+        "15"
+      ],
+      "answer": "50",
+      "explanation": "15 × 50 = 750 — two 15s make 30, so a hundred 15s make 1,500, and half of that is 750."
+    },
+    {
+      "id": "c7",
+      "question": "Write 17 ÷ 4 as a decimal.",
+      "options": [
+        "4.25",
+        "4.1",
+        "4.4",
+        "4.75"
+      ],
+      "answer": "4.25",
+      "explanation": "17 ÷ 4 = 4 r 1, and the remainder becomes 1/4 = 0.25."
+    },
+    {
+      "id": "c8",
+      "question": "What is 84 ÷ 14?",
+      "options": [
+        "6",
+        "7",
+        "5",
+        "8"
+      ],
+      "answer": "6",
+      "explanation": "Guess with 15: about 6. Test: 6 × 14 = 84 exactly."
+    },
+    {
+      "id": "c9",
+      "question": "Write 19 ÷ 2 as a mixed number.",
+      "options": [
+        "9 1/2",
+        "9 r 1",
+        "8 1/2",
+        "9 1/4"
+      ],
+      "answer": "9 1/2",
+      "explanation": "19 ÷ 2 = 9 r 1, and the leftover 1 divided by 2 is the fraction 1/2."
+    },
+    {
+      "id": "c10",
+      "question": "Which test shows that 741 divides exactly by 3?",
+      "options": [
+        "Its digits add to 12, a multiple of 3",
+        "It ends in 1",
+        "It is an odd number",
+        "Its last two digits divide by 3"
+      ],
+      "answer": "Its digits add to 12, a multiple of 3",
+      "explanation": "7 + 4 + 1 = 12, and 12 is a multiple of 3 — so 741 divides by 3 (741 ÷ 3 = 247)."
+    }
+  ],
+  "practice": [
+    {
+      "id": "p1",
+      "level": "warm",
+      "prompt": "What is 480 ÷ 12?",
+      "answer": "40",
+      "hint": "48 ÷ 12, then bring the zero back."
+    },
+    {
+      "id": "p2",
+      "level": "warm",
+      "prompt": "What is 25 × 16?",
+      "answer": "400",
+      "hint": "Four 25s make 100 — and 16 is four fours."
+    },
+    {
+      "id": "p3",
+      "level": "warm",
+      "prompt": "What is 96 ÷ 16?",
+      "answer": "6",
+      "hint": "16 × 6 — test it."
+    },
+    {
+      "id": "p4",
+      "level": "warm",
+      "prompt": "What is 13 × 30?",
+      "answer": "390",
+      "hint": "13 × 3, then the zero."
+    },
+    {
+      "id": "p5",
+      "level": "core",
+      "prompt": "What is 736 ÷ 16?",
+      "answer": "46",
+      "hint": "How many 16s in 73? Four (64). Bring down the 6."
+    },
+    {
+      "id": "p6",
+      "level": "core",
+      "prompt": "What is 38 × 45?",
+      "answer": "1710",
+      "hint": "38 × 40 = 1,520 and 38 × 5 = 190."
+    },
+    {
+      "id": "p7",
+      "level": "core",
+      "prompt": "What is 812 ÷ 28?",
+      "answer": "29",
+      "hint": "Guess with 30: how many in 81? Then test with 28."
+    },
+    {
+      "id": "p8",
+      "level": "core",
+      "prompt": "What is 598 ÷ 13?",
+      "answer": "46",
+      "hint": "Four 13s in 59 (52), leftover 7 — bring down the 8."
+    },
+    {
+      "id": "p9",
+      "level": "core",
+      "prompt": "What is 67 × 24?",
+      "answer": "1608",
+      "hint": "67 × 20 = 1,340 and 67 × 4 = 268."
+    },
+    {
+      "id": "p10",
+      "level": "stretch",
+      "prompt": "What is 989 ÷ 43?",
+      "answer": "23",
+      "hint": "Guess with 40: two 43s in 98 (86), leftover 12 — bring down the 9."
+    },
+    {
+      "id": "p11",
+      "level": "stretch",
+      "prompt": "What is 74 × 58?",
+      "answer": "4292",
+      "hint": "74 × 60 = 4,440, then take away 74 × 2."
+    },
+    {
+      "id": "p12",
+      "level": "stretch",
+      "prompt": "What is 850 ÷ 34?",
+      "answer": "25",
+      "hint": "34 × 25 — a quarter of 34 × 100."
+    }
+  ]
+}

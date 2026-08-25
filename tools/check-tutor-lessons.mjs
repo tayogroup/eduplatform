@@ -39,11 +39,25 @@ const subject = process.argv[2];
 // the lesson file; never remove one to get green — a missing file is the
 // finding.
 const REQUIRED = {
-  mathematics: [[4, 11], [5, 7], [6, 6]],
-  science: [],
+  mathematics: [
+    // The percentages ladder (first tranche, 2026-08-26).
+    [4, 11], [5, 7], [6, 6],
+    // Multiplication and division, long division at the top (second tranche).
+    [4, 17], [5, 11], [6, 10],
+    // Area and perimeter (second tranche). G6's is the area half of its
+    // Measures unit — the lesson's promise says so.
+    [4, 14], [5, 14], [6, 7],
+  ],
+  // The states-of-matter ladder (2026-08-26). Science checks are conceptual,
+  // so the recompute patterns rarely apply — the floor below stays low on
+  // purpose rather than pretending arithmetic verification covers prose.
+  science: [[4, 3], [5, 3], [6, 3]],
 };
 // Computable answers verified across the subject's lessons. Only goes up.
-const COMPUTED_FLOOR = { mathematics: 50, science: 0 };
+// (mathematics measured 157 across 9 lessons on 2026-08-26; the floor sits
+// just under so a wording tweak cannot wedge the gate, while a recompute
+// pattern silently dying still fails it.)
+const COMPUTED_FLOOR = { mathematics: 150, science: 0 };
 
 if (!REQUIRED[subject]) {
   console.error(`usage: check-tutor-lessons.mjs <${Object.keys(REQUIRED).join("|")}>`);
@@ -89,6 +103,25 @@ function recompute(prompt) {
   }
   if ((m = p.match(/scores (\d+) out of (\d+)\. What percentage is that\?$/))) {
     return { value: (Number(m[1]) / Number(m[2])) * 100, kind: "percent" };
+  }
+  if ((m = p.match(/^What is (\d+) × (\d+)\?$/))) {
+    return { value: Number(m[1]) * Number(m[2]), kind: "number" };
+  }
+  // Division: exact → a plain number; with remainder → the "Q r R" form the
+  // lessons standardise on ("21 r 3").
+  if ((m = p.match(/^What is (\d+) ÷ (\d+)\?(?: Give the answer as quotient and remainder, like \d+ r \d+\.)?$/))) {
+    const a = Number(m[1]), b = Number(m[2]);
+    if (a % b === 0) return { value: a / b, kind: "number" };
+    return { value: `${Math.floor(a / b)} r ${a % b}`, kind: "string" };
+  }
+  if ((m = p.match(/^What is the area, in square (?:centimetres|metres), of a rectangle (\d+) (?:cm|m) long and (\d+) (?:cm|m) wide\?$/))) {
+    return { value: Number(m[1]) * Number(m[2]), kind: "number" };
+  }
+  if ((m = p.match(/^What is the perimeter, in (?:centimetres|metres), of a rectangle (\d+) (?:cm|m) long and (\d+) (?:cm|m) wide\?$/))) {
+    return { value: 2 * (Number(m[1]) + Number(m[2])), kind: "number" };
+  }
+  if ((m = p.match(/^What is the area, in square (?:centimetres|metres), of a triangle with base (\d+) (?:cm|m) and height (\d+) (?:cm|m)\?$/))) {
+    return { value: (Number(m[1]) * Number(m[2])) / 2, kind: "number" };
   }
   return null;
 }

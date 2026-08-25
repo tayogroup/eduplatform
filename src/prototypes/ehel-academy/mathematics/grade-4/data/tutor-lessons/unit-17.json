@@ -1,0 +1,263 @@
+{
+  "schemaVersion": 1,
+  "subject": "mathematics",
+  "stage": 4,
+  "unit": 17,
+  "unitTitle": "Multiplication and Division",
+  "area": "multiplication-and-division",
+  "title": "Understand multiplication and division",
+  "promise": "This starts from what multiplying and dividing really mean — groups of things — and builds up to multiplying big numbers in parts and dividing with remainders. Take it slowly and say every example out loud.",
+  "narrated": true,
+  "sections": [
+    {
+      "heading": "Multiplication is repeated groups",
+      "body": "The sign × means groups of. 6 × 4 means 6 groups of 4 things — count them and you get 24.\nBecause groups can be counted either way, 6 × 4 and 4 × 6 give the same answer. That is a gift: if you know one, you know the other for free.\nYour times tables are just the group counts you use so often that they are worth knowing by heart. Every harder multiplication in this lesson is built out of table facts you already own.",
+      "example": "7 × 8 = 56, and so 8 × 7 = 56 too — one fact, two questions answered."
+    },
+    {
+      "heading": "Multiplying bigger numbers: break them into parts",
+      "body": "To multiply 23 × 4, do not try to swallow it whole. Break 23 into 20 and 3, multiply each part, then add.\n20 × 4 = 80. And 3 × 4 = 12. Then 80 + 12 = 92. So 23 × 4 = 92.\nThis is called partitioning, and it works on any number: split it by place value, multiply the pieces, add them back together. The pieces are always friendly table facts with zeros on the end.",
+      "example": "34 × 2: 30 × 2 = 60 and 4 × 2 = 8, so 34 × 2 = 68."
+    },
+    {
+      "heading": "Division is sharing into equal groups",
+      "body": "The sign ÷ asks: how many equal groups? 48 ÷ 6 means 48 things shared into groups of 6 — and there are 8 such groups, because 8 × 6 = 48.\nThat last step is the secret: every division question is a multiplication question read backwards. To answer 48 ÷ 6, ask yourself 6 times WHAT makes 48?\nThis is why your tables matter twice over — each fact you know answers one multiplication and one division.",
+      "example": "40 ÷ 5 = 8, because 8 × 5 = 40."
+    },
+    {
+      "heading": "When it does not share evenly: remainders",
+      "body": "Share 17 sweets between 5 friends. Each friend gets 3 (that uses 15 sweets) — and 2 sweets are left over. We write: 17 ÷ 5 = 3 r 2. The r means remainder — the part that would not share evenly.\nThe remainder must ALWAYS be smaller than the number you are dividing by. If you divide by 5 and your remainder is 5 or more, another whole group is hiding in there — go round again.",
+      "example": "29 ÷ 4 = 7 r 1, because 7 × 4 = 28, and 29 − 28 leaves 1 over."
+    },
+    {
+      "heading": "Check every division by multiplying back",
+      "body": "Multiplication and division undo each other, and that gives you a free answer-checker.\nAfter working out 52 ÷ 4 = 13, check it: 13 × 4 = 52. It matches, so the answer stands.\nWith a remainder, multiply then add it: 17 ÷ 5 = 3 r 2, and the check is 3 × 5 + 2 = 17. If your check does not land back on the number you started with, one of the steps slipped — find it before moving on. Checking takes ten seconds and catches almost every mistake.",
+      "example": "96 ÷ 4 = 24. Check: 24 × 4 = 96. Correct."
+    }
+  ],
+  "mistakes": [
+    {
+      "wrong": "Multiplying 23 × 4 by doing 2 × 4 and 3 × 4 and writing 812.",
+      "right": "The 2 in 23 is twenty. 20 × 4 = 80, then 3 × 4 = 12, so 23 × 4 = 92.",
+      "why": "Partitioning splits by PLACE VALUE — the tens digit carries its zero with it."
+    },
+    {
+      "wrong": "Writing 17 ÷ 5 = 3 r 5.",
+      "right": "17 ÷ 5 = 3 r 2. A remainder of 5 means another whole group of 5 fits.",
+      "why": "The remainder must always be smaller than the divisor — otherwise you stopped sharing too early."
+    },
+    {
+      "wrong": "Thinking 48 ÷ 6 and 6 ÷ 48 are the same, the way 6 × 4 = 4 × 6.",
+      "right": "Order matters in division: 48 ÷ 6 = 8, but 6 ÷ 48 is less than 1.",
+      "why": "Swapping the numbers works for multiplying (groups counted either way) but not for sharing — who is being shared out changes everything."
+    }
+  ],
+  "check": [
+    {
+      "id": "c1",
+      "question": "What is 7 × 8?",
+      "options": [
+        "56",
+        "54",
+        "63",
+        "48"
+      ],
+      "answer": "56",
+      "explanation": "7 × 8 = 56 — one of the table facts worth knowing cold."
+    },
+    {
+      "id": "c2",
+      "question": "What is 6 × 9?",
+      "options": [
+        "54",
+        "56",
+        "63",
+        "45"
+      ],
+      "answer": "54",
+      "explanation": "6 × 9 = 54. If you know 9 × 6, you know this one too."
+    },
+    {
+      "id": "c3",
+      "question": "What is 48 ÷ 6?",
+      "options": [
+        "8",
+        "6",
+        "7",
+        "9"
+      ],
+      "answer": "8",
+      "explanation": "Ask: 6 times what makes 48? 6 × 8 = 48, so the answer is 8."
+    },
+    {
+      "id": "c4",
+      "question": "What is 23 × 4?",
+      "options": [
+        "92",
+        "82",
+        "812",
+        "86"
+      ],
+      "answer": "92",
+      "explanation": "Partition: 20 × 4 = 80 and 3 × 4 = 12, then 80 + 12 = 92."
+    },
+    {
+      "id": "c5",
+      "question": "What is 17 ÷ 5? Give the answer as quotient and remainder, like 12 r 1.",
+      "options": [
+        "3 r 2",
+        "3 r 5",
+        "2 r 7",
+        "4 r 3"
+      ],
+      "answer": "3 r 2",
+      "explanation": "3 × 5 = 15, and 17 − 15 leaves a remainder of 2."
+    },
+    {
+      "id": "c6",
+      "question": "What does 30 ÷ 6 ask?",
+      "options": [
+        "How many groups of 6 make 30",
+        "What is 6 more than 30",
+        "What is 30 groups of 6",
+        "What is 6 less than 30"
+      ],
+      "answer": "How many groups of 6 make 30",
+      "explanation": "Division asks how many equal groups — here, 5 groups of 6 make 30."
+    },
+    {
+      "id": "c7",
+      "question": "What is 96 ÷ 4?",
+      "options": [
+        "24",
+        "23",
+        "26",
+        "22"
+      ],
+      "answer": "24",
+      "explanation": "90 ÷ 4 is awkward, so split friendlier: 80 ÷ 4 = 20 and 16 ÷ 4 = 4, giving 24."
+    },
+    {
+      "id": "c8",
+      "question": "Which calculation CHECKS that 45 ÷ 9 = 5 is right?",
+      "options": [
+        "5 × 9 = 45",
+        "45 × 9 = 405",
+        "45 + 9 = 54",
+        "9 ÷ 5"
+      ],
+      "answer": "5 × 9 = 45",
+      "explanation": "Multiply the answer back by the divisor — landing on 45 proves the division."
+    },
+    {
+      "id": "c9",
+      "question": "What is 30 × 3?",
+      "options": [
+        "90",
+        "60",
+        "33",
+        "93"
+      ],
+      "answer": "90",
+      "explanation": "3 × 3 = 9, and the ten carries its zero: 30 × 3 = 90."
+    },
+    {
+      "id": "c10",
+      "question": "What is 52 ÷ 4?",
+      "options": [
+        "13",
+        "12",
+        "14",
+        "16"
+      ],
+      "answer": "13",
+      "explanation": "40 ÷ 4 = 10 and 12 ÷ 4 = 3, so 52 ÷ 4 = 13. Check: 13 × 4 = 52."
+    }
+  ],
+  "practice": [
+    {
+      "id": "p1",
+      "level": "warm",
+      "prompt": "What is 6 × 4?",
+      "answer": "24",
+      "hint": "6 groups of 4."
+    },
+    {
+      "id": "p2",
+      "level": "warm",
+      "prompt": "What is 7 × 3?",
+      "answer": "21",
+      "hint": "A table fact — say it out loud."
+    },
+    {
+      "id": "p3",
+      "level": "warm",
+      "prompt": "What is 40 ÷ 5?",
+      "answer": "8",
+      "hint": "5 times what makes 40?"
+    },
+    {
+      "id": "p4",
+      "level": "warm",
+      "prompt": "What is 9 × 5?",
+      "answer": "45",
+      "hint": "Count up in fives nine times, or just know it."
+    },
+    {
+      "id": "p5",
+      "level": "core",
+      "prompt": "What is 34 × 2?",
+      "answer": "68",
+      "hint": "Partition: 30 × 2, then 4 × 2, then add."
+    },
+    {
+      "id": "p6",
+      "level": "core",
+      "prompt": "What is 26 × 3?",
+      "answer": "78",
+      "hint": "20 × 3 = 60 and 6 × 3 = 18."
+    },
+    {
+      "id": "p7",
+      "level": "core",
+      "prompt": "What is 84 ÷ 4?",
+      "answer": "21",
+      "hint": "80 ÷ 4 first, then 4 ÷ 4."
+    },
+    {
+      "id": "p8",
+      "level": "core",
+      "prompt": "What is 65 ÷ 5?",
+      "answer": "13",
+      "hint": "50 ÷ 5 = 10, and 15 ÷ 5 = 3."
+    },
+    {
+      "id": "p9",
+      "level": "core",
+      "prompt": "What is 29 ÷ 4? Give the answer as quotient and remainder, like 12 r 1.",
+      "answer": "7 r 1",
+      "hint": "7 × 4 = 28 — how many are left over?"
+    },
+    {
+      "id": "p10",
+      "level": "stretch",
+      "prompt": "What is 47 × 6?",
+      "answer": "282",
+      "hint": "40 × 6 = 240 and 7 × 6 = 42."
+    },
+    {
+      "id": "p11",
+      "level": "stretch",
+      "prompt": "What is 96 ÷ 8?",
+      "answer": "12",
+      "hint": "80 ÷ 8 = 10, then 16 ÷ 8 = 2."
+    },
+    {
+      "id": "p12",
+      "level": "stretch",
+      "prompt": "What is 75 ÷ 6? Give the answer as quotient and remainder, like 12 r 1.",
+      "answer": "12 r 3",
+      "hint": "12 × 6 = 72. Check the remainder is smaller than 6."
+    }
+  ]
+}

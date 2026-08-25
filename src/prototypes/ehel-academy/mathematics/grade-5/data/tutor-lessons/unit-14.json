@@ -1,0 +1,268 @@
+{
+  "schemaVersion": 1,
+  "subject": "mathematics",
+  "stage": 5,
+  "unit": 14,
+  "unitTitle": "Area and Perimeter",
+  "area": "area-and-perimeter",
+  "title": "Understand area and perimeter, including tricky shapes",
+  "promise": "This starts from the two pictures everything rests on — space inside, distance around — then shows you how to handle the shapes that are NOT neat rectangles: L-shapes you split up, and triangles that are secretly half a rectangle.",
+  "narrated": true,
+  "sections": [
+    {
+      "heading": "The two ideas, side by side",
+      "body": "AREA is the space inside a shape, counted in unit squares — square centimetres (cm²) or square metres (m²). For a rectangle it is length × width, because the squares inside sit in equal rows.\nPERIMETER is the distance around the outside — a length, in plain cm or m. For a rectangle, add the length and width and double the answer.\nA rectangle 14 cm long and 6 cm wide: area 14 × 6 = 84 cm²; perimeter (14 + 6) × 2 = 40 cm. Two different questions about the same shape, with different units to prove it.",
+      "example": "Same shape, both answers: 11 by 8 gives area 88 cm² and perimeter 38 cm."
+    },
+    {
+      "heading": "L-shapes: split them into rectangles",
+      "body": "An L-shaped room is not a rectangle — but it is two rectangles standing together, and rectangles you can do.\nDraw one line to cut the L into two rectangles. Find each rectangle's area with length × width, and ADD them. An L made of an 8 by 5 part and a 4 by 3 part has area 40 + 12 = 52 cm².\nWhere you draw the cut does not matter — cut it the other way and the two pieces are different, but their total is the same 52. The shape does not care how you sliced it.",
+      "example": "An L made of a 10 by 4 part and a 6 by 3 part: 40 + 18 = 58 cm²."
+    },
+    {
+      "heading": "Perimeter of an L-shape: walk the whole edge",
+      "body": "For an L-shape's PERIMETER, splitting does not help — the cut you drew is inside the shape, and the ant never walks it.\nInstead, walk the ant right around the outside and add every edge you meet. There will be six sides on an L, and some of their lengths will be missing from the picture — work them out from the sides you know, because opposite distances across the shape must match up.\nAdd all six. Count the sides as you go so none escapes: a missed side is the classic L-shape mistake.",
+      "example": "An L with sides 10, 4, 6, 3, 4 and 7 around the outside has perimeter 34 cm."
+    },
+    {
+      "heading": "A right-angled triangle is half a rectangle",
+      "body": "Draw a rectangle and slice it corner to corner: two identical right-angled triangles. So each triangle's area is HALF the rectangle's.\nThat gives the rule: area of a right-angled triangle = (base × height) ÷ 2. A triangle with base 10 cm and height 6 cm sits inside a 10 by 6 rectangle (area 60), so the triangle's area is 30 cm².\nThe base and height are the two sides that meet at the square corner — not the slanted side. The slant is the cut, and it took no extra space with it.",
+      "example": "Base 8 cm, height 8 cm: the rectangle would be 64 cm², so the triangle is 32 cm²."
+    },
+    {
+      "heading": "Same perimeter, different area",
+      "body": "Here is the fact that surprises everyone: two shapes can have the SAME perimeter and DIFFERENT areas.\nA 6 by 6 square and a 10 by 2 rectangle both have a perimeter of 24 cm. But their areas are 36 cm² and 20 cm². Same fence — very different gardens.\nLong thin shapes waste their perimeter; squarish shapes make the most of it. This is why the two measures must never be mixed up: knowing one tells you almost nothing about the other.",
+      "example": "Perimeter 20 cm could be a 5 by 5 square (area 25) or a 9 by 1 strip (area 9)."
+    },
+    {
+      "heading": "Finding a missing side from the area",
+      "body": "Questions sometimes run the formula backwards: a rectangle has area 42 cm² and length 7 cm — how wide is it?\nArea = length × width, so 42 = 7 × width. Ask: 7 times what makes 42? Six. The width is 6 cm.\nEvery backwards area question is a division in disguise: divide the area by the side you know, and out comes the side you do not. Check by multiplying forwards again: 7 × 6 = 42.",
+      "example": "Area 144 cm², length 16 cm: width = 144 ÷ 16 = 9 cm."
+    }
+  ],
+  "mistakes": [
+    {
+      "wrong": "Finding an L-shape's area by multiplying its two longest sides.",
+      "right": "Split the L into two rectangles, find each area, and ADD them.",
+      "why": "Length × width only works on rectangles — an L multiplied whole counts space that is not there."
+    },
+    {
+      "wrong": "Using the slanted side as the height of a right-angled triangle.",
+      "right": "Base and height are the two sides meeting at the square corner; area is base × height ÷ 2.",
+      "why": "The formula halves a rectangle, and the rectangle is built on the two perpendicular sides — the slant is just the cut."
+    },
+    {
+      "wrong": "Assuming two shapes with the same perimeter have the same area.",
+      "right": "A 6 by 6 square and a 10 by 2 rectangle share a perimeter of 24 cm but have areas 36 and 20 cm².",
+      "why": "Perimeter measures the boundary, area the inside — the same boundary can enclose very different amounts of space."
+    }
+  ],
+  "check": [
+    {
+      "id": "c1",
+      "question": "What is the area, in square centimetres, of a rectangle 14 cm long and 6 cm wide?",
+      "options": [
+        "84",
+        "40",
+        "20",
+        "48"
+      ],
+      "answer": "84",
+      "explanation": "14 × 6 = 84 cm²."
+    },
+    {
+      "id": "c2",
+      "question": "What is the perimeter, in centimetres, of a rectangle 14 cm long and 6 cm wide?",
+      "options": [
+        "40",
+        "84",
+        "20",
+        "34"
+      ],
+      "answer": "40",
+      "explanation": "14 + 6 = 20, doubled is 40 cm."
+    },
+    {
+      "id": "c3",
+      "question": "How do you find the AREA of an L-shape?",
+      "options": [
+        "Split it into rectangles and add their areas",
+        "Multiply its two longest sides",
+        "Add up all its sides",
+        "Double its perimeter"
+      ],
+      "answer": "Split it into rectangles and add their areas",
+      "explanation": "An L is two rectangles standing together — find each with length × width and add."
+    },
+    {
+      "id": "c4",
+      "question": "What is the area, in square centimetres, of a triangle with base 10 cm and height 6 cm?",
+      "options": [
+        "30",
+        "60",
+        "16",
+        "26"
+      ],
+      "answer": "30",
+      "explanation": "It is half a 10 by 6 rectangle: 60 ÷ 2 = 30 cm²."
+    },
+    {
+      "id": "c5",
+      "question": "A rectangle has area 42 cm² and length 7 cm. How wide is it?",
+      "options": [
+        "6 cm",
+        "7 cm",
+        "5 cm",
+        "35 cm"
+      ],
+      "answer": "6 cm",
+      "explanation": "42 = 7 × width, so width = 42 ÷ 7 = 6 cm."
+    },
+    {
+      "id": "c6",
+      "question": "An L-shape is made of an 8 by 5 rectangle and a 4 by 3 rectangle. What is its total area?",
+      "options": [
+        "52 cm²",
+        "40 cm²",
+        "12 cm²",
+        "96 cm²"
+      ],
+      "answer": "52 cm²",
+      "explanation": "8 × 5 = 40 and 4 × 3 = 12; together 52 cm²."
+    },
+    {
+      "id": "c7",
+      "question": "What is the perimeter, in centimetres, of a rectangle 11 cm long and 8 cm wide?",
+      "options": [
+        "38",
+        "88",
+        "19",
+        "30"
+      ],
+      "answer": "38",
+      "explanation": "11 + 8 = 19, doubled is 38 cm."
+    },
+    {
+      "id": "c8",
+      "question": "Two shapes have the same perimeter. What do we know about their areas?",
+      "options": [
+        "They can still be different",
+        "They must be equal",
+        "The longer shape has more area",
+        "Area is always double the perimeter"
+      ],
+      "answer": "They can still be different",
+      "explanation": "A 6 by 6 square and a 10 by 2 rectangle share perimeter 24 but have areas 36 and 20 — the boundary does not fix the inside."
+    },
+    {
+      "id": "c9",
+      "question": "What is the area, in square centimetres, of a triangle with base 8 cm and height 8 cm?",
+      "options": [
+        "32",
+        "64",
+        "16",
+        "24"
+      ],
+      "answer": "32",
+      "explanation": "Half of an 8 by 8 square: 64 ÷ 2 = 32 cm²."
+    },
+    {
+      "id": "c10",
+      "question": "What is the area, in square centimetres, of a rectangle 13 cm long and 7 cm wide?",
+      "options": [
+        "91",
+        "40",
+        "81",
+        "70"
+      ],
+      "answer": "91",
+      "explanation": "13 × 7 = 91 cm²."
+    }
+  ],
+  "practice": [
+    {
+      "id": "p1",
+      "level": "warm",
+      "prompt": "What is the area, in square centimetres, of a rectangle 8 cm long and 6 cm wide?",
+      "answer": "48",
+      "hint": "Length × width."
+    },
+    {
+      "id": "p2",
+      "level": "warm",
+      "prompt": "What is the perimeter, in centimetres, of a rectangle 8 cm long and 6 cm wide?",
+      "answer": "28",
+      "hint": "Add length and width, then double."
+    },
+    {
+      "id": "p3",
+      "level": "warm",
+      "prompt": "What is the area, in square centimetres, of a triangle with base 6 cm and height 4 cm?",
+      "answer": "12",
+      "hint": "Half of a 6 by 4 rectangle."
+    },
+    {
+      "id": "p4",
+      "level": "warm",
+      "prompt": "What is the area, in square centimetres, of a rectangle 20 cm long and 5 cm wide?",
+      "answer": "100",
+      "hint": "20 × 5."
+    },
+    {
+      "id": "p5",
+      "level": "core",
+      "prompt": "What is the perimeter, in centimetres, of a rectangle 13 cm long and 9 cm wide?",
+      "answer": "44",
+      "hint": "13 + 9 = 22, then double."
+    },
+    {
+      "id": "p6",
+      "level": "core",
+      "prompt": "What is the area, in square centimetres, of a triangle with base 12 cm and height 5 cm?",
+      "answer": "30",
+      "hint": "12 × 5, then halve."
+    },
+    {
+      "id": "p7",
+      "level": "core",
+      "prompt": "A rectangle has area 42 cm² and width 6 cm. How long is it, in centimetres?",
+      "answer": "7",
+      "hint": "Divide the area by the side you know."
+    },
+    {
+      "id": "p8",
+      "level": "core",
+      "prompt": "An L-shape is made of a 10 by 4 rectangle and a 6 by 3 rectangle. What is its total area, in square centimetres?",
+      "answer": "58",
+      "hint": "Find each rectangle's area, then add."
+    },
+    {
+      "id": "p9",
+      "level": "core",
+      "prompt": "What is the area, in square centimetres, of a rectangle 16 cm long and 9 cm wide?",
+      "answer": "144",
+      "hint": "16 × 9: try 16 × 10, then take away 16."
+    },
+    {
+      "id": "p10",
+      "level": "stretch",
+      "prompt": "What is the area, in square centimetres, of a triangle with base 14 cm and height 9 cm?",
+      "answer": "63",
+      "hint": "14 × 9 = 126, then halve."
+    },
+    {
+      "id": "p11",
+      "level": "stretch",
+      "prompt": "What is the perimeter, in centimetres, of a rectangle 23 cm long and 17 cm wide?",
+      "answer": "80",
+      "hint": "23 + 17 = 40."
+    },
+    {
+      "id": "p12",
+      "level": "stretch",
+      "prompt": "What is the area, in square centimetres, of a rectangle 25 cm long and 16 cm wide?",
+      "answer": "400",
+      "hint": "25 × 16 — four 25s make 100, and 16 is four fours."
+    }
+  ]
+}

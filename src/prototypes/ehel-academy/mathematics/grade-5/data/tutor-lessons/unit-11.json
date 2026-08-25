@@ -1,0 +1,263 @@
+{
+  "schemaVersion": 1,
+  "subject": "mathematics",
+  "stage": 5,
+  "unit": 11,
+  "unitTitle": "Multiplication and Division",
+  "area": "multiplication-and-division",
+  "title": "Understand multiplication and division with bigger numbers",
+  "promise": "This starts from the two moves everything rests on — breaking numbers into parts, and reading division backwards as multiplication — and builds to two-digit multiplying, three-digit dividing, and knowing what to DO with a remainder.",
+  "narrated": true,
+  "sections": [
+    {
+      "heading": "One idea runs through everything: break it into parts",
+      "body": "Big multiplications are never done in one bite. 23 × 15 looks hard until you split it: 23 × 10 = 230, and 23 × 5 = 115 (half of 230). Add them: 230 + 115 = 345.\nThe pieces are always easy — multiplying by 10, by halves of 10, by single digits — and adding the pieces back is the only other skill you need.\nWrite the pieces down. The mistakes in this topic almost never come from the multiplying; they come from trying to hold too much in your head at once.",
+      "example": "43 × 20: think 43 × 2 = 86, then × 10 makes 860."
+    },
+    {
+      "heading": "The grid: partitioning you can see",
+      "body": "For two-digit times two-digit, the grid method lays the parts out so none can hide. To work out 27 × 14, split both numbers: 27 is 20 + 7, and 14 is 10 + 4. That gives four little multiplications:\n20 × 10 = 200. 20 × 4 = 80. 7 × 10 = 70. 7 × 4 = 28.\nAdd the four answers: 200 + 80 + 70 + 28 = 378. So 27 × 14 = 378.\nFour easy facts and one addition — that is all a two-digit multiplication ever is.",
+      "example": "45 × 12: the parts are 400, 80, 50 and 10, which total 540."
+    },
+    {
+      "heading": "Short division: sharing one digit at a time",
+      "body": "To divide 372 by 6, share it place by place, left to right.\nStart with the hundreds: 3 hundreds shared by 6 will not give a whole hundred each, so carry the 3 across to make 37 tens. 37 tens ÷ 6 = 6 tens, remainder 1 ten. Carry that ten across to make 12 ones. 12 ÷ 6 = 2.\nRead the answer off the top: 62. Every short division is this same rhythm — share, carry the leftover to the next place, share again.",
+      "example": "312 ÷ 6: 31 tens ÷ 6 = 5 tens r 1 ten, then 12 ÷ 6 = 2, giving 52."
+    },
+    {
+      "heading": "What a remainder MEANS depends on the question",
+      "body": "58 children are going on a trip, and each car holds 4. Divide: 58 ÷ 4 = 14 r 2. So — how many cars are needed?\nNot 14. Fourteen cars carry 56 children, and 2 children are still standing at the gate. The answer is 15 cars, because a real remainder of children needs a real car.\nSometimes you round up (cars, boxes, trips), sometimes the remainder is the answer itself (sweets left over), and sometimes you drop it. The division gives you the numbers; the QUESTION tells you what to do with them.",
+      "example": "34 cakes packed in boxes of 6: 34 ÷ 6 = 5 r 4 — five full boxes, and 4 cakes left over."
+    },
+    {
+      "heading": "Estimate first, so a wrong answer cannot hide",
+      "body": "Before working out 41 × 19, round it: 40 × 20 = 800. Your exact answer should land near 800 — and 41 × 19 = 779 does.\nAn estimate is a safety net, not extra work. If your exact answer comes out at 200 or at 8,000, the estimate catches the slip immediately, before it costs you the rest of the question.\nDivision too: 434 ÷ 7 should be a bit over 60, because 420 ÷ 7 = 60. If you get 26, something fell over.",
+      "example": "Estimate 52 × 31: about 50 × 30 = 1,500."
+    }
+  ],
+  "mistakes": [
+    {
+      "wrong": "Working out 27 × 14 as 27 × 10 + 27 and calling it done.",
+      "right": "27 × 14 = 27 × 10 + 27 × 4 = 270 + 108 = 378.",
+      "why": "The second part is 27 multiplied by the WHOLE of the 4 — not 27 once. Partition both numbers fully and no part goes missing."
+    },
+    {
+      "wrong": "Answering \"14 cars\" when 58 children travel 4 to a car.",
+      "right": "58 ÷ 4 = 14 r 2, and the 2 leftover children need a car too — so 15 cars.",
+      "why": "When the remainder is people or things that must all be included, round UP. The maths gives 14 r 2; the situation decides."
+    },
+    {
+      "wrong": "Forgetting to carry the leftover ten in short division, so 372 ÷ 6 comes out as 6-something instead of 62.",
+      "right": "Each leftover joins the next digit: 37 tens ÷ 6 leaves 1 ten, which makes the 2 into 12.",
+      "why": "The carry IS the division working — dropping it throws part of the number away."
+    }
+  ],
+  "check": [
+    {
+      "id": "c1",
+      "question": "What is 43 × 20?",
+      "options": [
+        "860",
+        "86",
+        "8600",
+        "830"
+      ],
+      "answer": "860",
+      "explanation": "43 × 2 = 86, then multiply by 10: 860."
+    },
+    {
+      "id": "c2",
+      "question": "What is 372 ÷ 6?",
+      "options": [
+        "62",
+        "52",
+        "72",
+        "61"
+      ],
+      "answer": "62",
+      "explanation": "37 tens ÷ 6 = 6 tens r 1; the leftover ten makes 12 ones, and 12 ÷ 6 = 2. Answer 62."
+    },
+    {
+      "id": "c3",
+      "question": "What is 23 × 15?",
+      "options": [
+        "345",
+        "245",
+        "335",
+        "365"
+      ],
+      "answer": "345",
+      "explanation": "23 × 10 = 230 and 23 × 5 = 115; together 345."
+    },
+    {
+      "id": "c4",
+      "question": "What is 154 ÷ 7?",
+      "options": [
+        "22",
+        "21",
+        "23",
+        "24"
+      ],
+      "answer": "22",
+      "explanation": "7 × 22 = 154 — read the division backwards as a multiplication."
+    },
+    {
+      "id": "c5",
+      "question": "58 children travel 4 to a car. How many cars are needed?",
+      "options": [
+        "15",
+        "14",
+        "14 r 2",
+        "16"
+      ],
+      "answer": "15",
+      "explanation": "58 ÷ 4 = 14 r 2, and the 2 leftover children still need a car — so round up to 15."
+    },
+    {
+      "id": "c6",
+      "question": "Which pair is a factor pair of 36?",
+      "options": [
+        "4 and 9",
+        "5 and 7",
+        "6 and 8",
+        "3 and 13"
+      ],
+      "answer": "4 and 9",
+      "explanation": "4 × 9 = 36. Factor pairs multiply to make the number exactly."
+    },
+    {
+      "id": "c7",
+      "question": "What is 208 ÷ 8?",
+      "options": [
+        "26",
+        "24",
+        "28",
+        "25"
+      ],
+      "answer": "26",
+      "explanation": "160 ÷ 8 = 20 and 48 ÷ 8 = 6, so 208 ÷ 8 = 26."
+    },
+    {
+      "id": "c8",
+      "question": "Which is the best ESTIMATE for 41 × 19?",
+      "options": [
+        "40 × 20 = 800",
+        "40 × 10 = 400",
+        "50 × 20 = 1000",
+        "41 + 19 = 60"
+      ],
+      "answer": "40 × 20 = 800",
+      "explanation": "Round each number to its nearest friendly value: 41 → 40 and 19 → 20."
+    },
+    {
+      "id": "c9",
+      "question": "What is 125 ÷ 5?",
+      "options": [
+        "25",
+        "24",
+        "26",
+        "20"
+      ],
+      "answer": "25",
+      "explanation": "100 ÷ 5 = 20 and 25 ÷ 5 = 5, so 125 ÷ 5 = 25."
+    },
+    {
+      "id": "c10",
+      "question": "What is 36 × 25?",
+      "options": [
+        "900",
+        "800",
+        "925",
+        "850"
+      ],
+      "answer": "900",
+      "explanation": "25 is a quarter of 100, so 36 × 25 = 36 × 100 ÷ 4 = 3600 ÷ 4 = 900."
+    }
+  ],
+  "practice": [
+    {
+      "id": "p1",
+      "level": "warm",
+      "prompt": "What is 32 × 3?",
+      "answer": "96",
+      "hint": "30 × 3 and 2 × 3."
+    },
+    {
+      "id": "p2",
+      "level": "warm",
+      "prompt": "What is 120 ÷ 4?",
+      "answer": "30",
+      "hint": "12 ÷ 4, then bring the zero back."
+    },
+    {
+      "id": "p3",
+      "level": "warm",
+      "prompt": "What is 15 × 6?",
+      "answer": "90",
+      "hint": "10 × 6 plus 5 × 6."
+    },
+    {
+      "id": "p4",
+      "level": "warm",
+      "prompt": "What is 90 ÷ 6?",
+      "answer": "15",
+      "hint": "60 ÷ 6 = 10, and 30 ÷ 6 = 5."
+    },
+    {
+      "id": "p5",
+      "level": "core",
+      "prompt": "What is 27 × 14?",
+      "answer": "378",
+      "hint": "Grid it: 200 + 80 + 70 + 28."
+    },
+    {
+      "id": "p6",
+      "level": "core",
+      "prompt": "What is 312 ÷ 6?",
+      "answer": "52",
+      "hint": "31 tens ÷ 6 first — carry the leftover ten."
+    },
+    {
+      "id": "p7",
+      "level": "core",
+      "prompt": "What is 45 × 12?",
+      "answer": "540",
+      "hint": "45 × 10 = 450, then add 45 × 2."
+    },
+    {
+      "id": "p8",
+      "level": "core",
+      "prompt": "What is 434 ÷ 7?",
+      "answer": "62",
+      "hint": "420 ÷ 7 = 60 — how many sevens in the 14 that is left?"
+    },
+    {
+      "id": "p9",
+      "level": "core",
+      "prompt": "What is 87 ÷ 4? Give the answer as quotient and remainder, like 12 r 1.",
+      "answer": "21 r 3",
+      "hint": "21 × 4 = 84."
+    },
+    {
+      "id": "p10",
+      "level": "stretch",
+      "prompt": "What is 38 × 27?",
+      "answer": "1026",
+      "hint": "38 × 20 = 760 and 38 × 7 = 266."
+    },
+    {
+      "id": "p11",
+      "level": "stretch",
+      "prompt": "What is 612 ÷ 9?",
+      "answer": "68",
+      "hint": "540 ÷ 9 = 60, and 72 ÷ 9 = 8."
+    },
+    {
+      "id": "p12",
+      "level": "stretch",
+      "prompt": "What is 725 ÷ 6? Give the answer as quotient and remainder, like 12 r 1.",
+      "answer": "120 r 5",
+      "hint": "720 ÷ 6 = 120 — then what is left?"
+    }
+  ]
+}

@@ -80,6 +80,10 @@ const { tts, FatalTtsError, PermanentTtsError } = require("./lib/ehel-tts");
       const capstone = JSON.parse(fs.readFileSync(capstoneFile, "utf8"));
       for (const cat of catList) textsForCapstone(capstone, cat).forEach(enqueue);
     }
+    // The tutoring topic lessons live beside the units (tutor-lessons/), one
+    // clip per Understand-step section — RAW composition, no spokenText; see
+    // the lib for why.
+    if (catList.includes("tutorLessons")) narration.textsForTutorLessons(MATH, grade).forEach(enqueue);
   }
   const totalChars = queue.reduce((s, q) => s + q.chars, 0);
   console.log(`categories: ${catList.join(",")} | grades: ${gradeList.join(",")}`);

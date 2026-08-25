@@ -1,0 +1,263 @@
+{
+  "schemaVersion": 1,
+  "subject": "mathematics",
+  "stage": 6,
+  "unit": 7,
+  "unitTitle": "Exploring Measures: Area & Time",
+  "area": "area-and-perimeter",
+  "title": "Understand area: triangles, parallelograms and composite shapes",
+  "promise": "This lesson is about the area half of this unit. It starts from the one picture that unlocks every formula — a shape rearranged into a rectangle — so triangles and parallelograms stop needing memorising and start making sense.",
+  "narrated": true,
+  "sections": [
+    {
+      "heading": "Every area formula is a rectangle in disguise",
+      "body": "You already trust one area fact: a rectangle's area is length × width, because unit squares sit inside it in neat rows.\nEvery other formula in this lesson comes from turning a shape INTO a rectangle — slicing a piece off one end and carrying it to the other, or doubling the shape and halving the answer. If you can see the rearrangement, you never have to memorise the formula: you can rebuild it on the spot.\nHold that picture through everything that follows.",
+      "example": "A rectangle 18 cm long and 6 cm wide: 18 × 6 = 108 cm². The anchor everything else hangs from."
+    },
+    {
+      "heading": "The parallelogram: a pushed-over rectangle",
+      "body": "A parallelogram is a rectangle that has leaned sideways. Slice the slanted triangle off one end, carry it round to the other end, and it slots in perfectly — you have a rectangle again, with the SAME base and the SAME height.\nSo a parallelogram's area is base × height, exactly like the rectangle it secretly is. The height is the straight-up distance between the two parallel sides — NOT the slanted side, which got longer when the shape leaned.",
+      "example": "Base 9 cm, height 6 cm: area 9 × 6 = 54 cm² — the lean changed the look, not the space."
+    },
+    {
+      "heading": "The triangle: half of something you can already do",
+      "body": "Take any triangle and make an exact copy. Spin the copy round and fit the two together — they always form a parallelogram, with the same base and height as the triangle.\nSo one triangle is HALF that parallelogram: area = base × height ÷ 2. A triangle with base 12 cm and height 7 cm gives 12 × 7 = 84, halved to 42 cm².\nThis works for EVERY triangle, not just right-angled ones — the height is the straight-up distance from the base to the top point, drawn at a right angle to the base.",
+      "example": "Base 9 cm, height 10 cm: 90 ÷ 2 = 45 cm²."
+    },
+    {
+      "heading": "Composite shapes: divide and conquer",
+      "body": "Real shapes — floor plans, garden plots, arrow signs — are usually rectangles and triangles glued together. The method never changes: split the shape into pieces you have formulas for, find each area, and add.\nA shape made of a 9 by 4 rectangle with a triangle of base 4 and height 3 on its end: rectangle 36, triangle 6, total 42 cm².\nLabel each piece as you go. The errors in composite questions are bookkeeping errors — a piece counted twice, or not at all — not formula errors.",
+      "example": "A 6 by 4 rectangle plus a triangle of base 6 and height 4: 24 + 12 = 36 cm²."
+    },
+    {
+      "heading": "Perimeter still means the walk around",
+      "body": "None of the new formulas touch perimeter — it is still the ant's walk around the outside, adding every edge.\nFor a rectangle 30 m long and 20 m wide, the walk is (30 + 20) × 2 = 100 m. For a parallelogram, the walk uses the SLANTED sides — the very sides area ignores. That is the sharpest test of whether you understand both: area wants the height, perimeter wants the slant.\nAnd the old warning still stands: same perimeter never promises same area.",
+      "example": "A parallelogram with base 10 cm and slant sides 7 cm has perimeter 34 cm — its height plays no part."
+    }
+  ],
+  "mistakes": [
+    {
+      "wrong": "Using the slanted side as a parallelogram's height, so base 9 with slant 7 gives 63.",
+      "right": "The height is the straight-up distance between the parallel sides. If it is 6, the area is 9 × 6 = 54 cm².",
+      "why": "The slant got longer when the rectangle leaned over, but the space inside did not grow — only the true height counts."
+    },
+    {
+      "wrong": "Forgetting to halve, so a triangle with base 12 and height 7 gets area 84.",
+      "right": "base × height gives the PARALLELOGRAM made of two copies; one triangle is half: 42 cm².",
+      "why": "The formula is a doubling trick run backwards — two triangles make the parallelogram, so divide by 2."
+    },
+    {
+      "wrong": "Finding a composite shape's area and accidentally counting the joining edge as a separate piece.",
+      "right": "Split, label each piece once, add the pieces — the cut line itself is not a shape.",
+      "why": "Composite errors are bookkeeping errors. A quick sketch with each piece labelled makes double-counting visible."
+    }
+  ],
+  "check": [
+    {
+      "id": "c1",
+      "question": "A parallelogram has base 9 cm and height 6 cm. What is its area?",
+      "options": [
+        "54 cm²",
+        "63 cm²",
+        "30 cm²",
+        "15 cm²"
+      ],
+      "answer": "54 cm²",
+      "explanation": "base × height: 9 × 6 = 54 cm². The slanted side is not the height."
+    },
+    {
+      "id": "c2",
+      "question": "What is the area, in square centimetres, of a triangle with base 12 cm and height 7 cm?",
+      "options": [
+        "42",
+        "84",
+        "19",
+        "38"
+      ],
+      "answer": "42",
+      "explanation": "12 × 7 = 84, and one triangle is half of that: 42 cm²."
+    },
+    {
+      "id": "c3",
+      "question": "WHY is a triangle's area base × height ÷ 2?",
+      "options": [
+        "Two copies of any triangle fit together into a parallelogram",
+        "Triangles have three sides",
+        "The height is always half the base",
+        "It is a rule with no reason"
+      ],
+      "answer": "Two copies of any triangle fit together into a parallelogram",
+      "explanation": "The doubled shape has area base × height, so one triangle is half of it."
+    },
+    {
+      "id": "c4",
+      "question": "What is the area, in square centimetres, of a rectangle 18 cm long and 6 cm wide?",
+      "options": [
+        "108",
+        "48",
+        "24",
+        "96"
+      ],
+      "answer": "108",
+      "explanation": "18 × 6 = 108 cm²."
+    },
+    {
+      "id": "c5",
+      "question": "A shape is a 9 by 4 rectangle with a triangle of base 4 cm and height 3 cm joined to one end. What is its total area?",
+      "options": [
+        "42 cm²",
+        "36 cm²",
+        "48 cm²",
+        "40 cm²"
+      ],
+      "answer": "42 cm²",
+      "explanation": "Rectangle 9 × 4 = 36; triangle 4 × 3 ÷ 2 = 6; together 42 cm²."
+    },
+    {
+      "id": "c6",
+      "question": "A parallelogram has base 15 cm and height 4 cm. What is its area?",
+      "options": [
+        "60 cm²",
+        "38 cm²",
+        "19 cm²",
+        "30 cm²"
+      ],
+      "answer": "60 cm²",
+      "explanation": "15 × 4 = 60 cm² — the pushed-over rectangle."
+    },
+    {
+      "id": "c7",
+      "question": "What is the area, in square centimetres, of a triangle with base 9 cm and height 10 cm?",
+      "options": [
+        "45",
+        "90",
+        "19",
+        "50"
+      ],
+      "answer": "45",
+      "explanation": "9 × 10 = 90, halved: 45 cm²."
+    },
+    {
+      "id": "c8",
+      "question": "A square has 6 cm sides. A triangle has base 12 cm and height 6 cm. Which has the larger area?",
+      "options": [
+        "They are equal",
+        "The square",
+        "The triangle",
+        "It cannot be told"
+      ],
+      "answer": "They are equal",
+      "explanation": "Square: 36 cm². Triangle: 12 × 6 ÷ 2 = 36 cm². Different shapes, same space."
+    },
+    {
+      "id": "c9",
+      "question": "What is the perimeter, in metres, of a rectangle 30 m long and 20 m wide?",
+      "options": [
+        "100",
+        "600",
+        "50",
+        "120"
+      ],
+      "answer": "100",
+      "explanation": "(30 + 20) × 2 = 100 m — perimeter is still the walk around."
+    },
+    {
+      "id": "c10",
+      "question": "What is the area, in square centimetres, of a triangle with base 20 cm and height 9 cm?",
+      "options": [
+        "90",
+        "180",
+        "29",
+        "58"
+      ],
+      "answer": "90",
+      "explanation": "20 × 9 = 180, and half is 90 cm²."
+    }
+  ],
+  "practice": [
+    {
+      "id": "p1",
+      "level": "warm",
+      "prompt": "What is the area, in square centimetres, of a triangle with base 8 cm and height 4 cm?",
+      "answer": "16",
+      "hint": "Base × height, then halve."
+    },
+    {
+      "id": "p2",
+      "level": "warm",
+      "prompt": "What is the area, in square centimetres, of a rectangle 12 cm long and 7 cm wide?",
+      "answer": "84",
+      "hint": "12 × 7."
+    },
+    {
+      "id": "p3",
+      "level": "warm",
+      "prompt": "A parallelogram has base 10 cm and height 6 cm. What is its area, in square centimetres?",
+      "answer": "60",
+      "hint": "Base × height — the same as the rectangle it leans from."
+    },
+    {
+      "id": "p4",
+      "level": "warm",
+      "prompt": "What is the perimeter, in centimetres, of a rectangle 14 cm long and 11 cm wide?",
+      "answer": "50",
+      "hint": "Add the sides and double."
+    },
+    {
+      "id": "p5",
+      "level": "core",
+      "prompt": "What is the area, in square centimetres, of a triangle with base 16 cm and height 5 cm?",
+      "answer": "40",
+      "hint": "16 × 5 = 80 — then remember the halving."
+    },
+    {
+      "id": "p6",
+      "level": "core",
+      "prompt": "A parallelogram has base 7 cm and height 8 cm. What is its area, in square centimetres?",
+      "answer": "56",
+      "hint": "The lean does not change the space: 7 × 8."
+    },
+    {
+      "id": "p7",
+      "level": "core",
+      "prompt": "A rectangle has area 132 cm² and length 12 cm. How wide is it, in centimetres?",
+      "answer": "11",
+      "hint": "Run the formula backwards: divide."
+    },
+    {
+      "id": "p8",
+      "level": "core",
+      "prompt": "What is the area, in square centimetres, of a triangle with base 18 cm and height 6 cm?",
+      "answer": "54",
+      "hint": "18 × 6 = 108."
+    },
+    {
+      "id": "p9",
+      "level": "core",
+      "prompt": "A shape is a 6 by 4 rectangle plus a triangle of base 6 cm and height 4 cm. What is its total area, in square centimetres?",
+      "answer": "36",
+      "hint": "24 for the rectangle — and the triangle is half of another one."
+    },
+    {
+      "id": "p10",
+      "level": "stretch",
+      "prompt": "What is the area, in square centimetres, of a triangle with base 26 cm and height 11 cm?",
+      "answer": "143",
+      "hint": "26 × 11 = 286."
+    },
+    {
+      "id": "p11",
+      "level": "stretch",
+      "prompt": "A parallelogram has base 24 cm and height 15 cm. What is its area, in square centimetres?",
+      "answer": "360",
+      "hint": "24 × 15: try 24 × 10 plus 24 × 5."
+    },
+    {
+      "id": "p12",
+      "level": "stretch",
+      "prompt": "What is the area, in square centimetres, of a triangle with base 15 cm and height 14 cm?",
+      "answer": "105",
+      "hint": "15 × 14 = 210."
+    }
+  ]
+}

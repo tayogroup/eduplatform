@@ -19,7 +19,7 @@ const { cyrb53, clean, MIN_CHARS } = require("./ehel-narration-hash");
 
 const CATEGORIES = ["concepts", "explorations", "explorationQuestions", "visualModels", "methods",
   "methodSteps", "workedExamples", "practice", "realProblems", "reasoning", "assessment",
-  "games", "words", "capstone"];
+  "games", "words", "capstone", "tutorLessons"];
 
 // The exact strings each Listen button narrates — must match course-ui.js. A
 // difference of one character means a different hash, so the app looks for a
@@ -91,6 +91,26 @@ function rawTextsForCapstone(capstone, category) {
     ...(project.stages || []).map((s) => s.prompt)];
 }
 
+// The tutoring topic lessons (grade-N/data/tutor-lessons/unit-N.json) — the
+// help session's Understand step (shell/get-help.js). One clip per section,
+// composed EXACTLY as the step's data-speak text composes it. Deliberately
+// RAW — no spokenText(): the shared get-help UI never applies science's
+// notation transform, so applying it here would buy clips under hashes the
+// app never requests. check-tutor-lessons.mjs holds this template, the UI's,
+// and its own hashing equal (it is that button's coverage gate — the raw
+// data-speak markup is invisible to check-ehel-audio-coverage's scan).
+const tutorLessonExampleTail = (s) => (s.example ? ` For example: ${s.example}` : "");
+function textsForTutorLessons(scienceRoot, grade) {
+  const dir = path.join(scienceRoot, `grade-${grade}`, "data", "tutor-lessons");
+  if (!fs.existsSync(dir)) return [];
+  const out = [];
+  for (const file of fs.readdirSync(dir).filter((f) => /^unit-\d+\.json$/.test(f)).sort()) {
+    const lesson = JSON.parse(fs.readFileSync(path.join(dir, file), "utf8"));
+    for (const s of lesson.sections || []) out.push(`${s.heading}. ${s.body}${tutorLessonExampleTail(s)}`);
+  }
+  return out;
+}
+
 /** Every clip one grade needs, as a Set of hashes. */
 function hashesForGrade(scienceRoot, grade, categories = CATEGORIES) {
   const keys = new Set();
@@ -113,6 +133,7 @@ function hashesForGrade(scienceRoot, grade, categories = CATEGORIES) {
     const capstone = JSON.parse(fs.readFileSync(capstoneFile, "utf8"));
     for (const category of categories) textsForCapstone(capstone, category).forEach(add);
   }
+  if (categories.includes("tutorLessons")) textsForTutorLessons(scienceRoot, grade).forEach(add);
   return keys;
 }
 
@@ -131,4 +152,4 @@ function hashGradeMap(scienceRoot, categories = CATEGORIES) {
   return map;
 }
 
-module.exports = { cyrb53, clean, MIN_CHARS, CATEGORIES, spokenText, textsForUnit, textsForCapstone, hashesForGrade, hashGradeMap };
+module.exports = { cyrb53, clean, MIN_CHARS, CATEGORIES, spokenText, textsForUnit, textsForCapstone, textsForTutorLessons, hashesForGrade, hashGradeMap };

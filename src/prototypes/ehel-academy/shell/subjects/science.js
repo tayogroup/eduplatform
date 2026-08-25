@@ -1802,6 +1802,9 @@ const config = {
     course: () => course,
     marketplaceHref: () => (PLATFORM_ORIGIN ? `${PLATFORM_ORIGIN}/local/hubredirect/teacher_marketplace.php?q=${encodeURIComponent("Science")}` : ""),
     sections: () => sections,
+    // Authored topic lessons exist for this subject, so the search page fetches
+    // each stage's tutor-lessons/index.json to badge the units that have one.
+    hasTutorLessons: true,
     examples: ["food chains", "evaporation", "electric circuits"],
   }),
   extendSummary: (progress, base) => ({ ...base, knownWords: progress.knownWords ? [...progress.knownWords] : undefined }),

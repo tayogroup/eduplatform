@@ -239,6 +239,27 @@ for (const gradeDir of grades) {
 for (const [stage, unit] of REQUIRED[subject]) {
   if (!seen.has(`${stage}:${unit}`)) fail(`required lesson missing: ${subject} grade-${stage} unit-${unit}`, "the registry only grows — if a rebuild swept the tutor-lessons directory, restore it from git");
 }
+
+// Every grade carries tutor-lessons/index.json — the list the get-help search
+// page reads to BADGE lesson-bearing units, committed (empty where a grade has
+// none) precisely so the client never probes for a file that may not exist:
+// the CDN caches 404s per edge shard, and a cached 404 minted today would mask
+// the lesson authored tomorrow. The index must match the directory exactly —
+// a lesson missing from it ships invisible, which is the defect the badge was
+// built to fix.
+for (const gradeDir of grades) {
+  const dir = path.join(EHEL, subject, gradeDir, "data", "tutor-lessons");
+  const indexPath = path.join(dir, "index.json");
+  const actual = fs.existsSync(dir)
+    ? fs.readdirSync(dir).filter((f) => /^unit-\d+\.json$/.test(f)).map((f) => Number(f.match(/unit-(\d+)/)[1])).sort((a, b) => a - b)
+    : [];
+  if (!fs.existsSync(indexPath)) { fail(`${subject} ${gradeDir}: tutor-lessons/index.json is missing`, "every grade carries one, empty or not — the search page fetches it unconditionally for this subject"); continue; }
+  let listed;
+  try { listed = JSON.parse(fs.readFileSync(indexPath, "utf8")).units; } catch (e) { fail(`${subject} ${gradeDir}: tutor-lessons/index.json does not parse`, e.message); continue; }
+  if (JSON.stringify(listed) !== JSON.stringify(actual)) {
+    fail(`${subject} ${gradeDir}: index.json disagrees with the directory`, `index lists [${listed}], directory holds [${actual}] — a lesson missing from the index ships with no badge`);
+  }
+}
 if (computed < COMPUTED_FLOOR[subject]) {
   fail(`arithmetic coverage fell: ${computed} verified, floor is ${COMPUTED_FLOOR[subject]}`, "a recompute pattern stopped matching — items it covered are now unchecked behind a green tick");
 }

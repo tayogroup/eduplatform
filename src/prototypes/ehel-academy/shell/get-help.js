@@ -196,6 +196,27 @@ export function createGetHelp(options) {
     return index;
   }
 
+  // Which of a stage's units carry an authored topic lesson — what the result
+  // cards BADGE, so the in-depth lesson is visible from the search instead of
+  // only after starting a session (found by the owner searching "decimal" and
+  // seeing nothing new: the feature existed and nothing said so). Fetched only
+  // for subjects that opt in (options.hasTutorLessons), and every such
+  // subject's grades ALL carry an index file, empty or not — the client must
+  // never probe a path that may not exist, because the CDN caches 404s per
+  // edge shard and a 404 minted today masks the lesson authored tomorrow.
+  const lessonIndexCache = new Map(); // stage -> Set(unit numbers)
+  async function loadLessonIndex(stage) {
+    if (!options.hasTutorLessons) return new Set();
+    if (lessonIndexCache.has(stage)) return lessonIndexCache.get(stage);
+    let units = new Set();
+    try {
+      const response = await fetch(new URL("tutor-lessons/index.json", dataRoot(stage)));
+      if (response.ok) units = new Set(((await response.json()).units || []).map(Number));
+    } catch { /* offline — cards simply show no badge this visit */ }
+    lessonIndexCache.set(stage, units);
+    return units;
+  }
+
   function windowStages() {
     const current = Number(options.stage());
     if (showAllStages) return Array.from({ length: options.maxStage }, (_, i) => i + 1);
@@ -340,7 +361,10 @@ export function createGetHelp(options) {
     const token = ++searchToken;
     resultsBox.innerHTML = `<section class="panel gh-status"><p>${ui.icon("loader-circle")} Searching ${options.subjectLabel}…</p></section>`;
     const stages = windowStages();
-    const indexes = await Promise.all(stages.map((stage) => loadIndex(stage)));
+    const [indexes, lessonIndexes] = await Promise.all([
+      Promise.all(stages.map((stage) => loadIndex(stage))),
+      Promise.all(stages.map((stage) => loadLessonIndex(stage))),
+    ]);
     if (token !== searchToken) return; // a newer keystroke owns the box now
     const current = Number(options.stage());
     const hits = [];
@@ -348,7 +372,7 @@ export function createGetHelp(options) {
       if (!index) return;
       for (const unit of index.units) {
         const { score, topics } = scoreUnit(unit, tokens);
-        if (score > 0) hits.push({ stage: stages[at], unit, score, topics });
+        if (score > 0) hits.push({ stage: stages[at], unit, score, topics, hasLesson: lessonIndexes[at].has(Number(unit.unit)) });
       }
     });
     resultsBox.innerHTML = resultsHtml(hits, current, ui, query);
@@ -376,9 +400,16 @@ export function createGetHelp(options) {
     // so "open the unit yourself" is the school-run framing the category
     // exists to avoid — the session and the topic chips are their doors.
     const browse = shellHooks?.tutoring ? "" : `<a class="gh-hit-browse" href="${esc(overviewHref)}">${ui.icon("arrow-right")} <span>Or open the unit yourself</span></a>`;
+    // A unit with an authored topic lesson says so on the card, and its button
+    // names what the learner actually gets. Without this the in-depth lesson
+    // was invisible until after committing to a session, so a search that
+    // happened to rank lesson-less units first looked like the feature was
+    // missing entirely.
+    const badge = hit.hasLesson ? `<span class="gh-lesson-badge">${ui.icon("lightbulb")} Full lesson</span>` : "";
+    const startLabel = hit.hasLesson ? "Teach me this, then practise" : "Start a help session on this";
     return `<article class="gh-hit">
-      <p class="gh-hit-heading"><strong>${esc(`${options.stageWord} ${hit.stage}`)} · Unit ${hit.unit.unit}:</strong> ${esc(hit.unit.title)}</p>
-      <button class="button primary gh-start" data-gh-start="${at}" type="button">${ui.icon("compass")} <span>Start a help session on this</span></button>
+      <p class="gh-hit-heading"><strong>${esc(`${options.stageWord} ${hit.stage}`)} · Unit ${hit.unit.unit}:</strong> ${esc(hit.unit.title)}${badge}</p>
+      <button class="button primary gh-start" data-gh-start="${at}" type="button">${ui.icon("compass")} <span>${startLabel}</span></button>
       ${browse}
       ${chips ? `<div class="gh-chips">${chips}</div>` : ""}
     </article>`;
@@ -503,6 +534,8 @@ export function createGetHelp(options) {
     .gh-hit { padding: 12px 0; border-top: 1px solid var(--line); }
     .gh-hit:first-of-type { border-top: 0; }
     .gh-hit-heading { margin: 0 0 10px; font-size: 15px; }
+    .gh-lesson-badge { display: inline-flex; align-items: center; gap: 5px; margin-left: 8px; padding: 2px 9px; border-radius: 99px; background: var(--teal-soft, #e6f7f5); color: var(--teal-dark, #0e7490); font-size: 12px; font-weight: var(--weight-medium); white-space: nowrap; }
+    .gh-lesson-badge i, .gh-lesson-badge svg { width: 12px; height: 12px; }
     .gh-hit-browse { display: inline-flex; gap: 6px; align-items: baseline; flex-wrap: wrap; text-decoration: none; color: var(--muted); font-size: 13px; margin-top: 10px; }
     .gh-hit-browse:hover { text-decoration: underline; }
     .gh-hit-browse i { width: 13px; height: 13px; align-self: center; }
@@ -635,8 +668,17 @@ export function createGetHelp(options) {
       const cached = lessonCache.get(key);
       return cached && typeof cached.then === "function" ? null : cached;
     }
-    const pending = fetch(new URL(`tutor-lessons/unit-${session.target.unit}.json`, dataRoot(session.target.stage)))
-      .then((response) => (response.ok ? response.json() : null))
+    // Ask the INDEX first and fetch only what it lists. Fetching the lesson
+    // path blind 404s on every unit that has none, and the CDN caches a 404
+    // per edge shard — so a blind probe today is exactly what would hide the
+    // lesson authored for that unit tomorrow, on whichever shards answered.
+    // Same rule the release protocol follows for version paths: never probe a
+    // path that may not exist, consult a listing instead.
+    const pending = loadLessonIndex(session.target.stage)
+      .then((units) => (units.has(Number(session.target.unit))
+        ? fetch(new URL(`tutor-lessons/unit-${session.target.unit}.json`, dataRoot(session.target.stage)))
+            .then((response) => (response.ok ? response.json() : null))
+        : null))
       .catch(() => null)
       .then((lesson) => {
         lessonCache.set(key, lesson && typeof lesson === "object" ? lesson : null);

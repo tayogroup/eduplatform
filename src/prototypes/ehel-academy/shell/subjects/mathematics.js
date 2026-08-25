@@ -1924,6 +1924,9 @@ const config = {
     course: () => course,
     marketplaceHref: () => (PLATFORM_ORIGIN ? `${PLATFORM_ORIGIN}/local/hubredirect/teacher_marketplace.php?q=${encodeURIComponent("Mathematics")}` : ""),
     sections: () => sections,
+    // Authored topic lessons exist for this subject, so the search page fetches
+    // each stage's tutor-lessons/index.json to badge the units that have one.
+    hasTutorLessons: true,
     examples: ["percentages", "long division", "area and perimeter"],
   }),
   visibleSections: () => (isPrereqUnit

@@ -64,6 +64,7 @@
     <div class="panel"><h2>Payment Plans</h2><table><tbody id="plans"></tbody></table></div>
     <div class="panel"><h2>Grades</h2><table><tbody id="grades"></tbody></table></div>
     <div class="panel"><h2>Course progress</h2><table><tbody id="courseprogress"></tbody></table></div>
+    <div class="panel" id="tutoring-panel" hidden><h2>Tutoring support</h2><p class="sub" style="margin-bottom:10px">Help sessions your child ran: what they searched, the lesson used, and how the before/after check went. Numbers are question counts, not marks.</p><table><tbody id="tutoring"></tbody></table></div>
     <div class="panel" id="reportcards-panel" hidden><h2>Report cards</h2><table><tbody id="reportcards"></tbody></table></div>
     <div class="panel"><h2>Conduct &amp; Merits</h2><table><tbody id="behaviour"></tbody></table></div>
     <div class="panel" id="lessondisputes-panel"><h2>Tutor &amp; lesson concerns</h2>
@@ -188,6 +189,28 @@
       } catch (e) { window.alert("Could not submit: " + e.message); }
       b.disabled = false;
     }));
+
+    // Tutoring help sessions (the tutoring-support category). Counts only —
+    // half these sessions are self-compared written answers nothing marked, so
+    // there is no percentage to print and inventing one would claim mastery
+    // nobody measured. The full summary (including the questions still found
+    // hard) sits behind a <details>, which is also the text to hand a tutor.
+    const tutoring = d.tutoring || [];
+    $("#tutoring-panel").hidden = tutoring.length === 0;
+    $("#tutoring").innerHTML = tutoring.map((t) => {
+      const when = t.finishedAt ? esc(String(t.finishedAt).slice(0, 10)) : "";
+      const where = `Stage ${Number(t.stage) || "?"} · Unit ${Number(t.unit) || "?"}${t.unitTitle ? ": " + esc(t.unitTitle) : ""}`;
+      const result = t.scored
+        ? `<span class="pill">before ${Number(t.before)}/${Number(t.beforeTotal)}</span> <span class="pill ${Number(t.after) > Number(t.before) ? "good" : ""}">after ${Number(t.after)}/${Number(t.afterTotal)}</span>`
+        : `<span class="pill">${Number(t.attempted) || 0} written &amp; compared</span>`;
+      const practice = Number(t.practiceTotal) > 0
+        ? ` <span class="pill">practice ${Number(t.practiceRight)}/${Number(t.practiceTotal)}</span>` : "";
+      const summary = t.summary
+        ? `<details style="margin-top:6px"><summary class="muted" style="cursor:pointer">Session summary — share this when booking a tutor</summary><pre style="white-space:pre-wrap;font:12px/1.5 ui-monospace,Consolas,monospace;margin:6px 0 0">${esc(t.summary)}</pre></details>` : "";
+      return `<tr><td><strong>${esc(t.subject)} — ${esc(t.topic)}</strong>`
+        + `<div class="muted">${where}${when ? " · " + when : ""}</div>`
+        + `<div style="margin-top:5px">${result}${practice}</div>${summary}</td></tr>`;
+    }).join("") || "";
 
     $("#courseprogress").innerHTML = (d.courseprogress || []).map((c) => {
       // `title` already carries subject, stage and any distinguishing level;

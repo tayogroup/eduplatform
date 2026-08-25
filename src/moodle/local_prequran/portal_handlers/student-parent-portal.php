@@ -236,6 +236,19 @@ $documents = pqh_table_exists_safe('local_prequran_document') ? array_values($DB
 // nothing about how the quizzes actually went. Labelling and aggregation come
 // from progress_rolluplib (pqpr_*), shared with the teacher portal.
 $courseprogress = [];
+// Tutoring help sessions, for the tutoring-support category (2026-08-25): the
+// child searched a topic, ran check → learn → practise → check again, and the
+// app recorded it under an ehel-tutoring-<subject> umbrella course. Those keys
+// are DIVERTED out of the course rollup below — its "% units complete" framing
+// is meaningless for a course a learner dips into by topic, and the curriculum
+// map has no entry for it — and rendered as their own card. The fields are the
+// reducer's sanitised whitelist: counts, never a percentage, because half the
+// sessions are the self-compared kind nothing marked.
+$tutoringsessions = [];
+$tutoringsubjects = [
+    'eng' => 'English', 'math' => 'Mathematics', 'sci' => 'Science',
+    'comp' => 'Computing', 'gp' => 'Global Perspectives', 'intensive-eng' => 'Intensive English',
+];
 $progressrows = pqpr_progress_rows([$studentid]);
 if ($progressrows) {
     $bycourse = [];
@@ -243,6 +256,32 @@ if ($progressrows) {
         $key = (string)$row->coursekey;
         if ($key === '') {
             continue;
+        }
+        if (preg_match('/^ehel-tutoring-([a-z-]+)$/', $key, $tutmatch)) {
+            $tutstate = json_decode((string)$row->statejson, true);
+            foreach ((is_array($tutstate) ? ($tutstate['tutoringSessions'] ?? []) : []) as $ts) {
+                if (!is_array($ts)) {
+                    continue;
+                }
+                $tutoringsessions[] = [
+                    'subject' => $tutoringsubjects[$tutmatch[1]] ?? $tutmatch[1],
+                    'topic' => (string)($ts['topic'] ?? ''),
+                    'stage' => (int)($ts['stage'] ?? 0),
+                    'unit' => (int)($ts['unit'] ?? 0),
+                    'unitTitle' => (string)($ts['unitTitle'] ?? ''),
+                    'scored' => !empty($ts['scored']),
+                    'before' => (int)($ts['before'] ?? 0),
+                    'beforeTotal' => (int)($ts['beforeTotal'] ?? 0),
+                    'after' => (int)($ts['after'] ?? 0),
+                    'afterTotal' => (int)($ts['afterTotal'] ?? 0),
+                    'attempted' => (int)($ts['attempted'] ?? 0),
+                    'practiceRight' => (int)($ts['practiceRight'] ?? 0),
+                    'practiceTotal' => (int)($ts['practiceTotal'] ?? 0),
+                    'finishedAt' => (string)($ts['finishedAt'] ?? ''),
+                    'summary' => (string)($ts['summary'] ?? ''),
+                ];
+            }
+            continue; // never the unit-percent rollup
         }
         if (!isset($bycourse[$key])) {
             $bycourse[$key] = ['done' => 0, 'seen' => 0, 'checkpoints' => [], 'attempts' => []];
@@ -420,6 +459,12 @@ echo json_encode([
     'plans' => $plans,
     'grades' => $grades,
     'courseprogress' => $courseprogress,
+    // Newest first, capped like checkpoints: a family's payload stays bounded
+    // however much tutoring the child does.
+    'tutoring' => (static function (array $sessions): array {
+        usort($sessions, static fn(array $a, array $b) => strcmp($b['finishedAt'], $a['finishedAt']));
+        return array_slice($sessions, 0, 30);
+    })($tutoringsessions),
     'reportcards' => $reportcardsout,
     'behaviour' => $behaviourout,
     'lessondisputes' => $lessondisputesout,

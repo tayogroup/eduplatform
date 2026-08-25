@@ -125,13 +125,19 @@ require_once($CFG->dirroot . '/local/prequran/progress_gatewaylib.php');
 $pqcl_rawcourse = optional_param('course', '', PARAM_ALPHANUMEXT);
 $pqcl_ehelkey = '';
 $pqcl_ehelcourseid = 0;
-if (pqpg_ehel_app_base($pqcl_rawcourse) !== null) {
+// Launchable = a per-stage catalog course OR a tutoring umbrella course
+// (ehel-tutoring-<slug>, the tutoring-support category's enrolment unit —
+// pqpg_ehel_launch_url resolves the learner's own stage for those).
+$pqcl_ehel_launchable = static function (string $key): bool {
+    return pqpg_ehel_app_base($key) !== null || pqpg_tutoring_subject($key) !== null;
+};
+if ($pqcl_ehel_launchable($pqcl_rawcourse)) {
     $pqcl_ehelkey = $pqcl_rawcourse;
     $pqcl_ehelcourseid = (int)$DB->get_field('course', 'id', ['idnumber' => $pqcl_ehelkey]);
 } else if (preg_match('/^moodle_(\d+)$/', $pqcl_rawcourse, $pqcl_mm)) {
     $pqcl_cid = (int)$pqcl_mm[1];
     $pqcl_idn = (string)$DB->get_field('course', 'idnumber', ['id' => $pqcl_cid]);
-    if (pqpg_ehel_app_base($pqcl_idn) !== null) {
+    if ($pqcl_ehel_launchable($pqcl_idn)) {
         $pqcl_ehelkey = $pqcl_idn;
         $pqcl_ehelcourseid = $pqcl_cid;
     }

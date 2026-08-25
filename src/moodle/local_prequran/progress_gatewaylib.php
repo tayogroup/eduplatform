@@ -212,14 +212,93 @@ function pqpg_ehel_app_base(string $coursekey): ?array {
 }
 
 /**
+ * The subject slug of a tutoring umbrella course key, or null.
+ *
+ * The six umbrella courses (idnumber ehel-tutoring-<slug>) are the enrolment
+ * unit of the tutoring-support category: one course per subject, no stage in
+ * the key, because a tutoring learner's stage is a property of the LEARNER
+ * (their declared school year), not of the course. The slugs are exactly the
+ * ones pqpg_ehel_app_base() knows, so a subject added there becomes
+ * tutoring-launchable by creating its umbrella course and nothing else.
+ */
+function pqpg_tutoring_subject(string $coursekey): ?string {
+    if (!preg_match('/^ehel-tutoring-([a-z-]+)$/', $coursekey, $m)) {
+        return null;
+    }
+    // Proved against the same map the launch resolves through: a slug the app
+    // base cannot resolve is not a subject, whatever the course tree says.
+    $letter = $m[1] === 'intensive-eng' ? 'l' : 'g';
+    return pqpg_ehel_app_base('ehel-' . $m[1] . '-' . $letter . '01') !== null ? $m[1] : null;
+}
+
+/**
+ * The stage a tutoring learner's launch anchors on — their declared school
+ * year, read from the student profile the intake fills (current_grade).
+ *
+ * This is the anchor of the app's ±2 help window, refined later by the
+ * placement exam; a profile the intake has not filled yet anchors mid-range
+ * rather than at Stage 1, because a wrong-but-central anchor still shows the
+ * child's material inside the default window.
+ *
+ * Two subject quirks are absorbed here rather than in the app: Global
+ * Perspectives Stage 5 is withdrawn (two of six skills exist), so a year-5
+ * child anchors at 6 — their age cohort's next stage — instead of landing on
+ * the withdrawal notice; Intensive English's axis is CEFR levels, not school
+ * years, so it always opens at Level 1 and its own placement moves the learner.
+ */
+function pqpg_tutoring_stage(int $userid, string $slug): int {
+    global $DB;
+    if ($slug === 'intensive-eng') {
+        return 1;
+    }
+    $declared = 0;
+    try {
+        $grade = (string)$DB->get_field('local_prequran_student_profile', 'current_grade', ['userid' => $userid], IGNORE_MISSING);
+        if (preg_match('/(\d+)/', $grade, $m)) {
+            $declared = (int)$m[1];
+        }
+    } catch (Throwable $e) {
+        // No profile table or unreadable value — fall through to the default.
+    }
+    $stage = ($declared >= 1 && $declared <= 8) ? $declared : 4;
+    if ($slug === 'gp' && $stage === 5) {
+        $stage = 6;
+    }
+    return $stage;
+}
+
+/**
  * Full grade-aware Bunny launch URL for an EHEL course, with a freshly minted
  * progress token bound to $userid appended, or '' if $coursekey is not EHEL.
  *
  * $unit selects which unit the app opens on, defaulting to 1 — the first
  * teaching unit, which is what a course launch wants. Every current caller
  * takes the default.
+ *
+ * A tutoring umbrella key (ehel-tutoring-<slug>) launches the SAME subject app
+ * at the learner's own declared stage, but the token is minted with the
+ * umbrella key — and the gateway enforces token course == posted course, so
+ * everything a tutoring learner does is recorded under the tutoring course.
+ * That one line is the separation the category promises: school-course
+ * gradebooks and rosters never see them, while the umbrella course's own
+ * record is what their parents' reports read.
  */
 function pqpg_ehel_launch_url(int $userid, string $coursekey, string $env, string $wwwroot, int $unit = 1): string {
+    $tutoringslug = pqpg_tutoring_subject($coursekey);
+    if ($tutoringslug !== null) {
+        $stage = pqpg_tutoring_stage($userid, $tutoringslug);
+        $letter = $tutoringslug === 'intensive-eng' ? 'l' : 'g';
+        // A synthetic stage key resolves the app URL through the one existing
+        // map — no second copy of the subject table to drift.
+        $base = pqpg_ehel_app_base('ehel-' . $tutoringslug . '-' . $letter . str_pad((string)$stage, 2, '0', STR_PAD_LEFT));
+        if ($base === null) {
+            return '';
+        }
+        $token = pqpg_mint_token($userid, $coursekey, $env);
+        $endpoint = rtrim($wwwroot, '/') . '/local/prequran/progress_gateway.php';
+        return $base['appurl'] . '?' . $base['levelparam'] . '=' . $base['stage'] . '&unit=' . $unit
+            . '&pwsEndpoint=' . urlencode($endpoint) . '&pwsToken=' . urlencode($token) . '&studentid=' . $userid;
+    }
     $base = pqpg_ehel_app_base($coursekey);
     if ($base === null) {
         return '';

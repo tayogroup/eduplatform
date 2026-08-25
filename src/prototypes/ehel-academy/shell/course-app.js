@@ -69,19 +69,18 @@ export function createCourseApp(config) {
   // same weight the role claim carries. Entitlement is enforced by Moodle
   // enrolment at launch, not by this flag. The decoder twins english.js ::
   // launchClaims() — one shape, kept in step by behaviour.
-  const launchCategory = () => {
+  const launchTokenClaims = () => {
     const token = params.get("pwsToken") || "";
     const [, payload] = token.split(".");
-    if (payload) {
-      try {
-        const base64 = payload.replace(/-/g, "+").replace(/_/g, "/").padEnd(Math.ceil(payload.length / 4) * 4, "=");
-        const claims = JSON.parse(atob(base64));
-        if (claims && typeof claims.category === "string" && claims.category) return claims.category;
-      } catch { /* not a token we can read — fall through */ }
-    }
-    return params.get("category") || "";
+    if (!payload) return null;
+    try {
+      const base64 = payload.replace(/-/g, "+").replace(/_/g, "/").padEnd(Math.ceil(payload.length / 4) * 4, "=");
+      const claims = JSON.parse(atob(base64));
+      return claims && typeof claims === "object" ? claims : null;
+    } catch { return null; /* not a token we can read */ }
   };
-  const IS_TUTORING = launchCategory() === "tutoring";
+  const LAUNCH_TOKEN_CLAIMS = launchTokenClaims();
+  const IS_TUTORING = (LAUNCH_TOKEN_CLAIMS?.category || params.get("category")) === "tutoring";
   // The school-run sections a tutoring learner never walks. Hidden from the nav
   // AND dropped from the countable list in one place, because several subjects
   // count "live" toward a unit's 100% — hiding it while still counting it would
@@ -143,9 +142,20 @@ export function createCourseApp(config) {
   const gradeProgress = loadGradeProgress();
 
   // --- progress web service (P1.4) -----------------------------------------
-  const PROGRESS_COURSE = config.courseKey(stageNumber);
+  // A tutoring launch's token is minted with the umbrella course key
+  // (ehel-tutoring-<slug>) and the gateway REJECTS posts whose course disagrees
+  // with the token — so the app adopts the token's course. That rejection is
+  // the separation working: everything a tutoring learner does lands under the
+  // tutoring course, never in a school course's record.
+  const PROGRESS_COURSE = (IS_TUTORING && typeof LAUNCH_TOKEN_CLAIMS?.course === "string" && LAUNCH_TOKEN_CLAIMS.course)
+    ? LAUNCH_TOKEN_CLAIMS.course
+    : config.courseKey(stageNumber);
   const PROGRESS_STUDENT = params.get("studentid") || "local";
-  const PROGRESS_UNIT = `u${pad2(unitNumber)}`;
+  // One tutoring course spans every stage of its subject, so the bare unit
+  // number is ambiguous there — Grade 5 Unit 7 and Grade 6 Unit 7 would write
+  // to the same key. The stage joins the unit id for this category only;
+  // regular courses keep the shape every existing record uses.
+  const PROGRESS_UNIT = IS_TUTORING ? `g${pad2(stageNumber)}-u${pad2(unitNumber)}` : `u${pad2(unitNumber)}`;
   // Launch URLs travel through chat/email copy-paste, which injects invisible
   // Unicode (zero-width chars, smart punctuation) that makes fetch() reject the
   // Authorization header outright. Strip anything outside the JWT alphabet.

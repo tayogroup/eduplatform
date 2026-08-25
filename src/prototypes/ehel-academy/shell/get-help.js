@@ -156,6 +156,11 @@ export function createGetHelp(options) {
   const indexCache = new Map(); // stage -> index | null (null = not offered)
   let showAllStages = false;
   let searchToken = 0;
+  // The live search box's current query, kept so the shell's Wehel dock can
+  // tell the tutor what the learner is stuck on while they are still ON the
+  // search page — before any result is clicked. Cleared when the box empties,
+  // so a stale question never outlives the search it belonged to.
+  let currentQuery = "";
   // Set by the shell after boot (course-app.js). For the TUTORING category the
   // finished session is emitted server-side as a tutoring.session event — the
   // umbrella course's own record, which the parent portal reads. A regular
@@ -319,6 +324,7 @@ export function createGetHelp(options) {
 
   async function runSearch(query, ui) {
     const tokens = tokenize(query);
+    currentQuery = tokens.length ? String(query || "").trim() : "";
     const resultsBox = ui.$("#gh-results");
     if (!resultsBox) return;
     if (!tokens.length) { resultsBox.innerHTML = introHtml(ui); bindIntro(ui); return; }
@@ -356,10 +362,15 @@ export function createGetHelp(options) {
     // topic, opened in focus mode — so it leads, styled primary and placed
     // first. The unit link and chips still work, for a learner who would
     // rather browse the unit itself; they carry the same focus-mode door.
+    // The tutoring category gets no browse link at all (owner request
+    // 2026-08-25): those learners come with a problem, not a course position,
+    // so "open the unit yourself" is the school-run framing the category
+    // exists to avoid — the session and the topic chips are their doors.
+    const browse = shellHooks?.tutoring ? "" : `<a class="gh-hit-browse" href="${esc(overviewHref)}">${ui.icon("arrow-right")} <span>Or open the unit yourself</span></a>`;
     return `<article class="gh-hit">
       <p class="gh-hit-heading"><strong>${esc(`${options.stageWord} ${hit.stage}`)} · Unit ${hit.unit.unit}:</strong> ${esc(hit.unit.title)}</p>
       <button class="button primary gh-start" data-gh-start="${at}" type="button">${ui.icon("compass")} <span>Start a help session on this</span></button>
-      <a class="gh-hit-browse" href="${esc(overviewHref)}">${ui.icon("arrow-right")} <span>Or open the unit yourself</span></a>
+      ${browse}
       ${chips ? `<div class="gh-chips">${chips}</div>` : ""}
     </article>`;
   }
@@ -890,5 +901,10 @@ export function createGetHelp(options) {
     return { id: session.section, label: session.topicLabel, query: session.query };
   }
 
-  return { render, renderSession, sessionHere, attachShell, sessionHint };
+  // The live search-box query, for the shell's Wehel dock: on the get-help
+  // page a tutoring learner's "context" is what they just typed they were
+  // stuck on, not the unit the shell happens to have loaded behind the page.
+  const searchQuery = () => currentQuery;
+
+  return { render, renderSession, sessionHere, attachShell, sessionHint, searchQuery };
 }

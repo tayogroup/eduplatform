@@ -866,10 +866,23 @@ export function createCourseApp(config) {
     // (get-help.js :: defaultHrefFor / english.js :: placementLocation).
     // Read once per page load, same as every other get-help marker (focus,
     // review, topic): it names THIS landing, not a standing preference, so it
-    // is gone the moment the learner navigates anywhere else.
+    // is gone the moment the learner navigates anywhere else. Never on the
+    // get-help route itself — that page is about a NEW question, and a marker
+    // that survived a hash navigation back to it would describe the old one.
     const ghHint = () => {
+      if (route === "get-help") return null;
       const label = params.get("ghLabel");
       return label ? { label, query: params.get("ghQuery") || "" } : null;
+    };
+    // A tutoring learner ON the search page: their context is what they just
+    // typed they are stuck on, read live from the search box — not the unit
+    // the shell loaded behind the page, which for this category is an
+    // arbitrary landing. Tutoring only: a school learner's dock on this page
+    // keeps meaning "my current unit", which is their actual position.
+    const searchHint = () => {
+      if (!IS_TUTORING || route !== "get-help") return null;
+      const q = config.getHelp?.searchQuery?.();
+      return q ? { label: "Get help search", query: q } : null;
     };
     // The section label for the route the learner is on — what the drawer
     // reports to Wehel as context. Read at send time, not at mount time, so it
@@ -879,8 +892,9 @@ export function createCourseApp(config) {
       // stays on "help-session" throughout — so the generic lookup below
       // always misses here. get-help.js's own hint carries the section the
       // session's search actually landed on; ghHint covers the same case for
-      // a bare topic-chip visit, which never reaches "help-session" at all.
-      const hint = (route === "help-session" ? config.getHelp?.sessionHint?.() : null) || ghHint();
+      // a bare topic-chip visit, which never reaches "help-session" at all;
+      // searchHint covers a tutoring learner still on the search page.
+      const hint = (route === "help-session" ? config.getHelp?.sessionHint?.() : null) || ghHint() || searchHint();
       if (hint) return hint.label;
       const match = (config.visibleSections ? config.visibleSections() : sections).find(([id]) => id === route);
       return match ? match[2] : "";
@@ -897,7 +911,7 @@ export function createCourseApp(config) {
       // for, plus the words they searched with — what "this activity" means
       // for a help session, the same way a deck's current slide names it for
       // a Grades 1-4 lesson page.
-      const hint = (route === "help-session" ? config.getHelp?.sessionHint?.() : null) || ghHint();
+      const hint = (route === "help-session" ? config.getHelp?.sessionHint?.() : null) || ghHint() || searchHint();
       if (hint) return [hint.label, hint.query ? `searched: "${hint.query}"` : ""].filter(Boolean).join(" — ");
       const slide = document.querySelector(".gc-slide:not([inert])");
       if (!slide) return "";

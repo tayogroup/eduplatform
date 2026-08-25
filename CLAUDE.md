@@ -1620,6 +1620,45 @@ This is the form of "verify what shipped, not what you wrote" that survives a
 build step. The weaker form — grep the deployed file for a string you expect —
 is fine for a verbatim component and misleading everywhere else.
 
+#### A marker proves presence, not correctness (2026-08-25)
+
+Marker-grepping has one honest use, and the night of six-plus releases pinned
+down exactly where its edges are. When another session's release supersedes
+yours — which happened to English three times in one night, twice announced to
+nobody who was watching that subject — grepping the LIVE bundle for your
+feature's identifiers is the cheap check for "did my work survive at all". It
+was run three times that night; all three survived. Use it, with both caveats:
+
+- **Do not derive safety from provenance instead of checking.** "The release
+  was built from current HEAD, so it carries my committed work by construction"
+  was argued that night and is wrong: a CURRENT tree can carry your feature
+  edited, narrowed or deleted by another session that committed properly —
+  `shell/subjects/english.js` was edited by four sessions in one night, so this
+  is the existence proof, not a hypothetical. Stale trees are one danger case,
+  not the only one. This is "HEAD is a cleaner input, not a safety property"
+  (above, for content tiers) re-landing on the app tier.
+- **A marker is a claim about presence read as a claim about behaviour** — the
+  same shape as `uploaded: 2`, HTTP 200 on a missing directory, and
+  `already uploaded: N`. Rename a function, narrow a filter by one clause,
+  change a constant: marker intact, feature gone.
+
+So the honest ordering: a marker grep is the cheap NECESSARY condition, good
+for "did my work survive at all" after somebody else's release; behaviour
+exercised against the live bundle is the SUFFICIENT one, worth its cost on
+releases you cut yourself and whenever a marker check surprises you. And note
+where a typical careful release actually sits: markers against the live bundle
+plus behaviour verified in a browser against the same COMMIT is still one build
+step short of behaviour against the shipped bundle itself — a small gap, not a
+zero one.
+
+One companion practice from the same night, because the superseding releases
+were the trigger: **an unnamed release stamps all six subjects, so announce it
+as "vNNN, all six".** The v271 announcement named only the subject that
+motivated it, and a verified English deployment was superseded with no signal —
+nobody did anything wrong, and the take-a-number convention cannot cover it,
+because that convention is about who holds a number and this is about who owns
+a subject.
+
 ### `.bunny-appver-manifest.json` is CONTENDED, and a wrong entry is silent
 
 Several sessions share this checkout, so they share this file, and

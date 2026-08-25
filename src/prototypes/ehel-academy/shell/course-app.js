@@ -756,7 +756,20 @@ export function createCourseApp(config) {
     // exists for them, and nothing can reveal the sidebar this category is
     // meant not to have. No fullscreen request either: the page is not taking
     // the screen, only dropping a column, and a flip on every nav click would
-    // be jarring. Their way around is the search, which is their home route.
+    // be jarring.
+    //
+    // WHAT REPLACES THE SIDEBAR, since the v278 comment claimed the Menu
+    // button was what made hiding it safe and that button is now gone: the
+    // SEARCH is this category's route into a section, not the nav. Get-help's
+    // topic chips deep-link straight to the teaching routes — measured on the
+    // live bundle, one Mathematics query returned 63 chips pointing at
+    // #lesson, #method, #examples and #explore, and English's point at
+    // #reading, #dictionary, #grammar and #writing — and a help session's
+    // learn step links its stops the same way. So the old comment
+    // over-claimed: the sidebar was never how these learners got to
+    // Vocabulary or Reading, which is why removing both costs them nothing.
+    // What it does cost is the direct hop back to a RUNNING help session
+    // mid-lesson; that returns via the search, their home route.
     if (IS_TUTORING) { document.body.classList.add("tutoring-nav"); return; }
     ensureFocusChrome();
     document.body.classList.add("focus-mode");

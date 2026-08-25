@@ -5335,10 +5335,12 @@ function courseLocation(nextUnit, nextRoute = "overview") {
   url.searchParams.set("grade", gradeNumber);
   url.searchParams.set("unit", nextUnit);
   url.searchParams.delete("review");
-  // A get-help visit's own markers — see placementLocation. Neither should
-  // ride along to a unit/grade the learner reached by navigating normally.
+  // A get-help visit's own markers — see placementLocation. None should ride
+  // along to a unit/grade the learner reached by navigating normally.
   url.searchParams.delete("topic");
   url.searchParams.delete("focus");
+  url.searchParams.delete("ghLabel");
+  url.searchParams.delete("ghQuery");
   url.hash = nextRoute;
   return url.href;
 }
@@ -5350,6 +5352,8 @@ function gradeLocation(nextGrade) {
   url.searchParams.delete("review");
   url.searchParams.delete("topic");
   url.searchParams.delete("focus");
+  url.searchParams.delete("ghLabel");
+  url.searchParams.delete("ghQuery");
   url.hash = "overview";
   return url.href;
 }
@@ -8159,7 +8163,7 @@ function renderFinalQuizResults(results) {
 // remediation links) lives in grade-N/data/placement-exam.json — the UI only
 // applies it, so curriculum can retune bands without a code change.
 
-function placementLocation(targetGrade, targetUnit, nextRoute = "overview", { review = false, focus = false, topic = "" } = {}) {
+function placementLocation(targetGrade, targetUnit, nextRoute = "overview", { review = false, focus = false, topic = "", ghLabel = "", ghQuery = "" } = {}) {
   const url = new URL(location.href);
   url.searchParams.set("grade", targetGrade);
   // Every grade opens at Unit 1 now that Grade 1's Unit 0 is withdrawn from
@@ -8182,6 +8186,14 @@ function placementLocation(targetGrade, targetUnit, nextRoute = "overview", { re
   // section, from a get-help topic chip.
   if (topic) url.searchParams.set("topic", topic);
   else url.searchParams.delete("topic");
+  // The chip's own topic label and the search that found it — what the
+  // shell's Wehel dock reads (course-app.js's sectionHint/activityHint) when
+  // the learner opens the tutor right after landing here, without ever
+  // starting a guided help session. get-help.js :: defaultHrefFor carries the
+  // same two params for every other subject; English needs its own copy only
+  // because it builds its links through this function instead.
+  if (ghLabel) url.searchParams.set("ghLabel", ghLabel); else url.searchParams.delete("ghLabel");
+  if (ghQuery) url.searchParams.set("ghQuery", ghQuery); else url.searchParams.delete("ghQuery");
   url.hash = nextRoute;
   return url.href;
 }
@@ -11182,14 +11194,22 @@ const config = {
     course: () => course,
     marketplaceHref: () => (PLATFORM_ORIGIN ? `${PLATFORM_ORIGIN}/local/hubredirect/teacher_marketplace.php?q=${encodeURIComponent("English")}` : ""),
     sections: () => sections,
-    hrefFor: (targetGrade, targetUnit, section) => {
+    hrefFor: (targetGrade, targetUnit, section, hint) => {
       const target = section || "overview";
-      return placementLocation(targetGrade, targetUnit, target, { review: true, focus: true, topic: target !== "overview" ? target : "" });
+      return placementLocation(targetGrade, targetUnit, target, {
+        review: true, focus: true, topic: target !== "overview" ? target : "",
+        ghLabel: hint?.label || "", ghQuery: hint?.query || "",
+      });
     },
     // The help session's own route rides the same review door — the shell
     // dispatches it ahead of the gated renderers, so it renders on a locked
     // unit; every link it then emits lands on the overview per hrefFor above.
     sessionHref: (targetGrade, targetUnit) => placementLocation(targetGrade, targetUnit, "help-session", { review: true, focus: true }),
+    // A finished session sourced from a Foundations/Next-steps result ran on
+    // a different grade than the learner's own — plain get-help.js's default
+    // sends it back with no review door and no focus mode, since this is
+    // "come home", not another remediation visit.
+    homeHref: (stage) => placementLocation(stage, 1, "get-help", {}),
     // Sections are chained here, so the session names its stops instead of
     // deep-linking them, and sends the learner through the overview in order.
     orderedUnit: true,

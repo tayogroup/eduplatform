@@ -199,7 +199,13 @@ export function createGetHelp(options) {
     return Array.from({ length: to - from + 1 }, (_, i) => from + i);
   }
 
-  function defaultHrefFor(stage, unit, section) {
+  // `hint` — { label, query } — names the exact topic a chip points at and
+  // the words the learner searched with. Carried on the URL (ghLabel/ghQuery)
+  // so it survives the full page load: course-app.js's Wehel dock reads it
+  // back (sectionHint/activityHint) when the learner opens the tutor right
+  // after landing, without having started a guided help session at all —
+  // the only other place that context lives (see sessionHint below).
+  function defaultHrefFor(stage, unit, section, hint) {
     const url = new URL(location.href);
     url.searchParams.set(options.param, stage);
     url.searchParams.set("unit", unit);
@@ -211,11 +217,27 @@ export function createGetHelp(options) {
     // focus mode (topbar + sidebar hidden), so the destination is just the
     // one topic, not the full course chrome. course-app.js :: init().
     url.searchParams.set("focus", "1");
+    if (hint?.label) url.searchParams.set("ghLabel", hint.label); else url.searchParams.delete("ghLabel");
+    if (hint?.query) url.searchParams.set("ghQuery", hint.query); else url.searchParams.delete("ghQuery");
     url.hash = section || "overview";
     return url.href;
   }
-  const hrefFor = (stage, unit, section) => (options.hrefFor ? options.hrefFor(stage, unit, section) : defaultHrefFor(stage, unit, section));
+  const hrefFor = (stage, unit, section, hint) => (options.hrefFor ? options.hrefFor(stage, unit, section, hint) : defaultHrefFor(stage, unit, section, hint));
   const sessionHref = (stage, unit) => (options.sessionHref ? options.sessionHref(stage, unit) : defaultHrefFor(stage, unit, "help-session"));
+  // Where a finished session sends a learner it borrowed from another stage —
+  // see the data-gh-finish handler below.
+  function homeHref(stage) {
+    if (options.homeHref) return options.homeHref(stage);
+    const url = new URL(location.href);
+    url.searchParams.set(options.param, stage);
+    url.searchParams.set("unit", 1);
+    url.searchParams.delete("review");
+    url.searchParams.delete("focus");
+    url.searchParams.delete("ghLabel");
+    url.searchParams.delete("ghQuery");
+    url.hash = "get-help";
+    return url.href;
+  }
 
   const sectionLabel = (id) => {
     const entry = options.sections().find(([sectionId]) => sectionId === id);
@@ -314,20 +336,22 @@ export function createGetHelp(options) {
         if (score > 0) hits.push({ stage: stages[at], unit, score, topics });
       }
     });
-    resultsBox.innerHTML = resultsHtml(hits, current, ui);
+    resultsBox.innerHTML = resultsHtml(hits, current, ui, query);
     bindResults(hits, query, ui);
   }
 
-  function resultCard(hit, at, ui) {
+  function resultCard(hit, at, ui, query) {
     const esc = ui.escapeHtml;
     const overviewHref = hrefFor(hit.stage, hit.unit.unit, "overview");
     // Chips deep-link into the unit's own sections. English's hrefFor opens
     // that exact section too (its own review-topic exemption), so the label
     // is never just a hint here — worst case, a subject with no such
     // exemption still shows the topic labels, so the learner knows what to
-    // look for once inside.
+    // look for once inside. Each chip also carries its own label and the
+    // search that found it, so Wehel is scoped from this landing even when
+    // the learner never starts a guided help session (see defaultHrefFor).
     const chips = hit.topics.slice(0, 5).map((t) =>
-      `<a class="gh-chip" href="${esc(hrefFor(hit.stage, hit.unit.unit, t.section))}">${ui.icon("corner-down-right")}<span>${esc(t.label)}</span><small>${esc(sectionLabel(t.section))}</small></a>`).join("");
+      `<a class="gh-chip" href="${esc(hrefFor(hit.stage, hit.unit.unit, t.section, { label: t.label, query }))}">${ui.icon("corner-down-right")}<span>${esc(t.label)}</span><small>${esc(sectionLabel(t.section))}</small></a>`).join("");
     // The help session is the targeted path — a focused walk on just this
     // topic, opened in focus mode — so it leads, styled primary and placed
     // first. The unit link and chips still work, for a learner who would
@@ -347,7 +371,7 @@ export function createGetHelp(options) {
     bindIntro(ui);
   }
 
-  function resultsHtml(hits, current, ui) {
+  function resultsHtml(hits, current, ui, query) {
     if (!hits.length) {
       return `<section class="panel gh-status"><p><strong>No matches${showAllStages ? "" : " nearby"}.</strong> Try a different word — the name your school uses may differ${showAllStages ? "" : `, or widen the search to every ${options.stageWord.toLowerCase()} below`}.</p></section>`;
     }
@@ -364,7 +388,7 @@ export function createGetHelp(options) {
         .sort((a, b) => b.score - a.score || Math.abs(a.stage - current) - Math.abs(b.stage - current))
         .slice(0, 8);
       if (!members.length) return "";
-      const cards = members.map((hit) => { ranked.push(hit); return resultCard(hit, ranked.length - 1, ui); }).join("");
+      const cards = members.map((hit) => { ranked.push(hit); return resultCard(hit, ranked.length - 1, ui, query); }).join("");
       return `<section class="panel">
         <span class="eyebrow">${group.title}</span>
         <p class="gh-note">${group.note}</p>
@@ -816,7 +840,14 @@ export function createGetHelp(options) {
           summary: session.summary || "",
         });
       }
-      location.hash = "get-help";
+      // A Foundations/Next-steps session runs on a DIFFERENT stage than the
+      // learner's own (session.from.stage) — finishing has to send them back
+      // to it, not leave the whole shell (stage picker, unit picker, every
+      // count on the page) still showing the stage the session borrowed.
+      // Only a real navigation changes the query string that drives that;
+      // the hash-only jump below is correct exactly when the two agree.
+      if (session.from.stage !== session.target.stage) location.href = homeHref(session.from.stage);
+      else location.hash = "get-help";
     });
   }
 

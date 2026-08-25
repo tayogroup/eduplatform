@@ -861,6 +861,16 @@ export function createCourseApp(config) {
     button.innerHTML = `${SPARKLE_ICON}<span>Wehel Tutor</span>`;
 
     let drawer = null, backdrop = null, chatPanel = null;
+    // A direct topic-chip click — no guided help session started — still
+    // carries the chip's own label and the search that found it, on the URL
+    // (get-help.js :: defaultHrefFor / english.js :: placementLocation).
+    // Read once per page load, same as every other get-help marker (focus,
+    // review, topic): it names THIS landing, not a standing preference, so it
+    // is gone the moment the learner navigates anywhere else.
+    const ghHint = () => {
+      const label = params.get("ghLabel");
+      return label ? { label, query: params.get("ghQuery") || "" } : null;
+    };
     // The section label for the route the learner is on — what the drawer
     // reports to Wehel as context. Read at send time, not at mount time, so it
     // stays right as the learner moves around with the drawer open.
@@ -868,9 +878,10 @@ export function createCourseApp(config) {
       // The help-session route never equals a real section id — the walk
       // stays on "help-session" throughout — so the generic lookup below
       // always misses here. get-help.js's own hint carries the section the
-      // session's search actually landed on.
-      const session = route === "help-session" ? config.getHelp?.sessionHint?.() : null;
-      if (session) return session.label;
+      // session's search actually landed on; ghHint covers the same case for
+      // a bare topic-chip visit, which never reaches "help-session" at all.
+      const hint = (route === "help-session" ? config.getHelp?.sessionHint?.() : null) || ghHint();
+      if (hint) return hint.label;
       const match = (config.visibleSections ? config.visibleSections() : sections).find(([id]) => id === route);
       return match ? match[2] : "";
     };
@@ -886,8 +897,8 @@ export function createCourseApp(config) {
       // for, plus the words they searched with — what "this activity" means
       // for a help session, the same way a deck's current slide names it for
       // a Grades 1-4 lesson page.
-      const session = route === "help-session" ? config.getHelp?.sessionHint?.() : null;
-      if (session) return [session.label, session.query ? `searched: "${session.query}"` : ""].filter(Boolean).join(" — ");
+      const hint = (route === "help-session" ? config.getHelp?.sessionHint?.() : null) || ghHint();
+      if (hint) return [hint.label, hint.query ? `searched: "${hint.query}"` : ""].filter(Boolean).join(" — ");
       const slide = document.querySelector(".gc-slide:not([inert])");
       if (!slide) return "";
       const label = (slide.getAttribute("aria-label") || "").trim();

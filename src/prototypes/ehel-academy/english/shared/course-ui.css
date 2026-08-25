@@ -171,9 +171,22 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
 body.focus-mode .topbar, body.focus-mode .sidebar { display: none; }
 body.focus-mode .app-shell { grid-template-columns: 1fr; min-height: 100vh; }
 .focus-exit { display: none; }
-body.focus-mode .focus-exit { position: fixed; top: 12px; left: 12px; z-index: 60; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px 0 13px; border: 0; border-radius: 999px; background: #102c43; color: #fff; font: inherit; font-size: 14px; font-weight: var(--weight-medium); cursor: pointer; box-shadow: 0 6px 20px rgba(16,44,67,.35); }
-body.focus-mode .focus-exit:hover { background: #1d4360; }
+body.focus-mode .focus-exit, body.tutoring-nav .focus-exit { position: fixed; top: 12px; left: 12px; z-index: 60; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px 0 13px; border: 0; border-radius: 999px; background: #102c43; color: #fff; font: inherit; font-size: 14px; font-weight: var(--weight-medium); cursor: pointer; box-shadow: 0 6px 20px rgba(16,44,67,.35); }
+body.focus-mode .focus-exit:hover, body.tutoring-nav .focus-exit:hover { background: #1d4360; }
 .focus-exit svg { width: 18px; height: 18px; }
+/* The tutoring category hides the LEFT SIDEBAR on every page, and keeps the
+   topbar: the sidebar's course context states a school position these learners
+   do not have ("Grade 5 · English · Term 2") and its unit menu is course
+   browsing, which is not their path — while the topbar's grade and unit
+   pickers are the roaming chrome this category was deliberately given. The
+   Menu button reveals the sidebar when they want the section list, so hiding
+   it never costs them the way to Vocabulary or Reading. It sits BELOW the
+   topbar here, unlike focus mode where the topbar is gone and it can take the
+   corner. */
+body.tutoring-nav .sidebar { display: none; }
+body.tutoring-nav .app-shell { grid-template-columns: 1fr; }
+body.tutoring-nav .focus-exit { top: 84px; }
+@media (max-width: 760px) { body.tutoring-nav .focus-exit { top: auto; bottom: 12px; } }
 /* Grade 1 grammar carousel — kid-friendly full-screen slides, one language
    pattern at a time (modelled on the Arabic Alphabet unit's Learn section). */
 /* The deck fills the page and no more, so the slide's height is whatever is left

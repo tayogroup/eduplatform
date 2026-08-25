@@ -722,7 +722,7 @@ export function createCourseApp(config) {
   // real: leaving fullscreen always drops focus mode, so the two can never
   // strand the learner in a page with no navigation and no browser chrome.)
   function exitFocusMode() {
-    document.body.classList.remove("focus-mode");
+    document.body.classList.remove("focus-mode", "tutoring-nav");
     if (document.fullscreenElement) document.exitFullscreen?.().catch(() => {});
     // A manual exit is a standing choice — strip the URL's own door back to
     // focus mode so reloading this page (or coming back to it later) does
@@ -749,6 +749,14 @@ export function createCourseApp(config) {
   }
   function enterFocusMode() {
     ensureFocusChrome();
+    // The tutoring category hides the SIDEBAR only and keeps the topbar: its
+    // grade and unit pickers are the roaming chrome this category was
+    // deliberately given, and putting them behind the Menu button would charge
+    // a tap for every hop. Same Menu button either way, so the section list is
+    // never more than one tap from a learner who wants it. No fullscreen
+    // request here — the page is not taking the screen, only dropping a
+    // column, and a fullscreen flip on every nav click would be jarring.
+    if (IS_TUTORING) { document.body.classList.add("tutoring-nav"); return; }
     document.body.classList.add("focus-mode");
     // True fullscreen: the nav click is a user gesture, so the request is
     // allowed. Browsers that refuse (e.g. iPhone Safari) keep the CSS-only

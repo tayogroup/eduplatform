@@ -17,6 +17,12 @@ const EVENT_CLASS = {
   "unit.completed": "durable",
   "capstone.submitted": "durable",
   "section.completed": "durable",
+  // The tutoring category's finished help session — the record the parent
+  // portal reads. Durable: dropping one loses a session a family paid for.
+  // (It was first emitted WITHOUT this line, and classOf's ephemeral default
+  // silently discarded every one — the exact mis-tag the comment above warns
+  // about. An event type must be enrolled here before anything emits it.)
+  "tutoring.session": "durable",
   "progress.summary": "state",
   "draft.saved": "state",
   "section.viewed": "ephemeral",
@@ -84,6 +90,20 @@ function applyEvent(state, ev) {
     case "draft.saved":
       unit.drafts = unit.drafts || {};
       unit.drafts[ev.section || "_"] = { text: ev.text, blobRef: ev.blobRef, words: ev.words, at: ev.at };
+      break;
+    case "tutoring.session":
+      // Mirror of the server reducer's case, minus the sanitiser — this state
+      // is the learner's own device talking to itself; the server clamps what
+      // it is actually sent. Same cap so local resume matches remote.
+      unit.tutoringSessions = unit.tutoringSessions || [];
+      unit.tutoringSessions.push({
+        topic: ev.topic, query: ev.query, stage: ev.stage, unit: ev.unit, unitTitle: ev.unitTitle,
+        scored: !!ev.scored, before: ev.before, beforeTotal: ev.beforeTotal,
+        after: ev.after, afterTotal: ev.afterTotal, attempted: ev.attempted,
+        practiceRight: ev.practiceRight, practiceTotal: ev.practiceTotal,
+        startedAt: ev.startedAt, finishedAt: ev.finishedAt, summary: ev.summary,
+      });
+      if (unit.tutoringSessions.length > 20) unit.tutoringSessions = unit.tutoringSessions.slice(-20);
       break;
     default:
       break; // ephemeral: never persisted to resume state

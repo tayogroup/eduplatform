@@ -169,6 +169,11 @@ export function createCourseApp(config) {
   });
   let unitCompletedSent = false;
   const emitProgress = (event) => { try { progressWS.emit(event); } catch { /* never break the lesson */ } };
+  // The help-session flow emits its finished sessions server-side for the
+  // tutoring category only — the record their parents' reports read, written
+  // under the umbrella course this page's token was minted for. Regular
+  // learners' sessions never leave the browser (see get-help.js::attachShell).
+  if (config.getHelp?.attachShell) config.getHelp.attachShell({ tutoring: IS_TUTORING, emitEvent: emitProgress });
   const emitProgressSummary = () => {
     const base = {
       type: "progress.summary", unit: PROGRESS_UNIT,

@@ -173,11 +173,46 @@ echo "\nit must never become a grade\n";
 check('no score field invented', array_key_exists('score', $s1), false);
 check('no checkpoint created', count((array)$s1['checkpoints']), 0);
 
+echo "\napply_event(tutoring.session) — the tutoring category's record, through the event path\n";
+// Hostile payload: over-count clamped into its total, a smuggled score field
+// dropped by the whitelist, summary bounded. Assert on what is STORED.
+[$t1, $t1r] = $apply($emptyState(), [
+    'type' => 'tutoring.session', 'id' => 'hs-1', 'at' => '2026-08-25T10:00:00Z',
+    'topic' => 'Percentages', 'query' => 'percentage', 'stage' => 6, 'unit' => 6,
+    'scored' => true, 'before' => 999, 'beforeTotal' => 5, 'after' => 4, 'afterTotal' => 5,
+    'practiceRight' => 9, 'practiceTotal' => 3,
+    'score' => 100, 'grade' => 'A', 'percent' => 100,
+    'summary' => str_repeat('x', 5000),
+]);
+$stored = $t1['tutoringSessions'][0];
+check('durable and applied', $t1r, [true, true]);
+check('over-count clamped into its total', [$stored['before'], $stored['practiceRight']], [5, 3]);
+check('smuggled score/grade/percent fields do not exist',
+    array_key_exists('score', $stored) || array_key_exists('grade', $stored) || array_key_exists('percent', $stored), false);
+check('summary bounded', strlen($stored['summary']), 2000);
+[$t2, $t2r] = $apply($t1, [
+    'type' => 'tutoring.session', 'id' => 'hs-1', 'at' => '2026-08-25T10:05:00Z', 'topic' => 'Percentages',
+]);
+check('idempotent by event id — a retry stores nothing new', [count($t2['tutoringSessions']), $t2r], [1, [false, true]]);
+[$t3, ] = $apply($emptyState(), ['type' => 'tutoring.session', 'id' => 'hs-2', 'at' => '2026-08-25T10:00:00Z']);
+check('a payload with neither topic nor summary is noise, not a session',
+    isset($t3['tutoringSessions']), false);
+$capstate = $emptyState();
+for ($i = 1; $i <= 25; $i++) {
+    [$capstate, ] = $apply($capstate, ['type' => 'tutoring.session', 'id' => "hs-cap-{$i}", 'at' => '2026-08-25T10:00:00Z', 'topic' => "T{$i}"]);
+}
+check('the list caps at 20, newest kept',
+    [count($capstate['tutoringSessions']), end($capstate['tutoringSessions'])['topic']], [20, 'T25']);
+check('a session never creates a checkpoint (the gradebook path)', count((array)$t1['checkpoints']), 0);
+
 echo "\npublic_state\n";
 $pub = $call('public_state', [$s1]);
 check('attempted reaches the client', $pub['attempted'], ['quiz' => ['answered' => 3, 'total' => 12]]);
 check('internal bookkeeping still stripped',
     array_key_exists('_lastAt', $pub) || array_key_exists('_appliedIds', $pub), false);
+$pubt = $call('public_state', [$t1]);
+check('tutoring sessions reach the client (the parent report reads them)',
+    $pubt['tutoringSessions'][0]['topic'], 'Percentages');
 
 printf("\n%d passed, %d failed\n", $pass, $fail);
 if ($fail > 0) {

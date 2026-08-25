@@ -24,6 +24,62 @@ class local_prequran_progress_external extends external_api {
 
     /** Keep at most this many recent durable ids per unit for idempotency. */
     const MAX_APPLIED_IDS = 250;
+    const MAX_TUTORING_SESSIONS = 20;
+
+    /**
+     * The stored shape of a tutoring help session, from an untrusted client
+     * payload. Whitelist only: a field this does not name does not exist,
+     * which is what keeps a session structurally incapable of smuggling a
+     * score — the record carries COUNTS (3 of 5 right), and turning counts
+     * into a grade is a decision no client gets to make. Counts are clamped
+     * into their totals the way sanitise_attempted() clamps answered, and a
+     * payload with neither a topic nor a summary is noise, not a session.
+     */
+    private static function sanitise_tutoring_session($ev): ?array {
+        if (!is_array($ev)) {
+            return null;
+        }
+        // Plain mb_substr, not core_text: this method runs inside
+        // check-progress-attempted.php's minimal harness, which loads the real
+        // class without Moodle's core — a dependency here is a dependency the
+        // gate has to fake, and a gate running against fakes proves less.
+        $text = static function ($v, int $max): string {
+            if (!is_scalar($v)) {
+                return '';
+            }
+            $s = trim((string)$v);
+            return function_exists('mb_substr') ? mb_substr($s, 0, $max) : substr($s, 0, $max);
+        };
+        $count = static function ($v, int $cap = 50): int {
+            return max(0, min($cap, (int)(is_scalar($v) ? $v : 0)));
+        };
+        $topic = $text($ev['topic'] ?? '', 200);
+        $summary = $text($ev['summary'] ?? '', 2000);
+        if ($topic === '' && $summary === '') {
+            return null;
+        }
+        $beforetotal = $count($ev['beforeTotal'] ?? 0);
+        $aftertotal = $count($ev['afterTotal'] ?? 0);
+        $practicetotal = $count($ev['practiceTotal'] ?? 0);
+        return [
+            'topic' => $topic,
+            'query' => $text($ev['query'] ?? '', 120),
+            'stage' => $count($ev['stage'] ?? 0, 12),
+            'unit' => $count($ev['unit'] ?? 0, 99),
+            'unitTitle' => $text($ev['unitTitle'] ?? '', 200),
+            'scored' => !empty($ev['scored']),
+            'before' => min($count($ev['before'] ?? 0), $beforetotal),
+            'beforeTotal' => $beforetotal,
+            'after' => min($count($ev['after'] ?? 0), $aftertotal),
+            'afterTotal' => $aftertotal,
+            'attempted' => $count($ev['attempted'] ?? 0),
+            'practiceRight' => min($count($ev['practiceRight'] ?? 0), $practicetotal),
+            'practiceTotal' => $practicetotal,
+            'startedAt' => $text($ev['startedAt'] ?? '', 32),
+            'finishedAt' => $text($ev['finishedAt'] ?? '', 32),
+            'summary' => $summary,
+        ];
+    }
 
     /** Cap on how many sections one `attempted` map may carry. See sanitise_attempted(). */
     const MAX_ATTEMPTED_SECTIONS = 20;
@@ -139,7 +195,7 @@ class local_prequran_progress_external extends external_api {
     /** Apply one event onto a unit-state array. Returns [changed, isDurable]. */
     private static function apply_event(array &$state, array $ev): array {
         $type = $ev['type'] ?? '';
-        $durable = in_array($type, ['checkpoint.result', 'unit.completed', 'capstone.submitted', 'section.completed'], true);
+        $durable = in_array($type, ['checkpoint.result', 'unit.completed', 'capstone.submitted', 'section.completed', 'tutoring.session'], true);
         $isstate = in_array($type, ['progress.summary', 'draft.saved'], true);
 
         // Idempotency: a durable event already applied is a no-op.
@@ -215,6 +271,25 @@ class local_prequran_progress_external extends external_api {
                     'words' => isset($ev['words']) ? (int)$ev['words'] : null,
                     'at' => $ev['at'] ?? null,
                 ];
+                break;
+            case 'tutoring.session':
+                // A finished help session of the tutoring-support category —
+                // the record a parent's report and a human-tutor handoff read.
+                // Only the sanitiser's whitelist is stored (counts, never a
+                // percentage — the session may be the unscored attempted-only
+                // kind), idempotent by event id like every durable event, and
+                // capped so one enthusiastic learner cannot grow the row
+                // without bound.
+                $session = self::sanitise_tutoring_session($ev);
+                if ($session === null) {
+                    return [false, false];
+                }
+                $sessions = isset($state['tutoringSessions']) && is_array($state['tutoringSessions']) ? $state['tutoringSessions'] : [];
+                $sessions[] = $session;
+                if (count($sessions) > self::MAX_TUTORING_SESSIONS) {
+                    $sessions = array_slice($sessions, -self::MAX_TUTORING_SESSIONS);
+                }
+                $state['tutoringSessions'] = $sessions;
                 break;
             default:
                 return [false, false]; // ephemeral: never persisted

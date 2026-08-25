@@ -156,6 +156,13 @@ export function createGetHelp(options) {
   const indexCache = new Map(); // stage -> index | null (null = not offered)
   let showAllStages = false;
   let searchToken = 0;
+  // Set by the shell after boot (course-app.js). For the TUTORING category the
+  // finished session is emitted server-side as a tutoring.session event — the
+  // umbrella course's own record, which the parent portal reads. A regular
+  // learner's sessions stay in localStorage only: their record must never
+  // reach the school's books, and not emitting is how that stays true.
+  let shellHooks = null;
+  const attachShell = (hooks) => { shellHooks = hooks || null; };
 
   const stageDir = (n) => (options.stageDir ? options.stageDir(n) : `grade-${n}`);
 
@@ -779,6 +786,23 @@ export function createGetHelp(options) {
       session.finishedAt = new Date().toISOString();
       store.activeId = null;
       saveStore();
+      // Tutoring category only — see attachShell. Idempotent server-side by
+      // the session id, so a retried click cannot store a second record.
+      if (shellHooks?.tutoring && shellHooks.emitEvent) {
+        shellHooks.emitEvent({
+          type: "tutoring.session", id: session.id, at: session.finishedAt,
+          topic: session.topicLabel, query: session.query,
+          stage: session.target.stage, unit: session.target.unit, unitTitle: session.target.title,
+          scored: sets.scored,
+          before: session.check.score, beforeTotal: session.check.total,
+          after: session.recheck.score, afterTotal: session.recheck.total,
+          attempted: session.check.attempted + session.recheck.attempted,
+          practiceRight: Object.values(session.practice.marks).filter((m) => m === "right").length,
+          practiceTotal: Object.values(session.practice.marks).length,
+          startedAt: session.startedAt, finishedAt: session.finishedAt,
+          summary: session.summary || "",
+        });
+      }
       location.hash = "get-help";
     });
   }
@@ -807,5 +831,5 @@ export function createGetHelp(options) {
     return lines.join("\n");
   }
 
-  return { render, renderSession, sessionHere };
+  return { render, renderSession, sessionHere, attachShell };
 }

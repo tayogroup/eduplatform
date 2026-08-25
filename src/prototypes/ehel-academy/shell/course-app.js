@@ -1103,7 +1103,18 @@ export function createCourseApp(config) {
       // comment. Fullscreen itself is refused this way (no user gesture on a
       // page load), which enterFocusMode already treats as fine: the CSS-only
       // chrome-hidden layout still applies either way.
-      if (params.get("focus") === "1") enterFocusMode();
+      //
+      // The TUTORING category gets it on EVERY page (owner, 2026-08-25), not
+      // only on a get-help link. The left sidebar is the reason: its course
+      // context states a school position these learners do not have
+      // ("Grade 5 · English · Term 2") and its unit menu is course browsing,
+      // which is not their path — they arrive by searching a topic. Reusing
+      // focus mode rather than hiding the sidebar separately is deliberate:
+      // the floating Menu button comes with it, so the section nav is one tap
+      // away instead of gone, and a nav click re-enters focus exactly as it
+      // does for everyone else. Pressing Menu is therefore a peek, not a mode
+      // — which is also why nothing needs to remember that they pressed it.
+      if (IS_TUTORING || params.get("focus") === "1") enterFocusMode();
     } catch (error) {
       console.error(error);
       const target = $("#loading") || $("#app");

@@ -1001,6 +1001,13 @@ PRESENT in the manifest** when the tool compares hashes. Presence is a true fact
 about the wrong property. Agreement between two people checking the same wrong
 property is not a second opinion, and it reads exactly like verification.
 
+The same family, one step quieter: a number that is RIGHT, printed at the right
+moment, and reported without being interrogated. A release on 2026-08-26 printed
+`plan 44 | uploaded 42` — correct, and the difference was exactly the thing being
+argued about in the same conversation, unread by the person relaying it. That is
+not a gate failure and no check can catch it; it is the reason a figure you are
+about to repeat is worth subtracting once first.
+
 **The half of the old note that WAS right is about browsers, not the manifest,
 and it is unchanged**: a re-recorded clip that keeps its filename keeps its URL,
 so every learner who has already played it holds the old audio for up to a year
@@ -2004,6 +2011,48 @@ was invisible because each one could point at the other. That is a step past the
 failures elsewhere in this file — the ✓ printed after a skip, the gate that is
 green about an unreachable feature — because here neither check is doing nothing.
 Their union has a hole, and no single check can report it.
+
+#### `--dry` prints the RELEASE, not the upload set
+
+The per-file list under a `--dry` run is every item the release CONTAINS. It is
+not what will be sent, and a file appearing in it says nothing about whether the
+manifest will skip it:
+
+```js
+// tools/deploy-app-version.js
+const todo = all.filter((x) => x.always || manifest[x.remote] !== sha1(x.buf));  // :581
+console.log(`items: ${all.length} | to upload: ${todo.length} …`);              // :583 — only the COUNT
+if (DRY) { for (const item of all) console.log(…); }                            // :585 — iterates `all`
+```
+
+Read as an upload list it inverts the answer for exactly the files this section
+is about. On 2026-08-26 a science+computing release was planned by reading that
+list: `app/computing/shared/grade-redirect.js` appeared in it and
+`app/science/shared/grade-redirect.js` did not, so computing's was taken as being
+uploaded and science's as skipped. **Both were skipped** — the two stubs are
+byte-identical (`17afd85ca4b5…`, 845 B) and both matched the manifest. The
+inference pointed at dropping the check on computing's stub, which sits on the
+identical invisible-to-`--verify` path as science's, so the one file that most
+needed the storage comparison was the one the reasoning excused.
+
+The arithmetic that refutes it is printed on line 583 of the same output and was
+reported without being interrogated: **plan 44, uploaded 42**, and the missing two
+are precisely the skipped stubs.
+
+**This is the INVERSE of the rest of this section, and that is why it is worth the
+space.** Everything else here is a check that silently does no work: a ✓ after a
+skip, a gate green about an unreachable feature, a parser matching nothing. Here
+nothing malfunctions and nothing is missing. The output does exactly what it says,
+and the reader supplies the error. It shares that shape with the platform probe
+writing its own `OPTIONS … 204` lines into the access log it is used to read
+(recorded above, same day) — the two failures here that are a PRESENCE rather
+than an absence. An absence you can go looking for; a presence has to be
+recognised, and the extra data is what misleads you.
+
+To learn what a release will actually SEND, compare `--plan-json`'s `sha1` per
+remote against `.bunny-appver-manifest.json` — or skip the inference entirely and
+compare the plan against storage after the fact, which is what the guard above
+does.
 
 ### A pre-commit check shaped like recognition cannot see a new feature
 

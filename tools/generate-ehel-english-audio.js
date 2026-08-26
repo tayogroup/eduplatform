@@ -234,6 +234,17 @@ function glossaryItems(glossary, grade) {
     // Stripping them would delete a working popover in every case, and would put
     // `fashion'` back into collision with the live `fashion` entry, which is the
     // defect this change exists to fix.
+    //
+    // Nor are the two `fashion` entries near-duplicates that could be merged. The
+    // definitions differ where it counts, and only the FULL strings show it:
+    //   fashion   (83)  "…popular styles of clothing, or the industry that designs
+    //                    and sells them"
+    //   fashion'  (119) "…popular styles of clothing, especially within the industry
+    //                    that produces and sells them QUICKLY AND CHEAPLY"
+    // The second is the fast-fashion sense the Grade 7 unit teaches. A 90-character
+    // dump of that field cuts three words before the only phrase that distinguishes
+    // them, and reads as "nearly the same" — which is how this comment first came to
+    // claim they were.
     const id = slug(word) + (/['’]$/.test(String(word).trim()) ? "-possessive" : "");
 
     const wordSource = `./${dir}/${id}.mp3`;

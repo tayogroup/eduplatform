@@ -233,6 +233,50 @@ function renderDeckOnly(deck) {
   deckMount = null;
 }
 
+// ── The four sections that keep BOTH designs at Stages 1-4 ───────────────────
+// Owner, 2026-08-26, after the deck-only change earlier the same day: a section
+// goes back to drawing the grid above its deck where the deck DROPPED something
+// the grid uniquely had. In Science that is exactly the four sections whose grid
+// draws a live model — Explore concept, Visual models, Lesson and Activities.
+// The deck's own diagrams are flat (`deckDiagram`, interactive: false), so
+// deck-only left those stages with no interactive model at all.
+//
+// The other six deck sections are NOT restored and must not be: nothing in them
+// lives only in the grid, so a second copy of the same content is the thing the
+// deck-only change correctly removed. Mathematics and Global Perspectives are
+// untouched for the same reason — neither draws a single deckDiagram.
+//
+// How many live WebGL contexts this restores is NOT uniform, and the note that
+// used to sit here said the wrong thing (see CLAUDE.md, corrected 2026-08-26):
+//   Explore concept  scienceDiagram(topic, active)      1 context, the active discovery
+//   Visual models    scienceDiagram(topic, active)      1 context, the active model
+//   Lesson           course.concepts.map(…)             one per concept, up to 6
+//   Activities       course.activities.map(…)           one per activity, up to 6
+// So "the grid could afford one live context because it showed one topic at a
+// time" is true for the first two and false for the last two. That is the state
+// that shipped for months before the deck-only change, not a new hazard — but it
+// is why the deck half MUST stay flat here. Making deck diagrams interactive
+// would double these to 2N and put Lesson and Activities past the cap that made
+// them flat in the first place (about sixteen contexts on desktop, commonly
+// eight on mobile).
+function renderBothDesigns(classic, deck, intro) {
+  $("#app").innerHTML = `<div class="both-designs">
+      <div class="classic-design" id="classic-design"></div>
+      <section class="deck-design">
+        <div class="deck-design-head"><span class="eyebrow">Slides</span><p>${escapeHtml(intro)}</p></div>
+        <div id="deck-design"></div>
+      </section>
+    </div>`;
+  classicRegion = $("#classic-design");
+  classic();
+  // classicRegion stays set past this point on purpose: a grid renderer's redraw
+  // closures run later, on the learner's clicks, and must still find the region.
+  // Clearing it here would send that repaint to #app and wipe both designs.
+  deckMount = "#deck-design";
+  deck();
+  deckMount = null;
+}
+
 
 // Science never loads the lucide runtime (it is one of the four shell-voice
 // subjects), so the deck draws inline SVG. The subject helpers are passed as
@@ -576,7 +620,7 @@ function renderScienceWordsDeck() {
 
 // Stages 1-4 show the deck alone; Stages 5-8 the grid alone.
 function renderExploreConcept() {
-  if (BOTH_DESIGNS()) return renderDeckOnly(renderExploreConceptDeck);
+  if (BOTH_DESIGNS()) return renderBothDesigns(renderExploreConceptClassic, renderExploreConceptDeck, "The same discoveries, one at a time.");
   if (deckStage()) return renderExploreConceptDeck();
   return renderExploreConceptClassic();
 }
@@ -671,7 +715,7 @@ function renderExploreConceptDeck() {
 
 // Stages 1-4 show the deck alone; Stages 5-8 the grid alone.
 function renderVisualModels() {
-  if (BOTH_DESIGNS()) return renderDeckOnly(renderVisualModelsDeck);
+  if (BOTH_DESIGNS()) return renderBothDesigns(renderVisualModelsClassic, renderVisualModelsDeck, "The same models, one at a time.");
   if (deckStage()) return renderVisualModelsDeck();
   return renderVisualModelsClassic();
 }
@@ -812,7 +856,7 @@ const courseTopic = () => unitTopic(course.unit.unitTitle, course.concepts);
 
 // Stages 1-4 show the deck alone; Stages 5-8 the grid alone.
 function renderLesson() {
-  if (BOTH_DESIGNS()) return renderDeckOnly(renderLessonDeck);
+  if (BOTH_DESIGNS()) return renderBothDesigns(renderLessonClassic, renderLessonDeck, "The same concepts, one at a time.");
   if (deckStage()) return renderLessonDeck();
   return renderLessonClassic();
 }
@@ -1094,7 +1138,7 @@ function renderPracticeDeck() {
 
 // Stages 1-4 show the deck alone; Stages 5-8 the grid alone.
 function renderActivities() {
-  if (BOTH_DESIGNS()) return renderDeckOnly(renderActivitiesDeck);
+  if (BOTH_DESIGNS()) return renderBothDesigns(renderActivitiesClassic, renderActivitiesDeck, "The same investigations, one at a time.");
   if (deckStage()) return renderActivitiesDeck();
   return renderActivitiesClassic();
 }

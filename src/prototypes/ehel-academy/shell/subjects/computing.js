@@ -222,15 +222,22 @@ const d$$ = (selector) => [...(deckRegion || document).querySelectorAll(selector
 // accessibility tree and out of the tab order — the section would be unreachable
 // for a screen reader and for a sighted keyboard user, not duplicated for them.
 //
-// So the attributes are gone and untabDeckHalf with them. What replaces it is the
+// So on a DECK-ONLY page the attributes are gone. What replaces them is the
 // deck's own per-slide work in deck.js (syncReachable): the slide on screen is
 // reachable, the ones beside it are `inert`, and each carries role="group" and an
 // aria-label naming its position. That was always there, and was simply
 // unreachable under an aria-hidden ancestor.
 //
-// The straight gain: Stages 1-4 keyboard and screen-reader users used to get the
-// original half alone, by design. They now get the same design everyone else
-// gets.
+// The straight gain: on those pages Stages 1-4 keyboard and screen-reader users
+// used to get the original half alone, by design. They now get the same design
+// everyone else gets.
+//
+// The attributes come BACK on the five sections restored to both designs on
+// 2026-08-26 (bothDesignsPage below), because there the original condition holds
+// again exactly: the deck is a second presentation of content read in full above
+// it. The test is therefore per PAGE, not per stage — which untabDeckHalf()
+// already handles on its own, since it is scoped by the aria-hidden attribute
+// and is a no-op wherever there is no hidden half.
 function deckOnlyPage(renderDeck) {
   $("#app").innerHTML = `<div class="both-designs deck-only">
       <div class="deck-design" id="deck-design"><div id="deck-host"></div></div>
@@ -238,6 +245,62 @@ function deckOnlyPage(renderDeck) {
   classicRegion = null;
   deckRegion = $("#deck-design");
   renderDeck();
+}
+
+function untabDeckHalf() {
+  // Read out of the DOM rather than through deckRegion: afterPaint fires from
+  // inside the deck, which does not know what it was mounted into. Scoped by
+  // the aria-hidden attribute, so it can only ever reach the deck half — on a
+  // page that is not both-designs there is no hidden half and this is a no-op.
+  const region = document.querySelector('#app .deck-design[aria-hidden="true"]');
+  if (!region) return;
+  for (const control of region.querySelectorAll('a[href], button, select, textarea, input, [tabindex]:not([tabindex="-1"])')) {
+    control.setAttribute("tabindex", "-1");
+  }
+}
+
+// ── The five sections that keep BOTH designs at Stages 1-4 ───────────────────
+// Owner, 2026-08-26, after the deck-only change earlier the same day: a section
+// draws the grid above its deck where the deck DROPPED something the grid alone
+// had. In Computing that is the four sections whose grid draws a live model —
+// Explore concept, Visual models, Lesson, Activities, whose decks draw
+// `deckDiagram` (interactive: false) — plus Computing Words, which is the only
+// route to the per-word WebGL explainer (computing-word-scenes.js).
+//
+// The other nine deck sections are NOT restored and must not be: nothing in them
+// lives only in the grid, so a second copy of the same content is precisely what
+// the deck-only change correctly removed.
+//
+// Contexts this actually restores, measured rather than assumed — they are not
+// uniform, and CLAUDE.md said the wrong thing about this until 2026-08-26:
+//   Computing Words   computingWordExplainer(current.term)  1 — the ACTIVE word's card
+//   Explore concept   the active discovery                  1
+//   Visual models     the active model                      1
+//   Lesson            course.concepts.map(…)                one per concept, up to 5
+//   Activities        course.activities.map(…)              one per activity, 8 at Stage 4
+// The "a 15-word unit would be 15 live contexts" warning is about putting the
+// explainer INTO the deck, where every slide is in the DOM at once. The grid's
+// word card shows one word and holds one context, which is why restoring the
+// grid is the cheap way to get the explainer back and moving it into the deck is
+// not. Activities at 8 is the worst case and is the state that shipped for
+// months before deck-only — but it is also why the deck half MUST stay flat
+// here: interactive deck diagrams would make it 16.
+function bothDesignsPage(renderClassic, renderDeck) {
+  $("#app").innerHTML = `<div class="both-designs">
+      <div class="classic-design" id="classic-design"></div>
+      <div class="deck-design" id="deck-design" aria-hidden="true">
+        <div class="deck-design-head"><span class="eyebrow">The same section, one card at a time</span><p>Swipe or use the arrows. Everything above is here too.</p></div>
+        <div id="deck-host"></div>
+      </div>
+    </div>`;
+  classicRegion = $("#classic-design");
+  deckRegion = null;
+  renderClassic();
+  // Only now: the deck's own mount must not resolve through the classic region,
+  // and its controls must not be found by the original's still-live listeners.
+  deckRegion = $("#deck-design");
+  renderDeck();
+  untabDeckHalf();
 }
 
 // Every deck renderer mounts through this, so where a deck goes is decided once.
@@ -260,7 +323,7 @@ const { mountDeck, deckFinish } = createDeck({
   // Scoped to what actually changed: a one-slide redraw must not re-initialise
   // the WebGL models on the slides either side of it, which would leave two
   // animation loops running on one canvas.
-  afterPaint: (scope) => { bindVoiceControls(); updateVoiceUI(); initComputingWebGL(scope); },
+  afterPaint: (scope) => { bindVoiceControls(); updateVoiceUI(); initComputingWebGL(scope); untabDeckHalf(); },
 });
 
 // The debugging rule and the online-safety help are the UI's own words, not any
@@ -748,7 +811,7 @@ function renderComputingWords() {
     ? course.reference.vocabulary
     : (course.reference.terms || []).map(([term, meaning]) => ({ term, meaning, example: "", letter: (term[0] || "?").toUpperCase() }));
   if (!vocab.length) { cRoot().innerHTML = `${pageHeader("Language for computing", "Computing Words", "No key words were provided for this unit.")}`; return; }
-  if (bothDesigns()) return deckOnlyPage(() => renderComputingWordsDeck(vocab));
+  if (bothDesigns()) return bothDesignsPage(() => renderComputingWordsClassic(vocab), () => renderComputingWordsDeck(vocab));
   return renderComputingWordsClassic(vocab);
 }
 
@@ -882,7 +945,7 @@ function renderExploreConceptDeck() {
 }
 
 function renderExploreConcept() {
-  if (bothDesigns()) return deckOnlyPage(() => renderExploreConceptDeck());
+  if (bothDesigns()) return bothDesignsPage(() => renderExploreConceptClassic(), () => renderExploreConceptDeck());
   return renderExploreConceptClassic();
 }
 
@@ -939,7 +1002,7 @@ function renderVisualModelsDeck() {
 }
 
 function renderVisualModels() {
-  if (bothDesigns()) return deckOnlyPage(() => renderVisualModelsDeck());
+  if (bothDesigns()) return bothDesignsPage(() => renderVisualModelsClassic(), () => renderVisualModelsDeck());
   return renderVisualModelsClassic();
 }
 
@@ -1059,7 +1122,7 @@ function renderLessonDeck() {
 }
 
 function renderLesson() {
-  if (bothDesigns()) return deckOnlyPage(() => renderLessonDeck());
+  if (bothDesigns()) return bothDesignsPage(() => renderLessonClassic(), () => renderLessonDeck());
   return renderLessonClassic();
 }
 
@@ -1288,7 +1351,7 @@ function renderActivitiesDeck() {
 }
 
 function renderActivities() {
-  if (bothDesigns()) return deckOnlyPage(() => renderActivitiesDeck());
+  if (bothDesigns()) return bothDesignsPage(() => renderActivitiesClassic(), () => renderActivitiesDeck());
   return renderActivitiesClassic();
 }
 

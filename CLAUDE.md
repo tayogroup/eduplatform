@@ -43,7 +43,8 @@ Real uploads are `npm run deploy:integration|staging|production`. **Never run a 
 ## Hard rules
 
 - **Grades/Stages 5-8 keep their design**: the full-screen slide deck (`gc-*`, `shell/deck.js`) is for Grades/Stages 1-4 only. By Grade 5 a learner scans a page rather than being walked through it one item at a time, so the grids, tabs and two-column labs there are the intended design, not a backlog waiting to be converted. Gate on stage number, in ONE constant per subject, never per section — the name differs by subject — `DECK_MAX_STAGE` in Science, Mathematics and Global Perspectives, `BOTH_DESIGNS_MAX_STAGE` in Computing, `BOTH_DESIGNS` in English (a boolean, `gradeNumber <= 4`) — but the line is 4 in every one of them; keep every grid renderer byte-identical and give it only a one-line early return (Computing is the exception and says why below: the stacked designs forced its originals to query inside a region, so they moved into `…Classic` functions behind a dispatcher — the upper stages still reach them unchanged); scope deck CSS to deck-only classes (`.gc-*`, `.wc-*`, `.<subject>-gc-*`) so no rule can match an upper-stage page. Verify at an upper stage in the browser — zero `gc-*` nodes and `body.gc-full` never set — not just by reading the diff. The upper stages carry known cosmetic defects that look like invitations (Science's `.method-example > strong` is 70px serif, a Mathematics size for `24 + 8`, applied to a whole investigation): flag them, never fix them in passing.
-- **Grades/Stages 1-4 are the deck ALONE, except English's Reading & story.**
+- **Grades/Stages 1-4 are the deck ALONE except where the deck DROPPED
+  something** — ten sections, listed below.
   Owner, 2026-08-26, across all five deck
   subjects: a section that has a deck renders the slides and nothing above them.
   They used to render the original design first and the same content again as an
@@ -54,8 +55,18 @@ Real uploads are `npm run deploy:integration|staging|production`. **Never run a 
   so the topbar stays and the learner asks for the screen with the deck's own Full
   screen button.
 
-  **The ONE exemption, owner the same day: English's Reading & story keeps both
-  designs at Grades 1-4.** `renderReading` calls `renderBothDesigns`, which is
+  **The exemptions, all owner-decided on 2026-08-26, all on one rule: a section
+  keeps both designs where the deck cannot carry something the page alone had.**
+  Ten sections in three subjects — English's Reading & story (narration);
+  Science's Explore concept, Visual models, Lesson and Activities, and the same
+  four in Computing plus Computing Words (interactive WebGL models, see the
+  bullet below). Mathematics and Global Perspectives have NO exemptions and must
+  keep none: neither draws a `deckDiagram`, and their decks host no WebGL at all,
+  so nothing in them lives only in the grid. Everything else stays deck-only —
+  a second copy of the same content is exactly what the deck-only change
+  correctly removed.
+
+  **English's Reading & story: the narration case.** `renderReading` calls `renderBothDesigns`, which is
   kept alongside `renderDeckOnly` for it alone. The reason is that this is the one
   section where the two halves are not the same content twice: the e-book carries
   the narration — the recorded clip, the read-along highlight, the print button —
@@ -80,6 +91,21 @@ Real uploads are `npm run deploy:integration|staging|production`. **Never run a 
   above it and carries the "Go to the slides" pointer again. `collectPageNarration`
   needs no such test — it prefers `#classic-design`, which exists only where a
   classic half does.
+
+  **Computing's `aria-hidden` + `untabDeckHalf()` are back, on the restored
+  sections ONLY, and the same "which kind" rule is why.** They were deleted with
+  the deck-only change because with the grid gone they would have taken the ONLY
+  design out of the accessibility tree; on a restored section the original
+  condition holds again exactly — the deck is a second presentation of content
+  read in full above it. Nothing needed a stage test: `untabDeckHalf()` is scoped
+  by the attribute (`#app .deck-design[aria-hidden="true"]`) and is a no-op where
+  there is no hidden half, so putting the attribute back in `bothDesignsPage`
+  alone is the whole change. Keep its `afterPaint` call — the deck mints fresh
+  tabbable controls on `setSlides` and `redrawSlide`, so without it the tab order
+  silently repairs itself the first time a learner filters or changes slide
+  (verified: filtering the Words deck rebuilt 65 controls to 59, still 0
+  reachable). Global Perspectives has the identical pair, still correctly
+  deleted — it has no restored sections.
 
   **Do not flip the gate to do this, in either direction.** `BOTH_DESIGNS` /
   `bothDesigns()` is what ROUTES a stage to the deck, so flipping it sends 1-4
@@ -116,18 +142,62 @@ Real uploads are `npm run deploy:integration|staging|production`. **Never run a 
     section — 25 practice questions, or several hundred English words. It now
     prefers `#classic-design`, then the one slide that is not `inert`
     (`shell/course-app.js` and `english.js`, one line each).
-  - **The interactive WebGL models at 1-4 are GONE, and that is a real loss, not
-    an oversight.** They lived in the grid half, which could afford one live
-    context because it showed one topic at a time; deck diagrams are flat
-    (`deckDiagram`, `interactive: false`) because every slide is in the DOM at
-    once — up to eight contexts for Stage 4 Build It against a cap of about
-    sixteen on desktop and commonly eight on mobile. Computing's per-word WebGL
-    explainer (`computing-word-scenes.js`, Stages 1-4 only, a 15-word unit would
-    be 15 contexts) is unreachable for the same reason.
-    `check-computing-webgl-scenes.mjs` still passes — the DATA is intact — which
-    is the usual shape: a gate that is green about a feature nobody can reach.
-    Recovering either means initialising only the slide on screen and dropping
-    the context on a slide change; the deck already tracks which slide that is.
+  - **The interactive WebGL models at 1-4 were GONE, and have been RESTORED —
+    by bringing the grid back on the sections that had them, not by putting
+    models in the deck.** Owner, 2026-08-26, later the same day. Deck diagrams
+    stay flat (`deckDiagram`, `interactive: false`) because every slide is in the
+    DOM at once, so nine sections went back to both designs and only those:
+    Science's Explore concept, Visual models, Lesson and Activities; the same
+    four in Computing plus Computing Words, which is the only route to the
+    per-word explainer (`computing-word-scenes.js`). Mathematics and Global
+    Perspectives are untouched and must stay so — neither draws a single
+    `deckDiagram`, so neither lost anything.
+
+    **Two measurements in the previous version of this bullet were wrong. Both
+    were checked in the browser on 2026-08-26 and both mattered to the fix.**
+
+    "The grid could afford one live context because it showed one topic at a
+    time" is true for HALF the sections and false for the other half, and the
+    same note's own figure ("up to eight contexts for Stage 4 Build It")
+    contradicts it — eight only parses if the grid held eight at once. Measured
+    per renderer, `interactive` contexts on one page:
+
+    | section | how the grid draws it | contexts |
+    | --- | --- | --- |
+    | Explore concept | the ACTIVE discovery | 1 |
+    | Visual models | the ACTIVE model | 1 |
+    | Computing Words | the ACTIVE word's card | 1 |
+    | Lesson | `concepts.map(…)` | one per concept — 6 Science, 5 Computing |
+    | Activities | `activities.map(…)` | one per activity — 6 Science, **8** Computing |
+
+    That is the state that shipped for months before deck-only, not a new
+    hazard — but it is why the deck half MUST stay flat on a restored section.
+    Interactive deck diagrams would double these to 2N and put Activities past
+    the cap (about sixteen on desktop, commonly eight on mobile).
+
+    "A 15-word unit would be 15 contexts" is about moving the explainer INTO the
+    deck. The grid's word card shows one word and holds ONE context, which is
+    why restoring the grid is the cheap way to get the explainer back and moving
+    it into the deck is not. `computingWordExplainer(current.term)` — singular,
+    the active word.
+
+    Two things to know before touching this again. **Not every diagram index has
+    a scene**: `scienceDiagram` returns a static SVG when `diagram.scene` is
+    falsy (Science 24 of 33 have one, Computing 19 of 27), so a section legitimately
+    shows "Visual example" rather than "Interactive example" at some indices —
+    zero canvases at index 0 is data, not a broken restore. And
+    `initScienceWebGL` / `initComputingWebGL` mount a renderer for EVERY matching
+    canvas in scope with **no cap and no lazy mounting**; the `try/catch` shows a
+    fallback only on synchronous creation failure, and there is no
+    `webglcontextlost` handler in either file, so a browser that evicts the
+    oldest context to honour a new one leaves a silently blank canvas. That is
+    pre-existing and unaddressed.
+
+    `check-computing-webgl-scenes.mjs` was the worked example of a gate that is
+    green about a feature nobody can reach — its "word explainer coverage:
+    grade 1: 88/88 … grades 1-4 must be total" passed the entire time the
+    explainer was unreachable. It now describes something a learner can get to,
+    which is what makes it a gate again rather than a fact about data.
   - A pre-existing 22px horizontal overflow on a deck page is NOT from this
     change: the deck is 960px in a 946px content column, measured identical with
     the grid half restored in the DOM. It is the shape Global Perspectives'

@@ -116,6 +116,20 @@ const AUDIO_IS_DEV = ["localhost", "127.0.0.1"].includes(location.hostname);
 // stamped a day earlier — those swapped one colliding entry's audio for the
 // other's, which withheld no correction — these 74 carry a real repair. The
 // uploader reports the number: it said 74.
+//   Also carried by this stamp, and NOT given one of its own: the Grade 8
+//   glossary re-recordings (020e58837, 31 clips that stopped saying their own
+//   index number). They kept their filenames — workers-meaning.mp3 went 58,976
+//   bytes to 56,050 on the same path — so by the per-clip rule above they need
+//   a stamp. They do not need a NEW one: what busts a browser is the stamp
+//   CHANGING, and a stamp covers every clip already on storage when it ships.
+//   These were uploaded and verified on storage (82/82 matching the repo
+//   byte-for-byte) while 20260827a was still unreleased, so the release that
+//   carries it refetches them too. Minting 20260827b would have been the same
+//   release doing the same thing under a second name.
+//   The ordering is the whole point and it is the one way this can go wrong:
+//   audio to storage FIRST, stamp shipped after. A clip uploaded onto an
+//   unchanged filename AFTER its stamp is already live is pinned again under
+//   the new URL, for a year, and needs the next stamp.
 const AUDIO_RELEASE = "20260827a";
 function withAudioRelease(url) {
   // Dev serves from disk with no caching worth defeating, and a bare filename

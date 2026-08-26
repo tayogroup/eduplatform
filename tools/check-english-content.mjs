@@ -292,6 +292,7 @@ let missingSection = 0;
 let displayPhonemes = 0;
 let taughtVocabulary = 0;
 let glossaryVocabulary = 0;
+let quotedGlossaryKeys = 0;    // keys ending in a bare apostrophe — see the floor below
 const unsigned = new Map();      // reviewStatus -> count
 const bannerImages = new Map();  // image path -> [unit labels]
 
@@ -506,7 +507,58 @@ for (const gradeDir of grades) {
       const resolved = resolveAsset(source, gradeDir);
       if (resolved && !fs.existsSync(resolved)) fail(`${gradeDir}/sentence-glossary.json`, `${where} is available:true but ${source} is not on disk`);
     });
+
+    // ── a key ending in a bare apostrophe must be a word somebody can CLICK ──
+    // These look like junk and are not. `linkGlossaryWords` (english.js)
+    // tokenises with /[A-Za-z']+/g, so an apostrophe is part of a word token:
+    // where a word abuts a CLOSING SINGLE QUOTE in a sentence, the clickable
+    // token carries the quote, and only a key carrying it too will open the
+    // popover. Four of the 46 are not possessives at all and are the reason
+    // this check is written down rather than assumed —
+    //
+    //   fashion'  "What connotation does the phrase 'fast fashion' carry…"
+    //   well'     "…repetition of the phrase 'buy less, choose well' …"
+    //   future'   "…something like 'fast fashion's fading future'."
+    //   ku'       "The word 'ha-i-ku' has three syllables."  ('ha | i | ku')
+    //
+    // — each carrying the definition that token needs. Do NOT strip the
+    // apostrophe to "tidy" them: `fashion'` would collide with the separate
+    // `fashion` entry, which is the bug 8fc9888e8 just paid 6,175 characters to
+    // fix, and in all four the learner loses a working popover because the
+    // token they click no longer has an entry.
+    //
+    // So the check runs the other way: it cannot stop a deletion, but it fails
+    // the moment a key like these is added WITHOUT a token to justify it, which
+    // is the only way one of them is ever really junk. 46 of 46 reachable when
+    // written. Scoped to this class deliberately — 42 keys across Grades 1, 2
+    // and 8 are unreachable for unrelated reasons, and sweeping those into this
+    // gate would mean 42 new baseline entries in a baseline built to shrink.
+    const quoted = Object.keys(glossary.entries || {}).filter((key) => /['’]$/.test(key));
+    quotedGlossaryKeys += quoted.length;
+    if (quoted.length) {
+      const tokens = new Set();
+      for (const file of fs.readdirSync(dataDir, { recursive: true })
+        .map((name) => path.join(dataDir, String(name)))
+        .filter((file) => file.endsWith(".json") && path.basename(file) !== "sentence-glossary.json")) {
+        for (const token of fs.readFileSync(file, "utf8").match(/[A-Za-z']+/g) || []) tokens.add(token.toLowerCase());
+      }
+      for (const key of quoted) {
+        if (!tokens.has(key.toLowerCase())) {
+          fail(`${gradeDir}/sentence-glossary.json`, `${JSON.stringify(key)} ends in a bare apostrophe but never occurs as a token in this grade's content — nothing can open its popover, and it owns a clip nobody can play`);
+        }
+      }
+    }
   }
+}
+
+// The floor every gate in this repo eventually grows, and this one needs it more
+// than most: the check above is a loop over whatever `/['’]$/` selects, so a
+// filter that stops matching does not fail — it iterates nothing and reports a
+// clean pass, which is the "green because it did no work" shape recorded all
+// over CLAUDE.md. 46 keys qualify across Grades 4-8; well under that means the
+// selector broke, not that the content was tidied.
+if (quotedGlossaryKeys < 40) {
+  fail("sentence-glossary", `only ${quotedGlossaryKeys} key(s) ending in a bare apostrophe were found across all grades (46 when this was written) — the selector is matching almost nothing, so the reachability check above compared almost nothing`);
 }
 
 // ── the printable worksheet's answer-key filter ─────────────────────────────

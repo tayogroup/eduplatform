@@ -214,6 +214,26 @@ function glossaryItems(glossary, grade) {
     // yet; keying the filename on what else is in the file would put those nine
     // back into collision the day somebody adds one, silently, with no gate able
     // to see it. A filename is a function of its key.
+    //
+    // "-possessive" is a slight misnomer and the name is kept only because the
+    // files exist under it. What it actually selects for is "the key ends in a
+    // bare apostrophe", and four of the 46 are not possessives at all — g7
+    // "fashion'", "future'", "well'" and g5 "ku'" are ordinary words that abut a
+    // CLOSING SINGLE QUOTE in a sentence.
+    //
+    // Those four are correct data and MUST NOT be "repaired" by stripping the
+    // apostrophe. linkGlossaryWords tokenizes with /[A-Za-z']+/g (english.js), so
+    // an apostrophe is part of a word token: in "the phrase 'fast fashion' carries",
+    // what a learner can click IS `fashion'`, and the entry under that exact key is
+    // what makes the popover fire. "The word 'ha-i-ku' has three syllables"
+    // tokenizes to `'ha`, `i`, `ku'`, which is why a `ku'` entry exists and why its
+    // definition reads "part of the word 'haiku'".
+    //
+    // Measured across all eight grades, not assumed: 46 of 46 bare-apostrophe keys
+    // occur as a clickable token in their own grade's content — zero unreachable.
+    // Stripping them would delete a working popover in every case, and would put
+    // `fashion'` back into collision with the live `fashion` entry, which is the
+    // defect this change exists to fix.
     const id = slug(word) + (/['’]$/.test(String(word).trim()) ? "-possessive" : "");
 
     const wordSource = `./${dir}/${id}.mp3`;

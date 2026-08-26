@@ -2082,31 +2082,6 @@ remote against `.bunny-appver-manifest.json` — or skip the inference entirely 
 compare the plan against storage after the fact, which is what the guard above
 does.
 
-#### And the pipe does not just truncate the output, it can KILL the upload
-
-The section above is about `tail` discarding a summary. `head` is worse, because
-it exits, and a deploy piped into it takes SIGPIPE mid-write.
-
-v288 died that way on 2026-08-26: `deploy-app-version.js … | head -40` stopped
-at **65 of 126 files, with `app/english/index.html` already flipped**. So the
-entry pointed at a version directory that was missing more than half its bundle,
-and for about twenty minutes English served a pointer to a `v288/lucide.min.js`
-that did not exist — every icon in the shell an empty `<i>`, in production.
-
-**Never pipe a release into anything that can exit early.** Redirect to a file
-and read that (`… > release.log 2>&1; head -40 release.log`), or let it print.
-The pointer files go up LAST for exactly this reason, but "last" is no protection
-when the process is killed between the bundle and the pointer — it is protection
-against a failed upload, not against a severed stdout.
-
-The recovery is the same call as v262 and worth repeating because the instinct
-is wrong: **do not repair a half-written tag, and do not probe it to find out
-what is missing.** Roll forward to a new one. A version-path 404 is edge-cached
-for 37+ hours and cannot be purged with the key in `.env`, so a check would mint
-the very hole it was looking for, and a repaired v288 would still be serving
-cached 404s to everyone who had already loaded it. v289 was released over the
-top, all six subjects, and v288 stays spent and unreferenced.
-
 #### `| head` on a deploy does not truncate the output, it KILLS the upload
 
 The section above is about `tail` discarding a tool's summary header. `head` is

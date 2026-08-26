@@ -411,15 +411,63 @@ function createRenderer(canvas) {
   };
 }
 
-export function initScienceWebGL(root=document) {
-  root.querySelectorAll("canvas[data-science-scene]").forEach((canvas)=>{
-    const figure=canvas.closest("[data-science-figure]");
-    try {
-      const renderer=createRenderer(canvas); if(!renderer) throw new Error("WebGL unavailable");
-      figure.querySelector("[data-geometry-toggle]").addEventListener("click",event=>{const paused=renderer.toggle();event.currentTarget.textContent=paused?"Play animation":"Pause animation";});
-      figure.querySelector("[data-geometry-reset]").addEventListener("click",()=>renderer.reset());
-    } catch(error) {
-      console.warn("Science WebGL example unavailable",error); canvas.hidden=true; const fallback=figure.querySelector(".geometry-fallback"); if(fallback) fallback.hidden=false; const controls=figure.querySelector(".geometry-controls"); if(controls) controls.hidden=true;
-    }
+// Mounted canvases, so a second init pass cannot build a second renderer on one
+// canvas — and, more to the point, cannot attach the listeners below twice.
+//
+// This is DEFENSIVE. It is not fixing something observed, and the first version
+// of this comment claimed it was: it said afterPaint and the grid renderers both
+// init the same canvases. They do not overlap. `afterPaint` belongs to the DECK
+// (deck.js) and is called with the slide track, and a deck diagram is flat
+// (`interactive: false`) so it carries no scene canvas at all; the grid renderers
+// scan the classic region instead. A grid renderer that redraws replaces its own
+// DOM, so its canvases are new elements rather than remounted ones. Measured on
+// the deployed pre-guard bundle rather than reasoned about — one click on Pause
+// flipped the label exactly once, so exactly one listener was attached.
+//
+// It stays because the handlers below are listeners and the duplicate would be
+// silent: a deck that ever drew an interactive diagram, or a renderer that ever
+// re-inited without replacing its DOM, would double every toggle. A WeakSet keys
+// on the element, so a canvas thrown away by a re-render is collected with it.
+const mountedScenes = new WeakSet();
+
+// A context can be lost long AFTER it was created, and nothing above notices.
+// The browser honours a new context by evicting the oldest, and these pages mount
+// many at once — one per concept or activity, eight on Computing's Stage 4 Build
+// It, eleven on Stage 6 Lesson — against a cap of about sixteen on desktop and
+// commonly eight on mobile. No error is thrown when it happens: the try/catch
+// below only ever sees synchronous CREATION failure, so before this the canvas
+// simply stopped drawing and the fallback beside it stayed hidden. The learner
+// was left looking at an empty box where the model had been.
+//
+// preventDefault() is what makes the loss recoverable — without it the context is
+// gone permanently and webglcontextrestored never fires at all.
+function mountScienceScene(canvas) {
+  if (mountedScenes.has(canvas)) return;
+  const figure=canvas.closest("[data-science-figure]");
+  if (!figure) return;
+  const fallback=figure.querySelector(".geometry-fallback"), controls=figure.querySelector(".geometry-controls");
+  const toggle=figure.querySelector("[data-geometry-toggle]"), reset=figure.querySelector("[data-geometry-reset]");
+  const degrade=(error)=>{ console.warn("Science WebGL example unavailable",error); canvas.hidden=true; if(fallback) fallback.hidden=false; if(controls) controls.hidden=true; };
+  const build=()=>{ const r=createRenderer(canvas); if(!r) throw new Error("WebGL unavailable"); return r; };
+  let renderer=null;
+  try { renderer=build(); } catch(error) { degrade(error); return; }
+  mountedScenes.add(canvas);
+  toggle?.addEventListener("click",event=>{ if(!renderer) return; const paused=renderer.toggle(); event.currentTarget.textContent=paused?"Play animation":"Pause animation"; });
+  reset?.addEventListener("click",()=>renderer?.reset());
+  canvas.addEventListener("webglcontextlost",(event)=>{
+    event.preventDefault();
+    renderer?.destroy(); renderer=null;
+    degrade("the browser reclaimed this WebGL context");
   });
+  canvas.addEventListener("webglcontextrestored",()=>{
+    try {
+      renderer=build();
+      canvas.hidden=false; if(fallback) fallback.hidden=true; if(controls) controls.hidden=false;
+      if(toggle) toggle.textContent="Pause animation";
+    } catch(error) { degrade(error); }
+  });
+}
+
+export function initScienceWebGL(root=document) {
+  root.querySelectorAll("canvas[data-science-scene]").forEach(mountScienceScene);
 }

@@ -9380,7 +9380,19 @@ function gamesTeacherPanel() {
 // app/english/v{TAG}/ → app/shared/fonts/. deploy-app-version.js already exempts
 // that one prefix from its "reference escapes the version path" warning, because
 // a woff2 is immutable under its own name.
-const CURSIVE_FONT_URL = new URL("../../shared/fonts/EduNSWACTCursive-normal-400-700.woff2", import.meta.url).href;
+// Edu NSW ACT Foundation, SIL Open Font License 1.1, self-hosted.
+//
+// It replaced Edu NSW ACT Cursive on 2026-08-26 because the sheet was unreadable
+// and untraceable: the Cursive face is a slanted, looped hand whose ascenders
+// carry big entry flourishes, and a learner could neither read the model nor
+// follow it. Foundation is the same family's UNJOINED hand — upright, round, one
+// stroke per letter — and the trade was made deliberately by the owner: the sheet
+// now teaches letterform and spacing rather than continuous joins.
+//
+// The joins are what was given up, and nothing free replaces them: Foundation and
+// the Beginner family (QLD, SA, TAS, VIC) are all unjoined, and the only joined
+// teaching hand this repo can ship is the one just removed.
+const CURSIVE_FONT_URL = new URL("../../shared/fonts/EduNSWACTFoundation-normal-400-700.woff2", import.meta.url).href;
 const CURSIVE_FAMILY = "Ehel Cursive";
 
 // The weight the sheet is DRAWN at, and — the point of it being a constant — the
@@ -9394,17 +9406,71 @@ const CURSIVE_FAMILY = "Ehel Cursive";
 // drawing at 700 under-measures every word and overflows the ruled line. That is
 // the same class of defect as the probe that measured a header the sheet never
 // printed — a correct measurement of something other than what ships.
-const CURSIVE_WEIGHT = 700;
+// 500 for Edu NSW ACT Foundation. This is a property of the FACE, not a taste:
+// the outgoing Cursive face was thin and needed 700 to read at all, and this one
+// is a rounder, heavier design where 700 fills in the counters of "a" and "e" and
+// the word turns into a row of blobs. Compared at 500/600/700 against the real
+// ruled band before choosing.
+const CURSIVE_WEIGHT = 500;
 // The trace copies. Light enough to write over in pencil, dark enough to follow —
 // the shipped #c2ced8 was neither, and at 400 the ghosts were nearly invisible.
 const CURSIVE_GHOST_FILL = "#9fb2c2";
 
-// Measured off the shipped woff2 with canvas TextMetrics at 100px, NOT taken
-// from the family's design notes: the rules have to sit where this file's
-// outlines actually sit, or every model letter floats above its baseline and the
-// sheet teaches the wrong thing. baseline→midline .54em, baseline→ascender
-// 1.01em, baseline→descender .47em. Re-measure if the woff2 is ever replaced.
-const CURSIVE_X_HEIGHT = 0.54, CURSIVE_ASCENDER = 1.01, CURSIVE_DESCENDER = 0.47;
+// WHERE THE RULES GO, measured off the face that actually loaded rather than
+// written down beside it.
+//
+// These were three hard-coded constants with a comment saying "re-measure if the
+// woff2 is ever replaced" — which is a rule only as good as whoever remembers it,
+// and the woff2 was then replaced. Getting them wrong is not subtle: the rules
+// have to sit where THIS file's outlines sit, or every model letter floats off
+// its baseline and the sheet teaches the wrong thing.
+//
+// So the numbers below are only a fallback for the moment before the face
+// resolves, and measureCursiveMetrics() overwrites them from the real outlines on
+// load. Swap the font and the geometry follows on its own.
+const cursiveMetrics = { x: 0.45, asc: 0.70, desc: 0.22 };
+
+// Ink extents, not font metadata. A face's declared ascent/descent describe its
+// em box and routinely exceed the letters — the same distinction that made
+// getBBox useless for this earlier — so the letters are rasterised and their
+// topmost and bottommost lit pixels found. Taken over several letters because one
+// is not the alphabet: "f" both rises and drops in this hand, and "l" alone would
+// miss it.
+function measureCursiveMetrics() {
+  try {
+    const EM = 200;
+    const canvas = document.createElement("canvas");
+    canvas.width = 900; canvas.height = 700;
+    const ctx = canvas.getContext("2d", { willReadFrequently: true });
+    const baseline = 450;
+    const extent = (ch) => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#000";
+      ctx.font = `${CURSIVE_WEIGHT} ${EM}px "${CURSIVE_FAMILY}"`;
+      ctx.textBaseline = "alphabetic";
+      ctx.fillText(ch, 30, baseline);
+      const data = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+      let top = null, bottom = null;
+      for (let y = 0; y < canvas.height; y += 1) {
+        for (let x = 0; x < canvas.width; x += 1) {
+          if (data[(y * canvas.width + x) * 4 + 3] > 24) { if (top === null) top = y; bottom = y; break; }
+        }
+      }
+      return top === null ? null : { top: (baseline - top) / EM, bottom: (baseline - bottom) / EM };
+    };
+    const of = (chars, pick) => {
+      const values = chars.map(extent).filter(Boolean).map(pick);
+      return values.length ? values : null;
+    };
+    const xs = of(["x", "o", "n"], (e) => e.top);
+    const ascs = of(["l", "h", "k", "b", "f"], (e) => e.top);
+    const descs = of(["g", "y", "p", "j", "f"], (e) => e.bottom);
+    if (!xs || !ascs || !descs) return;
+    cursiveMetrics.x = Math.max(...xs);
+    cursiveMetrics.asc = Math.max(...ascs);
+    cursiveMetrics.desc = -Math.min(...descs);
+  } catch { /* keep the fallback; a sheet with slightly wrong rules beats no sheet */ }
+}
 
 // A4 portrait at 14mm margins. Every length below is millimetres, and the ruled
 // lines are drawn as SVG in a viewBox whose user unit IS one millimetre — so a
@@ -9422,8 +9488,8 @@ const WORKSHEET_SIZES = {
 const defaultWorksheetSize = () => (gradeNumber <= 2 ? "large" : "medium");
 
 function worksheetGeometry(sizeKey) {
-  const em = (WORKSHEET_SIZES[sizeKey] || WORKSHEET_SIZES.medium).xMm / CURSIVE_X_HEIGHT;
-  const band = em * (CURSIVE_ASCENDER + CURSIVE_DESCENDER);
+  const em = (WORKSHEET_SIZES[sizeKey] || WORKSHEET_SIZES.medium).xMm / cursiveMetrics.x;
+  const band = em * (cursiveMetrics.asc + cursiveMetrics.desc);
   // The trace line and the write line need to read as a PAIR, and the pair needs
   // to separate from the next word. At 1mm apart the trace line's descender rule
   // and the write line's ascender rule printed as one doubled grey line and the
@@ -9443,7 +9509,14 @@ function loadCursiveFace() {
   if (!cursiveFacePromise) {
     cursiveFacePromise = new FontFace(CURSIVE_FAMILY, `url("${CURSIVE_FONT_URL}") format("woff2")`, { weight: "400 700" })
       .load()
-      .then((face) => { document.fonts.add(face); return face; })
+      .then((face) => {
+        document.fonts.add(face);
+        // AFTER the add, not before: canvas can only rasterise a face the
+        // document knows about, and measuring first silently measures the
+        // fallback — which would look like a plausible set of numbers.
+        measureCursiveMetrics();
+        return face;
+      })
       .catch((error) => { cursiveFacePromise = null; throw error; });
   }
   return cursiveFacePromise;
@@ -9482,18 +9555,24 @@ function traceCopies(widthEm, geo) {
   return Math.max(1, Math.min(3, Math.floor((SHEET_W + gap) / (wordMm + gap))));
 }
 
+// How far in from the rule's left end the writing starts. At x=0 the first
+// letter's leftmost ink sits exactly on the page margin and the stem is shaved
+// off — visible on every model word on the sheet. A hair of inset costs nothing
+// and is what a ruled exercise book does anyway.
+const CURSIVE_LEFT_INSET = 0.8;
+
 // One ruled line. `y` in the viewBox is the baseline, so the four rules and the
 // text share one coordinate system and cannot drift apart.
 function worksheetLineSvg(geo, word = "", widthEm = 0) {
-  const baseline = geo.em * CURSIVE_ASCENDER;
-  const midline = geo.em * (CURSIVE_ASCENDER - CURSIVE_X_HEIGHT);
+  const baseline = geo.em * cursiveMetrics.asc;
+  const midline = geo.em * (cursiveMetrics.asc - cursiveMetrics.x);
   const foot = geo.band;
   const copies = [];
   if (word) {
     const gap = geo.em * 0.7;
     const step = widthEm * geo.em + gap;
     for (let index = 0; index < traceCopies(widthEm, geo); index += 1) {
-      copies.push(`<text x="${(index * step).toFixed(2)}" y="${baseline.toFixed(2)}" class="${index ? "cw-ghost" : "cw-model"}">${escapeHtml(word)}</text>`);
+      copies.push(`<text x="${(CURSIVE_LEFT_INSET + index * step).toFixed(2)}" y="${baseline.toFixed(2)}" class="${index ? "cw-ghost" : "cw-model"}">${escapeHtml(word)}</text>`);
     }
   }
   return `<svg class="cw-svg" viewBox="0 0 ${SHEET_W} ${foot.toFixed(2)}" preserveAspectRatio="xMinYMin meet" aria-hidden="true" focusable="false">
@@ -9509,15 +9588,15 @@ function worksheetLineSvg(geo, word = "", widthEm = 0) {
 // across it. Used for a sentence, where the point is to read it and copy it
 // underneath — not to trace it.
 function worksheetTextLineSvg(geo, text, { model }) {
-  const baseline = geo.em * CURSIVE_ASCENDER;
-  const midline = geo.em * (CURSIVE_ASCENDER - CURSIVE_X_HEIGHT);
+  const baseline = geo.em * cursiveMetrics.asc;
+  const midline = geo.em * (cursiveMetrics.asc - cursiveMetrics.x);
   const foot = geo.band;
   return `<svg class="cw-svg" viewBox="0 0 ${SHEET_W} ${foot.toFixed(2)}" preserveAspectRatio="xMinYMin meet" aria-hidden="true" focusable="false">
     <line class="cw-rule" x1="0" y1="0" x2="${SHEET_W}" y2="0"></line>
     <line class="cw-rule cw-dashed" x1="0" y1="${midline.toFixed(2)}" x2="${SHEET_W}" y2="${midline.toFixed(2)}"></line>
     <line class="cw-baseline" x1="0" y1="${baseline.toFixed(2)}" x2="${SHEET_W}" y2="${baseline.toFixed(2)}"></line>
     <line class="cw-rule" x1="0" y1="${foot.toFixed(2)}" x2="${SHEET_W}" y2="${foot.toFixed(2)}"></line>
-    ${text && model ? `<text x="0" y="${baseline.toFixed(2)}" class="cw-model">${escapeHtml(text)}</text>` : ""}
+    ${text && model ? `<text x="${CURSIVE_LEFT_INSET}" y="${baseline.toFixed(2)}" class="cw-model">${escapeHtml(text)}</text>` : ""}
   </svg>`;
 }
 
@@ -9529,8 +9608,8 @@ function worksheetTextLineSvg(geo, text, { model }) {
 // The dividers are faint and stop at the baseline — a full-height rule would read
 // as a column edge and box the letters in, which is the opposite of joined writing.
 function worksheetSpellSvg(geo, widthEm) {
-  const baseline = geo.em * CURSIVE_ASCENDER;
-  const midline = geo.em * (CURSIVE_ASCENDER - CURSIVE_X_HEIGHT);
+  const baseline = geo.em * cursiveMetrics.asc;
+  const midline = geo.em * (cursiveMetrics.asc - cursiveMetrics.x);
   const foot = geo.band;
   const gap = geo.em * 0.7;
   const step = widthEm * geo.em + gap;
@@ -9538,7 +9617,7 @@ function worksheetSpellSvg(geo, widthEm) {
   const dividers = [];
   for (let index = 1; index < slots; index += 1) {
     const x = (index * step - gap / 2).toFixed(2);
-    dividers.push(`<line class="cw-slot" x1="${x}" y1="${(baseline - geo.em * CURSIVE_X_HEIGHT * 1.15).toFixed(2)}" x2="${x}" y2="${baseline.toFixed(2)}"></line>`);
+    dividers.push(`<line class="cw-slot" x1="${x}" y1="${(baseline - geo.em * cursiveMetrics.x * 1.15).toFixed(2)}" x2="${x}" y2="${baseline.toFixed(2)}"></line>`);
   }
   return `<svg class="cw-svg" viewBox="0 0 ${SHEET_W} ${foot.toFixed(2)}" preserveAspectRatio="xMinYMin meet" aria-hidden="true" focusable="false">
     <line class="cw-rule" x1="0" y1="0" x2="${SHEET_W}" y2="0"></line>

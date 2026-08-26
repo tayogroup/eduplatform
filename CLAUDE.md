@@ -1650,6 +1650,17 @@ failing check reporting a code no caller reads as failure is exactly the class
 of defect this file is about, so the terminal paths set `process.exitCode` and
 let node drain.
 
+**A floor cannot see a partial parse, and this gate proved it on itself.** It
+refuses below 5 endpoints; the true number is 7; a release tree missing
+`src/moodle/local_prequran` yields 6, which clears the floor. It ran that way
+inside a real release on 2026-08-27 and printed a tick over six of seven. Two
+guards now cover what the floor cannot: the gateway's source file must be
+READABLE (absent → exit 2, naming the archive recipe), and the gateway must
+appear in the discovered list even when the file is present (a moved minting
+line → exit 2). Both mutation-tested. The general form is worth more than the
+fix: **a floor set below the true count is not a floor, it is a formality** —
+name the specific thing that must be there.
+
 **What it cannot see**: it probes from wherever it runs. The 2026-08-26 outage
 was per-IP — this network was greylisted while other families' calls were
 landing all along, which looked like a refutation and was not. A pass here means
@@ -1760,7 +1771,7 @@ If that pre-release check finds someone else's work in the tree, **do not stash
 it and do not ask them to hurry** — build the release from HEAD instead:
 
 ```bash
-git archive HEAD tools package.json src/moodle/local_hubredirect \
+git archive HEAD tools package.json src/moodle \
   src/prototypes/ehel-academy/shell src/prototypes/ehel-academy/shared \
   src/prototypes/ehel-academy/english/shared \
   src/prototypes/ehel-academy/<subject> \
@@ -1770,10 +1781,19 @@ git archive HEAD tools package.json src/moodle/local_hubredirect \
 **Two of those paths look unrelated to the subject you are releasing, and both
 are load-bearing for the post-deploy tier check:**
 
-- `src/moodle/local_hubredirect` holds `wehel_prompt.json`, the Wehel phrase
-  bank, and every subject EXCEPT English resolves its narration hashes through
-  it (`tools/lib/ehel-wehel-phrases.js`, `CLIP_SUBJECTS`). Without it the check
-  dies on a Moodle path in the middle of a Bunny deploy.
+- `src/moodle` holds two things a Bunny release turns out to need.
+  `local_hubredirect/wehel_prompt.json` is the Wehel phrase bank, and every
+  subject EXCEPT English resolves its narration hashes through it
+  (`tools/lib/ehel-wehel-phrases.js`, `CLIP_SUBJECTS`); without it the check dies
+  on a Moodle path in the middle of a Bunny deploy. And
+  `local_prequran/progress_gatewaylib.php` is where `check-platform-cors.mjs`
+  reads the progress gateway's path — **this pathspec used to say
+  `src/moodle/local_hubredirect`, and the narrower form bought a silently smaller
+  sweep**: on 2026-08-27 the platform check ran inside a release from an archive
+  tree, printed "Preflighting 6 endpoint(s)" where there are seven, and passed.
+  Six of seven, under a green tick, at the moment an operator trusts it most.
+  The check now refuses rather than narrowing, so the narrow pathspec fails
+  loudly — but widening it here is the actual fix.
 - `english/shared` holds `course-ui.css`, which the other subjects `@import`
   and which `deploy-app-version.js` bundles into each release as
   `design-system.css`. Without it `--plan-json` cannot build the release plan,

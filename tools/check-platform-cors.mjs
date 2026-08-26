@@ -134,7 +134,22 @@ function discoverEndpoints() {
   // platformUrl() call. The path is minted server-side, so read it from the
   // minting line — the same rule, one file further along. It is reached with a
   // bearer token and no credentials, which is why nothing above marks it.
-  const lib = readIfPresent(path.join(ROOT, "src/moodle/local_prequran/progress_gatewaylib.php"));
+  //
+  // Its FILE is the thing to guard, not just its parse. A release cut from a
+  // `git archive` tree does not contain it — the recipe in CLAUDE.md pulls
+  // `src/moodle/local_hubredirect` and nothing else — so on 2026-08-27 this
+  // check ran inside a release and printed "Preflighting 6 endpoint(s)" over a
+  // green tick. Six of seven, silently, at the exact moment an operator trusts
+  // it most. The floor below could not see it: a floor of 5 against a true 7
+  // passes a partial parse, the same shape as the portal-route gate's 50.
+  const libPath = path.join(ROOT, "src/moodle/local_prequran/progress_gatewaylib.php");
+  if (!fs.existsSync(libPath)) {
+    console.error(`✗ cannot read ${path.relative(ROOT, libPath)}, which is where the progress gateway's path comes from.`);
+    console.error("  Without it this check sweeps one endpoint fewer and says so in a line nobody reads.");
+    console.error("  If this is a release tree, add `src/moodle` to the git archive pathspec and run it again.");
+    process.exit(2);
+  }
+  const lib = readIfPresent(libPath);
   for (const m of lib.matchAll(/'(\/local\/prequran\/progress_gateway\.php)'/g)) {
     if (!found.has(m[1])) found.set(m[1], { path: m[1], credentialed: false });
   }
@@ -160,6 +175,16 @@ const ORIGIN = appOrigin();
 if (ENDPOINTS.length < 5) {
   console.error(`✗ read only ${ENDPOINTS.length} endpoint(s) out of the shell sources — expected at least 5.`);
   console.error("  The call pattern has changed and this check is now looking at nothing. Fix the parser, do not lower the floor.");
+  process.exit(2);
+}
+// A floor is a weak guard and this one proved it: 6 of 7 cleared a floor of 5.
+// So name the endpoint that a floor cannot miss. The gateway is the one that
+// comes from a different file, in a different plugin, by a different rule — the
+// single most likely thing to fall out of the sweep, and the file guard above
+// catches only its ABSENCE, not a minting line that has moved.
+if (!ENDPOINTS.some((e) => /progress_gateway\.php$/.test(e.path))) {
+  console.error("✗ the progress gateway is missing from the endpoint list, though its source was readable.");
+  console.error("  Its path is parsed out of progress_gatewaylib.php's minting line; that line has moved or changed shape.");
   process.exit(2);
 }
 // The same guard one level down: if the credential parser stops matching, every

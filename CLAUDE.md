@@ -1661,6 +1661,28 @@ change makes every other subject's app tier stale, because their bundled
 `design-system.css` came from it. Intensive English v242 went stale exactly that
 way an hour after release, when an English commit touched `course-ui.css`.
 
+**But "stale" is not the question. "Can the drift RENDER" is.** Read literally,
+the paragraph above says an English CSS commit obliges you to re-release five
+other subjects, and on 2026-08-26 that would have been wrong. English v286
+carried a comment-only edit to `course-ui.css`; the tier check duly reported all
+five other subjects behind in exactly one file, `design-system.css`. Fetching the
+live `app/mathematics/v284/design-system.css` and reading it settled it in one
+step: it already carried the `.deck-only` rule, and it carried the exact comment
+block the commit REPLACED while carrying none of the new one. So the drift was
+comments, and comments cannot render.
+
+Releasing the five anyway would have spent five tags and put five untested
+bundles in front of learners to synchronise a comment. The English-only release
+was correct, and the sentence to carry forward is that the five are "stale on the
+shared stylesheet" — which is a different claim from "behind", and one you can
+only turn into a decision by fetching the live bundle and diffing it.
+
+The general form is the one this file keeps arriving at from other directions:
+`check-ehel-deploy-sync.mjs` compares HASHES, so it answers "are these bytes the
+same" and never "does the difference matter". That is the right design — a gate
+that tried to judge significance would start passing real drift — but it means
+its ✗ is the START of a question. Ask the bundle, not the tick.
+
 then run the deploy from `<tmpdir>`, copying `.env` and the
 `.bunny-*-manifest.json` caches in so the uploader still skips what is already on
 storage. `git worktree add` is the obvious answer and the wrong one here: a full
@@ -1847,6 +1869,53 @@ Treat it as shared. Copy it into a release tree and back out again if you must,
 but know that writing it while another session is mid-release overwrites their
 record of what they just uploaded. That happened on 2026-08-22 with two other
 releases in flight; nothing broke, and nothing would have said so if it had.
+
+#### One file is skipped on trust AND verified by nothing
+
+`shared/grade-redirect.js` falls through both safeguards at once, and neither is
+broken. Found 2026-08-26 while accounting for English v286.
+
+- The manifest skips it when `manifest[x.remote] === sha1(x.buf)` — the trust
+  path this whole section is about, where a wrong entry means the file is never
+  sent and nothing says so.
+- `--verify` cannot see it. `verifyRelease()` builds its read-back list as
+  ``items.map((i) => i.remote).filter((r) => r.includes(`/${TAG}/`))``, and the
+  stub is deliberately unversioned so the entry path `grade-N/index.html` stays
+  stable across releases.
+- The rescue that would otherwise catch it does not reach it either.
+  `verifyRelease` also resolves what the ENTRY references rather than only what
+  was uploaded — added because `versionIndexHtml()` rewrites computing's
+  `brand-fx.js` into `v{TAG}/` while `shared/brand-fx.js` is untracked, so a
+  clean checkout points the entry at a file it never sent. But that loop selects
+  `/^app\/[^/]+\/index\.html$/`, the SUBJECT entry, and `grade-redirect.js` is
+  referenced from `grade-N/index.html`, which the pattern cannot match.
+
+**Half of it is safe and that is why this has never bitten.** The manifest
+compares a content hash, so it cannot be wrong about CHANGED bytes: edit the
+stub and it uploads. The exposure is the other direction, the same one recorded
+above — an entry that is right about the bytes and wrong about whether they ever
+reached storage. It bites only a release that DEPENDS on new redirect behaviour,
+which would pass 16/16 and be broken on the CDN.
+
+The guard is passive, costs nothing and mints no cached 404, because it reads
+STORAGE rather than probing the edge. Take the expected hash from the release
+plan, which needs no `BUNNY_KEY`:
+
+```bash
+node tools/deploy-app-version.js <tag> --shell --plan-json english   # sha1 per remote, uploads nothing
+curl -s -H "AccessKey: $BUNNY_KEY" "https://storage.bunnycdn.com/ehelacademy/Ehel%20Primary/app/english/shared/grade-redirect.js" | sha1sum
+```
+
+Run on v286: both `30c9606829b5ef784ea1d6dbcf7d2f869b123058`, 920 bytes.
+
+**Scope this honestly.** It is demonstrated for exactly one file, on one
+release, where it did not bite — a real hole, and NOT yet evidence about any
+other pair of checks in this repo. What is worth carrying is the shape: two
+safeguards that are each complete on their own, with a file between them that
+was invisible because each one could point at the other. That is a step past the
+failures elsewhere in this file — the ✓ printed after a skip, the gate that is
+green about an unreachable feature — because here neither check is doing nothing.
+Their union has a hole, and no single check can report it.
 
 ### A pre-commit check shaped like recognition cannot see a new feature
 

@@ -9370,6 +9370,22 @@ function gamesTeacherPanel() {
 const CURSIVE_FONT_URL = new URL("../../shared/fonts/EduNSWACTCursive-normal-400-700.woff2", import.meta.url).href;
 const CURSIVE_FAMILY = "Ehel Cursive";
 
+// The weight the sheet is DRAWN at, and — the point of it being a constant — the
+// weight its widths are MEASURED at. The face is variable 400-700 and shipped at
+// 400, which prints a spidery model and a trace ghost at #c2ced8 that a child
+// cannot actually see to follow: "readable" and "writable" are two complaints and
+// this was the cause of both, more than the letterforms were.
+//
+// Measurement and render must use the SAME weight. cursiveWidthOf feeds
+// wrapCursive, traceCopies and the printed line layout, so measuring at 400 while
+// drawing at 700 under-measures every word and overflows the ruled line. That is
+// the same class of defect as the probe that measured a header the sheet never
+// printed — a correct measurement of something other than what ships.
+const CURSIVE_WEIGHT = 700;
+// The trace copies. Light enough to write over in pencil, dark enough to follow —
+// the shipped #c2ced8 was neither, and at 400 the ghosts were nearly invisible.
+const CURSIVE_GHOST_FILL = "#9fb2c2";
+
 // Measured off the shipped woff2 with canvas TextMetrics at 100px, NOT taken
 // from the family's design notes: the rules have to sit where this file's
 // outlines actually sit, or every model letter floats above its baseline and the
@@ -9432,7 +9448,7 @@ let cursiveMeasureContext = null;
 function cursiveWidthOf(text) {
   if (!cursiveMeasureContext) {
     cursiveMeasureContext = document.createElement("canvas").getContext("2d");
-    cursiveMeasureContext.font = `400 100px "${CURSIVE_FAMILY}"`;
+    cursiveMeasureContext.font = `${CURSIVE_WEIGHT} 100px "${CURSIVE_FAMILY}"`;
   }
   return cursiveMeasureContext.measureText(String(text)).width / 100;
 }
@@ -10149,9 +10165,13 @@ function worksheetCss(geo, { print }) {
     .cw-rule { stroke: #b9c7d2; stroke-width: .18; }
     .cw-dashed { stroke: #ccd8e0; stroke-dasharray: 1.6 1.6; }
     .cw-baseline { stroke: #17324d; stroke-width: .3; }
-    .cw-model, .cw-ghost { font-family: "${CURSIVE_FAMILY}", cursive; font-size: ${geo.em.toFixed(3)}px; }
+    /* Model and ghost share a weight as well as a family: the ghost is the shape
+       the learner traces, so a lighter ghost would teach a different letterform
+       from the one above it. Only the colour differs. */
+    .cw-model, .cw-ghost { font-family: "${CURSIVE_FAMILY}", cursive; font-weight: ${CURSIVE_WEIGHT};
+                           font-size: ${geo.em.toFixed(3)}px; }
     .cw-model { fill: #17324d; }
-    .cw-ghost { fill: #c2ced8; }`;
+    .cw-ghost { fill: ${CURSIVE_GHOST_FILL}; }`;
 }
 
 // Vocabulary groups, each with its words, in the unit's own order.

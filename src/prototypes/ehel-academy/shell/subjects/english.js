@@ -5142,15 +5142,66 @@ function escapeHtml(value = "") {
 // file escapes everywhere else it renders learner-facing text. `excludeWord`
 // is the card's own target word (already named above the sentence); linking
 // it back to itself would be a click that does nothing useful.
+// A glossary key can be a PHRASE — "bus stop", "lay the table", "ferris-wheel",
+// "in-front-of". The tokenizer below matches [A-Za-z']+, which contains neither a
+// space nor a hyphen, so for as long as it was the only reader those 40 keys could
+// never be produced: "Wait at the bus stop" scanned as `bus` and `stop`, and a
+// correct definition sat behind a key nothing could emit. Every one of the 40 has
+// its text present in a practice sentence, so they were live content the READER
+// could not reach, not dead data — which is why the fix is here and not a deletion
+// in the content.
+//
+// Longest first, so "bus stop" wins over a bare "bus" starting at the same place.
+// The separator is matched as [\s-]+ rather than literally, so a key written with
+// a hyphen still matches prose that spaces it (and the reverse); all 40 were
+// checked against the prose as written, and this only widens what resolves.
+//
+// Rebuilt when `sentenceGlossary` is replaced — it is reassigned per grade in
+// load() — rather than on every call, which would rescan several thousand keys
+// for every sentence rendered.
+let glossaryPhraseCache = null;
+let glossaryPhraseSource = null;
+function glossaryPhrases() {
+  if (glossaryPhraseSource === sentenceGlossary && glossaryPhraseCache) return glossaryPhraseCache;
+  const escapePart = (part) => part.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  glossaryPhraseCache = Object.keys(sentenceGlossary || {})
+    .filter((key) => /[\s-]/.test(key))
+    .sort((a, b) => b.length - a.length)
+    .map((key) => ({
+      key,
+      // Sticky: it may only match AT the token we are standing on, never later in
+      // the sentence, or a phrase further along would swallow the text between.
+      re: new RegExp(key.split(/[\s-]+/).filter(Boolean).map(escapePart).join("[\\s-]+"), "iy"),
+    }));
+  glossaryPhraseSource = sentenceGlossary;
+  return glossaryPhraseCache;
+}
+
 function linkGlossaryWords(text, excludeWord = "") {
   const excludeLower = String(excludeWord || "").toLowerCase();
   const source = String(text || "");
   const pattern = /[A-Za-z']+/g;
+  const phrases = glossaryPhrases();
   let out = "";
   let last = 0;
   let match;
   while ((match = pattern.exec(source))) {
     out += escapeHtml(source.slice(last, match.index));
+    let phrase = null;
+    for (const candidate of phrases) {
+      if (candidate.key === excludeLower) continue;
+      candidate.re.lastIndex = match.index;
+      const hit = candidate.re.exec(source);
+      if (hit) { phrase = { key: candidate.key, text: hit[0] }; break; }
+    }
+    if (phrase) {
+      out += `<button type="button" class="glossary-word" data-glossary-word="${escapeHtml(phrase.key)}">${escapeHtml(phrase.text)}</button>`;
+      last = match.index + phrase.text.length;
+      // Past the whole phrase, so its own words are not scanned again and linked
+      // a second time inside the button we just wrote.
+      pattern.lastIndex = last;
+      continue;
+    }
     const word = match[0];
     const lw = word.toLowerCase();
     const entry = lw !== excludeLower ? sentenceGlossary[lw] : null;

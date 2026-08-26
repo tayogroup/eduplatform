@@ -161,6 +161,13 @@ export function createGetHelp(options) {
   // search page — before any result is clicked. Cleared when the box empties,
   // so a stale question never outlives the search it belonged to.
   let currentQuery = "";
+  // Which stage this SEARCH is drawn around. Null until the tutoring category's
+  // stage picker moves it (course-app.js :: tutoring pickers), and never for a
+  // school learner, whose stage is where they actually stand. options.stage()
+  // stays that real position — a session's target and its `from` are recorded
+  // against it, so re-aiming the search can never rewrite where the learner is.
+  let stageOverride = null;
+  const stageNow = () => Number(stageOverride ?? options.stage());
   // Set by the shell after boot (course-app.js). For the TUTORING category the
   // finished session is emitted server-side as a tutoring.session event — the
   // umbrella course's own record, which the parent portal reads. A regular
@@ -218,7 +225,7 @@ export function createGetHelp(options) {
   }
 
   function windowStages() {
-    const current = Number(options.stage());
+    const current = stageNow();
     if (showAllStages) return Array.from({ length: options.maxStage }, (_, i) => i + 1);
     const from = Math.max(1, current - 2);
     const to = Math.min(options.maxStage, current + 2);
@@ -366,7 +373,7 @@ export function createGetHelp(options) {
       Promise.all(stages.map((stage) => loadLessonIndex(stage))),
     ]);
     if (token !== searchToken) return; // a newer keystroke owns the box now
-    const current = Number(options.stage());
+    const current = stageNow();
     const hits = [];
     indexes.forEach((index, at) => {
       if (!index) return;
@@ -574,7 +581,7 @@ export function createGetHelp(options) {
   function render() {
     const ui = options.deps();
     const esc = ui.escapeHtml;
-    const current = Number(options.stage());
+    const current = stageNow();
     const from = Math.max(1, current - 2);
     const to = Math.min(options.maxStage, current + 2);
     ui.$("#app").innerHTML = `${STYLE}${ui.pageHeader(
@@ -589,7 +596,7 @@ export function createGetHelp(options) {
           <button class="button primary" id="gh-go" type="button">${ui.icon("search")} <span>Search</span></button>
         </div>
         <div class="gh-window">
-          <span>${showAllStages ? `Searching every ${options.stageWord.toLowerCase()} (1–${options.maxStage})` : `Searching ${options.stageWord.toLowerCase()}s ${from}–${to}, around yours`}</span>
+          <span>${showAllStages ? `Searching every ${options.stageWord.toLowerCase()} (1–${options.maxStage})` : `Searching ${options.stageWord.toLowerCase()}s ${from}–${to}, ${stageOverride == null ? "around yours" : `around ${options.stageWord} ${current}`}`}</span>
           <button class="button secondary" id="gh-widen" type="button">${showAllStages ? `Back to ${options.stageWord.toLowerCase()}s ${from}–${to}` : `Show all ${options.stageWord.toLowerCase()}s`}</button>
         </div>
       </section>
@@ -1096,5 +1103,44 @@ export function createGetHelp(options) {
   // stuck on, not the unit the shell happens to have loaded behind the page.
   const searchQuery = () => currentQuery;
 
-  return { render, renderSession, sessionHere, attachShell, sessionHint, searchQuery };
+  // --- driven from outside the page ------------------------------------------
+  // Both are for the tutoring category's topbar pickers, which search rather
+  // than navigate (course-app.js :: tutoring pickers). Neither touches the URL:
+  // a picked topic is a question being asked, not a place the learner went, and
+  // a marker left on the URL would still be describing it several searches
+  // later — the same reason ghLabel/ghQuery are read once per page load.
+
+  // Put a query in the box and run it. Returns false when the page is not
+  // mounted, so the caller knows it has to route here first rather than
+  // silently dropping the learner's topic.
+  function search(query) {
+    const ui = options.deps();
+    const input = ui.$("#gh-query");
+    if (!input) return false;
+    input.value = query;
+    runSearch(query, ui);
+    return true;
+  }
+
+  // Re-aim the window at another stage. When the page is mounted this is the
+  // same dance the "Show all stages" button does, and for the same reason:
+  // render() rebuilds the search box, so the query has to be carried across by
+  // hand and re-run. When it is NOT mounted, recording the override is the
+  // whole job — the render that follows the caller's navigate() reads it.
+  function setStage(next) {
+    const n = Number(next);
+    if (!Number.isFinite(n) || n < 1 || n > options.maxStage) return;
+    stageOverride = n;
+    const ui = options.deps();
+    const mounted = ui.$("#gh-query");
+    if (!mounted) return;
+    const query = mounted.value;
+    render();
+    const input = ui.$("#gh-query");
+    if (!input) return;
+    input.value = query;
+    if (query.trim()) runSearch(query, ui);
+  }
+
+  return { render, renderSession, sessionHere, attachShell, sessionHint, searchQuery, search, setStage };
 }

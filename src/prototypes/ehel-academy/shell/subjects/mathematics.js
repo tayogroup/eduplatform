@@ -2021,7 +2021,7 @@ const config = {
     ctx.$("#course-label").textContent = `${stage.label} · ${course.subject} · ${course.term.label}`;
     ctx.$("#unit-title").textContent = course.unit.unitTitle;
     ctx.$("#stage-select").innerHTML = Array.from({ length: 8 }, (_, i) => i + 1).map((n) => `<option value="${n}" ${n === s ? "selected" : ""}>Stage ${n}</option>`).join("");
-    ctx.$("#stage-select").addEventListener("change", () => { location.href = `?stage=${Number(ctx.$("#stage-select").value)}&unit=1#overview`; });
+    ctx.$("#stage-select").addEventListener("change", () => { location.href = ctx.courseHref(1, "overview", Number(ctx.$("#stage-select").value)); });
     // The Study Plan rides in the unit picker under the Prerequisite
     // entry, one press away from anywhere in the course. Its option value is a
     // route, not a unit number — the change handler routes it.
@@ -2032,7 +2032,7 @@ const config = {
       ...manifest.units.map((unit) => `<option value="${unit.number}" ${unit.number === u ? "selected" : ""}>Unit ${unit.number}: ${esc(unit.title)}</option>`),
     ].join("");
     for (const picker of [ctx.$("#unit-select"), ctx.$("#top-unit-select")]) picker.innerHTML = unitOptions;
-    for (const picker of [ctx.$("#unit-select"), ctx.$("#top-unit-select")]) picker.addEventListener("change", () => { location.href = picker.value === "year-plan" ? `?stage=${s}&unit=${PREREQ_UNIT}#year-plan` : `?stage=${s}&unit=${Number(picker.value)}#overview`; });
+    for (const picker of [ctx.$("#unit-select"), ctx.$("#top-unit-select")]) picker.addEventListener("change", () => { location.href = picker.value === "year-plan" ? ctx.courseHref(PREREQ_UNIT, "year-plan") : ctx.courseHref(Number(picker.value)); });
   },
 };
 

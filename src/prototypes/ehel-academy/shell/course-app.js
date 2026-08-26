@@ -706,6 +706,18 @@ export function createCourseApp(config) {
       if (!teacherSwitch.dataset.bound) { teacherSwitch.dataset.bound = "true"; teacherSwitch.addEventListener("click", () => navigate("teacher")); }
     }
     if (config.onNavRendered) config.onNavRendered();
+    // The Study Plan is already in TUTORING_HIDDEN — dropped from the nav and
+    // from the countable list — but every subject ALSO prints it in the unit
+    // picker, which for this category is the door actually in front of the
+    // learner, since the sidebar is gone. One school-run page, two doors, and
+    // only one of them was shut. Pruned after onNavRendered because English
+    // repaints its pickers there (english.js :: renderUnitPickers), so doing
+    // it once at boot would not hold. The prerequisite entry is deliberately
+    // left: a placement exam is not in TUTORING_HIDDEN and is a reasonable
+    // thing for a search-driven learner to want.
+    if (IS_TUTORING) {
+      for (const option of $$('#unit-select option[value="year-plan"], #top-unit-select option[value="year-plan"]')) option.remove();
+    }
     // The nav repaints on its own — completing a section calls renderNav()
     // without a route change — so it cannot rely on renderRoute's sweep.
     paintIcons();
@@ -798,6 +810,90 @@ export function createCourseApp(config) {
     $("#content")?.focus({ preventScroll: true });
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
+
+  // --- the tutoring category's topbar pickers SEARCH, they do not navigate ---
+  // For a school learner the Stage and Unit pickers are position: "take me to
+  // Unit 9". The tutoring category holds no position — the unit the shell
+  // loaded behind the search page is an arbitrary landing — so the same two
+  // controls mean something else there, and every subject was reading them the
+  // school way: each binds `location.href = "?stage=…&unit=…#overview"`, which
+  // both discards the topic the learner just named AND rebuilds the query
+  // string from scratch, dropping ?category= and the ?pwsToken= that carries
+  // the claim. So picking "Unit 9: Probability" landed a tutoring learner in
+  // the ordinary course UI, no longer tutoring at all. (Owner, 2026-08-26.)
+  //
+  // ONE overlay in the shell rather than a tutoring branch in six subject
+  // files, the same shape and for the same reason as tutoringWehelOptions
+  // above. It is a CAPTURE-phase listener on `document`: the subjects bind
+  // their own handlers directly on the <select>, so the only way to take the
+  // event off them without holding a reference to six differently-shaped
+  // closures is to stop it while it is still on the way down. stopPropagation
+  // (not stopImmediate — the listener is on `document`, they are on the
+  // element) keeps it from ever reaching them.
+  //
+  // Anything this does NOT claim still reaches the subject untouched, and the
+  // two that matter are deliberate: "Stage Study Plan" (value "year-plan") and
+  // "Prerequisite: Placement exam" (value PREREQ_UNIT, negative) are places,
+  // not topics, so they navigate exactly as they did.
+  function tutoringPickerSearch() {
+    if (!IS_TUTORING || !config.getHelp) return;
+    // "Unit 4: Addition and Subtraction (1)" -> "Addition and Subtraction".
+    // The prefix is a course COORDINATE and the parenthesised tail is which
+    // half of a split topic this unit holds; neither is a word anybody is
+    // stuck on, and both only dilute the query. The status suffixes English
+    // and Intensive English print are stripped too — those options carry
+    // `disabled`, so no change event can fire from one, but the label is read
+    // here rather than assumed.
+    //
+    // The separator is subject-specific and both forms must be matched: five
+    // subjects write "Unit 1: Research", Global Perspectives writes
+    // "Unit 1 — Research". Matching the colon alone leaves GP searching for
+    // the literal words "Unit 1", which score nothing and dilute the title
+    // that does.
+    const topicOf = (option) => (option?.textContent || "")
+      .replace(/^\s*🔒\s*/, "")
+      .replace(/^\s*Unit\s+\d+\s*[:—–-]\s*/i, "")
+      .replace(/\s*[—-]\s*(review only|not yet written)\s*$/i, "")
+      .replace(/\s*\((?:locked|\d+)\)\s*$/i, "")
+      .trim();
+    const searchHere = (query) => {
+      // render() writes into #app, so the page has to exist before the query
+      // can go into its box — a picker used mid-lesson routes there first.
+      if (route !== "get-help") navigate("get-help");
+      config.getHelp.search(query);
+      $("#gh-query")?.focus();
+    };
+    document.addEventListener("change", (event) => {
+      const picker = event.target;
+      if (!picker || picker.tagName !== "SELECT") return;
+      // The stage axis is named differently by subject (#stage-select,
+      // #grade-select, #level-select) but they all carry this one class, which
+      // is what makes this overlay subject-agnostic.
+      if (picker.classList.contains("top-grade-picker")) {
+        const stage = Number(picker.value);
+        if (!Number.isFinite(stage) || stage < 1) return;
+        event.stopPropagation();
+        // Order matters: record the stage first, so if we still have to route
+        // to the search page its first render already draws the new window.
+        config.getHelp.setStage(stage);
+        if (route !== "get-help") navigate("get-help");
+        return;
+      }
+      if (picker.id !== "unit-select" && picker.id !== "top-unit-select") return;
+      // Everything except the two non-topic entries: "year-plan" is not a
+      // number at all, and the prerequisite is PREREQ_UNIT (-1). Zero is NOT
+      // one of them — Intensive English Level 1 opens on a real "Unit 0: The
+      // Sounds That Are Hard", so a `< 1` guard silently sends that one unit
+      // back down the school path while its neighbours search.
+      const unit = Number(picker.value);
+      if (!Number.isFinite(unit) || unit < 0) return;
+      const topic = topicOf(picker.selectedOptions[0]);
+      if (!topic) return;
+      event.stopPropagation();
+      searchHere(topic);
+    }, true);
+  }
+  tutoringPickerSearch();
   // shared/course-shell.js :: icon() emits <i data-lucide> for EVERY subject, and
   // the runtime replaces those elements in place — so it has to run after
   // anything that paints, and a subject that never calls it shows blank icons
@@ -1038,8 +1134,34 @@ export function createCourseApp(config) {
     document.body.appendChild(button);
   }
 
+  // Where a picker sends the learner. Built from the CURRENT url and then
+  // trimmed, never rebuilt from scratch: the query string carries the launch
+  // (?pwsToken=, ?pwsEndpoint=, on which the remote progress backend depends)
+  // and the category claim (?category=). Mathematics, Science and Computing
+  // each wrote `location.href = "?stage=…&unit=…#overview"`, which silently
+  // dropped all three — so a tutoring learner who picked the Study Plan or the
+  // placement exam arrived as an ordinary school learner, sidebar and all,
+  // which is the same symptom the unit picker had for a different reason.
+  // English (courseLocation), Intensive English (unitLocation) and Global
+  // Perspectives already did it this way; this is that helper, once.
+  //
+  // The five deletions are get-help's own landing markers plus English's
+  // review flag. Each names the ONE unit the learner was SENT to, so none may
+  // ride along to a unit they then chose for themselves — without this the
+  // Wehel dock's ghHint() would keep reporting the old topic. They used to go
+  // free, as a side effect of throwing the whole query string away.
+  const courseHref = (unit, hash = "overview", stage = stageNumber) => {
+    const url = new URL(location.href);
+    url.searchParams.set(config.param, stage);
+    url.searchParams.set("unit", unit);
+    for (const marker of ["review", "topic", "focus", "ghLabel", "ghQuery"]) url.searchParams.delete(marker);
+    url.hash = hash;
+    return url.href;
+  };
+
   // --- ctx: the surface the subject's renderers close over ------------------
   const ctx = {
+    courseHref,
     $, $$, escapeHtml, icon, voiceButton, pageHeader, toast,
     // "tutoring" for the tutoring-support category (see launchCategory above),
     // "" for a regular learner. Subjects read it for their own category

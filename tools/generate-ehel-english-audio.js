@@ -195,7 +195,26 @@ function glossaryItems(glossary, grade) {
   const items = [];
   for (const [word, entry] of Object.entries(glossary.entries || {})) {
     if (!entry) continue;
-    const id = slug(word);
+    // A PLURAL possessive ends in a bare apostrophe, and slug() drops it: the
+    // apostrophe is not [a-z0-9], so it collapses to "-" and the trailing "-" is
+    // stripped. "birds'" and "birds" therefore both became birds.mp3, and the two
+    // entries — which carry genuinely different definitions ("animals with
+    // feathers…" against "belonging to more than one animal…") — overwrote each
+    // other's clip on every run. Whichever was generated last won, so one of the
+    // pair played the other's definition, and every run re-narrated both because
+    // the fingerprint recorded for the name never matched whoever asked next.
+    //
+    // A SINGULAR possessive is unaffected and must stay unaffected: "boat's" has
+    // an s after the apostrophe, so it slugs to boat-s and never collided. 436
+    // keys carry a trailing apostrophe; only the 46 ending in a BARE one are
+    // touched here, and the other 390 keep their filenames byte-for-byte.
+    //
+    // The suffix is applied to all 46, not to the 37 that collide TODAY. Nine of
+    // them are unique only because their grade happens to have no plain entry
+    // yet; keying the filename on what else is in the file would put those nine
+    // back into collision the day somebody adds one, silently, with no gate able
+    // to see it. A filename is a function of its key.
+    const id = slug(word) + (/['’]$/.test(String(word).trim()) ? "-possessive" : "");
 
     const wordSource = `./${dir}/${id}.mp3`;
     const prevWord = entry.wordAudio || {};

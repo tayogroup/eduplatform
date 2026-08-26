@@ -1544,6 +1544,24 @@ was per-IP — this network was greylisted while other families' calls were
 landing all along, which looked like a refutation and was not. A pass here means
 *this* machine can reach the platform.
 
+**And it writes to the log you read when something breaks.** Every run puts one
+`OPTIONS … 204 0` in the platform's access log per endpoint, so a session that
+runs it a few times leaves a tidy row of identical counts — 6 `wehel_chat`,
+6 `wehel_speak`, 6 `wehel_listen` — which reads exactly like traffic recovering.
+It fooled the person who wrote it, hours after writing it, while checking
+whether learners had come back from that same outage. **Identical counts across
+unrelated endpoints are the tell**, and the way through is to separate the
+preflights from the real calls, because only the second kind is a learner:
+
+```bash
+grep "quiz_tts.php" ~/access-logs/<host>-ssl_log | awk '{print $9, $10}' | sort | uniq -c
+```
+
+A `204 0` is somebody's preflight, this gate's included. A `200` with a
+five-figure byte count is a page of a book actually narrated — which is the only
+line in that file that proves the whole chain works, and on the evening of the
+outage there was exactly one of them.
+
 ## Git
 
 - Work on `main` (or feature branches off it). History before 2026-07-16 lived on `codex/*` branches, now merged and deleted.

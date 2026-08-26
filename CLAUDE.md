@@ -2007,6 +2007,28 @@ CDN-side hazard (a probe against the edge mints a cached 404 that cannot be
 purged with the key in `.env`) and the storage side fails differently and just
 as silently.
 
+**How long that cached 404 lasts depends on the PATH SHAPE, and the gap is five
+minutes against at least 37 hours.** Measured 2026-08-26, around the v285/v286
+releases: an entry-path 404 carries `max-age=300`, while a version-path 404
+survived **37+ hours and was never observed to expire**. The contrast is what
+makes "never probe" usable rather than blanket. Never probe a `v{TAG}/` path
+before its upload lands — the mistake is effectively permanent, the key in
+`.env` cannot purge it, and it has already cost one session a real five-minute
+outage and a burned tag. An entry path is cheap to be wrong about, because it
+clears itself in five minutes. Storage reads with the access key are passive and
+answer the same question without minting anything.
+
+It cuts the other way too, and that half is about `app/shared/fonts/`. Assets
+exempted from the version path sit on ENTRY paths, so a correction to one lands
+within five minutes instead of waiting on a new tag — but the same fact means a
+release's font depends on a short-cached fetch rather than on the immutable
+`v{TAG}/` copy the rest of the bundle gets. Good trade, worth knowing you made
+it.
+
+Same standing caution as the cache-control table above, and for the same reason:
+these are edge-rule numbers, not properties of the path, so they can change
+under the repo with no commit to notice. Re-measure before relying on either.
+
 **Announcing is point-to-point, so "I announced" and "nobody was told" are both
 true at once.** This is the finding, and it is worth more than the convention it
 kills. That night one session announced v261 to a second session — which is the

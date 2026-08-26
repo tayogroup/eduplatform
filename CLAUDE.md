@@ -2082,6 +2082,71 @@ remote against `.bunny-appver-manifest.json` — or skip the inference entirely 
 compare the plan against storage after the fact, which is what the guard above
 does.
 
+#### And the pipe does not just truncate the output, it can KILL the upload
+
+The section above is about `tail` discarding a summary. `head` is worse, because
+it exits, and a deploy piped into it takes SIGPIPE mid-write.
+
+v288 died that way on 2026-08-26: `deploy-app-version.js … | head -40` stopped
+at **65 of 126 files, with `app/english/index.html` already flipped**. So the
+entry pointed at a version directory that was missing more than half its bundle,
+and for about twenty minutes English served a pointer to a `v288/lucide.min.js`
+that did not exist — every icon in the shell an empty `<i>`, in production.
+
+**Never pipe a release into anything that can exit early.** Redirect to a file
+and read that (`… > release.log 2>&1; head -40 release.log`), or let it print.
+The pointer files go up LAST for exactly this reason, but "last" is no protection
+when the process is killed between the bundle and the pointer — it is protection
+against a failed upload, not against a severed stdout.
+
+The recovery is the same call as v262 and worth repeating because the instinct
+is wrong: **do not repair a half-written tag, and do not probe it to find out
+what is missing.** Roll forward to a new one. A version-path 404 is edge-cached
+for 37+ hours and cannot be purged with the key in `.env`, so a check would mint
+the very hole it was looking for, and a repaired v288 would still be serving
+cached 404s to everyone who had already loaded it. v289 was released over the
+top, all six subjects, and v288 stays spent and unreferenced.
+
+#### `| head` on a deploy does not truncate the output, it KILLS the upload
+
+The section above is about `tail` discarding a tool's summary header. `head` is
+the same reflex and a worse failure, because the damage is not to what you read:
+`head` exits at its line count, node takes SIGPIPE, and **the upload stops where
+it stands.** Redirect the whole run to a file and read the file:
+
+```bash
+node tools/deploy-app-version.js vNNN --shell --verify > "$SCRATCH/deploy.log" 2>&1
+```
+
+On 2026-08-26 `… v288 --shell --verify | head -40` died at **65 of 126 files** —
+and pointers are written per subject as that subject finishes, so
+`app/english/index.html` and `current.json` had ALREADY been flipped to v288.
+English's live pointer referenced `v288/lucide.min.js`, which never uploaded, so
+every icon in the English shell was an empty `<i>` for about twenty minutes.
+Mathematics happened to complete before the kill; the other four never had their
+pointers flipped and stayed safe on their previous bundles throughout. **A
+partial release is not uniformly partial** — which subjects are live on the new
+tag is decided by where in the sequence it died.
+
+**Do not complete the half-written tag, and do not probe it.** The manifest is
+written back only at the end, so a killed run records nothing, and the retry is
+refused by `tagAlreadyWritten` — "identical bytes … but this checkout never
+uploaded it" — which is correct: from the manifest's side your own dead run is
+indistinguishable from a stranger's release. `--force-tag` would get past it and
+is still the wrong move, because a version-path 404 is edge-cached 37+ hours and
+cannot be purged with the key in `.env`. If a learner hit the missing file in
+those minutes, that miss is cached and overwriting the tag does not reach them —
+and checking whether one did is itself the thing that mints it. Roll forward to a
+fresh tag, which is the remedy the tool's own error prints first, and leave the
+spent tag in place: the v262 precedent, where deleting an orphan would convert it
+into an unpurgeable 404.
+
+**And verify from storage, never from the run's own output** — the output is
+exactly what a SIGPIPE takes away. Compare `--plan-json`'s remotes against a
+storage listing, then read each subject's `index.html` and confirm every
+`v{TAG}/` file it references is actually there. That comparison is what found
+this; the truncated log looked like a healthy release scrolling past.
+
 ### A pre-commit check shaped like recognition cannot see a new feature
 
 Three sessions swept each other's work into their commits over 2026-08-21/22 —

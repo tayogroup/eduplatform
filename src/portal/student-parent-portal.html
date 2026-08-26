@@ -200,8 +200,18 @@
     $("#tutoring").innerHTML = tutoring.map((t) => {
       const when = t.finishedAt ? esc(String(t.finishedAt).slice(0, 10)) : "";
       const where = `Stage ${Number(t.stage) || "?"} · Unit ${Number(t.unit) || "?"}${t.unitTitle ? ": " + esc(t.unitTitle) : ""}`;
+      // A before/after pair is only meaningful when a genuine pre-study
+      // baseline exists. Since the topic lesson opens first, a child may skip
+      // the opening check or take it after studying — beforeTotal 0 says so,
+      // and then there is nothing to have improved ON: show the score plainly
+      // and do NOT highlight it as improvement, which would claim a gain
+      // nobody measured. Same rule as counts-never-marks: report what was
+      // actually observed.
+      const hasBaseline = t.scored && Number(t.beforeTotal) > 0;
       const result = t.scored
-        ? `<span class="pill">before ${Number(t.before)}/${Number(t.beforeTotal)}</span> <span class="pill ${Number(t.after) > Number(t.before) ? "good" : ""}">after ${Number(t.after)}/${Number(t.afterTotal)}</span>`
+        ? (hasBaseline
+          ? `<span class="pill">before ${Number(t.before)}/${Number(t.beforeTotal)}</span> <span class="pill ${Number(t.after) > Number(t.before) ? "good" : ""}">after ${Number(t.after)}/${Number(t.afterTotal)}</span>`
+          : `<span class="pill">check ${Number(t.after)}/${Number(t.afterTotal)}</span> <span class="muted">studied the lesson first — no before/after comparison</span>`)
         : `<span class="pill">${Number(t.attempted) || 0} written &amp; compared</span>`;
       const practice = Number(t.practiceTotal) > 0
         ? ` <span class="pill">practice ${Number(t.practiceRight)}/${Number(t.practiceTotal)}</span>` : "";

@@ -925,6 +925,13 @@ export function createGetHelp(options) {
         part.total = set.length;
         part.score = set.filter((q) => norm(part.answers[q.id]) === norm(q.answer)).length;
         part.submitted = true;
+        // WHEN the first check was taken, not just whether. A lesson-bearing
+        // session opens on the lesson, so a learner can reach this check
+        // afterwards — and the summary a parent and a human tutor read must
+        // not then call it a "before studying" baseline. Recorded at the
+        // moment of submission, because that is the only point the order is
+        // knowable.
+        if (id === "check") part.afterLesson = Boolean(session.understand && session.understand.completed);
         session.stepOpen = id; // stay to show the marking
         rerender();
       });
@@ -1002,7 +1009,14 @@ export function createGetHelp(options) {
           topic: session.topicLabel, query: session.query,
           stage: session.target.stage, unit: session.target.unit, unitTitle: session.target.title,
           scored: sets.scored,
-          before: session.check.score, beforeTotal: session.check.total,
+          // A baseline is only a baseline if it was taken BEFORE the lesson.
+          // Sent as 0/0 otherwise — the parent card reads beforeTotal 0 as
+          // "no before test" and drops its improvement claim, rather than
+          // treating a post-lesson score as a starting point the child
+          // improved on. The real number still reaches a human tutor in the
+          // summary text, correctly labelled.
+          before: session.check.afterLesson ? 0 : session.check.score,
+          beforeTotal: session.check.afterLesson ? 0 : session.check.total,
           after: session.recheck.score, afterTotal: session.recheck.total,
           attempted: session.check.attempted + session.recheck.attempted,
           practiceRight: Object.values(session.practice.marks).filter((m) => m === "right").length,
@@ -1040,8 +1054,17 @@ export function createGetHelp(options) {
       // session opens on the lesson, so the check is genuinely optional now —
       // and printing "0/5" for a quiz nobody sat would tell a parent, and any
       // human tutor reading this, that the child scored nothing.
-      if (session.check.submitted) lines.push(`Quick check before studying: ${session.check.score}/${session.check.total || sets.checkSet.length}`);
-      if (session.recheck.submitted) lines.push(`Check after studying: ${session.recheck.score}/${session.recheck.total || sets.recheckSet.length}`);
+      if (session.check.submitted) {
+        lines.push(session.check.afterLesson
+          ? `First check (taken AFTER the topic lesson, so not a pre-study baseline): ${session.check.score}/${session.check.total || sets.checkSet.length}`
+          : `Quick check before studying: ${session.check.score}/${session.check.total || sets.checkSet.length}`);
+      }
+      if (session.recheck.submitted) {
+        // "after studying" only means something against a genuine before.
+        lines.push(session.check.submitted && !session.check.afterLesson
+          ? `Check after studying: ${session.recheck.score}/${session.recheck.total || sets.recheckSet.length}`
+          : `Second check: ${session.recheck.score}/${session.recheck.total || sets.recheckSet.length}`);
+      }
       const stillWrong = sets.recheckSet.filter((q) => session.recheck.submitted && norm(session.recheck.answers[q.id]) !== norm(q.answer));
       if (stillWrong.length) lines.push(`Still finds hard:`, ...stillWrong.map((q) => `  - ${q.prompt}`));
     } else {

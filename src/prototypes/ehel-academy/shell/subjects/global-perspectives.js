@@ -41,12 +41,12 @@ let placement;
 // Shell-provided bindings (populated by bind(ctx)).
 let $, $$, escapeHtml, icon, voiceButton, toast, readAlongSpans;
 let complete, saveProgress, navigate, emitProgress;
-let bindVoiceControls, updateVoiceUI, stopVoice, renderNav, unitSectionIds, stageNumber;
+let bindVoiceControls, updateVoiceUI, stopVoice, renderNav, unitSectionIds, stageNumber, learnerCategory;
 let course, progress, manifest, dataRootUrl;
 function bind(ctx) {
   ({ $, $$, escapeHtml, icon, voiceButton, toast, readAlongSpans, complete, saveProgress, navigate,
      emitProgress, bindVoiceControls, updateVoiceUI, stopVoice, renderNav, unitSectionIds,
-     stageNumber } = ctx);
+     stageNumber, learnerCategory } = ctx);
   course = ctx.course; progress = ctx.progress; manifest = ctx.manifest; dataRootUrl = ctx.dataRootUrl;
   if (isPrereqUnit) {
     placement = createPlacementUnit({
@@ -279,6 +279,23 @@ const isDeckStage = () => stageNumber <= DECK_MAX_STAGE;
 // original page, which is the opposite change.
 const BOTH_MAX_STAGE = 4;
 const isBothStage = () => stageNumber <= BOTH_MAX_STAGE;
+
+// Whether the deck REPLACES the page for this learner. isDeckStage() is the stage
+// boundary and nothing else changed about it; this asks the same question of
+// the person in front of it.
+//
+// The tutoring category gets the ORIGINAL page at every stage (owner,
+// 2026-08-27). Those learners are at other schools and arrive by search on one
+// problem, so they need to scan a section and find the part they came for —
+// which is what the grid does and what a deck takes away: a deck is a
+// walk-through from slide one, the right design for a child working through
+// their own school's unit in order, which is not this learner.
+//
+// Asked here rather than at each call site, for the same reason the stage
+// boundary is one constant: one place decides, and a section added later
+// inherits the answer. learnerCategory comes from the shell (course-app.js ::
+// ctx.learnerCategory), which reads the signed launch token's claim.
+const deckPage = () => isDeckStage() && learnerCategory !== "tutoring";
 
 // Where the next deck lands. renderDeckOnly sets it, and every deck renderer
 // below mounts inside the page without knowing about it. Null would mean the deck
@@ -1019,7 +1036,7 @@ const paint = (id, fn) => () => {
 // stage gate is checked here rather than in the renderers map, which is built
 // at module load, before bind() knows what stage this is.
 const routeTo = (id, deckRenderer, pageRenderer) => () => {
-  if (!isDeckStage()) return paint(id, pageRenderer)();
+  if (!deckPage()) return paint(id, pageRenderer)();
   if (!availableSections().some(([sectionId]) => sectionId === id)) return paint("overview", renderOverview)();
   // Both gates are 4, so the bare return below is unreachable: every stage with a
   // deck reaches it through renderDeckOnly, which mounts it inside the page. The

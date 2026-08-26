@@ -31,13 +31,13 @@ let placement;
 // Shell-provided bindings (populated by bind(ctx)).
 let $, $$, escapeHtml, icon, voiceButton, pageHeader, toast, readAlongSpans;
 let complete, completeGradeSection, saveProgress, saveGradeProgress, navigate, emitProgress;
-let bindVoiceControls, updateVoiceUI, stopVoice, renderNav, unitSectionIds, stageNumber, STAGE_STORAGE_KEY, PROGRESS_UNIT;
+let bindVoiceControls, updateVoiceUI, stopVoice, renderNav, unitSectionIds, stageNumber, STAGE_STORAGE_KEY, PROGRESS_UNIT, learnerCategory;
 let course, progress, gradeProgress, manifest, gradeCapstone, dataRootUrl;
 let shellCtx;
 function bind(ctx) {
   ({ $, $$, escapeHtml, icon, voiceButton, pageHeader, toast, readAlongSpans, complete, completeGradeSection,
      saveProgress, saveGradeProgress, navigate, emitProgress, bindVoiceControls, updateVoiceUI,
-     stopVoice, renderNav, unitSectionIds, stageNumber, STAGE_STORAGE_KEY, PROGRESS_UNIT } = ctx);
+     stopVoice, renderNav, unitSectionIds, stageNumber, STAGE_STORAGE_KEY, PROGRESS_UNIT, learnerCategory } = ctx);
   shellCtx = ctx;
   course = ctx.course; progress = ctx.progress; gradeProgress = ctx.gradeProgress;
   manifest = ctx.manifest; gradeCapstone = ctx.gradeCapstone; dataRootUrl = ctx.dataRootUrl;
@@ -399,6 +399,23 @@ const deckIntro = (id) => DECK_INTROS[id] || null;
 // categories only a deck narrates. Raise one and raise the other.
 const DECK_MAX_STAGE = 4;
 const bothDesigns = () => stageNumber <= DECK_MAX_STAGE;
+
+// Whether the deck REPLACES the page for this learner. bothDesigns() is the stage
+// boundary and nothing else changed about it; this asks the same question of
+// the person in front of it.
+//
+// The tutoring category gets the ORIGINAL page at every stage (owner,
+// 2026-08-27). Those learners are at other schools and arrive by search on one
+// problem, so they need to scan a section and find the part they came for —
+// which is what the grid does and what a deck takes away: a deck is a
+// walk-through from slide one, the right design for a child working through
+// their own school's unit in order, which is not this learner.
+//
+// Asked here rather than at each call site, for the same reason the stage
+// boundary is one constant: one place decides, and a section added later
+// inherits the answer. learnerCategory comes from the shell (course-app.js ::
+// ctx.learnerCategory), which reads the signed launch token's claim.
+const deckPage = () => bothDesigns() && learnerCategory !== "tutoring";
 let classicRegion = null;
 let deckMount = null;
 
@@ -634,7 +651,7 @@ function renderOverview() {
 const MATH_SYMBOLS = [["+", "combine or add", "Use when quantities join"], ["−", "find a difference", "Use when quantities separate"], ["=", "has the same value", "Both sides balance"], ["<", "is less than", "The smaller value"], [">", "is greater than", "The larger value"]];
 
 function renderMathWords() {
-  if (bothDesigns()) return renderDeckOnly(renderMathWordsDeck);
+  if (deckPage()) return renderDeckOnly(renderMathWordsDeck);
   return renderMathWordsClassic();
 }
 
@@ -706,7 +723,7 @@ function renderMathWordsDeck() {
 }
 
 function renderExploreConcept() {
-  if (bothDesigns()) return renderDeckOnly(renderExploreConceptDeck);
+  if (deckPage()) return renderDeckOnly(renderExploreConceptDeck);
   return renderExploreConceptClassic();
 }
 
@@ -801,7 +818,7 @@ function renderExploreConceptDeck() {
 }
 
 function renderVisualModels() {
-  if (bothDesigns()) return renderDeckOnly(renderVisualModelsDeck);
+  if (deckPage()) return renderDeckOnly(renderVisualModelsDeck);
   return renderVisualModelsClassic();
 }
 
@@ -851,7 +868,7 @@ function renderVisualModelsDeck() {
 }
 
 function renderLearnMethod() {
-  if (bothDesigns()) return renderDeckOnly(renderLearnMethodDeck);
+  if (deckPage()) return renderDeckOnly(renderLearnMethodDeck);
   return renderLearnMethodClassic();
 }
 
@@ -1020,7 +1037,7 @@ function renderLessonDeck() {
 }
 
 function renderLesson() {
-  if (bothDesigns()) return renderDeckOnly(renderLessonDeck);
+  if (deckPage()) return renderDeckOnly(renderLessonDeck);
   return renderLessonClassic();
 }
 
@@ -1099,7 +1116,7 @@ function renderExamplesDeck() {
 }
 
 function renderExamples() {
-  if (bothDesigns()) return renderDeckOnly(renderExamplesDeck);
+  if (deckPage()) return renderDeckOnly(renderExamplesDeck);
   return renderExamplesClassic();
 }
 
@@ -1184,7 +1201,7 @@ function renderPracticeDeck() {
 }
 
 function renderPractice() {
-  if (bothDesigns()) return renderDeckOnly(renderPracticeDeck);
+  if (deckPage()) return renderDeckOnly(renderPracticeDeck);
   return renderPracticeClassic();
 }
 
@@ -1268,7 +1285,7 @@ function renderActivitiesDeck() {
 }
 
 function renderActivities() {
-  if (bothDesigns()) return renderDeckOnly(renderActivitiesDeck);
+  if (deckPage()) return renderDeckOnly(renderActivitiesDeck);
   return renderActivitiesClassic();
 }
 
@@ -1589,7 +1606,7 @@ function renderRealProblemsDeck() {
 }
 
 function renderRealProblems() {
-  if (bothDesigns()) return renderDeckOnly(renderRealProblemsDeck);
+  if (deckPage()) return renderDeckOnly(renderRealProblemsDeck);
   return renderRealProblemsClassic();
 }
 
@@ -1660,7 +1677,7 @@ function renderExplainThinkingDeck() {
 }
 
 function renderExplainThinking() {
-  if (bothDesigns()) return renderDeckOnly(renderExplainThinkingDeck);
+  if (deckPage()) return renderDeckOnly(renderExplainThinkingDeck);
   return renderExplainThinkingClassic();
 }
 

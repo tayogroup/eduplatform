@@ -5931,6 +5931,23 @@ function linkedWords() {
 // renderers paint by assigning to #app.innerHTML, which would erase a deck
 // mounted below them the moment the shelf redrew.
 const BOTH_DESIGNS = gradeNumber <= 4;
+
+// Whether the deck REPLACES the page for this learner. BOTH_DESIGNS is the
+// grade boundary and nothing else changed about it; this is the same question
+// asked of the person in front of it.
+//
+// The tutoring category gets the ORIGINAL page at every grade (owner,
+// 2026-08-27). Those learners are at other schools and arrive by search on one
+// problem — "percentages homework", "why does this story use commas" — so they
+// need to scan a section and find the part they came for, which is exactly what
+// the grid does and exactly what a deck takes away: a deck is a walk-through
+// from slide one, and it is the right design for a child working through their
+// own school's unit in order, which is not this learner.
+//
+// It is asked here rather than at the seven call sites for the same reason the
+// grade boundary is one constant: one place decides, and a section added later
+// inherits the answer.
+const DECK_PAGE = BOTH_DESIGNS && !IS_TUTORING;
 let classicRegion = null;
 let deckMount = null;
 
@@ -5998,7 +6015,7 @@ function renderDictionary() {
   // Reading & story, this section's two halves really are the same words twice.
   // From Grade 5 the lab is the whole section: by then a learner is looking words
   // UP, and a unit can carry 70 of them.
-  if (BOTH_DESIGNS) return renderDeckOnly(renderWordCarousel);
+  if (DECK_PAGE) return renderDeckOnly(renderWordCarousel);
   return renderDictionaryClassic();
 }
 
@@ -6864,7 +6881,7 @@ const readingsAreForTheGrownUp = () => course.readings.length > 0
 // four would start the story from page one.
 function renderReading() {
   if (readingsAreForTheGrownUp()) return renderReadingGrownUp();
-  if (BOTH_DESIGNS) return renderBothDesigns(renderReadingClassic, renderReadingCarousel, "The same text, one page at a time.");
+  if (DECK_PAGE) return renderBothDesigns(renderReadingClassic, renderReadingCarousel, "The same text, one page at a time.");
   return renderReadingClassic();
 }
 
@@ -7340,7 +7357,7 @@ function printStory(story, parts) {
 }
 
 function renderComprehension() {
-  if (BOTH_DESIGNS) return renderDeckOnly(renderComprehensionCarousel);
+  if (DECK_PAGE) return renderDeckOnly(renderComprehensionCarousel);
   return renderComprehensionClassic();
 }
 
@@ -7441,7 +7458,7 @@ function renderGrammar() {
   // Grades 1-4 get the kid-friendly carousel (one pattern at a time), modelled on
   // the Arabic Alphabet unit's Learn section, with the grid workshop kept above
   // it. Grade 5 and up are the workshop alone.
-  if (BOTH_DESIGNS) return renderDeckOnly(renderGrammarCarousel);
+  if (DECK_PAGE) return renderDeckOnly(renderGrammarCarousel);
   return renderGrammarClassic();
 }
 
@@ -7530,7 +7547,7 @@ function renderGrammarCarousel() {
 }
 
 function renderSpeaking() {
-  if (BOTH_DESIGNS) return renderDeckOnly(renderSpeakingCarousel);
+  if (DECK_PAGE) return renderDeckOnly(renderSpeakingCarousel);
   return renderSpeakingClassic();
 }
 
@@ -7700,7 +7717,7 @@ async function toggleRecording(taskId, button) {
 }
 
 function renderWriting() {
-  if (BOTH_DESIGNS) return renderDeckOnly(renderWritingCarousel);
+  if (DECK_PAGE) return renderDeckOnly(renderWritingCarousel);
   return renderWritingClassic();
 }
 
@@ -7843,7 +7860,7 @@ function renderWritingCarousel() {
 }
 
 function renderActivities() {
-  if (BOTH_DESIGNS) return renderDeckOnly(renderActivitiesCarousel);
+  if (DECK_PAGE) return renderDeckOnly(renderActivitiesCarousel);
   return renderActivitiesClassic();
 }
 

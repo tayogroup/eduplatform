@@ -115,6 +115,40 @@ Real uploads are `npm run deploy:integration|staging|production`. **Never run a 
   counts. Read it as "does the deck replace the page at this stage". The gate
   stays; what it renders is what changed.
 
+  **The tutoring category is the second exemption, and it is a LEARNER
+  exemption rather than a section one** (owner, 2026-08-27). A tutoring-support
+  learner gets the ORIGINAL page in every section of every subject, at every
+  stage — they are at another school and arrive by search on one problem, so
+  they need to scan a section and find the part they came for, which is what the
+  grid does and what a deck takes away. Everything above still holds for a
+  school learner at 1-4.
+
+  It is one line per subject, beside the stage gate and never at a call site:
+  `deckPage()` in Mathematics, Science, Computing and Global Perspectives,
+  `DECK_PAGE` in English, each the existing gate AND `learnerCategory !==
+  "tutoring"`. The stage gate itself is untouched, for the reason directly
+  above — it is overloaded, and English's cursive worksheet and Science's
+  worked-example counts must not move for this learner. The category comes from
+  `ctx.learnerCategory` (course-app.js, from the signed launch token's claim;
+  `?category=tutoring` is the dev door), which the four shell subjects now bind;
+  English reads its own `IS_TUTORING`.
+
+  **Science carried a dead second gate that this woke up.** Each of its ten
+  renderers had `if (deckStage()) return renderXDeck()` under the both-designs
+  line — a full-bleed fallback whose expression was identical to
+  `BOTH_DESIGNS()`, so the line above always returned first and it had never
+  once been reached. Gating only the first line therefore sent tutoring learners
+  to a full-bleed deck, topbar and all: the ONE case where the two expressions
+  differ is the case that made the dead line live. All ten are deleted and
+  `deckStage` with them. No other subject had a second path. Verified in the
+  browser, both ways, in all five subjects — 0 `gc-*` nodes under `#app` and no
+  `#deck-design` with `category=tutoring`, the deck unchanged without it.
+
+  **Intensive English is untouched and cannot follow this rule**: its Patterns
+  section (`renderGrammar`) is a hand-written `gc-*` carousel with no original
+  page behind it, so there is nothing to fall back to. It would need a grid
+  written first — flagged, not done.
+
   Four consequences, each of which cost a check when the change was made:
 
   - **The section guide must not sit above a deck that REPLACED the page.**

@@ -30,12 +30,12 @@ let placement;
 // Shell-provided bindings (populated by bind(ctx)).
 let $, $$, escapeHtml, icon, voiceButton, pageHeader, toast, readAlongSpans;
 let complete, completeGradeSection, saveProgress, saveGradeProgress, navigate, emitProgress;
-let bindVoiceControls, updateVoiceUI, stopVoice, renderNav, unitSectionIds, stageNumber, STAGE_STORAGE_KEY, PROGRESS_UNIT, speakText;
+let bindVoiceControls, updateVoiceUI, stopVoice, renderNav, unitSectionIds, stageNumber, STAGE_STORAGE_KEY, PROGRESS_UNIT, speakText, learnerCategory;
 let course, progress, gradeProgress, manifest, gradeCapstone, dataRootUrl;
 function bind(ctx) {
   ({ $, $$, escapeHtml, icon, voiceButton, pageHeader, toast, readAlongSpans, complete, completeGradeSection,
      saveProgress, saveGradeProgress, navigate, emitProgress, bindVoiceControls, updateVoiceUI,
-     stopVoice, renderNav, unitSectionIds, stageNumber, STAGE_STORAGE_KEY, PROGRESS_UNIT, speakText } = ctx);
+     stopVoice, renderNav, unitSectionIds, stageNumber, STAGE_STORAGE_KEY, PROGRESS_UNIT, speakText, learnerCategory } = ctx);
   // Every spoken string passes through spokenText() before it reaches the
   // voice engine — one choke point instead of a wrapper at forty call sites,
   // so a renderer added later is covered without remembering to. The lib
@@ -167,7 +167,16 @@ const sections = [
 // the decks render them unchanged, and every narration clip those stages ask for
 // already exists.
 const DECK_MAX_STAGE = 4;
-const deckStage = () => stageNumber <= DECK_MAX_STAGE;
+
+// A second gate, deckStage(), used to sit here and mount a deck full-bleed
+// (`if (deckStage()) return renderXDeck()`) under each of the ten renderers.
+// It has been the same expression as BOTH_DESIGNS() since Stage 1 shipped, so
+// the line above it always returned first and it was never once reached — dead
+// on both sides of the boundary. The tutoring rule below is what made that
+// matter: deckPage() is false for those learners while a bare stage test is
+// still true, so the dead line woke up and handed a tutoring learner the deck
+// full-bleed, topbar and all. Removed rather than re-gated: there is one
+// question here, and deckPage() is it.
 
 // ── The deck alone, at Stages 1-4 ────────────────────────────────────────────
 // Stages 1-4 show the SLIDES ONLY — one item per slide, and nothing above them.
@@ -184,6 +193,23 @@ const deckStage = () => stageNumber <= DECK_MAX_STAGE;
 // at this stage": every call site already meant that. What changed is what
 // renderDeckOnly renders, not who reaches it.
 const BOTH_DESIGNS = () => stageNumber <= DECK_MAX_STAGE;
+
+// Whether the deck REPLACES the page for this learner. BOTH_DESIGNS() is the stage
+// boundary and nothing else changed about it; this asks the same question of
+// the person in front of it.
+//
+// The tutoring category gets the ORIGINAL page at every stage (owner,
+// 2026-08-27). Those learners are at other schools and arrive by search on one
+// problem, so they need to scan a section and find the part they came for —
+// which is what the grid does and what a deck takes away: a deck is a
+// walk-through from slide one, the right design for a child working through
+// their own school's unit in order, which is not this learner.
+//
+// Asked here rather than at each call site, for the same reason the stage
+// boundary is one constant: one place decides, and a section added later
+// inherits the answer. learnerCategory comes from the shell (course-app.js ::
+// ctx.learnerCategory), which reads the signed launch token's claim.
+const deckPage = () => BOTH_DESIGNS() && learnerCategory !== "tutoring";
 
 // Where the original renderers draw, and where the deck mounts, when both share a
 // page. Both are null everywhere else, and classicScope() falls back to the
@@ -451,8 +477,7 @@ function renderOverview() {
 
 // Stages 1-4 show the deck alone; Stages 5-8 the grid alone.
 function renderScienceWords() {
-  if (BOTH_DESIGNS()) return renderDeckOnly(renderScienceWordsDeck);
-  if (deckStage()) return renderScienceWordsDeck();
+  if (deckPage()) return renderDeckOnly(renderScienceWordsDeck);
   return renderScienceWordsClassic();
 }
 
@@ -620,8 +645,7 @@ function renderScienceWordsDeck() {
 
 // Stages 1-4 show the deck alone; Stages 5-8 the grid alone.
 function renderExploreConcept() {
-  if (BOTH_DESIGNS()) return renderBothDesigns(renderExploreConceptClassic, renderExploreConceptDeck, "The same discoveries, one at a time.");
-  if (deckStage()) return renderExploreConceptDeck();
+  if (deckPage()) return renderBothDesigns(renderExploreConceptClassic, renderExploreConceptDeck, "The same discoveries, one at a time.");
   return renderExploreConceptClassic();
 }
 
@@ -715,8 +739,7 @@ function renderExploreConceptDeck() {
 
 // Stages 1-4 show the deck alone; Stages 5-8 the grid alone.
 function renderVisualModels() {
-  if (BOTH_DESIGNS()) return renderBothDesigns(renderVisualModelsClassic, renderVisualModelsDeck, "The same models, one at a time.");
-  if (deckStage()) return renderVisualModelsDeck();
+  if (deckPage()) return renderBothDesigns(renderVisualModelsClassic, renderVisualModelsDeck, "The same models, one at a time.");
   return renderVisualModelsClassic();
 }
 
@@ -765,8 +788,7 @@ function renderVisualModelsDeck() {
 
 // Stages 1-4 show the deck alone; Stages 5-8 the grid alone.
 function renderLearnMethod() {
-  if (BOTH_DESIGNS()) return renderDeckOnly(renderLearnMethodDeck);
-  if (deckStage()) return renderLearnMethodDeck();
+  if (deckPage()) return renderDeckOnly(renderLearnMethodDeck);
   return renderLearnMethodClassic();
 }
 
@@ -856,8 +878,7 @@ const courseTopic = () => unitTopic(course.unit.unitTitle, course.concepts);
 
 // Stages 1-4 show the deck alone; Stages 5-8 the grid alone.
 function renderLesson() {
-  if (BOTH_DESIGNS()) return renderBothDesigns(renderLessonClassic, renderLessonDeck, "The same concepts, one at a time.");
-  if (deckStage()) return renderLessonDeck();
+  if (deckPage()) return renderBothDesigns(renderLessonClassic, renderLessonDeck, "The same concepts, one at a time.");
   return renderLessonClassic();
 }
 
@@ -911,8 +932,7 @@ function renderLessonDeck() {
 
 // Stages 1-4 show the deck alone; Stages 5-8 the grid alone.
 function renderExamples() {
-  if (BOTH_DESIGNS()) return renderDeckOnly(renderExamplesDeck);
-  if (deckStage()) return renderExamplesDeck();
+  if (deckPage()) return renderDeckOnly(renderExamplesDeck);
   return renderExamplesClassic();
 }
 
@@ -1028,8 +1048,7 @@ function renderExamplesDeck() {
 
 // Stages 1-4 show the deck alone; Stages 5-8 the grid alone.
 function renderPractice() {
-  if (BOTH_DESIGNS()) return renderDeckOnly(renderPracticeDeck);
-  if (deckStage()) return renderPracticeDeck();
+  if (deckPage()) return renderDeckOnly(renderPracticeDeck);
   return renderPracticeClassic();
 }
 
@@ -1138,8 +1157,7 @@ function renderPracticeDeck() {
 
 // Stages 1-4 show the deck alone; Stages 5-8 the grid alone.
 function renderActivities() {
-  if (BOTH_DESIGNS()) return renderBothDesigns(renderActivitiesClassic, renderActivitiesDeck, "The same investigations, one at a time.");
-  if (deckStage()) return renderActivitiesDeck();
+  if (deckPage()) return renderBothDesigns(renderActivitiesClassic, renderActivitiesDeck, "The same investigations, one at a time.");
   return renderActivitiesClassic();
 }
 
@@ -1467,8 +1485,7 @@ function renderFluency() {
 
 // Stages 1-4 show the deck alone; Stages 5-8 the grid alone.
 function renderRealProblems() {
-  if (BOTH_DESIGNS()) return renderDeckOnly(renderRealProblemsDeck);
-  if (deckStage()) return renderRealProblemsDeck();
+  if (deckPage()) return renderDeckOnly(renderRealProblemsDeck);
   return renderRealProblemsClassic();
 }
 
@@ -1533,8 +1550,7 @@ function renderRealProblemsDeck() {
 
 // Stages 1-4 show the deck alone; Stages 5-8 the grid alone.
 function renderExplainThinking() {
-  if (BOTH_DESIGNS()) return renderDeckOnly(renderExplainThinkingDeck);
-  if (deckStage()) return renderExplainThinkingDeck();
+  if (deckPage()) return renderDeckOnly(renderExplainThinkingDeck);
   return renderExplainThinkingClassic();
 }
 

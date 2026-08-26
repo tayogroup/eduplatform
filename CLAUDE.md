@@ -2027,17 +2027,39 @@ if (DRY) { for (const item of all) console.log(…); }                          
 
 Read as an upload list it inverts the answer for exactly the files this section
 is about. On 2026-08-26 a science+computing release was planned by reading that
-list: `app/computing/shared/grade-redirect.js` appeared in it and
-`app/science/shared/grade-redirect.js` did not, so computing's was taken as being
-uploaded and science's as skipped. **Both were skipped** — the two stubs are
-byte-identical (`17afd85ca4b5…`, 845 B) and both matched the manifest. The
-inference pointed at dropping the check on computing's stub, which sits on the
-identical invisible-to-`--verify` path as science's, so the one file that most
-needed the storage comparison was the one the reasoning excused.
+list, and the conclusion drawn was that `app/computing/shared/grade-redirect.js`
+was being uploaded while `app/science/shared/grade-redirect.js` was being
+skipped. **Both were skipped** — the two stubs are byte-identical
+(`17afd85ca4b5…`, 845 B) and both matched the manifest. The inference pointed at
+dropping the check on computing's stub, which sits on the identical
+invisible-to-`--verify` path as science's, so the file that most needed the
+storage comparison was the one the reasoning excused.
 
-The arithmetic that refutes it is printed on line 583 of the same output and was
-reported without being interrogated: **plan 44, uploaded 42**, and the missing two
-are precisely the skipped stubs.
+**Two compounding errors produced that, and the second is the one to learn
+from.** The first is reading `all` as `todo`. The second is that the command was
+run as `--dry … | tail -45` against 50 lines of output, and the 5 discarded lines
+were:
+
+```
+tag: v287 | subjects: science,computing …
+items: 44 | to upload: 42 (4 pointer files always sent)   <- the refutation
+    34976B  app/science/v287/course-ui.css
+    13760B  app/science/v287/geometry-webgl.js
+      845B  app/science/shared/grade-redirect.js          <- one of the two files being compared
+```
+
+So the asymmetry between the two stubs was **manufactured by the truncation**:
+science's line was cut, computing's survived, and two byte-identical files on
+identical paths appeared to be treated differently. And `items: 44 | to upload:
+42` — the arithmetic that refutes the whole inference — was printed immediately
+above the list being misread, at PLAN time, and thrown away by the same pipe.
+This was not corroboration discovered afterwards; the refutation was on screen
+before the wrong belief was formed.
+
+**`tail` a tool's output and you discard its summary first.** These tools print
+counts before detail, so a pipe that keeps the end keeps the least
+interrogatable part. Where the question is "what will this do", read the header,
+not the list.
 
 **This is the INVERSE of the rest of this section, and that is why it is worth the
 space.** Everything else here is a check that silently does no work: a ✓ after a

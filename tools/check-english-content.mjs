@@ -557,7 +557,7 @@ for (const gradeDir of grades) {
 // two call sites). 437 keys have words that appear solely in the item's
 // `exampleSentence`, and that field is never drawn on a word card — the app
 // prefers practiceSentences and falls back to exampleSentence only when there
-// are none, which across all eight grades is zero items out of 9,317. It is
+// are none, which across all eight grades is zero items out of 10,317. It is
 // printed on the handwriting worksheet at Grades 1-4, and it is fed to the
 // Wehel prompt everywhere; neither is a place a popover can exist.
 //
@@ -567,7 +567,7 @@ for (const gradeDir of grades) {
 // reachable means rendering exampleSentence on the word card, and
 // `sentenceAudio` is an array indexed to practiceSentences — 1,695 of 1,695
 // exact in Grade 7, and exampleSentence has no audio of its own — so every one
-// of the 9,317 would get a "Hear sentence" button with no clip behind it and
+// of the 10,317 would get a "Hear sentence" button with no clip behind it and
 // fall back to the PAID runtime endpoint on every play. That is a content
 // commission with a bill, not a cleanup, and it is an owner's decision.
 //

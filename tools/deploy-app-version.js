@@ -38,6 +38,7 @@
 
 const fs = require("fs"), path = require("path"), crypto = require("crypto");
 const { requireTiersInStep } = require("./lib/require-tiers-in-step");
+const { requirePlatformCors } = require("./lib/require-platform-cors");
 const { acquireReleaseLock } = require("./lib/release-lock");
 const ROOT = path.resolve(__dirname, "..");
 const EHEL = path.join(ROOT, "src", "prototypes", "ehel-academy");
@@ -645,4 +646,8 @@ process.on("exit", dropReleaseLock);
   // that code reads was shipped with it, and that gap is what reached learners
   // on 2026-08-12: v141 verified perfectly against three-week-old content.
   if (!failed) requireTiersInStep(SUBJECTS);
+  // And the tier the other checks cannot see: the platform the app calls at
+  // runtime. A release can be perfectly shipped and perfectly in step while
+  // every cross-origin call it makes is being refused — see 2026-08-26.
+  if (!failed) requirePlatformCors();
 })();

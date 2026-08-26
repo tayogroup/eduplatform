@@ -17,6 +17,7 @@
 
 const fs = require("fs"), path = require("path"), crypto = require("crypto");
 const { requireTiersInStep } = require("./lib/require-tiers-in-step");
+const { requirePlatformCors } = require("./lib/require-platform-cors");
 const ROOT = path.resolve(__dirname, "..");
 const EHEL = path.join(ROOT, "src", "prototypes", "ehel-academy");
 const ZONE = "ehelacademy";
@@ -172,4 +173,5 @@ async function put(remote, buf) {
   // on every legitimate release. Afterwards, a split means the operator is not
   // finished, and the exit code says so while the upload itself stands.
   if (!failed) requireTiersInStep(subjectList);
+  if (!failed) requirePlatformCors();
 })();

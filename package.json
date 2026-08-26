@@ -200,7 +200,8 @@
     "lint:php": "node tools/check-php-syntax.mjs",
     "fix:verb-agreement": "node tools/fix-ehel-verb-agreement.mjs",
     "check:teacher-scripts": "node tools/check-ehel-teacher-scripts.mjs",
-    "check:tutor-lessons": "node tools/check-tutor-lessons.mjs mathematics && node tools/check-tutor-lessons.mjs science"
+    "check:tutor-lessons": "node tools/check-tutor-lessons.mjs mathematics && node tools/check-tutor-lessons.mjs science",
+    "check:platform-cors": "node tools/check-platform-cors.mjs"
   },
   "devDependencies": {
     "@playwright/test": "^1.58.2",

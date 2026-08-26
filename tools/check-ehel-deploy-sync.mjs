@@ -57,6 +57,7 @@ import crypto from "node:crypto";
 import { fileURLToPath } from "node:url";
 import { createRequire } from "node:module";
 import { spawnSync } from "node:child_process";
+import os from "node:os";
 
 // A CRASH IS NOT A VERDICT — exit 4 rather than the 1 an uncaught throw gives.
 //
@@ -90,6 +91,8 @@ const { readManifestPaths } = require("./lib/upload-manifest.js");
 const here = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(here, "..");
 const EHEL = path.join(ROOT, "src", "prototypes", "ehel-academy");
+// The same location as a repo-relative pathspec, for git archive below.
+const EHEL_REL = "src/prototypes/ehel-academy";
 const CONTENT_MANIFEST = path.join(ROOT, ".bunny-content-manifest.json");
 const MEDIA_MANIFEST = path.join(ROOT, ".bunny-upload-manifest.json");
 const APP_MANIFEST = path.join(ROOT, ".bunny-appver-manifest.json");
@@ -235,15 +238,18 @@ const appManifest = fs.existsSync(APP_MANIFEST) ? JSON.parse(fs.readFileSync(APP
 // Ask the deployer to enumerate the release and hash every byte stream it would
 // write. Runs it in --plan-json, which uploads nothing and needs no BUNNY_KEY,
 // so this stays an offline check.
-function releasePlan(subject, tag) {
-  if (!fs.existsSync(APP_DEPLOYER)) return { ok: false, why: "deploy-app-version.js is not in tools/" };
+function releasePlan(subject, tag, tree = null) {
+  const deployer = tree ? path.join(tree, "tools", "deploy-app-version.js") : APP_DEPLOYER;
+  if (!fs.existsSync(deployer)) {
+    return { ok: false, why: tree ? "deploy-app-version.js is not in the HEAD tree" : "deploy-app-version.js is not in tools/" };
+  }
   // course-app.js only reaches a version path in --shell mode, so its presence
   // in the manifest is how the release itself says which mode built it. Every
   // subject ships --shell today; reading it back rather than assuming keeps this
   // honest if one ever does not.
   const wasShell = Object.prototype.hasOwnProperty.call(appManifest, `app/${subject}/${tag}/course-app.js`);
-  const args = [APP_DEPLOYER, tag, ...(wasShell ? ["--shell"] : []), "--plan-json", subject];
-  const run = spawnSync(process.execPath, args, { encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
+  const args = [deployer, tag, ...(wasShell ? ["--shell"] : []), "--plan-json", subject];
+  const run = spawnSync(process.execPath, args, { encoding: "utf8", maxBuffer: 64 * 1024 * 1024, cwd: tree || undefined });
   if (run.error) return { ok: false, why: `could not run deploy-app-version.js --plan-json (${run.error.message})` };
   if (run.status !== 0) {
     const first = (run.stderr || run.stdout || "").trim().split("\n")[0] || `exit ${run.status}`;
@@ -258,6 +264,73 @@ function releasePlan(subject, tag) {
     // narrows to course-ui.js is precisely the state this replaced.
     return { ok: false, why: "deploy-app-version.js --plan-json did not return a plan — re-point this check rather than dropping it" };
   }
+}
+
+// ── telling released drift apart from somebody's unsaved work ────────────────
+//
+// The plan above is built from the WORKING TREE, and several sessions share this
+// checkout, so the tree routinely holds edits that were never released and were
+// never meant to be. Those made this check report "app behind in 1 of 16
+// file(s)" about a file nobody had shipped — and on 2026-08-27 an operator was
+// told, correctly, to ignore that line. A gate people are told to ignore is the
+// one failure this file cannot survive: every other defect recorded here made it
+// silently green, and this one makes it noisily wrong, which costs the same
+// trust faster.
+//
+// So when the plan disagrees with the manifest, ask HEAD the same question.
+// `git archive HEAD` into a temp tree costs 0.6s with the pathspec below and
+// yields a byte-identical plan to a full checkout (verified: 19 items, same
+// sha1s). If HEAD's plan matches what was released, the difference is
+// uncommitted local work and the release is NOT behind.
+//
+// Built once per process and reused across subjects. Nothing is written to the
+// repo, and it never touches the index — `git stash` would be the obvious
+// alternative and is unusable here for exactly the reason this exists: it moves
+// other sessions' work.
+let headTreeCache;
+function headTree() {
+  if (headTreeCache !== undefined) return headTreeCache;
+  headTreeCache = null;
+  try {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "ehel-headplan-"));
+    // Only what the planner reads: the shell, the shared code, each subject's
+    // own shared code and entry stubs. Deliberately no data/ and no media/ —
+    // they are megabytes, the plan never opens them, and including them took
+    // this from 0.6s to 15s.
+    const paths = [
+      "tools", "package.json",
+      `${EHEL_REL}/shell`, `${EHEL_REL}/shared`,
+    ];
+    for (const s of ALL) {
+      paths.push(`${EHEL_REL}/${s}/shared`, `${EHEL_REL}/${s}/index.html`);
+      paths.push(`${EHEL_REL}/${s}/grade-1/index.html`, `${EHEL_REL}/${s}/level-1/index.html`);
+    }
+    // A pathspec that matches nothing makes git archive fail outright, and the
+    // grade-/level- split means one of each pair never matches. --pathspec-file
+    // with :(glob) would be tidier; tolerating the miss is simpler and the
+    // failure mode is a null tree, which the caller reports rather than hides.
+    const archive = spawnSync("git", ["archive", "HEAD", ...paths.filter((p) => {
+      const probe = spawnSync("git", ["ls-tree", "-d", "--name-only", "HEAD", p], { encoding: "utf8" });
+      const file = spawnSync("git", ["cat-file", "-e", `HEAD:${p}`], { encoding: "utf8" });
+      return (probe.stdout || "").trim() !== "" || file.status === 0;
+    })], { encoding: "buffer", maxBuffer: 256 * 1024 * 1024 });
+    if (archive.status !== 0) return headTreeCache;
+    const tar = spawnSync("tar", ["-x", "-C", dir], { input: archive.stdout });
+    if (tar.status !== 0) return headTreeCache;
+    headTreeCache = dir;
+  } catch {
+    headTreeCache = null;
+  }
+  return headTreeCache;
+}
+
+// Which of the planner's own inputs are dirty right now. Used only to explain a
+// difference, never to decide one — the decision is HEAD's plan above.
+function dirtyPlanSources(subject) {
+  const scope = [`${EHEL_REL}/shell`, `${EHEL_REL}/shared`, `${EHEL_REL}/${subject}/shared`, `${EHEL_REL}/english/shared`];
+  const run = spawnSync("git", ["status", "--porcelain", "--", ...scope], { encoding: "utf8" });
+  if (run.status !== 0) return [];
+  return (run.stdout || "").split("\n").map((l) => l.slice(3).trim()).filter(Boolean);
 }
 
 // The release a subject is on, read from the manifest rather than the network so
@@ -327,7 +400,41 @@ function appState(subject) {
   // recorded under paths this plan does not name, and comparing zero files
   // while printing a tick is the whole defect being fixed here.
   if (!compared) return { known: false, why: `no ${tag} file from the release plan is in the manifest — nothing could be compared` };
-  return { known: true, tag, stale: differing.length > 0, compared, differing };
+  if (!differing.length) return { known: true, tag, stale: false, compared, differing, basis: "the working tree" };
+
+  // The working tree disagrees. Before calling that drift, ask HEAD — in a
+  // shared checkout the difference is as likely to be somebody's unsaved work
+  // as a release that has fallen behind, and those want opposite responses.
+  const dirty = dirtyPlanSources(subject);
+  if (!dirty.length) return { known: true, tag, stale: true, compared, differing, basis: "the working tree" };
+
+  const tree = headTree();
+  if (!tree) {
+    // Cannot attribute. Say so instead of picking the verdict that happens to
+    // be in hand — the whole point of this branch is that "behind" was not
+    // earned.
+    return { known: true, tag, stale: true, compared, differing, basis: "the working tree", unattributed: dirty };
+  }
+  const headPlan = releasePlan(subject, tag, tree);
+  if (!headPlan.ok) return { known: true, tag, stale: true, compared, differing, basis: "the working tree", unattributed: dirty };
+
+  const headDiffering = [];
+  for (const item of headPlan.items) {
+    if (item.pointer || !item.remote.includes(`/${tag}/`)) continue;
+    if (appManifest[item.remote] !== item.sha1) headDiffering.push(item.remote);
+  }
+  return {
+    known: true,
+    tag,
+    stale: headDiffering.length > 0,
+    compared,
+    differing: headDiffering,
+    basis: "HEAD",
+    // What the working tree alone would have reported, kept so the line can say
+    // the difference is local rather than silently dropping it.
+    localOnly: differing.filter((r) => !headDiffering.includes(r)),
+    dirty,
+  };
 }
 
 let failed = false;
@@ -409,9 +516,20 @@ for (const subject of subjects) {
   // Say how many files the verdict covers. "matches the working tree" over one
   // file and over sixteen read identically, and for a long time it was one.
   console.log(`  app      : ${app.known
-    ? `${app.tag} ${app.stale ? `behind the working tree in ${app.differing.length} of ${app.compared} file(s)` : `matches the working tree`} (${app.compared} file(s) compared)`
+    ? `${app.tag} ${app.stale ? `behind ${app.basis} in ${app.differing.length} of ${app.compared} file(s)` : `matches ${app.basis}`} (${app.compared} file(s) compared)`
     : `not checked — ${app.why}`}`);
   for (const remote of app.differing || []) console.log(`    behind: ${remote}`);
+  // The line that stops the false alarm. Without it this printed "behind" about
+  // a file nobody had shipped, and the honest answer for the operator was to
+  // ignore it — which is how a gate stops being read at all.
+  for (const remote of app.localOnly || []) console.log(`    not drift: ${remote} differs only because of uncommitted local edits`);
+  if (app.localOnly?.length || (app.basis === "HEAD" && app.dirty?.length)) {
+    console.log(`    (compared against HEAD: ${app.dirty.length} plan source(s) have uncommitted edits — ${app.dirty.slice(0, 3).join(", ")}${app.dirty.length > 3 ? ", …" : ""})`);
+  }
+  if (app.unattributed?.length) {
+    console.log(`    ⚠ could not compare against HEAD, and ${app.unattributed.length} plan source(s) are uncommitted —`);
+    console.log(`      this "behind" may be local work rather than released drift. Commit or check by hand.`);
+  }
   // Naming the tool that DOES cover it, not just the reason this one cannot.
   // Both audio incidents this week were English, and a reader who sees the tick
   // below can reasonably take it for a statement about clips unless the line

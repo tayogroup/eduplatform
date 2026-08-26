@@ -102,7 +102,21 @@ const AUDIO_IS_DEV = ["localhost", "127.0.0.1"].includes(location.hostname);
 // same upload, two different answers — ask it per CLIP, never per repair. The
 // uploader can tell you which: it reports how many of the files it is sending
 // are already-uploaded paths whose CONTENTS changed (it said 3).
-const AUDIO_RELEASE = "20260826a";
+// 20260827a: the plural-possessive collision fix (generate-ehel-english-audio.js
+// :: glossaryItems). "birds'" and "birds" both slugged to birds.mp3, so 37
+// filenames across Grades 4-8 were shared by two entries with different
+// definitions and whichever generated last owned the file. The same per-clip
+// arithmetic as 20260826a, and it lands the other way round: of the 166 clips in
+// that upload, 92 are the newly named `*-possessive*` files whose URLs never
+// existed, so no browser holds anything and they need nothing from this stamp —
+// but 74 are the PLURAL halves, re-narrated onto their existing filenames because
+// the recording there was the possessive's definition. Their URLs are unchanged,
+// so without the stamp every learner who has already opened one keeps hearing the
+// wrong definition for a year. Unlike the 20 grade-8 clips deliberately NOT
+// stamped a day earlier — those swapped one colliding entry's audio for the
+// other's, which withheld no correction — these 74 carry a real repair. The
+// uploader reports the number: it said 74.
+const AUDIO_RELEASE = "20260827a";
 function withAudioRelease(url) {
   // Dev serves from disk with no caching worth defeating, and a bare filename
   // is easier to grep for in the network panel.

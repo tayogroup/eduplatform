@@ -2440,6 +2440,55 @@ Count the references, never the description.
 3. If build output matters: `npm run env:local-dev`, then spot-check via `npm run preview:bunny:production`.
 4. Playwright e2e only runs against a configured Moodle instance — don't treat missing `EDUPLATFORM_*` env as a code failure.
 
+### Splitting one condition into two wakes up whatever was equal to the old one
+
+Worked example, 2026-08-27, from the tutoring deck-only change (the hard rule
+near the top of this file). Science had TWO gates that were the same expression:
+
+```js
+const deckStage   = () => stageNumber <= DECK_MAX_STAGE;   // and, further down,
+const BOTH_DESIGNS = () => stageNumber <= DECK_MAX_STAGE;
+```
+
+and each of its ten renderers read
+
+```js
+if (BOTH_DESIGNS()) return renderDeckOnly(renderXDeck);   // always returned first
+if (deckStage())    return renderXDeck();                 // therefore NEVER reached
+```
+
+The second line was dead — extensionally equal to the first, so unreachable on
+both sides of the boundary, and it had been that way since Stage 1 shipped.
+Adding `deckPage() = BOTH_DESIGNS() && learnerCategory !== "tutoring"` to the
+FIRST line made the two diverge, and the dead line woke up on the one input
+where they now differ: a tutoring learner got a full-bleed deck with the topbar
+gone — the exact opposite of the change's intent, in the only case the change
+was for. All ten are deleted and `deckStage` with them.
+
+**A diff structurally cannot show this.** Nothing about that line was edited.
+Its MEANING changed because a sibling expression changed; its text did not. So
+reviewing the diff harder never reaches it, however carefully — and the edited
+call sites, the ones a reviewer does check, are the safe half by construction.
+
+So, when a change splits one condition into two: **grep for every OTHER
+expression that was equivalent to the old one, not only the sites you edited.**
+The unedited sites are where the meaning silently moved. It is one grep.
+
+Two honest limits on this note:
+
+- **It is demonstrated once, in one subject.** Mathematics, Computing, English
+  and Global Perspectives each had a single gate and were unaffected. This is a
+  shape worth checking for, not a defect class known to be widespread here.
+- **The redundancy is what made it invisible, not the deadness.** A condition
+  that plainly does nothing gets deleted. One that is *equal to a live
+  condition* tests fine, reads as load-bearing, and is indistinguishable from
+  doing work right up until its twin moves.
+
+It was found by opening the page as a tutoring learner and seeing a deck, not by
+reading code — which is the same lesson as the `break-inside: avoid` page count
+and the two suns in the sky: the declaration tells you the intent, never what
+the running thing does.
+
 ### The PHP gate, and the corruption it exists for
 
 `src/moodle` is the source of truth for the Moodle plugins, but until this gate

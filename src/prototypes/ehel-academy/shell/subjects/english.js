@@ -10336,10 +10336,19 @@ function worksheetPrintChromeCss() {
 `;
 }
 
+// "Handwriting", not "Cursive". The sheet was renamed on 2026-08-26 when the face
+// changed to Edu NSW ACT Foundation, which is UNJOINED: it teaches letterform,
+// spacing and spelling rather than continuous joins, and a title promising cursive
+// would have been the page describing something it no longer does.
+//
+// Note this is now the one place in the feature where the two halves differ. The
+// handwriting ANIMATION still draws joined letters from cursive-strokes.js and its
+// aria-label still says "in cursive", correctly — that alphabet did not change.
+// Worksheet unjoined, animation joined, and neither label is wrong.
 function worksheetSheetHeaderHtml({ sentences = false, spelling = false, punctuation = false, comprehension = false, answerKey = false } = {}) {
   return `<header class="cw-head">
     <span>${escapeHtml(gradeLabel)} · Unit ${course.unit.unitNo} · ${escapeHtml(course.unit.unitTitle)}</span>
-    <h1>Cursive writing practice</h1>
+    <h1>Handwriting practice</h1>
     <p>Trace the grey words, then write each word yourself on the line underneath.${spelling ? " Say the letters, cover the word, and write it again from memory." : ""}${sentences ? " Then copy the sentence onto the empty lines." : ""}${punctuation ? " Where a sentence has lost its capital letters and punctuation, write it out again with them put back." : ""}${comprehension ? " At the end there are texts to read with questions underneath — read each one all the way through before you answer." : ""}${answerKey ? " The answers are on the last pages — leave those to the grown-up until you have finished." : ""}</p>
     <div class="cw-name"><span>Name</span><span>Date</span></div>
   </header>`;
@@ -10617,7 +10626,7 @@ function renderCursiveWorksheet() {
 
   $("#app").innerHTML = `${pageHeader(
     `${gradeLabel} · Unit ${course.unit.unitNo}`,
-    "Cursive writing worksheet",
+    "Handwriting worksheet",
     "Print this and write each word by hand as you learn it. Trace the grey words first, then write the word yourself on the line underneath.",
     "For learners",
   )}
@@ -10750,7 +10759,7 @@ function printCursiveWorksheet(chosenGroups, size, widths, { sentences = false, 
     return;
   }
   const geo = worksheetGeometry(size);
-  const title = `Cursive writing · ${gradeLabel} Unit ${course.unit.unitNo}`;
+  const title = `Handwriting · ${gradeLabel} Unit ${course.unit.unitNo}`;
   printWindow.document.open();
   printWindow.document.write(`<!doctype html>
     <html lang="en">
@@ -11207,7 +11216,7 @@ function studentResourceCards() {
   cards.push({ route: "live", iconName: "video", title: navLabelOf("live", "Live sessions"), blurb: "When your class meets your teacher online, the link is here." });
   // Grades 1-4 only, on the same line the picture dictionary and the picture
   // books already draw — see the worksheet section above for why.
-  if (BOTH_DESIGNS) cards.push({ category: "worksheets", route: "worksheet", iconName: "pen-line", title: "Cursive writing worksheet", blurb: "Print this unit's words on handwriting lines. Trace each word, then write it yourself." });
+  if (BOTH_DESIGNS) cards.push({ category: "worksheets", route: "worksheet", iconName: "pen-line", title: "Handwriting worksheet", blurb: "Print this unit's words on handwriting lines. Trace each word, then write it yourself." });
   // Grades 1-2 only, and its own constant rather than BOTH_DESIGNS: the printable
   // runs to Grade 4, this covers the story glossary and stops at 2.
   if (gradeNumber <= HANDWRITING_MAX_GRADE) cards.push({ category: "worksheets", route: "handwriting", iconName: "pen-tool", title: "How to write it", blurb: "Watch the pen write each word from this unit's stories, and see where to start." });

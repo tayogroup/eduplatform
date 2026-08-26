@@ -2061,6 +2061,12 @@ counts before detail, so a pipe that keeps the end keeps the least
 interrogatable part. Where the question is "what will this do", read the header,
 not the list.
 
+Reproducing this today prints `to upload: 4`, not 42: v287 has since been
+released, so the manifest records those files and only the four always-sent
+pointers remain in `todo`. The 42 is specific to the pre-release run. A count
+that does not reproduce is the expected behaviour of a manifest-driven tool, not
+a sign this entry has gone stale.
+
 **This is the INVERSE of the rest of this section, and that is why it is worth the
 space.** Everything else here is a check that silently does no work: a ✓ after a
 skip, a gate green about an unreachable feature, a parser matching nothing. Here

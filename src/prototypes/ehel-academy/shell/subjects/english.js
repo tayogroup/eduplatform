@@ -582,19 +582,26 @@ function numberWord(n) { return ["zero", "one", "two", "three", "four", "five", 
 function renderSectionGuide() {
   const app = $("#app");
   let host = $("#section-guide");
-  const build = !isPrereqUnit && !unitIsLocked() && SECTION_GUIDES[route] && sectionUnlocked(route);
+  // Never above a deck. Every step here describes the ORIGINAL design in its own
+  // furniture — "on the left is the list of the 15 words", "press a word to open
+  // it", "it gets a LEARNED tag in the list" — and from 2026-08-26 Grades 1-4 do
+  // not draw that design at all. Left in, it would be a set of instructions for a
+  // page the child cannot see, on the sections where the child is youngest.
+  //
+  // Nothing is lost: a deck opens on its own "How to use these slides" (DECK_INTROS
+  // below), which says the same things in the deck's own furniture and names the
+  // button that finishes the section. The pointer that used to hang here — "under
+  // the page there are slides" — went with it; the slides ARE the page now.
+  const build = !isPrereqUnit && !unitIsLocked() && SECTION_GUIDES[route] && sectionUnlocked(route) && !$("#deck-design");
   if (!build) { host?.remove(); return; }
   if (!host) { host = document.createElement("section"); host.id = "section-guide"; app.parentNode.insertBefore(host, app); }
   const guide = SECTION_GUIDES[route]();
-  const hasDeck = Boolean($("#deck-design"));
   host.className = "section-guide";
   host.innerHTML = `<details open>
       <summary>${icon("info")}<span><strong>How to use this page</strong><small>${escapeHtml(sectionLabel(route))} — what to do, step by step</small></span></summary>
       <ol class="section-guide-steps">${guide.steps.map((step) => `<li>${escapeHtml(step)}</li>`).join("")}</ol>
       <p class="section-guide-finish">${icon("check-circle")}<span><strong>To finish:</strong> ${escapeHtml(guide.finish)}</span></p>
-      ${hasDeck ? `<p class="section-guide-deck">${icon("gallery-horizontal")}<span>Under the page there are slides with the same things, one at a time. <button class="link-button" type="button" data-jump-deck>Go to the slides</button></span></p>` : ""}
     </details>`;
-  host.querySelector("[data-jump-deck]")?.addEventListener("click", () => $("#deck-design")?.scrollIntoView({ behavior: "smooth", block: "start" }));
   icons();
 }
 
@@ -4816,9 +4823,11 @@ let audioRequestId = 0;
 let pageNarrationActive = false;
 let pageNarrationCancel = null;
 let activeWordId;
-// Set by renderWordCarousel while both designs are mounted, cleared by
-// onBeforeRender with the other region state — a handler in the lab must never
-// reach into a deck belonging to a section that has already been replaced.
+// Published by renderWordCarousel and consumed by the vocabulary LAB, which no
+// longer draws at the grades the deck does — so nothing reaches these any more.
+// Kept, null-guarded at every call site, because the lab is still the whole
+// section at Grades 5-8: this is the wiring the two would need again the day they
+// share a page.
 let showWordInDeck = null;
 // The other direction, and the same contract. Both designs draw the same
 // section, so a word marked in the lab is marked in the deck too — but only the
@@ -5210,10 +5219,14 @@ function prepareNarrationText(value) {
 }
 
 function collectPageNarration() {
-  // On a both-designs page the deck below repeats the section word for word, so
-  // "read this page" reads the original half only. Narrating #app there would say
-  // everything twice.
-  const source = $("#classic-design") || $("#app");
+  // "Read this page" takes the ORIGINAL half where there is one — Stages 5+, and
+  // Stages 1-4 until 2026-08-26, when they became the deck alone. On a deck page
+  // #app is every slide at once (a deck paints all of them, not just the visible
+  // one), so reading it would narrate the whole section in one go — 25 practice
+  // questions, or an English unit's several hundred words. The slide the learner
+  // is on is what "this page" means there, and the deck already marks it: every
+  // other slide is `inert` (deck.js :: syncReachable).
+  const source = $("#classic-design") || $("#app .gc-slide:not([inert])") || $("#app");
   if (!source) return currentPageNarration;
   const copy = source.cloneNode(true);
   copy.querySelectorAll("button, .audio-source, .status-chip, script, style, [hidden], [aria-hidden='true'], details:not([open]) > *:not(summary)").forEach((element) => element.remove());
@@ -5583,9 +5596,10 @@ function lectureJourneyList(journey) {
     : `<ul class="checklist">${journey.steps.map(([name, text]) => `<li>${icon(name)} ${escapeHtml(text)}</li>`).join("")}</ul>`;
 }
 
-// The ONE section at Grades 1-4 that does not draw both designs. The deck under
-// this page restated a video the learner had just watched — a second thing to
-// click and no second thing to learn — so the lecture keeps the original alone:
+// The ONE section at Grades 1-4 that takes no deck, and so the one that still
+// draws the original page there. The deck restated a video the learner had just
+// watched — a second thing to click and no second thing to learn — so the
+// lecture keeps the original alone:
 // the player with its own slide arrows, the checklist beside it, and the button
 // that completes the section.
 //
@@ -5780,28 +5794,30 @@ function linkedWords() {
   return course.dictionaryLinks.map((link) => ({ ...link, master: dictionary.entries.find((entry) => entry.dictionaryEntryId === link.dictionaryEntryId) }));
 }
 
-// ── Grades 1-4: the original design AND the slide deck ───────────────────────
-// A unit module at Grades 1-4 shows both designs, in this order: the original
-// section first, then the same content as an inline deck under it. The deck used
-// to REPLACE the original page here; now it joins it. Grades 5-8 are untouched —
-// they never had a deck, and the boundary is still 4 (see DECK_MAX_STAGE in the
-// other subjects: by Grade 5 a learner scans a page rather than being walked
-// through it one item at a time).
+// ── Grades 1-4: the slide deck, and nothing above it ─────────────────────────
+// A unit module at Grades 1-4 is the deck ALONE — one item per slide, and nothing
+// above it. It showed both designs stacked for a while (the original section
+// first, the same content as an inline deck under it), and the owner ended that
+// on 2026-08-26 across all five deck subjects: the original above is the page the
+// deck exists to replace, and a young learner met it first on every section.
+// Grades 5-8 are untouched — they never had a deck, and the boundary is still 4
+// (see DECK_MAX_STAGE in the other subjects: by Grade 5 a learner scans a page
+// rather than being walked through it one item at a time).
 //
-// Two things make this more than an extra function call. Both designs draw the
-// same section, so both carry the same hooks: #word-search and #group-filter,
-// data-word, data-check-answer, data-writing-audio, data-record. A
-// document-wide querySelector would hand the vocabulary lab the deck's search
-// box, and the recorder the wrong <audio>. And the original renderers paint by
-// assigning to #app.innerHTML, which would erase a deck mounted below them the
-// moment a subtab or a filter redrew.
+// BOTH_DESIGNS is kept and deliberately NOT flipped: it is what routes a grade
+// here in the first place, so flipping it would send Grades 1-4 back to the
+// original page — the opposite change — and it decides two unrelated things
+// besides (whether this grade is offered the cursive worksheet, and whether that
+// route resolves at all). Read it as "does the deck replace the page at this
+// grade", which is what every call site already meant.
 //
-// So each design gets its own region. The original renderer queries through
-// classicScope, whose "#app" IS that region — so it keeps writing the line it
-// always wrote and lands in .classic-design instead of over the whole page — and
-// the deck mounts into .deck-design with full-bleed off. At Grades 5-8 the
-// region is null, "#app" is the page root again and the document is the scope,
-// so those grades run exactly the code they ran before.
+// classicScope and .classic-design stay, and still matter, because the original
+// renderers are the whole section at Grades 5-8: there the region is null, "#app"
+// is the page root and the document is the scope, exactly as before. What no
+// longer happens is the two sharing a page — so the hooks they both carry
+// (#word-search, #group-filter, data-word, data-check-answer, data-writing-audio,
+// data-record) can no longer collide, and the region plumbing is now a guard on a
+// case that does not arise rather than a live fix.
 const BOTH_DESIGNS = gradeNumber <= 4;
 let classicRegion = null;
 let deckMount = null;
@@ -5824,22 +5840,19 @@ function classicScope() {
   };
 }
 
-function renderBothDesigns(classic, carousel, intro) {
-  // The page guide (renderSectionGuide, run by onAfterRender) sits above this
-  // whole block and links down to the deck: the original paints first and is
-  // tall, so the deck and its instruction slide are below the fold.
-  $("#app").innerHTML = `<div class="both-designs">
-      <div class="classic-design" id="classic-design"></div>
-      <section class="deck-design">
-        <div class="deck-design-head"><span class="eyebrow">Slides</span><p>${escapeHtml(intro)}</p></div>
-        <div id="deck-design"></div>
-      </section>
+// The deck keeps mounting into a host with full-bleed OFF rather than taking
+// #app with body.gc-full: gc-full hides the topbar, so a child would lose the way
+// back to the unit, and every rule that sizes an inline deck hangs off
+// .deck-design (course-ui.css). The whole screen is still one tap away — that is
+// what the deck's own Full screen button is for.
+//
+// The original half is not written at all, rather than hidden with CSS. A hidden
+// half still renders, still starts its audio and still answers a document-wide
+// querySelector, which is the collision the two regions were built to prevent.
+function renderDeckOnly(carousel) {
+  $("#app").innerHTML = `<div class="both-designs deck-only">
+      <section class="deck-design"><div id="deck-design"></div></section>
     </div>`;
-  classicRegion = $("#classic-design");
-  classic();
-  // The deck is mounted second and left mounted: the region survives the
-  // original's own redraws, which now stop at .classic-design. Both flags are
-  // cleared by onBeforeRender before the next section draws.
   deckMount = "#deck-design";
   carousel();
   deckMount = null;
@@ -5849,7 +5862,7 @@ function renderDictionary() {
   // Grades 1-4 meet one word at a time in the deck, and keep the searchable
   // two-column lab above it. From Grade 5 the lab is the whole section: by then
   // a learner is looking words UP, and a unit can carry 70 of them.
-  if (BOTH_DESIGNS) return renderBothDesigns(renderDictionaryClassic, renderWordCarousel, "The same words, one at a time.");
+  if (BOTH_DESIGNS) return renderDeckOnly(renderWordCarousel);
   return renderDictionaryClassic();
 }
 
@@ -6162,11 +6175,11 @@ function renderWordCarousel() {
     deck.redrawSlide(position, wordSlide(words[position], position));
   };
 
-  // Lets the word list ABOVE move this deck. At Grades 1-4 both designs are on
-  // screen showing the same words, so picking a word in the lab and watching the
-  // deck stay on the previous one reads as the page ignoring the click — which
-  // is what a learner reported. The lab already repaints its own card; this is
-  // the other half of that.
+  // Let the word LAB move this deck, from the days the two shared a page: picking
+  // a word in the lab and watching the deck stay on the previous one read as the
+  // page ignoring the click, which is what a learner reported. Grades 1-4 draw the
+  // deck alone now, so nothing calls this — it is published against the day the
+  // two share a page again, and costs one closure.
   //
   // Published as a function rather than the deck itself so the lookup happens
   // against `words` AS IT IS WHEN CLICKED — the deck filters itself, so a word's
@@ -6709,7 +6722,7 @@ const readingsAreForTheGrownUp = () => course.readings.length > 0
 
 function renderReading() {
   if (readingsAreForTheGrownUp()) return renderReadingGrownUp();
-  if (BOTH_DESIGNS) return renderBothDesigns(renderReadingClassic, renderReadingCarousel, "The same text, one page at a time.");
+  if (BOTH_DESIGNS) return renderDeckOnly(renderReadingCarousel);
   return renderReadingClassic();
 }
 
@@ -7185,7 +7198,7 @@ function printStory(story, parts) {
 }
 
 function renderComprehension() {
-  if (BOTH_DESIGNS) return renderBothDesigns(renderComprehensionClassic, renderComprehensionCarousel, "The same questions, one at a time.");
+  if (BOTH_DESIGNS) return renderDeckOnly(renderComprehensionCarousel);
   return renderComprehensionClassic();
 }
 
@@ -7286,7 +7299,7 @@ function renderGrammar() {
   // Grades 1-4 get the kid-friendly carousel (one pattern at a time), modelled on
   // the Arabic Alphabet unit's Learn section, with the grid workshop kept above
   // it. Grade 5 and up are the workshop alone.
-  if (BOTH_DESIGNS) return renderBothDesigns(renderGrammarClassic, renderGrammarCarousel, "The same patterns, one at a time.");
+  if (BOTH_DESIGNS) return renderDeckOnly(renderGrammarCarousel);
   return renderGrammarClassic();
 }
 
@@ -7375,7 +7388,7 @@ function renderGrammarCarousel() {
 }
 
 function renderSpeaking() {
-  if (BOTH_DESIGNS) return renderBothDesigns(renderSpeakingClassic, renderSpeakingCarousel, "The same practices, one at a time.");
+  if (BOTH_DESIGNS) return renderDeckOnly(renderSpeakingCarousel);
   return renderSpeakingClassic();
 }
 
@@ -7545,7 +7558,7 @@ async function toggleRecording(taskId, button) {
 }
 
 function renderWriting() {
-  if (BOTH_DESIGNS) return renderBothDesigns(renderWritingClassic, renderWritingCarousel, "The same writing tasks, one at a time.");
+  if (BOTH_DESIGNS) return renderDeckOnly(renderWritingCarousel);
   return renderWritingClassic();
 }
 
@@ -7688,7 +7701,7 @@ function renderWritingCarousel() {
 }
 
 function renderActivities() {
-  if (BOTH_DESIGNS) return renderBothDesigns(renderActivitiesClassic, renderActivitiesCarousel, "The same activities, one at a time.");
+  if (BOTH_DESIGNS) return renderDeckOnly(renderActivitiesCarousel);
   return renderActivitiesClassic();
 }
 

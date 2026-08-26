@@ -268,16 +268,22 @@ const isDeckStage = () => stageNumber <= DECK_MAX_STAGE;
 // the deck INSTEAD of the page, which is what this subject shipped first and
 // what English itself moved away from.
 //
-// Stages 1-4, matching English. This is now the same boundary as
-// DECK_MAX_STAGE, which makes the deck-instead-of-the-page branch in routeTo
-// unreachable — it is kept only because Stage 5+ still resolves through the
-// same helper, and the branch costs one line.
+// Stages 1-4, matching English. Since 2026-08-26 this is what says a stage draws
+// the SLIDES ONLY — one part at a time, with nothing above them. Until then it
+// meant the original section AND the deck under it, and the owner ended that
+// across all five deck subjects: the original above is the page the deck exists
+// to replace, and a young learner met it first on every section.
+//
+// The name is kept and the gate is deliberately NOT flipped: it is what routes a
+// stage to the deck at all, so flipping it would send Stages 1-4 back to the
+// original page, which is the opposite change.
 const BOTH_MAX_STAGE = 4;
 const isBothStage = () => stageNumber <= BOTH_MAX_STAGE;
 
-// Where the next deck lands. A both-designs page sets it, and every deck
-// renderer below mounts inline under the original section without knowing about
-// it. Null means the deck owns the page, which is what Stages 2-4 still do.
+// Where the next deck lands. renderDeckOnly sets it, and every deck renderer
+// below mounts inside the page without knowing about it. Null would mean the deck
+// takes #app with body.gc-full, which nothing does now: gc-full hides the topbar,
+// and the deck's own Full screen button is how a learner asks for the screen.
 // Cleared by onBeforeRender, so it can never leak into the next section.
 let deckMount = null;
 
@@ -300,97 +306,50 @@ function deck() {
       // replaces them with unbound copies. Re-binding is idempotent — the shell
       // marks a bound button with data-voiceBound — so this is safe to call on
       // every paint.
-      // untabDeckHalf runs here too, not only after the first mount: a re-deck
-      // (the practice part filter) builds new slides and a new dot strip, and
-      // fresh controls arrive tabbable.
-      afterPaint: () => { bindVoiceControls(); updateVoiceUI(); untabDeckHalf(); },
+      afterPaint: () => { bindVoiceControls(); updateVoiceUI(); },
     });
   }
-  // Where a deck lands is decided by whoever is rendering, not by the eleven
-  // deck renderers below: on a both-designs page deckMount is set and every one
-  // of them mounts inline under the original section, bounded rather than
-  // full-bleed, without carrying a parameter for it.
+  // Where a deck lands is decided by whoever is rendering, not by the eleven deck
+  // renderers below: renderDeckOnly sets deckMount and every one of them mounts
+  // inside the page, bounded rather than full-bleed, without carrying a parameter
+  // for it.
   return {
     ...deckApi,
     mountDeck: (options) => deckApi.mountDeck(deckMount ? { ...options, mount: deckMount, fullBleed: false } : options),
   };
 }
 
-// The original section, then the same content as a deck below it.
+// The deck, in its own region, and nothing above it.
 //
-// Simpler here than in English, and for one reason: every renderer in this file
-// RETURNS its HTML rather than painting and then querying the document. English
-// had to give its originals a scoped paint/$/$$ because a subtab redraw
-// reassigned #app.innerHTML and would have erased the deck below. Nothing here
-// repaints — the only in-place change a page makes is disabling its own done
-// button — so the original half can simply be dropped into the region.
-// Takes every control in the AT-hidden deck half out of the tab order.
+// THE DECK IS NO LONGER HIDDEN FROM ASSISTIVE TECH, and that reversal is the
+// load-bearing half of this change. While the section was drawn twice, the deck
+// half carried aria-hidden and every control in it was given tabindex="-1": it
+// was a second PRESENTATION of content read in full above, and a screen reader
+// met the whole lesson twice without it. All of that reasoning ran on the
+// original being there. It is not, so the same attributes would now take the ONLY
+// design out of the accessibility tree and out of the tab order — the section
+// would be unreachable for a screen reader and for a sighted keyboard user rather
+// than merely undoubled.
 //
-// Has to run after every paint, not once: the deck rebuilds its slides and its
-// whole dot strip on setSlides (Stage 4 practice filters itself from 25
-// questions to 14), and replaces a single slide on redrawSlide. Each of those
-// mints fresh elements, and a fresh button is tabbable — so a learner who
-// filtered the practice deck would find the tab order quietly restored.
+// So the attributes are gone, and untabDeckHalf with them. What replaces it is
+// the deck's own per-slide work in deck.js (syncReachable): the slide on screen
+// is reachable, the ones beside it are `inert`, and each carries role="group"
+// and an aria-label naming its position.
 //
-// Reads the region out of the DOM rather than taking it as an argument, because
-// the repaint callers are inside the deck and do not know what they are mounted
-// into. The aria-hidden attribute IS the condition: no hidden half, nothing to
-// do, so this is a no-op on any page that is not both-designs.
-function untabDeckHalf() {
-  const region = $("#app")?.querySelector('.deck-design[aria-hidden="true"]');
-  if (!region) return;
-  for (const control of region.querySelectorAll('a[href], button, select, textarea, input, [tabindex]:not([tabindex="-1"])')) {
-    control.setAttribute("tabindex", "-1");
-  }
-}
-
-// A both-designs page carries the section twice, and a screen reader met it as
-// the lesson and then the lesson again. The deck half is now hidden from
-// assistive tech outright: it is a second PRESENTATION of content already read
-// in full above, not second content. Nothing is lost by skipping it — measured
-// rather than assumed, the two halves carry the same six Listen buttons over
-// the same clips, and the deck's finish button already settles the page's own
-// through markSectionDone.
+// The straight gain: Stages 1-4 keyboard and screen-reader users used to meet the
+// page half alone, by design. They now meet the same design everyone else does.
 //
-// This is a product decision, taken deliberately: the slides remain for mouse
-// and touch, and are gone for screen readers AND for sighted keyboard users,
-// who now meet the page half alone. That second group is the real cost, and it
-// is the reason this was not done as a side effect of an accessibility pass.
-//
-// `inert` would be the tidy one-attribute version and is WRONG here. Inert
-// blocks pointer events as well as focus and AT, so it would not hide the deck
-// from screen readers — it would delete the feature for everyone, mouse and
-// touch included. What is wanted is narrower, so it takes two things:
-//
-//   aria-hidden      removes the half from the accessibility tree, inherited by
-//                    everything inside it.
-//   tabindex="-1"    on every control in it. aria-hidden alone over focusable
-//                    controls is its own defect: Tab still lands there, and the
-//                    learner is now on something that announces nothing at all.
-//
-// The aria-label this section briefly carried is gone with it. A named section
-// is a `region` landmark, which was the point when the deck was still exposed
-// and skippable; on a hidden subtree the name is unreachable, and leaving dead
-// ARIA behind reads as an oversight.
-function renderBothDesigns(classic, deckRenderer, intro) {
+// The page renderers are untouched and still return their HTML as strings —
+// Stages 5+ paint them through paint() exactly as before.
+function renderDeckOnly(deckRenderer) {
   const app = $("#app");
-  app.innerHTML = `<div class="both-designs">
-      <div class="classic-design" id="classic-design">${classic()}</div>
-      <section class="deck-design" aria-hidden="true">
-        <div class="deck-design-head"><span class="eyebrow">Slides</span><p>${escapeHtml(intro)}</p></div>
-        <div id="deck-design"></div>
-      </section>
+  app.innerHTML = `<div class="both-designs deck-only">
+      <section class="deck-design"><div id="deck-design"></div></section>
     </div>`;
   app.scrollTop = 0;
   deckMount = "#deck-design";
   deckRenderer();
   deckMount = null;
-  untabDeckHalf();
-  // The original half's Listen buttons were written as a string just now, so
-  // they are not bound yet — the deck binds its own through afterPaint, and the
-  // shell binds after a renderer returns, but this renderer painted twice.
-  bindVoiceControls();
-  updateVoiceUI();
 }
 
 // A section is now marked done from two places — the page's "Mark this section
@@ -1059,13 +1018,14 @@ const paint = (id, fn) => () => {
 // for a section this pack does not carry falls back to the overview — and the
 // stage gate is checked here rather than in the renderers map, which is built
 // at module load, before bind() knows what stage this is.
-const routeTo = (id, deckRenderer, pageRenderer, slidesIntro) => () => {
+const routeTo = (id, deckRenderer, pageRenderer) => () => {
   if (!isDeckStage()) return paint(id, pageRenderer)();
   if (!availableSections().some(([sectionId]) => sectionId === id)) return paint("overview", renderOverview)();
-  // Stages 1-4 all get the original section AND the deck. BOTH_MAX_STAGE and
-  // DECK_MAX_STAGE are both 4, so the deck-alone return below is unreachable —
-  // it is kept because Stage 5+ still resolves through this helper.
-  if (isBothStage()) return renderBothDesigns(pageRenderer, deckRenderer, slidesIntro);
+  // Both gates are 4, so the bare return below is unreachable: every stage with a
+  // deck reaches it through renderDeckOnly, which mounts it inside the page. The
+  // line is kept because it is what a full-bleed deck stage would use, and it
+  // costs one line.
+  if (isBothStage()) return renderDeckOnly(deckRenderer);
   return deckRenderer();
 };
 
@@ -1272,26 +1232,24 @@ const config = {
     // three-column chart that a one-item-per-slide deck would take apart, the
     // tutor is a live conversation, and For the Grown-Up is the one section
     // written for an adult reading it on their own.
-    lesson: routeTo("lesson", renderLessonDeck, renderLesson, "The same lesson, one part at a time."),
+    lesson: routeTo("lesson", renderLessonDeck, renderLesson),
     bigideas: routeTo("bigideas",
       () => renderBoxDeck({ section: "bigideas", label: "Big idea", heading: "Ideas to hold on to", finishLabel: "I will remember these", items: course.bigIdeas.map((item) => ({ item, role: "bigIdea" })) }),
-      () => renderBoxes("bigideas", "bigIdea", course.bigIdeas, "Big Ideas", "Ideas to hold on to", "The few things worth remembering from this unit."),
-      "The same ideas, one at a time."),
+      () => renderBoxes("bigideas", "bigIdea", course.bigIdeas, "Big Ideas", "Ideas to hold on to", "The few things worth remembering from this unit.")),
     models: routeTo("models",
       () => renderBoxDeck({ section: "models", label: "Example", heading: "See the skill in action", finishLabel: "I have seen the examples", items: course.models.map((item) => ({ item, role: "model" })) }),
-      () => renderBoxes("models", "model", course.models, "Worked Examples", "See the skill in action", "Follow someone else doing it, then do the same with your own topic."),
-      "The same examples, one at a time."),
+      () => renderBoxes("models", "model", course.models, "Worked Examples", "See the skill in action", "Follow someone else doing it, then do the same with your own topic.")),
     goals: paint("goals", renderGoals),
-    toolkit: routeTo("toolkit", renderToolkitDeck, renderToolkit, "The same toolkit, one card at a time."),
-    words: routeTo("words", renderWordsDeck, renderWords, "The same words, one at a time."),
-    challenge: routeTo("challenge", renderChallengeDeck, renderChallenge, "The same challenge, one step at a time."),
-    activities: routeTo("activities", renderActivitiesDeck, renderActivities, "The same activities, one at a time."),
-    project: routeTo("project", renderProjectDeck, renderProject, "The same project, one step at a time."),
+    toolkit: routeTo("toolkit", renderToolkitDeck, renderToolkit),
+    words: routeTo("words", renderWordsDeck, renderWords),
+    challenge: routeTo("challenge", renderChallengeDeck, renderChallenge),
+    activities: routeTo("activities", renderActivitiesDeck, renderActivities),
+    project: routeTo("project", renderProjectDeck, renderProject),
     tutor: renderTutor,
-    practice: routeTo("practice", renderPracticeDeck, renderPractice, "The same questions, one at a time."),
-    quiz: routeTo("quiz", renderQuizDeck, renderQuiz, "The same questions, one at a time."),
-    reflect: routeTo("reflect", renderReflectDeck, renderReflect, "The same questions, one at a time."),
-    teacher: routeTo("teacher", renderTeacherDeck, renderTeacher, "The same cards, one at a time."),
+    practice: routeTo("practice", renderPracticeDeck, renderPractice),
+    quiz: routeTo("quiz", renderQuizDeck, renderQuiz),
+    reflect: routeTo("reflect", renderReflectDeck, renderReflect),
+    teacher: routeTo("teacher", renderTeacherDeck, renderTeacher),
     grownup: paint("grownup", renderGrownUp),
     progress: paint("progress", renderProgressPage),
   }),

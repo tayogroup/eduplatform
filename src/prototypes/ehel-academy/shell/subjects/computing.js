@@ -150,10 +150,12 @@ function cambridgeLabel(stage) {
 // consults rather than works through, and a glossary dealt out one row per slide
 // is worse to use than a table.
 //
-// ── Both designs on one page (Stages 1-4) ────────────────────────────────────
-// Stages 1-4 get the original section AND the same content as a deck under it,
-// in that order — the arrangement English Grades 1-4 use. Stages 5-8 get the
-// original alone.
+// ── The deck alone (Stages 1-4) ──────────────────────────────────────────────
+// Stages 1-4 get the SLIDES ONLY — one card at a time, and nothing above them.
+// They got the original section and the deck under it until 2026-08-26, when the
+// owner ended that across all five deck subjects: the original above is the page
+// the deck exists to replace, and a young learner met it first on every section.
+// Stages 5-8 get the original alone, unchanged.
 //
 // 4 is where the packs themselves divide: Stages 1-4 ship as Teacher & Parent
 // Guides rewritten into learner voice, and Stage 5 up ships student lesson books
@@ -169,9 +171,10 @@ function cambridgeLabel(stage) {
 // word's `example`, both absent from parts of Stages 2-3 — were already
 // conditional on the slides that show them.
 //
-// There is no longer a "deck instead of the original" stage: the deck-only gate
-// this replaces covered exactly Stages 1-4, so every dispatcher's second branch
-// became unreachable the moment this number reached 4, and it went with it.
+// The name is kept and the gate is deliberately NOT flipped: this is what routes
+// a stage to the deck at all, so flipping it would send Stages 1-4 back to the
+// original page, which is the opposite change. Read bothDesigns() as "does the
+// deck replace the page at this stage" — what every call site already meant.
 const BOTH_DESIGNS_MAX_STAGE = 4;
 const bothDesigns = () => stageNumber <= BOTH_DESIGNS_MAX_STAGE;
 
@@ -182,17 +185,18 @@ const bothDesigns = () => stageNumber <= BOTH_DESIGNS_MAX_STAGE;
 // other's controls — the deck would filter itself by the lab's search box, and
 // the original's [data-check] binding would capture the deck's buttons too.
 //
-// So each design owns a region and queries inside it. Both variables are null on
-// every other page, where these helpers fall back to the document and behave
-// exactly as $ and $$ did — which is why Stages 2-8 are unaffected by the switch.
+// So each design owns a region and queries inside it. That collision cannot
+// happen any more — the two designs no longer share a page — but the regions
+// stay: they are what makes cRoot()/c$ and d$ mean "my half" at every call site,
+// and both fall back to the document when null, which is now every page.
 let classicRegion = null;
 let deckRegion = null;
-// Published by renderComputingWordsDeck while both designs are mounted, cleared
-// in onBeforeRender with the regions above. Stages 1-4 show the word LIST and
-// the word DECK on one page over the same vocabulary, and picking a word in the
-// list moved the list alone — the deck stayed on the previous word, which reads
-// as the page ignoring the click. Reported in English, where the same one-way
-// wiring existed; this is the same defect in this subject.
+// Published by renderComputingWordsDeck and consumed by the word LIST, which no
+// longer draws at the stages the deck does — so nothing reaches it any more.
+// Kept, null-guarded at its one call site, because the list is still the whole
+// section at Stages 5-8: this is the wiring the two would need again the day they
+// share a page. It was written for a real defect — picking a word in the list
+// moved the list alone and left the deck on the previous word.
 let showComputingWordInDeck = null;
 // The original renderers assign to their root's innerHTML. On a both-designs
 // page that root is the classic region, not #app — otherwise the first redraw
@@ -203,64 +207,43 @@ const c$$ = (selector) => [...(classicRegion || document).querySelectorAll(selec
 const d$ = (selector) => (deckRegion || document).querySelector(selector);
 const d$$ = (selector) => [...(deckRegion || document).querySelectorAll(selector)];
 
-// The page: original first, deck second, each in its own region. The deck mounts
-// with fullBleed off so it sits IN the page rather than being the page — no
-// body.gc-full, because the original above it still needs the normal chrome.
-// A both-designs page carries the section TWICE, so a screen reader met every
-// concept, activity and quiz question as the section and then the section
-// again. The deck half is hidden from assistive tech: it is a second
-// PRESENTATION of content already read in full above, not second content.
-// Nothing is lost by skipping it — the two halves draw from the same data, and
-// the deck's finish button settles the same progress key through the original's
-// own done handler.
+// The page: the deck, in its own region, and nothing else. It still mounts with
+// fullBleed off so it sits IN the page rather than being the page — body.gc-full
+// hides the topbar, and a child who cannot get back to the unit is worse off than
+// one who scrolls. The whole screen is one tap away on the deck's own Full screen
+// button.
 //
-// Deliberate, and it has a cost: the slides stay for mouse and touch and are
-// gone for screen readers AND for sighted keyboard users, who now meet the page
-// half alone. That second group is why this is a product decision rather than a
-// tidy-up. Global Perspectives made the same call first; this matches it.
+// THE DECK IS NO LONGER HIDDEN FROM ASSISTIVE TECH, and that reversal is the
+// load-bearing half of this change. While the section was drawn twice, the deck
+// carried aria-hidden and every control in it was given tabindex="-1": it was a
+// second PRESENTATION of content read in full above, and a screen reader met the
+// whole section twice without it. That reasoning ran on the original being there.
+// It is not, so the same attributes would now take the ONLY design out of the
+// accessibility tree and out of the tab order — the section would be unreachable
+// for a screen reader and for a sighted keyboard user, not duplicated for them.
 //
-// `inert` would be the one-attribute version and is WRONG here — it blocks
-// pointer events too, so it would not hide the deck, it would delete it for
-// everyone. Two attributes are needed instead:
-//   aria-hidden    takes the half out of the accessibility tree, inherited.
-//   tabindex="-1"  on every control inside it. aria-hidden over focusable
-//                  controls is its own defect: Tab still lands there, on
-//                  something that now announces nothing at all.
-function untabDeckHalf() {
-  // Read out of the DOM rather than through deckRegion: afterPaint fires from
-  // inside the deck, which does not know what it was mounted into. Scoped by
-  // the aria-hidden attribute, so it can only ever reach the deck half — on a
-  // page that is not both-designs there is no hidden half and this is a no-op.
-  const region = document.querySelector('#app .deck-design[aria-hidden="true"]');
-  if (!region) return;
-  for (const control of region.querySelectorAll('a[href], button, select, textarea, input, [tabindex]:not([tabindex="-1"])')) {
-    control.setAttribute("tabindex", "-1");
-  }
-}
-
-function bothDesignsPage(renderClassic, renderDeck) {
-  $("#app").innerHTML = `<div class="both-designs">
-      <div class="classic-design" id="classic-design"></div>
-      <div class="deck-design" id="deck-design" aria-hidden="true">
-        <div class="deck-design-head"><span class="eyebrow">The same section, one card at a time</span><p>Swipe or use the arrows. Everything above is here too.</p></div>
-        <div id="deck-host"></div>
-      </div>
+// So the attributes are gone and untabDeckHalf with them. What replaces it is the
+// deck's own per-slide work in deck.js (syncReachable): the slide on screen is
+// reachable, the ones beside it are `inert`, and each carries role="group" and an
+// aria-label naming its position. That was always there, and was simply
+// unreachable under an aria-hidden ancestor.
+//
+// The straight gain: Stages 1-4 keyboard and screen-reader users used to get the
+// original half alone, by design. They now get the same design everyone else
+// gets.
+function deckOnlyPage(renderDeck) {
+  $("#app").innerHTML = `<div class="both-designs deck-only">
+      <div class="deck-design" id="deck-design"><div id="deck-host"></div></div>
     </div>`;
-  classicRegion = $("#classic-design");
-  deckRegion = null;
-  renderClassic();
-  // Only now: the deck's own mount must not resolve through the classic region,
-  // and its controls must not be found by the original's still-live listeners.
+  classicRegion = null;
   deckRegion = $("#deck-design");
   renderDeck();
-  untabDeckHalf();
 }
 
 // Every deck renderer mounts through this, so where a deck goes is decided once.
-// On a both-designs page it mounts into the host below the original, with
-// full-bleed off — body.gc-full would strip the padding and hide the page header
-// belonging to the original still sitting above it. Everywhere else this is
-// mountDeck's own default and nothing changes.
+// At the stages that have one it mounts into the host inside the page, with
+// full-bleed off — body.gc-full strips the padding and hides the topbar with it.
+// Everywhere else this is mountDeck's own default and nothing changes.
 const mountSectionDeck = (options) => (bothDesigns()
   ? mountDeck({ ...options, mount: d$("#deck-host"), fullBleed: false })
   : mountDeck(options));
@@ -277,11 +260,7 @@ const { mountDeck, deckFinish } = createDeck({
   // Scoped to what actually changed: a one-slide redraw must not re-initialise
   // the WebGL models on the slides either side of it, which would leave two
   // animation loops running on one canvas.
-  // untabDeckHalf runs here as well as after the first mount: the deck replaces
-  // its whole track on setSlides and a single slide on redrawSlide, and every
-  // fresh button arrives tabbable again — so without this the tab order quietly
-  // repairs itself the first time a learner moves a slide.
-  afterPaint: (scope) => { bindVoiceControls(); updateVoiceUI(); initComputingWebGL(scope); untabDeckHalf(); },
+  afterPaint: (scope) => { bindVoiceControls(); updateVoiceUI(); initComputingWebGL(scope); },
 });
 
 // The debugging rule and the online-safety help are the UI's own words, not any
@@ -428,7 +407,7 @@ function renderCodeExamples() {
     c$$('[data-go]').forEach((button) => button.addEventListener("click", () => navigate(button.dataset.go)));
     return;
   }
-  if (bothDesigns()) return bothDesignsPage(() => renderCodeExamplesClassic(examples), () => renderCodeExamplesDeck(examples));
+  if (bothDesigns()) return deckOnlyPage(() => renderCodeExamplesDeck(examples));
   return renderCodeExamplesClassic(examples);
 }
 
@@ -571,7 +550,7 @@ function renderDebuggingDeck(bugs) {
 
 function renderDebugging() {
   const bugs = course.debugging || [];
-  if (bothDesigns()) return bothDesignsPage(() => renderDebuggingClassic(bugs), () => renderDebuggingDeck(bugs));
+  if (bothDesigns()) return deckOnlyPage(() => renderDebuggingDeck(bugs));
   return renderDebuggingClassic(bugs);
 }
 
@@ -629,7 +608,7 @@ function renderSafetyDeck(items) {
 
 function renderSafety() {
   const items = course.esafety || [];
-  if (bothDesigns()) return bothDesignsPage(() => renderSafetyClassic(items), () => renderSafetyDeck(items));
+  if (bothDesigns()) return deckOnlyPage(() => renderSafetyDeck(items));
   return renderSafetyClassic(items);
 }
 
@@ -769,7 +748,7 @@ function renderComputingWords() {
     ? course.reference.vocabulary
     : (course.reference.terms || []).map(([term, meaning]) => ({ term, meaning, example: "", letter: (term[0] || "?").toUpperCase() }));
   if (!vocab.length) { cRoot().innerHTML = `${pageHeader("Language for computing", "Computing Words", "No key words were provided for this unit.")}`; return; }
-  if (bothDesigns()) return bothDesignsPage(() => renderComputingWordsClassic(vocab), () => renderComputingWordsDeck(vocab));
+  if (bothDesigns()) return deckOnlyPage(() => renderComputingWordsDeck(vocab));
   return renderComputingWordsClassic(vocab);
 }
 
@@ -798,7 +777,14 @@ function renderComputingWordsClassic(vocab) {
         <section class="panel word-card" id="word-card">
           <div class="word-card-head">${computingWordPicture(current.term, stageNumber) ? `<div class="word-card-picture" aria-hidden="true">${computingWordPicture(current.term, stageNumber)}</div>` : ""}<div><span class="word-type">Computing word</span><h2>${escapeHtml(current.term)}</h2></div><button class="icon-button" id="listen-word" type="button" title="Listen" aria-label="Listen to ${escapeHtml(current.term)}">♪</button></div>
           <p class="meaning"><span class="field-label">Meaning:</span> ${escapeHtml(current.meaning)}</p>
-          ${bothDesigns() ? computingWordExplainer(current.term) : ""}
+          ${bothDesigns() ? computingWordExplainer(current.term) : ""}${""/* Stages 1-4 render the deck instead of this card, so the explainer is now
+             drawn nowhere: it was Stages 1-4 only, and it cannot follow the words
+             into the deck. computing-word-scenes.js says why — every slide is in
+             the DOM at once, so a 15-word unit would be 15 live WebGL contexts
+             against a browser cap of about sixteen, where the card showed one word
+             and held one context. Recovering it means initialising the slide on
+             screen alone and dropping the context on a slide change. Recorded in
+             CLAUDE.md, not done here. */}
           ${current.example ? `<div class="sentence-card"><small>Used in the lesson</small><p>“${escapeHtml(current.example)}”</p>${voiceButton(current.example, "Hear the example")}</div>` : ""}
           <div class="practice-box"><input id="word-sentence" maxlength="180" placeholder="Write your own sentence using ${escapeHtml(current.term.toLowerCase())}…" aria-label="Write your own sentence"><button class="button primary" id="check-word-sentence" type="button">Check sentence</button></div>
           <div id="word-feedback"></div>
@@ -807,8 +793,9 @@ function renderComputingWordsClassic(vocab) {
       </div>
       <p style="margin-top:16px"><button class="button primary" id="words-done" type="button">I explored the computing words ✓</button></p>`;
     // One canvas per page — the card shows a single word, and each redraw
-    // replaces it, so this never stacks live contexts the way per-slide
-    // canvases in the deck half would.
+    // replaces it, so this never stacks live contexts the way per-slide canvases
+    // in a deck would. Paired with the explainer above, so it is equally
+    // unreachable now: nothing below Stage 5 draws this card.
     if (bothDesigns()) initComputingWebGL(cRoot());
     const search = c$("#word-search");
     search.addEventListener("input", () => { query = search.value.trim().toLowerCase(); const pos = search.selectionStart; draw(); const s = c$("#word-search"); s.focus(); s.setSelectionRange(pos, pos); });
@@ -895,7 +882,7 @@ function renderExploreConceptDeck() {
 }
 
 function renderExploreConcept() {
-  if (bothDesigns()) return bothDesignsPage(() => renderExploreConceptClassic(), () => renderExploreConceptDeck());
+  if (bothDesigns()) return deckOnlyPage(() => renderExploreConceptDeck());
   return renderExploreConceptClassic();
 }
 
@@ -952,7 +939,7 @@ function renderVisualModelsDeck() {
 }
 
 function renderVisualModels() {
-  if (bothDesigns()) return bothDesignsPage(() => renderVisualModelsClassic(), () => renderVisualModelsDeck());
+  if (bothDesigns()) return deckOnlyPage(() => renderVisualModelsDeck());
   return renderVisualModelsClassic();
 }
 
@@ -1019,7 +1006,7 @@ function renderLearnMethodDeck() {
 }
 
 function renderLearnMethod() {
-  if (bothDesigns()) return bothDesignsPage(() => renderLearnMethodClassic(), () => renderLearnMethodDeck());
+  if (bothDesigns()) return deckOnlyPage(() => renderLearnMethodDeck());
   return renderLearnMethodClassic();
 }
 
@@ -1072,7 +1059,7 @@ function renderLessonDeck() {
 }
 
 function renderLesson() {
-  if (bothDesigns()) return bothDesignsPage(() => renderLessonClassic(), () => renderLessonDeck());
+  if (bothDesigns()) return deckOnlyPage(() => renderLessonDeck());
   return renderLessonClassic();
 }
 
@@ -1139,7 +1126,7 @@ function renderExamplesDeck() {
 }
 
 function renderExamples() {
-  if (bothDesigns()) return bothDesignsPage(() => renderExamplesClassic(), () => renderExamplesDeck());
+  if (bothDesigns()) return deckOnlyPage(() => renderExamplesDeck());
   return renderExamplesClassic();
 }
 
@@ -1223,7 +1210,7 @@ function renderPracticeDeck() {
 }
 
 function renderPractice() {
-  if (bothDesigns()) return bothDesignsPage(() => renderPracticeClassic(), () => renderPracticeDeck());
+  if (bothDesigns()) return deckOnlyPage(() => renderPracticeDeck());
   return renderPracticeClassic();
 }
 
@@ -1301,7 +1288,7 @@ function renderActivitiesDeck() {
 }
 
 function renderActivities() {
-  if (bothDesigns()) return bothDesignsPage(() => renderActivitiesClassic(), () => renderActivitiesDeck());
+  if (bothDesigns()) return deckOnlyPage(() => renderActivitiesDeck());
   return renderActivitiesClassic();
 }
 
@@ -1607,7 +1594,7 @@ function renderRealProblemsDeck() {
 }
 
 function renderRealProblems() {
-  if (bothDesigns()) return bothDesignsPage(() => renderRealProblemsClassic(), () => renderRealProblemsDeck());
+  if (bothDesigns()) return deckOnlyPage(() => renderRealProblemsDeck());
   return renderRealProblemsClassic();
 }
 
@@ -1675,7 +1662,7 @@ function renderExplainThinkingDeck() {
 }
 
 function renderExplainThinking() {
-  if (bothDesigns()) return bothDesignsPage(() => renderExplainThinkingClassic(), () => renderExplainThinkingDeck());
+  if (bothDesigns()) return deckOnlyPage(() => renderExplainThinkingDeck());
   return renderExplainThinkingClassic();
 }
 

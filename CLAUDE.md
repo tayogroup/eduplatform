@@ -42,7 +42,65 @@ Real uploads are `npm run deploy:integration|staging|production`. **Never run a 
 
 ## Hard rules
 
-- **Grades/Stages 5-8 keep their design**: the full-screen slide deck (`gc-*`, `shell/deck.js`) is for Grades/Stages 1-4 only. By Grade 5 a learner scans a page rather than being walked through it one item at a time, so the grids, tabs and two-column labs there are the intended design, not a backlog waiting to be converted. Gate on stage number, in ONE constant per subject, never per section — the name differs by subject — `DECK_MAX_STAGE` in Science, Mathematics and Global Perspectives, `BOTH_DESIGNS_MAX_STAGE` in Computing, `BOTH_DESIGNS` in English (a boolean, `gradeNumber <= 4`) — but the line is 4 in every one of them; keep every grid renderer byte-identical and give it only a one-line early return (Computing is the exception and says why below: showing both designs at once forced its originals to query inside a region, so they moved into `…Classic` functions behind a dispatcher — the upper stages still reach them unchanged); scope deck CSS to deck-only classes (`.gc-*`, `.wc-*`, `.<subject>-gc-*`) so no rule can match an upper-stage page. Verify at an upper stage in the browser — zero `gc-*` nodes and `body.gc-full` never set — not just by reading the diff. The upper stages carry known cosmetic defects that look like invitations (Science's `.method-example > strong` is 70px serif, a Mathematics size for `24 + 8`, applied to a whole investigation): flag them, never fix them in passing.
+- **Grades/Stages 5-8 keep their design**: the full-screen slide deck (`gc-*`, `shell/deck.js`) is for Grades/Stages 1-4 only. By Grade 5 a learner scans a page rather than being walked through it one item at a time, so the grids, tabs and two-column labs there are the intended design, not a backlog waiting to be converted. Gate on stage number, in ONE constant per subject, never per section — the name differs by subject — `DECK_MAX_STAGE` in Science, Mathematics and Global Perspectives, `BOTH_DESIGNS_MAX_STAGE` in Computing, `BOTH_DESIGNS` in English (a boolean, `gradeNumber <= 4`) — but the line is 4 in every one of them; keep every grid renderer byte-identical and give it only a one-line early return (Computing is the exception and says why below: the stacked designs forced its originals to query inside a region, so they moved into `…Classic` functions behind a dispatcher — the upper stages still reach them unchanged); scope deck CSS to deck-only classes (`.gc-*`, `.wc-*`, `.<subject>-gc-*`) so no rule can match an upper-stage page. Verify at an upper stage in the browser — zero `gc-*` nodes and `body.gc-full` never set — not just by reading the diff. The upper stages carry known cosmetic defects that look like invitations (Science's `.method-example > strong` is 70px serif, a Mathematics size for `24 + 8`, applied to a whole investigation): flag them, never fix them in passing.
+- **Grades/Stages 1-4 are the deck ALONE.** Owner, 2026-08-26, across all five deck
+  subjects: a section that has a deck renders the slides and nothing above them.
+  They used to render the original design first and the same content again as an
+  inline deck beneath it; the grid above is the page the deck exists to replace,
+  and a young learner met it first on every section. One helper per subject does
+  it — `renderDeckOnly` in English, Mathematics, Science and Global Perspectives,
+  `deckOnlyPage` in Computing — and the deck still mounts with `fullBleed: false`,
+  so the topbar stays and the learner asks for the screen with the deck's own Full
+  screen button.
+
+  **Do not flip the gate to do this, in either direction.** `BOTH_DESIGNS` /
+  `bothDesigns()` is what ROUTES a stage to the deck, so flipping it sends 1-4
+  back to the grid — the opposite change — and it is overloaded besides: in
+  English it also decides whether the grade offers the cursive worksheet and
+  whether that route resolves at all; in Science it decides the worked-example
+  counts. Read it as "does the deck replace the page at this stage". The gate
+  stays; what it renders is what changed.
+
+  Four consequences, each of which cost a check when the change was made:
+
+  - **The section guide must not sit above a deck.** English's and Mathematics'
+    "How to use this page" describes the ORIGINAL in its own furniture ("on the
+    left is the list of the 15 words"), so above a deck it is instructions for a
+    page the child cannot see. `renderSectionGuide` in both subjects now returns
+    early when `#deck-design` exists; the deck's own "How to use these slides"
+    intro slide (`DECK_INTROS`) says the same things, and the pointer that used to
+    hang under the guide ("under the page there are slides") went with it.
+  - **The deck had to be UN-hidden from assistive tech in Computing and Global
+    Perspectives.** Both carried `aria-hidden="true"` on the deck half plus an
+    `untabDeckHalf()` that set `tabindex="-1"` on every control in it — correct
+    while it was a second presentation of content read in full above. With the
+    grid gone the same attributes would take the ONLY design out of the
+    accessibility tree and the tab order. Both are deleted; `deck.js ::
+    syncReachable` already does the per-slide work (one reachable slide, the rest
+    `inert`, each with role and label). Keyboard and screen-reader users at 1-4
+    used to meet the page half alone, by design; they now meet what everyone else
+    does.
+  - **"Read this page" would read every slide.** A deck paints all its slides into
+    the DOM, so `collectPageNarration` falling back to `#app` narrates the whole
+    section — 25 practice questions, or several hundred English words. It now
+    prefers `#classic-design`, then the one slide that is not `inert`
+    (`shell/course-app.js` and `english.js`, one line each).
+  - **The interactive WebGL models at 1-4 are GONE, and that is a real loss, not
+    an oversight.** They lived in the grid half, which could afford one live
+    context because it showed one topic at a time; deck diagrams are flat
+    (`deckDiagram`, `interactive: false`) because every slide is in the DOM at
+    once — up to eight contexts for Stage 4 Build It against a cap of about
+    sixteen on desktop and commonly eight on mobile. Computing's per-word WebGL
+    explainer (`computing-word-scenes.js`, Stages 1-4 only, a 15-word unit would
+    be 15 contexts) is unreachable for the same reason.
+    `check-computing-webgl-scenes.mjs` still passes — the DATA is intact — which
+    is the usual shape: a gate that is green about a feature nobody can reach.
+    Recovering either means initialising only the slide on screen and dropping
+    the context on a slide change; the deck already tracks which slide that is.
+  - A pre-existing 22px horizontal overflow on a deck page is NOT from this
+    change: the deck is 960px in a 946px content column, measured identical with
+    the grid half restored in the DOM. It is the shape Global Perspectives'
+    stylesheet already describes as shared and wanting a design-system fix.
 - **The English picture-book shelf stops at Grade 4.** Decided by the owner on
   2026-08-20, after Grades 1-4 shipped, and it is a decision rather than a gap —
   do not "finish the set" at 5-8. Two reasons, both visible in the content: every
@@ -315,29 +373,31 @@ and options three ways (`(a)`, `a)`, `A)`), and one layout gives the key run the
 was found by a unit silently going unchecked, so narrowing any of them drops
 that unit from the gate without saying so.
 
-#### Computing Stages 1-4 show BOTH designs
+#### Computing Stages 1-4 show the deck alone
 
-Every section that has a deck renders the original page first and the same
-content as an inline deck under it — thirteen sections, gated by
-`BOTH_DESIGNS_MAX_STAGE` in `shell/subjects/computing.js`. There is no
-deck-instead-of-original stage: a stage either has both or has the original
-alone. The pack division is the reason 4 is the line, the same one Cambridge
-draws — Guides below it, student lesson books above.
+Thirteen sections have a deck, gated by `BOTH_DESIGNS_MAX_STAGE` in
+`shell/subjects/computing.js`, and since 2026-08-26 each of them renders the
+slides and nothing else (`deckOnlyPage`). They rendered the original page first
+and the same content as an inline deck under it until then — see the hard rule
+above for why that ended and what it cost. The pack division is the reason 4 is
+the line, the same one Cambridge draws — Guides below it, student lesson books
+above.
 
 Two things follow, and both are load-bearing:
 
-- **Each half queries inside its own region.** Both designs draw the same
-  section, so both carry `#word-search`, `[data-check]`, `[data-hint]`,
-  `[data-activity-done]` and thirty-odd writes to `#app`. The original paints
-  first, so a document-wide lookup from either half reaches the other's
-  controls. The original uses `c$`/`c$$`/`cRoot()`, the deck uses `d$`/`d$$`,
-  and both region variables are cleared in `onBeforeRender` — they point into
-  the page being replaced. A new control added to either half must use its
-  half's helpers, or it will silently drive the other design.
-- **A deck slide draws its diagram flat** (`deckDiagram`, `interactive: false`).
-  The original above it already builds the interactive WebGL model, and Build It
-  at Stage 4 has eight activities: interactive on both halves was sixteen live
-  contexts on one page, against a browser cap of about sixteen.
+- **Each design queries inside its own region.** The two no longer share a page,
+  so the collision this was written for cannot happen — but the regions are what
+  make `cRoot()`/`c$`/`c$$` and `d$`/`d$$` mean "my half" at every call site, and
+  the section is written to them throughout. A new control still uses its own
+  half's helpers. `classicRegion` is now null on a deck page and both are cleared
+  in `onBeforeRender`.
+- **A deck slide draws its diagram flat** (`deckDiagram`, `interactive: false`),
+  because every slide is in the DOM at once — Build It at Stage 4 has eight
+  activities, against a browser cap of about sixteen on desktop and commonly
+  eight on mobile. This used to be free (the original above built the interactive
+  model), and since 2026-08-26 it is a straight loss at Stages 1-4: nothing there
+  draws an interactive model, and the per-word WebGL explainer
+  (`computing-word-scenes.js`) is unreachable with it.
 
 Word cards carry a picture from `computing/shared/computing-word-pictures.js` —
 Computing's OWN map, deliberately not English's `shell/subjects/word-pictures.js`.

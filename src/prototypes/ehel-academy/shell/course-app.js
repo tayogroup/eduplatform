@@ -370,10 +370,14 @@ export function createCourseApp(config) {
     return chunks;
   }
   function collectPageNarration() {
-    // On a both-designs page the deck below repeats the section word for word,
-    // so reading #app would say the whole thing twice. The original half is the
-    // page; the deck is a second view of it.
-    const source = $("#classic-design") || $("#app");
+    // "Read this page" takes the ORIGINAL half where there is one — Stages 5+, and
+    // Stages 1-4 until 2026-08-26, when they became the deck alone. On a deck page
+    // #app is every slide at once (a deck paints all of them, not just the visible
+    // one), so reading it would narrate the whole section in one go — 25 practice
+    // questions, or an English unit's several hundred words. The slide the learner
+    // is on is what "this page" means there, and the deck already marks it: every
+    // other slide is `inert` (deck.js :: syncReachable).
+    const source = $("#classic-design") || $("#app .gc-slide:not([inert])") || $("#app");
     if (!source) return currentPageNarration;
     const copy = source.cloneNode(true);
     copy.querySelectorAll(".voice-button, .audio-source, .status-chip, script, style, [hidden], [aria-hidden='true'], details:not([open]) > *:not(summary)").forEach((el) => el.remove());

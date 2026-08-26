@@ -169,15 +169,20 @@ const sections = [
 const DECK_MAX_STAGE = 4;
 const deckStage = () => stageNumber <= DECK_MAX_STAGE;
 
-// ── Both designs, at Stage 1 only ────────────────────────────────────────────
-// Stages 1-4 do not choose between the grid and the deck: each section shows the
-// original design, then the same content again as slides beneath it. Stages 5-8
-// stay grid only. Stage 1 shipped this way first, alone, and 2-4 followed once it
-// was confirmed — which is why this reads as its own name rather than deckStage()
-// even though the two now cover the same stages. They answer different questions:
-// deckStage() is "is there a deck here at all", BOTH_DESIGNS is "is the grid
-// above it". Keep them separate, or dropping one design later means untangling
-// which of the two a given call site meant.
+// ── The deck alone, at Stages 1-4 ────────────────────────────────────────────
+// Stages 1-4 show the SLIDES ONLY — one item per slide, and nothing above them.
+// They shipped stacked instead (the grid, then the same content again as slides
+// beneath it), and the owner ended that on 2026-08-26 across all five deck
+// subjects: the grid above is the page the deck exists to replace, and a young
+// learner met it first on every section. Stages 5-8 are untouched and still
+// render the grid alone.
+//
+// BOTH_DESIGNS is kept and deliberately NOT flipped. It is what routes a stage
+// here in the first place, so flipping it would send Stages 1-4 back to the grid
+// — the opposite change — and it is overloaded besides (it also decides the
+// worked-example counts below). Read it now as "does the deck replace the page
+// at this stage": every call site already meant that. What changed is what
+// renderDeckOnly renders, not who reaches it.
 const BOTH_DESIGNS = () => stageNumber <= DECK_MAX_STAGE;
 
 // Where the original renderers draw, and where the deck mounts, when both share a
@@ -185,10 +190,11 @@ const BOTH_DESIGNS = () => stageNumber <= DECK_MAX_STAGE;
 // document and the real #app when they are — so a grid renderer behaves exactly
 // as it did before at every stage that does not use this. Cleared in onBeforeRender.
 let classicRegion = null;
-// Published by renderScienceWordsDeck while both designs are mounted, cleared in
-// onBeforeRender with classicRegion. At the stages that show the word LIST and
-// the word DECK together, picking a word in the list moved the list alone and
-// left the deck on the previous word. Same one-way wiring reported in English.
+// Published by renderScienceWordsDeck, consumed by the word LIST in the grid
+// half — which no longer draws at the stages the deck does, so nothing can reach
+// it any more. Kept, null-guarded at its one call site, because the grid half is
+// still the whole section at Stages 5-8: this is the wiring that would be needed
+// again the day the two share a page.
 let showScienceWordInDeck = null;
 let deckMount = null;
 // `$("#app")` resolves to the region rather than the page. That one mapping is
@@ -205,19 +211,23 @@ function classicScope() {
   };
 }
 
-function renderBothDesigns(classic, deck, intro) {
-  $("#app").innerHTML = `<div class="both-designs">
-      <div class="classic-design" id="classic-design"></div>
-      <section class="deck-design">
-        <div class="deck-design-head"><span class="eyebrow">Slides</span><p>${escapeHtml(intro)}</p></div>
-        <div id="deck-design"></div>
-      </section>
+// The deck still mounts into a host with full-bleed OFF rather than taking #app
+// with body.gc-full. Two reasons, both about what the learner keeps: gc-full
+// hides the topbar, so a child would lose the way back to the unit, and every
+// rule that sizes an inline deck hangs off .deck-design (course-ui.css). A
+// learner who wants the whole screen asks for it with the deck's own Full screen
+// button, which is what that button is for.
+//
+// .classic-design is not written at all — not hidden with CSS. A hidden half
+// still renders, still starts its audio and still answers a document-wide
+// querySelector, which is the failure the two regions were built to prevent.
+// classicRegion therefore stays null, and classicScope() falls back to the
+// document: right, because the grid renderers only run at Stages 5-8 now, where
+// they own the page.
+function renderDeckOnly(deck) {
+  $("#app").innerHTML = `<div class="both-designs deck-only">
+      <section class="deck-design"><div id="deck-design"></div></section>
     </div>`;
-  classicRegion = $("#classic-design");
-  classic();
-  // classicRegion stays set past this point on purpose: a grid renderer's redraw
-  // closures run later, on the learner's clicks, and must still find the region.
-  // Clearing it here would send that repaint to #app and wipe both designs.
   deckMount = "#deck-design";
   deck();
   deckMount = null;
@@ -256,9 +266,15 @@ const mountDeck = (options) => baseMountDeck(deckMount ? { ...options, mount: de
 // and the second copy shows the learner nothing the first does not. Computing
 // draws its deck diagrams flat for exactly this reason.
 //
-// Gated on BOTH_DESIGNS() rather than hard-coded, so a deck that ever stands
-// alone keeps the interactive model instead of silently losing it.
-const deckDiagram = (topic, index) => scienceDiagram(topic, index, { interactive: !BOTH_DESIGNS() });
+// The deck now stands alone and its diagrams stay flat, so Stages 1-4 no longer
+// reach the interactive model at all. That is a real loss rather than an
+// oversight: the arithmetic above is a property of the DECK — every slide is in
+// the DOM at once — and it does not improve now the grid is gone. The grid could
+// afford a live context because it showed one topic at a time. Recovering the
+// model means initialising only the slide on screen and dropping the context on
+// a slide change; the deck already tracks which slide that is (syncReachable in
+// deck.js). Recorded in CLAUDE.md, not done here.
+const deckDiagram = (topic, index) => scienceDiagram(topic, index, { interactive: false });
 
 // The deck's own Listen button: the shell's voiceButton renders a `.button
 // secondary` with a lucide glyph that never draws here. Same contract —
@@ -389,9 +405,9 @@ function renderOverview() {
   $$('[data-go]').forEach((button) => button.addEventListener("click", () => navigate(button.dataset.go)));
 }
 
-// Stages 1-4 show the grid and the deck, in that order; Stages 5-8 the grid alone.
+// Stages 1-4 show the deck alone; Stages 5-8 the grid alone.
 function renderScienceWords() {
-  if (BOTH_DESIGNS()) return renderBothDesigns(renderScienceWordsClassic, renderScienceWordsDeck, "The same words, one at a time.");
+  if (BOTH_DESIGNS()) return renderDeckOnly(renderScienceWordsDeck);
   if (deckStage()) return renderScienceWordsDeck();
   return renderScienceWordsClassic();
 }
@@ -558,9 +574,9 @@ function renderScienceWordsDeck() {
   drawDeck();
 }
 
-// Stages 1-4 show the grid and the deck, in that order; Stages 5-8 the grid alone.
+// Stages 1-4 show the deck alone; Stages 5-8 the grid alone.
 function renderExploreConcept() {
-  if (BOTH_DESIGNS()) return renderBothDesigns(renderExploreConceptClassic, renderExploreConceptDeck, "The same discoveries, one at a time.");
+  if (BOTH_DESIGNS()) return renderDeckOnly(renderExploreConceptDeck);
   if (deckStage()) return renderExploreConceptDeck();
   return renderExploreConceptClassic();
 }
@@ -653,9 +669,9 @@ function renderExploreConceptDeck() {
   });
 }
 
-// Stages 1-4 show the grid and the deck, in that order; Stages 5-8 the grid alone.
+// Stages 1-4 show the deck alone; Stages 5-8 the grid alone.
 function renderVisualModels() {
-  if (BOTH_DESIGNS()) return renderBothDesigns(renderVisualModelsClassic, renderVisualModelsDeck, "The same models, one at a time.");
+  if (BOTH_DESIGNS()) return renderDeckOnly(renderVisualModelsDeck);
   if (deckStage()) return renderVisualModelsDeck();
   return renderVisualModelsClassic();
 }
@@ -703,9 +719,9 @@ function renderVisualModelsDeck() {
   });
 }
 
-// Stages 1-4 show the grid and the deck, in that order; Stages 5-8 the grid alone.
+// Stages 1-4 show the deck alone; Stages 5-8 the grid alone.
 function renderLearnMethod() {
-  if (BOTH_DESIGNS()) return renderBothDesigns(renderLearnMethodClassic, renderLearnMethodDeck, "The same methods, one at a time.");
+  if (BOTH_DESIGNS()) return renderDeckOnly(renderLearnMethodDeck);
   if (deckStage()) return renderLearnMethodDeck();
   return renderLearnMethodClassic();
 }
@@ -794,9 +810,9 @@ function renderLearnMethodDeck() {
 
 const courseTopic = () => unitTopic(course.unit.unitTitle, course.concepts);
 
-// Stages 1-4 show the grid and the deck, in that order; Stages 5-8 the grid alone.
+// Stages 1-4 show the deck alone; Stages 5-8 the grid alone.
 function renderLesson() {
-  if (BOTH_DESIGNS()) return renderBothDesigns(renderLessonClassic, renderLessonDeck, "The same concepts, one at a time.");
+  if (BOTH_DESIGNS()) return renderDeckOnly(renderLessonDeck);
   if (deckStage()) return renderLessonDeck();
   return renderLessonClassic();
 }
@@ -849,9 +865,9 @@ function renderLessonDeck() {
   });
 }
 
-// Stages 1-4 show the grid and the deck, in that order; Stages 5-8 the grid alone.
+// Stages 1-4 show the deck alone; Stages 5-8 the grid alone.
 function renderExamples() {
-  if (BOTH_DESIGNS()) return renderBothDesigns(renderExamplesClassic, renderExamplesDeck, "The same examples, one at a time.");
+  if (BOTH_DESIGNS()) return renderDeckOnly(renderExamplesDeck);
   if (deckStage()) return renderExamplesDeck();
   return renderExamplesClassic();
 }
@@ -869,6 +885,12 @@ function renderExamplesClassic() {
   // this is what the page SAYS rather than how it looks — .classic-design cannot
   // scope a template literal — so changing it for them would be changing their
   // design, which is not this change's to make.
+  //
+  // Which is now the only case this function has: Stages 1-4 render the deck
+  // instead of this grid, so `counted` is false wherever it is read and the
+  // corrected strings below are unreachable. They are kept rather than deleted
+  // because this is one renderer with a branch in it, not two renderers, and the
+  // day a stage below 5 wants its grid back the right strings are still here.
   const counted = BOTH_DESIGNS();
   const all = course.workedExamples;
   const LEVELS = ["Basic", "Intermediate", "Challenge"];
@@ -960,9 +982,9 @@ function renderExamplesDeck() {
   drawDeck();
 }
 
-// Stages 1-4 show the grid and the deck, in that order; Stages 5-8 the grid alone.
+// Stages 1-4 show the deck alone; Stages 5-8 the grid alone.
 function renderPractice() {
-  if (BOTH_DESIGNS()) return renderBothDesigns(renderPracticeClassic, renderPracticeDeck, "The same questions, one at a time.");
+  if (BOTH_DESIGNS()) return renderDeckOnly(renderPracticeDeck);
   if (deckStage()) return renderPracticeDeck();
   return renderPracticeClassic();
 }
@@ -1070,9 +1092,9 @@ function renderPracticeDeck() {
   });
 }
 
-// Stages 1-4 show the grid and the deck, in that order; Stages 5-8 the grid alone.
+// Stages 1-4 show the deck alone; Stages 5-8 the grid alone.
 function renderActivities() {
-  if (BOTH_DESIGNS()) return renderBothDesigns(renderActivitiesClassic, renderActivitiesDeck, "The same investigations, one at a time.");
+  if (BOTH_DESIGNS()) return renderDeckOnly(renderActivitiesDeck);
   if (deckStage()) return renderActivitiesDeck();
   return renderActivitiesClassic();
 }
@@ -1399,9 +1421,9 @@ function renderFluency() {
   draw();
 }
 
-// Stages 1-4 show the grid and the deck, in that order; Stages 5-8 the grid alone.
+// Stages 1-4 show the deck alone; Stages 5-8 the grid alone.
 function renderRealProblems() {
-  if (BOTH_DESIGNS()) return renderBothDesigns(renderRealProblemsClassic, renderRealProblemsDeck, "The same problems, one at a time.");
+  if (BOTH_DESIGNS()) return renderDeckOnly(renderRealProblemsDeck);
   if (deckStage()) return renderRealProblemsDeck();
   return renderRealProblemsClassic();
 }
@@ -1465,9 +1487,9 @@ function renderRealProblemsDeck() {
   });
 }
 
-// Stages 1-4 show the grid and the deck, in that order; Stages 5-8 the grid alone.
+// Stages 1-4 show the deck alone; Stages 5-8 the grid alone.
 function renderExplainThinking() {
-  if (BOTH_DESIGNS()) return renderBothDesigns(renderExplainThinkingClassic, renderExplainThinkingDeck, "The same prompts, one at a time.");
+  if (BOTH_DESIGNS()) return renderDeckOnly(renderExplainThinkingDeck);
   if (deckStage()) return renderExplainThinkingDeck();
   return renderExplainThinkingClassic();
 }

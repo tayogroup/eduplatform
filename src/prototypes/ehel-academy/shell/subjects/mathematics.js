@@ -309,19 +309,25 @@ function renderSectionGuide() {
   const app = $("#app");
   let host = $("#section-guide");
   const route = shellCtx.route;
-  const build = !isPrereqUnit && SECTION_GUIDES[route];
+  // Never above a deck. Every step here describes the ORIGINAL page in its own
+  // furniture — the tabs, the grid, the buttons under it — and from 2026-08-26
+  // Stages 1-4 do not draw that page at all. Left in, it would be instructions
+  // for a page the child cannot see, on the stages where the child is youngest.
+  //
+  // Nothing is lost: every Stage 1-4 deck opens on its own "How to use these
+  // slides" (DECK_INTROS below, one per section), which says the same things in
+  // the deck's own furniture. The pointer that used to hang here — "under the
+  // page there are slides" — went with it; the slides ARE the page now.
+  const build = !isPrereqUnit && SECTION_GUIDES[route] && !$("#deck-design");
   if (!build) { host?.remove(); return; }
   if (!host) { host = document.createElement("section"); host.id = "section-guide"; app.parentNode.insertBefore(host, app); }
   const guide = SECTION_GUIDES[route]();
-  const hasDeck = Boolean($("#deck-design"));
   host.className = "section-guide";
   host.innerHTML = `<details open>
       <summary>${icon("info")}<span><strong>How to use this page</strong><small>${escapeHtml(sectionLabel(route))} — what to do, step by step</small></span></summary>
       <ol class="section-guide-steps">${guide.steps.map((step) => `<li>${escapeHtml(step)}</li>`).join("")}</ol>
       <p class="section-guide-finish">${icon("check-circle")}<span><strong>To finish:</strong> ${escapeHtml(guide.finish)}</span></p>
-      ${hasDeck ? `<p class="section-guide-deck">${icon("gallery-horizontal")}<span>Under the page there are slides with the same things, one at a time. <button class="link-button" type="button" data-jump-deck>Go to the slides</button></span></p>` : ""}
     </details>`;
-  host.querySelector("[data-jump-deck]")?.addEventListener("click", () => $("#deck-design")?.scrollIntoView({ behavior: "smooth", block: "start" }));
 }
 
 // The instruction slide in front of each Stage 1-4 deck. Icons are the deck's
@@ -371,25 +377,23 @@ const deckIntro = (id) => DECK_INTROS[id] || null;
 // already handles, since the mark-each-complete gate was written for the grid's
 // six.
 //
-// ── Both designs on one page ────────────────────────────────────────────────
-// A deck stage shows the ORIGINAL section first and the same content as an
-// inline deck under it, which is what English Grades 1-4 do. There is no
-// deck-instead-of-original stage any more: Stage 1 had one for a while, Stages
-// 2-4 had one until they joined it, and the branch that served them is gone
-// because DECK_MAX_STAGE now decides both questions at once — which stages get
-// a deck, and which show it under the original.
+// ── The deck alone, at Stages 1-4 ────────────────────────────────────────────
+// A deck stage shows the SLIDES ONLY — one item per slide, and nothing above
+// them. It used to show the original section first and the same content again
+// as an inline deck beneath it; the owner ended that on 2026-08-26 across all
+// five deck subjects, because the grid above is the page the deck exists to
+// replace and a young learner met it first on every section. Stages 5+ are
+// untouched and still render the original alone.
 //
-// Both designs draw the same section, so both carry the same hooks — the
-// explore page and the explore deck each own a discovery answer box, the
-// practice grid and the practice deck each own a feedback slot. A
-// document-wide querySelector would hand one design the other's controls. The
-// original renderers also paint by assigning to #app.innerHTML, which would
-// erase a deck mounted below them the moment a tab or a filter redrew.
+// bothDesigns() is kept and deliberately NOT flipped: it is what routes a stage
+// here in the first place, so flipping it would send Stages 1-4 back to the grid
+// — the opposite change. Read it as "does the deck replace the page at this
+// stage", which is what every call site already meant. What changed is what
+// renderDeckOnly renders, not who reaches it.
 //
-// So each design gets a region: the original paints into .classic-design and
-// queries inside it (classicScope), the deck mounts into .deck-design with
-// full-bleed off. Above Stage 4 both fall back to #app and the document, so
-// those stages run exactly the code they ran before.
+// classicScope() and .classic-design stay for Stages 5+, where the original IS
+// the section and the region is null. The original renderers are not called at
+// all below Stage 5 now, so nothing there paints, queries or plays.
 //
 // tools/lib/ehel-math-narration.js carries this number too, for the three
 // categories only a deck narrates. Raise one and raise the other.
@@ -416,19 +420,19 @@ function classicScope() {
   };
 }
 
-function renderBothDesigns(classic, carousel, intro) {
-  $("#app").innerHTML = `<div class="both-designs">
-      <div class="classic-design" id="classic-design"></div>
-      <section class="deck-design">
-        <div class="deck-design-head"><span class="eyebrow">Slides</span><p>${escapeHtml(intro)}</p></div>
-        <div id="deck-design"></div>
-      </section>
+// The deck keeps mounting into a host with full-bleed OFF rather than taking
+// #app with body.gc-full: gc-full hides the topbar, so a child would lose the
+// way back to the unit, and every rule that sizes an inline deck hangs off
+// .deck-design (course-ui.css). The whole screen is still one tap away — the
+// deck's own Full screen button is what that is for.
+//
+// The original half is not written at all, rather than hidden with CSS. A hidden
+// half still renders, still starts its audio and still answers a document-wide
+// querySelector, which is the failure the two regions were built to prevent.
+function renderDeckOnly(carousel) {
+  $("#app").innerHTML = `<div class="both-designs deck-only">
+      <section class="deck-design"><div id="deck-design"></div></section>
     </div>`;
-  classicRegion = $("#classic-design");
-  classic();
-  // The deck is mounted second and left mounted: its region survives the
-  // original's own redraws, which now stop at .classic-design. Both flags are
-  // cleared by onBeforeRender before the next section draws.
   deckMount = "#deck-design";
   carousel();
   deckMount = null;
@@ -630,7 +634,7 @@ function renderOverview() {
 const MATH_SYMBOLS = [["+", "combine or add", "Use when quantities join"], ["−", "find a difference", "Use when quantities separate"], ["=", "has the same value", "Both sides balance"], ["<", "is less than", "The smaller value"], [">", "is greater than", "The larger value"]];
 
 function renderMathWords() {
-  if (bothDesigns()) return renderBothDesigns(renderMathWordsClassic, renderMathWordsDeck, "The same words and signs, one at a time.");
+  if (bothDesigns()) return renderDeckOnly(renderMathWordsDeck);
   return renderMathWordsClassic();
 }
 
@@ -702,7 +706,7 @@ function renderMathWordsDeck() {
 }
 
 function renderExploreConcept() {
-  if (bothDesigns()) return renderBothDesigns(renderExploreConceptClassic, renderExploreConceptDeck, "The same discoveries, one at a time.");
+  if (bothDesigns()) return renderDeckOnly(renderExploreConceptDeck);
   return renderExploreConceptClassic();
 }
 
@@ -797,7 +801,7 @@ function renderExploreConceptDeck() {
 }
 
 function renderVisualModels() {
-  if (bothDesigns()) return renderBothDesigns(renderVisualModelsClassic, renderVisualModelsDeck, "The same models, one at a time.");
+  if (bothDesigns()) return renderDeckOnly(renderVisualModelsDeck);
   return renderVisualModelsClassic();
 }
 
@@ -847,7 +851,7 @@ function renderVisualModelsDeck() {
 }
 
 function renderLearnMethod() {
-  if (bothDesigns()) return renderBothDesigns(renderLearnMethodClassic, renderLearnMethodDeck, "The same methods, one at a time.");
+  if (bothDesigns()) return renderDeckOnly(renderLearnMethodDeck);
   return renderLearnMethodClassic();
 }
 
@@ -1016,7 +1020,7 @@ function renderLessonDeck() {
 }
 
 function renderLesson() {
-  if (bothDesigns()) return renderBothDesigns(renderLessonClassic, renderLessonDeck, "The same concepts, one at a time.");
+  if (bothDesigns()) return renderDeckOnly(renderLessonDeck);
   return renderLessonClassic();
 }
 
@@ -1095,7 +1099,7 @@ function renderExamplesDeck() {
 }
 
 function renderExamples() {
-  if (bothDesigns()) return renderBothDesigns(renderExamplesClassic, renderExamplesDeck, "The same examples, one at a time.");
+  if (bothDesigns()) return renderDeckOnly(renderExamplesDeck);
   return renderExamplesClassic();
 }
 
@@ -1180,7 +1184,7 @@ function renderPracticeDeck() {
 }
 
 function renderPractice() {
-  if (bothDesigns()) return renderBothDesigns(renderPracticeClassic, renderPracticeDeck, "The same questions, one at a time.");
+  if (bothDesigns()) return renderDeckOnly(renderPracticeDeck);
   return renderPracticeClassic();
 }
 
@@ -1264,7 +1268,7 @@ function renderActivitiesDeck() {
 }
 
 function renderActivities() {
-  if (bothDesigns()) return renderBothDesigns(renderActivitiesClassic, renderActivitiesDeck, "The same activities, one at a time.");
+  if (bothDesigns()) return renderDeckOnly(renderActivitiesDeck);
   return renderActivitiesClassic();
 }
 
@@ -1585,7 +1589,7 @@ function renderRealProblemsDeck() {
 }
 
 function renderRealProblems() {
-  if (bothDesigns()) return renderBothDesigns(renderRealProblemsClassic, renderRealProblemsDeck, "The same problems, one at a time.");
+  if (bothDesigns()) return renderDeckOnly(renderRealProblemsDeck);
   return renderRealProblemsClassic();
 }
 
@@ -1656,7 +1660,7 @@ function renderExplainThinkingDeck() {
 }
 
 function renderExplainThinking() {
-  if (bothDesigns()) return renderBothDesigns(renderExplainThinkingClassic, renderExplainThinkingDeck, "The same prompts, one at a time.");
+  if (bothDesigns()) return renderDeckOnly(renderExplainThinkingDeck);
   return renderExplainThinkingClassic();
 }
 

@@ -377,18 +377,19 @@ body.focus-mode.gc-full .gc-dots { position: fixed; left: 0; right: 0; bottom: 1
 body.focus-mode.gc-full .wc-tools { position: fixed; left: 0; right: 0; bottom: 58px; max-width: 640px; margin: 0 auto; padding: 0 16px; z-index: 55; }
 /* ── Grades 1-4: the slide deck, inside the page ─────────────────────────────
    A unit module at Grades 1-4 is the deck ALONE since 2026-08-26 (english.js ::
-   renderDeckOnly). It still does not take the screen: it is mounted with
-   full-bleed off, into .deck-design, because body.gc-full hides the topbar and a
-   child needs the way back to the unit. Every rule here hangs off a
-   .both-designs ancestor on purpose — the .gc-* rules above are shared with
-   Mathematics, Science, Computing and Global Perspectives (whose dated
-   stylesheet @imports this file on the CDN), and a full-bleed deck must not pick
-   any of it up.
+   renderDeckOnly), with ONE exception the same day: Reading & story keeps the
+   e-book above its deck (english.js :: renderBothDesigns), so both wrappers are
+   live and .deck-only is what tells them apart. Either way the deck does not
+   take the screen: it is mounted with full-bleed off, into .deck-design, because
+   body.gc-full hides the topbar and a child needs the way back to the unit.
+   Every rule here hangs off a .both-designs ancestor on purpose — the .gc-*
+   rules above are shared with Mathematics, Science, Computing and Global
+   Perspectives (whose dated stylesheet @imports this file on the CDN), and a
+   full-bleed deck must not pick any of it up.
 
-   The wrapper keeps its name because it is what every sizing rule below is
-   scoped to, and .deck-only is what says there is nothing above the deck: the
-   dashed rule was the seam between the two designs, and with one design it is a
-   line under the page header with nothing on the other side of it. */
+   The dashed rule is the seam between the two designs, so it is drawn on the
+   reading page and taken off a .deck-only one, where it would be a line under
+   the page header with nothing on the other side of it. */
 .both-designs { display: grid; gap: 30px; }
 .deck-design { border-top: 2px dashed var(--line); padding-top: 24px; }
 .both-designs.deck-only > .deck-design { border-top: 0; padding-top: 0; }

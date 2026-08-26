@@ -592,26 +592,31 @@ function numberWord(n) { return ["zero", "one", "two", "three", "four", "five", 
 function renderSectionGuide() {
   const app = $("#app");
   let host = $("#section-guide");
-  // Never above a deck. Every step here describes the ORIGINAL design in its own
-  // furniture — "on the left is the list of the 15 words", "press a word to open
-  // it", "it gets a LEARNED tag in the list" — and from 2026-08-26 Grades 1-4 do
-  // not draw that design at all. Left in, it would be a set of instructions for a
-  // page the child cannot see, on the sections where the child is youngest.
+  // Never above a deck-ONLY page. Every step here describes the ORIGINAL design
+  // in its own furniture — "on the left is the list of the 15 words", "press a
+  // word to open it", "it gets a LEARNED tag in the list" — so where the deck
+  // replaced that design outright (2026-08-26, Grades 1-4) the guide would be a
+  // set of instructions for a page the child cannot see. Nothing is lost there:
+  // the deck opens on its own "How to use these slides" (DECK_INTROS below),
+  // which says the same things in the deck's own furniture.
   //
-  // Nothing is lost: a deck opens on its own "How to use these slides" (DECK_INTROS
-  // below), which says the same things in the deck's own furniture and names the
-  // button that finishes the section. The pointer that used to hang here — "under
-  // the page there are slides" — went with it; the slides ARE the page now.
-  const build = !isPrereqUnit && !unitIsLocked() && SECTION_GUIDES[route] && sectionUnlocked(route) && !$("#deck-design");
+  // The test is .deck-only, NOT the presence of a deck. Reading & story kept both
+  // designs at Grades 1-4 (renderReading), and on that page the guide describes
+  // the e-book shelf sitting right above it — correct again, and the deck pointer
+  // below comes back with it.
+  const build = !isPrereqUnit && !unitIsLocked() && SECTION_GUIDES[route] && sectionUnlocked(route) && !$(".deck-only");
   if (!build) { host?.remove(); return; }
   if (!host) { host = document.createElement("section"); host.id = "section-guide"; app.parentNode.insertBefore(host, app); }
   const guide = SECTION_GUIDES[route]();
+  const hasDeck = Boolean($("#deck-design"));
   host.className = "section-guide";
   host.innerHTML = `<details open>
       <summary>${icon("info")}<span><strong>How to use this page</strong><small>${escapeHtml(sectionLabel(route))} — what to do, step by step</small></span></summary>
       <ol class="section-guide-steps">${guide.steps.map((step) => `<li>${escapeHtml(step)}</li>`).join("")}</ol>
       <p class="section-guide-finish">${icon("check-circle")}<span><strong>To finish:</strong> ${escapeHtml(guide.finish)}</span></p>
+      ${hasDeck ? `<p class="section-guide-deck">${icon("gallery-horizontal")}<span>Under the page there are slides with the same things, one at a time. <button class="link-button" type="button" data-jump-deck>Go to the slides</button></span></p>` : ""}
     </details>`;
+  host.querySelector("[data-jump-deck]")?.addEventListener("click", () => $("#deck-design")?.scrollIntoView({ behavior: "smooth", block: "start" }));
   icons();
 }
 
@@ -4850,6 +4855,9 @@ let refreshDeckWordCount = null;
 // Same contract for the other three sections whose classic half has a selector:
 // the shelf in Reading, the task subtabs in Writing, the group subtabs in
 // Comprehension. Each is published by its own carousel and cleared with the rest.
+// showReadingInDeck is the one of these still LIVE at Grades 1-4 — Reading &
+// story is the section that kept both designs, so its shelf really does move the
+// deck below it. The other two are the same dormant wiring as showWordInDeck.
 let showReadingInDeck = null;
 let showWritingInDeck = null;
 let showComprehensionGroupInDeck = null;
@@ -5229,13 +5237,16 @@ function prepareNarrationText(value) {
 }
 
 function collectPageNarration() {
-  // "Read this page" takes the ORIGINAL half where there is one — Stages 5+, and
-  // Stages 1-4 until 2026-08-26, when they became the deck alone. On a deck page
-  // #app is every slide at once (a deck paints all of them, not just the visible
-  // one), so reading it would narrate the whole section in one go — 25 practice
-  // questions, or an English unit's several hundred words. The slide the learner
-  // is on is what "this page" means there, and the deck already marks it: every
-  // other slide is `inert` (deck.js :: syncReachable).
+  // "Read this page" takes the ORIGINAL half wherever there is one: Grades 5-8,
+  // and the Reading & story page at Grades 1-4, which kept its e-book above the
+  // deck. There the deck repeats the same text word for word, so narrating #app
+  // would say the whole thing twice.
+  //
+  // On a deck-only page #app is every slide at once (a deck paints all of them,
+  // not just the visible one), so reading it would narrate the whole section in
+  // one go — 25 practice questions, or an English unit's several hundred words.
+  // The slide the learner is on is what "this page" means there, and the deck
+  // already marks it: every other slide is `inert` (deck.js :: syncReachable).
   const source = $("#classic-design") || $("#app .gc-slide:not([inert])") || $("#app");
   if (!source) return currentPageNarration;
   const copy = source.cloneNode(true);
@@ -5804,15 +5815,24 @@ function linkedWords() {
   return course.dictionaryLinks.map((link) => ({ ...link, master: dictionary.entries.find((entry) => entry.dictionaryEntryId === link.dictionaryEntryId) }));
 }
 
-// ── Grades 1-4: the slide deck, and nothing above it ─────────────────────────
-// A unit module at Grades 1-4 is the deck ALONE — one item per slide, and nothing
-// above it. It showed both designs stacked for a while (the original section
-// first, the same content as an inline deck under it), and the owner ended that
+// ── Grades 1-4: the slide deck, and what still sits above it ─────────────────
+// A unit module at Grades 1-4 is the deck ALONE in every section but one — one
+// item per slide, and nothing above it. It showed both designs stacked (the
+// original section first, the same content as an inline deck under it), and the owner ended that
 // on 2026-08-26 across all five deck subjects: the original above is the page the
 // deck exists to replace, and a young learner met it first on every section.
 // Grades 5-8 are untouched — they never had a deck, and the boundary is still 4
 // (see DECK_MAX_STAGE in the other subjects: by Grade 5 a learner scans a page
 // rather than being walked through it one item at a time).
+//
+// ONE section is exempt, by the owner the same day: Reading & story keeps BOTH
+// designs at Grades 1-4 (renderReading → renderBothDesigns). The two are not the
+// same content twice there the way they are everywhere else — the e-book is the
+// whole text with the narration, the read-along highlight and the print button,
+// and the deck is that text broken into pages with no audio at all (see
+// renderReadingCarousel). Losing the e-book would lose the only way to hear the
+// story. So the reading page is the one place the region plumbing below is still
+// live rather than a guard on a case that does not arise.
 //
 // BOTH_DESIGNS is kept and deliberately NOT flipped: it is what routes a grade
 // here in the first place, so flipping it would send Grades 1-4 back to the
@@ -5821,13 +5841,16 @@ function linkedWords() {
 // route resolves at all). Read it as "does the deck replace the page at this
 // grade", which is what every call site already meant.
 //
-// classicScope and .classic-design stay, and still matter, because the original
-// renderers are the whole section at Grades 5-8: there the region is null, "#app"
-// is the page root and the document is the scope, exactly as before. What no
-// longer happens is the two sharing a page — so the hooks they both carry
-// (#word-search, #group-filter, data-word, data-check-answer, data-writing-audio,
-// data-record) can no longer collide, and the region plumbing is now a guard on a
-// case that does not arise rather than a live fix.
+// classicScope and .classic-design carry two jobs. At Grades 5-8 the original
+// renderers ARE the whole section: the region is null, "#app" is the page root
+// and the document is the scope, exactly as before. On the Reading & story page
+// at Grades 1-4 they do the job they were written for — both halves draw the same
+// section and so carry the same hooks (#reading-filter and the shelf's
+// data-reading, and elsewhere #word-search, #group-filter, data-word,
+// data-check-answer, data-writing-audio, data-record), a document-wide
+// querySelector would hand the e-book the deck's control, and the classic
+// renderers paint by assigning to #app.innerHTML, which would erase a deck
+// mounted below them the moment the shelf redrew.
 const BOTH_DESIGNS = gradeNumber <= 4;
 let classicRegion = null;
 let deckMount = null;
@@ -5868,10 +5891,34 @@ function renderDeckOnly(carousel) {
   deckMount = null;
 }
 
+// The stacked pair, kept for the ONE section that still draws both: Reading &
+// story. The original paints first and is tall, so the deck and its instruction
+// slide sit below the fold — which is why the page guide above this block
+// (renderSectionGuide, run by onAfterRender) carries a link down to them, and
+// why the guide is suppressed on a .deck-only page and not here.
+function renderBothDesigns(classic, carousel, intro) {
+  $("#app").innerHTML = `<div class="both-designs">
+      <div class="classic-design" id="classic-design"></div>
+      <section class="deck-design">
+        <div class="deck-design-head"><span class="eyebrow">Slides</span><p>${escapeHtml(intro)}</p></div>
+        <div id="deck-design"></div>
+      </section>
+    </div>`;
+  classicRegion = $("#classic-design");
+  classic();
+  // The deck is mounted second and left mounted: the region survives the
+  // original's own redraws, which now stop at .classic-design. Both flags are
+  // cleared by onBeforeRender before the next section draws.
+  deckMount = "#deck-design";
+  carousel();
+  deckMount = null;
+}
+
 function renderDictionary() {
-  // Grades 1-4 meet one word at a time in the deck, and keep the searchable
-  // two-column lab above it. From Grade 5 the lab is the whole section: by then
-  // a learner is looking words UP, and a unit can carry 70 of them.
+  // Grades 1-4 meet one word at a time in the deck, and nothing above it — unlike
+  // Reading & story, this section's two halves really are the same words twice.
+  // From Grade 5 the lab is the whole section: by then a learner is looking words
+  // UP, and a unit can carry 70 of them.
   if (BOTH_DESIGNS) return renderDeckOnly(renderWordCarousel);
   return renderDictionaryClassic();
 }
@@ -6730,9 +6777,15 @@ function readingWordCount(value) {
 const readingsAreForTheGrownUp = () => course.readings.length > 0
   && course.readings.every((text) => text.audience === "adult");
 
+// The one section at Grades 1-4 that keeps BOTH designs (see the block above
+// renderDeckOnly). The e-book is not the deck's content a second time: it is
+// where the narration lives — the recorded clip, the read-along highlight and
+// the print button — and the deck deliberately carries none of that, because a
+// reading clip is one recording of the whole text and a Listen button on page
+// four would start the story from page one.
 function renderReading() {
   if (readingsAreForTheGrownUp()) return renderReadingGrownUp();
-  if (BOTH_DESIGNS) return renderDeckOnly(renderReadingCarousel);
+  if (BOTH_DESIGNS) return renderBothDesigns(renderReadingClassic, renderReadingCarousel, "The same text, one page at a time.");
   return renderReadingClassic();
 }
 

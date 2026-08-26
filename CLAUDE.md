@@ -43,7 +43,8 @@ Real uploads are `npm run deploy:integration|staging|production`. **Never run a 
 ## Hard rules
 
 - **Grades/Stages 5-8 keep their design**: the full-screen slide deck (`gc-*`, `shell/deck.js`) is for Grades/Stages 1-4 only. By Grade 5 a learner scans a page rather than being walked through it one item at a time, so the grids, tabs and two-column labs there are the intended design, not a backlog waiting to be converted. Gate on stage number, in ONE constant per subject, never per section — the name differs by subject — `DECK_MAX_STAGE` in Science, Mathematics and Global Perspectives, `BOTH_DESIGNS_MAX_STAGE` in Computing, `BOTH_DESIGNS` in English (a boolean, `gradeNumber <= 4`) — but the line is 4 in every one of them; keep every grid renderer byte-identical and give it only a one-line early return (Computing is the exception and says why below: the stacked designs forced its originals to query inside a region, so they moved into `…Classic` functions behind a dispatcher — the upper stages still reach them unchanged); scope deck CSS to deck-only classes (`.gc-*`, `.wc-*`, `.<subject>-gc-*`) so no rule can match an upper-stage page. Verify at an upper stage in the browser — zero `gc-*` nodes and `body.gc-full` never set — not just by reading the diff. The upper stages carry known cosmetic defects that look like invitations (Science's `.method-example > strong` is 70px serif, a Mathematics size for `24 + 8`, applied to a whole investigation): flag them, never fix them in passing.
-- **Grades/Stages 1-4 are the deck ALONE.** Owner, 2026-08-26, across all five deck
+- **Grades/Stages 1-4 are the deck ALONE, except English's Reading & story.**
+  Owner, 2026-08-26, across all five deck
   subjects: a section that has a deck renders the slides and nothing above them.
   They used to render the original design first and the same content again as an
   inline deck beneath it; the grid above is the page the deck exists to replace,
@@ -52,6 +53,33 @@ Real uploads are `npm run deploy:integration|staging|production`. **Never run a 
   `deckOnlyPage` in Computing — and the deck still mounts with `fullBleed: false`,
   so the topbar stays and the learner asks for the screen with the deck's own Full
   screen button.
+
+  **The ONE exemption, owner the same day: English's Reading & story keeps both
+  designs at Grades 1-4.** `renderReading` calls `renderBothDesigns`, which is
+  kept alongside `renderDeckOnly` for it alone. The reason is that this is the one
+  section where the two halves are not the same content twice: the e-book carries
+  the narration — the recorded clip, the read-along highlight, the print button —
+  and the deck deliberately carries none of it, because a reading clip is one
+  recording of the whole text and a Listen button on page four would start the
+  story from page one (`renderReadingCarousel` says so in the code). Deck-only
+  there would remove the only way to hear the story.
+
+  So on the reading page the region plumbing below is LIVE rather than dormant:
+  `classicScope()` is what stops the e-book's `$("#app").innerHTML = …` erasing
+  the deck under it when the shelf redraws, and what keeps `#reading-filter`
+  (deck) and `[data-reading]` (shelf) from answering each other's queries.
+  `showReadingInDeck` is a real cross-link — picking a text on the shelf moves the
+  deck — while `showWordInDeck`, `showWritingInDeck` and
+  `showComprehensionGroupInDeck` stay published and unreached.
+
+  **`.deck-only`, not `#deck-design`, is what "the deck replaced the page" means
+  now.** Both wrappers are live, so anything asking "is there a deck above me"
+  has to ask which kind. `renderSectionGuide` is the case that matters: it is
+  suppressed on a deck-only page (its steps describe furniture the child cannot
+  see) and drawn on the reading page, where it describes the shelf sitting right
+  above it and carries the "Go to the slides" pointer again. `collectPageNarration`
+  needs no such test — it prefers `#classic-design`, which exists only where a
+  classic half does.
 
   **Do not flip the gate to do this, in either direction.** `BOTH_DESIGNS` /
   `bothDesigns()` is what ROUTES a stage to the deck, so flipping it sends 1-4
@@ -63,13 +91,16 @@ Real uploads are `npm run deploy:integration|staging|production`. **Never run a 
 
   Four consequences, each of which cost a check when the change was made:
 
-  - **The section guide must not sit above a deck.** English's and Mathematics'
-    "How to use this page" describes the ORIGINAL in its own furniture ("on the
-    left is the list of the 15 words"), so above a deck it is instructions for a
-    page the child cannot see. `renderSectionGuide` in both subjects now returns
-    early when `#deck-design` exists; the deck's own "How to use these slides"
-    intro slide (`DECK_INTROS`) says the same things, and the pointer that used to
-    hang under the guide ("under the page there are slides") went with it.
+  - **The section guide must not sit above a deck that REPLACED the page.**
+    English's and Mathematics' "How to use this page" describes the ORIGINAL in
+    its own furniture ("on the left is the list of the 15 words"), so above a
+    deck-only page it is instructions for a page the child cannot see. The deck's
+    own "How to use these slides" intro slide (`DECK_INTROS`) says the same
+    things. Mathematics returns early on `#deck-design`, which is right there
+    because every one of its 1-4 sections is deck-only; **English tests
+    `.deck-only`**, because Reading & story still has a classic half for the guide
+    to describe — and the pointer under the guide ("under the page there are
+    slides") is drawn on that page and nowhere else.
   - **The deck had to be UN-hidden from assistive tech in Computing and Global
     Perspectives.** Both carried `aria-hidden="true"` on the deck half plus an
     `untabDeckHalf()` that set `tabindex="-1"` on every control in it — correct

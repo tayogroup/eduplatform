@@ -92,7 +92,17 @@ const AUDIO_IS_DEV = ["localhost", "127.0.0.1"].includes(location.hostname);
 // Two clips is a small reason to make the whole course refetch once, and it is
 // still the correct trade — the alternative is a definition nobody can hear
 // corrected, for a year, on a word the unit is teaching.
-const AUDIO_RELEASE = "20260824b";
+// 20260826a: three vocabulary MEANING clips were re-recorded onto their own
+// filenames — meter (g3 u8), haphazard (g7 u4), chastise (g8 u4) — in the same
+// media upload that first shipped 256 new grammar-practice clips. Only these
+// three need the stamp, and the arithmetic of which is which is worth keeping:
+// the 256 are new filenames, so their URLs never existed and no browser holds
+// anything; the three kept their paths, so their URLs are unchanged and every
+// learner who has played them has the old audio pinned for a year. Same repair,
+// same upload, two different answers — ask it per CLIP, never per repair. The
+// uploader can tell you which: it reports how many of the files it is sending
+// are already-uploaded paths whose CONTENTS changed (it said 3).
+const AUDIO_RELEASE = "20260826a";
 function withAudioRelease(url) {
   // Dev serves from disk with no caching worth defeating, and a bare filename
   // is easier to grep for in the network panel.

@@ -551,6 +551,63 @@ for (const gradeDir of grades) {
   }
 }
 
+// ── glossary entries the popover can never reach ────────────────────────────
+// A key is linkable only if its word appears in a PRACTICE sentence: those are
+// the only strings linkGlossaryWords is called on (english.js :: sentencesFor,
+// two call sites). 437 keys have words that appear solely in the item's
+// `exampleSentence`, and that field is never drawn on a word card — the app
+// prefers practiceSentences and falls back to exampleSentence only when there
+// are none, which across all eight grades is zero items out of 9,317. It is
+// printed on the handwriting worksheet at Grades 1-4, and it is fed to the
+// Wehel prompt everywhere; neither is a place a popover can exist.
+//
+// This is a CEILING, not a floor, and the same shape as check:math-cambridge's
+// zero-objective count: the number may fall, never rise. It is recorded rather
+// than fixed because the fix is not an engineering one. Making those keys
+// reachable means rendering exampleSentence on the word card, and
+// `sentenceAudio` is an array indexed to practiceSentences — 1,695 of 1,695
+// exact in Grade 7, and exampleSentence has no audio of its own — so every one
+// of the 9,317 would get a "Hear sentence" button with no clip behind it and
+// fall back to the PAID runtime endpoint on every play. That is a content
+// commission with a bill, not a cleanup, and it is an owner's decision.
+//
+// The guard below the ceiling is the one this file keeps having to learn: if
+// the practice-sentence tokeniser ever broke, every key would look unreachable
+// and the ceiling would fail loudly — good. The silent direction is the
+// opposite, a collapse in what counts as LINKED reporting a happy fall, so the
+// linked count carries its own floor.
+const UNREACHABLE_CEILING = 437;
+const LINKED_FLOOR = 15000;
+{
+  let linked = 0, exampleOnly = 0;
+  for (const gradeDir of grades) {
+    const dataDir = path.join(root, gradeDir, "data");
+    const glossaryFile = path.join(dataDir, "sentence-glossary.json");
+    const unitsDir = path.join(dataDir, "units");
+    if (!fs.existsSync(glossaryFile) || !fs.existsSync(unitsDir)) continue;
+    const practice = new Set(), example = new Set();
+    const add = (text, set) => { for (const m of String(text).match(/[A-Za-z']+/g) || []) set.add(m.toLowerCase()); };
+    for (const name of fs.readdirSync(unitsDir)) {
+      for (const item of readJson(path.join(unitsDir, name)).dictionaryLinks || []) {
+        for (const sentence of item.practiceSentences || []) add(sentence, practice);
+        if (item.exampleSentence) add(item.exampleSentence, example);
+      }
+    }
+    for (const key of Object.keys(readJson(glossaryFile).entries || {})) {
+      const lower = key.toLowerCase();
+      if (practice.has(lower)) linked += 1;
+      else if (example.has(lower)) exampleOnly += 1;
+    }
+  }
+  if (linked < LINKED_FLOOR) {
+    fail("sentence-glossary", `only ${linked} glossary key(s) resolve to a practice sentence (floor ${LINKED_FLOOR}) — the practice-sentence reader broke, so the unreachable count below means nothing`);
+  } else if (exampleOnly > UNREACHABLE_CEILING) {
+    fail("sentence-glossary", `${exampleOnly} glossary key(s) are reachable only through exampleSentence, above the recorded ceiling of ${UNREACHABLE_CEILING} — a new entry was written against a sentence the word card never draws`);
+  } else if (exampleOnly < UNREACHABLE_CEILING) {
+    note(`glossary: ${exampleOnly} key(s) reachable only through exampleSentence, below the recorded ceiling of ${UNREACHABLE_CEILING} — lower UNREACHABLE_CEILING in this file to lock the gain in`);
+  }
+}
+
 // The floor every gate in this repo eventually grows, and this one needs it more
 // than most: the check above is a loop over whatever `/['’]$/` selects, so a
 // filter that stops matching does not fail — it iterates nothing and reports a

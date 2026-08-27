@@ -1696,22 +1696,29 @@ CSS;
 function pqh_duolingo_chrome_css(string $scope): string {
     return <<<CSS
 /* ---- Duolingo-styled rail + top bar ---- */
-{$scope}{--duo-green:#58cc02;--duo-green-dark:#58a700;--duo-blue:#1cb0f6;--duo-blue-dark:#1899d6;--duo-blue-soft:#ddf4ff;--duo-blue-line:#84d8ff;--duo-line:#e5e5e5;--duo-line-deep:#d6d6d6;--duo-ink:#4b4b4b;--duo-muted:#afafaf;--duo-wash:#f7f7f7;--duo-red:#ff4b4b;--duo-orange:#ff9600;--duo-purple:#ce82ff;--duo-gold:#ffc800;--duo-header:#235390;--duo-header-line:#1b4272;--duo-header-ink:#fff}
+{$scope}{--duo-green:#58cc02;--duo-green-dark:#58a700;--duo-blue:#1cb0f6;--duo-blue-dark:#1899d6;--duo-blue-soft:#ddf4ff;--duo-blue-line:#84d8ff;--duo-line:#e5e5e5;--duo-line-deep:#d6d6d6;--duo-ink:#4b4b4b;--duo-muted:#afafaf;--duo-wash:#f7f7f7;--duo-red:#ff4b4b;--duo-orange:#ff9600;--duo-purple:#ce82ff;--duo-gold:#ffc800;--duo-header:#235390;--duo-header-line:#1b4272;--duo-header-ink:#fff;--duo-header-ink-soft:rgba(255,255,255,.72);--duo-header-hover:rgba(255,255,255,.10);--duo-on-dark-green:#89e219;--duo-on-dark-red:#ff8080;--duo-chip-ink:#0a6fa8}
 
 /* the rail: white, held by a 2px rule, nothing filled until you touch it */
-{$scope} .pqh-gnav{background:#fff!important;border-right:2px solid var(--duo-line)!important;gap:4px}
+/* THE RAIL IS THE HEADER'S OTHER HALF. It was white beside a #235390 bar, which
+   read as chrome on one edge and blank on the other; the two now make one block.
+   Everything below re-inks the rail for a dark field, and every value in it was
+   MEASURED rather than picked -- on #235390 the old label #4b4b4b is 1.13:1
+   (invisible), the foot's #afafaf is 3.53:1 and the brand's #58cc02 is 3.71:1,
+   all failing. White labels are 7.74:1 and 72% white is 4.89:1. */
+{$scope} .pqh-gnav{background:var(--duo-header)!important;border-right:2px solid var(--duo-header-line)!important;gap:4px}
 {$scope} .pqh-gnav__brand{padding:6px 8px 16px}
 {$scope} .pqh-gnav__mark{border-radius:16px!important;background:var(--duo-green)!important;color:#fff!important;font-size:15px!important;font-weight:800!important;letter-spacing:.04em!important;box-shadow:0 4px 0 var(--duo-green-dark)!important}
-{$scope} .pqh-gnav__mark--img{background:#fff!important;box-shadow:0 0 0 2px var(--duo-line)!important}
-{$scope} .pqh-gnav__name{color:var(--duo-green)!important;font-size:15px!important;font-weight:800!important;letter-spacing:.01em!important}
+{$scope} .pqh-gnav__mark--img{background:#fff!important;box-shadow:0 0 0 2px var(--duo-header-line)!important}
+/* #58cc02 is 3.71:1 here and fails as text; Duolingo's lighter green is 4.78:1 */
+{$scope} .pqh-gnav__name{color:var(--duo-on-dark-green)!important;font-size:15px!important;font-weight:800!important;letter-spacing:.01em!important}
 
 /* A nav row is a label, not a chip. Uppercase at 12.5px with the icon stepped
    up to 26px and the stroke to 2.4 is what makes it read as Duolingo rather
    than as the same row in a different colour. */
-{$scope} .pqh-gnav__item{box-sizing:border-box;gap:12px;min-height:48px;padding:0 12px!important;border:2px solid transparent!important;border-radius:14px!important;background:transparent!important;color:var(--duo-ink)!important;font-size:12.5px!important;font-weight:800!important;letter-spacing:.06em!important;text-transform:uppercase!important;box-shadow:none!important;transition:background .12s ease,border-color .12s ease,color .12s ease}
+{$scope} .pqh-gnav__item{box-sizing:border-box;gap:12px;min-height:48px;padding:0 12px!important;border:2px solid transparent!important;border-radius:14px!important;background:transparent!important;color:var(--duo-header-ink)!important;font-size:12.5px!important;font-weight:800!important;letter-spacing:.06em!important;text-transform:uppercase!important;box-shadow:none!important;transition:background .12s ease,border-color .12s ease,color .12s ease}
 {$scope} .pqh-gnav__item svg{width:26px;height:26px;stroke-width:2.4}
-{$scope} .pqh-gnav__item:hover{background:var(--duo-wash)!important;color:var(--duo-ink)!important}
-{$scope} .pqh-gnav__item.is-active{background:var(--duo-blue-soft)!important;border-color:var(--duo-blue-line)!important;color:var(--duo-blue)!important}
+{$scope} .pqh-gnav__item:hover{background:var(--duo-header-hover)!important;color:var(--duo-header-ink)!important}
+{$scope} .pqh-gnav__item.is-active{background:var(--duo-blue-soft)!important;border-color:var(--duo-blue-line)!important;color:var(--duo-chip-ink)!important}
 
 /* One colour per destination, the way Duolingo colours LEARN / LEAGUES / SHOP.
    Keyed on position rather than on a name because the rail's contents differ by
@@ -1723,20 +1730,20 @@ function pqh_duolingo_chrome_css(string $scope): string {
 {$scope} .pqh-gnav>.pqh-gnav__item:nth-child(4) svg{color:var(--duo-orange)}
 {$scope} .pqh-gnav>.pqh-gnav__item:nth-child(5) svg{color:var(--duo-purple)}
 {$scope} .pqh-gnav>.pqh-gnav__item:nth-child(6) svg{color:var(--duo-gold)}
-{$scope} .pqh-gnav>.pqh-gnav__item:nth-child(7) svg{color:var(--duo-red)}
+{$scope} .pqh-gnav>.pqh-gnav__item:nth-child(7) svg{color:var(--duo-on-dark-red)}
 {$scope} .pqh-gnav>.pqh-gnav__item:nth-child(8) svg{color:var(--duo-green)}
 {$scope} .pqh-gnav>.pqh-gnav__item:nth-child(9) svg{color:var(--duo-blue)}
 /* !important because the nth-child rules above are (0,4,1) and this is (0,3,1) */
-{$scope} .pqh-gnav__item.is-active svg{color:var(--duo-blue)!important}
+{$scope} .pqh-gnav__item.is-active svg{color:var(--duo-chip-ink)!important}
 
-{$scope} .pqh-gnav__foot{border-top:2px solid var(--duo-line)!important;padding-top:10px}
-{$scope} .pqh-gnav__foot .pqh-gnav__item{color:var(--duo-muted)!important}
-{$scope} .pqh-gnav__foot .pqh-gnav__item svg{color:var(--duo-muted)}
-{$scope} .pqh-gnav__foot .pqh-gnav__item:hover{background:var(--duo-wash)!important;color:var(--duo-ink)!important}
+{$scope} .pqh-gnav__foot{border-top:2px solid var(--duo-header-line)!important;padding-top:10px}
+{$scope} .pqh-gnav__foot .pqh-gnav__item{color:var(--duo-header-ink-soft)!important}
+{$scope} .pqh-gnav__foot .pqh-gnav__item svg{color:var(--duo-header-ink-soft)}
+{$scope} .pqh-gnav__foot .pqh-gnav__item:hover{background:var(--duo-header-hover)!important;color:var(--duo-header-ink)!important}
 /* Logout is the only destructive row here, so it is the only one that goes red.
    Collapse sits beside it and must not. */
-{$scope} .pqh-gnav__foot a.pqh-gnav__item:hover{color:var(--duo-red)!important}
-{$scope} .pqh-gnav__foot a.pqh-gnav__item:hover svg{color:var(--duo-red)}
+{$scope} .pqh-gnav__foot a.pqh-gnav__item:hover{color:var(--duo-on-dark-red)!important}
+{$scope} .pqh-gnav__foot a.pqh-gnav__item:hover svg{color:var(--duo-on-dark-red)}
 
 /* Collapsed rail: restate the centring, because the padding above would
    otherwise beat pqh_design_shell_css()'s own .pqh-rail-min rule. */

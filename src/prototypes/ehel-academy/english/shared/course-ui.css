@@ -1472,6 +1472,53 @@ body.ebook-watching .course-ebook-illustration img, body.ebook-watching svg.cour
   .game-play-top > div { display: grid; gap: 2px; text-align: right; }
 }
 
+/* ============================================================================
+   The tablet band — 681 to 980px, Grades/Stages 1-4 only.
+   ============================================================================
+   Between the phone rail and the full sidebar the ≤980px block collapses the
+   sidebar to an 82px icon column and hides every label. On a portrait tablet
+   that leaves a young learner with EIGHTEEN UNLABELLED CIRCLES and no words at
+   all — a memory test where the phone gets a labelled sheet and the desktop a
+   labelled path. Measured on an iPad Mini: sidebar 82px, content 686px with
+   visible slack, labels display:none.
+
+   So at these stages the band gets the labels back and the sidebar the width to
+   hold them. 232px leaves 449px of content at the narrow end of the band and
+   536px on a 768px tablet — the overview grid is already single-column below
+   980px, so nothing else has to move.
+
+   This is the one place in the young-learner work that changes LAYOUT rather
+   than paint. It is unavoidable here: a label needs width, and the whole defect
+   is that there is none. Above Stage 4 the 82px column is untouched, which is
+   also what keeps this off small laptop windows for older learners.
+
+   The lower bound is min-width:681px, not a bare max-width, so the phone rules
+   below 681 keep their sheet — the two bands describe different devices and
+   must not overlap. */
+@media (min-width: 681px) and (max-width: 980px) {
+  html.young-stage .app-shell { grid-template-columns: 232px 1fr; }
+  html.young-stage .sidebar { padding: 18px 12px; }
+  /* The course line and unit title come back, because the ≤980 block hid them
+     for an 82px column and this one is 232px — leaving them hidden left a rule
+     floating over an empty navy band that got wider with the sidebar. The
+     PICKER and its label stay hidden: the topbar carries one at this width, and
+     two unit pickers on one screen is a choice about which to trust. */
+  html.young-stage .course-context { min-height: 0; padding: 0 4px 16px; }
+  html.young-stage .course-context span, html.young-stage .course-context p { display: block; }
+  /* The labels, which are the entire point of this block. */
+  html.young-stage .nav-button--path > span:not(.nav-state) { display: block; font-size: 15px; text-align: left; }
+  html.young-stage .sidebar .teacher-switch span { display: block; }
+  /* The path geometry the ≤980 block flattened: it centres every grid item and
+     runs the trail down the middle of the row, both of which are right for an
+     icon column and wrong the moment a label sits beside the node. */
+  html.young-stage .nav-button--path { grid-template-columns: 40px 1fr auto; justify-items: stretch; gap: 12px; min-height: 62px; padding: 7px 10px; }
+  html.young-stage .nav-button--path::before { left: 28px; }
+  html.young-stage .sidebar .teacher-switch { grid-template-columns: 34px 1fr; justify-items: start; align-items: center; gap: 11px; padding: 9px 11px; }
+  /* The badge rides the node again — and only when it carries something, or
+     every not-yet section grows an empty ring. */
+  html.young-stage .nav-state:not(:empty) { display: grid; }
+}
+
 /* On the smallest phones two labelled tiles cost the section rail too much: at
    320px they leave 152px of it, under two of the 84px tiles a learner navigates
    by. So they drop to the badge alone — the same letter-only form these two

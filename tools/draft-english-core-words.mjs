@@ -154,7 +154,13 @@ function usableCandidate(text) {
   if (((text.match(/"/g) || []).length % 2) === 1) return false;
   // Speaker-prefixed lines come from the units' teaching scripts, not the story:
   // "Learner: This is my mum." is a stage direction with a sentence inside it.
+  //
+  // The named roles were not enough — the scripts also prefix with the CHARACTER,
+  // and "Amal: I will read a long chapter book by myself." reached a Grade 3 word
+  // card looking like an ordinary example. Any capitalised opening word followed
+  // by a colon is a speaker label; a real sentence does not begin that way.
   if (/^(Learner|Teacher|Adult|Child|Parent|Together)\s*:/i.test(text)) return false;
+  if (/^[A-Z][a-z]+\s*:/.test(text)) return false;
   // A mid-line slash marks a rhyme's line break — "She lays eggs / for
   // gentlemen." is two verse lines, not a sentence.
   if (/\s\/\s/.test(text)) return false;
@@ -251,7 +257,20 @@ for (const cu of core.units) {
   draft.push({ unit: cu.unitNo, title: cu.unitTitle, wordCount: words.length, words });
 }
 
-fs.writeFileSync(OUT, JSON.stringify({ schemaVersion: "Ehel Core Words Draft v1.0", gradeId: `g${String(GRADE).padStart(2, "0")}`, units: draft }, null, 1) + "\n");
+// --unit MERGES into whatever is already on disk. It used to write `draft`
+// straight out, and since `draft` holds only the unit asked for, a --unit run
+// replaced the whole file with that one unit and silently discarded the other
+// nine. That is a one-keystroke way to lose a grade's review surface, and the
+// summary printed afterwards looks entirely healthy because it describes the
+// unit that survived.
+let units = draft;
+if (onlyUnit && fs.existsSync(OUT)) {
+  const prior = JSON.parse(fs.readFileSync(OUT, "utf8")).units || [];
+  const merged = new Map(prior.map((u) => [u.unit, u]));
+  for (const u of draft) merged.set(u.unit, u);
+  units = [...merged.values()].sort((a, b) => a.unit - b.unit);
+}
+fs.writeFileSync(OUT, JSON.stringify({ schemaVersion: "Ehel Core Words Draft v1.0", gradeId: `g${String(GRADE).padStart(2, "0")}`, units }, null, 1) + "\n");
 
 const total = Object.values(tally).reduce((a, b) => a + b, 0);
 console.log(`Grade ${GRADE} Core words draft — ${total} words${onlyUnit ? ` (unit ${onlyUnit})` : ""}\n`);

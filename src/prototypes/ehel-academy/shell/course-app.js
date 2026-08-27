@@ -831,10 +831,16 @@ export function createCourseApp(config) {
   // inside one unit, it carries entries this category has no use for (Overview,
   // Video lesson, My progress, Study Plan), and its order is a teaching sequence
   // rather than a menu of things to be stuck on.
+  // Speaking sits between Grammar and Writing, which is where the course's own
+  // section order puts it, rather than appended after Books — a menu of parts of
+  // the course reads as one when it runs in the order the course teaches them.
+  // It was absent from the owner's first list and added on the second; it is the
+  // best-covered section in the index (480 topics, more than any other), so it
+  // was never a question of whether there was anything behind it.
   const TUTORING_ENGLISH_SECTIONS = [
     ["dictionary", "Vocabulary"], ["reading", "Reading & story"], ["comprehension", "Comprehension"],
-    ["grammar", "Grammar"], ["writing", "Writing"], ["activities", "Activities"],
-    ["games", "Games"], ["quiz", "Quiz"], ["ebooks", "Books"],
+    ["grammar", "Grammar"], ["speaking", "Speaking"], ["writing", "Writing"],
+    ["activities", "Activities"], ["games", "Games"], ["quiz", "Quiz"], ["ebooks", "Books"],
   ];
   // Repainted after onNavRendered on every nav render, not once at boot, because
   // English rebuilds its own pickers there (english.js :: renderUnitPickers) and

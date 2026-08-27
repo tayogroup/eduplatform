@@ -5089,6 +5089,31 @@ function unitEbooks() {
   return ebookCatalog.filter((item) => item.grades.includes(gradeNumber) && (!item.units || item.units.includes(unitNumber)));
 }
 
+// What the Books PAGE shelves, as distinct from what a unit owns.
+//
+// A course learner gets this unit's shelf, which is the design: the books are
+// the unit's ending, not a library to wander.
+//
+// A tutoring learner gets the whole library. They are search-driven and never
+// walk units — Get help opens the one unit their problem lives in, whatever its
+// number — so a per-unit shelf showed them the two to five books of wherever
+// they happened to land and hid the other ~140. Same reasoning as the +/-2 grade
+// search window: their route in is a problem, not a position.
+//
+// The whole catalogue rather than their grade's slice, deliberately. The
+// catalogue IS Grades 1-4 (the shelf stops at 4 by the owner's 2026-08-20
+// decision), and a tutoring learner above Grade 4 reading a Grade 3 book is the
+// case the category exists for. This does not reopen that decision for the
+// course, which still ends at Grade 4 — unitEbooks is untouched and is still
+// what every course page asks.
+//
+// countableSectionIds deliberately keeps asking unitEbooks: Books must not
+// start counting toward finishing a unit, and the tutoring category has no unit
+// gate anyway.
+function shelfEbooks() {
+  return IS_TUTORING ? ebookCatalog.slice() : unitEbooks();
+}
+
 function savePlacementProgress() {
   localStorage.setItem(PLACEMENT_STORAGE_KEY, JSON.stringify(placementProgress));
   renderNav();
@@ -5117,7 +5142,7 @@ function visibleSections() {
   // unit's 100%, which is why those grades' progress bars stopped at 92% and
   // could never read complete. It is also what made the gate unsafe beyond
   // Grade 1: an uncompletable step in the chain shuts the learner out for good.
-  const available = sections.filter(([id]) => (id !== "games" || gamePack) && (id !== "ebooks" || unitEbooks().length) && (id !== "teacherguide" || hasGrownUpGuide()) && (id !== "story-library" || hasStoryLibrary()));
+  const available = sections.filter(([id]) => (id !== "games" || gamePack) && (id !== "ebooks" || shelfEbooks().length) && (id !== "teacherguide" || hasGrownUpGuide()) && (id !== "story-library" || hasStoryLibrary()));
   return unitNumber === 10 ? [...available, ["final-quiz", "trophy", "Final course quiz"]] : available;
 }
 
@@ -9301,7 +9326,7 @@ function renderEbooks() {
   // rest of the course hidden behind a theatre mode nobody can now switch off.
   document.body.classList.remove("ebook-watching");
   ebookHadFullscreen = false;
-  const gradeEbooks = unitEbooks();
+  const gradeEbooks = shelfEbooks();
   if (!gradeEbooks.length) {
     $("#app").innerHTML = `${pageHeader("Independent reading library", "Books", `Grade ${gradeNumber} illustrated books for this unit will appear here as they are approved.`, "Library being prepared")}
       <section class="panel empty-library"><span>${icon("library-big")}</span><h2>Your Unit ${unitNumber} shelf</h2><p>There are no approved eBooks for this unit yet. Each unit gets its own story - keep learning!</p></section>`;

@@ -53,6 +53,25 @@ export function createCourseApp(config) {
   const stageNumber = Number(params.get(config.param) || params.get("stage") || params.get("grade") || document.documentElement.dataset[config.param] || document.documentElement.dataset.stage || document.documentElement.dataset.grade || 2);
   const unitNumber = Number(params.get("unit") ?? (config.defaultUnit ? config.defaultUnit(stageNumber) : 1));
 
+  // --- the path nav ----------------------------------------------------------
+  // Grades/Stages 1-4 draw the section list as a PATH: a trail of circular
+  // nodes, filled green behind the learner and hollow ahead of them, with the
+  // label beside each. Above that the list stays the flat row of icons it is
+  // today, for the reason the deck is gated at the same number — by Stage 5 a
+  // learner scans a list rather than being walked along it, and a trail of
+  // beads is a six-year-old's affordance, not a thirteen-year-old's.
+  //
+  // ONE constant, and it lives here rather than in each subject, because unlike
+  // DECK_MAX_STAGE this decides nothing but paint: no route, no gate, no count.
+  // Every subject reaches this line -- English included, which renders its own
+  // sections but takes nav, boot and routing from this core.
+  //
+  // Levelled courses are excluded rather than compared. Intensive English is
+  // Levels 1-2, and a level says nothing about how old the learner is, so
+  // `<= 4` would be an accident there rather than a decision.
+  const PATH_NAV_MAX_STAGE = 4;
+  const pathNav = config.param !== "level" && stageNumber >= 1 && stageNumber <= PATH_NAV_MAX_STAGE;
+
   // --- learner category ------------------------------------------------------
   // "tutoring" marks the tutoring-support learners: children at OTHER schools
   // whose families use Ehel as tutoring (owner decision 2026-08-25 — real
@@ -698,7 +717,7 @@ export function createCourseApp(config) {
       try { sessionHere = Boolean(config.getHelp.sessionHere?.()); } catch { /* not loaded yet */ }
       if (sessionHere) navItems.push({ id: "help-session", iconName: "compass", label: "Help session", active: route === "help-session", done: false });
     }
-    $("#section-nav").innerHTML = sectionNavigation(navItems);
+    $("#section-nav").innerHTML = sectionNavigation(navItems, { path: pathNav });
     $$('[data-route]').forEach((button) => button.addEventListener("click", () => navigate(button.dataset.route)));
     const teacherSwitch = $("#teacher-switch");
     if (teacherSwitch) {

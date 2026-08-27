@@ -482,6 +482,74 @@ body.focus-mode.gc-full .wc-tools { position: fixed; left: 0; right: 0; bottom: 
 .nav-button > span:not(.nav-state) { font-size: 14px; }
 .nav-state { width: 18px; height: 18px; border: 1px solid #7694a6; border-radius: 50%; display: grid; place-items: center; font-size: 14px; }
 .nav-state.done { color: #0a392d; background: #6ee7b7; border-color: #6ee7b7; }
+
+/* ============================================================================
+   The path nav — Grades/Stages 1-4 only.
+   ============================================================================
+   Gated by PATH_NAV_MAX_STAGE in shell/course-app.js, which puts
+   .nav-button--path on every row; above Stage 4 the class is absent and every
+   rule here is inert, so the upper stages keep the flat list above byte for
+   byte. Levelled courses (Intensive English) are excluded there too.
+
+   The list becomes a trail: one circular node per section, joined by a line
+   that is GREEN behind the learner and grey ahead of them, so "where am I"
+   is answered by colour before any word is read. Same shape as the deck's
+   reason for existing at these stages — one thing at a time, in order.
+
+   Everything is CSS on the markup that was already there. The node IS the
+   section's <svg> (padding + a round background), the trail is the row's own
+   ::before, and .nav-state stays the badge it was — which is what keeps
+   english.js :: paintSectionLocks() working: it writes 🔒 into .nav-state and
+   dims the row, and both still land on a node exactly as they did on a row.
+
+   `:has()` reads the done state off .nav-state because the BUTTON carries no
+   done class — the shared template puts it on the badge. Two consequences
+   worth knowing: it still resolves under the ≤980px rule that sets
+   .nav-state{display:none}, since display does not affect matching; and a
+   locked-but-finished row correctly reads as not-done, because
+   paintSectionLocks() removes .done before writing the padlock.
+*/
+#section-nav:has(.nav-button--path) { gap: 0; padding: 10px 0 18px; }
+.nav-button--path { position: relative; grid-template-columns: 40px 1fr auto; gap: 12px; min-height: 62px; padding: 7px 10px; border-radius: 16px; }
+/* The trail. Drawn full height and clipped at the ends so the segments meet
+   with no seam — which is why the container's 3px gap goes to 0 above. */
+/* Square ends, not rounded: each row draws its own segment, and a 4px radius
+   pinches every join into a visible notch down the whole trail. */
+.nav-button--path::before { content: ""; position: absolute; left: 28px; top: 0; bottom: 0; width: 4px; background: rgba(255,255,255,.2); }
+.nav-button--path:first-child::before { top: 50%; }
+.nav-button--path:last-child::before { bottom: 50%; }
+.nav-button--path:has(.nav-state.done)::before { background: #2f8f57; }
+/* The node. Sits above the trail, so the line runs behind it rather than
+   through it. */
+.nav-button--path > i, .nav-button--path > svg { position: relative; z-index: 1; box-sizing: border-box; width: 40px; height: 40px; padding: 10px; border: 2px solid rgba(255,255,255,.24); border-radius: 50%; background: #16374e; color: #9fbccd; }
+.nav-button--path:has(.nav-state.done) > i, .nav-button--path:has(.nav-state.done) > svg { border-color: #6ee7b7; background: #6ee7b7; color: #0a392d; }
+/* You-are-here beats done, and has to say so at a HIGHER specificity than the
+   done rule above: :has() contributes its argument's weight, so
+   .nav-button--path:has(.nav-state.done) > svg is (0,3,1) and a bare
+   .nav-button--path.active > svg is (0,2,1) -- it loses wherever it matters
+   most, on the section the learner is standing on. #section-nav settles it.
+   The ring is solid gold rather than a soft glow: at 22% over this navy it
+   came out khaki, which reads as a smudge on the node rather than a marker. */
+#section-nav .nav-button--path.active > i, #section-nav .nav-button--path.active > svg { box-shadow: 0 0 0 4px var(--gold); }
+#section-nav .nav-button--path.active:not(:has(.nav-state.done)) > i, #section-nav .nav-button--path.active:not(:has(.nav-state.done)) > svg { border-color: var(--gold); background: var(--gold); color: #102c43; }
+.nav-button--path > span:not(.nav-state) { font-size: 15px; font-weight: var(--weight-medium); }
+.nav-button--path.active > span:not(.nav-state) { font-weight: var(--weight-bold); }
+/* The row's own paint. The inset gold bar the flat list uses is cancelled:
+   the node carries the current state here, and both together read as two
+   different answers to the same question. */
+.nav-button--path.active { background: rgba(255,255,255,.12); box-shadow: none; }
+.nav-button--path:hover { background: rgba(255,255,255,.08); }
+/* The badge rides on the node's lower-right corner rather than sitting in its
+   own column — a tick beside the far edge of a 200px row is a long way from
+   the thing it is about. */
+.nav-button--path .nav-state { position: absolute; left: 32px; bottom: 7px; z-index: 2; width: 19px; height: 19px; border-width: 2px; border-color: #102c43; background: #16374e; font-size: 12px; }
+.nav-button--path .nav-state.done { border-color: #102c43; background: #2f8f57; color: #fff; }
+/* An EMPTY badge is drawn nowhere on the path. In the flat list its ring is a
+   meaningful empty checkbox at the end of the row; sitting on the node it is a
+   blemish on the circle, and the hollow node already says "not yet". It comes
+   back the moment it carries something — ✓ when done, 🔒 when
+   english.js :: paintSectionLocks() writes one in. */
+.nav-button--path .nav-state:empty { display: none; }
 .teacher-switch { margin-top: 8px; border-top: 1px solid rgba(255,255,255,.14); border-radius: 0; padding-top: 18px; grid-template-columns: 22px 1fr; }
 /* The two switches are one block under the section list, so the rule above them
    is drawn once: Student resources owns it and Teacher resources tucks in under.
@@ -1147,6 +1215,14 @@ body.ebook-watching .course-ebook-illustration img, body.ebook-watching svg.cour
   .course-context span, .course-context strong, .course-context p, .unit-picker-label, .unit-picker, .nav-button > span:not(.nav-state), .teacher-switch span { display: none; }
   .course-context { min-height: 48px; padding: 0; }
   .nav-button, .teacher-switch { grid-template-columns: 1fr; justify-items: center; padding: 9px 3px; }
+  /* The rail is 82px of icons with no labels. The path survives it — the trail
+     runs down the middle of the nodes — but the geometry has to be restated,
+     because .nav-button--path is more specific than the line above and would
+     otherwise keep its 42px/1fr/auto columns and left-align every node.
+     The badge is hidden with .nav-state, so at this width the NODE is the only
+     thing saying done: it is already green, which is why nothing is lost. */
+  .nav-button--path { grid-template-columns: 1fr; justify-items: center; padding: 7px 3px; gap: 0; }
+  .nav-button--path::before { left: calc(50% - 2px); }
   .nav-state { display: none; }
   .overview-grid, .lecture-layout, .dictionary-layout, .course-ebook-layout { grid-template-columns: 1fr; }
   .course-ebook-shelf { position: static; grid-template-columns: minmax(190px, .7fr) minmax(230px, 1fr); }
@@ -1208,6 +1284,15 @@ body.ebook-watching .course-ebook-illustration img, body.ebook-watching svg.cour
   .nav-button { min-width: 84px; min-height: 58px; }
   .nav-button > span:not(.nav-state) { display: block; max-width: 80px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; text-align: center; }
   .nav-button { grid-template-rows: 22px 18px; gap: 2px; }
+  /* On the phone rail the list runs sideways, so there is no trail to draw —
+     a vertical line down a 58px tile is a tick mark, not a path. The nodes
+     stay, smaller, and carry the whole state; the tile keeps the same 84px
+     width and ellipsised label as every other stage, so the rail scrolls
+     identically. */
+  .nav-button--path { min-width: 84px; min-height: 58px; grid-template-columns: 1fr; grid-template-rows: 30px 18px; gap: 2px; padding: 5px 3px; border-radius: 10px; }
+  .nav-button--path::before { display: none; }
+  .nav-button--path > i, .nav-button--path > svg { width: 30px; height: 30px; padding: 7px; border-width: 2px; }
+  .nav-button--path > span:not(.nav-state) { font-size: 12px; }
   .content { padding: 22px 14px 94px; }
   .page-header { display: block; }
   .page-actions { justify-items: start; margin-top: 14px; }

@@ -5,6 +5,7 @@ require_once(__DIR__ . '/../../config.php');
 require_login();
 require_once(__DIR__ . '/accesslib.php');
 require_once(__DIR__ . '/course_catalog.php');
+require_once($CFG->dirroot . '/local/prequran/progress_gatewaylib.php');
 
 $userid = (int)$USER->id;
 
@@ -218,8 +219,35 @@ try {
 }
 
 // ---- courses: catalog enrolments + Moodle enrolments, homework matched by course ----
+// A tutoring-support learner is enrolled in one ehel-tutoring-<slug> course per
+// subject their family bought, and six cards is not what "one Tutor Me" means to
+// them. These two closures pull those cards out of the ordinary lists so the
+// block after the loops can put ONE back.
+//
+// The enrolments themselves are untouched — they are what entitlement is checked
+// against at launch, and the family report still groups help sessions by the
+// course key (portal_handlers/student-parent-portal.php). This is a
+// presentation collapse and nothing else.
+//
+// Where the key lives differs by source: a Moodle enrolment card is keyed
+// 'moodle_<id>' and carries the idnumber in course_number, while a catalog card
+// is keyed by the catalog key itself. Asking both is why a tutoring course
+// added to the catalog later would not quietly reappear as a seventh card.
+$pqhsd_tutoringslugs = [];
+$pqhsd_tutoring_card = static function (string $key, array $entry) use (&$pqhsd_tutoringslugs): bool {
+    $idnumber = trim((string)($entry['course_number'] ?? ''));
+    $slug = pqpg_tutoring_subject($idnumber !== '' ? $idnumber : $key);
+    if ($slug === null) {
+        return false;
+    }
+    $pqhsd_tutoringslugs[$slug] = true;
+    return true;
+};
 $courses = [];
 foreach (pqh_user_courses($userid) as $key => $entry) {
+    if ($pqhsd_tutoring_card($key, (array)$entry)) {
+        continue;
+    }
     $courses[$key] = [
         'key' => (string)$key,
         'title' => (string)($entry['title'] ?? $key),
@@ -252,6 +280,9 @@ try {
             // same course twice under two different keys.
             continue;
         }
+        if ($pqhsd_tutoring_card($key, (array)$entry)) {
+            continue;
+        }
         $title = (string)($entry['title'] ?? ($entry['fullname'] ?? $key));
         $courses[$key] = [
             'key' => (string)$key,
@@ -265,6 +296,38 @@ try {
     }
 } catch (Throwable $e) {
     // Moodle enrolment cards unavailable; catalog courses still render.
+}
+// ---- the tutoring-support category: six umbrella courses, ONE card ------
+// The card's KEY is the subject it will actually open, not a synthetic
+// 'ehel-tutoring': the SEB hand-off below mints its ticket from
+// $course['key'], so a key naming no real course would build a launch that
+// cannot resolve. The TITLE is what says "Tutor Me" — and it deliberately
+// matches none of pqhsd_course_face()'s subject needles, so the card takes the
+// neutral star rather than borrowing one subject's colour for all six.
+//
+// Appended rather than inserted: a tutoring learner is at another school and has
+// no other enrolments, so in practice this is their only card, and appending
+// leaves everybody else's ordering exactly as it was.
+if ($pqhsd_tutoringslugs) {
+    // Resume where they were, so the one card is not always the same subject.
+    // The rule lives in progress_gatewaylib beside the rest of the tutoring
+    // server logic — it is gated there (tools/check-tutoring-anchor.php), and
+    // the in-app subject picker needs the same answer.
+    $pqhsd_opensubject = pqpg_tutoring_resume_subject($userid, array_keys($pqhsd_tutoringslugs));
+    if ($pqhsd_opensubject !== '') {
+        $pqhsd_tutkey = 'ehel-tutoring-' . $pqhsd_opensubject;
+        $courses[$pqhsd_tutkey] = [
+            'key' => $pqhsd_tutkey,
+            'title' => 'Tutor Me',
+            'summary' => '',
+            // Deliberately empty. The rollup immediately below matches homework
+            // on coursename, and a tutoring card must never adopt a school
+            // course's homework — these learners are taught somewhere else.
+            'coursename' => '',
+            'continue' => new moodle_url('/local/hubredirect/course_launch.php', ['course' => $pqhsd_tutkey]),
+            'position' => '',
+        ];
+    }
 }
 foreach ($courses as &$course) {
     $mine = array_values(array_filter($hwrows, static function($r) use ($course) {

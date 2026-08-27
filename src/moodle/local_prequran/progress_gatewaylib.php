@@ -398,6 +398,47 @@ function pqpg_tutoring_clamp_stage(string $slug, int $stage): int {
 }
 
 /**
+ * Which tutoring subject a learner's single "Tutor Me" card should open.
+ *
+ * $available is the slugs they are actually enrolled in — the caller has that
+ * list already, so this does not go back to the database for it.
+ *
+ * The learner's last-opened subject wins, so the one card resumes where they
+ * were instead of always landing on the same subject; course_launch.php writes
+ * that preference on the learner's OWN launch. It is VALIDATED against
+ * $available rather than trusted, because a preference outlives the enrolment
+ * that set it — a family who drops a subject would otherwise have their card
+ * pointing at a course the launch will refuse.
+ *
+ * The fallback is the first subject the shared table lists, never the first the
+ * caller happened to pass: enrolment order is query order, so a card that fell
+ * back would open a different subject for two learners with the same purchase.
+ *
+ * '' when they are enrolled in none, which is the caller's signal to draw no
+ * card at all rather than one that opens nothing.
+ */
+function pqpg_tutoring_resume_subject(int $userid, array $available): string {
+    $have = [];
+    foreach ($available as $slug) {
+        $have[(string)$slug] = true;
+    }
+    try {
+        $last = (string)get_user_preferences('local_prequran_tutoring_subject', '', $userid);
+    } catch (Throwable $e) {
+        $last = '';
+    }
+    if ($last !== '' && isset($have[$last])) {
+        return $last;
+    }
+    foreach (pqpg_ehel_subject_slugs() as $slug) {
+        if (isset($have[$slug])) {
+            return $slug;
+        }
+    }
+    return '';
+}
+
+/**
  * The tutoring subjects this learner is enrolled in, each with the stage its
  * help window anchors on — minted into the launch token so the app's subject
  * picker can draw them.

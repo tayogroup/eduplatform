@@ -1,6 +1,7 @@
 <?php
-// Behavioural gate for the tutoring anchor — the stage a tutoring learner's
-// ±2 help window is drawn around, per subject.
+// Behavioural gate for the tutoring server rules: the stage a tutoring
+// learner's ±2 help window is drawn around (per subject), which subjects their
+// launch token offers, and which one the single "Tutor Me" card opens.
 //
 // Why a gate at all. The anchor is ONE NUMBER that decides which five stages of
 // a subject a search can reach (shell/get-help.js :: windowStages), and it is
@@ -63,6 +64,16 @@ class fake_db {
     }
 }
 
+/** The stubbed learner's last-opened tutoring subject, per userid. */
+$PREFS = [];
+function get_user_preferences(string $name, $default = null, $user = null) {
+    global $PREFS;
+    if ($name !== 'local_prequran_tutoring_subject') {
+        return $default;
+    }
+    return $PREFS[(int)$user] ?? $default;
+}
+
 /** Courses the stubbed learner is enrolled in — idnumbers only. */
 $ENROLMENTS = [];
 function enrol_get_users_courses(int $userid, bool $onlyactive = false, string $fields = '') {
@@ -99,7 +110,7 @@ require($target);
 // floor of 1-8, which is right for five subjects out of six.
 foreach (['pqpg_tutoring_stage', 'pqpg_tutoring_anchor', 'pqpg_tutoring_declared_stage',
           'pqpg_tutoring_clamp_stage', 'pqpg_tutoring_subjects', 'pqpg_ehel_subject_map',
-          'pqpg_ehel_subject_slugs', 'pqpg_tutoring_subject'] as $fn) {
+          'pqpg_ehel_subject_slugs', 'pqpg_tutoring_subject', 'pqpg_tutoring_resume_subject'] as $fn) {
     if (!function_exists($fn)) {
         fwrite(STDERR, "✗ $fn() is gone — this gate is not testing what it claims to.\n");
         exit(2);
@@ -216,6 +227,26 @@ check('...which are the anchored, withdrawn-skipped and CEFR answers', array_col
 world([7 => 'Grade 4'], [], []);
 check('no tutoring enrolment offers nothing — an empty list, not null', pqpg_tutoring_subjects(7), []);
 
+echo "\nwhich subject the single \"Tutor Me\" card opens\n";
+world([7 => 'Grade 4']);
+$PREFS = [];
+check('with no preference, the first subject the table lists',
+    pqpg_tutoring_resume_subject(7, ['gp', 'math', 'eng']), 'eng');
+check('...which is the table\'s order, not the order it was handed',
+    pqpg_tutoring_resume_subject(7, ['gp', 'math']), 'math');
+$PREFS = [7 => 'gp'];
+check('the last-opened subject resumes', pqpg_tutoring_resume_subject(7, ['gp', 'math', 'eng']), 'gp');
+check('a preference for a subject they are no longer enrolled in is ignored',
+    pqpg_tutoring_resume_subject(7, ['math', 'eng']), 'eng');
+$PREFS = [7 => 'not-a-subject'];
+check('a junk preference falls back rather than opening nothing',
+    pqpg_tutoring_resume_subject(7, ['math']), 'math');
+$PREFS = [7 => 'math'];
+check('one learner\'s preference is not another\'s', pqpg_tutoring_resume_subject(8, ['gp', 'eng']), 'eng');
+$PREFS = [];
+check('no tutoring enrolment opens nothing — the caller draws no card',
+    pqpg_tutoring_resume_subject(7, []), '');
+
 echo "\nthe map the launch and the anchor share\n";
 // pqpg_ehel_app_base() is on the launch path for EVERY EHEL course, not just
 // the tutoring ones — the subject table was lifted out of it so the anchor
@@ -273,6 +304,16 @@ exit(0);
 //   build the picker from the subject map, not enrolment  a family who bought two
 //                                                       subjects is offered six
 //   include the `ien` alias in pqpg_ehel_subject_slugs()  Intensive English twice
+//
+// …three on which subject the single "Tutor Me" card opens:
+//
+//   resume in the caller's order, not the table's      two learners with the same
+//                                                       purchase open different
+//                                                       subjects, by query order
+//   ignore the last-opened preference                   the card never resumes
+//   trust the preference unvalidated                    a dropped subject leaves the
+//                                                       card pointing at a course
+//                                                       the launch will refuse
 //
 // …and three on the subject table's lift out of pqpg_ehel_app_base(), which is
 // on the launch path for EVERY course rather than only the tutoring ones:

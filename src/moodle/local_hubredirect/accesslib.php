@@ -1696,7 +1696,7 @@ CSS;
 function pqh_duolingo_chrome_css(string $scope): string {
     return <<<CSS
 /* ---- Duolingo-styled rail + top bar ---- */
-{$scope}{--duo-green:#58cc02;--duo-green-dark:#58a700;--duo-blue:#1cb0f6;--duo-blue-dark:#1899d6;--duo-blue-soft:#ddf4ff;--duo-blue-line:#84d8ff;--duo-line:#e5e5e5;--duo-line-deep:#d6d6d6;--duo-ink:#4b4b4b;--duo-muted:#afafaf;--duo-wash:#f7f7f7;--duo-red:#ff4b4b;--duo-orange:#ff9600;--duo-purple:#ce82ff;--duo-gold:#ffc800}
+{$scope}{--duo-green:#58cc02;--duo-green-dark:#58a700;--duo-blue:#1cb0f6;--duo-blue-dark:#1899d6;--duo-blue-soft:#ddf4ff;--duo-blue-line:#84d8ff;--duo-line:#e5e5e5;--duo-line-deep:#d6d6d6;--duo-ink:#4b4b4b;--duo-muted:#afafaf;--duo-wash:#f7f7f7;--duo-red:#ff4b4b;--duo-orange:#ff9600;--duo-purple:#ce82ff;--duo-gold:#ffc800;--duo-header:#235390;--duo-header-line:#1b4272;--duo-header-ink:#fff}
 
 /* the rail: white, held by a 2px rule, nothing filled until you touch it */
 {$scope} .pqh-gnav{background:#fff!important;border-right:2px solid var(--duo-line)!important;gap:4px}
@@ -1752,13 +1752,28 @@ function pqh_duolingo_chrome_css(string $scope): string {
    every other, which shows up as a white bar with no bottom rule at all. The
    seam rule has nothing left to close here: the bar is no longer navy, and this
    page draws no header block under it. */
-{$scope}{$scope} .pqh-appbar.pqh-appbar{height:auto;min-height:66px;background:#fff!important;background-image:none!important;border-bottom:2px solid var(--duo-line)!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;box-shadow:none!important}
-{$scope} .pqh-appbar__brand{color:var(--duo-ink)!important;font-weight:800!important}
-{$scope} .pqh-appbar__brand-icon{stroke:var(--duo-green)!important}
+{$scope}{$scope} .pqh-appbar.pqh-appbar{height:auto;min-height:66px;background:var(--duo-header)!important;background-image:none!important;border-bottom:2px solid var(--duo-header-line)!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;box-shadow:none!important}
+{$scope} .pqh-appbar__brand{color:var(--duo-header-ink)!important;font-weight:800!important}
+{$scope} .pqh-appbar__brand-icon{stroke:var(--duo-header-ink)!important}
+
+/* THE BAR IS ONLY HALF THE HEADER on the pages that draw a <prefix>-top block.
+   student_workplace and live_schedule both carry `class="X-top pqh-workspace-top"`,
+   the skin paints it #162b48 with white ink, and its own :has(.pqh-appbar) rule
+   pulls it flush against the bar with no radius and no seam -- the two are meant
+   to read as ONE header. Leaving the bar white therefore did not produce a white
+   header; it produced a blank strip sitting on a navy slab.
+   Painting the block the same #235390 puts the two halves back together. The ink
+   is deliberately NOT touched: white on #235390 is 7.7:1, so every heading, sub,
+   kicker and ghost button the skin already styles stays exactly as it is. That is
+   the whole reason for choosing a dark brand blue over a light tint -- a tint
+   would have meant re-inking all of it, and one missed selector is white text on
+   pale blue. Targets .pqh-workspace-top rather than each page's own prefix,
+   because both student pages carry it and it needs no per-page rule. */
+{$scope} .pqh-workspace-top{background:var(--duo-header)!important;border-color:var(--duo-header)!important}
 {$scope} .pqh-appbar__nav{gap:8px}
 /* The solid bottom edge is the whole trick: a 2px border plus a 0 2px 0 shadow
    reads as a physical key, and :active drops the button onto it. */
-{$scope} .pqh-appbar__nav a,{$scope} .pqh-appbar__nav button{box-sizing:border-box;min-height:42px;padding:0 16px!important;border:2px solid var(--duo-line)!important;border-radius:14px!important;background:#fff!important;color:var(--duo-muted)!important;font-size:12.5px!important;font-weight:800!important;letter-spacing:.06em!important;text-transform:uppercase!important;box-shadow:0 2px 0 var(--duo-line)!important;transition:background .1s ease,border-color .1s ease,color .1s ease,transform .06s ease,box-shadow .06s ease}
+{$scope} .pqh-appbar__nav a,{$scope} .pqh-appbar__nav button{box-sizing:border-box;min-height:42px;padding:0 16px!important;border:2px solid var(--duo-line)!important;border-radius:14px!important;background:#fff!important;color:var(--duo-ink)!important;font-size:12.5px!important;font-weight:800!important;letter-spacing:.06em!important;text-transform:uppercase!important;box-shadow:0 2px 0 var(--duo-line)!important;transition:background .1s ease,border-color .1s ease,color .1s ease,transform .06s ease,box-shadow .06s ease}
 {$scope} .pqh-appbar__nav a:hover,{$scope} .pqh-appbar__nav button:hover{background:var(--duo-wash)!important;border-color:var(--duo-line-deep)!important;color:var(--duo-ink)!important}
 {$scope} .pqh-appbar__nav a:active,{$scope} .pqh-appbar__nav button:active{transform:translateY(2px);box-shadow:none!important}
 {$scope} .pqh-appbar__nav a:focus-visible,{$scope} .pqh-appbar__nav button:focus-visible{outline:3px solid var(--duo-blue-line);outline-offset:2px}

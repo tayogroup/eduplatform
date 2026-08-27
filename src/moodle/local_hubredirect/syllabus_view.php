@@ -86,7 +86,8 @@ if ($allowed && $course && $row) {
 // pqh_learner_chrome_css(): that asks pqh_shell_viewer_kind(), and a visitor
 // with no session has no viewer kind to answer with. $viewerid above is already
 // the exact test needed, so the links are simply not drawn when there is nobody
-// to draw them for -- a guest sees the header they saw before, minus the navy.
+// to draw them for -- a guest sees the same header as everyone else, with no
+// pills in it.
 $pqsv_back = null;
 $pqsv_backlabel = '';
 if ($viewerid > 0) {
@@ -119,9 +120,14 @@ if ($viewerid > 0) {
   :root{--ink:#1f1f1f;--ink2:#555;--muted:#707070;--line:#dfdfdf;--bg:#f2f2f2;--card:#fff;--blue:#162b48;--blue2:#1a67a3;--sky:#ebf3f7}
   *{box-sizing:border-box}
   body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 "Lato",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
-  /* The header matches the top bar the learner has just come from: white, held
-     by a 2px grey rule, with uppercase pills carrying a solid bottom edge that
-     they press into.
+  /* The header matches the top bar the learner has just come from: Duolingo's
+     dark blue #235390, with uppercase white pills carrying a solid bottom edge
+     that they press into.
+
+     Dark rather than a light tint because the brand text sits DIRECTLY on this
+     background -- unlike the shell's bar, whose top-left is empty by design --
+     so the ink has to be legible on it. White is 7.7:1 here and the sub-line at
+     72% white is 4.9:1; on any tint pale enough to read as "light", both fail.
 
      Written as literals rather than added to :root above, deliberately. These
      are the SHARED chrome's values (pqh_duolingo_chrome_css in accesslib.php),
@@ -129,13 +135,13 @@ if ($viewerid > 0) {
      --line is #dfdfdf here against the chrome's #e5e5e5. Keeping them apart is
      what stops one being "tidied" into the other. Everything below this block
      keeps the page's own tokens untouched. */
-  header.top{background:#fff;color:#4b4b4b;padding:12px 0;border-bottom:2px solid #e5e5e5}
+  header.top{background:#235390;color:#fff;padding:12px 0;border-bottom:2px solid #1b4272}
   .wrap{width:min(880px,calc(100% - 32px));margin:0 auto}
   header.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
   .brand{font-weight:800;font-size:18px}
-  .brand small{display:block;font-weight:400;font-size:12px;color:#afafaf;margin-top:2px}
+  .brand small{display:block;font-weight:400;font-size:12px;color:rgba(255,255,255,.72);margin-top:2px}
   .top-nav{display:flex;align-items:center;gap:8px}
-  .top-nav a{box-sizing:border-box;display:inline-flex;align-items:center;gap:7px;min-height:42px;padding:0 16px;border:2px solid #e5e5e5;border-radius:14px;background:#fff;color:#afafaf;font-size:12.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;box-shadow:0 2px 0 #e5e5e5;transition:background .1s ease,border-color .1s ease,color .1s ease,transform .06s ease,box-shadow .06s ease}
+  .top-nav a{box-sizing:border-box;display:inline-flex;align-items:center;gap:7px;min-height:42px;padding:0 16px;border:2px solid #e5e5e5;border-radius:14px;background:#fff;color:#4b4b4b;font-size:12.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;box-shadow:0 2px 0 #e5e5e5;transition:background .1s ease,border-color .1s ease,color .1s ease,transform .06s ease,box-shadow .06s ease}
   .top-nav a:hover{background:#f7f7f7;border-color:#d6d6d6;color:#4b4b4b}
   .top-nav a:active{transform:translateY(2px);box-shadow:none}
   .top-nav a:focus-visible{outline:3px solid #84d8ff;outline-offset:2px}

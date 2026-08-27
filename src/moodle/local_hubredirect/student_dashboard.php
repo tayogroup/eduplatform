@@ -133,6 +133,72 @@ function pqhsd_letter(float $pct): string {
     }
     return 'F';
 }
+
+/**
+ * The face of a course card: which subject it is, in a child's terms.
+ *
+ * The card is read by a seven-year-old, so it leads with the SUBJECT word and
+ * carries the stage as a small pill: "Ehel English — Grade 2" on one line is
+ * three ideas in eleven-point type, and the one a child scans for is
+ * "English". Everything here is derived from the title alone — no new query,
+ * and an unrecognised course still gets a colour, an icon and both halves of
+ * whatever its title is.
+ *
+ * Two colours per subject, and they are not interchangeable. `c` is the bright
+ * one and paints the progress fill and the icon tint, where nothing sits on
+ * top of it. `deep` is what carries WHITE TEXT — the button and the pill ink —
+ * so every one of them is dark enough to clear 4.5:1 against white. A card
+ * that used the bright hue behind the button would read as a toy and fail
+ * anybody reading it in sunlight.
+ *
+ * @return array{name:string,level:string,icon:string,c:string,deep:string,tint:string}
+ */
+function pqhsd_course_face(string $title): array {
+    $subjects = [
+        // needle          name                    bright     deep       tint       icon
+        ['english',       'English',              '#ff9f1c', '#a35200', '#fff1de'],
+        ['math',          'Mathematics',          '#1cb0f6', '#0a6fa8', '#e2f3fd'],
+        ['science',       'Science',              '#58cc02', '#2e7d00', '#ecf8e1'],
+        ['comput',        'Computing',            '#b565ff', '#6b21c8', '#f4eaff'],
+        ['global',        'Global Perspectives',  '#ff5a5f', '#c02a2f', '#ffeaea'],
+        ['quran',         'Quran',                '#2ec4b6', '#0f766e', '#e1f6f3'],
+        ["qur'an",        'Quran',                '#2ec4b6', '#0f766e', '#e1f6f3'],
+        ['arabic',        'Arabic',               '#2ec4b6', '#0f766e', '#e1f6f3'],
+        ['islam',         'Islamic Studies',      '#2ec4b6', '#0f766e', '#e1f6f3'],
+    ];
+    $icons = [
+        'English' => '<path d="M12 7.5C10.6 6 8.6 5.3 6 5.5A1 1 0 0 0 5 6.5v10a1 1 0 0 0 1.1 1c2.3-.2 4.2.4 5.9 1.8 1.7-1.4 3.6-2 5.9-1.8a1 1 0 0 0 1.1-1v-10a1 1 0 0 0-1-1c-2.6-.2-4.6.5-6 2z"/><path d="M12 7.5v11"/>',
+        'Mathematics' => '<rect x="3.5" y="3.5" width="17" height="17" rx="4.5"/><path d="M7.2 9h3.6M9 7.2v3.6M13.2 9h3.6M13.6 14.4l2.8 2.8M16.4 14.4l-2.8 2.8M7.2 15.6h3.6"/>',
+        'Science' => '<path d="M9.5 3h5M10.5 3v5.6l-4.3 8A2.4 2.4 0 0 0 8.3 20h7.4a2.4 2.4 0 0 0 2.1-3.4l-4.3-8V3"/><path d="M7.6 14.5h8.8"/>',
+        'Computing' => '<rect x="2.5" y="4.5" width="19" height="12.5" rx="2.5"/><path d="M8.5 20.5h7M12 17v3.5"/>',
+        'Global Perspectives' => '<circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17"/><path d="M12 3.5c2.3 2.4 3.5 5.3 3.5 8.5S14.3 18.1 12 20.5c-2.3-2.4-3.5-5.3-3.5-8.5S9.7 5.9 12 3.5z"/>',
+        'Quran' => '<path d="M19.5 14.8A7.5 7.5 0 1 1 9.6 4.4a6 6 0 0 0 9.9 10.4z"/><path d="m17.6 4 .7 1.8 1.8.7-1.8.7-.7 1.8-.7-1.8-1.8-.7 1.8-.7z"/>',
+        'Arabic' => '<path d="M19.5 14.8A7.5 7.5 0 1 1 9.6 4.4a6 6 0 0 0 9.9 10.4z"/><path d="m17.6 4 .7 1.8 1.8.7-1.8.7-.7 1.8-.7-1.8-1.8-.7 1.8-.7z"/>',
+        'Islamic Studies' => '<path d="M19.5 14.8A7.5 7.5 0 1 1 9.6 4.4a6 6 0 0 0 9.9 10.4z"/><path d="m17.6 4 .7 1.8 1.8.7-1.8.7-.7 1.8-.7-1.8-1.8-.7 1.8-.7z"/>',
+        'default' => '<path d="m12 3.6 2.6 5.4 5.9.8-4.3 4.1 1 5.9-5.2-2.8-5.2 2.8 1-5.9L3.5 9.8l5.9-.8z"/>',
+    ];
+
+    $clean = trim(preg_replace('/^\s*Ehel\s+/i', '', $title));
+    // The catalogue writes "Subject — Grade 2"; an em dash, an en dash and a
+    // spaced hyphen have all appeared in course titles, so all three split.
+    $name = $clean;
+    $level = '';
+    if (preg_match('/^(.*?)\s*(?:—|–|\s-\s)\s*(.+)$/u', $clean, $m)) {
+        $name = trim($m[1]);
+        $level = trim($m[2]);
+    }
+
+    $hay = mb_strtolower($title);
+    foreach ($subjects as $s) {
+        if (mb_strpos($hay, $s[0]) !== false) {
+            return ['name' => $name !== '' ? $name : $s[1], 'level' => $level,
+                'icon' => $icons[$s[1]], 'c' => $s[2], 'deep' => $s[3], 'tint' => $s[4]];
+        }
+    }
+    return ['name' => $name !== '' ? $name : $clean, 'level' => $level,
+        'icon' => $icons['default'], 'c' => '#6c8cff', 'deep' => '#3b4fc4', 'tint' => '#ebefff'];
+}
+
 $avgpct = $gradedpct ? array_sum($gradedpct) / count($gradedpct) : null;
 
 // ---- next live class ----
@@ -269,22 +335,10 @@ body.pqhsd-page #page,body.pqhsd-page #page-content,body.pqhsd-page #region-main
 .pqhsd-label{margin:0 0 8px;color:#8494a5;font-size:10.5px;font-weight:750;text-transform:uppercase;letter-spacing:.07em}
 .pqhsd-cols{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(300px,1fr);gap:16px;align-items:start}
 .pqhsd-courses{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
-.pqhsd-ccard{display:flex;flex-direction:column;background:#fff;border:1px solid #e4e9ef;border-radius:16px;overflow:hidden;box-shadow:0 1px 2px rgba(15,34,55,.05),0 10px 28px -16px rgba(15,34,55,.14);transition:transform .15s ease,box-shadow .15s ease}
-.pqhsd-ccard:hover{transform:translateY(-2px);box-shadow:0 2px 4px rgba(15,34,55,.06),0 18px 38px -16px rgba(15,34,55,.22)}
-.pqhsd-ccard__cover{min-height:74px;padding:13px 15px;display:flex;flex-direction:column;justify-content:center;gap:2px;background:linear-gradient(115deg,var(--cc,#2166d1),var(--cc2,#4d8be0))}.pqhsd-ccard__cover h3{margin:0;color:#fff;font-size:15px;font-weight:800;line-height:1.25;letter-spacing:-.01em}.pqhsd-ccard__pos{margin:0;color:rgba(255,255,255,.86);font-size:12px;font-weight:650;line-height:1.3}
-.pqhsd-courses .pqhsd-ccard:nth-child(5n+1){--cc:#2166d1;--cc2:#4d8be0}
-.pqhsd-courses .pqhsd-ccard:nth-child(5n+2){--cc:#0d5c8c;--cc2:#3383b4}
-.pqhsd-courses .pqhsd-ccard:nth-child(5n+3){--cc:#0f7f9e;--cc2:#3aa7c4}
-.pqhsd-courses .pqhsd-ccard:nth-child(5n+4){--cc:#4f5fc4;--cc2:#7b88dd}
-.pqhsd-courses .pqhsd-ccard:nth-child(5n+5){--cc:#33567e;--cc2:#5c7ea6}
-.pqhsd-ccard__body{display:flex;flex-direction:column;gap:8px;flex:1;padding:12px 14px 14px}
-
+/* The course cards are styled further down, in the block AFTER the
+   OpenProject skin -- see the note there. All that is left here is
+   .pqhsd-ccard__meta, which the notices above the grid use too. */
 .pqhsd-ccard__meta{color:#8494a5;font-size:11.5px;font-weight:600}
-.pqhsd-chip{display:inline-flex;align-items:center;align-self:flex-start;min-height:22px;padding:1px 8px;border-radius:999px;background:#fbe9e7;color:#c0392b;font-size:11px;font-weight:700}
-.pqhsd-progress{height:7px;border-radius:999px;background:#edf3fc;overflow:hidden}
-.pqhsd-progress i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#2166d1,#4d8be0)}
-.pqhsd-progress--warn i{background:#b7791f}
-.pqhsd-ccard__actions{margin-top:auto}
 .pqhsd-btn{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 14px;border-radius:10px;background:#2166d1;color:#fff!important;font-size:12.5px;font-weight:700;text-decoration:none!important}
 .pqhsd-btn:hover{background:#17498f}
 .pqhsd-btn--light{background:#fff;color:#0f2237!important;border:1px solid #e4e9ef}
@@ -318,6 +372,64 @@ body.pqhsd-page #page,body.pqhsd-page #page-content,body.pqhsd-page #region-main
 </style>
 <style><?php echo pqh_openproject_skin_css('pqhsd', 'pqhsd-page'); ?></style>
 <style><?php echo pqh_openproject_skin_css(['pqhsd-todo', 'pqhsd-ccard', 'pqhsd-feedback'], '', '__'); ?></style>
+<style>
+/* ---------------------------------------------------------------------------
+   The course cards, for a child.
+   ---------------------------------------------------------------------------
+   THIS BLOCK MUST STAY AFTER THE TWO SKIN BLOCKS ABOVE. pqh_openproject_skin_css
+   is a later stylesheet on purpose -- that is how it restyles 27 pages without
+   !important -- so anything written above it loses. Everything here uses the
+   .pqhsd-jc- namespace, which the skin claims none of (its selectors are exact
+   classes: .pqhsd-card, .pqhsd-btn, .pqhsd-chip, .pqhsd-ccard__body ...), so
+   nothing has to fight it either.
+
+   The shape is a chunky tile: one subject word, its stage as a pill, one line
+   of "what is waiting", a fat progress bar and a single obvious button with a
+   solid bottom edge that presses in. What the old card did -- a dark gradient
+   band carrying the whole title, then a white body -- put the loudest thing on
+   the page around the least useful reading of it, and tiled eight of them.
+   Colour now identifies the SUBJECT rather than the position in the grid, so
+   English is orange on every card that says English, and a child finds their
+   course by colour before they can read it.
+*/
+.pqhsd-courses{grid-template-columns:repeat(auto-fill,minmax(232px,1fr));gap:16px}
+.pqhsd-jc{display:flex;flex-direction:column;gap:11px;padding:16px 15px 15px;background:#fff;border:2px solid #e7ecf3;border-radius:22px;box-shadow:0 4px 0 #e7ecf3;transition:transform .13s ease,box-shadow .13s ease,border-color .13s ease}
+.pqhsd-jc:hover{transform:translateY(-3px);border-color:var(--jc);box-shadow:0 7px 0 var(--jct)}
+.pqhsd-jc-head{display:flex;align-items:center;gap:12px}
+.pqhsd-jc-badge{flex:0 0 auto;width:52px;height:52px;border-radius:17px;display:flex;align-items:center;justify-content:center;background:var(--jct);color:var(--jcd)}
+.pqhsd-jc-badge svg{width:27px;height:27px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.pqhsd-jc-id{min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:4px}
+.pqhsd-jc-name{margin:0;color:#16324f;font-size:19px;font-weight:800;line-height:1.15;letter-spacing:-.02em}
+.pqhsd-jc-level{display:inline-block;padding:2px 10px;border-radius:999px;background:var(--jcd);color:#fff;font-size:11.5px;font-weight:800;line-height:1.5;letter-spacing:.01em}
+.pqhsd-jc-pos{margin:0;color:#5b6b7c;font-size:12px;font-weight:700}
+/* Two lines, then an ellipsis: a catalogue summary can be a paragraph, and a
+   card that grows to fit one is a card that no longer matches the row it is
+   in. -webkit-box is the only clamp with the support this needs. */
+.pqhsd-jc-note{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin:0;color:#5b6b7c;font-size:12.5px;font-weight:650;line-height:1.35}
+.pqhsd-jc-note b{color:#16324f;font-weight:800}
+.pqhsd-jc-todo{align-self:flex-start;display:inline-flex;align-items:center;gap:6px;margin:0;padding:4px 11px 4px 8px;border-radius:999px;background:#ffe8e8;color:#a71d21;font-size:12px;font-weight:800}
+.pqhsd-jc-todo svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
+.pqhsd-jc-bar{height:13px;border-radius:999px;background:#eef1f6;overflow:hidden}
+/* min-width so that 1% is still a visible nub rather than a hairline. The
+   fill is not drawn at all at 0% -- a nub at zero reads as "you have started",
+   which is the one thing the bar must not say. */
+.pqhsd-jc-bar i{display:block;height:100%;min-width:13px;border-radius:999px;background:var(--jc);box-shadow:inset 0 3px 0 rgba(255,255,255,.4)}
+.pqhsd-jc-pct{margin:0;color:#5b6b7c;font-size:12px;font-weight:750}
+.pqhsd-jc-go{display:flex;gap:8px;margin-top:auto;padding-top:2px}
+/* box-sizing + a transparent border so the primary and the outlined Syllabus
+   button are the same 42px tall. Without it the secondary's 2px border makes
+   it the taller of the two and the row sits crooked. */
+.pqhsd-jc-btn{box-sizing:border-box;flex:1 1 auto;display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:42px;padding:0 14px;border:2px solid transparent;border-radius:14px;background:var(--jcd);color:#fff!important;font-size:13.5px;font-weight:800;letter-spacing:.01em;text-decoration:none!important;box-shadow:0 4px 0 rgba(0,0,0,.22);transition:transform .08s ease,box-shadow .08s ease,filter .13s ease}
+.pqhsd-jc-btn svg{width:16px;height:16px;fill:currentColor;stroke:none}
+.pqhsd-jc-btn:hover{filter:brightness(1.08);color:#fff!important}
+.pqhsd-jc-btn:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,.22)}
+.pqhsd-jc-btn:focus-visible{outline:3px solid var(--jc);outline-offset:2px}
+.pqhsd-jc-btn2{flex:0 0 auto;background:#fff;color:#3f5468!important;border:2px solid #e7ecf3;box-shadow:0 4px 0 #e7ecf3}
+.pqhsd-jc-btn2:hover{background:#f5f8fc;filter:none;color:#16324f!important}
+.pqhsd-jc-btn2:active{box-shadow:0 1px 0 #e7ecf3}
+.pqhsd-courses .pqhsd-empty{grid-column:1/-1;border:2px dashed #d8e0ea;border-radius:22px;background:#f8fafc;color:#5b6b7c;font-size:14px;font-weight:700}
+@media(prefers-reduced-motion:reduce){.pqhsd-jc,.pqhsd-jc-btn{transition:none}.pqhsd-jc:hover{transform:none}.pqhsd-jc-btn:active{transform:none}}
+</style>
 <main class="pqhsd-shell">
 <?php
 echo pqh_design_shell_html('pqhsd-shell', 'dashboard', [
@@ -416,60 +528,74 @@ echo pqh_design_shell_html('pqhsd-shell', 'dashboard', [
         <?php if (!$courses): ?>
           <div class="pqhsd-empty">No course enrolments yet. Ask your teacher or browse the catalog.</div>
         <?php endif; ?>
-        <?php foreach ($courses as $course): ?>
-          <div class="pqhsd-ccard">
-            <?php // The cover is the card's header, not decoration: the course and the
-                    // learner's place in it are the two things worth reading at a glance,
-                    // so they sit in the coloured band and the white body is left to the
-                    // actions and progress. ?>
-            <div class="pqhsd-ccard__cover">
-              <h3><?php echo s($course['title']); ?></h3>
-              <?php if (($course['position'] ?? '') !== ''): ?>
-                <p class="pqhsd-ccard__pos"><?php echo s((string)$course['position']); ?></p>
-              <?php endif; ?>
+        <?php foreach ($courses as $course): $pqhsd_face = pqhsd_course_face((string)$course['title']); ?>
+          <?php
+            // With SEB on, link straight to the sebs:// handoff: the browser
+            // never navigates, so there is no interstitial and this dashboard
+            // is still on screen when SEB closes.
+            $pqhsd_href = $course['continue']->out(false);
+            if ($pqhsd_sebavailable && $pqhsd_sebpref === 'seb') {
+                $pqhsd_href = pqh_seb_course_handoff_url((string)$course['key'], $userid);
+            }
+            // Syllabus link: only for real Moodle courses (catalog keys have
+            // no course to point at), and only when one exists to read.
+            $pqhsd_syl = '';
+            if (preg_match('/^moodle_(\d+)$/', (string)$course['key'], $pqhsd_mm)) {
+                $pqhsd_cid = (int)$pqhsd_mm[1];
+                $pqhsd_idn = (string)$DB->get_field('course', 'idnumber', ['id' => $pqhsd_cid]);
+                if (pqh_table_exists_safe('local_prequran_syllabus')
+                        && $DB->record_exists('local_prequran_syllabus', ['moodlecourseid' => $pqhsd_cid])) {
+                    $pqhsd_syl = (new moodle_url('/local/hubredirect/syllabus_view.php',
+                        ['course' => $pqhsd_idn !== '' ? $pqhsd_idn : $pqhsd_cid]))->out(false);
+                }
+            }
+            // "Start" until there is progress to continue. A child who has not
+            // opened a course yet is not continuing anything, and the word is
+            // the difference between a card that invites and one that nags.
+            $pqhsd_started = ($course['pct'] !== null && (int)$course['pct'] > 0);
+          ?>
+          <article class="pqhsd-jc" style="--jc:<?php echo s($pqhsd_face['c']); ?>;--jcd:<?php echo s($pqhsd_face['deep']); ?>;--jct:<?php echo s($pqhsd_face['tint']); ?>">
+            <?php // The subject is the card's identity, so it leads: a coloured emblem,
+                    // the subject word, and the stage as a pill under it. The full title
+                    // ("Ehel English — Grade 2") still reaches assistive tech through the
+                    // button's label, where it names the destination. ?>
+            <div class="pqhsd-jc-head">
+              <span class="pqhsd-jc-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><?php echo $pqhsd_face['icon']; ?></svg></span>
+              <div class="pqhsd-jc-id">
+                <h3 class="pqhsd-jc-name"><?php echo s($pqhsd_face['name']); ?></h3>
+                <?php if ($pqhsd_face['level'] !== ''): ?>
+                  <span class="pqhsd-jc-level"><?php echo s($pqhsd_face['level']); ?></span>
+                <?php endif; ?>
+              </div>
             </div>
-            <div class="pqhsd-ccard__body">
-              <?php if ($course['missing'] > 0): ?>
-                <span class="pqhsd-chip"><?php echo (int)$course['missing']; ?> missing task<?php echo $course['missing'] === 1 ? '' : 's'; ?></span>
-              <?php elseif ($course['next'] !== ''): ?>
-                <div class="pqhsd-ccard__meta">Next: <?php echo $course['next']; ?></div>
-              <?php elseif ($course['summary'] !== ''): ?>
-                <div class="pqhsd-ccard__meta"><?php echo s($course['summary']); ?></div>
-              <?php endif; ?>
-              <?php if ($course['pct'] !== null): ?>
-                <div class="pqhsd-progress<?php echo $course['missing'] > 0 ? ' pqhsd-progress--warn' : ''; ?>"><i style="width:<?php echo (int)$course['pct']; ?>%"></i></div>
-                <div class="pqhsd-ccard__meta"><?php echo (int)$course['pct']; ?>% complete<?php echo $course['grade'] !== '' ? ' · grade ' . s($course['grade']) : ''; ?></div>
-              <?php endif; ?>
-              <?php
-                // With SEB on, link straight to the sebs:// handoff: the browser
-                // never navigates, so there is no interstitial and this dashboard
-                // is still on screen when SEB closes.
-                $pqhsd_href = $course['continue']->out(false);
-                if ($pqhsd_sebavailable && $pqhsd_sebpref === 'seb') {
-                    $pqhsd_href = pqh_seb_course_handoff_url((string)$course['key'], $userid);
-                }
-              ?>
-              <?php
-                // Syllabus link: only for real Moodle courses (catalog keys have
-                // no course to point at), and only when one exists to read.
-                $pqhsd_syl = '';
-                if (preg_match('/^moodle_(\d+)$/', (string)$course['key'], $pqhsd_mm)) {
-                    $pqhsd_cid = (int)$pqhsd_mm[1];
-                    $pqhsd_idn = (string)$DB->get_field('course', 'idnumber', ['id' => $pqhsd_cid]);
-                    if (pqh_table_exists_safe('local_prequran_syllabus')
-                            && $DB->record_exists('local_prequran_syllabus', ['moodlecourseid' => $pqhsd_cid])) {
-                        $pqhsd_syl = (new moodle_url('/local/hubredirect/syllabus_view.php',
-                            ['course' => $pqhsd_idn !== '' ? $pqhsd_idn : $pqhsd_cid]))->out(false);
-                    }
-                }
-              ?>
-              <div class="pqhsd-ccard__actions"><a class="pqhsd-btn" href="<?php echo s($pqhsd_href); ?>">Continue</a><?php
-                if ($pqhsd_syl !== '') {
-                    echo '<a class="pqhsd-btn pqhsd-btn--light" href="' . s($pqhsd_syl) . '">Syllabus</a>';
-                }
+            <?php if (($course['position'] ?? '') !== ''): ?>
+              <p class="pqhsd-jc-pos"><?php echo s((string)$course['position']); ?></p>
+            <?php endif; ?>
+            <?php if ($course['missing'] > 0): ?>
+              <p class="pqhsd-jc-todo"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5M12 16.2h.01"/></svg><?php echo (int)$course['missing']; ?> to catch up</p>
+            <?php elseif ($course['next'] !== ''): ?>
+              <p class="pqhsd-jc-note"><b>Next:</b> <?php echo $course['next']; ?></p>
+            <?php elseif ($course['summary'] !== ''): ?>
+              <p class="pqhsd-jc-note"><?php echo s($course['summary']); ?></p>
+            <?php else: ?>
+              <p class="pqhsd-jc-note"><?php
+                echo ($course['pct'] !== null && (int)$course['pct'] >= 100) ? 'All done — nice work!'
+                    : ($pqhsd_started ? 'Nothing waiting — keep going!' : 'Ready when you are!');
+              ?></p>
+            <?php endif; ?>
+            <?php if ($course['pct'] !== null): ?>
+              <div class="pqhsd-jc-bar" role="img" aria-label="<?php echo (int)$course['pct']; ?>% of your work in this course is done"><?php
+                echo $pqhsd_started ? '<i style="width:' . (int)$course['pct'] . '%"></i>' : '';
               ?></div>
+              <p class="pqhsd-jc-pct"><?php echo (int)$course['pct']; ?>% done<?php echo $course['grade'] !== '' ? ' · grade ' . s($course['grade']) : ''; ?></p>
+            <?php endif; ?>
+            <div class="pqhsd-jc-go">
+              <a class="pqhsd-jc-btn" href="<?php echo s($pqhsd_href); ?>" aria-label="<?php echo $pqhsd_started ? 'Continue' : 'Start'; ?> <?php echo s((string)$course['title']); ?>"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.2v13.6a1 1 0 0 0 1.5.9l11-6.8a1 1 0 0 0 0-1.8l-11-6.8a1 1 0 0 0-1.5.9z"/></svg><?php echo $pqhsd_started ? 'Continue' : 'Start'; ?></a>
+              <?php if ($pqhsd_syl !== ''): ?>
+                <a class="pqhsd-jc-btn pqhsd-jc-btn2" href="<?php echo s($pqhsd_syl); ?>" aria-label="Syllabus for <?php echo s((string)$course['title']); ?>">Syllabus</a>
+              <?php endif; ?>
             </div>
-          </div>
+          </article>
         <?php endforeach; ?>
       </div>
     </div>

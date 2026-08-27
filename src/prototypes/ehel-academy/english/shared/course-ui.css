@@ -550,6 +550,14 @@ body.focus-mode.gc-full .wc-tools { position: fixed; left: 0; right: 0; bottom: 
    back the moment it carries something — ✓ when done, 🔒 when
    english.js :: paintSectionLocks() writes one in. */
 .nav-button--path .nav-state:empty { display: none; }
+/* The sections-sheet opener is created by the shell for every young-stage
+   learner, but it only means anything inside the phone breakpoint, where the
+   sheet rules live. Hidden HERE, at base, rather than left to that block to
+   reveal: a <button> is display:inline-block by default, so without this line
+   it appears in the desktop sidebar as a stray control — which it did, and the
+   sheet's own rules could never have caught it, because they are scoped to a
+   width at which it is supposed to show. */
+.sections-toggle { display: none; }
 
 /* ============================================================================
    The topbar for a young learner — Grades/Stages 1-4 only.
@@ -1333,6 +1341,61 @@ body.ebook-watching .course-ebook-illustration img, body.ebook-watching svg.cour
   .nav-button--path::before { display: none; }
   .nav-button--path > i, .nav-button--path > svg { width: 30px; height: 30px; padding: 7px; border-width: 2px; }
   .nav-button--path > span:not(.nav-state) { font-size: 12px; }
+
+  /* ==========================================================================
+     The sections sheet — phones, Grades/Stages 1-4 only.
+     ==========================================================================
+     Everything below needs BOTH html.young-stage and this breakpoint, so the
+     phone rail above is what every other stage keeps, unchanged. The opener is
+     created by shell/course-app.js :: mountSectionsSheet() and is display:none
+     everywhere except here, which is why no subject's index.html changed.
+
+     The rail is the wrong shape for a young learner on a phone: eighteen 84px
+     tiles is 1,512px of strip in a 222px window, nothing scrolls the current
+     one into view, and the pinned resource tiles take 140px of a 390px screen.
+     Closed, this is one button. Open, it is the whole vertical path — the same
+     nodes, trail and ticks the desktop sidebar draws, at full size, because the
+     sheet has the height the rail never had.
+
+     The two resource tiles stop being pinned here and move INSIDE the sheet.
+     They were pinned so a learner would not have to scroll a 16-tile rail to
+     reach them; with no rail to scroll that reason is spent, and unpinning
+     gives the closed bar back to the one control that matters. */
+  html.young-stage .sections-toggle { order: -3; flex: 1 1 auto; display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 52px; padding: 0 18px; border: 0; border-radius: 16px; background: rgba(255,255,255,.12); color: #fff; font: inherit; font-size: 15px; font-weight: var(--weight-bold); cursor: pointer; }
+  html.young-stage .sections-toggle svg, html.young-stage .sections-toggle i { width: 22px; height: 22px; }
+  html.young-stage .sections-toggle:active { background: rgba(255,255,255,.2); }
+  /* Closed: the bar carries the opener and nothing else. */
+  html.young-stage .sidebar { gap: 8px; }
+  html.young-stage #section-nav,
+  html.young-stage .sidebar .teacher-switch:not([hidden]) { display: none; }
+  /* Open: the sheet takes the screen and the path comes back at full size. */
+  /* Below the topbar, not over it. The sidebar is z-index 19 and the topbar is
+     a sticky 20, so `top: 0` slid the sheet's own opener underneath it — the
+     close control, invisible, on the one device with no Escape key. Starting at
+     the bar's height keeps the opener reachable AND leaves the grade and unit
+     pickers usable with the sheet open. 62px is the phone topbar (see the
+     .topbar rule in this block). */
+  html.young-stage body.sections-open .sidebar { top: 62px; height: calc(100vh - 62px); height: calc(100dvh - 62px); display: flex; flex-direction: column; align-items: stretch; gap: 10px; padding: 12px 14px calc(12px + env(safe-area-inset-bottom)); overflow-y: auto; }
+  html.young-stage body.sections-open #section-nav { display: grid; flex: 0 0 auto; gap: 0; overflow: visible; padding: 4px 0 8px; }
+  html.young-stage body.sections-open .sidebar .teacher-switch:not([hidden]) { order: 9; display: grid; width: auto; min-height: 52px; grid-template-columns: 34px 1fr; grid-template-rows: none; justify-items: start; align-items: center; gap: 11px; padding: 8px 12px; border-radius: 14px; }
+  html.young-stage body.sections-open .sidebar .teacher-switch:not([hidden]) > span:last-child { font-size: 15px; text-align: left; }
+  /* The rows are the desktop path again: the ≤680 block above squeezed them
+     into 84px tiles for a horizontal strip, and none of that applies in a sheet
+     that is as tall as the screen. */
+  /* justify-items and the trail's `left` are restated because the ≤980px block
+     also matches at phone width and centres both: the label was centring in its
+     column and the trail was running down the middle of the row instead of
+     through the nodes. Neither is visible in a computed-style assertion that
+     only asks about widths — the screenshot is what caught them. */
+  html.young-stage body.sections-open .nav-button--path { min-width: 0; min-height: 62px; grid-template-columns: 40px 1fr auto; grid-template-rows: none; justify-items: stretch; gap: 12px; padding: 7px 10px; border-radius: 16px; }
+  html.young-stage body.sections-open .nav-button--path::before { display: block; left: 28px; }
+  html.young-stage body.sections-open .nav-button--path > i, html.young-stage body.sections-open .nav-button--path > svg { width: 40px; height: 40px; padding: 10px; }
+  html.young-stage body.sections-open .nav-button--path > span:not(.nav-state) { max-width: none; font-size: 15px; text-align: left; white-space: normal; overflow: visible; }
+  html.young-stage body.sections-open .nav-state:not(:empty) { display: grid; }
+  /* The dock would sit on top of the open sheet; it is the one thing on the
+     phone with a higher z-index than the sidebar. */
+  body.sections-open .wehel-dock-button, body.sections-open .focus-exit { display: none !important; }
+
   .content { padding: 22px 14px 94px; }
   .page-header { display: block; }
   .page-actions { justify-items: start; margin-top: 14px; }

@@ -84,6 +84,55 @@ export function createCourseApp(config) {
   // ever changes.
   document.documentElement.classList.toggle("young-stage", pathNav);
 
+  // --- the sections sheet (phones, Grades/Stages 1-4) ------------------------
+  // On a phone the sidebar becomes a horizontal rail, and for a young learner
+  // that is the wrong shape: eighteen 84px tiles is 1,512px of strip inside a
+  // 222px window, nothing scrolls the current one into view, and the two pinned
+  // resource tiles take 140px of a 390px screen. A six-year-old saw Overview and
+  // half of Unit Study Plan and had to drag a seven-screen ribbon sideways to
+  // find Reading.
+  //
+  // So at these stages the phone rail becomes a full-screen SHEET: one button
+  // opens the same vertical path the desktop sidebar draws, with the same nodes,
+  // trail and ticks. The button is created here rather than added to six
+  // subjects' index.html, and it is inert everywhere else — CSS only reveals it
+  // under html.young-stage inside the phone breakpoint.
+  //
+  // It does NOT invent a second way to leave a section. Tapping a row already
+  // enters focus mode, which hides the sidebar; the sheet just closes with it.
+  let sectionsToggle = null;
+  const sheetOpen = () => document.body.classList.contains("sections-open");
+  function closeSectionsSheet() {
+    if (!sheetOpen()) return;
+    document.body.classList.remove("sections-open");
+    sectionsToggle?.setAttribute("aria-expanded", "false");
+  }
+  function mountSectionsSheet() {
+    if (!pathNav || sectionsToggle) return;
+    const sidebar = $(".sidebar");
+    const nav = $("#section-nav");
+    if (!sidebar || !nav) return;
+    if (!nav.id) nav.id = "section-nav";
+    sectionsToggle = document.createElement("button");
+    sectionsToggle.type = "button";
+    sectionsToggle.id = "sections-toggle";
+    sectionsToggle.className = "sections-toggle";
+    sectionsToggle.setAttribute("aria-controls", "section-nav");
+    sectionsToggle.setAttribute("aria-expanded", "false");
+    sectionsToggle.innerHTML = `${icon("list")}<span>Sections</span>`;
+    sectionsToggle.addEventListener("click", () => {
+      const open = !sheetOpen();
+      document.body.classList.toggle("sections-open", open);
+      sectionsToggle.setAttribute("aria-expanded", String(open));
+      // Opening puts the learner at the top of their own path rather than
+      // wherever the rail happened to be scrolled to.
+      if (open) nav.scrollTop = 0;
+    });
+    sidebar.insertBefore(sectionsToggle, sidebar.firstChild);
+    // Escape closes it, the same key that leaves focus mode — one habit, not two.
+    document.addEventListener("keydown", (event) => { if (event.key === "Escape") closeSectionsSheet(); });
+  }
+
   // --- learner category ------------------------------------------------------
   // "tutoring" marks the tutoring-support learners: children at OTHER schools
   // whose families use Ehel as tutoring (owner decision 2026-08-25 — real
@@ -713,6 +762,10 @@ export function createCourseApp(config) {
   }
 
   function renderNav() {
+    // Idempotent (it returns early once the button exists) and called here
+    // rather than at boot because this is the first point at which the sidebar
+    // is guaranteed to be in the document for every subject.
+    mountSectionsSheet();
     const navItems = navSections().filter(([id]) => tutoringVisible(id)).map(([id, sectionIcon, label]) => ({ id, iconName: sectionIcon, label, active: route === id, done: isSectionDone(id) }));
     // "Get help with…" — the tutoring add-on's search page (shell/get-help.js).
     // Appended here rather than listed in any subject's sections so it can
@@ -730,7 +783,7 @@ export function createCourseApp(config) {
       if (sessionHere) navItems.push({ id: "help-session", iconName: "compass", label: "Help session", active: route === "help-session", done: false });
     }
     $("#section-nav").innerHTML = sectionNavigation(navItems, { path: pathNav });
-    $$('[data-route]').forEach((button) => button.addEventListener("click", () => navigate(button.dataset.route)));
+    $$('[data-route]').forEach((button) => button.addEventListener("click", () => { closeSectionsSheet(); navigate(button.dataset.route); }));
     const teacherSwitch = $("#teacher-switch");
     if (teacherSwitch) {
       teacherSwitch.classList.toggle("active", route === "teacher");

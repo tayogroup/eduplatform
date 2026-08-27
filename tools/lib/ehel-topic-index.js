@@ -26,6 +26,7 @@
 
 const fs = require("fs");
 const path = require("path");
+const { readEbookCatalog, ebooksFor } = require("./ehel-ebook-catalog.js");
 
 const SCHEMA_VERSION = "Ehel Topic Index v1.0";
 
@@ -121,6 +122,31 @@ function topicsEnglish(unit, ctx) {
     const words = (byGroup.get(g.id) || []).filter(Boolean);
     if (words.length) out.push({ section: "dictionary", label: g.title, keywords: keywords([g.title, ...words], 40) });
   }
+  // Books. The picture-book shelf is the one section whose content is NOT in the
+  // content tier: `ebookCatalog` is a const in shell/subjects/english.js. So
+  // nothing derived topics from it and the tutoring picker, which offers Books,
+  // answered "No Books lessons are indexed" for every grade — a live dead end
+  // that looked like missing content rather than a missing derivation.
+  //
+  // Indexed here rather than by moving the catalogue into content: the story
+  // TEXT would then exist twice, which is the defect write-english-ebook-docs.mjs
+  // exists to prevent (the Grade 1 hand-typed STORY.txt copies went stale exactly
+  // that way). A derived index is the same shape as everything else in this file.
+  //
+  // English only. Intensive English shares topicsEnglish and has no shelf, and
+  // the shelf itself stops at Grade 4 by the owner's 2026-08-20 decision, so an
+  // empty answer above Grade 4 is correct rather than a gap.
+  for (const book of (ctx && ctx.ebooks) || []) {
+    // The story's own words are what a learner would search for -- "the fawn who
+    // could not stop crying" finds Smile Please! -- so the page text carries the
+    // keywords, capped like every other multi-item topic here.
+    const pageText = (book.pages || []).map((pg) => clip(pg && pg.text, 120));
+    out.push({
+      section: "ebooks",
+      label: book.title,
+      keywords: keywords([book.title, book.description, book.level, ...pageText], 40),
+    });
+  }
   // The four below were added when English's tutoring picker started offering
   // SECTIONS rather than unit themes (course-app.js :: TUTORING_ENGLISH_SECTIONS).
   // Picking one selects on `topic.section`, so a section with no topics is a
@@ -207,7 +233,10 @@ function buildGradeIndex(ehelRoot, subject, stage) {
       unit: Number(entry.number),
       title,
       keywords: keywords([title, ...outcomeTexts(unit)], 40),
-      topics: extractTopics(subject, unit, { games: readGamesPack(dataDir, entry.number) }).filter((t) => t.label && t.keywords.length),
+      topics: extractTopics(subject, unit, {
+        games: readGamesPack(dataDir, entry.number),
+        ebooks: subject === "english" ? ebooksFor(readEbookCatalog(ehelRoot), stage, entry.number) : [],
+      }).filter((t) => t.label && t.keywords.length),
     });
   }
   if (!units.length) return null;

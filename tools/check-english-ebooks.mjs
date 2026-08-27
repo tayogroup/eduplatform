@@ -29,6 +29,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { createRequire } from "node:module";
 import vm from "node:vm";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -44,41 +45,12 @@ const fail = (message) => problems.push(message);
 // it. Parsing it with a regex instead would mean re-implementing string
 // escaping — and every page's text is full of quotes.
 
-function literalBetweenBrackets(source, declaration) {
-  const start = source.indexOf(declaration);
-  if (start < 0) throw new Error(`${declaration} not found in shell/subjects/english.js`);
-  const open = source.indexOf("[", start);
-  let depth = 0;
-  let inString = null;
-  let inComment = null;
-  for (let i = open; i < source.length; i += 1) {
-    const ch = source[i];
-    if (inComment) {
-      // Comments are skipped, not scanned. A prose apostrophe — "the unit's own
-      // vocabulary" — otherwise opens a string that swallows the rest of the
-      // array, and the slice ends on whatever bracket happens to come next.
-      if (inComment === "line" && ch === "\n") inComment = null;
-      else if (inComment === "block" && ch === "*" && source[i + 1] === "/") { inComment = null; i += 1; }
-      continue;
-    }
-    if (inString) {
-      if (ch === "\\") i += 1;
-      else if (ch === inString) inString = null;
-      continue;
-    }
-    if (ch === "/" && source[i + 1] === "/") { inComment = "line"; i += 1; continue; }
-    if (ch === "/" && source[i + 1] === "*") { inComment = "block"; i += 1; continue; }
-    if (ch === '"' || ch === "'" || ch === "`") { inString = ch; continue; }
-    if (ch === "[") depth += 1;
-    if (ch === "]") {
-      depth -= 1;
-      if (depth === 0) return source.slice(open, i + 1);
-    }
-  }
-  throw new Error(`${declaration} is not closed`);
-}
-
-const ebookCatalog = vm.runInNewContext(`(${literalBetweenBrackets(shellSource, "const ebookCatalog = [")})`);
+// The extractor lives in tools/lib/ehel-ebook-catalog.js so the topic index can
+// read the same catalogue the same way. Two source-slicing copies is the drift
+// this file's own comments warn about, and the second one is always the copy
+// that stops matching english.js.
+const { readEbookCatalog } = createRequire(import.meta.url)("./lib/ehel-ebook-catalog.js");
+const ebookCatalog = readEbookCatalog(path.join(root, "src", "prototypes", "ehel-academy"));
 
 // The alias table and the mood set decide what a data-tap can resolve to, so
 // they are read out of the same file rather than restated here — a restated

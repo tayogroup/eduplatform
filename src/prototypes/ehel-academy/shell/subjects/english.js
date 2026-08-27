@@ -9344,8 +9344,25 @@ function bindEbookFullscreenExit() {
 // than an invented sentence.
 let glossaryQuery = "";
 let activeGlossaryWord = null;
+let glossarySeededFromSearch = false;
 
 function renderGlossary() {
+  // Land ON the word they searched for. get-help puts the learner's own query on
+  // the link as `ghQuery` (get-help.js :: defaultHrefFor), so somebody who typed
+  // "milk" and opened the Glossary arrives with it already in the box rather than
+  // at the top of an alphabetical list of a few thousand words — which is the
+  // whole difference between a glossary and a lookup.
+  //
+  // Once per PAGE LOAD, which is how course-app.js reads ghLabel/ghQuery too: it
+  // describes THIS arrival, not a standing preference. Deliberately not reset in
+  // onBeforeRender — that fires on every route render, so a learner who cleared
+  // the box, looked at another section and came back would have "milk" put back
+  // in front of them by a URL marker describing a search they had finished with.
+  if (!glossarySeededFromSearch) {
+    glossarySeededFromSearch = true;
+    const fromSearch = new URLSearchParams(location.search).get("ghQuery");
+    if (fromSearch) glossaryQuery = fromSearch;
+  }
   const all = Object.entries(sentenceGlossary)
     .filter(([, entry]) => entry && entry.definition)
     .sort(([a], [b]) => a.localeCompare(b));
@@ -9362,7 +9379,16 @@ function renderGlossary() {
     const filtered = q
       ? all.filter(([word, entry]) => word.toLowerCase().includes(q) || String(entry.definition).toLowerCase().includes(q))
       : all;
-    if (!filtered.some(([word]) => word === activeGlossaryWord)) activeGlossaryWord = filtered.length ? filtered[0][0] : null;
+    // The word they typed leads, not the alphabetically first thing that mentions
+    // it. Searching "milk" matches nine entries at Grade 1 because the query is
+    // matched against definitions too — "cereal" is "small dry food we eat in a
+    // bowl with milk" — and sorting alphabetically opened on cereal. Exact match
+    // first, then a word that starts with it ("milkman"), then the list order.
+    if (!filtered.some(([word]) => word === activeGlossaryWord)) {
+      const exact = filtered.find(([word]) => word.toLowerCase() === q);
+      const prefix = q ? filtered.find(([word]) => word.toLowerCase().startsWith(q)) : null;
+      activeGlossaryWord = (exact || prefix || filtered[0] || [null])[0];
+    }
     const entry = activeGlossaryWord ? sentenceGlossary[activeGlossaryWord] : null;
 
     $("#glossary-list").innerHTML = filtered.length

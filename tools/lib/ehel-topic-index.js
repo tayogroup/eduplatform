@@ -203,7 +203,24 @@ function topicsEnglish(unit, ctx) {
     out.push({
       section: "glossary",
       label: "Glossary — every word in this grade",
-      keywords: keywords(["glossary", "word", "words", "meaning", "meanings", "definition", "definitions", "spelling", "vocabulary"], 20),
+      // The page's own words, ALL of them, plus words for the page itself.
+      //
+      // These were nine generic terms, on the reasoning that forty of several
+      // thousand would be an arbitrary alphabetical slice presented as if it
+      // meant something. That objection is right about a SAMPLE and is what this
+      // avoids by taking the whole list: nothing is chosen, so nothing is
+      // arbitrary. Generic terms alone made the card unreachable by the only
+      // search anyone runs against a glossary — a learner searched "milk", got
+      // Vocabulary and Quiz cards from three other units, and no way to the
+      // entry that defines it.
+      //
+      // It does not make the card match everything: it matches a word only if
+      // THIS grade's glossary actually holds it, which is exactly the claim the
+      // card makes. A grade whose glossary lacks the word contributes nothing.
+      keywords: keywords([
+        "glossary", "word", "words", "meaning", "meanings", "definition", "definitions", "spelling", "vocabulary",
+        ...(ctx.glossaryWordList || []),
+      ], Number.MAX_SAFE_INTEGER),
     });
   }
   // Games live in their own pack beside the unit, not inside it — the only
@@ -254,8 +271,10 @@ function buildGradeIndex(ehelRoot, subject, stage) {
   if (!fs.existsSync(manifestPath)) return null;
   const manifest = JSON.parse(fs.readFileSync(manifestPath, "utf8"));
   const glossary = readGlossary(dataDir);
-  const glossaryWords = Object.values((glossary && glossary.entries) || {})
-    .filter((entry) => entry && entry.definition).length;
+  const glossaryEntries = Object.entries((glossary && glossary.entries) || {})
+    .filter(([, entry]) => entry && entry.definition);
+  const glossaryWords = glossaryEntries.length;
+  const glossaryWordList = glossaryEntries.map(([word]) => word);
   const units = [];
   for (const entry of [...manifest.units].sort((a, b) => a.number - b.number)) {
     if (cfg.minUnit != null && Number(entry.number) < cfg.minUnit) continue;
@@ -275,6 +294,7 @@ function buildGradeIndex(ehelRoot, subject, stage) {
         // Counted, not passed whole: the topic needs to know the glossary is
         // non-empty, not to carry several thousand entries into every unit.
         glossaryWords: glossaryWords,
+        glossaryWordList,
         // The glossary topic hangs off the grade's FIRST indexed unit. `units`
         // is empty only before the first is pushed, so this is true exactly once
         // per grade without a separate pass to find the lowest number.

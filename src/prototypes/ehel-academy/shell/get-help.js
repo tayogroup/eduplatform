@@ -690,7 +690,60 @@ export function createGetHelp(options) {
     .gh-recent-line { margin: 0; } .gh-recent-line small { color: var(--muted); margin-left: 6px; }
     .gh-score { display: flex; gap: 14px; flex-wrap: wrap; margin: 10px 0; }
     .gh-score span { background: var(--teal-soft, #e6f7f5); border-radius: 10px; padding: 10px 14px; font-size: 14px; }
+    .gh-subjects h2 { margin: 0; font-size: 16px; }
+    .gh-subject-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 11px; }
+    .gh-subject { display: flex; flex-direction: column; gap: 1px; padding: 9px 14px; border: 1px solid var(--line); border-radius: 10px; text-decoration: none; color: inherit; }
+    .gh-subject strong { font-size: 14px; }
+    .gh-subject span { font-size: 12px; color: var(--muted); }
+    a.gh-subject:hover { border-color: var(--teal); }
+    a.gh-subject:focus-visible { outline: 3px solid var(--teal); outline-offset: 2px; }
+    .gh-subject.is-here { background: var(--teal-soft, #e6f7f5); border-color: var(--teal); }
   </style>`;
+
+  // The tutoring category's way OUT of one subject and into another.
+  //
+  // A "Tutor Me" learner reaches one subject's app from one dashboard card, and
+  // the six subjects are six separate apps — separate bundle, separate content
+  // tier, separate URL — so switching is a page load through the Moodle launch
+  // whatever it looks like. That is also what keeps it honest: the launch mints
+  // a token for the subject being opened and resolves that subject's own anchor
+  // stage, so a switch cannot land a learner in a subject at somebody else's
+  // level.
+  //
+  // Drawn ONLY for the tutoring category, and only from the launch token's own
+  // list (course-app.js :: TUTORING_SUBJECTS, minted from enrolment). A school
+  // learner has a course and a position and does not want this; a tutoring
+  // learner with no token — local dev, a direct CDN visit — has no list, and an
+  // empty row is drawn as nothing rather than as six dead entries.
+  //
+  // The stage beside each subject is the anchor its ±2 search window is drawn
+  // around, and this is the only place a learner or a parent can see it. It
+  // legitimately differs per subject: a child can be at their year in one and
+  // two below it in another, which is the whole reason the anchor is per
+  // subject (progress_gatewaylib.php :: pqpg_tutoring_stage).
+  function subjectSwitcher(ui) {
+    const esc = ui.escapeHtml;
+    const subjects = shellHooks?.tutoring ? shellHooks.subjects : null;
+    if (!Array.isArray(subjects) || !subjects.length) return "";
+    const cards = subjects.map((entry) => {
+      const level = entry.stage > 0 ? `${entry.stageWord} ${entry.stage}` : "";
+      const inner = `<strong>${esc(entry.label)}</strong>${level ? `<span>${esc(level)}</span>` : ""}`;
+      // The subject in front of them is marked, never linked: a link back to
+      // this page would spend a full launch to arrive where they already are.
+      if (entry.here) return `<span class="gh-subject is-here" aria-current="true">${inner}</span>`;
+      // No resolvable platform origin means no launch to send them on. Same
+      // rule the marketplace buttons follow: draw nothing rather than a
+      // root-relative link that 404s on the CDN origin.
+      if (!entry.href) return "";
+      return `<a class="gh-subject" href="${esc(entry.href)}">${inner}</a>`;
+    }).join("");
+    if (!cards) return "";
+    return `<section class="panel gh-subjects">
+        <h2>Your subjects</h2>
+        <p class="gh-note">Pick a subject to get help with — each one opens at your own level in that subject.</p>
+        <div class="gh-subject-row">${cards}</div>
+      </section>`;
+  }
 
   function render() {
     const ui = options.deps();
@@ -703,7 +756,7 @@ export function createGetHelp(options) {
       "Get help with…",
       `Stuck on homework, or on something your school teaches in a different order? Search the whole ${esc(options.subjectLabel)} course and open the exact lesson that teaches it — including the ${options.stageWord.toLowerCase()}s before and after yours.`,
       "Help",
-    )}
+    )}${subjectSwitcher(ui)}
       <section class="panel">
         <div class="gh-search">
           <input id="gh-query" type="search" placeholder="What are you stuck on? e.g. ${esc((options.examples || [])[0] || "a topic")}" aria-label="Search ${esc(options.subjectLabel)} topics">

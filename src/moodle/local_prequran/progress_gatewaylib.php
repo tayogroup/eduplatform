@@ -476,6 +476,12 @@ function pqpg_tutoring_subjects(int $userid): ?array {
             $subject = pqpg_ehel_subject_map()[$slug];
             $subjects[] = [
                 'subject' => $slug,
+                // The APP DIRECTORY, which is how the shell knows itself
+                // (config.subjectKey). It is the join between this list and the
+                // page drawing it: without it the picker cannot tell which of
+                // the six the learner is already looking at, and would offer
+                // them a link back to where they are.
+                'dir' => $subject['dir'],
                 'label' => $subject['label'],
                 'stage' => pqpg_tutoring_stage($userid, $slug),
                 // "Grade 4" / "Stage 4" / "Level 1" — derived from the URL param

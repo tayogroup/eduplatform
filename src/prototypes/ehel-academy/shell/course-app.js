@@ -22,7 +22,7 @@ import { createProgressClient } from "../shared/progress-client.js?v=20260722a";
 import "../shared/seb-session.js?v=20260724a";
 // Welcome gate (adopted from PreQuraan): one tap into fullscreen, every launch.
 import { mountLessonGate } from "../shared/lesson-gate.js?v=20260724a";
-import { mountWehelChat } from "./wehel.js?v=wehel-4";
+import { mountWehelChat, platformUrl } from "./wehel.js?v=wehel-4";
 
 const pad2 = (n) => String(n).padStart(2, "0");
 
@@ -259,7 +259,43 @@ export function createCourseApp(config) {
   // moment a hidden section gained topics — indexing the stage capstones put
   // "Run a Stage 5 Science Fair" first in a tutoring learner's results for a
   // section their own nav deliberately omits. (Owner, 2026-08-27.)
-  if (config.getHelp?.attachShell) config.getHelp.attachShell({ tutoring: IS_TUTORING, emitEvent: emitProgress, hiddenSections: TUTORING_HIDDEN });
+  // --- the tutoring learner's other subjects --------------------------------
+  // One dashboard card ("Tutor Me") opens ONE subject's app, so the way out of
+  // it and into another is here, on the search page this category lands on.
+  //
+  // The list is the token's, minted from ENROLMENT
+  // (progress_gatewaylib.php :: pqpg_tutoring_subjects) — it is what the learner
+  // can actually open, so a family who bought four subjects is not offered six,
+  // and the shell holds no list of its own to go stale. Same reason the topbar
+  // picker derives rather than lists.
+  //
+  // Each entry carries the stage its ±2 help window is anchored on, which is
+  // the ONLY place a learner can see that number: it is resolved server-side
+  // per subject and the app is simply told the answer.
+  //
+  // The href is built HERE rather than in get-help.js because this is where the
+  // launch context is. platformUrl() resolves the Moodle origin from
+  // pwsEndpoint and correctly falls back to a root-relative path when the app
+  // is served BY Moodle — building the URL by hand in the page would have to
+  // reproduce both cases. A launch with no token carries no claim, so this is
+  // empty in local dev and the switcher does not draw.
+  //
+  // `dir` is the app directory, which is how a subject module names itself
+  // (config.subjectKey); it is what marks the entry the learner is already
+  // looking at, so the switcher never offers a link back to this page.
+  const TUTORING_SUBJECTS = (IS_TUTORING && Array.isArray(LAUNCH_TOKEN_CLAIMS?.tutoring))
+    ? LAUNCH_TOKEN_CLAIMS.tutoring
+      .filter((entry) => entry && typeof entry.dir === "string" && typeof entry.course === "string")
+      .map((entry) => ({
+        dir: entry.dir,
+        label: String(entry.label || entry.dir),
+        stage: Number(entry.stage) || 0,
+        stageWord: String(entry.stageWord || "Stage"),
+        here: entry.dir === config.subjectKey,
+        href: platformUrl(`/local/hubredirect/course_launch.php?course=${encodeURIComponent(entry.course)}`),
+      }))
+    : [];
+  if (config.getHelp?.attachShell) config.getHelp.attachShell({ tutoring: IS_TUTORING, emitEvent: emitProgress, hiddenSections: TUTORING_HIDDEN, subjects: TUTORING_SUBJECTS });
   const emitProgressSummary = () => {
     const base = {
       type: "progress.summary", unit: PROGRESS_UNIT,

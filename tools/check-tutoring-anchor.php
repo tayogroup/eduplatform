@@ -210,6 +210,12 @@ check('each carries its own anchor stage', array_column($subjects, 'stage'), [4,
 check('and the course key the picker opens', array_column($subjects, 'course'),
     ['ehel-tutoring-eng', 'ehel-tutoring-gp']);
 check('with the subject\'s own stage word', array_column($subjects, 'stageWord'), ['Grade', 'Stage']);
+// The join between this claim and the page drawing it: the shell knows itself by
+// app directory (config.subjectKey), so without this the picker cannot tell which
+// of the six the learner is already in, and offers them a link back to where they
+// already are.
+check('and the app directory the shell knows itself by',
+    array_column($subjects, 'dir'), ['english', 'global-perspectives']);
 world([7 => 'Grade 4'], [], [7 => ['ehel-tutoring-gp', 'ehel-tutoring-eng']]);
 check('offer order is the subject table\'s, not the enrolment query\'s',
     array_column(pqpg_tutoring_subjects(7), 'subject'), ['eng', 'gp']);

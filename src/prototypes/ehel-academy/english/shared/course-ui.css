@@ -550,6 +550,46 @@ body.focus-mode.gc-full .wc-tools { position: fixed; left: 0; right: 0; bottom: 
    back the moment it carries something — ✓ when done, 🔒 when
    english.js :: paintSectionLocks() writes one in. */
 .nav-button--path .nav-state:empty { display: none; }
+
+/* ============================================================================
+   The topbar for a young learner — Grades/Stages 1-4 only.
+   ============================================================================
+   Same gate as the path nav (PATH_NAV_MAX_STAGE in shell/course-app.js), reached
+   a different way: the nav's rows are generated, so they carry a class of their
+   own, but the topbar is static markup sitting in six subjects' index.html. The
+   shell publishes the decision as html.young-stage and everything here hangs off
+   that, so no subject's HTML is touched and all six move together.
+
+   GEOMETRY IS DELIBERATELY UNTOUCHED. The bar stays 72px, because .app-shell is
+   min-height:calc(100vh - 72px) and .sidebar is top:72px;height:calc(100vh - 72px)
+   -- three numbers in three rules that have to agree, and a taller bar for
+   1-4 would mean maintaining two sets of them. 44px controls fit inside 72px
+   with room to spare, so the child gets the bigger targets anyway.
+
+   Nothing here sets a property the ≤980px or ≤680px blocks also set -- they
+   change display, width, height, padding and gap; this changes radius, weight,
+   fill and border. So unlike the nav, which had to restate its geometry twice,
+   this block needs no restatement at either breakpoint and the responsive
+   behaviour is untouched. Check that before adding a property here.
+*/
+html.young-stage .topbar { border-bottom-width: 2px; }
+/* The percentage becomes the badge and "Unit progress" stays plain text beside
+   it: a number a child is watching go up should look like a thing, not like
+   emphasis inside a sentence. */
+html.young-stage .unit-progress { gap: 11px; font-weight: var(--weight-medium); }
+html.young-stage .unit-progress strong { padding: 3px 10px; border-radius: 999px; background: var(--teal); color: #fff; font-size: 14px; font-weight: var(--weight-bold); }
+html.young-stage .progress-track { height: 14px; box-shadow: inset 0 2px 0 rgba(16,44,67,.07); }
+html.young-stage .progress-track span { border-radius: 999px; background: linear-gradient(180deg, #2fb98a, var(--teal)); box-shadow: inset 0 3px 0 rgba(255,255,255,.38); }
+/* Chunky controls: 2px borders and a big radius, at 44px -- the size a small
+   finger can hit -- rather than the 40px/7px the older stages use. */
+html.young-stage .top-grade-picker, html.young-stage .top-unit-picker { min-height: 44px; border-width: 2px; border-radius: 14px; font-weight: var(--weight-bold); }
+html.young-stage .icon-button { width: 44px; height: 44px; border-width: 2px; border-radius: 50%; font-size: 18px; }
+html.young-stage .icon-button:hover { background: #edf6f4; }
+html.young-stage .profile-button span { width: 42px; height: 42px; border: 2px solid #dcae2e; font-size: 15px; font-weight: var(--weight-bold); }
+/* The XP counter as a gold pill rather than grey small print. Every subject
+   puts something different in here -- "120 XP" in English, "Science lab" in
+   Science -- so this styles the slot, not a number. */
+html.young-stage .profile-button small { padding: 4px 11px; border-radius: 999px; background: var(--gold); color: #4a3708; font-size: 13px; font-weight: var(--weight-bold); }
 .teacher-switch { margin-top: 8px; border-top: 1px solid rgba(255,255,255,.14); border-radius: 0; padding-top: 18px; grid-template-columns: 22px 1fr; }
 /* The two switches are one block under the section list, so the rule above them
    is drawn once: Student resources owns it and Teacher resources tucks in under.

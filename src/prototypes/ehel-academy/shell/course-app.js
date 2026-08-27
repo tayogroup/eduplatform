@@ -71,6 +71,18 @@ export function createCourseApp(config) {
   // `<= 4` would be an accident there rather than a decision.
   const PATH_NAV_MAX_STAGE = 4;
   const pathNav = config.param !== "level" && stageNumber >= 1 && stageNumber <= PATH_NAV_MAX_STAGE;
+  // The same decision, published for CSS that has no markup to hang a class on.
+  // The section list gets .nav-button--path per row because sectionNavigation()
+  // builds those rows; the TOPBAR is static markup in each subject's index.html
+  // -- six files, identical structure, none of it generated -- so the only way
+  // to reach it is a flag on an ancestor. One gate, two mechanisms, because the
+  // two surfaces are built differently.
+  //
+  // documentElement, not body: this module is imported at the end of <body> in
+  // every subject today, but <html> exists from the first byte of the parse, so
+  // the class cannot land after the topbar has already painted unstyled if that
+  // ever changes.
+  document.documentElement.classList.toggle("young-stage", pathNav);
 
   // --- learner category ------------------------------------------------------
   // "tutoring" marks the tutoring-support learners: children at OTHER schools

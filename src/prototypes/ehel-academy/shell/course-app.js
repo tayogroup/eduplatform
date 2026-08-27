@@ -812,60 +812,81 @@ export function createCourseApp(config) {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
-  // --- English's tutoring picker offers SECTIONS, not unit themes -----------
-  // Mathematics' unit titles ARE topics — "Probability", "Angles", "2D Shapes" —
-  // so picking one and searching it is a good question. English's are themes:
-  // "There's a Lesson in That", "People and Work", "Nature's Power". Searching
-  // those returns the one unit that is named that and nothing a learner stuck on
-  // homework would want, so the picker that works for Mathematics is hollow here
-  // even though the plumbing is identical.
+  // --- the tutoring picker offers PARTS OF THE COURSE ----------------------
+  // What a learner picks from should be a thing they can be stuck on, and
+  // whether the unit list is already that differs by subject. Mathematics'
+  // titles ARE topics — "Probability", "Fractions: Halves" — so picking one and
+  // searching it is a good question. English's and Intensive English's are
+  // themes — "People and Work", "Who I Am" — and searching those finds the one
+  // unit named that and nothing a learner wants. Same plumbing, opposite
+  // usefulness, which is why this is not one behaviour for all six:
   //
-  // What an English learner is stuck on is a PART OF THE COURSE, so that is what
-  // this category's picker offers. Owner's list, in the owner's order. The ids
-  // are the section ids the topic index tags every topic with, which is what
-  // makes them selectable at all — `dictionary` is the id behind "Vocabulary"
-  // and `ebooks` the one behind "Books", and getting either wrong silently
-  // selects nothing (get-help.js :: searchSection).
+  //   english, intensive-english   sections REPLACE the units
+  //   the other four               sections are ADDED, units kept
   //
-  // Deliberately NOT the shell's `sections` list: that is what a learner walks
-  // inside one unit, it carries entries this category has no use for (Overview,
-  // Video lesson, My progress, Study Plan), and its order is a teaching sequence
-  // rather than a menu of things to be stuck on.
-  // Speaking sits between Grammar and Writing, which is where the course's own
-  // section order puts it, rather than appended after Books — a menu of parts of
-  // the course reads as one when it runs in the order the course teaches them.
-  // It was absent from the owner's first list and added on the second; it is the
-  // best-covered section in the index (480 topics, more than any other), so it
-  // was never a question of whether there was anything behind it.
-  const TUTORING_ENGLISH_SECTIONS = [
-    ["dictionary", "Vocabulary"], ["reading", "Reading & story"], ["comprehension", "Comprehension"],
-    ["grammar", "Grammar"], ["speaking", "Speaking"], ["writing", "Writing"],
-    ["activities", "Activities"], ["games", "Games"], ["quiz", "Quiz"], ["ebooks", "Books"],
-  ];
-  // Repainted after onNavRendered on every nav render, not once at boot, because
-  // English rebuilds its own pickers there (english.js :: renderUnitPickers) and
-  // would otherwise put the unit list straight back. Idempotent: the marker
-  // attribute makes a repaint over an already-painted picker a no-op, so this
-  // costs one attribute read per render rather than a rebuild.
+  // Removing a working unit search from Mathematics to make the six look alike
+  // would be a regression dressed as consistency.
+  //
+  // The ids are the ones each subject's topic index actually tags topics with,
+  // measured rather than assumed — picking a section selects on `topic.section`
+  // (get-help.js :: searchSection), so an id with no topics is a dead entry.
+  // English's list is the owner's, and deliberately includes `ebooks`, which has
+  // none: the shelf lives in shell/subjects/english.js rather than the content
+  // tier, so no content builder can index it, and the entry says so when picked.
+  const TUTORING_SECTION_IDS = {
+    english: ["dictionary", "reading", "comprehension", "grammar", "speaking", "writing", "activities", "games", "quiz", "ebooks"],
+    "intensive-english": ["dictionary", "reading", "comprehension", "grammar", "speaking", "writing", "activities", "quiz"],
+    mathematics: ["lesson", "words", "explore", "method", "examples"],
+    science: ["lesson", "words", "explore", "method", "examples"],
+    computing: ["lesson", "words", "explore", "code", "method", "examples"],
+    "global-perspectives": ["lesson", "bigideas", "models", "toolkit", "words"],
+  };
+  const SECTIONS_REPLACE_UNITS = new Set(["english", "intensive-english"]);
+  // The subject's OWN wording, never a second copy of it. Intensive English
+  // calls `dictionary` "Words" and `grammar` "Patterns" where English says
+  // "Vocabulary" and "Grammar", and a menu that renamed them would describe a
+  // nav the learner does not have. Global Perspectives' rows are 4-tuples
+  // (a render predicate trails the label); every subject keeps the label at
+  // index 2, which is what makes one lookup work for all six.
+  const tutoringSectionLabel = (id) => {
+    const list = typeof config.sections === "function" ? config.sections() : (config.sections || []);
+    const row = list.find((entry) => entry[0] === id);
+    return row ? row[2] : id;
+  };
+  // Repainted after onNavRendered on every nav render rather than once at boot,
+  // because English rebuilds its own pickers there (english.js ::
+  // renderUnitPickers) and would otherwise put the unit list straight back. The
+  // marker attribute makes a repaint over an already-painted picker a no-op.
   function paintTutoringSections() {
-    if (config.subjectKey !== "english" || !config.getHelp) return;
+    const ids = TUTORING_SECTION_IDS[config.subjectKey];
+    if (!ids || !config.getHelp) return;
+    const replace = SECTIONS_REPLACE_UNITS.has(config.subjectKey);
+    const options = ids
+      .map((id) => `<option value="section:${id}">${escapeHtml(tutoringSectionLabel(id))}</option>`).join("");
     for (const picker of [$("#unit-select"), $("#top-unit-select")]) {
       if (!picker || picker.dataset.tutoringSections === "true") continue;
-      // The prerequisite entry is kept, exactly as Mathematics keeps it: a
-      // placement exam is a reasonable thing for a search-driven learner to
-      // want, and it is the one entry here that is a PLACE rather than a topic.
-      // -1 is PREREQ_UNIT (shell/placement.js). Written as a literal rather than
-      // imported: the shell has no other use for that module, and the value is
-      // already hard-coded into every subject's option markup, which is what
-      // this reads back.
-      const prereq = picker.querySelector('option[value="-1"]')?.outerHTML || "";
-      picker.innerHTML = prereq + TUTORING_ENGLISH_SECTIONS
-        .map(([id, label]) => `<option value="section:${id}">${escapeHtml(label)}</option>`).join("");
-      // Nothing is selected on purpose. The shell loaded some unit behind this
-      // page and none of these options describes it, so a selected entry would
-      // be a claim about where the learner is; the placeholder asks instead.
-      picker.insertAdjacentHTML("afterbegin", '<option value="" selected disabled>What are you stuck on?</option>');
-      picker.setAttribute("aria-label", "Choose what you are stuck on");
+      if (replace) {
+        // The prerequisite entry is kept, exactly as Mathematics keeps it: a
+        // placement exam is a reasonable thing for a search-driven learner to
+        // want, and it is the one entry here that is a PLACE rather than a topic.
+        // -1 is PREREQ_UNIT (shell/placement.js), written as a literal because
+        // the shell has no other use for that module and the value is already
+        // hard-coded into every subject's option markup, which is what this
+        // reads back.
+        const prereq = picker.querySelector('option[value="-1"]')?.outerHTML || "";
+        picker.innerHTML = prereq + options;
+        // Nothing is selected on purpose: the shell loaded some unit behind this
+        // page and none of these options describes it, so a selected entry would
+        // be a claim about where the learner is. The placeholder asks instead.
+        picker.insertAdjacentHTML("afterbegin", '<option value="" selected disabled>What are you stuck on?</option>');
+        picker.setAttribute("aria-label", "Choose what you are stuck on");
+      } else {
+        // Units stay, and stay SELECTED — they are this subject's best topics and
+        // the picker still reports which unit the shell has open. The sections go
+        // above them in their own group, so the two axes are visibly different
+        // things rather than one flat list of eleven.
+        picker.insertAdjacentHTML("afterbegin", `<optgroup label="Parts of a lesson">${options}</optgroup>`);
+      }
       picker.dataset.tutoringSections = "true";
     }
   }

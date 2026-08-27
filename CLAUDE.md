@@ -248,6 +248,42 @@ Real uploads are `npm run deploy:integration|staging|production`. **Never run a 
   above: a page-turning book is exactly the one-item-at-a-time walk-through the
   upper stages are meant not to have. `unitEbooks()` already filters by grade, so
   the section simply does not appear at 5-8 and nothing needs gating.
+
+  **The TUTORING category is exempt, at every grade. Owner, 2026-08-27.** A
+  tutoring learner gets the whole 146-book library wherever they are standing,
+  including Grades 5-8. The seam is `shelfEbooks()` in `shell/subjects/english.js`
+  — `IS_TUTORING ? ebookCatalog : unitEbooks()` — and `visibleSections` offers
+  Books whenever that is non-empty, which is why the section now appears at Grade 6
+  and opens on *Smile Please! · Level 1*.
+
+  This does not soften the rule above for the COURSE, which is untouched:
+  `unitEbooks()` still answers every course page, a Grade 5-8 course learner still
+  has no shelf, and a Grade 1-4 course learner still gets their own unit's books
+  and nobody else's. What changed is only who else may read them.
+ 
+  The reasoning is that the 2026-08-20 decision is about what a page-turning book
+  does to upper-stage TEACHING — competing with the unit's own serialised story,
+  flattening a unit that teaches text forms. A tutoring learner is not doing that
+  teaching. They arrive from a search with a problem and no position, which is the
+  same reasoning that gives them a +/-2 grade window and no unit gate, and an
+  easier book is often exactly what an older learner stuck on reading needs.
+ 
+  **It was nearly shipped as a side effect, which is the part worth keeping.** It
+  arrived inside a picker fix: widening `shelfEbooks()` made `visibleSections`
+  keep `ebooks` at every grade, so the nav grew the entry, so the picker offered
+  it. Both changes were individually correct and their product crossed a
+  documented owner decision that neither of them named. It was caught in review by
+  another session, not by any gate — nothing in the repo reads CLAUDE.md — and the
+  session that shipped it had verified "146 books at Grade 5 tutoring" and
+  recorded it as the feature working.
+ 
+  One consequence to know before touching the picker: the nav filter in
+  `course-app.js :: paintTutoringSections` was written to drop Books at Grades 5-8,
+  and this exemption means it no longer has that job. Measured at Grade 6 tutoring,
+  it currently filters NOTHING for English — all ten section ids survive. It still
+  guards the general case (a unit with no game pack draws no `games` entry), but
+  do not read it as protecting the Books boundary; that boundary is gone by
+  decision.
 - **Generated bundle**: never edit `runtime.bundle.js` directly (`docs/generated-bundle-policy.md`).
 - **Stable filenames**: active JS/CSS filenames never contain versions, dates, or `locked`. Versions live in git tags (`alphabet-v1.0.0`, `shared-v1.0.0`) and manifests (`docs/naming-versioning.md`).
 - **Unit config schema**: `unit.config.js` must pass `npm run validate:units`; schema documented in `docs/unit-config-schema.md`.

@@ -855,8 +855,18 @@ export function createCourseApp(config) {
   };
   // Repainted after onNavRendered on every nav render rather than once at boot,
   // because English rebuilds its own pickers there (english.js ::
-  // renderUnitPickers) and would otherwise put the unit list straight back. The
-  // marker attribute makes a repaint over an already-painted picker a no-op.
+  // renderUnitPickers, called from onNavRendered AND onReady) and would
+  // otherwise put the unit list straight back.
+  //
+  // The idempotence test asks what the picker CONTAINS, not whether it was
+  // painted before. A `data-` marker was tried and is wrong: renderUnitPickers
+  // does `picker.innerHTML = options`, which replaces the options while the
+  // attribute sits on the <select> and survives — so the guard read "already
+  // done" over a picker whose sections had just been wiped, and English showed
+  // units again from the first nav render onward. Correct at boot, wrong from
+  // the first click, which is exactly the shape that reads as intermittent.
+  // Asking for a `section:` option cannot go stale that way: whatever wipes it
+  // also clears the answer, and the next render repaints.
   function paintTutoringSections() {
     const ids = TUTORING_SECTION_IDS[config.subjectKey];
     if (!ids || !config.getHelp) return;
@@ -864,7 +874,7 @@ export function createCourseApp(config) {
     const options = ids
       .map((id) => `<option value="section:${id}">${escapeHtml(tutoringSectionLabel(id))}</option>`).join("");
     for (const picker of [$("#unit-select"), $("#top-unit-select")]) {
-      if (!picker || picker.dataset.tutoringSections === "true") continue;
+      if (!picker || picker.querySelector('option[value^="section:"]')) continue;
       if (replace) {
         // The prerequisite entry is kept, exactly as Mathematics keeps it: a
         // placement exam is a reasonable thing for a search-driven learner to
@@ -887,7 +897,6 @@ export function createCourseApp(config) {
         // things rather than one flat list of eleven.
         picker.insertAdjacentHTML("afterbegin", `<optgroup label="Parts of a lesson">${options}</optgroup>`);
       }
-      picker.dataset.tutoringSections = "true";
     }
   }
 

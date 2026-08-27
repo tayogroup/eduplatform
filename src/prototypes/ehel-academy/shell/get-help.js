@@ -166,7 +166,13 @@ export function createGetHelp(options) {
   // school learner, whose stage is where they actually stand. options.stage()
   // stays that real position — a session's target and its `from` are recorded
   // against it, so re-aiming the search can never rewrite where the learner is.
+  // The section view the learner is looking at, if any — English's tutoring
+  // picker (searchSection below). Kept because re-aiming the stage window or
+  // widening to every stage REBUILDS the page, and without this the rebuild
+  // would silently drop the filter and drop them back on the intro panel. A
+  // typed query supersedes it; emptying the box clears it.
   let stageOverride = null;
+  let activeSection = null;
   const stageNow = () => Number(stageOverride ?? options.stage());
   // Set by the shell after boot (course-app.js). For the TUTORING category the
   // finished session is emitted server-side as a tutoring.session event — the
@@ -362,6 +368,7 @@ export function createGetHelp(options) {
   async function runSearch(query, ui) {
     const tokens = tokenize(query);
     currentQuery = tokens.length ? String(query || "").trim() : "";
+    activeSection = null;
     const resultsBox = ui.$("#gh-results");
     if (!resultsBox) return;
     if (!tokens.length) { resultsBox.innerHTML = introHtml(ui); bindIntro(ui); return; }
@@ -615,7 +622,7 @@ export function createGetHelp(options) {
       render();
       const nextInput = ui.$("#gh-query");
       nextInput.value = query;
-      if (query.trim()) runSearch(query, ui);
+      rerunCurrentView(ui, query);
       nextInput.focus();
     });
     bindIntro(ui);
@@ -1110,6 +1117,62 @@ export function createGetHelp(options) {
   // a marker left on the URL would still be describing it several searches
   // later — the same reason ghLabel/ghQuery are read once per page load.
 
+  // Show every lesson in ONE SECTION, for the tutoring category's English
+  // picker. A section name is not a searchable string and must not be handled
+  // by pretending it is: scoreUnit matches a unit's title and keywords and a
+  // topic's label and keywords, and never `topic.section`, so runSearch("grammar")
+  // scores nothing against the 480 grammar topics — it can only find units that
+  // happen to say "grammar" in their title. This selects on the field itself and
+  // hands the same hit shape to the same renderer, so grouping, ranking, the
+  // lesson badge and the topic chips all behave exactly as for a typed query.
+  //
+  // `score` is the topic COUNT: inside one section every unit matches equally,
+  // so the only ordering left that means anything is how much of that section a
+  // unit carries. resultsHtml breaks ties by distance from the learner's stage,
+  // which is what keeps their own grade first.
+  async function searchSection(sectionId, label) {
+    const ui = options.deps();
+    const resultsBox = ui.$("#gh-results");
+    if (!resultsBox) return false;
+    const name = label || sectionId;
+    // The box is CLEARED rather than filled with the section name: that name is
+    // not what the learner typed, and leaving it there would make their next
+    // keystroke edit a word they never wrote. currentQuery still carries it, so
+    // the Wehel dock can still say what they are looking at.
+    const input = ui.$("#gh-query");
+    if (input) input.value = "";
+    currentQuery = name;
+    activeSection = { id: sectionId, label: name };
+    const token = ++searchToken;
+    resultsBox.innerHTML = `<section class="panel gh-status"><p>${ui.icon("loader-circle")} Finding ${ui.escapeHtml(name)} lessons…</p></section>`;
+    const stages = windowStages();
+    const [indexes, lessonIndexes] = await Promise.all([
+      Promise.all(stages.map((stage) => loadIndex(stage))),
+      Promise.all(stages.map((stage) => loadLessonIndex(stage))),
+    ]);
+    if (token !== searchToken) return true; // a newer pick owns the box now
+    const hits = [];
+    indexes.forEach((index, at) => {
+      if (!index) return;
+      for (const unit of index.units) {
+        const topics = (unit.topics || []).filter((topic) => topic.section === sectionId);
+        if (!topics.length) continue;
+        hits.push({ stage: stages[at], unit, score: topics.length, topics, hasLesson: lessonIndexes[at].has(Number(unit.unit)) });
+      }
+    });
+    if (!hits.length) {
+      // Said plainly, rather than through the typed-query wording ("try a
+      // different word"), which would be advice about a box the learner did not
+      // use. A section with no indexed topics is a gap in the index, not a
+      // failed search — four of English's nine are in exactly that state.
+      resultsBox.innerHTML = `<section class="panel gh-status"><p><strong>No ${ui.escapeHtml(name)} lessons are indexed${showAllStages ? "" : ` for ${options.stageWord.toLowerCase()}s ${stages[0]}–${stages[stages.length - 1]}`}.</strong> Try another part of the course, or type what you are stuck on in the box above.</p></section>`;
+      return true;
+    }
+    resultsBox.innerHTML = resultsHtml(hits, stageNow(), ui, name);
+    bindResults(hits, name, ui);
+    return true;
+  }
+
   // Put a query in the box and run it. Returns false when the page is not
   // mounted, so the caller knows it has to route here first rather than
   // silently dropping the learner's topic.
@@ -1127,6 +1190,15 @@ export function createGetHelp(options) {
   // render() rebuilds the search box, so the query has to be carried across by
   // hand and re-run. When it is NOT mounted, recording the override is the
   // whole job — the render that follows the caller's navigate() reads it.
+  // What the page is showing right now, re-run after a rebuild. The two things
+  // that rebuild — the stage picker and "Show all stages" — both used to re-run
+  // the QUERY only, which is correct for a typed search and silently wrong for a
+  // section view, whose box is deliberately empty.
+  function rerunCurrentView(ui, query) {
+    if (query.trim()) { runSearch(query, ui); return; }
+    if (activeSection) searchSection(activeSection.id, activeSection.label);
+  }
+
   function setStage(next) {
     const n = Number(next);
     if (!Number.isFinite(n) || n < 1 || n > options.maxStage) return;
@@ -1139,8 +1211,8 @@ export function createGetHelp(options) {
     const input = ui.$("#gh-query");
     if (!input) return;
     input.value = query;
-    if (query.trim()) runSearch(query, ui);
+    rerunCurrentView(ui, query);
   }
 
-  return { render, renderSession, sessionHere, attachShell, sessionHint, searchQuery, search, setStage };
+  return { render, renderSession, sessionHere, attachShell, sessionHint, searchQuery, search, setStage, searchSection };
 }

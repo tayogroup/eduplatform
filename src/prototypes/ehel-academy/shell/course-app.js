@@ -717,6 +717,7 @@ export function createCourseApp(config) {
     // thing for a search-driven learner to want.
     if (IS_TUTORING) {
       for (const option of $$('#unit-select option[value="year-plan"], #top-unit-select option[value="year-plan"]')) option.remove();
+      paintTutoringSections();
     }
     // The nav repaints on its own — completing a section calls renderNav()
     // without a route change — so it cannot rely on renderRoute's sweep.
@@ -811,6 +812,58 @@ export function createCourseApp(config) {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
+  // --- English's tutoring picker offers SECTIONS, not unit themes -----------
+  // Mathematics' unit titles ARE topics — "Probability", "Angles", "2D Shapes" —
+  // so picking one and searching it is a good question. English's are themes:
+  // "There's a Lesson in That", "People and Work", "Nature's Power". Searching
+  // those returns the one unit that is named that and nothing a learner stuck on
+  // homework would want, so the picker that works for Mathematics is hollow here
+  // even though the plumbing is identical.
+  //
+  // What an English learner is stuck on is a PART OF THE COURSE, so that is what
+  // this category's picker offers. Owner's list, in the owner's order. The ids
+  // are the section ids the topic index tags every topic with, which is what
+  // makes them selectable at all — `dictionary` is the id behind "Vocabulary"
+  // and `ebooks` the one behind "Books", and getting either wrong silently
+  // selects nothing (get-help.js :: searchSection).
+  //
+  // Deliberately NOT the shell's `sections` list: that is what a learner walks
+  // inside one unit, it carries entries this category has no use for (Overview,
+  // Video lesson, My progress, Study Plan), and its order is a teaching sequence
+  // rather than a menu of things to be stuck on.
+  const TUTORING_ENGLISH_SECTIONS = [
+    ["dictionary", "Vocabulary"], ["reading", "Reading & story"], ["comprehension", "Comprehension"],
+    ["grammar", "Grammar"], ["writing", "Writing"], ["activities", "Activities"],
+    ["games", "Games"], ["quiz", "Quiz"], ["ebooks", "Books"],
+  ];
+  // Repainted after onNavRendered on every nav render, not once at boot, because
+  // English rebuilds its own pickers there (english.js :: renderUnitPickers) and
+  // would otherwise put the unit list straight back. Idempotent: the marker
+  // attribute makes a repaint over an already-painted picker a no-op, so this
+  // costs one attribute read per render rather than a rebuild.
+  function paintTutoringSections() {
+    if (config.subjectKey !== "english" || !config.getHelp) return;
+    for (const picker of [$("#unit-select"), $("#top-unit-select")]) {
+      if (!picker || picker.dataset.tutoringSections === "true") continue;
+      // The prerequisite entry is kept, exactly as Mathematics keeps it: a
+      // placement exam is a reasonable thing for a search-driven learner to
+      // want, and it is the one entry here that is a PLACE rather than a topic.
+      // -1 is PREREQ_UNIT (shell/placement.js). Written as a literal rather than
+      // imported: the shell has no other use for that module, and the value is
+      // already hard-coded into every subject's option markup, which is what
+      // this reads back.
+      const prereq = picker.querySelector('option[value="-1"]')?.outerHTML || "";
+      picker.innerHTML = prereq + TUTORING_ENGLISH_SECTIONS
+        .map(([id, label]) => `<option value="section:${id}">${escapeHtml(label)}</option>`).join("");
+      // Nothing is selected on purpose. The shell loaded some unit behind this
+      // page and none of these options describes it, so a selected entry would
+      // be a claim about where the learner is; the placeholder asks instead.
+      picker.insertAdjacentHTML("afterbegin", '<option value="" selected disabled>What are you stuck on?</option>');
+      picker.setAttribute("aria-label", "Choose what you are stuck on");
+      picker.dataset.tutoringSections = "true";
+    }
+  }
+
   // --- the tutoring category's topbar pickers SEARCH, they do not navigate ---
   // For a school learner the Stage and Unit pickers are position: "take me to
   // Unit 9". The tutoring category holds no position — the unit the shell
@@ -880,6 +933,17 @@ export function createCourseApp(config) {
         return;
       }
       if (picker.id !== "unit-select" && picker.id !== "top-unit-select") return;
+      // English's section picker (paintTutoringSections). Handled before the
+      // unit test because these values are not numbers and would otherwise fall
+      // through to the subject's own handler and navigate.
+      if (String(picker.value).startsWith("section:")) {
+        const id = picker.value.slice("section:".length);
+        const label = topicOf(picker.selectedOptions[0]);
+        event.stopPropagation();
+        if (route !== "get-help") navigate("get-help");
+        config.getHelp.searchSection(id, label);
+        return;
+      }
       // Everything except the two non-topic entries: "year-plan" is not a
       // number at all, and the prerequisite is PREREQ_UNIT (-1). Zero is NOT
       // one of them — Intensive English Level 1 opens on a real "Unit 0: The

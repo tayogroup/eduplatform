@@ -296,6 +296,68 @@ export function createCourseApp(config) {
       }))
     : [];
   if (config.getHelp?.attachShell) config.getHelp.attachShell({ tutoring: IS_TUTORING, emitEvent: emitProgress, hiddenSections: TUTORING_HIDDEN, subjects: TUTORING_SUBJECTS });
+
+  // The same list again, in the TOPBAR, so it is reachable from a content page.
+  //
+  // Owner, 2026-08-27: "once the student is in the content page, they cannot
+  // change the course, for example from english to math." They were right, and
+  // the panel above is why — subjectSwitcher() is called from get-help.js ::
+  // render() alone, so "Your subjects" exists on the SEARCH page and nowhere
+  // else. A tutoring learner reading a lesson has no sidebar either
+  // (body.tutoring-nav hides it), so from a section there was no subject
+  // switcher on screen and no visible way back to the page that has one. The
+  // routes that did exist were the topbar's stage/unit pickers, which reach the
+  // search only as a side effect of SEARCHING, and browser Back.
+  //
+  // So this is the missing half of a feature rather than a new one: same list,
+  // same launch, same rules — drawn where the learner actually is. The panel on
+  // the search page stays, because that page is this category's home and the
+  // panel says the anchor stage per subject, which a <select> cannot.
+  //
+  // Built with DOM calls rather than innerHTML because escapeHtml is defined
+  // below this point; it also means no escaping to get wrong. Injected into
+  // .top-actions, which every subject's index.html already has, so this is one
+  // shell change and not six — the same reason the tutoring pickers are an
+  // overlay here rather than a branch in each subject file.
+  //
+  // Silent unless it can do something: no token means no list (local dev, a
+  // direct CDN visit) and one subject means nothing to switch to. Selecting the
+  // subject already open is a no-op with an empty value rather than a launch
+  // spent arriving where you are — the rule the panel keeps by drawing that
+  // entry as a span.
+  function mountTutoringSubjectPicker() {
+    if (!IS_TUTORING) return;
+    const choices = TUTORING_SUBJECTS.filter((entry) => entry.here || entry.href);
+    if (choices.length < 2) return;
+    const actions = $(".top-actions");
+    if (!actions || $("#subject-select")) return;
+    const select = document.createElement("select");
+    select.id = "subject-select";
+    // top-grade-picker for the styling that already exists (adding a rule to
+    // course-ui.css would make five other subjects' bundles stale over a
+    // cosmetic change — see the shared-stylesheet coupling in CLAUDE.md);
+    // top-subject-picker so a later stylesheet can tell them apart.
+    select.className = "top-grade-picker top-subject-picker";
+    select.setAttribute("aria-label", "Choose subject");
+    for (const entry of choices) {
+      const option = document.createElement("option");
+      option.value = entry.here ? "" : entry.href;
+      option.textContent = entry.label;
+      option.selected = entry.here;
+      select.append(option);
+    }
+    select.addEventListener("change", () => {
+      const href = select.value;
+      if (!href) return;
+      // A full page load through course_launch.php, exactly as the panel's
+      // links do: the launch mints that subject's own token and resolves its
+      // own anchor stage, so a switch cannot land a learner in a subject at
+      // another subject's level.
+      location.href = href;
+    });
+    actions.prepend(select);
+  }
+  mountTutoringSubjectPicker();
   const emitProgressSummary = () => {
     const base = {
       type: "progress.summary", unit: PROGRESS_UNIT,

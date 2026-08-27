@@ -870,8 +870,28 @@ export function createCourseApp(config) {
   function paintTutoringSections() {
     const ids = TUTORING_SECTION_IDS[config.subjectKey];
     if (!ids || !config.getHelp) return;
+    // Only the sections THIS GRADE draws. The list above is per subject and
+    // cannot be per grade: English draws Books at Grades 1-4 and the Story
+    // Library at 5-8, so the fixed list offered "Books" at Grade 5, where no
+    // such route exists. Picking it selected a section nothing renders — the
+    // portal-allowlist failure shape, which is not a 404 but a silent landing
+    // on whatever the router falls back to.
+    //
+    // Asked of the NAV rather than of a second list, for the same reason the
+    // idempotence test below asks what the picker CONTAINS: a nav entry is the
+    // grade's own answer to "does this section exist here", produced by the code
+    // that actually draws it, so it cannot drift from what renders. A second
+    // per-grade table would be a copy, and the copy is what goes stale.
+    //
+    // An empty nav means it has not been drawn yet, not that the grade has no
+    // sections, so the picker is left untouched rather than painted with
+    // nothing — the next nav render repaints it.
+    const live = new Set($$("[data-route]").map((el) => el.dataset.route));
+    if (!live.size) return;
+    const offered = ids.filter((id) => live.has(id));
+    if (!offered.length) return;
     const replace = SECTIONS_REPLACE_UNITS.has(config.subjectKey);
-    const options = ids
+    const options = offered
       .map((id) => `<option value="section:${id}">${escapeHtml(tutoringSectionLabel(id))}</option>`).join("");
     for (const picker of [$("#unit-select"), $("#top-unit-select")]) {
       if (!picker || picker.querySelector('option[value^="section:"]')) continue;

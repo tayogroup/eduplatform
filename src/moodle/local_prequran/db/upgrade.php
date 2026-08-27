@@ -822,5 +822,13 @@ function xmldb_local_prequran_upgrade($oldversion): bool {
         upgrade_plugin_savepoint(true, 202607310030, 'local', 'prequran');
     }
 
+    if ($oldversion < 202608270031) {
+        // Per-subject tutoring anchors: the ±2 help window stops being drawn
+        // around one declared school year for all six subjects at once. Empty
+        // table = today's behaviour, so this changes nothing until a row exists.
+        xmldb_local_prequran_ensure_tutoring_anchor_schema();
+        upgrade_plugin_savepoint(true, 202608270031, 'local', 'prequran');
+    }
+
     return true;
 }

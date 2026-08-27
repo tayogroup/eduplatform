@@ -73,6 +73,7 @@ function xmldb_local_prequran_install(): void {
     xmldb_local_prequran_ensure_content_authoring_schema();
     xmldb_local_prequran_ensure_exam_capture_schema();
     xmldb_local_prequran_ensure_syllabus_schema();
+    xmldb_local_prequran_ensure_tutoring_anchor_schema();
 
     require_once($CFG->dirroot . '/local/prequran/db/progresslib.php');
     xmldb_local_prequran_ensure_progress_schema();

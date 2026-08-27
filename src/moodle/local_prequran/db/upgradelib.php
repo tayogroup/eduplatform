@@ -6672,3 +6672,54 @@ function xmldb_local_prequran_ensure_student_availability_schema(): void {
         xmldb_local_prequran_add_field_if_missing($dbman, $table, xmldb_local_prequran_field_text('availability_json'));
     }
 }
+
+/**
+ * Per-subject tutoring anchor: the stage a tutoring learner's help window is
+ * drawn around, for ONE subject.
+ *
+ * The tutoring-support category has no curriculum position, so its ±2 help
+ * window has to be anchored on something. That was the child's single declared
+ * school year (student_profile.current_grade) for every subject at once — which
+ * is the assumption this population most reliably breaks: a child who came for
+ * help is routinely at their year in one subject and two below it in another,
+ * and one number cannot say so. A row here overrides the declared year for one
+ * subject and leaves the rest alone.
+ *
+ * Deliberately sparse. No row means the declared year still answers, exactly as
+ * it did before this table existed, so it ships dark: nothing changes for any
+ * learner until somebody sets an anchor. `source` records who decided —
+ * 'staff', 'parent', 'learner', or 'placement' once the exam reports a stage
+ * (it does not yet; see pqpg_tutoring_stage).
+ *
+ * `subject` holds the slug pqpg_tutoring_subject() answers with (eng, math,
+ * sci, comp, gp, intensive-eng), not the app directory: it is the key half of
+ * the umbrella course idnumber, which is what the launch resolves through.
+ */
+function xmldb_local_prequran_ensure_tutoring_anchor_schema(): void {
+    global $DB;
+
+    $dbman = $DB->get_manager();
+
+    xmldb_local_prequran_create_table_if_missing(
+        $dbman,
+        new xmldb_table('local_prequran_tutoring_anchor'),
+        [
+            xmldb_local_prequran_field_id(),
+            xmldb_local_prequran_field_int('userid'),
+            xmldb_local_prequran_field_char('subject', 20),
+            xmldb_local_prequran_field_int('stage', 3, 0),
+            xmldb_local_prequran_field_char('source', 20, 'staff'),
+            xmldb_local_prequran_field_int('setby'),
+            xmldb_local_prequran_field_int('timecreated'),
+            xmldb_local_prequran_field_int('timemodified'),
+        ],
+        [
+            new xmldb_key('primary', XMLDB_KEY_PRIMARY, ['id']),
+            // One anchor per learner per subject: the resolution below reads a
+            // single row and a second one would make which stage wins a matter
+            // of insertion order.
+            new xmldb_key('preqtutanch_uix', XMLDB_KEY_UNIQUE, ['userid', 'subject']),
+        ],
+        []
+    );
+}

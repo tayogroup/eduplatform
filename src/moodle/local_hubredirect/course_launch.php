@@ -222,6 +222,23 @@ if ($pqcl_ehelkey !== '' && $pqcl_ehelcourseid > 0) {
     // Host from the request, path and scheme from wwwroot. See
     // pqh_seb_request_base().
     $pqcl_base = pqh_seb_request_base();
+    // Which tutoring subject this learner was last in, so the single "Tutor Me"
+    // dashboard card resumes where they were instead of always opening the same
+    // subject. Written on the learner's OWN launch only: a parent or admin
+    // opening the child's course is not the child choosing a subject, and
+    // letting it write would move the card under them.
+    //
+    // A user preference rather than a column: it is a UI convenience with no
+    // reporting meaning, and losing it costs one tap.
+    $pqcl_tutslug = pqpg_tutoring_subject($pqcl_ehelkey);
+    if ($pqcl_tutslug !== null && $pqcl_target === (int)$USER->id) {
+        try {
+            set_user_preference('local_prequran_tutoring_subject', $pqcl_tutslug, $pqcl_target);
+        } catch (Throwable $pqcl_prefex) {
+            // Never block a launch to remember where it went.
+            debugging('Tutoring subject preference not saved: ' . $pqcl_prefex->getMessage(), DEBUG_DEVELOPER);
+        }
+    }
     $pqcl_url = pqpg_ehel_launch_url($pqcl_target, $pqcl_ehelkey, $pqcl_env, $pqcl_base);
     if ($pqcl_url !== '') {
         // Focus mode: ordinary tab, but the app requests fullscreen and reports

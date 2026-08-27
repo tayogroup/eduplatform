@@ -114,6 +114,9 @@ function pqpg_mint_token(int $userid, string $coursekey, string $env = '', int $
     // tokens minted before the registry existed stay valid until expiry.
     $jti = bin2hex(random_bytes(8));
     $header = pqpg_b64url(json_encode(['alg' => 'HS256', 'typ' => 'JWT'], JSON_UNESCAPED_SLASHES));
+    // Resolved once: it decides both the claim below and whether the tutoring
+    // subject list is worth the enrolment query, which nothing else pays for.
+    $category = pqpg_launch_category($userid);
     // `role` rides in the signed payload so the app reads it from the token
     // rather than from a query string a learner could edit. The app cannot
     // VERIFY the signature — it has no secret — so this decides presentation
@@ -124,7 +127,16 @@ function pqpg_mint_token(int $userid, string $coursekey, string $env = '', int $
         // 'tutoring' for the tutoring-support cohort, null for everyone else —
         // the app draws the subject-first tutoring UI on it (see
         // pqpg_launch_category). Same presentation-only weight as role.
-        'category' => pqpg_launch_category($userid),
+        'category' => $category,
+        // The tutoring subjects this learner is enrolled in, each with the
+        // stage its help window anchors on — what the app's subject picker
+        // draws, so a tutoring learner can move between subjects from inside
+        // the app instead of going back out to the dashboard. Null for
+        // everyone else, and null too when the lookup fails, which the app
+        // reads as "not known" and draws no picker for. Presentation only,
+        // like every claim here: opening a subject still goes through
+        // course_launch.php, where enrolment is actually checked.
+        'tutoring' => $category === 'tutoring' ? pqpg_tutoring_subjects($userid) : null,
         // Present only when an admin has suspended this course, so a token
         // minted before the setting existed simply has no opinion and the
         // app falls through to gating.json.
@@ -160,24 +172,48 @@ function pqpg_mint_token(int $userid, string $coursekey, string $env = '', int $
  * non-null here is what makes a course launchable, so adding a subject is
  * this one edit.
  */
-function pqpg_ehel_app_base(string $coursekey): ?array {
-    // slug => [app directory, the URL param that carries the level, the letter
-    // the course key numbers with]. The app directory matches the Bunny deploy
-    // target in tools/upload-app-to-bunny.js (app/<dir>), and the param matches
-    // that subject's `param:` in shell/subjects/<dir>.js — English routes by
-    // ?grade=, Intensive English by ?level=, everything else by ?stage=. Get
-    // either wrong and the app opens on its default stage instead of the
-    // learner's, which looks like working software.
-    $subjects = [
-        'eng'  => ['english', 'grade', 'g'],
-        'math' => ['mathematics', 'stage', 'g'],
-        'sci'  => ['science', 'stage', 'g'],
-        'comp' => ['computing', 'stage', 'g'],
-        'gp'   => ['global-perspectives', 'stage', 'g'],
+/**
+ * The EHEL subject table: slug => everything the server needs to know about a
+ * subject, in the order a learner should be offered them.
+ *
+ *   dir       the app directory. Matches the Bunny deploy target in
+ *             tools/upload-app-to-bunny.js (app/<dir>).
+ *   param     the URL param that carries the level. Matches that subject's
+ *             `param:` in shell/subjects/<dir>.js — English routes by ?grade=,
+ *             Intensive English by ?level=, everything else by ?stage=. Get it
+ *             wrong and the app opens on its default stage instead of the
+ *             learner's, which looks like working software.
+ *   letter    the letter the course key numbers with. Part of the subject's
+ *             identity, not decoration: accepting ehel-eng-l01 would resolve a
+ *             level to a grade and launch the wrong thing.
+ *   maxstage  the highest stage the subject offers. Mirrors `maxStage:` in the
+ *             same shell/subjects/<dir>.js — Intensive English has two CEFR
+ *             levels where the rest have eight stages. Read only to clamp a
+ *             tutoring anchor, so a stale value cannot break a course launch;
+ *             it would only let an anchor sit above a stage that exists.
+ *   label     the subject's name. Mirrors `subjectLabel:` in the same file.
+ *             Minted into the launch token so the tutoring subject picker can
+ *             draw the subjects a learner is enrolled in without the shell
+ *             holding a seventh copy of this list.
+ *   alias     true for a key kept only to resolve old launch URLs. Excluded
+ *             from anything that ENUMERATES subjects, so the picker never
+ *             offers Intensive English twice.
+ *
+ * Extracted from pqpg_ehel_app_base() when the tutoring anchor needed the same
+ * table: two copies of this would disagree about what a subject is, and the
+ * launch and the anchor would then disagree about which stage to open.
+ */
+function pqpg_ehel_subject_map(): array {
+    return [
+        'eng'  => ['dir' => 'english', 'param' => 'grade', 'letter' => 'g', 'maxstage' => 8, 'label' => 'English'],
+        'math' => ['dir' => 'mathematics', 'param' => 'stage', 'letter' => 'g', 'maxstage' => 8, 'label' => 'Mathematics'],
+        'sci'  => ['dir' => 'science', 'param' => 'stage', 'letter' => 'g', 'maxstage' => 8, 'label' => 'Science'],
+        'comp' => ['dir' => 'computing', 'param' => 'stage', 'letter' => 'g', 'maxstage' => 8, 'label' => 'Computing'],
+        'gp'   => ['dir' => 'global-perspectives', 'param' => 'stage', 'letter' => 'g', 'maxstage' => 8, 'label' => 'Global Perspectives'],
         // Intensive English is published by the catalog as ehel-intensive-eng-lNN
-        // and that is the canonical form, because this function is looked up by
-        // a Moodle course idnumber and that is what catalog_sync writes.
-        'intensive-eng' => ['intensive-english', 'level', 'l'],
+        // and that is the canonical form, because pqpg_ehel_app_base() is looked
+        // up by a Moodle course idnumber and that is what catalog_sync writes.
+        'intensive-eng' => ['dir' => 'intensive-english', 'param' => 'level', 'letter' => 'l', 'maxstage' => 2, 'label' => 'Intensive English'],
         // The app emitted ehel-ien-lNN until 2026-08-21, which missed both the
         // curriculum-map join and the Moodle course lookup — a family saw the
         // raw key with an inflated percent, and push_gradebook() soft-skipped
@@ -189,15 +225,35 @@ function pqpg_ehel_app_base(string $coursekey): ?array {
         // fix, or one from a browser still holding the old app bundle, and both
         // outlive the release. It costs one array entry; dropping it turns an
         // old link into a course that opens on its default level.
-        'ien'  => ['intensive-english', 'level', 'l'],
+        'ien'  => ['dir' => 'intensive-english', 'param' => 'level', 'letter' => 'l', 'maxstage' => 2, 'label' => 'Intensive English', 'alias' => true],
     ];
+}
+
+/**
+ * Every real subject slug, in offer order — the alias excluded, because this is
+ * what ENUMERATES subjects and Intensive English must appear once.
+ */
+function pqpg_ehel_subject_slugs(): array {
+    $slugs = [];
+    foreach (pqpg_ehel_subject_map() as $slug => $subject) {
+        if (empty($subject['alias'])) {
+            $slugs[] = $slug;
+        }
+    }
+    return $slugs;
+}
+
+function pqpg_ehel_app_base(string $coursekey): ?array {
+    $subjects = pqpg_ehel_subject_map();
     if (!preg_match('/^ehel-([a-z-]+)-([gl])(\d{2})$/', $coursekey, $m)) {
         return null;
     }
     if (!isset($subjects[$m[1]])) {
         return null;
     }
-    [$subjectdir, $levelparam, $letter] = $subjects[$m[1]];
+    $subjectdir = $subjects[$m[1]]['dir'];
+    $levelparam = $subjects[$m[1]]['param'];
+    $letter = $subjects[$m[1]]['letter'];
     // The letter is part of the subject's identity, not decoration: accepting
     // ehel-eng-l01 would resolve a level to a grade and launch the wrong thing.
     if ($m[2] !== $letter) {
@@ -232,39 +288,167 @@ function pqpg_tutoring_subject(string $coursekey): ?string {
 }
 
 /**
- * The stage a tutoring learner's launch anchors on — their declared school
- * year, read from the student profile the intake fills (current_grade).
+ * The explicitly-set tutoring anchor for one subject, or 0 if there is none.
  *
- * This is the anchor of the app's ±2 help window, refined later by the
- * placement exam; a profile the intake has not filled yet anchors mid-range
- * rather than at Stage 1, because a wrong-but-central anchor still shows the
- * child's material inside the default window.
- *
- * Two subject quirks are absorbed here rather than in the app: Global
- * Perspectives Stage 5 is withdrawn (two of six skills exist), so a year-5
- * child anchors at 6 — their age cohort's next stage — instead of landing on
- * the withdrawal notice; Intensive English's axis is CEFR levels, not school
- * years, so it always opens at Level 1 and its own placement moves the learner.
+ * A row here is somebody's decision — staff, a parent, the learner, and one day
+ * the placement exam — that this child's help window for THIS subject should be
+ * drawn around a stage other than their declared school year. Absent is the
+ * normal case and means "nobody has said", not "stage 0".
  */
-function pqpg_tutoring_stage(int $userid, string $slug): int {
+function pqpg_tutoring_anchor(int $userid, string $slug): int {
     global $DB;
-    if ($slug === 'intensive-eng') {
-        return 1;
+    try {
+        if (!$DB->get_manager()->table_exists(new xmldb_table('local_prequran_tutoring_anchor'))) {
+            return 0;
+        }
+        return (int)$DB->get_field('local_prequran_tutoring_anchor', 'stage',
+            ['userid' => $userid, 'subject' => $slug], IGNORE_MISSING);
+    } catch (Throwable $e) {
+        // Unreadable is the same answer as unset: fall back to the declared year.
+        return 0;
     }
-    $declared = 0;
+}
+
+/**
+ * The learner's declared school year, or 0 — the intake's `current_grade`, free
+ * text ("Grade 4", "Year 4", "4"), so a number is dug out of it.
+ */
+function pqpg_tutoring_declared_stage(int $userid): int {
+    global $DB;
     try {
         $grade = (string)$DB->get_field('local_prequran_student_profile', 'current_grade', ['userid' => $userid], IGNORE_MISSING);
         if (preg_match('/(\d+)/', $grade, $m)) {
-            $declared = (int)$m[1];
+            return (int)$m[1];
         }
     } catch (Throwable $e) {
-        // No profile table or unreadable value — fall through to the default.
+        // No profile table or unreadable value — the caller defaults.
     }
-    $stage = ($declared >= 1 && $declared <= 8) ? $declared : 4;
+    return 0;
+}
+
+/**
+ * The stage a tutoring learner's launch anchors on, for ONE subject.
+ *
+ * This is the anchor of the app's +/-2 help window. It resolves in one order,
+ * most specific first:
+ *
+ *   1. an explicit anchor row for this subject  (pqpg_tutoring_anchor)
+ *   2. the declared school year from the intake (current_grade)
+ *   3. 4, mid-range — a profile the intake has not filled yet anchors in the
+ *      middle rather than at Stage 1, because a wrong-but-central anchor still
+ *      shows the child's own material inside the default window.
+ *
+ * Step 1 is why this takes a subject. It used to be one declared year answering
+ * for all six subjects at once, and that is the assumption the tutoring
+ * population most reliably breaks: a child who came for help is routinely at
+ * their year in one subject and two below it in another. Nothing changes for a
+ * learner with no anchor row — the chain falls straight through to step 2,
+ * which is what it always did.
+ *
+ * THE PLACEMENT EXAM IS NOT IN THIS CHAIN, and the older version of this
+ * docblock claiming the anchor is "refined later by the placement exam" was
+ * describing an intention, not code. The exam emits `checkpoint.result` with a
+ * percent and a pass flag (shell/placement.js) and no stage at all, so there is
+ * nothing here to read: turning a percentage into a stage would be inventing a
+ * mapping nobody measured. It slots in at step 1 as `source = placement` the
+ * day the exam reports the stage it recommends, and needs no change here.
+ *
+ * Two subject quirks are absorbed at the end rather than in the app, and they
+ * apply to an explicit anchor too — they are facts about the SUBJECT, not about
+ * the learner. Global Perspectives Stage 5 is withdrawn (two of six skills
+ * exist), so a year-5 child anchors at 6, their age cohort's next stage,
+ * instead of landing on the withdrawal notice. And every subject's anchor is
+ * held inside the stages it actually offers, which is what stops an anchor of 6
+ * opening Intensive English — two CEFR levels — above its top.
+ *
+ * Intensive English no longer returns Level 1 unconditionally: an explicit
+ * anchor is exactly how a learner placed at Level 2 gets there, and Level 1
+ * remains what everyone without one gets, because a school year is not a CEFR
+ * level and reading "Grade 6" as "Level 6" would be worse than the default.
+ */
+function pqpg_tutoring_stage(int $userid, string $slug): int {
+    $stage = pqpg_tutoring_anchor($userid, $slug);
+    if ($stage < 1) {
+        // A school year is meaningless on Intensive English's CEFR axis, so the
+        // declared year is skipped entirely there and the default is Level 1.
+        $stage = $slug === 'intensive-eng' ? 1 : pqpg_tutoring_declared_stage($userid);
+    }
+    if ($stage < 1) {
+        $stage = 4;
+    }
+    return pqpg_tutoring_clamp_stage($slug, $stage);
+}
+
+/**
+ * Hold a stage inside the range its subject actually publishes, and off Global
+ * Perspectives' withdrawn Stage 5.
+ *
+ * An unknown slug is clamped to 1-8, the shape five of the six subjects use —
+ * this is reached with a slug pqpg_tutoring_subject() has already resolved, so
+ * that branch is a floor rather than a case that happens.
+ */
+function pqpg_tutoring_clamp_stage(string $slug, int $stage): int {
+    $subject = pqpg_ehel_subject_map()[$slug] ?? null;
+    $max = $subject ? (int)$subject['maxstage'] : 8;
+    $stage = max(1, min($max, $stage));
     if ($slug === 'gp' && $stage === 5) {
         $stage = 6;
     }
     return $stage;
+}
+
+/**
+ * The tutoring subjects this learner is enrolled in, each with the stage its
+ * help window anchors on — minted into the launch token so the app's subject
+ * picker can draw them.
+ *
+ * DERIVED FROM ENROLMENT, never from the subject table: the picker then offers
+ * exactly what the learner can actually open, and a family who bought four
+ * subjects is not shown six. It is also why the shell needs no list of its own,
+ * which is the failure the tutoring topbar picker was rewritten to avoid — a
+ * hand-kept copy of somebody else's vocabulary is only as complete as the day
+ * it was written.
+ *
+ * Presentation only, like every other claim in the token: the app draws it, and
+ * opening any of them still goes through course_launch.php, where enrolment is
+ * checked properly. Returns null rather than an empty list when the lookup
+ * fails, so the app can tell "not known" from "none" and simply draw no picker.
+ */
+function pqpg_tutoring_subjects(int $userid): ?array {
+    global $CFG;
+    try {
+        require_once($CFG->libdir . '/enrollib.php');
+        $enrolled = [];
+        foreach (enrol_get_users_courses($userid, true, 'idnumber') as $course) {
+            $slug = pqpg_tutoring_subject((string)($course->idnumber ?? ''));
+            if ($slug !== null) {
+                $enrolled[$slug] = true;
+            }
+        }
+        $subjects = [];
+        // Walked in the subject table's order, not the enrolment query's, so
+        // the picker reads the same way for every learner.
+        foreach (pqpg_ehel_subject_slugs() as $slug) {
+            if (!isset($enrolled[$slug])) {
+                continue;
+            }
+            $subject = pqpg_ehel_subject_map()[$slug];
+            $subjects[] = [
+                'subject' => $slug,
+                'label' => $subject['label'],
+                'stage' => pqpg_tutoring_stage($userid, $slug),
+                // "Grade 4" / "Stage 4" / "Level 1" — derived from the URL param
+                // the subject routes by rather than stored twice.
+                'stageWord' => ucfirst($subject['param']),
+                'course' => 'ehel-tutoring-' . $slug,
+            ];
+        }
+        return $subjects;
+    } catch (Throwable $e) {
+        // No picker beats a wrong picker: the app falls back to the subject the
+        // learner is already in.
+        return null;
+    }
 }
 
 /**

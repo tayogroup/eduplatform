@@ -1967,9 +1967,44 @@ function pqh_design_shell_html(string $shellclass, string $active = '', array $o
     $html .= '<a class="pqh-gnav__brand" href="' . $items['dashboard'][1]->out(false) . '" title="' . s($brand) . '">'
         . '<span class="pqh-gnav__mark' . ($brandlogo !== '' ? ' pqh-gnav__mark--img' : '') . '">' . ($brandlogo !== '' ? '<img src="' . s($brandlogo) . '" alt="' . s($brand) . '">' : s($initials)) . '</span>'
         . '<span class="pqh-gnav__name">' . s($brand) . '</span></a>';
+    // THE ROW FOR THE PAGE YOU ARE ON IS HIGHLIGHTED, NEVER HIDDEN.
+    //
+    // Five pages asked for both at once -- student_dashboard, student_workplace,
+    // teacher_workspace, admin_workspace and workspace_dashboard each passed
+    // $active AND listed that same key in hideitems, on the older convention
+    // that you do not show somebody a link to the page they are already on.
+    // The two instructions contradict, hiding ran second, and the effect was
+    // that .is-active could not appear: measured across the five pages a
+    // student can reach, ZERO rows carried it. The highlight was dead code on
+    // every one of them.
+    //
+    // Marking wins, so a hideitems entry that names the active row is ignored.
+    // Done here rather than by editing the five pages because it is one
+    // convention, and a page that keeps saying "hide me" a year from now should
+    // still get the current answer rather than a stale one.
+    //
+    // ...UNLESS the page has already built its own row for the current page.
+    // The eight live_* pages hide all five defaults and rebuild the whole rail
+    // out of navitems, so un-hiding the default there does not restore a
+    // missing row -- it DUPLICATES one, and both copies then light up. Caught by
+    // rendering live_schedule.php: "[Schedule] | Dashboard | Workspace | School
+    // Hub | [Schedule] | Calendar | Live sessions". So a navitem claiming the
+    // active key means the hide was deliberate and is honoured as written.
+    $navclaims = [];
+    if (!empty($opts['navitems']) && is_array($opts['navitems'])) {
+        foreach ($opts['navitems'] as $navitem) {
+            $navkey = (string)($navitem['key'] ?? '');
+            if ($navkey !== '') {
+                $navclaims[$navkey] = true;
+            }
+        }
+    }
     $gnavitems = $items;
     if (!empty($opts['hideitems']) && is_array($opts['hideitems'])) {
         foreach ($opts['hideitems'] as $hidekey) {
+            if ($active !== '' && (string)$hidekey === $active && !isset($navclaims[$active])) {
+                continue;
+            }
             unset($gnavitems[$hidekey]);
         }
     }
@@ -1981,7 +2016,15 @@ function pqh_design_shell_html(string $shellclass, string $active = '', array $o
         foreach ($opts['navitems'] as $item) {
             $url = ($item['url'] ?? '') instanceof moodle_url ? $item['url']->out(false) : (string)($item['url'] ?? '#');
             $attrs = trim((string)($item['attrs'] ?? ''));
-            $html .= '<a class="pqh-gnav__item"' . ($attrs !== '' ? ' ' . $attrs : '') . ' href="' . $url . '">'
+            // A navitem can be the current page too, and until now it could not
+            // say so: these were emitted with a bare class, so only the four
+            // built-in $items could ever be marked. That is the second reason
+            // the highlight never appeared -- the eight live_* pages hide all
+            // five defaults and rebuild the rail entirely out of navitems, so
+            // there was nothing left that COULD be active. Opt-in by 'key', so
+            // a navitem without one behaves exactly as before.
+            $navactive = ($active !== '' && (string)($item['key'] ?? '') === $active) ? ' is-active' : '';
+            $html .= '<a class="pqh-gnav__item' . $navactive . '"' . ($attrs !== '' ? ' ' . $attrs : '') . ' href="' . $url . '">'
                 . '<svg viewBox="0 0 24 24">' . (string)($item['icon'] ?? '') . '</svg>'
                 . '<span class="pqh-gnav__label">' . s((string)($item['label'] ?? '')) . '</span></a>';
         }
@@ -2081,31 +2124,37 @@ function pqh_live_page_shell_opts(string $title, array $urlparams = [], int $chi
         'navitems' => [
             [
                 'label' => 'Dashboard',
+                'key' => 'dashboard',
                 'url' => $dashboardurl,
                 'icon' => '<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>',
             ],
             [
                 'label' => 'Workspace',
+                'key' => 'workspace',
                 'url' => $workspaceurl,
                 'icon' => '<rect x="2" y="4" width="20" height="5" rx="1"/><path d="M4 9v10M20 9v10M2 19h20"/>',
             ],
             [
                 'label' => 'School Hub',
+                'key' => 'hub',
                 'url' => $huburl,
                 'icon' => '<path d="M3 9.5 12 3l9 6.5"/><path d="M5 10v10a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V10"/>',
             ],
             [
                 'label' => 'Schedule',
+                'key' => 'schedule',
                 'url' => new moodle_url('/local/hubredirect/live_schedule.php', $urlparams + $childparams),
                 'icon' => '<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',
             ],
             [
                 'label' => 'Calendar',
+                'key' => 'calendar',
                 'url' => new moodle_url('/local/hubredirect/live_calendar.php', $urlparams + $childparams),
                 'icon' => '<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/>',
             ],
             [
                 'label' => 'Live sessions',
+                'key' => 'live',
                 'url' => new moodle_url('/local/hubredirect/live_sessions.php', $urlparams),
                 'icon' => '<rect x="2" y="6" width="14" height="12" rx="2"/><path d="m22 8-6 4 6 4V8z"/>',
             ],

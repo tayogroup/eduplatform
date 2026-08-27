@@ -335,6 +335,12 @@ const sections = [
   // so it can neither gate nor count. Free reading that decides whether a unit
   // is finished is not free reading.
   ["story-library", "book-marked", "Story Library"],
+  // Tutoring only, and gated in visibleSections rather than here so the row stays
+  // a plain declaration. A course learner meets words inside the unit that teaches
+  // them — Vocabulary, and the click-popover on any practice sentence. A tutoring
+  // learner arrives from a search with a word they are stuck on and no unit to
+  // meet it in, so they get the whole grade's glossary as a place to look one up.
+  ["glossary", "book-a", "Glossary"],
   ["live", "video", "Live sessions"],
   ["reflect", "sparkles", "My progress"],
 ];
@@ -917,7 +923,7 @@ const unitProgressKey = (unit) => `ehel-english-g${gradeNumber}-u${unit}-progres
 // leaving it demanded here would have made the bar read 100% while the gate held
 // the next unit shut.
 const countableSectionIds = () => sections
-  .filter(([id]) => !["overview", "live", "teacherguide", "unit-plan", "story-library"].includes(id))
+  .filter(([id]) => !["overview", "live", "teacherguide", "unit-plan", "story-library", "glossary"].includes(id))
   .filter(([id]) => (id !== "games" || gamePack) && (id !== "ebooks" || unitEbooks().length))
   .map(([id]) => id);
 // The server's view of every unit, handed over by the shell before load() and
@@ -5142,7 +5148,7 @@ function visibleSections() {
   // unit's 100%, which is why those grades' progress bars stopped at 92% and
   // could never read complete. It is also what made the gate unsafe beyond
   // Grade 1: an uncompletable step in the chain shuts the learner out for good.
-  const available = sections.filter(([id]) => (id !== "games" || gamePack) && (id !== "ebooks" || shelfEbooks().length) && (id !== "teacherguide" || hasGrownUpGuide()) && (id !== "story-library" || hasStoryLibrary()));
+  const available = sections.filter(([id]) => (id !== "games" || gamePack) && (id !== "ebooks" || shelfEbooks().length) && (id !== "glossary" || (IS_TUTORING && Object.keys(sentenceGlossary).length)) && (id !== "teacherguide" || hasGrownUpGuide()) && (id !== "story-library" || hasStoryLibrary()));
   return unitNumber === 10 ? [...available, ["final-quiz", "trophy", "Final course quiz"]] : available;
 }
 
@@ -9319,6 +9325,83 @@ function bindEbookFullscreenExit() {
   });
 }
 
+// ── The tutoring Glossary ────────────────────────────────────────────────────
+// The whole grade's words in one place: definition, an example of the word in
+// use, and both recordings.
+//
+// Only the tutoring category draws it, for the same reason it gets the whole
+// picture-book library rather than one unit's shelf. A course learner meets a
+// word inside the unit that teaches it — Vocabulary, and the click-popover on
+// any practice sentence — so a separate lookup page would be a second door to
+// content they are already standing in front of. A tutoring learner arrives from
+// a search holding a word they are stuck on, with no unit to meet it in.
+//
+// The data is `sentenceGlossary`, already loaded per grade and already the
+// source the popover reads, so this adds no fetch and cannot disagree with the
+// popover about what a word means. `example` is derived by
+// tools/build-english-glossary-examples.mjs from the grade's own sentences
+// (98.0% of 17,692 words have one); a word without one simply shows none rather
+// than an invented sentence.
+let glossaryQuery = "";
+let activeGlossaryWord = null;
+
+function renderGlossary() {
+  const all = Object.entries(sentenceGlossary)
+    .filter(([, entry]) => entry && entry.definition)
+    .sort(([a], [b]) => a.localeCompare(b));
+  if (!all.length) {
+    $("#app").innerHTML = `${pageHeader("Look up a word", "Glossary", "This grade's glossary is not available yet.")}`;
+    icons();
+    return;
+  }
+
+  const draw = () => {
+    const q = glossaryQuery.trim().toLowerCase();
+    // Matched on the word AND the definition: a learner who does not know the
+    // word cannot search for it, but can often describe it.
+    const filtered = q
+      ? all.filter(([word, entry]) => word.toLowerCase().includes(q) || String(entry.definition).toLowerCase().includes(q))
+      : all;
+    if (!filtered.some(([word]) => word === activeGlossaryWord)) activeGlossaryWord = filtered.length ? filtered[0][0] : null;
+    const entry = activeGlossaryWord ? sentenceGlossary[activeGlossaryWord] : null;
+
+    $("#glossary-list").innerHTML = filtered.length
+      ? filtered.slice(0, 400).map(([word, item]) => `<button class="word-row ${word === activeGlossaryWord ? "active" : ""}" data-glossary-entry="${escapeHtml(word)}" type="button"><span><strong>${escapeHtml(word)}</strong><small>${escapeHtml(String(item.definition).slice(0, 46))}${String(item.definition).length > 46 ? "…" : ""}</small></span></button>`).join("")
+      : `<div class="empty">No word matches “${escapeHtml(glossaryQuery)}”.</div>`;
+    // Capped at 400 rows and SAID so, rather than silently truncated: Grade 8
+    // has 3,834 words and a list that quietly stopped would read as a missing
+    // word rather than a long list.
+    $("#glossary-count").textContent = filtered.length > 400
+      ? `showing the first 400 of ${filtered.length} words — type to narrow it`
+      : `${filtered.length} word${filtered.length === 1 ? "" : "s"}`;
+
+    $("#glossary-card").innerHTML = entry
+      ? `<div class="word-card-head"><div><span class="word-type">Glossary word</span><h2>${escapeHtml(activeGlossaryWord)}</h2></div>
+          ${entry.wordAudio?.source ? `<button class="icon-button" id="hear-glossary-word" type="button" title="Listen" aria-label="Listen to ${escapeHtml(activeGlossaryWord)}">${icon("volume-2")}</button>` : ""}</div>
+        <p class="meaning"><span class="field-label">Meaning:</span> ${escapeHtml(entry.definition)}
+          ${entry.definitionAudio?.source ? ` <button class="icon-button" id="hear-glossary-meaning" type="button" title="Listen to the meaning" aria-label="Listen to the meaning of ${escapeHtml(activeGlossaryWord)}">${icon("volume-2")}</button>` : ""}</p>
+        ${entry.example ? `<div class="sentence-card"><small>In a sentence</small><p>${linkGlossaryWords(entry.example, activeGlossaryWord)}</p></div>` : ""}`
+      : "";
+
+    $$("[data-glossary-entry]").forEach((button) => button.addEventListener("click", () => { activeGlossaryWord = button.dataset.glossaryEntry; draw(); icons(); }));
+    // The popover's own call, verbatim (showGlossaryPopover above): same clip,
+    // same cue window, same rate. Two ways to play one recording would drift.
+    $("#hear-glossary-word")?.addEventListener("click", (event) => playAudio(entry.wordAudio.source, {
+      rate: AI_NARRATION_RATE, start: entry.wordAudio.cueStart, end: entry.wordAudio.cueEnd, button: event.currentTarget,
+    }));
+    $("#hear-glossary-meaning")?.addEventListener("click", (event) => playAudio(entry.definitionAudio.source, {
+      rate: AI_NARRATION_RATE, start: entry.definitionAudio.cueStart, end: entry.definitionAudio.cueEnd, button: event.currentTarget,
+    }));
+    icons();
+  };
+
+  $("#app").innerHTML = `${pageHeader("Look up a word", "Glossary", `Every word this grade explains, with what it means, how it is used and how it sounds.`, `${all.length} words`)}
+    <div class="toolbar"><label class="search-box">${icon("search")}<input id="glossary-search" type="search" placeholder="Search a word or its meaning" aria-label="Search the glossary" value="${escapeHtml(glossaryQuery)}"></label><span class="status-chip" id="glossary-count"></span></div>
+    <div class="dictionary-layout"><section class="panel word-list" id="glossary-list"></section><section class="panel word-card" id="glossary-card"></section></div>`;
+  $("#glossary-search").addEventListener("input", (event) => { glossaryQuery = event.target.value; draw(); });
+  draw();
+}
+
 function renderEbooks() {
   ebookWatchActive = false;
   ebookWatchToken += 1;
@@ -11483,7 +11566,7 @@ const config = {
   // 92% and could not open the next unit — a support tool gating progression.
   // It stays in the nav and still ticks when used; it just no longer decides
   // whether a unit is finished.
-  nonCountable: ["overview", "live", "final-quiz", "teacherguide", "year-plan", "unit-plan", "story-library", "worksheet", "handwriting", "grade-dictionary"],
+  nonCountable: ["overview", "live", "final-quiz", "teacherguide", "year-plan", "unit-plan", "story-library", "worksheet", "handwriting", "grade-dictionary", "glossary"],
   gradeSections: [],
   // English draws its own card (renderSectionCompletion): its sections open
   // in a gated chain and its units unlock one another, which the shell's
@@ -11563,6 +11646,7 @@ const config = {
     games: () => renderGames(),
     quiz: () => renderQuiz(),
     ebooks: () => renderEbooks(),
+    glossary: () => renderGlossary(),
     "story-library": () => renderStoryLibrary(),
     live: () => renderLive(),
     reflect: () => renderReflect(),

@@ -2009,6 +2009,7 @@ body.pqh-live-page .main-inner{margin:0!important;padding:0!important;max-width:
 <?php echo pqh_design_shell_css('.pql-shell'); ?>
 </style>
 <style><?php echo pqh_openproject_skin_css('pql', 'pqh-live-page'); ?></style>
+<style><?php echo pqh_learner_chrome_css('.pql-shell'); ?></style>
 <main class="pql-shell">
 <?php echo pqh_design_shell_html('pql-shell', 'live', pqh_live_page_shell_opts('Live Sessions', $urlparams)); ?>
   <div class="pql-wrap">

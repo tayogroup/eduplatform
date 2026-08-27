@@ -172,6 +172,7 @@ echo $OUTPUT->header();
 .pqsr-alert{margin:0 0 14px;padding:11px 13px;border-radius:11px;background:var(--pqh-tint);border:1px solid var(--pqh-tint-2);color:var(--pqh-primary-ink);font-size:13px;font-weight:550}
 </style>
 <style><?php echo pqh_openproject_skin_css('pqsr', 'pqsr-page'); ?></style>
+<style><?php echo pqh_learner_chrome_css('.pqsr-shell'); ?></style>
 <main class="pqsr-shell">
 <?php echo pqh_design_shell_html('pqsr-shell', '', ['title' => 'Exam results']); ?>
   <div class="pqsr-wrap">

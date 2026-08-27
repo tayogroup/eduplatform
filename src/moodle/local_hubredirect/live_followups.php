@@ -504,6 +504,7 @@ body.pqh-live-followups-page .main-inner{margin:0!important;padding:0!important;
 <?php echo pqh_design_shell_css('.pqlf-shell'); ?>
 </style>
 <style><?php echo pqh_openproject_skin_css('pqlf', 'pqh-live-followups-page'); ?></style>
+<style><?php echo pqh_learner_chrome_css('.pqlf-shell'); ?></style>
 <main class="pqlf-shell">
 <?php echo pqh_design_shell_html('pqlf-shell'); ?>
   <div class="pqlf-wrap">

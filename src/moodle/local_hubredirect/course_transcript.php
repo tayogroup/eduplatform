@@ -186,6 +186,7 @@ body.pqct-page #page,body.pqct-page #page-content,body.pqct-page #region-main,bo
 <?php echo pqh_design_shell_css('.pqct-shell'); ?>
 </style>
 <style><?php echo pqh_openproject_skin_css('pqct', 'pqct-page'); ?></style>
+<style><?php echo pqh_learner_chrome_css('.pqct-shell'); ?></style>
 <main class="pqct-shell">
 <?php echo pqh_design_shell_html('pqct-shell'); ?><div class="pqct-wrap">
   <section class="pqct-top">

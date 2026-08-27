@@ -184,6 +184,7 @@ body.pqsy-page #page,body.pqsy-page #page-content,body.pqsy-page #region-main,bo
 <?php echo pqh_design_shell_css('.pqsy-shell'); ?>
 </style>
 <style><?php echo pqh_openproject_skin_css('pqsy', 'pqsy-page'); ?></style>
+<style><?php echo pqh_learner_chrome_css('.pqsy-shell'); ?></style>
 <main class="pqsy-shell">
 <?php
 echo pqh_design_shell_html('pqsy-shell', 'workspace', [

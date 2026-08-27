@@ -674,6 +674,7 @@ body.pqh-managed-report-page .main-inner{margin:0!important;padding:0!important;
 <?php echo pqh_design_shell_css('.pqmr-shell'); ?>
 </style>
 <style><?php echo pqh_openproject_skin_css('pqmr', 'pqh-managed-report-page'); ?></style>
+<style><?php echo pqh_learner_chrome_css('.pqmr-shell'); ?></style>
 <main class="pqmr-shell">
 <?php echo pqh_design_shell_html('pqmr-shell'); ?>
   <div class="pqmr-wrap">

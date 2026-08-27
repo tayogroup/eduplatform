@@ -441,6 +441,7 @@ body.pqh-live-calendar-page .main-inner{margin:0!important;padding:0!important;m
 <?php echo pqh_design_shell_css('.pqlcal-shell'); ?>
 </style>
 <style><?php echo pqh_openproject_skin_css('pqlcal', 'pqh-live-calendar-page'); ?></style>
+<style><?php echo pqh_learner_chrome_css('.pqlcal-shell'); ?></style>
 <main class="pqlcal-shell">
 <?php echo pqh_design_shell_html('pqlcal-shell', 'live', pqh_live_page_shell_opts('Live Calendar', $urlparams, $childid)); ?>
   <div class="pqlcal-wrap">

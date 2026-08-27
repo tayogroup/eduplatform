@@ -1135,6 +1135,7 @@ body.pqw-reports-page #page,body.pqw-reports-page #page-content,body.pqw-reports
 <?php echo pqh_design_shell_css('.pqwr-shell'); ?>
 </style>
 <style><?php echo pqh_openproject_skin_css('pqwr', 'pqw-reports-page'); ?></style>
+<style><?php echo pqh_learner_chrome_css('.pqwr-shell'); ?></style>
 <main class="pqwr-shell">
 <?php echo pqh_design_shell_html('pqwr-shell', '', ['title' => 'Workspace Reports']); ?>
   <div class="pqwr-wrap">

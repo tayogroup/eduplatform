@@ -194,6 +194,7 @@ echo $OUTPUT->header();
 @media(max-width:960px){.pqsm-grid{grid-template-columns:1fr}}
 </style>
 <style><?php echo pqh_openproject_skin_css('pqsm', 'pqsm-page'); ?></style>
+<style><?php echo pqh_learner_chrome_css('.pqsm-shell'); ?></style>
 <main class="pqsm-shell">
 <?php echo pqh_design_shell_html('pqsm-shell', '', ['title' => 'Exams']); ?>
   <div class="pqsm-wrap">

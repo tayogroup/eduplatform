@@ -2866,6 +2866,7 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
 </style>
 <style><?php echo pqh_openproject_skin_css(['pqh', 'pqh-teacher', 'pqh-course'], 'pqh-dashboard-page'); ?></style>
 <style><?php echo pqh_openproject_skin_css(['pqh-todo', 'pqh-student-profile', 'pqh-course-panel', 'pqh-course-card', 'pqh-notif', 'pqh-live-session', 'pqh-tkpi', 'pqh-appbar', 'pqh-tccard'], '', '__'); ?></style>
+<style><?php echo pqh_learner_chrome_css('.pqh-shell'); ?></style>
 <main class="pqh-shell pqh-font-<?php echo s($pqhfontsize); ?><?php echo $pqhdensity === 'compact' ? ' pqh-compact' : ''; ?>">
 <?php $pqhdashboardhomeurl = new moodle_url('/local/hubredirect/dashboard.php', $pqhpageparams); ?>
 <nav class="pqh-gnav" aria-label="Global navigation">

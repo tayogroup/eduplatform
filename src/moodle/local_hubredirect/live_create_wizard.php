@@ -815,6 +815,7 @@ body.pqh-live-create-wizard-page .main-inner{margin:0!important;padding:0!import
 <?php echo pqh_design_shell_css('.pqlwiz-shell'); ?>
 </style>
 <style><?php echo pqh_openproject_skin_css('pqlwiz', 'pqh-live-create-wizard-page'); ?></style>
+<style><?php echo pqh_learner_chrome_css('.pqlwiz-shell'); ?></style>
 <main class="pqlwiz-shell">
 <?php echo pqh_design_shell_html('pqlwiz-shell'); ?>
   <div class="pqlwiz-wrap">

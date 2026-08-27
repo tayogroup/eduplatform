@@ -288,6 +288,7 @@ body.pqh-live-recordings-parent-page .main-inner{margin:0!important;padding:0!im
 <?php echo pqh_design_shell_css('.pqlrp-shell'); ?>
 </style>
 <style><?php echo pqh_openproject_skin_css('pqlrp', 'pqh-live-recordings-parent-page'); ?></style>
+<style><?php echo pqh_learner_chrome_css('.pqlrp-shell'); ?></style>
 <main class="pqlrp-shell">
 <?php echo pqh_design_shell_html('pqlrp-shell', 'live', pqh_live_page_shell_opts('Live Recordings', $urlparams, $childid)); ?>
   <div class="pqlrp-wrap">

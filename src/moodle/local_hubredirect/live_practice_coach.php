@@ -360,6 +360,7 @@ body.pqh-practice-coach-report-page .main-inner{margin:0!important;padding:0!imp
 <?php echo pqh_design_shell_css('.pqlpc-shell'); ?>
 </style>
 <style><?php echo pqh_openproject_skin_css('pqlpc', 'pqh-practice-coach-report-page'); ?></style>
+<style><?php echo pqh_learner_chrome_css('.pqlpc-shell'); ?></style>
 <main class="pqlpc-shell">
 <?php echo pqh_design_shell_html('pqlpc-shell'); ?>
   <div class="pqlpc-wrap">

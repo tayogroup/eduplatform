@@ -1669,10 +1669,160 @@ CSS;
 }
 
 /**
+ * Duolingo-styled chrome for the learner's shell: the left rail, its links and
+ * the top bar. Scoped to a page's shell class, so it reaches only the pages
+ * that ask for it -- the staff and parent portals keep the blue system.
+ *
+ * THIS MUST BE EMITTED AFTER pqh_openproject_skin_css(). That generator paints
+ * the rail and the app bar with doubled-class selectors carrying !important
+ * (.pqh-gnav__item.pqh-gnav__item{...!important}), so a later stylesheet is the
+ * only thing that can win. Every selector here is written to match or beat that
+ * (0,2,0) / (0,3,0) shape -- `{$scope} .pqh-gnav__item` is (0,2,0) and later,
+ * `{$scope} .pqh-gnav__item.is-active` is (0,3,0) and later -- which is why the
+ * scope prefix is not decoration and must not be dropped.
+ *
+ * What "Duolingo" means here, concretely: white chrome held together by 2px
+ * grey rules rather than fills; nav rows as uppercase bold labels beside big
+ * chunky icons, each icon in its own colour; the active row a soft blue chip
+ * with a blue outline; and buttons that carry a solid bottom edge and press
+ * into it on :active instead of moving a shadow.
+ *
+ * Layout is left alone wherever the collapsed rail depends on it -- the 248px
+ * width, the 72px collapsed width and the fixed positioning all still come from
+ * pqh_design_shell_css(). The one geometry this does change (row padding) is
+ * restated for .pqh-rail-min below, because forcing it here would otherwise
+ * beat that rule and leave the collapsed icons off-centre.
+ */
+function pqh_duolingo_chrome_css(string $scope): string {
+    return <<<CSS
+/* ---- Duolingo-styled rail + top bar ---- */
+{$scope}{--duo-green:#58cc02;--duo-green-dark:#58a700;--duo-blue:#1cb0f6;--duo-blue-dark:#1899d6;--duo-blue-soft:#ddf4ff;--duo-blue-line:#84d8ff;--duo-line:#e5e5e5;--duo-line-deep:#d6d6d6;--duo-ink:#4b4b4b;--duo-muted:#afafaf;--duo-wash:#f7f7f7;--duo-red:#ff4b4b;--duo-orange:#ff9600;--duo-purple:#ce82ff;--duo-gold:#ffc800}
+
+/* the rail: white, held by a 2px rule, nothing filled until you touch it */
+{$scope} .pqh-gnav{background:#fff!important;border-right:2px solid var(--duo-line)!important;gap:4px}
+{$scope} .pqh-gnav__brand{padding:6px 8px 16px}
+{$scope} .pqh-gnav__mark{border-radius:16px!important;background:var(--duo-green)!important;color:#fff!important;font-size:15px!important;font-weight:800!important;letter-spacing:.04em!important;box-shadow:0 4px 0 var(--duo-green-dark)!important}
+{$scope} .pqh-gnav__mark--img{background:#fff!important;box-shadow:0 0 0 2px var(--duo-line)!important}
+{$scope} .pqh-gnav__name{color:var(--duo-green)!important;font-size:15px!important;font-weight:800!important;letter-spacing:.01em!important}
+
+/* A nav row is a label, not a chip. Uppercase at 12.5px with the icon stepped
+   up to 26px and the stroke to 2.4 is what makes it read as Duolingo rather
+   than as the same row in a different colour. */
+{$scope} .pqh-gnav__item{box-sizing:border-box;gap:12px;min-height:48px;padding:0 12px!important;border:2px solid transparent!important;border-radius:14px!important;background:transparent!important;color:var(--duo-ink)!important;font-size:12.5px!important;font-weight:800!important;letter-spacing:.06em!important;text-transform:uppercase!important;box-shadow:none!important;transition:background .12s ease,border-color .12s ease,color .12s ease}
+{$scope} .pqh-gnav__item svg{width:26px;height:26px;stroke-width:2.4}
+{$scope} .pqh-gnav__item:hover{background:var(--duo-wash)!important;color:var(--duo-ink)!important}
+{$scope} .pqh-gnav__item.is-active{background:var(--duo-blue-soft)!important;border-color:var(--duo-blue-line)!important;color:var(--duo-blue)!important}
+
+/* One colour per destination, the way Duolingo colours LEARN / LEAGUES / SHOP.
+   Keyed on position rather than on a name because the rail's contents differ by
+   role and by page -- any row landing on any of these colours is correct, and a
+   rail longer than the cycle simply repeats it. nth-child counts the brand link
+   as 1, so the first nav row is 2. */
+{$scope} .pqh-gnav>.pqh-gnav__item:nth-child(2) svg{color:var(--duo-green)}
+{$scope} .pqh-gnav>.pqh-gnav__item:nth-child(3) svg{color:var(--duo-blue)}
+{$scope} .pqh-gnav>.pqh-gnav__item:nth-child(4) svg{color:var(--duo-orange)}
+{$scope} .pqh-gnav>.pqh-gnav__item:nth-child(5) svg{color:var(--duo-purple)}
+{$scope} .pqh-gnav>.pqh-gnav__item:nth-child(6) svg{color:var(--duo-gold)}
+{$scope} .pqh-gnav>.pqh-gnav__item:nth-child(7) svg{color:var(--duo-red)}
+{$scope} .pqh-gnav>.pqh-gnav__item:nth-child(8) svg{color:var(--duo-green)}
+{$scope} .pqh-gnav>.pqh-gnav__item:nth-child(9) svg{color:var(--duo-blue)}
+/* !important because the nth-child rules above are (0,4,1) and this is (0,3,1) */
+{$scope} .pqh-gnav__item.is-active svg{color:var(--duo-blue)!important}
+
+{$scope} .pqh-gnav__foot{border-top:2px solid var(--duo-line)!important;padding-top:10px}
+{$scope} .pqh-gnav__foot .pqh-gnav__item{color:var(--duo-muted)!important}
+{$scope} .pqh-gnav__foot .pqh-gnav__item svg{color:var(--duo-muted)}
+{$scope} .pqh-gnav__foot .pqh-gnav__item:hover{background:var(--duo-wash)!important;color:var(--duo-ink)!important}
+/* Logout is the only destructive row here, so it is the only one that goes red.
+   Collapse sits beside it and must not. */
+{$scope} .pqh-gnav__foot a.pqh-gnav__item:hover{color:var(--duo-red)!important}
+{$scope} .pqh-gnav__foot a.pqh-gnav__item:hover svg{color:var(--duo-red)}
+
+/* Collapsed rail: restate the centring, because the padding above would
+   otherwise beat pqh_design_shell_css()'s own .pqh-rail-min rule. */
+{$scope}.pqh-rail-min .pqh-gnav__item{justify-content:center;padding:0!important}
+{$scope}.pqh-rail-min .pqh-gnav__item svg{width:28px;height:28px}
+
+/* The top bar: white, the same 2px rule, no blur and no navy.
+   The selector is doubled to (0,4,0) for ONE declaration's sake. The skin
+   writes `.X-shell:has(.pqh-appbar) .pqh-appbar{border-bottom-width:0!important}`
+   -- doubled by its own generator to (0,4,0) -- so that a navy app bar and a
+   navy page header read as one block with no seam between them. A plain
+   `{$scope} .pqh-appbar` is (0,2,0) and loses that one property while winning
+   every other, which shows up as a white bar with no bottom rule at all. The
+   seam rule has nothing left to close here: the bar is no longer navy, and this
+   page draws no header block under it. */
+{$scope}{$scope} .pqh-appbar.pqh-appbar{height:auto;min-height:66px;background:#fff!important;background-image:none!important;border-bottom:2px solid var(--duo-line)!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;box-shadow:none!important}
+{$scope} .pqh-appbar__brand{color:var(--duo-ink)!important;font-weight:800!important}
+{$scope} .pqh-appbar__brand-icon{stroke:var(--duo-green)!important}
+{$scope} .pqh-appbar__nav{gap:8px}
+/* The solid bottom edge is the whole trick: a 2px border plus a 0 2px 0 shadow
+   reads as a physical key, and :active drops the button onto it. */
+{$scope} .pqh-appbar__nav a,{$scope} .pqh-appbar__nav button{box-sizing:border-box;min-height:42px;padding:0 16px!important;border:2px solid var(--duo-line)!important;border-radius:14px!important;background:#fff!important;color:var(--duo-muted)!important;font-size:12.5px!important;font-weight:800!important;letter-spacing:.06em!important;text-transform:uppercase!important;box-shadow:0 2px 0 var(--duo-line)!important;transition:background .1s ease,border-color .1s ease,color .1s ease,transform .06s ease,box-shadow .06s ease}
+{$scope} .pqh-appbar__nav a:hover,{$scope} .pqh-appbar__nav button:hover{background:var(--duo-wash)!important;border-color:var(--duo-line-deep)!important;color:var(--duo-ink)!important}
+{$scope} .pqh-appbar__nav a:active,{$scope} .pqh-appbar__nav button:active{transform:translateY(2px);box-shadow:none!important}
+{$scope} .pqh-appbar__nav a:focus-visible,{$scope} .pqh-appbar__nav button:focus-visible{outline:3px solid var(--duo-blue-line);outline-offset:2px}
+{$scope} .pqh-appbar__nav a.pqh-appbar__icon{width:42px;padding:0!important}
+{$scope} .pqh-appbar__nav a.pqh-appbar__icon svg{width:20px;height:20px;stroke-width:2.4}
+/* Logout keeps the emphasis it already had -- it is still the one filled button
+   in the bar -- but takes Duolingo's blue rather than its green, so a solid
+   pill can never be confused with "go". The active row's blue is a soft #ddf4ff
+   fill with blue text, which does not collide with a solid #1cb0f6 pill. */
+{$scope} .pqh-appbar__nav .pqh-appbar__logout{background:var(--duo-blue)!important;border-color:var(--duo-blue)!important;color:#fff!important;box-shadow:0 4px 0 var(--duo-blue-dark)!important}
+{$scope} .pqh-appbar__nav .pqh-appbar__logout:hover{background:#3fbdf8!important;border-color:#3fbdf8!important;color:#fff!important}
+{$scope} .pqh-appbar__nav .pqh-appbar__logout:active{transform:translateY(4px);box-shadow:none!important}
+
+@media(max-width:900px){{$scope}{$scope} .pqh-appbar.pqh-appbar{min-height:60px}}
+@media(prefers-reduced-motion:reduce){{$scope} .pqh-gnav__item,{$scope} .pqh-appbar__nav a,{$scope} .pqh-appbar__nav button{transition:none}{$scope} .pqh-appbar__nav a:active,{$scope} .pqh-appbar__nav button:active{transform:none}}
+CSS;
+}
+
+/**
+ * The chrome a LEARNER gets, chosen by VIEWER rather than by page.
+ *
+ * Every page that draws this shell draws the same rail and top bar, and most of
+ * them serve more than one kind of viewer -- a student sitting an exam and the
+ * teacher who set it meet the same seb_exam.php. Gating on the filename would
+ * mean hand-keeping a list of "student pages" beside a shell that already knows
+ * who is looking, and this repo has the worked example of what that costs: the
+ * tutoring topbar picker kept exactly such a table and it drifted in BOTH
+ * directions within a day -- a section that rendered and could not be picked,
+ * and a section it offered that had nothing behind it. So the question asked
+ * here is "who is reading this", never "which file am I in".
+ *
+ * That is also what makes the call safe to put on every page that draws the
+ * shell, which is the point rather than a side effect. Over-inclusion emits an
+ * empty string and costs nothing; omitting a page a student can actually reach
+ * is invisible until a child lands on it, and no gate in this repo would say so.
+ *
+ * Echo it AFTER pqh_openproject_skin_css(), for the reason set out above
+ * pqh_duolingo_chrome_css().
+ */
+function pqh_learner_chrome_css(string $scope): string {
+    global $USER;
+    if (pqh_shell_viewer_kind((int)($USER->id ?? 0)) !== 'student') {
+        return '';
+    }
+    return pqh_duolingo_chrome_css($scope);
+}
+
+/**
  * Standard application shell markup: nav rail, blue app bar, and the
  * expandable-rail script. Echo directly after the page's <main> opens.
  */
 function pqh_shell_viewer_kind(int $userid): string {
+    // Memoised per request. The answer is a fact about role assignments and
+    // workspace membership, none of which can change while one page renders,
+    // and it is now asked TWICE on every shell page -- once to build the rail,
+    // once to choose the chrome -- at up to five record_exists queries a time.
+    static $cache = [];
+    if (!array_key_exists($userid, $cache)) {
+        $cache[$userid] = pqh_shell_viewer_kind_uncached($userid);
+    }
+    return $cache[$userid];
+}
+
+function pqh_shell_viewer_kind_uncached(int $userid): string {
     global $DB;
     if ($userid <= 0) {
         return 'staff';

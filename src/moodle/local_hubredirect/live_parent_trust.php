@@ -881,6 +881,7 @@ body.pqh-live-parent-trust-page .main-inner{margin:0!important;padding:0!importa
 <?php echo pqh_design_shell_css('.pqlpt-shell'); ?>
 </style>
 <style><?php echo pqh_openproject_skin_css('pqlpt', 'pqh-live-parent-trust-page'); ?></style>
+<style><?php echo pqh_learner_chrome_css('.pqlpt-shell'); ?></style>
 <main class="pqlpt-shell">
 <?php echo pqh_design_shell_html('pqlpt-shell', 'live', pqh_live_page_shell_opts('Parent Live Hub', $urlparams, $childid)); ?>
   <div class="pqlpt-wrap">

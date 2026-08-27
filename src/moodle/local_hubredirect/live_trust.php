@@ -528,6 +528,7 @@ body.pqh-live-trust-page{background:#fff!important}
 <?php echo pqh_design_shell_css('.pqlt-shell'); ?>
 </style>
 <style><?php echo pqh_openproject_skin_css('pqlt', 'pqh-live-trust-page'); ?></style>
+<style><?php echo pqh_learner_chrome_css('.pqlt-shell'); ?></style>
 <main class="pqlt-shell">
 <?php echo pqh_design_shell_html('pqlt-shell', 'live', pqh_live_page_shell_opts('Trust Center', $urlparams, $childid)); ?>
   <div class="pqlt-wrap">

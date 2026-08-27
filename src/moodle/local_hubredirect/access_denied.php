@@ -76,6 +76,7 @@ body.pqh-access-page{background:#f4f7fb!important}
 <?php echo pqh_design_shell_css('.pqha-shell'); ?>
 </style>
 <style><?php echo pqh_openproject_skin_css('pqha', 'pqh-access-page'); ?></style>
+<style><?php echo pqh_learner_chrome_css('.pqha-shell'); ?></style>
 <main class="pqha-shell">
 <?php echo pqh_design_shell_html('pqha-shell'); ?>
   <div class="pqha-wrap">

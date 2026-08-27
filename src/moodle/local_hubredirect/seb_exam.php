@@ -166,6 +166,7 @@ body.pqsx-page{margin:0;background:#f4f6f9}
 .pqsx-unlock{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:0 22px;border-radius:11px;background:#2166d1;color:#fff!important;text-decoration:none!important;font-size:15px;font-weight:700}
 </style>
 <style><?php echo pqh_openproject_skin_css('pqsx', 'pqsx-page'); ?></style>
+<style><?php echo pqh_learner_chrome_css('.pqsx-shell'); ?></style>
 <div class="pqsx-exam">
 <?php if ($finished || $timeup): ?>
   <div class="pqsx-panel">

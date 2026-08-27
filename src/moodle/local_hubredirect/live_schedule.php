@@ -495,6 +495,7 @@ body.pqh-live-schedule-page .main-inner{margin:0!important;padding:0!important;m
 <?php echo pqh_design_shell_css('.pqlsch-shell'); ?>
 </style>
 <style><?php echo pqh_openproject_skin_css('pqlsch', 'pqh-live-schedule-page'); ?></style>
+<style><?php echo pqh_learner_chrome_css('.pqlsch-shell'); ?></style>
 <main class="pqlsch-shell">
 <?php echo pqh_design_shell_html('pqlsch-shell', 'live', pqh_live_page_shell_opts('Live Schedule', [], $childid)); ?>
   <div class="pqlsch-wrap">

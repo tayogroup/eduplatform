@@ -435,6 +435,10 @@ body.pqhsd-page #page,body.pqhsd-page #page-content,body.pqhsd-page #region-main
 </style>
 <style><?php echo pqh_openproject_skin_css('pqhsd', 'pqhsd-page'); ?></style>
 <style><?php echo pqh_openproject_skin_css(['pqhsd-todo', 'pqhsd-ccard', 'pqhsd-feedback'], '', '__'); ?></style>
+<?php // The rail, its links and the top bar, in Duolingo's language. Same
+      // ordering rule as the block below: it has to follow the skin, which
+      // paints .pqh-gnav and .pqh-appbar with !important. ?>
+<style><?php echo pqh_learner_chrome_css('.pqhsd-shell'); ?></style>
 <style>
 /* ---------------------------------------------------------------------------
    The course cards, for a child.

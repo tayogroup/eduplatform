@@ -125,6 +125,7 @@ body.pqhsw-page #page,body.pqhsw-page #page-content,body.pqhsw-page #region-main
 .pqhsw-shell .pqh-gnav{background:none}
 </style>
 <style><?php echo pqh_openproject_skin_css('pqhsw', 'pqhsw-page'); ?></style>
+<style><?php echo pqh_learner_chrome_css('.pqhsw-shell'); ?></style>
 <main class="pqhsw-shell">
 <?php
 echo pqh_design_shell_html('pqhsw-shell', 'workspace', [

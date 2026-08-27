@@ -276,6 +276,7 @@ body.pqw-parent-page #page,body.pqw-parent-page #page-content,body.pqw-parent-pa
 <?php echo pqh_design_shell_css('.pqwp-shell'); ?>
 </style>
 <style><?php echo pqh_openproject_skin_css('pqwp', 'pqw-parent-page'); ?></style>
+<style><?php echo pqh_learner_chrome_css('.pqwp-shell'); ?></style>
 <main class="pqwp-shell">
 <?php
 echo pqh_design_shell_html('pqwp-shell', 'workspace', [

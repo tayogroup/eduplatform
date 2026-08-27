@@ -112,14 +112,16 @@ const boundary = String.raw`\b`;
 //   "You are using all your senses." On the way home, Amal held her hand.
 // came back as a single "sentence" 82 characters long, carrying the tail of the
 // line before it. Anything with a terminal mark followed by more text is a split
-// failure; anything over 55 characters is longer than the authored sets a
-// five-year-old is meant to read (those average 32).
+// failure; anything over the grade's cap is longer than the authored sets that
+// grade's readers are meant to read.
+//
 // The cap is per GRADE, because it means "longer than the sentences this grade
 // already asks a child to read" — and that is not one number. Measured over each
 // grade's own authored practice sentences:
 //   grade 1  n=4772  mean 30  median 29  p90 36  p99 44  max 56
 //   grade 2  n=4142  mean 42  median 42  p90 53  p99 63  max 83
 //   grade 3  n=3748  mean 41  median 41  p90 52  p99 61  max 76
+//   grade 4  n=4432  mean 46  median 46  p90 57  p99 66  max 82
 // so each entry is that grade's observed maximum, rounded down to a round number.
 // Note grade 3 is not longer than grade 2 — the jump is between 1 and 2, and the
 // curve is flat above that, which is why this is a measured table and not a
@@ -130,7 +132,7 @@ const boundary = String.raw`\b`;
 // those very sentences with the Core word sets, so a second run would measure a
 // different corpus and silently change which candidates are usable — the same
 // self-referential trap the build tool hit by treating its own output as input.
-const MAX_CANDIDATE_BY_GRADE = { 1: 55, 2: 80, 3: 75 };
+const MAX_CANDIDATE_BY_GRADE = { 1: 55, 2: 80, 3: 75, 4: 80 };
 const MAX_CANDIDATE = MAX_CANDIDATE_BY_GRADE[GRADE] ?? 80;
 const SPLIT_FAILURE = /[.!?]["']?\s+\S/;
 // Some passages use "/" to separate instruction steps ("… / Point to the

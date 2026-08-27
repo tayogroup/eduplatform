@@ -146,7 +146,7 @@ body.pqaw-page #page,body.pqaw-page #page-content,body.pqaw-page #region-main,bo
 <?php echo pqh_design_shell_css('.pqaw-shell'); ?>
 </style>
 <style><?php echo pqh_openproject_skin_css('pqaw', 'pqaw-page'); ?></style>
-<style><?php echo pqh_learner_chrome_css('.pqaw-shell'); ?></style>
+<style><?php echo pqh_viewer_chrome_css('.pqaw-shell'); ?></style>
 <main class="pqaw-shell">
 <?php
 $pqawnavitems = [];

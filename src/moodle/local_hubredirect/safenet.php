@@ -282,7 +282,7 @@ body.pqsn-page #page,body.pqsn-page #page-content,body.pqsn-page #region-main,bo
 <?php echo pqh_design_shell_css('.pqsn-shell'); ?>
 </style>
 <style><?php echo pqh_openproject_skin_css('pqsn', 'pqsn-page'); ?></style>
-<style><?php echo pqh_learner_chrome_css('.pqsn-shell'); ?></style>
+<style><?php echo pqh_viewer_chrome_css('.pqsn-shell'); ?></style>
 <main class="pqsn-shell">
 <?php echo pqh_design_shell_html('pqsn-shell'); ?>
 <div class="pqsn-wrap">

@@ -291,7 +291,7 @@ body.pqwr-page #page,body.pqwr-page #page-content,body.pqwr-page #region-main,bo
 <?php echo pqh_design_shell_css('.pqwr-shell'); ?>
 </style>
 <style><?php echo pqh_openproject_skin_css('pqwr', 'pqwr-page'); ?></style>
-<style><?php echo pqh_learner_chrome_css('.pqwr-shell'); ?></style>
+<style><?php echo pqh_viewer_chrome_css('.pqwr-shell'); ?></style>
 <main class="pqwr-shell">
 <?php
 echo pqh_design_shell_html('pqwr-shell', 'workspace', [

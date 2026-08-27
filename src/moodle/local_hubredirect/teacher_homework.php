@@ -200,7 +200,7 @@ body.pqhh-page header,body.pqhh-page footer,body.pqhh-page nav.navbar,body.pqhh-
 <?php echo pqh_design_shell_css('.pqhh-shell'); ?>
 </style>
 <style><?php echo pqh_openproject_skin_css('pqhh', 'pqhh-page'); ?></style>
-<style><?php echo pqh_learner_chrome_css('.pqhh-shell'); ?></style>
+<style><?php echo pqh_viewer_chrome_css('.pqhh-shell'); ?></style>
 <main class="pqhh-shell">
 <?php echo pqh_design_shell_html('pqhh-shell'); ?><div class="pqhh-wrap">
   <header class="pqhh-head"><div><h1>Homework</h1><p>Create course work, review submissions, and publish grades.</p></div><a class="pqhh-btn" href="<?php echo (new moodle_url('/local/hubredirect/teacher_workspace.php', $urlparams))->out(false); ?>">Teacher workspace</a></header>

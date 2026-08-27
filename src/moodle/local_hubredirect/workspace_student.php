@@ -547,7 +547,7 @@ body.pqw-student-page #page,body.pqw-student-page #page-content,body.pqw-student
 <?php echo pqh_design_shell_css('.pqws-shell'); ?>
 </style>
 <style><?php echo pqh_openproject_skin_css('pqws', 'pqw-student-page'); ?></style>
-<style><?php echo pqh_learner_chrome_css('.pqws-shell'); ?></style>
+<style><?php echo pqh_viewer_chrome_css('.pqws-shell'); ?></style>
 <main class="pqws-shell">
 <?php
 echo pqh_design_shell_html('pqws-shell', 'workspace', [

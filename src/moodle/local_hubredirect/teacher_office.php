@@ -94,7 +94,7 @@ body.pqh-office-studio-page #page,body.pqh-office-studio-page #page-content,body
 <?php echo pqh_design_shell_css('.pqho-shell'); ?>
 </style>
 <style><?php echo pqh_openproject_skin_css('pqho', 'pqh-office-studio-page'); ?></style>
-<style><?php echo pqh_learner_chrome_css('.pqho-shell'); ?></style>
+<style><?php echo pqh_viewer_chrome_css('.pqho-shell'); ?></style>
 <main class="pqho-shell">
 <?php echo pqh_design_shell_html('pqho-shell'); ?>
   <div class="pqho-wrap">

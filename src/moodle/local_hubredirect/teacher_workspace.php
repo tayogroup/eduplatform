@@ -764,7 +764,7 @@ body.pqh-live-teacher-page .main-inner{margin:0!important;padding:0!important;ma
 .pqltch-shell .pqh-appbar{background:linear-gradient(90deg,#cfe9ff 0%,#e3f4ff 50%,#f2fbff 100%)}
 </style>
 <style><?php echo pqh_openproject_skin_css('pqltch', 'pqh-live-teacher-page'); ?></style>
-<style><?php echo pqh_learner_chrome_css('.pqltch-shell'); ?></style>
+<style><?php echo pqh_viewer_chrome_css('.pqltch-shell'); ?></style>
 <main class="pqltch-shell">
 <?php
 echo pqh_design_shell_html('pqltch-shell', 'workspace', [

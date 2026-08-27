@@ -633,7 +633,7 @@ body.pqh-live-summaries-page{background:#fff!important}
 <?php echo pqh_design_shell_css('.pqls-shell'); ?>
 </style>
 <style><?php echo pqh_openproject_skin_css('pqls', 'pqh-live-summaries-page'); ?></style>
-<style><?php echo pqh_learner_chrome_css('.pqls-shell'); ?></style>
+<style><?php echo pqh_viewer_chrome_css('.pqls-shell'); ?></style>
 <main class="pqls-shell">
 <?php
 echo pqh_design_shell_html('pqls-shell', 'live', pqh_live_page_shell_opts('Live Summaries', $urlparams, $childid));

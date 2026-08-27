@@ -796,7 +796,7 @@ body.pqw-dashboard-page #page,body.pqw-dashboard-page #page-content,body.pqw-das
 </style>
 <style><?php echo pqh_openproject_skin_css('pqwd', 'pqw-dashboard-page'); ?></style>
 <style><?php echo pqh_openproject_skin_css(['pqwd-todo', 'pqwd-modal'], '', '__'); ?></style>
-<style><?php echo pqh_learner_chrome_css('.pqwd-shell'); ?></style>
+<style><?php echo pqh_viewer_chrome_css('.pqwd-shell'); ?></style>
 <main class="pqwd-shell">
 <?php
 $pqwdshellextra = '<button type="button" onclick="window.history.back()">Back</button>';

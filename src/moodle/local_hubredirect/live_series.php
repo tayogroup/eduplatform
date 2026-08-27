@@ -815,7 +815,7 @@ body.pqh-live-series-page .main-inner{margin:0!important;padding:0!important;max
 <?php echo pqh_design_shell_css('.pqlser-shell'); ?>
 </style>
 <style><?php echo pqh_openproject_skin_css('pqlser', 'pqh-live-series-page'); ?></style>
-<style><?php echo pqh_learner_chrome_css('.pqlser-shell'); ?></style>
+<style><?php echo pqh_viewer_chrome_css('.pqlser-shell'); ?></style>
 <main class="pqlser-shell">
 <?php echo pqh_design_shell_html('pqlser-shell'); ?>
   <div class="pqlser-wrap">

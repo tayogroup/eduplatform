@@ -83,7 +83,7 @@ if ($allowed && $course && $row) {
 //
 // It stays standalone and it stays PUBLIC, which is the constraint that shapes
 // this. The same URL serves anonymous admissions traffic, so it cannot use
-// pqh_learner_chrome_css(): that asks pqh_shell_viewer_kind(), and a visitor
+// pqh_viewer_chrome_css(): that asks pqh_shell_viewer_kind(), and a visitor
 // with no session has no viewer kind to answer with. $viewerid above is already
 // the exact test needed, so the links are simply not drawn when there is nobody
 // to draw them for -- a guest sees the same header as everyone else, with no

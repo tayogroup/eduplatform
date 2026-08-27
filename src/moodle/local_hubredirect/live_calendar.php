@@ -441,7 +441,7 @@ body.pqh-live-calendar-page .main-inner{margin:0!important;padding:0!important;m
 <?php echo pqh_design_shell_css('.pqlcal-shell'); ?>
 </style>
 <style><?php echo pqh_openproject_skin_css('pqlcal', 'pqh-live-calendar-page'); ?></style>
-<style><?php echo pqh_learner_chrome_css('.pqlcal-shell'); ?></style>
+<style><?php echo pqh_viewer_chrome_css('.pqlcal-shell'); ?></style>
 <main class="pqlcal-shell">
 <?php // 'calendar', not 'live': same reason as live_schedule.php -- this page has
       // its own row in the rail, beside a Live sessions row that goes elsewhere. ?>

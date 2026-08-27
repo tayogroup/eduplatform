@@ -495,7 +495,7 @@ body.pqh-live-schedule-page .main-inner{margin:0!important;padding:0!important;m
 <?php echo pqh_design_shell_css('.pqlsch-shell'); ?>
 </style>
 <style><?php echo pqh_openproject_skin_css('pqlsch', 'pqh-live-schedule-page'); ?></style>
-<style><?php echo pqh_learner_chrome_css('.pqlsch-shell'); ?></style>
+<style><?php echo pqh_viewer_chrome_css('.pqlsch-shell'); ?></style>
 <main class="pqlsch-shell">
 <?php // 'schedule', not 'live': this page IS the Schedule row in its own rail, and
       // the rail also carries a separate Live sessions row pointing elsewhere. ?>

@@ -1669,9 +1669,15 @@ CSS;
 }
 
 /**
- * Duolingo-styled chrome for the learner's shell: the left rail, its links and
- * the top bar. Scoped to a page's shell class, so it reaches only the pages
- * that ask for it -- the staff and parent portals keep the blue system.
+ * Duolingo-styled chrome: the left rail, its links and the top bar. Scoped to a
+ * page's shell class, so it reaches only the pages that ask for it.
+ *
+ * This says nothing about WHO gets it -- that is pqh_viewer_chrome_css()'s job,
+ * and since 2026-08-28 the answer is students and staff alike, parents aside.
+ * The name is still "duolingo" rather than "learner" because the sheet is a
+ * look, not an audience; it was drawn for a seven-year-old and it is now also
+ * what a site admin sees on the finance pages, which is a decision recorded at
+ * the gate rather than a property of these rules.
  *
  * THIS MUST BE EMITTED AFTER pqh_openproject_skin_css(). That generator paints
  * the rail and the app bar with doubled-class selectors carrying !important
@@ -1809,7 +1815,7 @@ CSS;
 }
 
 /**
- * The chrome a LEARNER gets, chosen by VIEWER rather than by page.
+ * The chrome a VIEWER gets, chosen by who is reading rather than by page.
  *
  * Every page that draws this shell draws the same rail and top bar, and most of
  * them serve more than one kind of viewer -- a student sitting an exam and the
@@ -1828,10 +1834,24 @@ CSS;
  *
  * Echo it AFTER pqh_openproject_skin_css(), for the reason set out above
  * pqh_duolingo_chrome_css().
+ *
+ * STAFF GET IT TOO, owner decision 2026-08-28, and the trade is worth stating
+ * rather than discovering. pqh_shell_viewer_kind() has three answers -- student,
+ * staff, parent -- and 'staff' is ONE bucket holding teachers, assistant
+ * teachers, workspace admins, owners, managers, site admins and principals.
+ * There is no teacher kind to gate on. So "give the teachers the new chrome"
+ * necessarily also gives it to the finance, compliance, governance and
+ * executive-reporting pages those same people reach: admin_workspace,
+ * workspace_reports, at_risk_report, managed_reports, safenet and the trust
+ * pages all now render in a chrome designed for a seven-year-old. That was put
+ * to the owner with a narrower option -- gate on pqh_has_teacher_profile(), so a
+ * pure administrator keeps the old design -- and this was chosen instead.
+ *
+ * Parents are the one kind still excluded, because nobody asked for them.
  */
-function pqh_learner_chrome_css(string $scope): string {
+function pqh_viewer_chrome_css(string $scope): string {
     global $USER;
-    if (pqh_shell_viewer_kind((int)($USER->id ?? 0)) !== 'student') {
+    if (pqh_shell_viewer_kind((int)($USER->id ?? 0)) === 'parent') {
         return '';
     }
     return pqh_duolingo_chrome_css($scope);

@@ -1,0 +1,159 @@
+#!/usr/bin/env node
+// Proofread the authored Core-word content for one grade, as it is written.
+//
+// This exists because the Grade 1 pass found every one of these faults by hand,
+// one at a time, after the fact — a sentence that never contained its own word
+// ("Why are you late, Adam?" for `because`), an irregular past that hides the
+// headword (`gave` for `give`), US spellings arriving with reused sentences, a
+// set of five with two the same. Each was a real defect and each is mechanical
+// to detect, so nothing is served by finding them by reading.
+//
+// It checks CONTENT, not shape: the draft tool already guarantees the fields
+// exist. What it cannot know is whether a sentence teaches its word.
+//
+//   node tools/check-english-core-words-authored.mjs --grade 2
+//   node tools/check-english-core-words-authored.mjs --grade 2 --unit 3
+import fs from "node:fs";
+import path from "node:path";
+
+const ROOT = path.join("src", "prototypes", "ehel-academy", "english");
+const argv = process.argv.slice(2);
+let GRADE = 2, onlyUnit = null;
+for (let i = 0; i < argv.length; i++) {
+  if (argv[i] === "--grade") { GRADE = Number(argv[++i]); continue; }
+  if (argv[i] === "--unit") { onlyUnit = Number(argv[++i]); continue; }
+  console.error(`Unrecognised argument: ${argv[i]}`);
+  process.exit(2);
+}
+const DIR = path.join(ROOT, `grade-${GRADE}`, "data");
+
+// Sentence length is per grade for the same reason the draft tool's candidate
+// cap is: it means "as long as this grade already asks a child to read".
+// Measured over each grade's own authored practice sentences (max 56 / 83).
+const MAX_SENTENCE = { 1: 60, 2: 78, 3: 74 }[GRADE] ?? 78;
+const MAX_WORDS = { 1: 11, 2: 15, 3: 15 }[GRADE] ?? 15;
+
+// The cast the grade's own readings use. A sentence starring somebody else came
+// from another grade and puts a stranger on the word card.
+//
+// DERIVED from the readings, then widened by the hand-list below. A table alone
+// was wrong the first time a new grade was drafted: Grade 3 had no entry, fell
+// back to [], and the check duly reported Nora and Sami — who appear 66 and 65
+// times in Grade 3's own passages — as strangers. An unknown grade must not turn
+// this into a check that flags every name.
+//
+// A name is a capitalised token the course does not know as an ordinary word;
+// that test is what separates "Nora" from the "The"/"What"/"Yes" that start
+// sentences. The two sources are UNIONED rather than intersected, because the
+// failure directions are not symmetric: a name wrongly admitted costs one missed
+// flag, while a name wrongly rejected produces noise on every correct sentence,
+// which is how a check gets ignored.
+function deriveCast(grade) {
+  const known = new Set();
+  for (let g = 1; g <= 8; g++) {
+    const f = path.join(ROOT, `grade-${g}`, "data", `master-dictionary.grade${g}.json`);
+    if (fs.existsSync(f)) for (const e of JSON.parse(fs.readFileSync(f, "utf8")).entries) known.add(e.lemma.toLowerCase());
+  }
+  const counts = new Map();
+  for (let u = 0; u <= 10; u++) {
+    const f = path.join(ROOT, `grade-${grade}`, "data", "units", `unit-${u}.json`);
+    if (!fs.existsSync(f)) continue;
+    for (const r of JSON.parse(fs.readFileSync(f, "utf8")).readings || [])
+      for (const m of String(r.passageScript || "").matchAll(/\b([A-Z][a-z]{2,})\b/g))
+        counts.set(m[1], (counts.get(m[1]) || 0) + 1);
+  }
+  return [...counts].filter(([w, n]) => n >= 5 && !known.has(w.toLowerCase())).map(([w]) => w);
+}
+const CAST = [...new Set([
+  ...deriveCast(GRADE),
+  // Family words a grade uses without the readings naming them five times.
+  "Amal", "Adam", "Grandma", "Grandpa", "Mum", "Dad", "Teacher",
+  ...({ 2: ["Leo", "Nora", "Theo", "Sami", "Maya", "Leila", "Yasmin", "Idris"],
+        // Theo, Nadia and Rami are below the derivation's threshold in the Grade 3
+        // readings but are named cast in the Grade 3 ebook kit (CLAUDE.md), so they
+        // are not strangers to a Grade 3 child.
+        3: ["Amal", "Yasmin", "Nora", "Sami", "Leo", "Hana", "Daniel", "Mina", "Maya", "Omar",
+            "Theo", "Nadia", "Rami"] }[GRADE] ?? []),
+])];
+
+// UK spellings are the house style (owner decision, 2026-08-17).
+const US = /\b(color|colors|favorite|mom|moms|gray|neighbor|neighbors|center|centers|meter|meters|liter|liters|practice(?=s? (?:the|your|a)\b)|realize|organize|apologize|traveled|labeled|jewelry|airplane|soccer|candy|cookie|cookies|sidewalk|flashlight|garbage can|elevator|apartment|janitor|mold|railroad|emphasize)\b/i;
+
+const draftFile = path.join(DIR, "core-words-draft.json");
+const authoredFile = path.join(DIR, "core-words-authored.json");
+if (!fs.existsSync(draftFile)) { console.error(`No draft at ${draftFile}`); process.exit(2); }
+const draft = JSON.parse(fs.readFileSync(draftFile, "utf8"));
+const authored = fs.existsSync(authoredFile)
+  ? JSON.parse(fs.readFileSync(authoredFile, "utf8")).words : {};
+
+// Does the sentence actually contain the word? Regular inflections count —
+// "picked" teaches `pick`. Irregular ones do NOT: `gave` does not show a reader
+// the word `give`, which is the whole point of the example.
+function shows(sentence, word) {
+  const w = word.replace(/[^a-z]/gi, "");
+  if (!w) return true;
+  const stem = w.replace(/(?:e)$/, "");
+  const pat = new RegExp(
+    `\\b${w}(?:s|es|ed|ing|ly|er|est)?\\b|\\b${stem}(?:ed|ing|es|er|est)\\b|\\b${w}${w.slice(-1)}(?:ed|ing|er|est)\\b`,
+    "i");
+  return pat.test(sentence);
+}
+
+let words = 0, problems = 0;
+const seenSentence = new Map();
+const report = [];
+
+for (const unit of draft.units) {
+  if (onlyUnit && unit.unit !== onlyUnit) continue;
+  for (const w of unit.words) {
+    const a = authored[w.word];
+    const meaning = a?.childMeaning ?? w.childMeaning;
+    const sentences = a?.practiceSentences ?? w.practiceSentences ?? [];
+    // Only judge what has been written. A word still marked for authoring is a
+    // known gap, not a defect — reporting it here would bury the real faults.
+    if (!meaning || sentences.length < 5) continue;
+    words += 1;
+    const bad = [];
+
+    if (!/[.!?]$/.test(meaning.trim())) bad.push("meaning does not end in a full stop");
+    if (meaning.trim().length < 15) bad.push("meaning is too short to teach anything");
+    if (US.test(meaning)) bad.push(`US spelling in the meaning: ${meaning.match(US)[0]}`);
+
+    if (sentences.length !== 5) bad.push(`${sentences.length} sentences, not 5`);
+    const within = new Set();
+    sentences.forEach((s, i) => {
+      const n = i + 1;
+      if (!shows(s, w.word)) bad.push(`sentence ${n} never uses "${w.word}": ${s}`);
+      if (s.length > MAX_SENTENCE) bad.push(`sentence ${n} is ${s.length} chars (max ${MAX_SENTENCE}): ${s}`);
+      if (s.trim().split(/\s+/).length > MAX_WORDS) bad.push(`sentence ${n} is over ${MAX_WORDS} words: ${s}`);
+      if (!/^["'“]?[A-Z]/.test(s)) bad.push(`sentence ${n} does not start with a capital: ${s}`);
+      if (!/[.!?]["'”]?$/.test(s)) bad.push(`sentence ${n} has no end punctuation: ${s}`);
+      if (US.test(s)) bad.push(`sentence ${n} US spelling "${s.match(US)[0]}": ${s}`);
+      if (/_{2,}/.test(s)) bad.push(`sentence ${n} is a fill-in-the-blank line: ${s}`);
+      if (within.has(s)) bad.push(`sentence ${n} repeats another in the same set: ${s}`);
+      within.add(s);
+      // A name the grade's readings never use came in with a reused sentence.
+      for (const m of s.matchAll(/\b([A-Z][a-z]{2,})\b/g)) {
+        const name = m[1];
+        if (m.index === 0) continue;                       // sentence-initial word
+        if (!/^(Amal|Adam|Leo|Nora|Theo|Sami|Maya|Leila|Yasmin|Grandma|Grandpa|Idris|Mum|Dad|Teacher|Miss|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday|January|February|March|April|May|June|July|August|September|October|November|December|English|Earth)$/.test(name)) continue;
+        if (!CAST.includes(name) && !/^(Miss|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday|January|February|March|April|May|June|July|August|September|October|November|December|English|Earth)$/.test(name))
+          bad.push(`sentence ${n} names "${name}", who is not in this grade's cast: ${s}`);
+      }
+      const prev = seenSentence.get(s);
+      if (prev && prev !== w.word) bad.push(`sentence ${n} is reused verbatim from "${prev}": ${s}`);
+      seenSentence.set(s, w.word);
+    });
+
+    if (bad.length) {
+      problems += bad.length;
+      report.push(`  u${unit.unit} ${w.word}\n${bad.map((b) => `      ${b}`).join("\n")}`);
+    }
+  }
+}
+
+console.log(`Grade ${GRADE} authored Core words${onlyUnit ? ` (unit ${onlyUnit})` : ""}`);
+console.log(`  words with complete content checked: ${words}`);
+console.log(`  problems: ${problems}\n`);
+if (report.length) console.log(report.join("\n"));
+process.exitCode = problems ? 1 : 0;

@@ -459,6 +459,55 @@ unit's own score. Reported twice by the owner before it was found, because the
 first report was read as being about the glossary page and it was about the
 search.
 
+### The stage capstones are indexed, and hidden from tutoring (2026-08-27)
+
+Mathematics, Science and Computing each author a `grade-capstone.json` per stage
+— driving question, staged prompts, evidence checklist, rubric, quiz — and none
+of it was indexed, so a learner searching "science fair project" got seed
+investigations and no route to the Stage 5 Science Fair that IS the project.
+48 topics now: 24 `capstone` and 24 `capstonequiz`, 16 per subject across 8
+stages, hung off each grade's FIRST indexed unit exactly as the English glossary
+is (a capstone belongs to the stage, not to a unit).
+
+Two per stage, not one, because the shells draw two sections and a topic's
+section is where picking it LANDS — a quiz question must not drop the learner on
+the project page.
+
+**English gets none, deliberately, and it is the case that looks like an
+omission.** It has a Capstone row and it is a DOOR rather than a project:
+`renderCapstone` shows Unit 10's own launch page, and Unit 10 is already indexed
+as a unit, so a topic there would be a second card leading to content the index
+already describes. Global Perspectives and Intensive English author no capstone
+at all. If a `grade-capstone.json` is ever written for English, `capstoneTopics`
+picks it up with no change.
+
+**A floor set at what you had before the last thing you added is a formality.**
+The three `TOPIC_FLOORS` were exactly the pre-capstone totals, so extraction
+losing every capstone topic would have landed the count precisely on the floor
+and passed. Raised to 4183 / 1254 / 1895 with the change. Mutation-tested both
+ways, and the two halves catch different things: breaking `capstoneTopics` alone
+is caught by the BYTE-COMPARE, and only breaking it *and rebuilding* — where the
+files legitimately match a broken derivation — reaches the floor. That run
+reported 4167, 1238 and 1879, which are the old floor values, and is the whole
+argument for having moved them.
+
+**The search only offers what the learner's own nav will show.** Indexing the
+capstones gave a section in `TUTORING_HIDDEN` topics for the first time, and
+`get-help` had never had to know about hidden sections — so a tutoring learner
+searching "science fair project" got the capstone first and its quiz second, for
+a section their nav deliberately omits. `reachable()` now filters every topic
+through the shell's `TUTORING_HIDDEN`, passed in through `attachShell` rather
+than restated, for the reason the picker derives instead of listing. Applied in
+both paths that turn topics into results — `searchSection` too, though the
+picker cannot offer a hidden section, because it is reachable from a URL.
+
+Be exact about what that is: **not a broken link.** `#capstone` renders the full
+capstone for a tutoring learner — checked before deciding. The page works and is
+withheld, because the category arrives with one problem and no course position
+and a whole-stage project is not an answer to that. A dead link is a bug to fix
+without asking; this needed the owner (2026-08-27), and the difference is why it
+was left open rather than inferred.
+
 ### The human-tutor handoff, proven on the live marketplace (2026-08-24)
 
 The whole chain was exercised on production with a QA tutor: help-session
@@ -1927,6 +1976,20 @@ Two consequences worth knowing:
   again, and the window they need to know about is the one between those two
   messages.
 
+  **This is not a release rule, and scoping it to releases cost a peer a wrong
+  conclusion within the hour.** A content upload takes no tag and no lock, so it
+  got none of this treatment — and it changed what everyone else's checks would
+  say. The sequence: a session measured 24 files as stale against
+  `.bunny-content-manifest.json` and told a peer so; the owner then authorised
+  the upload; the peer compared STORAGE forty minutes later, found the files
+  identical, and concluded the manifest had lied. It had not — it was accurate
+  at both readings, and the missing fact was an upload performed after saying it
+  would not be. Note the manifest has now been accused twice in one evening and
+  was telling the truth both times: "the manifest is a claim, storage is the
+  fact" is a good METHOD and a false RULE, and carrying it as "the manifest
+  lies" would mean ignoring an accurate instrument. **Announce anything that
+  changes shared state, not only the things that take a lock.**
+
   The generalisable half is about shelf life. The tag was re-measured from
   storage immediately before use, because this file says a verified tag goes
   stale in minutes — and the TREE was not re-measured, though it is a reading of
@@ -2098,6 +2161,75 @@ Same shape as the recognition-check trap recorded below — a heuristic that
 happens to agree with the answer on the cases you built it from. The difference
 is that here you can check it directly, because the index is readable: after
 `--cached`, ask what is actually staged rather than what you meant to stage.
+
+#### Git cannot tell you whose commit it is, and three sessions proved it (2026-08-27)
+
+```bash
+git log --format='%an <%ae>' -20 | sort | uniq -c
+#  20  hwarsame <hassanwarsame@gmail.com>
+```
+
+One identity, every commit, because every session commits as the same person.
+So **per-session authorship is not recorded and cannot be** — not hard to find,
+absent. The only handles are the commit subject line and what a session says
+about itself.
+
+That is worth writing down because of what it does to the fix. Three attribution
+errors happened in one evening between two sessions — a dirty file attributed to
+whoever was in the conversation, a contact inferred from the same fact, and four
+unpushed commits assigned to "the tutoring session" from their subject lines.
+The reflex reading is carelessness, and it is wrong: **the fact does not exist,
+so care cannot supply it**, and "be more careful" against an unavailable fact
+just produces a more confident guess.
+
+Every one of those three inferences was also *probably right*, which is what kept
+the habit alive through three repetitions. So the correction has to be about the
+FORM of the claim rather than its accuracy: say what you can establish and let
+the gap show. "One is mine because I made it; three are not mine; whose they are
+is unknowable from here" is thinner than "three are the tutoring session's" and
+is the only version that survives being wrong. Same move as reporting exit 3
+rather than a tick.
+
+The pre-commit hook already works this way and is worth reading as the pattern
+rather than as a nuisance: it cannot tell whose hunks are whose, so it does not
+guess — it fires whenever the risk is present and makes a human look.
+
+#### A commit can be LIVE and on no remote, and `git status` is silent about it
+
+Found the same evening, after four releases from this checkout. Three commits
+were serving learners in v304 and existed on **neither** remote:
+
+```bash
+git rev-list origin/main..HEAD    # before any release, and before you report "pushed"
+git rev-list backup/main..HEAD    # CLAUDE.md names TWO copies; check both
+```
+
+A release archives HEAD, so it publishes whatever is committed locally —
+pushing is a separate act nobody's release performs. The deployed bundle is not
+a recovery path: `course-app.js` has its imports rewritten by
+`deploy-app-version.js` and there is no `english.js` on the CDN at all, so the
+only copy of those three features' source was one disk.
+
+Two traps, both hit within minutes of each other:
+
+- **"Is my commit on origin" does not answer "what is riding underneath it".**
+  The session that flagged this knew what IT had not pushed and reported that as
+  the state of the branch; there were four commits, three of them somebody
+  else's, all ancestors of the one being asked about. `is-ancestor` on your own
+  sha answers about you. `rev-list origin/main..HEAD` answers about the branch.
+- **Checking ONE remote and reporting it as "the remote".** This file names
+  `backup` as the second copy precisely for this, and it was exactly as far
+  behind as origin — so "not on origin" read as "not backed up anywhere" only by
+  luck. Check every remote this file claims as a copy, not the one you push to
+  first.
+
+**And there is no scoped push.** Those commits are ancestors, so a push of your
+own work publishes everyone's whether you like it or not — git offers no way to
+push one and not the other, and cherry-picking onto a side branch to invent one
+is worse than the problem. Say so before pushing rather than after: an
+instruction to push your work is not authority over anybody else's, beyond what
+git forces on you.
+
 
 ### Diff the BUNDLE with --plan-json, never the files on disk
 

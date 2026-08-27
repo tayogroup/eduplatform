@@ -104,7 +104,7 @@ function topicsGlobalPerspectives(unit) {
   return out;
 }
 
-function topicsEnglish(unit) {
+function topicsEnglish(unit, ctx) {
   const out = [];
   for (const r of unit.readings || []) out.push(topic("reading", r.title, [r.title, r.genre, r.theme]));
   for (const g of unit.grammar || []) out.push(topic("grammar", g.title, [g.title, clip(g.explanation)]));
@@ -121,12 +121,56 @@ function topicsEnglish(unit) {
     const words = (byGroup.get(g.id) || []).filter(Boolean);
     if (words.length) out.push({ section: "dictionary", label: g.title, keywords: keywords([g.title, ...words], 40) });
   }
+  // The four below were added when English's tutoring picker started offering
+  // SECTIONS rather than unit themes (course-app.js :: TUTORING_ENGLISH_SECTIONS).
+  // Picking one selects on `topic.section`, so a section with no topics is a
+  // dead entry in that menu — these were four of them.
+  //
+  // Granularity is chosen per section by measuring how repetitive the labels
+  // are, which is the same judgement the vocabulary grouping above records.
+  // Measured across Grade 6's ten units: activity titles are 57 distinct out of
+  // 60, so one topic each; comprehension carries 4 named groups per unit;
+  // quizzes are one per unit; and game titles are **12 distinct out of 120** —
+  // the same twelve games in every unit — so a topic per game would put twelve
+  // near-identical chips on every result card. The pack gets ONE topic whose
+  // keywords are the games it holds, exactly as a vocabulary group is one topic
+  // keyworded by its words.
+  const byComprehension = new Map();
+  for (const c of unit.comprehension || []) {
+    const group = String(c.section || "").trim();
+    if (!group) continue; // a row with no group name would index as a blank label
+    if (!byComprehension.has(group)) byComprehension.set(group, []);
+    byComprehension.get(group).push(c.question);
+  }
+  for (const [group, questions] of byComprehension) {
+    out.push({ section: "comprehension", label: group, keywords: keywords([group, ...questions.map((q) => clip(q, 120))], 30) });
+  }
+  for (const a of unit.activities || []) out.push(topic("activities", a.title, [a.title, a.activityType]));
+  const byQuiz = new Map();
+  for (const q of unit.quizzes || []) {
+    const title = String(q.quizTitle || "").trim();
+    if (!title) continue;
+    if (!byQuiz.has(title)) byQuiz.set(title, []);
+    byQuiz.get(title).push(q.question);
+  }
+  for (const [title, questions] of byQuiz) {
+    out.push({ section: "quiz", label: title, keywords: keywords([title, ...questions.map((q) => clip(q, 120))], 30) });
+  }
+  // Games live in their own pack beside the unit, not inside it — the only
+  // section here whose source is a second file, which is why extractTopics
+  // takes a ctx at all.
+  const pack = ctx && ctx.games;
+  if (pack && (pack.games || []).length) {
+    const titles = pack.games.map((g) => g.title).filter(Boolean);
+    const skills = pack.games.map((g) => g.skill).filter(Boolean);
+    out.push({ section: "games", label: pack.title || "Games", keywords: keywords([pack.title, ...titles, ...skills], 40) });
+  }
   return out;
 }
 
-function extractTopics(subject, unit) {
+function extractTopics(subject, unit, ctx) {
   if (subject === "global-perspectives") return topicsGlobalPerspectives(unit);
-  if (subject === "english" || subject === "intensive-english") return topicsEnglish(unit);
+  if (subject === "english" || subject === "intensive-english") return topicsEnglish(unit, ctx);
   return topicsFamilyA(unit, subject);
 }
 
@@ -135,6 +179,15 @@ function outcomeTexts(unit) {
 }
 
 // --- index assembly ----------------------------------------------------------
+
+// A unit's game pack, or null. Absent for most subjects and for some English
+// units, and absence is normal rather than an error — the section simply
+// contributes no topic.
+function readGamesPack(dataDir, unitNumber) {
+  const file = path.join(dataDir, "games", `unit-${unitNumber}.json`);
+  if (!fs.existsSync(file)) return null;
+  try { return JSON.parse(fs.readFileSync(file, "utf8")); } catch { return null; }
+}
 
 function buildGradeIndex(ehelRoot, subject, stage) {
   const cfg = SUBJECTS[subject];
@@ -154,7 +207,7 @@ function buildGradeIndex(ehelRoot, subject, stage) {
       unit: Number(entry.number),
       title,
       keywords: keywords([title, ...outcomeTexts(unit)], 40),
-      topics: extractTopics(subject, unit).filter((t) => t.label && t.keywords.length),
+      topics: extractTopics(subject, unit, { games: readGamesPack(dataDir, entry.number) }).filter((t) => t.label && t.keywords.length),
     });
   }
   if (!units.length) return null;

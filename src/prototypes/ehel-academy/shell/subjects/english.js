@@ -341,6 +341,23 @@ const sections = [
   // learner arrives from a search with a word they are stuck on and no unit to
   // meet it in, so they get the whole grade's glossary as a place to look one up.
   ["glossary", "book-a", "Glossary"],
+  // The grade's final project, in EVERY unit rather than only in the one that
+  // launches it. Until now English's capstone was reachable only as Unit 10's
+  // `lecture` row wearing a different label (see visibleSections' relabel) —
+  // which put it third in the nav, in the video slot, and invisible from every
+  // other unit. A learner could not see what the year was building towards, and
+  // could not get back to it afterwards.
+  //
+  // It is a DOOR, not a step. Unit 10 IS the capstone; this row is how you see
+  // it coming and how you return. So it is never counted and never gates — see
+  // nonCountable — because a row that appears in all ten units while belonging
+  // to one of them cannot decide whether any of them is finished. Same standing
+  // as Live sessions and Story Library.
+  //
+  // Position mirrors Science, Mathematics and Computing, which put their Stage
+  // Capstone exactly here: after the reference rows, above the live class and
+  // the progress page.
+  ["capstone", "flag", "Capstone project"],
   ["live", "video", "Live sessions"],
   ["reflect", "sparkles", "My progress"],
 ];
@@ -367,6 +384,7 @@ const SECTION_HINTS = {
   quiz: "Answer all the questions. Get more than half right to pass. You can try again.",
   ebooks: "Read or watch one book to the end.",
   reflect: "Choose an answer for every sentence about how you did.",
+  capstone: "Your big project for the whole grade. Look at it any time — it opens when you reach Unit 10.",
 };
 // Unit 10 has no video: its first step is a page that launches the capstone.
 const CAPSTONE_LAUNCH_HINT = "Read about your capstone project, then press the button to start.";
@@ -1029,6 +1047,13 @@ const sectionChain = () => SECTION_CHAIN.filter((id) => visibleSections().some((
 function sectionUnlocked(id, { fromOverview = false } = {}) {
   if (!UNIT_GATE_ENABLED || isPrereqUnit || TEACHER_PREVIEW) return true;
   if (REVIEW_TOPIC && id === REVIEW_TOPIC) return true;
+  // The capstone is not a step in THIS unit's chain — it is the whole grade's
+  // final project — so what stands in its way is a UNIT, not the section above
+  // it. Asking the chain would answer index -1, which reads as "not a step" and
+  // opens it from Unit 1. Owner decision, 2026-08-27: it locks like every other
+  // row until the learner reaches Unit 10, so a child sees where the year is
+  // going without being able to jump there.
+  if (id === "capstone") return unitIsUnlocked(CAPSTONE_UNIT);
   const chain = sectionChain();
   const index = chain.indexOf(id);
   if (index <= 0) return true; // not a step, or the first one
@@ -6300,6 +6325,68 @@ function bindOverviewAudio(holder) {
   }));
 }
 
+// The capstone door. One page, two states, deliberately in one function: the
+// locked and open versions say the same thing about the same project and differ
+// only in whether the way in is a button or a sentence about Unit 10. Splitting
+// them is how the two copies drift.
+//
+// It renders the project overview English already has rather than any new
+// curriculum. English carries no grade-capstone.json — Science, Mathematics and
+// Computing each read one, with a driving question, staged prompts, an evidence
+// checklist and a rubric — so what this door shows is what Unit 10's launch page
+// shows, and the work itself still lives in Unit 10. If that file is ever
+// authored for English, this is the renderer that should read it.
+function renderCapstone() {
+  const open = unitIsUnlocked(CAPSTONE_UNIT) || TEACHER_PREVIEW;
+  const here = unitNumber === CAPSTONE_UNIT;
+  const entry = manifest?.units?.find((unit) => Number(unit.number) === CAPSTONE_UNIT);
+  const title = entry?.title || `Unit ${CAPSTONE_UNIT}`;
+  const nextUp = currentOpenUnit();
+  const nextTitle = manifest?.units?.find((unit) => Number(unit.number) === nextUp)?.title || `Unit ${nextUp}`;
+  $("#app").innerHTML = `${pageHeader(
+    `${escapeHtml(gradeLabel)} · your final project`,
+    "Capstone project",
+    open
+      ? "Bring your best English work together, make something you are proud of, and present it."
+      : `This opens when you reach Unit ${CAPSTONE_UNIT}. Have a look at what you are working towards.`,
+    open ? "Approved content" : "Locked",
+  )}
+    <div class="overview-grid">
+      <div class="section-stack">
+        <section class="panel">
+          <h2>${icon(open ? "flag" : "lock")} Choose. Create. Present. Reflect.</h2>
+          <p>Your capstone is <strong>Unit ${CAPSTONE_UNIT}: ${escapeHtml(title)}</strong> — the last unit of ${escapeHtml(gradeLabel)} English. You choose your strongest work, make a final product from it, and present it. Your teacher guides each stage across six live sessions.</p>
+          ${here && open
+            ? `<p>You are in it now. Start from this unit's <strong>Capstone launch</strong>.</p><button class="button gold" data-go="lecture" type="button">${icon("flag")} Go to Capstone launch ${icon("arrow-right")}</button>`
+            : open
+              ? `<a class="button gold" href="${escapeHtml(courseLocation(CAPSTONE_UNIT, "lecture"))}">${icon("flag")} Open my capstone ${icon("arrow-right")}</a>`
+              : `<p>You are up to <strong>Unit ${nextUp}: ${escapeHtml(nextTitle)}</strong>. Finish each unit and Unit ${CAPSTONE_UNIT} opens by itself.</p>${
+                  // No button when the learner is already standing in their open
+                  // unit — "Go to Unit 1" from inside Unit 1 is a button that
+                  // does nothing, and a dead control on a locked page reads as
+                  // the lock being broken. The Overview is one click away in the
+                  // nav; this page's job there is to say what is coming.
+                  nextUp === unitNumber
+                    ? `<button class="button gold" data-go="overview" type="button">Back to this unit ${icon("arrow-right")}</button>`
+                    : `<a class="button gold" href="${escapeHtml(courseLocation(nextUp))}">Go to Unit ${nextUp} ${icon("arrow-right")}</a>`
+                }`}
+        </section>
+      </div>
+      <div class="section-stack">
+        <section class="panel">
+          <h3>What the capstone asks of you</h3>
+          <ol class="path-list">
+            <li>${icon("circle-dot")}<span><strong>Choose</strong> — pick the work from this year you are proudest of.</span></li>
+            <li>${icon("circle-dot")}<span><strong>Create</strong> — turn it into one finished product.</span></li>
+            <li>${icon("circle-dot")}<span><strong>Present</strong> — say it out loud, to your class.</span></li>
+            <li>${icon("circle-dot")}<span><strong>Reflect</strong> — say what got better this year.</span></li>
+          </ol>
+        </section>
+      </div>
+    </div>`;
+  $$("[data-go]").forEach((button) => button.addEventListener("click", () => navigate(button.dataset.go)));
+}
+
 // Wraps a renderer map so each entry re-checks both gates at the moment it runs,
 // rather than the map being chosen once while the module is still evaluating.
 // The greyed-out nav button is the polite half of the section gate; this is the
@@ -6315,6 +6402,11 @@ function gated(renderers) {
 // The locked-section page. Same job as the locked-unit page one level down:
 // name the one thing standing in the way, and offer the way to it.
 function renderLockedSection(id) {
+  // The capstone belongs to the grade, not to this unit's chain, so the generic
+  // page cannot describe it: chain.indexOf() answers -1, `previous` comes back
+  // undefined, and the learner is told to finish a section called "undefined".
+  // It names the unit standing in the way instead.
+  if (id === "capstone") return renderCapstone();
   const open = nextOpenSection();
   const chain = sectionChain();
   const previous = chain[chain.indexOf(id) - 1];
@@ -12364,7 +12456,7 @@ const config = {
   // 92% and could not open the next unit — a support tool gating progression.
   // It stays in the nav and still ticks when used; it just no longer decides
   // whether a unit is finished.
-  nonCountable: ["overview", "live", "final-quiz", "teacherguide", "year-plan", "unit-plan", "story-library", "worksheet", "handwriting", "grade-dictionary", "glossary"],
+  nonCountable: ["overview", "live", "final-quiz", "teacherguide", "year-plan", "unit-plan", "story-library", "worksheet", "handwriting", "grade-dictionary", "glossary", "capstone"],
   gradeSections: [],
   // English draws its own card (renderSectionCompletion): its sections open
   // in a gated chain and its units unlock one another, which the shell's
@@ -12446,6 +12538,10 @@ const config = {
     ebooks: () => renderEbooks(),
     glossary: () => renderGlossary(),
     "story-library": () => renderStoryLibrary(),
+    // Registered inside gated() like everything else, but it draws its own
+    // locked state: gated() calls renderLockedSection, which hands the capstone
+    // straight back here (see the guard there).
+    capstone: () => renderCapstone(),
     live: () => renderLive(),
     reflect: () => renderReflect(),
     "final-quiz": () => renderFinalQuiz(),

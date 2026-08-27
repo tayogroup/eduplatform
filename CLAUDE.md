@@ -2328,18 +2328,70 @@ out. On the way out, read the repo's CURRENT manifest, apply only the entries
 your release wrote, and write that — the other session's entries survive because
 you never held a stale copy of them in the first place.
 
+**Keep the copy-in snapshot, and merge against THAT.** A two-way diff of the
+release tree against the repo cannot do this, and the first version of this
+paragraph got it wrong in a way worth keeping as the worked example:
+
 ```js
-const repo = JSON.parse(fs.readFileSync(".bunny-appver-manifest.json", "utf8"));
-const rel  = JSON.parse(fs.readFileSync(`${TMP}/.bunny-appver-manifest.json`, "utf8"));
-for (const [k, v] of Object.entries(rel)) if (repo[k] !== v) repo[k] = v;   // yours only
+for (const [k, v] of Object.entries(rel)) if (repo[k] !== v) repo[k] = v;   // WRONG
 ```
 
-**Ask the same comparison which case you were in**, because it is the only thing
-that will ever tell you: entries present in the repo's copy but absent from your
-release tree's appeared while you were running, and they are somebody else's
-release. On v306 (2026-08-27) that count was **0** — 103 entries merged onto
-8046, nothing at risk — and a straight copy-back would have been harmless. That
-is exactly why it is written down from this release rather than from a bad one.
+`rel` is not "your entries" — it is the baseline you copied in PLUS your
+entries. So for a key that already existed and that another session UPDATED
+while you ran, `repo[k]` is their fresh value and `rel[k]` is the stale one you
+carried in; they differ, the loop writes the stale value back, and their entry
+is gone. That is the clobber, reintroduced by the code written to prevent it.
+Nor is it a corner case: the pointer files every release rewrites — the
+per-subject `index.html`, `current.json`, `shared/grade-redirect.js` — already
+have keys, so two overlapping releases collide on exactly those.
+
+Two-way cannot distinguish "I wrote this" from "they wrote this", because that
+information is in neither file. It needs a third input: the baseline, or the set
+of remotes this run actually uploaded (`deploy-app-version.js` computes that as
+`todo`, which is authoritative and needs no snapshot).
+
+```bash
+cp .bunny-appver-manifest.json "$TMP/.bunny-appver-manifest.base.json"   # at copy-in
+```
+```js
+const base = JSON.parse(fs.readFileSync(`${TMP}/.bunny-appver-manifest.base.json`, "utf8"));
+const rel  = JSON.parse(fs.readFileSync(`${TMP}/.bunny-appver-manifest.json`, "utf8"));
+const repo = JSON.parse(fs.readFileSync(".bunny-appver-manifest.json", "utf8"));
+for (const [k, v] of Object.entries(rel)) if (v !== base[k]) repo[k] = v;   // only what THIS run wrote
+```
+
+**Ask the baseline which case you were in**, because it is the only thing that
+can tell you: any key where the repo's copy now differs from your baseline was
+written by somebody else while you ran — added OR changed. Comparing against the
+release tree instead sees only the ADDED half, and the changed half is precisely
+what the broken loop damages, so the weaker check reports clean on the one case
+that matters.
+
+On v306 (2026-08-27), measured after the fact: 103 entries written, **all of
+them `/v306/` paths**, 0 keys added by another session, and 0 non-`v306` keys
+touched. So that run was genuinely clean and a straight copy-back would have
+been harmless — but it was clean because no other release overlapped it, not
+because the check would have caught one.
+
+**Every measured instance so far is clean, and that is the expected reading
+rather than the reassuring one.** v302-v305 were all copy-backs; all 309 of
+their entries were checked against storage and every one agrees with what is
+actually held, and the v306 entries written afterwards are intact. No damage —
+but the reason is sequencing, not care: the only appver writers are app
+releases, and no two of those overlapped. A release landing between somebody's
+copy-in and their copy-back would have lost its entries. That is the whole
+argument in one sentence: **the copy-back's correctness depends on something the
+person performing it cannot see** — whether anyone else released inside their
+window — and the merge's does not.
+
+So a note recording only bad outcomes would never have been written here. Every
+instance of this hazard is still in the future.
+
+Checking the entries against storage is the cheap confirmation and takes a
+couple of minutes for a release's worth: fetch each remote the release wrote and
+compare. It cannot find damage retroactively in general — a clobbered entry that
+has since been re-uploaded looks correct — but run after a release it confirms
+the entries that release just wrote.
 
 **The unsafe case leaves no trace at all.** A clobbered entry does not fail the
 release that causes it. It fails a FUTURE upload, silently, by claiming a file is

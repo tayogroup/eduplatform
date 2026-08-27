@@ -110,7 +110,8 @@ require($target);
 // floor of 1-8, which is right for five subjects out of six.
 foreach (['pqpg_tutoring_stage', 'pqpg_tutoring_anchor', 'pqpg_tutoring_declared_stage',
           'pqpg_tutoring_clamp_stage', 'pqpg_tutoring_subjects', 'pqpg_ehel_subject_map',
-          'pqpg_ehel_subject_slugs', 'pqpg_tutoring_subject', 'pqpg_tutoring_resume_subject'] as $fn) {
+          'pqpg_ehel_subject_slugs', 'pqpg_tutoring_subject', 'pqpg_tutoring_resume_subject',
+          'pqpg_tutoring_window'] as $fn) {
     if (!function_exists($fn)) {
         fwrite(STDERR, "✗ $fn() is gone — this gate is not testing what it claims to.\n");
         exit(2);
@@ -253,6 +254,29 @@ $PREFS = [];
 check('no tutoring enrolment opens nothing — the caller draws no card',
     pqpg_tutoring_resume_subject(7, []), '');
 
+echo "\nthe window a level MEANS — the staff page's copy of get-help.js\n";
+// tutoring_anchors.php prints "searches grades 2 to 6" beside each subject, and
+// what a learner really gets is decided in the browser by
+// get-help.js :: windowStages(). Two copies of one rule, so they are asserted
+// against each other here: same arithmetic, same per-subject clamp.
+check('±2 around the anchor', pqpg_tutoring_window('math', 4), [2, 6]);
+check('the bottom is held at 1, never 0 or below', pqpg_tutoring_window('math', 1), [1, 3]);
+check('the top is held at what the subject publishes', pqpg_tutoring_window('math', 8), [6, 8]);
+// The case a flat 1-8 clamp gets wrong: two CEFR levels, so a window of 1 to 3
+// would name a level that does not exist.
+check('Intensive English is two levels, so the window is not 1 to 3',
+    pqpg_tutoring_window('intensive-eng', 1), [1, 2]);
+check('and it cannot run past level 2 from the top either',
+    pqpg_tutoring_window('intensive-eng', 2), [1, 2]);
+check('an unknown subject falls back to the 1-8 shape five of six use',
+    pqpg_tutoring_window('not-a-subject', 4), [2, 6]);
+// The window is drawn around the EFFECTIVE stage, so a Global Perspectives
+// learner whose year is 5 searches around 6 — the withdrawn stage is not the
+// centre of anything.
+world([7 => 'Grade 5']);
+check('Global Perspectives windows around the stage it actually opens',
+    pqpg_tutoring_window('gp', pqpg_tutoring_stage(7, 'gp')), [4, 8]);
+
 echo "\nthe map the launch and the anchor share\n";
 // pqpg_ehel_app_base() is on the launch path for EVERY EHEL course, not just
 // the tutoring ones — the subject table was lifted out of it so the anchor
@@ -320,6 +344,15 @@ exit(0);
 //   trust the preference unvalidated                    a dropped subject leaves the
 //                                                       card pointing at a course
 //                                                       the launch will refuse
+//
+// …and two on the window the staff page PRINTS, which is a second copy of
+// get-help.js :: windowStages() and the only one testable from here:
+//
+//   widen it to ±3                                      the page describes a window
+//                                                       the search does not use
+//   clamp it flat at 8                                  Intensive English is said to
+//                                                       search levels 1-3, of which
+//                                                       one does not exist
 //
 // …and three on the subject table's lift out of pqpg_ehel_app_base(), which is
 // on the launch path for EVERY course rather than only the tutoring ones:

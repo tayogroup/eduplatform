@@ -4421,6 +4421,10 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
           <a class="pqh-btn pqh-btn--secondary" href="<?php echo (new moodle_url('/local/hubredirect/public_intake.php', $pqhpageparams))->out(false); ?>">Public student form</a>
           <a class="pqh-btn pqh-btn--secondary" href="<?php echo (new moodle_url('/local/hubredirect/student_intake.php', $pqhpageparams))->out(false); ?>">Student intake</a>
           <a class="pqh-btn pqh-btn--secondary" href="<?php echo (new moodle_url('/local/hubredirect/intake_requests.php', $pqhpageparams))->out(false); ?>">Student requests</a>
+          <?php // Beside intake because that is where the level it overrides is
+                // first captured: the intake form asks for one school year, and a
+                // tutoring learner needs one per subject. ?>
+          <a class="pqh-btn pqh-btn--secondary" href="<?php echo (new moodle_url('/local/hubredirect/tutoring_anchors.php', $pqhpageparams))->out(false); ?>">Tutoring levels</a>
         </div>
       </article>
       <article class="pqh-card">

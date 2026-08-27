@@ -398,6 +398,32 @@ function pqpg_tutoring_clamp_stage(string $slug, int $stage): int {
 }
 
 /**
+ * The stages a tutoring learner's search actually reaches for one subject:
+ * their anchor, plus and minus two, held inside what the subject publishes.
+ *
+ * THIS IS A SECOND COPY OF A RULE THAT LIVES IN THE APP — get-help.js ::
+ * windowStages(), which is the one that decides what a learner really gets. It
+ * exists because the staff page has to say what a level MEANS ("searches grades
+ * 2 to 6") and cannot ask the browser. The two are gated against each other by
+ * tools/check-tutoring-anchor.php, so they cannot quietly drift into a page
+ * that describes a window the search does not use.
+ *
+ * The clamp is per subject, not a flat 1-8: Intensive English publishes two CEFR
+ * levels, so a learner anchored at Level 1 searches 1 to 2, and a window of 1 to
+ * 3 would name a level that does not exist.
+ *
+ * "Show all stages" is deliberately not modelled here. It is a button in the
+ * app, a thing the learner does, not a property of their level — and a staff
+ * page that mentioned it would be describing the search rather than the setting
+ * it is there to change.
+ */
+function pqpg_tutoring_window(string $slug, int $stage): array {
+    $subject = pqpg_ehel_subject_map()[$slug] ?? null;
+    $max = $subject ? (int)$subject['maxstage'] : 8;
+    return [max(1, $stage - 2), min($max, $stage + 2)];
+}
+
+/**
  * Which tutoring subject a learner's single "Tutor Me" card should open.
  *
  * $available is the slugs they are actually enrolled in — the caller has that

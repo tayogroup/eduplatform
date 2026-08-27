@@ -93,6 +93,21 @@ function glossaryGroupsOf(groups) {
   return byStrand.length ? byStrand : groups.filter((g) => /stories/i.test(g.title));
 }
 
+// The one title english.js recognises (STORY_GLOSSARY_GROUP). It completes
+// Vocabulary on every group whose title is not this string, so a glossary under
+// any other name matches nothing, taughtGroups() comes back the full length, and
+// taughtWords() falls through to gating on the whole unit — and Vocabulary sits
+// in front of Reading in SECTION_CHAIN, so the glossary becomes a prerequisite
+// for the story it glosses.
+//
+// glossaryGroupsOf above is deliberately BROADER than that, which is what lets
+// this tool find a differently-named glossary. The merged group it writes must
+// still come out under the name the runtime knows. It did not: the title came
+// from `glossary?.title`, the FIRST match, and Grade 1 Unit 3 had two glossary
+// groups — "Animals in our stories" ahead of "Words from our stories". It
+// shipped with a 103-word gate where the other nine units have 39.
+const STORY_GLOSSARY_GROUP = "Words from our stories";
+
 const taughtLink = new Map();
 const unitDocs = [];
 for (let n = 1; n <= 10; n++) {
@@ -147,6 +162,20 @@ function sentencesChanged(existing, written) {
 let reused = 0, authoredCount = 0, audioKept = 0, audioCleared = 0;
 const missing = [];
 const plan = [];
+
+// Every vocabularyId a Core card will claim, across the WHOLE grade, computed
+// before any unit is built. It has to be grade-wide rather than per-unit:
+// `taughtLink` resolves a word to the first taught link anywhere in the grade,
+// so a Core word in unit 2 can take over a link that lives in unit 1, and it is
+// unit 1's build that would otherwise displace that link into its glossary
+// still carrying the id.
+const claimedIds = new Set();
+for (const cu of core.units)
+  for (const g of cu.groups)
+    for (const w of g.words) {
+      const id = taughtLink.get(w)?.vocabularyId;
+      if (id) claimedIds.add(id);
+    }
 
 for (const cu of core.units) {
   const { doc, file, n } = unitDocs[cu.unitNo - 1];
@@ -236,20 +265,51 @@ for (const cu of core.units) {
     (g) => !glossaryIds2.has(g.id) && !coreIds.has(g.id));
   const glossary = doc.vocabularyGroups.find((g) => glossaryIds2.has(g.id));
   const oldIds = new Set(oldTaught.map((g) => g.id));
-  const displaced = doc.dictionaryLinks.filter((l) => oldIds.has(l.groupId));
+  // A Core word that was ALREADY taught keeps its old link's vocabularyId, so
+  // that id now belongs to the Core card. The same old link is also sitting in a
+  // group being displaced into the glossary — and displacing it puts the id in
+  // the unit TWICE. vocabularyId is the key progress is stored against
+  // (`progress.knownWords`), so a duplicate means marking one word learned marks
+  // the other, and the section can complete without the child having seen it.
+  //
+  // Grade 1 never showed this: almost none of its Core words had been taught
+  // before, so no id was ever taken over. Grade 2 reuses 42 links and produced
+  // 26 duplicates inside single units. Drop any glossary-bound link whose id a
+  // Core card has claimed — the word is taught now, so it does not also need a
+  // look-up entry. `claimedIds` is computed grade-wide above.
+  const displaced = doc.dictionaryLinks.filter(
+    (l) => oldIds.has(l.groupId) && !claimedIds.has(l.vocabularyId));
   // A rerun must not carry its own core links into the glossary either: they are
   // rebuilt from core-words.json above, so drop anything already in a core group.
   const keptGlossary = doc.dictionaryLinks.filter(
-    (l) => !oldIds.has(l.groupId) && !coreIds.has(l.groupId));
+    (l) => !oldIds.has(l.groupId) && !coreIds.has(l.groupId) && !claimedIds.has(l.vocabularyId));
 
   const glossaryId = glossary?.id ?? `${IDP}-u${cu.unitNo}-glossary`;
-  const glossaryTitle = glossary?.title ?? "Words from our stories";
+  // Not `glossary?.title` — see STORY_GLOSSARY_GROUP above. Carrying the found
+  // group's own title forward is what shipped Unit 3's glossary under a name the
+  // runtime cannot recognise, and every gate in the repo passed it.
+  const glossaryTitle = STORY_GLOSSARY_GROUP;
   groups.push({ id: glossaryId, number: groups.length + 1, title: glossaryTitle, strand: "glossary" });
 
+  const unitLinks = [
+    ...links,
+    ...keptGlossary.map((l) => ({ ...l, groupId: glossaryId, groupTitle: glossaryTitle })),
+    ...displaced.map((l) => ({ ...l, groupId: glossaryId, groupTitle: glossaryTitle })),
+  ];
+  // Every reader that asks how big a group is asks `group.vocabularyIds` —
+  // check-english-content.mjs's three vocabulary rules, and the unit Study Plan's
+  // newWordCount / storyWordCount in english.js. This tool stopped emitting the
+  // field, so at Grades 1-2 all of them measured zero and passed having measured
+  // nothing: the structural "glossary under another name" detector, written for
+  // exactly the title defect above, compared 0 against 0 while that defect was
+  // live. Derived in link order, which is how the other grades' builders write it.
+  const withIds = groups.map((g) => ({
+    id: g.id, number: g.number, title: g.title,
+    vocabularyIds: unitLinks.filter((l) => l.groupId === g.id).map((l) => l.vocabularyId),
+    strand: g.strand,
+  }));
   plan.push({
-    n, file, groups,
-    links: [...links, ...keptGlossary.map((l) => ({ ...l, groupId: glossaryId, groupTitle: glossaryTitle })),
-      ...displaced.map((l) => ({ ...l, groupId: glossaryId, groupTitle: glossaryTitle }))],
+    n, file, groups: withIds, links: unitLinks,
     coreCount: cu.coreWordCount, displaced: displaced.length, glossaryTotal: keptGlossary.length + displaced.length,
   });
 }

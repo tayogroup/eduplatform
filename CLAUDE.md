@@ -393,6 +393,72 @@ always, and must never reach the school's gradebook; and "AI could not unstick
 me → book a human tutor" is part of the design, so help sessions keep a record
 a handoff can carry.
 
+### The topbar picker is DERIVED. Do not give it a list again (2026-08-27)
+
+`paintTutoringSections` (`shell/course-app.js`) offers the sections a tutoring
+learner can search. It used to hold `TUTORING_SECTION_IDS`, one array of ids per
+subject, and that table is deleted. It was a hand-kept copy of two vocabularies
+that both already knew the answer, and it failed in **both** directions within a
+day:
+
+- `glossary` was added to English and was invisible to the picker until somebody
+  edited the table to admit it existed — a section that renders and is
+  searchable and cannot be picked.
+- `ebooks` sat IN the table with no topics behind it, so picking Books answered
+  "No Books lessons are indexed for grades 2-6". An entry the table was
+  confident about and the searcher had never heard of.
+
+Two sources now, and neither can drift from what it describes:
+
+```
+the NAV    which sections THIS GRADE draws, and the order it draws them
+the INDEX  which sections the search can actually answer for  (get-help.js :: sectionsWithTopics)
+```
+
+Offered = the nav filtered by the index. A new section with topics appears the
+moment it renders; a section the index cannot answer for is never offered. The
+order is the nav's, which is also how `glossary` ends up last without anyone
+deciding it should.
+
+Four things to know before touching it:
+
+- **`sectionsWithTopics()` reads `windowStages()`, not the current stage**, because
+  that is precisely the set `searchSection` searches. English draws the Books
+  shelf at every grade for a tutoring learner while the catalogue puts the books
+  at Grades 1-4, so at Grade 5+ the entry is answerable only out of the
+  neighbouring grades. Narrowing it to the current stage silently drops the
+  entry whose search works.
+- **Null means "not known yet", not "none".** Nothing is painted until the index
+  answers. If it cannot be loaded, section search cannot work either, so every
+  entry the picker could offer would find nothing — painting none is the honest
+  degradation, not a fallback worth adding a table back for.
+- **The nav alone is NOT enough, and this is the trap if you read the section
+  title and stop.** Mathematics draws **16** sections and 5 carry topics. A
+  nav-derived picker with an exclusion list for the obvious non-teaching routes
+  still offers 8 dead entries — recreating the Books dead end eight times over,
+  in the subject with the most units. The index half is what makes "offered"
+  mean "picking this finds something".
+- Per-subject differences now fall out of the data. Measured at the change:
+  mathematics and science `lesson, words, explore, method, examples`; computing
+  the same plus `code`; global-perspectives `lesson, bigideas, models, toolkit,
+  words`; intensive-english eight; english eleven. Those are the deleted table's
+  contents exactly — the derivation was verified against it in the browser in
+  all six subjects before it was deleted, which is the only reason it could be.
+
+`SECTIONS_REPLACE_UNITS` is a separate decision and stays: english and
+intensive-english REPLACE the units, the other four ADD sections above them.
+
+**The searcher keeps what the picker said.** `runSearch` used to clear
+`activeSection` on the way in, which made the picker and the box two searches
+rather than one: choosing Glossary and then typing "milk" dropped the Glossary
+half and answered with Vocabulary and Quiz topics out of five other units, the
+glossary's own entry ranked third among them. The learner had said two things
+and only the second was heard. It narrows now, a chip says the filter is on and
+clears it in one click, and under a filter the TOPICS decide rather than the
+unit's own score. Reported twice by the owner before it was found, because the
+first report was read as being about the glossary page and it was about the
+search.
+
 ### The human-tutor handoff, proven on the live marketplace (2026-08-24)
 
 The whole chain was exercised on production with a QA tutor: help-session
@@ -1839,6 +1905,37 @@ Two consequences worth knowing:
   else is sitting in it — that is how v218 and v219 put a feature into production
   ahead of its own commit. `git status` before a release, the same as before a
   commit.
+
+  **That check sees work already sitting in the tree. It cannot see work that
+  STARTS while you package**, and the gap is the whole width of the upload. On
+  2026-08-27, v301 was cut from this tree while another session had just been
+  told by its user to revert `a2414f064` — the topbar, `course-app.js` and
+  `course-ui.css`. It held off, unasked, purely because it knew a release was in
+  flight; had it started, a revert nobody asked for would have shipped under a
+  tag whose message is about the tutoring picker. Exactly the v218/v219 shape,
+  reached from the other direction: not stale work found in the tree, but fresh
+  work arriving after the tree was found clean.
+
+  Nothing in the tooling covers this. `git status` had passed, correctly, and
+  would have passed again a minute later while the tree was being rewritten
+  underneath. The release lock is per storage ZONE and stops two concurrent
+  *releases*; it says nothing about an ordinary edit landing mid-package. So the
+  only cover is the announcement — which is a courtesy that reduces the odds,
+  not a control, for the reasons already recorded above. **Say when a release
+  STARTS and say when its pointers have flipped**, not just which tag you are
+  taking: "I am taking v301" tells a peer nothing about when it is safe to edit
+  again, and the window they need to know about is the one between those two
+  messages.
+
+  The generalisable half is about shelf life. The tag was re-measured from
+  storage immediately before use, because this file says a verified tag goes
+  stale in minutes — and the TREE was not re-measured, though it is a reading of
+  shared state with exactly the same shelf life. One had a rule written about it
+  and the other did not, which is not a reason to treat them differently. The
+  same applies to HEAD: the session holding v301 had its local `main` move from
+  `a2414f064` to `f45ed2f2a` under it mid-task, because somebody pulled in the
+  shared checkout. **In this repo, "the tree is clean at `<sha>`" is a
+  measurement, not a fact you established.**
 
 If that pre-release check finds someone else's work in the tree, **do not stash
 it and do not ask them to hurry** — build the release from HEAD instead:

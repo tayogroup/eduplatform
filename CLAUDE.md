@@ -2321,6 +2321,38 @@ but know that writing it while another session is mid-release overwrites their
 record of what they just uploaded. That happened on 2026-08-22 with two other
 releases in flight; nothing broke, and nothing would have said so if it had.
 
+**So do not copy it BACK. Merge.** The paragraph above names the hazard and then
+prescribes the operation that causes it, which is worth fixing in place:
+"copy the manifests in and back out" is right on the way in and wrong on the way
+out. On the way out, read the repo's CURRENT manifest, apply only the entries
+your release wrote, and write that — the other session's entries survive because
+you never held a stale copy of them in the first place.
+
+```js
+const repo = JSON.parse(fs.readFileSync(".bunny-appver-manifest.json", "utf8"));
+const rel  = JSON.parse(fs.readFileSync(`${TMP}/.bunny-appver-manifest.json`, "utf8"));
+for (const [k, v] of Object.entries(rel)) if (repo[k] !== v) repo[k] = v;   // yours only
+```
+
+**Ask the same comparison which case you were in**, because it is the only thing
+that will ever tell you: entries present in the repo's copy but absent from your
+release tree's appeared while you were running, and they are somebody else's
+release. On v306 (2026-08-27) that count was **0** — 103 entries merged onto
+8046, nothing at risk — and a straight copy-back would have been harmless. That
+is exactly why it is written down from this release rather than from a bad one.
+
+**The unsafe case leaves no trace at all.** A clobbered entry does not fail the
+release that causes it. It fails a FUTURE upload, silently, by claiming a file is
+already on storage — so the damage surfaces weeks later as a file that never
+deploys, with nothing connecting it back to the release that ate the record.
+There is no run to inspect, no log line, no failed check. Which means the merge
+is not a refinement of the copy: it is the only version of the operation whose
+correctness you can establish at the time you perform it.
+
+Preserve the file's formatting when you write it — it is one single-line JSON
+object, and re-serialising it pretty would rewrite 8,000 lines under whoever
+reads the diff next.
+
 #### One file is skipped on trust AND verified by nothing
 
 `shared/grade-redirect.js` falls through both safeguards at once, and neither is

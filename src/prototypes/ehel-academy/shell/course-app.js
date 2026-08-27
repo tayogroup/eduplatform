@@ -858,24 +858,27 @@ export function createCourseApp(config) {
   // Removing a working unit search from Mathematics to make the six look alike
   // would be a regression dressed as consistency.
   //
-  // The ids are the ones each subject's topic index actually tags topics with,
-  // measured rather than assumed — picking a section selects on `topic.section`
-  // (get-help.js :: searchSection), so an id with no topics is a dead entry.
-  // English's list is the owner's, and deliberately includes `ebooks`, which has
-  // none: the shelf lives in shell/subjects/english.js rather than the content
-  // tier, so no content builder can index it, and the entry says so when picked.
-  const TUTORING_SECTION_IDS = {
-    // `glossary` is a tutoring-only section (english.js) and sits last, where the
-    // nav puts it: it is a reference page to look a word up in, not a part of
-    // the course to be stuck on, so it reads as the end of the list rather than
-    // among the lessons.
-    english: ["dictionary", "reading", "comprehension", "grammar", "speaking", "writing", "activities", "games", "quiz", "ebooks", "glossary"],
-    "intensive-english": ["dictionary", "reading", "comprehension", "grammar", "speaking", "writing", "activities", "quiz"],
-    mathematics: ["lesson", "words", "explore", "method", "examples"],
-    science: ["lesson", "words", "explore", "method", "examples"],
-    computing: ["lesson", "words", "explore", "code", "method", "examples"],
-    "global-perspectives": ["lesson", "bigideas", "models", "toolkit", "words"],
-  };
+  // WHICH sections are offered is derived, not listed. There used to be a table
+  // here — six subjects, one array of ids each — and it was a hand-kept copy of
+  // two things that both already know the answer:
+  //
+  //   the NAV    which sections THIS GRADE draws
+  //   the INDEX  which sections the search can answer for
+  //
+  // A copy of somebody else's vocabulary is only as complete as the day it was
+  // written, and nothing reports the difference. Both halves of that bill came
+  // in within one day: `glossary` was added to English and was invisible to the
+  // picker until the table was edited to admit it existed, and `ebooks` sat IN
+  // the table with no topics behind it, so picking Books answered "No Books
+  // lessons are indexed for grades 2-6" — an entry the table was confident about
+  // and the searcher had never heard of.
+  //
+  // Derived, neither can happen: a new section with topics is offered the moment
+  // it renders, and a section the index cannot answer for is never offered at
+  // all. The order is the NAV's, so the picker reads down the page the learner
+  // is looking at — which is also how `glossary` ends up last without anyone
+  // deciding it should, it being a reference page rather than a part of the
+  // course to be stuck on.
   const SECTIONS_REPLACE_UNITS = new Set(["english", "intensive-english"]);
   // The subject's OWN wording, never a second copy of it. Intensive English
   // calls `dictionary` "Words" and `grammar` "Patterns" where English says
@@ -888,6 +891,29 @@ export function createCourseApp(config) {
     const row = list.find((entry) => entry[0] === id);
     return row ? row[2] : id;
   };
+  // What the topic index can answer for, once. null until it has been asked.
+  // Held here rather than fetched per paint because paintTutoringSections runs
+  // on EVERY nav render, and the answer is a property of the subject and the
+  // learner's stage window, not of the render.
+  let searchableSections = null;
+  let searchableAsked = false;
+  function askWhatIsSearchable() {
+    if (searchableAsked || !config.getHelp?.sectionsWithTopics) return;
+    searchableAsked = true;
+    Promise.resolve()
+      .then(() => config.getHelp.sectionsWithTopics())
+      .then((ids) => {
+        if (!ids || !ids.size) return;
+        searchableSections = ids;
+        // The nav has already been drawn by now, and the paint that started this
+        // deliberately painted nothing, so this is the one that fills the picker
+        // in. Nothing else will call it: a nav render is what normally repaints,
+        // and there may never be another one.
+        paintTutoringSections();
+      })
+      .catch(() => { /* no index, no section search — the units stay as they are */ });
+  }
+
   // Repainted after onNavRendered on every nav render rather than once at boot,
   // because English rebuilds its own pickers there (english.js ::
   // renderUnitPickers, called from onNavRendered AND onReady) and would
@@ -903,27 +929,28 @@ export function createCourseApp(config) {
   // Asking for a `section:` option cannot go stale that way: whatever wipes it
   // also clears the answer, and the next render repaints.
   function paintTutoringSections() {
-    const ids = TUTORING_SECTION_IDS[config.subjectKey];
-    if (!ids || !config.getHelp) return;
-    // Only the sections THIS GRADE draws. The list above is per subject and
-    // cannot be per grade: English draws Books at Grades 1-4 and the Story
-    // Library at 5-8, so the fixed list offered "Books" at Grade 5, where no
-    // such route exists. Picking it selected a section nothing renders — the
-    // portal-allowlist failure shape, which is not a 404 but a silent landing
-    // on whatever the router falls back to.
-    //
-    // Asked of the NAV rather than of a second list, for the same reason the
-    // idempotence test below asks what the picker CONTAINS: a nav entry is the
-    // grade's own answer to "does this section exist here", produced by the code
-    // that actually draws it, so it cannot drift from what renders. A second
-    // per-grade table would be a copy, and the copy is what goes stale.
+    if (!config.getHelp) return;
+    // Only the sections THIS GRADE draws, in the order it draws them. A nav
+    // entry is the grade's own answer to "does this section exist here",
+    // produced by the code that actually draws it, so it cannot drift from what
+    // renders — which a per-grade table would, English drawing Books at 1-4 for
+    // a school learner and at every grade for a tutoring one.
     //
     // An empty nav means it has not been drawn yet, not that the grade has no
     // sections, so the picker is left untouched rather than painted with
     // nothing — the next nav render repaints it.
-    const live = new Set($$("[data-route]").map((el) => el.dataset.route));
-    if (!live.size) return;
-    const offered = ids.filter((id) => live.has(id));
+    const live = $$("[data-route]").map((el) => el.dataset.route);
+    if (!live.length) return;
+    // …and only the sections the SEARCH can answer for. Until the index says
+    // otherwise this is null, and null means "not known yet" rather than
+    // "none": painting the nav unfiltered for a moment would put eight dead
+    // entries in front of a Mathematics learner (its nav draws 16 sections and
+    // 5 carry topics), so nothing is painted until the answer arrives. That is
+    // the honest degradation as well as the tidy one — if the index cannot be
+    // loaded at all, section search cannot work either, and every entry the
+    // picker could offer would be an entry that finds nothing.
+    if (!searchableSections) { askWhatIsSearchable(); return; }
+    const offered = live.filter((id) => searchableSections.has(id));
     if (!offered.length) return;
     const replace = SECTIONS_REPLACE_UNITS.has(config.subjectKey);
     const options = offered

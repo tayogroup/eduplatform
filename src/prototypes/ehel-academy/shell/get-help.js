@@ -209,6 +209,41 @@ export function createGetHelp(options) {
     return index;
   }
 
+  // Which SECTION IDS the search can actually answer for — the vocabulary the
+  // tutoring topbar picker offers (course-app.js :: paintTutoringSections).
+  //
+  // It reads the INDEX rather than a list in the shell because the index is what
+  // a picked section then searches: `searchSection("ebooks")` looks for topics
+  // whose section is "ebooks", so a section the picker offers and the index has
+  // never heard of answers "No Books lessons are indexed for grades 2-6" — which
+  // is exactly how Books shipped. The picker's list and the searcher's list have
+  // to be the same list, so there is one of them and this is it.
+  //
+  // Over windowStages(), not the current stage alone, because that is precisely
+  // the set searchSection searches. English draws the Books shelf at every grade
+  // for a tutoring learner (the whole library, owner 2026-08-26) while the
+  // catalogue puts the books themselves at Grades 1-4, so at Grade 5 the entry
+  // is answerable only out of the neighbouring grades. Asking the current stage
+  // alone would drop it, and the picker would be missing an entry whose search
+  // works.
+  //
+  // The fetches are the ones the first search makes anyway and the cache is
+  // shared with it, so this warms that search rather than costing a round trip.
+  // Returns null — not an empty set — when nothing could be loaded: "I do not
+  // know" and "there are none" want different answers from the caller.
+  async function sectionsWithTopics() {
+    const indexes = await Promise.all(windowStages().map((stage) => loadIndex(stage)));
+    const found = indexes.filter(Boolean);
+    if (!found.length) return null;
+    const ids = new Set();
+    for (const index of found) {
+      for (const unit of index.units || []) {
+        for (const topic of unit.topics || []) if (topic.section) ids.add(topic.section);
+      }
+    }
+    return ids;
+  }
+
   // Which of a stage's units carry an authored topic lesson — what the result
   // cards BADGE, so the in-depth lesson is visible from the search instead of
   // only after starting a session (found by the owner searching "decimal" and
@@ -368,10 +403,22 @@ export function createGetHelp(options) {
   async function runSearch(query, ui) {
     const tokens = tokenize(query);
     currentQuery = tokens.length ? String(query || "").trim() : "";
-    activeSection = null;
+    // The picked section SURVIVES the learner typing. It used to be cleared
+    // here, which quietly made the picker and the box two searches rather than
+    // one: choosing Glossary and then typing "milk" dropped the Glossary part
+    // and answered with Vocabulary and Quiz topics out of five other units,
+    // the glossary's own entry for the word ranked third among them. The
+    // learner had said both things and only the second was heard. (Owner,
+    // 2026-08-27, reporting it twice.)
+    //
+    // Narrowing is what a learner means by using both: "milk, in the glossary".
+    // It is also the only reading that can be undone — the chip below says the
+    // filter is on and clears it in one click, whereas a dropped filter leaves
+    // nothing to notice or undo.
+    const section = activeSection;
     const resultsBox = ui.$("#gh-results");
     if (!resultsBox) return;
-    if (!tokens.length) { resultsBox.innerHTML = introHtml(ui); bindIntro(ui); return; }
+    if (!tokens.length) { activeSection = null; resultsBox.innerHTML = introHtml(ui); bindIntro(ui); return; }
     const token = ++searchToken;
     resultsBox.innerHTML = `<section class="panel gh-status"><p>${ui.icon("loader-circle")} Searching ${options.subjectLabel}…</p></section>`;
     const stages = windowStages();
@@ -386,11 +433,44 @@ export function createGetHelp(options) {
       if (!index) return;
       for (const unit of index.units) {
         const { score, topics } = scoreUnit(unit, tokens);
-        if (score > 0) hits.push({ stage: stages[at], unit, score, topics, hasLesson: lessonIndexes[at].has(Number(unit.unit)) });
+        if (score <= 0) continue;
+        // Under a section filter the TOPICS decide, not the unit's own score: a
+        // unit whose title matched the word but which teaches none of it in this
+        // section is not an answer to "milk, in the glossary".
+        const kept = section ? topics.filter((topic) => topic.section === section.id) : topics;
+        if (!kept.length) continue;
+        hits.push({ stage: stages[at], unit, score, topics: kept, hasLesson: lessonIndexes[at].has(Number(unit.unit)) });
       }
     });
-    resultsBox.innerHTML = resultsHtml(hits, current, ui, query);
+    if (section && !hits.length) {
+      // Which of the two things they asked for came up empty is the useful part:
+      // the word may be all over the course and simply not in this section, and
+      // "no results" would send them off to re-word a search that was fine.
+      resultsBox.innerHTML = `<section class="panel gh-status"><p><strong>Nothing about “${ui.escapeHtml(currentQuery)}” in ${ui.escapeHtml(section.label)}.</strong></p>${sectionFilterHtml(section, ui)}</section>`;
+      bindSectionFilter(ui);
+      return;
+    }
+    resultsBox.innerHTML = (section ? sectionFilterHtml(section, ui) : "") + resultsHtml(hits, current, ui, query);
     bindResults(hits, query, ui);
+    if (section) bindSectionFilter(ui);
+  }
+
+  // The visible half of the rule above: a filter the learner cannot see is a
+  // filter they cannot undo, and this one now outlives the keystroke that used
+  // to clear it.
+  const sectionFilterHtml = (section, ui) =>
+    `<p class="gh-section-filter">${ui.icon("filter")} <span>Searching <strong>${ui.escapeHtml(section.label)}</strong> only.</span> <button class="gh-section-clear" type="button">Search everything</button></p>`;
+
+  function bindSectionFilter(ui) {
+    const button = ui.$("#gh-results .gh-section-clear");
+    if (!button) return;
+    button.addEventListener("click", () => {
+      activeSection = null;
+      const input = ui.$("#gh-query");
+      // Re-run whatever they typed, now unfiltered — the query is the half they
+      // did not ask to undo.
+      runSearch(input ? input.value : currentQuery, ui);
+    });
   }
 
   function resultCard(hit, at, ui, query) {
@@ -545,6 +625,9 @@ export function createGetHelp(options) {
     .gh-search input { flex: 1 1 260px; min-width: 0; border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; font: inherit; background: #fff; }
     .gh-window { display: flex; align-items: center; gap: 8px; margin-top: 12px; color: var(--muted); font-size: 14px; flex-wrap: wrap; }
     .gh-note { color: var(--muted); font-size: 14px; margin: 4px 0 12px; }
+    .gh-section-filter { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 0 0 12px; padding: 8px 12px; border-radius: 10px; background: var(--teal-soft, #e6f7f5); color: var(--teal-dark, #0e7490); font-size: 14px; }
+    .gh-section-filter i, .gh-section-filter svg { width: 14px; height: 14px; flex: none; }
+    .gh-section-clear { border: 0; background: none; padding: 0; font: inherit; color: inherit; text-decoration: underline; cursor: pointer; }
     .gh-hit { padding: 12px 0; border-top: 1px solid var(--line); }
     .gh-hit:first-of-type { border-top: 0; }
     .gh-hit-heading { margin: 0 0 10px; font-size: 15px; }
@@ -1214,5 +1297,5 @@ export function createGetHelp(options) {
     rerunCurrentView(ui, query);
   }
 
-  return { render, renderSession, sessionHere, attachShell, sessionHint, searchQuery, search, setStage, searchSection };
+  return { render, renderSession, sessionHere, attachShell, sessionHint, searchQuery, search, setStage, searchSection, sectionsWithTopics };
 }

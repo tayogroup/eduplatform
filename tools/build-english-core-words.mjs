@@ -1,57 +1,105 @@
 #!/usr/bin/env node
-// Grade 1 Core words — restructure the unit vocabulary.
+// English Core words — restructure the unit vocabulary for one grade.
 //
 // What this does, per unit:
 //   1. every vocabulary group the unit teaches today becomes a GLOSSARY group
 //      ("Words from our stories"), so those words stay available to look up
 //      while reading but no longer gate the Vocabulary section;
-//   2. the Core words for that unit (english/grade-1/data/core-words.json)
-//      become the taught groups, in three strands — phonics, topic, sight.
+//   2. the Core words for that unit (english/grade-N/data/core-words.json)
+//      become the taught groups, in that grade's strands.
 //
-// A Core word that is already taught at Grade 1 keeps its existing
-// dictionaryLink untouched: its child meaning, its five practice sentences and
-// every audio clip come across as they are. Owner's decision, 2026-08-27 —
-// reuse rather than re-author, which is ~35% of the authoring saved.
+// A Core word already taught at this grade keeps its existing dictionaryLink
+// untouched: its child meaning, its five practice sentences and every audio
+// clip come across as they are. Owner's decision, 2026-08-27 — reuse rather
+// than re-author, which is ~35% of the authoring saved.
 //
 // It REFUSES to write a unit where any Core word has no teaching content. A
 // link with no childMeaning and no practiceSentences would render an empty word
 // card and pass every existing structural check, so the refusal is the point:
 // the missing content is the work, and this tool is what measures it.
 //
-//   node tools/build-english-core-words.mjs            # report only, writes nothing
-//   node tools/build-english-core-words.mjs --write    # apply, if nothing is missing
-//   node tools/build-english-core-words.mjs --write --allow-incomplete
-//                                                     # apply, leaving gaps flagged
+//   node tools/build-english-core-words.mjs --grade 2            # report, writes nothing
+//   node tools/build-english-core-words.mjs --grade 2 --write    # apply, if nothing is missing
+//   node tools/build-english-core-words.mjs --grade 2 --write --allow-incomplete
+//                                                               # apply, leaving gaps flagged
+//
+// GRADE-PARAMETERISED rather than cloned, for the same reason the draft tool is:
+// two copies would drift, and each grade's units would then be restructured by
+// subtly different rules with nothing reporting the difference.
 import fs from "node:fs";
 import path from "node:path";
 
-const ROOT = path.join("src", "prototypes", "ehel-academy", "english", "grade-1", "data");
-const UNITS = path.join(ROOT, "units");
 const WRITE = process.argv.includes("--write");
 const ALLOW = process.argv.includes("--allow-incomplete");
+let GRADE = 1;
 
-for (const a of process.argv.slice(2)) {
-  if (!["--write", "--allow-incomplete"].includes(a)) {
-    console.error(`Unrecognised argument: ${a}`);
-    console.error("Usage: build-english-core-words.mjs [--write] [--allow-incomplete]");
-    process.exit(2);
-  }
+const argv = process.argv.slice(2);
+for (let i = 0; i < argv.length; i++) {
+  if (argv[i] === "--grade") { GRADE = Number(argv[++i]); continue; }
+  if (["--write", "--allow-incomplete"].includes(argv[i])) continue;
+  console.error(`Unrecognised argument: ${argv[i]}`);
+  console.error("Usage: build-english-core-words.mjs [--grade N] [--write] [--allow-incomplete]");
+  process.exit(2);
+}
+if (!Number.isInteger(GRADE) || GRADE < 1 || GRADE > 8) {
+  console.error(`--grade must be 1-8, got: ${GRADE}`);
+  process.exit(2);
 }
 
+const ROOT = path.join("src", "prototypes", "ehel-academy", "english", `grade-${GRADE}`, "data");
+const UNITS = path.join(ROOT, "units");
+// The id prefix every generated vocabularyId and fallback group id carries.
+// It MUST track the grade: left at "g1-" a Grade 2 build mints Grade 1 ids, and
+// vocabularyId is the key progress is stored against, so a learner's completed
+// words would collide across grades.
+const IDP = `g${GRADE}`;
+
 const core = JSON.parse(fs.readFileSync(path.join(ROOT, "core-words.json"), "utf8"));
-const master = JSON.parse(fs.readFileSync(path.join(ROOT, "master-dictionary.grade1.json"), "utf8"));
+
+// A Core group whose TITLE reads as the glossary is refused outright. The strand
+// test below makes the tool robust either way, but a title like "Words: stories
+// and talking together" is still ambiguous to every other reader of this data —
+// including the check that counts taught vocabulary — so it is a naming mistake
+// worth stopping at the source rather than tolerating.
+const collide = core.units.flatMap((u) => u.groups.filter((g) => /stories/i.test(g.title))
+  .map((g) => `unit ${u.unitNo}: ${g.id} — "${g.title}"`));
+if (collide.length) {
+  console.error("Refusing to run: a Core group is titled as though it were the story glossary.");
+  for (const c of collide) console.error(`  ${c}`);
+  console.error('Rename it so the title does not contain "stories".');
+  process.exit(2);
+}
+
+const master = JSON.parse(fs.readFileSync(path.join(ROOT, `master-dictionary.grade${GRADE}.json`), "utf8"));
 const masterBy = new Map(master.entries.map((e) => [e.lemma.toLowerCase(), e]));
 
-// Every link Grade 1 holds today, keyed by the word. Taught links carry the
+// Every link this grade holds today, keyed by the word. Taught links carry the
 // teaching content; glossary links are look-up entries and are not reusable as
 // Core words without authoring, so they are recorded separately.
+// Which group is the story glossary.
+//
+// Originally this was a title test alone, `/stories/i`, and that is a property
+// of the WORDING rather than of the group — so a Core group could satisfy it.
+// Grade 2 unit 10 teaches story vocabulary and its topic group was titled
+// "Words: stories and talking together": on a re-run the tool read its own
+// output, took that Core group for the glossary, and moved 31 taught words out
+// of the taught set. Grade 1 has no such title, which is exactly why the tool
+// looked idempotent for a whole grade.
+//
+// A group this tool has written carries `strand`, so prefer that and keep the
+// title test only for units it has never touched.
+function glossaryGroupsOf(groups) {
+  const byStrand = groups.filter((g) => g.strand === "glossary");
+  return byStrand.length ? byStrand : groups.filter((g) => /stories/i.test(g.title));
+}
+
 const taughtLink = new Map();
 const unitDocs = [];
 for (let n = 1; n <= 10; n++) {
   const file = path.join(UNITS, `unit-${n}.json`);
   const doc = JSON.parse(fs.readFileSync(file, "utf8"));
   unitDocs.push({ n, file, doc });
-  const glossaryIds = new Set(doc.vocabularyGroups.filter((g) => /stories/i.test(g.title)).map((g) => g.id));
+  const glossaryIds = new Set(glossaryGroupsOf(doc.vocabularyGroups).map((g) => g.id));
   for (const link of doc.dictionaryLinks) {
     if (glossaryIds.has(link.groupId)) continue;
     const w = String(link.masterWord || "").toLowerCase();
@@ -64,8 +112,8 @@ const authored = fs.existsSync(authoredFile)
   ? JSON.parse(fs.readFileSync(authoredFile, "utf8")).words : {};
 
 // The reviewed draft is the content of record. It resolves each word across the
-// WHOLE course — a Grade 1 glossary link and a higher-grade link both count —
-// where taughtLink below only holds Grade 1's taught links. Reading the draft is
+// WHOLE course — this grade's glossary links and other grades' links both
+// count — where taughtLink below only holds this grade's taught links. Reading the draft is
 // what keeps this tool's idea of "complete" identical to the draft's; deriving
 // it again here produced 34 phantom gaps for words whose content sits in a
 // glossary entry.
@@ -112,15 +160,31 @@ for (const cu of core.units) {
       const d = draft.get(w);
       // Authored first; otherwise whatever the reviewed draft resolved, which
       // may have come from a glossary link or another grade.
-      const written = authored[w]
-        ?? (d && d.childMeaning && (d.practiceSentences || []).length >= 5
-          ? { childMeaning: d.childMeaning, practiceSentences: d.practiceSentences, acceptedFrom: d.meaningSource }
-          : undefined);
+      // Authored content is layered over the draft FIELD BY FIELD, not swapped
+      // in wholesale. The draft tool has always merged this way, and `??` here
+      // did not: an authored entry carrying only a re-pitched childMeaning
+      // replaced the draft entry outright, taking its five sentences with it, so
+      // the word arrived with a meaning and nothing to read. Nine Grade 2 words
+      // were reported as "needing authoring" while the draft called all 400
+      // complete — two tools reading one file by different rules, which is the
+      // divergence this file exists to avoid.
+      const fromDraft = d
+        ? { childMeaning: d.childMeaning, practiceSentences: d.practiceSentences || [], acceptedFrom: d.meaningSource }
+        : undefined;
+      const a = authored[w];
+      const written = a || fromDraft
+        ? {
+          ...(fromDraft ?? {}),
+          ...(a ?? {}),
+          childMeaning: a?.childMeaning ?? fromDraft?.childMeaning,
+          practiceSentences: a?.practiceSentences ?? fromDraft?.practiceSentences ?? [],
+        }
+        : undefined;
       if (written && written.childMeaning && (written.practiceSentences || []).length >= 5) {
         authoredCount += 1;
         links.push({
           ...(existing ?? {}),
-          vocabularyId: existing?.vocabularyId ?? `g1-u${cu.unitNo}-core-${w.replace(/[^a-z]/g, "")}`,
+          vocabularyId: existing?.vocabularyId ?? `${IDP}-u${cu.unitNo}-core-${w.replace(/[^a-z]/g, "")}`,
           unitId: doc.unit.unitId,
           dictionaryEntryId: existing?.dictionaryEntryId ?? masterBy.get(w)?.dictionaryEntryId ?? null,
           masterWord: w,
@@ -132,8 +196,8 @@ for (const cu of core.units) {
           sentenceStarter: written.sentenceStarter ?? existing?.sentenceStarter ?? null,
           aiTutorPrompt: written.aiTutorPrompt ?? existing?.aiTutorPrompt ?? null,
           groupId: g.id, groupTitle: g.title, sequence: i + 1,
-          origin: "Ehel Grade 1 Core words",
-          reviewStatus: written.acceptedFrom ? "Reviewed - accepted from existing content" : "Authored for Grade 1 Core words",
+          origin: `Ehel Grade ${GRADE} Core words`,
+          reviewStatus: written.acceptedFrom ? "Reviewed - accepted from existing content" : `Authored for Grade ${GRADE} Core words`,
           // The audio on a reused link belongs to its OLD sentences. Where the
           // text changed, the clips no longer match and must be re-rendered.
           ...(sentencesChanged(existing, written)
@@ -146,14 +210,14 @@ for (const cu of core.units) {
       } else {
         missing.push({ unit: cu.unitNo, word: w, hasMasterEntry: masterBy.has(w), hadPartialLink: Boolean(existing) });
         links.push({
-          vocabularyId: `g1-u${cu.unitNo}-core-${w.replace(/[^a-z]/g, "")}`,
+          vocabularyId: `${IDP}-u${cu.unitNo}-core-${w.replace(/[^a-z]/g, "")}`,
           unitId: doc.unit.unitId,
           dictionaryEntryId: masterBy.get(w)?.dictionaryEntryId ?? null,
           groupId: g.id, groupTitle: g.title, sequence: i + 1,
           masterWord: w,
           childMeaning: null, exampleSentence: null, practiceSentences: [],
           spellingPractice: null, sentenceStarter: null, aiTutorPrompt: null,
-          origin: "Ehel Grade 1 Core words", reviewStatus: "Needs authoring",
+          origin: `Ehel Grade ${GRADE} Core words`, reviewStatus: "Needs authoring",
         });
       }
     });
@@ -167,9 +231,10 @@ for (const cu of core.units) {
   // 39 core + 55 glossary to 39 core + 94 glossary, with the Core words
   // duplicated on both sides and nothing reporting it.
   const coreIds = new Set(cu.groups.map((g) => g.id));
+  const glossaryIds2 = new Set(glossaryGroupsOf(doc.vocabularyGroups).map((g) => g.id));
   const oldTaught = doc.vocabularyGroups.filter(
-    (g) => !/stories/i.test(g.title) && !coreIds.has(g.id));
-  const glossary = doc.vocabularyGroups.find((g) => /stories/i.test(g.title));
+    (g) => !glossaryIds2.has(g.id) && !coreIds.has(g.id));
+  const glossary = doc.vocabularyGroups.find((g) => glossaryIds2.has(g.id));
   const oldIds = new Set(oldTaught.map((g) => g.id));
   const displaced = doc.dictionaryLinks.filter((l) => oldIds.has(l.groupId));
   // A rerun must not carry its own core links into the glossary either: they are
@@ -177,7 +242,7 @@ for (const cu of core.units) {
   const keptGlossary = doc.dictionaryLinks.filter(
     (l) => !oldIds.has(l.groupId) && !coreIds.has(l.groupId));
 
-  const glossaryId = glossary?.id ?? `g1-u${cu.unitNo}-glossary`;
+  const glossaryId = glossary?.id ?? `${IDP}-u${cu.unitNo}-glossary`;
   const glossaryTitle = glossary?.title ?? "Words from our stories";
   groups.push({ id: glossaryId, number: groups.length + 1, title: glossaryTitle, strand: "glossary" });
 
@@ -189,7 +254,7 @@ for (const cu of core.units) {
   });
 }
 
-console.log("Grade 1 Core words — restructure plan\n");
+console.log(`Grade ${GRADE} Core words — restructure plan\n`);
 console.log("unit  core  reused  to author  glossary after");
 for (const p of plan) {
   const need = missing.filter((m) => m.unit === p.n).length;

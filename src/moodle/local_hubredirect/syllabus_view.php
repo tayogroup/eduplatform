@@ -121,8 +121,8 @@ if ($viewerid > 0) {
   *{box-sizing:border-box}
   body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 "Lato",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
   /* The header matches the top bar the learner has just come from: Duolingo's
-     dark blue #235390, with uppercase white pills carrying a solid bottom edge
-     that they press into.
+     dark blue #235390, with uppercase pills cut from it -- a translucent white
+     fill, not a solid one -- carrying a solid bottom edge that they press into.
 
      Dark rather than a light tint because the brand text sits DIRECTLY on this
      background -- unlike the shell's bar, whose top-left is empty by design --
@@ -141,13 +141,13 @@ if ($viewerid > 0) {
   .brand{font-weight:800;font-size:18px}
   .brand small{display:block;font-weight:400;font-size:12px;color:rgba(255,255,255,.72);margin-top:2px}
   .top-nav{display:flex;align-items:center;gap:8px}
-  .top-nav a{box-sizing:border-box;display:inline-flex;align-items:center;gap:7px;min-height:42px;padding:0 16px;border:2px solid #e5e5e5;border-radius:14px;background:#fff;color:#4b4b4b;font-size:12.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;box-shadow:0 2px 0 #e5e5e5;transition:background .1s ease,border-color .1s ease,color .1s ease,transform .06s ease,box-shadow .06s ease}
-  .top-nav a:hover{background:#f7f7f7;border-color:#d6d6d6;color:#4b4b4b}
+  .top-nav a{box-sizing:border-box;display:inline-flex;align-items:center;gap:7px;min-height:42px;padding:0 16px;border:2px solid rgba(255,255,255,.34);border-radius:14px;background:rgba(255,255,255,.16);color:#fff;font-size:12.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;box-shadow:0 2px 0 rgba(0,0,0,.20);transition:background .1s ease,border-color .1s ease,color .1s ease,transform .06s ease,box-shadow .06s ease}
+  .top-nav a:hover{background:rgba(255,255,255,.20);border-color:rgba(255,255,255,.48);color:#fff}
   .top-nav a:active{transform:translateY(2px);box-shadow:none}
   .top-nav a:focus-visible{outline:3px solid #84d8ff;outline-offset:2px}
   .top-nav svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
-  .top-nav .logout{background:#1cb0f6;border-color:#1cb0f6;color:#fff;box-shadow:0 4px 0 #1899d6}
-  .top-nav .logout:hover{background:#3fbdf8;border-color:#3fbdf8;color:#fff}
+  .top-nav .logout{background:#1cb0f6;border-color:#1cb0f6;color:#0f2237;box-shadow:0 4px 0 #1899d6}
+  .top-nav .logout:hover{background:#3fbdf8;border-color:#3fbdf8;color:#0f2237}
   .top-nav .logout:active{transform:translateY(4px);box-shadow:none}
   @media(prefers-reduced-motion:reduce){.top-nav a{transition:none}.top-nav a:active{transform:none}}
   main{padding:26px 0 60px}

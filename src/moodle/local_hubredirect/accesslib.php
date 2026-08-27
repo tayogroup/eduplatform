@@ -1696,7 +1696,7 @@ CSS;
 function pqh_duolingo_chrome_css(string $scope): string {
     return <<<CSS
 /* ---- Duolingo-styled rail + top bar ---- */
-{$scope}{--duo-green:#58cc02;--duo-green-dark:#58a700;--duo-blue:#1cb0f6;--duo-blue-dark:#1899d6;--duo-blue-soft:#ddf4ff;--duo-blue-line:#84d8ff;--duo-line:#e5e5e5;--duo-line-deep:#d6d6d6;--duo-ink:#4b4b4b;--duo-muted:#afafaf;--duo-wash:#f7f7f7;--duo-red:#ff4b4b;--duo-orange:#ff9600;--duo-purple:#ce82ff;--duo-gold:#ffc800;--duo-header:#235390;--duo-header-line:#1b4272;--duo-header-ink:#fff;--duo-header-ink-soft:rgba(255,255,255,.72);--duo-header-hover:rgba(255,255,255,.10);--duo-on-dark-green:#89e219;--duo-on-dark-red:#ff8080;--duo-chip-ink:#0a6fa8}
+{$scope}{--duo-green:#58cc02;--duo-green-dark:#58a700;--duo-blue:#1cb0f6;--duo-blue-dark:#1899d6;--duo-blue-soft:#ddf4ff;--duo-blue-line:#84d8ff;--duo-line:#e5e5e5;--duo-line-deep:#d6d6d6;--duo-ink:#4b4b4b;--duo-muted:#afafaf;--duo-wash:#f7f7f7;--duo-red:#ff4b4b;--duo-orange:#ff9600;--duo-purple:#ce82ff;--duo-gold:#ffc800;--duo-header:#235390;--duo-header-line:#1b4272;--duo-header-ink:#fff;--duo-header-ink-soft:rgba(255,255,255,.72);--duo-header-hover:rgba(255,255,255,.10);--duo-on-dark-green:#89e219;--duo-on-dark-red:#ff8080;--duo-chip-ink:#0a6fa8;--duo-pill:rgba(255,255,255,.16);--duo-pill-line:rgba(255,255,255,.34);--duo-pill-hover:rgba(255,255,255,.20);--duo-pill-hover-line:rgba(255,255,255,.48);--duo-on-bright:#0f2237}
 
 /* the rail: white, held by a 2px rule, nothing filled until you touch it */
 /* THE RAIL IS THE HEADER'S OTHER HALF. It was white beside a #235390 bar, which
@@ -1780,8 +1780,17 @@ function pqh_duolingo_chrome_css(string $scope): string {
 {$scope} .pqh-appbar__nav{gap:8px}
 /* The solid bottom edge is the whole trick: a 2px border plus a 0 2px 0 shadow
    reads as a physical key, and :active drops the button onto it. */
-{$scope} .pqh-appbar__nav a,{$scope} .pqh-appbar__nav button{box-sizing:border-box;min-height:42px;padding:0 16px!important;border:2px solid var(--duo-line)!important;border-radius:14px!important;background:#fff!important;color:var(--duo-ink)!important;font-size:12.5px!important;font-weight:800!important;letter-spacing:.06em!important;text-transform:uppercase!important;box-shadow:0 2px 0 var(--duo-line)!important;transition:background .1s ease,border-color .1s ease,color .1s ease,transform .06s ease,box-shadow .06s ease}
-{$scope} .pqh-appbar__nav a:hover,{$scope} .pqh-appbar__nav button:hover{background:var(--duo-wash)!important;border-color:var(--duo-line-deep)!important;color:var(--duo-ink)!important}
+/* The pills were solid white on a #235390 bar -- the last white thing left in
+   the chrome. They take a translucent white fill instead, which is what this
+   design already does on a dark field (the rail's own hover, and the skin's
+   ghost buttons on its navy bar), so they read as raised surfaces cut from the
+   header rather than as objects dropped on it.
+   .16 is not a taste call: white on that fill is 5.18:1 and the fill is 1.50:1
+   against the header, so it is visibly a button. .24 would be a bolder fill and
+   drops the label to 4.30:1, which fails -- the ceiling here is set by the text,
+   not by the look. */
+{$scope} .pqh-appbar__nav a,{$scope} .pqh-appbar__nav button{box-sizing:border-box;min-height:42px;padding:0 16px!important;border:2px solid var(--duo-pill-line)!important;border-radius:14px!important;background:var(--duo-pill)!important;color:var(--duo-header-ink)!important;font-size:12.5px!important;font-weight:800!important;letter-spacing:.06em!important;text-transform:uppercase!important;box-shadow:0 2px 0 rgba(0,0,0,.20)!important;transition:background .1s ease,border-color .1s ease,color .1s ease,transform .06s ease,box-shadow .06s ease}
+{$scope} .pqh-appbar__nav a:hover,{$scope} .pqh-appbar__nav button:hover{background:var(--duo-pill-hover)!important;border-color:var(--duo-pill-hover-line)!important;color:var(--duo-header-ink)!important}
 {$scope} .pqh-appbar__nav a:active,{$scope} .pqh-appbar__nav button:active{transform:translateY(2px);box-shadow:none!important}
 {$scope} .pqh-appbar__nav a:focus-visible,{$scope} .pqh-appbar__nav button:focus-visible{outline:3px solid var(--duo-blue-line);outline-offset:2px}
 {$scope} .pqh-appbar__nav a.pqh-appbar__icon{width:42px;padding:0!important}
@@ -1790,8 +1799,8 @@ function pqh_duolingo_chrome_css(string $scope): string {
    in the bar -- but takes Duolingo's blue rather than its green, so a solid
    pill can never be confused with "go". The active row's blue is a soft #ddf4ff
    fill with blue text, which does not collide with a solid #1cb0f6 pill. */
-{$scope} .pqh-appbar__nav .pqh-appbar__logout{background:var(--duo-blue)!important;border-color:var(--duo-blue)!important;color:#fff!important;box-shadow:0 4px 0 var(--duo-blue-dark)!important}
-{$scope} .pqh-appbar__nav .pqh-appbar__logout:hover{background:#3fbdf8!important;border-color:#3fbdf8!important;color:#fff!important}
+{$scope} .pqh-appbar__nav .pqh-appbar__logout{background:var(--duo-blue)!important;border-color:var(--duo-blue)!important;color:var(--duo-on-bright)!important;box-shadow:0 4px 0 var(--duo-blue-dark)!important}
+{$scope} .pqh-appbar__nav .pqh-appbar__logout:hover{background:#3fbdf8!important;border-color:#3fbdf8!important;color:var(--duo-on-bright)!important}
 {$scope} .pqh-appbar__nav .pqh-appbar__logout:active{transform:translateY(4px);box-shadow:none!important}
 
 @media(max-width:900px){{$scope}{$scope} .pqh-appbar.pqh-appbar{min-height:60px}}

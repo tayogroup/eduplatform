@@ -73,6 +73,36 @@ if ($allowed && $course && $row) {
         $body .= '<p class="actions"><a class="btn" href="' . s($loginurl->out(false)) . '">Sign in</a></p>';
     }
 }
+
+// The way back.
+//
+// This page is reached from a learner's dashboard by a Syllabus button and is
+// otherwise a dead end: it is a standalone document -- its own <!doctype>, no
+// $OUTPUT->header(), no pqh_design_shell_html() -- so none of the shell's
+// chrome reaches it and there was no link out of it at all.
+//
+// It stays standalone and it stays PUBLIC, which is the constraint that shapes
+// this. The same URL serves anonymous admissions traffic, so it cannot use
+// pqh_learner_chrome_css(): that asks pqh_shell_viewer_kind(), and a visitor
+// with no session has no viewer kind to answer with. $viewerid above is already
+// the exact test needed, so the links are simply not drawn when there is nobody
+// to draw them for -- a guest sees the header they saw before, minus the navy.
+$pqsv_back = null;
+$pqsv_backlabel = '';
+if ($viewerid > 0) {
+    $pqsv_params = [];
+    if (trim((string)($consumer->consumerslug ?? '')) !== '') {
+        $pqsv_params['consumer'] = (string)$consumer->consumerslug;
+    }
+    // A student's home is their own dashboard; everybody else's is the combined
+    // one. Same split student_dashboard.php makes on the way in.
+    $pqsv_isstudent = pqh_shell_viewer_kind($viewerid) === 'student';
+    $pqsv_back = new moodle_url(
+        $pqsv_isstudent ? '/local/hubredirect/student_dashboard.php' : '/local/hubredirect/dashboard.php',
+        $pqsv_params
+    );
+    $pqsv_backlabel = $pqsv_isstudent ? 'Back to dashboard' : 'Dashboard';
+}
 ?><!doctype html>
 <html lang="en">
 <head>
@@ -89,10 +119,31 @@ if ($allowed && $course && $row) {
   :root{--ink:#1f1f1f;--ink2:#555;--muted:#707070;--line:#dfdfdf;--bg:#f2f2f2;--card:#fff;--blue:#162b48;--blue2:#1a67a3;--sky:#ebf3f7}
   *{box-sizing:border-box}
   body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 "Lato",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
-  header.top{background:var(--blue);color:#fff;padding:16px 0}
+  /* The header matches the top bar the learner has just come from: white, held
+     by a 2px grey rule, with uppercase pills carrying a solid bottom edge that
+     they press into.
+
+     Written as literals rather than added to :root above, deliberately. These
+     are the SHARED chrome's values (pqh_duolingo_chrome_css in accesslib.php),
+     not this page's palette, and the two are close enough to be confused --
+     --line is #dfdfdf here against the chrome's #e5e5e5. Keeping them apart is
+     what stops one being "tidied" into the other. Everything below this block
+     keeps the page's own tokens untouched. */
+  header.top{background:#fff;color:#4b4b4b;padding:12px 0;border-bottom:2px solid #e5e5e5}
   .wrap{width:min(880px,calc(100% - 32px));margin:0 auto}
+  header.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
   .brand{font-weight:800;font-size:18px}
-  .brand small{display:block;font-weight:400;font-size:12px;color:rgba(255,255,255,.72);margin-top:2px}
+  .brand small{display:block;font-weight:400;font-size:12px;color:#afafaf;margin-top:2px}
+  .top-nav{display:flex;align-items:center;gap:8px}
+  .top-nav a{box-sizing:border-box;display:inline-flex;align-items:center;gap:7px;min-height:42px;padding:0 16px;border:2px solid #e5e5e5;border-radius:14px;background:#fff;color:#afafaf;font-size:12.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;box-shadow:0 2px 0 #e5e5e5;transition:background .1s ease,border-color .1s ease,color .1s ease,transform .06s ease,box-shadow .06s ease}
+  .top-nav a:hover{background:#f7f7f7;border-color:#d6d6d6;color:#4b4b4b}
+  .top-nav a:active{transform:translateY(2px);box-shadow:none}
+  .top-nav a:focus-visible{outline:3px solid #84d8ff;outline-offset:2px}
+  .top-nav svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+  .top-nav .logout{background:#1cb0f6;border-color:#1cb0f6;color:#fff;box-shadow:0 4px 0 #1899d6}
+  .top-nav .logout:hover{background:#3fbdf8;border-color:#3fbdf8;color:#fff}
+  .top-nav .logout:active{transform:translateY(4px);box-shadow:none}
+  @media(prefers-reduced-motion:reduce){.top-nav a{transition:none}.top-nav a:active{transform:none}}
   main{padding:26px 0 60px}
   .sheet{background:var(--card);border:1px solid var(--line);border-radius:3px;padding:28px 32px}
   h1{margin:0 0 4px;font-size:26px;line-height:1.25}
@@ -113,12 +164,20 @@ if ($allowed && $course && $row) {
   .btn{display:inline-block;padding:8px 14px;border:1px solid #ccc;border-radius:3px;background:#fff;color:var(--ink);text-decoration:none;font-weight:700;font-size:14px;cursor:pointer;margin-right:6px}
   .btn:hover{background:#f9f9f9;border-color:#919191;color:var(--blue2)}
   @media print{header.top{background:none;color:#000;padding:0 0 12px;border-bottom:1px solid #999}
-    .brand small{color:#444}body{background:#fff}.sheet{border:0;padding:0}.actions{display:none}}
+    .brand small{color:#444}body{background:#fff}.sheet{border:0;padding:0}.actions{display:none}
+    /* the way out is furniture, not syllabus */
+    .top-nav{display:none}}
 </style>
 </head>
 <body>
 <header class="top"><div class="wrap">
   <div class="brand"><?php echo s($brand); ?><small>Course syllabus</small></div>
+<?php if ($pqsv_back !== null): ?>
+  <nav class="top-nav" aria-label="Leave the syllabus">
+    <a href="<?php echo s($pqsv_back->out(false)); ?>"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg><?php echo s($pqsv_backlabel); ?></a>
+    <a class="logout" href="<?php echo s((new moodle_url('/local/hubredirect/logout.php'))->out(false)); ?>">Logout</a>
+  </nav>
+<?php endif; ?>
 </div></header>
 <main class="wrap"><div class="sheet">
 <?php echo $body; ?>

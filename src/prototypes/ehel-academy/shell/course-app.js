@@ -834,7 +834,11 @@ export function createCourseApp(config) {
   // none: the shelf lives in shell/subjects/english.js rather than the content
   // tier, so no content builder can index it, and the entry says so when picked.
   const TUTORING_SECTION_IDS = {
-    english: ["dictionary", "reading", "comprehension", "grammar", "speaking", "writing", "activities", "games", "quiz", "ebooks"],
+    // `glossary` is a tutoring-only section (english.js) and sits last, where the
+    // nav puts it: it is a reference page to look a word up in, not a part of
+    // the course to be stuck on, so it reads as the end of the list rather than
+    // among the lessons.
+    english: ["dictionary", "reading", "comprehension", "grammar", "speaking", "writing", "activities", "games", "quiz", "ebooks", "glossary"],
     "intensive-english": ["dictionary", "reading", "comprehension", "grammar", "speaking", "writing", "activities", "quiz"],
     mathematics: ["lesson", "words", "explore", "method", "examples"],
     science: ["lesson", "words", "explore", "method", "examples"],

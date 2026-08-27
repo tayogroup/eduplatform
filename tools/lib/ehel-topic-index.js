@@ -182,6 +182,30 @@ function topicsEnglish(unit, ctx) {
   for (const [title, questions] of byQuiz) {
     out.push({ section: "quiz", label: title, keywords: keywords([title, ...questions.map((q) => clip(q, 120))], 30) });
   }
+  // The Glossary is ONE topic for the whole grade, on its lowest-numbered unit,
+  // and that shape is forced by what the page is. renderGlossary draws every
+  // word in the grade in one flat alphabetical list out of `sentenceGlossary` —
+  // the same content whichever unit the learner stands in, and with no groups to
+  // mirror. A topic per unit would give ten identical cards per grade all
+  // opening the same page; a topic per WORD would be thousands, the mistake the
+  // vocabulary grouping above already refuses. One card per grade is what the
+  // picker should give: this grade's glossary, and the ones either side.
+  //
+  // English only. Intensive English shares this function and its shell draws no
+  // `glossary` section, so a topic there would sit behind a route that subject
+  // does not have — which check-topic-index rejects, because it reads the valid
+  // section ids out of each subject's own shell.
+  //
+  // The keywords describe the PAGE rather than sampling its words: forty of
+  // several thousand would be an arbitrary alphabetical slice presented as if it
+  // meant something, and the words are already reachable through `dictionary`.
+  if (ctx && ctx.subject === "english" && ctx.firstUnitOfGrade && ctx.glossaryWords > 0) {
+    out.push({
+      section: "glossary",
+      label: "Glossary — every word in this grade",
+      keywords: keywords(["glossary", "word", "words", "meaning", "meanings", "definition", "definitions", "spelling", "vocabulary"], 20),
+    });
+  }
   // Games live in their own pack beside the unit, not inside it — the only
   // section here whose source is a second file, which is why extractTopics
   // takes a ctx at all.
@@ -209,6 +233,14 @@ function outcomeTexts(unit) {
 // A unit's game pack, or null. Absent for most subjects and for some English
 // units, and absence is normal rather than an error — the section simply
 // contributes no topic.
+// A grade's sentence glossary, or null. Read once per GRADE rather than per
+// unit, which is the whole reason its topic is shaped the way it is below.
+function readGlossary(dataDir) {
+  const file = path.join(dataDir, "sentence-glossary.json");
+  if (!fs.existsSync(file)) return null;
+  try { return JSON.parse(fs.readFileSync(file, "utf8")); } catch { return null; }
+}
+
 function readGamesPack(dataDir, unitNumber) {
   const file = path.join(dataDir, "games", `unit-${unitNumber}.json`);
   if (!fs.existsSync(file)) return null;
@@ -221,6 +253,9 @@ function buildGradeIndex(ehelRoot, subject, stage) {
   const manifestPath = path.join(dataDir, "course-manifest.json");
   if (!fs.existsSync(manifestPath)) return null;
   const manifest = JSON.parse(fs.readFileSync(manifestPath, "utf8"));
+  const glossary = readGlossary(dataDir);
+  const glossaryWords = Object.values((glossary && glossary.entries) || {})
+    .filter((entry) => entry && entry.definition).length;
   const units = [];
   for (const entry of [...manifest.units].sort((a, b) => a.number - b.number)) {
     if (cfg.minUnit != null && Number(entry.number) < cfg.minUnit) continue;
@@ -234,8 +269,16 @@ function buildGradeIndex(ehelRoot, subject, stage) {
       title,
       keywords: keywords([title, ...outcomeTexts(unit)], 40),
       topics: extractTopics(subject, unit, {
+        subject,
         games: readGamesPack(dataDir, entry.number),
         ebooks: subject === "english" ? ebooksFor(readEbookCatalog(ehelRoot), stage, entry.number) : [],
+        // Counted, not passed whole: the topic needs to know the glossary is
+        // non-empty, not to carry several thousand entries into every unit.
+        glossaryWords: glossaryWords,
+        // The glossary topic hangs off the grade's FIRST indexed unit. `units`
+        // is empty only before the first is pushed, so this is true exactly once
+        // per grade without a separate pass to find the lowest number.
+        firstUnitOfGrade: units.length === 0,
       }).filter((t) => t.label && t.keywords.length),
     });
   }

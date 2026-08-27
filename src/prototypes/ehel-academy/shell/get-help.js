@@ -182,6 +182,29 @@ export function createGetHelp(options) {
   let shellHooks = null;
   const attachShell = (hooks) => { shellHooks = hooks || null; };
 
+  // A topic is only an answer if the learner in front of it can GET there. The
+  // tutoring category hides some sections from its nav (course-app.js ::
+  // TUTORING_HIDDEN — the study plans, live classes, and the stage capstone and
+  // its quiz), and until the capstones were indexed no hidden section had any
+  // topics, so the search never had to know. The moment they did, a tutoring
+  // learner's first two results were a project their own nav does not offer.
+  //
+  // The list is the shell's, passed in rather than restated here, for the same
+  // reason the picker derives instead of listing: a second copy of somebody
+  // else's vocabulary is only as correct as the day it was written. Owner's
+  // decision, 2026-08-27 — a capstone is a whole-stage project and this
+  // category arrives with one problem and no course position.
+  //
+  // Note this is NOT the same question as whether the page would render. It
+  // does — #capstone draws the full capstone for a tutoring learner, checked —
+  // so this hides an answer that works, because the category is not meant to be
+  // offered it. A dead link would be a bug; this is a decision.
+  const reachable = (topic) => {
+    if (!shellHooks?.tutoring) return true;
+    const hidden = shellHooks.hiddenSections;
+    return !hidden || !hidden.includes(topic.section);
+  };
+
   const stageDir = (n) => (options.stageDir ? options.stageDir(n) : `grade-${n}`);
 
   // Same two-world resolution as wehel.js :: courseDataRoot — the repo tree in
@@ -437,7 +460,8 @@ export function createGetHelp(options) {
         // Under a section filter the TOPICS decide, not the unit's own score: a
         // unit whose title matched the word but which teaches none of it in this
         // section is not an answer to "milk, in the glossary".
-        const kept = section ? topics.filter((topic) => topic.section === section.id) : topics;
+        const inReach = topics.filter(reachable);
+        const kept = section ? inReach.filter((topic) => topic.section === section.id) : inReach;
         if (!kept.length) continue;
         hits.push({ stage: stages[at], unit, score, topics: kept, hasLesson: lessonIndexes[at].has(Number(unit.unit)) });
       }
@@ -1238,7 +1262,10 @@ export function createGetHelp(options) {
     indexes.forEach((index, at) => {
       if (!index) return;
       for (const unit of index.units) {
-        const topics = (unit.topics || []).filter((topic) => topic.section === sectionId);
+        // reachable() too, though the picker cannot offer a hidden section:
+        // searchSection is also reached from a URL, and a section this category
+        // does not show should answer the same way however it was asked for.
+        const topics = (unit.topics || []).filter((topic) => topic.section === sectionId && reachable(topic));
         if (!topics.length) continue;
         hits.push({ stage: stages[at], unit, score: topics.length, topics, hasLesson: lessonIndexes[at].has(Number(unit.unit)) });
       }

@@ -253,7 +253,13 @@ export function createCourseApp(config) {
   // tutoring category only — the record their parents' reports read, written
   // under the umbrella course this page's token was minted for. Regular
   // learners' sessions never leave the browser (see get-help.js::attachShell).
-  if (config.getHelp?.attachShell) config.getHelp.attachShell({ tutoring: IS_TUTORING, emitEvent: emitProgress });
+  // `hiddenSections` is TUTORING_HIDDEN itself, not a copy of it: the search and
+  // the nav have to agree about what this category can reach, and the way to
+  // guarantee that is for there to be one list. Without it they disagreed the
+  // moment a hidden section gained topics — indexing the stage capstones put
+  // "Run a Stage 5 Science Fair" first in a tutoring learner's results for a
+  // section their own nav deliberately omits. (Owner, 2026-08-27.)
+  if (config.getHelp?.attachShell) config.getHelp.attachShell({ tutoring: IS_TUTORING, emitEvent: emitProgress, hiddenSections: TUTORING_HIDDEN });
   const emitProgressSummary = () => {
     const base = {
       type: "progress.summary", unit: PROGRESS_UNIT,

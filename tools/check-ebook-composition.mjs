@@ -43,6 +43,22 @@ const EXTENTS = {
   chick: [-32, -30, 32, 35],
   lulu: [-50, -40, 46, 26],
   bird: [-40, -26, 36, 22],
+  // Duku the donkey was drawn by donkey() and taps as "duku", so for the whole
+  // life of this gate he resolved to no entry and was silently skipped — 37
+  // placements measured as nothing while the check printed ✓. The box is
+  // donkey()'s; adding it measured 37 more characters and every one is inside
+  // the frame, so this closes a blind spot rather than papering over a defect.
+  duku: [-100, -125, 175, 100],
+  // The Grade 1 shelf additions (tools/lib/ehel-ebook-kit-grade1-shelf.js).
+  // They carry data-figure and NOT data-tap, because a tap value promises a
+  // clip and there is no rabbit.mp3 on the shelf — so this table is the only
+  // thing that makes them measured at all.
+  rabbit: [-66, -166, 62, 16],
+  duck: [-90, -122, 116, 18],
+  frog: [-74, -80, 74, 14],
+  puppy: [-92, -112, 114, 18],
+  whale: [-190, -152, 150, 66],
+  crocodile: [-190, -60, 240, 48],
 };
 
 // The Grade 3 cast are people, and people are built from ONE parametric figure,

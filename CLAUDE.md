@@ -1401,7 +1401,8 @@ If a second print path is ever added, this is the first thing to check, and
 Every English unit ends with a shelf of animated picture books, across Grades 1
 to 4 only (see the Grade 5 rule above). A unit's shelf holds more than one book,
 and how many differs by grade — Grade 4 carries **five per unit** since
-2026-08-21. Do not hard-code the number anywhere: `unitEbooks()` resolves a
+2026-08-21 and Grade 1 since 2026-08-27 (Grade 1's withdrawn Unit 0 keeps its
+six). Do not hard-code the number anywhere: `unitEbooks()` resolves a
 shelf from `ebookCatalog` by grade and unit, and `check-english-ebooks.mjs`
 prints the per-grade totals, so ask the catalogue rather than a count written
 down here. They are **generated SVG**, not artwork files:
@@ -1428,9 +1429,25 @@ Three files, one storyworld:
   worktop, the observatory, the ambulance, the station, the mall — plus Elena,
   Talia, the librarian, the mayor, Karim, the uncle, the governor, the lawyer,
   the caretaker and the labourer, and the four Unit 5 animals.
+- `tools/lib/ehel-ebook-kit-grade1-shelf.js` — the props Grade 1's books three
+  to five name and no earlier grade did: the rabbit, duck, frog and puppy of
+  Unit 3, the whale and crocodile of Unit 8, the crown, clown hat, cape, mask
+  and paper chain Unit 4 MAKES, the drum, keyboard and violin of Unit 6's Music
+  Man, the aeroplane of Unit 7, and the onions, potatoes and beans of Unit 5.
 - `tools/create-{musa,grade2,grade3,grade4}-ebook-illustrations.js` — the pages.
 - `tools/create-grade4-shelf-ebook-illustrations.js` — the other forty Grade 4
   pages, one book per remaining reading in each unit.
+- `tools/create-grade1-shelf-ebook-illustrations.js` — the other thirty Grade 1
+  pages, three per unit for units 1 to 10.
+
+**Grade 1's three added books are three KINDS of book, not three more stories,
+and that is forced by the content.** A Grade 1 unit carries only three readings
+— Story, Shared reading, Rhyme — and the Story was already book two, so Grade
+3's trick of one book per unused text cannot reach five. Book three is the
+unit's RHYME acted out, book four fills in the unit's SHARED-READING frame
+("This is a ___. It is ___.") with that unit's own vocabulary groups, and book
+five is a second animal fable. Book four is where the vocabulary revision
+actually lives; do not read it as a picture list.
 
 **Grade 4 is drawn by two generators, not one.** The first book on every unit
 comes from `create-grade4-ebook-illustrations.js` and is built on that unit's
@@ -1537,6 +1554,26 @@ It walks the group tree composing transforms rather than matching a `<g>` and
 looking ahead for a `data-tap` to name it. The lookahead version mis-read a small
 drawing inside another prop — a picture of Zuri on an easel — as an unrelated
 character, and reported four figures off-frame that were nothing of the kind.
+
+**Its `EXTENTS` table is keyed on the ATTRIBUTE VALUE, not on the drawing
+function, and for Duku those two names differ — so the gate had never once
+looked at him.** `donkey()` draws him and tags him `data-tap="duku"`; the table
+held `donkey`. An unknown name is skipped in silence, so 37 placements across
+the Grade 1 and Grade 2 farm books resolved to no entry while the gate printed
+✓ over them. Found 2026-08-27, while adding the Grade 1 shelf; adding `duku`
+measured 37 more characters and all 37 are inside the frame, so nothing was
+broken — the point is that the gate was green *because it did no work*, which is
+the same shape as the ✓ printed after a skipped tier comparison and the endpoint
+floor of 5 that cleared a parse finding 6 of 7. Audit the table against the SVGs
+rather than against the kit:
+
+```bash
+grep -rho 'data-tap="[a-z0-9-]*"' --include=*.svg src/prototypes/ehel-academy/english/ebooks | sort | uniq -c
+```
+
+Every value there that names a CHARACTER needs a row, and a new animal that
+carries `data-figure` without a `data-tap` (because no clip has been paid for)
+needs one too — that attribute is the only thing making it measurable.
 
 Both gates were mutation-tested: each invariant was broken in turn and the gate
 had to fail.

@@ -70,6 +70,16 @@ const shelfMap = shelfSource.slice(shelfSource.indexOf("const books = {"));
 const shelfBookIds = [...shelfMap.matchAll(/dir: "([a-z0-9-]+)"/g)].map((match) => match[1]);
 if (shelfBookIds.length !== 40) throw new Error(`Expected 40 Grade 4 shelf books, read ${shelfBookIds.length}.`);
 
+// The same trick for Grade 1's books three to five. Grade 1 is now drawn by
+// THREE generators — the animal fable from create-musa-ebook-illustrations.js,
+// the Amal series from create-amal-ebook-illustrations.js, and these thirty
+// from their own — so a single per-grade entry in DRAWN_BY below can no longer
+// name the right tool for every Grade 1 book.
+const grade1ShelfSource = fs.readFileSync(path.join(root, "tools", "create-grade1-shelf-ebook-illustrations.js"), "utf8");
+const grade1ShelfMap = grade1ShelfSource.slice(grade1ShelfSource.indexOf("const books = {"));
+const grade1ShelfBookIds = [...grade1ShelfMap.matchAll(/dir: "([a-z0-9-]+)"/g)].map((match) => match[1]);
+if (grade1ShelfBookIds.length !== 30) throw new Error(`Expected 30 Grade 1 shelf books, read ${grade1ShelfBookIds.length}.`);
+
 // The only authored content in this file: what each book is FOR. The unit
 // vocabulary lines are the words the story deliberately reuses, taken from that
 // unit's vocabularyGroups — a reviewer reads this to check the story is doing
@@ -866,6 +876,190 @@ const NOTES = {
     themes: "answering questions about your own work in front of the people in it",
     cameos: "Grandma Hana, Doctor Sarah, Omar, Elena and Idris each ask the question they ask in the Unit 10 dialogue.",
   },
+  // ---------------------------------------------------------------- Grade 1, books three to five
+  // Thirty books, three per unit, drawn by create-grade1-shelf-ebook-illustrations.js.
+  // "Rhyme" is the unit's own reading 3, "Look and say" fills in its reading 2,
+  // and "Fable" is a second story in the animal storyworld.
+  "hello-school": {
+    series: "Grade 1 shelf - Rhyme", book: 3, term: "Term 1", unit: "Unit 1: Welcome to School",
+    vocabulary: "table, chair, book, crayon, rules, school, hello, teacher, friend, sing, point, listen",
+    themes: "one poem said together every morning; saying it louder each time",
+    cameos: "the poem is the Unit 1 rhyme; Miss Yasmin, Adam, Samira and Leo are the class from Amal's First Day.",
+  },
+  "find-something-green": {
+    series: "Grade 1 shelf - Look and say", book: 4, term: "Term 1", unit: "Unit 1: Welcome to School",
+    vocabulary: "red, blue, green, yellow, orange, purple, black, white, brown, book, pencil, crayon, lunchbox, ruler, clock, whiteboard, table, chair",
+    themes: "ten colours found on ten real things in the room",
+    cameos: "the treasure hunt is the one Miss Yasmin runs in the Unit 1 reading; the lunchbox is Unit 1's tenth classroom word and gets its first drawing here.",
+  },
+  "the-lost-blue-crayon": {
+    series: "Grade 1 shelf - Fable", book: 5, term: "Term 1", unit: "Unit 1: Welcome to School",
+    vocabulary: "crayon, red, yellow, grey, brown, blue, nine, ten, look, found, friend, thank you",
+    themes: "four friends looking in four places; the thing is where nobody thought to look",
+    cameos: "Kiki, Miss Twiga, the little elephant, the ostrich and Musa, all from Kiki Goes to School.",
+  },
+  "some-families-are-big": {
+    series: "Grade 1 shelf - Rhyme", book: 3, term: "Term 1", unit: "Unit 2: Family Time",
+    vocabulary: "family, big, small, mother, mum, father, dad, brother, sister, grandma, grandpa, baby, one to ten",
+    themes: "big or small is the wrong question; counting the people you have",
+    cameos: "the poem is the Unit 2 Families rhyme and the counting comes from the Ten in the Bed song beside it.",
+  },
+  "who-is-in-my-family": {
+    series: "Grade 1 shelf - Look and say", book: 4, term: "Term 1", unit: "Unit 2: Family Time",
+    vocabulary: "mother, mum, father, dad, brother, sister, baby, grandma, grandpa, family, pancakes, milk, fruit, help, lay the table, one to seven",
+    themes: "naming every person at your own table",
+    cameos: "Adam, Hodan, baby Idris, Ayeeyo and Grandpa are the family of Breakfast at Grandma's House.",
+  },
+  "ten-little-eggs": {
+    series: "Grade 1 shelf - Fable", book: 5, term: "Term 1", unit: "Unit 2: Family Time",
+    vocabulary: "one to ten, egg, chick, hen, nest, family, wait, barn",
+    themes: "counting down while you wait, and one that takes longer than the rest",
+    cameos: "Koko the hen and her chicks from The Little Lost Chick; Duku and the goat come to look.",
+  },
+  "wind-the-bobbin-up": {
+    series: "Grade 1 shelf - Rhyme", book: 3, term: "Term 2", unit: "Unit 3: Fun and Games",
+    vocabulary: "pull, clap, point, wind up, hands, knees, ceiling, floor, window, door, one two three",
+    themes: "learning words with your whole body",
+    cameos: "the song is the Unit 3 action song, action for action; the class is Amal's.",
+  },
+  "touch-your-toes": {
+    series: "Grade 1 shelf - Look and say", book: 4, term: "Term 2", unit: "Unit 3: Fun and Games",
+    vocabulary: "bounce, roll, throw, catch, clap, shake, jump, head, ear, nose, shoulder, arm, hand, finger, leg, foot, toes",
+    themes: "can-you as a question you answer by doing it",
+    cameos: "the red ball is the one from Amal and the Big Ball; Adam, Samira and Leo play too.",
+  },
+  "where-is-the-ball": {
+    series: "Grade 1 shelf - Fable", book: 5, term: "Term 2", unit: "Unit 3: Fun and Games",
+    vocabulary: "on, under, next to, in, left, right, ball, bounce, roll, throw, catch, rabbit, duck, frog",
+    themes: "a search that teaches where rather than what",
+    cameos: "Kiki, the little elephant, the goat and the chick; the rabbit, duck and frog are Unit 3's own story animals, drawn for the first time here.",
+  },
+  "party-time-look-at-me": {
+    series: "Grade 1 shelf - Rhyme", book: 3, term: "Term 2", unit: "Unit 4: Making Things",
+    vocabulary: "clown, king, princess, superhero, frown, crown, cape, mask, cut, make, paint, wear, silver, gold",
+    themes: "dressing up as somebody, and the poem getting sillier every time",
+    cameos: "the poem is the Unit 4 Party Time rhyme, down to the clown's funny frown and the king's silver ring.",
+  },
+  "shapes-i-can-cut": {
+    series: "Grade 1 shelf - Look and say", book: 4, term: "Term 2", unit: "Unit 4: Making Things",
+    vocabulary: "square, circle, triangle, rectangle, red, blue, green, yellow, orange, cut, make, paint, wear, weave, hat",
+    themes: "four shapes that turn into something you can put on your head",
+    cameos: "Ayeeyo's mat is the one she weaves in Amal Makes a Mat; Adam's painted shirt is his own accident.",
+  },
+  "higgledy-piggledy-my-black-hen": {
+    series: "Grade 1 shelf - Fable", book: 5, term: "Term 2", unit: "Unit 4: Making Things",
+    vocabulary: "hen, egg, nine, ten, sometimes, count, flap, laughed",
+    themes: "a question with two right answers, which is the joke the rhyme is making",
+    cameos: "Koko, Duku and the goat; the rhyme is the Unit 4 short-e rhyme printed beside the Party Time poem.",
+  },
+  "hello-to-the-farm": {
+    series: "Grade 1 shelf - Rhyme", book: 3, term: "Term 2", unit: "Unit 5: On the Farm",
+    vocabulary: "farmer, tractor, cow, stall, field, chick, barn, seed, egg, wheat",
+    themes: "greeting a place one thing at a time",
+    cameos: "the poem is the Unit 5 Farm Poem; Grandpa's farm is the one from Amal and the Little Hen.",
+  },
+  "who-says-moo": {
+    series: "Grade 1 shelf - Look and say", book: 4, term: "Term 2", unit: "Unit 5: On the Farm",
+    vocabulary: "cow, hen, chick, duck, sheep, moo, cluck, peep, quack, baa, tractor, feeding, planting, driving, seed, carrot, tomatoes, onions, potatoes, beans",
+    themes: "every animal has its own sound and its own word",
+    cameos: "Grandpa drives the tractor; the onions, potatoes and beans are Unit 5's own vegetables and are drawn for the first time here.",
+  },
+  "duku-plants-a-row": {
+    series: "Grade 1 shelf - Fable", book: 5, term: "Term 2", unit: "Unit 5: On the Farm",
+    vocabulary: "seed, field, planting, growing, rain, sun, wait, carrot, tomato, beans, first, then",
+    themes: "the part of growing food that is only waiting",
+    cameos: "Duku from Duku Makes a Scarecrow, with Koko and the goat; the row he digs is the one the scarecrow guards.",
+  },
+  "two-little-eyes": {
+    series: "Grade 1 shelf - Rhyme", book: 3, term: "Term 3", unit: "Unit 6: My Five Senses",
+    vocabulary: "see, hear, smell, taste, touch, eyes, ears, nose, mouth, sweet, soft",
+    themes: "a poem that names four senses, and the child who finds the fifth",
+    cameos: "the poem and the question at the end of it are both the Unit 6 reading's own; Ayeeyo asks it.",
+  },
+  "which-sense-do-i-use": {
+    series: "Grade 1 shelf - Look and say", book: 4, term: "Term 3", unit: "Unit 6: My Five Senses",
+    vocabulary: "see, hear, smell, taste, touch, eyes, ears, nose, tongue, hands, bright, loud, quiet, sweet, soft, hard, cold, sweeter, colder",
+    themes: "one sense per thing, then two things compared",
+    cameos: "the spice pots are Omar's market stall from Amal at the Market; the drum and violin come from the Unit 6 Music Man song.",
+  },
+  "kiki-makes-music": {
+    series: "Grade 1 shelf - Fable", book: 5, term: "Term 3", unit: "Unit 6: My Five Senses",
+    vocabulary: "loud, quiet, louder, quieter, sweet, hear, ears, drum, violin, piano",
+    themes: "loud is not the same as good; playing so somebody else can still hear",
+    cameos: "Kiki, the little elephant, the ostrich, Miss Twiga and Musa; the three instruments are the ones the Unit 6 Music Man song names.",
+  },
+  "the-wheels-on-the-bus": {
+    series: "Grade 1 shelf - Rhyme", book: 3, term: "Term 3", unit: "Unit 7: Let's Go!",
+    vocabulary: "bus, wheels, wipers, bell, seat, sit down, buckle up, ride, town, swish, ding, round and round",
+    themes: "a song with an action for every verse, and a polite request at the end of it",
+    cameos: "both the song and the Bus Driver rhyme are the Unit 7 reading's own; Omar drives.",
+  },
+  "how-do-you-go": {
+    series: "Grade 1 shelf - Look and say", book: 4, term: "Term 3", unit: "Unit 7: Let's Go!",
+    vocabulary: "walk, bus, car, bicycle, boat, train, plane, helicopter, wheels, seat, sails, wings, drive, ride, fly, float, big, little, fast, slow",
+    themes: "eight ways to travel, then which of them is fast and which is slow",
+    cameos: "the aeroplane is Unit 7's eighth travel word and is drawn for the first time here.",
+  },
+  "lulu-and-the-slow-boat": {
+    series: "Grade 1 shelf - Fable", book: 5, term: "Term 3", unit: "Unit 7: Let's Go!",
+    vocabulary: "fast, slow, fly, float, boat, wind, stop, go, travel, together",
+    themes: "fast that has to stop against slow that does not",
+    cameos: "Lulu from Lulu Says Let's Go, and Kiki in the boat from Lulu and the Wonderful Water.",
+  },
+  "rain-on-the-green-grass": {
+    series: "Grade 1 shelf - Rhyme", book: 3, term: "Term 3", unit: "Unit 8: Wonderful Water",
+    vocabulary: "rain, grass, tree, houses, drip, drop, wet, stream, rowing, rainbow",
+    themes: "two water songs for one wet afternoon",
+    cameos: "both the Rainy Day poem and the rowing song are the Unit 8 reading's own; Hodan sings the second one.",
+  },
+  "what-is-water-for": {
+    series: "Grade 1 shelf - Look and say", book: 4, term: "Term 3", unit: "Unit 8: Wonderful Water",
+    vocabulary: "water, drink, wash, cook, grow plants, rain, river, well, wet, dry, clean, float, sink, rainy, sunny, fish, frog, turtle, whale, crocodile, waste",
+    themes: "what water is for, where it is, and who lives in it",
+    cameos: "the well is the one from The Well in the Village; the whale and the crocodile are Unit 8's own water animals and are drawn for the first time here.",
+  },
+  "not-one-drop-wasted": {
+    series: "Grade 1 shelf - Fable", book: 5, term: "Term 3", unit: "Unit 8: Wonderful Water",
+    vocabulary: "water, well, low, empty, waste, wasted, drip, drop, carried, thirsty, rain, puddle",
+    themes: "a shortage everybody solves at once, in small ways",
+    cameos: "Musa, Duku, Koko, Kiki and the goat; the well is The Well in the Village's.",
+  },
+  "red-means-stop": {
+    series: "Grade 1 shelf - Rhyme", book: 3, term: "Term 3", unit: "Unit 9: City Places",
+    vocabulary: "red, green, yellow, stop, go, wait, traffic lights, statue, march, crossing, town, market, school",
+    themes: "a rhyme you can walk to the shop on",
+    cameos: "both the traffic-lights rhyme and the I Live in a Town song are the Unit 9 reading's own.",
+  },
+  "who-works-here": {
+    series: "Grade 1 shelf - Look and say", book: 4, term: "Term 3", unit: "Unit 9: City Places",
+    vocabulary: "shop, hospital, school, library, market, park, bus stop, road, teacher, doctor, shopkeeper, neighbour, near, far, next to, busy, quiet, clean, please, thank you, litter",
+    themes: "every place in the town has somebody in it",
+    cameos: "Omar, Doctor Faduma and Miss Yasmin are the Year 1 course's own helpers; the walk is the one from A Walk Around Town.",
+  },
+  "the-busy-road-and-the-quiet-park": {
+    series: "Grade 1 shelf - Fable", book: 5, term: "Term 3", unit: "Unit 9: City Places",
+    vocabulary: "busy, quiet, big, small, clean, dirty, road, shop, library, park, stop, go, litter",
+    themes: "a city has a quiet part in it if you know where to walk",
+    cameos: "Lulu and Kiki from Lulu in the City, on the same streets.",
+  },
+  "my-year-of-words": {
+    series: "Grade 1 shelf - Rhyme", book: 3, term: "Term 3", unit: "Unit 10: My First English World (capstone)",
+    vocabulary: "three words from each unit of the year: table, chair, book; mother, father, family; bounce, roll, throw; square, circle, triangle; cow, hen, chick; see, hear, smell; walk, bus, car; water, rain, drop; shop, market, school",
+    themes: "a whole year said out loud in twelve pages",
+    cameos: "every picture is one the learner has already met in an earlier book of this grade.",
+  },
+  "show-me-your-book": {
+    series: "Grade 1 shelf - Look and say", book: 4, term: "Term 3", unit: "Unit 10: My First English World (capstone)",
+    vocabulary: "choose, favourite, folder, book, page, label, sentence, practise, minute, mirror, goal, remember, proud",
+    themes: "four steps to a finished thing, and answering questions about it",
+    cameos: "the steps are the Unit 10 project brief's own and the last two pages are its celebration dialogue, word for word in Amal's voice.",
+  },
+  "see-you-next-year-friends": {
+    series: "Grade 1 shelf - Fable", book: 5, term: "Term 3", unit: "Unit 10: My First English World (capstone)",
+    vocabulary: "hello, goodbye, water, fast, friend, year, ball, egg, chick, carrot, bell",
+    themes: "everybody brings one thing and says one word",
+    cameos: "Musa, Kiki, Duku, Koko, Miss Twiga, the little elephant, the goat, the ostrich and Lulu - the whole Grade 1 animal cast in one book.",
+  },
 };
 
 let written = 0;
@@ -919,11 +1113,17 @@ for (const book of catalog) {
   // set below is which books belong to the second one, and it is read off that
   // generator's own book map so it cannot drift from it.
   const GRADE4_SHELF = new Set(shelfBookIds);
+  const GRADE1_SHELF = new Set(grade1ShelfBookIds);
   const drawnBy = GRADE4_SHELF.has(book.id)
     ? ["the shared series kit in tools/lib/ehel-ebook-kit.js and the Grade 4",
       "shelf additions in tools/lib/ehel-ebook-kit-grade4-shelf.js, composed by",
       "tools/create-grade4-shelf-ebook-illustrations.js."]
-    : DRAWN_BY[book.grades[0]] || ["the shared series kit in tools/lib/ehel-ebook-kit.js."];
+    : GRADE1_SHELF.has(book.id)
+      ? ["the shared series kit in tools/lib/ehel-ebook-kit.js, the Amal-series",
+        "cast in tools/lib/ehel-ebook-kit-amal.js and the Grade 1 shelf additions",
+        "in tools/lib/ehel-ebook-kit-grade1-shelf.js, composed by",
+        "tools/create-grade1-shelf-ebook-illustrations.js."]
+      : DRAWN_BY[book.grades[0]] || ["the shared series kit in tools/lib/ehel-ebook-kit.js."];
 
   const attribution = [
     `${book.attribution}`,

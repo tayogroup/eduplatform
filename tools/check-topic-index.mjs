@@ -36,10 +36,17 @@ const EHEL = path.join(ROOT, "src", "prototypes", "ehel-academy");
 
 // Recorded on the first full build (2026-08-24). May rise, may not fall — a
 // falling count means extraction quietly stopped seeing something.
+//
+// The three capstone subjects were raised by 16 each on 2026-08-27, when the
+// stage capstones were indexed (8 stages x project + quiz). Raising them is the
+// point rather than bookkeeping: left at the old value, the floor was EXACTLY
+// the pre-capstone total, so extraction losing every capstone topic would land
+// the count precisely on the floor and pass. A floor set at what you had before
+// the last thing you added cannot see that thing disappear.
 const TOPIC_FLOORS = {
-  mathematics: 4167,
-  science: 1238,
-  computing: 1879,
+  mathematics: 4183,
+  science: 1254,
+  computing: 1895,
   "global-perspectives": 1273,
   english: 2165,
   "intensive-english": 862,

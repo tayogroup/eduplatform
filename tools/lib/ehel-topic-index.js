@@ -82,7 +82,7 @@ const clip = (text, n = 400) => String(text || "").slice(0, n);
 // nothing draws is the portal-allowlist bug over again: not a 404, a silent
 // landing on the wrong page.
 
-function topicsFamilyA(unit, subject) {
+function topicsFamilyA(unit, subject, ctx) {
   const out = [];
   for (const c of unit.concepts || []) out.push(topic("lesson", c.title, [c.title, clip(c.explanation), c.example]));
   for (const m of unit.methods || []) out.push(topic("method", m.title, [m.title, clip(m.example)]));
@@ -91,6 +91,54 @@ function topicsFamilyA(unit, subject) {
   if (subject === "computing") for (const c of unit.codeExamples || []) out.push(topic("code", c.title, [c.title, clip(c.intro)]));
   const terms = (unit.reference?.terms || []).map((t) => (Array.isArray(t) ? t[0] : t?.term)).filter(Boolean);
   if (terms.length) out.push({ section: "words", label: `${unit.subject} words`, keywords: keywords(terms, 40) });
+  out.push(...capstoneTopics(ctx));
+  return out;
+}
+
+// The stage capstone, hung off the grade's FIRST indexed unit for the same
+// reason the English glossary is: it belongs to the whole stage, not to a unit,
+// and a copy under each of eighteen units would be the same card eighteen times.
+//
+// Mathematics, Science and Computing each read a grade-capstone.json; English,
+// Global Perspectives and Intensive English carry none, so nothing is emitted
+// for them and nothing needs to say so. English is the one worth naming,
+// because it HAS a Capstone row and it is a DOOR rather than a project:
+// renderCapstone (shell/subjects/english.js) shows Unit 10's own launch page,
+// and Unit 10 is already indexed as a unit. A topic there would be a second
+// card leading to content this index already describes.
+//
+// Two topics, not one, because the shell draws two sections and a topic's
+// section is where picking it LANDS. Sending someone who searched a quiz
+// question to the project page would be the wrong half of the capstone.
+function capstoneTopics(ctx) {
+  const cap = ctx && ctx.capstone;
+  if (!cap || !ctx.firstUnitOfGrade) return [];
+  const out = [];
+  const project = cap.project || {};
+  const stages = project.stages || [];
+  out.push({
+    section: "capstone",
+    label: cap.title || "Stage Capstone",
+    // The words a learner would actually reach for. "capstone" and "project"
+    // are put in by hand because the content says neither: a learner stuck on
+    // it types "my project", and every other word here is about seeds or
+    // spreadsheets rather than about the thing being a capstone.
+    keywords: keywords([
+      "capstone", "project", cap.title, clip(cap.overview),
+      project.drivingQuestion, clip(project.finalProduct),
+      ...stages.flatMap((s) => [s.title, clip(s.prompt, 120)]),
+      ...(project.evidenceChecklist || []),
+      ...(project.rubric || []).map((r) => r.criterion),
+    ], 40),
+  });
+  const questions = (cap.quiz && cap.quiz.questions) || [];
+  if (questions.length) {
+    out.push({
+      section: "capstonequiz",
+      label: `${cap.title || "Stage Capstone"} — quiz`,
+      keywords: keywords(["capstone", "quiz", ...questions.map((q) => clip(q.question || q.prompt, 120))], 30),
+    });
+  }
   return out;
 }
 
@@ -238,7 +286,7 @@ function topicsEnglish(unit, ctx) {
 function extractTopics(subject, unit, ctx) {
   if (subject === "global-perspectives") return topicsGlobalPerspectives(unit);
   if (subject === "english" || subject === "intensive-english") return topicsEnglish(unit, ctx);
-  return topicsFamilyA(unit, subject);
+  return topicsFamilyA(unit, subject, ctx);
 }
 
 function outcomeTexts(unit) {
@@ -254,6 +302,15 @@ function outcomeTexts(unit) {
 // unit, which is the whole reason its topic is shaped the way it is below.
 function readGlossary(dataDir) {
   const file = path.join(dataDir, "sentence-glossary.json");
+  if (!fs.existsSync(file)) return null;
+  try { return JSON.parse(fs.readFileSync(file, "utf8")); } catch { return null; }
+}
+
+// One per stage, beside the units. Absent for English, Global Perspectives and
+// Intensive English, which is not an error — those subjects author no stage
+// capstone, and an absent file simply contributes no topics.
+function readCapstone(dataDir) {
+  const file = path.join(dataDir, "grade-capstone.json");
   if (!fs.existsSync(file)) return null;
   try { return JSON.parse(fs.readFileSync(file, "utf8")); } catch { return null; }
 }
@@ -275,6 +332,7 @@ function buildGradeIndex(ehelRoot, subject, stage) {
     .filter(([, entry]) => entry && entry.definition);
   const glossaryWords = glossaryEntries.length;
   const glossaryWordList = glossaryEntries.map(([word]) => word);
+  const capstone = readCapstone(dataDir);
   const units = [];
   for (const entry of [...manifest.units].sort((a, b) => a.number - b.number)) {
     if (cfg.minUnit != null && Number(entry.number) < cfg.minUnit) continue;
@@ -295,6 +353,7 @@ function buildGradeIndex(ehelRoot, subject, stage) {
         // non-empty, not to carry several thousand entries into every unit.
         glossaryWords: glossaryWords,
         glossaryWordList,
+        capstone,
         // The glossary topic hangs off the grade's FIRST indexed unit. `units`
         // is empty only before the first is pushed, so this is true exactly once
         // per grade without a separate pass to find the lowest number.

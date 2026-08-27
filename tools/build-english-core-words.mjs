@@ -159,12 +159,23 @@ for (const cu of core.units) {
     });
   }
 
-  // everything the unit taught before joins the story glossary
-  const oldTaught = doc.vocabularyGroups.filter((g) => !/stories/i.test(g.title));
+  // Everything the unit taught BEFORE this restructure joins the story glossary.
+  //
+  // Core groups are excluded, and that exclusion is what makes the tool safe to
+  // run twice. Without it a second run treats its own output as the old taught
+  // vocabulary and displaces it into the glossary again — unit 8 went from
+  // 39 core + 55 glossary to 39 core + 94 glossary, with the Core words
+  // duplicated on both sides and nothing reporting it.
+  const coreIds = new Set(cu.groups.map((g) => g.id));
+  const oldTaught = doc.vocabularyGroups.filter(
+    (g) => !/stories/i.test(g.title) && !coreIds.has(g.id));
   const glossary = doc.vocabularyGroups.find((g) => /stories/i.test(g.title));
   const oldIds = new Set(oldTaught.map((g) => g.id));
   const displaced = doc.dictionaryLinks.filter((l) => oldIds.has(l.groupId));
-  const keptGlossary = doc.dictionaryLinks.filter((l) => !oldIds.has(l.groupId));
+  // A rerun must not carry its own core links into the glossary either: they are
+  // rebuilt from core-words.json above, so drop anything already in a core group.
+  const keptGlossary = doc.dictionaryLinks.filter(
+    (l) => !oldIds.has(l.groupId) && !coreIds.has(l.groupId));
 
   const glossaryId = glossary?.id ?? `g1-u${cu.unitNo}-glossary`;
   const glossaryTitle = glossary?.title ?? "Words from our stories";

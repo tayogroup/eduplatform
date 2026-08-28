@@ -122,6 +122,10 @@ const boundary = String.raw`\b`;
 //   grade 2  n=4142  mean 42  median 42  p90 53  p99 63  max 83
 //   grade 3  n=3748  mean 41  median 41  p90 52  p99 61  max 76
 //   grade 4  n=4432  mean 46  median 46  p90 57  p99 66  max 82
+//   grade 5  n=5432  mean 58  median 58  p90 73  p99 84  max 102
+// Grade 5 is the second real jump, after the one between 1 and 2: it teaches
+// text FORMS - fable, memoir, playscript, persuasion - so its examples are
+// prose rather than the short modelling sentences of the lower grades.
 // so each entry is that grade's observed maximum, rounded down to a round number.
 // Note grade 3 is not longer than grade 2 — the jump is between 1 and 2, and the
 // curve is flat above that, which is why this is a measured table and not a
@@ -132,7 +136,7 @@ const boundary = String.raw`\b`;
 // those very sentences with the Core word sets, so a second run would measure a
 // different corpus and silently change which candidates are usable — the same
 // self-referential trap the build tool hit by treating its own output as input.
-const MAX_CANDIDATE_BY_GRADE = { 1: 55, 2: 80, 3: 75, 4: 80 };
+const MAX_CANDIDATE_BY_GRADE = { 1: 55, 2: 80, 3: 75, 4: 80, 5: 100 };
 const MAX_CANDIDATE = MAX_CANDIDATE_BY_GRADE[GRADE] ?? 80;
 const SPLIT_FAILURE = /[.!?]["']?\s+\S/;
 // Some passages use "/" to separate instruction steps ("… / Point to the

@@ -450,7 +450,27 @@ function pqpir_sibling_rows(): array {
             'display_name' => $get('sibling_display_name', 255),
             'age_years' => (string)(int)$get('sibling_age_years', 4),
             'gender' => $get('sibling_gender', 20),
-            'current_grade' => $get('sibling_current_grade', 80),
+            // Constrained to the SAME vocabulary the main applicant's grade is
+            // validated against a thousand lines below, because
+            // pqlgrp_match_score() compares student_profile.current_grade for
+            // EQUALITY against class_group.grade and both are meant to hold a
+            // primary_grade_levels key.
+            //
+            // The main applicant goes through that validation loop; a sibling
+            // never did — these rows are read straight out of
+            // sibling_current_grade[] and stored, so anything up to 80
+            // characters was accepted. A production profile already holds the
+            // display label "Grade 6" instead of the key grade_6, which is
+            // silently unmatchable: it can never join a Grade 6 cohort and
+            // nothing reports it.
+            //
+            // Dropped rather than rejected, deliberately. A sibling row is one
+            // child inside a family's single submission, and failing the whole
+            // form over an unrecognised grade on child three would lose the
+            // other children's data too. An empty grade is the state 161 active
+            // profiles are already in and is handled everywhere; a wrong one is
+            // not.
+            'current_grade' => pqpir_grade_key($get('sibling_current_grade', 80)),
             'special_needs' => $get('sibling_special_needs', 20),
             'medical_safety_notes' => $get('sibling_medical_safety_notes', 1000),
         ];
@@ -460,6 +480,37 @@ function pqpir_sibling_rows(): array {
         $rows[] = $row;
     }
     return $rows;
+}
+
+/**
+ * A grade key, or empty if it is not one.
+ *
+ * Accepts only a key from primary_grade_levels — the vocabulary
+ * student_profile.current_grade is compared for equality against. Tolerates the
+ * casing and spacing a hand-typed or imported value arrives in ("Grade 6",
+ * "grade 6", " GRADE_6 ") by normalising before the lookup, because those are
+ * the same declaration written carelessly rather than a different answer. What
+ * it will not do is invent one: anything it cannot resolve returns empty, which
+ * is a state the rest of the system already handles.
+ */
+function pqpir_grade_key(string $value): string {
+    $options = (require(__DIR__ . '/student_intake_config.php'))['primary_grade_levels'] ?? [];
+    $value = trim($value);
+    if ($value === '' || !$options) {
+        return '';
+    }
+    if (array_key_exists($value, $options)) {
+        return $value;
+    }
+    // "Grade 6" / "grade 6" -> grade_6, and the same for the labels themselves.
+    $needle = strtolower(preg_replace('/[^a-z0-9]+/i', '_', $value));
+    foreach ($options as $key => $label) {
+        if ($needle === strtolower((string)$key)
+                || $needle === strtolower(preg_replace('/[^a-z0-9]+/i', '_', (string)$label))) {
+            return (string)$key;
+        }
+    }
+    return '';
 }
 
 function pqpir_value(array $form, string $name): string {

@@ -338,6 +338,104 @@ function pqlgb_wehel_minutes(array $userids): array {
     return $minutes;
 }
 
+/**
+ * Is this learner in an active class group with a teacher on it?
+ *
+ * Decides whether the app mounts a Raise hand button at all. A tutoring learner
+ * working alone at nine at night has nobody on the other end, and a button that
+ * cannot reach anyone is worse than no button — the child waits instead of
+ * trying Wehel or the worked example.
+ */
+function pqlgb_learner_is_watched(int $userid): bool {
+    global $DB;
+    if ($userid <= 0 || !pqlgb_schema_ready()) {
+        return false;
+    }
+    $where = 'gm.studentid = :userid AND gm.assignment_status = :active AND cg.teacherid > 0';
+    if (pqlgb_table_has_field('local_prequran_class_group', 'status')) {
+        $where .= " AND cg.status <> 'archived'";
+    }
+    try {
+        return $DB->record_exists_sql(
+            "SELECT 1
+               FROM {local_prequran_group_member} gm
+               JOIN {local_prequran_class_group} cg ON cg.id = gm.groupid
+              WHERE $where",
+            ['userid' => $userid, 'active' => 'active']
+        );
+    } catch (Throwable $e) {
+        return false;
+    }
+}
+
+/**
+ * userid => ['up' => bool, 'since' => ts, 'by' => teacherid].
+ *
+ * The hand is the LATEST of course_hand_raised / course_hand_lowered, and it is
+ * deliberately NOT windowed the way focus breaks are: a hand raised twenty
+ * minutes ago is still up, and a window would quietly drop the learner who has
+ * been waiting longest — the exact person the board exists to surface.
+ *
+ * Bounded to the last 24 hours so the query cannot walk the whole audit table,
+ * and because a hand still up from yesterday is a stale row rather than a child
+ * with their arm in the air.
+ */
+function pqlgb_hand_state(array $userids): array {
+    global $DB;
+    $hands = [];
+    if (!$userids || !pqlgb_table_exists('local_prequran_live_audit')) {
+        return $hands;
+    }
+    [$insql, $params] = $DB->get_in_or_equal($userids, SQL_PARAMS_NAMED, 'usr');
+    $params['since'] = time() - DAYSECS;
+    try {
+        $rows = $DB->get_records_select('local_prequran_live_audit',
+            "actorid $insql AND timecreated >= :since AND action IN ('course_hand_raised', 'course_hand_lowered')",
+            $params, 'timecreated ASC, id ASC', 'id, actorid, action, details, timecreated');
+    } catch (Throwable $e) {
+        return $hands;
+    }
+    foreach ($rows as $row) {
+        $details = json_decode((string)$row->details, true);
+        $hands[(int)$row->actorid] = [
+            'up' => (string)$row->action === 'course_hand_raised',
+            'since' => (int)$row->timecreated,
+            'by' => is_array($details) ? (int)($details['by'] ?? 0) : 0,
+        ];
+    }
+    return $hands;
+}
+
+/**
+ * The teacher answering a hand from the board. Written with the LEARNER as
+ * actorid so pqlgb_hand_state() stays a single-actor query, and the teacher
+ * recorded in details instead.
+ */
+function pqlgb_lower_hand(int $userid, int $teacherid): bool {
+    global $DB;
+    if ($userid <= 0 || !pqlgb_table_exists('local_prequran_live_audit')) {
+        return false;
+    }
+    $state = pqlgb_hand_state([$userid])[$userid] ?? ['up' => false];
+    if (empty($state['up'])) {
+        return true; // Already down; answering twice is not an error.
+    }
+    try {
+        $DB->insert_record('local_prequran_live_audit', (object)[
+            'sessionid' => 0,
+            'actorid' => $userid,
+            'action' => 'course_hand_lowered',
+            'targettype' => 'course_hand',
+            'targetid' => 0,
+            'details' => json_encode(['by' => $teacherid], JSON_UNESCAPED_SLASHES),
+            'timecreated' => time(),
+        ]);
+        return true;
+    } catch (Throwable $e) {
+        return false;
+    }
+}
+
 function pqlgb_state_for(int $quietseconds, bool $hasprogress): string {
     if (!$hasprogress) {
         return 'nodata';
@@ -381,9 +479,10 @@ function pqlgb_build(int $teacherid, int $workspaceid, int $windowminutes, strin
     $snapshot = pqlgb_progress_snapshot($userids, $env);
     $signals = pqlgb_focus_signals($userids, $since);
     $wehel = pqlgb_wehel_minutes($userids);
+    $hands = pqlgb_hand_state($userids);
 
     $board = ['generated' => $now, 'window' => $windowminutes, 'env' => $env, 'groups' => [], 'totals' => [
-        'learners' => 0, 'quiet' => 0, 'breaks' => 0, 'leftearly' => 0,
+        'learners' => 0, 'quiet' => 0, 'breaks' => 0, 'leftearly' => 0, 'hands' => 0,
     ]];
 
     foreach ($groups as $group) {
@@ -392,6 +491,7 @@ function pqlgb_build(int $teacherid, int $workspaceid, int $windowminutes, strin
         foreach ($roster[$groupid] ?? [] as $userid) {
             $snap = $snapshot[$userid] ?? null;
             $signal = $signals[$userid] ?? ['breaks' => 0, 'leftearly' => 0, 'reason' => '', 'lastsignal' => 0];
+            $hand = $hands[$userid] ?? ['up' => false, 'since' => 0];
             $lastprogress = $snap ? (int)$snap['lastprogress'] : 0;
             $quiet = $lastprogress > 0 ? max(0, $now - $lastprogress) : 0;
             $state = pqlgb_state_for($quiet, $lastprogress > 0);
@@ -416,11 +516,16 @@ function pqlgb_build(int $teacherid, int $workspaceid, int $windowminutes, strin
                 'leftearly' => (int)$signal['leftearly'],
                 'reason' => (string)$signal['reason'],
                 'wehelminutes' => (int)($wehel[$userid] ?? 0),
+                'handup' => !empty($hand['up']),
+                'handsince' => !empty($hand['up']) ? (int)$hand['since'] : 0,
             ];
 
             $board['totals']['learners']++;
             $board['totals']['breaks'] += (int)$signal['breaks'];
             $board['totals']['leftearly'] += (int)$signal['leftearly'];
+            if (!empty($hand['up'])) {
+                $board['totals']['hands']++;
+            }
             if ($state === 'alert' || $state === 'warn') {
                 $board['totals']['quiet']++;
             }
@@ -431,6 +536,18 @@ function pqlgb_build(int $teacherid, int $workspaceid, int $windowminutes, strin
         // them: "has not started" is a different conversation from "has
         // stopped", and it is usually a launch problem, not a learner.
         usort($tiles, function ($a, $b) {
+            // A raised hand outranks every inferred signal, and it is the one
+            // thing on this board the learner said out loud. Staleness is a
+            // guess about who needs help; this is a request for it. Longest
+            // wait first among them, because the ladder promises the teacher
+            // takes them at the swap and the one waiting longest has been
+            // through the other three steps already.
+            if ($a['handup'] !== $b['handup']) {
+                return $a['handup'] ? -1 : 1;
+            }
+            if ($a['handup'] && $a['handsince'] !== $b['handsince']) {
+                return $a['handsince'] <=> $b['handsince'];
+            }
             $rank = ['alert' => 0, 'warn' => 1, 'ok' => 2, 'nodata' => 3];
             if ($rank[$a['state']] !== $rank[$b['state']]) {
                 return $rank[$a['state']] <=> $rank[$b['state']];

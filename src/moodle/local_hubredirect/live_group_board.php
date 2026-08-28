@@ -69,7 +69,7 @@ if (!empty($consumercontext->consumerslug)) {
 
 $ready = pqlgb_schema_ready();
 $board = $ready ? pqlgb_build($teacherid, $workspaceid, $windowminutes, $env) : ['groups' => [], 'totals' => [
-    'learners' => 0, 'quiet' => 0, 'breaks' => 0, 'leftearly' => 0,
+    'learners' => 0, 'quiet' => 0, 'breaks' => 0, 'leftearly' => 0, 'hands' => 0,
 ], 'generated' => time(), 'window' => $windowminutes, 'env' => $env];
 $board['ok'] = true;
 $board['teacherid'] = $teacherid;
@@ -78,6 +78,12 @@ $dataurl = new moodle_url('/local/hubredirect/live_group_board_data.php', [
     'workspaceid' => $workspaceid,
     'window' => $windowminutes,
     'env' => $env,
+    'teacherid' => $teacherid,
+    'sesskey' => sesskey(),
+]);
+
+$handurl = new moodle_url('/local/hubredirect/live_group_board_hand.php', [
+    'workspaceid' => $workspaceid,
     'teacherid' => $teacherid,
     'sesskey' => sesskey(),
 ]);
@@ -126,6 +132,14 @@ echo $OUTPUT->header();
 .pqlgb-tile--alert{border-left-color:#b02a37;background:var(--op-bad-bg)}
 .pqlgb-tile--warn{border-left-color:#997404;background:var(--op-warn-bg)}
 .pqlgb-tile--nodata{border-left-color:var(--op-line-strong);background:var(--op-surface-soft)}
+/* A raised hand is the only state the LEARNER declared, so it gets the one
+   saturated treatment on the board and outranks every inferred colour. */
+.pqlgb-tile--hand{border-left-color:#1a67a3;background:var(--op-primary-subtle)}
+.pqlgb-tile--hand .pqlgb-avatar{background:#1a67a3;color:#fff}
+.pqlgb-tile--hand .pqlgb-quiet b{color:var(--op-primary-emphasis)}
+.pqlgb-answer{margin-top:6px;min-height:28px;padding:0 10px;border:1px solid #1a67a3;border-radius:var(--op-pill);background:#1a67a3;color:#fff;font-family:var(--op-font);font-size:11.5px;font-weight:800;cursor:pointer}
+.pqlgb-answer:hover{background:var(--op-primary-hover);border-color:var(--op-primary-hover)}
+.pqlgb-answer[disabled]{opacity:.55;cursor:default}
 .pqlgb-avatar{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--op-primary-subtle);color:var(--op-primary-emphasis);font-size:13px;font-weight:900;letter-spacing:.02em}
 .pqlgb-tile--alert .pqlgb-avatar{background:#f1aeb5;color:#58151c}
 .pqlgb-tile--warn .pqlgb-avatar{background:#ffe69c;color:#664d03}
@@ -190,6 +204,7 @@ echo $OUTPUT->header();
   "use strict";
   var seed = <?php echo json_encode($board, JSON_HEX_TAG | JSON_HEX_AMP | JSON_UNESCAPED_SLASHES); ?>;
   var dataUrl = <?php echo json_encode($dataurl->out(false), JSON_HEX_TAG | JSON_HEX_AMP); ?>;
+  var handUrl = <?php echo json_encode($handurl->out(false), JSON_HEX_TAG | JSON_HEX_AMP); ?>;
   var groupsEl = document.getElementById("pqlgb-groups");
   var totalsEl = document.getElementById("pqlgb-totals");
   var freshEl = document.getElementById("pqlgb-freshness");
@@ -245,6 +260,12 @@ echo $OUTPUT->header();
   // is up to POLL_MS old and a tile that says "5 min" for twenty seconds after
   // it became six is the one case this board must not get wrong.
   function liveState(tile) {
+    // A raised hand replaces the state rather than colouring alongside it: the
+    // learner has said they are stuck, so what staleness would have GUESSED
+    // about them no longer matters for where they sit or how they read.
+    if (tile.handup) {
+      return { state: "hand", quiet: tile.lastprogress ? Math.max(0, serverNow() - tile.lastprogress) : 0 };
+    }
     if (!tile.lastprogress) { return { state: "nodata", quiet: 0 }; }
     var quiet = Math.max(0, serverNow() - tile.lastprogress);
     var state = quiet >= ALERT ? "alert" : (quiet >= WARN ? "warn" : "ok");
@@ -260,6 +281,10 @@ echo $OUTPUT->header();
     var place = where.length ? where.join(" &middot; ") : "No app activity recorded";
 
     var flags = [];
+    if (tile.handup) {
+      flags.push('<span class="pqlgb-flag pqlgb-flag--hand">hand up ' +
+        (tile.handsince ? humanGap(Math.max(0, serverNow() - tile.handsince)) + " min" : "") + "</span>");
+    }
     flags.push('<span class="pqlgb-flag">' + tile.sectionsdone + " done" +
       (tile.lastsection ? " &middot; last: " + esc(tile.lastsection) : "") + "</span>");
     if (tile.checkpoint) {
@@ -283,36 +308,44 @@ echo $OUTPUT->header();
         '<div class="pqlgb-where">' + place + "</div>" +
         '<div class="pqlgb-flags">' + flags.join("") + "</div>" +
         (tile.reason ? '<div class="pqlgb-reason">&ldquo;' + esc(tile.reason) + "&rdquo;</div>" : "") +
+        (tile.handup ? '<button class="pqlgb-answer" type="button" data-answer="' + tile.userid + '">Mark answered</button>' : "") +
       "</div>" +
       '<div class="pqlgb-quiet">' +
         (live.state === "nodata"
           ? "<b>&mdash;</b><span>not started</span>"
-          : "<b>" + humanGap(live.quiet) + "</b><span>min quiet</span>") +
+          : live.state === "hand"
+            ? "<b>&#9995;</b><span>hand up</span>"
+            : "<b>" + humanGap(live.quiet) + "</b><span>min quiet</span>") +
       "</div>" +
     "</div>";
   }
 
   function render() {
     var groups = board.groups || [];
-    var learners = 0, quiet = 0, breaks = 0, notStarted = 0;
+    var learners = 0, quiet = 0, breaks = 0, notStarted = 0, hands = 0;
 
     var html = groups.map(function (group) {
       var tiles = (group.tiles || []).slice();
       // Re-sorted here for the same reason liveState exists: a tile can cross
       // the warn threshold between polls, and the order is the thing a teacher
       // reads first.
-      var rank = { alert: 0, warn: 1, ok: 2, nodata: 3 };
+      var rank = { hand: -1, alert: 0, warn: 1, ok: 2, nodata: 3 };
       tiles.forEach(function (tile) {
         var live = liveState(tile);
         tile._rank = rank[live.state];
         tile._quiet = live.quiet;
         learners++;
         breaks += tile.breaks || 0;
+        if (tile.handup) { hands++; }
         if (live.state === "alert" || live.state === "warn") { quiet++; }
         if (live.state === "nodata") { notStarted++; }
       });
       tiles.sort(function (a, b) {
         if (a._rank !== b._rank) { return a._rank - b._rank; }
+        // Among raised hands, longest WAIT first — not longest quiet. The
+        // ladder promises the teacher takes them at the swap, so the one who
+        // asked earliest has been waiting through the other three steps.
+        if (a.handup && b.handup && a.handsince !== b.handsince) { return a.handsince - b.handsince; }
         if (a._quiet !== b._quiet) { return b._quiet - a._quiet; }
         return String(a.name).localeCompare(String(b.name));
       });
@@ -331,6 +364,7 @@ echo $OUTPUT->header();
       '<section class="pqlgb-group"><div class="pqlgb-empty">No class groups are assigned to you in this workspace. Groups are created in Student grouping.</div></section>';
 
     var totalsHtml = [
+      ["Hands up", hands, hands > 0],
       ["Learners on screen", learners, false],
       ["Quiet " + Math.floor(WARN / 60) + " min or more", quiet, quiet > 0],
       ["Left the page", breaks, breaks > 0],
@@ -379,6 +413,41 @@ echo $OUTPUT->header();
       .catch(function () { failures++; })
       .then(paintFreshness);
   }
+
+  // Delegated, because render() replaces the tiles whenever anything changes,
+  // so a listener bound to a button would not survive the next repaint.
+  groupsEl.addEventListener("click", function (event) {
+    var button = event.target.closest ? event.target.closest("[data-answer]") : null;
+    if (!button) { return; }
+    var learnerid = Number(button.getAttribute("data-answer"));
+    if (!learnerid) { return; }
+    button.disabled = true;
+    button.textContent = "Clearing…";
+    fetch(handUrl, {
+      method: "POST",
+      credentials: "same-origin",
+      headers: { "Accept": "application/json" },
+      body: new URLSearchParams({ learnerid: String(learnerid) })
+    })
+      .then(function (response) { return response.ok ? response.json() : null; })
+      .then(function (payload) {
+        if (!payload || !payload.ok) { throw new Error("refused"); }
+        // Lower it locally too, so the tile leaves the top of the list on the
+        // next tick rather than after the next poll. The poll confirms it; this
+        // only removes the lag between the teacher acting and the board saying
+        // so, which is the moment they would otherwise click twice.
+        (board.groups || []).forEach(function (group) {
+          (group.tiles || []).forEach(function (tile) {
+            if (tile.userid === learnerid) { tile.handup = false; tile.handsince = 0; }
+          });
+        });
+        render();
+      })
+      .catch(function () {
+        button.disabled = false;
+        button.textContent = "Not cleared — retry";
+      });
+  });
 
   skew = Date.now() - ((board.generated || Math.floor(Date.now() / 1000)) * 1000);
   render();

@@ -358,6 +358,118 @@ export function createCourseApp(config) {
     actions.prepend(select);
   }
   mountTutoringSubjectPicker();
+
+  // --- raise a hand ---------------------------------------------------------
+  //
+  // One live teacher runs two groups of nine out of phase: while one group is
+  // taught, this learner works here with no adult in the room. The escalation
+  // ladder they are taught is worked example, then Wehel, then the group chat,
+  // then the teacher — and until now there was no fourth step, because a child
+  // in the other breakout room had no way to say "I am stuck" that did not mean
+  // interrupting the lesson next door by voice.
+  //
+  // The teacher sees it on live_group_board.php, where a raised hand sorts above
+  // every inferred signal: staleness is the board GUESSING who needs help, and
+  // this is the one thing the learner said out loud.
+  //
+  // SILENT UNLESS IT CAN DO SOMETHING, the same rule the subject picker keeps
+  // above. The server answers `watched` — is this learner in an active class
+  // group with a teacher on it — and the button is not mounted at all when it
+  // is false. A tutoring learner working alone at nine at night must not be
+  // offered a button that reaches nobody: they would wait for help that is not
+  // coming instead of asking Wehel or re-reading the worked example, which is
+  // worse than having no button.
+  //
+  // Assigned to a CONST from platformUrl() because that is the pattern
+  // check-platform-cors.mjs reads to discover endpoints and decide whether each
+  // needs Allow-Credentials — this one is token-authenticated and sends none,
+  // like the progress gateway.
+  const HAND_ENDPOINT = platformUrl("/local/hubredirect/course_hand_raise.php");
+
+  function mountHandRaise() {
+    const actions = $(".top-actions");
+    if (!actions || !launchToken || !launchEndpoint || $("#hand-raise")) return;
+
+    // text/plain keeps this a SIMPLE request, so there is no CORS preflight —
+    // the focus beacon's trick. Unlike that beacon this is a fetch and not
+    // sendBeacon, because the learner needs the answer: the button's whole
+    // honesty rests on knowing whether the hand actually went up.
+    const post = (body) => fetch(HAND_ENDPOINT, {
+      method: "POST", mode: "cors", headers: { "Content-Type": "text/plain" },
+      body: JSON.stringify({ token: launchToken, ...body }),
+    }).then((response) => (response.ok ? response.json() : null)).catch(() => null);
+
+    let up = false;
+    let button = null;
+    let poll = 0;
+
+    const paint = () => {
+      button.textContent = up ? "✋ Hand up" : "Raise hand";
+      button.setAttribute("aria-pressed", up ? "true" : "false");
+      button.title = up
+        ? "Your teacher can see your hand. Press again to put it down."
+        : "Tell your teacher you are stuck. Keep working while you wait.";
+      // Raised state inline rather than in a stylesheet class: course-ui.css is
+      // imported by all six subjects and bundled into each release as
+      // design-system.css, so one cosmetic rule there makes five other
+      // subjects' app tiers stale (CLAUDE.md, the shared-stylesheet coupling).
+      // seb-session.js styles its injected controls the same way.
+      button.style.background = up ? "#1a67a3" : "white";
+      button.style.color = up ? "#fff" : "";
+      button.style.borderColor = up ? "#1a67a3" : "";
+    };
+
+    // Only while a hand is UP, so an ordinary lesson makes no repeat requests.
+    // It exists because the TEACHER can lower this hand from the board when
+    // they answer, and without it the child would still see their hand up.
+    const watch = () => {
+      clearInterval(poll);
+      if (!up) return;
+      poll = setInterval(async () => {
+        const state = await post({});
+        if (state && state.ok && !state.up && up) { up = false; paint(); clearInterval(poll); }
+      }, 30000);
+    };
+
+    const toggle = async () => {
+      button.disabled = true;
+      const wanted = !up;
+      const state = await post({ up: wanted, unit: PROGRESS_UNIT, section: location.hash.replace("#", "") });
+      button.disabled = false;
+      if (!state || !state.ok) {
+        // Say what is true. A hand that silently failed to go up is the one
+        // failure this control must never have, because the child then waits.
+        button.title = "That did not send. Check your connection and try again.";
+        return;
+      }
+      up = !!state.up;
+      paint();
+      watch();
+    };
+
+    // One request on mount, which also settles what a RELOAD should show: the
+    // hand lives on the server, so a learner who refreshes must not see their
+    // raised hand come back down while the teacher still has it flagged.
+    post({}).then((state) => {
+      if (!state || !state.ok || !state.watched) return;
+      button = document.createElement("button");
+      button.type = "button";
+      button.id = "hand-raise";
+      // top-grade-picker for a pill that already exists and is NOT hidden on
+      // mobile the way .icon-button is — this control must reach a learner on a
+      // phone. It also inherits the html.young-stage sizing, which makes the
+      // button bigger and rounder at Stages 1-4, the learners most likely to
+      // need it. Only the select-specific width and padding are overridden.
+      button.className = "top-grade-picker top-hand-raise";
+      button.style.cssText = "width:auto;padding:8px 12px;cursor:pointer";
+      up = !!state.up;
+      paint();
+      button.addEventListener("click", toggle);
+      actions.prepend(button);
+      watch();
+    });
+  }
+  mountHandRaise();
   const emitProgressSummary = () => {
     const base = {
       type: "progress.summary", unit: PROGRESS_UNIT,

@@ -726,6 +726,174 @@ Shared across all six subjects (`shell/course-app.js` + `shared/progress-client.
 
 A third key, `ehel-progress-outbox:{course}:{student}`, exists only for the remote backend (durable events queue there until a POST to `/progress/ingest` succeeds; the local backend applies events straight into its document instead). Irrelevant to local testing for the same reason.
 
+## The live group board: one teacher, two groups of nine, out of phase
+
+```bash
+npm run check:php            # includes the reducer gate the activity ring lives under
+node tools/check-platform-cors.mjs   # probes course_hand_raise.php, discovered automatically
+```
+
+The school runs a 3-4 hour learner day where one live teacher takes **two groups
+of nine**. They cannot be taught at the same instant, so they are taught out of
+phase: a 40-minute cycle of shared launch, 15 minutes taught at 1:9 while the
+other nine work in the app, swap, shared close. Every learner therefore spends
+as long with no adult in the room as with one, and **nothing showed the teacher
+that second nine**. The signals all existed; nothing read them together.
+
+- `live_group_boardlib.php` — the query library, read-only.
+- `live_group_board.php` — the page (teacher of the workspace; an administrator
+  may read another teacher's board, gated on `pqh_user_can_manage_workspace`).
+- `live_group_board_data.php` — the poll endpoint, gating restated not inherited.
+- `live_group_board_hand.php` — the teacher marking a raised hand answered.
+- `course_hand_raise.php` — the learner's end, launch-token auth.
+- Entry point: "Live group board", first in Teacher Operations on
+  `teacher_workspace.php`, because it is the only tool there used DURING a session.
+
+**THE SORT IS THE FEATURE.** Hand raised, then alert, then warn, then
+longest-quiet-first, then not-started. "Quiet" is time since the learner's app
+last reported anything (`local_prequran_progress.timemodified`, rewritten on
+every ingest), and that single ordering catches three problems a teacher cannot
+tell apart from the other room — stuck, gone, and disconnected. Everything else
+on a tile is context for that one decision.
+
+A **raised hand outranks every inferred signal** and replaces the tile's state
+rather than colouring alongside it: staleness is the board guessing who needs
+help, a hand is the one thing on it the learner said out loud. Among hands the
+order is longest WAIT first, not longest quiet.
+
+**ONE RENDERER, IN JS, SEEDED WITH INLINE JSON.** The obvious build paints the
+first frame in PHP and refreshes it in JavaScript, and that is two renderers for
+one board: they drift, and the drift shows up as a tile that changes shape the
+moment it refreshes. The page ships the first board as inline JSON and one JS
+function draws every frame including the first, so there is no fetch on load. A
+no-JS visitor is told the board needs JS rather than shown a frozen frame with
+nothing to say it is frozen. Quiet counters are recomputed client-side each
+second from the server's own `generated` stamp — the Wehel timer's rule, the
+client doing the server's arithmetic on the server's data rather than keeping a
+second clock.
+
+**Wehel is reported as minutes USED, never minutes left.** The daily allowance is
+a spec held byte-equal across three files by `check:wehel-contract`; a fourth
+copy here would be one that gate cannot see. `used` comes straight out of the
+ledger preference and needs no band table.
+
+### The activity ring: the progress document now records WHEN
+
+`sectionsDone` is an append-ordered list and `checkpoints` a map — both say WHAT
+a learner has done and neither said when, so per-block counts were not missing
+from the board, they were **absent from the data**.
+`externallib_progress.php` keeps `_activity`, a bounded ring (`MAX_ACTIVITY`, 80)
+of `[timestamp, kind, section]` appended only where the state actually CHANGED —
+`s` a section completed, `c` a checkpoint scored. No new table: it rides in
+`statejson`, and `public_state()` strips it, so the app never receives it and only
+the board, which reads the row directly, can see it. Extends the two-store note
+above; this is the server store, and the local one is untouched.
+
+Four decisions, each of which changes what the number means:
+
+- **Server clock, not the event's own `at`.** The board's headline (minutes
+  quiet) comes from `timemodified`, also server-side, and two numbers on one tile
+  from different clocks disagree the moment a device is skewed. The cost is that
+  work queued offline is stamped when it arrives; that is the honest reading of
+  "we learned of it now".
+- **A section arriving only via `progress.summary` still counts.** A tab closed
+  before the durable `section.completed` flushes loses it and the next summary
+  carries the section instead. Counting only the durable event undercounts
+  exactly the learner whose connection is worst.
+- **`_activitySince` records when counting began**, because every row written
+  before this shipped has no ring. Without it the board reports 0 for the first
+  cycle after release and a teacher chases a learner who is fine.
+- **That has to be carried all the way to the tile, and the first version got it
+  wrong in the UI after getting it right in the data.** A zero rendered as
+  "nothing this cycle" is a confident claim about a window nobody measured. Four
+  states now, and they are different claims: `+4 this cycle` (counted),
+  `+2+ this cycle` (the ring began mid-window, so a FLOOR), `nothing this cycle`
+  (idle, and we know), `not counted yet` (no ring — say nothing).
+
+`check-progress-attempted.php` covers it (34 assertions to 44) and its strip
+check was **widened**, not merely extended: it named only `_lastAt` and
+`_appliedIds`, so it would have passed while `_activity` leaked to every client
+on every hydrate. Mutation-tested five ways — dropping the record on
+`section.completed`, on `checkpoint.result` and on the summary catch-up, removing
+the cap, and leaking the key — all caught, green on restore. The leak mutation is
+what proves the widened assertion earns its place.
+
+### Hand-raise, and why it does not always draw
+
+The escalation ladder a learner is taught is worked example, then Wehel, then the
+group chat, then the teacher — and there was no fourth step, because a child in
+the other breakout room had no way to say "I am stuck" short of interrupting the
+lesson next door by voice.
+
+**The button does not mount unless somebody is watching.** The server answers
+`watched` (is this learner in an active class group with a teacher on it) and a
+false answer draws nothing. A tutoring learner working alone at nine at night
+must not be offered a button that reaches nobody: they would wait for help that
+is not coming instead of asking Wehel. Same "silent unless it can do something"
+rule the tutoring subject picker keeps.
+
+**A hand nobody can lower is as broken as a hand nobody can raise** — within one
+cycle the board is a wall of permanent flags and the teacher stops reading it.
+Both ends clear it, and the teacher's row is written with the **learner** as
+`actorid` and the teacher in `details`, so `pqlgb_hand_state()` stays a
+single-actor query. State is `course_hand_raised` / `course_hand_lowered` in
+`local_prequran_live_audit`, beside the focus events on the same actorid index,
+and deliberately **not windowed** the way focus breaks are: a hand raised twenty
+minutes ago is still up, and a window would drop the learner waiting longest.
+Rows are written only on a real transition, so pressing twenty times is one row.
+
+**Two limits the UI must keep stating.** Focus breaks are evidence, not
+prevention — a web page can report that a learner left it and cannot stop them.
+And the board is a monitoring surface, not attendance: it shows last-seen rather
+than marking anyone present.
+
+### A platform endpoint's CORS contract depends on how the gate finds it
+
+`check-platform-cors.mjs` discovers endpoints by parsing `platformUrl("…")` in
+`shell/*.js`, so `course_hand_raise.php` was probed the moment it was written —
+and failed, because it allowed only `Content-Type`. That exposed a split worth
+knowing before adding an endpoint:
+
+| how the gate finds it | endpoints | Allow-Headers | probed |
+| --- | --- | --- | --- |
+| `platformUrl("…")` in `shell/*.js` | 7 (the six Wehel/quiz calls, plus this one) | `Authorization, Content-Type, Accept` | yes |
+| the gateway's minting line in `progress_gatewaylib.php` | `progress_gateway.php` | `Authorization, Content-Type` | yes |
+| a URL parameter | `course_focus_event.php`, `practice_coach_event.php` | `Content-Type` only | **never** |
+
+Being callable through `platformUrl` is what buys an endpoint gate coverage;
+matching the contract is the price. **Every endpoint the gate probes must allow
+`Authorization`**, because it preflights with
+`Access-Control-Request-Headers: authorization,content-type` and requires both —
+so allowing it on an endpoint that authenticates from the body costs nothing and
+is the difference between a green release and a failing one. `Accept` is a
+hubredirect convention rather than a requirement; the gateway omits it and
+passes. Narrowing a discovered endpoint's headers fails the next release.
+
+### Deploying these files: the md5 is the only proof
+
+Plugin PHP goes to the Moodle box on its own channel, and on 2026-08-28 a cPanel
+File Manager upload of `externallib_progress.php` **reported success and
+delivered nothing** — the file's mtime stayed on the previous day and a `find`
+across the whole account turned up no copy written in two hours. Every cheaper
+check passed: the path returned `200`, the endpoint answered its preflight, the
+file compiled. All of that was true of the OLD file too. Only the hash could tell
+them apart, which is the repo's "a successful-looking upload proves nothing"
+arriving on this tier.
+
+The CDN-staging loop is self-verifying and is the better route: stage under
+`Ehel Primary/qa/` on the storage zone with a fresh, unguessable filename,
+`curl -fsS -o <name>.new` on the box, hash it, `mv` only if it matches, then
+delete both copies. Downloading to a temporary name is what keeps a partial
+transfer from truncating a live file — and for the progress gateway that file is
+every learner's ingest path. Note the pull zone is **`quraanacademy.b-cdn.net`**
+(`BUNNY_STORAGE_ZONE`), not `ehelacademy`, which 404s for `Ehel Primary/qa/`.
+
+Two things about `design_version.php` that look contradictory and are not: its
+listing globs `local/hubredirect/*.php`, so it **cannot show** a file in
+`local_prequran` — but `&reset=1` calls `opcache_reset()`, which is
+process-global and **does** clear that file's cached bytecode. Reset AFTER the
+real upload; a reset run against a failed upload just recompiles the old code.
+
 ## Ehel Academy subject pipelines
 
 Science, Computing and Global Perspectives are built from Word source packs in `~/Downloads`, not hand-edited. Each is `extract → build → check`:

@@ -7186,14 +7186,28 @@ function renderWordCarousel() {
   // One sentence position per word: in a deck each word keeps its own place,
   // where the lab had a single cursor because only one word was ever on screen.
   const sentenceAt = new Map();
-  // GRADE 1 ONLY, and the gate is the point rather than a detail. This renderer
-  // is shared by every grade with a deck (BOTH_DESIGNS = gradeNumber <= 4), so
-  // teaching the taught words alone silently changed Grades 2-4 too -- their
-  // unit 1 decks went 195 -> 40, 240 -> 45 and 183 -> 20 slides. Those grades
-  // are mid-restructure by other sessions and the change is not theirs to
-  // receive unannounced, however defensible it is. Owner, 2026-08-28: Grade 1
-  // only. Lift the gate when the other grades' Core words land, not before.
-  const DECK_TEACHES_TAUGHT_ONLY = gradeNumber === 1;
+  // GRADES 1 AND 2 ONLY, and the gate is the point rather than a detail. This
+  // renderer is shared by every grade with a deck (BOTH_DESIGNS = gradeNumber
+  // <= 4), so teaching the taught words alone reaches Grades 3-4 unless it is
+  // held back -- their unit 1 decks would go 240 -> 45 and 224 -> 42 slides.
+  // Those grades are mid-restructure by other sessions and the change is not
+  // theirs to receive unannounced, however defensible it is.
+  //
+  // Grade 1 was the whole gate for part of 2026-08-28, on that reasoning. Grade
+  // 2 joined it once its 400 Core words had landed (cf07330ce) and the owner
+  // saw the story glossary still inside the teaching walk-through: at Grade 2
+  // unit 1 the deck was 195 slides to earn a tick worth 40. Owner, 2026-08-28,
+  // asked for Grade 2 and Grade 2 alone. Grades 3-4 keep walking every word
+  // until their own turn -- their Core words exist (448 and 412) so the data is
+  // ready, but readiness is not the same as being asked for.
+  //
+  // Measured unit 1 decks after the change: 44 words at Grade 1, 40 at Grade 2,
+  // both from a deck that used to walk 111 and 195.
+  //
+  // It stays a named constant so a grade can be rolled back on its own, and it
+  // is deliberately NOT written as BOTH_DESIGNS: that gate is overloaded -- it
+  // also decides the cursive worksheet -- and this must not move with it.
+  const DECK_TEACHES_TAUGHT_ONLY = gradeNumber <= 2;
   let words = DECK_TEACHES_TAUGHT_ONLY ? taught : allWords;
   // The section is named for what it teaches. Where every taught word sits in
   // one group that group's own title IS the section — "Core words" at Grade 1 —

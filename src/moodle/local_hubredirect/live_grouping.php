@@ -1378,28 +1378,28 @@ body.pqh-live-grouping-page #page,body.pqh-live-grouping-page #page-content,body
             <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
             <input type="hidden" name="action" value="create_pool">
             <?php
-              // Offering-linked pools: demand for a real course cohort. The
-              // catalog Course select below still serves legacy tutoring pools.
-              $pqlgrpofferings = [];
-              if (pqlgrp_table_exists('local_prequran_course_offering')) {
-                  try {
-                      $pqlgrpofferings = $DB->get_records_select('local_prequran_course_offering',
-                          "workspaceid = ? AND status IN ('published', 'draft')", [$workspaceid], 'title ASC', 'id,title,status');
-                  } catch (Throwable $e) {
-                      $pqlgrpofferings = [];
-                  }
-              }
+              // The "Course offering (recommended)" select is deliberately NOT
+              // rendered. A pool is demand for a GRADE cohort — one live teacher
+              // taking two groups of nine across the whole timetable — so asking
+              // which single course offering it is for contradicts the thing the
+              // Grade field below now expresses, and offered the operator a
+              // choice that would narrow the cohort back to one subject.
+              //
+              // Only the FORM is gone. create_pool still reads
+              // optional_param('offeringid', 0) and still links a pool to an
+              // offering when one is posted, so the cohort-proposal form further
+              // down — which posts offeringid as a hidden input — is untouched,
+              // and an offering-linked pool created that way behaves exactly as
+              // before. Nothing about the schema or the server path changed.
+              //
+              // What this DOES give up for pools created here: class_group
+              // .offeringid stays 0, so the teacher weekly-load estimate falls
+              // back to its nominal 60 minutes per group instead of reading
+              // sessions_per_week x session_minutes off the offering, and the
+              // "skip students already placed for this offering" filter has no
+              // offering to check against. Both degrade to the pre-offering
+              // behaviour rather than breaking.
             ?>
-            <?php if ($pqlgrpofferings && pqlgrp_table_has_field('local_prequran_group_pool', 'offeringid')): ?>
-              <div class="pqlgrp-field"><label>Course offering (recommended)</label>
-                <select class="pqlgrp-select" name="offeringid">
-                  <option value="0">None - catalog subject pool</option>
-                  <?php foreach ($pqlgrpofferings as $pqlgrpoff): ?>
-                    <option value="<?php echo (int)$pqlgrpoff->id; ?>"><?php echo s((string)$pqlgrpoff->title); ?><?php echo (string)$pqlgrpoff->status !== 'published' ? ' (' . s((string)$pqlgrpoff->status) . ')' : ''; ?></option>
-                  <?php endforeach; ?>
-                </select>
-              </div>
-            <?php endif; ?>
             <div class="pqlgrp-field"><label>Pool title</label><input class="pqlgrp-input" name="title" placeholder="Somali beginner girls 6-8" required></div>
             <div class="pqlgrp-formgrid">
               <div class="pqlgrp-field"><label>Grade</label><?php echo pqlgrp_select('grade', $pqlgrpgradelevels, '', false); ?></div>

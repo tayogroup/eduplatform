@@ -1835,25 +1835,33 @@ CSS;
  * Echo it AFTER pqh_openproject_skin_css(), for the reason set out above
  * pqh_duolingo_chrome_css().
  *
- * STAFF GET IT TOO, owner decision 2026-08-28, and the trade is worth stating
- * rather than discovering. pqh_shell_viewer_kind() has three answers -- student,
- * staff, parent -- and 'staff' is ONE bucket holding teachers, assistant
- * teachers, workspace admins, owners, managers, site admins and principals.
- * There is no teacher kind to gate on. So "give the teachers the new chrome"
- * necessarily also gives it to the finance, compliance, governance and
- * executive-reporting pages those same people reach: admin_workspace,
- * workspace_reports, at_risk_report, managed_reports, safenet and the trust
- * pages all now render in a chrome designed for a seven-year-old. That was put
- * to the owner with a narrower option -- gate on pqh_has_teacher_profile(), so a
- * pure administrator keeps the old design -- and this was chosen instead.
+ * IT NOW GATES NOTHING, AND THAT IS DELIBERATE. The owner widened it twice in
+ * one day: students only, then staff as well (2026-08-28), then parents too --
+ * which is every kind pqh_shell_viewer_kind() can return, so the test is gone
+ * and every page that calls this gets the chrome.
  *
- * Parents are the one kind still excluded, because nobody asked for them.
+ * Two consequences of the widening, both accepted rather than overlooked.
+ * 'staff' is ONE bucket -- teachers, assistant teachers, workspace admins,
+ * owners, managers, site admins and principals -- with no teacher kind inside
+ * it, so the finance, compliance, governance and executive-reporting pages
+ * those same people reach (admin_workspace, workspace_reports, at_risk_report,
+ * managed_reports, safenet, the trust pages) render in a chrome drawn for a
+ * seven-year-old. A narrower gate on pqh_has_teacher_profile() was offered and
+ * declined. Parents then followed, so the family-facing dashboard and live
+ * schedule match.
+ *
+ * THE FUNCTION IS KEPT rather than deleted, and the call sites are left alone.
+ * It is now a pass-through, which is normally worth removing -- but it is also
+ * the ONE place the audience has ever been decided, and that decision has moved
+ * twice in a day. Keeping it costs a function call; deleting it means editing
+ * 42 call sites to name pqh_duolingo_chrome_css() directly, and editing them
+ * back the moment anyone wants a kind excluded again. If the audience settles
+ * for good, delete this and call the sheet directly -- that is the tidy-up, and
+ * it is a 42-file change plus a full re-upload, so do it once and deliberately.
+ *
+ * It no longer calls pqh_shell_viewer_kind(). There is nothing left to ask.
  */
 function pqh_viewer_chrome_css(string $scope): string {
-    global $USER;
-    if (pqh_shell_viewer_kind((int)($USER->id ?? 0)) === 'parent') {
-        return '';
-    }
     return pqh_duolingo_chrome_css($scope);
 }
 

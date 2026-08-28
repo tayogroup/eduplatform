@@ -205,11 +205,62 @@ check('the list caps at 20, newest kept',
     [count($capstate['tutoringSessions']), end($capstate['tutoringSessions'])['topic']], [20, 'T25']);
 check('a session never creates a checkpoint (the gradebook path)', count((array)$t1['checkpoints']), 0);
 
+// --- the activity ring: WHEN work happened -----------------------------------
+//
+// sectionsDone and checkpoints say WHAT a learner has done and never when, so
+// "how much did this child do in the last 15 minutes" was underivable and the
+// live group board could only show running totals. The ring answers it.
+//
+// These assert on what is STORED after a real event, never on what the helper
+// returns in isolation. That is the lesson sanitise_attempted taught here: a
+// helper tested alone stayed green while nothing called it.
+echo "\napply_event - the activity ring\n";
+
+$a0 = $emptyState();
+check('a fresh unit starts empty and not-yet-counting',
+    [$a0['_activity'], $a0['_activitySince']], [[], 0]);
+
+[$a1] = $apply($emptyState(), ['type' => 'section.completed', 'id' => 'e1', 'section' => 'vocabulary']);
+check('a completed section is recorded', count($a1['_activity']), 1);
+check('  as [ts, kind, section]',
+    [is_int($a1['_activity'][0][0]), $a1['_activity'][0][1], $a1['_activity'][0][2]],
+    [true, 's', 'vocabulary']);
+check('  and stamps when counting began', $a1['_activitySince'] > 0, true);
+
+[$a2] = $apply($a1, ['type' => 'section.completed', 'id' => 'e2', 'section' => 'vocabulary']);
+check('re-completing the SAME section records nothing', count($a2['_activity']), 1);
+
+[$a3] = $apply($a2, ['type' => 'checkpoint.result', 'id' => 'e3', 'section' => 'quiz', 'score' => 70, 'passed' => true]);
+check('a scored checkpoint is recorded', [count($a3['_activity']), $a3['_activity'][1][1]], [2, 'c']);
+
+// A tab closed before the durable event flushes loses it, and the next summary
+// carries the section instead. Counting only the durable event would undercount
+// exactly the learner whose connection is worst.
+[$a4] = $apply($a3, ['type' => 'progress.summary', 'at' => '2026-08-28T10:00:00Z',
+    'sectionsDone' => ['vocabulary', 'reading']]);
+check('a section arriving only via a summary is still recorded',
+    [count($a4['_activity']), $a4['_activity'][2][2]], [3, 'reading']);
+[$a5] = $apply($a4, ['type' => 'progress.summary', 'at' => '2026-08-28T10:01:00Z',
+    'sectionsDone' => ['vocabulary', 'reading']]);
+check('  and a summary repeating what it already sent records nothing',
+    count($a5['_activity']), 3);
+
+// Bounded, or a long day grows the state document without limit.
+$cap = $class->getConstant('MAX_ACTIVITY');
+$big = $emptyState();
+for ($i = 0; $i < $cap + 25; $i++) {
+    [$big] = $apply($big, ['type' => 'section.completed', 'id' => "b$i", 'section' => "s$i"]);
+}
+check('the ring is capped', count($big['_activity']), $cap);
+check('  and keeps the NEWEST entries, which is what a window reads',
+    end($big['_activity'])[2], 's' . ($cap + 24));
+
 echo "\npublic_state\n";
 $pub = $call('public_state', [$s1]);
 check('attempted reaches the client', $pub['attempted'], ['quiz' => ['answered' => 3, 'total' => 12]]);
 check('internal bookkeeping still stripped',
-    array_key_exists('_lastAt', $pub) || array_key_exists('_appliedIds', $pub), false);
+    array_key_exists('_lastAt', $pub) || array_key_exists('_appliedIds', $pub)
+    || array_key_exists('_activity', $pub) || array_key_exists('_activitySince', $pub), false);
 $pubt = $call('public_state', [$t1]);
 check('tutoring sessions reach the client (the parent report reads them)',
     $pubt['tutoringSessions'][0]['topic'], 'Percentages');

@@ -69,7 +69,7 @@ if (!empty($consumercontext->consumerslug)) {
 
 $ready = pqlgb_schema_ready();
 $board = $ready ? pqlgb_build($teacherid, $workspaceid, $windowminutes, $env) : ['groups' => [], 'totals' => [
-    'learners' => 0, 'quiet' => 0, 'breaks' => 0, 'leftearly' => 0, 'hands' => 0,
+    'learners' => 0, 'quiet' => 0, 'breaks' => 0, 'leftearly' => 0, 'hands' => 0, 'donewindow' => 0,
 ], 'generated' => time(), 'window' => $windowminutes, 'env' => $env];
 $board['ok'] = true;
 $board['teacherid'] = $teacherid;
@@ -151,6 +151,7 @@ echo $OUTPUT->header();
 .pqlgb-flag--bad{border-color:#f1aeb5;background:#f8d7da;color:#58151c}
 .pqlgb-flag--warn{border-color:#ffe69c;background:#fff3cd;color:#664d03}
 .pqlgb-flag--ok{border-color:#a3cfbb;background:#d1e7dd;color:#0a3622}
+.pqlgb-flag--moved{border-color:#a3cfbb;background:#d1e7dd;color:#0a3622}
 .pqlgb-reason{margin-top:6px;padding:6px 8px;border-left:2px solid #f1aeb5;background:var(--op-surface);font-size:12px;font-style:italic;color:var(--op-ink-muted);line-height:1.4}
 .pqlgb-quiet{text-align:right;white-space:nowrap}
 .pqlgb-quiet b{display:block;font-size:17px;font-weight:900;line-height:1.15;font-variant-numeric:tabular-nums}
@@ -194,7 +195,7 @@ echo $OUTPUT->header();
     <div class="pqlgb-totals" id="pqlgb-totals"></div>
     <div class="pqlgb-groups" id="pqlgb-groups"></div>
     <div class="pqlgb-note">
-      <b>What these numbers are.</b> <b>Quiet for</b> is time since the learner's app last reported anything — it is the board's headline because it catches stuck, gone and disconnected alike, which look identical from the other room. <b>Left page</b> counts focus breaks in the chosen window: it is evidence, not prevention, because a web page can report that a learner left it and cannot stop them. <b>Wehel</b> is AI-tutor minutes <em>used</em> today, not minutes left. Sections and quiz scores are running totals, not per-block counts &mdash; the progress record is reduced state with no event times in it, so a per-block count cannot be derived here without the gateway first recording when each event landed.
+      <b>What these numbers are.</b> <b>Quiet for</b> is time since the learner's app last reported anything — it is the board's headline because it catches stuck, gone and disconnected alike, which look identical from the other room. <b>Left page</b> counts focus breaks in the chosen window: it is evidence, not prevention, because a web page can report that a learner left it and cannot stop them. <b>Wehel</b> is AI-tutor minutes <em>used</em> today, not minutes left. <b>This cycle</b> counts sections completed and quizzes scored inside the chosen window, from the timestamps the progress gateway now records (<code>_activity</code>). It reads <b>N+</b> where that unit began recording after the window opened &mdash; the count is a floor then, not a total. <b>Done</b> beside it is the running total for the unit, which is a different question and always was.
     </div>
   <?php endif; ?>
 </div>
@@ -285,6 +286,27 @@ echo $OUTPUT->header();
       flags.push('<span class="pqlgb-flag pqlgb-flag--hand">hand up ' +
         (tile.handsince ? humanGap(Math.max(0, serverNow() - tile.handsince)) + " min" : "") + "</span>");
     }
+    // Work done IN the window, ahead of the running total, because the
+    // question a teacher asks entering the room is "did this child move since I
+    // last looked", not "how far are they overall".
+    //
+    // "N+" rather than "N" when the ring started recording after the window
+    // opened: the count is then a floor and printing a bare number would claim
+    // a precision the data does not have. A bare 0 there is worse still — it
+    // points the teacher at a learner who is fine.
+    var moved = (tile.donewindow || 0) + (tile.quizwindow || 0);
+    flags.push('<span class="pqlgb-flag' + (moved > 0 ? " pqlgb-flag--moved" : "") + '"' +
+      ' title="' + (tile.windowcovered
+        ? "Sections and quizzes completed in the chosen window."
+        : "At least this many — this unit began recording after the window opened.") + '">' +
+      (moved > 0
+        ? "+" + moved + (tile.windowcovered ? "" : "+") + " this cycle"
+        // "nothing" is a CLAIM about the window and may only be made when the
+        // window was actually covered. Every row written before the gateway
+        // started recording has no ring, so saying "nothing" there would
+        // report a learner as idle on the strength of data that does not
+        // exist — the false negative windowcovered exists to prevent.
+        : (tile.windowcovered ? "nothing this cycle" : "not counted yet")) + "</span>");
     flags.push('<span class="pqlgb-flag">' + tile.sectionsdone + " done" +
       (tile.lastsection ? " &middot; last: " + esc(tile.lastsection) : "") + "</span>");
     if (tile.checkpoint) {
@@ -322,7 +344,7 @@ echo $OUTPUT->header();
 
   function render() {
     var groups = board.groups || [];
-    var learners = 0, quiet = 0, breaks = 0, notStarted = 0, hands = 0;
+    var learners = 0, quiet = 0, breaks = 0, notStarted = 0, hands = 0, moved = 0;
 
     var html = groups.map(function (group) {
       var tiles = (group.tiles || []).slice();
@@ -337,6 +359,7 @@ echo $OUTPUT->header();
         learners++;
         breaks += tile.breaks || 0;
         if (tile.handup) { hands++; }
+        moved += (tile.donewindow || 0) + (tile.quizwindow || 0);
         if (live.state === "alert" || live.state === "warn") { quiet++; }
         if (live.state === "nodata") { notStarted++; }
       });
@@ -365,6 +388,7 @@ echo $OUTPUT->header();
 
     var totalsHtml = [
       ["Hands up", hands, hands > 0],
+      ["Done this cycle", moved, false],
       ["Learners on screen", learners, false],
       ["Quiet " + Math.floor(WARN / 60) + " min or more", quiet, quiet > 0],
       ["Left the page", breaks, breaks > 0],

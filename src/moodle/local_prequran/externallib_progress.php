@@ -24,6 +24,10 @@ class local_prequran_progress_external extends external_api {
 
     /** Keep at most this many recent durable ids per unit for idempotency. */
     const MAX_APPLIED_IDS = 250;
+    // One cycle of the live teaching model is 40 minutes and a learner completes
+    // a handful of sections in it; 80 covers a whole day per unit and keeps the
+    // ring a few hundred bytes of JSON.
+    const MAX_ACTIVITY = 80;
     const MAX_TUTORING_SESSIONS = 20;
 
     /**
@@ -147,6 +151,30 @@ class local_prequran_progress_external extends external_api {
             'completed' => false,
             '_lastAt' => '',
             '_appliedIds' => [],
+            // WHEN work happened, which nothing else in this document records.
+            // sectionsDone is an append-ordered list of ids and checkpoints is a
+            // map — both say WHAT a learner has done and neither says when, so
+            // "how much did this child do in the last 15 minutes" was
+            // underivable and the live group board could only show running
+            // totals. A bounded ring of [timestamp, kind, section] answers it
+            // without a second table: 's' a section completed, 'c' a checkpoint
+            // scored.
+            //
+            // Stamped with the SERVER's clock, not the event's own `at`. The
+            // board's headline (minutes quiet) comes from the row's
+            // timemodified, also server-side, and two numbers on one tile drawn
+            // from different clocks disagree the moment a learner's device is
+            // skewed — "4 done this cycle" beside "quiet for 20 minutes" is the
+            // shape of that bug. The cost is that work queued offline is
+            // stamped when it arrives rather than when it happened; that is the
+            // honest reading of "we learned of it now", and it matches what the
+            // teacher can act on.
+            '_activity' => [],
+            // When recording STARTED for this unit, so a board can tell "no
+            // work this cycle" from "we were not counting yet". Without it
+            // every unit reads 0 for the first cycle after this ships, which is
+            // a false negative pointing a teacher at a learner who is fine.
+            '_activitySince' => 0,
         ];
     }
 
@@ -216,6 +244,7 @@ class local_prequran_progress_external extends external_api {
             case 'section.completed':
                 if (!empty($ev['section']) && !in_array($ev['section'], $state['sectionsDone'], true)) {
                     $state['sectionsDone'][] = $ev['section'];
+                    self::record_activity($state, 's', (string)$ev['section']);
                 }
                 break;
             case 'checkpoint.result':
@@ -224,6 +253,7 @@ class local_prequran_progress_external extends external_api {
                     'passed' => !empty($ev['passed']),
                     'attempt' => isset($ev['attempt']) ? (int)$ev['attempt'] : 1,
                 ];
+                self::record_activity($state, 'c', (string)($ev['section'] ?? '_'));
                 break;
             case 'unit.completed':
                 $state['completed'] = true;
@@ -240,6 +270,13 @@ class local_prequran_progress_external extends external_api {
                     foreach ($ev['sectionsDone'] as $s) {
                         if (!in_array($s, $state['sectionsDone'], true)) {
                             $state['sectionsDone'][] = $s;
+                            // A section can reach the server through a summary
+                            // alone — the durable section.completed is dropped
+                            // when a tab closes before it flushes, and the next
+                            // summary carries it. Recording only the durable
+                            // event would undercount exactly the learner whose
+                            // connection is worst.
+                            self::record_activity($state, 's', (string)$s);
                         }
                     }
                 }
@@ -309,9 +346,31 @@ class local_prequran_progress_external extends external_api {
         return [true, $durable];
     }
 
+    /**
+     * Append one [timestamp, kind, section] to the unit's activity ring.
+     *
+     * Called only where the state actually CHANGED — a section already in
+     * sectionsDone records nothing, so re-opening a finished section is not
+     * counted as work and a replayed durable event cannot inflate the ring
+     * (apply_event returns early on a duplicate id before reaching here).
+     */
+    private static function record_activity(array &$state, string $kind, string $section): void {
+        if (!isset($state['_activity']) || !is_array($state['_activity'])) {
+            $state['_activity'] = [];
+        }
+        $now = time();
+        if (empty($state['_activitySince'])) {
+            $state['_activitySince'] = $now;
+        }
+        $state['_activity'][] = [$now, $kind, mb_substr($section, 0, 60)];
+        if (count($state['_activity']) > self::MAX_ACTIVITY) {
+            $state['_activity'] = array_slice($state['_activity'], -self::MAX_ACTIVITY);
+        }
+    }
+
     /** Strip internal bookkeeping keys before returning state to a client. */
     private static function public_state(array $state): array {
-        unset($state['_lastAt'], $state['_appliedIds']);
+        unset($state['_lastAt'], $state['_appliedIds'], $state['_activity'], $state['_activitySince']);
         return $state;
     }
 

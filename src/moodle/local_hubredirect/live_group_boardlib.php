@@ -27,13 +27,19 @@ declare(strict_types=1);
 //
 // TWO LIMITS ARE STRUCTURAL, and the UI must not imply otherwise.
 //
-// 1. The progress document is REDUCED, not an event log. sectionsDone is an
-//    append-ordered array of section ids with no timestamps, and checkpoints
-//    is {section: {score, passed, attempt}} with none either. So "sections
-//    completed in this block" cannot be derived here at all — only "has this
-//    learner reported anything since the window opened" (a boolean off
-//    timemodified) plus running totals. Do not add a per-block count without
-//    first giving the gateway somewhere to record event times.
+// 1. The progress document is REDUCED, and per-block counts needed the gateway
+//    to record event times before they could exist. It now does:
+//    externallib_progress.php keeps `_activity`, a bounded ring of
+//    [timestamp, kind, section] appended only where the state actually changed.
+//    sectionsDone and checkpoints still carry no times of their own — they say
+//    WHAT, the ring says WHEN — so a count must come from the ring and never
+//    from their length.
+//
+//    The ring starts when that unit first records something, which is why
+//    `_activitySince` exists and why this file carries a `covered` flag
+//    through to the tile. A window that opened before counting began can only
+//    report "at least N", and reporting a bare 0 there would point a teacher
+//    at a learner who is fine.
 //
 // 2. Wehel is reported as minutes USED, never minutes left. The daily
 //    allowance is a spec held byte-equal across wehel_chat.php,
@@ -205,7 +211,7 @@ function pqlgb_course_label(string $coursekey): array {
  * ingest for that unit — so it tracks the unit the learner is actually working
  * in, not the furthest one they have ever opened.
  */
-function pqlgb_progress_snapshot(array $userids, string $env): array {
+function pqlgb_progress_snapshot(array $userids, string $env, int $since = 0): array {
     global $DB;
     $snapshot = [];
     if (!$userids || !pqlgb_table_exists('local_prequran_progress')) {
@@ -235,7 +241,37 @@ function pqlgb_progress_snapshot(array $userids, string $env): array {
                 'lastsection' => '',
                 'unitscompleted' => 0,
                 'checkpoint' => null,
+                // Counted across ALL of the learner's units, not just the one
+                // they are in now: a learner who finishes a unit mid-cycle and
+                // opens the next one did that work in this block too.
+                'donewindow' => 0,
+                'quizwindow' => 0,
+                'countingsince' => 0,
             ];
+        }
+
+        // The ring is internal to the reducer (public_state strips it), and the
+        // board reads statejson straight from the row, so it is visible here
+        // and never to the app.
+        if ($since > 0 && !empty($state['_activity']) && is_array($state['_activity'])) {
+            foreach ($state['_activity'] as $entry) {
+                if (!is_array($entry) || count($entry) < 2 || (int)$entry[0] < $since) {
+                    continue;
+                }
+                if ((string)$entry[1] === 'c') {
+                    $snapshot[$userid]['quizwindow']++;
+                } else {
+                    $snapshot[$userid]['donewindow']++;
+                }
+            }
+        }
+        $startedat = (int)($state['_activitySince'] ?? 0);
+        if ($startedat > 0) {
+            // The EARLIEST across their units — the window is only fully
+            // covered if counting had begun everywhere before it opened.
+            $snapshot[$userid]['countingsince'] = $snapshot[$userid]['countingsince'] > 0
+                ? max($snapshot[$userid]['countingsince'], $startedat)
+                : $startedat;
         }
         if ((int)$row->timemodified >= $snapshot[$userid]['lastprogress']) {
             // Rows are ordered by timemodified, so the last one to land here is
@@ -476,13 +512,14 @@ function pqlgb_build(int $teacherid, int $workspaceid, int $windowminutes, strin
     $userids = array_values($userids);
 
     $names = pqlgb_learner_names($userids);
-    $snapshot = pqlgb_progress_snapshot($userids, $env);
+    $snapshot = pqlgb_progress_snapshot($userids, $env, $since);
     $signals = pqlgb_focus_signals($userids, $since);
     $wehel = pqlgb_wehel_minutes($userids);
     $hands = pqlgb_hand_state($userids);
 
     $board = ['generated' => $now, 'window' => $windowminutes, 'env' => $env, 'groups' => [], 'totals' => [
         'learners' => 0, 'quiet' => 0, 'breaks' => 0, 'leftearly' => 0, 'hands' => 0,
+        'donewindow' => 0,
     ]];
 
     foreach ($groups as $group) {
@@ -518,6 +555,13 @@ function pqlgb_build(int $teacherid, int $workspaceid, int $windowminutes, strin
                 'wehelminutes' => (int)($wehel[$userid] ?? 0),
                 'handup' => !empty($hand['up']),
                 'handsince' => !empty($hand['up']) ? (int)$hand['since'] : 0,
+                'donewindow' => $snap ? (int)$snap['donewindow'] : 0,
+                'quizwindow' => $snap ? (int)$snap['quizwindow'] : 0,
+                // False means the count is a floor, not a total: this unit
+                // started recording after the window opened, so the honest
+                // reading is "at least N".
+                'windowcovered' => $snap && (int)$snap['countingsince'] > 0
+                    && (int)$snap['countingsince'] <= $since,
             ];
 
             $board['totals']['learners']++;
@@ -526,6 +570,7 @@ function pqlgb_build(int $teacherid, int $workspaceid, int $windowminutes, strin
             if (!empty($hand['up'])) {
                 $board['totals']['hands']++;
             }
+            $board['totals']['donewindow'] += $snap ? (int)$snap['donewindow'] : 0;
             if ($state === 'alert' || $state === 'warn') {
                 $board['totals']['quiet']++;
             }

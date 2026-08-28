@@ -34,6 +34,10 @@ $pqlgrpcourseoptions = pqlgrp_course_options($consumercontext, $workspaceid, $pq
 // the left side on a collision, so a live offering's title wins over a stale
 // catalog label for the same key.
 $pqlgrpcourselabels = $pqlgrpcourseoptions + ($pqlgrpoptions['course_types'] ?? []);
+// The SAME list student_profile.current_grade is written from, because
+// pqlgrp_match_score() compares the two for equality and a second grade
+// vocabulary here would repeat the course_type mismatch exactly.
+$pqlgrpgradelevels = $pqlgrpoptions['primary_grade_levels'] ?? [];
 
 function pqlgrp_table_exists(string $table): bool {
     global $DB;
@@ -499,6 +503,22 @@ function pqlgrp_match_score($profile, $group): array {
         $score += 20;
         $details[] = 'course';
     }
+
+    // GRADE, which is what a K-12 cohort actually is. Both intake forms leave
+    // course_type EMPTY for a primary-education student (see the note on
+    // primary_grade_selection_levels in student_intake_config.php), so the
+    // course clause above can never fire for them — grade is the only attribute
+    // they populate that a cohort can be built on. Scored at the same weight
+    // for that reason.
+    //
+    // Same guard as the course clause: both sides non-empty and equal. A legacy
+    // pool carrying no grade is unaffected rather than penalised, which is what
+    // keeps the Quraan academy's matching identical to before.
+    if (pqlgrp_normal((string)($profile->current_grade ?? '')) !== ''
+            && pqlgrp_normal((string)($profile->current_grade ?? '')) === pqlgrp_normal((string)($group->grade ?? ''))) {
+        $score += 20;
+        $details[] = 'grade';
+    }
     // Hours first, zone names second. Real availability overlap between the
     // student and the group's teacher is worth more than any label: identical
     // zone strings with disjoint hours cannot meet, and different zones with
@@ -700,6 +720,13 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
                 'timecreated' => $now,
                 'timemodified' => $now,
             ];
+            // Guarded like every other optional column on this page: `grade`
+            // arrives with plugin version 202608280032, and this file can reach
+            // the server before that upgrade has run. Unguarded, every pool and
+            // group creation would fatal on a missing column.
+            if (pqlgrp_table_has_field('local_prequran_group_pool', 'grade')) {
+                $record->grade = pqlgrp_trim_param('grade');
+            }
             if (pqlgrp_table_has_field('local_prequran_group_pool', 'workspaceid')) {
                 $record->workspaceid = $workspaceid;
             }
@@ -739,6 +766,11 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
                 'timecreated' => $now,
                 'timemodified' => $now,
             ];
+            // The group is the pool made real, so it inherits the pool's grade
+            // unless the form overrides it. Same column guard as the pool above.
+            if (pqlgrp_table_has_field('local_prequran_class_group', 'grade')) {
+                $record->grade = pqlgrp_trim_param('grade', $pool ? (string)($pool->grade ?? '') : '');
+            }
             if (pqlgrp_table_has_field('local_prequran_class_group', 'workspaceid')) {
                 $record->workspaceid = $workspaceid;
             }
@@ -1223,7 +1255,7 @@ body.pqh-live-grouping-page #page,body.pqh-live-grouping-page #page-content,body
             <div class="pqlgrp-formgrid">
               <div class="pqlgrp-field"><label>User ID</label><input class="pqlgrp-input" name="userid" type="number" min="1" required></div>
               <div class="pqlgrp-field"><label>Student display name</label><input class="pqlgrp-input" name="student_display_name" placeholder="Optional display name"></div>
-              <div class="pqlgrp-field"><label>Course</label><?php echo pqlgrp_select('course_type', $pqlgrpcourseoptions, '', true); ?></div>
+              <div class="pqlgrp-field"><label>Course</label><?php echo pqlgrp_select('course_type', $pqlgrpcourseoptions, '', false); ?></div>
               <div class="pqlgrp-field"><label>Date of birth</label><input class="pqlgrp-input" name="date_of_birth" type="date"></div>
               <div class="pqlgrp-field"><label>Age</label><input class="pqlgrp-input" name="age_years" type="number" min="0" max="25" required></div>
               <div class="pqlgrp-field"><label>Gender</label><select class="pqlgrp-select" name="gender" required><option value="">Select</option><option value="female">Female</option><option value="male">Male</option></select></div>
@@ -1293,7 +1325,8 @@ body.pqh-live-grouping-page #page,body.pqh-live-grouping-page #page-content,body
             <?php endif; ?>
             <div class="pqlgrp-field"><label>Pool title</label><input class="pqlgrp-input" name="title" placeholder="Somali beginner girls 6-8" required></div>
             <div class="pqlgrp-formgrid">
-              <div class="pqlgrp-field"><label>Course</label><?php echo pqlgrp_select('course_type', $pqlgrpcourseoptions, '', true); ?></div>
+              <div class="pqlgrp-field"><label>Grade</label><?php echo pqlgrp_select('grade', $pqlgrpgradelevels, '', false); ?></div>
+              <div class="pqlgrp-field"><label>Course</label><?php echo pqlgrp_select('course_type', $pqlgrpcourseoptions, '', false); ?></div>
               <div class="pqlgrp-field"><label>Time zone</label><input class="pqlgrp-input" name="timezone" value="Africa/Nairobi"></div>
               <div class="pqlgrp-field"><label>Language</label><input class="pqlgrp-input" name="language"></div>
               <div class="pqlgrp-field"><label>Age min</label><input class="pqlgrp-input" name="age_min" type="number" min="0" max="25" value="6"></div>
@@ -1320,7 +1353,8 @@ body.pqh-live-grouping-page #page,body.pqh-live-grouping-page #page-content,body
             <div class="pqlgrp-field"><label>Pool</label><select class="pqlgrp-select" name="poolid" id="pqlgrp-group-pool"><option value="0">No pool</option><?php foreach ($pools as $pool): ?><option value="<?php echo (int)$pool->id; ?>"><?php echo s((string)$pool->title); ?></option><?php endforeach; ?></select></div>
             <div class="pqlgrp-field"><label>Group title</label><input class="pqlgrp-input" name="title" required></div>
             <div class="pqlgrp-formgrid">
-              <div class="pqlgrp-field"><label>Course</label><?php echo pqlgrp_select('course_type', $pqlgrpcourseoptions, '', true); ?></div>
+              <div class="pqlgrp-field"><label>Grade</label><?php echo pqlgrp_select('grade', $pqlgrpgradelevels, '', false); ?></div>
+              <div class="pqlgrp-field"><label>Course</label><?php echo pqlgrp_select('course_type', $pqlgrpcourseoptions, '', false); ?></div>
               <div class="pqlgrp-field"><label>Teacher recommendation</label><?php echo $teachers ? pqlgrp_select('teacherid', $teachers, '', false) : '<input type="hidden" name="teacherid" value="0"><div class="pqlgrp-empty">No active teacher profiles found.</div>'; ?><div class="pqlgrp-teacher-match" id="pqlgrp-teacher-match">Choose a matching pool to rank teachers by timezone, language, level, availability, and capacity.</div></div>
               <div class="pqlgrp-field"><label>Time zone</label><input class="pqlgrp-input" name="timezone" value="Africa/Nairobi"></div>
               <div class="pqlgrp-field"><label>Language</label><input class="pqlgrp-input" name="language"></div>
@@ -1531,7 +1565,7 @@ body.pqh-live-grouping-page #page,body.pqh-live-grouping-page #page-content,body
               <tr>
                 <td><strong><?php echo s((string)$group->title); ?></strong><br><span class="pqlgrp-pill"><?php echo s((string)$group->status); ?></span></td>
                 <td><?php echo s(pqlgrp_user_name((int)$group->teacherid, 'Teacher ' . (int)$group->teacherid)); ?></td>
-                <td><?php echo s((string)($pqlgrpcourselabels[(string)($group->course_type ?? '')] ?? (($group->course_type ?? '') ?: 'Course not set'))); ?><br><?php echo s((string)$group->language); ?> / <?php echo s((string)$group->current_level); ?> / <?php echo s((string)$group->learning_base); ?><br><?php echo s((string)$group->timezone); ?> / <?php echo s((string)$group->gender_policy); ?> / ages <?php echo (int)$group->age_min; ?>-<?php echo (int)$group->age_max; ?><br><?php echo s((string)$group->country); ?> / <?php echo s((string)$group->city); ?></td>
+                <td><?php echo s((string)($pqlgrpgradelevels[(string)($group->grade ?? '')] ?? (($group->grade ?? '') ?: 'Grade not set'))); ?><br><?php echo s((string)($pqlgrpcourselabels[(string)($group->course_type ?? '')] ?? (($group->course_type ?? '') ?: 'Course not set'))); ?><br><?php echo s((string)$group->language); ?> / <?php echo s((string)$group->current_level); ?> / <?php echo s((string)$group->learning_base); ?><br><?php echo s((string)$group->timezone); ?> / <?php echo s((string)$group->gender_policy); ?> / ages <?php echo (int)$group->age_min; ?>-<?php echo (int)$group->age_max; ?><br><?php echo s((string)$group->country); ?> / <?php echo s((string)$group->city); ?></td>
                 <td><?php echo (int)$group->active_students; ?> / <?php echo (int)$group->max_students; ?></td>
                 <td><?php echo s((string)$group->schedule_summary); ?></td>
               </tr>
@@ -1548,7 +1582,7 @@ body.pqh-live-grouping-page #page,body.pqh-live-grouping-page #page-content,body
               <tr>
                 <td><?php echo s((string)($profile->student_display_name ?? '') ?: pqlgrp_user_name((int)$profile->userid, 'Student ' . (int)$profile->userid)); ?><br>ID <?php echo (int)$profile->userid; ?></td>
                 <td><?php echo s((string)$profile->timezone); ?><br><?php echo s((string)$profile->language); ?></td>
-                <td><?php echo s((string)($pqlgrpcourselabels[(string)($profile->course_type ?? '')] ?? (($profile->course_type ?? '') ?: 'Course not set'))); ?><br><?php echo s((string)$profile->current_level); ?><br><?php echo s((string)$profile->learning_base); ?></td>
+                <td><?php echo s((string)($pqlgrpgradelevels[(string)($profile->current_grade ?? '')] ?? (($profile->current_grade ?? '') ?: 'Grade not set'))); ?><br><?php echo s((string)($pqlgrpcourselabels[(string)($profile->course_type ?? '')] ?? (($profile->course_type ?? '') ?: 'Course not set'))); ?><br><?php echo s((string)$profile->current_level); ?><br><?php echo s((string)$profile->learning_base); ?></td>
                 <td><?php echo s((string)($profile->parent_name ?? '')); ?><br><?php echo s((string)($profile->parent_email ?? '')); ?><br><span class="pqlgrp-pill <?php echo !empty($profile->live_class_consent) ? 'pqlgrp-pill--ok' : 'pqlgrp-pill--warn'; ?>">live <?php echo !empty($profile->live_class_consent) ? 'yes' : 'no'; ?></span> <span class="pqlgrp-pill <?php echo !empty($profile->recording_consent) ? 'pqlgrp-pill--ok' : 'pqlgrp-pill--warn'; ?>">record <?php echo !empty($profile->recording_consent) ? 'yes' : 'no'; ?></span></td>
                 <td><?php echo s((string)$profile->country); ?> / <?php echo s((string)$profile->city); ?><br><?php echo s((string)$profile->gender); ?> / <?php echo s((string)$profile->age_band); ?><br>Special Needs: <?php echo s((string)($profile->special_needs ?? 'no')); ?></td>
                 <td><span class="pqlgrp-pill"><?php echo s((string)$profile->status); ?></span></td>

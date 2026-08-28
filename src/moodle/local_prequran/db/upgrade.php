@@ -830,5 +830,14 @@ function xmldb_local_prequran_upgrade($oldversion): bool {
         upgrade_plugin_savepoint(true, 202608270031, 'local', 'prequran');
     }
 
+    if ($oldversion < 202608280032) {
+        // A cohort is a grade, not a course: one live teacher takes two groups
+        // of nine across the whole timetable, so a per-course group would have
+        // meant five groups of the same nine children. Nullable and unmigrated
+        // — a pool without a grade behaves exactly as it did.
+        xmldb_local_prequran_ensure_grade_cohort_schema();
+        upgrade_plugin_savepoint(true, 202608280032, 'local', 'prequran');
+    }
+
     return true;
 }

@@ -4445,6 +4445,7 @@ function xmldb_local_prequran_ensure_grouping_schema(): void {
         new xmldb_table('local_prequran_group_pool'),
         [
             xmldb_local_prequran_field_id(),
+            xmldb_local_prequran_field_char('grade', 40),
             xmldb_local_prequran_field_char('title', 255),
             xmldb_local_prequran_field_char('timezone', 100, 'UTC'),
             xmldb_local_prequran_field_char('language', 100),
@@ -4480,6 +4481,7 @@ function xmldb_local_prequran_ensure_grouping_schema(): void {
         new xmldb_table('local_prequran_class_group'),
         [
             xmldb_local_prequran_field_id(),
+            xmldb_local_prequran_field_char('grade', 40),
             xmldb_local_prequran_field_int('poolid'),
             xmldb_local_prequran_field_int('teacherid'),
             xmldb_local_prequran_field_char('title', 255),
@@ -6616,6 +6618,48 @@ function xmldb_local_prequran_ensure_exam_capture_schema(): void {
  * literally unrepresentable, and "3 x 1h live sessions per week" had nowhere
  * to live on the offering.
  */
+/**
+ * A cohort is a GRADE, not a course.
+ *
+ * group_pool and class_group carried course_type and offeringid and no grade at
+ * all, so a group could only ever be "Grade 2 English" — one subject. That
+ * breaks the way the school actually runs a day: one live teacher takes two
+ * groups of nine for three to four hours ACROSS the timetable, so the same nine
+ * children would have needed five groups (English, Mathematics, Science,
+ * Computing, Global Perspectives) and their teacher's live group board would
+ * have rendered ten columns of the same faces.
+ *
+ * `grade` holds a key from `primary_grade_levels` in student_intake_config.php
+ * — 'nursery', 'kg', 'grade_1' … 'grade_8', 'other' — which is the SAME
+ * vocabulary student_profile.current_grade already stores. That is the whole
+ * point: pqlgrp_match_score() compares them for equality, and a second
+ * vocabulary here would repeat the course_type mismatch that left 17 K-12
+ * profiles permanently ungrouped.
+ *
+ * course_type and offeringid stay and keep their meaning for the Quraan academy
+ * and for single-course cohorts. For a K-12 cohort they become what the group
+ * STUDIES rather than what defines it — which is why grade is nullable and
+ * nothing is migrated: a legacy pool with no grade behaves exactly as before.
+ */
+function xmldb_local_prequran_ensure_grade_cohort_schema(): void {
+    global $DB;
+
+    $dbman = $DB->get_manager();
+
+    foreach (['local_prequran_group_pool', 'local_prequran_class_group'] as $tablename) {
+        $table = new xmldb_table($tablename);
+        if (!$dbman->table_exists($table)) {
+            continue;
+        }
+        xmldb_local_prequran_add_field_if_missing($dbman, $table, xmldb_local_prequran_field_char('grade', 40));
+        xmldb_local_prequran_add_index_if_missing($dbman, $table, new xmldb_index(
+            substr($tablename, strlen('local_prequran_')) . '_grade_ix',
+            XMLDB_INDEX_NOTUNIQUE,
+            ['grade']
+        ));
+    }
+}
+
 function xmldb_local_prequran_ensure_course_cohort_schema(): void {
     global $DB;
 

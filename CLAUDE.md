@@ -445,11 +445,25 @@ worth knowing before anyone tries again:
 
 On screen the learner sees the clock and the share of the day gone —
 `15:58 left · 36% used` — with the chip itself as the bar (`--w-used` is the
-fill, so the percentage and the bar are one number and cannot disagree). The
-token reading is in the chip's title, not on its face: a percentage of time is
-something a Grade 1 can read off a bar, and a token count is a number about our
-API bill rather than about their lesson. If it should be on the face for older
-learners, that is a one-line change to `timerLabel`.
+fill, so the percentage and the bar are one number and cannot disagree).
+
+**From Grade 7 up the token count joins them on the chip's face**
+(`19:59 left · 20% used · 78.5k tokens`); below that it stays in the title.
+Owner, 2026-08-28. A percentage of time is something a Grade 1 can read off a
+bar; a token count is a number about our API bill rather than about their
+lesson. `WEHEL_TOKENS_ON_CHIP_FROM_GRADE` and `wehelShowsTokenCount` are
+client-only — the server sends the count to everyone either way — so there is
+nothing to mirror and no server behaviour hangs on it.
+
+**Intensive English is excluded at every level, and that is the same trap as
+the bands.** It sends its CEFR LEVEL as the grade, so `grade >= 7` cannot mean
+"an older learner" there; a Level 5 adult would be compared against a number
+that means something else entirely. The exclusion is explicit in
+`wehelShowsTokenCount` rather than left to arithmetic, and the gate asserts it
+at levels 1, 5 and 7. Note the consequence before changing it: no Intensive
+English learner sees the count on the chip, even though that course is already
+treated as adult for the allowance itself. That is the literal reading of "from
+Grade 7", not an oversight — widening it is one clause, and a decision.
 
 **The ledger is written TWICE per question and the two are not
 interchangeable**: the clock before the API call (so a refused or failed
@@ -479,8 +493,26 @@ mutations had to be REWRITTEN before they meant anything: three replaced only
 the first of two occurrences and one was a no-op that evaluated identically, so
 each "survived" a gate that was in fact fine. **A mutation that survives is a
 claim about the gate and about the mutation, and the mutation is the cheaper
-thing to be wrong about — check it first.** **One blind spot is
-recorded in the gate itself rather than papered over**: the PHP half is checked
+thing to be wrong about — check it first.**
+
+**And the harness itself failed in the way this file keeps documenting: it
+reported everything as caught while doing no work.** It read each file at the
+top of its own iteration and treated that as the original, which is correct
+only while every restore succeeds. One restore did not land, that mutated file
+silently became the next iteration's baseline, and from there every mutation
+was applied to — and "restored" to — a broken tree. It printed `ok` twelve
+times in a row and left two files mutated on disk, including `wehel_chat.php`
+with a renamed define.
+
+Two tells, both cheap: **every failure line was IDENTICAL** (a real suite fails
+for a different reason each time — 22 distinct messages across 24 mutations
+once fixed), and the run ended saying the tree was still mutated rather than
+being believed on its ticks. The rebuilt harness snapshots every file ONCE up
+front, verifies each restore against that snapshot and aborts if one does not
+land, and refuses to start if the gate is already red. A harness that cannot
+prove it put the tree back is not evidence about anything it printed.
+
+**One blind spot is recorded in the gate itself rather than papered over**: the PHP half is checked
 by reading source, so dead code reads as live code — wrapping the ledger write
 in `if (false)` leaves every pattern matching and the allowance unenforced.
 Nothing short of running the PHP against a Moodle catches that, and the pure

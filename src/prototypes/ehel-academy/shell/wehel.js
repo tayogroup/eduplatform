@@ -527,6 +527,32 @@ export function formatWehelClock(seconds) {
   return `${Math.floor(total / 60)}:${String(total % 60).padStart(2, "0")}`;
 }
 
+// From this grade up, the day's token count is printed on the face of the chip
+// and not only in its title (owner, 2026-08-28). Below it the number is noise a
+// young learner cannot act on; at 7+ it is a real figure about their own use.
+//
+// Client-only: the server sends the count to everyone either way, so there is
+// nothing to mirror and no server behaviour hangs on this.
+export const WEHEL_TOKENS_ON_CHIP_FROM_GRADE = 7;
+
+export function wehelShowsTokenCount({ grade, subject } = {}) {
+  // Intensive English sends its CEFR LEVEL as the grade (1-5), so a numeric
+  // grade test cannot mean "an older learner" there — the same reason it has
+  // its own allowance table. Excluded deliberately rather than silently
+  // compared against a number that means something else.
+  if (subject === "intensive-english") return false;
+  return (Number(grade) || 0) >= WEHEL_TOKENS_ON_CHIP_FROM_GRADE;
+}
+
+// 912 · 78.5k · 1.2M — short enough to sit in a chip beside a clock. The exact
+// figure stays in the chip's title, where there is room for it.
+export function formatWehelTokens(count) {
+  const total = Math.max(0, Math.round(Number(count) || 0));
+  if (total < 1000) return String(total);
+  if (total < 1_000_000) return `${(total / 1000).toFixed(1).replace(/\.0$/, "")}k`;
+  return `${(total / 1_000_000).toFixed(1).replace(/\.0$/, "")}M`;
+}
+
 // "25 minutes", "an hour", "2 hours" — what the allowance is called in the
 // sentence a learner reads. Mirrored as pqh_wehel_allowance_words in
 // wehel_chat.php, because the server writes the same sentence when it refuses.
@@ -1379,9 +1405,17 @@ export function mountWehelChat(options) {
   // a percentage of the time is something a Grade 1 can read off a bar, and a
   // token count is a number about our API bill rather than about their lesson.
   // The chip is its own progress bar — the fill is the percentage.
-  const timerLabel = (left) => (left <= 0
-    ? "Time is up for today"
-    : `${formatWehelClock(left)} left · ${percentUsed()}% used`);
+  const showsTokens = wehelShowsTokenCount({ grade: meta.grade, subject: meta.subject });
+  const timerLabel = (left) => {
+    if (left <= 0) return "Time is up for today";
+    const ledger = wehelTimeLedger();
+    // Only once there is something to count: "0 tokens" before the first
+    // question is a number that reports nothing.
+    const spend = showsTokens && ledger && ledger.tokens
+      ? ` · ${formatWehelTokens(ledger.tokens)} tokens`
+      : "";
+    return `${formatWehelClock(left)} left · ${percentUsed()}% used${spend}`;
+  };
   const timerTitle = () => {
     const ledger = wehelTimeLedger();
     const spend = ledger && ledger.tokens

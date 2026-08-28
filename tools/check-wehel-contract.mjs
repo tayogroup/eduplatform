@@ -44,8 +44,8 @@ globalThis.location = { hostname: "localhost", port: "4287", search: "", href: "
 globalThis.localStorage = { getItem: () => null, setItem: () => {} };
 
 const wehel = await import(pathToFileURL(SHELL).href);
-const { apiMessages, withoutMediaPlumbing, unitForTutor, UNIT_JSON_LIMIT, withAttachmentBlocks, homeworkContextText, HOMEWORK_CONTEXT_LIMIT, WEHEL_ATTACH_DAILY_LIMIT, teacherPrompts, storedTeacherScript, WEHEL_DAILY_BANDS, WEHEL_INTENSIVE_BANDS, WEHEL_TUTORING_MULTIPLIER, WEHEL_IDLE_GAP_SECONDS, wehelDailyMinutes, setWehelTimeLedger, wehelTimeLedger } = wehel;
-for (const [name, value] of Object.entries({ apiMessages, withoutMediaPlumbing, unitForTutor, UNIT_JSON_LIMIT, withAttachmentBlocks, homeworkContextText, HOMEWORK_CONTEXT_LIMIT, WEHEL_ATTACH_DAILY_LIMIT, teacherPrompts, storedTeacherScript, WEHEL_DAILY_BANDS, WEHEL_INTENSIVE_BANDS, WEHEL_TUTORING_MULTIPLIER, WEHEL_IDLE_GAP_SECONDS, wehelDailyMinutes, setWehelTimeLedger, wehelTimeLedger })) {
+const { apiMessages, withoutMediaPlumbing, unitForTutor, UNIT_JSON_LIMIT, withAttachmentBlocks, homeworkContextText, HOMEWORK_CONTEXT_LIMIT, WEHEL_ATTACH_DAILY_LIMIT, teacherPrompts, storedTeacherScript, WEHEL_DAILY_BANDS, WEHEL_INTENSIVE_BANDS, WEHEL_TUTORING_MULTIPLIER, WEHEL_IDLE_GAP_SECONDS, wehelDailyMinutes, setWehelTimeLedger, wehelTimeLedger, wehelShowsTokenCount, formatWehelTokens, WEHEL_TOKENS_ON_CHIP_FROM_GRADE } = wehel;
+for (const [name, value] of Object.entries({ apiMessages, withoutMediaPlumbing, unitForTutor, UNIT_JSON_LIMIT, withAttachmentBlocks, homeworkContextText, HOMEWORK_CONTEXT_LIMIT, WEHEL_ATTACH_DAILY_LIMIT, teacherPrompts, storedTeacherScript, WEHEL_DAILY_BANDS, WEHEL_INTENSIVE_BANDS, WEHEL_TUTORING_MULTIPLIER, WEHEL_IDLE_GAP_SECONDS, wehelDailyMinutes, setWehelTimeLedger, wehelTimeLedger, wehelShowsTokenCount, formatWehelTokens, WEHEL_TOKENS_ON_CHIP_FROM_GRADE })) {
   if (value === undefined) fail("shell/wehel.js no longer exports what this gate checks", `${name} is missing — restore the export rather than deleting the check`);
 }
 if (failures.length) { report(); process.exit(1); }
@@ -360,6 +360,28 @@ if (phpCap !== UNIT_JSON_LIMIT || devCap !== UNIT_JSON_LIMIT) {
     setWehelTimeLedger({ limit: 600, used: 150 }, now);
     if (wehelTimeLedger().tokens !== 0) {
       fail("A ledger with no token reading invents one", "an answer that carried no usage must read 0, not a number derived from the minutes");
+    }
+
+    // The token count is printed on the chip's FACE from Grade 7 up (owner,
+    // 2026-08-28) and lives in the title below that. Client-only — the server
+    // sends the count to everyone — so this is the whole of the rule.
+    for (const [grade, subject, expected] of [
+      [6, "science", false], [7, "science", true], [8, "english", true], [9, "mathematics", true],
+      // Intensive English sends its CEFR LEVEL as the grade, so a numeric test
+      // cannot mean "older learner" there — the same reason it is off the
+      // allowance table. Excluded at every level, including 7+ if one is ever
+      // authored.
+      [1, "intensive-english", false], [5, "intensive-english", false], [7, "intensive-english", false],
+    ]) {
+      if (wehelShowsTokenCount({ grade, subject }) !== expected) {
+        fail("The chip shows the token count to the wrong learners", `grade ${grade} ${subject}: got ${wehelShowsTokenCount({ grade, subject })}, expected ${expected}`);
+      }
+    }
+    // A compact number, or the chip stops fitting beside a clock.
+    for (const [count, want] of [[0, "0"], [999, "999"], [1000, "1k"], [39091, "39.1k"], [1_250_000, "1.3M"]]) {
+      if (formatWehelTokens(count) !== want) {
+        fail("The chip's token figure is not compact", `${count} formatted as "${formatWehelTokens(count)}", expected "${want}"`);
+      }
     }
     notes.push(`allowance 10-30 min by grade, ×${WEHEL_TUTORING_MULTIPLIER} tutoring, ${WEHEL_IDLE_GAP_SECONDS}s gap cap`);
   }

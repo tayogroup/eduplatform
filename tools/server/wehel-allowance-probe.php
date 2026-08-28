@@ -10,9 +10,16 @@
 // serves the previous version. Delete both copies when you are done: the staged
 // file is publicly fetchable at the edge while it is up.
 //
-//     php wehel-allowance-probe.php            # report + launch URL
-//     php wehel-allowance-probe.php --seed     # spend the day, so ONE question is refused
-//     php wehel-allowance-probe.php --reset    # give the day back
+//     php wehel-allowance-probe.php                  # report + launch URL
+//     php wehel-allowance-probe.php --seed           # spend the CLOCK, so one question is refused
+//     php wehel-allowance-probe.php --seed-spend     # spend the BUDGET, clock untouched
+//     php wehel-allowance-probe.php --seed-spend=N   # an exact weighted total, for the boundary
+//     php wehel-allowance-probe.php --reset          # give the day back
+//
+// There are two ceilings and they refuse differently: the minutes send
+// code "time-limit" and name the allowance ("that is all 40 minutes…"), the
+// spend sends "token-limit" and does not — its number rides in the response as
+// time.tokenLimit. Seed ONE of them; a day with both spent proves neither.
 //
 // It reads and prints; the only WRITE it can make is one user preference on one
 // fenced QA account, and --reset undoes it. It creates nothing, enrols nobody
@@ -85,18 +92,38 @@ if (!empty($user->deleted)) {
     qa_fail('the QA learner is deleted.');
 }
 
+// The two ceilings are seeded SEPARATELY and never together. A learner refused
+// while both are spent tells you nothing about which one refused them, and
+// which one refused is the whole question a probe run is asking.
 $args = array_slice($argv, 1);
+$seed = false;
+$reset = false;
+$seedspend = 0;
 foreach ($args as $arg) {
-    if (!in_array($arg, ['--seed', '--reset'], true)) {
+    if ($arg === '--seed') {
+        $seed = true;
+    } else if ($arg === '--reset') {
+        $reset = true;
+    } else if ($arg === '--seed-spend') {
+        // Past any ceiling the bands can produce: the largest is Intensive
+        // English above Level 2, an hour at 50,000 weighted a minute = 3M.
+        $seedspend = 99999999;
+    } else if (preg_match('/^--seed-spend=(\d+)$/', $arg, $m)) {
+        // An exact total, for testing the boundary itself — seed one below the
+        // ceiling and the learner must still be served.
+        $seedspend = (int)$m[1];
+        if ($seedspend <= 0) {
+            qa_fail('--seed-spend=N wants a positive number of weighted tokens.');
+        }
+    } else {
         // An unrecognised argument is refused rather than ignored: silently
         // falling back to the default action is how a typo becomes a surprise.
-        qa_fail('unknown argument "' . $arg . '". Use --seed, --reset, or nothing.');
+        qa_fail('unknown argument "' . $arg . '". Use --seed, --seed-spend[=N], --reset, or nothing.');
     }
 }
-$seed = in_array('--seed', $args, true);
-$reset = in_array('--reset', $args, true);
-if ($seed && $reset) {
-    qa_fail('--seed and --reset together mean nothing. Pick one.');
+$chosen = (int)$seed + (int)$reset + (int)($seedspend > 0);
+if ($chosen > 1) {
+    qa_fail('--seed, --seed-spend and --reset each put the ledger somewhere different. Pick one.');
 }
 
 const LEDGER = 'local_hubredirect_wehel_time';
@@ -124,6 +151,26 @@ if ($seed) {
     qa_say('');
     qa_say('  SEEDED  : ' . $value);
     qa_say('            The next question this learner asks will be refused. Run --reset afterwards.');
+}
+
+if ($seedspend > 0) {
+    // The CLOCK is left fresh (used=0, last=0) and only the weighted total is
+    // spent, so a refusal can only be the spend ceiling. That separation is the
+    // point: the two refusals are different codes and different sentences, and
+    // a run where both were spent could not tell you which one you had proved.
+    //
+    // Field 4 (raw tokens) is set alongside it for the panel's sake — the chip
+    // prints that figure at Grade 7 and up, and a spent budget showing "0
+    // tokens" would be a confusing thing to hand a tester. It is not what the
+    // ceiling compares against; field 5 is.
+    $value = $today . '|0|0|' . ($seedspend * 2) . '|' . $seedspend;
+    set_user_preference(LEDGER, $value, QA_USERID);
+    qa_say('');
+    qa_say('  SEEDED  : ' . $value . '   (spend only — the clock is untouched)');
+    qa_say('            weighted = ' . number_format($seedspend) . '. The server refuses when this reaches');
+    qa_say('            the ceiling for this day; the refusal carries that ceiling back as');
+    qa_say('            time.tokenLimit — the arithmetic the SERVER did, and worth reading.');
+    qa_say('            Expect code "token-limit", NOT "time-limit". Run --reset afterwards.');
 }
 
 if ($reset) {

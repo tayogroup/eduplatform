@@ -130,7 +130,7 @@ const AUDIO_IS_DEV = ["localhost", "127.0.0.1"].includes(location.hostname);
 //   audio to storage FIRST, stamp shipped after. A clip uploaded onto an
 //   unchanged filename AFTER its stamp is already live is pinned again under
 //   the new URL, for a year, and needs the next stamp.
-const AUDIO_RELEASE = "20260828a";
+const AUDIO_RELEASE = "20260828b";
 function withAudioRelease(url) {
   // Dev serves from disk with no caching worth defeating, and a bare filename
   // is easier to grep for in the network panel.

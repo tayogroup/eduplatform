@@ -203,6 +203,55 @@ function pqlgrp_text_matches(string $source, string $needle): bool {
     return strpos($source, $needle) !== false || strpos($needle, $source) !== false;
 }
 
+/**
+ * The grades a teacher has declared they teach.
+ *
+ * Stored as `primary_grades_taught` inside teacher_profile.application_json —
+ * a checkbox group on teacher_intake.php, not a column — so it arrives here
+ * only because pqlgrp_teacher_profiles() selects tp.* . A teacher who has never
+ * filled that section returns [], which the caller reads as "no claim" rather
+ * than "teaches nothing".
+ */
+function pqlgrp_teacher_grades($teacher): array {
+    $application = json_decode((string)($teacher->application_json ?? ''), true);
+    if (!is_array($application)) {
+        return [];
+    }
+    $grades = $application['primary_grades_taught'] ?? [];
+    return array_values(array_filter((array)$grades, 'is_string'));
+}
+
+/**
+ * The teacher-side keys that satisfy a cohort's grade.
+ *
+ * The two vocabularies OVERLAP but are not the same list, and assuming they
+ * were would have silently failed at both ends of the range:
+ *
+ *   student (primary_grade_levels)      nursery kg grade_1..grade_8 other
+ *   teacher (primary_teacher_grade_levels)  early_years grade_1..grade_6 upper_primary
+ *
+ * grade_1..grade_6 are identical on both sides and match exactly. The edges do
+ * not exist on the teacher side at all, so they map: nursery/kg to early_years,
+ * grade_7/grade_8 to upper_primary. The student's own key is always kept in the
+ * candidate set too, so if the teacher list ever gains grade_7 this starts
+ * matching it without another edit. 'other' resolves to itself and therefore
+ * matches nothing, which is correct — it is a declaration that the grade is
+ * unknown.
+ */
+function pqlgrp_teacher_grade_keys(string $grade): array {
+    $bridge = [
+        'nursery' => 'early_years',
+        'kg' => 'early_years',
+        'grade_7' => 'upper_primary',
+        'grade_8' => 'upper_primary',
+    ];
+    $keys = [$grade];
+    if (isset($bridge[$grade])) {
+        $keys[] = $bridge[$grade];
+    }
+    return array_values(array_unique($keys));
+}
+
 function pqlgrp_teacher_match_score($teacher, ?object $criteria, array $capacitycounts, array $availabilitycounts): array {
     if (!$criteria) {
         return [0, ['available teacher']];
@@ -228,6 +277,34 @@ function pqlgrp_teacher_match_score($teacher, ?object $criteria, array $capacity
     } elseif ($course !== '' && trim($teachercourses) === '') {
         $score += 5;
         $reasons[] = 'course neutral';
+    }
+
+    // GRADE, for the same reason the cohort itself is keyed on one: a K-12 group
+    // carries a grade and an empty course_type, so the clause above can only
+    // ever award this teacher the 5-point "course neutral" consolation. Without
+    // this, every teacher ranks identically for every grade cohort and the
+    // ranking says nothing at all.
+    //
+    // Membership of a declared SET, never a substring test. pqlgrp_text_matches()
+    // is right for the free-text course list above and wrong here: 'grade_1'
+    // is a substring of 'grade_10', so a substring test would hand a Grade 1
+    // cohort to a teacher who only declared Grade 10.
+    $grade = (string)($criteria->grade ?? '');
+    $teachergrades = pqlgrp_teacher_grades($teacher);
+    if ($grade !== '' && $teachergrades) {
+        $wanted = array_map('pqlgrp_normal', pqlgrp_teacher_grade_keys($grade));
+        $declared = array_map('pqlgrp_normal', $teachergrades);
+        if (array_intersect($wanted, $declared)) {
+            $score += 18;
+            $reasons[] = 'grade';
+        }
+    } elseif ($grade !== '' && !$teachergrades) {
+        // Same shape as 'course neutral': a teacher who has declared no grades
+        // is unranked on this axis rather than ruled out. Most existing profiles
+        // predate the primary section of teacher intake, so penalising silence
+        // would bury every teacher the school already has.
+        $score += 5;
+        $reasons[] = 'grade neutral';
     }
 
     // Hours, not zone labels. A pool has no student list yet, so the honest

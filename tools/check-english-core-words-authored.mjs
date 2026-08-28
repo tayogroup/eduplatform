@@ -90,6 +90,18 @@ const authored = fs.existsSync(authoredFile)
 // "picked" teaches `pick`. Irregular ones do NOT: `gave` does not show a reader
 // the word `give`, which is the whole point of the example.
 function shows(sentence, word) {
+  // A hyphenated headword must be matched WITH its hyphen. Stripping non-letters
+  // turns `self-control` into `selfcontrol`, which appears in no sentence any
+  // human would write, so all five of its examples would be reported as never
+  // using the word — the same false-accusation failure the -ies plurals caused.
+  // The hyphen is written as optional so "self-control" and "self control" both
+  // count; the word is not spelled without it, but a sentence should not fail on
+  // a space.
+  if (/-/.test(word)) {
+    const parts = word.split("-").map((p) => p.replace(/[^a-z]/gi, ""));
+    const joined = parts.join("[- ]?");
+    if (new RegExp(`\\b${joined}(?:s|ed|ing)?\\b`, "i").test(sentence)) return true;
+  }
   const w = word.replace(/[^a-z]/gi, "");
   if (!w) return true;
   const stem = w.replace(/(?:e)$/, "");

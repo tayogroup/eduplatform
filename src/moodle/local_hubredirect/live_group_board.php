@@ -265,11 +265,21 @@ echo $OUTPUT->header();
       .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
   }
 
+  // Returns [value, unit] rather than a bare string, because the value changes
+  // UNIT past an hour and every caller was appending "min" regardless. The live
+  // board showed a learner quiet since the previous day as "7h44 MIN QUIET".
+  // Keeping the unit with the number is what stops the two drifting again.
   function humanGap(seconds) {
-    if (seconds < 60) { return "&lt;1"; }
+    if (seconds < 60) { return ["&lt;1", "min"]; }
     var minutes = Math.floor(seconds / 60);
-    if (minutes < 60) { return String(minutes); }
-    return Math.floor(minutes / 60) + "h" + (minutes % 60);
+    if (minutes < 60) { return [String(minutes), "min"]; }
+    var hours = Math.floor(minutes / 60);
+    var rest = minutes % 60;
+    // 7h04, not 7h4 — an unpadded remainder reads as a different number.
+    // No unit word past the hour: the "h" in 7h44 already says it, and
+    // "7h44 hours quiet" reads worse than "7h44 quiet" on a tile scanned in a
+    // second. Callers drop an empty unit rather than printing a stray space.
+    return [hours + "h" + (rest < 10 ? "0" : "") + rest, ""];
   }
 
   // Unit keys are the app's own: "u03" on a course, "g05-u03" for a tutoring
@@ -314,7 +324,7 @@ echo $OUTPUT->header();
     var flags = [];
     if (tile.handup) {
       flags.push('<span class="pqlgb-flag pqlgb-flag--hand">hand up ' +
-        (tile.handsince ? humanGap(Math.max(0, serverNow() - tile.handsince)) + " min" : "") + "</span>");
+        (tile.handsince ? humanGap(Math.max(0, serverNow() - tile.handsince)).filter(Boolean).join(" ") : "") + "</span>");
     }
     // Work done IN the window, ahead of the running total, because the
     // question a teacher asks entering the room is "did this child move since I
@@ -367,7 +377,9 @@ echo $OUTPUT->header();
           ? "<b>&mdash;</b><span>not started</span>"
           : live.state === "hand"
             ? "<b>&#9995;</b><span>hand up</span>"
-            : "<b>" + humanGap(live.quiet) + "</b><span>min quiet</span>") +
+            : (function (gap) {
+                return "<b>" + gap[0] + "</b><span>" + (gap[1] ? gap[1] + " " : "") + "quiet</span>";
+              })(humanGap(live.quiet))) +
       "</div>" +
     "</div>";
   }

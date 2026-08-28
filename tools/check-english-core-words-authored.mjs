@@ -30,8 +30,12 @@ const DIR = path.join(ROOT, `grade-${GRADE}`, "data");
 // Sentence length is per grade for the same reason the draft tool's candidate
 // cap is: it means "as long as this grade already asks a child to read".
 // Measured over each grade's own authored practice sentences (max 56 / 83).
-const MAX_SENTENCE = { 1: 60, 2: 78, 3: 74, 4: 80, 5: 100 }[GRADE] ?? 78;
-const MAX_WORDS = { 1: 11, 2: 15, 3: 15, 4: 16, 5: 17 }[GRADE] ?? 15;
+// Grade 6 measures max 108 chars / 19 words, p99 97 / 16 — so the ?? fallback of
+// 78/15 would have rejected this grade's OWN existing sentences as too long. A
+// fallback below the top of the table is not a default, it is a wrong answer
+// waiting for the next grade; raised to the widest measured grade.
+const MAX_SENTENCE = { 1: 60, 2: 78, 3: 74, 4: 80, 5: 100, 6: 108 }[GRADE] ?? 78;
+const MAX_WORDS = { 1: 11, 2: 15, 3: 15, 4: 16, 5: 17, 6: 19 }[GRADE] ?? 19;
 
 // The cast the grade's own readings use. A sentence starring somebody else came
 // from another grade and puts a stranger on the word card.

@@ -136,7 +136,7 @@ const boundary = String.raw`\b`;
 // those very sentences with the Core word sets, so a second run would measure a
 // different corpus and silently change which candidates are usable — the same
 // self-referential trap the build tool hit by treating its own output as input.
-const MAX_CANDIDATE_BY_GRADE = { 1: 55, 2: 80, 3: 75, 4: 80, 5: 100 };
+const MAX_CANDIDATE_BY_GRADE = { 1: 55, 2: 80, 3: 75, 4: 80, 5: 100, 6: 108 };
 const MAX_CANDIDATE = MAX_CANDIDATE_BY_GRADE[GRADE] ?? 80;
 const SPLIT_FAILURE = /[.!?]["']?\s+\S/;
 // Some passages use "/" to separate instruction steps ("… / Point to the

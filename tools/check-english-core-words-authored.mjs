@@ -149,6 +149,23 @@ function shows(sentence, word) {
 //
 // Unlike the form rules above it, this one cannot accuse correct content: there
 // is no sentence a child should read that contains a backtick.
+// `cookie` is in the US list above for the BISCUIT, and that is right: the UK
+// vocabulary decision of 2026-08-17 maps cookie to biscuit. A browser cookie is
+// a different word that happens to be spelled the same, it is standard British
+// usage, and Grade 6's supplied list asks for it by name in the technology
+// category. The rule fired on all four sentences of a card the course
+// deliberately teaches.
+//
+// So the exemption is keyed to the HEADWORD, not to the sentence: the check is
+// skipped only where the card being written IS that word, which is the one
+// place the technical sense is certain. A stray "cookie" meaning biscuit on any
+// other card still fails, which is what the rule was written for.
+//
+// This is the same shape as `program` in Grade 5 - correct British English for
+// the computing sense, wrong for a broadcast - except that one needed no code,
+// because the US list never contained it. A rule about a WORD cannot see which
+// sense is on the page.
+const US_TECHNICAL_HEADWORD = new Set(["cookie"]);
 const BACKTICK = /`/;
 let words = 0, problems = 0;
 const seenSentence = new Map();
@@ -169,7 +186,8 @@ for (const unit of draft.units) {
     if (!/[.!?]$/.test(meaning.trim())) bad.push("meaning does not end in a full stop");
     if (meaning.trim().length < 15) bad.push("meaning is too short to teach anything");
     if (BACKTICK.test(meaning)) bad.push("meaning uses a backtick, which is code notation");
-    if (US.test(meaning)) bad.push(`US spelling in the meaning: ${meaning.match(US)[0]}`);
+    const usExempt = US_TECHNICAL_HEADWORD.has(String(w.word).toLowerCase());
+    if (!usExempt && US.test(meaning)) bad.push(`US spelling in the meaning: ${meaning.match(US)[0]}`);
 
     if (sentences.length !== 5) bad.push(`${sentences.length} sentences, not 5`);
     const within = new Set();
@@ -181,7 +199,7 @@ for (const unit of draft.units) {
       if (!/^["'“]?[A-Z]/.test(s)) bad.push(`sentence ${n} does not start with a capital: ${s}`);
       if (BACKTICK.test(s)) bad.push(`sentence ${n} uses a backtick, which is code notation: ${s}`);
       if (!/[.!?]["'”]?$/.test(s)) bad.push(`sentence ${n} has no end punctuation: ${s}`);
-      if (US.test(s)) bad.push(`sentence ${n} US spelling "${s.match(US)[0]}": ${s}`);
+      if (!usExempt && US.test(s)) bad.push(`sentence ${n} US spelling "${s.match(US)[0]}": ${s}`);
       if (/_{2,}/.test(s)) bad.push(`sentence ${n} is a fill-in-the-blank line: ${s}`);
       if (within.has(s)) bad.push(`sentence ${n} repeats another in the same set: ${s}`);
       within.add(s);

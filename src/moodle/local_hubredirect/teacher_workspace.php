@@ -817,6 +817,10 @@ echo pqh_design_shell_html('pqltch-shell', 'workspace', [
           <h2>Teacher Operations</h2>
           <p>Daily teacher work tools now live here.</p>
           <div class="pqltch-actions pqh-workspace-actions">
+            <?php // First in the row because it is the only tool here used DURING a
+            // session: one teacher running two groups out of phase reads it on
+            // entering each breakout room. ?>
+            <a class="pqltch-btn" href="<?php echo pqltch_url('live_group_board.php', $workspaceid > 0 ? ['workspaceid' => $workspaceid] : [])->out(false); ?>">Live group board</a>
             <a class="pqltch-btn pqltch-btn--light" href="<?php echo pqltch_url('teacher_homework.php', $workspaceid > 0 ? (['workspaceid' => $workspaceid] + $urlparams) : $urlparams)->out(false); ?>">Homework</a>
             <a class="pqltch-btn pqltch-btn--light" href="<?php echo pqltch_url('live_teacher_schedule.php', ['teacherid' => (int)$teacherid])->out(false); ?>">Teacher schedule</a>
             <a class="pqltch-btn pqltch-btn--light" href="<?php echo pqltch_url('live_sessions.php', ['session_type' => 'teacher_meeting', 'title' => 'Teacher Meeting Room'])->out(false); ?>">Teacher meetings</a>

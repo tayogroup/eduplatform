@@ -7165,17 +7165,35 @@ const deckIntro = (id) => DECK_INTROS[id] || null;
 // in .gc-top, which the full-bleed CSS hid.
 function renderWordCarousel() {
   const allWords = linkedWords();
-  // Same split as the lab: the deck WALKS every word and COMPLETES on the taught
-  // ones. The two lists are already in the right order — the glossary group is
-  // last in every unit that has one — so a learner meets the section's own words
-  // before the reference and never has to reach slide 400 to earn the tick.
+  // The deck teaches the TAUGHT words and nothing else. It used to walk every
+  // word and merely complete on the taught ones, which put the story glossary —
+  // reference a learner looks up while reading, and explicitly not required —
+  // inside the teaching walk-through, one slide at a time. At Grade 1 that made
+  // the section 111 slides to earn a tick worth 44, and it made the Core words
+  // restructure invisible: the owner asked for the old vocabulary to become
+  // glossary and a new category to take its place, and on screen the two were
+  // still one undifferentiated deck. Owner, 2026-08-28.
+  //
+  // Nothing is lost. A glossary word keeps its dictionaryLink, so the
+  // click-popover on any practice sentence (linkGlossaryWords) still defines it
+  // mid-reading, which is the surface it was demoted TO.
+  //
+  // Where a unit has no glossary group this is a no-op — taught IS every word —
+  // so the only grades it changes are the ones that carry a Core-words split.
   const taught = taughtWords();
   const learnedTaught = () => taught.filter((item) => progress.knownWords.includes(item.vocabularyId)).length;
   const esc = escapeHtml;
   // One sentence position per word: in a deck each word keeps its own place,
   // where the lab had a single cursor because only one word was ever on screen.
   const sentenceAt = new Map();
-  let words = allWords;
+  let words = taught;
+  // The section is named for what it teaches. Where every taught word sits in
+  // one group that group's own title IS the section — "Core words" at Grade 1 —
+  // and a generic heading above it would be the third place the learner is told
+  // nothing. Where the taught words span several groups there is no one name to
+  // use, so the generic heading stands.
+  const taughtGroups = [...new Set(taught.map((item) => item.groupTitle).filter(Boolean))];
+  const deckHeading = taughtGroups.length === 1 ? taughtGroups[0] : "Say the words";
 
   const wordSlide = (item, index) => {
     const sentences = item.practiceSentences?.length ? item.practiceSentences : [item.exampleSentence].filter(Boolean);
@@ -7250,16 +7268,21 @@ function renderWordCarousel() {
   };
 
   const deck = mountDeck({
-    heading: "Say the words",
+    heading: deckHeading,
     label: "Word",
-    intro: deckIntro("dictionary"),
+    // The intro card names the section too, so a learner is not told "Say the
+    // words" on the card and "Core words" in the heading above it. DECK_INTROS
+    // is shared across grades, so the title is overridden here rather than
+    // edited there — a grade whose taught words span several groups keeps the
+    // table's generic wording.
+    intro: { ...deckIntro("dictionary"), title: deckHeading },
     finish: ["dictionary", "I have learned these words"],
     emptyMessage: "No matching words. Clear the search to see them all.",
     // Sits below the dots, not in .gc-top, which the full-bleed CSS hides. A unit
     // holds up to 423 words, so the deck itself is what the search narrows.
     tools: `<div class="wc-tools">
         <label class="search-box">${icon("search")}<input id="word-search" type="search" placeholder="Search words or meanings" aria-label="Search vocabulary"></label>
-        <select id="group-filter" aria-label="Filter vocabulary group"><option value="all">All vocabulary groups</option>${course.vocabularyGroups.map((group) => `<option value="${group.id}">${esc(group.title)}</option>`).join("")}</select>
+        <select id="group-filter" aria-label="Filter vocabulary group"${taughtGroups.length > 1 ? "" : " hidden"}><option value="all">All vocabulary groups</option>${course.vocabularyGroups.filter((group) => taught.some((item) => item.groupId === group.id)).map((group) => `<option value="${group.id}">${esc(group.title)}</option>`).join("")}</select>
         <span class="status-chip" id="wc-known">${learnedTaught()} of ${taught.length} new words</span>
       </div>`,
     onSlide: (position) => { activeWordId = words[position]?.vocabularyId || activeWordId; },
@@ -7332,7 +7355,7 @@ function renderWordCarousel() {
   const drawDeck = () => {
     const query = inDeck("#word-search").value.trim().toLowerCase();
     const group = inDeck("#group-filter").value;
-    words = allWords.filter((item) => (group === "all" || item.groupId === group)
+    words = taught.filter((item) => (group === "all" || item.groupId === group)
       && (!query || `${item.master.displayWord} ${item.childMeaning}`.toLowerCase().includes(query)));
     deck.setSlides(words.map(wordSlide));
   };

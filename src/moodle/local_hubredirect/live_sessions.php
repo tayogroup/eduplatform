@@ -679,7 +679,7 @@ body.pqh-live-page .secondary-navigation{display:none!important}
     </div>
   </div>
   <div class="pql-split__body">
-    <iframe id="pql-split-class" class="pql-split__class" title="Live classroom" allow="camera *; microphone *; display-capture *; autoplay *; fullscreen *; speaker-selection *" allowfullscreen></iframe>
+    <iframe id="pql-split-class" class="pql-split__class" title="Live classroom" allow="camera *; microphone *; display-capture *; autoplay *; fullscreen *; speaker-selection *"></iframe>
     <iframe id="pql-split-materials" class="pql-split__materials" title="Teacher Materials"></iframe>
   </div>
 </div>

@@ -88,6 +88,9 @@ const require = createRequire(import.meta.url);
 // The media manifest's shape is owned by tools/lib/upload-manifest.js. Reading
 // it directly here is what broke this check when the format gained hashes.
 const { readManifestPaths } = require("./lib/upload-manifest.js");
+// The same definition the uploader follows, so this cannot grade it against a
+// different rule. See lib/content-tier.js.
+const { isAuthoringArtefact } = require("./lib/content-tier.js");
 const here = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(here, "..");
 const EHEL = path.join(ROOT, "src", "prototypes", "ehel-academy");
@@ -464,6 +467,9 @@ for (const subject of subjects) {
         const childRel = rel ? `${rel}/${entry.name}` : entry.name;
         if (entry.isDirectory()) { walk(local, childRel); continue; }
         if (!entry.name.endsWith(".json")) continue;
+        // Not content, and never uploaded — comparing it would report drift that
+        // no upload can clear.
+        if (isAuthoringArtefact(childRel)) continue;
         const remote = `content/${subject}/${gg(g)}/${childRel}`;
         const verdict = deployedMatches(remote, fs.readFileSync(local));
         if (verdict === "absent") { contentNew += 1; if (staleExamples.length < 3) staleExamples.push(`never uploaded: ${remote}`); }

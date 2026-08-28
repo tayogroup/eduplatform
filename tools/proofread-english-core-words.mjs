@@ -49,6 +49,21 @@ for (let u = 1; u <= 10; u++) {
     cards.push({ unit: u, word: l.masterWord, meaning: l.childMeaning || "", sentences: l.practiceSentences || [] });
   }
 }
+// A grade whose Core words have not been BUILT yet has no core groups in its
+// unit files, so this walk finds nothing and every check below passes over an
+// empty set. Run against Grade 5 before its build, it printed "cards: 0 |
+// total findings: 0", which reads exactly like a clean grade. Refusing is the
+// only honest answer: this repo has several entries about a tick printed over
+// a comparison that never ran, and this would have been another.
+if (!cards.length) {
+  console.error(`No Core-word cards found for grade ${GRADE}.`);
+  console.error("Its unit files carry no groups with a `strand`, which means the Core words");
+  console.error("have not been built yet. Run: node tools/build-english-core-words.mjs --grade "
+    + GRADE + " --write");
+  console.error("Reporting zero findings over zero cards would be a pass that tested nothing.");
+  process.exit(2);
+}
+
 const wordSet = new Set(cards.map((c) => c.word));
 const unitOf = new Map(cards.map((c) => [c.word, c.unit]));
 const findings = [];

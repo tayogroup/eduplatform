@@ -435,6 +435,29 @@ function taughtWords() {
   const taught = words.filter((item) => ids.has(item.groupId));
   return taught.length ? taught : words;
 }
+// How many example sentences a word card offers. A course learner sees three;
+// a tutoring learner sees all five. Owner, 2026-08-28.
+//
+// The reasoning is the one the tutoring category rests on everywhere else: a
+// school learner meets a word inside the unit that teaches it, with the lesson,
+// the story and the practice around it, so three usages are enough to show the
+// shape. A tutoring learner arrives from a search with one word and no course
+// position, and the sentences are most of what they get — so they get the lot.
+//
+// THE FIRST N, never a sample. `sentenceAudio` pairs with `practiceSentences`
+// BY INDEX, so slicing from the front keeps clip i under sentence i and needs
+// no remapping; taking any other subset would play the wrong recording. It also
+// means the three a course learner sees are the three that were authored first,
+// which is the order they were written to teach in.
+//
+// Nothing is dropped from the DATA. All five stay in the unit files and stay
+// narrated, so this is a display rule and switching a learner's category shows
+// the other two immediately, with their audio already paid for.
+const SENTENCES_SHOWN = IS_TUTORING ? 5 : 3;
+function shownSentences(item) {
+  const all = item.practiceSentences?.length ? item.practiceSentences : [item.exampleSentence].filter(Boolean);
+  return all.slice(0, SENTENCES_SHOWN);
+}
 const allWordsKnown = (words) => words.length > 0 && words.every((item) => progress.knownWords.includes(item.vocabularyId));
 
 // The one line for a section, with the two per-unit exceptions applied — used
@@ -6973,7 +6996,8 @@ function renderDictionaryClassic() {
   };
   const drawWord = () => {
     const item = words.find((word) => word.vocabularyId === activeWordId) || words[0];
-    const sentence = item.practiceSentences[activeSentence] || item.exampleSentence;
+    const shown = shownSentences(item);
+    const sentence = shown[activeSentence] || item.exampleSentence;
     // The word's own pronunciation, same "ship ahead of the audio" rule as
     // meaningAudio below: these buttons are drawn only once a clip exists, so
     // a newly-added word with no recording yet shows no control that could
@@ -6982,7 +7006,7 @@ function renderDictionaryClassic() {
     // The picture leads the card, ahead of the part of speech: a Grade 1 reader
     // recognises the thing before they can read "noun · a naming word".
     const cardPicture = dictionaryPicture(item.master);
-    $("#word-card").innerHTML = `<div class="word-card-head">${cardPicture ? `<div class="word-card-picture" aria-hidden="true">${cardPicture}</div>` : ""}<div><span class="word-type">${escapeHtml(item.master.partOfSpeech)}</span><h2>${escapeHtml(item.master.displayWord)}</h2><small>${escapeHtml(item.master.partOfSpeechDefinition)}</small></div>${wordAudioActions}</div><p class="meaning"><span class="field-label">Meaning:</span> ${escapeHtml(item.childMeaning)}${item.meaningAudio?.available ? ` <button class="icon-button" id="hear-meaning" type="button" title="Listen to the meaning" aria-label="Listen to the meaning of ${escapeHtml(item.master.displayWord)}">${icon("volume-2")}</button>` : ""}</p><div class="sentence-card"><small>In a sentence · ${activeSentence + 1} of ${item.practiceSentences.length}</small><p>${linkGlossaryWords(sentence, item.master.displayWord)}</p><div class="sentence-controls"><button class="icon-button" id="previous-sentence" type="button" aria-label="Previous sentence">${icon("arrow-left")}</button><div class="sentence-dots">${item.practiceSentences.map((_, index) => `<button class="sentence-dot ${index === activeSentence ? "active" : ""}" data-sentence="${index}" type="button" aria-label="Sentence ${index + 1}"></button>`).join("")}</div><button class="button ghost" id="hear-sentence" type="button">${icon("volume-2")} Hear sentence</button><button class="icon-button" id="next-sentence" type="button" aria-label="Next sentence">${icon("arrow-right")}</button></div></div><div><span class="field-label">Spelling:</span> ${escapeHtml(item.spellingPractice)}</div><div class="practice-box"><input id="word-sentence" maxlength="180" placeholder="${escapeHtml(item.sentenceStarter)}…" aria-label="Write your own sentence"><button class="button primary" id="check-word-sentence" type="button">Check sentence</button></div><div id="word-feedback" role="status" aria-live="polite" aria-atomic="true"></div><button class="button secondary" id="know-word" type="button">${progress.knownWords.includes(item.vocabularyId) ? icon("check-circle") + " Learned" : icon("bookmark-plus") + " I know this word"}</button>`;
+    $("#word-card").innerHTML = `<div class="word-card-head">${cardPicture ? `<div class="word-card-picture" aria-hidden="true">${cardPicture}</div>` : ""}<div><span class="word-type">${escapeHtml(item.master.partOfSpeech)}</span><h2>${escapeHtml(item.master.displayWord)}</h2><small>${escapeHtml(item.master.partOfSpeechDefinition)}</small></div>${wordAudioActions}</div><p class="meaning"><span class="field-label">Meaning:</span> ${escapeHtml(item.childMeaning)}${item.meaningAudio?.available ? ` <button class="icon-button" id="hear-meaning" type="button" title="Listen to the meaning" aria-label="Listen to the meaning of ${escapeHtml(item.master.displayWord)}">${icon("volume-2")}</button>` : ""}</p><div class="sentence-card"><small>In a sentence · ${activeSentence + 1} of ${shown.length}</small><p>${linkGlossaryWords(sentence, item.master.displayWord)}</p><div class="sentence-controls"><button class="icon-button" id="previous-sentence" type="button" aria-label="Previous sentence">${icon("arrow-left")}</button><div class="sentence-dots">${shown.map((_, index) => `<button class="sentence-dot ${index === activeSentence ? "active" : ""}" data-sentence="${index}" type="button" aria-label="Sentence ${index + 1}"></button>`).join("")}</div><button class="button ghost" id="hear-sentence" type="button">${icon("volume-2")} Hear sentence</button><button class="icon-button" id="next-sentence" type="button" aria-label="Next sentence">${icon("arrow-right")}</button></div></div><div><span class="field-label">Spelling:</span> ${escapeHtml(item.spellingPractice)}</div><div class="practice-box"><input id="word-sentence" maxlength="180" placeholder="${escapeHtml(item.sentenceStarter)}…" aria-label="Write your own sentence"><button class="button primary" id="check-word-sentence" type="button">Check sentence</button></div><div id="word-feedback" role="status" aria-live="polite" aria-atomic="true"></div><button class="button secondary" id="know-word" type="button">${progress.knownWords.includes(item.vocabularyId) ? icon("check-circle") + " Learned" : icon("bookmark-plus") + " I know this word"}</button>`;
     if (item.master.audio?.available) {
       const play = (button = null) => playAudio(item.master.audio.normal, {
         rate: AI_NARRATION_RATE,
@@ -7011,8 +7035,8 @@ function renderDictionaryClassic() {
       if (!descriptor || descriptor.available === false) return toast("This sentence recording is not available yet.");
       playAudio(descriptor.source, { rate: AI_NARRATION_RATE, start: descriptor.cueStart, end: descriptor.cueEnd, button: event.currentTarget });
     });
-    $("#previous-sentence").addEventListener("click", () => { activeSentence = (activeSentence - 1 + item.practiceSentences.length) % item.practiceSentences.length; drawWord(); icons(); });
-    $("#next-sentence").addEventListener("click", () => { activeSentence = (activeSentence + 1) % item.practiceSentences.length; drawWord(); icons(); });
+    $("#previous-sentence").addEventListener("click", () => { activeSentence = (activeSentence - 1 + shown.length) % shown.length; drawWord(); icons(); });
+    $("#next-sentence").addEventListener("click", () => { activeSentence = (activeSentence + 1) % shown.length; drawWord(); icons(); });
     $$('[data-sentence]').forEach((dot) => dot.addEventListener("click", () => { activeSentence = Number(dot.dataset.sentence); drawWord(); icons(); }));
     $("#check-word-sentence").addEventListener("click", (event) => {
       const value = $("#word-sentence").value.trim();
@@ -7242,7 +7266,7 @@ function renderWordCarousel() {
   const deckHeading = namedDeck ? taughtGroups[0] : "Say the words";
 
   const wordSlide = (item, index) => {
-    const sentences = item.practiceSentences?.length ? item.practiceSentences : [item.exampleSentence].filter(Boolean);
+    const sentences = shownSentences(item);
     const position = Math.min(sentenceAt.get(item.vocabularyId) || 0, Math.max(0, sentences.length - 1));
     const known = progress.knownWords.includes(item.vocabularyId);
     const sentenceAudio = item.sentenceAudio?.[position];
@@ -7278,7 +7302,7 @@ function renderWordCarousel() {
   };
 
   const wordFor = (id) => words.find((item) => item.vocabularyId === id);
-  const sentencesFor = (item) => (item.practiceSentences?.length ? item.practiceSentences : [item.exampleSentence].filter(Boolean));
+  const sentencesFor = (item) => shownSentences(item);
   // Repaint one slide in place, addressed by word rather than by position: the
   // deck is filtered, so a word's index moves under it.
   const redrawWord = (id) => {

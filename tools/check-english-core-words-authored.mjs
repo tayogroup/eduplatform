@@ -137,6 +137,19 @@ function shows(sentence, word) {
   return new RegExp(parts.join("|"), "i").test(sentence);
 }
 
+// A backtick is never correct in learner-facing prose. It is code notation, and
+// it reaches a card because whoever is authoring writes markdown all day.
+//
+// This rule exists because the check ALMOST caught it and that was luck. One
+// backtick opened a sentence, so the capitalisation rule fired - "does not start
+// with a capital" - and the real fault was named by a rule aimed at something
+// else. A sweep then found four more sitting MID-sentence, in two grades, every
+// one of them invisible to every check here. Caught 1 of 5, by accident, on the
+// only one that happened to sit where another rule was looking.
+//
+// Unlike the form rules above it, this one cannot accuse correct content: there
+// is no sentence a child should read that contains a backtick.
+const BACKTICK = /`/;
 let words = 0, problems = 0;
 const seenSentence = new Map();
 const report = [];
@@ -155,6 +168,7 @@ for (const unit of draft.units) {
 
     if (!/[.!?]$/.test(meaning.trim())) bad.push("meaning does not end in a full stop");
     if (meaning.trim().length < 15) bad.push("meaning is too short to teach anything");
+    if (BACKTICK.test(meaning)) bad.push("meaning uses a backtick, which is code notation");
     if (US.test(meaning)) bad.push(`US spelling in the meaning: ${meaning.match(US)[0]}`);
 
     if (sentences.length !== 5) bad.push(`${sentences.length} sentences, not 5`);
@@ -165,6 +179,7 @@ for (const unit of draft.units) {
       if (s.length > MAX_SENTENCE) bad.push(`sentence ${n} is ${s.length} chars (max ${MAX_SENTENCE}): ${s}`);
       if (s.trim().split(/\s+/).length > MAX_WORDS) bad.push(`sentence ${n} is over ${MAX_WORDS} words: ${s}`);
       if (!/^["'“]?[A-Z]/.test(s)) bad.push(`sentence ${n} does not start with a capital: ${s}`);
+      if (BACKTICK.test(s)) bad.push(`sentence ${n} uses a backtick, which is code notation: ${s}`);
       if (!/[.!?]["'”]?$/.test(s)) bad.push(`sentence ${n} has no end punctuation: ${s}`);
       if (US.test(s)) bad.push(`sentence ${n} US spelling "${s.match(US)[0]}": ${s}`);
       if (/_{2,}/.test(s)) bad.push(`sentence ${n} is a fill-in-the-blank line: ${s}`);

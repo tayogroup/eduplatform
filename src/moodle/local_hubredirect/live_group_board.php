@@ -56,6 +56,13 @@ if ($requestedteacherid > 0 && $requestedteacherid !== $teacherid && $canmanage)
     $teacherid = $requestedteacherid;
 }
 
+// A manager landing on their own empty board is what this exists to prevent:
+// the board defaults to $USER->id, an administrator owns no groups, and the
+// message said "no class groups are assigned to you" with no hint that a
+// teacher can be chosen. The teacherid parameter was undiscoverable without
+// reading the source, so every admin's first visit read as a broken page.
+$boardteachers = $canmanage ? pqlgb_board_teachers($workspaceid) : [];
+
 $urlparams = ['workspaceid' => $workspaceid];
 if ($windowminutes !== PQLGB_DEFAULT_WINDOW_MINUTES) {
     $urlparams['window'] = $windowminutes;
@@ -177,8 +184,21 @@ echo $OUTPUT->header();
     <span class="pqlgb-spacer"></span>
     <form class="pqlgb-form" method="get" action="<?php echo (new moodle_url('/local/hubredirect/live_group_board.php'))->out(false); ?>">
       <input type="hidden" name="workspaceid" value="<?php echo $workspaceid; ?>">
-      <?php if ($teacherid !== (int)$USER->id): ?><input type="hidden" name="teacherid" value="<?php echo $teacherid; ?>"><?php endif; ?>
+      <?php // Only carried when there is no select to carry it — two inputs of
+            // the same name would post twice and the last one would win. ?>
+      <?php if (!$boardteachers && $teacherid !== (int)$USER->id): ?><input type="hidden" name="teacherid" value="<?php echo $teacherid; ?>"><?php endif; ?>
       <?php if (!empty($consumercontext->consumerslug)): ?><input type="hidden" name="consumer" value="<?php echo s((string)$consumercontext->consumerslug); ?>"><?php endif; ?>
+      <?php if ($boardteachers): ?>
+        <label for="pqlgb-teacher">Teacher</label>
+        <select class="pqlgb-select" id="pqlgb-teacher" name="teacherid" onchange="this.form.submit()">
+          <?php if (!isset($boardteachers[(int)$USER->id])): ?>
+            <option value="<?php echo (int)$USER->id; ?>"<?php echo $teacherid === (int)$USER->id ? ' selected' : ''; ?>>Me (no groups)</option>
+          <?php endif; ?>
+          <?php foreach ($boardteachers as $tid => $tname): ?>
+            <option value="<?php echo (int)$tid; ?>"<?php echo (int)$tid === $teacherid ? ' selected' : ''; ?>><?php echo s((string)$tname); ?></option>
+          <?php endforeach; ?>
+        </select>
+      <?php endif; ?>
       <label for="pqlgb-window">Window</label>
       <select class="pqlgb-select" id="pqlgb-window" name="window" onchange="this.form.submit()">
         <?php foreach (pqlgb_window_choices() as $value => $label): ?>
@@ -206,6 +226,16 @@ echo $OUTPUT->header();
   var seed = <?php echo json_encode($board, JSON_HEX_TAG | JSON_HEX_AMP | JSON_UNESCAPED_SLASHES); ?>;
   var dataUrl = <?php echo json_encode($dataurl->out(false), JSON_HEX_TAG | JSON_HEX_AMP); ?>;
   var handUrl = <?php echo json_encode($handurl->out(false), JSON_HEX_TAG | JSON_HEX_AMP); ?>;
+  // Written for whoever is looking. The teacher-facing wording sent an
+  // administrator away believing the board was broken, when they were simply
+  // looking at their own groups and had none.
+  var emptyMessage = <?php echo json_encode(
+      $boardteachers
+          ? 'You own no class groups here. Choose a teacher above to supervise their board.'
+          : ($canmanage
+              ? 'Nobody in this workspace owns a class group yet. Groups are created in Student grouping.'
+              : 'No class groups are assigned to you in this workspace. Groups are created in Student grouping.'),
+      JSON_HEX_TAG | JSON_HEX_AMP); ?>;
   var groupsEl = document.getElementById("pqlgb-groups");
   var totalsEl = document.getElementById("pqlgb-totals");
   var freshEl = document.getElementById("pqlgb-freshness");
@@ -384,7 +414,7 @@ echo $OUTPUT->header();
     }).join("");
 
     var groupsHtml = html ||
-      '<section class="pqlgb-group"><div class="pqlgb-empty">No class groups are assigned to you in this workspace. Groups are created in Student grouping.</div></section>';
+      '<section class="pqlgb-group"><div class="pqlgb-empty">' + emptyMessage + '</div></section>';
 
     var totalsHtml = [
       ["Hands up", hands, hands > 0],

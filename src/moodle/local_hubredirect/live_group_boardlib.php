@@ -152,6 +152,56 @@ function pqlgb_group_roster(array $groupids): array {
     return $roster;
 }
 
+/**
+ * The teachers a manager can open a board for: userid => name.
+ *
+ * DERIVED, never a list of everyone with a teacher role. Only teachers who
+ * actually OWN at least one non-archived group in this workspace are offered,
+ * because a picker entry that opens an empty board is a dead end — the same
+ * defect the tutoring section picker had when it offered Books with no topics
+ * behind it. Offered here means "picking this shows you something".
+ *
+ * Returns [] for a manager of a workspace where nobody owns a group, which is
+ * the honest answer: there is no board to look at yet.
+ */
+function pqlgb_board_teachers(int $workspaceid): array {
+    global $DB;
+    if (!pqlgb_table_exists('local_prequran_class_group')) {
+        return [];
+    }
+    $where = 'cg.teacherid > 0';
+    $params = [];
+    if (pqlgb_table_has_field('local_prequran_class_group', 'status')) {
+        $where .= " AND cg.status <> 'archived'";
+    }
+    if ($workspaceid > 0 && pqlgb_table_has_field('local_prequran_class_group', 'workspaceid')) {
+        $where .= ' AND cg.workspaceid = :workspaceid';
+        $params['workspaceid'] = $workspaceid;
+    }
+    try {
+        $rows = $DB->get_records_sql(
+            "SELECT cg.teacherid, COUNT(DISTINCT cg.id) AS groups,
+                    u.firstname, u.lastname, u.firstnamephonetic, u.lastnamephonetic,
+                    u.middlename, u.alternatename
+               FROM {local_prequran_class_group} cg
+               JOIN {user} u ON u.id = cg.teacherid AND u.deleted = 0
+              WHERE $where
+           GROUP BY cg.teacherid, u.firstname, u.lastname, u.firstnamephonetic,
+                    u.lastnamephonetic, u.middlename, u.alternatename
+           ORDER BY u.firstname ASC, u.lastname ASC",
+            $params
+        );
+    } catch (Throwable $e) {
+        return [];
+    }
+    $teachers = [];
+    foreach ($rows as $row) {
+        $teachers[(int)$row->teacherid] = fullname($row)
+            . ' (' . (int)$row->groups . ' group' . ((int)$row->groups === 1 ? '' : 's') . ')';
+    }
+    return $teachers;
+}
+
 function pqlgb_learner_names(array $userids): array {
     global $DB;
     $names = [];

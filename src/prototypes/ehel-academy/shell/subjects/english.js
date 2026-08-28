@@ -7197,17 +7197,27 @@ function renderWordCarousel() {
   // 2 joined it once its 400 Core words had landed (cf07330ce) and the owner
   // saw the story glossary still inside the teaching walk-through: at Grade 2
   // unit 1 the deck was 195 slides to earn a tick worth 40. Owner, 2026-08-28,
-  // asked for Grade 2 and Grade 2 alone. Grades 3-4 keep walking every word
-  // until their own turn -- their Core words exist (448 and 412) so the data is
-  // ready, but readiness is not the same as being asked for.
+  // asked for Grade 2 and Grade 2 alone.
   //
-  // Measured unit 1 decks after the change: 44 words at Grade 1, 40 at Grade 2,
-  // both from a deck that used to walk 111 and 195.
+  // GRADE 3 JOINED on 2026-08-28, once its own 448 Core words were authored,
+  // built, given master-dictionary entries and deployed -- asked for by the
+  // owner in the same terms. Its unit 1 deck was the worst of the three: 240
+  // slides walked to earn a tick worth 45, and 195 of those 240 are story
+  // glossary words the Vocabulary section does not gate on at all.
+  //
+  // GRADE 4 STILL WALKS EVERY WORD, and that is the same held-back reasoning as
+  // before rather than an oversight. Its 412 Core words exist but another
+  // session is mid-authoring them, and this renderer is shared, so `<= 4` would
+  // hand that session a deck change it did not ask for in the middle of the work
+  // that decides what the deck should hold.
+  //
+  // Measured unit 1 decks after each change: 44 words at Grade 1, 40 at Grade 2,
+  // 45 at Grade 3, from decks that used to walk 111, 195 and 240.
   //
   // It stays a named constant so a grade can be rolled back on its own, and it
   // is deliberately NOT written as BOTH_DESIGNS: that gate is overloaded -- it
   // also decides the cursive worksheet -- and this must not move with it.
-  const DECK_TEACHES_TAUGHT_ONLY = gradeNumber <= 2;
+  const DECK_TEACHES_TAUGHT_ONLY = gradeNumber <= 3;
   let words = DECK_TEACHES_TAUGHT_ONLY ? taught : allWords;
   // The section is named for what it teaches. Where every taught word sits in
   // one group that group's own title IS the section — "Core words" at Grade 1 —

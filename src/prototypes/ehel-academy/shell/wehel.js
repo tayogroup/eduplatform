@@ -402,6 +402,143 @@ export const HOMEWORK_CONTEXT_LIMIT = 6000;
 export const WEHEL_ATTACH_DAILY_LIMIT = 5;
 export const WEHEL_ATTACH_PER_MESSAGE = 2;
 
+// --- the daily tutoring allowance ----------------------------------------------
+// Owner, 2026-08-28: Wehel is capped per learner per DAY, by how old the
+// learner is — 10 minutes at Grades 1-2, rising to 30 at Grade 9 and above.
+// Intensive English is deliberately NOT on that table: it sends its CEFR LEVEL
+// (1-5) as the grade, so a Level 1 learner is an adult beginner as often as a
+// child, and reading the level as a school year would hand them a Grade 1
+// allowance. The owner set it at 30 minutes for Levels 1-2 and an hour above.
+// A tutoring-support learner gets DOUBLE whatever their course allows: they are
+// paying for the tutor rather than getting it beside a lesson.
+//
+// The three specs are strings on purpose. They live in three files — here,
+// wehel_chat.php and tools/lib/wehel-dev-chat.js — and a table written three
+// times in three languages cannot be compared; one string parsed three ways
+// can, which is what the contract gate does. Read "2:10" as "up to grade 2,
+// 10 minutes"; the last band's 99 is the open top end.
+export const WEHEL_DAILY_BANDS = "2:10,4:15,6:20,8:25,99:30";
+export const WEHEL_INTENSIVE_BANDS = "2:30,99:60";
+export const WEHEL_TUTORING_MULTIPLIER = 2;
+// What a pause is worth. The clock is the wall-clock time BETWEEN a learner's
+// requests, so an unbroken conversation costs exactly as long as it lasts —
+// but a learner who walks away is not using the tutor, so any single gap is
+// charged at most this. It is also why the on-screen timer can tick without
+// lying: it counts the same seconds the server will, and stops at the same
+// place. The first request of the day charges nothing; the clock starts there.
+export const WEHEL_IDLE_GAP_SECONDS = 60;
+
+// Resolve one spec against a grade. Kept tiny and total: an unparseable spec
+// or a grade past the last band both land on the last band's minutes rather
+// than on zero, because a bug here must never lock a learner out of the tutor.
+export function wehelBandMinutes(spec, grade) {
+  const bands = String(spec).split(",").map((band) => band.split(":").map(Number))
+    .filter(([max, minutes]) => Number.isFinite(max) && Number.isFinite(minutes) && minutes > 0);
+  if (!bands.length) return 0;
+  const number = Number(grade) || 1;
+  return (bands.find(([max]) => number <= max) || bands[bands.length - 1])[1];
+}
+
+// The learner's whole daily allowance, in minutes. One definition, mirrored by
+// both servers — the SERVER copy is the one that enforces it; this one is what
+// the panel shows.
+export function wehelDailyMinutes({ grade, subject, learnerCategory } = {}) {
+  const base = subject === "intensive-english"
+    ? wehelBandMinutes(WEHEL_INTENSIVE_BANDS, grade)
+    : wehelBandMinutes(WEHEL_DAILY_BANDS, grade);
+  return learnerCategory === "tutoring" ? base * WEHEL_TUTORING_MULTIPLIER : base;
+}
+
+// --- what the panel shows ------------------------------------------------------
+// The server answers every question with the day's ledger, so the timer is a
+// reading of the server's own count rather than a second, client-side one that
+// could disagree with it. Between answers it ticks locally by the SAME rule the
+// server charges by (see WEHEL_IDLE_GAP_SECONDS), so the number on screen and
+// the number the server will charge next are the same number.
+//
+// Module-level, not per-panel: the drawer and a subject's tutor page can both
+// be open over one learner, and the allowance is a fact about the learner.
+//
+// It also outlives the PAGE, in localStorage under the day it was read. A
+// learner who opens a second subject, or comes back after lunch, would
+// otherwise be shown a full allowance until their next question corrected it —
+// a timer that resets on every page load is not a timer. This is a cache of
+// the server's last answer, never a second authority: the server charges and
+// refuses whatever this says, and a cleared cache costs the learner nothing.
+const TIME_LEDGER_KEY = "wehel-time-v1";
+
+function today() {
+  const now = new Date();
+  return `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, "0")}${String(now.getDate()).padStart(2, "0")}`;
+}
+
+let timeLedger = (() => {
+  try {
+    const stored = JSON.parse(storageGet(TIME_LEDGER_KEY) || "null");
+    // A ledger from yesterday is not a small error, it is the whole allowance:
+    // the server resets at midnight and so must this.
+    if (stored && stored.day === today() && Number.isFinite(stored.limit)) return stored;
+  } catch { /* a corrupt cache is simply no cache */ }
+  return null;
+})();
+
+export function setWehelTimeLedger(ledger, sentAt = Date.now()) {
+  if (!ledger || !Number.isFinite(Number(ledger.limit))) return;
+  timeLedger = {
+    day: today(),
+    limit: Math.max(0, Number(ledger.limit) || 0),
+    used: Math.max(0, Number(ledger.used) || 0),
+    // What the day has actually cost, as the API reported it to the server.
+    // Carried, never computed from the minutes: the two do not convert, and a
+    // ratio between them would be wrong per learner in both directions.
+    tokens: Math.max(0, Number(ledger.tokens) || 0),
+    weighted: Math.max(0, Number(ledger.weighted) || 0),
+    // The moment the request that produced this reading was SENT, not the
+    // moment it came back: the server stamped the ledger on arrival, and a
+    // reply can be ten seconds behind it.
+    at: sentAt,
+  };
+  storageSet(TIME_LEDGER_KEY, JSON.stringify(timeLedger));
+}
+
+export function wehelTimeLedger() {
+  if (!timeLedger) return null;
+  const elapsed = Math.max(0, Math.round((Date.now() - timeLedger.at) / 1000));
+  // Capped exactly as the server caps one gap — past this the learner has
+  // stopped, and the clock stops with them.
+  const used = timeLedger.used + Math.min(elapsed, WEHEL_IDLE_GAP_SECONDS);
+  return {
+    limit: timeLedger.limit,
+    used,
+    left: Math.max(0, timeLedger.limit - used),
+    // Rounded to whole points and held inside 0-100: the clock is capped at
+    // the limit, and a bar that overshoots its own track reads as a fault.
+    percentUsed: timeLedger.limit > 0
+      ? Math.min(100, Math.max(0, Math.round((used / timeLedger.limit) * 100)))
+      : 0,
+    tokens: timeLedger.tokens,
+    weighted: timeLedger.weighted,
+  };
+}
+
+// "9:05", and "0:00" when it is spent — never a negative clock.
+export function formatWehelClock(seconds) {
+  const total = Math.max(0, Math.round(Number(seconds) || 0));
+  return `${Math.floor(total / 60)}:${String(total % 60).padStart(2, "0")}`;
+}
+
+// "25 minutes", "an hour", "2 hours" — what the allowance is called in the
+// sentence a learner reads. Mirrored as pqh_wehel_allowance_words in
+// wehel_chat.php, because the server writes the same sentence when it refuses.
+export function wehelAllowanceWords(minutes) {
+  const total = Number(minutes) || 0;
+  if (total > 0 && total % 60 === 0) {
+    const hours = total / 60;
+    return hours === 1 ? "an hour" : `${hours} hours`;
+  }
+  return `${total} minutes`;
+}
+
 // Fetched once per page load and shared by every panel and every askWehel call
 // — the list moves when a teacher grades or assigns, which is never mid-chat.
 // A failed fetch resolves [] and clears the memo so a later call may retry.
@@ -780,6 +917,11 @@ export async function askWehel({ meta, messages, channel = "text", mode = "", se
   // "what's my homework?" from any surface, English's own tutor page included.
   const homework = homeworkContextText(await fetchWehelHomework());
   const post = async (conversation) => {
+    // Stamped before the fetch, not after it: the server charges the day's
+    // clock the moment the request arrives, and a reply can be ten seconds
+    // behind that. Ticking the on-screen timer from the reply would hand the
+    // learner those seconds back on every turn.
+    const sentAt = Date.now();
     const response = await fetch(WEHEL_CHAT_ENDPOINT, {
       method: "POST",
       credentials: DEV_API ? "same-origin" : "include",
@@ -816,10 +958,14 @@ export async function askWehel({ meta, messages, channel = "text", mode = "", se
       }),
     });
     const result = await response.json().catch(() => ({}));
+    // The day's ledger rides BOTH answers — the good one and the refusal — so
+    // a learner whose time has just run out sees 0:00 rather than a timer
+    // frozen at whatever it read before the last question.
+    setWehelTimeLedger(result.time, sentAt);
     if (!response.ok || !result.ok) {
       const failure = new Error(result.message || `Wehel is unavailable (${response.status}).`);
-      // A structured code (e.g. "attach-limit") lets the panel answer with the
-      // real reason instead of the generic offline hint.
+      // A structured code (e.g. "attach-limit", "time-limit") lets the panel
+      // answer with the real reason instead of the generic offline hint.
       if (result.code) failure.code = result.code;
       throw failure;
     }
@@ -882,6 +1028,7 @@ const ICON_PATHS = {
   stop: '<rect width="14" height="14" x="5" y="5" rx="2"/>',
   paperclip: '<path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"/>',
   book: '<path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/>',
+  clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
 };
 export function wehelIcon(name) {
   return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="16" height="16" style="vertical-align:-3px">${ICON_PATHS[name] || ""}</svg>`;
@@ -924,6 +1071,26 @@ const PANEL_STYLE = `
   cursor:pointer;max-width:min(46vw,190px)}
 .wehel-panel .ai-voice-row select:hover{border-color:var(--w-teal)}
 .wehel-panel #wehel-voice-toggle{border-radius:999px;padding:6px 14px;font-size:13px;font-weight:700}
+
+/* the day's allowance — a reading, not a control, so it is a chip and not a
+   button. Low turns it amber at two minutes; spent turns it grey, because a
+   red badge on a child's screen reads as something they did wrong. */
+/* The chip IS the bar: --w-used is the share of the day spent, so the fill and
+   the percentage in the text are one number and cannot disagree. A hard colour
+   stop rather than a gradient, so the edge reads as a measurement. */
+.wehel-panel .w-timer{--w-used:0%;display:inline-flex;align-items:center;gap:5px;padding:6px 12px;
+  border:1px solid rgba(15,118,110,.28);border-radius:999px;
+  background:linear-gradient(90deg,var(--w-teal-soft) 0 var(--w-used),#fff var(--w-used));
+  color:var(--w-teal);font-size:12.5px;font-weight:700;font-variant-numeric:tabular-nums;
+  white-space:nowrap;cursor:default}
+.wehel-panel .w-timer.is-low{border-color:rgba(224,176,112,.85);color:#7a4a00;
+  background:linear-gradient(90deg,#ffe6c2 0 var(--w-used),#fff4e5 var(--w-used))}
+.wehel-panel .w-timer.is-spent{border-color:var(--w-line);color:rgba(23,50,77,.6);
+  background:rgba(15,23,42,.05)}
+.wehel-panel .w-time-spent{display:flex;align-items:center;gap:8px;margin:0;
+  padding:13px 16px;border:1px solid var(--w-line);border-radius:var(--w-radius);
+  background:linear-gradient(170deg,#fff,var(--w-teal-soft));
+  font-size:14.5px;line-height:1.5;color:var(--w-ink)}
 
 /* conversation */
 .wehel-panel .ai-conversation{display:flex;flex-direction:column;gap:14px;
@@ -1147,6 +1314,14 @@ export function mountWehelChat(options) {
   const greetingFor = (focus) => (focus
     ? `Hi! I am ${tutorLabel}. We are on "${focus.label}"${isTutoring ? "" : ` in Unit ${meta.unitNo}: ${meta.unitTitle}`}. Shall I teach it, quiz you on it, or explain it a different way?`
     : baseGreeting);
+  // The day's allowance, shown from the first paint — before any question has
+  // been asked there is no server ledger yet, and a learner who is about to be
+  // stopped at ten minutes should be told so before they start, not after.
+  const allowanceMinutes = wehelDailyMinutes({
+    grade: meta.grade,
+    subject: meta.subject,
+    learnerCategory: options.learnerCategory || meta.learnerCategory,
+  });
   const modules = (Array.isArray(meta.modules) ? meta.modules : []).filter((module) => module && module.id && module.label);
   if (!Array.isArray(store[key])) store[key] = [];
   const messages = store[key];
@@ -1184,6 +1359,45 @@ export function mountWehelChat(options) {
   const speechRate = speechRateForGrade(meta.grade);
   let speakReplies = browserSpeechSupported && storageGet(speechKey) !== "off";
   let speakingIndex = null;
+
+  // --- the daily timer ---------------------------------------------------------
+  // What is left of today's allowance, as the server counts it: the ledger the
+  // last answer carried, plus the seconds since that question was sent, capped
+  // the same way the server caps one gap. Before the first question there is no
+  // ledger, so the whole allowance is shown.
+  const timeLeftSeconds = () => {
+    const ledger = wehelTimeLedger();
+    return ledger ? ledger.left : allowanceMinutes * 60;
+  };
+  const percentUsed = () => {
+    const ledger = wehelTimeLedger();
+    return ledger ? ledger.percentUsed : 0;
+  };
+  const timeSpent = () => allowanceMinutes > 0 && timeLeftSeconds() <= 0;
+  // The clock, the share of the day it represents, and what that day has cost.
+  // The percentage is on the face of the chip and the tokens are in its title:
+  // a percentage of the time is something a Grade 1 can read off a bar, and a
+  // token count is a number about our API bill rather than about their lesson.
+  // The chip is its own progress bar — the fill is the percentage.
+  const timerLabel = (left) => (left <= 0
+    ? "Time is up for today"
+    : `${formatWehelClock(left)} left · ${percentUsed()}% used`);
+  const timerTitle = () => {
+    const ledger = wehelTimeLedger();
+    const spend = ledger && ledger.tokens
+      ? ` Today Wehel has read and written ${ledger.tokens.toLocaleString()} tokens for you.`
+      : "";
+    return `${tutorLabel} is yours for ${allowanceMinutes} minutes a day.`
+      + ` The clock runs while you are talking and stops when you stop.${spend}`;
+  };
+  const timeChipHtml = () => {
+    if (allowanceMinutes <= 0) return "";
+    const left = timeLeftSeconds();
+    const state = left <= 0 ? " is-spent" : (left <= 120 ? " is-low" : "");
+    return `<span class="w-timer${state}" id="wehel-timer" role="timer" aria-live="off"`
+      + ` style="--w-used:${percentUsed()}%" title="${escapeHtml(timerTitle())}">`
+      + `${wehelIcon("clock")}<span class="w-timer-text">${escapeHtml(timerLabel(left))}</span></span>`;
+  };
 
   const bubble = (item, index) => {
     // An offline bubble used to differ from a real answer by the two words
@@ -1285,8 +1499,14 @@ export function mountWehelChat(options) {
         { label: "Show my homework step by step", mode: "homework-solutions", message: "Help me with my homework. Show me how to do it with a full worked solution, step by step, and explain each step." },
       );
     }
+    // Today's allowance is spent: the tutor is not broken and must not look
+    // broken, so the compose row is replaced by a plain sentence saying what
+    // happened and when it comes back. Disabling the input with no explanation
+    // is the shape a learner reads as an outage.
+    const spent = timeSpent();
     container.innerHTML = `
       <div class="ai-voice-row">
+        ${timeChipHtml()}
         ${browserSpeechSupported ? `<button class="button secondary" id="wehel-voice-toggle" type="button" aria-pressed="${speakReplies}" title="${speakReplies ? `${escapeHtml(tutorLabel)} reads replies aloud` : "Replies are silent"}">${speakReplies ? `${wehelIcon("volume")} Voice on` : `${wehelIcon("volumeOff")} Voice off`}</button>` : ""}
         <label for="wehel-persona">Wehel is
           <select id="wehel-persona">
@@ -1305,8 +1525,9 @@ export function mountWehelChat(options) {
         ${messages.length ? messages.map(bubble).join("") : bubble({ role: "assistant", text: greeting }, -1)}
         ${busy ? `<article class="ai-message assistant is-thinking"><span class="w-avatar" role="img" aria-label="${escapeHtml(tutorLabel)}">${wehelIcon("sparkle")}</span><div class="w-body"><strong class="w-who">${escapeHtml(tutorLabel)}</strong><p class="w-text"><span class="w-dot"></span><span class="w-dot"></span><span class="w-dot"></span><span class="sr-only">is thinking…</span></p></div></article>` : ""}
       </div>
-      <div class="ai-prompts">${prompts.map((prompt) => `<button data-wehel-prompt="${escapeHtml(prompt.message)}" data-wehel-mode="${escapeHtml(prompt.mode || "")}"${prompt.teach ? ' data-wehel-teach="1"' : ""} type="button" ${busy ? "disabled" : ""}>${escapeHtml(prompt.label)}</button>`).join("")}</div>
-      ${pendingAttachments.length ? `<div class="w-attach-row">${pendingAttachments.map((file, index) => `<span class="w-attach-chip"><span>${escapeHtml(file.name)}</span><button type="button" data-wehel-detach="${index}" aria-label="Remove ${escapeHtml(file.name)}">×</button></span>`).join("")}</div>` : ""}
+      <div class="ai-prompts">${spent ? "" : prompts.map((prompt) => `<button data-wehel-prompt="${escapeHtml(prompt.message)}" data-wehel-mode="${escapeHtml(prompt.mode || "")}"${prompt.teach ? ' data-wehel-teach="1"' : ""} type="button" ${busy ? "disabled" : ""}>${escapeHtml(prompt.label)}</button>`).join("")}</div>
+      ${pendingAttachments.length && !spent ? `<div class="w-attach-row">${pendingAttachments.map((file, index) => `<span class="w-attach-chip"><span>${escapeHtml(file.name)}</span><button type="button" data-wehel-detach="${index}" aria-label="Remove ${escapeHtml(file.name)}">×</button></span>`).join("")}</div>` : ""}
+      ${spent ? `<p class="w-time-spent">${wehelIcon("clock")} That is all ${escapeHtml(wehelAllowanceWords(allowanceMinutes))} of ${escapeHtml(tutorLabel)} for today — well done. I will be here again tomorrow.</p>` : `
       <form class="ai-compose" id="wehel-form">
         <label class="sr-only" for="wehel-input">Ask ${escapeHtml(tutorLabel)}</label>
         <input id="wehel-input" maxlength="500" placeholder="${escapeHtml(persona === "teacher" ? "Tell your teacher what you did, or ask…" : (focus ? `Ask about ${focus.label}…` : (options.placeholder || (isTutoring ? "Ask about anything you are stuck on…" : `Ask about ${meta.unitTitle}…`))))}" ${busy ? "disabled" : ""} autocomplete="off">
@@ -1314,7 +1535,7 @@ export function mountWehelChat(options) {
         <input id="wehel-attach-input" type="file" accept="image/*,application/pdf" multiple hidden>
         ${micSupported ? `<button class="button secondary" id="wehel-mic" type="button" aria-label="Ask by voice" title="Ask by voice" ${busy ? "disabled" : ""}>${wehelIcon("mic")}</button>` : ""}
         <button class="button primary" type="submit" ${busy ? "disabled" : ""}>${wehelIcon("send")} Send</button>
-      </form>`;
+      </form>`}`;
     if (ui.bindVoiceControls) ui.bindVoiceControls();
     const voiceToggle = container.querySelector("#wehel-voice-toggle");
     if (voiceToggle) voiceToggle.addEventListener("click", () => {
@@ -1351,7 +1572,9 @@ export function mountWehelChat(options) {
         : `${tutorLabel} is back to ${isTutoring ? "the whole lesson" : "the whole unit"}.`);
     });
     container.querySelectorAll("[data-wehel-prompt]").forEach((button) => button.addEventListener("click", () => submit(button.dataset.wehelPrompt, "text", button.dataset.wehelMode || "", { teach: button.dataset.wehelTeach === "1" })));
-    container.querySelector("#wehel-form").addEventListener("submit", (event) => {
+    // Absent once the day's allowance is spent — the compose row is a sentence
+    // then, not a form.
+    container.querySelector("#wehel-form")?.addEventListener("submit", (event) => {
       event.preventDefault();
       const input = container.querySelector("#wehel-input");
       if (input.value.trim()) submit(input.value.trim(), "text");
@@ -1383,6 +1606,30 @@ export function mountWehelChat(options) {
     if (mic) mic.addEventListener("click", () => toggleMic(mic));
     const conversation = container.querySelector("#wehel-conversation");
     conversation.scrollTop = conversation.scrollHeight;
+    startClock();
+  }
+
+  // One interval per panel, started by render and stopped when the panel
+  // leaves the DOM (a closed drawer). It repaints the chip's TEXT rather than
+  // calling render(), because a full repaint once a second would take the
+  // caret out of the input the learner is typing in. The one moment it does
+  // re-render is when the clock reaches zero, which is what swaps the compose
+  // row for the "come back tomorrow" line.
+  let clockTimer = null;
+  function startClock() {
+    if (clockTimer || allowanceMinutes <= 0) return;
+    clockTimer = setInterval(() => {
+      if (!container.isConnected) { clearInterval(clockTimer); clockTimer = null; return; }
+      const chip = container.querySelector("#wehel-timer");
+      if (!chip) return;
+      const left = timeLeftSeconds();
+      if (left <= 0) { render(); return; }
+      chip.classList.toggle("is-low", left <= 120);
+      chip.style.setProperty("--w-used", `${percentUsed()}%`);
+      chip.title = timerTitle();
+      const text = chip.querySelector(".w-timer-text");
+      if (text) text.textContent = timerLabel(left);
+    }, 1000);
   }
 
   function append(item) {
@@ -1446,12 +1693,20 @@ export function mountWehelChat(options) {
         reply = await ask();
       } catch (firstError) {
         // A spent daily allowance is deterministic — retrying cannot help.
-        if (firstError.code === "attach-limit") throw firstError;
+        // Worse for the clock than for uploads: the retry is a second request,
+        // and a second request charges a second gap.
+        if (firstError.code === "attach-limit" || firstError.code === "time-limit") throw firstError;
         await new Promise((resolve) => setTimeout(resolve, 2000));
         reply = await ask();
       }
     } catch (error) {
-      if (error.code === "attach-limit") {
+      if (error.code === "time-limit") {
+        // Not an outage either: the day's minutes are gone. Said as a normal
+        // reply for the same reason the upload limit is — the "could not be
+        // reached" banner would send the learner into a retry loop against a
+        // wall that only midnight moves.
+        reply = error.message || `That is all our time for today. Come back tomorrow and we can carry on!`;
+      } else if (error.code === "attach-limit") {
         // Not an outage: the tutor is fine, today's upload allowance is spent.
         // Said as a normal reply, because the "could not be reached" banner
         // would be a lie the learner acts on (retrying with the same photo).

@@ -26,6 +26,52 @@ const ATTACH_MEDIA_TYPES = {
 // set — the same shape the PHP keeps in a user preference.
 const attachLedger = { day: "", hashes: new Set() };
 
+// The daily tutoring allowance — mirrors of the wehel_chat.php constants; the
+// contract gate holds the three specs identical. Read "2:10" as "up to grade 2,
+// 10 minutes". Intensive English sends its CEFR level as the grade and so has
+// its own table; a tutoring learner gets double whatever their course allows.
+const DAILY_BANDS = "2:10,4:15,6:20,8:25,99:30";
+const INTENSIVE_BANDS = "2:30,99:60";
+const TUTORING_MULTIPLIER = 2;
+// One pause is worth at most this. See the PHP for why the clock is derived
+// from request timestamps rather than from anything the client reports.
+const IDLE_GAP_SECONDS = 60;
+// One dev learner, so the ledger is module-level — the same shape the PHP keeps
+// in a user preference.
+const timeLedger = { day: "", used: 0, last: 0, tokens: 0, weighted: 0 };
+
+function bandMinutes(spec, grade) {
+  const bands = spec.split(",").map((band) => band.split(":").map(Number)).filter(([, minutes]) => minutes > 0);
+  if (!bands.length) return 0;
+  return (bands.find(([max]) => grade <= max) || bands[bands.length - 1])[1];
+}
+
+function dailyMinutes(grade, subject, category) {
+  const base = subject === "intensive-english" ? bandMinutes(INTENSIVE_BANDS, grade) : bandMinutes(DAILY_BANDS, grade);
+  return category === "tutoring" ? base * TUTORING_MULTIPLIER : base;
+}
+
+// What an exchange cost, from the API's own report — mirrors
+// pqh_wehel_token_total / pqh_wehel_token_weight in wehel_chat.php. `weighted`
+// is the exchange in equivalent fresh-input tokens (a cache read is a tenth of
+// one, a cache write 1.25, output five), which is the half that is about money.
+function tokenTotal(usage) {
+  return (usage.input_tokens || 0) + (usage.cache_creation_input_tokens || 0)
+    + (usage.cache_read_input_tokens || 0) + (usage.output_tokens || 0);
+}
+
+function tokenWeight(usage) {
+  return Math.round((usage.input_tokens || 0)
+    + (usage.cache_creation_input_tokens || 0) * 1.25
+    + (usage.cache_read_input_tokens || 0) * 0.1
+    + (usage.output_tokens || 0) * 5);
+}
+
+function allowanceWords(minutes) {
+  if (minutes > 0 && minutes % 60 === 0) return minutes === 60 ? "an hour" : `${minutes / 60} hours`;
+  return `${minutes} minutes`;
+}
+
 // Validate one image/document block; returns its content hash — what the daily
 // allowance counts, so a retry (or a tool-loop round re-posting the same
 // conversation) is free. Mirrors pqh_wehel_validate_attachment.
@@ -119,6 +165,36 @@ function createWehelChatHandler({ apiKey, model: modelOverride = () => undefined
       if (!conversation.length || conversation[conversation.length - 1].role !== "user") {
         return fail(400, "The last message must be from the learner.");
       }
+      // Read here rather than beside its prompt block below: the daily
+      // allowance is doubled for this category, and that is decided before a
+      // prompt is assembled.
+      const learnerCategory = clean(payload.learnerCategory, 20);
+
+      // The daily tutoring allowance — mirrors wehel_chat.php. Each request
+      // charges the wall-clock gap since the learner's previous one, capped at
+      // IDLE_GAP_SECONDS; the first request of the day charges nothing. It runs
+      // BEFORE the attachment allowance, so a refused request consumes neither.
+      const allowanceMinutes = dailyMinutes(grade, subject, learnerCategory);
+      // tokens/weighted are MEASURED after the call answers, never converted
+      // from the minutes — see wehel_chat.php for why the two do not convert.
+      const time = { limit: allowanceMinutes * 60, used: 0, tokens: timeLedger.tokens, weighted: timeLedger.weighted };
+      if (allowanceMinutes > 0) {
+        const day = new Date().toISOString().slice(0, 10);
+        const now = Math.floor(Date.now() / 1000);
+        if (timeLedger.day !== day) { timeLedger.day = day; timeLedger.used = 0; timeLedger.last = 0; timeLedger.tokens = 0; timeLedger.weighted = 0; }
+        if (timeLedger.last > 0 && now > timeLedger.last) {
+          timeLedger.used += Math.min(now - timeLedger.last, IDLE_GAP_SECONDS);
+        }
+        timeLedger.last = now;
+        time.used = timeLedger.used;
+        if (timeLedger.used >= time.limit) {
+          res.writeHead(429, { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" });
+          res.end(JSON.stringify({ ok: false, code: "time-limit", time,
+            message: `That is all ${allowanceWords(allowanceMinutes)} of Wehel for today — well done. I will be here again tomorrow!` }));
+          return;
+        }
+      }
+
       // Daily allowance, hash-deduped — mirrors wehel_chat.php's user-preference
       // ledger, keyed to the one dev learner.
       if (attachmentHashes.length) {
@@ -182,7 +258,8 @@ function createWehelChatHandler({ apiKey, model: modelOverride = () => undefined
       // category is per-learner-stable and must sit above the hints it
       // reframes. Only categories the prompt source defines append anything.
       // Mirrored in wehel_chat.php.
-      const learnerCategory = clean(payload.learnerCategory, 20);
+      // (learnerCategory is read up with the allowance — it is needed long
+      // before the prompt is assembled.)
       const categoryNote = (promptData.categoryNotes || {})[learnerCategory];
       if (Array.isArray(categoryNote) && categoryNote.length) system += `\n\n${categoryNote.join("\n")}`;
       // Everything appended from here is the VOLATILE tail — it varies between
@@ -244,19 +321,30 @@ function createWehelChatHandler({ apiKey, model: modelOverride = () => undefined
       });
       if (!response.ok) return fail(502, `Anthropic ${response.status}: ${(await response.text()).slice(0, 240)}`);
       const result = await response.json();
+      // What this exchange cost, added to the day's totals before either answer
+      // leaves — the tool-call path included, since a tool round is a real call
+      // that was really paid for.
+      if (result.usage) {
+        timeLedger.tokens += tokenTotal(result.usage);
+        timeLedger.weighted += tokenWeight(result.usage);
+        time.tokens = timeLedger.tokens;
+        time.weighted = timeLedger.weighted;
+      }
       // A tool call goes back to the client, which holds the course data and
       // will re-post with the tool_result appended.
       const toolUse = (result.content || []).find((block) => block.type === "tool_use");
       if (toolUse) {
         res.writeHead(200, { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" });
-        res.end(JSON.stringify({ ok: true, toolUse: { id: toolUse.id, name: toolUse.name, input: toolUse.input }, assistantContent: result.content, model }));
+        res.end(JSON.stringify({ ok: true, toolUse: { id: toolUse.id, name: toolUse.name, input: toolUse.input }, assistantContent: result.content, model, time }));
         return;
       }
       const reply = (result.content || []).filter((block) => block.type === "text").map((block) => block.text).join("").trim();
       if (!reply) return fail(502, "Wehel could not answer just now.");
       const canonical = canonicaliseWehelReply(reply, phrasesForSubject(subject, promptData.phraseBank));
       res.writeHead(200, { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" });
-      res.end(JSON.stringify({ ok: true, reply: canonical, model }));
+      // The day's ledger rides the answer: the panel's timer reads this count
+      // rather than keeping a second clock that could drift away from it.
+      res.end(JSON.stringify({ ok: true, reply: canonical, model, time }));
     } catch (error) {
       // Validation errors carry their own status (400s from the attachment
       // checks); anything else is the generic 503.

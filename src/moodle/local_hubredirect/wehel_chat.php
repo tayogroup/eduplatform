@@ -96,6 +96,103 @@ define('WEHEL_ATTACH_DAILY_LIMIT', 5);
 define('PQH_WEHEL_ATTACH_PER_MESSAGE', 2);
 define('PQH_WEHEL_ATTACH_MAX_BASE64', 2800000); // ≈2MB decoded, per file
 
+// The daily tutoring allowance (owner, 2026-08-28). Wehel is capped per learner
+// per DAY, by how old the learner is: 10 minutes at Grades 1-2 rising to 30 at
+// Grade 9 and above. Intensive English is deliberately NOT on that table — it
+// sends its CEFR LEVEL as the grade, so reading the level as a school year
+// would hand an adult beginner a Grade 1 allowance; the owner set it at 30
+// minutes for Levels 1-2 and an hour above. A tutoring-support learner gets
+// DOUBLE whatever their course allows.
+//
+// This is the copy that ENFORCES. The mirrors are WEHEL_DAILY_BANDS and
+// friends in shell/wehel.js (what the on-screen timer shows) and in
+// tools/lib/wehel-dev-chat.js (local dev), and the contract gate holds the
+// three specs identical — a table written three times in three languages
+// cannot be compared, one string parsed three ways can. Read "2:10" as "up to
+// grade 2, 10 minutes"; the last band's 99 is the open top end.
+define('WEHEL_DAILY_BANDS', '2:10,4:15,6:20,8:25,99:30');
+define('WEHEL_INTENSIVE_BANDS', '2:30,99:60');
+define('WEHEL_TUTORING_MULTIPLIER', 2);
+// What one pause is worth. The clock is the wall-clock time BETWEEN a
+// learner's requests, so an unbroken conversation costs exactly as long as it
+// lasts — but a learner who walks away is not using the tutor, so any single
+// gap is charged at most this. It is also what lets the panel's timer tick
+// without lying: it counts the same seconds this file will charge, and stops
+// where this file stops. The first request of the day charges nothing.
+define('WEHEL_IDLE_GAP_SECONDS', 60);
+
+// Resolve one band spec against a grade. Total by design: an unparseable spec
+// or a grade past the last band lands on the last band rather than on zero,
+// because a bug here must never lock a learner out of the tutor.
+function pqh_wehel_band_minutes(string $spec, int $grade): int {
+    $bands = [];
+    foreach (explode(',', $spec) as $band) {
+        $pair = explode(':', $band);
+        if (count($pair) === 2 && (int)$pair[1] > 0) {
+            $bands[] = [(int)$pair[0], (int)$pair[1]];
+        }
+    }
+    if (!$bands) {
+        return 0;
+    }
+    foreach ($bands as [$max, $minutes]) {
+        if ($grade <= $max) {
+            return $minutes;
+        }
+    }
+    return $bands[count($bands) - 1][1];
+}
+
+// The learner's whole daily allowance, in minutes. Mirror of
+// wehelDailyMinutes in shell/wehel.js.
+function pqh_wehel_daily_minutes(int $grade, string $subject, string $category): int {
+    $base = $subject === 'intensive-english'
+        ? pqh_wehel_band_minutes(WEHEL_INTENSIVE_BANDS, $grade)
+        : pqh_wehel_band_minutes(WEHEL_DAILY_BANDS, $grade);
+    return $category === 'tutoring' ? $base * WEHEL_TUTORING_MULTIPLIER : $base;
+}
+
+// What a question actually COST, from the API's own report rather than from
+// any conversion of the minutes above. Two numbers, because they answer
+// different questions and only one of them is about money:
+//
+//   tokens    every token the exchange moved, cache reads included. With the
+//             unit prompt cached this is roughly 21k per question whatever the
+//             learner asked, so it tracks how MANY questions were asked and
+//             almost nothing else.
+//   weighted  the same exchange in equivalent fresh-input tokens, which is
+//             what it costs: a cache read is a tenth of a fresh input token, a
+//             cache write is 1.25, and output is five times one. A raw sum
+//             rates a long answer as cheap as the cache read that carried it.
+//
+// Both are recorded and neither caps anything yet (owner, 2026-08-28): a limit
+// wants a number taken from real days, and these are the first days measured.
+function pqh_wehel_token_weight(array $usage): int {
+    return (int)round(
+        (int)($usage['input_tokens'] ?? 0)
+        + (int)($usage['cache_creation_input_tokens'] ?? 0) * 1.25
+        + (int)($usage['cache_read_input_tokens'] ?? 0) * 0.1
+        + (int)($usage['output_tokens'] ?? 0) * 5
+    );
+}
+
+function pqh_wehel_token_total(array $usage): int {
+    return (int)($usage['input_tokens'] ?? 0)
+        + (int)($usage['cache_creation_input_tokens'] ?? 0)
+        + (int)($usage['cache_read_input_tokens'] ?? 0)
+        + (int)($usage['output_tokens'] ?? 0);
+}
+
+// "25 minutes", "an hour", "2 hours" — what the allowance is called in the
+// sentence a learner reads. Mirror of wehelAllowanceWords in shell/wehel.js.
+function pqh_wehel_allowance_words(int $minutes): string {
+    if ($minutes > 0 && $minutes % 60 === 0) {
+        $hours = intdiv($minutes, 60);
+        return $hours === 1 ? 'an hour' : $hours . ' hours';
+    }
+    return $minutes . ' minutes';
+}
+
 // The user a per-user external token belongs to — needed only to count
 // attachments, where "who" is the whole point. The configured shared ws_token
 // maps to nobody and returns 0.
@@ -115,6 +212,23 @@ function pqh_wehel_ws_token_userid(string $token): int {
         // Fall through to 0 — an unreadable token identifies nobody.
     }
     return 0;
+}
+
+// Who this request is for, across all three credentials: the launch token
+// names a learner, a logged-in session names one, a per-user external token
+// maps to one, and the configured shared ws_token maps to nobody and returns
+// 0. Both daily allowances — homework uploads and tutoring minutes — are
+// counted against this, and both are unenforceable without it.
+function pqh_wehel_learner_id(int $apiuserid, string $token): int {
+    global $USER;
+
+    if ($apiuserid > 0) {
+        return $apiuserid;
+    }
+    if (isloggedin()) {
+        return (int)$USER->id;
+    }
+    return pqh_wehel_ws_token_userid($token);
 }
 
 // Validate one image/document content block; returns its content hash, which
@@ -246,6 +360,9 @@ $unittitle = $clean($payload['unitTitle'] ?? '', 160);
 $unitno = $clean($payload['unitNo'] ?? '', 8);
 $cambridgecode = $clean($payload['cambridgeCode'] ?? '', 60);
 $modehint = trim((string)($payload['mode'] ?? ''));
+// Read here rather than beside its prompt block below: the daily allowance is
+// doubled for this category, and that is decided before a prompt is assembled.
+$learnercategory = $clean($payload['learnerCategory'] ?? '', 20);
 
 // The course outline is multi-line by design (one unit per line), so it gets
 // its own sanitiser: keep the newlines, collapse other whitespace, cap it.
@@ -382,6 +499,67 @@ if ($pqh_wehel_ratelimit > 0) {
     }
 }
 
+// --- the daily tutoring allowance ----------------------------------------------
+// Minutes per learner per day, by grade (see the bands at the top of this
+// file). The clock is derived from REQUEST TIMESTAMPS, never from anything the
+// client reports: each request charges the wall-clock gap since the learner's
+// previous one, capped at WEHEL_IDLE_GAP_SECONDS, and the first request of the
+// day charges nothing. So an unbroken conversation costs exactly as long as it
+// lasts, a learner who leaves the tab open and walks away is charged one
+// minute for the pause and not the afternoon, and the client's own timer can
+// mirror the arithmetic exactly because it is arithmetic on the same two
+// numbers.
+//
+// The ledger is a user preference ("YYYYMMDD|used|last") for the same reasons
+// the attachment one is: it survives sessions, it costs no schema, and it
+// resets itself at midnight. It runs AFTER the rate limit and BEFORE the
+// attachment allowance, so a refused request consumes neither.
+//
+// An unidentifiable caller is not charged, exactly as pqh_api_rate_limit_ok
+// does not rate-limit one. Every learner resolves — the launch token names one
+// and a session names one — so this is the configured shared ws_token, an
+// operator credential rather than a child.
+$pqh_wehel_learnerid = pqh_wehel_learner_id($pqh_apiuserid, $requesttoken);
+$pqh_wehel_dailyminutes = pqh_wehel_daily_minutes($grade, $subject, $learnercategory);
+// tokens/weighted are MEASURED, never a conversion of the minutes: the two do
+// not convert. What a day costs is driven by how many questions are asked, not
+// how long the learner sits there — the same ten minutes is four questions for
+// a slow reader and twenty for a quick one. See pqh_wehel_token_weight.
+$pqh_wehel_time = ['limit' => $pqh_wehel_dailyminutes * 60, 'used' => 0, 'tokens' => 0, 'weighted' => 0];
+$pqh_wehel_today = date('Ymd');
+$pqh_wehel_now = time();
+if ($pqh_wehel_dailyminutes > 0 && $pqh_wehel_learnerid > 0) {
+    $pqh_wehel_ledger = explode('|', (string)get_user_preferences('local_hubredirect_wehel_time', '', $pqh_wehel_learnerid));
+    $pqh_wehel_sameday = ($pqh_wehel_ledger[0] ?? '') === $pqh_wehel_today;
+    $pqh_wehel_used = $pqh_wehel_sameday ? max(0, (int)($pqh_wehel_ledger[1] ?? 0)) : 0;
+    $pqh_wehel_last = $pqh_wehel_sameday ? max(0, (int)($pqh_wehel_ledger[2] ?? 0)) : 0;
+    // Fields 4 and 5 are the day's token totals, written after the API call
+    // answers. They are carried through this write rather than reset, or every
+    // question would wipe the count made by the one before it.
+    $pqh_wehel_time['tokens'] = $pqh_wehel_sameday ? max(0, (int)($pqh_wehel_ledger[3] ?? 0)) : 0;
+    $pqh_wehel_time['weighted'] = $pqh_wehel_sameday ? max(0, (int)($pqh_wehel_ledger[4] ?? 0)) : 0;
+    if ($pqh_wehel_last > 0 && $pqh_wehel_now > $pqh_wehel_last) {
+        $pqh_wehel_used += min($pqh_wehel_now - $pqh_wehel_last, WEHEL_IDLE_GAP_SECONDS);
+    }
+    set_user_preference('local_hubredirect_wehel_time',
+        $pqh_wehel_today . '|' . $pqh_wehel_used . '|' . $pqh_wehel_now
+        . '|' . $pqh_wehel_time['tokens'] . '|' . $pqh_wehel_time['weighted'], $pqh_wehel_learnerid);
+    $pqh_wehel_time['used'] = $pqh_wehel_used;
+    if ($pqh_wehel_used >= $pqh_wehel_time['limit']) {
+        // 429 with a code, not a bare 429: the panel renders a coded refusal as
+        // a normal reply from the tutor, and an uncoded one as "Wehel could not
+        // be reached" — which would be a lie the learner acts on by retrying
+        // against a wall only midnight moves.
+        pqh_wehel_json(429, [
+            'ok' => false,
+            'code' => 'time-limit',
+            'message' => 'That is all ' . pqh_wehel_allowance_words($pqh_wehel_dailyminutes)
+                . ' of Wehel for today — well done. I will be here again tomorrow!',
+            'time' => $pqh_wehel_time,
+        ]);
+    }
+}
+
 // --- homework attachment daily allowance ---------------------------------------
 // WEHEL_ATTACH_DAILY_LIMIT files per learner per day, counted by CONTENT HASH so
 // the client's one automatic retry — and the tool loop, which re-posts the same
@@ -393,9 +571,7 @@ if ($pqh_wehel_ratelimit > 0) {
 // token maps to one, and the configured shared ws_token maps to nobody: that
 // caller is refused, because an uncountable allowance is no allowance.
 if ($attachmenthashes) {
-    global $USER;
-    $attachuserid = $pqh_apiuserid > 0 ? $pqh_apiuserid
-        : (isloggedin() ? (int)$USER->id : pqh_wehel_ws_token_userid($requesttoken));
+    $attachuserid = $pqh_wehel_learnerid;
     if ($attachuserid <= 0) {
         pqh_wehel_json(403, ['ok' => false, 'code' => 'attach-login', 'message' => 'Homework files need a learner login — open the course from the platform and try again.']);
     }
@@ -463,7 +639,8 @@ $system = strtr($system, [
 // the volatile hints it reframes. Only categories the prompt source defines
 // append anything, so an absent or unknown value builds byte-identical to
 // before this existed. Mirror of the same step in tools/lib/wehel-dev-chat.js.
-$learnercategory = $clean($payload['learnerCategory'] ?? '', 20);
+// ($learnercategory is read up with the other cleaned fields — the daily
+// allowance needs it long before the prompt does.)
 $categorynote = ($promptdata['categoryNotes'] ?? [])[$learnercategory] ?? null;
 if (is_array($categorynote) && $categorynote) {
     $system .= "\n\n" . implode("\n", array_map('strval', $categorynote));
@@ -609,6 +786,23 @@ if ($response === false || $status < 200 || $status >= 300) {
     ]);
 }
 $result = json_decode((string)$response, true);
+
+// What this exchange cost, added to the day's running totals before either
+// answer leaves. It is recorded HERE rather than in the allowance block above
+// because the usage does not exist until the API has answered — and it is
+// recorded on the tool-call path too, since a tool round is a real call that
+// was really paid for. The time fields are rewritten unchanged: this write and
+// the one above are the same five-field ledger, and dropping the last-seen
+// stamp here would restart the clock on every question.
+$pqh_wehel_usage = is_array($result['usage'] ?? null) ? $result['usage'] : [];
+if ($pqh_wehel_usage && $pqh_wehel_learnerid > 0) {
+    $pqh_wehel_time['tokens'] += pqh_wehel_token_total($pqh_wehel_usage);
+    $pqh_wehel_time['weighted'] += pqh_wehel_token_weight($pqh_wehel_usage);
+    set_user_preference('local_hubredirect_wehel_time',
+        $pqh_wehel_today . '|' . $pqh_wehel_time['used'] . '|' . $pqh_wehel_now
+        . '|' . $pqh_wehel_time['tokens'] . '|' . $pqh_wehel_time['weighted'], $pqh_wehel_learnerid);
+}
+
 // A tool call goes back to the client, which holds the course data and will
 // re-post with the tool_result appended.
 foreach ((array)($result['content'] ?? []) as $block) {
@@ -618,6 +812,7 @@ foreach ((array)($result['content'] ?? []) as $block) {
             'toolUse' => ['id' => $block['id'] ?? '', 'name' => $block['name'] ?? '', 'input' => $block['input'] ?? new stdClass()],
             'assistantContent' => $result['content'],
             'model' => $model,
+            'time' => $pqh_wehel_time,
         ]);
     }
 }
@@ -633,4 +828,6 @@ if ($reply === '') {
 }
 $reply = pqh_wehel_canonicalise($reply, pqh_wehel_phrases($promptdata, $subject));
 
-pqh_wehel_json(200, ['ok' => true, 'reply' => $reply, 'model' => $model]);
+// The day's ledger rides the answer: the panel's timer is a reading of this
+// count, not a second clock of its own that could drift away from it.
+pqh_wehel_json(200, ['ok' => true, 'reply' => $reply, 'model' => $model, 'time' => $pqh_wehel_time]);

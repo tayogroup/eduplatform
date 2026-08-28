@@ -44,8 +44,8 @@ globalThis.location = { hostname: "localhost", port: "4287", search: "", href: "
 globalThis.localStorage = { getItem: () => null, setItem: () => {} };
 
 const wehel = await import(pathToFileURL(SHELL).href);
-const { apiMessages, withoutMediaPlumbing, unitForTutor, UNIT_JSON_LIMIT, withAttachmentBlocks, homeworkContextText, HOMEWORK_CONTEXT_LIMIT, WEHEL_ATTACH_DAILY_LIMIT, teacherPrompts, storedTeacherScript } = wehel;
-for (const [name, value] of Object.entries({ apiMessages, withoutMediaPlumbing, unitForTutor, UNIT_JSON_LIMIT, withAttachmentBlocks, homeworkContextText, HOMEWORK_CONTEXT_LIMIT, WEHEL_ATTACH_DAILY_LIMIT, teacherPrompts, storedTeacherScript })) {
+const { apiMessages, withoutMediaPlumbing, unitForTutor, UNIT_JSON_LIMIT, withAttachmentBlocks, homeworkContextText, HOMEWORK_CONTEXT_LIMIT, WEHEL_ATTACH_DAILY_LIMIT, teacherPrompts, storedTeacherScript, WEHEL_DAILY_BANDS, WEHEL_INTENSIVE_BANDS, WEHEL_TUTORING_MULTIPLIER, WEHEL_IDLE_GAP_SECONDS, wehelDailyMinutes, setWehelTimeLedger, wehelTimeLedger } = wehel;
+for (const [name, value] of Object.entries({ apiMessages, withoutMediaPlumbing, unitForTutor, UNIT_JSON_LIMIT, withAttachmentBlocks, homeworkContextText, HOMEWORK_CONTEXT_LIMIT, WEHEL_ATTACH_DAILY_LIMIT, teacherPrompts, storedTeacherScript, WEHEL_DAILY_BANDS, WEHEL_INTENSIVE_BANDS, WEHEL_TUTORING_MULTIPLIER, WEHEL_IDLE_GAP_SECONDS, wehelDailyMinutes, setWehelTimeLedger, wehelTimeLedger })) {
   if (value === undefined) fail("shell/wehel.js no longer exports what this gate checks", `${name} is missing — restore the export rather than deleting the check`);
 }
 if (failures.length) { report(); process.exit(1); }
@@ -173,6 +173,195 @@ if (phpCap !== UNIT_JSON_LIMIT || devCap !== UNIT_JSON_LIMIT) {
   const devAttach = capIn(DEV, /const ATTACH_DAILY_LIMIT = (\d+)/);
   if (phpAttach !== WEHEL_ATTACH_DAILY_LIMIT || devAttach !== WEHEL_ATTACH_DAILY_LIMIT) {
     fail("The three attachment daily limits disagree", `wehel.js ${WEHEL_ATTACH_DAILY_LIMIT}, wehel_chat.php ${phpAttach}, wehel-dev-chat.js ${devAttach} — the owner set 5 a day per student, and the server copy is the one that enforces it`);
+  }
+}
+
+// --- 2b. the daily tutoring allowance ---------------------------------------
+// Owner, 2026-08-28: minutes per learner per day, by grade. Three files again,
+// and this one is the worst of the three to let drift — the client's copy
+// draws the TIMER a learner watches, so a disagreement is not a silently
+// smaller cap but a clock that runs out while the number on screen still says
+// there is time, or the reverse.
+//
+// Checked two ways, because either alone passes something real. The SPECS must
+// be identical strings (a table written three times in three languages cannot
+// be compared; one string parsed three ways can) — and the resolved minutes
+// must match the owner's table for every grade, so a parser that keeps the
+// string and misreads it still fails.
+{
+  const textIn = (file, re) => { const m = fs.readFileSync(file, "utf8").match(re); return m ? m[1] : null; };
+  const specs = [
+    ["daily bands", WEHEL_DAILY_BANDS,
+      textIn(PHP, /define\('WEHEL_DAILY_BANDS',\s*'([^']+)'\)/),
+      textIn(DEV, /const DAILY_BANDS = "([^"]+)"/)],
+    ["intensive bands", WEHEL_INTENSIVE_BANDS,
+      textIn(PHP, /define\('WEHEL_INTENSIVE_BANDS',\s*'([^']+)'\)/),
+      textIn(DEV, /const INTENSIVE_BANDS = "([^"]+)"/)],
+    ["tutoring multiplier", String(WEHEL_TUTORING_MULTIPLIER),
+      textIn(PHP, /define\('WEHEL_TUTORING_MULTIPLIER',\s*(\d+)\)/),
+      textIn(DEV, /const TUTORING_MULTIPLIER = (\d+)/)],
+    // The gap cap is what makes the on-screen timer honest: the panel ticks by
+    // this number because the server charges by it. Drift and the timer lies.
+    ["idle gap", String(WEHEL_IDLE_GAP_SECONDS),
+      textIn(PHP, /define\('WEHEL_IDLE_GAP_SECONDS',\s*(\d+)\)/),
+      textIn(DEV, /const IDLE_GAP_SECONDS = (\d+)/)],
+  ];
+  for (const [name, shell, php, dev] of specs) {
+    if (php === null || dev === null) {
+      fail(`The daily-allowance ${name} cannot be read out of both servers`, `wehel_chat.php ${php === null ? "not found" : php}, wehel-dev-chat.js ${dev === null ? "not found" : dev} — a spec this gate cannot find is a spec it is not comparing, and it would print a tick either way`);
+    } else if (php !== shell || dev !== shell) {
+      fail(`The three daily-allowance ${name} specs disagree`, `wehel.js "${shell}", wehel_chat.php "${php}", wehel-dev-chat.js "${dev}" — the server copy enforces and the client copy is the timer the learner watches`);
+    }
+  }
+
+  // The owner's table, stated here in full rather than derived from the spec —
+  // deriving it from the thing under test would prove only that the parser
+  // agrees with itself.
+  const expected = [
+    // grade, subject, school minutes, tutoring minutes (double)
+    [1, "science", 10, 20], [2, "english", 10, 20],
+    [3, "mathematics", 15, 30], [4, "computing", 15, 30],
+    [5, "science", 20, 40], [6, "global-perspectives", 20, 40],
+    [7, "english", 25, 50], [8, "mathematics", 25, 50],
+    [9, "science", 30, 60],
+    // Intensive English sends its CEFR LEVEL as the grade, so it is off the
+    // school table entirely: 30 minutes at Levels 1-2, an hour above.
+    [1, "intensive-english", 30, 60], [2, "intensive-english", 30, 60],
+    [3, "intensive-english", 60, 120], [5, "intensive-english", 60, 120],
+  ];
+  for (const [grade, subject, school, tutoring] of expected) {
+    const got = wehelDailyMinutes({ grade, subject });
+    const gotTutoring = wehelDailyMinutes({ grade, subject, learnerCategory: "tutoring" });
+    if (got !== school || gotTutoring !== tutoring) {
+      fail("The daily allowance does not match the owner's table", `grade ${grade} ${subject}: ${got} minutes (tutoring ${gotTutoring}), expected ${school} (tutoring ${tutoring})`);
+    }
+  }
+  // A bug in the band parser must never lock a learner OUT of the tutor, so
+  // every one of these resolves to a real allowance rather than to zero.
+  for (const [grade, subject] of [[0, "science"], [99, "science"], ["", "english"], [null, "computing"], [4, "unknown-subject"]]) {
+    if (!(wehelDailyMinutes({ grade, subject }) > 0)) {
+      fail("A malformed grade resolves to no allowance at all", `grade ${JSON.stringify(grade)} in ${subject} resolved to 0 minutes — zero is a locked-out learner, not a safe default`);
+    }
+  }
+
+  // The client must SEND nothing for this and the servers must CHARGE. Both
+  // servers refuse with a code, because the panel renders an uncoded 429 as
+  // "Wehel could not be reached" — the shape that had the last rate limit
+  // switched off in 2026-08 for reading as an outage.
+  // Neither server can be imported and run from here — wehel_chat.php executes
+  // against a live Moodle at require time — so this half reads their source.
+  // It names the MECHANISM rather than a marker string: a marker proves
+  // presence, and one occurrence of a preference name survives having the
+  // ledger torn out around it (mutation-tested; a single-marker version of
+  // this check passed a half-renamed ledger).
+  //
+  // Be exact about what this half CANNOT see: it reads text, so dead code
+  // reads as live code. Wrapping the ledger write in `if (false)` leaves every
+  // pattern below matching and the allowance unenforced. Nothing short of
+  // running the PHP against a Moodle can catch that, and the pure functions
+  // that could be tested that way (pqh_wehel_band_minutes) are not where the
+  // enforcement lives. The client half above IS behavioural — its functions
+  // are imported and run — which is why the timer's arithmetic is checked by
+  // exercising it rather than by matching it.
+  const sourceRules = [
+    [PHP, "wehel_chat.php", [
+      [/get_user_preferences\('local_hubredirect_wehel_time'/, "reads the day's ledger"],
+      // TWO writes, and they are not interchangeable: the clock is written
+      // before the API call (so a refused or failed question still costs the
+      // time it took) and the token totals after it (they do not exist until
+      // the API answers). Named by the field that differs, because a rule
+      // matching "the ledger is written somewhere" is satisfied by either one
+      // while the other is gone — mutation-tested, and the loose version
+      // passed a deleted clock write.
+      [/\$pqh_wehel_today \. '\|' \. \$pqh_wehel_used \. '\|' \. \$pqh_wehel_now/, "writes the day's clock back before the call — without this the clock resets on every question"],
+      [/\$pqh_wehel_today \. '\|' \. \$pqh_wehel_time\['used'\] \. '\|' \. \$pqh_wehel_now/, "writes the day's token totals back after the call"],
+      [/min\(\$pqh_wehel_now - \$pqh_wehel_last, WEHEL_IDLE_GAP_SECONDS\)/, "charges the gap since the learner's last question, capped at one pause"],
+      [/\$pqh_wehel_used >= \$pqh_wehel_time\['limit'\]/, "refuses once the day's minutes are spent"],
+      [/'code' => 'time-limit'/, "codes the refusal, so the panel can tell it from an outage"],
+      [/'time' => \$pqh_wehel_time/, "sends the ledger back with the answer, which is what the timer reads"],
+      // Tokens are MEASURED from the API's own report. Nothing may derive them
+      // from the minutes: cost is driven by how many questions were asked, not
+      // by how long the learner sat there, so a minutes→tokens ratio would be
+      // wrong per learner in both directions.
+      [/\$pqh_wehel_usage = is_array\(\$result\['usage'\]/, "reads the token usage the API reports"],
+      [/\$pqh_wehel_time\['weighted'\] \+= pqh_wehel_token_weight/, "adds the exchange to the day's cost-weighted total"],
+      [/\$pqh_wehel_time\['tokens'\] \+= pqh_wehel_token_total/, "adds the exchange to the day's raw token total"],
+    ]],
+    [DEV, "wehel-dev-chat.js", [
+      [/Math\.min\(now - timeLedger\.last, IDLE_GAP_SECONDS\)/, "charges the capped gap"],
+      [/timeLedger\.used >= time\.limit/, "refuses once the day's minutes are spent"],
+      [/code: "time-limit"/, "codes the refusal"],
+      [/reply: canonical, model, time/, "sends the ledger back with the answer"],
+      [/timeLedger\.weighted \+= tokenWeight\(result\.usage\)/, "measures what the exchange cost, mirroring wehel_chat.php"],
+    ]],
+    [SHELL, "shell/wehel.js", [
+      [/setWehelTimeLedger\(result\.time/, "reads the ledger back off every answer — without it the timer freezes at the last good number"],
+      [/error\.code === "time-limit"/, "answers a spent allowance as a reply, not as \"Wehel could not be reached\""],
+      [/firstError\.code === "attach-limit" \|\| firstError\.code === "time-limit"/, "does not retry a spent allowance — the retry is a second request, and a second request charges a second gap"],
+    ]],
+  ];
+  for (const [file, label, rules] of sourceRules) {
+    const source = fs.readFileSync(file, "utf8");
+    for (const [pattern, what] of rules) {
+      if (!pattern.test(source)) {
+        fail(`${label} no longer ${what}`, `the daily allowance is enforced by the SERVERS and shown by the client; ${label} is missing ${pattern} — if you reshaped this deliberately, update the gate in the same commit rather than deleting the rule`);
+      }
+    }
+  }
+  // The clock the panel shows must be the server's count plus at most one
+  // capped gap — the arithmetic the server itself does.
+  {
+    const now = Date.now();
+    setWehelTimeLedger({ limit: 600, used: 540 }, now - 10_000);
+    const ledger = wehelTimeLedger();
+    if (!ledger || Math.abs(ledger.used - 550) > 2) {
+      fail("The panel's clock does not tick with the seconds since the question was sent", `used read ${ledger ? ledger.used : "nothing"}, expected about 550`);
+    }
+    setWehelTimeLedger({ limit: 600, used: 540 }, now - 600_000);
+    const idled = wehelTimeLedger();
+    if (!idled || idled.used !== 540 + WEHEL_IDLE_GAP_SECONDS) {
+      fail("The panel's clock keeps running while the learner is away", `after ten idle minutes it read ${idled ? idled.used : "nothing"}, and the server would charge ${540 + WEHEL_IDLE_GAP_SECONDS} — a timer that outruns the server tells a learner their time is gone when it is not`);
+    }
+    if (!idled || idled.left !== 600 - idled.used) {
+      fail("The panel's clock does not agree with itself", `left ${idled ? idled.left : "nothing"} against limit 600 and used ${idled ? idled.used : "?"}`);
+    }
+
+    // The percentage and the bar are one number, so the number has to be the
+    // clock's own — a second computation of "how much is gone" is a second
+    // thing to drift.
+    setWehelTimeLedger({ limit: 600, used: 150 }, now);
+    const quarter = wehelTimeLedger();
+    if (!quarter || quarter.percentUsed !== 25) {
+      fail("The percentage does not follow the clock", `150s of 600s read as ${quarter ? quarter.percentUsed : "nothing"}%, expected 25%`);
+    }
+    // …and it must follow the TICKING clock, not the number the server last
+    // sent. Checked with a gap on the wire, because with none the two agree
+    // and a percentage computed off the stale figure passes unnoticed.
+    setWehelTimeLedger({ limit: 600, used: 150 }, now - 30_000);
+    const ticked = wehelTimeLedger();
+    if (!ticked || ticked.percentUsed !== 30 || ticked.used !== 180) {
+      fail("The percentage is computed from the server's figure, not the clock on screen", `30s after a 150s-of-600s reading it says ${ticked ? ticked.percentUsed : "nothing"}% of ${ticked ? ticked.used : "?"}s, expected 30% of 180s — the bar and the clock beside it would disagree`);
+    }
+    // A bar that overshoots its own track reads as a fault, and the clock is
+    // already held at zero, so the percentage is held at 100.
+    setWehelTimeLedger({ limit: 600, used: 900 }, now);
+    const over = wehelTimeLedger();
+    if (!over || over.percentUsed !== 100 || over.left !== 0) {
+      fail("An overspent day reports past its own limit", `used 900 of 600 read as ${over ? over.percentUsed : "nothing"}% with ${over ? over.left : "?"}s left, expected 100% and 0s`);
+    }
+    // Tokens are CARRIED from the server, never derived here. A client that
+    // computed them from the minutes would be inventing the one number on this
+    // panel that is supposed to be measured.
+    setWehelTimeLedger({ limit: 600, used: 150, tokens: 84_000, weighted: 9_400 }, now);
+    const spend = wehelTimeLedger();
+    if (!spend || spend.tokens !== 84_000 || spend.weighted !== 9_400) {
+      fail("The token reading is not carried through from the server", `read ${JSON.stringify(spend)} — the client must report what the API charged, not a conversion of the clock`);
+    }
+    setWehelTimeLedger({ limit: 600, used: 150 }, now);
+    if (wehelTimeLedger().tokens !== 0) {
+      fail("A ledger with no token reading invents one", "an answer that carried no usage must read 0, not a number derived from the minutes");
+    }
+    notes.push(`allowance 10-30 min by grade, ×${WEHEL_TUTORING_MULTIPLIER} tutoring, ${WEHEL_IDLE_GAP_SECONDS}s gap cap`);
   }
 }
 

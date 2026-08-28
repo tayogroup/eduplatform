@@ -359,6 +359,147 @@ Two things it cannot see, both server-side config: the model
 (`wehel_chat_rate_limit`, 0 = off — the machinery is intact, set it to restore
 the cap on a paid endpoint).
 
+### The daily allowance: minutes of Wehel per learner per day (2026-08-28)
+
+Owner decision. Wehel is capped per learner per DAY, by how old the learner is:
+
+| grade | 1-2 | 3-4 | 5-6 | 7-8 | 9 and above |
+| --- | --- | --- | --- | --- | --- |
+| minutes | 10 | 15 | 20 | 25 | 30 |
+
+Two exceptions, both decided at the same time and both for reasons the grade
+number cannot carry:
+
+- **Intensive English is off that table entirely** — 30 minutes at Levels 1-2,
+  an hour above. It sends its CEFR LEVEL as `grade` (`grade: levelNumber` in
+  `shell/subjects/intensive-english.js`), so reading it as a school year hands
+  an adult beginner a Grade 1 allowance. This is the trap to know before
+  touching the bands: the field is called grade in the payload and is not one
+  for one of the six subjects.
+- **A tutoring-support learner gets DOUBLE** whatever their course allows
+  (20/30/40/50/60, and 60/120 in Intensive English). They are paying for the
+  tutor rather than getting it beside a lesson.
+
+**Minutes are wall-clock time between the learner's own requests, derived
+server-side from timestamps — never from anything the client reports.** Each
+request charges the gap since that learner's previous one, capped at
+`WEHEL_IDLE_GAP_SECONDS` (60); the first request of the day charges nothing. So
+an unbroken conversation costs exactly as long as it lasts, a learner who walks
+away with the tab open is charged one minute for the pause rather than the
+afternoon, and the four-round tool loop — which re-posts the same conversation —
+costs the seconds it actually takes instead of four turns' worth. The ledger is
+a user preference (`local_hubredirect_wehel_time`, `"YYYYMMDD|used|last"`), the
+same shape and for the same reasons as the attachment one beside it: no schema,
+survives sessions, resets itself at midnight.
+
+**The gap cap is what lets the on-screen timer be honest.** The panel shows the
+server's own count plus the seconds since the question was sent, capped by the
+same number — so the client is doing the server's arithmetic on the server's
+data, not keeping a second clock that could disagree with it. Change the cap in
+one file and the timer starts lying in one direction or the other; the contract
+gate holds all three copies equal for exactly that reason.
+
+**Four specs, three files, one string each.** `WEHEL_DAILY_BANDS`,
+`WEHEL_INTENSIVE_BANDS`, `WEHEL_TUTORING_MULTIPLIER` and
+`WEHEL_IDLE_GAP_SECONDS` live in `shell/wehel.js`, `wehel_chat.php` and
+`tools/lib/wehel-dev-chat.js`. The bands are **strings** (`"2:10,4:15,6:20,8:25,99:30"`,
+read as "up to grade 2, 10 minutes") precisely so the three can be compared: a
+table written three times in three languages cannot be, one string parsed three
+ways can. `check:wehel-contract` compares the specs AND resolves the owner's
+table for every grade, because a parser that keeps the string and misreads it
+would pass the first check alone.
+
+**The timer survives a page load.** The panel caches the server's last reading
+in `localStorage` under the day it was read (`wehel-time-v1`), so a learner who
+opens a second subject or comes back after lunch is not shown a full allowance
+until their next question corrects it — a timer that resets on every page load
+is not a timer. It is a cache of the server's answer and never a second
+authority: the server charges and refuses whatever it says, a cleared cache
+costs the learner nothing, and a ledger dated yesterday is discarded rather than
+carried, because the server resets at midnight too.
+
+**Percentage is displayed; tokens are MEASURED, not converted (2026-08-28).**
+Asked for "the allocated time converted to tokens and percentage used
+displayed". Half of that holds and half does not, and the half that does not is
+worth knowing before anyone tries again:
+
+- **Minutes and tokens do not convert.** Measured across all 410 units, one
+  question carries a median ~21k input tokens (p90 31k, max 48k) — the unit
+  JSON. So a day's cost is driven by how many QUESTIONS are asked, not by how
+  long the learner sits there: the same ten minutes is four questions for a
+  slow reader and twenty for a quick one, a 5× spread on one allowance. Any
+  minutes→tokens ratio is a guess that is wrong per learner in both directions,
+  which is why nothing here derives one and the gate fails a client that tries.
+- **Because the unit prompt is cached, RAW tokens are a question counter in
+  disguise** — roughly 21k per question whatever was asked. The figure that
+  carries meaning is cost-weighted, so both are recorded: `tokens` (everything
+  the exchange moved) and `weighted` (the same exchange in equivalent
+  fresh-input tokens — a cache read is a tenth of one, a cache write 1.25,
+  output five times one).
+- **The measurement is free and was already on the wire.** The Messages API
+  returns `usage` in the reply `wehel_chat.php` already parses, and nothing
+  read it. No extra call, no estimate.
+- **Neither token figure caps anything yet.** A limit wants a number taken from
+  real days, and these are the first days measured. The ledger grew two fields
+  for it (`YYYYMMDD|used|last|tokens|weighted`).
+
+On screen the learner sees the clock and the share of the day gone —
+`15:58 left · 36% used` — with the chip itself as the bar (`--w-used` is the
+fill, so the percentage and the bar are one number and cannot disagree). The
+token reading is in the chip's title, not on its face: a percentage of time is
+something a Grade 1 can read off a bar, and a token count is a number about our
+API bill rather than about their lesson. If it should be on the face for older
+learners, that is a one-line change to `timerLabel`.
+
+**The ledger is written TWICE per question and the two are not
+interchangeable**: the clock before the API call (so a refused or failed
+question still costs the time it took) and the token totals after it (they do
+not exist until the API answers). The gate names each by the field that differs
+between them, because a rule matching "the ledger is written somewhere" is
+satisfied by either one while the other is gone — mutation-tested, and the
+loose version passed a deleted clock write.
+
+**A spent allowance is refused with a CODE, not a bare 429**, and this is the
+one piece of prior art that had to be respected: the 20/min rate limit was
+switched off in 2026-08 because the panel renders an uncoded 429 as the same
+"Wehel could not be reached" bubble as a real outage, so a cap read as a
+breakage. `code: "time-limit"` is answered as an ordinary reply from the tutor,
+the retry is skipped (a retry is a second request, and a second request charges
+a second gap), and the compose row is replaced by a sentence saying when Wehel
+comes back rather than a disabled input with no explanation.
+
+Mutation-tested twenty-one ways — every spec drifting in either server, a renamed
+define the gate can no longer read, an off-by-one band parser, a spec that
+parses to nothing, a timer that ignores the gap cap, a percentage computed off
+the server's stale figure instead of the ticking clock, a client that invents a
+token count from the minutes or stops reading the ledger back or starts
+retrying, either server dropping the usage measurement, and each half of the PHP
+ledger torn out — all caught, and the gate passes again on restore. Four
+mutations had to be REWRITTEN before they meant anything: three replaced only
+the first of two occurrences and one was a no-op that evaluated identically, so
+each "survived" a gate that was in fact fine. **A mutation that survives is a
+claim about the gate and about the mutation, and the mutation is the cheaper
+thing to be wrong about — check it first.** **One blind spot is
+recorded in the gate itself rather than papered over**: the PHP half is checked
+by reading source, so dead code reads as live code — wrapping the ledger write
+in `if (false)` leaves every pattern matching and the allowance unenforced.
+Nothing short of running the PHP against a Moodle catches that, and the pure
+functions that could be tested that way are not where the enforcement lives.
+The client half IS behavioural (its functions are imported and run), which is
+why the timer's arithmetic is exercised rather than matched.
+
+Two things this does NOT cover, both worth knowing before assuming a learner is
+capped:
+
+- **An unidentifiable caller is not charged**, exactly as `pqh_api_rate_limit_ok`
+  does not rate-limit one. Every learner resolves — the launch token names one
+  and a session names one — so in practice this is the configured shared
+  `ws_token`, an operator credential rather than a child.
+- **`wehel_speak.php` and `wehel_listen.php` are not metered.** A voice question
+  goes through `wehel_chat.php` like any other, so voice tutoring is charged;
+  the TTS of a reply and the transcription of a question are not separately
+  billed against the clock, because they belong to a turn that already was.
+
 ## The tutoring topic index
 
 ```bash

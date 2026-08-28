@@ -420,6 +420,28 @@ export const WEHEL_ATTACH_PER_MESSAGE = 2;
 export const WEHEL_DAILY_BANDS = "2:10,4:15,6:20,8:25,99:30";
 export const WEHEL_INTENSIVE_BANDS = "2:30,99:60";
 export const WEHEL_TUTORING_MULTIPLIER = 2;
+
+// The day's SPEND ceiling, derived from the same minutes rather than listed in
+// a table of its own (owner, 2026-08-28: cap the tokens too). One constant, so
+// there is nothing that can drift out of step with the bands, and the tutoring
+// doubling and the Intensive English table both carry through for free.
+//
+// It is a BACKSTOP, not a second product limit. The minutes are the rule a
+// learner feels and can see counting down; this stops a runaway day — a stuck
+// client, an unlucky loop, a learner opening unit after unit — from costing
+// unbounded money, and in ordinary use it must never be what stops anybody.
+//
+// Measured on production 2026-08-28: a whole two-question session cost 56,037
+// weighted, of which 49,882 was the first question's cache WRITE of the unit
+// prompt and 6,155 the follow-up's cache READ. So cost tracks how many UNITS
+// are opened, roughly 50k for each new one and ~6k per question after it. At
+// 50,000 per allowed minute a Grade 1's 10 minutes buys about ten fresh units
+// or a hundred follow-ups, several times what that many minutes can hold.
+export const WEHEL_WEIGHTED_TOKENS_PER_MINUTE = 50000;
+
+export function wehelDailyTokenLimit(meta) {
+  return wehelDailyMinutes(meta) * WEHEL_WEIGHTED_TOKENS_PER_MINUTE;
+}
 // What a pause is worth. The clock is the wall-clock time BETWEEN a learner's
 // requests, so an unbroken conversation costs exactly as long as it lasts —
 // but a learner who walks away is not using the tutor, so any single gap is
@@ -493,6 +515,10 @@ export function setWehelTimeLedger(ledger, sentAt = Date.now()) {
     // ratio between them would be wrong per learner in both directions.
     tokens: Math.max(0, Number(ledger.tokens) || 0),
     weighted: Math.max(0, Number(ledger.weighted) || 0),
+    // The day's spend ceiling, as the SERVER resolved it. Carried rather than
+    // recomputed here for the same reason the minute limit is: the copy that
+    // refuses is the only one that decides.
+    tokenLimit: Math.max(0, Number(ledger.tokenLimit) || 0),
     // The moment the request that produced this reading was SENT, not the
     // moment it came back: the server stamped the ledger on arrival, and a
     // reply can be ten seconds behind it.
@@ -518,6 +544,12 @@ export function wehelTimeLedger() {
       : 0,
     tokens: timeLedger.tokens,
     weighted: timeLedger.weighted,
+    tokenLimit: timeLedger.tokenLimit,
+    // Spent on SPEND rather than on time. A backstop that should never be what
+    // stops a learner — but when it does, the panel has to close the same way
+    // it closes for a spent clock, or the composer stays open over an endpoint
+    // that will only refuse.
+    tokensSpent: timeLedger.tokenLimit > 0 && timeLedger.weighted >= timeLedger.tokenLimit,
   };
 }
 
@@ -1399,7 +1431,12 @@ export function mountWehelChat(options) {
     const ledger = wehelTimeLedger();
     return ledger ? ledger.percentUsed : 0;
   };
-  const timeSpent = () => allowanceMinutes > 0 && timeLeftSeconds() <= 0;
+  // Either ceiling closes the day. The clock is the one the learner watches;
+  // the spend ceiling is a backstop that in ordinary use never fires, so it is
+  // reported in its own words rather than as "your time is up", which would be
+  // untrue and would leave a visible clock contradicting the panel under it.
+  const tokensSpent = () => Boolean(wehelTimeLedger()?.tokensSpent);
+  const timeSpent = () => (allowanceMinutes > 0 && timeLeftSeconds() <= 0) || tokensSpent();
   // The clock, the share of the day it represents, and what that day has cost.
   // The percentage is on the face of the chip and the tokens are in its title:
   // a percentage of the time is something a Grade 1 can read off a bar, and a
@@ -1407,6 +1444,7 @@ export function mountWehelChat(options) {
   // The chip is its own progress bar — the fill is the percentage.
   const showsTokens = wehelShowsTokenCount({ grade: meta.grade, subject: meta.subject });
   const timerLabel = (left) => {
+    if (tokensSpent()) return "That is all for today";
     if (left <= 0) return "Time is up for today";
     const ledger = wehelTimeLedger();
     // Only once there is something to count: "0 tokens" before the first
@@ -1427,7 +1465,7 @@ export function mountWehelChat(options) {
   const timeChipHtml = () => {
     if (allowanceMinutes <= 0) return "";
     const left = timeLeftSeconds();
-    const state = left <= 0 ? " is-spent" : (left <= 120 ? " is-low" : "");
+    const state = (left <= 0 || tokensSpent()) ? " is-spent" : (left <= 120 ? " is-low" : "");
     return `<span class="w-timer${state}" id="wehel-timer" role="timer" aria-live="off"`
       + ` style="--w-used:${percentUsed()}%" title="${escapeHtml(timerTitle())}">`
       + `${wehelIcon("clock")}<span class="w-timer-text">${escapeHtml(timerLabel(left))}</span></span>`;
@@ -1561,7 +1599,9 @@ export function mountWehelChat(options) {
       </div>
       <div class="ai-prompts">${spent ? "" : prompts.map((prompt) => `<button data-wehel-prompt="${escapeHtml(prompt.message)}" data-wehel-mode="${escapeHtml(prompt.mode || "")}"${prompt.teach ? ' data-wehel-teach="1"' : ""} type="button" ${busy ? "disabled" : ""}>${escapeHtml(prompt.label)}</button>`).join("")}</div>
       ${pendingAttachments.length && !spent ? `<div class="w-attach-row">${pendingAttachments.map((file, index) => `<span class="w-attach-chip"><span>${escapeHtml(file.name)}</span><button type="button" data-wehel-detach="${index}" aria-label="Remove ${escapeHtml(file.name)}">×</button></span>`).join("")}</div>` : ""}
-      ${spent ? `<p class="w-time-spent">${wehelIcon("clock")} That is all ${escapeHtml(wehelAllowanceWords(allowanceMinutes))} of ${escapeHtml(tutorLabel)} for today — well done. I will be here again tomorrow.</p>` : `
+      ${spent ? `<p class="w-time-spent">${wehelIcon("clock")} ${tokensSpent()
+        ? `We have done a great deal of work together today — that is all ${escapeHtml(tutorLabel)} for now. I will be here again tomorrow.`
+        : `That is all ${escapeHtml(wehelAllowanceWords(allowanceMinutes))} of ${escapeHtml(tutorLabel)} for today — well done. I will be here again tomorrow.`}</p>` : `
       <form class="ai-compose" id="wehel-form">
         <label class="sr-only" for="wehel-input">Ask ${escapeHtml(tutorLabel)}</label>
         <input id="wehel-input" maxlength="500" placeholder="${escapeHtml(persona === "teacher" ? "Tell your teacher what you did, or ask…" : (focus ? `Ask about ${focus.label}…` : (options.placeholder || (isTutoring ? "Ask about anything you are stuck on…" : `Ask about ${meta.unitTitle}…`))))}" ${busy ? "disabled" : ""} autocomplete="off">
@@ -1657,7 +1697,12 @@ export function mountWehelChat(options) {
       const chip = container.querySelector("#wehel-timer");
       if (!chip) return;
       const left = timeLeftSeconds();
-      if (left <= 0) { render(); return; }
+      // Either ceiling has to trigger the repaint that swaps the compose row
+      // for the come-back-tomorrow line. Testing only the clock left a spent
+      // BUDGET showing "That is all for today" on the chip above a composer
+      // that still accepted questions the endpoint could only refuse — the
+      // label is repainted by this tick, but the panel is not.
+      if (left <= 0 || tokensSpent()) { render(); return; }
       chip.classList.toggle("is-low", left <= 120);
       chip.style.setProperty("--w-used", `${percentUsed()}%`);
       chip.title = timerTitle();
@@ -1729,12 +1774,12 @@ export function mountWehelChat(options) {
         // A spent daily allowance is deterministic — retrying cannot help.
         // Worse for the clock than for uploads: the retry is a second request,
         // and a second request charges a second gap.
-        if (firstError.code === "attach-limit" || firstError.code === "time-limit") throw firstError;
+        if (["attach-limit", "time-limit", "token-limit"].includes(firstError.code)) throw firstError;
         await new Promise((resolve) => setTimeout(resolve, 2000));
         reply = await ask();
       }
     } catch (error) {
-      if (error.code === "time-limit") {
+      if (error.code === "time-limit" || error.code === "token-limit") {
         // Not an outage either: the day's minutes are gone. Said as a normal
         // reply for the same reason the upload limit is — the "could not be
         // reached" banner would send the learner into a retry loop against a

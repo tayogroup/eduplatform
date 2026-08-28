@@ -439,9 +439,34 @@ worth knowing before anyone tries again:
 - **The measurement is free and was already on the wire.** The Messages API
   returns `usage` in the reply `wehel_chat.php` already parses, and nothing
   read it. No extra call, no estimate.
-- **Neither token figure caps anything yet.** A limit wants a number taken from
-  real days, and these are the first days measured. The ledger grew two fields
-  for it (`YYYYMMDD|used|last|tokens|weighted`).
+- **The cost-weighted figure now CAPS the day too** (owner, 2026-08-28), and it
+  is DERIVED from the minutes rather than listed: `WEHEL_WEIGHTED_TOKENS_PER_MINUTE`
+  (50,000) times the allowance, so there is no second table, and the tutoring
+  doubling and the Intensive English bands carry through for free. The ledger
+  holds both figures (`YYYYMMDD|used|last|tokens|weighted`).
+
+  **It is a BACKSTOP, not a second product limit, and the gate enforces that.**
+  The minutes are what a learner feels and watches counting down; this exists so
+  a runaway day — a stuck client, an unlucky loop, a learner opening unit after
+  unit — cannot cost unbounded money. The rate comes from the measurement above:
+  ~50k weighted for each new unit opened, ~6k per question after it, so a Grade
+  1's ten minutes buys about ten fresh units or a hundred follow-ups. A floor in
+  the gate fails the build if the ceiling is ever tightened to where an ordinary
+  day would hit it — and that floor is not decoration: dropping the rate in all
+  three files at once is invisible to the mirror check, and the floor is the only
+  thing that catches it (mutation-tested, both ways).
+
+  It refuses with its own code, `token-limit`, never the clock's: telling a
+  learner their time is up while a visible timer says otherwise is a lie they
+  can see. The panel closes with its own wording, and — the part the gate could
+  not reach — **the ticking clock has to trigger that repaint too.** Testing
+  only `left <= 0` left a spent budget showing "That is all for today" on the
+  chip above a composer that still accepted questions the endpoint could only
+  refuse. The gate checks the ledger flag; only opening the page found the
+  panel. Checked against the ceiling ALREADY spent, not including the current
+  request, whose usage does not exist until the API answers — so the request
+  that crosses the line is served and the next is refused, which is the right
+  way round for a backstop.
 
 On screen the learner sees the clock and the share of the day gone —
 `15:58 left · 36% used` — with the chip itself as the bar (`--w-used` is the

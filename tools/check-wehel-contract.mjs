@@ -44,8 +44,8 @@ globalThis.location = { hostname: "localhost", port: "4287", search: "", href: "
 globalThis.localStorage = { getItem: () => null, setItem: () => {} };
 
 const wehel = await import(pathToFileURL(SHELL).href);
-const { apiMessages, withoutMediaPlumbing, unitForTutor, UNIT_JSON_LIMIT, withAttachmentBlocks, homeworkContextText, HOMEWORK_CONTEXT_LIMIT, WEHEL_ATTACH_DAILY_LIMIT, teacherPrompts, storedTeacherScript, WEHEL_DAILY_BANDS, WEHEL_INTENSIVE_BANDS, WEHEL_TUTORING_MULTIPLIER, WEHEL_IDLE_GAP_SECONDS, wehelDailyMinutes, setWehelTimeLedger, wehelTimeLedger, wehelShowsTokenCount, formatWehelTokens, WEHEL_TOKENS_ON_CHIP_FROM_GRADE } = wehel;
-for (const [name, value] of Object.entries({ apiMessages, withoutMediaPlumbing, unitForTutor, UNIT_JSON_LIMIT, withAttachmentBlocks, homeworkContextText, HOMEWORK_CONTEXT_LIMIT, WEHEL_ATTACH_DAILY_LIMIT, teacherPrompts, storedTeacherScript, WEHEL_DAILY_BANDS, WEHEL_INTENSIVE_BANDS, WEHEL_TUTORING_MULTIPLIER, WEHEL_IDLE_GAP_SECONDS, wehelDailyMinutes, setWehelTimeLedger, wehelTimeLedger, wehelShowsTokenCount, formatWehelTokens, WEHEL_TOKENS_ON_CHIP_FROM_GRADE })) {
+const { apiMessages, withoutMediaPlumbing, unitForTutor, UNIT_JSON_LIMIT, withAttachmentBlocks, homeworkContextText, HOMEWORK_CONTEXT_LIMIT, WEHEL_ATTACH_DAILY_LIMIT, teacherPrompts, storedTeacherScript, WEHEL_DAILY_BANDS, WEHEL_INTENSIVE_BANDS, WEHEL_TUTORING_MULTIPLIER, WEHEL_IDLE_GAP_SECONDS, wehelDailyMinutes, setWehelTimeLedger, wehelTimeLedger, wehelShowsTokenCount, formatWehelTokens, WEHEL_TOKENS_ON_CHIP_FROM_GRADE, WEHEL_WEIGHTED_TOKENS_PER_MINUTE, wehelDailyTokenLimit } = wehel;
+for (const [name, value] of Object.entries({ apiMessages, withoutMediaPlumbing, unitForTutor, UNIT_JSON_LIMIT, withAttachmentBlocks, homeworkContextText, HOMEWORK_CONTEXT_LIMIT, WEHEL_ATTACH_DAILY_LIMIT, teacherPrompts, storedTeacherScript, WEHEL_DAILY_BANDS, WEHEL_INTENSIVE_BANDS, WEHEL_TUTORING_MULTIPLIER, WEHEL_IDLE_GAP_SECONDS, wehelDailyMinutes, setWehelTimeLedger, wehelTimeLedger, wehelShowsTokenCount, formatWehelTokens, WEHEL_TOKENS_ON_CHIP_FROM_GRADE, WEHEL_WEIGHTED_TOKENS_PER_MINUTE, wehelDailyTokenLimit })) {
   if (value === undefined) fail("shell/wehel.js no longer exports what this gate checks", `${name} is missing — restore the export rather than deleting the check`);
 }
 if (failures.length) { report(); process.exit(1); }
@@ -205,6 +205,12 @@ if (phpCap !== UNIT_JSON_LIMIT || devCap !== UNIT_JSON_LIMIT) {
     ["idle gap", String(WEHEL_IDLE_GAP_SECONDS),
       textIn(PHP, /define\('WEHEL_IDLE_GAP_SECONDS',\s*(\d+)\)/),
       textIn(DEV, /const IDLE_GAP_SECONDS = (\d+)/)],
+    // The spend ceiling is DERIVED from the minutes, so this rate is the whole
+    // of it — there is no second table, and the tutoring doubling and the
+    // Intensive English bands carry through for free.
+    ["weighted tokens per minute", String(WEHEL_WEIGHTED_TOKENS_PER_MINUTE),
+      textIn(PHP, /define\('WEHEL_WEIGHTED_TOKENS_PER_MINUTE',\s*(\d+)\)/),
+      textIn(DEV, /const WEIGHTED_TOKENS_PER_MINUTE = (\d+)/)],
   ];
   for (const [name, shell, php, dev] of specs) {
     if (php === null || dev === null) {
@@ -278,6 +284,8 @@ if (phpCap !== UNIT_JSON_LIMIT || devCap !== UNIT_JSON_LIMIT) {
       [/min\(\$pqh_wehel_now - \$pqh_wehel_last, WEHEL_IDLE_GAP_SECONDS\)/, "charges the gap since the learner's last question, capped at one pause"],
       [/\$pqh_wehel_used >= \$pqh_wehel_time\['limit'\]/, "refuses once the day's minutes are spent"],
       [/'code' => 'time-limit'/, "codes the refusal, so the panel can tell it from an outage"],
+      [/'code' => 'token-limit'/, "refuses a spent SPEND ceiling in its own words, not the clock's"],
+      [/\$pqh_wehel_time\['weighted'\] >= \$pqh_wehel_time\['tokenLimit'\]/, "compares the day's cost against the ceiling"],
       [/'time' => \$pqh_wehel_time/, "sends the ledger back with the answer, which is what the timer reads"],
       // Tokens are MEASURED from the API's own report. Nothing may derive them
       // from the minutes: cost is driven by how many questions were asked, not
@@ -291,13 +299,14 @@ if (phpCap !== UNIT_JSON_LIMIT || devCap !== UNIT_JSON_LIMIT) {
       [/Math\.min\(now - timeLedger\.last, IDLE_GAP_SECONDS\)/, "charges the capped gap"],
       [/timeLedger\.used >= time\.limit/, "refuses once the day's minutes are spent"],
       [/code: "time-limit"/, "codes the refusal"],
+      [/code: "token-limit"/, "mirrors the spend refusal"],
       [/reply: canonical, model, time/, "sends the ledger back with the answer"],
       [/timeLedger\.weighted \+= tokenWeight\(result\.usage\)/, "measures what the exchange cost, mirroring wehel_chat.php"],
     ]],
     [SHELL, "shell/wehel.js", [
       [/setWehelTimeLedger\(result\.time/, "reads the ledger back off every answer — without it the timer freezes at the last good number"],
-      [/error\.code === "time-limit"/, "answers a spent allowance as a reply, not as \"Wehel could not be reached\""],
-      [/firstError\.code === "attach-limit" \|\| firstError\.code === "time-limit"/, "does not retry a spent allowance — the retry is a second request, and a second request charges a second gap"],
+      [/error\.code === "time-limit" \|\| error\.code === "token-limit"/, "answers a spent allowance as a reply, not as \"Wehel could not be reached\""],
+      [/\["attach-limit", "time-limit", "token-limit"\]\.includes\(firstError\.code\)/, "does not retry any spent allowance — a retry is a second request"],
     ]],
   ];
   for (const [file, label, rules] of sourceRules) {
@@ -377,6 +386,52 @@ if (phpCap !== UNIT_JSON_LIMIT || devCap !== UNIT_JSON_LIMIT) {
         fail("The chip shows the token count to the wrong learners", `grade ${grade} ${subject}: got ${wehelShowsTokenCount({ grade, subject })}, expected ${expected}`);
       }
     }
+    // The spend ceiling is DERIVED from the minutes, so it inherits the bands,
+    // the tutoring doubling and the Intensive English table. Asserted against
+    // the owner's minutes rather than against the rate times itself, which
+    // would only prove the multiplication.
+    for (const [meta, minutes] of [
+      [{ grade: 1, subject: "science" }, 10],
+      [{ grade: 7, subject: "english" }, 25],
+      [{ grade: 6, subject: "science", learnerCategory: "tutoring" }, 40],
+      [{ grade: 1, subject: "intensive-english" }, 30],
+      [{ grade: 3, subject: "intensive-english" }, 60],
+    ]) {
+      const want = minutes * WEHEL_WEIGHTED_TOKENS_PER_MINUTE;
+      if (wehelDailyTokenLimit(meta) !== want) {
+        fail("The spend ceiling does not follow the minutes", `${JSON.stringify(meta)} allows ${minutes} minutes, so the ceiling must be ${want} — got ${wehelDailyTokenLimit(meta)}`);
+      }
+    }
+    // It is a BACKSTOP: it must sit well clear of what a day of ordinary use
+    // costs, or it becomes a second cut-off nobody can see coming. Measured on
+    // production 2026-08-28, a two-question session cost 56,037 weighted, of
+    // which ~50k was the first question's cache write of the unit prompt. Ten
+    // whole fresh units must still fit inside the smallest allowance.
+    {
+      const smallest = wehelDailyTokenLimit({ grade: 1, subject: "science" });
+      const tenFreshUnits = 10 * 50_000;
+      if (smallest < tenFreshUnits) {
+        fail("The spend ceiling is tight enough to stop an ordinary day", `the smallest allowance permits ${smallest} weighted, and ten fresh units cost about ${tenFreshUnits} — a backstop this close will fire on real learners`);
+      }
+    }
+    // The client must close the panel on a spent BUDGET as well as a spent
+    // clock, or the composer stays open over an endpoint that can only refuse.
+    setWehelTimeLedger({ limit: 600, used: 60, tokens: 900_000, weighted: 500_000, tokenLimit: 500_000 }, now);
+    const budget = wehelTimeLedger();
+    if (!budget || budget.tokensSpent !== true) {
+      fail("A spent budget does not close the panel", `weighted 500000 against a ceiling of 500000 read tokensSpent=${budget && budget.tokensSpent} — the composer would stay open over an endpoint that only refuses`);
+    }
+    setWehelTimeLedger({ limit: 600, used: 60, tokens: 900_000, weighted: 499_999, tokenLimit: 500_000 }, now);
+    if (wehelTimeLedger().tokensSpent !== false) {
+      fail("A budget one token short reads as spent", "the ceiling is >=, not >");
+    }
+    // No ceiling reported (an older server, or none resolved) must never read
+    // as spent — that would close the panel on every learner.
+    setWehelTimeLedger({ limit: 600, used: 60, tokens: 900_000, weighted: 500_000 }, now);
+    if (wehelTimeLedger().tokensSpent !== false) {
+      fail("A missing ceiling reads as a spent one", "an answer that carries no tokenLimit must leave the panel open, not close it for everybody");
+    }
+
     // A compact number, or the chip stops fitting beside a clock.
     for (const [count, want] of [[0, "0"], [999, "999"], [1000, "1k"], [39091, "39.1k"], [1_250_000, "1.3M"]]) {
       if (formatWehelTokens(count) !== want) {

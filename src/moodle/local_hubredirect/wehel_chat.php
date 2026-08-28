@@ -121,6 +121,24 @@ define('WEHEL_TUTORING_MULTIPLIER', 2);
 // where this file stops. The first request of the day charges nothing.
 define('WEHEL_IDLE_GAP_SECONDS', 60);
 
+// The day's SPEND ceiling, derived from the same minutes rather than listed in
+// a table of its own (owner, 2026-08-28: cap the tokens too). One constant, so
+// nothing can drift out of step with the bands, and the tutoring doubling and
+// the Intensive English table both carry through for free.
+//
+// It is a BACKSTOP, not a second product limit. The minutes are the rule a
+// learner feels and watches counting down; this stops a runaway day — a stuck
+// client, an unlucky loop, a learner opening unit after unit — from costing
+// unbounded money, and in ordinary use it must never be what stops anybody.
+//
+// Measured on production 2026-08-28: a two-question session cost 56,037
+// weighted, of which 49,882 was the FIRST question's cache write of the unit
+// prompt and 6,155 the follow-up's cache read. So cost tracks how many UNITS
+// are opened — roughly 50k for each new one, ~6k per question after it. At
+// 50,000 per allowed minute a Grade 1's ten minutes buys about ten fresh units
+// or a hundred follow-ups, several times what ten minutes can hold.
+define('WEHEL_WEIGHTED_TOKENS_PER_MINUTE', 50000);
+
 // Resolve one band spec against a grade. Total by design: an unparseable spec
 // or a grade past the last band lands on the last band rather than on zero,
 // because a bug here must never lock a learner out of the tutor.
@@ -525,7 +543,13 @@ $pqh_wehel_dailyminutes = pqh_wehel_daily_minutes($grade, $subject, $learnercate
 // not convert. What a day costs is driven by how many questions are asked, not
 // how long the learner sits there — the same ten minutes is four questions for
 // a slow reader and twenty for a quick one. See pqh_wehel_token_weight.
-$pqh_wehel_time = ['limit' => $pqh_wehel_dailyminutes * 60, 'used' => 0, 'tokens' => 0, 'weighted' => 0];
+$pqh_wehel_time = [
+    'limit' => $pqh_wehel_dailyminutes * 60,
+    'used' => 0,
+    'tokens' => 0,
+    'weighted' => 0,
+    'tokenLimit' => $pqh_wehel_dailyminutes * WEHEL_WEIGHTED_TOKENS_PER_MINUTE,
+];
 $pqh_wehel_today = date('Ymd');
 $pqh_wehel_now = time();
 if ($pqh_wehel_dailyminutes > 0 && $pqh_wehel_learnerid > 0) {
@@ -558,6 +582,28 @@ if ($pqh_wehel_dailyminutes > 0 && $pqh_wehel_learnerid > 0) {
             'time' => $pqh_wehel_time,
         ]);
     }
+}
+
+// --- the day's spend ceiling ---------------------------------------------------
+// The backstop on cost, checked against what the day has ALREADY cost — this
+// request's own usage does not exist until the API answers, so the request that
+// crosses the line is served and the next one is refused. That is the right way
+// round for a backstop: it can never cut a learner off mid-answer for a cost it
+// had not yet incurred.
+//
+// It runs after the clock and before the attachment allowance, so a refused
+// request consumes neither. Its own code, not "time-limit": the panel says
+// something different for a spent budget than for a spent clock, and telling a
+// learner their time is up while a visible timer says otherwise would be a lie
+// they can see.
+if ($pqh_wehel_time['tokenLimit'] > 0 && $pqh_wehel_learnerid > 0
+        && $pqh_wehel_time['weighted'] >= $pqh_wehel_time['tokenLimit']) {
+    pqh_wehel_json(429, [
+        'ok' => false,
+        'code' => 'token-limit',
+        'message' => 'We have done a great deal of work together today — that is all Wehel for now. I will be here again tomorrow!',
+        'time' => $pqh_wehel_time,
+    ]);
 }
 
 // --- homework attachment daily allowance ---------------------------------------

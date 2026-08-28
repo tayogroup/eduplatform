@@ -36,6 +36,10 @@ const TUTORING_MULTIPLIER = 2;
 // One pause is worth at most this. See the PHP for why the clock is derived
 // from request timestamps rather than from anything the client reports.
 const IDLE_GAP_SECONDS = 60;
+// The day's spend ceiling, derived from the same minutes — a backstop on cost,
+// not a second product limit. See wehel_chat.php for the measurements behind
+// the rate.
+const WEIGHTED_TOKENS_PER_MINUTE = 50000;
 // One dev learner, so the ledger is module-level — the same shape the PHP keeps
 // in a user preference.
 const timeLedger = { day: "", used: 0, last: 0, tokens: 0, weighted: 0 };
@@ -177,7 +181,11 @@ function createWehelChatHandler({ apiKey, model: modelOverride = () => undefined
       const allowanceMinutes = dailyMinutes(grade, subject, learnerCategory);
       // tokens/weighted are MEASURED after the call answers, never converted
       // from the minutes — see wehel_chat.php for why the two do not convert.
-      const time = { limit: allowanceMinutes * 60, used: 0, tokens: timeLedger.tokens, weighted: timeLedger.weighted };
+      const time = {
+        limit: allowanceMinutes * 60, used: 0,
+        tokens: timeLedger.tokens, weighted: timeLedger.weighted,
+        tokenLimit: allowanceMinutes * WEIGHTED_TOKENS_PER_MINUTE,
+      };
       if (allowanceMinutes > 0) {
         const day = new Date().toISOString().slice(0, 10);
         const now = Math.floor(Date.now() / 1000);
@@ -193,6 +201,17 @@ function createWehelChatHandler({ apiKey, model: modelOverride = () => undefined
             message: `That is all ${allowanceWords(allowanceMinutes)} of Wehel for today — well done. I will be here again tomorrow!` }));
           return;
         }
+      }
+
+      // The day's spend ceiling, checked against what the day has ALREADY cost:
+      // this request's usage does not exist until the API answers. Mirrors
+      // wehel_chat.php, and runs before the attachment allowance so a refused
+      // request consumes neither.
+      if (time.tokenLimit > 0 && timeLedger.weighted >= time.tokenLimit) {
+        res.writeHead(429, { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" });
+        res.end(JSON.stringify({ ok: false, code: "token-limit", time,
+          message: "We have done a great deal of work together today — that is all Wehel for now. I will be here again tomorrow!" }));
+        return;
       }
 
       // Daily allowance, hash-deduped — mirrors wehel_chat.php's user-preference

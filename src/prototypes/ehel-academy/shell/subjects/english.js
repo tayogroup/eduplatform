@@ -7205,19 +7205,29 @@ function renderWordCarousel() {
   // slides walked to earn a tick worth 45, and 195 of those 240 are story
   // glossary words the Vocabulary section does not gate on at all.
   //
-  // GRADE 4 STILL WALKS EVERY WORD, and that is the same held-back reasoning as
-  // before rather than an oversight. Its 412 Core words exist but another
-  // session is mid-authoring them, and this renderer is shared, so `<= 4` would
-  // hand that session a deck change it did not ask for in the middle of the work
-  // that decides what the deck should hold.
+  // GRADE 4 JOINED on 2026-08-28, and the condition the hold was written against
+  // is what changed rather than anybody's mind. It read "another session is
+  // mid-authoring them, so `<= 4` would hand that session a deck change it did
+  // not ask for in the middle of the work that decides what the deck should
+  // hold." That work is finished: all 412 Core words are authored and
+  // proofread, built into the units (412 taught against 1,048 now in the story
+  // glossary), given their 385 master-dictionary entries, narrated with 3,637
+  // clips, and deployed. Asked for by the owner in the same terms as the other
+  // three.
   //
   // Measured unit 1 decks after each change: 44 words at Grade 1, 40 at Grade 2,
-  // 45 at Grade 3, from decks that used to walk 111, 195 and 240.
+  // 45 at Grade 3, 42 at Grade 4, from decks that used to walk 111, 195, 240 and
+  // 224. Across Grade 4's ten units the deck goes 1,460 slides to 412, so 1,048
+  // story-glossary words leave the teaching walk-through — the largest of the
+  // four, because Grade 4 carries the most glossary.
   //
-  // It stays a named constant so a grade can be rolled back on its own, and it
-  // is deliberately NOT written as BOTH_DESIGNS: that gate is overloaded -- it
-  // also decides the cursive worksheet -- and this must not move with it.
-  const DECK_TEACHES_TAUGHT_ONLY = gradeNumber <= 3;
+  // With four of four grades on it the gate now covers every grade that has a
+  // deck, and `gradeNumber <= 4` is the same line as BOTH_DESIGNS today. It
+  // stays a SEPARATE named constant anyway, for the two reasons it always had:
+  // a grade can be rolled back on its own, and BOTH_DESIGNS is overloaded — it
+  // also decides whether the grade offers the cursive worksheet — so collapsing
+  // the two would tie a vocabulary decision to a handwriting one.
+  const DECK_TEACHES_TAUGHT_ONLY = gradeNumber <= 4;
   let words = DECK_TEACHES_TAUGHT_ONLY ? taught : allWords;
   // The section is named for what it teaches. Where every taught word sits in
   // one group that group's own title IS the section — "Core words" at Grade 1 —

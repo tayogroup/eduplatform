@@ -149,6 +149,35 @@ const CLASS_BY_GRADE = {
       + "myself yourself himself herself itself ourselves yourselves themselves whoever whatever",
     noun: "",
   },
+  4: {
+    // Derived from the AUTHORED meanings rather than from the supplied category
+    // list. The card prints the meaning and the part of speech together, so the
+    // meaning is the authority: `contrast`, `estimate`, `influence`, `research`,
+    // `survey`, `draft` and `interview` all sit in the list's "actions" category
+    // and are defined here as nouns, and labelling them verbs would contradict
+    // the sentence printed directly above.
+    adverb: "currently recently immediately quickly slowly quietly loudly suddenly happily sadly safely "
+      + "generally mainly mostly additionally furthermore moreover consequently hence alternatively "
+      + "eventually previously gradually rarely frequently nevertheless",
+    position: "nearby opposite underneath alongside",
+    preposition: "according regarding concerning considering excluding besides",
+    conjunction: "whereas whilst",
+    adjective: "international digital electronic online convenient efficient transparent renewable extinct "
+      + "visible invisible frequent likely obvious approximate typical major minor greater lesser hopeful "
+      + "hopeless beneficial harmful essential appropriate suitable proper practical reasonable specific "
+      + "detailed effective capable aware casual delightful careless useless emotional positive negative "
+      + "national equivalent awful creative critical cultural damaged familiar flexible fortunate "
+      + "historical intelligent logical primary remarkable significant traditional urgent unusual "
+      + "incorrect urban rural coastal annual monthly weekly horizontal vertical impossible abstract "
+      + "figurative physical professional following",
+    verb: "accomplish advise allow announce approach argue assess attempt combine complain concentrate "
+      + "confirm consider construct contribute control convert cooperate demonstrate determine evaluate "
+      + "exchange expand expect illustrate inspect interpret locate maintain memorise mention participate "
+      + "persuade prevent recognise recommend relate revise scan summarise translate conclude justify "
+      + "infer cite categorise compose proofread absorb dissolve reproduce survive download upload admire "
+      + "apologise appreciate assist rewrite preview disappear",
+    // Everything else falls through to noun - 237 words, each checked to be one.
+  },
 };
 const CLASS = CLASS_BY_GRADE[GRADE];
 if (!CLASS) {

@@ -7186,14 +7186,26 @@ function renderWordCarousel() {
   // One sentence position per word: in a deck each word keeps its own place,
   // where the lab had a single cursor because only one word was ever on screen.
   const sentenceAt = new Map();
-  let words = taught;
+  // GRADE 1 ONLY, and the gate is the point rather than a detail. This renderer
+  // is shared by every grade with a deck (BOTH_DESIGNS = gradeNumber <= 4), so
+  // teaching the taught words alone silently changed Grades 2-4 too -- their
+  // unit 1 decks went 195 -> 40, 240 -> 45 and 183 -> 20 slides. Those grades
+  // are mid-restructure by other sessions and the change is not theirs to
+  // receive unannounced, however defensible it is. Owner, 2026-08-28: Grade 1
+  // only. Lift the gate when the other grades' Core words land, not before.
+  const DECK_TEACHES_TAUGHT_ONLY = gradeNumber === 1;
+  let words = DECK_TEACHES_TAUGHT_ONLY ? taught : allWords;
   // The section is named for what it teaches. Where every taught word sits in
   // one group that group's own title IS the section — "Core words" at Grade 1 —
   // and a generic heading above it would be the third place the learner is told
   // nothing. Where the taught words span several groups there is no one name to
   // use, so the generic heading stands.
   const taughtGroups = [...new Set(taught.map((item) => item.groupTitle).filter(Boolean))];
-  const deckHeading = taughtGroups.length === 1 ? taughtGroups[0] : "Say the words";
+  // Naming the section after its one taught group only makes sense where the
+  // deck IS that group. Off the gate the deck still walks the glossary too, so
+  // the group's title would be a name for a third of what is on screen.
+  const namedDeck = DECK_TEACHES_TAUGHT_ONLY && taughtGroups.length === 1;
+  const deckHeading = namedDeck ? taughtGroups[0] : "Say the words";
 
   const wordSlide = (item, index) => {
     const sentences = item.practiceSentences?.length ? item.practiceSentences : [item.exampleSentence].filter(Boolean);
@@ -7282,7 +7294,7 @@ function renderWordCarousel() {
     // holds up to 423 words, so the deck itself is what the search narrows.
     tools: `<div class="wc-tools">
         <label class="search-box">${icon("search")}<input id="word-search" type="search" placeholder="Search words or meanings" aria-label="Search vocabulary"></label>
-        <select id="group-filter" aria-label="Filter vocabulary group"${taughtGroups.length > 1 ? "" : " hidden"}><option value="all">All vocabulary groups</option>${course.vocabularyGroups.filter((group) => taught.some((item) => item.groupId === group.id)).map((group) => `<option value="${group.id}">${esc(group.title)}</option>`).join("")}</select>
+        <select id="group-filter" aria-label="Filter vocabulary group"${namedDeck ? " hidden" : ""}><option value="all">All vocabulary groups</option>${course.vocabularyGroups.filter((group) => !DECK_TEACHES_TAUGHT_ONLY || taught.some((item) => item.groupId === group.id)).map((group) => `<option value="${group.id}">${esc(group.title)}</option>`).join("")}</select>
         <span class="status-chip" id="wc-known">${learnedTaught()} of ${taught.length} new words</span>
       </div>`,
     onSlide: (position) => { activeWordId = words[position]?.vocabularyId || activeWordId; },
@@ -7355,7 +7367,7 @@ function renderWordCarousel() {
   const drawDeck = () => {
     const query = inDeck("#word-search").value.trim().toLowerCase();
     const group = inDeck("#group-filter").value;
-    words = taught.filter((item) => (group === "all" || item.groupId === group)
+    words = (DECK_TEACHES_TAUGHT_ONLY ? taught : allWords).filter((item) => (group === "all" || item.groupId === group)
       && (!query || `${item.master.displayWord} ${item.childMeaning}`.toLowerCase().includes(query)));
     deck.setSlides(words.map(wordSlide));
   };

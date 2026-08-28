@@ -212,6 +212,61 @@ function pqlgrp_text_matches(string $source, string $needle): bool {
  * filled that section returns [], which the caller reads as "no claim" rather
  * than "teaches nothing".
  */
+/**
+ * Active learners with NO active group membership anywhere, for manual
+ * placement: userid => "Name — Grade".
+ *
+ * Deliberately excludes anyone already in a group, and that is a correctness
+ * constraint rather than a simplification. assign_student upserts on
+ * (groupid, studentid), so assigning a learner who is active in another group
+ * creates a SECOND active membership rather than moving them — they would then
+ * appear in two columns of the live group board and be counted twice. Moving a
+ * learner between groups needs the old membership deactivated, which is a
+ * different action from placing an unplaced one, and this control does not
+ * pretend to be it.
+ */
+function pqlgrp_unplaced_students(int $workspaceid): array {
+    global $DB;
+    if (!pqlgrp_table_exists('local_prequran_student_profile')
+            || !pqlgrp_table_exists('local_prequran_group_member')) {
+        return [];
+    }
+    $where = "sp.status = 'active'";
+    $params = [];
+    if ($workspaceid > 0 && pqlgrp_table_has_field('local_prequran_student_profile', 'workspaceid')) {
+        $where .= ' AND sp.workspaceid = :workspaceid';
+        $params['workspaceid'] = $workspaceid;
+    }
+    try {
+        $rows = $DB->get_records_sql(
+            "SELECT sp.userid, sp.current_grade, sp.student_display_name
+               FROM {local_prequran_student_profile} sp
+              WHERE $where
+                AND NOT EXISTS (
+                    SELECT 1 FROM {local_prequran_group_member} gm
+                     WHERE gm.studentid = sp.userid AND gm.assignment_status = 'active')
+           ORDER BY sp.current_grade ASC, sp.timemodified DESC",
+            $params
+        );
+    } catch (Throwable $e) {
+        return [];
+    }
+    $out = [];
+    foreach ($rows as $row) {
+        $userid = (int)$row->userid;
+        $name = trim((string)($row->student_display_name ?? ''));
+        if ($name === '') {
+            $name = pqlgrp_user_name($userid, 'Student ' . $userid);
+        }
+        // The grade is shown because it is what the cohort is keyed on — an
+        // operator placing by hand should see the one attribute the matcher
+        // would have scored, including when it is missing.
+        $grade = trim((string)($row->current_grade ?? ''));
+        $out[$userid] = $name . ' — ' . ($grade !== '' ? $grade : 'no grade set');
+    }
+    return $out;
+}
+
 function pqlgrp_teacher_grades($teacher): array {
     $application = json_decode((string)($teacher->application_json ?? ''), true);
     if (!is_array($application)) {
@@ -1472,6 +1527,55 @@ body.pqh-live-grouping-page #page,body.pqh-live-grouping-page #page-content,body
               </tr>
             <?php endforeach; ?>
             </tbody></table>
+          <?php endif; ?>
+        </article>
+
+        <?php
+          // ---- Place a learner ------------------------------------------
+          // Suggested Assignments recommends; this PLACES. They are different
+          // jobs and only the first existed: its Assign button posts the group
+          // the matcher chose, and the matcher keeps the strictly highest score
+          // ($score > $best['score']), so on a tie the first group by title
+          // wins and every other group is unreachable. With two Grade 1 cohorts
+          // scoring alike, no learner could ever be put in the second one.
+          //
+          // Same server action, same validation — this only lets an operator
+          // name the group instead of accepting the ranking.
+          $pqlgrpunplaced = $ready ? pqlgrp_unplaced_students($workspaceid) : [];
+          $pqlgrpplaceable = [];
+          foreach ($groups as $pqlgrpg) {
+              if ((string)($pqlgrpg->status ?? '') === 'archived') {
+                  continue;
+              }
+              $pqlgrpfull = (int)$pqlgrpg->active_students >= (int)$pqlgrpg->max_students;
+              $pqlgrpplaceable[(int)$pqlgrpg->id] = (string)$pqlgrpg->title
+                  . ' — ' . ((string)($pqlgrpg->grade ?? '') !== ''
+                      ? (string)($pqlgrpgradelevels[(string)$pqlgrpg->grade] ?? (string)$pqlgrpg->grade)
+                      : 'no grade')
+                  . ' — ' . (int)$pqlgrpg->active_students . '/' . (int)$pqlgrpg->max_students
+                  . ($pqlgrpfull ? ' (full)' : '');
+          }
+        ?>
+        <article class="pqlgrp-panel">
+          <h2>Place a Learner</h2>
+          <p class="pqlgrp-sub">Put a learner in a group you choose, rather than the one the recommender ranks first. Only learners who are not already in a group are listed &mdash; moving someone between groups is a different action and is not offered here.</p>
+          <?php if (!$pqlgrpunplaced || !$pqlgrpplaceable): ?>
+            <div class="pqlgrp-empty"><?php echo $pqlgrpplaceable
+                ? 'Every active learner in this workspace is already in a group.'
+                : 'Create a class group before placing learners.'; ?></div>
+          <?php else: ?>
+            <form method="post" class="pqlgrp-formgrid">
+              <input type="hidden" name="sesskey" value="<?php echo s(sesskey()); ?>">
+              <input type="hidden" name="action" value="assign_student">
+              <div class="pqlgrp-field"><label>Learner</label><?php echo pqlgrp_select('studentid', $pqlgrpunplaced, '', true); ?></div>
+              <div class="pqlgrp-field"><label>Group</label><?php echo pqlgrp_select('groupid', $pqlgrpplaceable, '', true); ?></div>
+              <div class="pqlgrp-actions"><button class="pqlgrp-btn" type="submit">Place learner</button></div>
+            </form>
+            <?php // Occupancy is shown, not enforced. assign_student has never
+                  // checked max_students and this control does not start: a
+                  // school putting a tenth child in a group of nine is making a
+                  // decision, not a mistake, and a form that silently refused
+                  // would be the worse failure. ?>
           <?php endif; ?>
         </article>
 

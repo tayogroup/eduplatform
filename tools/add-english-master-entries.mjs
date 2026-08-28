@@ -113,6 +113,42 @@ const CLASS_BY_GRADE = {
     number: "second",
     noun: "",
   },
+  // Grade 3, same method as Grade 2: the supplied Core list's own ten categories
+  // decide, and only the mixed ones needed a per-word call. Anything unlisted
+  // falls through to noun, which is what categories 5, 6, 8 and 10 are almost
+  // entirely made of.
+  //
+  // Five words sit in "Actions and academic processes" and are taught here as
+  // NOUNS, so they are deliberately absent from the verb list: design ("A plan
+  // or drawing"), experiment ("A test you do"), support ("Something that holds
+  // another thing up"), test ("A set of questions") and value ("How much
+  // something is worth"). The category says what the word is FOR; the authored
+  // meaning says what this card teaches, and where they disagree the meaning
+  // wins, because the meaning is what the child reads under the part of speech.
+  3: {
+    verb: "accept achieve act analyse apply arrange attend avoid become belong calculate check classify "
+      + "communicate connect continue deliver depend develop divide edit encourage enter examine explore express "
+      + "fix gather identify increase introduce investigate manage mark multiply observe organise perform prepare "
+      + "present produce prove provide publish receive record reduce repeat replace report respond select separate "
+      + "sort subtract suggest travel verify wonder cheer reach float pound shout enjoy annoy care dare wrap knock "
+      + "fetch stretch splash scratch adapt breathe cause retell predict discuss whisper",
+    adjective: "accurate active ancient attractive available average basic blank central certain common complex "
+      + "crowded daily direct enormous exact excellent expensive extra final formal fresh general huge independent "
+      + "local main modern natural necessary normal ordinary personal popular possible powerful private public rare "
+      + "real recent regular serious similar single smooth social solid straight successful useful valuable wooden "
+      + "worse worst better best annoyed anxious cheerful delighted determined eager frightened grateful guilty "
+      + "jealous miserable peaceful pleased relaxed shy silly courageous generous loyal responsible selfish sensible "
+      + "thoughtful unkind unfair steep round clear whole electric such another several various plenty less least "
+      + "double third next possessive",
+    position: "beneath beyond within throughout north south east west",
+    preposition: "via except despite including minus plus",
+    adverb: "afterwards beforehand meanwhile instead indeed finally firstly secondly later earlier otherwise "
+      + "similarly especially possibly certainly probably definitely directly completely partly quite rather too "
+      + "whenever wherever early soon again then",
+    pronoun: "someone anyone everyone nobody somebody anybody everybody something anything everything nothing "
+      + "myself yourself himself herself itself ourselves yourselves themselves whoever whatever",
+    noun: "",
+  },
 };
 const CLASS = CLASS_BY_GRADE[GRADE];
 if (!CLASS) {
@@ -149,7 +185,13 @@ for (let u = 1; u <= 10; u++) {
   }
 }
 
-const missing = [...core.keys()].filter((w) => !have.has(w));
+// `have` is keyed lower-case, so the Core word must be lowered to ask it. It was
+// not, and Grade 3 is the first grade with a capitalised headword: `Africa` was
+// never found in a set holding `africa`, so every run appended a THIRD, FOURTH,
+// fifth Africa under the same dictionaryEntryId. Silent, because the duplicate
+// is a valid entry and the id collision only shows as a count that will not
+// settle — which is what a repeated run is for.
+const missing = [...core.keys()].filter((w) => !have.has(String(w).toLowerCase()));
 const unclassified = missing.filter((w) => !posOf.has(w));
 const tally = {};
 for (const w of missing) { const p = posOf.get(w) ?? "noun (fall-through)"; tally[p] = (tally[p] ?? 0) + 1; }

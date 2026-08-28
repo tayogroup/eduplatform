@@ -71,7 +71,15 @@ if (collide.length) {
 }
 
 const master = JSON.parse(fs.readFileSync(path.join(ROOT, `master-dictionary.grade${GRADE}.json`), "utf8"));
+// Keyed lower-case, so it must be READ lower-case too. It was not, and Grade 3
+// is the first grade with a capitalised headword: Africa, Asia and Europe went
+// in as `Africa` and came back undefined from a map holding `africa`, so their
+// three links kept `dictionaryEntryId: null` after the entries existed. The app
+// joins on that id alone, so those three word cards would have thrown on
+// `item.master.partOfSpeech` — the same crash the null ids cause, surviving the
+// fix for them. `masterFor` is the only way in.
 const masterBy = new Map(master.entries.map((e) => [e.lemma.toLowerCase(), e]));
+const masterFor = (w) => masterBy.get(String(w).toLowerCase());
 
 // Every link this grade holds today, keyed by the word. Taught links carry the
 // teaching content; glossary links are look-up entries and are not reusable as
@@ -215,7 +223,7 @@ for (const cu of core.units) {
           ...(existing ?? {}),
           vocabularyId: existing?.vocabularyId ?? `${IDP}-u${cu.unitNo}-core-${w.replace(/[^a-z]/g, "")}`,
           unitId: doc.unit.unitId,
-          dictionaryEntryId: existing?.dictionaryEntryId ?? masterBy.get(w)?.dictionaryEntryId ?? null,
+          dictionaryEntryId: existing?.dictionaryEntryId ?? masterFor(w)?.dictionaryEntryId ?? null,
           masterWord: w,
           displayWord: written.displayWord ?? existing?.displayWord ?? w,
           childMeaning: written.childMeaning,
@@ -237,11 +245,11 @@ for (const cu of core.units) {
         reused += 1;
         links.push({ ...existing, groupId: g.id, groupTitle: g.title, sequence: i + 1 });
       } else {
-        missing.push({ unit: cu.unitNo, word: w, hasMasterEntry: masterBy.has(w), hadPartialLink: Boolean(existing) });
+        missing.push({ unit: cu.unitNo, word: w, hasMasterEntry: Boolean(masterFor(w)), hadPartialLink: Boolean(existing) });
         links.push({
           vocabularyId: `${IDP}-u${cu.unitNo}-core-${w.replace(/[^a-z]/g, "")}`,
           unitId: doc.unit.unitId,
-          dictionaryEntryId: masterBy.get(w)?.dictionaryEntryId ?? null,
+          dictionaryEntryId: masterFor(w)?.dictionaryEntryId ?? null,
           groupId: g.id, groupTitle: g.title, sequence: i + 1,
           masterWord: w,
           childMeaning: null, exampleSentence: null, practiceSentences: [],

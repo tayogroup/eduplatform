@@ -5,6 +5,7 @@ require_once(__DIR__ . '/../../config.php');
 require_login();
 require_once(__DIR__ . '/accesslib.php');
 require_once(__DIR__ . '/availabilitylib.php');
+require_once(__DIR__ . '/course_offeringlib.php');
 
 $requestedworkspaceid = optional_param('workspaceid', 0, PARAM_INT);
 $consumercontext = pqh_requested_consumer_context();
@@ -26,6 +27,13 @@ if (!empty($consumercontext->consumerslug)) {
 }
 
 $pqlgrpoptions = require(__DIR__ . '/student_intake_config.php');
+$pqlgrpcourseoptions = pqlgrp_course_options($consumercontext, $workspaceid, $pqlgrpoptions['course_types'] ?? []);
+// Naming a STORED value is a wider question than offering a choice: rows written
+// before this page adopted course_key still hold 'pre_quraan' and friends, and a
+// table that printed the raw slug for them would be a regression. Array + keeps
+// the left side on a collision, so a live offering's title wins over a stale
+// catalog label for the same key.
+$pqlgrpcourselabels = $pqlgrpcourseoptions + ($pqlgrpoptions['course_types'] ?? []);
 
 function pqlgrp_table_exists(string $table): bool {
     global $DB;
@@ -411,6 +419,44 @@ function pqlgrp_set_profile_field(stdClass $record, string $field, $value): void
     if (pqlgrp_profile_has_field($field)) {
         $record->{$field} = $value;
     }
+}
+
+/**
+ * ONE course vocabulary for both writers on this page, keyed on `course_key`.
+ *
+ * The Course selects used to render the static Quraan catalog from
+ * student_intake_config.php ('pre_quraan', 'tarbiyah_kids', ...) while pool and
+ * group creation overrode course_type with the chosen offering's course_key
+ * ('ehel-eng-g01'). Two vocabularies in one column — and pqlgrp_match_score()
+ * awards its course points only on equality, so a K-12 student profile stamped
+ * 'pre_quraan' could never match a K-12 group. That is what "17 active student
+ * profiles / 17 ungrouped" was reporting: not a matching failure, a vocabulary
+ * mismatch.
+ *
+ * student_intake.php had already moved to pqco_workspace_course_options() (its
+ * line 14); this page had not. Adopting the same function rather than writing a
+ * second list is what stops the two drifting again.
+ *
+ * Two deliberate departures from that call site. The workspace passed is the
+ * RESOLVED one — pqh_current_workspace_id() may differ from the consumer
+ * context's own, and offerings are workspace-scoped, so reading the context's
+ * copy would offer another school's courses or none. And an empty result falls
+ * back to the static catalog: a workspace that publishes no offerings would
+ * otherwise render an empty required select and the form could not be submitted
+ * at all, which is a worse failure than the drift this replaces.
+ */
+function pqlgrp_course_options(stdClass $consumercontext, int $workspaceid, array $legacy): array {
+    if ($workspaceid <= 0 || !function_exists('pqco_workspace_course_options')) {
+        return $legacy;
+    }
+    $context = clone $consumercontext;
+    $context->workspaceid = $workspaceid;
+    try {
+        $options = pqco_workspace_course_options($context, [], false);
+    } catch (Throwable $e) {
+        return $legacy;
+    }
+    return $options ?: $legacy;
 }
 
 function pqlgrp_select(string $name, array $options, string $selected = '', bool $required = false): string {
@@ -1177,7 +1223,7 @@ body.pqh-live-grouping-page #page,body.pqh-live-grouping-page #page-content,body
             <div class="pqlgrp-formgrid">
               <div class="pqlgrp-field"><label>User ID</label><input class="pqlgrp-input" name="userid" type="number" min="1" required></div>
               <div class="pqlgrp-field"><label>Student display name</label><input class="pqlgrp-input" name="student_display_name" placeholder="Optional display name"></div>
-              <div class="pqlgrp-field"><label>Course</label><?php echo pqlgrp_select('course_type', $pqlgrpoptions['course_types'] ?? [], 'pre_quraan', true); ?></div>
+              <div class="pqlgrp-field"><label>Course</label><?php echo pqlgrp_select('course_type', $pqlgrpcourseoptions, '', true); ?></div>
               <div class="pqlgrp-field"><label>Date of birth</label><input class="pqlgrp-input" name="date_of_birth" type="date"></div>
               <div class="pqlgrp-field"><label>Age</label><input class="pqlgrp-input" name="age_years" type="number" min="0" max="25" required></div>
               <div class="pqlgrp-field"><label>Gender</label><select class="pqlgrp-select" name="gender" required><option value="">Select</option><option value="female">Female</option><option value="male">Male</option></select></div>
@@ -1247,7 +1293,7 @@ body.pqh-live-grouping-page #page,body.pqh-live-grouping-page #page-content,body
             <?php endif; ?>
             <div class="pqlgrp-field"><label>Pool title</label><input class="pqlgrp-input" name="title" placeholder="Somali beginner girls 6-8" required></div>
             <div class="pqlgrp-formgrid">
-              <div class="pqlgrp-field"><label>Course</label><?php echo pqlgrp_select('course_type', $pqlgrpoptions['course_types'] ?? [], 'pre_quraan', true); ?></div>
+              <div class="pqlgrp-field"><label>Course</label><?php echo pqlgrp_select('course_type', $pqlgrpcourseoptions, '', true); ?></div>
               <div class="pqlgrp-field"><label>Time zone</label><input class="pqlgrp-input" name="timezone" value="Africa/Nairobi"></div>
               <div class="pqlgrp-field"><label>Language</label><input class="pqlgrp-input" name="language"></div>
               <div class="pqlgrp-field"><label>Age min</label><input class="pqlgrp-input" name="age_min" type="number" min="0" max="25" value="6"></div>
@@ -1274,7 +1320,7 @@ body.pqh-live-grouping-page #page,body.pqh-live-grouping-page #page-content,body
             <div class="pqlgrp-field"><label>Pool</label><select class="pqlgrp-select" name="poolid" id="pqlgrp-group-pool"><option value="0">No pool</option><?php foreach ($pools as $pool): ?><option value="<?php echo (int)$pool->id; ?>"><?php echo s((string)$pool->title); ?></option><?php endforeach; ?></select></div>
             <div class="pqlgrp-field"><label>Group title</label><input class="pqlgrp-input" name="title" required></div>
             <div class="pqlgrp-formgrid">
-              <div class="pqlgrp-field"><label>Course</label><?php echo pqlgrp_select('course_type', $pqlgrpoptions['course_types'] ?? [], 'pre_quraan', true); ?></div>
+              <div class="pqlgrp-field"><label>Course</label><?php echo pqlgrp_select('course_type', $pqlgrpcourseoptions, '', true); ?></div>
               <div class="pqlgrp-field"><label>Teacher recommendation</label><?php echo $teachers ? pqlgrp_select('teacherid', $teachers, '', false) : '<input type="hidden" name="teacherid" value="0"><div class="pqlgrp-empty">No active teacher profiles found.</div>'; ?><div class="pqlgrp-teacher-match" id="pqlgrp-teacher-match">Choose a matching pool to rank teachers by timezone, language, level, availability, and capacity.</div></div>
               <div class="pqlgrp-field"><label>Time zone</label><input class="pqlgrp-input" name="timezone" value="Africa/Nairobi"></div>
               <div class="pqlgrp-field"><label>Language</label><input class="pqlgrp-input" name="language"></div>
@@ -1485,7 +1531,7 @@ body.pqh-live-grouping-page #page,body.pqh-live-grouping-page #page-content,body
               <tr>
                 <td><strong><?php echo s((string)$group->title); ?></strong><br><span class="pqlgrp-pill"><?php echo s((string)$group->status); ?></span></td>
                 <td><?php echo s(pqlgrp_user_name((int)$group->teacherid, 'Teacher ' . (int)$group->teacherid)); ?></td>
-                <td><?php echo s((string)($pqlgrpoptions['course_types'][(string)($group->course_type ?? '')] ?? (($group->course_type ?? '') ?: 'Course not set'))); ?><br><?php echo s((string)$group->language); ?> / <?php echo s((string)$group->current_level); ?> / <?php echo s((string)$group->learning_base); ?><br><?php echo s((string)$group->timezone); ?> / <?php echo s((string)$group->gender_policy); ?> / ages <?php echo (int)$group->age_min; ?>-<?php echo (int)$group->age_max; ?><br><?php echo s((string)$group->country); ?> / <?php echo s((string)$group->city); ?></td>
+                <td><?php echo s((string)($pqlgrpcourselabels[(string)($group->course_type ?? '')] ?? (($group->course_type ?? '') ?: 'Course not set'))); ?><br><?php echo s((string)$group->language); ?> / <?php echo s((string)$group->current_level); ?> / <?php echo s((string)$group->learning_base); ?><br><?php echo s((string)$group->timezone); ?> / <?php echo s((string)$group->gender_policy); ?> / ages <?php echo (int)$group->age_min; ?>-<?php echo (int)$group->age_max; ?><br><?php echo s((string)$group->country); ?> / <?php echo s((string)$group->city); ?></td>
                 <td><?php echo (int)$group->active_students; ?> / <?php echo (int)$group->max_students; ?></td>
                 <td><?php echo s((string)$group->schedule_summary); ?></td>
               </tr>
@@ -1502,7 +1548,7 @@ body.pqh-live-grouping-page #page,body.pqh-live-grouping-page #page-content,body
               <tr>
                 <td><?php echo s((string)($profile->student_display_name ?? '') ?: pqlgrp_user_name((int)$profile->userid, 'Student ' . (int)$profile->userid)); ?><br>ID <?php echo (int)$profile->userid; ?></td>
                 <td><?php echo s((string)$profile->timezone); ?><br><?php echo s((string)$profile->language); ?></td>
-                <td><?php echo s((string)($pqlgrpoptions['course_types'][(string)($profile->course_type ?? '')] ?? (($profile->course_type ?? '') ?: 'Course not set'))); ?><br><?php echo s((string)$profile->current_level); ?><br><?php echo s((string)$profile->learning_base); ?></td>
+                <td><?php echo s((string)($pqlgrpcourselabels[(string)($profile->course_type ?? '')] ?? (($profile->course_type ?? '') ?: 'Course not set'))); ?><br><?php echo s((string)$profile->current_level); ?><br><?php echo s((string)$profile->learning_base); ?></td>
                 <td><?php echo s((string)($profile->parent_name ?? '')); ?><br><?php echo s((string)($profile->parent_email ?? '')); ?><br><span class="pqlgrp-pill <?php echo !empty($profile->live_class_consent) ? 'pqlgrp-pill--ok' : 'pqlgrp-pill--warn'; ?>">live <?php echo !empty($profile->live_class_consent) ? 'yes' : 'no'; ?></span> <span class="pqlgrp-pill <?php echo !empty($profile->recording_consent) ? 'pqlgrp-pill--ok' : 'pqlgrp-pill--warn'; ?>">record <?php echo !empty($profile->recording_consent) ? 'yes' : 'no'; ?></span></td>
                 <td><?php echo s((string)$profile->country); ?> / <?php echo s((string)$profile->city); ?><br><?php echo s((string)$profile->gender); ?> / <?php echo s((string)$profile->age_band); ?><br>Special Needs: <?php echo s((string)($profile->special_needs ?? 'no')); ?></td>
                 <td><span class="pqlgrp-pill"><?php echo s((string)$profile->status); ?></span></td>

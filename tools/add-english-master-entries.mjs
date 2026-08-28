@@ -213,6 +213,41 @@ const CLASS_BY_GRADE = {
     number: "forty",
     // Everything else falls through to noun.
   },
+  // Grade 6, same rule as Grade 5 and for the same reason: its supplied
+  // categories sort by SUBJECT, not by function. "Actions and academic
+  // processes" is mostly verbs but holds `challenge` and `critique`, which this
+  // grade defines as nouns; "Describing and evaluating words" is mostly
+  // adjectives but holds `alternative` and `potential`, defined here as nouns.
+  // So each word is placed from the meaning authored for it, which is the line
+  // printed directly above the part of speech on the card.
+  //
+  // Deriving this table from the meanings automatically was tried and abandoned.
+  // A rule keyed on the opening "To " reads `kinetic`, `thermal`, `tectonic`,
+  // `academic` and `ethical` as VERBS, because their meanings all begin "To do
+  // with...", while it drops real verbs - characterise, acquire, enquire,
+  // indicate, reconcile, represent - into the noun fall-through because theirs
+  // happen to start otherwise. Wrong in both directions at once, which is worse
+  // than no derivation: it produces a table that looks considered.
+  6: {
+    verb: "accommodate harass acquire adjust articulate characterise commence conceptualise contextualise "
+      + "deduce devise differentiate enquire extrapolate generalise hypothesise imply incorporate indicate "
+      + "manipulate monitor prioritise quantify reconcile refine reinforce represent scrutinise theorise "
+      + "trace troubleshoot utilise annotate transfer intersect bisect export import manufacture",
+    adjective: "amateur attached awkward disastrous equipped sincere descriptive grammatical persuasive "
+      + "academic acceptable accessible adaptable adjacent advantageous authentic balanced coherent "
+      + "compatible comprehensive concrete confidential contradictory credible decisive dependent dynamic "
+      + "evident explicit extraordinary feasible fragile global impartial implicit inappropriate innovative "
+      + "insufficient intensive intermediate persistent preliminary rigid substantial subtle superior "
+      + "sustainable technical tremendous vulnerable kinetic thermal photosynthetic tectonic ascending "
+      + "descending congruent improper triangular rotational mixed browser-based cloud-based operating "
+      + "ethical emotive discursive subordinate modal",
+    adverb: "admittedly arguably correspondingly evidently henceforth presumably relatively theoretically "
+      + "thus undoubtedly thereafter therein",
+    conjunction: "inasmuch insofar provided lest",
+    preposition: "notwithstanding",
+    pronoun: "whom whichever",
+    // Everything else falls through to noun.
+  },
 };
 const CLASS = CLASS_BY_GRADE[GRADE];
 if (!CLASS) {

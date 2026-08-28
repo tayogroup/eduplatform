@@ -93,10 +93,20 @@ function shows(sentence, word) {
   const w = word.replace(/[^a-z]/gi, "");
   if (!w) return true;
   const stem = w.replace(/(?:e)$/, "");
-  const pat = new RegExp(
-    `\\b${w}(?:s|es|ed|ing|ly|er|est)?\\b|\\b${stem}(?:ed|ing|es|er|est)\\b|\\b${w}${w.slice(-1)}(?:ed|ing|er|est)\\b`,
-    "i");
-  return pat.test(sentence);
+  // A consonant + y becomes -ies or -ied: property/properties, carry/carried,
+  // activity/activities. Missing this reported "Every substance has its own set
+  // of properties." as a sentence that never uses `property`, which is a false
+  // accusation against correct content — and the words it would recur on are
+  // ordinary ones (country, activity, category, difficulty), so it would keep
+  // costing a reviewer time on every grade from here up.
+  const yStem = /[^aeiou]y$/.test(w) ? w.slice(0, -1) : null;
+  const parts = [
+    `\\b${w}(?:s|es|ed|ing|ly|er|est)?\\b`,
+    `\\b${stem}(?:ed|ing|es|er|est)\\b`,
+    `\\b${w}${w.slice(-1)}(?:ed|ing|er|est)\\b`,
+  ];
+  if (yStem) parts.push(`\\b${yStem}(?:ies|ied|ier|iest)\\b`);
+  return new RegExp(parts.join("|"), "i").test(sentence);
 }
 
 let words = 0, problems = 0;

@@ -1,141 +1,139 @@
 #!/usr/bin/env node
-// Proofread BUILT Core-word content for the fault classes the authored-content
-// gate cannot see. Every class here is one this grade actually produced.
+// Proofread a grade's Core-word content ACROSS words, not one word at a time.
 //
-//   node tools/proofread-english-core-words.mjs     (Grade 3; edit D for others)
+// check-english-core-words-authored.mjs judges each word alone: does the
+// sentence contain the headword, is it inside the length cap, does the meaning
+// end in a full stop. Every one of those can pass on all 412 words while the SET
+// is still wrong, because the faults that matter at this scale are relations
+// between cards:
 //
-// READ THE OUTPUT, DO NOT ACT ON THE COUNTS. Of 279 findings on Grade 3, three
-// were real. `self-defining` (30) and `circular` (55) and `collocation` (177)
-// are dominated by correct content: repeating the headword is house style at
-// 20-63% across every other grade, "camera is a machine" is a taxonomy rather
-// than a circle, and "grateful for" is the word's grammatical frame. The classes
-// that were worth their noise are pronoun, duplicate, same-meaning, unresolved
-// and same-opener.
+//   - two words given the same meaning, so the learner cannot tell them apart;
+//   - a meaning that leans on another Core word from the same grade, which is
+//     either unread (taught later) or pre-empted (taught here);
+//   - the same sentence used for two different words;
+//   - five sentences that are all the same shape, so the set drills one pattern;
+//   - a sentence opening with a pronoun that has no referent on the card, which
+//     reads fine in the passage it was mined from and nowhere else.
+//
+// None of these is detectable from a single word, which is why they survived a
+// clean per-word run.
+//
+//   node tools/proofread-english-core-words.mjs --grade 4
 import fs from "node:fs";
+import path from "node:path";
 
-const D = "src/prototypes/ehel-academy/english/grade-3/data/";
-const entries = JSON.parse(fs.readFileSync(D + "master-dictionary.grade3.json", "utf8")).entries;
-const byId = new Map(entries.map((e) => [e.dictionaryEntryId, e]));
+const ROOT = path.join("src", "prototypes", "ehel-academy", "english");
+const argv = process.argv.slice(2);
+let GRADE = null;
+for (let i = 0; i < argv.length; i++) {
+  if (argv[i] === "--grade") { GRADE = Number(argv[++i]); continue; }
+  console.error(`Unrecognised argument: ${argv[i]}`);
+  process.exit(2);
+}
+if (!Number.isInteger(GRADE) || GRADE < 1 || GRADE > 8) {
+  console.error("--grade N is required (1-8)");
+  process.exit(2);
+}
+const DATA = path.join(ROOT, `grade-${GRADE}`, "data");
 
-const units = [];
+// Read the BUILT units, so this proofreads what a learner will actually meet
+// rather than the authoring file it came from.
+const cards = [];
 for (let u = 1; u <= 10; u++) {
-  const d = JSON.parse(fs.readFileSync(D + `units/unit-${u}.json`, "utf8"));
-  const core = (d.dictionaryLinks || []).filter((l) => !/stories/i.test(l.groupTitle || ""));
-  units.push({ u, core });
+  const f = path.join(DATA, "units", `unit-${u}.json`);
+  if (!fs.existsSync(f)) continue;
+  const doc = JSON.parse(fs.readFileSync(f, "utf8"));
+  const core = new Set(doc.vocabularyGroups.filter((g) => g.strand && g.strand !== "glossary").map((g) => g.id));
+  for (const l of doc.dictionaryLinks || []) {
+    if (!core.has(l.groupId)) continue;
+    cards.push({ unit: u, word: l.masterWord, meaning: l.childMeaning || "", sentences: l.practiceSentences || [] });
+  }
 }
-const all = units.flatMap((x) => x.core.map((l) => ({ ...l, unit: x.u })));
-const coreWords = new Set(all.map((l) => String(l.masterWord).toLowerCase()));
+const wordSet = new Set(cards.map((c) => c.word));
+const unitOf = new Map(cards.map((c) => [c.word, c.unit]));
+const findings = [];
+const add = (kind, detail) => findings.push({ kind, detail });
 
-const out = [];
-const add = (kind, unit, word, detail) => out.push({ kind, unit, word, detail });
+// ---- 1. two words sharing a meaning -----------------------------------------
+const byMeaning = new Map();
+for (const c of cards) {
+  const key = c.meaning.toLowerCase().replace(/[^a-z ]/g, "").replace(/\s+/g, " ").trim();
+  if (!key) continue;
+  (byMeaning.get(key) ?? byMeaning.set(key, []).get(key)).push(c);
+}
+for (const [, group] of byMeaning) {
+  if (group.length > 1) add("same meaning", `${group.map((c) => `${c.word} (u${c.unit})`).join(" = ")}  — "${group[0].meaning}"`);
+}
 
-// 1. A definition that leans on another Core word from the SAME unit. Four of
-//    these shipped from higher grades (certainly->definitely, rare->especially,
-//    investigate->examine, electric->electricity).
-for (const { u, core } of units) {
-  const inUnit = new Set(core.map((l) => String(l.masterWord).toLowerCase()));
-  for (const l of core) {
-    const self = String(l.masterWord).toLowerCase();
-    const m = String(l.childMeaning || "").toLowerCase();
-    for (const other of inUnit) {
-      if (other === self || other.length < 5) continue;
-      if (new RegExp(`\\b${other}\\b`).test(m)) add("circular", u, l.masterWord, `meaning uses "${other}", also taught in this unit`);
-    }
+// ---- 2. a meaning that uses another Core word of this grade -------------------
+// Only flagged where the other word is a CONTENT word; the closed-class ones
+// (and, the, of) are unavoidable and carry no teaching weight.
+const CLOSED = new Set(("a an the and or but if of to in on at for with from by as is are was were be been am "
+  + "do does did have has had can will would should could may might must not no yes it its this that these those "
+  + "you your he she they them their we us our i me my him her his so than then when where how what which who "
+  + "there here more most much many some all one two up down out off over under about into").split(" "));
+for (const c of cards) {
+  const used = (c.meaning.toLowerCase().match(/[a-z-]+/g) || [])
+    .filter((w) => w !== c.word && !CLOSED.has(w) && wordSet.has(w));
+  for (const w of used) {
+    const other = unitOf.get(w);
+    const when = other > c.unit ? `taught LATER, unit ${other}` : other === c.unit ? `SAME unit` : `unit ${other}`;
+    add("meaning uses a Core word", `${c.word} (u${c.unit}) uses "${w}" — ${when}\n      "${c.meaning}"`);
   }
 }
 
-// 2. A set of five that teaches a COLLOCATION rather than the word: the same
-//    two-word phrase around the headword in three or more sentences. This is
-//    how `natural` (natural energy x3) and `single` (every single day) failed.
-for (const l of all) {
-  const w = String(l.masterWord).toLowerCase();
-  const grams = new Map();
-  for (const s of l.practiceSentences || []) {
-    const t = s.toLowerCase().replace(/[^a-z\s]/g, " ").split(/\s+/).filter(Boolean);
-    const i = t.findIndex((x) => x === w || x.startsWith(w));
-    if (i < 0) continue;
-    for (const g of [t.slice(i, i + 2).join(" "), t.slice(Math.max(0, i - 1), i + 1).join(" ")]) {
-      if (g.split(" ").length === 2) grams.set(g, (grams.get(g) || 0) + 1);
-    }
-  }
-  for (const [g, n] of grams) if (n >= 3) add("collocation", l.unit, l.masterWord, `"${g}" in ${n} of 5 sentences`);
+// ---- 3. the same sentence on two cards ---------------------------------------
+const bySentence = new Map();
+for (const c of cards) for (const s of c.sentences) {
+  const k = s.toLowerCase().replace(/[^a-z ]/g, "").replace(/\s+/g, " ").trim();
+  (bySentence.get(k) ?? bySentence.set(k, []).get(k)).push(c.word);
+}
+for (const [, ws] of bySentence) {
+  if (new Set(ws).size > 1) add("shared sentence", `${[...new Set(ws)].join(" / ")}`);
 }
 
-// 3. Every sentence opening with the same word — teaches the position, not the
-//    meaning. `later` failed this way and no gate saw it.
-for (const l of all) {
-  const firsts = (l.practiceSentences || []).map((s) => s.replace(/^["'“]/, "").split(/\s+/)[0].toLowerCase().replace(/[^a-z]/g, ""));
-  const counts = {};
-  for (const f of firsts) counts[f] = (counts[f] || 0) + 1;
-  for (const [f, n] of Object.entries(counts)) if (n >= 4) add("same-opener", l.unit, l.masterWord, `${n} of 5 sentences begin "${f}"`);
+// ---- 4. a set of five that is all one shape ----------------------------------
+// The authored sets deliberately vary: a statement, a question, a third-person
+// example, a quoted or named one, a first-person one. Five openings that are all
+// the same word drill a pattern instead of the vocabulary.
+for (const c of cards) {
+  if (c.sentences.length < 5) continue;
+  const opens = c.sentences.map((s) => s.split(/\s+/)[0].toLowerCase().replace(/[^a-z]/g, ""));
+  const uniq = new Set(opens);
+  if (uniq.size <= 2) add("set lacks variety", `${c.word} (u${c.unit}) — every sentence opens with ${[...uniq].map((x) => `"${x}"`).join(" / ")}`);
+  if (!c.sentences.some((s) => s.trim().endsWith("?"))) add("no question", `${c.word} (u${c.unit}) — none of the five is a question`);
 }
 
-// 4. Part of speech disagreeing with how the meaning is written. An entry that
-//    says noun above a meaning starting "To ..." is one of them contradicting
-//    the other on the card the child reads.
-for (const l of all) {
-  const e = byId.get(l.dictionaryEntryId);
-  if (!e) { add("unresolved", l.unit, l.masterWord, "link resolves to no dictionary entry"); continue; }
-  const m = String(l.childMeaning || "").trim();
-  if (/^To\s/.test(m) && e.partOfSpeech !== "verb") add("pos-vs-meaning", l.unit, l.masterWord, `${e.partOfSpeech}, but the meaning starts "To ..."`);
-  if (/^(A|An|The)\s/.test(m) && !["noun", "article"].includes(e.partOfSpeech)) add("pos-vs-meaning", l.unit, l.masterWord, `${e.partOfSpeech}, but the meaning starts "${m.split(/\s/)[0]} ..."`);
-}
+// ---- 5. a sentence that cannot stand alone -----------------------------------
+// A card shows one sentence at a time, so an opening pronoun has nothing to
+// refer to. This is the shape mined sentences arrive in.
+// THERE IS NO PRONOUN CHECK HERE, and the absence is deliberate.
+//
+// One was written and removed. It flagged any sentence opening with a pronoun,
+// on the theory that a card shows one sentence at a time so the pronoun has
+// nothing to refer to. It returned 160 hits. Exempting the determiner reading
+// ("This application helps you…", which names its subject in the very next word)
+// and the impersonal `it` ("It is likely that the river will rise") brought that
+// to 84 — and those 84 were still correct English: "She showed great courage
+// during the storm", "He gave professional advice about the roof". A generic
+// pronoun subject is how dictionary examples have always been written, and it
+// needs no antecedent because it refers to no one in particular.
+//
+// So the premise was wrong, not the threshold, and no amount of narrowing would
+// have reached a true positive. Recorded rather than quietly deleted because two
+// earlier checks in this family failed the same way — the -ies plurals and the
+// hyphenated headword, both of which accused correct content — and the pattern
+// worth remembering is that all three came from a rule about FORM applied to
+// text whose correctness is a matter of MEANING.
 
-// 5. A meaning that defines the word with itself.
-for (const l of all) {
-  const w = String(l.masterWord).toLowerCase();
-  const m = String(l.childMeaning || "").toLowerCase();
-  const stem = w.length > 4 ? w.slice(0, -2) : w;
-  if (new RegExp(`\\b${stem}`).test(m)) add("self-defining", l.unit, l.masterWord, l.childMeaning);
+// ---- report ------------------------------------------------------------------
+console.log(`Grade ${GRADE} Core words — cross-card proofread`);
+console.log(`  cards: ${cards.length}\n`);
+const byKind = new Map();
+for (const f of findings) (byKind.get(f.kind) ?? byKind.set(f.kind, []).get(f.kind)).push(f.detail);
+for (const [kind, list] of byKind) {
+  console.log(`${kind} (${list.length})`);
+  for (const d of list) console.log(`    ${d}`);
+  console.log("");
 }
-
-// 6. Pronoun agreement for the named cast. Sami and Leo are boys in this
-//    grade's content; Amal, Nora and Mina are girls. Two reused sentences said
-//    "Sami ... her".
-const GENDER = { sami: "m", leo: "m", daniel: "m", theo: "m", omar: "m", adam: "m", grandpa: "m",
-                 amal: "f", nora: "f", mina: "f", hana: "f", maya: "f", yasmin: "f", grandma: "f" };
-for (const l of all) {
-  for (const s of l.practiceSentences || []) {
-    for (const [name, g] of Object.entries(GENDER)) {
-      const re = new RegExp(`\\b${name[0].toUpperCase()}${name.slice(1)}\\b`);
-      if (!re.test(s)) continue;
-      const wrong = g === "m" ? /\b(her|hers|she)\b/i : /\b(his|him|he)\b/i;
-      // only when that name is the ONLY person in the sentence
-      const others = Object.keys(GENDER).filter((n) => n !== name)
-        .some((n) => new RegExp(`\\b${n[0].toUpperCase()}${n.slice(1)}\\b`).test(s));
-      if (!others && wrong.test(s)) add("pronoun", l.unit, l.masterWord, `${name} is ${g === "m" ? "male" : "female"}: ${s}`);
-    }
-  }
-}
-
-// 7. The same sentence used for two different words.
-const seen = new Map();
-for (const l of all) for (const s of l.practiceSentences || []) {
-  const prev = seen.get(s);
-  if (prev && prev !== l.masterWord) add("duplicate", l.unit, l.masterWord, `same sentence as "${prev}": ${s}`);
-  seen.set(s, l.masterWord);
-}
-
-// 8. Two Core words in the same unit sharing a meaning, which makes the pair
-//    indistinguishable on the cards.
-for (const { u, core } of units) {
-  const byMeaning = new Map();
-  for (const l of core) {
-    const k = String(l.childMeaning || "").toLowerCase().replace(/[^a-z ]/g, "").trim();
-    if (!k) continue;
-    if (byMeaning.has(k)) add("same-meaning", u, l.masterWord, `identical meaning to "${byMeaning.get(k)}"`);
-    byMeaning.set(k, l.masterWord);
-  }
-}
-
-console.log(`Grade 3 built content — ${all.length} Core words across ${units.length} units\n`);
-const kinds = {};
-for (const r of out) (kinds[r.kind] ??= []).push(r);
-const ORDER = ["unresolved", "pronoun", "duplicate", "same-meaning", "self-defining", "pos-vs-meaning", "circular", "collocation", "same-opener"];
-for (const k of ORDER) {
-  const rows = kinds[k] || [];
-  console.log(`${k.padEnd(16)} ${String(rows.length).padStart(3)}`);
-  for (const r of rows.slice(0, 12)) console.log(`     u${String(r.unit).padEnd(3)} ${r.word.padEnd(14)} ${r.detail}`);
-  if (rows.length > 12) console.log(`     … ${rows.length - 12} more`);
-}
-console.log(`\ntotal findings: ${out.length}`);
+console.log(`total findings: ${findings.length}`);

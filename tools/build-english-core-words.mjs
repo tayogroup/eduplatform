@@ -285,12 +285,31 @@ for (const cu of core.units) {
   // 26 duplicates inside single units. Drop any glossary-bound link whose id a
   // Core card has claimed — the word is taught now, so it does not also need a
   // look-up entry. `claimedIds` is computed grade-wide above.
+  // ...and by WORD as well as by id, because claiming the id is only one of the
+  // ways a Core card can be built. Grade 5 produced four words sitting in one
+  // unit twice - generosity, astronomy, myth, policy - and every one slipped the
+  // id test legitimately: the Core card had minted a fresh id
+  // (`g5-u1-core-generosity`) or reused a link from ANOTHER unit entirely
+  // (`policy` carries `u3-g1-1-policy` on a unit-10 card), so the unit's own
+  // glossary id was never claimed and the copy survived beside the Core card.
+  //
+  // The two copies then drift apart, which is how this was found rather than
+  // reasoned about: a restated-headword fix landed on u2's Core `astronomy` and
+  // left the glossary twin saying "Astronomy is the scientific study of..." with
+  // no full stop. One word, one unit, two meanings, and the learner meets both.
+  //
+  // The rule the id test was already reaching for is stated in the comment above
+  // it - the word is TAUGHT now, so it does not also need a look-up entry - and
+  // that rule is about the word, not about which id happened to be recycled.
+  const coreWordsHere = new Set(links.map((l) => String(l.masterWord).toLowerCase()));
+  const alsoTaught = (l) => coreWordsHere.has(String(l.masterWord).toLowerCase());
   const displaced = doc.dictionaryLinks.filter(
-    (l) => oldIds.has(l.groupId) && !claimedIds.has(l.vocabularyId));
+    (l) => oldIds.has(l.groupId) && !claimedIds.has(l.vocabularyId) && !alsoTaught(l));
   // A rerun must not carry its own core links into the glossary either: they are
   // rebuilt from core-words.json above, so drop anything already in a core group.
   const keptGlossary = doc.dictionaryLinks.filter(
-    (l) => !oldIds.has(l.groupId) && !coreIds.has(l.groupId) && !claimedIds.has(l.vocabularyId));
+    (l) => !oldIds.has(l.groupId) && !coreIds.has(l.groupId) && !claimedIds.has(l.vocabularyId)
+      && !alsoTaught(l));
 
   const glossaryId = glossary?.id ?? `${IDP}-u${cu.unitNo}-glossary`;
   // Not `glossary?.title` — see STORY_GLOSSARY_GROUP above. Carrying the found

@@ -119,6 +119,41 @@ for (const c of cards) {
   if (!c.sentences.some((s) => s.trim().endsWith("?"))) add("no question", `${c.word} (u${c.unit}) — none of the five is a question`);
 }
 
+// ---- 4b. THERE IS NO WITHIN-CARD ECHO CHECK, and the absence is deliberate ---
+//
+// The second one of these to be written and removed. Check 3 is exact-match
+// ACROSS cards, so it cannot see two sentences on ONE card saying the same
+// thing - which is a real defect, and one this session CAUSED: adding the
+// missing question to the eight sets flagged by check 4 was done by replacing
+// sentence 3 at a fixed index without reading the four around it, and five of
+// the eight came out carrying the question beside the statement it was made
+// from ("She read the rules and acted accordingly." / "Did she read the rules
+// and act accordingly?"). Every existing check passed all five.
+//
+// So the defect is real. A word-bag overlap check for it is not, and the
+// numbers are the argument. Over 793 cards in Grades 4 and 5 it returned 28
+// findings, of which about ONE (`personification`) is arguably a true echo. The
+// rest are cards repeating a frame on purpose - "Twelve is a multiple of three"
+// beside "Every number is a multiple of one", "The probability of heads is one
+// half" beside "What is the probability of rain today?".
+//
+// And no threshold separates them, which is what settles it rather than any
+// count. The five real echoes scored 0.80, 0.62, 0.56, 0.50 and 0.31; the false
+// ones run 0.75, 0.71, 0.67, 0.62, 0.57. They interleave. A cut that catches
+// `accordingly` and nothing false also misses `marvellous` and `namely`. A
+// narrower rule keyed on the actual shape - a question restating an adjacent
+// statement - was tried on paper and fails identically, because a card
+// legitimately holds a question and a statement built on the same frame.
+//
+// The premise is wrong, not the threshold, and it is wrong for the same reason
+// the pronoun check below was: a rule about FORM applied to text whose
+// correctness is a matter of MEANING. Five sentences teaching ONE word share
+// their frame by design - that is what a vocabulary card is - so overlap
+// measures the card working, not the card failing.
+//
+// What found all five was reading the set. Recorded so the next person to
+// notice the gap knows it has been measured, and what it costs.
+
 // ---- 5. a sentence that cannot stand alone -----------------------------------
 // A card shows one sentence at a time, so an opening pronoun has nothing to
 // refer to. This is the shape mined sentences arrive in.

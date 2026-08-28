@@ -87,6 +87,16 @@ if (unknown.length) {
 const subjects = process.argv.slice(2).filter((s) => SUBJECTS.includes(s));
 const subjectList = subjects.length ? subjects : SUBJECTS;
 
+// Authoring artefacts are not content. core-words.json is the allocation plan,
+// core-words-draft.json the review surface, and core-words-authored.json the
+// hand-written source the build reads. The app fetches none of them, and none
+// had ever been deployed — they sit under data/ only because that is where the
+// build reads them, and this walker takes every .json it finds, so they would
+// ship as a side effect of the directory layout rather than any decision. They
+// also carry working notes about the content's own defects, which is not
+// something to put on a public CDN by accident.
+const AUTHORING_ONLY = /(^|\/)core-words(-draft|-authored)?\.json$/;
+
 const sha1 = (buf) => crypto.createHash("sha1").update(buf).digest("hex");
 
 function walk(dir, rel = "") {
@@ -113,6 +123,7 @@ function buildList() {
       if (!fs.existsSync(dataDir)) continue;
       const gg = String(g).padStart(2, "0");
       for (const rel of walk(dataDir)) {
+        if (AUTHORING_ONLY.test(rel)) continue;
         const local = path.join(dataDir, rel);
         list.push({ local, remote: `content/${subject}/g${gg}/${rel}`, hash: sha1(fs.readFileSync(local)) });
       }

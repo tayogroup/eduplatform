@@ -178,6 +178,41 @@ const CLASS_BY_GRADE = {
       + "apologise appreciate assist rewrite preview disappear",
     // Everything else falls through to noun - 237 words, each checked to be one.
   },
+  // Grade 5 CANNOT use the supplied list's own categories the way Grades 2 and 3
+  // did. Its topic groups are subject sets, not function sets: "Words: how a
+  // story is built" holds `myth` and `plot` beside `permanent` and `precise`,
+  // and "Words: finding out and explaining" is 31 verbs under a heading that
+  // says nothing about verbs. So each word was placed from the AUTHORED meaning,
+  // which is what the card prints directly above the part of speech - the Grade
+  // 4 rule, applied to a grade where it is the only rule available.
+  //
+  // The two-way words were decided by reading that meaning, not by reasoning
+  // about the word: `paraphrase` ("To put something into your own words") is a
+  // verb, `recount` ("A retelling of events...") is a noun, `guarantee` ("A firm
+  // promise...") is a noun, and `individual` ("Single and separate, rather than
+  // part of a group") is an adjective. Every one of those four could honestly
+  // have gone the other way, and the meaning settles it in one reading.
+  5: {
+    verb: "occur occupy correspond equip embarrass exaggerate criticise interfere interrupt accompany "
+      + "assemble acknowledge administer advocate allocate anticipate assume clarify collaborate compile "
+      + "comprehend conduct consult derive detect distinguish elaborate emphasise establish formulate "
+      + "generate implement inquire integrate negotiate outline propose reflect regulate resolve retrieve "
+      + "simulate specify synthesise transform validate paraphrase authenticate install",
+    adjective: "conscious definite desperate solar electrical marvellous mischievous adequate ambitious "
+      + "artificial automatic considerable consistent constructive contemporary controversial convincing "
+      + "conventional crucial diverse domestic dramatic economical educational environmental exceptional "
+      + "external fundamental gradual ideal immediate impressive inadequate internal foreign legal mental "
+      + "mutual occasional overall particular permanent precise predictable principal realistic reliable "
+      + "scientific severe temporary informal argumentative rhetorical cohesive chronological literal "
+      + "theoretical unique universal unlikely valid vast vital sufficient thorough individual acute "
+      + "obtuse parallel perpendicular aggressive apparent virtual wireless digestive immune toxic willing",
+    adverb: "accordingly ultimately likewise altogether conversely nonetheless initially subsequently "
+      + "namely particularly regardless thereby whereby anyhow anyway simultaneously ordinarily "
+      + "incidentally sincerely comparatively notably wherein",
+    conjunction: "albeit",
+    number: "forty",
+    // Everything else falls through to noun.
+  },
 };
 const CLASS = CLASS_BY_GRADE[GRADE];
 if (!CLASS) {

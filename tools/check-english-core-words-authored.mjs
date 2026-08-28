@@ -122,6 +122,18 @@ function shows(sentence, word) {
     `\\b${w}${w.slice(-1)}(?:ed|ing|er|est)\\b`,
   ];
   if (yStem) parts.push(`\\b${yStem}(?:ies|ied|ier|iest)\\b`);
+  // A Latin noun ending -a pluralises to -ae: larva/larvae, antenna/antennae,
+  // formula/formulae. Without this, "Mosquito larvae live in still water." was
+  // reported as a sentence that never uses `larva` - while the sentence beside it
+  // on the same card exists precisely to teach that plural. The THIRD form rule
+  // in this function to accuse correct content, after the -ies plurals and the
+  // hyphenated headword, and the same shape every time: an inflection the rule
+  // had not been told about reads as an absence of the word.
+  //
+  // Narrow on purpose. It fires only where the headword itself ends in -a, so it
+  // cannot reach an English word that merely ends -ae, and it leaves the ordinary
+  // -s plural those nouns also take (formulas) to the rule above.
+  if (/a$/.test(w)) parts.push(`\\b${w.slice(0, -1)}ae\\b`);
   return new RegExp(parts.join("|"), "i").test(sentence);
 }
 

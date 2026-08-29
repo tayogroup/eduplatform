@@ -192,6 +192,15 @@ export function createCourseApp(config) {
   const ELEVENLABS_VOICE_ID = "XfNU2rGpBa01ckF309OY";
 
   const sections = config.sections;
+  // The caption for a route, or "" when the route is not a section (get-help,
+  // teacher) or the subject does not caption it. Empty rather than the id, so
+  // the receiver can tell "no caption" from "captioned as its id" and choose.
+  const sectionLabelOf = (id) => {
+    if (!id) return "";
+    const list = typeof config.sections === "function" ? config.sections() : (config.sections || []);
+    const hit = (list || []).find((entry) => entry && entry.route === id);
+    return hit && typeof hit.title === "string" ? hit.title : "";
+  };
   const nonCountable = config.nonCountable || ["overview"];
   const gradeSections = config.gradeSections || [];
 
@@ -502,6 +511,17 @@ export function createCourseApp(config) {
       // progress contract was written and nothing had ever populated it, so
       // this is the field being fed rather than a new one.
       resume: route || undefined,
+      // THE NAME THE LEARNER SEES, beside the id the code uses. English's
+      // `dictionary` route is captioned "Vocabulary" in the nav, `lecture` is
+      // "Video lesson", `teacherguide` is "Teacher & Parent Guide" -- so a
+      // board printing the raw id shows a teacher a word that appears nowhere
+      // on the child's screen, and reads as wrong even when it is right.
+      //
+      // Sent rather than mapped server-side because the caption is per subject
+      // and per grade (navLabelOf), and a copy of it in PHP would be a second
+      // vocabulary to drift. The app is captioning the nav anyway; this is the
+      // same string.
+      resumeLabel: sectionLabelOf(route) || undefined,
       xp: Object.values(progress.games || {}).reduce((s, g) => s + (g.xp || 0), 0) || undefined,
     };
     emitProgress(config.extendSummary ? config.extendSummary(progress, base) : base);

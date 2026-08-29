@@ -304,6 +304,7 @@ function pqlgb_progress_snapshot(array $userids, string $env, int $since = 0): a
                 'sectionsdone' => 0,
                 'lastsection' => '',
                 'resumedone' => false,
+                'resumelabel' => '',
                 // Where the learner IS, as opposed to what they last finished.
                 // Emitted by the shared shell on navigation; empty for any
                 // learner whose app predates that, which the board reports as
@@ -358,6 +359,15 @@ function pqlgb_progress_snapshot(array $userids, string $env, int $since = 0): a
             // name from the other.
             $snapshot[$userid]['resume'] = is_string($state['resume'] ?? null)
                 ? (string)$state['resume'] : '';
+            // Prefer the caption the learner is actually looking at. English's
+            // `dictionary` route is titled "Vocabulary" on their screen, so a
+            // tile printing the id names a section the teacher cannot find --
+            // it reads as a stale board even when the position is correct.
+            // Falls back to the id for any app that predates sending it.
+            $snapshot[$userid]['resumelabel'] = is_string($state['resumeLabel'] ?? null)
+                && $state['resumeLabel'] !== ''
+                ? (string)$state['resumeLabel']
+                : $snapshot[$userid]['resume'];
             // WORKING ON IT, or JUST FINISHED IT. `resume` alone cannot say:
             // it is only a position, so a learner who completes a section and
             // has not yet moved reads identically to one still labouring in it,
@@ -712,6 +722,7 @@ function pqlgb_build(int $teacherid, int $workspaceid, int $windowminutes, strin
                 'wehellive' => !empty($wehel[$userid]['live']),
                 'resume' => $snap ? (string)$snap['resume'] : '',
                 'resumedone' => $snap ? !empty($snap['resumedone']) : false,
+                'resumelabel' => $snap ? (string)$snap['resumelabel'] : '',
                 'learnused' => (int)($learning[$userid]['used'] ?? 0),
                 'learnremaining' => (int)($learning[$userid]['remaining'] ?? 0),
                 'learntarget' => (int)($learning[$userid]['target'] ?? 0),

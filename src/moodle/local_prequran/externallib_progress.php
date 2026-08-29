@@ -153,6 +153,7 @@ class local_prequran_progress_external extends external_api {
         return [
             'sectionsDone' => [],
             'resume' => null,
+            'resumeLabel' => null,
             'checkpoints' => new stdClass(),
             'xp' => 0,
             'knownWords' => [],
@@ -295,6 +296,13 @@ class local_prequran_progress_external extends external_api {
                 }
                 if (array_key_exists('resume', $ev)) {
                     $state['resume'] = $ev['resume'];
+                }
+                // The caption the learner sees for that section, sent beside
+                // the id because it is per subject and per grade and cannot be
+                // derived here. Stored the same way and with the same
+                // last-write-wins rule; consumers fall back to the id.
+                if (array_key_exists('resumeLabel', $ev)) {
+                    $state['resumeLabel'] = $ev['resumeLabel'];
                 }
                 if (isset($ev['xp'])) {
                     $state['xp'] = (int)$ev['xp'];

@@ -380,7 +380,11 @@ echo $OUTPUT->header();
     // time a teacher does not need to be told.
     var whereText = "";
     if (tile.resume) {
-      whereText = (tile.resumedone ? " &middot; finished " : " &middot; in ") + esc(tile.resume);
+      // The caption the learner sees, never the route id -- see resumelabel in
+      // the library. A teacher matching the tile against a child's screen has
+      // to be reading the same word they are.
+      whereText = (tile.resumedone ? " &middot; finished " : " &middot; in ")
+        + esc(tile.resumelabel || tile.resume);
     } else if (tile.lastsection) {
       whereText = " &middot; last: " + esc(tile.lastsection);
     }

@@ -176,6 +176,10 @@ a.pqlgb-golive{text-decoration:none;display:inline-block}
 .pqlgb-flag--warn{border-color:#ffe69c;background:#fff3cd;color:#664d03}
 .pqlgb-flag--ok{border-color:#a3cfbb;background:#d1e7dd;color:#0a3622}
 .pqlgb-flag--moved{border-color:#a3cfbb;background:#d1e7dd;color:#0a3622}
+.pqlgb-flag--cycle{border-color:#ced4da;background:#e9ecef;color:#41464b}
+.pqlgb-flag--where{border-color:#9eeaf9;background:#cff4fc;color:#055160}
+.pqlgb-flag--wehel{border-color:#c5b3e6;background:#e2d9f3;color:#432874}
+.pqlgb-flag--time{border-color:#a6e9d5;background:#d2f4ea;color:#114e3d}
 /* A raised hand is the one thing on this board the learner said out loud, and
    its flag had been rendering with no rule of its own since the feature
    shipped -- it read as an ordinary grey pill among the inferred signals it is
@@ -468,7 +472,7 @@ echo pqh_design_shell_html('pqlgb-shell', 'board', [
     // a precision the data does not have. A bare 0 there is worse still — it
     // points the teacher at a learner who is fine.
     var moved = (tile.donewindow || 0) + (tile.quizwindow || 0);
-    flags.push('<span class="pqlgb-flag' + (moved > 0 ? " pqlgb-flag--moved" : "") + '"' +
+    flags.push('<span class="pqlgb-flag' + (moved > 0 ? " pqlgb-flag--moved" : " pqlgb-flag--cycle") + '"' +
       ' title="' + (tile.windowcovered
         ? "Sections and quizzes completed in the chosen window."
         : "At least this many — this unit began recording after the window opened.") + '">' +
@@ -501,7 +505,7 @@ echo pqh_design_shell_html('pqlgb-shell', 'board', [
     } else if (tile.lastsection) {
       whereText = " &middot; last: " + esc(tile.lastsection);
     }
-    flags.push('<span class="pqlgb-flag">' + tile.sectionsdone + " done" + whereText + "</span>");
+    flags.push('<span class="pqlgb-flag pqlgb-flag--where">' + tile.sectionsdone + " done" + whereText + "</span>");
     if (tile.checkpoint) {
       flags.push('<span class="pqlgb-flag pqlgb-flag--' + (tile.checkpoint.passed ? "ok" : "bad") + '">' +
         esc(tile.checkpoint.section) + " " + tile.checkpoint.score + "%</span>");
@@ -533,7 +537,7 @@ echo pqh_design_shell_html('pqlgb-shell', 'board', [
       flags.push('<span class="pqlgb-flag pqlgb-flag--live">&#9679; in Wehel' +
         (tile.wehelminutes > 0 ? " &middot; " + tile.wehelminutes + " min today" : "") + "</span>");
     } else if (tile.wehelminutes > 0) {
-      flags.push('<span class="pqlgb-flag">Wehel ' + tile.wehelminutes + " min</span>");
+      flags.push('<span class="pqlgb-flag pqlgb-flag--wehel">Wehel ' + tile.wehelminutes + " min</span>");
     }
     // The learner's DAY: what they have banked today and what is left of the
     // target. Never a countdown to a stop -- used-time is a floor (a long read
@@ -550,10 +554,10 @@ echo pqh_design_shell_html('pqlgb-shell', 'board', [
     // worth showing, not a reason to show nothing.
     if (tile.learntarget > 0) {
       if (!tile.learncounted) {
-        flags.push('<span class="pqlgb-flag">day not counted yet</span>');
+        flags.push('<span class="pqlgb-flag pqlgb-flag--cycle">day not counted yet</span>');
       } else {
         var left = tile.learnremaining;
-        flags.push('<span class="pqlgb-flag' + (left <= 0 ? " pqlgb-flag--ok" : "") + '">' +
+        flags.push('<span class="pqlgb-flag' + (left <= 0 ? " pqlgb-flag--ok" : " pqlgb-flag--time") + '">' +
           hm(tile.learnused) + " today &middot; " +
           (left <= 0 ? "target met" : hm(left) + " left") + "</span>");
       }

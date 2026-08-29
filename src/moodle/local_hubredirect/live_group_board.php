@@ -367,14 +367,24 @@ echo $OUTPUT->header();
         // report a learner as idle on the strength of data that does not
         // exist — the false negative windowcovered exists to prevent.
         : (tile.windowcovered ? "nothing this cycle" : "not counted yet")) + "</span>");
-    // WHERE THEY ARE beats what they finished, but only when we know it. An
-    // app that predates the resume pointer sends nothing, and falling back to
-    // lastsection under an "in:" label would be a confident claim about a
-    // different fact -- so the label changes with the field.
-    flags.push('<span class="pqlgb-flag">' + tile.sectionsdone + " done" +
-      (tile.resume
-        ? " &middot; in: " + esc(tile.resume)
-        : (tile.lastsection ? " &middot; last: " + esc(tile.lastsection) : "")) + "</span>");
+    // THREE different claims, and the label has to match which one we hold.
+    //
+    //   in <x>        the learner is in a section they have NOT completed
+    //   finished <x>  they are still on it, but it is done -- about to move
+    //   last <x>      no resume pointer at all (an app predating v317): we know
+    //                 only what they last completed, never where they are
+    //
+    // The first version said "in:" for both of the first two, so the instant a
+    // learner completed a section the tile claimed they were still working in
+    // it. It only ever read correctly mid-activity, which is the half of the
+    // time a teacher does not need to be told.
+    var whereText = "";
+    if (tile.resume) {
+      whereText = (tile.resumedone ? " &middot; finished " : " &middot; in ") + esc(tile.resume);
+    } else if (tile.lastsection) {
+      whereText = " &middot; last: " + esc(tile.lastsection);
+    }
+    flags.push('<span class="pqlgb-flag">' + tile.sectionsdone + " done" + whereText + "</span>");
     if (tile.checkpoint) {
       flags.push('<span class="pqlgb-flag pqlgb-flag--' + (tile.checkpoint.passed ? "ok" : "bad") + '">' +
         esc(tile.checkpoint.section) + " " + tile.checkpoint.score + "%</span>");

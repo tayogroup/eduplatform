@@ -303,6 +303,7 @@ function pqlgb_progress_snapshot(array $userids, string $env, int $since = 0): a
                 'unit' => '',
                 'sectionsdone' => 0,
                 'lastsection' => '',
+                'resumedone' => false,
                 // Where the learner IS, as opposed to what they last finished.
                 // Emitted by the shared shell on navigation; empty for any
                 // learner whose app predates that, which the board reports as
@@ -357,6 +358,14 @@ function pqlgb_progress_snapshot(array $userids, string $env, int $since = 0): a
             // name from the other.
             $snapshot[$userid]['resume'] = is_string($state['resume'] ?? null)
                 ? (string)$state['resume'] : '';
+            // WORKING ON IT, or JUST FINISHED IT. `resume` alone cannot say:
+            // it is only a position, so a learner who completes a section and
+            // has not yet moved reads identically to one still labouring in it,
+            // and those call for opposite responses from a teacher. The
+            // completed list is already here, so the answer is a lookup rather
+            // than anything new on the wire.
+            $snapshot[$userid]['resumedone'] = $snapshot[$userid]['resume'] !== ''
+                && in_array($snapshot[$userid]['resume'], $sections, true);
             $snapshot[$userid]['checkpoint'] = pqlgb_weakest_checkpoint($state);
         }
         if (!empty($state['completed'])) {
@@ -702,6 +711,7 @@ function pqlgb_build(int $teacherid, int $workspaceid, int $windowminutes, strin
                 'wehelminutes' => (int)($wehel[$userid]['minutes'] ?? 0),
                 'wehellive' => !empty($wehel[$userid]['live']),
                 'resume' => $snap ? (string)$snap['resume'] : '',
+                'resumedone' => $snap ? !empty($snap['resumedone']) : false,
                 'learnused' => (int)($learning[$userid]['used'] ?? 0),
                 'learnremaining' => (int)($learning[$userid]['remaining'] ?? 0),
                 'learntarget' => (int)($learning[$userid]['target'] ?? 0),

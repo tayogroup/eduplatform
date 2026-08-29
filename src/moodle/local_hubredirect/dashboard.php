@@ -3680,6 +3680,7 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
       <a class="pqh-quick-card" href="#pqh-studentq"><strong>Class Roster</strong><span>Search assigned students and progress</span></a>
       <a class="pqh-quick-card" href="<?php echo pqh_course_transcript_link(0, $hasworkspace ? $currentworkspaceid : 0)->out(false); ?>"><strong>Unofficial Transcripts</strong><span>Open read-only transcripts for assigned students</span></a>
       <a class="pqh-quick-card" href="<?php echo pqh_hub_link('teacher_workspace.php', $hasworkspace ? ['workspaceid' => $currentworkspaceid] : [])->out(false); ?>"><strong>Teacher Workspace</strong><span>Today's classes and post-class reviews</span></a>
+      <a class="pqh-quick-card" href="<?php echo pqh_hub_link('live_group_board.php', $hasworkspace ? ['workspaceid' => $currentworkspaceid] : [])->out(false); ?>"><strong>Live Group Board</strong><span>Hands, chat, and live-room attendance across both groups during class</span></a>
       <?php if ($isindependentteacher): ?>
         <a class="pqh-quick-card" href="<?php echo pqh_live_session_create_link($hasworkspace ? $currentworkspaceid : 0)->out(false); ?>"><strong>Create Live Session</strong><span>Schedule a class and submit it for marketplace approval</span></a>
       <?php endif; ?>

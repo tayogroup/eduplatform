@@ -73,6 +73,12 @@ if ($teacherid !== (int)$USER->id) {
 if (!empty($consumercontext->consumerslug)) {
     $urlparams['consumer'] = (string)$consumercontext->consumerslug;
 }
+// The shared shell's own links carry only the stable identifiers -- consumer
+// and workspace -- never this page's teacher/window state.
+$navparams = $workspaceid > 0 ? ['workspaceid' => $workspaceid] : [];
+if (!empty($consumercontext->consumerslug)) {
+    $navparams['consumer'] = (string)$consumercontext->consumerslug;
+}
 
 $ready = pqlgb_schema_ready();
 $board = $ready ? pqlgb_build($teacherid, $workspaceid, $windowminutes, $env) : ['groups' => [], 'totals' => [
@@ -116,7 +122,6 @@ echo $OUTPUT->header();
 <style>
 .pqlgb{font-family:var(--op-font);color:var(--op-ink);max-width:1240px;margin:0 auto;padding:4px 0 40px}
 .pqlgb-bar{display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:14px 16px;margin-bottom:16px;background:var(--op-surface);border:1px solid var(--op-line);border-radius:var(--op-radius)}
-.pqlgb-bar h2{margin:0;font-size:18px;font-weight:900;letter-spacing:-.01em}
 .pqlgb-spacer{flex:1 1 auto}
 .pqlgb-form{display:flex;align-items:center;gap:8px}
 .pqlgb-form label{font-size:12px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--op-ink-soft)}
@@ -198,7 +203,7 @@ a.pqlgb-golive{text-decoration:none;display:inline-block}
    tiles hides the thing the page exists to show. */
 .pqlgb-cols{display:flex;gap:16px;align-items:start}
 .pqlgb-main{flex:1;min-width:0}
-.pqlgb-chat{width:320px;flex:0 0 320px;background:var(--op-surface);border:1px solid var(--op-line-strong);border-radius:10px;display:flex;flex-direction:column;max-height:78vh;position:sticky;top:12px}
+.pqlgb-chat{width:320px;flex:0 0 320px;background:var(--op-surface);border:1px solid var(--op-line-strong);border-radius:10px;display:flex;flex-direction:column;max-height:78vh;position:sticky;top:72px}
 .pqlgb-chat-head{padding:10px 12px;border-bottom:1px solid var(--op-line-strong);font-weight:800;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .pqlgb-chat-tab{border:1px solid var(--op-line-strong);background:transparent;border-radius:999px;padding:3px 10px;font:inherit;font-size:12px;font-weight:700;cursor:pointer}
 .pqlgb-chat-tab.is-active{background:#cfe2ff;border-color:#9ec5fe;color:#052c65}
@@ -221,20 +226,64 @@ a.pqlgb-golive{text-decoration:none;display:inline-block}
 .pqlgb-chat-announce{border:1px solid #052c65;background:transparent;color:#052c65;border-radius:8px;padding:3px 9px;font:inherit;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap}
 .pqlgb-chat-answer{display:block;margin-top:5px;border:1px solid #052c65;background:transparent;color:#052c65;border-radius:999px;padding:2px 9px;font:inherit;font-size:11px;font-weight:700;cursor:pointer}
 .pqlgb-chat-shot{display:block;max-width:100%;max-height:140px;object-fit:cover;object-position:top;border-radius:8px;margin-top:4px;cursor:zoom-in}
-.pqlgb-shot-lightbox{position:fixed;inset:0;z-index:80;background:rgba(10,30,45,.85);display:flex;align-items:center;justify-content:center;padding:24px;cursor:zoom-out}
+.pqlgb-shot-lightbox{position:fixed;inset:0;z-index:120;background:rgba(10,30,45,.85);display:flex;align-items:center;justify-content:center;padding:24px;cursor:zoom-out}
 .pqlgb-shot-lightbox img{max-width:96vw;max-height:92vh;border-radius:10px;box-shadow:0 12px 48px rgba(0,0,0,.5);background:#fff}
 .pqlgb-chat-form input{flex:1;border:1px solid var(--op-line-strong);border-radius:8px;padding:7px 10px;font:inherit;font-size:13px;min-width:0}
 .pqlgb-chat-form button{border:1px solid #052c65;background:#0d6efd;color:#fff;border-radius:8px;padding:7px 14px;font:inherit;font-size:13px;font-weight:700;cursor:pointer}
 @media (max-width:900px){.pqlgb-cols{flex-direction:column}.pqlgb-chat{width:100%;flex:1 1 auto;position:static;max-height:50vh}}
-</style>
 
+/* ---- the teacher-dashboard family's chrome: Moodle furniture hidden, the
+   shared rail + app bar, and a workspace-style header card. Modelled on
+   teacher_workspace.php so the board reads as a sibling of the pages the
+   dashboard links, not a bare Moodle page. ---- */
+body.pqlgb-page header,body.pqlgb-page footer,body.pqlgb-page nav.navbar,body.pqlgb-page #page-header,body.pqlgb-page #page-footer,body.pqlgb-page .drawer,body.pqlgb-page .drawer-toggles,body.pqlgb-page .block-region,body.pqlgb-page [data-region="drawer"],body.pqlgb-page [data-region="right-hand-drawer"]{display:none!important}
+body.pqlgb-page #page,body.pqlgb-page #page-content,body.pqlgb-page #region-main,body.pqlgb-page .main-inner{margin:0!important;padding:0!important;max-width:none!important;border:0!important}
+.pqlgb-shell{min-height:100vh;background:var(--op-canvas);font-family:var(--op-font);color:var(--op-ink)}
+.pqlgb-wrap{margin:0 auto}
+.pqlgb-top{display:flex;justify-content:space-between;gap:14px;align-items:center;margin-bottom:16px;padding:20px 22px;background:#fff;border:1px solid #e4e9ef;border-radius:14px}
+.pqlgb-top h1{margin:0;font-size:26px;font-weight:800;letter-spacing:-.02em;color:#0f2237}
+.pqlgb-top p{margin:6px 0 0;color:#5b6b7c;font-size:14px;font-weight:500}
+.pqlgb-top-actions{display:flex;flex-wrap:wrap;gap:9px}
+.pqlgb-top-actions a{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 12px;border:1px solid #e4e9ef;border-radius:10px;background:#fff;color:#0f2237!important;text-decoration:none;font-size:13px;font-weight:650}
+.pqlgb-top-actions a:hover{background:#edf3fc;border-color:#e0ebfa;text-decoration:none}
+@media(max-width:560px){.pqlgb-top{display:block}.pqlgb-top-actions{margin-top:10px}}
+<?php echo pqh_design_shell_css('.pqlgb-shell'); ?>
+.pqlgb-shell .pqh-appbar{background:linear-gradient(90deg,#cfe9ff 0%,#e3f4ff 50%,#f2fbff 100%)}
+</style>
+<style><?php echo pqh_viewer_chrome_css('.pqlgb-shell'); ?></style>
+<main class="pqlgb-shell">
+<?php
+echo pqh_design_shell_html('pqlgb-shell', 'board', [
+    'title' => 'Live group board',
+    'appbar' => [
+        ['Dashboard', new moodle_url('/local/hubredirect/dashboard.php', $navparams)],
+        ['Workspace', new moodle_url('/local/hubredirect/teacher_workspace.php', $navparams)],
+        ['Back', 'BACK', new moodle_url('/local/hubredirect/teacher_workspace.php', $navparams)],
+    ],
+    'navitems' => [[
+        'label' => 'Live group board',
+        'key' => 'board',
+        'url' => new moodle_url('/local/hubredirect/live_group_board.php', $urlparams),
+        'icon' => '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/>',
+    ]],
+]);
+?>
+<div class="pqlgb-wrap">
 <div class="pqlgb">
+  <section class="pqlgb-top">
+    <div>
+      <h1>Live group board</h1>
+      <p>Hands, quiet time, the chat, and the live room, across both groups at a glance.</p>
+    </div>
+    <div class="pqlgb-top-actions">
+      <a href="<?php echo (new moodle_url('/local/hubredirect/teacher_workspace.php', $navparams))->out(false); ?>">Teacher workspace</a>
+    </div>
+  </section>
   <noscript>
     <div class="pqlgb-noscript">This board refreshes itself every few seconds and needs JavaScript. Without it the tiles below would freeze with nothing to tell you they had, so they are not shown.</div>
   </noscript>
 
   <div class="pqlgb-bar">
-    <h2>Live group board</h2>
     <span class="pqlgb-freshness" id="pqlgb-freshness"><i class="pqlgb-dot"></i><span id="pqlgb-freshness-text">just updated</span></span>
     <span class="pqlgb-spacer"></span>
     <form class="pqlgb-form" method="get" action="<?php echo (new moodle_url('/local/hubredirect/live_group_board.php'))->out(false); ?>">
@@ -286,6 +335,8 @@ a.pqlgb-golive{text-decoration:none;display:inline-block}
     </div>
   <?php endif; ?>
 </div>
+</div>
+</main>
 
 <script>
 (function () {

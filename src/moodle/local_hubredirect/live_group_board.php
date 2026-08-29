@@ -177,7 +177,6 @@ a.pqlgb-golive{text-decoration:none;display:inline-block}
 .pqlgb-flag--ok{border-color:#a3cfbb;background:#d1e7dd;color:#0a3622}
 .pqlgb-flag--moved{border-color:#a3cfbb;background:#d1e7dd;color:#0a3622}
 .pqlgb-flag--cycle{border-color:#ced4da;background:#e9ecef;color:#41464b}
-.pqlgb-flag--where{border-color:#9eeaf9;background:#cff4fc;color:#055160}
 .pqlgb-flag--wehel{border-color:#c5b3e6;background:#e2d9f3;color:#432874}
 .pqlgb-flag--time{border-color:#a6e9d5;background:#d2f4ea;color:#114e3d}
 /* A raised hand is the one thing on this board the learner said out loud, and
@@ -456,7 +455,23 @@ echo pqh_design_shell_html('pqlgb-shell', 'board', [
     if (tile.subject) { where.push(esc(tile.subject)); }
     if (tile.stage) { where.push(esc(tile.stage)); }
     if (tile.unit) { where.push(esc(unitLabel(tile.unit))); }
-    var place = where.length ? where.join(" &middot; ") : "No app activity recorded";
+    // The learner's position and done-count ride the place line, position
+    // first (owner, 2026-08-30) -- they are context, like the unit, not a
+    // state. Three positions, three different claims (see the comment block
+    // below where the wording was settled): in <x> mid-activity, finished <x>
+    // done and about to move, last: <x> when no resume pointer exists. The
+    // caption is the learner's own (resumelabel), never the route id. A tile
+    // with no app record keeps saying so instead of showing a bare "0 done".
+    var wherebits = [];
+    if (tile.resume) {
+      wherebits.push((tile.resumedone ? "finished " : "in ") + esc(tile.resumelabel || tile.resume));
+    } else if (tile.lastsection) {
+      wherebits.push("last: " + esc(tile.lastsection));
+    }
+    wherebits.push(tile.sectionsdone + " done");
+    var place = where.length
+      ? where.concat(wherebits).join(" &middot; ")
+      : "No app activity recorded";
 
     var flags = [];
     if (tile.handup) {
@@ -495,17 +510,8 @@ echo pqh_design_shell_html('pqlgb-shell', 'board', [
     // learner completed a section the tile claimed they were still working in
     // it. It only ever read correctly mid-activity, which is the half of the
     // time a teacher does not need to be told.
-    var whereText = "";
-    if (tile.resume) {
-      // The caption the learner sees, never the route id -- see resumelabel in
-      // the library. A teacher matching the tile against a child's screen has
-      // to be reading the same word they are.
-      whereText = (tile.resumedone ? " &middot; finished " : " &middot; in ")
-        + esc(tile.resumelabel || tile.resume);
-    } else if (tile.lastsection) {
-      whereText = " &middot; last: " + esc(tile.lastsection);
-    }
-    flags.push('<span class="pqlgb-flag pqlgb-flag--where">' + tile.sectionsdone + " done" + whereText + "</span>");
+    // (The position chip that used to render here moved onto the place line
+    // above, 2026-08-30.)
     if (tile.checkpoint) {
       flags.push('<span class="pqlgb-flag pqlgb-flag--' + (tile.checkpoint.passed ? "ok" : "bad") + '">' +
         esc(tile.checkpoint.section) + " " + tile.checkpoint.score + "%</span>");

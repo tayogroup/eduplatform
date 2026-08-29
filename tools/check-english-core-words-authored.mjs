@@ -134,6 +134,13 @@ function shows(sentence, word) {
   // cannot reach an English word that merely ends -ae, and it leaves the ordinary
   // -s plural those nouns also take (formulas) to the rule above.
   if (/a$/.test(w)) parts.push(`\\b${w.slice(0, -1)}ae\\b`);
+  // Latin nouns in -ex and -ix pluralise to -ices: vertex/vertices, matrix/matrices,
+  // index/indices. Without this, "A cube has eight vertices and twelve edges." was
+  // reported as never using `vertex`. Same shape as the -ae rule directly above,
+  // found the same way, and it will recur: Grade 8 teaches both `vertex` and
+  // `matrix`. Narrow like its neighbour - it fires only where the headword itself
+  // ends -ex or -ix, so it cannot reach an English word merely ending -ices.
+  if (/[ei]x$/.test(w)) parts.push(`\\b${w.slice(0, -2)}ices\\b`);
   return new RegExp(parts.join("|"), "i").test(sentence);
 }
 

@@ -198,8 +198,26 @@ export function createCourseApp(config) {
   const sectionLabelOf = (id) => {
     if (!id) return "";
     const list = typeof config.sections === "function" ? config.sections() : (config.sections || []);
-    const hit = (list || []).find((entry) => entry && entry.route === id);
-    return hit && typeof hit.title === "string" ? hit.title : "";
+    for (const entry of list || []) {
+      // Every subject declares these as ARRAYS -- [route, icon, label], with an
+      // optional fourth availability predicate (Global Perspectives' grown-up
+      // guide). The first version of this read entry.route / entry.title,
+      // which an array does not have, so it matched nothing and returned ""
+      // for every route: `resumeLabel` was omitted from every summary and four
+      // releases shipped a field that was never once sent. The server said so
+      // the whole time -- resumeLabel stayed null -- and I read that as a stale
+      // bundle rather than as the feature not working.
+      //
+      // The object branch is kept because two section shapes already exist in
+      // this file (the nav cards at the bottom of english.js are objects), and
+      // the next one to be passed here should not repeat this.
+      if (Array.isArray(entry)) {
+        if (entry[0] === id) return typeof entry[2] === "string" ? entry[2] : "";
+      } else if (entry && entry.route === id) {
+        return typeof entry.title === "string" ? entry.title : "";
+      }
+    }
+    return "";
   };
   const nonCountable = config.nonCountable || ["overview"];
   const gradeSections = config.gradeSections || [];

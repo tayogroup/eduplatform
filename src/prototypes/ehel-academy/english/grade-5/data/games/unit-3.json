@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: A plan or rule that helps people decide what to do.",
+          "prompt": "Which word means: To make somebody feel awkward or ashamed.",
           "choices": [
-            "policy",
-            "constitution",
-            "mission"
+            "embarrass",
+            "constructive",
+            "ideal"
           ],
-          "answer": "policy",
-          "explanation": "policy: A plan or rule that helps people decide what to do."
+          "answer": "embarrass",
+          "explanation": "embarrass: To make somebody feel awkward or ashamed."
         },
         {
-          "prompt": "Which word means: A feeling of worry or stress when things are not calm.",
+          "prompt": "Which word means: Sleeps lightly for a short time, without meaning to fall fully asleep.",
           "choices": [
-            "policy",
-            "constitution",
-            "tension"
+            "embarrass",
+            "constructive",
+            "dozes"
           ],
-          "answer": "tension",
-          "explanation": "tension: A feeling of worry or stress when things are not calm."
+          "answer": "dozes",
+          "explanation": "dozes: Sleeps lightly for a short time, without meaning to fall fully asleep."
         },
         {
-          "prompt": "Which word means: A break or crack in something hard, like bone or stone.",
+          "prompt": "Which word means: Thought that something would happen before it did.",
           "choices": [
-            "constitution",
-            "fracture",
-            "policy"
+            "constructive",
+            "expected",
+            "embarrass"
           ],
-          "answer": "fracture",
-          "explanation": "fracture: A break or crack in something hard, like bone or stone."
+          "answer": "expected",
+          "explanation": "expected: Thought that something would happen before it did."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A large area inside a building where people wait or meet.",
-          "answer": "lobby"
+          "clue": "To make something seem bigger or more important than it really is.",
+          "answer": "exaggerate"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A way to measure something, or a new aspect of a situation.",
-          "answer": "dimension"
+          "clue": "The name of the school that created this course and its poetry collection.",
+          "answer": "ehel"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "The way you hold your body when you sit or stand.",
-          "answer": "posture"
+          "clue": "Covered with flat, hard pieces called tiles, often arranged in a pattern.",
+          "answer": "tiled"
         }
       ]
     },
@@ -83,56 +83,52 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "uniform.",
-            "a",
-            "wear",
-            "must",
-            "everyone",
-            "that",
-            "policy",
-            "a",
-            "has",
-            "school",
-            "Our"
-          ],
-          "answer": "Our school has a policy that everyone must wear a uniform."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "test.",
-            "big",
+            "class.",
             "the",
-            "before",
-            "room",
-            "the",
-            "in",
-            "tension",
             "of",
-            "lot",
-            "a",
-            "was",
-            "There"
+            "front",
+            "in",
+            "her",
+            "embarrass",
+            "to",
+            "mean",
+            "not",
+            "did",
+            "He"
           ],
-          "answer": "There was a lot of tension in the room before the big test."
+          "answer": "He did not mean to embarrass her in front of the class."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "page.",
-            "the",
-            "through",
-            "running",
-            "charter",
-            "old",
-            "the",
-            "in",
-            "fracture",
+            "swim.",
             "a",
-            "was",
-            "There"
+            "after",
+            "fur",
+            "its",
+            "off",
+            "water",
+            "shakes",
+            "dog",
+            "little",
+            "The"
           ],
-          "answer": "There was a fracture in the old charter running through the page."
+          "answer": "The little dog shakes water off its fur after a swim."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "sky.",
+            "the",
+            "across",
+            "clouds",
+            "the",
+            "pushing",
+            "was",
+            "wind",
+            "The"
+          ],
+          "answer": "The wind was pushing the clouds across the sky."
         }
       ]
     },
@@ -229,7 +225,7 @@
       "rounds": [
         {
           "prompt": "Speaking 1: Choral Verse Performance",
-          "target": "Our school has a policy that everyone must wear a uniform."
+          "target": "He did not mean to embarrass her in front of the class."
         },
         {
           "prompt": "Speaking 3: Present Your Own Poem",
@@ -252,59 +248,53 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "fairly.",
-            "equipment",
-            "sharing",
-            "about",
-            "policy",
-            "same",
+            "test.",
+            "big",
             "the",
-            "follows",
-            "school",
-            "our",
-            "in",
-            "classroom",
-            "Every"
-          ],
-          "answer": "Every classroom in our school follows the same policy about sharing equipment fairly."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "bedtime.",
-            "my",
-            "past",
-            "long",
-            "reading",
-            "me",
-            "kept",
-            "chapter",
-            "last",
+            "before",
+            "room",
             "the",
             "in",
             "tension",
-            "The"
+            "of",
+            "lot",
+            "a",
+            "was",
+            "There"
           ],
-          "answer": "The tension in the last chapter kept me reading long past my bedtime."
+          "answer": "There was a lot of tension in the room before the big test."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "halves.",
-            "two",
-            "into",
-            "picture",
+            "competition.",
+            "poetry",
             "the",
-            "splitting",
-            "glass,",
-            "the",
-            "across",
-            "runs",
-            "fracture",
-            "thin",
-            "One"
+            "in",
+            "place",
+            "second",
+            "in",
+            "finished",
+            "Sami"
           ],
-          "answer": "One thin fracture runs across the glass, splitting the picture into two halves."
+          "answer": "Sami finished in second place in the poetry competition."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "town.",
+            "old",
+            "the",
+            "in",
+            "neighbours",
+            "between",
+            "unity",
+            "about",
+            "spoke",
+            "Yasmin",
+            "Teacher"
+          ],
+          "answer": "Teacher Yasmin spoke about unity between neighbours in the old town."
         }
       ]
     },
@@ -317,34 +307,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'infection' mean in this unit?",
+          "prompt": "What does 'nature' mean in this unit?",
           "choices": [
-            "A sickness caused by germs that can spread.",
-            "A plan or rule that helps people decide what to do.",
-            "A set of rules that explains how a country or organisation works."
+            "The natural world, including plants, animals, weather and landscapes.",
+            "To make somebody feel awkward or ashamed.",
+            "Helpful, and meant to improve rather than to knock down."
           ],
-          "answer": "A sickness caused by germs that can spread.",
-          "explanation": "infection: A sickness caused by germs that can spread."
+          "answer": "The natural world, including plants, animals, weather and landscapes.",
+          "explanation": "nature: The natural world, including plants, animals, weather and landscapes."
         },
         {
-          "prompt": "What does 'vulture' mean in this unit?",
+          "prompt": "What does 'researched' mean in this unit?",
           "choices": [
-            "A plan or rule that helps people decide what to do.",
-            "A set of rules that explains how a country or organisation works.",
-            "A large bird that eats dead animals."
+            "To make somebody feel awkward or ashamed.",
+            "Helpful, and meant to improve rather than to knock down.",
+            "Studied a topic carefully to find out facts about it."
           ],
-          "answer": "A large bird that eats dead animals.",
-          "explanation": "vulture: A large bird that eats dead animals."
+          "answer": "Studied a topic carefully to find out facts about it.",
+          "explanation": "researched: Studied a topic carefully to find out facts about it."
         },
         {
-          "prompt": "What does 'constitution' mean in this unit?",
+          "prompt": "What does 'constructive' mean in this unit?",
           "choices": [
-            "A special job or task that someone is trying to do.",
-            "A set of rules that explains how a country or organisation works.",
-            "A plan or rule that helps people decide what to do."
+            "The best or most perfect for a purpose.",
+            "Helpful, and meant to improve rather than to knock down.",
+            "To make somebody feel awkward or ashamed."
           ],
-          "answer": "A set of rules that explains how a country or organisation works.",
-          "explanation": "constitution: A set of rules that explains how a country or organisation works."
+          "answer": "Helpful, and meant to improve rather than to knock down.",
+          "explanation": "constructive: Helpful, and meant to improve rather than to knock down."
         }
       ]
     },
@@ -357,34 +347,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'alternative'?",
+          "prompt": "What type of word is 'wide'?",
           "choices": [
+            "Adjective",
             "Noun",
-            "Verb",
-            "Adjective"
+            "Verb"
           ],
-          "answer": "Noun",
-          "explanation": "Alternative is used as a noun in this dictionary sense."
+          "answer": "Adjective",
+          "explanation": "Wide is used as an adjective in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'personification'?",
+          "prompt": "What type of word is 'tradition'?",
           "choices": [
             "Verb",
             "Adjective",
             "Noun"
           ],
           "answer": "Noun",
-          "explanation": "Personification is used as a noun in this dictionary sense."
+          "explanation": "Tradition is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'expansion'?",
+          "prompt": "What type of word is 'rains'?",
           "choices": [
             "Adjective",
             "Noun",
             "Verb"
           ],
           "answer": "Noun",
-          "explanation": "Expansion is used as a noun in this dictionary sense."
+          "explanation": "Rains is used as a noun in this dictionary sense."
         }
       ]
     },
@@ -400,16 +390,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "constitution",
-              "A set of rules that explains how a country or organisation works."
+              "marvellous",
+              "Extremely good, in a way that causes wonder."
             ],
             [
-              "mission",
-              "A special job or task that someone is trying to do."
+              "dramatic",
+              "Sudden and striking, or to do with plays."
             ],
             [
-              "comprehension",
-              "Understanding what you read or hear."
+              "argues",
+              "Disagrees with someone, often speaking in a firm or heated way."
             ]
           ]
         },
@@ -417,16 +407,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "infection",
-              "A sickness caused by germs that can spread."
+              "stitching",
+              "Moving quickly in and out, like a needle sewing thread through cloth."
             ],
             [
-              "primitive",
-              "Very simple and not advanced or developed."
+              "clap",
+              "To hit your hands together quickly to make a sound, often to keep a beat."
             ],
             [
-              "collaborative",
-              "Working together with others to achieve something."
+              "startled",
+              "Suddenly surprised or shocked by something unexpected."
             ]
           ]
         },
@@ -434,16 +424,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "vulture",
-              "A large bird that eats dead animals."
+              "original",
+              "The first or earliest version of something, not a copy."
             ],
             [
-              "simile",
-              "A comparison using 'like' or 'as'."
+              "symbolic",
+              "Representing something else, especially an idea or feeling, rather than being only what it looks like."
             ],
             [
-              "syllable",
-              "A unit of sound with one vowel sound."
+              "comprehension",
+              "Understanding what you read or hear."
             ]
           ]
         }

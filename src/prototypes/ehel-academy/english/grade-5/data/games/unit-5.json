@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: To share information or ideas with someone.",
+          "prompt": "Which word means: To say what is wrong or bad about something.",
           "choices": [
-            "communicate",
-            "emphasise",
-            "convince"
+            "criticise",
+            "comprehend",
+            "outline"
           ],
-          "answer": "communicate",
-          "explanation": "communicate: To share information or ideas with someone."
+          "answer": "criticise",
+          "explanation": "criticise: To say what is wrong or bad about something."
         },
         {
-          "prompt": "Which word means: To ask about something to get information.",
+          "prompt": "Which word means: Better than every other one of its kind.",
           "choices": [
-            "communicate",
-            "emphasise",
-            "enquire"
+            "criticise",
+            "comprehend",
+            "best"
           ],
-          "answer": "enquire",
-          "explanation": "enquire: To ask about something to get information."
+          "answer": "best",
+          "explanation": "best: Better than every other one of its kind."
         },
         {
-          "prompt": "Which word means: The outer edge or border of something.",
+          "prompt": "Which word means: A tool with thin pointed prongs used for eating or serving food.",
           "choices": [
-            "emphasise",
-            "fringe",
-            "communicate"
+            "comprehend",
+            "fork",
+            "criticise"
           ],
-          "answer": "fringe",
-          "explanation": "fringe: The outer edge or border of something."
+          "answer": "fork",
+          "explanation": "fork: A tool with thin pointed prongs used for eating or serving food."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A group of words that someone has said or written.",
-          "answer": "quote"
+          "clue": "To get involved in something that has nothing to do with you.",
+          "answer": "interfere"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "To show or point out something.",
-          "answer": "indicate"
+          "clue": "Meals or types of food that are prepared and served in a particular way.",
+          "answer": "dishes"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "To come together as a group or team.",
-          "answer": "unite"
+          "clue": "A tool with thin pointed prongs used for eating or serving food.",
+          "answer": "fork"
         }
       ]
     },
@@ -83,42 +83,52 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "clearly.",
-            "ideas",
-            "their",
-            "communicate",
-            "writers",
-            "Good"
+            "it.",
+            "improve",
+            "to",
+            "than",
+            "plan",
+            "a",
+            "criticise",
+            "to",
+            "easier",
+            "is",
+            "It"
           ],
-          "answer": "Good writers communicate their ideas clearly."
+          "answer": "It is easier to criticise a plan than to improve it."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "tomorrow.",
-            "for",
-            "homework",
-            "the",
-            "about",
-            "enquire",
-            "will",
-            "I"
-          ],
-          "answer": "I will enquire about the homework for tomorrow."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "group.",
-            "the",
+            "sentence.",
+            "conditional",
+            "a",
             "of",
-            "fringe",
-            "the",
-            "at",
-            "stood",
-            "She"
+            "example",
+            "an",
+            "is",
+            "melts\"",
+            "it",
+            "ice,",
+            "heat",
+            "you",
+            "\"If"
           ],
-          "answer": "She stood at the fringe of the group."
+          "answer": "\"If you heat ice, it melts\" is an example of a conditional sentence."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "cook.",
+            "to",
+            "meal",
+            "favourite",
+            "her",
+            "is",
+            "dish",
+            "This"
+          ],
+          "answer": "This dish is her favourite meal to cook."
         }
       ]
     },
@@ -215,15 +225,15 @@
       "rounds": [
         {
           "prompt": "Speaking 1: The Instruction Game (Pairs)",
-          "target": "Good writers communicate their ideas clearly."
+          "target": "It is easier to criticise a plan than to improve it."
         },
         {
           "prompt": "Speaking 3: Interview About Daily Routines (Pairs)",
-          "target": "I will enquire about the homework for tomorrow."
+          "target": "\"If you heat ice, it melts\" is an example of a conditional sentence."
         },
         {
           "prompt": "Speaking 5: Read the Recipe Aloud",
-          "target": "She stood at the fringe of the group."
+          "target": "This dish is her favourite meal to cook."
         }
       ]
     },
@@ -238,53 +248,47 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "breakfast.",
-            "after",
-            "—",
-            "study",
-            "to",
-            "time",
-            "prime",
-            "the",
-            "is",
-            "This"
+            "clearly.",
+            "ideas",
+            "their",
+            "communicate",
+            "writers",
+            "Good"
           ],
-          "answer": "This is the prime time to study — after breakfast."
+          "answer": "Good writers communicate their ideas clearly."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "grain.",
+            "ready.",
+            "everything",
+            "putting",
+            "means",
+            "which",
+            "place,",
+            "en",
+            "mise",
+            "preparation",
+            "this",
+            "call",
+            "Cooks"
+          ],
+          "answer": "Cooks call this preparation mise en place, which means putting everything ready."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "plate.",
+            "big",
             "one",
-            "tasting",
-            "without",
-            "ready",
-            "is",
+            "on",
+            "neatly",
+            "arranged",
+            "was",
             "rice",
-            "the",
-            "assume",
-            "not",
-            "do",
-            "cooks",
-            "Careful"
+            "The"
           ],
-          "answer": "Careful cooks do not assume the rice is ready without tasting one grain."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "field.",
-            "school",
-            "the",
-            "of",
-            "fringe",
-            "the",
-            "along",
-            "grows",
-            "grass",
-            "Tall"
-          ],
-          "answer": "Tall grass grows along the fringe of the school field."
+          "answer": "The rice was arranged neatly on one big plate."
         }
       ]
     },
@@ -297,34 +301,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'navigate' mean in this unit?",
+          "prompt": "What does 'basmati' mean in this unit?",
           "choices": [
-            "To find your way through something.",
-            "To share information or ideas with someone.",
-            "To make something seem important by saying it clearly or strongly."
+            "Describing a type of long-grain rice known for its fragrant smell.",
+            "To say what is wrong or bad about something.",
+            "To understand something fully."
           ],
-          "answer": "To find your way through something.",
-          "explanation": "navigate: To find your way through something."
+          "answer": "Describing a type of long-grain rice known for its fragrant smell.",
+          "explanation": "basmati: Describing a type of long-grain rice known for its fragrant smell."
         },
         {
-          "prompt": "What does 'migrate' mean in this unit?",
+          "prompt": "What does 'emotions' mean in this unit?",
           "choices": [
-            "To share information or ideas with someone.",
-            "To make something seem important by saying it clearly or strongly.",
-            "To move from one place to another."
+            "To say what is wrong or bad about something.",
+            "To understand something fully.",
+            "Strong feelings, such as happiness, sadness or fear, that people experience."
           ],
-          "answer": "To move from one place to another.",
-          "explanation": "migrate: To move from one place to another."
+          "answer": "Strong feelings, such as happiness, sadness or fear, that people experience.",
+          "explanation": "emotions: Strong feelings, such as happiness, sadness or fear, that people experience."
         },
         {
-          "prompt": "What does 'emphasise' mean in this unit?",
+          "prompt": "What does 'comprehend' mean in this unit?",
           "choices": [
-            "To make someone believe that something is true.",
-            "To make something seem important by saying it clearly or strongly.",
-            "To share information or ideas with someone."
+            "To describe the main points without the detail.",
+            "To understand something fully.",
+            "To say what is wrong or bad about something."
           ],
-          "answer": "To make something seem important by saying it clearly or strongly.",
-          "explanation": "emphasise: To make something seem important by saying it clearly or strongly."
+          "answer": "To understand something fully.",
+          "explanation": "comprehend: To understand something fully."
         }
       ]
     },
@@ -337,34 +341,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'slave'?",
+          "prompt": "What type of word is 'dish'?",
           "choices": [
             "Noun",
             "Verb",
             "Adjective"
           ],
           "answer": "Noun",
-          "explanation": "Slave is used as a noun in this dictionary sense."
+          "explanation": "Dish is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'combine'?",
+          "prompt": "What type of word is 'indicate'?",
           "choices": [
             "Noun",
             "Adjective",
             "Verb"
           ],
           "answer": "Verb",
-          "explanation": "Combine is used as a verb in this dictionary sense."
+          "explanation": "Indicate is used as a verb in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'exaggerate'?",
+          "prompt": "What type of word is 'tips'?",
           "choices": [
             "Adjective",
-            "Verb",
-            "Noun"
+            "Noun",
+            "Verb"
           ],
-          "answer": "Verb",
-          "explanation": "Exaggerate is used as a verb in this dictionary sense."
+          "answer": "Noun",
+          "explanation": "Tips is used as a noun in this dictionary sense."
         }
       ]
     },
@@ -380,16 +384,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
+              "interrupt",
+              "To stop somebody in the middle of what they are doing."
+            ],
+            [
               "emphasise",
               "To make something seem important by saying it clearly or strongly."
             ],
             [
-              "convince",
-              "To make someone believe that something is true."
-            ],
-            [
-              "assume",
-              "To think something is true without proof."
+              "texts",
+              "Pieces of writing, especially ones studied or read for a particular purpose."
             ]
           ]
         },
@@ -397,16 +401,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "navigate",
-              "To find your way through something."
+              "dishes",
+              "Meals or types of food that are prepared and served in a particular way."
             ],
             [
-              "generation",
-              "A group of people born around the same time."
+              "garlic",
+              "A strong-smelling bulb used to add flavour to cooking."
             ],
             [
-              "passage",
-              "A section of text, or a way through a place."
+              "fifteen",
+              "The number after fourteen and before sixteen."
             ]
           ]
         },
@@ -414,16 +418,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "migrate",
-              "To move from one place to another."
+              "clove",
+              "A small dried flower bud used as a strong-smelling spice in cooking."
             ],
             [
-              "inhale",
-              "To breathe in air through your nose or mouth."
+              "shine",
+              "To give out a bright light, or to show great skill or ability."
             ],
             [
-              "prime",
-              "The best or most important."
+              "convince",
+              "To make someone believe that something is true."
             ]
           ]
         }

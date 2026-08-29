@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: A hard black rock that people burn to make heat and energy.",
+          "prompt": "Which word means: The sense inside you that tells you what is right and wrong.",
           "choices": [
-            "coal",
-            "encounter",
-            "misty"
+            "conscience",
+            "misunderstanding",
+            "anthropomorphism"
           ],
-          "answer": "coal",
-          "explanation": "coal: A hard black rock that people burn to make heat and energy."
+          "answer": "conscience",
+          "explanation": "conscience: The sense inside you that tells you what is right and wrong."
         },
         {
-          "prompt": "Which word means: A group of living things that are alike and can have young together.",
+          "prompt": "Which word means: To come together in one place, often as a group.",
           "choices": [
-            "coal",
-            "encounter",
-            "species"
+            "conscience",
+            "misunderstanding",
+            "gather"
           ],
-          "answer": "species",
-          "explanation": "species: A group of living things that are alike and can have young together."
+          "answer": "gather",
+          "explanation": "gather: To come together in one place, often as a group."
         },
         {
-          "prompt": "Which word means: A member of your family who lived long before you were born.",
+          "prompt": "Which word means: The centre point of something, equally far from every side.",
           "choices": [
-            "encounter",
-            "ancestor",
-            "coal"
+            "misunderstanding",
+            "middle",
+            "conscience"
           ],
-          "answer": "ancestor",
-          "explanation": "ancestor: A member of your family who lived long before you were born."
+          "answer": "middle",
+          "explanation": "middle: The centre point of something, equally far from every side."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A small bag or pocket that holds and protects little things.",
-          "answer": "pouch"
+          "clue": "Aware of something, and able to think about it.",
+          "answer": "conscious"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Shiny and pale grey, in the way that polished silver metal looks.",
-          "answer": "silvery"
+          "clue": "To teach means to help someone learn a new skill or idea.",
+          "answer": "teach"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "The house or flat where a person lives.",
-          "answer": "residence"
+          "clue": "Moved suddenly and violently from side to side or up and down.",
+          "answer": "shaken"
         }
       ]
     },
@@ -83,48 +83,50 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "homes.",
-            "our",
-            "for",
-            "electricity",
-            "make",
-            "help",
-            "to",
-            "coal",
-            "use",
-            "We"
-          ],
-          "answer": "We use coal to help make electricity for our homes."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "forest.",
+            "found.",
+            "had",
+            "he",
+            "money",
             "the",
-            "in",
-            "birds",
-            "of",
-            "species",
-            "many",
-            "are",
-            "There"
+            "keep",
+            "him",
+            "let",
+            "not",
+            "would",
+            "conscience",
+            "His"
           ],
-          "answer": "There are many species of birds in the forest."
+          "answer": "His conscience would not let him keep the money he had found."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "ago.",
-            "generations",
-            "many",
-            "land",
-            "this",
+            "tale.",
+            "old",
+            "the",
+            "hear",
             "to",
-            "came",
-            "ancestor",
-            "My"
+            "grandmother",
+            "her",
+            "beside",
+            "sat",
+            "Maya"
           ],
-          "answer": "My ancestor came to this land many generations ago."
+          "answer": "Maya sat beside her grandmother to hear the old tale."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "valley.",
+            "green",
+            "the",
+            "through",
+            "gently",
+            "wound",
+            "river",
+            "The"
+          ],
+          "answer": "The river wound gently through the green valley."
         }
       ]
     },
@@ -221,7 +223,7 @@
       "rounds": [
         {
           "prompt": "Speaking 1: Talk About Stories That Teach",
-          "target": "We use coal to help make electricity for our homes."
+          "target": "His conscience would not let him keep the money he had found."
         },
         {
           "prompt": "Speaking 3: The News Report Interview",
@@ -229,7 +231,7 @@
         },
         {
           "prompt": "Speaking 5: Vocabulary in Conversation",
-          "target": "My ancestor came to this land many generations ago."
+          "target": "The river wound gently through the green valley."
         }
       ]
     },
@@ -244,54 +246,49 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "game.",
+            "rooftops.",
             "the",
-            "before",
-            "cards",
-            "the",
-            "shuffle",
-            "to",
-            "began",
-            "He"
+            "above",
+            "flew",
+            "birds",
+            "of",
+            "flock",
+            "A"
           ],
-          "answer": "He began to shuffle the cards before the game."
+          "answer": "A flock of birds flew above the rooftops."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "begins.",
-            "season",
-            "rainy",
+            "patience.",
+            "children",
+            "younger",
             "the",
-            "before",
-            "reserve",
+            "teach",
+            "would",
+            "story",
+            "the",
+            "hoped",
+            "Sami"
+          ],
+          "answer": "Sami hoped the story would teach the younger children patience."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "town.",
             "the",
             "in",
-            "species",
-            "every",
-            "count",
-            "Rangers"
-          ],
-          "answer": "Rangers count every species in the reserve before the rainy season begins."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "road.",
-            "cracked",
+            "standing",
+            "left",
+            "building",
+            "only",
             "the",
-            "along",
-            "trees",
-            "first",
-            "the",
-            "planted",
-            "Hana",
-            "Grandma",
-            "of",
-            "ancestor",
-            "An"
+            "was",
+            "courthouse",
+            "The"
           ],
-          "answer": "An ancestor of Grandma Hana planted the first trees along the cracked road."
+          "answer": "The courthouse was the only building left standing in the town."
         }
       ]
     },
@@ -304,34 +301,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'survival' mean in this unit?",
+          "prompt": "What does 'collecting' mean in this unit?",
           "choices": [
-            "Staying alive, especially when the conditions are hard or dangerous.",
-            "A hard black rock that people burn to make heat and energy.",
-            "To meet somebody or something by chance, without planning it first."
+            "Collecting means gathering things together, such as stories, coins or stamps.",
+            "The sense inside you that tells you what is right and wrong.",
+            "A failure to understand something correctly."
           ],
-          "answer": "Staying alive, especially when the conditions are hard or dangerous.",
-          "explanation": "survival: Staying alive, especially when the conditions are hard or dangerous."
+          "answer": "Collecting means gathering things together, such as stories, coins or stamps.",
+          "explanation": "collecting: Collecting means gathering things together, such as stories, coins or stamps."
         },
         {
-          "prompt": "What does 'contain' mean in this unit?",
+          "prompt": "What does 'climbed' mean in this unit?",
           "choices": [
-            "A hard black rock that people burn to make heat and energy.",
-            "To meet somebody or something by chance, without planning it first.",
-            "To hold something inside, or to have something as one of its parts."
+            "The sense inside you that tells you what is right and wrong.",
+            "A failure to understand something correctly.",
+            "Climbed means went up something using your hands and feet, such as steps or a hill."
           ],
-          "answer": "To hold something inside, or to have something as one of its parts.",
-          "explanation": "contain: To hold something inside, or to have something as one of its parts."
+          "answer": "Climbed means went up something using your hands and feet, such as steps or a hill.",
+          "explanation": "climbed: Climbed means went up something using your hands and feet, such as steps or a hill."
         },
         {
-          "prompt": "What does 'encounter' mean in this unit?",
+          "prompt": "What does 'misunderstanding' mean in this unit?",
           "choices": [
-            "Full of tiny water drops in the air, so seeing far ahead is hard.",
-            "To meet somebody or something by chance, without planning it first.",
-            "A hard black rock that people burn to make heat and energy."
+            "The idea of giving human feelings, thoughts or behaviour to an animal or an object.",
+            "A failure to understand something correctly.",
+            "The sense inside you that tells you what is right and wrong."
           ],
-          "answer": "To meet somebody or something by chance, without planning it first.",
-          "explanation": "encounter: To meet somebody or something by chance, without planning it first."
+          "answer": "A failure to understand something correctly.",
+          "explanation": "misunderstanding: A failure to understand something correctly."
         }
       ]
     },
@@ -344,34 +341,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'continental'?",
+          "prompt": "What type of word is 'matter'?",
           "choices": [
-            "Adjective",
+            "Verb",
             "Noun",
-            "Verb"
+            "Adjective"
           ],
-          "answer": "Adjective",
-          "explanation": "Continental is used as an adjective in this dictionary sense."
+          "answer": "Verb",
+          "explanation": "Matter is used as a verb in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'role'?",
+          "prompt": "What type of word is 'pouch'?",
           "choices": [
             "Verb",
             "Adjective",
             "Noun"
           ],
           "answer": "Noun",
-          "explanation": "Role is used as a noun in this dictionary sense."
+          "explanation": "Pouch is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'marine'?",
+          "prompt": "What type of word is 'around'?",
           "choices": [
             "Verb",
-            "Adjective",
+            "Preposition",
             "Noun"
           ],
-          "answer": "Adjective",
-          "explanation": "Marine is used as an adjective in this dictionary sense."
+          "answer": "Preposition",
+          "explanation": "Around is used as a preposition in this dictionary sense."
         }
       ]
     },
@@ -387,16 +384,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "encounter",
-              "To meet somebody or something by chance, without planning it first."
+              "definite",
+              "Certain and clearly decided, with no room for doubt."
             ],
             [
-              "misty",
-              "Full of tiny water drops in the air, so seeing far ahead is hard."
+              "stereotype",
+              "A fixed, over-simple idea about a whole group of people."
             ],
             [
-              "native",
-              "A person who was born in a particular town, region or country."
+              "much",
+              "To a great degree, or by a large amount."
             ]
           ]
         },
@@ -404,16 +401,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "survival",
-              "Staying alive, especially when the conditions are hard or dangerous."
+              "while",
+              "While means during the same time as something else is happening."
             ],
             [
-              "rural",
-              "Belonging to the countryside, where there are farms and open fields."
+              "morning",
+              "Morning is the early part of the day, before midday."
             ],
             [
-              "urban",
-              "Belonging to a city or town, where many people live close together."
+              "leave",
+              "To go away from a place, or to let something stay untouched."
             ]
           ]
         },
@@ -421,16 +418,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "contain",
-              "To hold something inside, or to have something as one of its parts."
+              "nearby",
+              "Close to a particular place, not far away at all."
             ],
             [
-              "noble",
-              "Showing good qualities such as honesty, courage and kindness."
+              "anyway",
+              "Anyway means despite what has just been said, or in spite of any difficulties."
             ],
             [
-              "shuffle",
-              "To walk slowly dragging your feet, or to mix cards into a new order."
+              "walk",
+              "Walk means to move along on foot at a normal speed."
             ]
           ]
         }

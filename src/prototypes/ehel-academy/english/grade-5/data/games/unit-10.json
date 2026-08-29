@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: A hard black rock that people dig up and burn to make heat and energy.",
+          "prompt": "Which word means: The way a word is said.",
           "choices": [
-            "coal",
-            "encounter",
-            "issue"
+            "pronunciation",
+            "economy",
+            "tax"
           ],
-          "answer": "coal",
-          "explanation": "coal: A hard black rock that people dig up and burn to make heat and energy."
+          "answer": "pronunciation",
+          "explanation": "pronunciation: The way a word is said."
         },
         {
-          "prompt": "Which word means: A set of written rules that explains how a country or group is run.",
+          "prompt": "Which word means: Keeping clean in order to stay healthy.",
           "choices": [
-            "coal",
-            "encounter",
-            "constitution"
+            "pronunciation",
+            "economy",
+            "hygiene"
           ],
-          "answer": "constitution",
-          "explanation": "constitution: A set of written rules that explains how a country or group is run."
+          "answer": "hygiene",
+          "explanation": "hygiene: Keeping clean in order to stay healthy."
         },
         {
-          "prompt": "Which word means: A restless, troubled mood when people are unhappy and may protest.",
+          "prompt": "Which word means: A large group of lands and peoples ruled by one government.",
           "choices": [
-            "encounter",
-            "unrest",
-            "coal"
+            "economy",
+            "empire",
+            "pronunciation"
           ],
-          "answer": "unrest",
-          "explanation": "unrest: A restless, troubled mood when people are unhappy and may protest."
+          "answer": "empire",
+          "explanation": "empire: A large group of lands and peoples ruled by one government."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A small soft bag or pocket used to hold and protect little things.",
-          "answer": "pouch"
+          "clue": "A plant such as a carrot or a bean that people eat.",
+          "answer": "vegetable"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A special document that grants rights or rules to a group of people.",
-          "answer": "charter"
+          "clue": "Keeping clean in order to stay healthy.",
+          "answer": "hygiene"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A restless, troubled mood when people are unhappy and may protest.",
-          "answer": "unrest"
+          "clue": "A large group of lands and peoples ruled by one government.",
+          "answer": "empire"
         }
       ]
     },
@@ -83,58 +83,41 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "pouch.",
-            "worn",
-            "a",
-            "inside",
-            "paper",
-            "land",
-            "folded",
-            "a",
-            "carried",
-            "family",
-            "visiting",
-            "The"
-          ],
-          "answer": "The visiting family carried a folded land paper inside a worn pouch."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "wind.",
-            "dreadful",
-            "a",
-            "into",
-            "explorers",
-            "the",
-            "led",
-            "once",
-            "route",
+            "everyone.",
+            "surprises",
+            "\"yacht\"",
             "of",
-            "choice",
-            "hasty",
-            "A"
+            "pronunciation",
+            "The"
           ],
-          "answer": "A hasty choice of route once led the explorers into a dreadful wind."
+          "answer": "The pronunciation of \"yacht\" surprises everyone."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "one.",
-            "calmer",
-            "a",
-            "tried",
-            "they",
-            "so",
-            "unsuccessful,",
+            "evening.",
+            "each",
+            "gate",
+            "the",
+            "locking",
+            "include",
+            "duties",
+            "Her"
+          ],
+          "answer": "Her duties include locking the gate each evening."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "year.",
+            "this",
+            "mild",
+            "comparatively",
             "was",
-            "plan",
-            "hasty",
-            "first,",
-            "team's",
+            "winter",
             "The"
           ],
-          "answer": "The team's first, hasty plan was unsuccessful, so they tried a calmer one."
+          "answer": "The winter was comparatively mild this year."
         }
       ]
     },
@@ -235,7 +218,7 @@
         },
         {
           "prompt": "Vocabulary in context",
-          "target": "A hasty choice of route once led the explorers into a dreadful wind."
+          "target": "Her duties include locking the gate each evening."
         },
         {
           "prompt": "Question-and-answer practice",
@@ -254,54 +237,57 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "independence.",
-            "of",
-            "sense",
-            "strong",
-            "a",
-            "Nora",
-            "gave",
-            "alone",
-            "board",
-            "whole",
+            "Exhibition.",
             "the",
-            "Building"
-          ],
-          "answer": "Building the whole board alone gave Nora a strong sense of independence."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "normal.",
-            "is",
-            "that",
-            "and",
-            "audience,",
-            "an",
+            "at",
+            "speak",
+            "to",
+            "turn",
+            "her",
             "before",
+            "just",
             "anxious",
-            "feel",
-            "learners",
-            "Many"
+            "felt",
+            "Amal"
           ],
-          "answer": "Many learners feel anxious before an audience, and that is normal."
+          "answer": "Amal felt anxious just before her turn to speak at the Exhibition."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "cars.",
-            "than",
-            "it",
-            "on",
-            "goats",
-            "more",
-            "have",
-            "may",
-            "road",
-            "rural",
-            "A"
+            "help.",
+            "judge's",
+            "the",
+            "needed",
+            "who",
+            "boy",
+            "a",
+            "encountered",
+            "she",
+            "steps",
+            "court",
+            "the",
+            "At"
           ],
-          "answer": "A rural road may have more goats on it than cars."
+          "answer": "At the court steps she encountered a boy who needed the judge's help."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "weeks.",
+            "for",
+            "ignored",
+            "were",
+            "letters",
+            "the",
+            "when",
+            "began",
+            "town",
+            "the",
+            "in",
+            "Unrest"
+          ],
+          "answer": "Unrest in the town began when the letters were ignored for weeks."
         }
       ]
     },
@@ -314,34 +300,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'hasty' mean in this unit?",
+          "prompt": "What does 'toxic' mean in this unit?",
           "choices": [
-            "Done too quickly, without stopping to think it through carefully.",
-            "A hard black rock that people dig up and burn to make heat and energy.",
-            "To meet somebody or something by chance, without planning it first."
+            "Poisonous, and harmful to living things.",
+            "The way a word is said.",
+            "The system by which a country makes and uses its money."
           ],
-          "answer": "Done too quickly, without stopping to think it through carefully.",
-          "explanation": "hasty: Done too quickly, without stopping to think it through carefully."
+          "answer": "Poisonous, and harmful to living things.",
+          "explanation": "toxic: Poisonous, and harmful to living things."
         },
         {
-          "prompt": "What does 'unexpected' mean in this unit?",
+          "prompt": "What does 'reluctant' mean in this unit?",
           "choices": [
-            "A hard black rock that people dig up and burn to make heat and energy.",
-            "To meet somebody or something by chance, without planning it first.",
-            "Surprising, because it was not planned or predicted."
+            "The way a word is said.",
+            "The system by which a country makes and uses its money.",
+            "Unwilling, or feeling unsure about doing something."
           ],
-          "answer": "Surprising, because it was not planned or predicted.",
-          "explanation": "unexpected: Surprising, because it was not planned or predicted."
+          "answer": "Unwilling, or feeling unsure about doing something.",
+          "explanation": "reluctant: Unwilling, or feeling unsure about doing something."
         },
         {
-          "prompt": "What does 'encounter' mean in this unit?",
+          "prompt": "What does 'economy' mean in this unit?",
           "choices": [
-            "A problem or topic that people discuss because it needs to be solved.",
-            "To meet somebody or something by chance, without planning it first.",
-            "A hard black rock that people dig up and burn to make heat and energy."
+            "Money people pay to the government to fund public services.",
+            "The system by which a country makes and uses its money.",
+            "The way a word is said."
           ],
-          "answer": "To meet somebody or something by chance, without planning it first.",
-          "explanation": "encounter: To meet somebody or something by chance, without planning it first."
+          "answer": "The system by which a country makes and uses its money.",
+          "explanation": "economy: The system by which a country makes and uses its money."
         }
       ]
     },
@@ -354,34 +340,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'quote'?",
+          "prompt": "What type of word is 'coal'?",
           "choices": [
             "Noun",
             "Verb",
             "Adjective"
           ],
           "answer": "Noun",
-          "explanation": "Quote is used as a noun in this dictionary sense."
+          "explanation": "Coal is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'spacious'?",
+          "prompt": "What type of word is 'local'?",
           "choices": [
             "Noun",
             "Verb",
             "Adjective"
           ],
           "answer": "Adjective",
-          "explanation": "Spacious is used as an adjective in this dictionary sense."
+          "explanation": "Local is used as an adjective in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'expose'?",
+          "prompt": "What type of word is 'duties'?",
           "choices": [
             "Adjective",
-            "Verb",
-            "Noun"
+            "Noun",
+            "Verb"
           ],
-          "answer": "Verb",
-          "explanation": "Expose is used as a verb in this dictionary sense."
+          "answer": "Noun",
+          "explanation": "Duties is used as a noun in this dictionary sense."
         }
       ]
     },
@@ -397,16 +383,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "encounter",
-              "To meet somebody or something by chance, without planning it first."
+              "vegetable",
+              "A plant such as a carrot or a bean that people eat."
             ],
             [
-              "issue",
-              "A problem or topic that people discuss because it needs to be solved."
+              "profit",
+              "The money left after all the costs are paid."
             ],
             [
-              "policy",
-              "A plan or rule that guides the choices a group of people makes."
+              "duties",
+              "Things a person is expected or required to do."
             ]
           ]
         },
@@ -414,16 +400,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "hasty",
-              "Done too quickly, without stopping to think it through carefully."
+              "infection",
+              "A sickness caused by germs that can spread."
             ],
             [
-              "anxious",
-              "Worried or nervous about something that might happen soon."
+              "earthquake",
+              "A sudden violent shaking of the ground."
             ],
             [
-              "emphasise",
-              "To show that something matters by saying it clearly and strongly."
+              "coal",
+              "A hard black rock that people dig up and burn to make heat and energy."
             ]
           ]
         },
@@ -431,16 +417,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "unexpected",
-              "Surprising, because it was not planned or predicted."
+              "lobby",
+              "A large open area inside a building where people wait or meet."
             ],
             [
-              "urban",
-              "Belonging to a city or busy town rather than the countryside."
+              "communicate",
+              "To share information, ideas or feelings with other people."
             ],
             [
-              "intelligence",
-              "The ability to learn, understand and think carefully about things."
+              "local",
+              "Belonging to the small area near where you live."
             ]
           ]
         }

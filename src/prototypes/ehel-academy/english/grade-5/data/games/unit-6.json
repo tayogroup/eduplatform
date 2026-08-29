@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: A situation where people are unhappy and may protest or cause trouble.",
+          "prompt": "Which word means: A place where people are buried after they die.",
           "choices": [
-            "unrest",
-            "unexpected",
-            "unfamiliar"
+            "cemetery",
+            "informal",
+            "literal"
           ],
-          "answer": "unrest",
-          "explanation": "unrest: A situation where people are unhappy and may protest or cause trouble."
+          "answer": "cemetery",
+          "explanation": "cemetery: A place where people are buried after they die."
         },
         {
-          "prompt": "Which word means: One of a kind; very special.",
+          "prompt": "Which word means: Very bad, unpleasant or frightening.",
           "choices": [
-            "unrest",
-            "unexpected",
-            "unique"
+            "cemetery",
+            "informal",
+            "terrible"
           ],
-          "answer": "unique",
-          "explanation": "unique: One of a kind; very special."
+          "answer": "terrible",
+          "explanation": "terrible: Very bad, unpleasant or frightening."
         },
         {
-          "prompt": "Which word means: Not finished or not having all the parts.",
+          "prompt": "Which word means: A person who is learning at a school or college.",
           "choices": [
-            "unexpected",
-            "incomplete",
-            "unrest"
+            "informal",
+            "student",
+            "cemetery"
           ],
-          "answer": "incomplete",
-          "explanation": "incomplete: Not finished or not having all the parts."
+          "answer": "student",
+          "explanation": "student: A person who is learning at a school or college."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Feeling worried or uncomfortable about something.",
-          "answer": "uneasy"
+          "clue": "A person who keeps the records and notes for a group.",
+          "answer": "secretary"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "One of a kind; very special.",
-          "answer": "unique"
+          "clue": "A person who works on a ship or sails as their job.",
+          "answer": "sailor"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Not able to do something well or correctly.",
-          "answer": "incompetent"
+          "clue": "Not real, but acted out or imagined as if it were real.",
+          "answer": "pretend"
         }
       ]
     },
@@ -83,55 +83,43 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "rules.",
+            "church.",
             "the",
-            "change",
-            "to",
-            "wanted",
-            "people",
-            "because",
-            "city",
-            "the",
-            "in",
-            "unrest",
-            "was",
-            "There"
+            "behind",
+            "lies",
+            "cemetery",
+            "old",
+            "The"
           ],
-          "answer": "There was unrest in the city because people wanted to change the rules."
+          "answer": "The old cemetery lies behind the church."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "help.",
-            "needed",
-            "and",
-            "unconscious",
-            "was",
-            "he",
-            "bike,",
+            "attention.",
+            "our",
+            "get",
+            "to",
+            "arms",
             "his",
-            "off",
-            "falling",
-            "After"
+            "waved",
+            "He"
           ],
-          "answer": "After falling off his bike, he was unconscious and needed help."
+          "answer": "He waved his arms to get our attention."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "question.",
-            "one",
-            "answer",
-            "to",
-            "forgot",
-            "I",
-            "because",
-            "incomplete",
-            "is",
-            "homework",
-            "My"
+            "window.",
+            "classroom",
+            "the",
+            "off",
+            "dust",
+            "the",
+            "wiped",
+            "Sami"
           ],
-          "answer": "My homework is incomplete because I forgot to answer one question."
+          "answer": "Sami wiped the dust off the classroom window."
         }
       ]
     },
@@ -232,7 +220,7 @@
         },
         {
           "prompt": "Speaking 3: Dramatic Reading",
-          "target": "After falling off his bike, he was unconscious and needed help."
+          "target": "He waved his arms to get our attention."
         },
         {
           "prompt": "Speaking 5: Prefix Expert Explains",
@@ -251,59 +239,52 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "attention.",
-            "pay",
-            "to",
-            "hard",
-            "it",
-            "made",
-            "it",
-            "and",
-            "monotonous,",
-            "was",
-            "voice",
-            "teacher's",
-            "The"
+            "dark.",
+            "the",
+            "in",
+            "noise",
+            "strange",
+            "a",
+            "heard",
+            "I",
+            "when",
+            "uneasy",
+            "felt",
+            "I"
           ],
-          "answer": "The teacher's voice was monotonous, and it made it hard to pay attention."
+          "answer": "I felt uneasy when I heard a strange noise in the dark."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "pavement.",
-            "the",
-            "on",
-            "unconscious",
-            "still",
-            "was",
-            "patient",
-            "the",
-            "because",
-            "quickly",
-            "worked",
-            "paramedics",
-            "The"
-          ],
-          "answer": "The paramedics worked quickly because the patient was still unconscious on the pavement."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "right.",
-            "it",
-            "putting",
-            "towards",
-            "step",
+            "page.",
             "first",
+            "very",
             "the",
-            "is",
-            "loud",
-            "out",
-            "injustice",
-            "an",
-            "Naming"
+            "from",
+            "suspense",
+            "on",
+            "built",
+            "are",
+            "stories",
+            "Mystery"
           ],
-          "answer": "Naming an injustice out loud is the first step towards putting it right."
+          "answer": "Mystery stories are built on suspense from the very first page."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "pages.",
+            "missing",
+            "the",
+            "find",
+            "to",
+            "folder",
+            "the",
+            "opened",
+            "Nora"
+          ],
+          "answer": "Nora opened the folder to find the missing pages."
         }
       ]
     },
@@ -316,34 +297,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'dissatisfied' mean in this unit?",
+          "prompt": "What does 'suspense' mean in this unit?",
           "choices": [
-            "Not happy or pleased with something.",
-            "A situation where people are unhappy and may protest or cause trouble.",
-            "Something that happens suddenly and is not planned."
+            "A feeling of excitement or nervousness while waiting to find out what happens.",
+            "A place where people are buried after they die.",
+            "Not formal or official; relaxed and casual."
           ],
-          "answer": "Not happy or pleased with something.",
-          "explanation": "dissatisfied: Not happy or pleased with something."
+          "answer": "A feeling of excitement or nervousness while waiting to find out what happens.",
+          "explanation": "suspense: A feeling of excitement or nervousness while waiting to find out what happens."
         },
         {
-          "prompt": "What does 'incapable' mean in this unit?",
+          "prompt": "What does 'witnessing' mean in this unit?",
           "choices": [
-            "A situation where people are unhappy and may protest or cause trouble.",
-            "Something that happens suddenly and is not planned.",
-            "Not able to do something."
+            "A place where people are buried after they die.",
+            "Not formal or official; relaxed and casual.",
+            "Seeing or experiencing something happen, often something important."
           ],
-          "answer": "Not able to do something.",
-          "explanation": "incapable: Not able to do something."
+          "answer": "Seeing or experiencing something happen, often something important.",
+          "explanation": "witnessing: Seeing or experiencing something happen, often something important."
         },
         {
-          "prompt": "What does 'unexpected' mean in this unit?",
+          "prompt": "What does 'informal' mean in this unit?",
           "choices": [
-            "Not known or recognised; something you have not seen before.",
-            "Something that happens suddenly and is not planned.",
-            "A situation where people are unhappy and may protest or cause trouble."
+            "Meaning exactly what the words say, with nothing figurative.",
+            "Not formal or official; relaxed and casual.",
+            "A place where people are buried after they die."
           ],
-          "answer": "Something that happens suddenly and is not planned.",
-          "explanation": "unexpected: Something that happens suddenly and is not planned."
+          "answer": "Not formal or official; relaxed and casual.",
+          "explanation": "informal: Not formal or official; relaxed and casual."
         }
       ]
     },
@@ -356,34 +337,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'discrimination'?",
+          "prompt": "What type of word is 'red'?",
           "choices": [
+            "Adjective",
             "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Noun",
-          "explanation": "Discrimination is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'navigable'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
+            "Verb"
           ],
           "answer": "Adjective",
-          "explanation": "Navigable is used as an adjective in this dictionary sense."
+          "explanation": "Red is used as an adjective in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'unaware'?",
+          "prompt": "What type of word is 'disregard'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Disregard is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'vast'?",
           "choices": [
             "Verb",
             "Adjective",
             "Noun"
           ],
           "answer": "Adjective",
-          "explanation": "Unaware is used as an adjective in this dictionary sense."
+          "explanation": "Vast is used as an adjective in this dictionary sense."
         }
       ]
     },
@@ -399,16 +380,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "unexpected",
-              "Something that happens suddenly and is not planned."
+              "category",
+              "A group of things that share the same features."
             ],
             [
-              "unfamiliar",
-              "Not known or recognised; something you have not seen before."
+              "coherence",
+              "The quality of a text whose ideas fit together sensibly."
             ],
             [
-              "unconscious",
-              "Not awake and not aware of what is happening."
+              "unlikely",
+              "Not expected to happen or be true; improbable."
             ]
           ]
         },
@@ -416,16 +397,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "dissatisfied",
-              "Not happy or pleased with something."
+              "waterfall",
+              "A place where a river or stream falls suddenly from a high point."
             ],
             [
-              "disregard",
-              "To ignore something or not pay attention to it."
+              "outwits",
+              "Beats someone by being cleverer than them, rather than by fighting."
             ],
             [
-              "dismantle",
-              "To take something apart piece by piece."
+              "shelves",
+              "Flat boards fixed to a wall or inside a cupboard, used for storing or displaying things."
             ]
           ]
         },
@@ -433,16 +414,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "incapable",
-              "Not able to do something."
+              "reviewed",
+              "Looked at something again carefully to check or judge it."
             ],
             [
-              "illegible",
-              "Hard to read or not clear enough to understand."
+              "fortunately",
+              "Luckily, or in a way that is good for someone."
             ],
             [
-              "monotonous",
-              "Very boring because it is always the same."
+              "disadvantage",
+              "A situation that makes something harder or less good."
             ]
           ]
         }

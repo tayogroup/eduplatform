@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: Doing something too quickly without thinking carefully.",
+          "prompt": "Which word means: Belonging to a country that is not your own.",
           "choices": [
-            "hasty",
-            "furious",
-            "grateful"
+            "foreign",
+            "symbolism",
+            "principal"
           ],
-          "answer": "hasty",
-          "explanation": "hasty: Doing something too quickly without thinking carefully."
+          "answer": "foreign",
+          "explanation": "foreign: Belonging to a country that is not your own."
         },
         {
-          "prompt": "Which word means: Very bad or unpleasant. Nobody would choose to be near it.",
+          "prompt": "Which word means: A short group of words that are often used together.",
           "choices": [
-            "hasty",
-            "furious",
-            "dreadful"
+            "foreign",
+            "symbolism",
+            "phrase"
           ],
-          "answer": "dreadful",
-          "explanation": "dreadful: Very bad or unpleasant. Nobody would choose to be near it."
+          "answer": "phrase",
+          "explanation": "phrase: A short group of words that are often used together."
         },
         {
-          "prompt": "Which word means: Deserving respect and admiration because of good qualities or actions.",
+          "prompt": "Which word means: To say that someone caused something bad to happen.",
           "choices": [
-            "furious",
-            "honourable",
-            "hasty"
+            "symbolism",
+            "blame",
+            "foreign"
           ],
-          "answer": "honourable",
-          "explanation": "honourable: Deserving respect and admiration because of good qualities or actions."
+          "answer": "blame",
+          "explanation": "blame: To say that someone caused something bad to happen."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Not wanting to do something or feeling unsure about it.",
-          "answer": "reluctant"
+          "clue": "A light sailing boat used for racing or pleasure.",
+          "answer": "yacht"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "So pleasing that it makes you smile straight away.",
-          "answer": "delightful"
+          "clue": "A person who listens, especially to a story or speech.",
+          "answer": "listener"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Someone or something you can trust to do what they say they will do.",
-          "answer": "reliable"
+          "clue": "Came back to join something again after being apart from it for a while.",
+          "answer": "rejoined"
         }
       ]
     },
@@ -83,58 +83,49 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "downhill.",
-            "rolling",
-            "basket",
-            "whole",
-            "the",
-            "sent",
-            "stones",
-            "loose",
-            "the",
-            "on",
-            "step",
-            "hasty",
-            "One"
+            "class.",
+            "evening",
+            "at",
+            "language",
+            "foreign",
+            "a",
+            "learning",
+            "is",
+            "She"
           ],
-          "answer": "One hasty step on the loose stones sent the whole basket rolling downhill."
+          "answer": "She is learning a foreign language at evening class."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "dawn.",
-            "before",
-            "house",
-            "the",
-            "in",
-            "everyone",
-            "woke",
-            "gate",
-            "the",
-            "from",
-            "screech",
-            "dreadful",
+            "quest.",
+            "dangerous",
+            "a",
+            "on",
+            "hero",
+            "a",
+            "follows",
+            "usually",
+            "legend",
             "A"
           ],
-          "answer": "A dreadful screech from the gate woke everyone in the house before dawn."
+          "answer": "A legend usually follows a hero on a dangerous quest."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "away.",
-            "blew",
-            "that",
-            "map",
+            "laughing.",
+            "and",
+            "stories",
+            "sharing",
+            "rock,",
             "the",
-            "than",
-            "reliable",
-            "more",
-            "proved",
-            "compass",
-            "old",
+            "under",
+            "sat",
+            "team",
             "The"
           ],
-          "answer": "The old compass proved more reliable than the map that blew away."
+          "answer": "The team sat under the rock, sharing stories and laughing."
         }
       ]
     },
@@ -231,11 +222,11 @@
       "rounds": [
         {
           "prompt": "Speaking 1: Retell a Legend",
-          "target": "One hasty step on the loose stones sent the whole basket rolling downhill."
+          "target": "She is learning a foreign language at evening class."
         },
         {
           "prompt": "Speaking 3: Dramatic Reading",
-          "target": "A dreadful screech from the gate woke everyone in the house before dawn."
+          "target": "A legend usually follows a hero on a dangerous quest."
         },
         {
           "prompt": "Speaking 5: Explain and Respond",
@@ -254,52 +245,54 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "school.",
-            "at",
-            "test",
-            "big",
-            "my",
-            "before",
-            "anxious",
-            "felt",
-            "I"
-          ],
-          "answer": "I felt anxious before my big test at school."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "her.",
-            "for",
-            "achievement",
-            "significant",
-            "a",
-            "was",
-            "fair",
-            "science",
+            "again.",
+            "filled",
+            "wells",
             "the",
-            "Winning"
+            "after",
+            "long",
+            "Zara",
+            "to",
+            "grateful",
+            "stayed",
+            "village",
+            "whole",
+            "The"
           ],
-          "answer": "Winning the science fair was a significant achievement for her."
+          "answer": "The whole village stayed grateful to Zara long after the wells filled again."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "asking.",
-            "without",
-            "toy",
-            "your",
-            "takes",
-            "someone",
-            "if",
-            "upset",
-            "be",
-            "to",
-            "justifiable",
-            "is",
-            "It"
+            "kitchen.",
+            "the",
+            "of",
+            "corner",
+            "the",
+            "in",
+            "quietly",
+            "hummed",
+            "fridge",
+            "old",
+            "The"
           ],
-          "answer": "It is justifiable to be upset if someone takes your toy without asking."
+          "answer": "The old fridge hummed quietly in the corner of the kitchen."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "ridge.",
+            "the",
+            "beyond",
+            "from",
+            "coming",
+            "voices",
+            "hear",
+            "faintly",
+            "could",
+            "Amal"
+          ],
+          "answer": "Amal could faintly hear voices coming from beyond the ridge."
         }
       ]
     },
@@ -312,34 +305,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'glorious' mean in this unit?",
+          "prompt": "What does 'choice' mean in this unit?",
           "choices": [
-            "Wonderfully beautiful, in a way that makes people stop and look.",
-            "Doing something too quickly without thinking carefully.",
-            "Extremely angry, so angry that it is hard to stay calm."
+            "An act of choosing between two or more things.",
+            "Belonging to a country that is not your own.",
+            "Using an object or image to stand for a bigger idea."
           ],
-          "answer": "Wonderfully beautiful, in a way that makes people stop and look.",
-          "explanation": "glorious: Wonderfully beautiful, in a way that makes people stop and look."
+          "answer": "An act of choosing between two or more things.",
+          "explanation": "choice: An act of choosing between two or more things."
         },
         {
-          "prompt": "What does 'contagious' mean in this unit?",
+          "prompt": "What does 'collect' mean in this unit?",
           "choices": [
-            "Doing something too quickly without thinking carefully.",
-            "Extremely angry, so angry that it is hard to stay calm.",
-            "A disease or feeling that can spread from one person to another."
+            "Belonging to a country that is not your own.",
+            "Using an object or image to stand for a bigger idea.",
+            "To gather several things together, usually to keep or study them."
           ],
-          "answer": "A disease or feeling that can spread from one person to another.",
-          "explanation": "contagious: A disease or feeling that can spread from one person to another."
+          "answer": "To gather several things together, usually to keep or study them.",
+          "explanation": "collect: To gather several things together, usually to keep or study them."
         },
         {
-          "prompt": "What does 'furious' mean in this unit?",
+          "prompt": "What does 'symbolism' mean in this unit?",
           "choices": [
-            "Feeling happy and thankful for something nice someone has done.",
-            "Extremely angry, so angry that it is hard to stay calm.",
-            "Doing something too quickly without thinking carefully."
+            "Main, or most important.",
+            "Using an object or image to stand for a bigger idea.",
+            "Belonging to a country that is not your own."
           ],
-          "answer": "Extremely angry, so angry that it is hard to stay calm.",
-          "explanation": "furious: Extremely angry, so angry that it is hard to stay calm."
+          "answer": "Using an object or image to stand for a bigger idea.",
+          "explanation": "symbolism: Using an object or image to stand for a bigger idea."
         }
       ]
     },
@@ -352,34 +345,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'forceful'?",
+          "prompt": "What type of word is 'noon'?",
           "choices": [
-            "Adjective",
             "Noun",
-            "Verb"
+            "Verb",
+            "Adjective"
           ],
-          "answer": "Adjective",
-          "explanation": "Forceful is used as an adjective in this dictionary sense."
+          "answer": "Noun",
+          "explanation": "Noon is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'profitable'?",
+          "prompt": "What type of word is 'dreadful'?",
           "choices": [
             "Noun",
             "Verb",
             "Adjective"
           ],
           "answer": "Adjective",
-          "explanation": "Profitable is used as an adjective in this dictionary sense."
+          "explanation": "Dreadful is used as an adjective in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'miserable'?",
+          "prompt": "What type of word is 'fact'?",
           "choices": [
-            "Verb",
             "Adjective",
-            "Noun"
+            "Noun",
+            "Verb"
           ],
-          "answer": "Adjective",
-          "explanation": "Miserable is used as an adjective in this dictionary sense."
+          "answer": "Noun",
+          "explanation": "Fact is used as a noun in this dictionary sense."
         }
       ]
     },
@@ -395,16 +388,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "furious",
-              "Extremely angry, so angry that it is hard to stay calm."
+              "stomach",
+              "The part of your body where food goes after you eat it."
             ],
             [
-              "grateful",
-              "Feeling happy and thankful for something nice someone has done."
+              "mental",
+              "To do with the mind or with thinking."
             ],
             [
-              "pleasant",
-              "Nice and enjoyable, so that you are glad to be there."
+              "gods",
+              "Powerful beings in myths who are believed to control parts of nature or human life."
             ]
           ]
         },
@@ -412,16 +405,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "glorious",
-              "Wonderfully beautiful, in a way that makes people stop and look."
+              "description",
+              "A piece of writing or speech that tells what something is like."
             ],
             [
-              "remarkable",
-              "Very special or unusual; something that stands out."
+              "placing",
+              "Putting something or someone carefully in a particular position."
             ],
             [
-              "dutiful",
-              "Doing carefully and loyally the things you are trusted to do."
+              "risks",
+              "Chances that something dangerous or unpleasant might happen."
             ]
           ]
         },
@@ -429,16 +422,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "contagious",
-              "A disease or feeling that can spread from one person to another."
+              "rejoined",
+              "Came back to join something again after being apart from it for a while."
             ],
             [
-              "justifiable",
-              "Something that is fair or reasonable to do."
+              "presenting",
+              "Showing or explaining something to a group of people."
             ],
             [
-              "intolerable",
-              "Something that is too bad or painful to accept."
+              "irritable",
+              "Easily annoyed or made angry."
             ]
           ]
         }

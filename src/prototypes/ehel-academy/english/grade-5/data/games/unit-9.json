@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: A small, cosy corner or space where you can relax or hide.",
+          "prompt": "Which word means: Ready to attack or argue; forceful and hostile.",
           "choices": [
-            "nook",
-            "bamboo",
-            "fertile"
+            "aggressive",
+            "hyperlink",
+            "wireless"
           ],
-          "answer": "nook",
-          "explanation": "nook: A small, cosy corner or space where you can relax or hide."
+          "answer": "aggressive",
+          "explanation": "aggressive: Ready to attack or argue; forceful and hostile."
         },
         {
-          "prompt": "Which word means: A type of cloth or fabric made by weaving threads together.",
+          "prompt": "Which word means: A flat board with a clip at the top for holding papers.",
           "choices": [
-            "nook",
-            "bamboo",
-            "textile"
+            "aggressive",
+            "hyperlink",
+            "clipboard"
           ],
-          "answer": "textile",
-          "explanation": "textile: A type of cloth or fabric made by weaving threads together."
+          "answer": "clipboard",
+          "explanation": "clipboard: A flat board with a clip at the top for holding papers."
         },
         {
-          "prompt": "Which word means: Related to a mother or motherhood.",
+          "prompt": "Which word means: Cradled means held something gently and protectively, as if in a cradle.",
           "choices": [
-            "bamboo",
-            "maternal",
-            "nook"
+            "hyperlink",
+            "cradled",
+            "aggressive"
           ],
-          "answer": "maternal",
-          "explanation": "maternal: Related to a mother or motherhood."
+          "answer": "cradled",
+          "explanation": "cradled: Cradled means held something gently and protectively, as if in a cradle."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "An area of land covered with trees and plants.",
-          "answer": "woodland"
+          "clue": "Easy to see or understand; obvious.",
+          "answer": "apparent"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A small bag or pocket, sometimes on an animal, used to carry things.",
-          "answer": "pouch"
+          "clue": "The soft, thick hair that covers the body of many animals.",
+          "answer": "fur"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Related to a father or a father figure.",
-          "answer": "paternal"
+          "clue": "Wrapped means covered or folded something around an object completely.",
+          "answer": "wrapped"
         }
       ]
     },
@@ -83,50 +83,48 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "tree.",
-            "hollow",
+            "won.",
+            "have",
+            "could",
+            "you",
+            "argument",
+            "an",
+            "loses",
+            "tone",
+            "aggressive",
+            "An"
+          ],
+          "answer": "An aggressive tone loses an argument you could have won."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "saved.",
+            "already",
+            "was",
+            "file",
             "the",
-            "inside",
-            "nook",
-            "little",
-            "a",
-            "in",
-            "slept",
-            "lemur",
-            "The"
+            "Incidentally,"
           ],
-          "answer": "The lemur slept in a little nook inside the hollow tree."
+          "answer": "Incidentally, the file was already saved."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "coat.",
-            "textile",
-            "soft",
+            "fence.",
+            "the",
+            "by",
+            "pile",
+            "tidy",
             "a",
-            "like",
-            "fur",
-            "thick",
-            "had",
-            "gibbon",
-            "baby",
-            "The"
+            "into",
+            "leaves",
+            "fallen",
+            "the",
+            "raked",
+            "Adam"
           ],
-          "answer": "The baby gibbon had thick fur like a soft textile coat."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "instinct.",
-            "paternal",
-            "with",
-            "watch",
-            "kept",
-            "monkey",
-            "male",
-            "The"
-          ],
-          "answer": "The male monkey kept watch with paternal instinct."
+          "answer": "Adam raked the fallen leaves into a tidy pile by the fence."
         }
       ]
     },
@@ -223,7 +221,7 @@
       "rounds": [
         {
           "prompt": "Speaking 1: Read the Script Aloud",
-          "target": "The lemur slept in a little nook inside the hollow tree."
+          "target": "An aggressive tone loses an argument you could have won."
         },
         {
           "prompt": "Speaking 3: The Director's Chair",
@@ -246,59 +244,52 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "leaves.",
-            "fallen",
-            "of",
-            "layer",
-            "thick",
-            "a",
-            "under",
-            "disappears",
-            "floor",
-            "woodland",
-            "the",
-            "autumn",
-            "Every"
+            "lived.",
+            "insects",
+            "where",
+            "bark",
+            "its",
+            "in",
+            "grooves",
+            "deep",
+            "had",
+            "tree",
+            "old",
+            "The"
           ],
-          "answer": "Every autumn the woodland floor disappears under a thick layer of fallen leaves."
+          "answer": "The old tree had deep grooves in its bark where insects lived."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "city.",
-            "crowded",
+            "lemur.",
+            "sleeping",
             "a",
-            "cool",
-            "to",
-            "helps",
-            "trees",
-            "planting",
-            "that",
-            "evidence",
-            "ample",
-            "is",
-            "There"
+            "revealing",
+            "cloth,",
+            "the",
+            "back",
+            "pulled",
+            "Talia"
           ],
-          "answer": "There is ample evidence that planting trees helps to cool a crowded city."
+          "answer": "Talia pulled back the cloth, revealing a sleeping lemur."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "video.",
+            "connected.",
+            "are",
+            "animals",
+            "woodland's",
             "the",
-            "showed",
-            "neighbour",
-            "the",
-            "until",
-            "lasted",
-            "window",
-            "broken",
-            "the",
-            "of",
-            "denial",
-            "His"
+            "how",
+            "showing",
+            "poster",
+            "a",
+            "drew",
+            "Amal"
           ],
-          "answer": "His denial of the broken window lasted until the neighbour showed the video."
+          "answer": "Amal drew a poster showing how the woodland's animals are connected."
         }
       ]
     },
@@ -311,34 +302,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'ample' mean in this unit?",
+          "prompt": "What does 'kindness' mean in this unit?",
           "choices": [
-            "More than enough; plenty of something.",
-            "A small, cosy corner or space where you can relax or hide.",
-            "A tall plant with hard, hollow stems that grows in warm places."
+            "Being gentle, caring and helpful towards other people or animals.",
+            "Ready to attack or argue; forceful and hostile.",
+            "A word or image you click to jump to another page."
           ],
-          "answer": "More than enough; plenty of something.",
-          "explanation": "ample: More than enough; plenty of something."
+          "answer": "Being gentle, caring and helpful towards other people or animals.",
+          "explanation": "kindness: Being gentle, caring and helpful towards other people or animals."
         },
         {
-          "prompt": "What does 'denial' mean in this unit?",
+          "prompt": "What does 'biodiversity' mean in this unit?",
           "choices": [
-            "A small, cosy corner or space where you can relax or hide.",
-            "A tall plant with hard, hollow stems that grows in warm places.",
-            "When someone refuses to believe something is true."
+            "Ready to attack or argue; forceful and hostile.",
+            "A word or image you click to jump to another page.",
+            "Biodiversity is the wide variety of plants and animals living in one place."
           ],
-          "answer": "When someone refuses to believe something is true.",
-          "explanation": "denial: When someone refuses to believe something is true."
+          "answer": "Biodiversity is the wide variety of plants and animals living in one place.",
+          "explanation": "biodiversity: Biodiversity is the wide variety of plants and animals living in one place."
         },
         {
-          "prompt": "What does 'bamboo' mean in this unit?",
+          "prompt": "What does 'hyperlink' mean in this unit?",
           "choices": [
-            "Able to produce many plants or crops; good for growing things.",
-            "A tall plant with hard, hollow stems that grows in warm places.",
-            "A small, cosy corner or space where you can relax or hide."
+            "Working without wires, by sending signals through the air.",
+            "A word or image you click to jump to another page.",
+            "Ready to attack or argue; forceful and hostile."
           ],
-          "answer": "A tall plant with hard, hollow stems that grows in warm places.",
-          "explanation": "bamboo: A tall plant with hard, hollow stems that grows in warm places."
+          "answer": "A word or image you click to jump to another page.",
+          "explanation": "hyperlink: A word or image you click to jump to another page."
         }
       ]
     },
@@ -351,34 +342,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'abnormal'?",
+          "prompt": "What type of word is 'refilled'?",
           "choices": [
-            "Adjective",
+            "Verb",
             "Noun",
-            "Verb"
-          ],
-          "answer": "Adjective",
-          "explanation": "Abnormal is used as an adjective in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'assemble'?",
-          "choices": [
-            "Noun",
-            "Adjective",
-            "Verb"
+            "Adjective"
           ],
           "answer": "Verb",
-          "explanation": "Assemble is used as a verb in this dictionary sense."
+          "explanation": "Refilled is used as a verb in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'manual'?",
+          "prompt": "What type of word is 'ample'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Adjective",
+          "explanation": "Ample is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'multimedia'?",
           "choices": [
             "Adjective",
             "Noun",
             "Verb"
           ],
           "answer": "Noun",
-          "explanation": "Manual is used as a noun in this dictionary sense."
+          "explanation": "Multimedia is used as a noun in this dictionary sense."
         }
       ]
     },
@@ -394,16 +385,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "bamboo",
-              "A tall plant with hard, hollow stems that grows in warm places."
+              "argument",
+              "A reason or set of reasons given to support an idea."
             ],
             [
-              "fertile",
-              "Able to produce many plants or crops; good for growing things."
+              "security",
+              "Protection against harm, theft or unwanted access."
             ],
             [
-              "capsule",
-              "A small container that holds something inside, like medicine or equipment."
+              "malware",
+              "Software written to damage or break into a computer."
             ]
           ]
         },
@@ -411,16 +402,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "ample",
-              "More than enough; plenty of something."
+              "stems",
+              "The long, thin parts of plants that hold up leaves and flowers."
             ],
             [
-              "critical",
-              "Very important or necessary; or describing a serious situation."
+              "scans",
+              "Looks quickly and carefully over something, searching for details."
             ],
             [
-              "economical",
-              "Something that saves money or uses resources wisely."
+              "raked",
+              "Raked means gathered or smoothed something, such as leaves, using a rake."
             ]
           ]
         },
@@ -428,16 +419,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "denial",
-              "When someone refuses to believe something is true."
+              "gold",
+              "Gold is a valuable yellow metal, and the word can also describe that bright colour."
             ],
             [
-              "constitutional",
-              "Related to the system of rules that a country follows."
+              "rescued",
+              "Rescued means saved someone or something from danger or harm."
             ],
             [
-              "dimple",
-              "A small, round indentation or mark on a surface."
+              "pouch",
+              "A small bag or pocket, sometimes on an animal, used to carry things."
             ]
           ]
         }

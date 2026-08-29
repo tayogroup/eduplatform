@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: The ability to learn, understand and think carefully about things.",
+          "prompt": "Which word means: A job that needs long training or study.",
           "choices": [
-            "intelligence",
-            "physician",
-            "ancient"
+            "profession",
+            "competitor",
+            "opponent"
           ],
-          "answer": "intelligence",
-          "explanation": "intelligence: The ability to learn, understand and think carefully about things."
+          "answer": "profession",
+          "explanation": "profession: A job that needs long training or study."
         },
         {
-          "prompt": "Which word means: Not guilty of doing anything wrong.",
+          "prompt": "Which word means: The ability to focus your full attention on one thing.",
           "choices": [
-            "intelligence",
-            "physician",
-            "innocent"
+            "profession",
+            "competitor",
+            "concentration"
           ],
-          "answer": "innocent",
-          "explanation": "innocent: Not guilty of doing anything wrong."
+          "answer": "concentration",
+          "explanation": "concentration: The ability to focus your full attention on one thing."
         },
         {
-          "prompt": "Which word means: A great victory or success after real effort.",
+          "prompt": "Which word means: A room, especially a large or enclosed one found deep inside a building or cave.",
           "choices": [
-            "physician",
-            "triumph",
-            "intelligence"
+            "competitor",
+            "chamber",
+            "profession"
           ],
-          "answer": "triumph",
-          "explanation": "triumph: A great victory or success after real effort."
+          "answer": "chamber",
+          "explanation": "chamber: A room, especially a large or enclosed one found deep inside a building or cave."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A doctor who keeps people healthy and treats them when they are ill.",
-          "answer": "physician"
+          "clue": "A place where people buy and eat meals that cooks make.",
+          "answer": "restaurant"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Good enough to accept, though not the very best.",
-          "answer": "decent"
+          "clue": "A small container or wrapped parcel that holds something.",
+          "answer": "packet"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "The act of going down from a higher place.",
-          "answer": "descent"
+          "clue": "Lines, symbols or patterns drawn or carved onto a surface.",
+          "answer": "markings"
         }
       ]
     },
@@ -83,43 +83,50 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "problem.",
-            "tricky",
-            "the",
-            "solve",
-            "her",
-            "helped",
-            "intelligence",
-            "Her"
-          ],
-          "answer": "Her intelligence helped her solve the tricky problem."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "play.",
+            "enter.",
             "to",
-            "wanted",
-            "just",
-            "puppy",
-            "innocent",
-            "The"
+            "years",
+            "takes",
+            "that",
+            "profession",
+            "a",
+            "is",
+            "Medicine"
           ],
-          "answer": "The innocent puppy just wanted to play."
+          "answer": "Medicine is a profession that takes years to enter."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "finishing.",
-            "building,",
-            "planning,",
-            "phases:",
-            "three",
-            "has",
-            "project",
-            "The"
+            "bed.",
+            "garden",
+            "the",
+            "of",
+            "edge",
+            "the",
+            "along",
+            "seeds",
+            "planted",
+            "We"
           ],
-          "answer": "The project has three phases: planning, building, finishing."
+          "answer": "We planted seeds along the edge of the garden bed."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "day.",
+            "first",
+            "very",
+            "their",
+            "on",
+            "Sandalwood",
+            "Team",
+            "formed",
+            "Nora",
+            "and",
+            "Amal"
+          ],
+          "answer": "Amal and Nora formed Team Sandalwood on their very first day."
         }
       ]
     },
@@ -216,7 +223,7 @@
       "rounds": [
         {
           "prompt": "Speaking 1: One Minute to Persuade",
-          "target": "Her intelligence helped her solve the tricky problem."
+          "target": "Medicine is a profession that takes years to enter."
         },
         {
           "prompt": "Speaking 3: Spot the Technique",
@@ -224,7 +231,7 @@
         },
         {
           "prompt": "Speaking 5: Interview the Expert",
-          "target": "The project has three phases: planning, building, finishing."
+          "target": "Amal and Nora formed Team Sandalwood on their very first day."
         }
       ]
     },
@@ -239,54 +246,49 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "brings.",
-            "it",
-            "duties",
-            "the",
-            "and",
-            "citizenship",
-            "about",
-            "poster",
+            "play.",
+            "to",
+            "place",
+            "great",
             "a",
-            "made",
-            "class",
-            "Our"
-          ],
-          "answer": "Our class made a poster about citizenship and the duties it brings."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "time.",
-            "library",
-            "longer",
-            "want",
-            "pupils",
-            "most",
-            "that",
-            "showed",
-            "survey",
-            "recent",
-            "A"
-          ],
-          "answer": "A recent survey showed that most pupils want longer library time."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "up.",
-            "climb",
-            "the",
-            "than",
-            "longer",
-            "took",
-            "ridge",
-            "the",
-            "from",
-            "descent",
+            "is",
+            "park",
+            "central",
             "The"
           ],
-          "answer": "The descent from the ridge took longer than the climb up."
+          "answer": "The central park is a great place to play."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "guess.",
+            "simple",
+            "a",
+            "than",
+            "weight",
+            "more",
+            "carries",
+            "opinion",
+            "expert",
+            "An"
+          ],
+          "answer": "An expert opinion carries more weight than a simple guess."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "inside.",
+            "poem",
+            "the",
+            "read",
+            "to",
+            "carefully",
+            "envelope",
+            "the",
+            "opened",
+            "Amal"
+          ],
+          "answer": "Amal opened the envelope carefully to read the poem inside."
         }
       ]
     },
@@ -299,34 +301,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'decent' mean in this unit?",
+          "prompt": "What does 'emotive' mean in this unit?",
           "choices": [
-            "Good enough to accept, though not the very best.",
-            "The ability to learn, understand and think carefully about things.",
-            "A doctor who keeps people healthy and treats them when they are ill."
+            "Describing words chosen to make readers feel strong emotions.",
+            "A job that needs long training or study.",
+            "A person or team taking part in a contest."
           ],
-          "answer": "Good enough to accept, though not the very best.",
-          "explanation": "decent: Good enough to accept, though not the very best."
+          "answer": "Describing words chosen to make readers feel strong emotions.",
+          "explanation": "emotive: Describing words chosen to make readers feel strong emotions."
         },
         {
-          "prompt": "What does 'descent' mean in this unit?",
+          "prompt": "What does 'ache' mean in this unit?",
           "choices": [
-            "The ability to learn, understand and think carefully about things.",
-            "A doctor who keeps people healthy and treats them when they are ill.",
-            "The act of going down from a higher place."
+            "A job that needs long training or study.",
+            "A person or team taking part in a contest.",
+            "A continuous dull pain in part of the body, or a strong feeling of longing."
           ],
-          "answer": "The act of going down from a higher place.",
-          "explanation": "descent: The act of going down from a higher place."
+          "answer": "A continuous dull pain in part of the body, or a strong feeling of longing.",
+          "explanation": "ache: A continuous dull pain in part of the body, or a strong feeling of longing."
         },
         {
-          "prompt": "What does 'physician' mean in this unit?",
+          "prompt": "What does 'competitor' mean in this unit?",
           "choices": [
-            "Very old, belonging to a time long before ours.",
-            "A doctor who keeps people healthy and treats them when they are ill.",
-            "The ability to learn, understand and think carefully about things."
+            "A person who competes or argues against you.",
+            "A person or team taking part in a contest.",
+            "A job that needs long training or study."
           ],
-          "answer": "A doctor who keeps people healthy and treats them when they are ill.",
-          "explanation": "physician: A doctor who keeps people healthy and treats them when they are ill."
+          "answer": "A person or team taking part in a contest.",
+          "explanation": "competitor: A person or team taking part in a contest."
         }
       ]
     },
@@ -339,34 +341,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'cycle'?",
+          "prompt": "What type of word is 'investigation'?",
           "choices": [
             "Noun",
             "Verb",
             "Adjective"
           ],
           "answer": "Noun",
-          "explanation": "Cycle is used as a noun in this dictionary sense."
+          "explanation": "Investigation is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'hemisphere'?",
+          "prompt": "What type of word is 'scarce'?",
           "choices": [
+            "Noun",
             "Verb",
-            "Adjective",
-            "Noun"
-          ],
-          "answer": "Noun",
-          "explanation": "Hemisphere is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'central'?",
-          "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
+            "Adjective"
           ],
           "answer": "Adjective",
-          "explanation": "Central is used as an adjective in this dictionary sense."
+          "explanation": "Scarce is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'anyhow'?",
+          "choices": [
+            "Verb",
+            "Adverb",
+            "Noun"
+          ],
+          "answer": "Adverb",
+          "explanation": "Anyhow is used as an adverb in this dictionary sense."
         }
       ]
     },
@@ -382,16 +384,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "physician",
-              "A doctor who keeps people healthy and treats them when they are ill."
+              "business",
+              "An organisation that makes or sells things for money."
             ],
             [
-              "ancient",
-              "Very old, belonging to a time long before ours."
+              "director",
+              "A person who is in charge of an organisation or a film."
             ],
             [
-              "precise",
-              "Exact and accurate, with no vague or careless detail."
+              "commerce",
+              "The buying and selling of goods on a large scale."
             ]
           ]
         },
@@ -399,16 +401,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "decent",
-              "Good enough to accept, though not the very best."
+              "packet",
+              "A small container or wrapped parcel that holds something."
             ],
             [
-              "ceremony",
-              "A special planned event that marks something important."
+              "safest",
+              "Causing the least danger or harm, more than anything else being compared."
             ],
             [
-              "evidence",
-              "Something that shows whether a claim is true or false."
+              "ramps",
+              "Sloped surfaces that let people or things move between different levels instead of using stairs."
             ]
           ]
         },
@@ -416,16 +418,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "descent",
-              "The act of going down from a higher place."
+              "makers",
+              "People who made or built something, especially something skilfully crafted."
             ],
             [
-              "physics",
-              "The study of forces, energy and how things move."
+              "doorway",
+              "The opening in a wall where a door is, forming an entrance to a room or building."
             ],
             [
-              "judicial",
-              "To do with judges, courts and the law."
+              "decent",
+              "Good enough to accept, though not the very best."
             ]
           ]
         }

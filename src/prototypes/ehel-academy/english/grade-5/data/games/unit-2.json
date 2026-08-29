@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: The ability to take care of yourself and make your own choices",
+          "prompt": "Which word means: To happen, especially without being planned.",
           "choices": [
-            "independence",
-            "empire",
-            "glare"
+            "occur",
+            "reflection",
+            "prey"
           ],
-          "answer": "independence",
-          "explanation": "independence: The ability to take care of yourself and make your own choices"
+          "answer": "occur",
+          "explanation": "occur: To happen, especially without being planned."
         },
         {
-          "prompt": "Which word means: Always being there for someone or something you care about",
+          "prompt": "Which word means: The moon is the large, round object that travels around the Earth and shines at night.",
           "choices": [
-            "independence",
-            "empire",
-            "loyal"
+            "occur",
+            "reflection",
+            "moon"
           ],
-          "answer": "loyal",
-          "explanation": "loyal: Always being there for someone or something you care about"
+          "answer": "moon",
+          "explanation": "moon: The moon is the large, round object that travels around the Earth and shines at night."
         },
         {
-          "prompt": "Which word means: The state of having something that belongs to you",
+          "prompt": "Which word means: Hurting means causing pain or discomfort to someone or something.",
           "choices": [
-            "empire",
-            "ownership",
-            "independence"
+            "reflection",
+            "hurting",
+            "occur"
           ],
-          "answer": "ownership",
-          "explanation": "ownership: The state of having something that belongs to you"
+          "answer": "hurting",
+          "explanation": "hurting: Hurting means causing pain or discomfort to someone or something."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A large area of land that is controlled by one ruler or government",
-          "answer": "empire"
+          "clue": "To fill a space, or to live or work in a place.",
+          "answer": "occupy"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "To completely ruin or make something unusable",
-          "answer": "destroy"
+          "clue": "The moon is the large, round object that travels around the Earth and shines at night.",
+          "answer": "moon"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Very loud or growing quickly",
-          "answer": "booming"
+          "clue": "Hurting means causing pain or discomfort to someone or something.",
+          "answer": "hurting"
         }
       ]
     },
@@ -83,51 +83,51 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "countries.",
-            "many",
-            "included",
-            "and",
-            "powerful",
-            "very",
-            "was",
-            "Empire",
-            "Roman",
+            "exactly.",
+            "up",
+            "lines",
+            "moon",
+            "the",
+            "when",
+            "only",
+            "occur",
+            "Eclipses"
+          ],
+          "answer": "Eclipses occur only when the moon lines up exactly."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "language.",
+            "English",
+            "the",
+            "into",
+            "crossed",
+            "later",
+            "book",
+            "his",
+            "in",
+            "names",
+            "star",
+            "Many"
+          ],
+          "answer": "Many star names in his book later crossed into the English language."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "meteorite.",
+            "small",
+            "a",
+            "be",
+            "to",
+            "out",
+            "turned",
+            "object",
+            "glowing",
             "The"
           ],
-          "answer": "The Roman Empire was very powerful and included many countries."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "sweets.",
-            "many",
-            "too",
-            "eating",
-            "avoid",
-            "to",
-            "try",
-            "I"
-          ],
-          "answer": "I try to avoid eating too many sweets."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "project.",
-            "my",
-            "for",
-            "approval",
-            "her",
-            "me",
-            "gave",
-            "teacher",
-            "my",
-            "when",
-            "happy",
-            "felt",
-            "I"
-          ],
-          "answer": "I felt happy when my teacher gave me her approval for my project."
+          "answer": "The glowing object turned out to be a small meteorite."
         }
       ]
     },
@@ -224,7 +224,7 @@
       "rounds": [
         {
           "prompt": "Speaking 1: Astronaut interview role-play",
-          "target": "The Roman Empire was very powerful and included many countries."
+          "target": "Eclipses occur only when the moon lines up exactly."
         },
         {
           "prompt": "Speaking 3: Group presentation of a science mission",
@@ -247,58 +247,47 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "solve.",
+            "sweets.",
+            "many",
+            "too",
+            "eating",
+            "avoid",
             "to",
-            "wants",
-            "class",
-            "our",
-            "issue",
-            "an",
-            "is",
-            "field",
-            "school",
+            "try",
+            "I"
+          ],
+          "answer": "I try to avoid eating too many sweets."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "deadline.",
+            "the",
+            "before",
+            "project",
+            "their",
+            "finish",
+            "team",
+            "the",
+            "helped",
+            "cooperation",
+            "Good"
+          ],
+          "answer": "Good cooperation helped the team finish their project before the deadline."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "form.",
+            "entry",
             "the",
             "on",
-            "Litter"
+            "perfectly",
+            "fitted",
+            "handwriting",
+            "Amal's"
           ],
-          "answer": "Litter on the school field is an issue our class wants to solve."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "minute.",
-            "a",
-            "than",
-            "less",
-            "in",
-            "model",
-            "paper",
-            "a",
-            "destroy",
-            "can",
-            "rain",
-            "Heavy"
-          ],
-          "answer": "Heavy rain can destroy a paper model in less than a minute."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "it.",
-            "saw",
-            "we",
-            "before",
-            "long",
-            "us",
-            "reached",
-            "parade",
-            "the",
-            "of",
-            "drums",
-            "booming",
-            "The"
-          ],
-          "answer": "The booming drums of the parade reached us long before we saw it."
+          "answer": "Amal's handwriting fitted perfectly on the entry form."
         }
       ]
     },
@@ -311,34 +300,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'avoid' mean in this unit?",
+          "prompt": "What does 'exploration' mean in this unit?",
           "choices": [
-            "To stay away from something or not do something",
-            "The ability to take care of yourself and make your own choices",
-            "A large area of land that is controlled by one ruler or government"
+            "Exploration is the act of travelling to and studying new or unknown places.",
+            "To happen, especially without being planned.",
+            "Light or sound bouncing back off a surface."
           ],
-          "answer": "To stay away from something or not do something",
-          "explanation": "avoid: To stay away from something or not do something"
+          "answer": "Exploration is the act of travelling to and studying new or unknown places.",
+          "explanation": "exploration: Exploration is the act of travelling to and studying new or unknown places."
         },
         {
-          "prompt": "What does 'approval' mean in this unit?",
+          "prompt": "What does 'energy' mean in this unit?",
           "choices": [
-            "The ability to take care of yourself and make your own choices",
-            "A large area of land that is controlled by one ruler or government",
-            "When someone thinks something is good or okay"
+            "To happen, especially without being planned.",
+            "Light or sound bouncing back off a surface.",
+            "Energy is the power that makes things move, work or produce light and heat."
           ],
-          "answer": "When someone thinks something is good or okay",
-          "explanation": "approval: When someone thinks something is good or okay"
+          "answer": "Energy is the power that makes things move, work or produce light and heat.",
+          "explanation": "energy: Energy is the power that makes things move, work or produce light and heat."
         },
         {
-          "prompt": "What does 'empire' mean in this unit?",
+          "prompt": "What does 'reflection' mean in this unit?",
           "choices": [
-            "A very bright light that is hard to see in",
-            "A large area of land that is controlled by one ruler or government",
-            "The ability to take care of yourself and make your own choices"
+            "An animal that is hunted and eaten by another.",
+            "Light or sound bouncing back off a surface.",
+            "To happen, especially without being planned."
           ],
-          "answer": "A large area of land that is controlled by one ruler or government",
-          "explanation": "empire: A large area of land that is controlled by one ruler or government"
+          "answer": "Light or sound bouncing back off a surface.",
+          "explanation": "reflection: Light or sound bouncing back off a surface."
         }
       ]
     },
@@ -351,34 +340,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'drowsy'?",
+          "prompt": "What type of word is 'tablets'?",
           "choices": [
-            "Adjective",
             "Noun",
-            "Verb"
+            "Verb",
+            "Adjective"
           ],
-          "answer": "Adjective",
-          "explanation": "Drowsy is used as an adjective in this dictionary sense."
+          "answer": "Noun",
+          "explanation": "Tablets is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'object'?",
+          "prompt": "What type of word is 'boycott'?",
           "choices": [
             "Verb",
             "Adjective",
             "Noun"
           ],
           "answer": "Noun",
-          "explanation": "Object is used as a noun in this dictionary sense."
+          "explanation": "Boycott is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'cooperate'?",
+          "prompt": "What type of word is 'angles'?",
           "choices": [
             "Adjective",
-            "Verb",
-            "Noun"
+            "Noun",
+            "Verb"
           ],
-          "answer": "Verb",
-          "explanation": "Cooperate is used as a verb in this dictionary sense."
+          "answer": "Noun",
+          "explanation": "Angles is used as a noun in this dictionary sense."
         }
       ]
     },
@@ -394,16 +383,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "empire",
-              "A large area of land that is controlled by one ruler or government"
+              "convenience",
+              "The quality of being easy or useful to do or use."
             ],
             [
-              "glare",
-              "A very bright light that is hard to see in"
+              "frequency",
+              "How often something happens in a given time."
             ],
             [
-              "boycott",
-              "When people decide not to buy or use something to show they disagree"
+              "mapped",
+              "Mapped means recorded or drew the exact position of something, often to make a chart or plan."
             ]
           ]
         },
@@ -411,16 +400,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "avoid",
-              "To stay away from something or not do something"
+              "planet",
+              "A planet is a large, round object in space that travels around a star, such as the Sun."
             ],
             [
-              "towering",
-              "Very tall or high"
+              "engineer",
+              "A person whose job is to design, build or fix machines, buildings or systems."
             ],
             [
-              "burrow",
-              "A hole or tunnel that an animal makes in the ground to live in"
+              "typing",
+              "Writing something by pressing the keys on a keyboard or tablet."
             ]
           ]
         },
@@ -428,16 +417,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "approval",
-              "When someone thinks something is good or okay"
+              "giggled",
+              "Giggled means laughed in a light, quiet way, often at something silly."
             ],
             [
-              "consume",
-              "To eat or drink something"
+              "less",
+              "Less means a smaller amount of something."
             ],
             [
-              "ideal",
-              "The best or most perfect thing or situation"
+              "expose",
+              "To show something that is usually hidden or to make something known"
             ]
           ]
         }

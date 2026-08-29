@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: Belonging to the small area where you live, such as your own town.",
+          "prompt": "Which word means: The number 40, which is four groups of ten ones.",
           "choices": [
-            "local",
-            "rural",
-            "colonial"
+            "forty",
+            "inequality",
+            "obtuse"
           ],
-          "answer": "local",
-          "explanation": "local: Belonging to the small area where you live, such as your own town."
+          "answer": "forty",
+          "explanation": "forty: The number 40, which is four groups of ten ones."
         },
         {
-          "prompt": "Which word means: The moment an army enters a place and takes control by force.",
+          "prompt": "Which word means: Shone with small, quick flashes of light.",
           "choices": [
-            "local",
-            "rural",
-            "invasion"
+            "forty",
+            "inequality",
+            "glinted"
           ],
-          "answer": "invasion",
-          "explanation": "invasion: The moment an army enters a place and takes control by force."
+          "answer": "glinted",
+          "explanation": "glinted: Shone with small, quick flashes of light."
         },
         {
-          "prompt": "Which word means: An amount that is left over because it is more than you need.",
+          "prompt": "Which word means: Fixed something firmly in place using small pointed pieces of metal.",
           "choices": [
-            "rural",
-            "surplus",
-            "local"
+            "inequality",
+            "nailed",
+            "forty"
           ],
-          "answer": "surplus",
-          "explanation": "surplus: An amount that is left over because it is more than you need."
+          "answer": "nailed",
+          "explanation": "nailed: Fixed something firmly in place using small pointed pieces of metal."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Belonging to a city or a busy town rather than the countryside.",
-          "answer": "urban"
+          "clue": "Enough for what is needed.",
+          "answer": "sufficient"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "To defeat somebody in a fight, or to take control of a place.",
-          "answer": "conquer"
+          "clue": "Stacked or heaped up in a large amount.",
+          "answer": "piled"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Not sensible or useful, because it would be too hard to do.",
-          "answer": "impractical"
+          "clue": "Fixed something firmly in place using small pointed pieces of metal.",
+          "answer": "nailed"
         }
       ]
     },
@@ -83,50 +83,50 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "afternoon.",
-            "every",
-            "play",
-            "we",
-            "where",
-            "is",
-            "park",
-            "local",
-            "The"
+            "market.",
+            "the",
+            "beside",
+            "roof",
+            "the",
+            "on",
+            "landed",
+            "birds",
+            "Forty"
           ],
-          "answer": "The local park is where we play every afternoon."
+          "answer": "Forty birds landed on the roof beside the market."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "city.",
-            "coastal",
+            "shelf.",
             "the",
+            "on",
+            "apricots",
+            "dried",
             "of",
-            "invasion",
-            "the",
-            "described",
-            "book",
-            "history",
-            "The"
-          ],
-          "answer": "The history book described the invasion of the coastal city."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "materials.",
-            "of",
-            "surplus",
+            "jar",
             "a",
-            "had",
-            "we",
-            "project,",
-            "our",
-            "finished",
-            "we",
-            "After"
+            "kept",
+            "Grandma"
           ],
-          "answer": "After we finished our project, we had a surplus of materials."
+          "answer": "Grandma kept a jar of dried apricots on the shelf."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "loved.",
+            "Sami",
+            "that",
+            "drink",
+            "pink",
+            "sweet",
+            "a",
+            "made",
+            "petals",
+            "hibiscus",
+            "The"
+          ],
+          "answer": "The hibiscus petals made a sweet pink drink that Sami loved."
         }
       ]
     },
@@ -231,7 +231,7 @@
         },
         {
           "prompt": "Speaking 5: Vocabulary Expert Interview",
-          "target": "After we finished our project, we had a surplus of materials."
+          "target": "The hibiscus petals made a sweet pink drink that Sami loved."
         }
       ]
     },
@@ -246,57 +246,53 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "times.",
-            "colonial",
-            "during",
-            "over",
-            "painted",
-            "were",
-            "stories",
-            "local",
-            "many",
-            "that",
-            "learned",
-            "Amal"
-          ],
-          "answer": "Amal learned that many local stories were painted over during colonial times."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "visit.",
-            "peaceful",
-            "a",
-            "as",
-            "same",
+            "city.",
+            "coastal",
             "the",
-            "not",
-            "is",
+            "of",
             "invasion",
-            "an",
-            "that",
-            "explained",
-            "Daniel"
+            "the",
+            "described",
+            "book",
+            "history",
+            "The"
           ],
-          "answer": "Daniel explained that an invasion is not the same as a peaceful visit."
+          "answer": "The history book described the invasion of the coastal city."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "stall.",
-            "every",
-            "filled",
-            "suddenly",
-            "fish",
-            "of",
-            "surplus",
-            "a",
-            "days,",
-            "empty",
-            "nine",
-            "After"
+            "all.",
+            "at",
+            "care",
+            "not",
+            "did",
+            "I",
+            "but",
+            "hoarse,",
+            "was",
+            "throat",
+            "my",
+            "midday",
+            "By"
           ],
-          "answer": "After nine empty days, a surplus of fish suddenly filled every stall."
+          "answer": "By midday my throat was hoarse, but I did not care at all."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "built.",
+            "was",
+            "wall",
+            "the",
+            "before",
+            "town",
+            "the",
+            "described",
+            "entries",
+            "The"
+          ],
+          "answer": "The entries described the town before the wall was built."
         }
       ]
     },
@@ -309,34 +305,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'cultural' mean in this unit?",
+          "prompt": "What does 'sticky' mean in this unit?",
           "choices": [
-            "Connected with the customs, arts and beliefs shared by a group of people.",
-            "Belonging to the small area where you live, such as your own town.",
-            "Belonging to the countryside, where there are farms, fields and few buildings."
+            "Covered with a substance that makes things stick to it.",
+            "The number 40, which is four groups of ten ones.",
+            "A statement that two amounts are not equal."
           ],
-          "answer": "Connected with the customs, arts and beliefs shared by a group of people.",
-          "explanation": "cultural: Connected with the customs, arts and beliefs shared by a group of people."
+          "answer": "Covered with a substance that makes things stick to it.",
+          "explanation": "sticky: Covered with a substance that makes things stick to it."
         },
         {
-          "prompt": "What does 'industrial' mean in this unit?",
+          "prompt": "What does 'appear' mean in this unit?",
           "choices": [
-            "Belonging to the small area where you live, such as your own town.",
-            "Belonging to the countryside, where there are farms, fields and few buildings.",
-            "Connected with factories and the making of goods in large amounts."
+            "The number 40, which is four groups of ten ones.",
+            "A statement that two amounts are not equal.",
+            "To become visible, or to come into view where it could not be seen before."
           ],
-          "answer": "Connected with factories and the making of goods in large amounts.",
-          "explanation": "industrial: Connected with factories and the making of goods in large amounts."
+          "answer": "To become visible, or to come into view where it could not be seen before.",
+          "explanation": "appear: To become visible, or to come into view where it could not be seen before."
         },
         {
-          "prompt": "What does 'rural' mean in this unit?",
+          "prompt": "What does 'inequality' mean in this unit?",
           "choices": [
-            "Belonging to a time when one country ruled and controlled another country.",
-            "Belonging to the countryside, where there are farms, fields and few buildings.",
-            "Belonging to the small area where you live, such as your own town."
+            "An angle larger than a right angle but less than a straight one.",
+            "A statement that two amounts are not equal.",
+            "The number 40, which is four groups of ten ones."
           ],
-          "answer": "Belonging to the countryside, where there are farms, fields and few buildings.",
-          "explanation": "rural: Belonging to the countryside, where there are farms, fields and few buildings."
+          "answer": "A statement that two amounts are not equal.",
+          "explanation": "inequality: A statement that two amounts are not equal."
         }
       ]
     },
@@ -349,34 +345,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
+          "prompt": "What type of word is 'skipped'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Skipped is used as a verb in this dictionary sense."
+        },
+        {
           "prompt": "What type of word is 'contact'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Noun",
-          "explanation": "Contact is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'plaintive'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Adjective",
-          "explanation": "Plaintive is used as an adjective in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'federal'?",
           "choices": [
             "Verb",
             "Adjective",
             "Noun"
           ],
-          "answer": "Adjective",
-          "explanation": "Federal is used as an adjective in this dictionary sense."
+          "answer": "Noun",
+          "explanation": "Contact is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'sunrise'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Sunrise is used as a noun in this dictionary sense."
         }
       ]
     },
@@ -392,16 +388,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "rural",
-              "Belonging to the countryside, where there are farms, fields and few buildings."
+              "thorough",
+              "Complete and careful, leaving nothing out."
             ],
             [
-              "colonial",
-              "Belonging to a time when one country ruled and controlled another country."
+              "prime",
+              "A number divisible only by itself and one."
             ],
             [
-              "political",
-              "Connected with government and the ways people decide on rules and laws."
+              "stall",
+              "A small stand or table where a trader sells goods, often at a market."
             ]
           ]
         },
@@ -409,16 +405,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "cultural",
-              "Connected with the customs, arts and beliefs shared by a group of people."
+              "raced",
+              "Moved or spread very quickly."
             ],
             [
-              "symbol",
-              "A picture, sign or object that stands for a bigger idea."
+              "smell",
+              "To notice something using your nose, or the scent something gives off."
             ],
             [
-              "journal",
-              "A book where you write your own thoughts, notes and daily events."
+              "sweet",
+              "Tasting like sugar or honey, rather than sour, salty or bitter."
             ]
           ]
         },
@@ -426,16 +422,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "industrial",
-              "Connected with factories and the making of goods in large amounts."
+              "tunic",
+              "A simple, loose piece of clothing that hangs down from the shoulders to about the knees."
             ],
             [
-              "flee",
-              "To run away quickly from danger or trouble."
+              "dancers",
+              "People who move their bodies to music, often as a performance."
             ],
             [
-              "thriving",
-              "Growing strongly and doing very well."
+              "festival",
+              "A special public event with music, food and activities that people share."
             ]
           ]
         }

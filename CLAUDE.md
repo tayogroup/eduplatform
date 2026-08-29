@@ -1007,14 +1007,21 @@ unchanged by how many groups happen to render.
 
 **A tile's info chips are tinted by CATEGORY, and the tints are not the
 semantic colours** (owner, 2026-08-30). Grey is the cycle count ("nothing this
-cycle", "day not counted yet"), cyan the position ("N done · in X"), purple
-Wehel minutes, teal the learning time — so the same fact sits under the same
-colour on every tile and a teacher's eye can find it without reading. The
-semantic colours keep their meanings untouched and outrank the tints on the
-states that earn them: ok green (moved this cycle / in live class / target
-met), warn amber, bad red, hand blue. A new chip should join a category or
-argue for a new one — a chip left on the bare white default now reads as
-unstyled rather than neutral.
+cycle", "day not counted yet"), purple Wehel minutes, teal the learning time
+— so the same fact sits under the same colour on every tile and a teacher's
+eye can find it without reading. The semantic colours keep their meanings
+untouched and outrank the tints on the states that earn them: ok green (moved
+this cycle / in live class / target met), warn amber, bad red, hand blue. A
+new chip should join a category or argue for a new one — a chip left on the
+bare white default now reads as unstyled rather than neutral.
+
+**The learner's position and done-count are NOT chips** (owner, later the
+same day — a cyan position chip shipped that morning and moved within hours).
+They ride the tile's place line — "Mathematics · Stage 1 · Unit 2 · in
+Visual Models · 0 done", position first — because they are context, like the
+unit, not states: the chip row keeps the things that change what a teacher
+does next. A tile with no app record still says "No app activity recorded"
+rather than a bare "0 done".
 
 ### The classroom chat: built INSIDE "no student-to-student messaging"
 

@@ -1005,6 +1005,17 @@ phase" because that is the school DAY the board was built for; a board SCREEN
 now shows one group at a time, and the sort, the flags and the chat are
 unchanged by how many groups happen to render.
 
+**A tile's info chips are tinted by CATEGORY, and the tints are not the
+semantic colours** (owner, 2026-08-30). Grey is the cycle count ("nothing this
+cycle", "day not counted yet"), cyan the position ("N done · in X"), purple
+Wehel minutes, teal the learning time — so the same fact sits under the same
+colour on every tile and a teacher's eye can find it without reading. The
+semantic colours keep their meanings untouched and outrank the tints on the
+states that earn them: ok green (moved this cycle / in live class / target
+met), warn amber, bad red, hand blue. A new chip should join a category or
+argue for a new one — a chip left on the bare white default now reads as
+unstyled rather than neutral.
+
 ### The classroom chat: built INSIDE "no student-to-student messaging"
 
 ```bash

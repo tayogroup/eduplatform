@@ -937,12 +937,31 @@ production with a real room and a real learner in it.
   window the join door enforces — and a running room BEATS a merely-scheduled
   one for the group's slot ("earliest wins" alone would hide the live room
   behind an upcoming slot).
-- **A session leaves `live` only when a cron sweeps rows past their
-  `scheduled_end`** (`live_session_reminders.php` → `awaiting_review`). So a
-  future-dated session left live stays "open" — to the board AND the join
-  door, same rule — until its scheduled end passes: days for an off-schedule
-  test, minutes for a real class. Platform semantics, deliberately mirrored
-  rather than second-guessed.
+- **A session leaves `live` two ways since 2026-08-30, and the second exists
+  because the first was not enough**: the old sweep on `scheduled_end`
+  passing, and `retire_ended_rooms()` in the same task
+  (`live_session_reminders`, every 15 minutes), which asks BBB
+  `isMeetingRunning` for every `live` row and retires ended rooms to
+  `awaiting_review` (audit `session_room_ended`). Before it, a future-dated
+  session a teacher went live on early stayed "open" — to the board AND
+  the join door — for DAYS after everyone left. Three rules keep the sweep
+  honest: it retires only on BBB's DEFINITE "not running" (a failed call
+  returns null from `local_prequran_bbb_is_meeting_running()` and null is
+  no evidence, never false); a 5-minute grace on `bbb_create_time`, because
+  BBB reports a meeting as not running until its FIRST joiner, so a teacher
+  mid-redirect must not have the room retired under them; and it is
+  self-healing, because the join door admits a teacher to `awaiting_review`
+  and every join re-creates the room and re-sets `live`. Cadence is the
+  task's schedule, editable in Site admin — no code change. Two traps from
+  shipping it: `require_once` from inside a method runs the included file's
+  TOP-LEVEL code in function scope, and `locallib.php` opens with
+  `require_once($CFG->libdir . '/filelib.php')` — with `$CFG` unset there
+  the path collapsed to `/filelib.php` and the whole task died (`global
+  $CFG;` in the method is the fix). And BBB itself only auto-ends EMPTY
+  rooms (`meetingExpireIfNoUserJoinedInMinutes` default 5,
+  `meetingExpireWhenLastUserLeftInMinutes` default 1) — it cannot end an
+  idle-but-occupied room (the inactivity timeout was removed in BBB 2.3),
+  so our 270-minute `duration` cap is the backstop there.
 - **"Pressed Go live" can create session A while the teacher joins session B.**
   The create fallback lands on the sessions page, which lists everything; the
   night this shipped the created session was never joined and the joined one

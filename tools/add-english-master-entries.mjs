@@ -275,6 +275,36 @@ const CLASS_BY_GRADE = {
       + "coordinating subordinating correlative lexical syntactic",
     // Everything else falls through to noun.
   },
+  // Grade 8, written by hand from the authored meanings, as Grades 6 and 7 were.
+  // This grade is the easiest of the four to place and the easiest to get wrong
+  // for one reason: about a quarter of its entries are hyphenated compounds, and
+  // a compound's part of speech is decided by its HEAD, not by its first word.
+  // `evidence-based`, `research-informed`, `citizenship-based` and `vector-based`
+  // are adjectives despite opening on nouns; `map-out` is a verb despite ending
+  // on a preposition; `narrative-arc`, `value-system` and `equation-set` are
+  // nouns despite opening on adjectives or nouns that could be either.
+  //
+  // The two-way words were settled by reading the line the card prints above the
+  // part of speech: `attribute`, `gauge`, `scaffold` and `map-out` are VERBS
+  // here; `matrix`, `locus`, `canon`, `persona` and `conceit` are nouns; and
+  // `derivative` is an adjective in this grade though it names a mathematical
+  // noun elsewhere, because unit 7 teaches the copied-from-an-earlier-work sense.
+  8: {
+    verb: "arbitrate corroborate discriminate triangulate counterbalance decode encode gauge map-out "
+      + "problematise recalibrate re-evaluate reformulate scaffold unpack ascertain attribute concede debunk "
+      + "exemplify mediate moderate operationalise postulate speculate standardise tabulate transcribe "
+      + "interrelate systematise",
+    adjective: "nuanced perceptive systematic definitive derivative diagnostic differentiated equitable "
+      + "ideological inconsistent interdisciplinary measurable multifaceted normative observable paradoxical "
+      + "qualitative quantitative reciprocal rigorous strategic transferable unprecedented conceptual "
+      + "comparative interpretive evaluative methodical evidence-based multidimensional research-informed "
+      + "operational civic citizenship-based regulation-based electorate-based fiscal monetary trade-based "
+      + "socioeconomic transnational atomic compound-based ecosystem-level genetic molecular neural organic "
+      + "radioactive trophic algorithmic firewall-based open-data geometric nonlinear scalar vector-based "
+      + "cubic denominator-based inequality-based percentile-based symbolism-based civic-duty embedded "
+      + "non-finite non-restrictive restrictive perfective progressive lexical",
+    // Everything else falls through to noun.
+  },
 };
 const CLASS = CLASS_BY_GRADE[GRADE];
 if (!CLASS) {

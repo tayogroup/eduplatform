@@ -4,7 +4,8 @@
 // ProgressClient wire protocol exactly, so apps switch to remote sync with only
 // launch params (?pwsEndpoint=<this file>&pwsToken=<jwt>):
 //
-//   POST {endpoint}/progress/ingest      body = batch envelope (JSON)
+//   POST {endpoint}/progress/save        body = batch envelope (JSON)
+//   POST {endpoint}/progress/ingest      the same, kept for already-shipped apps
 //   GET  {endpoint}/progress/{course}    -> hydrate state document (JSON)
 //
 // Auth: HS256 launch token (progress_gatewaylib.php) from the Authorization
@@ -71,7 +72,25 @@ if ($tokenuser <= 0) {
     pqpg_fail(401, 'Malformed launch token.');
 }
 
-if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && $route === '/progress/ingest') {
+// BOTH SPELLINGS, and the reason is a browser extension rather than anything
+// about HTTP. "/ingest" is what Sentry, PostHog and Segment name their
+// telemetry endpoints, so the common blocklists match it -- and Brave Shields
+// (and uBlock Origin on Chrome) refuse the request before it leaves the
+// machine. It fails as ERR_BLOCKED_BY_CLIENT: no request, no log line, no
+// status code, nothing the server can see or report. Measured on production
+// 2026-08-29, where every server-side check said the stored data was correct
+// because the writes never arrived.
+//
+// The consequence is not cosmetic. A learner on Brave keeps working while
+// nothing reports, and the live group board sorts on time since the app last
+// reported -- so it shows them GONE, which is the one signal it exists to make
+// a teacher act on.
+//
+// /progress/save is the path the app uses now. /progress/ingest stays accepted
+// for ever: every already-launched tab and every cached bundle still posts to
+// it, and those learners' work must keep landing.
+$pqpg_ingestroutes = ['/progress/save', '/progress/ingest'];
+if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && in_array($route, $pqpg_ingestroutes, true)) {
     if (!is_array($body) || !isset($body['events']) || !is_array($body['events'])) {
         pqpg_fail(400, 'Malformed batch envelope.');
     }

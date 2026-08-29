@@ -139,7 +139,12 @@ function remoteBackend({ course, student, endpoint, token }) {
     kind: "remote",
     async persist(events, { beacon = false } = {}) {
       const envelope = { contract: CONTRACT, student, course, session: sessionId(), sentAt: nowIso(), events: wire(events) };
-      const url = `${endpoint}/progress/ingest`;
+      // NOT "/ingest": the common ad-block lists match that path because it is
+      // what telemetry SDKs use, so Brave Shields and uBlock Origin refuse the
+      // request before it is sent -- ERR_BLOCKED_BY_CLIENT, invisible to the
+      // server and to every check that reads it. The gateway accepts both, so
+      // this can change without stranding a single already-open tab.
+      const url = `${endpoint}/progress/save`;
       if (beacon && navigator.sendBeacon) {
         // Page is unloading — fire-and-forget. The token rides IN the body
         // (sendBeacon cannot set headers) and the content type stays

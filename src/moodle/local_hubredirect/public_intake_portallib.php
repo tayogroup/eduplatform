@@ -365,6 +365,34 @@ function pqpirl_contact_submission_count(array $contacts, int $since): int {
     return is_array($rows) ? count($rows) : 0;
 }
 
+/**
+ * A grade key, or empty if it is not one.
+ *
+ * The body is deliberately identical to pqpir_grade_key() in public_intake.php.
+ * That page and public_intake_data.php run in parallel over the same form and
+ * must give a family the same result whichever front end they used, so the two
+ * resolutions have to agree; identical bodies are what makes that checkable.
+ */
+function pqpirl_grade_key(string $value): string {
+    $options = (require(__DIR__ . '/student_intake_config.php'))['primary_grade_levels'] ?? [];
+    $value = trim($value);
+    if ($value === '' || !$options) {
+        return '';
+    }
+    if (array_key_exists($value, $options)) {
+        return $value;
+    }
+    // "Grade 6" / "grade 6" -> grade_6, and the same for the labels themselves.
+    $needle = strtolower(preg_replace('/[^a-z0-9]+/i', '_', $value));
+    foreach ($options as $key => $label) {
+        if ($needle === strtolower((string)$key)
+                || $needle === strtolower(preg_replace('/[^a-z0-9]+/i', '_', (string)$label))) {
+            return (string)$key;
+        }
+    }
+    return '';
+}
+
 function pqpirl_value(array $form, string $name): string {
     if (!isset($form[$name])) {
         return '';

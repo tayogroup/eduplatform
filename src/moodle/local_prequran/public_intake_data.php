@@ -1007,7 +1007,18 @@ foreach ($siblinginput as $sibling) {
         'student_email' => '',
         'age_years' => (int)($sibling['age_years'] ?? 0),
         'gender' => pqpirl_limit_text(trim((string)($sibling['gender'] ?? '')), 20),
-        'current_grade' => pqpirl_limit_text(trim((string)($sibling['current_grade'] ?? '')), 80),
+        // Constrained to the SAME vocabulary the main applicant's grade is
+        // validated against above, and for the same reason public_intake.php
+        // constrains its own sibling rows: pqlgrp_match_score() compares
+        // student_profile.current_grade for EQUALITY against class_group.grade.
+        // A sibling row never went through that validation on either front end,
+        // so anything up to 80 characters was accepted here too.
+        //
+        // Dropped rather than rejected, matching the other front end exactly. A
+        // sibling row is one child inside a family's single submission, and
+        // failing the whole submission over child three's grade would lose the
+        // other children's answers with it.
+        'current_grade' => pqpirl_grade_key(trim((string)($sibling['current_grade'] ?? ''))),
         'special_needs' => pqpirl_limit_text(trim((string)($sibling['special_needs'] ?? '')), 20),
         'medical_safety_notes' => pqpirl_limit_text(trim((string)($sibling['medical_safety_notes'] ?? '')), 1000),
     ];

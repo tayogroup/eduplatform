@@ -716,7 +716,10 @@ echo $OUTPUT->header();
         if (m.id <= lastId) { return; }
         lastId = Math.max(lastId, m.id);
         var cls = "pqlgb-chat-msg" + (m.mine ? " is-mine" : "") + (m.toteacheronly ? " is-private" : "");
-        var who = m.mine ? "" : "<b>" + esc2(m.name) + (m.teacher ? " (teacher)" : "") + "</b>";
+        // No "(teacher)" suffix: the exchange now sends staff AS "Teacher"
+        // (the learner-facing rule), so the suffix would render "Teacher
+        // (teacher)". Students arrive as first names.
+        var who = m.mine ? "" : "<b>" + esc2(m.name) + "</b>";
         var priv = m.toteacheronly ? "<small>Only you and " + (m.mine ? "your teacher" : "this learner") + " can see this</small>" : "";
         var el = document.createElement("div");
         el.className = cls;

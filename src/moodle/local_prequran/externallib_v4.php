@@ -8250,10 +8250,19 @@ $validate = [
             $senderids[(int)$row->senderid] = true;
         }
         $names = [];
+        $studentsenders = [];
         if ($senderids) {
             [$insql, $inparams] = $DB->get_in_or_equal(array_keys($senderids));
             foreach ($DB->get_records_select('user', "id $insql", $inparams, '', 'id, firstname, lastname') as $u) {
                 $names[(int)$u->id] = trim((string)$u->firstname) !== '' ? (string)$u->firstname : ('User ' . (int)$u->id);
+            }
+            // Who in this batch is a CHILD, by the participant row the roster
+            // seeded -- the same authority the visibility stamp uses.
+            [$insql2, $inparams2] = $DB->get_in_or_equal(array_keys($senderids), SQL_PARAMS_NAMED, 'snd');
+            foreach ($DB->get_records_select('local_prequran_comm_participant',
+                    "threadid = :t AND role = 'student' AND userid $insql2",
+                    array_merge(['t' => (int)$thread->id], $inparams2), '', 'id, userid') as $prow) {
+                $studentsenders[(int)$prow->userid] = true;
             }
         }
 
@@ -8263,11 +8272,22 @@ $validate = [
             if (!self::support_message_visible_to_user($row, $thread, $userid)) {
                 continue;
             }
+            $senderstudent = !empty($studentsenders[(int)$row->senderid]);
             $messages[] = [
                 'id' => (int)$row->id,
                 'senderid' => (int)$row->senderid,
-                'name' => $names[(int)$row->senderid] ?? ('User ' . (int)$row->senderid),
-                'teacher' => (int)$row->senderid === $teacherid,
+                // A child sees "Teacher", whoever on staff is speaking. The
+                // first live test had the site admin covering the board, and
+                // the learner's panel captioned their message "System" -- the
+                // account's literal first name. A five-year-old does not need
+                // to distinguish an administrator from their teacher; they need
+                // to know an adult from the school is talking. Students keep
+                // their first names (first name only -- nine children share the
+                // room, and a full name on every line is roll-call furniture).
+                'name' => $senderstudent
+                    ? ($names[(int)$row->senderid] ?? ('User ' . (int)$row->senderid))
+                    : 'Teacher',
+                'teacher' => !$senderstudent,
                 'mine' => (int)$row->senderid === $userid,
                 // Whether the ROOM saw it, so a learner's own bubble can say
                 // "only your teacher sees this" instead of letting a child

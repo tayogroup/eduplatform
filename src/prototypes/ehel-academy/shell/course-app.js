@@ -575,7 +575,9 @@ export function createCourseApp(config) {
         el.style.cssText = "max-width:92%;padding:7px 10px;border-radius:10px;font-size:13px;line-height:1.4;"
           + (m.mine ? "align-self:flex-end;background:#cfe2ff;" : "background:#f1f3f5;");
         if (m.mine && m.toteacheronly) el.style.cssText += "background:#fff3cd;border:1px solid #ffe69c;";
-        const who = m.mine ? "" : `<b style="display:block;font-size:11px;opacity:.75">${escapeHtml(m.name)}${m.teacher ? " (teacher)" : ""}</b>`;
+        // No "(teacher)" suffix — the server sends staff as "Teacher" outright,
+        // so the suffix would double it. Students arrive as first names.
+        const who = m.mine ? "" : `<b style="display:block;font-size:11px;opacity:.75">${escapeHtml(m.name)}</b>`;
         const note = m.mine && m.toteacheronly
           ? '<small style="display:block;font-size:10px;color:#664d03;margin-top:3px">Only your teacher can see this</small>' : "";
         el.innerHTML = who + escapeHtml(m.body) + note;

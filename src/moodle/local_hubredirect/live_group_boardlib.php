@@ -659,6 +659,59 @@ function pqlgb_state_for(int $quietseconds, bool $hasprogress): string {
  * problems the teacher cannot tell apart from the other room — stuck, gone, and
  * disconnected.
  */
+/**
+ * groupid => the session "Go live" should open, or null.
+ *
+ * The administrator schedules the classes (recurring, via the wizard, which
+ * stamps groupid on every session it creates) and the teacher's job is to
+ * START the one that is due -- so this prefers the session whose window covers
+ * now, else the next one still to come TODAY. Tomorrow's class is not offered:
+ * a Go live button that opens something twenty hours early reads as the wrong
+ * class, and the create-now fallback covers the genuinely unscheduled day.
+ *
+ * Not filtered by teacherid: the group's class is the group's class, and the
+ * join action enforces who may enter far more carefully than this lookup
+ * could. Dead statuses are excluded so a cancelled class does not eat the slot
+ * of the replacement scheduled beside it.
+ */
+function pqlgb_group_next_session(array $groupids): array {
+    global $DB;
+    $out = [];
+    if (!$groupids || !pqlgb_table_exists('local_prequran_live_session')
+            || !pqlgb_table_has_field('local_prequran_live_session', 'groupid')) {
+        return $out;
+    }
+    $now = time();
+    $endofday = $now + DAYSECS;
+    [$insql, $params] = $DB->get_in_or_equal($groupids, SQL_PARAMS_NAMED, 'lgs');
+    try {
+        $rows = $DB->get_records_select('local_prequran_live_session',
+            "groupid $insql
+             AND status NOT IN ('cancelled', 'failed', 'rejected', 'completed', 'closed')
+             AND scheduled_end > :now AND scheduled_start < :eod",
+            array_merge($params, ['now' => $now, 'eod' => $endofday]),
+            'scheduled_start ASC', 'id, groupid, title, scheduled_start, scheduled_end, status, teacherid');
+    } catch (Throwable $e) {
+        return $out;
+    }
+    foreach ($rows as $row) {
+        $gid = (int)$row->groupid;
+        if (isset($out[$gid])) {
+            continue; // earliest wins
+        }
+        $out[$gid] = [
+            'id' => (int)$row->id,
+            'title' => (string)$row->title,
+            'start' => (int)$row->scheduled_start,
+            'end' => (int)$row->scheduled_end,
+            // "Due" ten minutes early, matching the student join window's
+            // default -- the teacher should be in the room before the class.
+            'due' => (int)$row->scheduled_start <= ($now + 10 * MINSECS),
+        ];
+    }
+    return $out;
+}
+
 function pqlgb_build(int $teacherid, int $workspaceid, int $windowminutes, string $env = 'production'): array {
     $now = time();
     $windowminutes = pqlgb_clean_window($windowminutes);
@@ -682,6 +735,7 @@ function pqlgb_build(int $teacherid, int $workspaceid, int $windowminutes, strin
     $wehel = pqlgb_wehel_state($userids);
     $learning = pqlgb_learning_time($userids);
     $hands = pqlgb_hand_state($userids);
+    $nextsessions = pqlgb_group_next_session(array_map('intval', array_keys($groups)));
 
     $board = ['generated' => $now, 'window' => $windowminutes, 'env' => $env, 'groups' => [], 'totals' => [
         'learners' => 0, 'quiet' => 0, 'breaks' => 0, 'leftearly' => 0, 'hands' => 0,
@@ -782,6 +836,7 @@ function pqlgb_build(int $teacherid, int $workspaceid, int $windowminutes, strin
 
         $board['groups'][] = [
             'id' => $groupid,
+            'session' => $nextsessions[$groupid] ?? null,
             'title' => (string)($group->title ?? ('Group ' . $groupid)),
             'capacity' => (int)($group->max_students ?? 9),
             'level' => (string)($group->current_level ?? ''),

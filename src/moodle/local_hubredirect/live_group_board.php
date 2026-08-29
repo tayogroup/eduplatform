@@ -142,6 +142,8 @@ echo $OUTPUT->header();
 .pqlgb-group-head span{font-size:12px;font-weight:700;color:var(--op-ink-soft)}
 .pqlgb-golive{margin-left:auto;border:1px solid #052c65;background:#0d6efd;color:#fff;border-radius:999px;padding:3px 12px;font:inherit;font-size:12px;font-weight:800;cursor:pointer}
 .pqlgb-golive:disabled{opacity:.6;cursor:default}
+a.pqlgb-golive{text-decoration:none;display:inline-block}
+.pqlgb-golive.is-upcoming{background:transparent;color:#052c65;border-color:#9ec5fe}
 .pqlgb-tiles{display:flex;flex-direction:column}
 
 .pqlgb-tile{display:grid;grid-template-columns:38px 1fr auto;gap:11px;padding:11px 14px;border-bottom:1px solid var(--op-line);border-left:3px solid transparent}
@@ -545,7 +547,7 @@ echo $OUTPUT->header();
 
       return '<section class="pqlgb-group">' +
         '<div class="pqlgb-group-head"><h3>' + esc(group.title) + "</h3>" +
-        '<button type="button" class="pqlgb-golive" data-golive="' + group.id + '" data-golivetitle="' + esc(group.title) + '">Go live</button>' +
+        goLiveControl(group) +
           "<span>" + tiles.length + " of " + (group.capacity || 9) +
           (group.level ? " &middot; " + esc(group.level) : "") + "</span></div>" +
         '<div class="pqlgb-tiles">' +
@@ -654,7 +656,26 @@ echo $OUTPUT->header();
   paintFreshness();
   setInterval(poll, POLL_MS);
 
-  // --- Go live: create-and-start a session for one group --------------------
+  // The administrator schedules the classes; the teacher STARTS them. So when
+  // a group has a session on today's calendar, Go live is a LINK into the
+  // existing join flow for exactly that session -- due now it says "Start
+  // class", still ahead it shows the time, and either way nothing new is
+  // created. Only a group with nothing scheduled today gets the create-now
+  // fallback below.
+  function goLiveControl(group) {
+    var sess = group.session;
+    if (sess && sess.id) {
+      var href = liveSessionsUrl + "&action=join&sessionid=" + sess.id + "&sesskey=" + encodeURIComponent(boardSesskey);
+      var when = new Date(sess.start * 1000);
+      var label = sess.due
+        ? "Start class"
+        : "Class at " + ("0" + when.getHours()).slice(-2) + ":" + ("0" + when.getMinutes()).slice(-2);
+      return '<a class="pqlgb-golive' + (sess.due ? "" : " is-upcoming") + '" target="_blank" rel="noopener" href="' + esc(href) + '" title="' + esc(sess.title) + '">' + esc(label) + "</a>";
+    }
+    return '<button type="button" class="pqlgb-golive" data-golive="' + group.id + '" data-golivetitle="' + esc(group.title) + '">Go live</button>';
+  }
+
+  // --- Go live fallback: create-and-start a session for one group -----------
   // No new endpoint and no duplicated scheduling logic: this drives the SAME
   // action=create the session wizard submits, which already takes a groupid
   // and seeds every active member as a participant, already checks teacher

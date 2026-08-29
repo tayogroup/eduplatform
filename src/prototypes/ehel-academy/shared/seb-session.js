@@ -358,7 +358,10 @@ function mountFocusMode(p, bar) {
 
   const report = (kind) => {
     const now = Date.now();
-    if (now - lastSent < 1500) return; // one blur can fire several events
+    // A 'return' always goes through: the throttle exists because one blur
+    // fires several events, but swallowing the return after a quick alt-tab
+    // would leave the board saying "away" about a learner who is back.
+    if (kind !== "return" && now - lastSent < 1500) return;
     lastSent = now;
     try {
       const body = JSON.stringify({ token, kind, count: breaks });
@@ -387,6 +390,11 @@ function mountFocusMode(p, bar) {
     if (document.visibilityState === "hidden") broke("hidden"); else report("return");
   });
   window.addEventListener("blur", () => { if (!movingInsideCourse()) broke("blur"); });
+  // The counterpart 'return' for a blur: clicking another window never hides
+  // the tab, so visibilitychange stays silent and only window focus says they
+  // came back. Without this the board's away state could not clear after a
+  // mere window switch.
+  window.addEventListener("focus", () => { if (!movingInsideCourse()) report("return"); });
   // --- fullscreen: the default in focus mode -------------------------------
   // A browser will not grant fullscreen without a user gesture, so it cannot be
   // entered on load. Entering on the learner's FIRST interaction — a tap they

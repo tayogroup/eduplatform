@@ -517,7 +517,15 @@ echo pqh_design_shell_html('pqlgb-shell', 'board', [
         esc(tile.checkpoint.section) + " " + tile.checkpoint.score + "%</span>");
     }
     if (tile.breaks > 0) {
-      flags.push('<span class="pqlgb-flag pqlgb-flag--warn">left page &times;' + tile.breaks + "</span>");
+      // Focus tracking, stated as the EVENT rather than a claim about now:
+      // "away Xm" is the time since their last reported departure with no
+      // return reported after it. Evidence, not prevention -- and only
+      // learners launched in focus mode report at all.
+      var brk = "left page &times;" + tile.breaks;
+      if (tile.awaysince > 0) {
+        brk += " &middot; away " + humanGap(Math.max(0, serverNow() - tile.awaysince)).filter(Boolean).join(" ").replace("&lt;1 min", "just now");
+      }
+      flags.push('<span class="pqlgb-flag pqlgb-flag--warn">' + brk + "</span>");
     }
     if (tile.leftearly > 0) {
       flags.push('<span class="pqlgb-flag pqlgb-flag--bad">left early</span>');

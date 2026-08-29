@@ -437,16 +437,32 @@ function pqlgb_focus_signals(array $userids, int $since): array {
     foreach ($rows as $row) {
         $userid = (int)$row->actorid;
         if (!isset($signals[$userid])) {
-            $signals[$userid] = ['breaks' => 0, 'leftearly' => 0, 'reason' => '', 'lastsignal' => 0];
+            $signals[$userid] = ['breaks' => 0, 'leftearly' => 0, 'reason' => '', 'lastsignal' => 0, 'awaysince' => 0];
         }
         if ((string)$row->action === 'course_left_early') {
             $signals[$userid]['leftearly']++;
+            $signals[$userid]['awaysince'] = (int)$row->timecreated;
             $details = json_decode((string)$row->details, true);
             if (is_array($details) && !empty($details['reason'])) {
                 $signals[$userid]['reason'] = (string)$details['reason'];
             }
         } else {
-            $signals[$userid]['breaks']++;
+            // One action, several kinds: the receiver stores blur / hidden /
+            // fullscreen_exit AND 'return' all as course_focus_break, kind in
+            // the details. A 'return' is the learner COMING BACK -- counting
+            // it as a break doubled every hide-and-return pair, and it is what
+            // clears the live away state. Rows scan timecreated ASC, so
+            // whatever the last row says is the learner's current state:
+            // awaysince > 0 means the last report was a departure with no
+            // return after it.
+            $details = json_decode((string)$row->details, true);
+            $kind = is_array($details) ? (string)($details['kind'] ?? '') : '';
+            if ($kind === 'return') {
+                $signals[$userid]['awaysince'] = 0;
+            } else {
+                $signals[$userid]['breaks']++;
+                $signals[$userid]['awaysince'] = (int)$row->timecreated;
+            }
         }
         $signals[$userid]['lastsignal'] = max($signals[$userid]['lastsignal'], (int)$row->timecreated);
     }
@@ -822,7 +838,7 @@ function pqlgb_build(int $teacherid, int $workspaceid, int $windowminutes, strin
         $tiles = [];
         foreach ($roster[$groupid] ?? [] as $userid) {
             $snap = $snapshot[$userid] ?? null;
-            $signal = $signals[$userid] ?? ['breaks' => 0, 'leftearly' => 0, 'reason' => '', 'lastsignal' => 0];
+            $signal = $signals[$userid] ?? ['breaks' => 0, 'leftearly' => 0, 'reason' => '', 'lastsignal' => 0, 'awaysince' => 0];
             $hand = $hands[$userid] ?? ['up' => false, 'since' => 0];
             $lastprogress = $snap ? (int)$snap['lastprogress'] : 0;
             $quiet = $lastprogress > 0 ? max(0, $now - $lastprogress) : 0;
@@ -845,6 +861,12 @@ function pqlgb_build(int $teacherid, int $workspaceid, int $windowminutes, strin
                 'unitscompleted' => $snap ? (int)$snap['unitscompleted'] : 0,
                 'checkpoint' => $snap ? $snap['checkpoint'] : null,
                 'breaks' => (int)$signal['breaks'],
+                // Live focus state: timestamp of the learner's last reported
+                // departure with no return reported after it, 0 when back on
+                // the page (or nothing reported in the window). Only learners
+                // whose launch preference is 'focus' report at all -- absence
+                // of this signal is absence of evidence, not presence.
+                'awaysince' => (int)$signal['awaysince'],
                 'leftearly' => (int)$signal['leftearly'],
                 'reason' => (string)$signal['reason'],
                 'wehelminutes' => (int)($wehel[$userid]['minutes'] ?? 0),

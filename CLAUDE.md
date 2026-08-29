@@ -910,10 +910,13 @@ the tile does carry a real attendance fact — the section below.)
 One lookup, `pqlgb_group_next_session()` in `live_group_boardlib.php`, feeds
 three surfaces: the teacher's Go live header, the learner's Join pill in the
 app (delivered with every chat poll through the learner door), and — since
-2026-08-29 evening — the live-class flags on every tile. While a group's room
-is RUNNING, each tile says 🟢 "in live class · joined HH:MM" or 🟡 "not in
-live class yet"; the header says "In session". Verified on production with a
-real room and a real learner in it.
+2026-08-29 evening — the live-class flag. While a group's room is
+RUNNING, a tile whose learner has JOINED it says 🟢 "in live class · joined
+HH:MM"; the header says "In session". ONLY the positive fact is stated: an
+amber "not in live class yet" shipped first and the owner removed it the next
+day — a learner without the flag may be working in the app on purpose, so the
+amber version accused people the data could not convict. Verified on
+production with a real room and a real learner in it.
 
 - **JOINED is the measured fact and the only claim made.** The join action
   writes `local_prequran_live_attendance` (`pql_mark_student_join`); BBB does

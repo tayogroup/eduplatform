@@ -576,12 +576,16 @@ export function createCourseApp(config) {
         // Inline styles for the same reason the hand button carries them:
         // course-ui.css is bundled into all six subjects' releases, so one
         // cosmetic rule there makes five other app tiers stale.
-        el.style.cssText = "max-width:92%;padding:7px 10px;border-radius:10px;font-size:13px;line-height:1.4;"
-          + (m.mine ? "align-self:flex-end;background:#cfe2ff;" : "background:#f1f3f5;");
+        el.style.cssText = "max-width:92%;padding:" + PAD + ";border-radius:" + RADIUS + "px;"
+          + "font-size:" + FS + "px;line-height:1.45;"
+          + (m.mine
+            ? "align-self:flex-end;background:#d7ecff;border-bottom-right-radius:6px;"
+            : "background:#f2f4f6;border-bottom-left-radius:6px;");
         // An announcement is the teacher's raised voice: full-width banner, so
         // "everyone stop and listen" cannot be mistaken for conversation.
         if (m.announcement) {
-          el.style.cssText = "max-width:100%;padding:9px 12px;border-radius:10px;font-size:13px;line-height:1.4;"
+          el.style.cssText = "max-width:100%;padding:" + (YOUNG ? "12px 15px" : "10px 13px") + ";"
+            + "border-radius:" + RADIUS + "px;font-size:" + FS + "px;line-height:1.45;"
             + "background:#052c65;color:#fff;font-weight:700;";
           el.innerHTML = '<span style="display:block;font-size:10px;letter-spacing:.06em;'
             + 'text-transform:uppercase;opacity:.85;margin-bottom:3px">\uD83D\uDCE2 Teacher Message!</span>'
@@ -589,7 +593,7 @@ export function createCourseApp(config) {
           msgsEl.appendChild(el);
           continue;
         }
-        if (m.mine && m.toteacheronly) el.style.cssText += "background:#fff3cd;border:1px solid #ffe69c;";
+        if (m.mine && m.toteacheronly) el.style.cssText += "background:#fff3cd;border:2px solid #ffe69c;";
         // No "(teacher)" suffix — the server sends staff as "Teacher" outright,
         // so the suffix would double it. Students arrive as first names.
         const who = m.mine ? "" : `<b style="display:block;font-size:11px;opacity:.75">${escapeHtml(m.name)}</b>`;
@@ -618,8 +622,9 @@ export function createCourseApp(config) {
     // images age out after 30 days while the message row stays.
     const appendShotBubble = (m) => {
       const el = document.createElement("div");
-      el.style.cssText = "max-width:92%;padding:7px 10px;border-radius:10px;font-size:12px;"
-        + (m.mine ? "align-self:flex-end;background:#fff3cd;border:1px solid #ffe69c;" : "background:#f1f3f5;");
+      el.style.cssText = "max-width:92%;padding:" + PAD + ";border-radius:" + RADIUS + "px;"
+        + "font-size:" + (FS - 1) + "px;"
+        + (m.mine ? "align-self:flex-end;background:#fff3cd;border:2px solid #ffe69c;" : "background:#f2f4f6;");
       el.innerHTML = (m.mine ? "" : `<b style="display:block;font-size:11px;opacity:.75">${escapeHtml(m.name)}</b>`)
         + '<span>📷 Screenshot</span>'
         + (m.mine ? '<small style="display:block;font-size:10px;color:#664d03;margin-top:3px">Only your teacher can see this</small>' : "");
@@ -716,21 +721,45 @@ export function createCourseApp(config) {
       }
     };
 
+    // CHILD-FRIENDLY SIZING, keyed on html.young-stage exactly as the
+    // Raise-hand button already is: Grades/Stages 1-4 get bigger type, fatter
+    // tap targets and rounder everything, because the audience is five and the
+    // failure mode of small controls is a child who gives up rather than one
+    // who complains. Upper stages keep a calmer version of the same skin.
+    // Inline styles throughout for the standing reason: one cosmetic rule in
+    // the shared stylesheet makes five other subjects' app tiers stale.
+    const YOUNG = document.documentElement.classList.contains("young-stage");
+    const FS = YOUNG ? 16 : 14;      // message text
+    const PAD = YOUNG ? "10px 14px" : "8px 11px";
+    const RADIUS = YOUNG ? 18 : 12;  // bubble corners
+
     const buildPanel = () => {
       panel = document.createElement("div");
       panel.id = "class-chat-panel";
-      panel.style.cssText = "position:fixed;right:12px;bottom:74px;z-index:55;width:min(320px,92vw);"
-        + "max-height:55vh;display:none;flex-direction:column;background:#fff;border:1px solid #cbd5e1;"
-        + "border-radius:12px;box-shadow:0 8px 30px rgba(0,0,0,.18);overflow:hidden";
-      panel.innerHTML = '<div style="padding:9px 12px;font-weight:800;font-size:13px;border-bottom:1px solid #e2e8f0">Class chat'
-        + '<div style="font-weight:400;font-size:11px;color:#64748b">Everyone sees your teacher. Only your teacher sees you.</div></div>'
-        + '<div id="class-chat-msgs" style="flex:1;overflow-y:auto;padding:10px 12px;display:flex;flex-direction:column;gap:8px;min-height:90px"></div>'
-        + '<form id="class-chat-form" style="display:flex;gap:8px;padding:9px 12px;border-top:1px solid #e2e8f0">'
+      panel.style.cssText = "position:fixed;right:12px;bottom:74px;z-index:55;"
+        + "width:min(" + (YOUNG ? 360 : 330) + "px,94vw);"
+        + "max-height:60vh;display:none;flex-direction:column;background:#fdfdfb;"
+        + "border:2px solid #bcd9f0;border-radius:" + (RADIUS + 4) + "px;"
+        + "box-shadow:0 10px 34px rgba(16,64,102,.22);overflow:hidden";
+      // The header is the sky gradient the app's own banners use, and it says
+      // the whole privacy rule in words a child reads: who can see what.
+      panel.innerHTML = '<div style="padding:' + (YOUNG ? 13 : 10) + 'px 15px;'
+        + 'background:linear-gradient(90deg,#cfe9ff,#e9f6ff);border-bottom:2px solid #bcd9f0">'
+        + '<div style="font-weight:900;font-size:' + (FS + 1) + 'px;color:#0a2c47">\uD83D\uDCAC Class chat</div>'
+        + '<div style="font-weight:600;font-size:' + (FS - 4) + 'px;color:#3d6a8c;margin-top:1px">'
+        + 'Everyone sees your teacher. Only your teacher sees you.</div></div>'
+        + '<div id="class-chat-msgs" style="flex:1;overflow-y:auto;padding:12px 14px;display:flex;'
+        + 'flex-direction:column;gap:9px;min-height:110px;background:#fdfdfb"></div>'
+        + '<form id="class-chat-form" style="display:flex;gap:8px;padding:11px 13px;'
+        + 'border-top:2px solid #e3eef7;background:#f4f9fd">'
         + '<button type="button" id="class-chat-shot" title="Send a picture of this page to your teacher" '
-        + 'style="border:1px solid #cbd5e1;background:#fff;border-radius:8px;padding:7px 10px;font-size:15px;cursor:pointer">\uD83D\uDCF7</button>'
+        + 'style="border:2px solid #bcd9f0;background:#fff;border-radius:999px;'
+        + 'padding:' + (YOUNG ? "9px 13px" : "7px 11px") + ';font-size:' + (FS + 2) + 'px;cursor:pointer;line-height:1">\uD83D\uDCF7</button>'
         + '<input id="class-chat-input" type="text" maxlength="1200" autocomplete="off" placeholder="Ask your teacher…" '
-        + 'style="flex:1;border:1px solid #cbd5e1;border-radius:8px;padding:7px 10px;font:inherit;font-size:13px;min-width:0">'
-        + '<button type="submit" style="border:1px solid #1a67a3;background:#1a67a3;color:#fff;border-radius:8px;padding:7px 12px;font:inherit;font-size:13px;cursor:pointer">Send</button></form>';
+        + 'style="flex:1;border:2px solid #bcd9f0;border-radius:999px;padding:' + (YOUNG ? "9px 15px" : "7px 13px") + ';'
+        + 'font:inherit;font-size:' + FS + 'px;min-width:0;background:#fff">'
+        + '<button type="submit" style="border:none;background:#1a67a3;color:#fff;border-radius:999px;'
+        + 'padding:' + (YOUNG ? "9px 18px" : "7px 15px") + ';font:inherit;font-size:' + FS + 'px;font-weight:800;cursor:pointer">Send</button></form>';
       document.body.appendChild(panel);
       msgsEl = panel.querySelector("#class-chat-msgs");
       const shotBtn = panel.querySelector("#class-chat-shot");
@@ -751,7 +780,9 @@ export function createCourseApp(config) {
       button.type = "button";
       button.id = "class-chat-toggle";
       button.className = "top-grade-picker top-class-chat";
-      button.style.cssText = "width:auto;padding:8px 12px;cursor:pointer";
+      // young-stage sizing comes from the class; the radius makes it read as a
+      // friendly pill next to Raise hand rather than another form control.
+      button.style.cssText = "width:auto;padding:8px 12px;cursor:pointer;border-radius:999px";
       paintButton();
       buildPanel();
       append(state.messages);

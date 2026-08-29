@@ -169,7 +169,12 @@ a.pqlgb-golive{text-decoration:none;display:inline-block}
 .pqlgb-tile--warn .pqlgb-avatar{background:#ffe69c;color:#664d03}
 .pqlgb-who{min-width:0}
 .pqlgb-who b{display:block;font-size:14px;font-weight:800;line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.pqlgb-where{margin-top:2px;font-size:12.5px;color:var(--op-ink-muted);line-height:1.4;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pqlgb-where{margin-top:3px;display:flex;flex-wrap:wrap;gap:4px;font-size:11.5px;color:var(--op-ink-muted);line-height:1.4}
+.pqlgb-pl{display:inline-flex;align-items:center;padding:1px 8px;border:1px solid;border-radius:999px;font-weight:700;white-space:nowrap}
+.pqlgb-pl--course{background:#edf3fc;border-color:#d5e3f8;color:#17498f}
+.pqlgb-pl--pos{background:#cff4fc;border-color:#9eeaf9;color:#055160}
+.pqlgb-pl--done{background:#f7d6e6;border-color:#efadce;color:#801f4f}
+.pqlgb-pl--wehel{background:#e2d9f3;border-color:#c5b3e6;color:#432874}
 .pqlgb-flags{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
 .pqlgb-flag{display:inline-flex;align-items:center;padding:2px 7px;border:1px solid var(--op-line-strong);border-radius:var(--op-pill);background:var(--op-surface);font-size:11px;font-weight:800;letter-spacing:.02em}
 .pqlgb-flag--bad{border-color:#f1aeb5;background:#f8d7da;color:#58151c}
@@ -450,27 +455,32 @@ echo pqh_design_shell_html('pqlgb-shell', 'board', [
 
   function tileHtml(tile) {
     var live = liveState(tile);
-    var where = [];
-    if (tile.subject) { where.push(esc(tile.subject)); }
-    if (tile.stage) { where.push(esc(tile.stage)); }
-    if (tile.unit) { where.push(esc(unitLabel(tile.unit))); }
-    // The learner's position and done-count ride the place line, position
-    // first (owner, 2026-08-30) -- they are context, like the unit, not a
-    // state. Three positions, three different claims (see the comment block
-    // below where the wording was settled): in <x> mid-activity, finished <x>
+    // The place line: every fact a tinted pill, position first (owner,
+    // 2026-08-30) -- context, like the unit, never a state; states stay on
+    // the chip row. Position wording keeps its three claims (see the comment
+    // block below where it was settled): in <x> mid-activity, finished <x>
     // done and about to move, last: <x> when no resume pointer exists. The
     // caption is the learner's own (resumelabel), never the route id. A tile
     // with no app record keeps saying so instead of showing a bare "0 done".
-    var wherebits = [];
+    var placeparts = [];
+    if (tile.subject) { placeparts.push([esc(tile.subject), "course"]); }
+    if (tile.stage) { placeparts.push([esc(tile.stage), "course"]); }
+    if (tile.unit) { placeparts.push([esc(unitLabel(tile.unit)), "course"]); }
     if (tile.resume) {
-      wherebits.push((tile.resumedone ? "finished " : "in ") + esc(tile.resumelabel || tile.resume));
+      placeparts.push([(tile.resumedone ? "finished " : "in ") + esc(tile.resumelabel || tile.resume), "pos"]);
     } else if (tile.lastsection) {
-      wherebits.push("last: " + esc(tile.lastsection));
+      placeparts.push(["last: " + esc(tile.lastsection), "pos"]);
     }
-    wherebits.push(tile.sectionsdone + " done");
-    if (tile.wehelminutes > 0 && !tile.wehellive) { wherebits.push("Wehel " + tile.wehelminutes + " min"); }
-    var place = where.length
-      ? where.concat(wherebits).join(" &middot; ")
+    if (placeparts.length) {
+      placeparts.push([tile.sectionsdone + " done", "done"]);
+      if (tile.wehelminutes > 0 && !tile.wehellive) {
+        placeparts.push(["Wehel " + tile.wehelminutes + " min", "wehel"]);
+      }
+    }
+    var place = placeparts.length
+      ? placeparts.map(function (part) {
+          return '<span class="pqlgb-pl pqlgb-pl--' + part[1] + '">' + part[0] + "</span>";
+        }).join("")
       : "No app activity recorded";
 
     var flags = [];

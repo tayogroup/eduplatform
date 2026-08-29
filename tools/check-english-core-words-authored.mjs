@@ -34,8 +34,8 @@ const DIR = path.join(ROOT, `grade-${GRADE}`, "data");
 // 78/15 would have rejected this grade's OWN existing sentences as too long. A
 // fallback below the top of the table is not a default, it is a wrong answer
 // waiting for the next grade; raised to the widest measured grade.
-const MAX_SENTENCE = { 1: 60, 2: 78, 3: 74, 4: 80, 5: 100, 6: 108, 7: 121 }[GRADE] ?? 121;
-const MAX_WORDS = { 1: 11, 2: 15, 3: 15, 4: 16, 5: 17, 6: 19, 7: 19 }[GRADE] ?? 19;
+const MAX_SENTENCE = { 1: 60, 2: 78, 3: 74, 4: 80, 5: 100, 6: 108, 7: 121, 8: 133 }[GRADE] ?? 133;
+const MAX_WORDS = { 1: 11, 2: 15, 3: 15, 4: 16, 5: 17, 6: 19, 7: 19, 8: 22 }[GRADE] ?? 22;
 
 // The cast the grade's own readings use. A sentence starring somebody else came
 // from another grade and puts a stranger on the word card.

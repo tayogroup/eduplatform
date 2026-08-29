@@ -177,7 +177,6 @@ a.pqlgb-golive{text-decoration:none;display:inline-block}
 .pqlgb-flag--ok{border-color:#a3cfbb;background:#d1e7dd;color:#0a3622}
 .pqlgb-flag--moved{border-color:#a3cfbb;background:#d1e7dd;color:#0a3622}
 .pqlgb-flag--cycle{border-color:#ced4da;background:#e9ecef;color:#41464b}
-.pqlgb-flag--wehel{border-color:#c5b3e6;background:#e2d9f3;color:#432874}
 .pqlgb-flag--time{border-color:#a6e9d5;background:#d2f4ea;color:#114e3d}
 /* A raised hand is the one thing on this board the learner said out loud, and
    its flag had been rendering with no rule of its own since the feature
@@ -469,6 +468,7 @@ echo pqh_design_shell_html('pqlgb-shell', 'board', [
       wherebits.push("last: " + esc(tile.lastsection));
     }
     wherebits.push(tile.sectionsdone + " done");
+    if (tile.wehelminutes > 0 && !tile.wehellive) { wherebits.push("Wehel " + tile.wehelminutes + " min"); }
     var place = where.length
       ? where.concat(wherebits).join(" &middot; ")
       : "No app activity recorded";
@@ -550,9 +550,8 @@ echo pqh_design_shell_html('pqlgb-shell', 'board', [
     if (tile.wehellive) {
       flags.push('<span class="pqlgb-flag pqlgb-flag--live">&#9679; in Wehel' +
         (tile.wehelminutes > 0 ? " &middot; " + tile.wehelminutes + " min today" : "") + "</span>");
-    } else if (tile.wehelminutes > 0) {
-      flags.push('<span class="pqlgb-flag pqlgb-flag--wehel">Wehel ' + tile.wehelminutes + " min</span>");
     }
+    // (The Wehel-minutes chip moved onto the place line, 2026-08-30.)
     // The learner's DAY: what they have banked today and what is left of the
     // target. Never a countdown to a stop -- used-time is a floor (a long read
     // reports nothing until the learner moves), so "left" is a ceiling, and

@@ -113,6 +113,33 @@ function discoverEndpoints() {
     }
   }
 
+  // A platformUrl() that is only ever assigned to a link's href is a TOP-LEVEL
+  // NAVIGATION, not a cross-origin call: the browser sends no preflight for a
+  // link, so CORS does not apply and probing it fails the gate about a page
+  // working exactly as designed. The case that forced this: the student Join
+  // pill's href to live_sessions.php (v337), a login-gated PAGE that answers
+  // OPTIONS with its redirect -- the v339 release gate called that an outage.
+  // Detected from the code like everything else here (a path whose EVERY
+  // appearance is `.href = platformUrl(...)` is a link), and each drop is
+  // printed, because a sweep that shrinks silently is the failure this file
+  // exists to prevent.
+  for (const [path] of [...found]) {
+    const esc = path.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const re = new RegExp("(\\.href\\s*=\\s*)?platformUrl\\(\"" + esc + "\"\\)", "g");
+    let total = 0;
+    let navonly = 0;
+    for (const source of sources) {
+      for (const m of source.matchAll(re)) {
+        total++;
+        if (m[1]) navonly++;
+      }
+    }
+    if (total > 0 && total === navonly) {
+      found.delete(path);
+      console.log(`  (navigation-only, not probed: ${path} -- a link target; no preflight is ever sent for a link)`);
+    }
+  }
+
   // Whether an endpoint needs Access-Control-Allow-Credentials is a property of
   // the CALL, not of the server: a browser rejects a credentialed response that
   // does not carry it, and requires nothing for one that is not credentialed.

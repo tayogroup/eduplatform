@@ -599,6 +599,22 @@ echo $OUTPUT->header();
   render();
   paintFreshness();
   setInterval(poll, POLL_MS);
+  // CATCH UP THE MOMENT THE TAB IS LOOKED AT AGAIN.
+  //
+  // poll() returns early while the tab is hidden, which is right -- a board
+  // left open all day should not poll from behind another window. But nothing
+  // resumed on return, so the first thing a teacher saw after switching to the
+  // board was whatever was true when they last left it, for up to POLL_MS.
+  // Reported as the board "needing a refresh": that refresh was the teacher
+  // manually doing what this now does.
+  //
+  // It matters more than the fifteen seconds suggest, because the two moments
+  // a teacher looks at this board are the swap and a learner asking for help --
+  // both immediately after looking at something else. The stale window lands
+  // exactly when the board is being read.
+  document.addEventListener("visibilitychange", function () {
+    if (!document.hidden) { poll(); }
+  });
   // Ticks the quiet counters and the freshness line between polls.
   setInterval(function () { render(); paintFreshness(); }, 1000);
   document.addEventListener("visibilitychange", function () { if (!document.hidden) { poll(); } });

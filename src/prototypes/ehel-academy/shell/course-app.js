@@ -249,6 +249,26 @@ export function createCourseApp(config) {
   });
   let unitCompletedSent = false;
   const emitProgress = (event) => { try { progressWS.emit(event); } catch { /* never break the lesson */ } };
+  // A POSITION REPORT IS SENT NOW, not on the idle timer.
+  //
+  // `progress.summary` is a "state" event, so it waits up to 20s for a quiet
+  // moment; `section.completed` is durable and posts instantly. That asymmetry
+  // predates the live group board and was right when the only consumer was
+  // resume-across-devices, where 20 seconds is nothing.
+  //
+  // It is wrong for a board whose entire question is "where is this learner
+  // RIGHT NOW". Measured on production: a learner moved through a unit for 14
+  // minutes and the server's pointer never left the section they had last
+  // COMPLETED, because only completions were flushing. The tile told a teacher
+  // the learner was somewhere they had already left.
+  //
+  // flush() coalesces onto any in-flight request (`if (flushing) return
+  // flushing`), so clicking quickly through five sections is one or two POSTs,
+  // not five -- the same shape completions already have, at the same cost.
+  const reportPosition = () => {
+    emitProgressSummary();
+    try { progressWS.flush?.(); } catch { /* never break the lesson */ }
+  };
   // The help-session flow emits its finished sessions server-side for the
   // tutoring category only — the record their parents' reports read, written
   // under the umbrella course this page's token was minted for. Regular
@@ -1113,7 +1133,8 @@ export function createCourseApp(config) {
   function navigate(next) {
     if (config.onNavigate) config.onNavigate();
     stopVoice(); route = next; location.hash = next;
-    // Report the move. Without this, `resume` would only ever be written when
+    // Report the move, and send it NOW -- see reportPosition(). Without this,
+    // `resume` would only ever be written when
     // the learner COMPLETES something, which is the one moment it is least
     // interesting -- it would name the section they just left.
     //
@@ -1123,7 +1144,7 @@ export function createCourseApp(config) {
     // make every open tab look busy and destroy the staleness signal. A
     // navigation is the learner doing something, so it belongs in that signal;
     // a clock tick does not.
-    emitProgressSummary();
+    reportPosition();
     enterFocusMode();
     renderNav(); renderRoute();
     $("#content")?.focus({ preventScroll: true });
@@ -1745,7 +1766,7 @@ export function createCourseApp(config) {
     const next = location.hash.slice(1);
     // Back/forward and a pasted link reach a section without going through
     // navigate(), so they report here for the same reason it does.
-    if (next && next !== route) { route = next; emitProgressSummary(); renderNav(); renderRoute(); }
+    if (next && next !== route) { route = next; reportPosition(); renderNav(); renderRoute(); }
   });
   // Ehel Academy logo: back to the learner's Moodle dashboard. pwsEndpoint
   // carries the Moodle host on a real launch; derive the dashboard from its

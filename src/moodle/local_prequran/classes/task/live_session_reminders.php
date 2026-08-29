@@ -270,13 +270,18 @@ class live_session_reminders extends \core\task\scheduled_task {
     // awaiting_review session, and every join re-creates the room and re-sets
     // status='live' -- a teacher who comes back simply restarts the class.
     private function retire_ended_rooms(): void {
-        global $DB;
+        // $CFG must be IN SCOPE here, not reached through $GLOBALS: a
+        // require_once from inside a method runs the included file's top-level
+        // code in this function's scope, and locallib.php opens with
+        // require_once($CFG->libdir . '/filelib.php') -- without the global,
+        // that resolved to '/filelib.php' and killed the whole task run.
+        global $CFG, $DB;
         if (!$this->column_exists('local_prequran_live_session', 'bbb_meeting_id')
                 || !$this->column_exists('local_prequran_live_session', 'bbb_created')
                 || !$this->column_exists('local_prequran_live_session', 'bbb_create_time')) {
             return;
         }
-        require_once($GLOBALS['CFG']->dirroot . '/local/prequran/locallib.php');
+        require_once($CFG->dirroot . '/local/prequran/locallib.php');
         $now = time();
         // The grace excludes rooms created moments ago: BBB reports a meeting
         // as not running until its FIRST joiner, so a teacher mid-redirect

@@ -512,20 +512,19 @@ echo pqh_design_shell_html('pqlgb-shell', 'board', [
     if (tile.leftearly > 0) {
       flags.push('<span class="pqlgb-flag pqlgb-flag--bad">left early</span>');
     }
-    // The live room, while one is running: who is in, who has not arrived.
-    // A child in BBB has this app tab backgrounded, so without this flag they
-    // read as quiet/gone on the very board that should show them doing the
-    // right thing. JOINED is the measured fact (the join action's attendance
-    // row); BBB does not reliably report leaving, so the flag says when they
-    // joined and never claims "still in".
-    if (tile.liveclass) {
-      if (tile.liveclass.joined > 0) {
-        var jt = new Date(tile.liveclass.joined * 1000);
-        flags.push('<span class="pqlgb-flag pqlgb-flag--ok">in live class &middot; joined '
-          + ("0" + jt.getHours()).slice(-2) + ":" + ("0" + jt.getMinutes()).slice(-2) + "</span>");
-      } else {
-        flags.push('<span class="pqlgb-flag pqlgb-flag--warn">not in live class yet</span>');
-      }
+    // The live room, while one is running: who is IN it. A child in BBB has
+    // this app tab backgrounded, so without this flag they read as quiet/gone
+    // on the very board that should show them doing the right thing. JOINED is
+    // the measured fact (the join action's attendance row); BBB does not
+    // reliably report leaving, so the flag says when they joined and never
+    // claims "still in". Only the positive fact is stated: a learner without
+    // it may be working in the app on purpose, so "not in live class yet"
+    // was an accusation the data cannot support (owner, 2026-08-30) --
+    // absence of the flag says everything the amber version did, honestly.
+    if (tile.liveclass && tile.liveclass.joined > 0) {
+      var jt = new Date(tile.liveclass.joined * 1000);
+      flags.push('<span class="pqlgb-flag pqlgb-flag--ok">in live class &middot; joined '
+        + ("0" + jt.getHours()).slice(-2) + ":" + ("0" + jt.getMinutes()).slice(-2) + "</span>");
     }
     // Presence first: a learner IN the tutor right now is a different thing
     // from one who used it earlier, and it is the one that changes what a

@@ -309,10 +309,27 @@ export function createProgressClient(opts) {
     // attempt would be another request answered 401. The idle timer and the
     // lifecycle beacons both route through here, so one guard covers them all.
     if (authLost) return { accepted: 0, ok: false, authLost: true };
+    // Nothing to send: answer without ever taking the lock. Half the reason the
+    // client wedged was an empty flush claiming `flushing` at all.
+    if (!loadOutbox().length) return { accepted: 0, ok: true };
     flushing = (async () => {
-      const batch = loadOutbox();
-      if (!batch.length) return { accepted: 0, ok: true };
+      // THE EMPTY CHECK IS INSIDE THE TRY, and that placement is the whole bug.
+      // It used to sit above it and `return` -- which skips the finally, so
+      // `flushing` was left holding a settled promise for ever. Every later
+      // flush then hit `if (flushing) return flushing` and sent nothing, while
+      // the .then() that would have retried had already fired.
+      //
+      // It produced exactly two updates and then silence: two navigations flush
+      // and clear normally, the 20s idle timer then fires on the outbox they
+      // just drained, takes the empty path, and wedges the client. Reported as
+      // "after 2 successful updates the board stops until the student refreshes".
+      //
+      // The early return predates the navigation flush; what changed is that
+      // draining the queue on every navigation guarantees the idle timer lands
+      // on an empty one, turning a latent bug into one that fires every time.
       try {
+        const batch = loadOutbox();
+        if (!batch.length) return { accepted: 0, ok: true };
         const res = await impl.persist(batch);
         const sent = new Set(batch.map((e) => e._k));
         saveOutbox(loadOutbox().filter((e) => !sent.has(e._k)));
@@ -352,8 +369,6 @@ export function createProgressClient(opts) {
           }
         }
         return { accepted: 0, ok: false, error: String(err), authLost: !!(err && err.authLost) };
-      } finally {
-        flushing = null;
       }
     })();
     const inflight = flushing;
@@ -361,9 +376,20 @@ export function createProgressClient(opts) {
     // a fresh flush can start. One follow-up per completed flush, and it only
     // fires if something actually asked while we were busy -- so a quiet queue
     // does not loop.
+    // `flushing` IS CLEARED HERE, NOT IN THE BODY, and the difference is the
+    // whole bug. An async body with no `await` on its path runs to completion
+    // SYNCHRONOUSLY -- so a `finally { flushing = null }` inside it fired
+    // BEFORE `flushing = (async () => …)()` had assigned anything, and the
+    // assignment then left a settled promise sitting in the lock for ever.
+    // Every later flush hit `if (flushing) return flushing` and sent nothing.
+    //
+    // Moving the empty check inside the try did not fix it -- tested, still two
+    // posts -- because the path was still synchronous. Clearing from a .then()
+    // cannot run before the assignment, whatever the body does.
     inflight.then(() => {
+      flushing = null;
       if (followUp) { followUp = false; flush(); }
-    }, () => { followUp = false; });
+    }, () => { flushing = null; followUp = false; });
     return inflight;
   }
 

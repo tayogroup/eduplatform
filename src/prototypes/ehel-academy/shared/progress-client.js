@@ -213,9 +213,25 @@ export function createProgressClient(opts) {
     return flushing;
   }
 
+  // Coalesce onto the PENDING timer rather than restarting it, so the wait is
+  // bounded at 20 s from the first unflushed change instead of 20 s from the
+  // last one.
+  //
+  // Restarting it starves exactly the busiest learner: state events now include
+  // a navigation (the shell emits a summary when the learner changes section),
+  // so a child moving through a unit every fifteen seconds would reset this
+  // timer forever and never report at all. That matters beyond a late write,
+  // because the live group board's whole sort is "time since this learner's app
+  // last reported anything" — under the old semantics the hardest-working
+  // learner would have drifted to ALERT while the one who had walked away
+  // reported on schedule. The signal would have been not just noisy but
+  // inverted.
+  //
+  // The outbox still batches: every change queued in the interval goes up in
+  // one POST, so this bounds latency without multiplying requests.
   function scheduleIdleFlush() {
-    if (idleTimer) clearTimeout(idleTimer);
-    idleTimer = setTimeout(() => { flush(); }, 20000); // 20 s idle
+    if (idleTimer) return;
+    idleTimer = setTimeout(() => { idleTimer = null; flush(); }, 20000);
   }
 
   // emit — stamp and route by class. Ephemeral events are analytics-only: never

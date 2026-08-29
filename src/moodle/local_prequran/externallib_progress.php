@@ -28,6 +28,19 @@ class local_prequran_progress_external extends external_api {
     // a handful of sections in it; 80 covers a whole day per unit and keeps the
     // ring a few hundred bytes of JSON.
     const MAX_ACTIVITY = 80;
+    // The learner's DAY, not Wehel's allowance. One number because the school
+    // states one: "students will be learning 3 to 4 hours a day" applies to
+    // every grade, so a band table here would invent a policy nobody set. This
+    // is the single place to change it.
+    const LEARN_DAILY_MINUTES = 210;
+    // Deliberately NOT Wehel's 60. Wehel charges per QUESTION, which is a
+    // frequent event; progress events are section completions and navigations,
+    // and a learner legitimately reads one section for ten minutes. A 60-second
+    // cap would bank one minute of that ten and make the figure meaningless.
+    // Five minutes still gives the property that matters: a learner who walks
+    // away with the tab open is charged one gap for the absence, not the
+    // afternoon.
+    const LEARN_IDLE_GAP_SECONDS = 300;
     const MAX_TUTORING_SESSIONS = 20;
 
     /**
@@ -437,9 +450,66 @@ class local_prequran_progress_external extends external_api {
      * self/siteadmin assert) and the launch-token gateway (after JWT verify).
      * Callers MUST have authorised $userid before calling.
      */
+    /**
+     * Charge the learner's day, in wall-clock seconds between their OWN reports.
+     *
+     * Same shape and the same reasons as the Wehel ledger it is modelled on: a
+     * user preference rather than a table (no schema, survives sessions, resets
+     * itself at midnight), and time derived server-side from timestamps rather
+     * than from anything the client claims about itself.
+     *
+     * `YYYYMMDD|used|last`. The first report of the day charges nothing, because
+     * there is no gap to charge yet.
+     *
+     * WHAT IT MEASURES IS A FLOOR, and the board must say so. A learner reading
+     * one long section reports nothing until they move, so any stretch longer
+     * than LEARN_IDLE_GAP_SECONDS is charged at the cap. Time used is therefore
+     * never overstated and time REMAINING is never understated -- the safe
+     * direction for a figure a teacher reads as "this child still has work in
+     * them", since it errs toward keeping them working rather than sending them
+     * away early.
+     */
+    private static function charge_learning_time(int $userid): void {
+        if ($userid <= 0) {
+            return;
+        }
+        // NEVER let this break an ingest. This runs on the path every learner's
+        // progress takes, ahead of the schema guard, so an exception here would
+        // stop progress saving platform-wide -- and it would do so to maintain a
+        // supervision figure, which is not worth one learner's lost work, let
+        // alone everyone's. set_user_preference() throws on a user record it
+        // cannot resolve, and the ingest's own caller has already decided the
+        // token is good; this is the difference between those two judgements.
+        //
+        // Same rule the app applies to its own emit path ("never break the
+        // lesson"). A dropped charge costs the board a few minutes of accuracy
+        // on one tile.
+        try {
+            $today = date('Ymd');
+            $now = time();
+            $ledger = explode('|', (string)get_user_preferences('local_prequran_learn_time', '', $userid));
+            $sameday = ($ledger[0] ?? '') === $today;
+            $used = $sameday ? max(0, (int)($ledger[1] ?? 0)) : 0;
+            $last = $sameday ? max(0, (int)($ledger[2] ?? 0)) : 0;
+            if ($last > 0 && $now > $last) {
+                $used += min($now - $last, self::LEARN_IDLE_GAP_SECONDS);
+            }
+            set_user_preference('local_prequran_learn_time', $today . '|' . $used . '|' . $now, $userid);
+        } catch (Throwable $e) {
+            // Deliberately silent: there is no learner-visible consequence and
+            // nothing here is worth a log line on every failed ingest.
+            return;
+        }
+    }
+
     public static function ingest_events(int $userid, string $coursekey, array $events, string $env): array {
         global $DB;
         $env = self::normalise_env($env);
+
+        // Charged BEFORE the work and outside the schema guard, for the reason
+        // the Wehel clock is written before its API call: the learner spent
+        // that time whether or not this batch could be stored.
+        self::charge_learning_time($userid);
 
         if (!self::table_exists('local_prequran_progress')) {
             return ['ok' => false, 'message' => 'Progress schema is not installed yet.', 'accepted' => 0, 'durable' => 0, 'dropped' => 0, 'stateversion' => 0];

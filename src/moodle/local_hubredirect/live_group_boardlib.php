@@ -55,6 +55,20 @@ define('PQLGB_STALE_WARN_SECONDS', 6 * 60);
 define('PQLGB_STALE_ALERT_SECONDS', 12 * 60);
 define('PQLGB_DEFAULT_WINDOW_MINUTES', 40);
 
+// How recently a learner must have asked Wehel something to read as IN it
+// right now. Deliberately longer than one exchange: a learner reads a reply,
+// thinks, and types again, and a window shorter than that would flicker the
+// flag off between every question. It is presence, not activity.
+define('PQLGB_WEHEL_LIVE_SECONDS', 180);
+
+// The learner's daily target, MIRRORED from local_prequran's own
+// LEARN_DAILY_MINUTES. A board is a read-only surface, so this copy can only
+// ever be wrong in the display -- but a second number that disagrees with the
+// one being enforced is exactly the Wehel-timer failure this repo already
+// records, so pqlgb_learn_daily_minutes() reads the real constant when the
+// class is loadable and falls back to this only if it is not.
+define('PQLGB_LEARN_DAILY_MINUTES_FALLBACK', 210);
+
 function pqlgb_table_exists(string $table): bool {
     global $DB;
     try {
@@ -289,6 +303,12 @@ function pqlgb_progress_snapshot(array $userids, string $env, int $since = 0): a
                 'unit' => '',
                 'sectionsdone' => 0,
                 'lastsection' => '',
+                // Where the learner IS, as opposed to what they last finished.
+                // Emitted by the shared shell on navigation; empty for any
+                // learner whose app predates that, which the board reports as
+                // unknown rather than falling back to lastsection -- those are
+                // different claims and only one of them was measured.
+                'resume' => '',
                 'unitscompleted' => 0,
                 'checkpoint' => null,
                 // Counted across ALL of the learner's units, not just the one
@@ -331,6 +351,12 @@ function pqlgb_progress_snapshot(array $userids, string $env, int $since = 0): a
             $snapshot[$userid]['unit'] = (string)$row->unit;
             $snapshot[$userid]['sectionsdone'] = count($sections);
             $snapshot[$userid]['lastsection'] = $sections ? (string)end($sections) : '';
+            // Taken from the SAME unit as lastsection, inside this branch, so
+            // the two always describe one unit. Read outside it, a learner with
+            // two units on the go would show a section from one beside a unit
+            // name from the other.
+            $snapshot[$userid]['resume'] = is_string($state['resume'] ?? null)
+                ? (string)$state['resume'] : '';
             $snapshot[$userid]['checkpoint'] = pqlgb_weakest_checkpoint($state);
         }
         if (!empty($state['completed'])) {
@@ -413,15 +439,85 @@ function pqlgb_focus_signals(array $userids, int $since): array {
  * left — see the header note: the allowance table is a three-way gated spec and
  * this file must not become a fourth copy of it.
  */
-function pqlgb_wehel_minutes(array $userids): array {
-    $minutes = [];
+/**
+ * Wehel, per learner: minutes used today AND whether they are in it right now.
+ *
+ * Both come out of the same ledger the tutor itself writes
+ * (`YYYYMMDD|used|last|tokens|weighted`) -- field 2 is seconds charged today,
+ * field 3 is the timestamp of their last question. Presence is therefore
+ * derived from the tutor's own record of being asked something, not from a
+ * second signal that could disagree with it.
+ *
+ * Minutes are reported as USED, never as remaining: the allowance is a spec
+ * held byte-equal across three files by check:wehel-contract, and a fourth copy
+ * here would be one that gate cannot see.
+ */
+function pqlgb_wehel_state(array $userids): array {
+    $state = [];
     $today = date('Ymd');
+    $now = time();
     foreach ($userids as $userid) {
         $userid = (int)$userid;
         $ledger = explode('|', (string)get_user_preferences('local_hubredirect_wehel_time', '', $userid));
-        $minutes[$userid] = (($ledger[0] ?? '') === $today) ? (int)floor(max(0, (int)($ledger[1] ?? 0)) / 60) : 0;
+        $sameday = ($ledger[0] ?? '') === $today;
+        $last = $sameday ? max(0, (int)($ledger[2] ?? 0)) : 0;
+        $state[$userid] = [
+            'minutes' => $sameday ? (int)floor(max(0, (int)($ledger[1] ?? 0)) / 60) : 0,
+            'last' => $last,
+            'live' => $last > 0 && ($now - $last) <= PQLGB_WEHEL_LIVE_SECONDS,
+        ];
     }
-    return $minutes;
+    return $state;
+}
+
+/**
+ * The learner's day: seconds banked today, and what remains of the target.
+ *
+ * Reads `local_prequran_learn_time`, which
+ * local_prequran_progress_external::ingest_events() charges on every report the
+ * learner's app makes. Read-only here.
+ *
+ * `used` IS A FLOOR. A learner reading one long section reports nothing until
+ * they move, so any stretch beyond the ingest's idle-gap cap is charged at the
+ * cap. So `remaining` is a CEILING, and the board must not present it as a
+ * countdown to a hard stop -- nothing stops at zero, and nothing should: this
+ * is a supervision signal, not an allowance like Wehel's.
+ */
+function pqlgb_learning_time(array $userids): array {
+    $out = [];
+    $today = date('Ymd');
+    $targetseconds = pqlgb_learn_daily_minutes() * 60;
+    foreach ($userids as $userid) {
+        $userid = (int)$userid;
+        $ledger = explode('|', (string)get_user_preferences('local_prequran_learn_time', '', $userid));
+        $sameday = ($ledger[0] ?? '') === $today;
+        $used = $sameday ? max(0, (int)($ledger[1] ?? 0)) : 0;
+        $out[$userid] = [
+            'used' => $used,
+            'remaining' => max(0, $targetseconds - $used),
+            'target' => $targetseconds,
+            // Nothing banked today and no ledger at all are different claims:
+            // the first is a learner who has not started, the second is one
+            // whose app has never reported since this shipped. Saying "3h 30m
+            // left" to both is a confident statement about a day nobody
+            // measured -- the same mistake the activity ring's "not counted
+            // yet" exists to avoid.
+            'counted' => $sameday && ($ledger[2] ?? '') !== '',
+        ];
+    }
+    return $out;
+}
+
+/**
+ * The daily target, preferring local_prequran's own constant over our fallback,
+ * so the board cannot quietly display a different number from the one recorded.
+ */
+function pqlgb_learn_daily_minutes(): int {
+    if (class_exists('local_prequran_progress_external')
+            && defined('local_prequran_progress_external::LEARN_DAILY_MINUTES')) {
+        return (int)constant('local_prequran_progress_external::LEARN_DAILY_MINUTES');
+    }
+    return PQLGB_LEARN_DAILY_MINUTES_FALLBACK;
 }
 
 /**
@@ -564,12 +660,13 @@ function pqlgb_build(int $teacherid, int $workspaceid, int $windowminutes, strin
     $names = pqlgb_learner_names($userids);
     $snapshot = pqlgb_progress_snapshot($userids, $env, $since);
     $signals = pqlgb_focus_signals($userids, $since);
-    $wehel = pqlgb_wehel_minutes($userids);
+    $wehel = pqlgb_wehel_state($userids);
+    $learning = pqlgb_learning_time($userids);
     $hands = pqlgb_hand_state($userids);
 
     $board = ['generated' => $now, 'window' => $windowminutes, 'env' => $env, 'groups' => [], 'totals' => [
         'learners' => 0, 'quiet' => 0, 'breaks' => 0, 'leftearly' => 0, 'hands' => 0,
-        'donewindow' => 0,
+        'donewindow' => 0, 'inwehel' => 0,
     ]];
 
     foreach ($groups as $group) {
@@ -602,7 +699,13 @@ function pqlgb_build(int $teacherid, int $workspaceid, int $windowminutes, strin
                 'breaks' => (int)$signal['breaks'],
                 'leftearly' => (int)$signal['leftearly'],
                 'reason' => (string)$signal['reason'],
-                'wehelminutes' => (int)($wehel[$userid] ?? 0),
+                'wehelminutes' => (int)($wehel[$userid]['minutes'] ?? 0),
+                'wehellive' => !empty($wehel[$userid]['live']),
+                'resume' => $snap ? (string)$snap['resume'] : '',
+                'learnused' => (int)($learning[$userid]['used'] ?? 0),
+                'learnremaining' => (int)($learning[$userid]['remaining'] ?? 0),
+                'learntarget' => (int)($learning[$userid]['target'] ?? 0),
+                'learncounted' => !empty($learning[$userid]['counted']),
                 'handup' => !empty($hand['up']),
                 'handsince' => !empty($hand['up']) ? (int)$hand['since'] : 0,
                 'donewindow' => $snap ? (int)$snap['donewindow'] : 0,
@@ -619,6 +722,9 @@ function pqlgb_build(int $teacherid, int $workspaceid, int $windowminutes, strin
             $board['totals']['leftearly'] += (int)$signal['leftearly'];
             if (!empty($hand['up'])) {
                 $board['totals']['hands']++;
+            }
+            if (!empty($wehel[$userid]['live'])) {
+                $board['totals']['inwehel']++;
             }
             $board['totals']['donewindow'] += $snap ? (int)$snap['donewindow'] : 0;
             if ($state === 'alert' || $state === 'warn') {

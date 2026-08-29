@@ -159,6 +159,16 @@ echo $OUTPUT->header();
 .pqlgb-flag--warn{border-color:#ffe69c;background:#fff3cd;color:#664d03}
 .pqlgb-flag--ok{border-color:#a3cfbb;background:#d1e7dd;color:#0a3622}
 .pqlgb-flag--moved{border-color:#a3cfbb;background:#d1e7dd;color:#0a3622}
+/* A raised hand is the one thing on this board the learner said out loud, and
+   its flag had been rendering with no rule of its own since the feature
+   shipped -- it read as an ordinary grey pill among the inferred signals it is
+   meant to outrank. Blue rather than red: it is a request for help, not a
+   fault. */
+.pqlgb-flag--hand{border-color:#9ec5fe;background:#cfe2ff;color:#052c65}
+/* In Wehel right now. Same blue family as the hand, one step quieter: both say
+   "this learner is already getting help", which is the reading that changes
+   what the teacher does next. */
+.pqlgb-flag--live{border-color:#9ec5fe;background:#e7f1ff;color:#084298}
 .pqlgb-reason{margin-top:6px;padding:6px 8px;border-left:2px solid #f1aeb5;background:var(--op-surface);font-size:12px;font-style:italic;color:var(--op-ink-muted);line-height:1.4}
 .pqlgb-quiet{text-align:right;white-space:nowrap}
 .pqlgb-quiet b{display:block;font-size:17px;font-weight:900;line-height:1.15;font-variant-numeric:tabular-nums}
@@ -347,8 +357,14 @@ echo $OUTPUT->header();
         // report a learner as idle on the strength of data that does not
         // exist — the false negative windowcovered exists to prevent.
         : (tile.windowcovered ? "nothing this cycle" : "not counted yet")) + "</span>");
+    // WHERE THEY ARE beats what they finished, but only when we know it. An
+    // app that predates the resume pointer sends nothing, and falling back to
+    // lastsection under an "in:" label would be a confident claim about a
+    // different fact -- so the label changes with the field.
     flags.push('<span class="pqlgb-flag">' + tile.sectionsdone + " done" +
-      (tile.lastsection ? " &middot; last: " + esc(tile.lastsection) : "") + "</span>");
+      (tile.resume
+        ? " &middot; in: " + esc(tile.resume)
+        : (tile.lastsection ? " &middot; last: " + esc(tile.lastsection) : "")) + "</span>");
     if (tile.checkpoint) {
       flags.push('<span class="pqlgb-flag pqlgb-flag--' + (tile.checkpoint.passed ? "ok" : "bad") + '">' +
         esc(tile.checkpoint.section) + " " + tile.checkpoint.score + "%</span>");
@@ -359,8 +375,25 @@ echo $OUTPUT->header();
     if (tile.leftearly > 0) {
       flags.push('<span class="pqlgb-flag pqlgb-flag--bad">left early</span>');
     }
-    if (tile.wehelminutes > 0) {
+    // Presence first: a learner IN the tutor right now is a different thing
+    // from one who used it earlier, and it is the one that changes what a
+    // teacher does next -- they are already getting help, so leave them.
+    if (tile.wehellive) {
+      flags.push('<span class="pqlgb-flag pqlgb-flag--live">&#9679; in Wehel' +
+        (tile.wehelminutes > 0 ? " &middot; " + tile.wehelminutes + " min today" : "") + "</span>");
+    } else if (tile.wehelminutes > 0) {
       flags.push('<span class="pqlgb-flag">Wehel ' + tile.wehelminutes + " min</span>");
+    }
+    // The learner's DAY. Reported as time left, but never as a countdown to a
+    // stop: used-time is a floor (a long read reports nothing until they move),
+    // so this is a ceiling and is labelled "left of target" rather than
+    // "remaining", which would imply a limit that does not exist. A learner
+    // whose app has not reported today is not shown a full target -- that would
+    // be a confident number about a day nobody measured.
+    if (tile.learncounted && tile.learntarget > 0) {
+      var lm = Math.round(tile.learnremaining / 60);
+      flags.push('<span class="pqlgb-flag' + (lm <= 0 ? " pqlgb-flag--ok" : "") + '">' +
+        (lm <= 0 ? "target met" : lm + " min left of target") + "</span>");
     }
 
     return '<div class="pqlgb-tile pqlgb-tile--' + live.state + '">' +
@@ -386,7 +419,7 @@ echo $OUTPUT->header();
 
   function render() {
     var groups = board.groups || [];
-    var learners = 0, quiet = 0, breaks = 0, notStarted = 0, hands = 0, moved = 0;
+    var learners = 0, quiet = 0, breaks = 0, notStarted = 0, hands = 0, moved = 0, inWehel = 0;
 
     var html = groups.map(function (group) {
       var tiles = (group.tiles || []).slice();
@@ -401,6 +434,12 @@ echo $OUTPUT->header();
         learners++;
         breaks += tile.breaks || 0;
         if (tile.handup) { hands++; }
+        // Counted client-side from the same field the tile reads, not taken
+        // from board.totals: render() re-derives everything each second so a
+        // learner can cross a threshold between polls, and a headline taken
+        // from the server while the tiles are recomputed would disagree with
+        // the tiles beneath it.
+        if (tile.wehellive) { inWehel++; }
         moved += (tile.donewindow || 0) + (tile.quizwindow || 0);
         if (live.state === "alert" || live.state === "warn") { quiet++; }
         if (live.state === "nodata") { notStarted++; }
@@ -430,6 +469,11 @@ echo $OUTPUT->header();
 
     var totalsHtml = [
       ["Hands up", hands, hands > 0],
+      // Not flagged, deliberately: a learner in the tutor is being helped, so
+      // this is context for the quiet count above it rather than something the
+      // teacher must act on. Highlighting it would put a call to action on the
+      // one row that says "this one is fine".
+      ["In Wehel now", inWehel, false],
       ["Done this cycle", moved, false],
       ["Learners on screen", learners, false],
       ["Quiet " + Math.floor(WARN / 60) + " min or more", quiet, quiet > 0],

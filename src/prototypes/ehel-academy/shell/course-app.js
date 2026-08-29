@@ -474,6 +474,13 @@ export function createCourseApp(config) {
     const base = {
       type: "progress.summary", unit: PROGRESS_UNIT,
       sectionsDone: [...(progress.completed || [])],
+      // WHERE THE LEARNER IS, which is not what sectionsDone says: that is what
+      // they have finished, and a learner stuck twenty minutes into the next
+      // section is exactly the one a supervising teacher needs to see. The
+      // reducer and the stored state have carried a `resume` field since the
+      // progress contract was written and nothing had ever populated it, so
+      // this is the field being fed rather than a new one.
+      resume: route || undefined,
       xp: Object.values(progress.games || {}).reduce((s, g) => s + (g.xp || 0), 0) || undefined,
     };
     emitProgress(config.extendSummary ? config.extendSummary(progress, base) : base);
@@ -1106,6 +1113,17 @@ export function createCourseApp(config) {
   function navigate(next) {
     if (config.onNavigate) config.onNavigate();
     stopVoice(); route = next; location.hash = next;
+    // Report the move. Without this, `resume` would only ever be written when
+    // the learner COMPLETES something, which is the one moment it is least
+    // interesting -- it would name the section they just left.
+    //
+    // This is a deliberate learner ACTION, never a timer, and the distinction
+    // is load-bearing for the live group board: its whole sort is "time since
+    // the learner's app last reported anything", so a periodic heartbeat would
+    // make every open tab look busy and destroy the staleness signal. A
+    // navigation is the learner doing something, so it belongs in that signal;
+    // a clock tick does not.
+    emitProgressSummary();
     enterFocusMode();
     renderNav(); renderRoute();
     $("#content")?.focus({ preventScroll: true });
@@ -1725,7 +1743,9 @@ export function createCourseApp(config) {
 
   window.addEventListener("hashchange", () => {
     const next = location.hash.slice(1);
-    if (next && next !== route) { route = next; renderNav(); renderRoute(); }
+    // Back/forward and a pasted link reach a section without going through
+    // navigate(), so they report here for the same reason it does.
+    if (next && next !== route) { route = next; emitProgressSummary(); renderNav(); renderRoute(); }
   });
   // Ehel Academy logo: back to the learner's Moodle dashboard. pwsEndpoint
   // carries the Moodle host on a real launch; derive the dashboard from its

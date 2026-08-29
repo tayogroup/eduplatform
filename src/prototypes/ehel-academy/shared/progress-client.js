@@ -151,11 +151,34 @@ function remoteBackend({ course, student, endpoint, token }) {
         // CORS-safelisted (text/plain) so cross-origin beacons deliver without
         // a preflight; the gateway parses the raw body regardless.
         const beaconBody = JSON.stringify({ ...envelope, token });
-        navigator.sendBeacon(url, new Blob([beaconBody], { type: "text/plain;charset=UTF-8" }));
+        // sendBeacon returns FALSE when the browser will not queue it -- over
+        // quota, or refused by a blocker, which is the same engine that refuses
+        // keepalive fetches by type. That return was ignored, and flush()
+        // clears the outbox on the beacon path unconditionally, so a refused
+        // beacon silently DELETED the learner's unsent work. Reported as a
+        // failure instead, which leaves the queue intact for the next flush.
+        const queued = navigator.sendBeacon(url, new Blob([beaconBody], { type: "text/plain;charset=UTF-8" }));
+        if (!queued) {
+          const err = new Error("beacon refused");
+          err.beaconRefused = true;
+          throw err;
+        }
         return { accepted: events.length, ok: true, beacon: true };
       }
       const body = JSON.stringify(envelope);
-      const r = await fetch(url, { method: "POST", headers: auth(), body, keepalive: true });
+      // NO `keepalive: true`. It marks the request as beacon-type, which is the
+      // shape analytics SDKs use to exfiltrate on unload -- so ad-block engines
+      // refuse it by REQUEST TYPE, whatever the URL says. Measured on
+      // production 2026-08-29: the identical URL, in the identical tab,
+      // returned 401 from a plain fetch and ERR_BLOCKED_BY_CLIENT with
+      // keepalive set. That is also why renaming the path from /ingest to
+      // /save changed nothing -- the rule was never matching the path.
+      //
+      // It bought nothing here either. keepalive exists to let a request
+      // outlive the page, and the unload case is already handled by the beacon
+      // branch above; this branch only runs while the page is alive and
+      // awaiting its own response.
+      const r = await fetch(url, { method: "POST", headers: auth(), body });
       if (!r.ok) {
         const err = new Error(`ingest ${r.status}`);
         // 401/403 is the launch token being expired, revoked or wrong. Unlike a
@@ -225,7 +248,14 @@ export function createProgressClient(opts) {
     if (beacon) {
       const queue = loadOutbox();
       if (!queue.length) return { accepted: 0, ok: true };
-      const res = await impl.persist(queue, { beacon: true });
+      let res;
+      try {
+        res = await impl.persist(queue, { beacon: true });
+      } catch (err) {
+        // Refused. KEEP THE QUEUE -- this path used to clear it either way, so
+        // a blocked beacon on tab-hide destroyed work that had never been sent.
+        return { accepted: 0, ok: false, error: String(err) };
+      }
       const sent = new Set(queue.map((e) => e._k));
       saveOutbox(loadOutbox().filter((e) => !sent.has(e._k)));
       return res;

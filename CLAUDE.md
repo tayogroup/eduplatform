@@ -1024,23 +1024,24 @@ phase" because that is the school DAY the board was built for; a board SCREEN
 now shows one group at a time, and the sort, the flags and the chat are
 unchanged by how many groups happen to render.
 
-**A tile's info chips are tinted by CATEGORY, and the tints are not the
-semantic colours** (owner, 2026-08-30). Grey is the cycle count ("nothing this
-cycle", "day not counted yet"), purple Wehel minutes, teal the learning time
-— so the same fact sits under the same colour on every tile and a teacher's
-eye can find it without reading. The semantic colours keep their meanings
-untouched and outrank the tints on the states that earn them: ok green (moved
-this cycle / in live class / target met), warn amber, bad red, hand blue. A
-new chip should join a category or argue for a new one — a chip left on the
-bare white default now reads as unstyled rather than neutral.
-
-**The learner's position and done-count are NOT chips** (owner, later the
-same day — a cyan position chip shipped that morning and moved within hours).
-They ride the tile's place line — "Mathematics · Stage 1 · Unit 2 · in
-Visual Models · 0 done", position first — because they are context, like the
-unit, not states: the chip row keeps the things that change what a teacher
-does next. A tile with no app record still says "No app activity recorded"
-rather than a bare "0 done".
+**A tile splits CONTEXT from STATES, and both halves are colour-coded by
+category** (owner, settled across 2026-08-30 in three steps — a cyan
+position chip and a purple Wehel-minutes chip each shipped and moved to the
+place line within hours, so do not re-add either as a chip). The PLACE LINE
+is a row of tinted pills, one per fact: blue the course (subject / stage /
+unit), cyan the position ("in Vocabulary" — mid-activity, "finished x",
+or "last: x" when no resume pointer exists), pink the done-count, purple
+the Wehel minutes. Pills wrap rather than ellipsize. The CHIP ROW keeps
+only what changes a teacher's next action: grey the cycle count ("nothing
+this cycle", "day not counted yet"), teal the learning time, and the
+semantic states with their meanings untouched — ok green (moved this
+cycle / in live class / target met), warn amber, bad red, hand blue, and
+the live-blue "in Wehel" presence, which carries the minutes on its face
+so the place line skips them while a learner is in the tutor and the
+number never shows twice. A new fact joins a category or argues for a new
+one — bare white now reads as unstyled rather than neutral — and a tile
+with no app record still says "No app activity recorded" rather than a
+bare "0 done".
 
 ### The classroom chat: built INSIDE "no student-to-student messaging"
 

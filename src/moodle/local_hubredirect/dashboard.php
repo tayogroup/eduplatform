@@ -2896,6 +2896,10 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
     <span class="pqh-gnav__label">Live Classes</span>
   </a>
   <?php if ($role === 'teacher'): ?>
+    <a class="pqh-gnav__item" href="<?php echo pqh_hub_link('live_group_board.php', $hasworkspace ? ['workspaceid' => $currentworkspaceid] : [])->out(false); ?>">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+      <span class="pqh-gnav__label">Group Board</span>
+    </a>
     <a class="pqh-gnav__item" href="<?php echo pqh_live_teacher_schedule_link((int)$USER->id)->out(false); ?>">
       <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
       <span class="pqh-gnav__label">Schedule</span>

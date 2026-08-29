@@ -246,6 +246,7 @@ export function createCourseApp(config) {
     backend: launchEndpoint ? "remote" : "local",
     endpoint: launchEndpoint || undefined,
     token: launchToken || undefined,
+    onAuthLost: (info) => showSessionExpired(info),
   });
   let unitCompletedSent = false;
   const emitProgress = (event) => { try { progressWS.emit(event); } catch { /* never break the lesson */ } };
@@ -833,6 +834,49 @@ export function createCourseApp(config) {
     const el = $("#toast");
     el.textContent = message; el.classList.add("show");
     clearTimeout(toast.timer); toast.timer = setTimeout(() => el.classList.remove("show"), 2400);
+  }
+
+  // THE LAUNCH TOKEN HAS EXPIRED (or been revoked). The learner carries on
+  // working and nothing reaches the server -- and until this existed, nothing
+  // said so: the flush threw, the events queued, and the teacher's board watched
+  // them go quiet while they worked. "Gone" is precisely the signal that board
+  // is read for, so the silence did not merely lose data, it manufactured a
+  // false alarm.
+  //
+  // Deliberately NOT a toast. The one above clears itself in 2.4 seconds, which
+  // the comment beside it already calls out as too little for something a
+  // learner must act on. This follows the completion card instead: drawn
+  // outside #app, because renderers rewrite #app.innerHTML on every route and
+  // anything inside would vanish on the next repaint.
+  //
+  // It says RE-OPEN, never "reload": reloading this URL replays the same
+  // expired token and fails identically. A fresh token only comes from a fresh
+  // launch.
+  //
+  // Nothing is lost, and the wording says so because it is true -- the outbox
+  // keeps every event, so a new launch delivers the work that could not be sent.
+  let sessionExpiredShown = false;
+  function showSessionExpired(info) {
+    if (sessionExpiredShown) return;
+    sessionExpiredShown = true;
+    const bar = document.createElement("div");
+    bar.id = "session-expired";
+    bar.setAttribute("role", "status");
+    bar.style.cssText = "position:fixed;left:0;right:0;bottom:0;z-index:60;display:flex;gap:12px;"
+      + "align-items:center;justify-content:center;flex-wrap:wrap;padding:12px 18px;"
+      + "background:#fff3cd;color:#664d03;border-top:2px solid #ffe69c;"
+      + "font:600 14px/1.4 system-ui,sans-serif;box-shadow:0 -2px 10px rgba(0,0,0,.08)";
+    const text = document.createElement("span");
+    text.textContent = "Your lesson session has timed out, so new work is not being saved. "
+      + "Open this lesson again from your dashboard — nothing you have done is lost.";
+    const close = document.createElement("button");
+    close.type = "button";
+    close.textContent = "Hide";
+    close.style.cssText = "border:1px solid #664d03;background:transparent;color:inherit;"
+      + "border-radius:999px;padding:4px 14px;font:inherit;cursor:pointer";
+    close.addEventListener("click", () => bar.remove());
+    bar.append(text, close);
+    document.body.appendChild(bar);
   }
 
   function complete(section, message) {

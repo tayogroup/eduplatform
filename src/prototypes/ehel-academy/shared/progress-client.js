@@ -151,7 +151,17 @@ function remoteBackend({ course, student, endpoint, token }) {
       }
       const body = JSON.stringify(envelope);
       const r = await fetch(url, { method: "POST", headers: auth(), body, keepalive: true });
-      if (!r.ok) throw new Error(`ingest ${r.status}`);
+      if (!r.ok) {
+        const err = new Error(`ingest ${r.status}`);
+        // 401/403 is the launch token being expired, revoked or wrong. Unlike a
+        // 5xx or a dropped connection, waiting does not fix it: every retry
+        // spends a request to be refused identically. Naming it lets the caller
+        // stop retrying and tell somebody, instead of queueing for ever in
+        // silence while the learner keeps working.
+        err.authLost = r.status === 401 || r.status === 403;
+        err.status = r.status;
+        throw err;
+      }
       return r.json();
     },
     async hydrate() {
@@ -179,6 +189,11 @@ export function createProgressClient(opts) {
   let flushing = null;
   // Set when a flush is asked for while one is already in flight. See flush().
   let followUp = false;
+  // Set once the server refuses our token. Nothing is discarded -- the outbox
+  // keeps every event, so a reload with a fresh token still delivers the
+  // learner's work -- but we stop spending requests that can only be refused,
+  // and we tell the app ONCE so it can tell the learner.
+  let authLost = false;
 
   const loadOutbox = () => readJson(outboxKey, []);
   const saveOutbox = (q) => writeJson(outboxKey, q);
@@ -210,6 +225,10 @@ export function createProgressClient(opts) {
     // The board then showed a section they had already left, intermittently --
     // the hardest kind of wrong to trust.
     if (flushing) { followUp = true; return flushing; }
+    // Refused already: the queue is preserved for a reload, but every further
+    // attempt would be another request answered 401. The idle timer and the
+    // lifecycle beacons both route through here, so one guard covers them all.
+    if (authLost) return { accepted: 0, ok: false, authLost: true };
     flushing = (async () => {
       const batch = loadOutbox();
       if (!batch.length) return { accepted: 0, ok: true };
@@ -219,7 +238,14 @@ export function createProgressClient(opts) {
         saveOutbox(loadOutbox().filter((e) => !sent.has(e._k)));
         return res;
       } catch (err) {
-        return { accepted: 0, ok: false, error: String(err) }; // stays queued for retry
+        if (err && err.authLost && !authLost) {
+          authLost = true;
+          // Reported once, not per failure: a learner does not need the same
+          // sentence every twenty seconds, and the condition does not change
+          // until they reload.
+          try { opts.onAuthLost?.({ status: err.status, queued: loadOutbox().length }); } catch { /* never break the lesson */ }
+        }
+        return { accepted: 0, ok: false, error: String(err), authLost: !!(err && err.authLost) };
       } finally {
         flushing = null;
       }
@@ -296,7 +322,13 @@ export function createProgressClient(opts) {
   }
   attachLifecycle();
 
-  return { emit, hydrate, flush, backend: impl.kind, contract: CONTRACT, classOf };
+  return {
+    emit, hydrate, flush, backend: impl.kind, contract: CONTRACT, classOf,
+    // True once the server has refused our token. The outbox still holds
+    // everything; a reload with a fresh token delivers it.
+    get authLost() { return authLost; },
+    get queuedCount() { return loadOutbox().length; },
+  };
 }
 
 export { EVENT_CLASS, classOf, CONTRACT };

@@ -94,6 +94,9 @@ $handurl = new moodle_url('/local/hubredirect/live_group_board_hand.php', [
     'teacherid' => $teacherid,
     'sesskey' => sesskey(),
 ]);
+$livesessionsurl = new moodle_url('/local/hubredirect/live_sessions.php', [
+    'workspaceid' => $workspaceid,
+]);
 $chaturl = new moodle_url('/local/hubredirect/live_group_board_chat.php', [
     'workspaceid' => $workspaceid,
     'teacherid' => $teacherid,
@@ -137,6 +140,8 @@ echo $OUTPUT->header();
 .pqlgb-group-head{display:flex;align-items:baseline;gap:10px;padding:12px 14px;border-bottom:1px solid var(--op-line);background:var(--op-surface-tint)}
 .pqlgb-group-head h3{margin:0;font-size:15px;font-weight:900}
 .pqlgb-group-head span{font-size:12px;font-weight:700;color:var(--op-ink-soft)}
+.pqlgb-golive{margin-left:auto;border:1px solid #052c65;background:#0d6efd;color:#fff;border-radius:999px;padding:3px 12px;font:inherit;font-size:12px;font-weight:800;cursor:pointer}
+.pqlgb-golive:disabled{opacity:.6;cursor:default}
 .pqlgb-tiles{display:flex;flex-direction:column}
 
 .pqlgb-tile{display:grid;grid-template-columns:38px 1fr auto;gap:11px;padding:11px 14px;border-bottom:1px solid var(--op-line);border-left:3px solid transparent}
@@ -280,6 +285,10 @@ echo $OUTPUT->header();
   var dataUrl = <?php echo json_encode($dataurl->out(false), JSON_HEX_TAG | JSON_HEX_AMP); ?>;
   var handUrl = <?php echo json_encode($handurl->out(false), JSON_HEX_TAG | JSON_HEX_AMP); ?>;
   var chatUrl = <?php echo json_encode($chaturl->out(false), JSON_HEX_TAG | JSON_HEX_AMP); ?>;
+  var liveSessionsUrl = <?php echo json_encode($livesessionsurl->out(false), JSON_HEX_TAG | JSON_HEX_AMP); ?>;
+  var boardSesskey = <?php echo json_encode(sesskey(), JSON_HEX_TAG | JSON_HEX_AMP); ?>;
+  var boardWorkspaceId = <?php echo (int)$workspaceid; ?>;
+  var boardTeacherId = <?php echo (int)$teacherid; ?>;
   // Written for whoever is looking. The teacher-facing wording sent an
   // administrator away believing the board was broken, when they were simply
   // looking at their own groups and had none.
@@ -536,6 +545,7 @@ echo $OUTPUT->header();
 
       return '<section class="pqlgb-group">' +
         '<div class="pqlgb-group-head"><h3>' + esc(group.title) + "</h3>" +
+        '<button type="button" class="pqlgb-golive" data-golive="' + group.id + '" data-golivetitle="' + esc(group.title) + '">Go live</button>' +
           "<span>" + tiles.length + " of " + (group.capacity || 9) +
           (group.level ? " &middot; " + esc(group.level) : "") + "</span></div>" +
         '<div class="pqlgb-tiles">' +
@@ -643,6 +653,65 @@ echo $OUTPUT->header();
   render();
   paintFreshness();
   setInterval(poll, POLL_MS);
+
+  // --- Go live: create-and-start a session for one group --------------------
+  // No new endpoint and no duplicated scheduling logic: this drives the SAME
+  // action=create the session wizard submits, which already takes a groupid
+  // and seeds every active member as a participant, already checks teacher
+  // conflicts, already queues reminders and audits, and (policy, 2026-07-17)
+  // publishes teacher-created sessions immediately. The board contributes only
+  // sensible defaults: starting NOW, running one Counterpoint cycle (40 min),
+  // titled after the group. live_sessions.php then shows the new session with
+  // its Join button, and the teacher JOINING is what creates the BBB meeting --
+  // that is the existing start semantics, not a gap.
+  //
+  // For a non-admin, action=create forces the session's teacher to $USER
+  // regardless of what we send, so a teacher can only ever go live as
+  // themselves; an admin supervising this board creates on the board teacher's
+  // behalf. The times are formatted IN the schedule timezone via Intl rather
+  // than the browser's own clock fields, because a supervisor abroad clicking
+  // "Go live" must not schedule the lesson eight hours away.
+  groupsEl.addEventListener("click", function (event) {
+    var btn = event.target.closest ? event.target.closest("[data-golive]") : null;
+    if (!btn) { return; }
+    var groupid = Number(btn.getAttribute("data-golive"));
+    if (!groupid) { return; }
+    if (!window.confirm('Start a live session for "' + (btn.getAttribute("data-golivetitle") || "this group") + '" now?')) { return; }
+    btn.disabled = true;
+    setTimeout(function () { btn.disabled = false; }, 4000);
+    var TZ = "Africa/Nairobi";
+    var parts = {};
+    new Intl.DateTimeFormat("en-CA", {
+      timeZone: TZ, year: "numeric", month: "2-digit", day: "2-digit",
+      hour: "2-digit", minute: "2-digit", hour12: false
+    }).formatToParts(new Date()).forEach(function (part) { parts[part.type] = part.value; });
+    var form = document.createElement("form");
+    form.method = "POST";
+    form.action = liveSessionsUrl;
+    form.target = "_blank";
+    var fields = {
+      sesskey: boardSesskey,
+      action: "create",
+      workspaceid: String(boardWorkspaceId),
+      teacherid: String(boardTeacherId),
+      groupid: String(groupid),
+      title: (btn.getAttribute("data-golivetitle") || "Class group") + " — live session",
+      sessiondate: parts.year + "-" + parts.month + "-" + parts.day,
+      sessiontime: (parts.hour === "24" ? "00" : parts.hour) + ":" + parts.minute,
+      timezone: TZ,
+      duration: "40"
+    };
+    Object.keys(fields).forEach(function (name) {
+      var input = document.createElement("input");
+      input.type = "hidden";
+      input.name = name;
+      input.value = fields[name];
+      form.appendChild(input);
+    });
+    document.body.appendChild(form);
+    form.submit();
+    form.remove();
+  });
   // CATCH UP THE MOMENT THE TAB IS LOOKED AT AGAIN.
   //
   // poll() returns early while the tab is hidden, which is right -- a board

@@ -176,6 +176,32 @@ function local_prequran_bbb_create_meeting(array $meeting): SimpleXMLElement {
     return local_prequran_bbb_call('create', local_prequran_bbb_meeting_defaults($meeting));
 }
 
+/**
+ * Ask BBB whether a meeting is currently running. Returns true or false on a
+ * definite answer, null when the API cannot be reached or does not answer the
+ * question -- a caller retiring rooms must treat null as "no evidence", never
+ * as "not running". Note BBB reports a created-but-never-joined meeting as
+ * not running: the FIRST joiner is what starts it.
+ */
+function local_prequran_bbb_is_meeting_running(string $meetingid): ?bool {
+    if (trim($meetingid) === '') {
+        return null;
+    }
+    try {
+        $xml = local_prequran_bbb_call('isMeetingRunning', ['meetingID' => $meetingid]);
+    } catch (Throwable $e) {
+        return null;
+    }
+    $running = strtolower(trim((string)($xml->running ?? '')));
+    if ($running === 'true') {
+        return true;
+    }
+    if ($running === 'false') {
+        return false;
+    }
+    return null;
+}
+
 function local_prequran_bbb_xml_attribute(string $value): string {
     return htmlspecialchars($value, ENT_XML1 | ENT_COMPAT, 'UTF-8');
 }

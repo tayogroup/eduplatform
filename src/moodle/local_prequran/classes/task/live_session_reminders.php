@@ -17,6 +17,7 @@ class live_session_reminders extends \core\task\scheduled_task {
         }
 
         $this->mark_ended_sessions_awaiting_review();
+        $this->retire_ended_rooms();
         $this->send_practice_coach_session_reports();
         $this->send_before_class_reminders('24h', 23 * HOURSECS, 25 * HOURSECS);
         $this->send_before_class_reminders('1h', 50 * MINSECS, 70 * MINSECS);
@@ -253,6 +254,57 @@ class live_session_reminders extends \core\task\scheduled_task {
 
         if ($updated > 0) {
             mtrace('PreQuran live lifecycle: marked ' . $updated . ' ended session(s) awaiting review.');
+        }
+    }
+
+    // The platform notices an ENDED ROOM, not just a passed end time. A BBB
+    // meeting ends on its own -- the last person leaves and the server expires
+    // it -- while the session row stays 'live' until the sweep above catches
+    // its scheduled_end. For an on-schedule class that gap is minutes; for a
+    // future-dated session a teacher went live on early (production,
+    // 2026-08-29: a Monday recurring session run on Saturday) it is DAYS, and
+    // the board and the student Join pill advertise a dead room the whole
+    // time. So every live row is checked against BBB itself.
+    //
+    // Retiring is safe and self-healing: the join door admits a teacher to an
+    // awaiting_review session, and every join re-creates the room and re-sets
+    // status='live' -- a teacher who comes back simply restarts the class.
+    private function retire_ended_rooms(): void {
+        global $DB;
+        if (!$this->column_exists('local_prequran_live_session', 'bbb_meeting_id')
+                || !$this->column_exists('local_prequran_live_session', 'bbb_created')
+                || !$this->column_exists('local_prequran_live_session', 'bbb_create_time')) {
+            return;
+        }
+        require_once($GLOBALS['CFG']->dirroot . '/local/prequran/locallib.php');
+        $now = time();
+        // The grace excludes rooms created moments ago: BBB reports a meeting
+        // as not running until its FIRST joiner, so a teacher mid-redirect
+        // must not have the room retired under them.
+        $sessions = $DB->get_records_select('local_prequran_live_session',
+            "status = 'live' AND bbb_created = 1 AND bbb_create_time > 0 AND bbb_create_time < :grace",
+            ['grace' => $now - 5 * MINSECS], 'id ASC',
+            'id, title, status, scheduled_end, bbb_meeting_id, bbb_create_time', 0, 100);
+        $retired = 0;
+        foreach ($sessions as $session) {
+            $running = local_prequran_bbb_is_meeting_running((string)$session->bbb_meeting_id);
+            if ($running !== false) {
+                // true = class in progress; null = no evidence (API down,
+                // blank answer). Only a definite "not running" retires a room.
+                continue;
+            }
+            $DB->update_record('local_prequran_live_session', (object)[
+                'id' => (int)$session->id, 'status' => 'awaiting_review', 'timemodified' => $now,
+            ]);
+            $this->mark_session_attempted((int)$session->id, 'session_room_ended', [
+                'oldstatus' => 'live',
+                'scheduled_end' => (int)$session->scheduled_end,
+                'reason' => 'BBB reports the room is no longer running',
+            ]);
+            $retired++;
+        }
+        if ($retired > 0) {
+            mtrace('PreQuran live lifecycle: retired ' . $retired . ' session(s) whose room has ended.');
         }
     }
 

@@ -951,6 +951,125 @@ listing globs `local/hubredirect/*.php`, so it **cannot show** a file in
 process-global and **does** clear that file's cached bytecode. Reset AFTER the
 real upload; a reset run against a failed upload just recompiles the old code.
 
+## The progress client failed silently in FIVE ways, and every one was live (2026-08-29)
+
+`shared/progress-client.js` is the write path for all six subjects. Its
+top-level rule is right — **never break the lesson** — and its implementation
+read that as *say nothing*, including when the thing to say was that a child's
+work was not reaching the school.
+
+None of these were new. They surfaced together because the live group board is
+the first consumer that needs a position report PROMPTLY, so making navigation
+flush finally pressed paths that had never been pressed. Eleven releases
+(v317-v327) went out in a day; one carried the features and ten carried these.
+
+| fault | what a learner saw | fix |
+| --- | --- | --- |
+| `flush()` coalesced onto an in-flight promise | events queued during a POST were never sent | `followUp` re-flushes after it settles |
+| a 401 threw and requeued for ever | app works, nothing reports, board says GONE | `authLost`: stop retrying, tell them once |
+| `sendBeacon` returning false was ignored while the outbox was cleared | a refused beacon on tab-hide DELETED unsent work | honour the return, keep the queue |
+| no timeout on `fetch` | one stalled request wedged `flushing` for ever — ONE attempt, then silence for the session | `AbortController` at 15s, on persist AND hydrate |
+| **the flush lock was set after the code that clears it** | exactly two updates, then silence until reload | clear from `.then()`, and never take the lock for an empty queue |
+
+**The last one is a JavaScript semantics trap and the most valuable line here.**
+It was written as
+
+```js
+flushing = (async () => {
+  const batch = loadOutbox();
+  if (!batch.length) return { accepted: 0, ok: true };   // no await on this path
+  try { … } finally { flushing = null; }
+})();
+```
+
+An async body runs **synchronously to its first `await`**, and the empty path
+has none — so the body completed and `flushing = null` fired BEFORE the
+assignment stored the settled promise. Every later flush hit
+`if (flushing) return flushing`, sent nothing, and the `.then()` that would have
+retried had already run.
+
+Always exactly two updates: two navigations flush and clear normally, then the
+20s idle timer fires on the outbox they just drained, takes the empty path, and
+wedges the client. **Moving the empty check inside the `try` does NOT fix it** —
+tried, still two — because the path is still synchronous.
+
+### `keepalive: true` is why ad blockers ate the writes
+
+Not the path. The measurement, same URL, same tab, seconds apart:
+
+```
+plain fetch                  POST …/progress/save   401
+the app's fetch (keepalive)  POST …/progress/save   ERR_BLOCKED_BY_CLIENT
+```
+
+`keepalive` marks a request beacon-type — the shape analytics SDKs use to
+exfiltrate on unload — so ad-block engines refuse it **by request type**,
+whatever the URL says. Renaming `/progress/ingest` to `/progress/save` (v322)
+therefore changed nothing; the gateway accepts both for ever because
+already-open tabs still post to the old one, but it was not the fix. `keepalive`
+bought nothing either: it exists to outlive a page, and the unload case is the
+sendBeacon branch.
+
+**ERR_BLOCKED_BY_CLIENT is invisible server-side.** No request, no access-log
+line, no status code. Every server-side check will report the stored data as
+correct, because the writes never arrived to be wrong. That cost most of a day
+of chasing a reporting chain that was fine throughout.
+
+**It needed no domain change.** A cross-site POST from `ehelacademy.b-cdn.net`
+to `ehelacademy.org` reaches the server normally — proved by the plain fetch
+getting its 401. Do not move the app onto the Moodle domain or proxy the gateway
+through the CDN for this reason.
+
+### The durable half: say it out loud, on the learner's screen
+
+`onDeliveryFailing` fires after **three** consecutive failed flushes — not one, a
+single failure is a phone changing cells and alarming a child mid-lesson is its
+own harm. Reported once, cleared on recovery, queue never touched.
+
+**Offline gets its own sentence.** A learner on a train has lost nothing; one
+whose extension is eating the writes needs to know the school cannot see their
+work. Identical to the code, opposite to a family.
+
+**The board deliberately says nothing.** A server receiving nothing cannot tell a
+blocked learner from a closed tab, so a tile claiming "unreported" would be a
+claim with no evidence behind it — the detection would have to travel the path
+that is broken. The learner's screen is the only honest place.
+
+### Two testing rules this bought the hard way
+
+- **A control derived from the thing under test is not a control.** The first
+  test of the wedge fix built its "before" fixture by string-patching the
+  CURRENT file, which already had the fix, so it compared two fixed versions and
+  reported 5 and 5. Take the fixture from `git show HEAD:<path>` — the bytes
+  actually shipped.
+- **Three of the fixes were wrong and only tests caught them**: the path rename,
+  the empty-check move, and that test. Each was obvious, reasoned, and would
+  have shipped on argument alone.
+
+### `resume` and `resumeLabel`: the tile must speak the learner's vocabulary
+
+`resume` had been declared in the progress contract, honoured by `apply_event`
+and returned by `public_state()` since it was written, and **nothing had ever
+emitted it** — dead plumbing, null on every row. The shell now sends it on
+navigation.
+
+`resumeLabel` rides beside it because the route id is not what the learner sees:
+English's `dictionary` is captioned **Vocabulary**, `lecture` is "Video lesson",
+`teacherguide` is "Teacher & Parent Guide". A tile printing the id names a
+section the teacher cannot find, so a CORRECT position reads as a stuck board —
+which cost three false investigations before anyone checked what the child's own
+screen called it.
+
+**The trap for the next person: english.js has TWO section lists.** The one
+`config.sections` passes is an array of ARRAYS — `["dictionary", "book-a",
+"Vocabulary"]`, with an optional fourth availability predicate — and all six
+subjects use that shape. Near the bottom of the same file is a list of nav CARDS
+which are OBJECTS (`{ route, title, blurb }`). Reading the object list and
+writing `entry.route`/`entry.title` matched nothing, returned `""` for every
+route, and shipped a field that was never once sent across four releases —
+while the server reported `resumeLabel: null` the whole time and that was read
+as a stale bundle. `sectionLabelOf` now accepts both shapes.
+
 ## Ehel Academy subject pipelines
 
 Science, Computing and Global Perspectives are built from Word source packs in `~/Downloads`, not hand-edited. Each is `extract → build → check`:

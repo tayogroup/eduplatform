@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: Kind and gentle; not harmful or dangerous.",
+          "prompt": "Which word means: The range of things something is able to do.",
           "choices": [
-            "benign",
-            "defect",
-            "cache"
+            "functionality",
+            "definitive",
+            "trains"
           ],
-          "answer": "benign",
-          "explanation": "benign: Kind and gentle; not harmful or dangerous."
+          "answer": "functionality",
+          "explanation": "functionality: The range of things something is able to do."
         },
         {
-          "prompt": "Which word means: To fill something up again or make it full after it has been used.",
+          "prompt": "Which word means: Something added only to make a thing look nicer, without any real purpose.",
           "choices": [
-            "benign",
-            "defect",
-            "replenish"
+            "functionality",
+            "definitive",
+            "decoration"
           ],
-          "answer": "replenish",
-          "explanation": "replenish: To fill something up again or make it full after it has been used."
+          "answer": "decoration",
+          "explanation": "decoration: Something added only to make a thing look nicer, without any real purpose."
         },
         {
-          "prompt": "Which word means: To become less strong or decrease in amount.",
+          "prompt": "Which word means: A polite and respectful word used to speak to a man, especially someone in authority.",
           "choices": [
-            "defect",
-            "abate",
-            "benign"
+            "definitive",
+            "sir",
+            "functionality"
           ],
-          "answer": "abate",
-          "explanation": "abate: To become less strong or decrease in amount."
+          "answer": "sir",
+          "explanation": "sir: A polite and respectful word used to speak to a man, especially someone in authority."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A temporary break from something difficult or unpleasant.",
-          "answer": "reprieve"
+          "clue": "A political belief that the nation's interests come before all others.",
+          "answer": "nationalism"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "To fill something up again or make it full after it has been used.",
-          "answer": "replenish"
+          "clue": "To tell a story or report something again, often in your own words.",
+          "answer": "retell"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "To exchange goods or services for other goods without using money.",
-          "answer": "barter"
+          "clue": "A group of people or things that are connected and work together.",
+          "answer": "network"
         }
       ]
     },
@@ -83,59 +83,49 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "class.",
-            "in",
-            "comfortable",
-            "feel",
-            "students",
-            "the",
-            "made",
-            "smile",
-            "benign",
-            "teacher's",
+            "cataloguing.",
+            "of",
+            "year",
+            "every",
+            "with",
+            "grew",
+            "functionality",
+            "archive's",
             "The"
           ],
-          "answer": "The teacher's benign smile made the students feel comfortable in class."
+          "answer": "The archive's functionality grew with every year of cataloguing."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "more.",
-            "with",
-            "jug",
-            "the",
-            "replenish",
-            "to",
-            "needed",
-            "we",
-            "juice,",
-            "the",
-            "all",
-            "drank",
-            "we",
-            "After"
-          ],
-          "answer": "After we drank all the juice, we needed to replenish the jug with more."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "3.14.",
-            "by",
-            "diameter",
-            "the",
-            "multiply",
-            "can",
-            "you",
-            "circle,",
+            "version.",
+            "official",
+            "newspaper's",
             "a",
-            "of",
-            "circumference",
-            "the",
-            "find",
-            "To"
+            "from",
+            "sharply",
+            "differs",
+            "often",
+            "account",
+            "participant's",
+            "A"
           ],
-          "answer": "To find the circumference of a circle, you can multiply the diameter by 3.14."
+          "answer": "A participant's account often differs sharply from a newspaper's official version."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "inspection.",
+            "Saturday",
+            "the",
+            "during",
+            "dorm",
+            "Jamal's",
+            "searched",
+            "prefect",
+            "A"
+          ],
+          "answer": "A prefect searched Jamal's dorm during the Saturday inspection."
         }
       ]
     },
@@ -232,7 +222,7 @@
       "rounds": [
         {
           "prompt": "Speaking 1: The Rebellion of Silence Retold",
-          "target": "The teacher's benign smile made the students feel comfortable in class."
+          "target": "The archive's functionality grew with every year of cataloguing."
         },
         {
           "prompt": "Speaking 3: Reported Speech Role-Play",
@@ -240,7 +230,7 @@
         },
         {
           "prompt": "Speaking 5: Vocabulary Expert Interview",
-          "target": "To find the circumference of a circle, you can multiply the diameter by 3.14."
+          "target": "A prefect searched Jamal's dorm during the Saturday inspection."
         }
       ]
     },
@@ -255,60 +245,52 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "century.",
+            "3.14.",
+            "by",
+            "diameter",
+            "the",
+            "multiply",
+            "can",
+            "you",
+            "circle,",
             "a",
-            "nearly",
-            "for",
-            "unnoticed",
-            "went",
-            "design",
-            "original",
-            "bridge's",
+            "of",
+            "circumference",
             "the",
-            "in",
-            "defect",
-            "tiny",
-            "A"
+            "find",
+            "To"
           ],
-          "answer": "A tiny defect in the bridge's original design went unnoticed for nearly a century."
+          "answer": "To find the circumference of a circle, you can multiply the diameter by 3.14."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "assistants.",
-            "loyal",
-            "most",
-            "his",
-            "even",
-            "exasperate",
-            "to",
-            "began",
-            "revisions",
-            "endless",
-            "scholar's",
-            "The"
+            "introduces.",
+            "unit",
+            "the",
+            "tool",
+            "grammar",
+            "fourth",
+            "the",
+            "is",
+            "speech",
+            "Reported"
           ],
-          "answer": "The scholar's endless revisions began to exasperate even his most loyal assistants."
+          "answer": "Reported speech is the fourth grammar tool the unit introduces."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "fields.",
-            "southern",
+            "prayers.",
+            "evening",
+            "before",
+            "students",
             "the",
-            "reached",
-            "channels",
-            "irrigation",
-            "new",
-            "the",
-            "until",
-            "abate",
-            "not",
-            "did",
-            "famine",
+            "addressed",
+            "headmaster",
             "The"
           ],
-          "answer": "The famine did not abate until the new irrigation channels reached the southern fields."
+          "answer": "The headmaster addressed the students before evening prayers."
         }
       ]
     },
@@ -321,34 +303,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'banish' mean in this unit?",
+          "prompt": "What does 'individual' mean in this unit?",
           "choices": [
-            "To send someone away or make them leave a place, often as punishment.",
-            "Kind and gentle; not harmful or dangerous.",
-            "A problem or fault in something that makes it not work properly."
+            "Considered separately, as a single one rather than as part of a group.",
+            "The range of things something is able to do.",
+            "Final and authoritative, settling the question."
           ],
-          "answer": "To send someone away or make them leave a place, often as punishment.",
-          "explanation": "banish: To send someone away or make them leave a place, often as punishment."
+          "answer": "Considered separately, as a single one rather than as part of a group.",
+          "explanation": "individual: Considered separately, as a single one rather than as part of a group."
         },
         {
-          "prompt": "What does 'roil' mean in this unit?",
+          "prompt": "What does 'punished' mean in this unit?",
           "choices": [
-            "Kind and gentle; not harmful or dangerous.",
-            "A problem or fault in something that makes it not work properly.",
-            "To make something messy or disturbed, especially water or a situation."
+            "The range of things something is able to do.",
+            "Final and authoritative, settling the question.",
+            "Made someone suffer a penalty for doing something wrong."
           ],
-          "answer": "To make something messy or disturbed, especially water or a situation.",
-          "explanation": "roil: To make something messy or disturbed, especially water or a situation."
+          "answer": "Made someone suffer a penalty for doing something wrong.",
+          "explanation": "punished: Made someone suffer a penalty for doing something wrong."
         },
         {
-          "prompt": "What does 'defect' mean in this unit?",
+          "prompt": "What does 'definitive' mean in this unit?",
           "choices": [
-            "A hidden store of things, often used to keep items safe.",
-            "A problem or fault in something that makes it not work properly.",
-            "Kind and gentle; not harmful or dangerous."
+            "Teaches or prepares someone to do something through regular practice.",
+            "Final and authoritative, settling the question.",
+            "The range of things something is able to do."
           ],
-          "answer": "A problem or fault in something that makes it not work properly.",
-          "explanation": "defect: A problem or fault in something that makes it not work properly."
+          "answer": "Final and authoritative, settling the question.",
+          "explanation": "definitive: Final and authoritative, settling the question."
         }
       ]
     },
@@ -361,34 +343,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'implore'?",
+          "prompt": "What type of word is 'tin'?",
           "choices": [
-            "Verb",
             "Noun",
+            "Verb",
             "Adjective"
           ],
-          "answer": "Verb",
-          "explanation": "Implore is used as a verb in this dictionary sense."
+          "answer": "Noun",
+          "explanation": "Tin is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'initiative'?",
+          "prompt": "What type of word is 'banish'?",
           "choices": [
-            "Verb",
+            "Noun",
             "Adjective",
-            "Noun"
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Banish is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'institutions'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
           ],
           "answer": "Noun",
-          "explanation": "Initiative is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'waver'?",
-          "choices": [
-            "Adjective",
-            "Verb",
-            "Noun"
-          ],
-          "answer": "Verb",
-          "explanation": "Waver is used as a verb in this dictionary sense."
+          "explanation": "Institutions is used as a noun in this dictionary sense."
         }
       ]
     },
@@ -404,16 +386,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "defect",
-              "A problem or fault in something that makes it not work properly."
+              "imperialism",
+              "A policy of extending a country's power over other territories."
             ],
             [
-              "cache",
-              "A hidden store of things, often used to keep items safe."
+              "restrictive",
+              "Describing a clause that identifies which one is meant."
             ],
             [
-              "ebb",
-              "To decrease or become less, especially in strength or intensity."
+              "taxation",
+              "The system of collecting money from people or businesses to fund a government."
             ]
           ]
         },
@@ -421,16 +403,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "petulant",
-              "Easily annoyed and often complaining, like a child."
+              "completed",
+              "Finished, with nothing left still happening or unresolved."
             ],
             [
-              "profound",
-              "Very deep or intense; having a strong effect or meaning."
+              "text",
+              "A piece of writing, considered as a whole rather than as separate sentences."
             ],
             [
-              "ecstatic",
-              "Extremely happy or excited."
+              "forbidden",
+              "Not allowed; banned by a rule or an order."
             ]
           ]
         },
@@ -438,16 +420,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "barter",
-              "To exchange goods or services for other goods without using money."
+              "ached",
+              "Felt a dull, continuous pain in a part of the body."
             ],
             [
-              "liberal",
-              "Open to new ideas and willing to change traditional beliefs."
+              "submission",
+              "The act of accepting someone else's authority or giving in to their control."
             ],
             [
-              "connoisseur",
-              "A person who knows a lot about something and can judge its quality."
+              "replenish",
+              "To fill something up again or make it full after it has been used."
             ]
           ]
         }

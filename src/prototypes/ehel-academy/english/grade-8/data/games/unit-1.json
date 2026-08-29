@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: Using few words to say something clearly.",
+          "prompt": "Which word means: An idea considered apart from the particular cases it came from.",
           "choices": [
-            "concise",
-            "zeal",
-            "allot"
+            "abstraction",
+            "misinformation",
+            "exist"
           ],
-          "answer": "concise",
-          "explanation": "concise: Using few words to say something clearly."
+          "answer": "abstraction",
+          "explanation": "abstraction: An idea considered apart from the particular cases it came from."
         },
         {
-          "prompt": "Which word means: Seeming reasonable or likely to be true.",
+          "prompt": "Which word means: The word or words by which a particular person, place, or thing is known.",
           "choices": [
-            "concise",
-            "zeal",
-            "plausible"
+            "abstraction",
+            "misinformation",
+            "name"
           ],
-          "answer": "plausible",
-          "explanation": "plausible: Seeming reasonable or likely to be true."
+          "answer": "name",
+          "explanation": "name: The word or words by which a particular person, place, or thing is known."
         },
         {
-          "prompt": "Which word means: Easily tricked because you believe what people say.",
+          "prompt": "Which word means: One or the other of two people or things, used to say something was true of both.",
           "choices": [
-            "zeal",
-            "gullible",
-            "concise"
+            "misinformation",
+            "either",
+            "abstraction"
           ],
-          "answer": "gullible",
-          "explanation": "gullible: Easily tricked because you believe what people say."
+          "answer": "either",
+          "explanation": "either: One or the other of two people or things, used to say something was true of both."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A structure used to block people or vehicles from passing.",
-          "answer": "barricade"
+          "clue": "Naming something by a thing closely associated with it.",
+          "answer": "metonymy"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Seeming reasonable or likely to be true.",
-          "answer": "plausible"
+          "clue": "A profile used to post and share content online, or a description of what happened.",
+          "answer": "account"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Easily tricked because you believe what people say.",
-          "answer": "gullible"
+          "clue": "A place, often outdoors, where people buy and sell goods.",
+          "answer": "market"
         }
       ]
     },
@@ -83,57 +83,53 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "story.",
+            "unfairly.",
+            "treated",
+            "is",
+            "somebody",
+            "until",
+            "abstraction",
+            "an",
+            "is",
+            "Justice"
+          ],
+          "answer": "Justice is an abstraction until somebody is treated unfairly."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "questioned.",
+            "be",
+            "could",
+            "nobody",
+            "so",
+            "claim,",
             "the",
+            "behind",
+            "name",
+            "a",
+            "put",
+            "Nobody"
+          ],
+          "answer": "Nobody put a name behind the claim, so nobody could be questioned."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "help.",
+            "for",
+            "waiting",
             "of",
-            "summary",
-            "concise",
-            "a",
-            "write",
-            "to",
-            "us",
-            "asked",
-            "teacher",
-            "The"
-          ],
-          "answer": "The teacher asked us to write a concise summary of the story."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "early.",
-            "up",
-            "waking",
-            "to",
-            "myself",
-            "accustom",
-            "to",
-            "while",
-            "a",
-            "me",
-            "took",
-            "It"
-          ],
-          "answer": "It took me a while to accustom myself to waking up early."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "better.",
-            "played",
-            "team",
-            "other",
+            "instead",
+            "ourselves",
+            "problem",
             "the",
-            "that",
-            "concede",
+            "solve",
             "to",
-            "had",
-            "captain",
-            "the",
-            "losing,",
-            "After"
+            "decided",
+            "We"
           ],
-          "answer": "After losing, the captain had to concede that the other team played better."
+          "answer": "We decided to solve the problem ourselves instead of waiting for help."
         }
       ]
     },
@@ -230,11 +226,11 @@
       "rounds": [
         {
           "prompt": "Speaking 1: Contrast Debate",
-          "target": "The teacher asked us to write a concise summary of the story."
+          "target": "Justice is an abstraction until somebody is treated unfairly."
         },
         {
           "prompt": "Speaking 3: Discussion Circle",
-          "target": "It took me a while to accustom myself to waking up early."
+          "target": "Nobody put a name behind the claim, so nobody could be questioned."
         },
         {
           "prompt": "Speaking 5: Explain and Respond",
@@ -253,56 +249,51 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "real.",
-            "was",
-            "prank",
-            "the",
-            "believed",
-            "she",
-            "that",
-            "gullible",
-            "so",
-            "was",
-            "She"
-          ],
-          "answer": "She was so gullible that she believed the prank was real."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "exam.",
+            "uniform.",
+            "school",
+            "new",
             "the",
             "about",
-            "fears",
-            "students'",
+            "students",
             "the",
-            "dispel",
-            "to",
-            "tried",
-            "teacher",
-            "The"
+            "among",
+            "dissent",
+            "was",
+            "There"
           ],
-          "answer": "The teacher tried to dispel the students' fears about the exam."
+          "answer": "There was dissent among the students about the new school uniform."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "thinking.",
-            "critical",
-            "their",
-            "silence",
-            "will",
-            "slogans",
-            "flashy",
-            "assuming",
-            "gullible,",
-            "as",
-            "teenagers",
-            "treat",
-            "sometimes",
-            "Advertisers"
+            "sign.",
+            "warning",
+            "a",
+            "itself",
+            "was",
+            "which",
+            "author,",
+            "no",
+            "had",
+            "flyer",
+            "The"
           ],
-          "answer": "Advertisers sometimes treat teenagers as gullible, assuming flashy slogans will silence their critical thinking."
+          "answer": "The flyer had no author, which was itself a warning sign."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "Sami?",
+            "crowd,",
+            "a",
+            "follow",
+            "to",
+            "wise",
+            "always",
+            "it",
+            "Is"
+          ],
+          "answer": "Is it always wise to follow a crowd, Sami?"
         }
       ]
     },
@@ -315,34 +306,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'dissent' mean in this unit?",
+          "prompt": "What does 'would' mean in this unit?",
           "choices": [
-            "Disagreement or difference of opinion.",
-            "Using few words to say something clearly.",
-            "A strong feeling of enthusiasm and eagerness."
+            "A word used to talk about something that was likely, expected, or imagined.",
+            "An idea considered apart from the particular cases it came from.",
+            "Misinformation is false or inaccurate information that is spread, often without the person realising it is wrong."
           ],
-          "answer": "Disagreement or difference of opinion.",
-          "explanation": "dissent: Disagreement or difference of opinion."
+          "answer": "A word used to talk about something that was likely, expected, or imagined.",
+          "explanation": "would: A word used to talk about something that was likely, expected, or imagined."
         },
         {
-          "prompt": "What does 'conscientious' mean in this unit?",
+          "prompt": "What does 'outlet' mean in this unit?",
           "choices": [
-            "Using few words to say something clearly.",
-            "A strong feeling of enthusiasm and eagerness.",
-            "Careful and thorough; paying attention to doing things well."
+            "An idea considered apart from the particular cases it came from.",
+            "Misinformation is false or inaccurate information that is spread, often without the person realising it is wrong.",
+            "A business or organisation, especially one that publishes news or sells goods."
           ],
-          "answer": "Careful and thorough; paying attention to doing things well.",
-          "explanation": "conscientious: Careful and thorough; paying attention to doing things well."
+          "answer": "A business or organisation, especially one that publishes news or sells goods.",
+          "explanation": "outlet: A business or organisation, especially one that publishes news or sells goods."
         },
         {
-          "prompt": "What does 'zeal' mean in this unit?",
+          "prompt": "What does 'misinformation' mean in this unit?",
           "choices": [
-            "To give or set aside a certain amount for a specific purpose.",
-            "A strong feeling of enthusiasm and eagerness.",
-            "Using few words to say something clearly."
+            "To exist means to be real or to be present in the world.",
+            "Misinformation is false or inaccurate information that is spread, often without the person realising it is wrong.",
+            "An idea considered apart from the particular cases it came from."
           ],
-          "answer": "A strong feeling of enthusiasm and eagerness.",
-          "explanation": "zeal: A strong feeling of enthusiasm and eagerness."
+          "answer": "Misinformation is false or inaccurate information that is spread, often without the person realising it is wrong.",
+          "explanation": "misinformation: Misinformation is false or inaccurate information that is spread, often without the person realising it is wrong."
         }
       ]
     },
@@ -355,34 +346,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'impending'?",
+          "prompt": "What type of word is 'imports'?",
           "choices": [
-            "Adjective",
             "Noun",
-            "Verb"
+            "Verb",
+            "Adjective"
           ],
-          "answer": "Adjective",
-          "explanation": "Impending is used as an adjective in this dictionary sense."
+          "answer": "Noun",
+          "explanation": "Imports is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'cite'?",
+          "prompt": "What type of word is 'dispelled'?",
           "choices": [
             "Noun",
             "Adjective",
             "Verb"
           ],
           "answer": "Verb",
-          "explanation": "Cite is used as a verb in this dictionary sense."
+          "explanation": "Dispelled is used as a verb in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'quibble'?",
+          "prompt": "What type of word is 'faith'?",
           "choices": [
             "Adjective",
             "Noun",
             "Verb"
           ],
           "answer": "Noun",
-          "explanation": "Quibble is used as a noun in this dictionary sense."
+          "explanation": "Faith is used as a noun in this dictionary sense."
         }
       ]
     },
@@ -398,16 +389,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "zeal",
-              "A strong feeling of enthusiasm and eagerness."
+              "assimilation",
+              "The process by which one group takes on the culture of another."
             ],
             [
-              "allot",
-              "To give or set aside a certain amount for a specific purpose."
+              "third",
+              "Third means coming immediately after the second, in position or order."
             ],
             [
-              "assimilate",
-              "To learn and understand new information and make it part of your knowledge."
+              "might",
+              "A word used to say that something is possible but not certain."
             ]
           ]
         },
@@ -415,16 +406,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "dissent",
-              "Disagreement or difference of opinion."
+              "questioned",
+              "Asked about closely, especially in order to check facts or test whether something is true."
             ],
             [
-              "rueful",
-              "Feeling sad or sorry about something you did."
+              "popular",
+              "Liked, enjoyed, or supported by a large number of people."
             ],
             [
-              "shrewd",
-              "Having good judgement; able to make smart decisions."
+              "bit",
+              "Used the teeth to cut into or grip something."
             ]
           ]
         },
@@ -432,16 +423,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "serenity",
-              "A state of being calm and peaceful."
+              "warily",
+              "In a cautious way, as if expecting danger or trouble."
             ],
             [
-              "embargo",
-              "A law or order that stops trade or limits what can be sold."
+              "fist",
+              "A hand with the fingers curled tightly into the palm."
             ],
             [
-              "revelation",
-              "A surprising or important fact that is made known."
+              "right",
+              "Correct, true, or morally acceptable."
             ]
           ]
         }

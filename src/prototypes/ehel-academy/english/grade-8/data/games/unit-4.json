@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: A natural ability to do something well.",
+          "prompt": "Which word means: Spreading control out from the centre to smaller units.",
           "choices": [
-            "aptitude",
-            "cunning",
-            "concession"
+            "decentralisation",
+            "modality",
+            "dubbed"
           ],
-          "answer": "aptitude",
-          "explanation": "aptitude: A natural ability to do something well."
+          "answer": "decentralisation",
+          "explanation": "decentralisation: Spreading control out from the centre to smaller units."
         },
         {
-          "prompt": "Which word means: Small and delicate in a way that is attractive.",
+          "prompt": "Which word means: Absolutely necessary; something that cannot be left out or done without.",
           "choices": [
-            "aptitude",
-            "cunning",
-            "dainty"
+            "decentralisation",
+            "modality",
+            "essential"
           ],
-          "answer": "dainty",
-          "explanation": "dainty: Small and delicate in a way that is attractive."
+          "answer": "essential",
+          "explanation": "essential: Absolutely necessary; something that cannot be left out or done without."
         },
         {
-          "prompt": "Which word means: To rise and move in large waves or clouds.",
+          "prompt": "Which word means: The chance that something particular will or will not happen.",
           "choices": [
-            "cunning",
-            "billow",
-            "aptitude"
+            "modality",
+            "odds",
+            "decentralisation"
           ],
-          "answer": "billow",
-          "explanation": "billow: To rise and move in large waves or clouds."
+          "answer": "odds",
+          "explanation": "odds: The chance that something particular will or will not happen."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A person or group that opposes or fights against another.",
-          "answer": "adversary"
+          "clue": "The organised study of data to find patterns and inform decisions.",
+          "answer": "analytics"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Angry and ready to fight or argue.",
-          "answer": "belligerent"
+          "clue": "Relating to the government or to the process of governing a country.",
+          "answer": "political"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Something that makes a lot of money or profit.",
-          "answer": "lucrative"
+          "clue": "To feel very confident that something is true, often said informally.",
+          "answer": "bet"
         }
       ]
     },
@@ -83,56 +83,53 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "quickly.",
-            "languages",
-            "new",
-            "learning",
-            "for",
-            "aptitude",
-            "great",
-            "a",
-            "has",
-            "She"
+            "affected.",
+            "people",
+            "the",
+            "to",
+            "closer",
+            "decisions",
+            "the",
+            "moved",
+            "Decentralisation"
           ],
-          "answer": "She has a great aptitude for learning new languages quickly."
+          "answer": "Decentralisation moved the decisions closer to the people affected."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "dinner.",
-            "cooked",
-            "mother",
-            "my",
-            "as",
-            "kitchen",
+            "Friday.",
+            "on",
+            "time",
+            "free",
+            "extra",
+            "students",
             "the",
-            "filled",
-            "garlic",
+            "earned",
+            "class",
+            "in",
+            "behaviour",
+            "Good"
+          ],
+          "answer": "Good behaviour in class earned the students extra free time on Friday."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "down.",
+            "team",
+            "his",
+            "letting",
+            "after",
+            "shame",
             "of",
-            "smell",
-            "pungent",
-            "The"
+            "sense",
+            "deep",
+            "a",
+            "felt",
+            "Rohan"
           ],
-          "answer": "The pungent smell of garlic filled the kitchen as my mother cooked dinner."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "end.",
-            "an",
-            "to",
-            "came",
-            "party",
-            "the",
-            "as",
-            "diminish",
-            "to",
-            "began",
-            "music",
-            "loud",
-            "The"
-          ],
-          "answer": "The loud music began to diminish as the party came to an end."
+          "answer": "Rohan felt a deep sense of shame after letting his team down."
         }
       ]
     },
@@ -148,7 +145,7 @@
           "prompt": "Choose the missing word from Code Name: Bonanza, part 1: Imani felt the _____ diminish. Their odds shrank like morning mist.",
           "choices": [
             "momentum",
-            "demeanour",
+            "demeanor",
             "bonanza",
             "concession"
           ],
@@ -229,11 +226,11 @@
       "rounds": [
         {
           "prompt": "Speaking 1: My Advertising Story",
-          "target": "She has a great aptitude for learning new languages quickly."
+          "target": "Decentralisation moved the decisions closer to the people affected."
         },
         {
           "prompt": "Speaking 3: Six-Minute Ethics Argument",
-          "target": "The pungent smell of garlic filled the kitchen as my mother cooked dinner."
+          "target": "Good behaviour in class earned the students extra free time on Friday."
         },
         {
           "prompt": "Speaking 5: Calm Authority Read-Aloud",
@@ -252,59 +249,52 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "around.",
-            "one",
-            "no",
-            "with",
-            "desolate",
-            "looked",
-            "beach",
-            "the",
-            "storm,",
-            "the",
-            "After"
-          ],
-          "answer": "After the storm, the beach looked desolate with no one around."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "money.",
-            "the",
-            "holding",
-            "parents",
-            "very",
-            "the",
-            "offended",
-            "but",
-            "teenagers",
-            "amused",
-            "tone",
-            "insolent",
-            "brand's",
+            "metal.",
+            "strong",
+            "light,",
+            "a",
+            "from",
+            "made",
+            "was",
+            "frame",
+            "drone's",
             "The"
           ],
-          "answer": "The brand's insolent tone amused teenagers but offended the very parents holding the money."
+          "answer": "The drone's frame was made from a light, strong metal."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "contradicted.",
-            "flatly",
-            "data",
-            "own",
-            "its",
-            "claims",
-            "for",
-            "company",
-            "the",
-            "chastise",
+            "school.",
+            "at",
+            "handwashing",
+            "encourage",
             "to",
-            "moved",
-            "regulator",
+            "posters",
+            "persuasive",
+            "used",
+            "campaign",
+            "health",
             "The"
           ],
-          "answer": "The regulator moved to chastise the company for claims its own data flatly contradicted."
+          "answer": "The health campaign used persuasive posters to encourage handwashing at school."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "bins.",
+            "labelled",
+            "into",
+            "items",
+            "sorting",
+            "dream,",
+            "a",
+            "like",
+            "hovered",
+            "drone",
+            "Their"
+          ],
+          "answer": "Their drone hovered like a dream, sorting items into labelled bins."
         }
       ]
     },
@@ -317,34 +307,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'intricate' mean in this unit?",
+          "prompt": "What does 'influencers' mean in this unit?",
           "choices": [
-            "Very detailed and complicated, with many small parts or patterns.",
-            "A natural ability to do something well.",
-            "Having the ability to achieve things in a clever and often deceptive way."
+            "Influencers are people, often on social media, who can affect what their followers think, buy or believe.",
+            "Spreading control out from the centre to smaller units.",
+            "How certain or obligatory a statement is made to sound."
           ],
-          "answer": "Very detailed and complicated, with many small parts or patterns.",
-          "explanation": "intricate: Very detailed and complicated, with many small parts or patterns."
+          "answer": "Influencers are people, often on social media, who can affect what their followers think, buy or believe.",
+          "explanation": "influencers: Influencers are people, often on social media, who can affect what their followers think, buy or believe."
         },
         {
-          "prompt": "What does 'bleak' mean in this unit?",
+          "prompt": "What does 'approval' mean in this unit?",
           "choices": [
-            "A natural ability to do something well.",
-            "Having the ability to achieve things in a clever and often deceptive way.",
-            "Something that is cold, empty, and without hope or happiness."
+            "Spreading control out from the centre to smaller units.",
+            "How certain or obligatory a statement is made to sound.",
+            "A feeling or expression of agreement that something is good."
           ],
-          "answer": "Something that is cold, empty, and without hope or happiness.",
-          "explanation": "bleak: Something that is cold, empty, and without hope or happiness."
+          "answer": "A feeling or expression of agreement that something is good.",
+          "explanation": "approval: A feeling or expression of agreement that something is good."
         },
         {
-          "prompt": "What does 'cunning' mean in this unit?",
+          "prompt": "What does 'modality' mean in this unit?",
           "choices": [
-            "Something that is given up or allowed in order to reach an agreement.",
-            "Having the ability to achieve things in a clever and often deceptive way.",
-            "A natural ability to do something well."
+            "To be dubbed something means to be given a particular name or nickname.",
+            "How certain or obligatory a statement is made to sound.",
+            "Spreading control out from the centre to smaller units."
           ],
-          "answer": "Having the ability to achieve things in a clever and often deceptive way.",
-          "explanation": "cunning: Having the ability to achieve things in a clever and often deceptive way."
+          "answer": "How certain or obligatory a statement is made to sound.",
+          "explanation": "modality: How certain or obligatory a statement is made to sound."
         }
       ]
     },
@@ -357,34 +347,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'dub'?",
-          "choices": [
-            "Verb",
-            "Noun",
-            "Adjective"
-          ],
-          "answer": "Verb",
-          "explanation": "Dub is used as a verb in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'obsolete'?",
+          "prompt": "What type of word is 'shame'?",
           "choices": [
             "Noun",
             "Verb",
             "Adjective"
           ],
-          "answer": "Adjective",
-          "explanation": "Obsolete is used as an adjective in this dictionary sense."
+          "answer": "Noun",
+          "explanation": "Shame is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'insolent'?",
+          "prompt": "What type of word is 'accord'?",
           "choices": [
             "Verb",
             "Adjective",
             "Noun"
           ],
-          "answer": "Adjective",
-          "explanation": "Insolent is used as an adjective in this dictionary sense."
+          "answer": "Noun",
+          "explanation": "Accord is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'principle'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Principle is used as a noun in this dictionary sense."
         }
       ]
     },
@@ -400,16 +390,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "cunning",
-              "Having the ability to achieve things in a clever and often deceptive way."
+              "disinformation",
+              "False information spread deliberately to deceive people."
             ],
             [
-              "concession",
-              "Something that is given up or allowed in order to reach an agreement."
+              "trader",
+              "A trader is a person who buys and sells goods, often in a market or shop."
             ],
             [
-              "pungent",
-              "Having a strong smell or taste that is often sharp or biting."
+              "toothpaste",
+              "Toothpaste is a paste used with a toothbrush to clean teeth."
             ]
           ]
         },
@@ -417,16 +407,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "intricate",
-              "Very detailed and complicated, with many small parts or patterns."
+              "billion",
+              "The number one thousand million, written as 1,000,000,000."
             ],
             [
-              "emerge",
-              "To come out or appear from somewhere."
+              "regulation",
+              "A regulation is an official rule made by an authority to control how something is done."
             ],
             [
-              "undulate",
-              "To move in waves or with a smooth, wavy motion."
+              "battlefield",
+              "A battlefield is a place of intense conflict, or a scene of fierce competition or argument."
             ]
           ]
         },
@@ -434,16 +424,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "elusive",
-              "Difficult to find, catch, or achieve."
+              "slammed",
+              "Put something down or shut something suddenly, forcefully, and loudly."
             ],
             [
-              "desolate",
-              "Feeling very sad and lonely; a place that is empty and has no people or life."
+              "tense",
+              "Anxious, nervous, or unable to relax because of stress or worry."
             ],
             [
-              "capacious",
-              "Having a lot of space; able to hold a lot of things."
+              "aptitude",
+              "A natural ability to do something well."
             ]
           ]
         }
@@ -509,7 +499,7 @@
             "Something that is given up or allowed in order to reach an agreement."
           ],
           "answer": "A natural ability to do something well.",
-          "explanation": "Aptitude is a natural talent, as in the story where Imani is known for her sharp aptitude in algorithms; the other options define demeanour, gusto and concession."
+          "explanation": "Aptitude is a natural talent, as in the story where Imani is known for her sharp aptitude in algorithms; the other options define demeanor, gusto and concession."
         },
         {
           "prompt": "What does 'concession' mean?",

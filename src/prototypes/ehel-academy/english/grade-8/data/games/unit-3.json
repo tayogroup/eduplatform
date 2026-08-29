@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: To stop something from happening or developing; to hold back.",
+          "prompt": "Which word means: How far two things can fairly be measured against each other.",
           "choices": [
-            "stifle",
-            "commemorate",
-            "advocate"
+            "comparability",
+            "civic",
+            "gradual"
           ],
-          "answer": "stifle",
-          "explanation": "stifle: To stop something from happening or developing; to hold back."
+          "answer": "comparability",
+          "explanation": "comparability: How far two things can fairly be measured against each other."
         },
         {
-          "prompt": "Which word means: The ability to develop into something greater in the future.",
+          "prompt": "Which word means: A lack of proper care or attention that causes something to become worse.",
           "choices": [
-            "stifle",
-            "commemorate",
-            "potential"
+            "comparability",
+            "civic",
+            "neglect"
           ],
-          "answer": "potential",
-          "explanation": "potential: The ability to develop into something greater in the future."
+          "answer": "neglect",
+          "explanation": "neglect: A lack of proper care or attention that causes something to become worse."
         },
         {
-          "prompt": "Which word means: Happening occasionally or at irregular intervals; not steady.",
+          "prompt": "Which word means: Moving steadily and continuously in one direction, often used to describe sound or waves.",
           "choices": [
-            "commemorate",
-            "sporadic",
-            "stifle"
+            "civic",
+            "rolling",
+            "comparability"
           ],
-          "answer": "sporadic",
-          "explanation": "sporadic: Happening occasionally or at irregular intervals; not steady."
+          "answer": "rolling",
+          "explanation": "rolling: Moving steadily and continuously in one direction, often used to describe sound or waves."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "To become smaller, less strong, or less important over time.",
-          "answer": "wane"
+          "clue": "The amount of salt dissolved in water or soil.",
+          "answer": "salinity"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A feeling of doubt or worry about something.",
-          "answer": "misgiving"
+          "clue": "Having the most activity or work; the superlative of busy.",
+          "answer": "busiest"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Feeling sad and disappointed.",
-          "answer": "dejected"
+          "clue": "Large fires built outdoors, often for warmth, celebration or storytelling.",
+          "answer": "bonfires"
         }
       ]
     },
@@ -83,56 +83,53 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "wane.",
-            "to",
-            "began",
-            "party",
-            "the",
-            "at",
-            "excitement",
-            "the",
-            "on,",
-            "went",
-            "evening",
-            "the",
-            "As"
+            "questions.",
+            "different",
+            "asked",
+            "they",
+            "because",
+            "comparability",
+            "lack",
+            "surveys",
+            "two",
+            "The"
           ],
-          "answer": "As the evening went on, the excitement at the party began to wane."
+          "answer": "The two surveys lack comparability because they asked different questions."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "again.",
-            "cancelled",
-            "was",
-            "meeting",
+            "ceremony.",
+            "small",
+            "a",
+            "with",
+            "clean-up",
+            "harbour",
             "the",
-            "when",
-            "exasperation",
-            "in",
-            "sighed",
-            "She"
+            "of",
+            "anniversary",
+            "the",
+            "marking",
+            "is",
+            "council",
+            "The"
           ],
-          "answer": "She sighed in exasperation when the meeting was cancelled again."
+          "answer": "The council is marking the anniversary of the harbour clean-up with a small ceremony."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "bench.",
+            "door.",
             "the",
-            "on",
-            "quietly",
-            "sat",
+            "towards",
+            "pointed",
             "and",
-            "dejected",
-            "felt",
-            "he",
-            "game,",
-            "the",
-            "losing",
-            "After"
+            "gently",
+            "Imani",
+            "nudged",
+            "Jamal"
           ],
-          "answer": "After losing the game, he felt dejected and sat quietly on the bench."
+          "answer": "Jamal nudged Imani gently and pointed towards the door."
         }
       ]
     },
@@ -229,15 +226,15 @@
       "rounds": [
         {
           "prompt": "Speaking 1: Discussing the story",
-          "target": "As the evening went on, the excitement at the party began to wane."
+          "target": "The two surveys lack comparability because they asked different questions."
         },
         {
           "prompt": "Speaking 3: Mini-speech",
-          "target": "She sighed in exasperation when the meeting was cancelled again."
+          "target": "The council is marking the anniversary of the harbour clean-up with a small ceremony."
         },
         {
           "prompt": "Speaking 5: Vocabulary Expert Interview",
-          "target": "After losing the game, he felt dejected and sat quietly on the bench."
+          "target": "Jamal nudged Imani gently and pointed towards the door."
         }
       ]
     },
@@ -252,59 +249,55 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "display.",
-            "photo",
-            "a",
-            "with",
-            "clean-up",
-            "harbour",
-            "first",
+            "day.",
             "the",
-            "commemorate",
-            "will",
-            "school",
-            "the",
-            "month",
-            "Next"
-          ],
-          "answer": "Next month the school will commemorate the first harbour clean-up with a photo display."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "deadline.",
-            "the",
-            "before",
-            "time",
-            "third",
-            "the",
-            "for",
-            "jammed",
-            "printer",
-            "the",
-            "as",
-            "grew",
-            "exasperation",
-            "Her"
-          ],
-          "answer": "Her exasperation grew as the printer jammed for the third time before the deadline."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "ease.",
-            "at",
-            "players",
-            "nervous",
-            "the",
-            "put",
-            "manner",
-            "amiable",
-            "coach's",
-            "new",
+            "throughout",
+            "going",
+            "and",
+            "coming",
+            "sporadic,",
+            "was",
+            "rain",
             "The"
           ],
-          "answer": "The new coach's amiable manner put the nervous players at ease."
+          "answer": "The rain was sporadic, coming and going throughout the day."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "morning.",
+            "clean-up",
+            "every",
+            "for",
+            "equipment",
+            "other",
+            "and",
+            "sacks",
+            "gloves,",
+            "supplied",
+            "council",
+            "The"
+          ],
+          "answer": "The council supplied gloves, sacks and other equipment for every clean-up morning."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "long?",
+            "so",
+            "for",
+            "polluted",
+            "stayed",
+            "bay",
+            "the",
+            "why",
+            "reason",
+            "logical",
+            "a",
+            "there",
+            "Is"
+          ],
+          "answer": "Is there a logical reason why the bay stayed polluted for so long?"
         }
       ]
     },
@@ -317,34 +310,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'misgiving' mean in this unit?",
+          "prompt": "What does 'personal' mean in this unit?",
           "choices": [
-            "A feeling of doubt or worry about something.",
-            "To stop something from happening or developing; to hold back.",
-            "To remember and honour someone or something, often with a ceremony."
+            "Belonging to or concerning a particular person; private or individual.",
+            "How far two things can fairly be measured against each other.",
+            "Relating to a city, town or the duties and rights of its citizens."
           ],
-          "answer": "A feeling of doubt or worry about something.",
-          "explanation": "misgiving: A feeling of doubt or worry about something."
+          "answer": "Belonging to or concerning a particular person; private or individual.",
+          "explanation": "personal: Belonging to or concerning a particular person; private or individual."
         },
         {
-          "prompt": "What does 'telltale' mean in this unit?",
+          "prompt": "What does 'kids' mean in this unit?",
           "choices": [
-            "To stop something from happening or developing; to hold back.",
-            "To remember and honour someone or something, often with a ceremony.",
-            "Showing or revealing information about something; a revealing sign."
+            "How far two things can fairly be measured against each other.",
+            "Relating to a city, town or the duties and rights of its citizens.",
+            "Kids is an informal word for children."
           ],
-          "answer": "Showing or revealing information about something; a revealing sign.",
-          "explanation": "telltale: Showing or revealing information about something; a revealing sign."
+          "answer": "Kids is an informal word for children.",
+          "explanation": "kids: Kids is an informal word for children."
         },
         {
-          "prompt": "What does 'commemorate' mean in this unit?",
+          "prompt": "What does 'civic' mean in this unit?",
           "choices": [
-            "Verb: to publicly support or recommend. Noun: a person who supports a cause.",
-            "To remember and honour someone or something, often with a ceremony.",
-            "To stop something from happening or developing; to hold back."
+            "Happening slowly and steadily over time, rather than suddenly.",
+            "Relating to a city, town or the duties and rights of its citizens.",
+            "How far two things can fairly be measured against each other."
           ],
-          "answer": "To remember and honour someone or something, often with a ceremony.",
-          "explanation": "commemorate: To remember and honour someone or something, often with a ceremony."
+          "answer": "Relating to a city, town or the duties and rights of its citizens.",
+          "explanation": "civic: Relating to a city, town or the duties and rights of its citizens."
         }
       ]
     },
@@ -357,34 +350,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'omniscient'?",
+          "prompt": "What type of word is 'except'?",
+          "choices": [
+            "Preposition",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Preposition",
+          "explanation": "Except is used as a preposition in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'exasperation'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Exasperation is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'galleries'?",
           "choices": [
             "Adjective",
             "Noun",
             "Verb"
           ],
-          "answer": "Adjective",
-          "explanation": "Omniscient is used as an adjective in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'durable'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Adjective",
-          "explanation": "Durable is used as an adjective in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'facilitate'?",
-          "choices": [
-            "Adjective",
-            "Verb",
-            "Noun"
-          ],
-          "answer": "Verb",
-          "explanation": "Facilitate is used as a verb in this dictionary sense."
+          "answer": "Noun",
+          "explanation": "Galleries is used as a noun in this dictionary sense."
         }
       ]
     },
@@ -400,16 +393,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "commemorate",
-              "To remember and honour someone or something, often with a ceremony."
+              "contradiction",
+              "A statement or situation that conflicts with another."
             ],
             [
-              "advocate",
-              "Verb: to publicly support or recommend. Noun: a person who supports a cause."
+              "torn",
+              "Ripped or pulled apart so that something is damaged."
             ],
             [
-              "illuminate",
-              "To light up or make brighter; to make something clear or easier to understand."
+              "gloves",
+              "Coverings worn on the hands to protect them."
             ]
           ]
         },
@@ -417,16 +410,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "misgiving",
-              "A feeling of doubt or worry about something."
+              "considering",
+              "Thinking carefully about something before making a decision."
             ],
             [
-              "banter",
-              "Friendly and playful conversation or teasing."
+              "trusting",
+              "Believing that someone or something is honest, reliable, or true."
             ],
             [
-              "dire",
-              "Very serious or urgent; needing immediate attention."
+              "shrugged",
+              "Raised and dropped the shoulders briefly to show that you do not know or do not mind something."
             ]
           ]
         },
@@ -434,16 +427,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "dejected",
-              "Feeling sad and disappointed."
+              "affixed",
+              "Fixed or attached something firmly to another object."
             ],
             [
-              "succinct",
-              "Expressing something clearly and in few words."
+              "coast",
+              "The coast is the land next to the sea."
             ],
             [
-              "exuberant",
-              "Full of energy, excitement, and happiness."
+              "affix",
+              "To attach or stick something to another thing."
             ]
           ]
         }

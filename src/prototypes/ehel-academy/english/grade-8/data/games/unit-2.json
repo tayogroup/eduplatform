@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: To feel very happy and excited, especially because of a success or victory.",
+          "prompt": "Which word means: The quality of being genuinely what something claims to be.",
           "choices": [
-            "exult",
-            "usurp",
-            "obstruct"
+            "authenticity",
+            "complement",
+            "moulded"
           ],
-          "answer": "exult",
-          "explanation": "exult: To feel very happy and excited, especially because of a success or victory."
+          "answer": "authenticity",
+          "explanation": "authenticity: The quality of being genuinely what something claims to be."
         },
         {
-          "prompt": "Which word means: To speak to someone in a way that shows you are angry because they did something wrong.",
+          "prompt": "Which word means: To collect or bring together information, people, or things.",
           "choices": [
-            "exult",
-            "usurp",
-            "rebuke"
+            "authenticity",
+            "complement",
+            "gather"
           ],
-          "answer": "rebuke",
-          "explanation": "rebuke: To speak to someone in a way that shows you are angry because they did something wrong."
+          "answer": "gather",
+          "explanation": "gather: To collect or bring together information, people, or things."
         },
         {
-          "prompt": "Which word means: Very skilled or good at something.",
+          "prompt": "Which word means: Dark means having little or no light.",
           "choices": [
-            "usurp",
-            "adept",
-            "exult"
+            "complement",
+            "dark",
+            "authenticity"
           ],
-          "answer": "adept",
-          "explanation": "adept: Very skilled or good at something."
+          "answer": "dark",
+          "explanation": "dark: Dark means having little or no light."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "To feel strong dislike or hatred for something or someone.",
-          "answer": "loathe"
+          "clue": "A reaction in which a substance loses electrons, often to oxygen.",
+          "answer": "oxidation"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "To speak to someone in a way that shows you are angry because they did something wrong.",
-          "answer": "rebuke"
+          "clue": "The basic character or quality of something, or the natural world.",
+          "answer": "nature"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Very skilled or good at something.",
-          "answer": "adept"
+          "clue": "Accessed means gained entry to or used something, such as a computer system.",
+          "answer": "accessed"
         }
       ]
     },
@@ -83,61 +83,54 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "minutes.",
-            "two",
-            "every",
-            "news",
+            "shipped.",
+            "batch",
             "the",
-            "interrupt",
-            "that",
-            "adverts",
-            "loathe",
-            "they",
-            "station",
-            "the",
-            "told",
-            "Listeners"
+            "before",
+            "checked",
+            "was",
+            "authenticity",
+            "label's",
+            "The"
           ],
-          "answer": "Listeners told the station they loathe adverts that interrupt the news every two minutes."
+          "answer": "The label's authenticity was checked before the batch shipped."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "about.",
-            "cared",
-            "residents",
-            "the",
-            "detail",
-            "every",
-            "out",
-            "left",
-            "gardens",
-            "the",
+            "ignored.",
+            "often",
+            "are",
+            "it",
             "about",
-            "narrative",
-            "official",
+            "writes",
+            "anyone",
+            "before",
+            "problem",
+            "a",
+            "feel",
+            "who",
+            "people",
             "The"
           ],
-          "answer": "The official narrative about the gardens left out every detail the residents cared about."
+          "answer": "The people who feel a problem before anyone writes about it are often ignored."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "everyone.",
-            "for",
-            "effortless",
-            "be",
-            "would",
-            "recycling",
-            "that",
-            "promise",
-            "implicit",
-            "an",
-            "made",
-            "poster",
+            "recording.",
+            "the",
+            "of",
+            "middle",
+            "the",
+            "in",
+            "dark",
+            "went",
+            "suddenly",
+            "screen",
             "The"
           ],
-          "answer": "The poster made an implicit promise that recycling would be effortless for everyone."
+          "answer": "The screen suddenly went dark in the middle of the recording."
         }
       ]
     },
@@ -234,7 +227,7 @@
       "rounds": [
         {
           "prompt": "Speaking 1: Vocabulary Expert Interview",
-          "target": "Listeners told the station they loathe adverts that interrupt the news every two minutes."
+          "target": "The label's authenticity was checked before the batch shipped."
         },
         {
           "prompt": "Speaking 3: Six-Minute Unit Argument",
@@ -242,7 +235,7 @@
         },
         {
           "prompt": "Speaking 5: Compare the Two Versions",
-          "target": "The poster made an implicit promise that recycling would be effortless for everyone."
+          "target": "The screen suddenly went dark in the middle of the recording."
         }
       ]
     },
@@ -257,56 +250,54 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "sad.",
-            "was",
-            "she",
-            "see",
-            "could",
-            "everyone",
-            "but",
-            "happiness,",
-            "feign",
-            "to",
-            "tried",
-            "She"
+            "everything.",
+            "changed",
+            "clause",
+            "buried",
+            "one",
+            "yet",
+            "monotonous,",
+            "felt",
+            "aloud",
+            "contract",
+            "the",
+            "Reading"
           ],
-          "answer": "She tried to feign happiness, but everyone could see she was sad."
+          "answer": "Reading the contract aloud felt monotonous, yet one buried clause changed everything."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "trip.",
-            "school",
+            "document.",
+            "missing",
             "the",
-            "before",
-            "excitement",
-            "students'",
-            "the",
-            "quell",
+            "request",
             "to",
-            "tried",
-            "teacher",
+            "office",
+            "council",
+            "the",
+            "visited",
+            "reporter",
             "The"
           ],
-          "answer": "The teacher tried to quell the students' excitement before the school trip."
+          "answer": "The reporter visited the council office to request the missing document."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "songs.",
-            "many",
-            "play",
-            "can",
-            "and",
-            "piano",
+            "quiet.",
+            "went",
+            "line",
             "the",
-            "playing",
-            "at",
-            "adept",
-            "is",
-            "She"
+            "as",
+            "microphone",
+            "the",
+            "on",
+            "tightened",
+            "grip",
+            "Kofi's"
           ],
-          "answer": "She is adept at playing the piano and can play many songs."
+          "answer": "Kofi's grip tightened on the microphone as the line went quiet."
         }
       ]
     },
@@ -319,34 +310,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'narrative' mean in this unit?",
+          "prompt": "What does 'preparation' mean in this unit?",
           "choices": [
-            "A story or description of events that tells what happened.",
-            "To feel very happy and excited, especially because of a success or victory.",
-            "To take control of something, especially a position of power, without the right to do so."
+            "The work and planning you do to get ready for something before it happens.",
+            "The quality of being genuinely what something claims to be.",
+            "A word or phrase that completes the meaning of a verb."
           ],
-          "answer": "A story or description of events that tells what happened.",
-          "explanation": "narrative: A story or description of events that tells what happened."
+          "answer": "The work and planning you do to get ready for something before it happens.",
+          "explanation": "preparation: The work and planning you do to get ready for something before it happens."
         },
         {
-          "prompt": "What does 'sociable' mean in this unit?",
+          "prompt": "What does 'bias' mean in this unit?",
           "choices": [
-            "To feel very happy and excited, especially because of a success or victory.",
-            "To take control of something, especially a position of power, without the right to do so.",
-            "Someone who likes to talk and spend time with other people."
+            "The quality of being genuinely what something claims to be.",
+            "A word or phrase that completes the meaning of a verb.",
+            "An unfair leaning toward one side of an argument, which stops a report from being balanced."
           ],
-          "answer": "Someone who likes to talk and spend time with other people.",
-          "explanation": "sociable: Someone who likes to talk and spend time with other people."
+          "answer": "An unfair leaning toward one side of an argument, which stops a report from being balanced.",
+          "explanation": "bias: An unfair leaning toward one side of an argument, which stops a report from being balanced."
         },
         {
-          "prompt": "What does 'usurp' mean in this unit?",
+          "prompt": "What does 'complement' mean in this unit?",
           "choices": [
-            "To block something so that it cannot move or be seen.",
-            "To take control of something, especially a position of power, without the right to do so.",
-            "To feel very happy and excited, especially because of a success or victory."
+            "Shaped by being poured or pressed into a mould while soft, then left to set.",
+            "A word or phrase that completes the meaning of a verb.",
+            "The quality of being genuinely what something claims to be."
           ],
-          "answer": "To take control of something, especially a position of power, without the right to do so.",
-          "explanation": "usurp: To take control of something, especially a position of power, without the right to do so."
+          "answer": "A word or phrase that completes the meaning of a verb.",
+          "explanation": "complement: A word or phrase that completes the meaning of a verb."
         }
       ]
     },
@@ -359,34 +350,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'restitution'?",
+          "prompt": "What type of word is 'beside'?",
           "choices": [
+            "Preposition",
             "Noun",
-            "Verb",
-            "Adjective"
+            "Verb"
           ],
-          "answer": "Noun",
-          "explanation": "Restitution is used as a noun in this dictionary sense."
+          "answer": "Preposition",
+          "explanation": "Beside is used as a preposition in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'luminous'?",
+          "prompt": "What type of word is 'avert'?",
           "choices": [
             "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Adjective",
-          "explanation": "Luminous is used as an adjective in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'inundate'?",
-          "choices": [
             "Adjective",
-            "Verb",
-            "Noun"
+            "Verb"
           ],
           "answer": "Verb",
-          "explanation": "Inundate is used as a verb in this dictionary sense."
+          "explanation": "Avert is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'surge'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Surge is used as a noun in this dictionary sense."
         }
       ]
     },
@@ -402,16 +393,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "usurp",
-              "To take control of something, especially a position of power, without the right to do so."
+              "clarification",
+              "An explanation that makes something clearer."
             ],
             [
-              "obstruct",
-              "To block something so that it cannot move or be seen."
+              "goodness",
+              "The quality of being kind, honest, or good for someone's health."
             ],
             [
-              "flourish",
-              "To grow or develop in a healthy or strong way."
+              "selects",
+              "Chooses something carefully from a number of possibilities."
             ]
           ]
         },
@@ -419,16 +410,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "narrative",
-              "A story or description of events that tells what happened."
+              "writes",
+              "Puts words on paper or a screen to record or communicate something."
             ],
             [
-              "analysis",
-              "The process of studying something carefully to understand it better."
+              "send",
+              "To cause a message, object or person to go from one place to another."
             ],
             [
-              "hindrance",
-              "Something that makes it difficult for you to do something."
+              "vendor",
+              "A person who sells goods, often from a stall or in the street."
             ]
           ]
         },
@@ -436,16 +427,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "sociable",
-              "Someone who likes to talk and spend time with other people."
+              "timeline",
+              "A timeline is a record or display of events arranged in the order they happened."
             ],
             [
-              "pertinent",
-              "Related to the topic or important for understanding something."
+              "breath",
+              "The air that you take into your lungs and let out again."
             ],
             [
-              "oblique",
-              "Not straight or direct; slanted or angled."
+              "exult",
+              "To feel very happy and excited, especially because of a success or victory."
             ]
           ]
         }

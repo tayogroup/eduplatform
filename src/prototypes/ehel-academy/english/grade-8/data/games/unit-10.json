@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: Using few words to say something clearly.",
+          "prompt": "Which word means: Checking that something is true or has been done correctly.",
           "choices": [
-            "concise",
-            "zeal",
-            "loathe"
+            "verification",
+            "binomial",
+            "colon"
           ],
-          "answer": "concise",
-          "explanation": "concise: Using few words to say something clearly."
+          "answer": "verification",
+          "explanation": "verification: Checking that something is true or has been done correctly."
         },
         {
-          "prompt": "Which word means: To remember and honour someone or something, often with a ceremony.",
+          "prompt": "Which word means: A person who lives near another person, often in the next house or street.",
           "choices": [
-            "concise",
-            "zeal",
-            "commemorate"
+            "verification",
+            "binomial",
+            "neighbour"
           ],
-          "answer": "commemorate",
-          "explanation": "commemorate: To remember and honour someone or something, often with a ceremony."
+          "answer": "neighbour",
+          "explanation": "neighbour: A person who lives near another person, often in the next house or street."
         },
         {
-          "prompt": "Which word means: A very cruel or terrible act",
+          "prompt": "Which word means: Carrying or supporting weight, responsibility, or meaning.",
           "choices": [
-            "zeal",
-            "atrocity",
-            "concise"
+            "binomial",
+            "bearing",
+            "verification"
           ],
-          "answer": "atrocity",
-          "explanation": "atrocity: A very cruel or terrible act"
+          "answer": "bearing",
+          "explanation": "bearing: Carrying or supporting weight, responsibility, or meaning."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A structure used to block people or vehicles from passing.",
-          "answer": "barricade"
+          "clue": "To put forward an idea as a starting point for reasoning.",
+          "answer": "postulate"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "To express thoughts and ideas clearly and effectively.",
-          "answer": "articulate"
+          "clue": "Extremely impressive or bright, often in a way that overwhelms the observer.",
+          "answer": "dazzling"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A place where someone is going or something is being sent",
-          "answer": "destination"
+          "clue": "A sudden event that causes serious harm, damage, or difficulty.",
+          "answer": "disaster"
         }
       ]
     },
@@ -83,56 +83,48 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "story.",
+            "observer.",
+            "different",
+            "a",
+            "with",
+            "count",
+            "the",
+            "repeating",
+            "meant",
+            "Verification"
+          ],
+          "answer": "Verification meant repeating the count with a different observer."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "question.",
+            "enquiry",
+            "clear",
+            "a",
+            "with",
+            "begins",
+            "project",
+            "capstone",
+            "Every"
+          ],
+          "answer": "Every capstone project begins with a clear enquiry question."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "field.",
             "the",
             "of",
-            "summary",
-            "concise",
-            "a",
-            "write",
-            "to",
-            "us",
-            "asked",
-            "teacher",
+            "stretch",
+            "final",
+            "the",
+            "across",
+            "raced",
+            "runners",
             "The"
           ],
-          "answer": "The teacher asked us to write a concise summary of the story."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "decisions.",
-            "the",
-            "all",
-            "making",
-            "by",
-            "role",
-            "president's",
-            "class",
-            "the",
-            "usurp",
-            "to",
-            "tried",
-            "student",
-            "The"
-          ],
-          "answer": "The student tried to usurp the class president's role by making all the decisions."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "chickens.",
-            "some",
-            "stole",
-            "and",
-            "farmer",
-            "the",
-            "tricked",
-            "fox",
-            "cunning",
-            "The"
-          ],
-          "answer": "The cunning fox tricked the farmer and stole some chickens."
+          "answer": "The runners raced across the final stretch of the field."
         }
       ]
     },
@@ -252,59 +244,59 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "lesson.",
-            "the",
-            "during",
-            "talking",
-            "from",
-            "desist",
+            "wane.",
             "to",
-            "students",
+            "began",
+            "party",
             "the",
-            "asked",
-            "teacher",
-            "The"
+            "at",
+            "excitement",
+            "the",
+            "on,",
+            "went",
+            "evening",
+            "the",
+            "As"
           ],
-          "answer": "The teacher asked the students to desist from talking during the lesson."
+          "answer": "As the evening went on, the excitement at the party began to wane."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "scene.",
-            "courtroom",
+            "end.",
+            "season's",
             "the",
-            "during",
-            "convincingly",
-            "astonishment",
-            "feign",
+            "mark",
             "to",
-            "had",
-            "showcase",
+            "bonfire",
+            "a",
+            "lights",
+            "club",
+            "beach",
             "the",
-            "in",
-            "Actors"
+            "summer",
+            "Every"
           ],
-          "answer": "Actors in the showcase had to feign astonishment convincingly during the courtroom scene."
+          "answer": "Every summer the beach club lights a bonfire to mark the season's end."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "donation.",
-            "every",
-            "match",
+            "climb.",
+            "each",
+            "compare",
             "to",
-            "offered",
-            "bakery",
-            "local",
-            "the",
-            "once",
-            "momentum",
-            "gathered",
-            "campaign",
-            "fundraising",
+            "most",
+            "and",
+            "more",
+            "like",
+            "words",
+            "measuring",
+            "used",
+            "essay",
             "The"
           ],
-          "answer": "The fundraising campaign gathered momentum once the local bakery offered to match every donation."
+          "answer": "The essay used measuring words like more and most to compare each climb."
         }
       ]
     },
@@ -317,34 +309,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'aptitude' mean in this unit?",
+          "prompt": "What does 'playbooks' mean in this unit?",
           "choices": [
-            "A natural ability to do something well.",
-            "Using few words to say something clearly.",
-            "A strong feeling of enthusiasm and eagerness."
+            "Sets of strategies or plans used to guide actions in a particular situation.",
+            "Checking that something is true or has been done correctly.",
+            "An algebraic expression with exactly two terms."
           ],
-          "answer": "A natural ability to do something well.",
-          "explanation": "aptitude: A natural ability to do something well."
+          "answer": "Sets of strategies or plans used to guide actions in a particular situation.",
+          "explanation": "playbooks: Sets of strategies or plans used to guide actions in a particular situation."
         },
         {
-          "prompt": "What does 'desist' mean in this unit?",
+          "prompt": "What does 'sorrow' mean in this unit?",
           "choices": [
-            "Using few words to say something clearly.",
-            "A strong feeling of enthusiasm and eagerness.",
-            "To stop doing something"
+            "Checking that something is true or has been done correctly.",
+            "An algebraic expression with exactly two terms.",
+            "A deep feeling of sadness, often caused by loss or difficulty."
           ],
-          "answer": "To stop doing something",
-          "explanation": "desist: To stop doing something"
+          "answer": "A deep feeling of sadness, often caused by loss or difficulty.",
+          "explanation": "sorrow: A deep feeling of sadness, often caused by loss or difficulty."
         },
         {
-          "prompt": "What does 'zeal' mean in this unit?",
+          "prompt": "What does 'binomial' mean in this unit?",
           "choices": [
-            "To feel strong dislike or hatred for something or someone.",
-            "A strong feeling of enthusiasm and eagerness.",
-            "Using few words to say something clearly."
+            "A punctuation mark introducing a list, explanation or quotation.",
+            "An algebraic expression with exactly two terms.",
+            "Checking that something is true or has been done correctly."
           ],
-          "answer": "A strong feeling of enthusiasm and eagerness.",
-          "explanation": "zeal: A strong feeling of enthusiasm and eagerness."
+          "answer": "An algebraic expression with exactly two terms.",
+          "explanation": "binomial: An algebraic expression with exactly two terms."
         }
       ]
     },
@@ -357,34 +349,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'pristine'?",
+          "prompt": "What type of word is 'unshakeable'?",
           "choices": [
             "Adjective",
             "Noun",
             "Verb"
           ],
           "answer": "Adjective",
-          "explanation": "Pristine is used as an adjective in this dictionary sense."
+          "explanation": "Unshakeable is used as an adjective in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'disposition'?",
+          "prompt": "What type of word is 'deceptive'?",
           "choices": [
+            "Noun",
             "Verb",
+            "Adjective"
+          ],
+          "answer": "Adjective",
+          "explanation": "Deceptive is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'tip'?",
+          "choices": [
             "Adjective",
-            "Noun"
+            "Noun",
+            "Verb"
           ],
           "answer": "Noun",
-          "explanation": "Disposition is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'feign'?",
-          "choices": [
-            "Adjective",
-            "Verb",
-            "Noun"
-          ],
-          "answer": "Verb",
-          "explanation": "Feign is used as a verb in this dictionary sense."
+          "explanation": "Tip is used as a noun in this dictionary sense."
         }
       ]
     },
@@ -400,16 +392,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "zeal",
-              "A strong feeling of enthusiasm and eagerness."
+              "triangulate",
+              "To check a finding by approaching it from several independent directions."
             ],
             [
-              "loathe",
-              "To feel strong dislike or hatred for something or someone."
+              "nonlinear",
+              "Not changing at a constant rate, so it does not plot as a straight line."
             ],
             [
-              "stifle",
-              "To stop something from happening or developing; to hold back."
+              "fades",
+              "Gradually loses colour, strength or importance over time."
             ]
           ]
         },
@@ -417,16 +409,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "aptitude",
-              "A natural ability to do something well."
+              "aim",
+              "To direct an effort, action or message towards a particular target."
             ],
             [
-              "momentum",
-              "The force or speed of something moving, especially when it is getting faster."
+              "overflowed",
+              "Became too full and spilled over, or was filled beyond its capacity."
             ],
             [
-              "deceptive",
-              "making someone believe something that is not true; misleading"
+              "raced",
+              "Moved very quickly, often trying to beat something or someone."
             ]
           ]
         },
@@ -434,16 +426,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "desist",
-              "To stop doing something"
+              "creeping",
+              "Moving slowly, quietly, or gradually, often without being noticed at first."
             ],
             [
-              "reprieve",
-              "A temporary break from something difficult or unpleasant."
+              "concise",
+              "Using few words to say something clearly."
             ],
             [
-              "campaign",
-              "A strong, organised effort to achieve something important for a cause."
+              "falter",
+              "to hesitate or lose strength when doing something"
             ]
           ]
         }

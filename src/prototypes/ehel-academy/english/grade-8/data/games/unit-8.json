@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: A strong, organised effort to achieve something important for a cause.",
+          "prompt": "Which word means: The reasons given to show that something is right or necessary.",
           "choices": [
-            "campaign",
-            "assail",
-            "stamina"
+            "justification",
+            "symbolism-based",
+            "sailors"
           ],
-          "answer": "campaign",
-          "explanation": "campaign: A strong, organised effort to achieve something important for a cause."
+          "answer": "justification",
+          "explanation": "justification: The reasons given to show that something is right or necessary."
         },
         {
-          "prompt": "Which word means: Very eager or enthusiastic about something.",
+          "prompt": "Which word means: To learn or become completely skilled at something.",
           "choices": [
-            "campaign",
-            "assail",
-            "avid"
+            "justification",
+            "symbolism-based",
+            "master"
           ],
-          "answer": "avid",
-          "explanation": "avid: Very eager or enthusiastic about something."
+          "answer": "master",
+          "explanation": "master: To learn or become completely skilled at something."
         },
         {
-          "prompt": "Which word means: Funny or silly actions or behaviours that people do.",
+          "prompt": "Which word means: More difficult or demanding than something else.",
           "choices": [
-            "assail",
-            "antics",
-            "campaign"
+            "symbolism-based",
+            "tougher",
+            "justification"
           ],
-          "answer": "antics",
-          "explanation": "antics: Funny or silly actions or behaviours that people do."
+          "answer": "tougher",
+          "explanation": "tougher: More difficult or demanding than something else."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "To make something clear or easier to understand.",
-          "answer": "clarify"
+          "clue": "A constructed character a writer speaks through.",
+          "answer": "persona"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Taking unnecessary risks without thinking about consequences.",
-          "answer": "foolhardy"
+          "clue": "Words that name a person, place, thing or idea.",
+          "answer": "nouns"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A lot of noise and activity, usually caused by excitement or upset.",
-          "answer": "commotion"
+          "clue": "A senior government official in charge of a particular department.",
+          "answer": "minister"
         }
       ]
     },
@@ -83,54 +83,53 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "library.",
-            "school",
-            "their",
+            "does.",
+            "hero",
+            "its",
+            "what",
             "for",
-            "money",
-            "raise",
-            "to",
-            "campaign",
-            "a",
-            "launched",
-            "students",
+            "justification",
+            "no",
+            "offers",
+            "novel",
             "The"
           ],
-          "answer": "The students launched a campaign to raise money for their school library."
+          "answer": "The novel offers no justification for what its hero does."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "learning.",
-            "were",
-            "we",
-            "what",
-            "to",
-            "relevant",
-            "was",
-            "homework",
-            "our",
-            "said",
+            "rule.",
+            "grammar",
+            "new",
+            "the",
+            "of",
+            "explanation",
+            "clear",
+            "a",
+            "gave",
             "teacher",
             "The"
           ],
-          "answer": "The teacher said our homework was relevant to what we were learning."
+          "answer": "The teacher gave a clear explanation of the new grammar rule."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "recuperate.",
+            "speak.",
             "to",
-            "weeks",
-            "few",
-            "a",
-            "needed",
-            "she",
-            "illness,",
-            "her",
-            "After"
+            "began",
+            "Imani",
+            "as",
+            "amphitheatre",
+            "the",
+            "over",
+            "fell",
+            "silence",
+            "hushed",
+            "A"
           ],
-          "answer": "After her illness, she needed a few weeks to recuperate."
+          "answer": "A hushed silence fell over the amphitheatre as Imani began to speak."
         }
       ]
     },
@@ -231,7 +230,7 @@
         },
         {
           "prompt": "Speaking 3: My Storytelling Campaign",
-          "target": "The teacher said our homework was relevant to what we were learning."
+          "target": "The teacher gave a clear explanation of the new grammar rule."
         },
         {
           "prompt": "Speaking 5: Explain and Respond",
@@ -250,58 +249,53 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "farmers.",
+            "storm.",
             "the",
-            "for",
-            "water",
-            "of",
-            "scarcity",
-            "a",
-            "was",
-            "there",
-            "drought,",
-            "the",
-            "During"
+            "about",
+            "worry",
+            "us",
+            "making",
+            "ominous,",
+            "looked",
+            "clouds",
+            "dark",
+            "The"
           ],
-          "answer": "During the drought, there was a scarcity of water for the farmers."
+          "answer": "The dark clouds looked ominous, making us worry about the storm."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "tyrants.",
-            "powerful",
-            "outwitting",
-            "people",
-            "ordinary",
-            "showing",
-            "by",
-            "listeners",
-            "motivate",
-            "often",
-            "tales",
-            "Folk"
+            "have.",
+            "or",
+            "has",
+            "verb",
+            "the",
+            "plus",
+            "subject",
+            "simple:",
+            "is",
+            "structure",
+            "sentence",
+            "The"
           ],
-          "answer": "Folk tales often motivate listeners by showing ordinary people outwitting powerful tyrants."
+          "answer": "The sentence structure is simple: subject plus the verb has or have."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "storyteller.",
-            "one",
-            "keep",
-            "to",
-            "village",
-            "every",
-            "ordered",
-            "decree",
-            "royal",
-            "a",
-            "legend,",
+            "drowning.",
+            "about",
+            "nightmares",
+            "had",
+            "she",
+            "flood,",
             "the",
-            "to",
-            "According"
+            "after",
+            "weeks",
+            "For"
           ],
-          "answer": "According to the legend, a royal decree ordered every village to keep one storyteller."
+          "answer": "For weeks after the flood, she had nightmares about drowning."
         }
       ]
     },
@@ -314,34 +308,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'jut' mean in this unit?",
+          "prompt": "What does 'compete' mean in this unit?",
           "choices": [
-            "To stick out or extend beyond something else.",
-            "A strong, organised effort to achieve something important for a cause.",
-            "To attack someone or something violently or with strong words."
+            "To take part in a contest, trying to do better than the other people involved.",
+            "The reasons given to show that something is right or necessary.",
+            "Working through objects that stand for larger ideas."
           ],
-          "answer": "To stick out or extend beyond something else.",
-          "explanation": "jut: To stick out or extend beyond something else."
+          "answer": "To take part in a contest, trying to do better than the other people involved.",
+          "explanation": "compete: To take part in a contest, trying to do better than the other people involved."
         },
         {
-          "prompt": "What does 'affluent' mean in this unit?",
+          "prompt": "What does 'saltwater' mean in this unit?",
           "choices": [
-            "A strong, organised effort to achieve something important for a cause.",
-            "To attack someone or something violently or with strong words.",
-            "Having a lot of money and wealth."
+            "The reasons given to show that something is right or necessary.",
+            "Working through objects that stand for larger ideas.",
+            "Water that contains salt, such as water from the sea."
           ],
-          "answer": "Having a lot of money and wealth.",
-          "explanation": "affluent: Having a lot of money and wealth."
+          "answer": "Water that contains salt, such as water from the sea.",
+          "explanation": "saltwater: Water that contains salt, such as water from the sea."
         },
         {
-          "prompt": "What does 'assail' mean in this unit?",
+          "prompt": "What does 'symbolism-based' mean in this unit?",
           "choices": [
-            "The ability to keep going and not get tired easily.",
-            "To attack someone or something violently or with strong words.",
-            "A strong, organised effort to achieve something important for a cause."
+            "People who work on a ship as part of its crew.",
+            "Working through objects that stand for larger ideas.",
+            "The reasons given to show that something is right or necessary."
           ],
-          "answer": "To attack someone or something violently or with strong words.",
-          "explanation": "assail: To attack someone or something violently or with strong words."
+          "answer": "Working through objects that stand for larger ideas.",
+          "explanation": "symbolism-based: Working through objects that stand for larger ideas."
         }
       ]
     },
@@ -354,34 +348,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'innate'?",
+          "prompt": "What type of word is 'sinks'?",
           "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Adjective",
-          "explanation": "Innate is used as an adjective in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'abet'?",
-          "choices": [
-            "Noun",
-            "Adjective",
-            "Verb"
-          ],
-          "answer": "Verb",
-          "explanation": "Abet is used as a verb in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'teem'?",
-          "choices": [
-            "Adjective",
             "Verb",
-            "Noun"
+            "Noun",
+            "Adjective"
           ],
           "answer": "Verb",
-          "explanation": "Teem is used as a verb in this dictionary sense."
+          "explanation": "Sinks is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'recuperate'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Recuperate is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'creators'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Creators is used as a noun in this dictionary sense."
         }
       ]
     },
@@ -397,16 +391,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "assail",
-              "To attack someone or something violently or with strong words."
+              "objectivity",
+              "Judging by facts rather than by personal feeling."
             ],
             [
-              "stamina",
-              "The ability to keep going and not get tired easily."
+              "differentiated",
+              "Made or treated differently to suit different cases."
             ],
             [
-              "relevant",
-              "Connected to the topic or situation being discussed."
+              "destroys",
+              "To damage something so badly that it no longer exists."
             ]
           ]
         },
@@ -414,16 +408,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "jut",
-              "To stick out or extend beyond something else."
+              "sleeping",
+              "Resting with your eyes closed, not awake or aware of your surroundings."
             ],
             [
-              "decree",
-              "An official order or decision made by a person in authority."
+              "merged",
+              "Combined two or more things so they became one."
             ],
             [
-              "counter",
-              "A flat surface where people can receive services or buy things."
+              "metaphor's",
+              "A short way of saying metaphor is, used when someone points out that a comparison is too complicated or unclear."
             ]
           ]
         },
@@ -431,16 +425,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "subordinate",
-              "A person who has a lower position or rank than someone else."
+              "nausea",
+              "A feeling of sickness in the stomach that often makes a person want to vomit."
             ],
             [
-              "scarcity",
-              "A situation where there is not enough of something needed."
+              "soul",
+              "The spiritual or emotional part of a person, often linked to their deepest feelings."
             ],
             [
-              "engross",
-              "To completely focus on something and not notice anything else."
+              "decree",
+              "An official order or decision made by a person in authority."
             ]
           ]
         }

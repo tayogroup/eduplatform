@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: A very cruel or terrible act",
+          "prompt": "Which word means: Making something official by setting it out in fixed rules.",
           "choices": [
-            "atrocity",
-            "desist",
-            "anarchy"
+            "formalisation",
+            "personal-agency",
+            "spin"
           ],
-          "answer": "atrocity",
-          "explanation": "atrocity: A very cruel or terrible act"
+          "answer": "formalisation",
+          "explanation": "formalisation: Making something official by setting it out in fixed rules."
         },
         {
-          "prompt": "Which word means: To shake or tremble while speaking, often from nervousness",
+          "prompt": "Which word means: For that reason, as a result of what was just said.",
           "choices": [
-            "atrocity",
-            "desist",
-            "quaver"
+            "formalisation",
+            "personal-agency",
+            "therefore"
           ],
-          "answer": "quaver",
-          "explanation": "quaver: To shake or tremble while speaking, often from nervousness"
+          "answer": "therefore",
+          "explanation": "therefore: For that reason, as a result of what was just said."
         },
         {
-          "prompt": "Which word means: To say that something is true, often without proof",
+          "prompt": "Which word means: The amount of space between two places or points.",
           "choices": [
-            "desist",
-            "claim",
-            "atrocity"
+            "personal-agency",
+            "distance",
+            "formalisation"
           ],
-          "answer": "claim",
-          "explanation": "claim: To say that something is true, often without proof"
+          "answer": "distance",
+          "explanation": "distance: The amount of space between two places or points."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A place where someone is going or something is being sent",
-          "answer": "destination"
+          "clue": "To do with feeding levels in a food chain.",
+          "answer": "trophic"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "To feel or express strong disapproval of something",
-          "answer": "deplore"
+          "clue": "Very unusual or impressive, and worth noticing or talking about.",
+          "answer": "remarkable"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "To use something in a way that helps you but may be unfair",
-          "answer": "exploit"
+          "clue": "To move or increase suddenly and powerfully.",
+          "answer": "surged"
         }
       ]
     },
@@ -83,51 +83,52 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "world.",
-            "the",
-            "shocked",
-            "that",
-            "atrocities",
-            "many",
-            "to",
-            "led",
-            "war",
-            "The"
-          ],
-          "answer": "The war led to many atrocities that shocked the world."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "conservation.",
-            "in",
-            "interest",
-            "her",
-            "kindled",
-            "Mountains",
-            "Simien",
-            "the",
-            "about",
-            "Reading"
-          ],
-          "answer": "Reading about the Simien Mountains kindled her interest in conservation."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "citadel.",
-            "the",
-            "at",
-            "ceremony",
+            "argument.",
+            "of",
+            "century",
             "a",
-            "with",
-            "culminate",
-            "will",
-            "programme",
-            "leadership",
+            "ended",
+            "agreement",
+            "grazing",
+            "the",
+            "of",
+            "formalisation",
             "The"
           ],
-          "answer": "The leadership programme will culminate with a ceremony at the citadel."
+          "answer": "The formalisation of the grazing agreement ended a century of argument."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "spring.",
+            "each",
+            "ridge",
+            "the",
+            "below",
+            "terraces",
+            "the",
+            "on",
+            "barley",
+            "plant",
+            "Farmers"
+          ],
+          "answer": "Farmers plant barley on the terraces below the ridge each spring."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "team.",
+            "the",
+            "reminded",
+            "Milo",
+            "fail,",
+            "all",
+            "we",
+            "fails,",
+            "one",
+            "If"
+          ],
+          "answer": "If one fails, we all fail, Milo reminded the team."
         }
       ]
     },
@@ -224,7 +225,7 @@
       "rounds": [
         {
           "prompt": "Speaking 1: Comparing Natural Wonders",
-          "target": "The war led to many atrocities that shocked the world."
+          "target": "The formalisation of the grazing agreement ended a century of argument."
         },
         {
           "prompt": "Speaking 3: Reporting What Others Said",
@@ -232,7 +233,7 @@
         },
         {
           "prompt": "Speaking 5: Vocabulary Expert Interview",
-          "target": "The leadership programme will culminate with a ceremony at the citadel."
+          "target": "If one fails, we all fail, Milo reminded the team."
         }
       ]
     },
@@ -247,56 +248,55 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "circles.",
-            "in",
-            "spinning",
-            "river,",
+            "citadel.",
             "the",
-            "in",
-            "eddy",
-            "an",
-            "in",
-            "floated",
-            "leaves",
+            "at",
+            "ceremony",
+            "a",
+            "with",
+            "culminate",
+            "will",
+            "programme",
+            "leadership",
             "The"
           ],
-          "answer": "The leaves floated in an eddy in the river, spinning in circles."
+          "answer": "The leadership programme will culminate with a ceremony at the citadel."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "disappeared.",
-            "generator",
+            "most?",
+            "them",
+            "need",
+            "that",
+            "villages",
             "the",
-            "before",
-            "just",
-            "fence",
-            "the",
-            "near",
-            "movements",
-            "furtive",
-            "noticed",
-            "rangers",
-            "The"
+            "to",
+            "close",
+            "built",
+            "usually",
+            "nurseries",
+            "tree",
+            "are",
+            "Why"
           ],
-          "answer": "The rangers noticed furtive movements near the fence just before the generator disappeared."
+          "answer": "Why are tree nurseries usually built close to the villages that need them most?"
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "riverbank.",
+            "others.",
             "the",
-            "along",
-            "hidden",
-            "discover",
-            "they",
-            "traps",
-            "any",
-            "confiscate",
-            "may",
-            "Rangers"
+            "for",
+            "waiting",
+            "without",
+            "outcrop",
+            "the",
+            "past",
+            "strode",
+            "Tariq"
           ],
-          "answer": "Rangers may confiscate any traps they discover hidden along the riverbank."
+          "answer": "Tariq strode past the outcrop without waiting for the others."
         }
       ]
     },
@@ -309,34 +309,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'transgression' mean in this unit?",
+          "prompt": "What does 'saturated' mean in this unit?",
           "choices": [
-            "A wrong action that breaks a rule or law",
-            "A very cruel or terrible act",
-            "To stop doing something"
+            "So full of water that it cannot absorb any more.",
+            "Making something official by setting it out in fixed rules.",
+            "An individual's own capacity to choose and to act."
           ],
-          "answer": "A wrong action that breaks a rule or law",
-          "explanation": "transgression: A wrong action that breaks a rule or law"
+          "answer": "So full of water that it cannot absorb any more.",
+          "explanation": "saturated: So full of water that it cannot absorb any more."
         },
         {
-          "prompt": "What does 'brusque' mean in this unit?",
+          "prompt": "What does 'tore' mean in this unit?",
           "choices": [
-            "A very cruel or terrible act",
-            "To stop doing something",
-            "Speaking in a very direct and rude way, without friendliness"
+            "Making something official by setting it out in fixed rules.",
+            "An individual's own capacity to choose and to act.",
+            "To pull something apart with force, or to move violently and quickly."
           ],
-          "answer": "Speaking in a very direct and rude way, without friendliness",
-          "explanation": "brusque: Speaking in a very direct and rude way, without friendliness"
+          "answer": "To pull something apart with force, or to move violently and quickly.",
+          "explanation": "tore: To pull something apart with force, or to move violently and quickly."
         },
         {
-          "prompt": "What does 'desist' mean in this unit?",
+          "prompt": "What does 'personal-agency' mean in this unit?",
           "choices": [
-            "A situation with no government or authority, leading to confusion",
-            "To stop doing something",
-            "A very cruel or terrible act"
+            "To turn quickly around a central point.",
+            "An individual's own capacity to choose and to act.",
+            "Making something official by setting it out in fixed rules."
           ],
-          "answer": "To stop doing something",
-          "explanation": "desist: To stop doing something"
+          "answer": "An individual's own capacity to choose and to act.",
+          "explanation": "personal-agency: An individual's own capacity to choose and to act."
         }
       ]
     },
@@ -349,34 +349,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'respite'?",
+          "prompt": "What type of word is 'scoffed'?",
           "choices": [
+            "Verb",
             "Noun",
-            "Verb",
             "Adjective"
-          ],
-          "answer": "Noun",
-          "explanation": "Respite is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'crucial'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Adjective",
-          "explanation": "Crucial is used as an adjective in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'antagonise'?",
-          "choices": [
-            "Adjective",
-            "Verb",
-            "Noun"
           ],
           "answer": "Verb",
-          "explanation": "Antagonise is used as a verb in this dictionary sense."
+          "explanation": "Scoffed is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'transgression'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Transgression is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'hunter'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Hunter is used as a noun in this dictionary sense."
         }
       ]
     },
@@ -392,16 +392,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "desist",
-              "To stop doing something"
+              "biosphere",
+              "The whole zone of the Earth where living things exist."
             ],
             [
-              "anarchy",
-              "A situation with no government or authority, leading to confusion"
+              "surrounding",
+              "Describing the area or things that are near or all around something."
             ],
             [
-              "kindle",
-              "To start a fire, or to make a feeling or interest begin"
+              "wolf",
+              "A wild animal related to the dog that often hunts alone or in a group."
             ]
           ]
         },
@@ -409,16 +409,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "transgression",
-              "A wrong action that breaks a rule or law"
+              "tree",
+              "A tall plant with a wooden trunk, branches, and leaves that can live for many years."
             ],
             [
-              "resent",
-              "To feel angry or upset because something seems unfair"
+              "muleteers",
+              "People whose job is to lead and look after mules, especially ones carrying loads."
             ],
             [
-              "conspicuous",
-              "Easy to see or notice; very obvious"
+              "panting",
+              "Breathing quickly and heavily, especially after hard exercise."
             ]
           ]
         },
@@ -426,16 +426,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "exploit",
-              "To use something in a way that helps you but may be unfair"
+              "avoid",
+              "To stay away from something or to prevent something from happening."
             ],
             [
-              "citadel",
-              "A strong fortress that protects a city or area"
+              "relief",
+              "A feeling of comfort when worry or fear ends."
             ],
             [
-              "gruelling",
-              "Extremely tiring and difficult"
+              "antagonise",
+              "To make someone angry or upset by your actions or words"
             ]
           ]
         }

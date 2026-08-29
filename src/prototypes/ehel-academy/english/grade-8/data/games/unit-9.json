@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: A situation in which there is a lot of damage or confusion.",
+          "prompt": "Which word means: Ready to work, or to do with day-to-day running.",
           "choices": [
-            "havoc",
-            "render",
-            "gait"
+            "operational",
+            "recalibrate",
+            "score"
           ],
-          "answer": "havoc",
-          "explanation": "havoc: A situation in which there is a lot of damage or confusion."
+          "answer": "operational",
+          "explanation": "operational: Ready to work, or to do with day-to-day running."
         },
         {
-          "prompt": "Which word means: Not showing respect for other people; rude or disrespectful.",
+          "prompt": "Which word means: Very noticeable, unusual, or impressive to look at.",
           "choices": [
-            "havoc",
-            "render",
-            "impudent"
+            "operational",
+            "recalibrate",
+            "striking"
           ],
-          "answer": "impudent",
-          "explanation": "impudent: Not showing respect for other people; rude or disrespectful."
+          "answer": "striking",
+          "explanation": "striking: Very noticeable, unusual, or impressive to look at."
         },
         {
-          "prompt": "Which word means: To become real or to appear after being imagined or planned.",
+          "prompt": "Which word means: Called out loudly, or shed tears from strong emotion.",
           "choices": [
-            "render",
-            "materialise",
-            "havoc"
+            "recalibrate",
+            "cried",
+            "operational"
           ],
-          "answer": "materialise",
-          "explanation": "materialise: To become real or to appear after being imagined or planned."
+          "answer": "cried",
+          "explanation": "cried: Called out loudly, or shed tears from strong emotion."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Skilful and quick in movement or action.",
-          "answer": "deft"
+          "clue": "Exhaustion caused by prolonged stress or overwork.",
+          "answer": "burnout"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Acting quickly without thinking about the consequences.",
-          "answer": "impulsive"
+          "clue": "Measured or arranged so that something happens at exactly the right moment.",
+          "answer": "timed"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "To understand or grasp something; to catch someone who has done wrong.",
-          "answer": "apprehend"
+          "clue": "Circular or curved shapes made by something bending back on itself.",
+          "answer": "loops"
         }
       ]
     },
@@ -83,54 +83,53 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "lines.",
-            "power",
+            "late.",
+            "months",
+            "three",
+            "operational",
+            "became",
+            "studio",
+            "recording",
+            "The"
+          ],
+          "answer": "The recording studio became operational three months late."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "one.",
+            "week",
+            "of",
+            "goal",
+            "the",
+            "not",
+            "was",
+            "perfection",
+            "that",
+            "cast",
+            "the",
+            "reminded",
+            "director",
+            "The"
+          ],
+          "answer": "The director reminded the cast that perfection was not the goal of week one."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "notes.",
+            "careful",
+            "taking",
             "and",
-            "trees",
-            "down",
-            "knocking",
-            "town,",
-            "the",
-            "in",
-            "havoc",
-            "caused",
-            "storm",
-            "The"
-          ],
-          "answer": "The storm caused havoc in the town, knocking down trees and power lines."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "class.",
-            "during",
-            "teacher",
-            "the",
-            "to",
-            "back",
-            "talked",
-            "student",
-            "impudent",
-            "The"
-          ],
-          "answer": "The impudent student talked back to the teacher during class."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "year.",
-            "next",
-            "materialise",
-            "will",
-            "park",
-            "new",
+            "clipboard",
             "a",
-            "build",
-            "to",
-            "plan",
-            "The"
+            "holding",
+            "nearby,",
+            "stood",
+            "judge",
+            "A"
           ],
-          "answer": "The plan to build a new park will materialise next year."
+          "answer": "A judge stood nearby, holding a clipboard and taking careful notes."
         }
       ]
     },
@@ -231,7 +230,7 @@
         },
         {
           "prompt": "Speaking 3: Dramatic Reading",
-          "target": "The impudent student talked back to the teacher during class."
+          "target": "The director reminded the cast that perfection was not the goal of week one."
         },
         {
           "prompt": "Speaking 5: Explain and Respond",
@@ -250,57 +249,55 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "grade.",
-            "excellent",
-            "an",
-            "got",
-            "she",
-            "so",
-            "accurate,",
-            "were",
-            "answers",
-            "math",
+            "happened.",
+            "what",
+            "about",
+            "lying",
+            "by",
+            "reputation",
+            "his",
+            "sully",
+            "to",
+            "want",
+            "not",
+            "did",
+            "He"
+          ],
+          "answer": "He did not want to sully his reputation by lying about what happened."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "clowns.",
+            "two",
+            "the",
+            "of",
+            "timing",
+            "comic",
+            "the",
+            "loved",
+            "audience",
             "The"
           ],
-          "answer": "The math answers were accurate, so she got an excellent grade."
+          "answer": "The audience loved the comic timing of the two clowns."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "Asia.",
-            "East",
-            "and",
-            "Africa",
-            "West",
-            "of",
-            "scales",
-            "pentatonic",
+            "discovered.",
+            "was",
+            "mask",
+            "missing",
             "the",
-            "compare",
-            "often",
-            "Musicologists"
-          ],
-          "answer": "Musicologists often compare the pentatonic scales of West Africa and East Asia."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "measure.",
-            "equal",
+            "after",
+            "silence",
             "in",
-            "courage",
-            "and",
-            "permits,",
-            "instruments,",
-            "carrying",
-            "themselves,",
-            "for",
-            "fend",
-            "must",
-            "musicians",
-            "Street"
+            "wallowed",
+            "room",
+            "whole",
+            "The"
           ],
-          "answer": "Street musicians must fend for themselves, carrying instruments, permits, and courage in equal measure."
+          "answer": "The whole room wallowed in silence after the missing mask was discovered."
         }
       ]
     },
@@ -313,34 +310,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'vulnerable' mean in this unit?",
+          "prompt": "What does 'criticises' mean in this unit?",
           "choices": [
-            "Easily hurt or harmed, either physically or emotionally.",
-            "A situation in which there is a lot of damage or confusion.",
-            "To make something become a certain way; to perform or deliver."
+            "Points out the faults or weaknesses in something, often to help it improve.",
+            "Ready to work, or to do with day-to-day running.",
+            "To adjust something so it measures or performs correctly again."
           ],
-          "answer": "Easily hurt or harmed, either physically or emotionally.",
-          "explanation": "vulnerable: Easily hurt or harmed, either physically or emotionally."
+          "answer": "Points out the faults or weaknesses in something, often to help it improve.",
+          "explanation": "criticises: Points out the faults or weaknesses in something, often to help it improve."
         },
         {
-          "prompt": "What does 'succumb' mean in this unit?",
+          "prompt": "What does 'rebuild' mean in this unit?",
           "choices": [
-            "A situation in which there is a lot of damage or confusion.",
-            "To make something become a certain way; to perform or deliver.",
-            "To give in to something or to stop resisting, often because it is too strong."
+            "Ready to work, or to do with day-to-day running.",
+            "To adjust something so it measures or performs correctly again.",
+            "Build something again after it has been damaged, removed, or taken apart."
           ],
-          "answer": "To give in to something or to stop resisting, often because it is too strong.",
-          "explanation": "succumb: To give in to something or to stop resisting, often because it is too strong."
+          "answer": "Build something again after it has been damaged, removed, or taken apart.",
+          "explanation": "rebuild: Build something again after it has been damaged, removed, or taken apart."
         },
         {
-          "prompt": "What does 'render' mean in this unit?",
+          "prompt": "What does 'recalibrate' mean in this unit?",
           "choices": [
-            "The way a person walks or moves on their feet.",
-            "To make something become a certain way; to perform or deliver.",
-            "A situation in which there is a lot of damage or confusion."
+            "The original music written for a film, play, or other performance.",
+            "To adjust something so it measures or performs correctly again.",
+            "Ready to work, or to do with day-to-day running."
           ],
-          "answer": "To make something become a certain way; to perform or deliver.",
-          "explanation": "render: To make something become a certain way; to perform or deliver."
+          "answer": "To adjust something so it measures or performs correctly again.",
+          "explanation": "recalibrate: To adjust something so it measures or performs correctly again."
         }
       ]
     },
@@ -353,34 +350,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'fend'?",
+          "prompt": "What type of word is 'suspicious'?",
           "choices": [
-            "Verb",
+            "Adjective",
             "Noun",
-            "Adjective"
+            "Verb"
           ],
-          "answer": "Verb",
-          "explanation": "Fend is used as a verb in this dictionary sense."
+          "answer": "Adjective",
+          "explanation": "Suspicious is used as an adjective in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'accurate'?",
+          "prompt": "What type of word is 'vulnerable'?",
           "choices": [
             "Noun",
             "Verb",
             "Adjective"
           ],
           "answer": "Adjective",
-          "explanation": "Accurate is used as an adjective in this dictionary sense."
+          "explanation": "Vulnerable is used as an adjective in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'compare'?",
+          "prompt": "What type of word is 'sincerity'?",
           "choices": [
             "Adjective",
-            "Verb",
-            "Noun"
+            "Noun",
+            "Verb"
           ],
-          "answer": "Verb",
-          "explanation": "Compare is used as a verb in this dictionary sense."
+          "answer": "Noun",
+          "explanation": "Sincerity is used as a noun in this dictionary sense."
         }
       ]
     },
@@ -396,16 +393,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "render",
-              "To make something become a certain way; to perform or deliver."
+              "interdependence",
+              "A relationship in which each side relies on the other."
             ],
             [
-              "gait",
-              "The way a person walks or moves on their feet."
+              "stallholder",
+              "A person who sells goods from a small stand, often at a market."
             ],
             [
-              "aloof",
-              "Not friendly or not interested in talking to others."
+              "beings",
+              "Living creatures, especially when referring to people as a group."
             ]
           ]
         },
@@ -413,16 +410,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "vulnerable",
-              "Easily hurt or harmed, either physically or emotionally."
+              "mask",
+              "A covering worn over the face to hide or change how someone looks."
             ],
             [
-              "gaudy",
-              "Very bright and showy in a way that is too much or not tasteful."
+              "richest",
+              "Having the most impressive, elaborate or costly quality; the superlative of the word rich."
             ],
             [
-              "dissipate",
-              "To gradually disappear or become less strong."
+              "sleek",
+              "Smooth, polished, and stylish in appearance."
             ]
           ]
         },
@@ -430,16 +427,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "dispatch",
-              "To send something or someone to a place quickly."
+              "collapsed",
+              "Fell down suddenly, or gave way completely, often from exhaustion or emotion."
             ],
             [
-              "wallow",
-              "To stay in a feeling or situation for a long time, often a negative one."
+              "stress",
+              "A feeling of worry or pressure caused by difficult or demanding situations."
             ],
             [
-              "meander",
-              "To walk or move in a slow, relaxed way without a clear direction."
+              "aloof",
+              "Not friendly or not interested in talking to others."
             ]
           ]
         }

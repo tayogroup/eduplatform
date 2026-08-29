@@ -696,11 +696,18 @@ function pqlgb_group_next_session(array $groupids): array {
     try {
         $rows = $DB->get_records_select('local_prequran_live_session',
             // Approval-pending states are excluded too: the join denies them
-            // for everyone, so offering one is offering a refusal.
+            // for everyone, so offering one is offering a refusal. And a
+            // status='live' session is admitted whatever its scheduled date:
+            // the teacher going live on a future-dated (recurring) session is
+            // a real class actually running, found on production 2026-08-29 --
+            // the room everyone was in was scheduled for two days later and
+            // the today-only window made the board blind to it. Bounded by
+            // scheduled_end + after like everything else, which is the same
+            // boundary the join door itself enforces.
             "groupid $insql
              AND status NOT IN ('cancelled', 'failed', 'rejected', 'completed', 'closed',
                                 'pending_institution_approval', 'pending_marketplace_approval')
-             AND scheduled_end + :aft > :now AND scheduled_start < :eod",
+             AND scheduled_end + :aft > :now AND (scheduled_start < :eod OR status = 'live')",
             array_merge($params, ['aft' => $after, 'now' => $now, 'eod' => $endofday]),
             'scheduled_start ASC',
             'id, groupid, title, scheduled_start, scheduled_end, status, teacherid'
@@ -710,9 +717,6 @@ function pqlgb_group_next_session(array $groupids): array {
     }
     foreach ($rows as $row) {
         $gid = (int)$row->groupid;
-        if (isset($out[$gid])) {
-            continue; // earliest wins
-        }
         // live_sessions.php's student rule, verbatim in shape: a student is
         // refused when now > end + after, or when the teacher has not started
         // the room AND now < start - before. Teacher-started means bbb_created
@@ -720,6 +724,12 @@ function pqlgb_group_next_session(array $groupids): array {
         // early.
         $teacherstarted = $hasbbbcreated
             && !empty($row->bbb_created) && (string)$row->status === 'live';
+        // Earliest wins -- except that a RUNNING room beats anything merely
+        // scheduled: a group with an upcoming slot today AND a live room on a
+        // future-dated session must report the room people are actually in.
+        if (isset($out[$gid]) && !($teacherstarted && empty($out[$gid]['live']))) {
+            continue;
+        }
         // A session past its scheduled end is only ON if the room is still
         // live (overtime -- the teacher has not left). The configured
         // after-window (here 180 minutes) keeps the JOIN DOOR open that long,

@@ -689,10 +689,16 @@ a.pqlgb-golive{text-decoration:none;display:inline-block}
     if (sess && sess.id) {
       var href = liveSessionsUrl + "&action=join&sessionid=" + sess.id + "&sesskey=" + encodeURIComponent(boardSesskey);
       var when = new Date(sess.start * 1000);
-      var label = sess.due
-        ? "Start class"
-        : "Class at " + ("0" + when.getHours()).slice(-2) + ":" + ("0" + when.getMinutes()).slice(-2);
-      return '<a class="pqlgb-golive' + (sess.due ? "" : " is-upcoming") + '" target="_blank" rel="noopener" href="' + esc(href) + '" title="' + esc(sess.title) + '">' + esc(label) + "</a>";
+      // A LIVE room outranks the calendar wording: "Class at 09:00" over a
+      // room that is running right now (a future-dated recurring session the
+      // teacher went live on) reads as a stuck board. The link is the same
+      // join action either way.
+      var label = sess.live
+        ? "In session"
+        : (sess.due
+            ? "Start class"
+            : "Class at " + ("0" + when.getHours()).slice(-2) + ":" + ("0" + when.getMinutes()).slice(-2));
+      return '<a class="pqlgb-golive' + (sess.due || sess.live ? "" : " is-upcoming") + '" target="_blank" rel="noopener" href="' + esc(href) + '" title="' + esc(sess.title) + '">' + esc(label) + "</a>";
     }
     return '<button type="button" class="pqlgb-golive" data-golive="' + group.id + '" data-golivetitle="' + esc(group.title) + '">Go live</button>';
   }

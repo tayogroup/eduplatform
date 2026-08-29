@@ -177,6 +177,8 @@ export function createProgressClient(opts) {
   let seq = 0;
   let idleTimer = null;
   let flushing = null;
+  // Set when a flush is asked for while one is already in flight. See flush().
+  let followUp = false;
 
   const loadOutbox = () => readJson(outboxKey, []);
   const saveOutbox = (q) => writeJson(outboxKey, q);
@@ -195,7 +197,19 @@ export function createProgressClient(opts) {
       saveOutbox(loadOutbox().filter((e) => !sent.has(e._k)));
       return res;
     }
-    if (flushing) return flushing;
+    // COALESCE, BUT DO NOT LOSE. The in-flight flush snapshotted the outbox
+    // when it started, so anything queued since is NOT in that batch --
+    // returning its promise silently strands the newer events. They used to be
+    // rescued by the idle timer, but only by luck: if that timer fired during
+    // the in-flight window it called flush(), coalesced away to nothing, and
+    // cleared itself, leaving the queue with no flush pending and no timer.
+    //
+    // Rare while only completions flushed. Routine once navigation did, which
+    // is how it surfaced: a learner moving quickly between sections had one
+    // report land and the next stick until something else happened to flush.
+    // The board then showed a section they had already left, intermittently --
+    // the hardest kind of wrong to trust.
+    if (flushing) { followUp = true; return flushing; }
     flushing = (async () => {
       const batch = loadOutbox();
       if (!batch.length) return { accepted: 0, ok: true };
@@ -210,7 +224,15 @@ export function createProgressClient(opts) {
         flushing = null;
       }
     })();
-    return flushing;
+    const inflight = flushing;
+    // `flushing` is nulled in the IIFE's own finally, so by the time this runs
+    // a fresh flush can start. One follow-up per completed flush, and it only
+    // fires if something actually asked while we were busy -- so a quiet queue
+    // does not loop.
+    inflight.then(() => {
+      if (followUp) { followUp = false; flush(); }
+    }, () => { followUp = false; });
+    return inflight;
   }
 
   // Coalesce onto the PENDING timer rather than restarting it, so the wait is

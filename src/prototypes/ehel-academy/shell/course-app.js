@@ -455,7 +455,7 @@ export function createCourseApp(config) {
     let poll = 0;
 
     const paint = () => {
-      button.textContent = up ? "✋ Hand up" : "Raise hand";
+      button.textContent = up ? "✋ Hand up" : "✋ Raise hand";
       button.setAttribute("aria-pressed", up ? "true" : "false");
       button.title = up
         ? "Your teacher can see your hand. Press again to put it down."
@@ -551,6 +551,49 @@ export function createCourseApp(config) {
     let msgsEl = null;
     let button = null;
 
+    // NOTIFY, not just mark. The unread dot alone assumes a child scans the
+    // topbar; a five-year-old deep in an exercise does not. So a new message
+    // from someone else pulses the button and plays one soft two-note chime.
+    // The chime is Web Audio (no asset, no permission dialog); browsers gate
+    // audio behind a user gesture, so a blocked context fails silently and the
+    // pulse still carries the signal. One chime per quiet period -- the flag
+    // resets when the panel opens -- because a repeating ping during a lesson
+    // is noise, not notice.
+    let chimed = false;
+    let audioCtx = null;
+    const chime = () => {
+      if (chimed) return;
+      chimed = true;
+      try {
+        audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === "suspended") audioCtx.resume();
+        const at = audioCtx.currentTime;
+        [[523.25, 0], [659.25, 0.16]].forEach(([freq, delay]) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.frequency.value = freq;
+          osc.type = "sine";
+          gain.gain.setValueAtTime(0.0001, at + delay);
+          gain.gain.exponentialRampToValueAtTime(0.06, at + delay + 0.02);
+          gain.gain.exponentialRampToValueAtTime(0.0001, at + delay + 0.35);
+          osc.connect(gain).connect(audioCtx.destination);
+          osc.start(at + delay);
+          osc.stop(at + delay + 0.4);
+        });
+      } catch (e) { /* never break the lesson; the pulse still shows */ }
+    };
+    // The pulse needs @keyframes, which inline styles cannot carry. The style
+    // tag ships inside this module (not course-ui.css), so the shared-
+    // stylesheet coupling is untouched, and it respects reduced-motion.
+    if (!document.getElementById("class-chat-pulse-style")) {
+      const st = document.createElement("style");
+      st.id = "class-chat-pulse-style";
+      st.textContent = "@keyframes ccPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}"
+        + ".cc-pulse{animation:ccPulse .9s ease-in-out 4}"
+        + "@media (prefers-reduced-motion: reduce){.cc-pulse{animation:none}}";
+      document.head.appendChild(st);
+    }
+
     const paintButton = () => {
       button.textContent = unread ? "💬 Class chat •" : "💬 Class chat";
       button.title = unread
@@ -607,7 +650,13 @@ export function createCourseApp(config) {
         msgsEl.appendChild(el);
       }
       if (nearBottom) msgsEl.scrollTop = msgsEl.scrollHeight;
-      if (sawOther && !open) { unread = true; paintButton(); }
+      if (sawOther && !open) {
+        unread = true;
+        paintButton();
+        chime();
+        button.classList.add("cc-pulse");
+        setTimeout(() => button.classList.remove("cc-pulse"), 4000);
+      }
     };
 
     const poll = async (body) => {
@@ -794,6 +843,8 @@ export function createCourseApp(config) {
         panel.style.display = open ? "flex" : "none";
         if (open) {
           unread = false;
+          chimed = false;
+          button.classList.remove("cc-pulse");
           paintButton();
           poll();
           msgsEl.scrollTop = msgsEl.scrollHeight;

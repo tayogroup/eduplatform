@@ -961,6 +961,47 @@ answer "is there a class" — a session past its scheduled end is only a class
 while the room is live, and `joinable` is computed by the door's own
 expression so the pill can never say yes where the door says no.
 
+### The dashboard entry, the board's chrome, and one group per session (2026-08-29/30)
+
+The board is reached from the TEACHER DASHBOARD's rail -- "Group Board",
+between Live Classes and Schedule -- as well as from Teacher Operations on
+`teacher_workspace.php`. Two things about how that entry landed are worth more
+than the entry itself:
+
+- **`dashboard.php`'s quick-card grid is `display:none` on the current
+  design.** The first attempt added a perfectly correct card to the
+  `$role === 'teacher'` quick-links block, and it rendered invisibly -- the
+  markup is live, the container is hidden, and nothing but opening the page
+  can tell you so (a text search does not match hidden text either). The
+  VISIBLE navigation is the hand-built per-role `pqh-gnav` rail further up the
+  same file. The invisible card was left in place deliberately: it is correct
+  if the quick grid ever returns. Same lesson as the two suns and the
+  break-inside page count -- the declaration says intent, only the rendered
+  page says what a user gets.
+- **`teacher_dashboard.php` is a 5-line wrapper around `dashboard.php`**
+  (`PQH_TEACHER_DASHBOARD_WRAPPER`); the teacher dashboard's logic, rail and
+  role-switch all live in dashboard.php.
+
+The board itself wears the same chrome as the pages that dashboard links,
+modelled on `teacher_workspace.php`: Moodle furniture hidden by the body-class
+block, the shared design shell (`pqh_design_shell_css`/`_html` -- left rail
+plus sky-gradient app bar, with the board highlighted via a `navitems` entry
+carrying a `key`), and a workspace-style header card that took over the title
+from the toolbar's h2. Two mechanical consequences: the chat column's sticky
+top moved to 72px so it parks below the 60px sticky app bar, and the
+screenshot lightbox's z-index rose to 120 to cover the fixed rail (z 80).
+
+**One group per session** (owner, 2026-08-29): a teacher handles ONE group per
+live session. The board needed no code change -- it draws whatever
+non-archived groups the teacher owns -- and the change was pure data: QA class
+group #38 "group board 2" archived (`status='archived'`, the platform's own
+removal idiom; memberships and sessions kept, restore by flipping the status
+back) via a staged two-fence script that refused unless id AND exact title
+both matched. The section heading above still says "two groups of nine, out of
+phase" because that is the school DAY the board was built for; a board SCREEN
+now shows one group at a time, and the sort, the flags and the chat are
+unchanged by how many groups happen to render.
+
 ### The classroom chat: built INSIDE "no student-to-student messaging"
 
 ```bash

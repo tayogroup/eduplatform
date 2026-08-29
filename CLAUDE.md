@@ -1016,6 +1016,99 @@ been running on config defaults everywhere. The resolver only ever PROMOTES
 flags (a zero column never demotes a config default), which is what makes a
 minimal per-workspace row safe to create.
 
+### The chat's screenshot: a child sends the lesson page, and only the lesson page
+
+The camera beside Send (owner, 2026-08-29; app v332 + the chat's PHP) lets a
+learner send their current screen to the teacher. **The capture is a render of
+the app's own DOM** — html2canvas 1.4.1, vendored at
+`shared/html2canvas.min.js`, upstream-unmodified and tracked in git exactly
+like lucide — and deliberately NEVER the browser screen-capture API. That
+API's picker offers a five-year-old the whole desktop: other tabs, other apps,
+whatever the family had open. Its failure mode is a safeguarding incident, not
+a bug, and no permission dialog fixes that for this audience. A DOM render can
+only contain what the lesson shows and what the child typed into it; the
+requirements doc's attachments non-goal carries the owner's approved exception
+beside the rule.
+
+The pieces, and the decision inside each:
+
+- **The child previews before anything is sent** — "Your teacher will see
+  exactly this" over the actual image. A capture a child cannot inspect is a
+  capture they cannot consent to. Downscaled to 1280 wide, JPEG 0.7.
+- **Always `group_teacher_only`, hardcoded at the insert** — the stamp
+  function is not on this path, so `check-class-group-chat.php` asserts the
+  LITERAL at the insert site. Answer-to-class cannot carry an image because
+  its quote is text-only.
+- **Proven a JPEG by magic bytes, 500KB decoded cap** (plus an 800KB base64
+  cap at the learner door before decoding is attempted). The text safety
+  filter does not apply to pixels; the bounded capture stands in for it.
+- **No public URL, ever.** Stored via the file API (system context, filearea
+  `class_chat_shot`, itemid = messageid); the only ways out are the two gated
+  chat doors, and the image fetch re-runs `support_message_visible_to_user`
+  per request — a bubble and its pixels cannot diverge in who may see them.
+- **30-day retention**, swept opportunistically on store (bounded to 50 per
+  call, no cron wiring). The message row stays; panels say "expired". Text
+  forever is cheap; images of children's work forever is a policy nobody chose.
+- **The board shows a thumbnail; click opens a FULL-VIEWPORT lightbox.** The
+  first version expanded inside the 320px chat column and the owner's first
+  review said "too small for the teacher to review" — the thumbnail is the
+  conversation form, the lightbox is the review form, and review needs the
+  viewport.
+- **html2canvas lazy-loads by deriving its URL from the lucide script tag**
+  already on every page — correct in local dev and under `v{TAG}/` alike, zero
+  index.html changes, and the 200KB loads only when a child presses the
+  camera. It rides `SHARED_MODULES` in `deploy-app-version.js`.
+- Known limitation, accepted: WebGL canvases (Science/Computing interactive
+  models) render blank in a DOM capture. English — where the classroom runs —
+  draws none.
+
+### v331 shipped my own patch script inside course-app.js, and three checks watched it happen
+
+The release carrying the screenshot feature took **all six subjects down at
+boot**: `course-app.js` line 574 was `}"""` followed by
+`assert s.count(old) == 1` — the PYTHON SOURCE of the patch script that built
+the feature, inside the shipped JavaScript. Rolled forward as v332 inside the
+hour (never roll back a version path).
+
+The mechanism: a repair script re-derived its replacement text by
+REGEX-EXTRACTING `old = """…"""` / `new = """…"""` literals out of an earlier
+patch script, matched by their assert markers. For the second marker, the
+leftmost `old = """` in that file belonged to the FIRST block — so the lazy
+groups satisfied the anchor by extending ACROSS the first block's closing
+quotes, swallowing the python between the blocks into the "replacement".
+
+**Three verifications passed, and each was a real measurement of the wrong
+thing** — which is why this section exists:
+
+- `node --check` ran on intermediate states, never on the final bytes. The
+  multi-step patch script asserts before it writes, so a mid-script assert
+  means NOTHING landed — and a later partial re-apply left checks running on
+  states that never shipped.
+- The **symbol-presence check passed BECAUSE of the poison**: the injected
+  text was the feature's source code, as text, so every symbol it defines was
+  present in it. Presence of a name is not presence of working code — the
+  marker-proves-presence-not-correctness rule, at its pathological limit.
+- The **hunk-split classifier waved it through**, because it recognises my
+  work by my identifiers and the poison was made of them.
+
+The rules bought, each now practised:
+
+- **Never derive patch text by regex from another patch script.** Replacement
+  text recovered from a script that failed is the failure wearing a new name.
+  Type the strings.
+- **Verification belongs AFTER the last write, on the final file.** Every
+  check in the broken round passed; none of them ran last.
+- **Parse the LIVE bundle after every release** — `node --check` on the CDN's
+  own `course-app.js`. It is the check v331 never got and v332 did, it costs
+  one curl, and it is the only check that runs on the bytes learners execute.
+
+Recovery shape, because the tree is shared: the poisoned file was rebuilt from
+the last good commit — but a plain `git checkout` would have DESTROYED another
+session's uncommitted narration work in the same file. Their hunks were saved
+as a patch FIRST (`git diff HEAD -- <file>` before any reset), the file
+restored, their patch re-applied, and only then the feature re-applied as one
+handwritten script.
+
 ### A platform endpoint's CORS contract depends on how the gate finds it
 
 `check-platform-cors.mjs` discovers endpoints by parsing `platformUrl("…")` in

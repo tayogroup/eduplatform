@@ -256,6 +256,8 @@ export function createCourseApp(config) {
     endpoint: launchEndpoint || undefined,
     token: launchToken || undefined,
     onAuthLost: (info) => showSessionExpired(info),
+    onDeliveryFailing: (info) => showDeliveryProblem(info),
+    onDeliveryRecovered: () => clearNotice("delivery-problem"),
   });
   let unitCompletedSent = false;
   const emitProgress = (event) => { try { progressWS.emit(event); } catch { /* never break the lesson */ } };
@@ -875,20 +877,20 @@ export function createCourseApp(config) {
   //
   // Nothing is lost, and the wording says so because it is true -- the outbox
   // keeps every event, so a new launch delivers the work that could not be sent.
-  let sessionExpiredShown = false;
-  function showSessionExpired(info) {
-    if (sessionExpiredShown) return;
-    sessionExpiredShown = true;
+  // One notice bar, two conditions. Drawn outside #app for the reason the
+  // completion card is: renderers rewrite #app.innerHTML on every route, so
+  // anything inside vanishes on the next repaint.
+  function showNotice(id, message) {
+    if (document.getElementById(id)) return;
     const bar = document.createElement("div");
-    bar.id = "session-expired";
+    bar.id = id;
     bar.setAttribute("role", "status");
     bar.style.cssText = "position:fixed;left:0;right:0;bottom:0;z-index:60;display:flex;gap:12px;"
       + "align-items:center;justify-content:center;flex-wrap:wrap;padding:12px 18px;"
       + "background:#fff3cd;color:#664d03;border-top:2px solid #ffe69c;"
       + "font:600 14px/1.4 system-ui,sans-serif;box-shadow:0 -2px 10px rgba(0,0,0,.08)";
     const text = document.createElement("span");
-    text.textContent = "Your lesson session has timed out, so new work is not being saved. "
-      + "Open this lesson again from your dashboard — nothing you have done is lost.";
+    text.textContent = message;
     const close = document.createElement("button");
     close.type = "button";
     close.textContent = "Hide";
@@ -897,6 +899,37 @@ export function createCourseApp(config) {
     close.addEventListener("click", () => bar.remove());
     bar.append(text, close);
     document.body.appendChild(bar);
+  }
+  function clearNotice(id) { document.getElementById(id)?.remove(); }
+
+  function showSessionExpired() {
+    showNotice("session-expired",
+      "Your lesson session has timed out, so new work is not being saved. "
+      + "Open this lesson again from your dashboard — nothing you have done is lost.");
+  }
+
+  // THE WRITE PATH IS FAILING and it is not the token. Measured on production
+  // 2026-08-29: a browser extension refused the POST before it was sent
+  // (ERR_BLOCKED_BY_CLIENT), so nothing reached the server, nothing appeared in
+  // any log, and every server-side check reported the stored data as correct --
+  // because the writes never arrived to be wrong.
+  //
+  // The learner is the only one who can be told. A server receiving nothing
+  // cannot tell a blocked learner from a closed tab, so the teacher's board
+  // renders them as GONE, which is the one signal it exists to act on. Being
+  // silent here does not merely lose data, it manufactures a false alarm about
+  // a child who is sitting there working.
+  //
+  // Offline gets its own sentence. A learner on a train has lost nothing and
+  // needs no alarm; one whose extension is eating the writes needs to know the
+  // school cannot see their work. Identical to the code, opposite to a family.
+  function showDeliveryProblem(info) {
+    showNotice("delivery-problem", info && info.online === false
+      ? "You are offline. Your work is saved on this device and will be sent to school "
+        + "when you are back online."
+      : "Your work is being saved on this device, but it is not reaching the school. "
+        + "Ask a grown-up to check any ad blocker or privacy shield for this site, "
+        + "then open the lesson again. Nothing you have done is lost.");
   }
 
   function complete(section, message) {

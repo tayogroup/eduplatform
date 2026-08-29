@@ -199,6 +199,19 @@ export function createProgressClient(opts) {
   // learner's work -- but we stop spending requests that can only be refused,
   // and we tell the app ONCE so it can tell the learner.
   let authLost = false;
+  // Consecutive failed flushes. A blocked or broken write path is INVISIBLE
+  // otherwise: the throw is caught, the events queue, and the learner is told
+  // nothing while their work stops reaching the school. Worse, the live group
+  // board sorts on time since the app last reported, so it renders them as
+  // GONE -- a server that receives nothing cannot tell a blocked learner from a
+  // closed tab, which is exactly why this has to be said on the learner's own
+  // screen instead.
+  let failures = 0;
+  let deliveryReported = false;
+  // Three, not one: a single failed flush is an ordinary blip on a phone
+  // moving between cells, and crying wolf at a child mid-lesson is its own
+  // harm. Three consecutive means the path is not coming back on its own.
+  const FAIL_THRESHOLD = 3;
 
   const loadOutbox = () => readJson(outboxKey, []);
   const saveOutbox = (q) => writeJson(outboxKey, q);
@@ -241,6 +254,14 @@ export function createProgressClient(opts) {
         const res = await impl.persist(batch);
         const sent = new Set(batch.map((e) => e._k));
         saveOutbox(loadOutbox().filter((e) => !sent.has(e._k)));
+        // Recovered. Told only if we had reported a problem, so a learner whose
+        // connection wobbled once is never shown a notice they then have to be
+        // un-shown.
+        failures = 0;
+        if (deliveryReported) {
+          deliveryReported = false;
+          try { opts.onDeliveryRecovered?.(); } catch { /* never break the lesson */ }
+        }
         return res;
       } catch (err) {
         if (err && err.authLost && !authLost) {
@@ -249,6 +270,24 @@ export function createProgressClient(opts) {
           // sentence every twenty seconds, and the condition does not change
           // until they reload.
           try { opts.onAuthLost?.({ status: err.status, queued: loadOutbox().length }); } catch { /* never break the lesson */ }
+        }
+        if (!(err && err.authLost)) {
+          failures += 1;
+          if (failures >= FAIL_THRESHOLD && !deliveryReported) {
+            deliveryReported = true;
+            try {
+              opts.onDeliveryFailing?.({
+                consecutive: failures,
+                queued: loadOutbox().length,
+                // OFFLINE IS A DIFFERENT SENTENCE. A learner on a train has
+                // lost nothing and needs no alarm; one whose extension is
+                // eating the writes needs to know the school is not seeing
+                // their work. Same failure to the code, opposite meaning to a
+                // family.
+                online: typeof navigator === "undefined" ? true : navigator.onLine !== false,
+              });
+            } catch { /* never break the lesson */ }
+          }
         }
         return { accepted: 0, ok: false, error: String(err), authLost: !!(err && err.authLost) };
       } finally {
@@ -333,6 +372,8 @@ export function createProgressClient(opts) {
     // everything; a reload with a fresh token delivers it.
     get authLost() { return authLost; },
     get queuedCount() { return loadOutbox().length; },
+    // True while consecutive flushes are failing for a non-auth reason.
+    get deliveryFailing() { return deliveryReported; },
   };
 }
 

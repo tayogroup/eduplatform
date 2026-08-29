@@ -35,6 +35,7 @@ $requestedworkspaceid = optional_param('workspaceid', 0, PARAM_INT);
 $groupid = optional_param('groupid', 0, PARAM_INT);
 $since = optional_param('since', 0, PARAM_INT);
 $body = trim((string)optional_param('body', '', PARAM_RAW));
+$replyto = optional_param('replyto', 0, PARAM_INT);
 $workspaceid = pqh_current_workspace_id((int)$USER->id, $requestedworkspaceid);
 
 if ($workspaceid <= 0 || !pqh_user_can_teach_in_workspace((int)$USER->id, $workspaceid)) {
@@ -62,5 +63,5 @@ if ($groupid <= 0 || !array_key_exists($groupid, $groups)) {
     exit;
 }
 
-$result = local_prequran_external::class_group_chat_exchange((int)$USER->id, $groupid, $body, max(0, $since));
+$result = local_prequran_external::class_group_chat_exchange((int)$USER->id, $groupid, $body, max(0, $since), 60, max(0, $replyto));
 echo json_encode($result, JSON_UNESCAPED_SLASHES);

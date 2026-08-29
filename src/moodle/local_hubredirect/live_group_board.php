@@ -204,7 +204,11 @@ echo $OUTPUT->header();
 .pqlgb-chat-msg.is-private{background:#fff3cd;border:1px solid #ffe69c}
 .pqlgb-chat-msg.is-private small{display:block;font-size:10px;color:#664d03;margin-top:3px}
 .pqlgb-chat-empty{color:var(--op-muted,#6c757d);font-size:13px;padding:8px 2px}
-.pqlgb-chat-form{display:flex;gap:8px;padding:10px 12px;border-top:1px solid var(--op-line-strong)}
+.pqlgb-chat-form{display:flex;flex-wrap:wrap;gap:8px;padding:10px 12px;border-top:1px solid var(--op-line-strong)}
+.pqlgb-chat-chip{width:100%;font-size:11px;color:#664d03;background:#fff3cd;border:1px solid #ffe69c;border-radius:8px;padding:4px 8px}
+.pqlgb-chat-chip-x{border:none;background:transparent;color:inherit;font:inherit;cursor:pointer;font-weight:800}
+.pqlgb-chat-quote{display:block;font-size:11px;font-style:italic;opacity:.8;border-left:3px solid #9ec5fe;padding-left:6px;margin-bottom:4px}
+.pqlgb-chat-answer{display:block;margin-top:5px;border:1px solid #052c65;background:transparent;color:#052c65;border-radius:999px;padding:2px 9px;font:inherit;font-size:11px;font-weight:700;cursor:pointer}
 .pqlgb-chat-form input{flex:1;border:1px solid var(--op-line-strong);border-radius:8px;padding:7px 10px;font:inherit;font-size:13px;min-width:0}
 .pqlgb-chat-form button{border:1px solid #052c65;background:#0d6efd;color:#fff;border-radius:8px;padding:7px 14px;font:inherit;font-size:13px;font-weight:700;cursor:pointer}
 @media (max-width:900px){.pqlgb-cols{flex-direction:column}.pqlgb-chat{width:100%;flex:1 1 auto;position:static;max-height:50vh}}
@@ -680,6 +684,10 @@ echo $OUTPUT->header();
     var lastId = 0;
     var chatDisabled = false;
     var inflight = false;
+    // The learner question a typed reply will broadcast with. Cleared on send,
+    // on cancel, and on switching group -- a reply must never quote a question
+    // from the other room.
+    var replyTarget = null;
 
     function esc2(s) { var d = document.createElement("div"); d.textContent = s == null ? "" : String(s); return d.innerHTML; }
 
@@ -702,6 +710,7 @@ echo $OUTPUT->header();
       if (!next || next === activeGroup) { return; }
       activeGroup = next;
       lastId = 0;
+      setReplyTarget(null);
       msgsEl.innerHTML = '<div class="pqlgb-chat-empty">Loading&hellip;</div>';
       drawTabs();
       pollChat();
@@ -721,9 +730,20 @@ echo $OUTPUT->header();
         // (teacher)". Students arrive as first names.
         var who = m.mine ? "" : "<b>" + esc2(m.name) + "</b>";
         var priv = m.toteacheronly ? "<small>Only you and " + (m.mine ? "your teacher" : "this learner") + " can see this</small>" : "";
+        // An answered-to-class message carries its question, never its asker.
+        var quote = m.quote
+          ? '<span class="pqlgb-chat-quote">' + (m.quote.mine ? "You asked" : "Someone asked") + ": " + esc2(m.quote.body) + "</span>"
+          : "";
+        // A learner question gets the one action that makes it teaching: answer
+        // it in front of everyone, with the asker kept out of it. The question
+        // TEXT goes to the class, so the button says so -- if a child wrote
+        // their name into the question, the teacher is the judgment call.
+        var answer = (m.toteacheronly && !m.mine)
+          ? '<button type="button" class="pqlgb-chat-answer" data-replyto="' + m.id + '" data-preview="' + esc2(m.body).replace(/"/g, "&quot;") + '">Answer to class</button>'
+          : "";
         var el = document.createElement("div");
         el.className = cls;
-        el.innerHTML = who + esc2(m.body) + priv;
+        el.innerHTML = who + quote + esc2(m.body) + priv + answer;
         msgsEl.appendChild(el);
       });
       if (nearBottom) { msgsEl.scrollTop = msgsEl.scrollHeight; }
@@ -736,6 +756,7 @@ echo $OUTPUT->header();
       params.set("groupid", String(activeGroup));
       params.set("since", String(lastId));
       if (body) { params.set("body", body); }
+      if (body && replyTarget) { params.set("replyto", String(replyTarget.id)); }
       return fetch(chatUrl, {
         method: "POST",
         credentials: "same-origin",
@@ -762,12 +783,36 @@ echo $OUTPUT->header();
       callChat("");
     }
 
+    var chip = document.createElement("div");
+    chip.className = "pqlgb-chat-chip";
+    chip.hidden = true;
+    form.insertBefore(chip, form.firstChild);
+    function setReplyTarget(next) {
+      replyTarget = next;
+      chip.hidden = !next;
+      chip.innerHTML = next
+        ? 'Answering for the class: &ldquo;' + esc2(next.preview).slice(0, 160) + '&rdquo; '
+          + '<button type="button" class="pqlgb-chat-chip-x" aria-label="Cancel">&times;</button>'
+        : "";
+      if (next) { input.placeholder = "Answer the class\u2026"; input.focus(); }
+      else { input.placeholder = "Message the class\u2026"; }
+    }
+    chip.addEventListener("click", function (event) {
+      if (event.target.closest && event.target.closest(".pqlgb-chat-chip-x")) { setReplyTarget(null); }
+    });
+    msgsEl.addEventListener("click", function (event) {
+      var btn = event.target.closest ? event.target.closest("[data-replyto]") : null;
+      if (!btn) { return; }
+      setReplyTarget({ id: Number(btn.getAttribute("data-replyto")), preview: btn.getAttribute("data-preview") || "" });
+    });
+
     form.addEventListener("submit", function (event) {
       event.preventDefault();
       var text = (input.value || "").trim();
       if (!text) { return; }
       input.value = "";
       callChat(text);
+      setReplyTarget(null);
     });
 
     drawTabs();

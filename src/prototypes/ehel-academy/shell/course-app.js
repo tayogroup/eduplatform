@@ -580,7 +580,11 @@ export function createCourseApp(config) {
         const who = m.mine ? "" : `<b style="display:block;font-size:11px;opacity:.75">${escapeHtml(m.name)}</b>`;
         const note = m.mine && m.toteacheronly
           ? '<small style="display:block;font-size:10px;color:#664d03;margin-top:3px">Only your teacher can see this</small>' : "";
-        el.innerHTML = who + escapeHtml(m.body) + note;
+        // An answer-to-class arrives with the question and without the asker.
+        // The asker's own panel says "You asked" -- they know; nobody else does.
+        const quote = m.quote
+          ? `<span style="display:block;font-size:11px;font-style:italic;opacity:.8;border-left:3px solid #9ec5fe;padding-left:6px;margin-bottom:4px">${m.quote.mine ? "You asked" : "Someone asked"}: ${escapeHtml(m.quote.body)}</span>` : "";
+        el.innerHTML = who + quote + escapeHtml(m.body) + note;
         msgsEl.appendChild(el);
       }
       if (nearBottom) msgsEl.scrollTop = msgsEl.scrollHeight;

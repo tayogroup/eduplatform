@@ -8211,7 +8211,7 @@ $validate = [
      * share one room; a full name on every line is roll-call furniture, and the
      * teacher's tile layout already resolves who is who.
      */
-    public static function class_group_chat_exchange(int $userid, int $groupid, string $body = '', int $sincemessageid = 0, int $limit = 60): array {
+    public static function class_group_chat_exchange(int $userid, int $groupid, string $body = '', int $sincemessageid = 0, int $limit = 60, int $replytoid = 0): array {
         global $DB;
 
         if ($userid <= 0 || $groupid <= 0) {
@@ -8230,7 +8230,7 @@ $validate = [
         }
 
         try {
-            $opened = self::support_open_class_group_thread($groupid, $policy, '', $body, $userid);
+            $opened = self::support_open_class_group_thread($groupid, $policy, '', $body, $userid, $replytoid);
         } catch (\Throwable $e) {
             return ['ok' => false, 'enabled' => true, 'message' => 'Class chat could not be opened.'];
         }
@@ -8266,11 +8266,39 @@ $validate = [
             }
         }
 
+        // Quoted questions for any answer-to-class rows in this page. The body
+        // travels; the ASKER never does -- 'quotemine' is the one identity fact
+        // sent, and only to the asker themselves, so their panel can honestly
+        // say "You asked" while everyone else reads "Someone asked".
+        $quotes = [];
+        foreach ($rows as $row) {
+            if (preg_match('/^reply:(\d+)$/', (string)($row->templatekey ?? ''), $m)) {
+                $quotes[(int)$m[1]] = null;
+            }
+        }
+        if ($quotes) {
+            [$qsql, $qparams] = $DB->get_in_or_equal(array_keys($quotes), SQL_PARAMS_NAMED, 'qt');
+            foreach ($DB->get_records_select('local_prequran_comm_message',
+                    "threadid = :qth AND id $qsql",
+                    array_merge(['qth' => $threadid], $qparams), '', 'id, senderid, body') as $qrow) {
+                $quotes[(int)$qrow->id] = $qrow;
+            }
+        }
+
         $teacherid = (int)($thread->assignedto ?? 0);
         $messages = [];
         foreach ($rows as $row) {
             if (!self::support_message_visible_to_user($row, $thread, $userid)) {
                 continue;
+            }
+            $quote = null;
+            if (preg_match('/^reply:(\d+)$/', (string)($row->templatekey ?? ''), $m)
+                    && !empty($quotes[(int)$m[1]])) {
+                $qrow = $quotes[(int)$m[1]];
+                $quote = [
+                    'body' => core_text::substr((string)$qrow->body, 0, 300),
+                    'mine' => (int)$qrow->senderid === $userid,
+                ];
             }
             $senderstudent = !empty($studentsenders[(int)$row->senderid]);
             $messages[] = [
@@ -8294,6 +8322,7 @@ $validate = [
                 // believe the class read something the class cannot read.
                 'toteacheronly' => (string)($row->visibility ?? 'public') === 'group_teacher_only',
                 'body' => (string)$row->body,
+                'quote' => $quote,
                 'at' => (int)$row->timecreated,
             ];
         }
@@ -8311,7 +8340,7 @@ $validate = [
         ];
     }
 
-    protected static function support_open_class_group_thread(int $groupid, array $policy, string $subject, string $body, int $asuserid = 0): array {
+    protected static function support_open_class_group_thread(int $groupid, array $policy, string $subject, string $body, int $asuserid = 0, int $replytoid = 0): array {
         global $DB, $USER;
 
         if ($groupid <= 0) {
@@ -8405,6 +8434,25 @@ $validate = [
             }
         }
 
+        // ANSWER-TO-CLASS (owner, 2026-08-29): a staff reply may reference one
+        // learner question. The reply goes to the whole room WITH the question
+        // and WITHOUT the asker -- the class gets the teaching, nobody learns
+        // who needed it. Guarded three ways: only staff may reference (a
+        // student must never be able to broadcast another child's words), the
+        // referenced message must be in THIS thread, and it must be a learner
+        // question (group_teacher_only) -- quoting an already-public message is
+        // a no-op dressed as a feature. A reference that fails any of these is
+        // dropped silently and the reply still sends, because a teacher's
+        // answer to the class must not bounce over a stale id.
+        $replyref = 0;
+        if ($replytoid > 0 && !($ismember && !$isteacher)) {
+            $quoted = $DB->get_record('local_prequran_comm_message', ['id' => $replytoid]);
+            if ($quoted && (int)$quoted->threadid === $threadid
+                    && (string)($quoted->visibility ?? '') === 'group_teacher_only') {
+                $replyref = $replytoid;
+            }
+        }
+
         $messageid = 0;
         $clean = self::support_clean_message_body($body, $policy, !$isteacher, 1200);
         if ($clean !== '') {
@@ -8415,7 +8463,10 @@ $validate = [
                 'studentid' => 0,
                 'messagekind' => 'text',
                 'body' => $clean,
-                'templatekey' => '',
+                // The reference rides in templatekey ('reply:<id>') because the
+                // column exists and is unused here; a schema change for one
+                // integer would be a plugin upgrade for a pointer.
+                'templatekey' => $replyref > 0 ? ('reply:' . $replyref) : '',
                 'status' => 'visible',
                 'moderationflags' => '',
                 'visibility' => self::support_message_visibility_for(

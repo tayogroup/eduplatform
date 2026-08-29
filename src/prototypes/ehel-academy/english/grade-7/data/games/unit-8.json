@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: To show or tell what you think or feel.",
+          "prompt": "Which word means: A skill, quality, or certificate that makes someone suitable for a job.",
           "choices": [
-            "express",
-            "allege",
-            "influence"
+            "qualification",
+            "intelligence",
+            "correlative"
           ],
-          "answer": "express",
-          "explanation": "express: To show or tell what you think or feel."
+          "answer": "qualification",
+          "explanation": "qualification: A skill, quality, or certificate that makes someone suitable for a job."
         },
         {
-          "prompt": "Which word means: Likely to do something or to be affected by something.",
+          "prompt": "Which word means: Closed, or made to stop operating.",
           "choices": [
-            "express",
-            "allege",
-            "liable"
+            "qualification",
+            "intelligence",
+            "shut"
           ],
-          "answer": "liable",
-          "explanation": "liable: Likely to do something or to be affected by something."
+          "answer": "shut",
+          "explanation": "shut: Closed, or made to stop operating."
         },
         {
-          "prompt": "Which word means: Hardworking and productive.",
+          "prompt": "Which word means: Made something free of dirt, mess, or rubbish by washing or tidying it.",
           "choices": [
-            "allege",
-            "industrious",
-            "express"
+            "intelligence",
+            "cleaned",
+            "qualification"
           ],
-          "answer": "industrious",
-          "explanation": "industrious: Hardworking and productive."
+          "answer": "cleaned",
+          "explanation": "cleaned: Made something free of dirt, mess, or rubbish by washing or tidying it."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "To say that something is true, or to ask for something you believe is yours.",
-          "answer": "claim"
+          "clue": "The art of using language to persuade.",
+          "answer": "rhetoric"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Having the right to do or receive something.",
-          "answer": "eligible"
+          "clue": "A girl or woman who has the same parents as another person.",
+          "answer": "sister"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "The process of growing or improving something.",
-          "answer": "development"
+          "clue": "Taking turns in a set order, so a task passes regularly from one person to the next.",
+          "answer": "rotating"
         }
       ]
     },
@@ -83,52 +83,54 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "magazine.",
-            "school",
-            "the",
+            "not.",
+            "could",
+            "experience",
+            "unrecorded",
+            "of",
+            "years",
+            "that",
+            "doors",
+            "opened",
+            "accounting",
             "in",
-            "ideas",
-            "my",
-            "express",
-            "to",
-            "want",
-            "I"
+            "qualification",
+            "recognised",
+            "A"
           ],
-          "answer": "I want to express my ideas in the school magazine."
+          "answer": "A recognised qualification in accounting opened doors that years of unrecorded experience could not."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "fairer.",
-            "them",
-            "make",
-            "to",
-            "rules",
-            "the",
-            "to",
-            "amendment",
-            "an",
-            "made",
-            "school",
-            "The"
+            "sign.",
+            "warning",
+            "a",
+            "often",
+            "is",
+            "source",
+            "named",
+            "no",
+            "with",
+            "story",
+            "A"
           ],
-          "answer": "The school made an amendment to the rules to make them fairer."
+          "answer": "A story with no named source is often a warning sign."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "present.",
-            "to",
-            "student",
+            "fortnight.",
             "each",
-            "for",
-            "time",
-            "allocate",
-            "will",
-            "teacher",
+            "classes",
+            "the",
+            "between",
+            "rotated",
+            "duty",
+            "cleaning",
             "The"
           ],
-          "answer": "The teacher will allocate time for each student to present."
+          "answer": "The cleaning duty rotated between the classes each fortnight."
         }
       ]
     },
@@ -229,11 +231,11 @@
         },
         {
           "prompt": "Speaking 3: Vocabulary Expert Interview",
-          "target": "The school made an amendment to the rules to make them fairer."
+          "target": "A story with no named source is often a warning sign."
         },
         {
           "prompt": "Speaking 5: Five-Minute Unit Talk",
-          "target": "The teacher will allocate time for each student to present."
+          "target": "The cleaning duty rotated between the classes each fortnight."
         }
       ]
     },
@@ -248,57 +250,54 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "breathe.",
-            "to",
-            "hard",
-            "it",
-            "makes",
-            "that",
-            "cough",
-            "chronic",
-            "a",
-            "has",
-            "She"
-          ],
-          "answer": "She has a chronic cough that makes it hard to breathe."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "viewers.",
-            "sceptical",
-            "most",
+            "exonerated.",
+            "was",
+            "boy",
             "the",
-            "even",
-            "convince",
-            "to",
-            "managed",
+            "found,",
+            "was",
             "evidence",
-            "careful",
-            "documentary's",
-            "The"
+            "new",
+            "the",
+            "After"
           ],
-          "answer": "The documentary's careful evidence managed to convince even the most sceptical viewers."
+          "answer": "After the new evidence was found, the boy was exonerated."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "passwords.",
-            "customers'",
-            "its",
-            "protecting",
-            "in",
-            "negligent",
-            "been",
-            "had",
-            "company",
+            "immediately.",
+            "rumour",
             "the",
-            "that",
-            "concluded",
-            "report",
-            "The"
+            "believed",
+            "she",
+            "and",
+            "sister,",
+            "younger",
+            "Rohan's",
+            "is",
+            "Tia"
           ],
-          "answer": "The report concluded that the company had been negligent in protecting its customers' passwords."
+          "answer": "Tia is Rohan's younger sister, and she believed the rumour immediately."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "rule.",
+            "cleaning",
+            "the",
+            "to",
+            "opposed",
+            "were",
+            "students",
+            "why",
+            "asked",
+            "member",
+            "board",
+            "senior",
+            "A"
+          ],
+          "answer": "A senior board member asked why students were opposed to the cleaning rule."
         }
       ]
     },
@@ -311,34 +310,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'exonerated' mean in this unit?",
+          "prompt": "What does 'searched' mean in this unit?",
           "choices": [
-            "To be declared not guilty of a crime or blame.",
-            "To show or tell what you think or feel.",
-            "To say that something is true, but not prove it yet."
+            "Looked carefully in order to find something.",
+            "A skill, quality, or certificate that makes someone suitable for a job.",
+            "A machine's ability to perform tasks that would need human thought."
           ],
-          "answer": "To be declared not guilty of a crime or blame.",
-          "explanation": "exonerated: To be declared not guilty of a crime or blame."
+          "answer": "Looked carefully in order to find something.",
+          "explanation": "searched: Looked carefully in order to find something."
         },
         {
-          "prompt": "What does 'consecutive' mean in this unit?",
+          "prompt": "What does 'testimonies' mean in this unit?",
           "choices": [
-            "To show or tell what you think or feel.",
-            "To say that something is true, but not prove it yet.",
-            "Happening one after another without any breaks."
+            "A skill, quality, or certificate that makes someone suitable for a job.",
+            "A machine's ability to perform tasks that would need human thought.",
+            "Statements people give, especially describing what they saw or know, often used as evidence."
           ],
-          "answer": "Happening one after another without any breaks.",
-          "explanation": "consecutive: Happening one after another without any breaks."
+          "answer": "Statements people give, especially describing what they saw or know, often used as evidence.",
+          "explanation": "testimonies: Statements people give, especially describing what they saw or know, often used as evidence."
         },
         {
-          "prompt": "What does 'allege' mean in this unit?",
+          "prompt": "What does 'intelligence' mean in this unit?",
           "choices": [
-            "The power to change or affect someone or something.",
-            "To say that something is true, but not prove it yet.",
-            "To show or tell what you think or feel."
+            "Describing a pair of words that work together in a sentence.",
+            "A machine's ability to perform tasks that would need human thought.",
+            "A skill, quality, or certificate that makes someone suitable for a job."
           ],
-          "answer": "To say that something is true, but not prove it yet.",
-          "explanation": "allege: To say that something is true, but not prove it yet."
+          "answer": "A machine's ability to perform tasks that would need human thought.",
+          "explanation": "intelligence: A machine's ability to perform tasks that would need human thought."
         }
       ]
     },
@@ -351,34 +350,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
+          "prompt": "What type of word is 'input'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Input is used as a noun in this dictionary sense."
+        },
+        {
           "prompt": "What type of word is 'organise'?",
           "choices": [
-            "Verb",
             "Noun",
-            "Adjective"
+            "Adjective",
+            "Verb"
           ],
           "answer": "Verb",
           "explanation": "Organise is used as a verb in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'copious'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Adjective",
-          "explanation": "Copious is used as an adjective in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'convince'?",
+          "prompt": "What type of word is 'tries'?",
           "choices": [
             "Adjective",
             "Verb",
             "Noun"
           ],
           "answer": "Verb",
-          "explanation": "Convince is used as a verb in this dictionary sense."
+          "explanation": "Tries is used as a verb in this dictionary sense."
         }
       ]
     },
@@ -394,16 +393,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "allege",
-              "To say that something is true, but not prove it yet."
+              "representation",
+              "The way something or someone is shown or described."
             ],
             [
-              "influence",
-              "The power to change or affect someone or something."
+              "sanction",
+              "A penalty imposed to make a country or person obey."
             ],
             [
-              "amendment",
-              "A change or addition to a law or document."
+              "removes",
+              "Takes something away or gets rid of it."
             ]
           ]
         },
@@ -411,16 +410,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "exonerated",
-              "To be declared not guilty of a crime or blame."
+              "sister",
+              "A girl or woman who has the same parents as another person."
             ],
             [
-              "delegate",
-              "A person chosen to represent others; to give a task to someone."
+              "spotting",
+              "Noticing or recognising something, often something hidden or hard to see."
             ],
             [
-              "consult",
-              "To ask someone for advice or information."
+              "leaned",
+              "Moved or rested your body at an angle, often against or away from something."
             ]
           ]
         },
@@ -428,16 +427,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "consecutive",
-              "Happening one after another without any breaks."
+              "democratic",
+              "Based on fair discussion where decisions are made together, not by just one person."
             ],
             [
-              "hybrid",
-              "Something made by combining two different things."
+              "justice",
+              "Fairness in the way people are treated, especially by rules, laws, or those in charge."
             ],
             [
-              "necessity",
-              "Something that is very important and must be done or had."
+              "delegate",
+              "A person chosen to represent others; to give a task to someone."
             ]
           ]
         }

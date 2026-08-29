@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: Kind and generous; wanting to help others.",
+          "prompt": "Which word means: The act of giving out or assigning something, such as tasks or money, in a set way.",
           "choices": [
-            "benevolent",
-            "determined",
-            "industrious"
+            "allocation",
+            "deliberate",
+            "coloured"
           ],
-          "answer": "benevolent",
-          "explanation": "benevolent: Kind and generous; wanting to help others."
+          "answer": "allocation",
+          "explanation": "allocation: The act of giving out or assigning something, such as tasks or money, in a set way."
         },
         {
-          "prompt": "Which word means: Not giving up easily; holding on with great determination.",
+          "prompt": "Which word means: Magnificent means extremely impressive, beautiful or grand.",
           "choices": [
-            "benevolent",
-            "determined",
-            "tenacious"
+            "allocation",
+            "deliberate",
+            "magnificent"
           ],
-          "answer": "tenacious",
-          "explanation": "tenacious: Not giving up easily; holding on with great determination."
+          "answer": "magnificent",
+          "explanation": "magnificent: Magnificent means extremely impressive, beautiful or grand."
         },
         {
-          "prompt": "Which word means: Important and well-known.",
+          "prompt": "Which word means: The leader or person in charge of a group, school, or organisation.",
           "choices": [
-            "determined",
-            "prominent",
-            "benevolent"
+            "deliberate",
+            "head",
+            "allocation"
           ],
-          "answer": "prominent",
-          "explanation": "prominent: Important and well-known."
+          "answer": "head",
+          "explanation": "head: The leader or person in charge of a group, school, or organisation."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Having a special charm that attracts and inspires people.",
-          "answer": "charismatic"
+          "clue": "The state of having more than one possible meaning.",
+          "answer": "ambiguity"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Very enthusiastic and eager about something.",
-          "answer": "zealous"
+          "clue": "Treasured means considered very precious and cared for deeply.",
+          "answer": "treasured"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Not taking sides; treating everyone equally and fairly.",
-          "answer": "impartial"
+          "clue": "An organised effort by a group of people to collect something or achieve a goal.",
+          "answer": "drive"
         }
       ]
     },
@@ -83,50 +83,45 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "shelter.",
-            "homeless",
+            "tasks.",
+            "of",
+            "allocation",
+            "unfair",
             "the",
-            "to",
-            "food",
-            "donated",
-            "woman",
-            "benevolent",
+            "opposed",
+            "council",
             "The"
           ],
-          "answer": "The benevolent woman donated food to the homeless shelter."
+          "answer": "The council opposed the unfair allocation of tasks."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "dragon.",
+            "community.",
             "the",
-            "from",
-            "village",
-            "the",
-            "saved",
-            "hero",
-            "legendary",
-            "The"
+            "in",
+            "generation",
+            "every",
+            "to",
+            "enjoyment",
+            "bring",
+            "Festivals"
           ],
-          "answer": "The legendary hero saved the village from the dragon."
+          "answer": "Festivals bring enjoyment to every generation in the community."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "bus.",
-            "the",
-            "for",
-            "waiting",
-            "while",
-            "weather",
-            "cold",
-            "the",
-            "endure",
-            "to",
-            "had",
-            "She"
+            "Friday.",
+            "before",
+            "forms",
+            "their",
+            "in",
+            "hand",
+            "must",
+            "Students"
           ],
-          "answer": "She had to endure the cold weather while waiting for the bus."
+          "answer": "Students must hand in their forms before Friday."
         }
       ]
     },
@@ -246,58 +241,50 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "homework.",
-            "our",
-            "finish",
+            "differences.",
+            "their",
+            "reconcile",
             "to",
-            "time",
-            "extra",
-            "us",
-            "gave",
+            "tried",
             "and",
-            "lenient",
-            "was",
-            "teacher",
-            "The"
+            "talked",
+            "they",
+            "argument,",
+            "their",
+            "After"
           ],
-          "answer": "The teacher was lenient and gave us extra time to finish our homework."
+          "answer": "After their argument, they talked and tried to reconcile their differences."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "dances.",
-            "traditional",
-            "and",
-            "speeches",
-            "included",
+            "calendar.",
+            "their",
+            "on",
+            "date",
             "festival",
             "the",
+            "marks",
+            "family",
+            "Every"
+          ],
+          "answer": "Every family marks the festival date on their calendar."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "lion.",
+            "a",
             "of",
-            "ceremony",
-            "opening",
-            "The"
-          ],
-          "answer": "The opening ceremony of the festival included speeches and traditional dances."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "them.",
-            "below",
-            "gasped",
-            "crowd",
-            "festival",
+            "spirit",
             "the",
-            "while",
-            "platforms",
-            "the",
-            "between",
-            "leapt",
-            "acrobats",
-            "agile",
-            "The"
+            "has",
+            "Zara",
+            "said",
+            "Yasmin",
+            "Teacher"
           ],
-          "answer": "The agile acrobats leapt between the platforms while the festival crowd gasped below them."
+          "answer": "Teacher Yasmin said Zara has the spirit of a lion."
         }
       ]
     },
@@ -310,34 +297,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'reconcile' mean in this unit?",
+          "prompt": "What does 'emphasising' mean in this unit?",
           "choices": [
-            "To make two people or groups friendly again after a disagreement.",
-            "Kind and generous; wanting to help others.",
-            "Having a strong desire to achieve something and not giving up."
+            "Giving special importance to something so that people notice it clearly.",
+            "The act of giving out or assigning something, such as tasks or money, in a set way.",
+            "Done on purpose, after thought."
           ],
-          "answer": "To make two people or groups friendly again after a disagreement.",
-          "explanation": "reconcile: To make two people or groups friendly again after a disagreement."
+          "answer": "Giving special importance to something so that people notice it clearly.",
+          "explanation": "emphasising: Giving special importance to something so that people notice it clearly."
         },
         {
-          "prompt": "What does 'authentic' mean in this unit?",
+          "prompt": "What does 'motorcycle' mean in this unit?",
           "choices": [
-            "Kind and generous; wanting to help others.",
-            "Having a strong desire to achieve something and not giving up.",
-            "Real and genuine; not fake or copied."
+            "The act of giving out or assigning something, such as tasks or money, in a set way.",
+            "Done on purpose, after thought.",
+            "A two-wheeled vehicle powered by an engine, ridden by sitting astride it."
           ],
-          "answer": "Real and genuine; not fake or copied.",
-          "explanation": "authentic: Real and genuine; not fake or copied."
+          "answer": "A two-wheeled vehicle powered by an engine, ridden by sitting astride it.",
+          "explanation": "motorcycle: A two-wheeled vehicle powered by an engine, ridden by sitting astride it."
         },
         {
-          "prompt": "What does 'determined' mean in this unit?",
+          "prompt": "What does 'deliberate' mean in this unit?",
           "choices": [
-            "Hard-working and very dedicated to tasks.",
-            "Having a strong desire to achieve something and not giving up.",
-            "Kind and generous; wanting to help others."
+            "Coloured describes something that has colour, especially bright or noticeable colour.",
+            "Done on purpose, after thought.",
+            "The act of giving out or assigning something, such as tasks or money, in a set way."
           ],
-          "answer": "Having a strong desire to achieve something and not giving up.",
-          "explanation": "determined: Having a strong desire to achieve something and not giving up."
+          "answer": "Done on purpose, after thought.",
+          "explanation": "deliberate: Done on purpose, after thought."
         }
       ]
     },
@@ -350,34 +337,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'clamour'?",
+          "prompt": "What type of word is 'hardware'?",
           "choices": [
             "Noun",
             "Verb",
             "Adjective"
           ],
           "answer": "Noun",
-          "explanation": "Clamour is used as a noun in this dictionary sense."
+          "explanation": "Hardware is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'tradition'?",
+          "prompt": "What type of word is 'tenacious'?",
           "choices": [
+            "Noun",
             "Verb",
-            "Adjective",
-            "Noun"
-          ],
-          "answer": "Noun",
-          "explanation": "Tradition is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'meticulous'?",
-          "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
+            "Adjective"
           ],
           "answer": "Adjective",
-          "explanation": "Meticulous is used as an adjective in this dictionary sense."
+          "explanation": "Tenacious is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'reconciled'?",
+          "choices": [
+            "Adjective",
+            "Verb",
+            "Noun"
+          ],
+          "answer": "Verb",
+          "explanation": "Reconciled is used as a verb in this dictionary sense."
         }
       ]
     },
@@ -393,16 +380,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "determined",
-              "Having a strong desire to achieve something and not giving up."
+              "applicability",
+              "How far something can be usefully applied to a situation."
             ],
             [
-              "industrious",
-              "Hard-working and very dedicated to tasks."
+              "eagerly",
+              "Eagerly means with great excitement and enthusiasm, as if you cannot wait for something."
             ],
             [
-              "paragon",
-              "A person or thing that is a perfect example of a particular quality."
+              "cardamom",
+              "Cardamom is a fragrant spice used in cooking and in drinks like tea."
             ]
           ]
         },
@@ -410,16 +397,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "zealous",
-              "Very enthusiastic and eager about something."
+              "drum",
+              "A drum is a musical instrument played by hitting its tight surface with hands or sticks."
             ],
             [
-              "endure",
-              "To continue to exist or to suffer through difficult times."
+              "lit",
+              "Set something on fire, or made something bright with light."
             ],
             [
-              "agile",
-              "Able to move quickly and easily."
+              "believed",
+              "Felt certain that something was true or trustworthy."
             ]
           ]
         },
@@ -427,16 +414,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "lenient",
-              "Not strict; allowing some freedom or flexibility."
+              "drive",
+              "An organised effort by a group of people to collect something or achieve a goal."
             ],
             [
-              "procession",
-              "A group of people moving forward in an orderly way, often as part of a ceremony."
+              "article",
+              "A piece of writing on a particular subject, published in a newspaper or magazine."
             ],
             [
-              "ceremony",
-              "A formal event performed on a special occasion."
+              "intrepid",
+              "Brave and not afraid of danger or difficulty."
             ]
           ]
         }

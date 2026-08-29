@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: Angry and ready to fight or argue.",
+          "prompt": "Which word means: A gradual gathering of something into a larger amount.",
           "choices": [
-            "belligerent",
-            "vindictive",
-            "narcissistic"
+            "accumulation",
+            "culture",
+            "hold"
           ],
-          "answer": "belligerent",
-          "explanation": "belligerent: Angry and ready to fight or argue."
+          "answer": "accumulation",
+          "explanation": "accumulation: A gradual gathering of something into a larger amount."
         },
         {
-          "prompt": "Which word means: A difference or disagreement between two things that should be the same.",
+          "prompt": "Which word means: A biography is the true story of a real person's life, usually written by someone else.",
           "choices": [
-            "belligerent",
-            "vindictive",
-            "discrepancy"
+            "accumulation",
+            "culture",
+            "biography"
           ],
-          "answer": "discrepancy",
-          "explanation": "discrepancy: A difference or disagreement between two things that should be the same."
+          "answer": "biography",
+          "explanation": "biography: A biography is the true story of a real person's life, usually written by someone else."
         },
         {
-          "prompt": "Which word means: Showing a lack of respect or being rude about someone or something.",
+          "prompt": "Which word means: Started to burn, or took hold of and stopped something moving.",
           "choices": [
-            "vindictive",
-            "derogatory",
-            "belligerent"
+            "culture",
+            "caught",
+            "accumulation"
           ],
-          "answer": "derogatory",
-          "explanation": "derogatory: Showing a lack of respect or being rude about someone or something."
+          "answer": "caught",
+          "explanation": "caught: Started to burn, or took hold of and stopped something moving."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "The wish to do evil or harm to others.",
-          "answer": "malevolence"
+          "clue": "Movement forward, in a career or in knowledge.",
+          "answer": "advancement"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "To make a problem or situation worse.",
-          "answer": "exacerbate"
+          "clue": "To write means to put words on paper or a screen to record or share ideas.",
+          "answer": "write"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "To make someone angry or upset by opposing them or being mean.",
-          "answer": "antagonise"
+          "clue": "The grey powder left behind after something has completely burned.",
+          "answer": "ash"
         }
       ]
     },
@@ -83,52 +83,54 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "near.",
-            "came",
-            "who",
-            "anyone",
-            "at",
-            "loudly",
-            "barked",
-            "dog",
-            "belligerent",
-            "The"
+            "journey.",
+            "whole",
+            "the",
+            "for",
+            "paid",
+            "savings",
+            "small",
+            "of",
+            "accumulation",
+            "An"
           ],
-          "answer": "The belligerent dog barked loudly at anyone who came near."
+          "answer": "An accumulation of small savings paid for the whole journey."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "watch.",
-            "to",
-            "film",
-            "which",
-            "about",
-            "argue",
-            "often",
-            "friends",
+            "entrance.",
+            "market",
+            "the",
+            "near",
+            "table",
+            "small",
+            "a",
+            "from",
+            "spices",
+            "sold",
+            "grandmother",
             "My"
           ],
-          "answer": "My friends often argue about which film to watch."
+          "answer": "My grandmother sold spices from a small table near the market entrance."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "lies.",
-            "his",
-            "with",
-            "everyone",
-            "fool",
-            "to",
-            "tried",
-            "story",
+            "began.",
+            "goalpost",
             "the",
-            "in",
-            "character",
-            "deceitful",
-            "The"
+            "about",
+            "argument",
+            "the",
+            "moment",
+            "the",
+            "loud",
+            "grew",
+            "team",
+            "Kofi's"
           ],
-          "answer": "The deceitful character in the story tried to fool everyone with his lies."
+          "answer": "Kofi's team grew loud the moment the argument about the goalpost began."
         }
       ]
     },
@@ -225,11 +227,11 @@
       "rounds": [
         {
           "prompt": "Speaking 1: Present Your Family Biography",
-          "target": "The belligerent dog barked loudly at anyone who came near."
+          "target": "An accumulation of small savings paid for the whole journey."
         },
         {
           "prompt": "Speaking 3: Five-Minute Talk — Where We Come From",
-          "target": "My friends often argue about which film to watch."
+          "target": "My grandmother sold spices from a small table near the market entrance."
         },
         {
           "prompt": "Speaking 5: Interview an Elder",
@@ -248,56 +250,55 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "sad.",
-            "feel",
-            "her",
-            "made",
-            "which",
-            "clothes,",
-            "her",
-            "about",
-            "comment",
-            "derogatory",
-            "a",
-            "made",
-            "He"
-          ],
-          "answer": "He made a derogatory comment about her clothes, which made her feel sad."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "injuries.",
-            "several",
-            "and",
-            "casualty",
-            "one",
-            "caused",
-            "accident",
-            "car",
+            "boys.",
+            "two",
+            "the",
+            "between",
+            "respect",
+            "genuine",
+            "by",
+            "replaced",
+            "faded,",
+            "rivalry",
+            "old",
             "The"
           ],
-          "answer": "The car accident caused one casualty and several injuries."
+          "answer": "The old rivalry faded, replaced by genuine respect between the two boys."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "name.",
-            "town's",
+            "years?",
+            "driest",
             "the",
-            "mispronounced",
-            "speaker",
-            "visiting",
+            "during",
+            "children",
+            "twelve",
+            "feed",
+            "still",
+            "farm",
+            "small",
             "the",
-            "when",
-            "jeer",
-            "to",
-            "began",
-            "spectators",
-            "few",
-            "A"
+            "Could"
           ],
-          "answer": "A few spectators began to jeer when the visiting speaker mispronounced the town's name."
+          "answer": "Could the small farm still feed twelve children during the driest years?"
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "smoke.",
+            "of",
+            "smell",
+            "the",
+            "to",
+            "morning",
+            "next",
+            "the",
+            "early",
+            "woke",
+            "Jamal"
+          ],
+          "answer": "Jamal woke early the next morning to the smell of smoke."
         }
       ]
     },
@@ -310,34 +311,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'devious' mean in this unit?",
+          "prompt": "What does 'crafted' mean in this unit?",
           "choices": [
-            "Not honest or straightforward; tricky or sneaky.",
-            "Angry and ready to fight or argue.",
-            "Wanting to hurt someone because they hurt you."
+            "Crafted means made something skilfully, usually with care and often by hand.",
+            "A gradual gathering of something into a larger amount.",
+            "The customs, beliefs, and way of life shared by a group of people."
           ],
-          "answer": "Not honest or straightforward; tricky or sneaky.",
-          "explanation": "devious: Not honest or straightforward; tricky or sneaky."
+          "answer": "Crafted means made something skilfully, usually with care and often by hand.",
+          "explanation": "crafted: Crafted means made something skilfully, usually with care and often by hand."
         },
         {
-          "prompt": "What does 'harass' mean in this unit?",
+          "prompt": "What does 'week' mean in this unit?",
           "choices": [
-            "Angry and ready to fight or argue.",
-            "Wanting to hurt someone because they hurt you.",
-            "To bother or annoy someone repeatedly."
+            "A gradual gathering of something into a larger amount.",
+            "The customs, beliefs, and way of life shared by a group of people.",
+            "A period of seven days."
           ],
-          "answer": "To bother or annoy someone repeatedly.",
-          "explanation": "harass: To bother or annoy someone repeatedly."
+          "answer": "A period of seven days.",
+          "explanation": "week: A period of seven days."
         },
         {
-          "prompt": "What does 'vindictive' mean in this unit?",
+          "prompt": "What does 'culture' mean in this unit?",
           "choices": [
-            "Someone who is very interested in themselves and thinks they are better than others.",
-            "Wanting to hurt someone because they hurt you.",
-            "Angry and ready to fight or argue."
+            "To contain something, or to keep it safely within something else.",
+            "The customs, beliefs, and way of life shared by a group of people.",
+            "A gradual gathering of something into a larger amount."
           ],
-          "answer": "Wanting to hurt someone because they hurt you.",
-          "explanation": "vindictive: Wanting to hurt someone because they hurt you."
+          "answer": "The customs, beliefs, and way of life shared by a group of people.",
+          "explanation": "culture: The customs, beliefs, and way of life shared by a group of people."
         }
       ]
     },
@@ -350,34 +351,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'compel'?",
+          "prompt": "What type of word is 'goalpost'?",
           "choices": [
-            "Verb",
             "Noun",
+            "Verb",
             "Adjective"
           ],
-          "answer": "Verb",
-          "explanation": "Compel is used as a verb in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'casualty'?",
-          "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
-          ],
           "answer": "Noun",
-          "explanation": "Casualty is used as a noun in this dictionary sense."
+          "explanation": "Goalpost is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'argument'?",
+          "prompt": "What type of word is 'fix'?",
           "choices": [
-            "Adjective",
             "Noun",
+            "Adjective",
             "Verb"
           ],
-          "answer": "Noun",
-          "explanation": "Argument is used as a noun in this dictionary sense."
+          "answer": "Verb",
+          "explanation": "Fix is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'originally'?",
+          "choices": [
+            "Verb",
+            "Adverb",
+            "Noun"
+          ],
+          "answer": "Adverb",
+          "explanation": "Originally is used as an adverb in this dictionary sense."
         }
       ]
     },
@@ -393,16 +394,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "vindictive",
-              "Wanting to hurt someone because they hurt you."
+              "administration",
+              "The people who manage and organise a school, business, or other organisation."
             ],
             [
-              "narcissistic",
-              "Someone who is very interested in themselves and thinks they are better than others."
+              "clan",
+              "A large group of families who are connected by a shared ancestor or history."
             ],
             [
-              "conflict",
-              "A disagreement or fight between people or groups."
+              "lives",
+              "A group of people's daily experiences and activities, especially over a long period of time."
             ]
           ]
         },
@@ -410,16 +411,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "devious",
-              "Not honest or straightforward; tricky or sneaky."
+              "describe",
+              "To describe something means using words to explain what it is like."
             ],
             [
-              "connive",
-              "To secretly plan to do something wrong or illegal with someone else."
+              "enough",
+              "As much or as many as is needed for something."
             ],
             [
-              "defiant",
-              "Showing that you do not want to obey someone or something."
+              "sweat",
+              "The salty moisture that appears on your skin when you are hot or working hard."
             ]
           ]
         },
@@ -427,16 +428,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "harass",
-              "To bother or annoy someone repeatedly."
+              "billowed",
+              "Rose or moved in large, swelling clouds or waves, like smoke or a sail in the wind."
             ],
             [
-              "retaliate",
-              "To do something bad to someone because they did something bad to you."
+              "funny",
+              "Amusing or causing laughter, though sometimes used sarcastically to mean the opposite."
             ],
             [
-              "alienate",
-              "To make someone feel like they don't belong or are not part of a group."
+              "clean",
+              "Free from dirt, mess, or rubbish."
             ]
           ]
         }

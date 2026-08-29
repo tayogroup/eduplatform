@@ -248,6 +248,33 @@ const CLASS_BY_GRADE = {
     pronoun: "whom whichever",
     // Everything else falls through to noun.
   },
+  // Grade 7, written by hand from the authored meanings, for the reason recorded
+  // under grade 6: deriving this table automatically reads `kinetic`, `thermal`
+  // and `academic` as VERBS, because their meanings begin "To do with...", and
+  // drops real verbs into the noun fall-through. Wrong in both directions, and
+  // the output looks considered.
+  //
+  // This grade has more two-way words than any before it, and every one was
+  // settled by reading the line the card prints above the part of speech:
+  // `frame`, `weigh`, `rank`, `qualify` and `forecast` are VERBS here, though
+  // frame and rank read naturally as nouns; `scatter` is a NOUN, though it is an
+  // obvious verb, because this unit teaches the graph; and `audit`, `benchmark`,
+  // `sanction`, `learning` and `intelligence` are nouns for the same reason.
+  7: {
+    verb: "correlate defend qualify refute substantiate delineate diagnose enumerate facilitate innovate "
+      + "interrogate modify optimise replicate appraise deconstruct discern forecast frame probe rank "
+      + "reconstruct reassess reinterpret rephrase weigh",
+    adjective: "ambiguous analytical arbitrary autonomous biased compelling concise concurrent contextual "
+      + "cumulative deliberate distinct dominant empirical flawed holistic hypothetical inevitable inherent "
+      + "integral legitimate marginal plausible rational robust sophisticated subjective tentative "
+      + "abiotic biotic cellular electromagnetic endocrine greenhouse organic periodic ecosystem-based "
+      + "ecology-based algebraic Cartesian exponential linear quadratic random simultaneous statistical "
+      + "interquartile bivariate geospatial open-source biometric coding-based data-driven networked "
+      + "programmable cooperative civic-minded principled semantic satirical demographic conditional copular "
+      + "finite subjunctive transitive intransitive imperative indicative interrogative exclamatory "
+      + "coordinating subordinating correlative lexical syntactic",
+    // Everything else falls through to noun.
+  },
 };
 const CLASS = CLASS_BY_GRADE[GRADE];
 if (!CLASS) {

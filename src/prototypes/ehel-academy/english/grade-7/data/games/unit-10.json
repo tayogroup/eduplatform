@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
+          "prompt": "Which word means: A complete and often surprising change in the form, appearance or nature of something.",
+          "choices": [
+            "transformation",
+            "semantic",
+            "refute"
+          ],
+          "answer": "transformation",
+          "explanation": "transformation: A complete and often surprising change in the form, appearance or nature of something."
+        },
+        {
+          "prompt": "Which word means: Able to be trusted to do what is expected, again and again.",
+          "choices": [
+            "transformation",
+            "semantic",
+            "dependable"
+          ],
+          "answer": "dependable",
+          "explanation": "dependable: Able to be trusted to do what is expected, again and again."
+        },
+        {
           "prompt": "Which word means: Angry and ready to fight or argue.",
           "choices": [
+            "semantic",
             "belligerent",
-            "vindictive",
-            "charismatic"
+            "transformation"
           ],
           "answer": "belligerent",
           "explanation": "belligerent: Angry and ready to fight or argue."
-        },
-        {
-          "prompt": "Which word means: A strong, regular, repeated pattern of sound or movement.",
-          "choices": [
-            "belligerent",
-            "vindictive",
-            "rhythm"
-          ],
-          "answer": "rhythm",
-          "explanation": "rhythm: A strong, regular, repeated pattern of sound or movement."
-        },
-        {
-          "prompt": "Which word means: A way of explaining something by comparing it to something else that is similar.",
-          "choices": [
-            "vindictive",
-            "analogy",
-            "belligerent"
-          ],
-          "answer": "analogy",
-          "explanation": "analogy: A way of explaining something by comparing it to something else that is similar."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
+          "clue": "How much something varies from one measurement to the next.",
+          "answer": "variability"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A plant, or part of a plant, that people grow and eat as food.",
+          "answer": "vegetable"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
           "clue": "The wish to do evil or harm to others.",
           "answer": "malevolence"
-        },
-        {
-          "prompt": "Build the word that matches the clue.",
-          "clue": "Doing or saying something again and again.",
-          "answer": "repetition"
-        },
-        {
-          "prompt": "Build the word that matches the clue.",
-          "clue": "A way of explaining something by comparing it to something else that is similar.",
-          "answer": "analogy"
         }
       ]
     },
@@ -83,54 +83,52 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "near.",
-            "came",
-            "who",
-            "anyone",
-            "at",
-            "loudly",
-            "barked",
-            "dog",
-            "belligerent",
-            "The"
-          ],
-          "answer": "The belligerent dog barked loudly at anyone who came near."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "school.",
-            "better",
-            "a",
-            "for",
-            "together",
-            "work",
-            "to",
-            "everyone",
-            "inspired",
-            "leader",
-            "charismatic",
-            "The"
-          ],
-          "answer": "The charismatic leader inspired everyone to work together for a better school."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "melancholy.",
+            "total.",
+            "was",
+            "June",
+            "and",
+            "March",
+            "between",
+            "draft",
+            "the",
             "of",
-            "sense",
-            "deep",
-            "a",
-            "felt",
-            "she",
-            "away,",
-            "moved",
-            "friend",
-            "her",
-            "After"
+            "transformation",
+            "The"
           ],
-          "answer": "After her friend moved away, she felt a deep sense of melancholy."
+          "answer": "The transformation of the draft between March and June was total."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "other.",
+            "the",
+            "after",
+            "one",
+            "not",
+            "together,",
+            "solved",
+            "are",
+            "equations",
+            "Simultaneous"
+          ],
+          "answer": "Simultaneous equations are solved together, not one after the other."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "week.",
+            "next",
+            "conference",
+            "portfolio",
+            "the",
+            "to",
+            "annotated,",
+            "piece,",
+            "best",
+            "your",
+            "Bring"
+          ],
+          "answer": "Bring your best piece, annotated, to the portfolio conference next week."
         }
       ]
     },
@@ -250,53 +248,51 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "safely.",
-            "tent",
+            "shelter.",
+            "homeless",
+            "the",
+            "to",
+            "food",
+            "donated",
+            "woman",
+            "benevolent",
+            "The"
+          ],
+          "answer": "The benevolent woman donated food to the homeless shelter."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "magazine.",
+            "school",
+            "the",
+            "in",
+            "ideas",
+            "my",
+            "express",
+            "to",
+            "want",
+            "I"
+          ],
+          "answer": "I want to express my ideas in the school magazine."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "it.",
+            "about",
+            "word",
             "a",
-            "up",
-            "set",
-            "to",
-            "how",
-            "demonstrate",
-            "will",
-            "ranger",
-            "The"
+            "said",
+            "anyone",
+            "before",
+            "building",
+            "resentment",
+            "the",
+            "noticed",
+            "Zara"
           ],
-          "answer": "The ranger will demonstrate how to set up a tent safely."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "fluently.",
-            "English",
-            "speak",
-            "to",
-            "learned",
-            "she",
-            "perseverance,",
-            "Through"
-          ],
-          "answer": "Through perseverance, she learned to speak English fluently."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "speaking.",
-            "and",
-            "writing,",
-            "reading,",
-            "across",
-            "growth",
-            "demonstrate",
-            "to",
-            "student",
-            "each",
-            "asks",
-            "portfolio",
-            "capstone",
-            "The"
-          ],
-          "answer": "The capstone portfolio asks each student to demonstrate growth across reading, writing, and speaking."
+          "answer": "Zara noticed the resentment building before anyone said a word about it."
         }
       ]
     },
@@ -309,34 +305,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'melancholy' mean in this unit?",
+          "prompt": "What does 'urging' mean in this unit?",
           "choices": [
-            "A feeling of sadness or being unhappy for a long time.",
-            "Angry and ready to fight or argue.",
-            "Wanting to hurt someone because they hurt you."
+            "Trying strongly to persuade someone to do something.",
+            "A complete and often surprising change in the form, appearance or nature of something.",
+            "To do with the meaning of words."
           ],
-          "answer": "A feeling of sadness or being unhappy for a long time.",
-          "explanation": "melancholy: A feeling of sadness or being unhappy for a long time."
+          "answer": "Trying strongly to persuade someone to do something.",
+          "explanation": "urging: Trying strongly to persuade someone to do something."
         },
         {
-          "prompt": "What does 'bias' mean in this unit?",
+          "prompt": "What does 'diligent' mean in this unit?",
           "choices": [
-            "Angry and ready to fight or argue.",
-            "Wanting to hurt someone because they hurt you.",
-            "An unfair preference or opinion that affects how you think or act."
+            "A complete and often surprising change in the form, appearance or nature of something.",
+            "To do with the meaning of words.",
+            "Working hard and being careful to do things well."
           ],
-          "answer": "An unfair preference or opinion that affects how you think or act.",
-          "explanation": "bias: An unfair preference or opinion that affects how you think or act."
+          "answer": "Working hard and being careful to do things well.",
+          "explanation": "diligent: Working hard and being careful to do things well."
         },
         {
-          "prompt": "What does 'vindictive' mean in this unit?",
+          "prompt": "What does 'semantic' mean in this unit?",
           "choices": [
-            "Having a special charm that attracts and inspires people.",
-            "Wanting to hurt someone because they hurt you.",
-            "Angry and ready to fight or argue."
+            "To prove that a statement is wrong.",
+            "To do with the meaning of words.",
+            "A complete and often surprising change in the form, appearance or nature of something."
           ],
-          "answer": "Wanting to hurt someone because they hurt you.",
-          "explanation": "vindictive: Wanting to hurt someone because they hurt you."
+          "answer": "To do with the meaning of words.",
+          "explanation": "semantic: To do with the meaning of words."
         }
       ]
     },
@@ -349,34 +345,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'collaborate'?",
+          "prompt": "What type of word is 'conditional'?",
           "choices": [
-            "Verb",
+            "Adjective",
             "Noun",
-            "Adjective"
+            "Verb"
           ],
-          "answer": "Verb",
-          "explanation": "Collaborate is used as a verb in this dictionary sense."
+          "answer": "Adjective",
+          "explanation": "Conditional is used as an adjective in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'achievement'?",
+          "prompt": "What type of word is 'bias'?",
           "choices": [
             "Verb",
             "Adjective",
             "Noun"
           ],
           "answer": "Noun",
-          "explanation": "Achievement is used as a noun in this dictionary sense."
+          "explanation": "Bias is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'diligent'?",
+          "prompt": "What type of word is 'theorem'?",
           "choices": [
-            "Verb",
             "Adjective",
-            "Noun"
+            "Noun",
+            "Verb"
           ],
-          "answer": "Adjective",
-          "explanation": "Diligent is used as an adjective in this dictionary sense."
+          "answer": "Noun",
+          "explanation": "Theorem is used as a noun in this dictionary sense."
         }
       ]
     },
@@ -392,16 +388,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "vindictive",
-              "Wanting to hurt someone because they hurt you."
+              "variability",
+              "How much something varies from one measurement to the next."
             ],
             [
-              "charismatic",
-              "Having a special charm that attracts and inspires people."
+              "tragedy",
+              "A play in which the main character is brought down, often by their own flaw."
             ],
             [
-              "alliteration",
-              "The repetition of the same sound at the beginning of several words in a sentence or phrase."
+              "simultaneous",
+              "Happening or being solved at the same time."
             ]
           ]
         },
@@ -409,16 +405,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "melancholy",
-              "A feeling of sadness or being unhappy for a long time."
+              "loyal",
+              "Firm and faithful in supporting a person, group, or cause."
             ],
             [
-              "vulnerable",
-              "Able to be easily hurt or harmed, either physically or emotionally."
+              "hers",
+              "Belonging to a female person who has already been mentioned."
             ],
             [
-              "demonstrate",
-              "To show how something works or to prove something clearly."
+              "conditional",
+              "Depending on something else being true or happening first, often shown with 'if'."
             ]
           ]
         },
@@ -426,16 +422,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
+              "vindictive",
+              "Wanting to hurt someone because they hurt you."
+            ],
+            [
+              "melancholy",
+              "A feeling of sadness or being unhappy for a long time."
+            ],
+            [
               "bias",
               "An unfair preference or opinion that affects how you think or act."
-            ],
-            [
-              "dedication",
-              "Being fully committed to a task or purpose; giving time and energy to something."
-            ],
-            [
-              "express",
-              "To show or tell what you think or feel."
             ]
           ]
         }

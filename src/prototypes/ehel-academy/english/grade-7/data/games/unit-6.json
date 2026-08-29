@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: A way of explaining something by comparing it to something else that is similar.",
+          "prompt": "Which word means: A suggestion that is not stated directly but can be understood.",
           "choices": [
-            "analogy",
-            "bias",
-            "viewpoint"
+            "implication",
+            "scatter",
+            "stadion"
           ],
-          "answer": "analogy",
-          "explanation": "analogy: A way of explaining something by comparing it to something else that is similar."
+          "answer": "implication",
+          "explanation": "implication: A suggestion that is not stated directly but can be understood."
         },
         {
-          "prompt": "Which word means: A group of words that someone has said or written, repeated by another.",
+          "prompt": "Which word means: Very unusual, remarkable, or far beyond what is normal.",
           "choices": [
-            "analogy",
-            "bias",
-            "quotation"
+            "implication",
+            "scatter",
+            "extraordinary"
           ],
-          "answer": "quotation",
-          "explanation": "quotation: A group of words that someone has said or written, repeated by another."
+          "answer": "extraordinary",
+          "explanation": "extraordinary: Very unusual, remarkable, or far beyond what is normal."
         },
         {
-          "prompt": "Which word means: A different choice or option.",
+          "prompt": "Which word means: To look into or examine something carefully in order to learn more about it.",
           "choices": [
-            "bias",
-            "alternative",
-            "analogy"
+            "scatter",
+            "explore",
+            "implication"
           ],
-          "answer": "alternative",
-          "explanation": "alternative: A different choice or option."
+          "answer": "explore",
+          "explanation": "explore: To look into or examine something carefully in order to learn more about it."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "An unfair preference or opinion that affects how you think or act.",
-          "answer": "bias"
+          "clue": "The act of becoming better, or making something better than before.",
+          "answer": "improvement"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A short explanation of the main points of something.",
-          "answer": "summary"
+          "clue": "Successfully completed or reached something through hard work and effort.",
+          "answer": "achieved"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A careful guess about an amount, or to make such a guess.",
-          "answer": "estimate"
+          "clue": "The air that moves into and out of your lungs when you breathe.",
+          "answer": "breath"
         }
       ]
     },
@@ -83,54 +83,56 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "films.",
-            "favourite",
-            "our",
-            "about",
-            "talk",
-            "we",
-            "when",
-            "argumentative",
-            "very",
-            "be",
-            "can",
-            "friend",
-            "My"
-          ],
-          "answer": "My friend can be very argumentative when we talk about our favourite films."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "champion.",
-            "sports",
-            "a",
+            "leap.",
+            "big",
+            "one",
+            "than",
+            "rather",
+            "changes",
+            "steady",
+            "small,",
             "from",
-            "quotation",
-            "famous",
-            "a",
-            "read",
-            "we",
-            "class,",
-            "English",
-            "our",
-            "In"
+            "comes",
+            "often",
+            "improvement",
+            "Real"
           ],
-          "answer": "In our English class, we read a famous quotation from a sports champion."
+          "answer": "Real improvement often comes from small, steady changes rather than one big leap."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "organisation.",
-            "global",
-            "a",
+            "advantage.",
+            "unfair",
+            "an",
+            "gain",
+            "to",
+            "substances",
+            "banned",
+            "of",
+            "use",
+            "the",
             "is",
-            "Committee",
-            "Olympic",
-            "International",
+            "Doping"
+          ],
+          "answer": "Doping is the use of banned substances to gain an unfair advantage."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "school.",
+            "whole",
+            "the",
+            "within",
+            "matter",
+            "serious",
+            "a",
+            "become",
+            "had",
+            "complaint",
             "The"
           ],
-          "answer": "The International Olympic Committee is a global organisation."
+          "answer": "The complaint had become a serious matter within the whole school."
         }
       ]
     },
@@ -250,57 +252,51 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "Greece.",
-            "ancient",
+            "achievement.",
+            "human",
+            "of",
+            "celebration",
+            "the",
             "is",
-            "Games",
-            "Olympic",
+            "Olympics",
             "the",
             "of",
-            "origin",
+            "theme",
             "The"
           ],
-          "answer": "The origin of the Olympic Games is ancient Greece."
+          "answer": "The theme of the Olympics is the celebration of human achievement."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "finals.",
-            "championship",
-            "regional",
-            "the",
-            "for",
-            "qualify",
+            "school.",
+            "before",
+            "father",
+            "his",
+            "help",
             "to",
-            "is",
-            "season",
-            "this",
-            "objective",
-            "main",
-            "team's",
-            "The"
+            "morning",
+            "every",
+            "six",
+            "at",
+            "wakes",
+            "Sami"
           ],
-          "answer": "The team's main objective this season is to qualify for the regional championship finals."
+          "answer": "Sami wakes at six every morning to help his father before school."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "her.",
-            "beside",
-            "runner",
-            "every",
-            "of",
-            "conscious",
-            "remained",
-            "champion",
-            "the",
-            "out,",
-            "flat",
-            "sprinting",
-            "while",
-            "Even"
+            "next.",
+            "up",
+            "spoke",
+            "whoever",
+            "support",
+            "to",
+            "promised",
+            "Rohan"
           ],
-          "answer": "Even while sprinting flat out, the champion remained conscious of every runner beside her."
+          "answer": "Rohan promised to support whoever spoke up next."
         }
       ]
     },
@@ -313,34 +309,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'summary' mean in this unit?",
+          "prompt": "What does 'train' mean in this unit?",
           "choices": [
-            "A short explanation of the main points of something.",
-            "A way of explaining something by comparing it to something else that is similar.",
-            "An unfair preference or opinion that affects how you think or act."
+            "To prepare for a sport or activity by practising regularly.",
+            "A suggestion that is not stated directly but can be understood.",
+            "A graph that plots two measurements against each other."
           ],
-          "answer": "A short explanation of the main points of something.",
-          "explanation": "summary: A short explanation of the main points of something."
+          "answer": "To prepare for a sport or activity by practising regularly.",
+          "explanation": "train: To prepare for a sport or activity by practising regularly."
         },
         {
-          "prompt": "What does 'estimate' mean in this unit?",
+          "prompt": "What does 'estimated' mean in this unit?",
           "choices": [
-            "A way of explaining something by comparing it to something else that is similar.",
-            "An unfair preference or opinion that affects how you think or act.",
-            "A careful guess about an amount, or to make such a guess."
+            "A suggestion that is not stated directly but can be understood.",
+            "A graph that plots two measurements against each other.",
+            "Made an approximate calculation or judgement about an amount or value."
           ],
-          "answer": "A careful guess about an amount, or to make such a guess.",
-          "explanation": "estimate: A careful guess about an amount, or to make such a guess."
+          "answer": "Made an approximate calculation or judgement about an amount or value.",
+          "explanation": "estimated: Made an approximate calculation or judgement about an amount or value."
         },
         {
-          "prompt": "What does 'bias' mean in this unit?",
+          "prompt": "What does 'scatter' mean in this unit?",
           "choices": [
-            "A way of thinking about something; a perspective.",
-            "An unfair preference or opinion that affects how you think or act.",
-            "A way of explaining something by comparing it to something else that is similar."
+            "An ancient Greek word for a short foot race, and the track where it was run.",
+            "A graph that plots two measurements against each other.",
+            "A suggestion that is not stated directly but can be understood."
           ],
-          "answer": "An unfair preference or opinion that affects how you think or act.",
-          "explanation": "bias: An unfair preference or opinion that affects how you think or act."
+          "answer": "A graph that plots two measurements against each other.",
+          "explanation": "scatter: A graph that plots two measurements against each other."
         }
       ]
     },
@@ -353,34 +349,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'diversity'?",
+          "prompt": "What type of word is 'dishonest'?",
           "choices": [
+            "Adjective",
             "Noun",
-            "Verb",
-            "Adjective"
+            "Verb"
           ],
-          "answer": "Noun",
-          "explanation": "Diversity is used as a noun in this dictionary sense."
+          "answer": "Adjective",
+          "explanation": "Dishonest is used as an adjective in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'predicament'?",
+          "prompt": "What type of word is 'theme'?",
           "choices": [
             "Verb",
             "Adjective",
             "Noun"
           ],
           "answer": "Noun",
-          "explanation": "Predicament is used as a noun in this dictionary sense."
+          "explanation": "Theme is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'context'?",
+          "prompt": "What type of word is 'physical'?",
           "choices": [
+            "Verb",
             "Adjective",
-            "Noun",
-            "Verb"
+            "Noun"
           ],
-          "answer": "Noun",
-          "explanation": "Context is used as a noun in this dictionary sense."
+          "answer": "Adjective",
+          "explanation": "Physical is used as an adjective in this dictionary sense."
         }
       ]
     },
@@ -396,16 +392,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "bias",
-              "An unfair preference or opinion that affects how you think or act."
+              "innovation",
+              "A new method or idea put into practice."
             ],
             [
-              "viewpoint",
-              "A way of thinking about something; a perspective."
+              "compelling",
+              "So convincing or interesting that it holds your attention."
             ],
             [
-              "excerpt",
-              "A short part taken from a longer piece of writing."
+              "educator",
+              "A person whose job is to teach or train others, especially in a school setting."
             ]
           ]
         },
@@ -413,16 +409,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "summary",
-              "A short explanation of the main points of something."
+              "achieved",
+              "Successfully completed or reached something through hard work and effort."
             ],
             [
-              "censorship",
-              "When authorities control what people can see, read, or say."
+              "ahead",
+              "In front, or further forward in time, distance, or progress."
             ],
             [
-              "judicial",
-              "Related to courts of law and judges."
+              "assistant",
+              "A person who helps another person, especially in their job."
             ]
           ]
         },
@@ -430,16 +426,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "estimate",
-              "A careful guess about an amount, or to make such a guess."
+              "offer",
+              "To present something for someone to accept, use, or consider."
             ],
             [
-              "inevitable",
-              "Certain to happen and impossible to avoid."
+              "corrected",
+              "Fixed a mistake or made something accurate that was previously wrong."
             ],
             [
-              "prospective",
-              "Expected or likely to happen in the future."
+              "quotation",
+              "A group of words that someone has said or written, repeated by another."
             ]
           ]
         }

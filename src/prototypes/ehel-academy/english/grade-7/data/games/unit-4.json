@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: A feeling of sadness or being unhappy for a long time.",
+          "prompt": "Which word means: The building of something, or the way it is put together.",
           "choices": [
-            "melancholy",
-            "elated",
-            "famished"
+            "construction",
+            "globalisation",
+            "challenge"
           ],
-          "answer": "melancholy",
-          "explanation": "melancholy: A feeling of sadness or being unhappy for a long time."
+          "answer": "construction",
+          "explanation": "construction: The building of something, or the way it is put together."
         },
         {
-          "prompt": "Which word means: Not strict or careful; relaxed.",
+          "prompt": "Which word means: A drawing that shows where places are and how to get to them.",
           "choices": [
-            "melancholy",
-            "elated",
-            "lax"
+            "construction",
+            "globalisation",
+            "map"
           ],
-          "answer": "lax",
-          "explanation": "lax: Not strict or careful; relaxed."
+          "answer": "map",
+          "explanation": "map: A drawing that shows where places are and how to get to them."
         },
         {
-          "prompt": "Which word means: Having a lot of knowledge or experience; complex and advanced.",
+          "prompt": "Which word means: A thin rubber bag that is filled with air or gas until it becomes round and light.",
           "choices": [
-            "elated",
-            "sophisticated",
-            "melancholy"
+            "globalisation",
+            "balloon",
+            "construction"
           ],
-          "answer": "sophisticated",
-          "explanation": "sophisticated: Having a lot of knowledge or experience; complex and advanced."
+          "answer": "balloon",
+          "explanation": "balloon: A thin rubber bag that is filled with air or gas until it becomes round and light."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Full of energy, excitement, and happiness.",
-          "answer": "exuberant"
+          "clue": "The quality of deserving to be believed.",
+          "answer": "credibility"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "To make someone want to do something, especially something that is not good for them.",
-          "answer": "tempt"
+          "clue": "To find your way around a place, often using a map or directions.",
+          "answer": "navigate"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Not straight or level; tilted to one side.",
-          "answer": "askew"
+          "clue": "Moving slowly and without control, often carried by wind, water, or feelings.",
+          "answer": "drifting"
         }
       ]
     },
@@ -83,57 +83,50 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "melancholy.",
-            "of",
-            "sense",
-            "deep",
-            "a",
-            "felt",
-            "she",
-            "away,",
-            "moved",
-            "friend",
-            "her",
-            "After"
-          ],
-          "answer": "After her friend moved away, she felt a deep sense of melancholy."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "night.",
-            "all",
-            "awake",
-            "me",
-            "kept",
-            "party",
+            "years.",
+            "four",
+            "took",
+            "road",
+            "ring",
             "the",
-            "from",
-            "noise",
-            "obnoxious",
-            "The"
+            "of",
+            "Construction"
           ],
-          "answer": "The obnoxious noise from the party kept me awake all night."
+          "answer": "Construction of the ring road took four years."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "laugh.",
-            "everyone",
-            "made",
-            "and",
-            "ludicrous",
-            "is",
-            "car",
-            "a",
-            "driving",
-            "cat",
-            "a",
+            "market.",
+            "crowded",
+            "the",
+            "through",
+            "vegetables",
+            "fresh",
+            "with",
+            "loaded",
+            "carts",
+            "push",
+            "Traders"
+          ],
+          "answer": "Traders push carts loaded with fresh vegetables through the crowded market."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "lesson.",
+            "the",
             "of",
-            "idea",
+            "end",
+            "the",
+            "at",
+            "loudly",
+            "rang",
+            "bell",
+            "school",
             "The"
           ],
-          "answer": "The idea of a cat driving a car is ludicrous and made everyone laugh."
+          "answer": "The school bell rang loudly at the end of the lesson."
         }
       ]
     },
@@ -230,7 +223,7 @@
       "rounds": [
         {
           "prompt": "Speaking 1: Vocabulary Expert Interview",
-          "target": "After her friend moved away, she felt a deep sense of melancholy."
+          "target": "Construction of the ring road took four years."
         },
         {
           "prompt": "Speaking 3: Five-Minute Talk — Present Your Travel Guide",
@@ -238,7 +231,7 @@
         },
         {
           "prompt": "Speaking 5: City Comparison Game",
-          "target": "The idea of a cat driving a car is ludicrous and made everyone laugh."
+          "target": "The school bell rang loudly at the end of the lesson."
         }
       ]
     },
@@ -253,52 +246,56 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "it.",
-            "straightened",
-            "I",
-            "so",
-            "askew,",
-            "was",
-            "wall",
+            "studying.",
+            "stopped",
+            "and",
+            "complacent",
+            "became",
+            "he",
+            "test,",
             "the",
             "on",
-            "picture",
+            "grade",
+            "good",
+            "a",
+            "getting",
+            "After"
+          ],
+          "answer": "After getting a good grade on the test, he became complacent and stopped studying."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "junction.",
+            "busiest",
+            "the",
+            "at",
+            "lights",
+            "traffic",
+            "new",
+            "installed",
+            "recently",
+            "council",
             "The"
           ],
-          "answer": "The picture on the wall was askew, so I straightened it."
+          "answer": "The council recently installed new traffic lights at the busiest junction."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "feelings.",
-            "her",
-            "about",
-            "candour",
-            "with",
-            "spoke",
-            "She"
-          ],
-          "answer": "She spoke with candour about her feelings."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "crush.",
-            "rush-hour",
+            "assembly.",
+            "for",
+            "rang",
+            "bell",
             "the",
-            "ease",
-            "and",
-            "later",
-            "travel",
-            "to",
-            "commuters",
-            "tempt",
-            "might",
-            "fares",
-            "evening",
-            "Cheaper"
+            "when",
+            "desk",
+            "her",
+            "cleaning",
+            "was",
+            "Imani"
           ],
-          "answer": "Cheaper evening fares might tempt commuters to travel later and ease the rush-hour crush."
+          "answer": "Imani was cleaning her desk when the bell rang for assembly."
         }
       ]
     },
@@ -311,34 +308,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'naive' mean in this unit?",
+          "prompt": "What does 'college' mean in this unit?",
           "choices": [
-            "Not having much experience or knowledge about the world, and therefore easily deceived.",
-            "A feeling of sadness or being unhappy for a long time.",
-            "Very happy and excited about something good that has happened."
+            "A place where students study after leaving secondary school.",
+            "The building of something, or the way it is put together.",
+            "The growing connection of the world's economies and cultures."
           ],
-          "answer": "Not having much experience or knowledge about the world, and therefore easily deceived.",
-          "explanation": "naive: Not having much experience or knowledge about the world, and therefore easily deceived."
+          "answer": "A place where students study after leaving secondary school.",
+          "explanation": "college: A place where students study after leaving secondary school."
         },
         {
-          "prompt": "What does 'contemporary' mean in this unit?",
+          "prompt": "What does 'hosted' mean in this unit?",
           "choices": [
-            "A feeling of sadness or being unhappy for a long time.",
-            "Very happy and excited about something good that has happened.",
-            "Living or happening at the same time; modern."
+            "The building of something, or the way it is put together.",
+            "The growing connection of the world's economies and cultures.",
+            "Organised an event and welcomed the people who came to it."
           ],
-          "answer": "Living or happening at the same time; modern.",
-          "explanation": "contemporary: Living or happening at the same time; modern."
+          "answer": "Organised an event and welcomed the people who came to it.",
+          "explanation": "hosted: Organised an event and welcomed the people who came to it."
         },
         {
-          "prompt": "What does 'elated' mean in this unit?",
+          "prompt": "What does 'globalisation' mean in this unit?",
           "choices": [
-            "Very hungry or starving.",
-            "Very happy and excited about something good that has happened.",
-            "A feeling of sadness or being unhappy for a long time."
+            "A difficult task that tests your ability or effort to overcome it.",
+            "The growing connection of the world's economies and cultures.",
+            "The building of something, or the way it is put together."
           ],
-          "answer": "Very happy and excited about something good that has happened.",
-          "explanation": "elated: Very happy and excited about something good that has happened."
+          "answer": "The growing connection of the world's economies and cultures.",
+          "explanation": "globalisation: The growing connection of the world's economies and cultures."
         }
       ]
     },
@@ -351,34 +348,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'frivolous'?",
+          "prompt": "What type of word is 'buzzed'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Buzzed is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'ludicrous'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Adjective",
+          "explanation": "Ludicrous is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'bajaaj'?",
           "choices": [
             "Adjective",
             "Noun",
             "Verb"
           ],
-          "answer": "Adjective",
-          "explanation": "Frivolous is used as an adjective in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'candour'?",
-          "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
-          ],
           "answer": "Noun",
-          "explanation": "Candour is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'obnoxious'?",
-          "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
-          ],
-          "answer": "Adjective",
-          "explanation": "Obnoxious is used as an adjective in this dictionary sense."
+          "explanation": "Bajaaj is used as a noun in this dictionary sense."
         }
       ]
     },
@@ -394,16 +391,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "elated",
-              "Very happy and excited about something good that has happened."
+              "credibility",
+              "The quality of deserving to be believed."
             ],
             [
-              "famished",
-              "Very hungry or starving."
+              "optimise",
+              "To make something work as well as it possibly can."
             ],
             [
-              "discipline",
-              "The ability to control yourself and make yourself do things you should, even if you do not want to."
+              "common",
+              "Found or happening often, so that it is not unusual."
             ]
           ]
         },
@@ -411,16 +408,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "naive",
-              "Not having much experience or knowledge about the world, and therefore easily deceived."
+              "idea",
+              "A thought or plan that comes into your mind, often a solution to a problem."
             ],
             [
-              "haphazard",
-              "Not planned or organised; done in a random way."
+              "potholes",
+              "Holes worn into the surface of a road over time."
             ],
             [
-              "inexplicable",
-              "Something that is very strange or difficult to understand."
+              "circled",
+              "Drew a ring around something, or moved in a loop around it."
             ]
           ]
         },
@@ -428,16 +425,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "contemporary",
-              "Living or happening at the same time; modern."
+              "dreamed",
+              "Experienced images, feelings, or events in the mind while asleep."
             ],
             [
-              "fluctuate",
-              "To change or vary in amount or level."
+              "forgot",
+              "Failed to remember something you needed to know or do."
             ],
             [
-              "crescendo",
-              "A gradual increase in loudness or intensity, especially in music."
+              "oblivious",
+              "Not aware of something that is happening around you."
             ]
           ]
         }

@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: To make someone feel worried or upset.",
+          "prompt": "Which word means: The importance of something, or how much it matters.",
           "choices": [
-            "agitate",
-            "converge",
-            "recognise"
+            "significance",
+            "networked",
+            "substitution"
           ],
-          "answer": "agitate",
-          "explanation": "agitate: To make someone feel worried or upset."
+          "answer": "significance",
+          "explanation": "significance: The importance of something, or how much it matters."
         },
         {
-          "prompt": "Which word means: Able to do many different things or adapt to many situations.",
+          "prompt": "Which word means: Made up of many connected parts and therefore difficult to understand fully.",
           "choices": [
-            "agitate",
-            "converge",
-            "versatile"
+            "significance",
+            "networked",
+            "complex"
           ],
-          "answer": "versatile",
-          "explanation": "versatile: Able to do many different things or adapt to many situations."
+          "answer": "complex",
+          "explanation": "complex: Made up of many connected parts and therefore difficult to understand fully."
         },
         {
-          "prompt": "Which word means: Basic or simple; not fully developed.",
+          "prompt": "Which word means: Careful to avoid danger or mistakes, especially after something has gone wrong.",
           "choices": [
-            "converge",
-            "rudimentary",
-            "agitate"
+            "networked",
+            "cautious",
+            "significance"
           ],
-          "answer": "rudimentary",
-          "explanation": "rudimentary: Basic or simple; not fully developed."
+          "answer": "cautious",
+          "explanation": "cautious: Careful to avoid danger or mistakes, especially after something has gone wrong."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "To think of or create an idea or plan in your mind.",
-          "answer": "conceive"
+          "clue": "Using a physical feature, such as a fingerprint, to identify someone.",
+          "answer": "biometric"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Able to do many different things or adapt to many situations.",
-          "answer": "versatile"
+          "clue": "A pale yellowish-white colour, like the top layer of fresh milk.",
+          "answer": "cream"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "More bad than something else; of lower quality.",
-          "answer": "worse"
+          "clue": "Combining sound, pictures, video, and text together, especially in a presentation.",
+          "answer": "multimedia"
         }
       ]
     },
@@ -83,59 +83,58 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "test.",
-            "coding",
+            "trial.",
+            "second",
             "the",
-            "during",
-            "students",
+            "after",
+            "only",
+            "clear",
+            "was",
+            "result",
             "the",
-            "agitate",
-            "to",
-            "began",
-            "sound",
-            "notification",
-            "loud",
+            "of",
+            "significance",
             "The"
           ],
-          "answer": "The loud notification sound began to agitate the students during the coding test."
+          "answer": "The significance of the result was clear only after the second trial."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "project.",
+            "students.",
             "the",
-            "for",
-            "needed",
-            "she",
-            "skills",
-            "coding",
-            "the",
-            "acquire",
+            "interview",
             "to",
-            "hard",
-            "worked",
-            "She"
+            "came",
+            "station",
+            "radio",
+            "regional",
+            "a",
+            "from",
+            "journalist",
+            "A"
           ],
-          "answer": "She worked hard to acquire the coding skills she needed for the project."
+          "answer": "A journalist from a regional radio station came to interview the students."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "fair.",
-            "science",
-            "school",
+            "dark.",
             "the",
-            "at",
-            "farming",
-            "future",
-            "on",
-            "research",
-            "her",
-            "present",
-            "will",
-            "She"
+            "in",
+            "grow",
+            "plants",
+            "how",
+            "test",
+            "to",
+            "experiment",
+            "an",
+            "designed",
+            "club",
+            "science",
+            "The"
           ],
-          "answer": "She will present her research on future farming at the school science fair."
+          "answer": "The science club designed an experiment to test how plants grow in the dark."
         }
       ]
     },
@@ -232,11 +231,11 @@
       "rounds": [
         {
           "prompt": "Speaking 1: Vocabulary Expert Interview",
-          "target": "The loud notification sound began to agitate the students during the coding test."
+          "target": "The significance of the result was clear only after the second trial."
         },
         {
           "prompt": "Speaking 3: Five-Minute Unit Talk",
-          "target": "She worked hard to acquire the coding skills she needed for the project."
+          "target": "A journalist from a regional radio station came to interview the students."
         },
         {
           "prompt": "Speaking 5: Report What They Said",
@@ -255,61 +254,52 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "robots.",
-            "new",
+            "judges.",
             "the",
-            "see",
-            "to",
-            "other",
-            "each",
-            "jostled",
-            "visitors",
-            "fair,",
-            "tech",
-            "crowded",
+            "impressed",
+            "presentation",
             "the",
-            "In"
+            "during",
+            "demeanour",
+            "calm",
+            "Her"
           ],
-          "answer": "In the crowded tech fair, visitors jostled each other to see the new robots."
+          "answer": "Her calm demeanour during the presentation impressed the judges."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "years.",
-            "forty",
-            "last",
-            "the",
-            "from",
-            "keyboards",
-            "with",
-            "office",
-            "her",
-            "decorated",
-            "programmer",
-            "eccentric",
-            "The"
+            "patience.",
+            "and",
+            "testing",
+            "careful",
+            "of",
+            "months",
+            "only",
+            "involved,",
+            "magic",
+            "no",
+            "was",
+            "There"
           ],
-          "answer": "The eccentric programmer decorated her office with keyboards from the last forty years."
+          "answer": "There was no magic involved, only months of careful testing and patience."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "device.",
-            "any",
-            "from",
-            "ease",
-            "remarkable",
-            "with",
-            "appointments",
-            "reserve",
-            "parents",
-            "lets",
-            "system",
-            "booking",
-            "new",
-            "The"
+            "out.",
+            "came",
+            "truth",
+            "the",
+            "before",
+            "hacker",
+            "a",
+            "was",
+            "Zane",
+            "assumed",
+            "Everyone"
           ],
-          "answer": "The new booking system lets parents reserve appointments with remarkable ease from any device."
+          "answer": "Everyone assumed Zane was a hacker before the truth came out."
         }
       ]
     },
@@ -322,34 +312,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'fugitive' mean in this unit?",
+          "prompt": "What does 'cranes' mean in this unit?",
           "choices": [
-            "A person who is running away from the police or trying to escape.",
-            "To make someone feel worried or upset.",
-            "To come together from different directions to meet at one point."
+            "Tall machines used on building sites to lift and move heavy materials.",
+            "The importance of something, or how much it matters.",
+            "Connected to other computers so information can be shared."
           ],
-          "answer": "A person who is running away from the police or trying to escape.",
-          "explanation": "fugitive: A person who is running away from the police or trying to escape."
+          "answer": "Tall machines used on building sites to lift and move heavy materials.",
+          "explanation": "cranes: Tall machines used on building sites to lift and move heavy materials."
         },
         {
-          "prompt": "What does 'ease' mean in this unit?",
+          "prompt": "What does 'episode' mean in this unit?",
           "choices": [
-            "To make someone feel worried or upset.",
-            "To come together from different directions to meet at one point.",
-            "Noun: comfort or freedom from worry. Verb: to make something less difficult."
+            "The importance of something, or how much it matters.",
+            "Connected to other computers so information can be shared.",
+            "One single part of a television, radio, or podcast series."
           ],
-          "answer": "Noun: comfort or freedom from worry. Verb: to make something less difficult.",
-          "explanation": "ease: Noun: comfort or freedom from worry. Verb: to make something less difficult."
+          "answer": "One single part of a television, radio, or podcast series.",
+          "explanation": "episode: One single part of a television, radio, or podcast series."
         },
         {
-          "prompt": "What does 'converge' mean in this unit?",
+          "prompt": "What does 'networked' mean in this unit?",
           "choices": [
-            "To see or hear something and know what it is; to identify.",
-            "To come together from different directions to meet at one point.",
-            "To make someone feel worried or upset."
+            "Replacing a word or phrase with a shorter one to avoid repeating it.",
+            "Connected to other computers so information can be shared.",
+            "The importance of something, or how much it matters."
           ],
-          "answer": "To come together from different directions to meet at one point.",
-          "explanation": "converge: To come together from different directions to meet at one point."
+          "answer": "Connected to other computers so information can be shared.",
+          "explanation": "networked: Connected to other computers so information can be shared."
         }
       ]
     },
@@ -362,34 +352,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'present'?",
+          "prompt": "What type of word is 'crash'?",
           "choices": [
-            "Verb",
             "Noun",
+            "Verb",
             "Adjective"
           ],
-          "answer": "Verb",
-          "explanation": "Present is used as a verb in this dictionary sense."
+          "answer": "Noun",
+          "explanation": "Crash is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'flounder'?",
+          "prompt": "What type of word is 'present'?",
           "choices": [
             "Noun",
             "Adjective",
             "Verb"
           ],
           "answer": "Verb",
-          "explanation": "Flounder is used as a verb in this dictionary sense."
+          "explanation": "Present is used as a verb in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'determine'?",
+          "prompt": "What type of word is 'moisture'?",
           "choices": [
             "Adjective",
-            "Verb",
-            "Noun"
+            "Noun",
+            "Verb"
           ],
-          "answer": "Verb",
-          "explanation": "Determine is used as a verb in this dictionary sense."
+          "answer": "Noun",
+          "explanation": "Moisture is used as a noun in this dictionary sense."
         }
       ]
     },
@@ -405,16 +395,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "converge",
-              "To come together from different directions to meet at one point."
+              "stability",
+              "The quality of staying steady and not changing unexpectedly."
             ],
             [
-              "recognise",
-              "To see or hear something and know what it is; to identify."
+              "periodic",
+              "Happening at regular intervals, or arranged in repeating patterns."
             ],
             [
-              "blunt",
-              "Speaking in a direct, honest way without trying to be polite; also: not sharp."
+              "temperature",
+              "How hot or cold something is, usually shown as a number on a scale."
             ]
           ]
         },
@@ -422,16 +412,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "fugitive",
-              "A person who is running away from the police or trying to escape."
+              "magic",
+              "A special power that seems to make impossible things happen, often used to describe something that feels amazing."
             ],
             [
-              "ostracise",
-              "To exclude someone from a group or society."
+              "ostracised",
+              "Deliberately left out or excluded from a group by other people."
             ],
             [
-              "obscure",
-              "Not well known or hard to understand."
+              "timestamp",
+              "A record showing the exact date and time that something happened."
             ]
           ]
         },
@@ -439,16 +429,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "ease",
-              "Noun: comfort or freedom from worry. Verb: to make something less difficult."
+              "glad",
+              "Feeling happy or pleased about something."
             ],
             [
-              "lapse",
-              "Noun: a small mistake or failure, often from forgetting. Verb: to gradually stop."
+              "rarest",
+              "Most unusual or hardest to find, when compared with everything else."
             ],
             [
-              "omit",
-              "To leave out or not include something."
+              "ostracise",
+              "To exclude someone from a group or society."
             ]
           ]
         }

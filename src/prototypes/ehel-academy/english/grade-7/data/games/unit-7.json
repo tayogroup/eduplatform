@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: A strong desire to achieve something important in life.",
+          "prompt": "Which word means: A careful search made to find out the true facts about something.",
           "choices": [
-            "ambition",
-            "dedication",
-            "achievement"
+            "investigation",
+            "socialism",
+            "legitimate"
           ],
-          "answer": "ambition",
-          "explanation": "ambition: A strong desire to achieve something important in life."
+          "answer": "investigation",
+          "explanation": "investigation: A careful search made to find out the true facts about something."
         },
         {
-          "prompt": "Which word means: A job that requires special training or education.",
+          "prompt": "Which word means: To find or learn something that was not known before.",
           "choices": [
-            "ambition",
-            "dedication",
-            "profession"
+            "investigation",
+            "socialism",
+            "discover"
           ],
-          "answer": "profession",
-          "explanation": "profession: A job that requires special training or education."
+          "answer": "discover",
+          "explanation": "discover: To find or learn something that was not known before."
         },
         {
-          "prompt": "Which word means: Being honest and having strong moral principles, even when no one is watching.",
+          "prompt": "Which word means: Not as good as expected, causing a feeling of sadness or letdown.",
           "choices": [
-            "dedication",
-            "integrity",
-            "ambition"
+            "socialism",
+            "disappointing",
+            "investigation"
           ],
-          "answer": "integrity",
-          "explanation": "integrity: Being honest and having strong moral principles, even when no one is watching."
+          "answer": "disappointing",
+          "explanation": "disappointing: Not as good as expected, causing a feeling of sadness or letdown."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Being fully committed to a task or purpose; giving time and energy to something.",
-          "answer": "dedication"
+          "clue": "The quality of being new and not copied from anything.",
+          "answer": "originality"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A job that requires special training or education.",
-          "answer": "profession"
+          "clue": "To grow, improve, or become more advanced over time.",
+          "answer": "develop"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Being honest and having strong moral principles, even when no one is watching.",
-          "answer": "integrity"
+          "clue": "Great strength or power, especially of something like weather or a physical push.",
+          "answer": "force"
         }
       ]
     },
@@ -83,57 +83,53 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "areas.",
-            "rural",
-            "in",
-            "children",
-            "helps",
-            "who",
-            "doctor",
-            "a",
-            "become",
-            "to",
-            "is",
-            "ambition",
-            "Her"
-          ],
-          "answer": "Her ambition is to become a doctor who helps children in rural areas."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "flood.",
-            "the",
-            "after",
-            "rebuild",
-            "them",
-            "helped",
-            "community",
+            "report.",
             "the",
             "of",
-            "resilience",
+            "paragraph",
+            "one",
+            "changed",
+            "and",
+            "months",
+            "four",
+            "took",
+            "investigation",
             "The"
           ],
-          "answer": "The resilience of the community helped them rebuild after the flood."
+          "answer": "The investigation took four months and changed one paragraph of the report."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "career.",
-            "right",
-            "the",
-            "choose",
+            "impossible.",
+            "felt",
+            "it",
+            "when",
+            "even",
+            "training",
             "her",
-            "helped",
-            "teacher",
-            "her",
-            "from",
-            "received",
-            "she",
-            "mentorship",
-            "The"
+            "to",
+            "committed",
+            "stayed",
+            "Nora"
           ],
-          "answer": "The mentorship she received from her teacher helped her choose the right career."
+          "answer": "Nora stayed committed to her training even when it felt impossible."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "harbour.",
+            "the",
+            "near",
+            "stalls",
+            "the",
+            "lined",
+            "fruit",
+            "fresh",
+            "of",
+            "Baskets"
+          ],
+          "answer": "Baskets of fresh fruit lined the stalls near the harbour."
         }
       ]
     },
@@ -230,7 +226,7 @@
       "rounds": [
         {
           "prompt": "Speaking 1: Present Your Career Choice",
-          "target": "Her ambition is to become a doctor who helps children in rural areas."
+          "target": "The investigation took four months and changed one paragraph of the report."
         },
         {
           "prompt": "Speaking 3: Career Guess Game",
@@ -238,7 +234,7 @@
         },
         {
           "prompt": "Speaking 5: Retell the Storm of Truth",
-          "target": "The mentorship she received from her teacher helped her choose the right career."
+          "target": "Baskets of fresh fruit lined the stalls near the harbour."
         }
       ]
     },
@@ -253,61 +249,52 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "home.",
-            "at",
-            "helping",
-            "and",
-            "hard",
-            "working",
-            "by",
-            "parents",
-            "his",
-            "to",
-            "gratitude",
-            "showed",
-            "He"
-          ],
-          "answer": "He showed gratitude to his parents by working hard and helping at home."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "arrived.",
-            "breakthrough",
-            "their",
-            "before",
-            "experiments",
-            "failed",
-            "of",
-            "years",
-            "through",
-            "team",
-            "research",
+            "year.",
+            "this",
+            "achievement",
+            "greatest",
+            "her",
+            "was",
+            "prize",
+            "science",
             "the",
-            "carried",
-            "Perseverance"
+            "Winning"
           ],
-          "answer": "Perseverance carried the research team through years of failed experiments before their breakthrough arrived."
+          "answer": "Winning the science prize was her greatest achievement this year."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "not.",
-            "could",
-            "experience",
-            "unrecorded",
-            "of",
-            "years",
+            "Nora?",
+            "impossible,",
+            "felt",
+            "once",
             "that",
-            "doors",
-            "opened",
-            "accounting",
-            "in",
-            "qualification",
-            "recognised",
-            "A"
+            "skill",
+            "a",
+            "develop",
+            "you",
+            "can",
+            "How"
           ],
-          "answer": "A recognised qualification in accounting opened doors that years of unrecorded experience could not."
+          "answer": "How can you develop a skill that once felt impossible, Nora?"
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "out?",
+            "came",
+            "truth",
+            "the",
+            "moment",
+            "the",
+            "it,",
+            "didn't",
+            "hammered,",
+            "heart",
+            "Her"
+          ],
+          "answer": "Her heart hammered, didn't it, the moment the truth came out?"
         }
       ]
     },
@@ -320,34 +307,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'apprentice' mean in this unit?",
+          "prompt": "What does 'salt' mean in this unit?",
           "choices": [
-            "A person learning a trade or skill from an experienced worker.",
-            "A strong desire to achieve something important in life.",
-            "Being fully committed to a task or purpose; giving time and energy to something."
+            "A white substance found in seawater that gives food a savoury taste.",
+            "A careful search made to find out the true facts about something.",
+            "A system in which key industries and services are owned by the public."
           ],
-          "answer": "A person learning a trade or skill from an experienced worker.",
-          "explanation": "apprentice: A person learning a trade or skill from an experienced worker."
+          "answer": "A white substance found in seawater that gives food a savoury taste.",
+          "explanation": "salt: A white substance found in seawater that gives food a savoury taste."
         },
         {
-          "prompt": "What does 'aspiration' mean in this unit?",
+          "prompt": "What does 'practised' mean in this unit?",
           "choices": [
-            "A strong desire to achieve something important in life.",
-            "Being fully committed to a task or purpose; giving time and energy to something.",
-            "A hope or dream of achieving something in the future."
+            "A careful search made to find out the true facts about something.",
+            "A system in which key industries and services are owned by the public.",
+            "Did something again and again in order to improve at it."
           ],
-          "answer": "A hope or dream of achieving something in the future.",
-          "explanation": "aspiration: A hope or dream of achieving something in the future."
+          "answer": "Did something again and again in order to improve at it.",
+          "explanation": "practised: Did something again and again in order to improve at it."
         },
         {
-          "prompt": "What does 'dedication' mean in this unit?",
+          "prompt": "What does 'socialism' mean in this unit?",
           "choices": [
-            "Something that has been accomplished through effort and skill.",
-            "Being fully committed to a task or purpose; giving time and energy to something.",
-            "A strong desire to achieve something important in life."
+            "Allowed by rules or law, or reasonable and justified.",
+            "A system in which key industries and services are owned by the public.",
+            "A careful search made to find out the true facts about something."
           ],
-          "answer": "Being fully committed to a task or purpose; giving time and energy to something.",
-          "explanation": "dedication: Being fully committed to a task or purpose; giving time and energy to something."
+          "answer": "A system in which key industries and services are owned by the public.",
+          "explanation": "socialism: A system in which key industries and services are owned by the public."
         }
       ]
     },
@@ -360,34 +347,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'scholarship'?",
+          "prompt": "What type of word is 'fruit'?",
           "choices": [
             "Noun",
             "Verb",
             "Adjective"
           ],
           "answer": "Noun",
-          "explanation": "Scholarship is used as a noun in this dictionary sense."
+          "explanation": "Fruit is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'responsibility'?",
+          "prompt": "What type of word is 'apprentice'?",
           "choices": [
             "Verb",
             "Adjective",
             "Noun"
           ],
           "answer": "Noun",
-          "explanation": "Responsibility is used as a noun in this dictionary sense."
+          "explanation": "Apprentice is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'distinction'?",
+          "prompt": "What type of word is 'professor'?",
           "choices": [
             "Adjective",
             "Noun",
             "Verb"
           ],
           "answer": "Noun",
-          "explanation": "Distinction is used as a noun in this dictionary sense."
+          "explanation": "Professor is used as a noun in this dictionary sense."
         }
       ]
     },
@@ -403,16 +390,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "perseverance",
-              "Continuing to work hard even when things are difficult or take a long time."
+              "originality",
+              "The quality of being new and not copied from anything."
             ],
             [
-              "milestone",
-              "An important event or stage in the development of something."
+              "frame",
+              "To present an idea in a way that shapes how it is understood."
             ],
             [
-              "profession",
-              "A job that requires special training or education."
+              "proud",
+              "Feeling great pleasure and satisfaction because of something you or someone close to you has achieved."
             ]
           ]
         },
@@ -420,16 +407,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "apprentice",
-              "A person learning a trade or skill from an experienced worker."
+              "opportunities",
+              "Chances to do something that can help a person succeed or improve their life."
             ],
             [
-              "mentorship",
-              "Guidance and support given by an experienced person to someone less experienced."
+              "fishermen",
+              "People whose job is to catch fish, usually from the sea or a river."
             ],
             [
-              "reputation",
-              "The opinion that people have about someone based on their behaviour and achievements."
+              "poverty",
+              "The state of being very poor and lacking money for basic needs."
             ]
           ]
         },
@@ -437,16 +424,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "aspiration",
-              "A hope or dream of achieving something in the future."
+              "thunder",
+              "A loud rumbling or crashing sound that comes from the sky during a storm."
             ],
             [
-              "initiative",
-              "The ability to see what needs to be done and do it without being told."
+              "afford",
+              "To have enough money or time to be able to do something."
             ],
             [
-              "determination",
-              "A firm decision to do something and not give up."
+              "profession",
+              "A job that requires special training or education."
             ]
           ]
         }

@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: To accept or admit that something is true, or to recognise that you have received something.",
+          "prompt": "Which word means: The finding of something that was not known before.",
           "choices": [
-            "acknowledge",
-            "demonstrate",
-            "establish"
+            "discovery",
+            "empirical",
+            "stretched"
           ],
-          "answer": "acknowledge",
-          "explanation": "acknowledge: To accept or admit that something is true, or to recognise that you have received something."
+          "answer": "discovery",
+          "explanation": "discovery: The finding of something that was not known before."
         },
         {
-          "prompt": "Which word means: To communicate or express a message, feeling or idea.",
+          "prompt": "Which word means: Filtered means passed a liquid through something to remove dirt or unwanted particles.",
           "choices": [
-            "acknowledge",
-            "demonstrate",
-            "convey"
+            "discovery",
+            "empirical",
+            "filtered"
           ],
-          "answer": "convey",
-          "explanation": "convey: To communicate or express a message, feeling or idea."
+          "answer": "filtered",
+          "explanation": "filtered: Filtered means passed a liquid through something to remove dirt or unwanted particles."
         },
         {
-          "prompt": "Which word means: To keep something going or to support it over a long period of time.",
+          "prompt": "Which word means: A short way of saying \"we would\" or \"we had\", often used in everyday speech.",
           "choices": [
-            "demonstrate",
-            "sustain",
-            "acknowledge"
+            "empirical",
+            "we'd",
+            "discovery"
           ],
-          "answer": "sustain",
-          "explanation": "sustain: To keep something going or to support it over a long period of time."
+          "answer": "we'd",
+          "explanation": "we'd: A short way of saying \"we would\" or \"we had\", often used in everyday speech."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "To work together with others to achieve a common goal.",
-          "answer": "collaborate"
+          "clue": "The ability to change easily to suit new conditions.",
+          "answer": "flexibility"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "To cause a lot of damage or destruction.",
-          "answer": "devastate"
+          "clue": "Nature is the physical world of plants, animals, rivers and forests that people did not make.",
+          "answer": "nature"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "To include something as part of a larger whole.",
-          "answer": "incorporate"
+          "clue": "A plan or purpose that someone has in mind before they act.",
+          "answer": "intention"
         }
       ]
     },
@@ -83,54 +83,54 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "project.",
-            "your",
-            "on",
-            "job",
-            "great",
-            "a",
-            "did",
-            "you",
-            "that",
-            "acknowledge",
-            "to",
-            "want",
-            "I"
-          ],
-          "answer": "I want to acknowledge that you did a great job on your project."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "safest.",
-            "is",
-            "location",
-            "which",
-            "evaluate",
-            "to",
-            "need",
-            "we",
-            "campsite,",
-            "a",
-            "choosing",
-            "Before"
-          ],
-          "answer": "Before choosing a campsite, we need to evaluate which location is safest."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "laws.",
-            "protection",
-            "environmental",
-            "infringes",
-            "river",
+            "survey.",
+            "whole",
             "the",
-            "in",
-            "waste",
-            "Dumping"
+            "changed",
+            "site",
+            "nesting",
+            "the",
+            "of",
+            "discovery",
+            "The"
           ],
-          "answer": "Dumping waste in the river infringes environmental protection laws."
+          "answer": "The discovery of the nesting site changed the whole survey."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "region.",
+            "this",
+            "in",
+            "season",
+            "dry",
+            "the",
+            "during",
+            "sharply",
+            "decreases",
+            "Rainfall"
+          ],
+          "answer": "Rainfall decreases sharply during the dry season in this region."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "term.",
+            "the",
+            "of",
+            "rest",
+            "the",
+            "for",
+            "suffer",
+            "would",
+            "department",
+            "science",
+            "the",
+            "projector,",
+            "the",
+            "Without"
+          ],
+          "answer": "Without the projector, the science department would suffer for the rest of the term."
         }
       ]
     },
@@ -227,7 +227,7 @@
       "rounds": [
         {
           "prompt": "Speaking 1: Describe Your Ideal Outdoor Adventure",
-          "target": "I want to acknowledge that you did a great job on your project."
+          "target": "The discovery of the nesting site changed the whole survey."
         },
         {
           "prompt": "Speaking 3: Retell the River Report",
@@ -235,7 +235,7 @@
         },
         {
           "prompt": "Speaking 5: Five-Minute Unit Talk",
-          "target": "Dumping waste in the river infringes environmental protection laws."
+          "target": "Without the projector, the science department would suffer for the rest of the term."
         }
       ]
     },
@@ -250,57 +250,53 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "points.",
-            "collection",
-            "more",
-            "adding",
-            "by",
-            "programme",
-            "recycling",
-            "our",
-            "augment",
-            "can",
-            "We"
+            "safest.",
+            "is",
+            "location",
+            "which",
+            "evaluate",
+            "to",
+            "need",
+            "we",
+            "campsite,",
+            "a",
+            "choosing",
+            "Before"
           ],
-          "answer": "We can augment our recycling programme by adding more collection points."
+          "answer": "Before choosing a campsite, we need to evaluate which location is safest."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "details.",
-            "exaggerated",
-            "but",
-            "exciting",
-            "with",
-            "stories",
-            "adventure",
-            "her",
-            "embellish",
-            "to",
-            "likes",
-            "She"
+            "branches.",
+            "living",
+            "any",
+            "breaking",
+            "without",
+            "firewood",
+            "fallen",
+            "collected",
+            "Daniel"
           ],
-          "answer": "She likes to embellish her adventure stories with exciting but exaggerated details."
+          "answer": "Daniel collected fallen firewood without breaking any living branches."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "safely.",
-            "water",
-            "stream",
-            "purify",
-            "to",
-            "how",
-            "demonstrate",
-            "will",
-            "guide",
-            "the",
-            "briefing,",
-            "expedition",
-            "the",
-            "During"
+            "campus.",
+            "on",
+            "somewhere",
+            "infringed",
+            "been",
+            "had",
+            "rule",
+            "serious",
+            "a",
+            "that",
+            "agreed",
+            "Jamal"
           ],
-          "answer": "During the expedition briefing, the guide will demonstrate how to purify stream water safely."
+          "answer": "Jamal agreed that a serious rule had been infringed somewhere on campus."
         }
       ]
     },
@@ -313,34 +309,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'obliterate' mean in this unit?",
+          "prompt": "What does 'report' mean in this unit?",
           "choices": [
-            "To completely destroy or remove something so it no longer exists.",
-            "To accept or admit that something is true, or to recognise that you have received something.",
-            "To show how something works or to prove something clearly."
+            "A report is a written account describing what someone did, saw, or found out.",
+            "The finding of something that was not known before.",
+            "Based on what has been observed or measured."
           ],
-          "answer": "To completely destroy or remove something so it no longer exists.",
-          "explanation": "obliterate: To completely destroy or remove something so it no longer exists."
+          "answer": "A report is a written account describing what someone did, saw, or found out.",
+          "explanation": "report: A report is a written account describing what someone did, saw, or found out."
         },
         {
-          "prompt": "What does 'admonish' mean in this unit?",
+          "prompt": "What does 'clashed' mean in this unit?",
           "choices": [
-            "To accept or admit that something is true, or to recognise that you have received something.",
-            "To show how something works or to prove something clearly.",
-            "To tell someone firmly that they have done something wrong, often in a caring way."
+            "The finding of something that was not known before.",
+            "Based on what has been observed or measured.",
+            "To strongly disagree or come into conflict with someone else."
           ],
-          "answer": "To tell someone firmly that they have done something wrong, often in a caring way.",
-          "explanation": "admonish: To tell someone firmly that they have done something wrong, often in a caring way."
+          "answer": "To strongly disagree or come into conflict with someone else.",
+          "explanation": "clashed: To strongly disagree or come into conflict with someone else."
         },
         {
-          "prompt": "What does 'demonstrate' mean in this unit?",
+          "prompt": "What does 'empirical' mean in this unit?",
           "choices": [
-            "To create or start something that is meant to last.",
-            "To show how something works or to prove something clearly.",
-            "To accept or admit that something is true, or to recognise that you have received something."
+            "Extended over a distance, or reached out further than usual.",
+            "Based on what has been observed or measured.",
+            "The finding of something that was not known before."
           ],
-          "answer": "To show how something works or to prove something clearly.",
-          "explanation": "demonstrate: To show how something works or to prove something clearly."
+          "answer": "Based on what has been observed or measured.",
+          "explanation": "empirical: Based on what has been observed or measured."
         }
       ]
     },
@@ -353,34 +349,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'alleviate'?",
+          "prompt": "What type of word is 'sincerely'?",
           "choices": [
-            "Verb",
+            "Adverb",
             "Noun",
-            "Adjective"
+            "Verb"
           ],
-          "answer": "Verb",
-          "explanation": "Alleviate is used as a verb in this dictionary sense."
+          "answer": "Adverb",
+          "explanation": "Sincerely is used as an adverb in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'abdicate'?",
+          "prompt": "What type of word is 'devastate'?",
           "choices": [
             "Noun",
             "Adjective",
             "Verb"
           ],
           "answer": "Verb",
-          "explanation": "Abdicate is used as a verb in this dictionary sense."
+          "explanation": "Devastate is used as a verb in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'resolve'?",
+          "prompt": "What type of word is 'species'?",
           "choices": [
             "Adjective",
-            "Verb",
-            "Noun"
+            "Noun",
+            "Verb"
           ],
-          "answer": "Verb",
-          "explanation": "Resolve is used as a verb in this dictionary sense."
+          "answer": "Noun",
+          "explanation": "Species is used as a noun in this dictionary sense."
         }
       ]
     },
@@ -396,16 +392,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "demonstrate",
-              "To show how something works or to prove something clearly."
+              "flexibility",
+              "The ability to change easily to suit new conditions."
             ],
             [
-              "evaluate",
-              "To think carefully about something to decide how good, important or effective it is."
+              "least",
+              "Used to show the smallest amount, extent, or degree of something, often when comparing things."
             ],
             [
-              "conclude",
-              "To finish something, or to reach a decision after thinking carefully."
+              "deforestation",
+              "The cutting down and clearing of large areas of forest."
             ]
           ]
         },
@@ -413,16 +409,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "infringe",
-              "To break a rule or law, or to limit someone's rights."
+              "beans",
+              "Beans are small seeds from certain plants that people cook and eat as food."
             ],
             [
-              "tarnish",
-              "To damage or spoil something, especially a reputation or quality."
+              "acacia",
+              "An acacia is a tree with thorny branches that often grows in dry, warm regions."
             ],
             [
-              "mitigate",
-              "To make something less severe, harmful or serious."
+              "clever",
+              "Quick to understand, learn and solve problems; intelligent."
             ]
           ]
         },
@@ -430,16 +426,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "admonish",
-              "To tell someone firmly that they have done something wrong, often in a caring way."
+              "intention",
+              "A plan or purpose that someone has in mind before they act."
             ],
             [
-              "imitate",
-              "To copy someone or something in order to be like them."
+              "sheets",
+              "Flat pieces of paper, especially the ones used for writing, printing or answering questions."
             ],
             [
-              "forsake",
-              "To give up or leave something or someone behind."
+              "significant",
+              "Important or meaningful; large enough to have an effect."
             ]
           ]
         }

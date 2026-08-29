@@ -131,6 +131,10 @@ function localBackend({ course, student }) {
   };
 }
 
+// Long enough that a slow school connection is not cut off mid-send, short
+// enough that a stall costs one navigation rather than the session.
+const REQUEST_TIMEOUT_MS = 15000;
+
 function remoteBackend({ course, student, endpoint, token }) {
   const auth = () => ({ Authorization: `Bearer ${token}`, "Content-Type": "application/json" });
   // `_k` is an internal outbox-tracking key — strip it from the wire payload.
@@ -178,7 +182,25 @@ function remoteBackend({ course, student, endpoint, token }) {
       // outlive the page, and the unload case is already handled by the beacon
       // branch above; this branch only runs while the page is alive and
       // awaiting its own response.
-      const r = await fetch(url, { method: "POST", headers: auth(), body });
+      // A HUNG REQUEST USED TO SILENCE THE APP FOR EVER. fetch() has no timeout
+      // of its own, and flush() coalesces onto the in-flight promise -- so one
+      // request that never settles leaves `flushing` set, every later flush
+      // returns that same dead promise, the finally never runs, and nothing is
+      // reported again until the page is reloaded. Reported as "every few
+      // minutes you have to refresh the app".
+      //
+      // A stalled connection is ordinary on a school network; what is not
+      // ordinary is one stall costing the rest of the session. Aborting turns
+      // it into a normal failure: the promise settles, `flushing` clears, the
+      // queue is kept, and the next navigation tries again.
+      const ctrl = typeof AbortController === "undefined" ? null : new AbortController();
+      const timer = ctrl ? setTimeout(() => ctrl.abort(), REQUEST_TIMEOUT_MS) : null;
+      let r;
+      try {
+        r = await fetch(url, { method: "POST", headers: auth(), body, signal: ctrl ? ctrl.signal : undefined });
+      } finally {
+        if (timer) clearTimeout(timer);
+      }
       if (!r.ok) {
         const err = new Error(`ingest ${r.status}`);
         // 401/403 is the launch token being expired, revoked or wrong. Unlike a
@@ -193,7 +215,17 @@ function remoteBackend({ course, student, endpoint, token }) {
       return r.json();
     },
     async hydrate() {
-      const r = await fetch(`${endpoint}/progress/${encodeURIComponent(course)}`, { headers: auth() });
+      // Same reason as persist(): with no timeout this hangs the resume path on
+      // load, and the learner waits on a request that will never answer.
+      const hctrl = typeof AbortController === "undefined" ? null : new AbortController();
+      const htimer = hctrl ? setTimeout(() => hctrl.abort(), REQUEST_TIMEOUT_MS) : null;
+      let r;
+      try {
+        r = await fetch(`${endpoint}/progress/${encodeURIComponent(course)}`,
+          { headers: auth(), signal: hctrl ? hctrl.signal : undefined });
+      } finally {
+        if (htimer) clearTimeout(htimer);
+      }
       if (!r.ok) throw new Error(`hydrate ${r.status}`);
       return r.json();
     },

@@ -73,6 +73,24 @@ if (substr_count($src, 'self::support_message_visible_to_user(') < 2) {
     exit(1);
 }
 
+// A SCREENSHOT is never public, whoever sends it. Its visibility is a literal
+// at the insert site rather than a call to the stamp, so the gate asserts the
+// literal: find the screenshot insert and require group_teacher_only inside it.
+$shotat = strpos($src, "'messagekind' => 'screenshot'");
+if ($shotat === false) {
+    fwrite(STDERR, "FAIL: the screenshot insert is gone from the exchange.
+");
+    exit(1);
+}
+$shotwindow = substr($src, $shotat, 600);
+if (strpos($shotwindow, "'visibility' => 'group_teacher_only'") === false) {
+    fwrite(STDERR, "FAIL: a screenshot message is no longer forced to group_teacher_only.
+");
+    fwrite(STDERR, "      An image of a child's screen must never reach other children.
+");
+    exit(1);
+}
+
 // ---- harness: evaluate the real text ---------------------------------------
 // The view function touches is_siteadmin/has_capability only on its fallback
 // branch; stub them false so the fallback denies, which is the strict reading.

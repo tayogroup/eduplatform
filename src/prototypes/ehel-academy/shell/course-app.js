@@ -568,6 +568,124 @@ export function createCourseApp(config) {
         if (m.id <= lastId) continue;
         lastId = Math.max(lastId, m.id);
         if (!m.mine) sawOther = true;
+        if (m.screenshot) {
+          appendShotBubble(m);
+          continue;
+        }"""
+assert s.count(old) == 1, "renderer branch"
+s = s.replace(old, new)
+
+# ---- 2. the capture machinery, inside mountClassChat ------------------------
+old = """    const buildPanel = () => {"""
+new = """    // A screenshot bubble: the image is fetched lazily per message through the
+    // same door, which re-runs the visibility check -- so a bubble and its
+    // pixels can never diverge in who may see them. "Expired" is a real state:
+    // images age out after 30 days while the message row stays.
+    const appendShotBubble = (m) => {
+      const el = document.createElement("div");
+      el.style.cssText = "max-width:92%;padding:7px 10px;border-radius:10px;font-size:12px;"
+        + (m.mine ? "align-self:flex-end;background:#fff3cd;border:1px solid #ffe69c;" : "background:#f1f3f5;");
+      el.innerHTML = (m.mine ? "" : `<b style="display:block;font-size:11px;opacity:.75">${escapeHtml(m.name)}</b>`)
+        + '<span>\\uD83D\\uDCF7 Screenshot</span>'
+        + (m.mine ? '<small style="display:block;font-size:10px;color:#664d03;margin-top:3px">Only your teacher can see this</small>' : "");
+      msgsEl.appendChild(el);
+      post({ image: m.id }).then((img) => {
+        if (!img || !img.ok) return;
+        if (img.gone) { el.querySelector("span").textContent = "\\uD83D\\uDCF7 Screenshot (expired)"; return; }
+        const pic = document.createElement("img");
+        pic.src = "data:image/jpeg;base64," + img.jpegbase64;
+        pic.alt = "Screenshot";
+        pic.style.cssText = "display:block;max-width:100%;border-radius:8px;margin-top:4px";
+        el.insertBefore(pic, el.querySelector("small"));
+        el.querySelector("span").remove();
+      });
+    };
+
+    // THE CAPTURE IS A RENDER OF THE LESSON PAGE'S OWN DOM -- deliberately not
+    // the browser screen-capture API, whose picker lets a five-year-old share
+    // the family's whole desktop. This can only contain what the app renders
+    // and what the child typed into it; that boundary is the safeguarding
+    // design, and the preview below is the child seeing exactly what the
+    // teacher will see before anything is sent.
+    //
+    // html2canvas is vendored beside lucide and lazy-loaded by deriving its URL
+    // from the lucide script tag already on every page -- correct in local dev
+    // and under v{TAG}/ alike, and the 200KB only ever loads when a child
+    // presses the camera.
+    const loadCapturer = () => new Promise((resolve, reject) => {
+      if (window.html2canvas) return resolve(window.html2canvas);
+      const lucideTag = document.querySelector('script[src*="lucide.min.js"]');
+      if (!lucideTag) return reject(new Error("no anchor"));
+      const tag = document.createElement("script");
+      tag.src = lucideTag.src.replace(/lucide\\.min\\.js.*$/, "html2canvas.min.js");
+      tag.onload = () => (window.html2canvas ? resolve(window.html2canvas) : reject(new Error("no symbol")));
+      tag.onerror = () => reject(new Error("load failed"));
+      document.head.appendChild(tag);
+    });
+
+    const captureAndPreview = async (cameraBtn) => {
+      cameraBtn.disabled = true;
+      try {
+        const h2c = await loadCapturer();
+        const target = document.querySelector("#content") || document.body;
+        const canvas = await h2c(target, { logging: false, useCORS: false, scale: 1 });
+        // Downscale to <=1280 wide and re-encode as JPEG: the server caps at
+        // 500KB decoded and a retina PNG of a full page is several megabytes.
+        const w = Math.min(1280, canvas.width);
+        const scaled = document.createElement("canvas");
+        scaled.width = w;
+        scaled.height = Math.round(canvas.height * (w / canvas.width));
+        scaled.getContext("2d").drawImage(canvas, 0, 0, scaled.width, scaled.height);
+        const dataUrl = scaled.toDataURL("image/jpeg", 0.7);
+
+        const overlay = document.createElement("div");
+        overlay.style.cssText = "position:fixed;inset:0;z-index:70;background:rgba(10,30,45,.75);"
+          + "display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:18px";
+        overlay.innerHTML = '<div style="color:#fff;font:700 14px system-ui,sans-serif">'
+          + "Send this picture to your teacher? Your teacher will see exactly this.</div>"
+          + '<img alt="Preview" style="max-width:min(720px,92vw);max-height:60vh;border-radius:10px;'
+          + 'box-shadow:0 10px 40px rgba(0,0,0,.4)" src="' + dataUrl + '">'
+          + '<div style="display:flex;gap:10px">'
+          + '<button type="button" data-shot-send style="border:1px solid #1a67a3;background:#1a67a3;color:#fff;'
+          + 'border-radius:10px;padding:10px 20px;font:700 14px system-ui,sans-serif;cursor:pointer">Send to teacher</button>'
+          + '<button type="button" data-shot-cancel style="border:1px solid #fff;background:transparent;color:#fff;'
+          + 'border-radius:10px;padding:10px 20px;font:700 14px system-ui,sans-serif;cursor:pointer">Cancel</button></div>';
+        document.body.appendChild(overlay);
+        overlay.querySelector("[data-shot-cancel]").addEventListener("click", () => overlay.remove());
+        overlay.querySelector("[data-shot-send]").addEventListener("click", async () => {
+          overlay.remove();
+          const state = await post({ screenshot: dataUrl, since: lastId });
+          if (state && state.ok && state.enabled) {
+            append(state.messages);
+          }
+          // A refused shot must SAY so -- a picture that silently never
+          // appears is the same wound as every silent failure fixed today.
+          if (!state || !state.ok || state.shotrejected) {
+            const note = document.createElement("div");
+            note.textContent = "The picture did not send. Try again, or describe the problem in a message.";
+            note.style.cssText = "align-self:flex-end;font-size:11px;color:#664d03;background:#fff3cd;"
+              + "border:1px solid #ffe69c;border-radius:8px;padding:4px 8px";
+            msgsEl.appendChild(note);
+            msgsEl.scrollTop = msgsEl.scrollHeight;
+          }
+        });
+      } catch (e) {
+        /* capture failed: say so briefly rather than nothing */
+        const note = document.createElement("div");
+        note.textContent = "The picture could not be taken. You can describe the problem in a message instead.";
+        note.style.cssText = "align-self:flex-end;font-size:11px;color:#664d03;background:#fff3cd;"
+          + "border:1px solid #ffe69c;border-radius:8px;padding:4px 8px";
+        if (msgsEl) msgsEl.appendChild(note);
+      } finally {
+        cameraBtn.disabled = false;
+      }
+    };
+
+    const buildPanel = () => {
+        if (m.screenshot) {
+          appendShotBubble(m);
+          continue;
+        }
         const el = document.createElement("div");
         // Inline styles for the same reason the hand button carries them:
         // course-ui.css is bundled into all six subjects' releases, so one
@@ -607,11 +725,15 @@ export function createCourseApp(config) {
         + '<div style="font-weight:400;font-size:11px;color:#64748b">Everyone sees your teacher. Only your teacher sees you.</div></div>'
         + '<div id="class-chat-msgs" style="flex:1;overflow-y:auto;padding:10px 12px;display:flex;flex-direction:column;gap:8px;min-height:90px"></div>'
         + '<form id="class-chat-form" style="display:flex;gap:8px;padding:9px 12px;border-top:1px solid #e2e8f0">'
+        + '<button type="button" id="class-chat-shot" title="Send a picture of this page to your teacher" '
+        + 'style="border:1px solid #cbd5e1;background:#fff;border-radius:8px;padding:7px 10px;font-size:15px;cursor:pointer">\uD83D\uDCF7</button>'
         + '<input id="class-chat-input" type="text" maxlength="1200" autocomplete="off" placeholder="Ask your teacher…" '
         + 'style="flex:1;border:1px solid #cbd5e1;border-radius:8px;padding:7px 10px;font:inherit;font-size:13px;min-width:0">'
         + '<button type="submit" style="border:1px solid #1a67a3;background:#1a67a3;color:#fff;border-radius:8px;padding:7px 12px;font:inherit;font-size:13px;cursor:pointer">Send</button></form>';
       document.body.appendChild(panel);
       msgsEl = panel.querySelector("#class-chat-msgs");
+      const shotBtn = panel.querySelector("#class-chat-shot");
+      shotBtn.addEventListener("click", () => captureAndPreview(shotBtn));
       panel.querySelector("#class-chat-form").addEventListener("submit", (event) => {
         event.preventDefault();
         const inputEl = panel.querySelector("#class-chat-input");

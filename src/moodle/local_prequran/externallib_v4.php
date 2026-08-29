@@ -8211,7 +8211,88 @@ $validate = [
      * share one room; a full name on every line is roll-call furniture, and the
      * teacher's tile layout already resolves who is who.
      */
-    public static function class_group_chat_exchange(int $userid, int $groupid, string $body = '', int $sincemessageid = 0, int $limit = 60, int $replytoid = 0): array {
+    /**
+     * A learner's screenshot of THE LESSON PAGE, sent to the teacher.
+     *
+     * The capture is a render of the app's own DOM, never the browser
+     * screen-capture API -- so it can only contain what the lesson renders and
+     * what the child typed into it. That constraint is the safeguarding design;
+     * this end enforces the rest of it:
+     *
+     *  - ALWAYS group_teacher_only, whoever sends it. An image of a child's
+     *    screen never reaches other children, and Answer-to-class cannot carry
+     *    it because its quote is text-only.
+     *  - Verified to BE a JPEG by magic bytes, capped at 500KB decoded. The
+     *    text safety filter does not apply to pixels, and the bounded capture
+     *    is what stands in for it.
+     *  - Stored through the file API (system context, component
+     *    local_prequran, filearea class_chat_shot, itemid = messageid), never
+     *    at a public URL: the ONLY ways back out are the two gated chat doors,
+     *    which re-check thread visibility per request.
+     *
+     * Screenshots auto-delete after CLASS_CHAT_SHOT_KEEP_DAYS (the message row
+     * stays, its image answers gone): their value is "help me NOW", and images
+     * of children's work should not accumulate for ever. Sweep runs
+     * opportunistically on store, so no cron wiring is needed.
+     */
+    const CLASS_CHAT_SHOT_MAX_BYTES = 512000;
+    const CLASS_CHAT_SHOT_KEEP_DAYS = 30;
+
+    protected static function class_group_chat_store_shot(int $threadid, int $messageid, string $bytes): bool {
+        $fs = get_file_storage();
+        $ctx = \context_system::instance();
+        $fs->delete_area_files($ctx->id, 'local_prequran', 'class_chat_shot', $messageid);
+        $fs->create_file_from_string([
+            'contextid' => $ctx->id, 'component' => 'local_prequran',
+            'filearea' => 'class_chat_shot', 'itemid' => $messageid,
+            'filepath' => '/', 'filename' => 'shot.jpg',
+        ], $bytes);
+        // Opportunistic retention sweep: delete stored images older than the
+        // keep window. Bounded to 50 per call so a store never stalls.
+        global $DB;
+        $cut = time() - (self::CLASS_CHAT_SHOT_KEEP_DAYS * DAYSECS);
+        $old = $DB->get_records_select('files',
+            "component = 'local_prequran' AND filearea = 'class_chat_shot'
+             AND filename = 'shot.jpg' AND timecreated < :cut",
+            ['cut' => $cut], 'timecreated ASC', 'id, itemid', 0, 50);
+        foreach ($old as $f) {
+            $fs->delete_area_files($ctx->id, 'local_prequran', 'class_chat_shot', (int)$f->itemid);
+        }
+        return true;
+    }
+
+    /**
+     * The image for one screenshot message, as base64 -- or null when the
+     * caller may not see the message, the message is not a screenshot, or the
+     * image has aged out. Visibility is THE SAME check the message list runs,
+     * so an image can never be fetched by anyone who could not see its bubble.
+     */
+    public static function class_group_chat_image(int $userid, int $groupid, int $messageid): ?array {
+        global $DB;
+        if ($userid <= 0 || $groupid <= 0 || $messageid <= 0) {
+            return null;
+        }
+        $thread = $DB->get_record('local_prequran_comm_thread',
+            ['type' => 'class_group', 'assignmentgroupid' => $groupid]);
+        if (!$thread || !self::support_can_read_thread_as($thread, $userid)) {
+            return null;
+        }
+        $msg = $DB->get_record('local_prequran_comm_message', ['id' => $messageid]);
+        if (!$msg || (int)$msg->threadid !== (int)$thread->id
+                || (string)$msg->messagekind !== 'screenshot'
+                || !self::support_message_visible_to_user($msg, $thread, $userid)) {
+            return null;
+        }
+        $fs = get_file_storage();
+        $file = $fs->get_file(\context_system::instance()->id, 'local_prequran',
+            'class_chat_shot', $messageid, '/', 'shot.jpg');
+        if (!$file) {
+            return ['ok' => true, 'gone' => true];
+        }
+        return ['ok' => true, 'gone' => false, 'jpegbase64' => base64_encode($file->get_content())];
+    }
+
+    public static function class_group_chat_exchange(int $userid, int $groupid, string $body = '', int $sincemessageid = 0, int $limit = 60, int $replytoid = 0, string $screenshotb64 = ''): array {
         global $DB;
 
         if ($userid <= 0 || $groupid <= 0) {
@@ -8229,6 +8310,23 @@ $validate = [
             return ['ok' => false, 'enabled' => false, 'message' => 'Class chat is not enabled here.'];
         }
 
+        // A screenshot rides its own message, decoded and proven a JPEG before
+        // anything is stored. Rejection is silent-but-shaped: the reply carries
+        // shotrejected so the panel can tell the child it did not go, instead
+        // of a bubble that quietly never appears.
+        $shotbytes = '';
+        $shotrejected = '';
+        if ($screenshotb64 !== '') {
+            $raw = base64_decode(preg_replace('/^data:image\/jpeg;base64,/', '', $screenshotb64), true);
+            if ($raw === false || strlen($raw) < 100 || substr($raw, 0, 2) !== "\xFF\xD8") {
+                $shotrejected = 'not-a-jpeg';
+            } else if (strlen($raw) > self::CLASS_CHAT_SHOT_MAX_BYTES) {
+                $shotrejected = 'too-big';
+            } else {
+                $shotbytes = $raw;
+            }
+        }
+
         try {
             $opened = self::support_open_class_group_thread($groupid, $policy, '', $body, $userid, $replytoid);
         } catch (\Throwable $e) {
@@ -8239,6 +8337,28 @@ $validate = [
             return ['ok' => false, 'enabled' => true, 'message' => 'Class chat could not be opened.'];
         }
         $thread = $DB->get_record('local_prequran_comm_thread', ['id' => $threadid], '*', MUST_EXIST);
+
+        if ($shotbytes !== '') {
+            $now = time();
+            $shotid = (int)$DB->insert_record('local_prequran_comm_message', (object)[
+                'threadid' => $threadid,
+                'senderid' => $userid,
+                'senderrole' => 'student',
+                'studentid' => 0,
+                'messagekind' => 'screenshot',
+                'body' => '',
+                'templatekey' => '',
+                'status' => 'visible',
+                'moderationflags' => '',
+                // NEVER public, whoever sends it -- see class_group_chat_store_shot.
+                'visibility' => 'group_teacher_only',
+                'ticketid' => 0,
+                'timecreated' => $now,
+                'timemodified' => $now,
+            ]);
+            self::class_group_chat_store_shot($threadid, $shotid, $shotbytes);
+            $DB->set_field('local_prequran_comm_thread', 'lastmessageat', $now, ['id' => $threadid]);
+        }
 
         $limit = max(1, min(200, $limit));
         $rows = $DB->get_records_select('local_prequran_comm_message',
@@ -8322,6 +8442,7 @@ $validate = [
                 // believe the class read something the class cannot read.
                 'toteacheronly' => (string)($row->visibility ?? 'public') === 'group_teacher_only',
                 'body' => (string)$row->body,
+                'screenshot' => (string)$row->messagekind === 'screenshot',
                 'quote' => $quote,
                 'at' => (int)$row->timecreated,
             ];
@@ -8330,6 +8451,7 @@ $validate = [
         return [
             'ok' => true,
             'enabled' => true,
+            'shotrejected' => $shotrejected,
             'threadid' => $threadid,
             'groupid' => $groupid,
             'grouptitle' => (string)($group->title ?? ''),

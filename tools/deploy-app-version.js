@@ -205,7 +205,11 @@ function versionIndexHtml(html, subject) {
 // and which is served max-age=2592000. Unlike the others it is vendored
 // upstream (lucide 0.468.0, unmodified) and IS tracked in git, so it never hits
 // the skip path below.
-const SHARED_MODULES = ["course-shell.js", "progress-client.js", "seb-session.js", "lesson-gate.js", "brand-fx.js", "lucide.min.js"];
+// html2canvas.min.js is the classroom chat's screenshot renderer (1.4.1,
+// upstream-unmodified, tracked in git like lucide). The app lazy-loads it by
+// deriving its URL from the lucide script tag already on the page, so it only
+// needs to sit BESIDE lucide in every release -- no index.html rewrite.
+const SHARED_MODULES = ["course-shell.js", "progress-client.js", "seb-session.js", "lesson-gate.js", "brand-fx.js", "lucide.min.js", "html2canvas.min.js"];
 const sharedModuleItems = (subject) => SHARED_MODULES.flatMap((name) => {
   const src = path.join(EHEL, "shared", name);
   if (!fs.existsSync(src)) { console.log(`  (skip ${name}: not in the working tree)`); return []; }

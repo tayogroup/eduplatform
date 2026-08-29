@@ -22,7 +22,7 @@ Reference model: LiveChat organizes the product around chat tools, messaging cha
 - Unsupervised parent-to-student chat.
 - Public visitor sales chat.
 - Open social media inbox aggregation.
-- Voice, video, screen sharing, and file attachments unless later approved by safeguarding and storage policy.
+- Voice, video, screen sharing, and file attachments unless later approved by safeguarding and storage policy. APPROVED EXCEPTION (owner, 2026-08-29): the classroom chat's lesson-page screenshot. It is a render of the app's own DOM (never the browser screen-capture API, whose picker can share the whole desktop), previewed by the child before sending, always teacher-only, JPEG-verified and size-capped server-side, stored via the file API behind the two gated chat doors with no public URL, and auto-deleted after 30 days.
 - AI auto-resolution that sends messages without human review.
 - Full replacement of Moodle notifications, WhatsApp urgent alerts, or existing parent-teacher messaging.
 

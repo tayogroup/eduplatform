@@ -216,6 +216,8 @@ a.pqlgb-golive{text-decoration:none;display:inline-block}
 .pqlgb-chat-chip-x{border:none;background:transparent;color:inherit;font:inherit;cursor:pointer;font-weight:800}
 .pqlgb-chat-quote{display:block;font-size:11px;font-style:italic;opacity:.8;border-left:3px solid #9ec5fe;padding-left:6px;margin-bottom:4px}
 .pqlgb-chat-answer{display:block;margin-top:5px;border:1px solid #052c65;background:transparent;color:#052c65;border-radius:999px;padding:2px 9px;font:inherit;font-size:11px;font-weight:700;cursor:pointer}
+.pqlgb-chat-shot{display:block;max-width:100%;max-height:140px;object-fit:cover;object-position:top;border-radius:8px;margin-top:4px;cursor:zoom-in}
+.pqlgb-chat-shot.is-full{max-height:none;object-fit:contain;cursor:zoom-out}
 .pqlgb-chat-form input{flex:1;border:1px solid var(--op-line-strong);border-radius:8px;padding:7px 10px;font:inherit;font-size:13px;min-width:0}
 .pqlgb-chat-form button{border:1px solid #052c65;background:#0d6efd;color:#fff;border-radius:8px;padding:7px 14px;font:inherit;font-size:13px;font-weight:700;cursor:pointer}
 @media (max-width:900px){.pqlgb-cols{flex-direction:column}.pqlgb-chat{width:100%;flex:1 1 auto;position:static;max-height:50vh}}
@@ -814,6 +816,7 @@ a.pqlgb-golive{text-decoration:none;display:inline-block}
       list.forEach(function (m) {
         if (m.id <= lastId) { return; }
         lastId = Math.max(lastId, m.id);
+        if (m.screenshot) { appendShot(m); return; }
         var cls = "pqlgb-chat-msg" + (m.mine ? " is-mine" : "") + (m.toteacheronly ? " is-private" : "");
         // No "(teacher)" suffix: the exchange now sends staff AS "Teacher"
         // (the learner-facing rule), so the suffix would render "Teacher
@@ -837,6 +840,35 @@ a.pqlgb-golive{text-decoration:none;display:inline-block}
         msgsEl.appendChild(el);
       });
       if (nearBottom) { msgsEl.scrollTop = msgsEl.scrollHeight; }
+    }
+
+    // A learner's screenshot: thumbnail fetched lazily through this door (the
+    // visibility check runs again server-side), click to toggle full size.
+    function appendShot(m) {
+      var el = document.createElement("div");
+      el.className = "pqlgb-chat-msg is-private";
+      el.innerHTML = "<b>" + esc2(m.name) + "</b><span>\uD83D\uDCF7 Screenshot\u2026</span>"
+        + "<small>Only you and this learner can see this</small>";
+      msgsEl.appendChild(el);
+      var params = new URLSearchParams();
+      params.set("groupid", String(activeGroup));
+      params.set("image", String(m.id));
+      fetch(chatUrl, {
+        method: "POST", credentials: "same-origin",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: params.toString()
+      }).then(function (r) { return r.json(); }).then(function (img) {
+        var label = el.querySelector("span");
+        if (!img || !img.ok) { return; }
+        if (img.gone) { label.textContent = "\uD83D\uDCF7 Screenshot (expired)"; return; }
+        var pic = document.createElement("img");
+        pic.src = "data:image/jpeg;base64," + img.jpegbase64;
+        pic.alt = "Learner screenshot";
+        pic.className = "pqlgb-chat-shot";
+        pic.addEventListener("click", function () { pic.classList.toggle("is-full"); });
+        el.insertBefore(pic, el.querySelector("small"));
+        label.remove();
+      }).catch(function () { /* leave the placeholder */ });
     }
 
     function callChat(body) {

@@ -63,5 +63,13 @@ if ($groupid <= 0 || !array_key_exists($groupid, $groups)) {
     exit;
 }
 
+// Image fetch for a screenshot bubble; same visibility re-check inside.
+$imageid = optional_param('image', 0, PARAM_INT);
+if ($imageid > 0) {
+    $img = local_prequran_external::class_group_chat_image((int)$USER->id, $groupid, $imageid);
+    echo json_encode($img ?: ['ok' => false], JSON_UNESCAPED_SLASHES);
+    exit;
+}
+
 $result = local_prequran_external::class_group_chat_exchange((int)$USER->id, $groupid, $body, max(0, $since), 60, max(0, $replyto));
 echo json_encode($result, JSON_UNESCAPED_SLASHES);

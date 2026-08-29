@@ -103,5 +103,24 @@ if (!$grouprow) {
 $body = trim((string)($payload['body'] ?? ''));
 $since = max(0, (int)($payload['since'] ?? 0));
 
-$result = local_prequran_external::class_group_chat_exchange($userid, (int)$grouprow->id, $body, $since);
+// Fetching a screenshot's image is its own verb: {token, image: <messageid>}.
+// The exchange's visibility check runs again inside -- an image can never be
+// fetched by anyone who could not see its bubble.
+$imageid = (int)($payload['image'] ?? 0);
+if ($imageid > 0) {
+    $img = local_prequran_external::class_group_chat_image($userid, (int)$grouprow->id, $imageid);
+    echo json_encode($img ?: ['ok' => false], JSON_UNESCAPED_SLASHES);
+    exit;
+}
+
+// A screenshot of the lesson page, base64 JPEG. Size-capped again here before
+// the exchange caps it properly, so a grossly oversized body is refused before
+// it is even decoded.
+$screenshot = (string)($payload['screenshot'] ?? '');
+if (strlen($screenshot) > 800000) {
+    echo json_encode(['ok' => false, 'shotrejected' => 'too-big'], JSON_UNESCAPED_SLASHES);
+    exit;
+}
+
+$result = local_prequran_external::class_group_chat_exchange($userid, (int)$grouprow->id, $body, $since, 60, 0, $screenshot);
 echo json_encode($result, JSON_UNESCAPED_SLASHES);

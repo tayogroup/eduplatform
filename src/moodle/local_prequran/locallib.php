@@ -477,6 +477,7 @@ function local_prequran_support_default_policy(): array {
         'async_enabled' => local_prequran_support_config_bool('support_async_enabled', true),
         'student_helpdesk_enabled' => local_prequran_support_config_bool('support_student_helpdesk_enabled', true),
         'student_teacher_enabled' => local_prequran_support_config_bool('support_student_teacher_enabled', true),
+        'class_group_enabled' => local_prequran_support_config_bool('support_class_group_enabled', false),
         'parent_teacher_enabled' => local_prequran_support_config_bool('support_parent_teacher_enabled', true),
         'student_free_text_policy' => clean_param((string)get_config('local_prequran', 'support_student_free_text_policy'), PARAM_ALPHANUMEXT) ?: 'topic_only',
         'parent_visible_default' => (int)get_config('local_prequran', 'support_parent_visible_default') !== 0,
@@ -525,6 +526,7 @@ function local_prequran_support_effective_policy(int $workspaceid = 0, int $cons
     foreach ([
         'livechat_enabled',
         'async_enabled',
+        'class_group_enabled',
         'student_helpdesk_enabled',
         'student_teacher_enabled',
         'parent_teacher_enabled',

@@ -683,14 +683,28 @@ function pqlgb_group_next_session(array $groupids): array {
     }
     $now = time();
     $endofday = $now + DAYSECS;
+    // THE JOIN'S OWN CONFIG, not constants. The first version hardcoded a
+    // ten-minute lead and the owner's first real class caught it: the pill
+    // said "Join class" while live_sessions.php said "outside the student
+    // join window" -- two rules for one fact. These are the exact values and
+    // the exact expression the join action denies on, so the pill and the
+    // door cannot disagree again.
+    $before = ((int)get_config('local_prequran', 'bbb_join_window_before_minutes') ?: 10) * MINSECS;
+    $after = ((int)get_config('local_prequran', 'bbb_join_window_after_minutes') ?: 15) * MINSECS;
+    $hasbbbcreated = pqlgb_table_has_field('local_prequran_live_session', 'bbb_created');
     [$insql, $params] = $DB->get_in_or_equal($groupids, SQL_PARAMS_NAMED, 'lgs');
     try {
         $rows = $DB->get_records_select('local_prequran_live_session',
+            // Approval-pending states are excluded too: the join denies them
+            // for everyone, so offering one is offering a refusal.
             "groupid $insql
-             AND status NOT IN ('cancelled', 'failed', 'rejected', 'completed', 'closed')
-             AND scheduled_end > :now AND scheduled_start < :eod",
-            array_merge($params, ['now' => $now, 'eod' => $endofday]),
-            'scheduled_start ASC', 'id, groupid, title, scheduled_start, scheduled_end, status, teacherid');
+             AND status NOT IN ('cancelled', 'failed', 'rejected', 'completed', 'closed',
+                                'pending_institution_approval', 'pending_marketplace_approval')
+             AND scheduled_end + :aft > :now AND scheduled_start < :eod",
+            array_merge($params, ['aft' => $after, 'now' => $now, 'eod' => $endofday]),
+            'scheduled_start ASC',
+            'id, groupid, title, scheduled_start, scheduled_end, status, teacherid'
+                . ($hasbbbcreated ? ', bbb_created' : ''));
     } catch (Throwable $e) {
         return $out;
     }
@@ -699,14 +713,26 @@ function pqlgb_group_next_session(array $groupids): array {
         if (isset($out[$gid])) {
             continue; // earliest wins
         }
+        // live_sessions.php's student rule, verbatim in shape: a student is
+        // refused when now > end + after, or when the teacher has not started
+        // the room AND now < start - before. Teacher-started means bbb_created
+        // set and status 'live' -- once the teacher is in, a student may join
+        // early.
+        $teacherstarted = $hasbbbcreated
+            && !empty($row->bbb_created) && (string)$row->status === 'live';
+        $joinable = !($now > ((int)$row->scheduled_end + $after))
+            && !(!$teacherstarted && $now < ((int)$row->scheduled_start - $before));
         $out[$gid] = [
             'id' => (int)$row->id,
             'title' => (string)$row->title,
             'start' => (int)$row->scheduled_start,
             'end' => (int)$row->scheduled_end,
-            // "Due" ten minutes early, matching the student join window's
-            // default -- the teacher should be in the room before the class.
+            // The teacher's "Start class" lead: they should be in the room
+            // BEFORE the join window opens for children. Board-facing only.
             'due' => (int)$row->scheduled_start <= ($now + 10 * MINSECS),
+            // The learner's red pill: red ONLY when the join action would say
+            // yes right now.
+            'joinable' => $joinable,
         ];
     }
     return $out;

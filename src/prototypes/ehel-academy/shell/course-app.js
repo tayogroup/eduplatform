@@ -685,7 +685,10 @@ export function createCourseApp(config) {
         liveBtn.href = platformUrl("/local/hubredirect/live_sessions.php");
         actions.prepend(liveBtn);
       }
-      if (sess.due) {
+      // joinable, not due: due is the TEACHER'S lead (be in the room first);
+      // a child's red button must mean the door will actually open. The
+      // mismatch shipped and was caught by the owner's first real class.
+      if (sess.joinable) {
         liveBtn.textContent = "🔴 Join class";
         liveBtn.title = "Your class is ready. Press to join your teacher.";
         liveBtn.style.background = "#b02a37";
@@ -695,7 +698,7 @@ export function createCourseApp(config) {
         const when = new Date(sess.start * 1000);
         const hh = ("0" + when.getHours()).slice(-2) + ":" + ("0" + when.getMinutes()).slice(-2);
         liveBtn.textContent = "🔴 Class at " + hh;
-        liveBtn.title = "Your class starts at " + hh + ". The button turns red when it is time.";
+        liveBtn.title = "Your class starts at " + hh + ". The button turns red when you can join.";
         liveBtn.style.background = "white";
         liveBtn.style.color = "";
         liveBtn.style.borderColor = "";

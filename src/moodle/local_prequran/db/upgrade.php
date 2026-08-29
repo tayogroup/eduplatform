@@ -839,5 +839,13 @@ function xmldb_local_prequran_upgrade($oldversion): bool {
         upgrade_plugin_savepoint(true, 202608280032, 'local', 'prequran');
     }
 
+    if ($oldversion < 202608290033) {
+        // class_group chat: support_policy.class_group_enabled, off by default.
+        // The room itself is threads + participants in tables that already
+        // exist; the only schema is the flag that lets a workspace turn it on.
+        xmldb_local_prequran_ensure_support_schema();
+        upgrade_plugin_savepoint(true, 202608290033, 'local', 'prequran');
+    }
+
     return true;
 }

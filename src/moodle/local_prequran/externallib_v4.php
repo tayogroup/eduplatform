@@ -7649,6 +7649,15 @@ $validate = [
     }
 
     protected static function support_allowed_types(): array {
+        // class_group is the one that is NOT 1:1: one room per class group of
+        // nine with the teacher in it, for the live group board. The other
+        // three are private conversations about a single named student, which
+        // is why they all require a studentid and this one refuses to take one.
+        return ['student_helpdesk', 'student_teacher', 'parent_teacher', 'class_group'];
+    }
+
+    /** Types that are about ONE student and require a studentid. */
+    protected static function support_student_scoped_types(): array {
         return ['student_helpdesk', 'student_teacher', 'parent_teacher'];
     }
 
@@ -7677,6 +7686,15 @@ $validate = [
     }
 
     protected static function support_type_enabled(string $type, array $policy): bool {
+        // Checked BEFORE the async gate, deliberately. async_enabled governs the
+        // ticketing pipeline -- SLA clocks, queues, business hours, routing --
+        // and the classroom chat is none of those. It lives only while a group
+        // is being taught and has no queue to breach, so making it wait on the
+        // helpdesk being switched on would tie a lesson tool to a support
+        // rollout it has nothing to do with.
+        if ($type === 'class_group') {
+            return !empty($policy['class_group_enabled']);
+        }
         if (empty($policy['async_enabled'])) {
             return false;
         }
@@ -7817,10 +7835,52 @@ $validate = [
             && self::support_can_read_thread_as($thread, $userid);
     }
 
+    /**
+     * THE ASYMMETRY OF THE CLASSROOM ROOM.
+     *
+     * A teacher's message is public: they are talking to the class, which is the
+     * whole point of putting a room on the live group board -- one sentence
+     * reaching all nine at the swap.
+     *
+     * A learner's message is addressed to the teacher alone. That keeps the room
+     * inside the rule the requirements state twice -- "Non-Goals: student-to-
+     * student chat" and, under Safety And Moderation, "No student-to-student
+     * messaging" -- while still letting a child say something in front of a
+     * channel their teacher is watching.
+     *
+     * It is a visibility value rather than a second table because
+     * comm_message.visibility and support_message_visible_to_user() already
+     * exist and are already applied on BOTH read paths (get_conversation and
+     * live_poll). Nothing about the store, the polling or the audit changes.
+     */
+    protected static function support_message_visibility_for($thread, int $senderid): string {
+        if ((string)($thread->type ?? '') !== 'class_group') {
+            return 'public';
+        }
+        return $senderid === (int)($thread->assignedto ?? 0) ? 'public' : 'group_teacher_only';
+    }
+
     protected static function support_message_visible_to_user($message, $thread, int $userid): bool {
         $visibility = (string)($message->visibility ?? 'public');
         if ($visibility === '' || $visibility === 'public') {
             return true;
+        }
+        // A learner's message in a class_group room reaches the teacher and its
+        // own author, and nobody else in the room. Checked here rather than in
+        // the query because both read paths already funnel through this, so
+        // there is exactly one place the rule can be wrong.
+        //
+        // The author is included deliberately: a child who cannot see what they
+        // just sent believes it failed and sends it again.
+        if ($visibility === 'group_teacher_only') {
+            if ((int)($message->senderid ?? 0) === $userid) {
+                return true;
+            }
+            if ((int)($thread->assignedto ?? 0) === $userid) {
+                return true;
+            }
+            return is_siteadmin($userid)
+                || has_capability('local/prequran:supportviewqueue', \context_system::instance(), $userid);
         }
         if (function_exists('local_prequran_support_visibility_allowed')) {
             return local_prequran_support_visibility_allowed($visibility, $userid, empty($thread->studentid) ? 0 : (int)$thread->studentid);
@@ -7964,8 +8024,19 @@ $validate = [
         if ($studentid <= 0 && self::is_managed_student($userid)) {
             $studentid = $userid;
         }
-        if ($studentid <= 0) {
+        if ($studentid <= 0 && in_array($type, self::support_student_scoped_types(), true)) {
             throw new \invalid_parameter_exception('studentid is required for support conversations.');
+        }
+        if ($type === 'class_group') {
+            // A room, not a case. Whoever it is about is everyone in it, so a
+            // studentid here would be meaningless and is refused rather than
+            // quietly ignored -- storing one would make the thread look like a
+            // private conversation about that child to every consumer that
+            // reads thread.studentid.
+            if ($studentid > 0) {
+                throw new \invalid_parameter_exception('class_group conversations are not about one student.');
+            }
+            return self::support_open_class_group_thread($cohortid, $policy, $subject, $body);
         }
 
         $requesterrole = self::support_user_role_for_student($userid, $studentid);
@@ -8090,6 +8161,166 @@ $validate = [
         return ['ok' => true, 'tables_ready' => true, 'conversation' => self::support_format_conversation($thread, $userid), 'messageid' => $messageid, 'message' => 'created'];
     }
 
+    /**
+     * Find-or-create the ONE chat room for a class group, and reconcile who is in it.
+     *
+     * A room, not a case. There is exactly one thread per class group and it is
+     * reused for ever -- a second call joins the existing room rather than
+     * opening a parallel one, because two rooms for one group is a class split
+     * in half with neither side knowing.
+     *
+     * Read and reply are already participant-based (support_can_read_thread_as
+     * and support_can_reply_thread both check local_prequran_comm_participant),
+     * so a group thread needs NO change to reading, replying, moderation, the
+     * visibility rules or the audit trail. Everything here is about getting the
+     * right rows into that table and keeping them right.
+     *
+     * MEMBERSHIP IS RECONCILED ON EVERY OPEN, in both directions. A learner
+     * moved into the group mid-term must be able to read the room, and one
+     * moved OUT must stop -- leaving them seated is a child reading a class
+     * they no longer belong to. Removal is by muting and revoking reply rather
+     * than deleting the row, so what they already sent stays attributable and
+     * the audit trail does not develop holes.
+     */
+    protected static function support_open_class_group_thread(int $groupid, array $policy, string $subject, string $body): array {
+        global $DB, $USER;
+
+        if ($groupid <= 0) {
+            throw new \invalid_parameter_exception('cohortid must carry the class group id for a class_group conversation.');
+        }
+        $group = $DB->get_record('local_prequran_class_group', ['id' => $groupid]);
+        if (!$group || (string)($group->status ?? '') === 'archived') {
+            throw new \moodle_exception('nopermissions', '', '', 'That class group is not available.');
+        }
+        $teacherid = (int)($group->teacherid ?? 0);
+        if ($teacherid <= 0) {
+            // The rule the Raise hand button already keeps: a channel that can
+            // reach nobody is worse than no channel, because the child waits
+            // instead of trying something else.
+            throw new \moodle_exception('nopermissions', '', '', 'That class group has no teacher, so its chat cannot be opened.');
+        }
+
+        $userid = (int)$USER->id;
+        $members = $DB->get_fieldset_select('local_prequran_group_member', 'studentid',
+            'groupid = :g AND assignment_status = :a', ['g' => $groupid, 'a' => 'active']);
+        $members = array_values(array_unique(array_map('intval', $members ?: [])));
+        $isteacher = $userid === $teacherid;
+        $ismember = in_array($userid, $members, true);
+        if (!$isteacher && !$ismember && !is_siteadmin($userid)
+                && !has_capability('local/prequran:supportviewqueue', \context_system::instance(), $userid)) {
+            throw new \moodle_exception('nopermissions', '', '', 'You are not in that class group.');
+        }
+
+        $now = time();
+        $thread = $DB->get_record('local_prequran_comm_thread', [
+            'type' => 'class_group',
+            'assignmentgroupid' => $groupid,
+        ]);
+        $created = false;
+        $transaction = $DB->start_delegated_transaction();
+        if (!$thread) {
+            $threadid = (int)$DB->insert_record('local_prequran_comm_thread', (object)[
+                'type' => 'class_group',
+                'workspaceid' => (int)($group->workspaceid ?? 0),
+                'cohortid' => 0,
+                // studentid stays 0 -- a room is not about one child, and storing
+                // one would make every consumer that reads thread.studentid
+                // treat this as a private conversation about that learner.
+                'studentid' => 0,
+                'createdby' => $userid,
+                'status' => 'active',
+                'subject' => $subject !== '' ? $subject : (string)($group->title ?? 'Class chat'),
+                'category' => 'class_group',
+                'priority' => 'normal',
+                'assignedto' => $teacherid,
+                'assignmentgroupid' => $groupid,
+                'visibility' => 'public',
+                'linkedticketid' => 0,
+                'lastmessageat' => $now,
+                'timecreated' => $now,
+                'timemodified' => $now,
+            ]);
+            $created = true;
+        } else {
+            $threadid = (int)$thread->id;
+        }
+
+        // The teacher of record can change; the room follows the group.
+        self::support_seed_participant($threadid, $teacherid, 'teacher', 1, 0, $now);
+        foreach ($members as $memberid) {
+            self::support_seed_participant($threadid, $memberid, 'student', 1, 0, $now);
+        }
+        $allowed = array_merge([$teacherid], $members);
+        foreach ($DB->get_records('local_prequran_comm_participant', ['threadid' => $threadid]) as $row) {
+            $isstudentrow = (string)($row->role ?? '') === 'student';
+            if (!$isstudentrow) {
+                // Staff who joined to moderate or read the room are not on the
+                // group roster and must not be evicted by it.
+                continue;
+            }
+            $stale = !in_array((int)$row->userid, $allowed, true);
+            if ($stale && (empty($row->muted) || !empty($row->canreply))) {
+                $row->muted = 1;
+                $row->canreply = 0;
+                $row->timemodified = $now;
+                $DB->update_record('local_prequran_comm_participant', $row);
+            } else if (!$stale && !empty($row->muted)) {
+                // Moved back in: un-mute, rather than leaving a returning
+                // learner silently unable to read their own class.
+                $row->muted = 0;
+                $row->canreply = 1;
+                $row->timemodified = $now;
+                $DB->update_record('local_prequran_comm_participant', $row);
+            }
+        }
+
+        $messageid = 0;
+        $clean = self::support_clean_message_body($body, $policy, !$isteacher, 1200);
+        if ($clean !== '') {
+            $messageid = (int)$DB->insert_record('local_prequran_comm_message', (object)[
+                'threadid' => $threadid,
+                'senderid' => $userid,
+                'senderrole' => $isteacher ? 'teacher' : 'student',
+                'studentid' => 0,
+                'messagekind' => 'text',
+                'body' => $clean,
+                'templatekey' => '',
+                'status' => 'visible',
+                'moderationflags' => '',
+                'visibility' => $isteacher ? 'public' : 'group_teacher_only',
+                'ticketid' => 0,
+                'timecreated' => $now,
+                'timemodified' => $now,
+            ]);
+            $DB->set_field('local_prequran_comm_thread', 'lastmessageat', $now, ['id' => $threadid]);
+        }
+
+        if ($created) {
+            $DB->insert_record('local_prequran_comm_audit', (object)[
+                'threadid' => $threadid,
+                'messageid' => $messageid,
+                'actorid' => $userid,
+                'action' => 'support_conversation_created',
+                'details' => json_encode(['type' => 'class_group', 'groupid' => $groupid, 'members' => count($members)]),
+                'timecreated' => $now,
+            ]);
+            if (function_exists('local_prequran_support_audit')) {
+                local_prequran_support_audit((int)($group->workspaceid ?? 0), 'conversation_created', 'conversation',
+                    $threadid, ['type' => 'class_group', 'groupid' => $groupid], 0, $threadid, $messageid);
+            }
+        }
+        $transaction->allow_commit();
+
+        $thread = $DB->get_record('local_prequran_comm_thread', ['id' => $threadid], '*', MUST_EXIST);
+        return [
+            'ok' => true,
+            'tables_ready' => true,
+            'conversation' => self::support_format_conversation($thread, $userid),
+            'messageid' => $messageid,
+            'message' => $created ? 'created' : 'joined',
+        ];
+    }
+
     protected static function support_empty_conversation(): array {
         return [
             'id' => 0, 'type' => '', 'workspaceid' => 0, 'cohortid' => 0, 'studentid' => 0, 'createdby' => 0,
@@ -8146,7 +8377,7 @@ $validate = [
             'templatekey' => '',
             'status' => 'visible',
             'moderationflags' => '',
-            'visibility' => 'public',
+            'visibility' => self::support_message_visibility_for($thread, (int)$USER->id),
             'ticketid' => empty($thread->linkedticketid) ? 0 : (int)$thread->linkedticketid,
             'timecreated' => $now,
             'timemodified' => $now,

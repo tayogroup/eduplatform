@@ -335,7 +335,7 @@ Visibility levels:
 
 Requirements:
 
-- No student-to-student messaging.
+- No student-to-student messaging. The `class_group` classroom room (2026-08-29) is built INSIDE this rule, not as an exception to it: the teacher's messages are public to the room, a student's are visible to the teacher and the student themselves alone (`comm_message.visibility = group_teacher_only`). Students never read each other. `tools/check-class-group-chat.php` fails the build if either half of that stops holding.
 - Student free text can be limited by age, consent, workspace, and feature flag.
 - Student messages should be filtered for phone numbers, emails, social handles, URLs, and unsafe content.
 - Allow users to report a message or ticket.

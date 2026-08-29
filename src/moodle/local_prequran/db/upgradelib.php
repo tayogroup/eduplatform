@@ -5167,6 +5167,7 @@ function xmldb_local_prequran_ensure_support_schema(): void {
         xmldb_local_prequran_field_char('status', 40, 'active'),
         xmldb_local_prequran_field_int('livechat_enabled', 1, 0),
         xmldb_local_prequran_field_int('async_enabled', 1, 0),
+        xmldb_local_prequran_field_int('class_group_enabled', 1, 0),
         xmldb_local_prequran_field_int('student_helpdesk_enabled', 1, 0),
         xmldb_local_prequran_field_int('student_teacher_enabled', 1, 0),
         xmldb_local_prequran_field_int('parent_teacher_enabled', 1, 1),
@@ -5185,6 +5186,19 @@ function xmldb_local_prequran_ensure_support_schema(): void {
         new xmldb_index('preqsuppol_work_ix', XMLDB_INDEX_NOTUNIQUE, ['workspaceid', 'status']),
         new xmldb_index('preqsuppol_cons_ix', XMLDB_INDEX_NOTUNIQUE, ['consumerid', 'status']),
     ]);
+
+    // The whole-group classroom chat (owner, 2026-08-29). Its own flag rather
+    // than riding student_teacher_enabled, because it is a different product:
+    // student_teacher is a PRIVATE 1:1 line into the helpdesk pipeline, this is
+    // one room per class group of nine with the teacher in it.
+    //
+    // Deliberately NOT gated on async_enabled the way the other three are.
+    // That flag governs the ticketing pipeline -- SLA clocks, queues, business
+    // hours, routing -- and a live classroom chat is none of those: it exists
+    // only while a group is being taught, and it has no queue to breach.
+    $supportpolicy = new xmldb_table('local_prequran_support_policy');
+    xmldb_local_prequran_add_field_if_missing($dbman, $supportpolicy,
+        xmldb_local_prequran_field_int('class_group_enabled', 1, 0));
 
     xmldb_local_prequran_create_table_if_missing($dbman, new xmldb_table('local_prequran_support_queue'), [
         xmldb_local_prequran_field_id(),

@@ -218,8 +218,7 @@ a.pqlgb-golive{text-decoration:none;display:inline-block}
 .pqlgb-chat-msg.is-announcement{background:#052c65;color:#fff;max-width:100%;font-weight:700}
 .pqlgb-chat-msg.is-announcement b{opacity:.85}
 .pqlgb-chat-mega{display:block;font-size:10px;letter-spacing:.06em;text-transform:uppercase;opacity:.85;margin-bottom:3px}
-.pqlgb-chat-announce{border:1px solid #052c65;background:transparent;border-radius:8px;padding:3px 9px;font:inherit;font-size:14px;cursor:pointer}
-.pqlgb-chat-announce.is-armed{background:#052c65}
+.pqlgb-chat-announce{border:1px solid #052c65;background:transparent;color:#052c65;border-radius:8px;padding:3px 9px;font:inherit;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap}
 .pqlgb-chat-answer{display:block;margin-top:5px;border:1px solid #052c65;background:transparent;color:#052c65;border-radius:999px;padding:2px 9px;font:inherit;font-size:11px;font-weight:700;cursor:pointer}
 .pqlgb-chat-shot{display:block;max-width:100%;max-height:140px;object-fit:cover;object-position:top;border-radius:8px;margin-top:4px;cursor:zoom-in}
 .pqlgb-shot-lightbox{position:fixed;inset:0;z-index:80;background:rgba(10,30,45,.85);display:flex;align-items:center;justify-content:center;padding:24px;cursor:zoom-out}
@@ -898,15 +897,15 @@ a.pqlgb-golive{text-decoration:none;display:inline-block}
       }).catch(function () { /* leave the placeholder */ });
     }
 
-    function callChat(body) {
+    function callChat(body, announce) {
       if (!activeGroup || inflight) { return Promise.resolve(null); }
       inflight = true;
       var params = new URLSearchParams();
       params.set("groupid", String(activeGroup));
       params.set("since", String(lastId));
       if (body) { params.set("body", body); }
-      if (body && replyTarget) { params.set("replyto", String(replyTarget.id)); }
-      if (body && announceNext) { params.set("announce", "1"); }
+      if (body && replyTarget && !announce) { params.set("replyto", String(replyTarget.id)); }
+      if (body && announce) { params.set("announce", "1"); }
       return fetch(chatUrl, {
         method: "POST",
         credentials: "same-origin",
@@ -933,20 +932,22 @@ a.pqlgb-golive{text-decoration:none;display:inline-block}
       callChat("");
     }
 
-    // Armed by the megaphone button for exactly one send, and mutually
-    // exclusive with a reply target: an announcement is not an answer.
-    var announceNext = false;
+    // TWO SEND BUTTONS, no modes (owner, after first use: "Arm does not send").
+    // The megaphone SENDS the typed message as an announcement to all groups;
+    // Send sends it as an ordinary message or, with the chip armed, as the
+    // answer to a learner. A button that only changes what a LATER button will
+    // do is a state a teacher mid-lesson should not have to carry.
     var announceBtn = document.createElement("button");
     announceBtn.type = "button";
     announceBtn.className = "pqlgb-chat-announce";
     announceBtn.textContent = "\uD83D\uDCE2";
-    announceBtn.title = "Announce to ALL your groups";
+    announceBtn.title = "Send this message to ALL your groups as an announcement";
     announceBtn.addEventListener("click", function () {
-      announceNext = !announceNext;
-      if (announceNext) { setReplyTarget(null); }
-      announceBtn.classList.toggle("is-armed", announceNext);
-      input.placeholder = announceNext ? "Announce to all groups\u2026" : "Message the class\u2026";
-      input.focus();
+      var text = (input.value || "").trim();
+      if (!text) { input.focus(); return; }
+      input.value = "";
+      setReplyTarget(null); // an announcement is not an answer
+      callChat(text, true);
     });
     form.insertBefore(announceBtn, form.firstChild);
 
@@ -961,12 +962,8 @@ a.pqlgb-golive{text-decoration:none;display:inline-block}
         ? 'Answering for the class: &ldquo;' + esc2(next.preview).slice(0, 160) + '&rdquo; '
           + '<button type="button" class="pqlgb-chat-chip-x" aria-label="Cancel">&times;</button>'
         : "";
-      if (next) {
-        // an answer is not an announcement; disarm the megaphone
-        announceNext = false;
-        announceBtn.classList.remove("is-armed");
-        input.placeholder = "Answer the class\u2026"; input.focus();
-      } else if (!announceNext) { input.placeholder = "Message the class\u2026"; }
+      if (next) { input.placeholder = "Answer the class\u2026"; input.focus(); }
+      else { input.placeholder = "Message the class\u2026"; }
     }
     chip.addEventListener("click", function (event) {
       if (event.target.closest && event.target.closest(".pqlgb-chat-chip-x")) { setReplyTarget(null); }
@@ -977,16 +974,20 @@ a.pqlgb-golive{text-decoration:none;display:inline-block}
       setReplyTarget({ id: Number(btn.getAttribute("data-replyto")), preview: btn.getAttribute("data-preview") || "" });
     });
 
+    // ENTER SENDS NOTHING (owner). With two send buttons of different scope --
+    // one room versus every room -- an implicit third path had to pick one of
+    // them silently, and a message meant for one child going to every group is
+    // the expensive direction to be wrong in. The teacher chooses a button.
+    input.addEventListener("keydown", function (event) {
+      if (event.key === "Enter") { event.preventDefault(); }
+    });
     form.addEventListener("submit", function (event) {
       event.preventDefault();
       var text = (input.value || "").trim();
       if (!text) { return; }
       input.value = "";
-      callChat(text);
+      callChat(text, false);
       setReplyTarget(null);
-      announceNext = false;
-      announceBtn.classList.remove("is-armed");
-      input.placeholder = "Message the class\u2026";
     });
 
     drawTabs();

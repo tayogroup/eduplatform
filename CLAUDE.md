@@ -904,6 +904,118 @@ prevention — a web page can report that a learner left it and cannot stop them
 And the board is a monitoring surface, not attendance: it shows last-seen rather
 than marking anyone present.
 
+### The classroom chat: built INSIDE "no student-to-student messaging"
+
+```bash
+php tools/check-class-group-chat.php   # also chained into check:php
+```
+
+The escalation ladder taught to learners (worked example, then Wehel, then the
+group chat, then the teacher) named a group chat the platform did not have.
+It exists now (2026-08-29, plugin 202608290033 + app v328-v330), and the first
+thing to know is what it was built ON: **the LiveChat already existed.** The
+support system — `support.php`, `comm_thread`/`comm_message`/`comm_participant`,
+the `support_*` external API with polling, moderation and audit, specified in
+`docs/livechat-helpdesk-*` — is the LiveChat. The classroom room is its FOURTH
+conversation type, `class_group`, not a second system: one room per class group,
+found-or-created by `(type, assignmentgroupid)`, inheriting reading, replying,
+moderation, visibility and audit unchanged because those were already
+participant-based. Do not build a parallel chat store; the search that found
+this one took three attempts because it looked for "chat" instead of reading
+what `support.php` was.
+
+**The room is ASYMMETRIC, and that is a safeguarding decision, not a
+limitation.** The requirements doc states "no student-to-student messaging"
+twice — once under Safety And Moderation — and a whole-group room IS
+student-to-student messaging, unsupervised for 15 minutes at a stretch by the
+Counterpoint Model's own design, for learners as young as five. A whole-group
+version was built first and stopped one step short of committing when the rule
+was found. The shipped shape: a STUDENT's message is stamped
+`group_teacher_only` (visible to the teacher and its own author alone); anyone
+else's is public to the room. The learner's own bubble says "Only your teacher
+can see this", because a child who cannot see what they sent believes it failed,
+and a child must never believe the class read something the class cannot read.
+
+**The stamp keys on ROLE, not on being the assigned teacher.** The first live
+exchange had a site admin covering the board — the ordinary second user here,
+not an edge case — and the assigned-teacher version stamped their messages as
+learner messages: amber on their own panel, invisible to every child. Who is a
+student is answered by the participant row the roster seeded (`role='student'`);
+staff replying via capability have no row, which correctly reads as
+not-a-student. The same rows answer the display name: a child sees **"Teacher"**
+over any staff message — the admin account's literal firstname is "System", and
+that reached a five-year-old's screen before this rule existed. Students appear
+as first names only; nine children share a room and full names are roll-call
+furniture.
+
+**Answer-to-class: the whole room gets the teaching, nobody learns who needed
+it** (owner). Each learner question on the teacher's panel carries an "Answer to
+class" button; the reply is a public message whose `templatekey` holds
+`reply:<id>` (existing unused column — no schema change for one pointer), and
+the exchange returns a `quote`: the question's body capped at 300 chars plus
+ONE identity fact, `mine`, sent only to the asker so their panel says "You
+asked" while everyone else reads "Someone asked". Guarded at the STORE: only
+staff may reference a message, same-thread only, and the referenced message must
+be `group_teacher_only` — and the learner door has no `replyto` parameter at
+all, so a student cannot broadcast another child's words even in principle. A
+failed reference drops silently and the reply still sends as a plain broadcast.
+The question TEXT going public is the feature; a child sometimes writes their
+own name into a question, and the teacher reading it before clicking the button
+is the judgment call, kept human on purpose.
+
+**One implementation, two doors.** Everything after auth is
+`local_prequran_external::class_group_chat_exchange()`. The learner door
+(`course_group_chat.php`) authenticates by launch token in the
+`course_hand_raise.php` mould and derives the learner's group FROM THE ROSTER —
+a groupid in the payload would let any token read any room in the school. The
+teacher door (`live_group_board_chat.php`) is session + sesskey with the board's
+restated gating, and rebuilds `pqlgb_teacher_groups()` rather than trusting a
+groupid. A manager supervising another teacher's board reads its rooms but
+sends as themselves. The panel mounts for a learner only when the server says
+the room exists and is enabled — the Raise-hand rule that a control which
+reaches nobody is worse than none.
+
+**The gate extracts source, because it cannot load the class.**
+`externallib_v4.php` is 11k lines behind `MOODLE_INTERNAL`, so unlike
+`check-progress-attempted.php` the gate cannot include it; it extracts the two
+visibility functions' text by brace-counting and exercises THAT — the shipped
+bytes, not a copy — and exits 2 when extraction fails, because a gate that
+cannot read its target and passes is green about nothing. It also asserts the
+send path CALLS the stamp and both read paths filter: a perfect function
+nothing invokes protects nobody. Mutation-tested; one mutation first "survived"
+because the harness broke on an apostrophe and never applied it — the mutation
+is the cheaper thing to be wrong about, check it first.
+
+Four traps, each of which cost real time on ship day:
+
+- **The policy resolver copies a WHITELIST of flags off the support_policy row,
+  and a new flag must be added to it** (`local_prequran_support_effective_policy`
+  in locallib.php) or the DB column can hold 1 for ever while the type reads
+  false. Found only by reading the resolver before writing the flag script;
+  no gate sees that layer. The flag is `class_group_enabled`, per-workspace,
+  deliberately NOT behind `async_enabled` — that governs the ticketing pipeline
+  (SLA, queues, business hours) and a live classroom is none of those.
+- **Moodle records the declared version even when no upgrade step ran for it.**
+  `version.php` landed on the served tree while `db/upgrade{lib}.php` silently
+  did not; the upgrade then stamped 202608290033 having done nothing, and "No
+  upgrade needed" was true about an upgrade that never happened. Repair without
+  version surgery: the ensure functions are add-if-missing, so pull the real
+  files and call `xmldb_local_prequran_ensure_support_schema()` directly.
+- **Messages keep their stored visibility stamp for ever.** A stamp fix applies
+  from the NEXT message; anything sent before it never becomes visible to the
+  people the fix would have shown it to. Resend; do not wait for old messages
+  to appear.
+- **A learner message containing a phone number, email, URL or @handle is
+  refused** by `support_clean_message_body` — the requirements' contact-details
+  filter, inherited free. It currently refuses QUIETLY; a kind explanation for
+  the child is still owed.
+
+Policy row note: enabling workspace 23 created support_policy row **id 1** — the
+first policy row this install has ever had, meaning the helpdesk LiveChat has
+been running on config defaults everywhere. The resolver only ever PROMOTES
+flags (a zero column never demotes a config default), which is what makes a
+minimal per-workspace row safe to create.
+
 ### A platform endpoint's CORS contract depends on how the gate finds it
 
 `check-platform-cors.mjs` discovers endpoints by parsing `platformUrl("…")` in

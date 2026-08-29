@@ -8292,7 +8292,7 @@ $validate = [
         return ['ok' => true, 'gone' => false, 'jpegbase64' => base64_encode($file->get_content())];
     }
 
-    public static function class_group_chat_exchange(int $userid, int $groupid, string $body = '', int $sincemessageid = 0, int $limit = 60, int $replytoid = 0, string $screenshotb64 = ''): array {
+    public static function class_group_chat_exchange(int $userid, int $groupid, string $body = '', int $sincemessageid = 0, int $limit = 60, int $replytoid = 0, string $screenshotb64 = '', bool $announce = false): array {
         global $DB;
 
         if ($userid <= 0 || $groupid <= 0) {
@@ -8327,6 +8327,25 @@ $validate = [
             }
         }
 
+        // An ANNOUNCEMENT is a teacher's raised voice: same words, different
+        // standing. It is rendered as a banner on every learner's panel, so a
+        // student must not be able to mint one -- the flag is dropped (never
+        // errored: the message still sends as ordinary chat) when the sender is
+        // a student, answered by the same participant-row authority as the
+        // visibility stamp. The kind is applied AFTER the open call so the
+        // ordinary send path stays byte-identical.
+        if ($announce && $body !== '') {
+            $existingthread = $DB->get_record('local_prequran_comm_thread',
+                ['type' => 'class_group', 'assignmentgroupid' => $groupid]);
+            if ($existingthread) {
+                $isstudent = (string)$DB->get_field('local_prequran_comm_participant', 'role',
+                    ['threadid' => (int)$existingthread->id, 'userid' => $userid]) === 'student';
+                if ($isstudent) {
+                    $announce = false;
+                }
+            }
+        }
+
         try {
             $opened = self::support_open_class_group_thread($groupid, $policy, '', $body, $userid, $replytoid);
         } catch (\Throwable $e) {
@@ -8337,6 +8356,15 @@ $validate = [
             return ['ok' => false, 'enabled' => true, 'message' => 'Class chat could not be opened.'];
         }
         $thread = $DB->get_record('local_prequran_comm_thread', ['id' => $threadid], '*', MUST_EXIST);
+
+        if ($announce && $body !== '' && (int)($opened['messageid'] ?? 0) > 0) {
+            // Retype the message just sent as an announcement. Only a message
+            // this very call created can be promoted, and only when the guard
+            // above kept the flag -- so the promotion window is exactly one
+            // message wide and staff-only.
+            $DB->set_field('local_prequran_comm_message', 'messagekind', 'announcement',
+                ['id' => (int)$opened['messageid']]);
+        }
 
         if ($shotbytes !== '') {
             $now = time();
@@ -8443,6 +8471,7 @@ $validate = [
                 'toteacheronly' => (string)($row->visibility ?? 'public') === 'group_teacher_only',
                 'body' => (string)$row->body,
                 'screenshot' => (string)$row->messagekind === 'screenshot',
+                'announcement' => (string)$row->messagekind === 'announcement',
                 'quote' => $quote,
                 'at' => (int)$row->timecreated,
             ];

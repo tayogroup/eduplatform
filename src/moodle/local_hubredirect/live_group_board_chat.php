@@ -71,5 +71,18 @@ if ($imageid > 0) {
     exit;
 }
 
-$result = local_prequran_external::class_group_chat_exchange((int)$USER->id, $groupid, $body, max(0, $since), 60, max(0, $replyto));
+// An announcement goes to EVERY group on this board at once -- the whole point
+// over an ordinary message, which reaches one room. The reply the panel renders
+// is the ACTIVE group's exchange; the other rooms just receive.
+$announce = optional_param('announce', 0, PARAM_INT) === 1;
+if ($announce && $body !== '') {
+    foreach (array_keys($groups) as $othergroupid) {
+        if ((int)$othergroupid === $groupid) {
+            continue; // the active group is sent below, with the full reply
+        }
+        local_prequran_external::class_group_chat_exchange((int)$USER->id, (int)$othergroupid, $body, 0, 1, 0, '', true);
+    }
+}
+
+$result = local_prequran_external::class_group_chat_exchange((int)$USER->id, $groupid, $body, max(0, $since), 60, max(0, $replyto), '', $announce);
 echo json_encode($result, JSON_UNESCAPED_SLASHES);

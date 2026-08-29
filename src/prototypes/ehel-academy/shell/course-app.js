@@ -578,6 +578,17 @@ export function createCourseApp(config) {
         // cosmetic rule there makes five other app tiers stale.
         el.style.cssText = "max-width:92%;padding:7px 10px;border-radius:10px;font-size:13px;line-height:1.4;"
           + (m.mine ? "align-self:flex-end;background:#cfe2ff;" : "background:#f1f3f5;");
+        // An announcement is the teacher's raised voice: full-width banner, so
+        // "everyone stop and listen" cannot be mistaken for conversation.
+        if (m.announcement) {
+          el.style.cssText = "max-width:100%;padding:9px 12px;border-radius:10px;font-size:13px;line-height:1.4;"
+            + "background:#052c65;color:#fff;font-weight:700;";
+          el.innerHTML = '<span style="display:block;font-size:10px;letter-spacing:.06em;'
+            + 'text-transform:uppercase;opacity:.85;margin-bottom:3px">\uD83D\uDCE2 Announcement</span>'
+            + escapeHtml(m.body);
+          msgsEl.appendChild(el);
+          continue;
+        }
         if (m.mine && m.toteacheronly) el.style.cssText += "background:#fff3cd;border:1px solid #ffe69c;";
         // No "(teacher)" suffix — the server sends staff as "Teacher" outright,
         // so the suffix would double it. Students arrive as first names.

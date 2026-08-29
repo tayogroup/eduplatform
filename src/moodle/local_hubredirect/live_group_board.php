@@ -215,6 +215,11 @@ a.pqlgb-golive{text-decoration:none;display:inline-block}
 .pqlgb-chat-chip{width:100%;font-size:11px;color:#664d03;background:#fff3cd;border:1px solid #ffe69c;border-radius:8px;padding:4px 8px}
 .pqlgb-chat-chip-x{border:none;background:transparent;color:inherit;font:inherit;cursor:pointer;font-weight:800}
 .pqlgb-chat-quote{display:block;font-size:11px;font-style:italic;opacity:.8;border-left:3px solid #9ec5fe;padding-left:6px;margin-bottom:4px}
+.pqlgb-chat-msg.is-announcement{background:#052c65;color:#fff;max-width:100%;font-weight:700}
+.pqlgb-chat-msg.is-announcement b{opacity:.85}
+.pqlgb-chat-mega{display:block;font-size:10px;letter-spacing:.06em;text-transform:uppercase;opacity:.85;margin-bottom:3px}
+.pqlgb-chat-announce{border:1px solid #052c65;background:transparent;border-radius:8px;padding:3px 9px;font:inherit;font-size:14px;cursor:pointer}
+.pqlgb-chat-announce.is-armed{background:#052c65}
 .pqlgb-chat-answer{display:block;margin-top:5px;border:1px solid #052c65;background:transparent;color:#052c65;border-radius:999px;padding:2px 9px;font:inherit;font-size:11px;font-weight:700;cursor:pointer}
 .pqlgb-chat-shot{display:block;max-width:100%;max-height:140px;object-fit:cover;object-position:top;border-radius:8px;margin-top:4px;cursor:zoom-in}
 .pqlgb-shot-lightbox{position:fixed;inset:0;z-index:80;background:rgba(10,30,45,.85);display:flex;align-items:center;justify-content:center;padding:24px;cursor:zoom-out}
@@ -824,6 +829,10 @@ a.pqlgb-golive{text-decoration:none;display:inline-block}
         // (teacher)". Students arrive as first names.
         var who = m.mine ? "" : "<b>" + esc2(m.name) + "</b>";
         var priv = m.toteacheronly ? "<small>Only you and " + (m.mine ? "your teacher" : "this learner") + " can see this</small>" : "";
+        // An announcement is the teacher's raised voice: banner-styled, so it
+        // reads differently from conversation even in the scrollback.
+        if (m.announcement) { cls += " is-announcement"; who = who ? who : ""; }
+        var megaphone = m.announcement ? '<span class="pqlgb-chat-mega">\uD83D\uDCE2 Announcement</span>' : "";
         // An answered-to-class message carries its question, never its asker.
         var quote = m.quote
           ? '<span class="pqlgb-chat-quote">' + (m.quote.mine ? "You asked" : "Someone asked") + ": " + esc2(m.quote.body) + "</span>"
@@ -837,7 +846,7 @@ a.pqlgb-golive{text-decoration:none;display:inline-block}
           : "";
         var el = document.createElement("div");
         el.className = cls;
-        el.innerHTML = who + quote + esc2(m.body) + priv + answer;
+        el.innerHTML = megaphone + who + quote + esc2(m.body) + priv + answer;
         msgsEl.appendChild(el);
       });
       if (nearBottom) { msgsEl.scrollTop = msgsEl.scrollHeight; }
@@ -897,6 +906,7 @@ a.pqlgb-golive{text-decoration:none;display:inline-block}
       params.set("since", String(lastId));
       if (body) { params.set("body", body); }
       if (body && replyTarget) { params.set("replyto", String(replyTarget.id)); }
+      if (body && announceNext) { params.set("announce", "1"); }
       return fetch(chatUrl, {
         method: "POST",
         credentials: "same-origin",
@@ -923,6 +933,23 @@ a.pqlgb-golive{text-decoration:none;display:inline-block}
       callChat("");
     }
 
+    // Armed by the megaphone button for exactly one send, and mutually
+    // exclusive with a reply target: an announcement is not an answer.
+    var announceNext = false;
+    var announceBtn = document.createElement("button");
+    announceBtn.type = "button";
+    announceBtn.className = "pqlgb-chat-announce";
+    announceBtn.textContent = "\uD83D\uDCE2";
+    announceBtn.title = "Announce to ALL your groups";
+    announceBtn.addEventListener("click", function () {
+      announceNext = !announceNext;
+      if (announceNext) { setReplyTarget(null); }
+      announceBtn.classList.toggle("is-armed", announceNext);
+      input.placeholder = announceNext ? "Announce to all groups\u2026" : "Message the class\u2026";
+      input.focus();
+    });
+    form.insertBefore(announceBtn, form.firstChild);
+
     var chip = document.createElement("div");
     chip.className = "pqlgb-chat-chip";
     chip.hidden = true;
@@ -934,8 +961,12 @@ a.pqlgb-golive{text-decoration:none;display:inline-block}
         ? 'Answering for the class: &ldquo;' + esc2(next.preview).slice(0, 160) + '&rdquo; '
           + '<button type="button" class="pqlgb-chat-chip-x" aria-label="Cancel">&times;</button>'
         : "";
-      if (next) { input.placeholder = "Answer the class\u2026"; input.focus(); }
-      else { input.placeholder = "Message the class\u2026"; }
+      if (next) {
+        // an answer is not an announcement; disarm the megaphone
+        announceNext = false;
+        announceBtn.classList.remove("is-armed");
+        input.placeholder = "Answer the class\u2026"; input.focus();
+      } else if (!announceNext) { input.placeholder = "Message the class\u2026"; }
     }
     chip.addEventListener("click", function (event) {
       if (event.target.closest && event.target.closest(".pqlgb-chat-chip-x")) { setReplyTarget(null); }
@@ -953,6 +984,9 @@ a.pqlgb-golive{text-decoration:none;display:inline-block}
       input.value = "";
       callChat(text);
       setReplyTarget(null);
+      announceNext = false;
+      announceBtn.classList.remove("is-armed");
+      input.placeholder = "Message the class\u2026";
     });
 
     drawTabs();

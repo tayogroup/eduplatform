@@ -279,6 +279,16 @@ echo $OUTPUT->header();
   // UNIT past an hour and every caller was appending "min" regardless. The live
   // board showed a learner quiet since the previous day as "7h44 MIN QUIET".
   // Keeping the unit with the number is what stops the two drifting again.
+  // "3h30" / "45m". Distinct from humanGap(), which formats the big quiet
+  // counter and returns a [value, unit] pair for its two-line layout; a flag is
+  // one short string.
+  function hm(seconds) {
+    var m = Math.max(0, Math.round(seconds / 60));
+    if (m < 60) { return m + "m"; }
+    var h = Math.floor(m / 60), rest = m % 60;
+    return h + "h" + (rest < 10 ? "0" : "") + rest;
+  }
+
   function humanGap(seconds) {
     if (seconds < 60) { return ["&lt;1", "min"]; }
     var minutes = Math.floor(seconds / 60);
@@ -384,16 +394,28 @@ echo $OUTPUT->header();
     } else if (tile.wehelminutes > 0) {
       flags.push('<span class="pqlgb-flag">Wehel ' + tile.wehelminutes + " min</span>");
     }
-    // The learner's DAY. Reported as time left, but never as a countdown to a
-    // stop: used-time is a floor (a long read reports nothing until they move),
-    // so this is a ceiling and is labelled "left of target" rather than
-    // "remaining", which would imply a limit that does not exist. A learner
-    // whose app has not reported today is not shown a full target -- that would
-    // be a confident number about a day nobody measured.
-    if (tile.learncounted && tile.learntarget > 0) {
-      var lm = Math.round(tile.learnremaining / 60);
-      flags.push('<span class="pqlgb-flag' + (lm <= 0 ? " pqlgb-flag--ok" : "") + '">' +
-        (lm <= 0 ? "target met" : lm + " min left of target") + "</span>");
+    // The learner's DAY: what they have banked today and what is left of the
+    // target. Never a countdown to a stop -- used-time is a floor (a long read
+    // reports nothing until the learner moves), so "left" is a ceiling, and
+    // nothing happens at zero.
+    //
+    // ALWAYS RENDERED, including when there is no ledger. The first version
+    // drew nothing at all in that case, on the reasoning that "3h 30m left" for
+    // a day nobody measured is a confident lie -- which is true, and led to the
+    // wrong fix: on the morning it shipped every tile was silent and the
+    // feature was indistinguishable from a failed deploy. The board already had
+    // the right answer one line above, where the activity ring says "not
+    // counted yet" instead of a zero. Say that here too: absent data is a state
+    // worth showing, not a reason to show nothing.
+    if (tile.learntarget > 0) {
+      if (!tile.learncounted) {
+        flags.push('<span class="pqlgb-flag">day not counted yet</span>');
+      } else {
+        var left = tile.learnremaining;
+        flags.push('<span class="pqlgb-flag' + (left <= 0 ? " pqlgb-flag--ok" : "") + '">' +
+          hm(tile.learnused) + " today &middot; " +
+          (left <= 0 ? "target met" : hm(left) + " left") + "</span>");
+      }
     }
 
     return '<div class="pqlgb-tile pqlgb-tile--' + live.state + '">' +

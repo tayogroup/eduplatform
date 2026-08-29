@@ -217,7 +217,8 @@ a.pqlgb-golive{text-decoration:none;display:inline-block}
 .pqlgb-chat-quote{display:block;font-size:11px;font-style:italic;opacity:.8;border-left:3px solid #9ec5fe;padding-left:6px;margin-bottom:4px}
 .pqlgb-chat-answer{display:block;margin-top:5px;border:1px solid #052c65;background:transparent;color:#052c65;border-radius:999px;padding:2px 9px;font:inherit;font-size:11px;font-weight:700;cursor:pointer}
 .pqlgb-chat-shot{display:block;max-width:100%;max-height:140px;object-fit:cover;object-position:top;border-radius:8px;margin-top:4px;cursor:zoom-in}
-.pqlgb-chat-shot.is-full{max-height:none;object-fit:contain;cursor:zoom-out}
+.pqlgb-shot-lightbox{position:fixed;inset:0;z-index:80;background:rgba(10,30,45,.85);display:flex;align-items:center;justify-content:center;padding:24px;cursor:zoom-out}
+.pqlgb-shot-lightbox img{max-width:96vw;max-height:92vh;border-radius:10px;box-shadow:0 12px 48px rgba(0,0,0,.5);background:#fff}
 .pqlgb-chat-form input{flex:1;border:1px solid var(--op-line-strong);border-radius:8px;padding:7px 10px;font:inherit;font-size:13px;min-width:0}
 .pqlgb-chat-form button{border:1px solid #052c65;background:#0d6efd;color:#fff;border-radius:8px;padding:7px 14px;font:inherit;font-size:13px;font-weight:700;cursor:pointer}
 @media (max-width:900px){.pqlgb-cols{flex-direction:column}.pqlgb-chat{width:100%;flex:1 1 auto;position:static;max-height:50vh}}
@@ -865,7 +866,24 @@ a.pqlgb-golive{text-decoration:none;display:inline-block}
         pic.src = "data:image/jpeg;base64," + img.jpegbase64;
         pic.alt = "Learner screenshot";
         pic.className = "pqlgb-chat-shot";
-        pic.addEventListener("click", function () { pic.classList.toggle("is-full"); });
+        // A lightbox, not an in-column toggle: the first version expanded
+        // inside the 320px chat column, which made a full lesson page
+        // unreadable -- the owner's words were "too small for the teacher to
+        // review". The teacher is REVIEWING a child's screen; that needs the
+        // whole viewport. Esc or any click closes.
+        pic.addEventListener("click", function () {
+          var box = document.createElement("div");
+          box.className = "pqlgb-shot-lightbox";
+          var big = document.createElement("img");
+          big.src = pic.src;
+          big.alt = pic.alt;
+          box.appendChild(big);
+          var close = function () { box.remove(); document.removeEventListener("keydown", onkey); };
+          var onkey = function (ev) { if (ev.key === "Escape") { close(); } };
+          box.addEventListener("click", close);
+          document.addEventListener("keydown", onkey);
+          document.body.appendChild(box);
+        });
         el.insertBefore(pic, el.querySelector("small"));
         label.remove();
       }).catch(function () { /* leave the placeholder */ });

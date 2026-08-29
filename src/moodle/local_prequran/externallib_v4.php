@@ -8182,7 +8182,107 @@ $validate = [
      * than deleting the row, so what they already sent stays attributable and
      * the audit trail does not develop holes.
      */
-    protected static function support_open_class_group_thread(int $groupid, array $policy, string $subject, string $body): array {
+    /**
+     * The classroom room's whole exchange, for BOTH doors.
+     *
+     * The learner door (course_group_chat.php) authenticates by launch token
+     * and the teacher door (live_group_board_chat.php) by session, but the
+     * room they reach is this one function: open-or-join the group thread,
+     * optionally send, return the visible slice. Two doors, one implementation
+     * -- the visibility rule lives in support_message_visibility_for() and
+     * support_message_visible_to_user() and is exercised here for both sides,
+     * so it cannot drift between them. check-class-group-chat.php guards those
+     * two functions; this is the path that makes them load-bearing.
+     *
+     * Messages are returned ASCENDING FROM $sincemessageid so both panels poll
+     * with their highest seen id and repaint only what is new -- the board's
+     * own render() rule (never rebuild what did not change), applied to chat.
+     *
+     * The name sent for a learner is their FIRST name only. Nine five-year-olds
+     * share one room; a full name on every line is roll-call furniture, and the
+     * teacher's tile layout already resolves who is who.
+     */
+    public static function class_group_chat_exchange(int $userid, int $groupid, string $body = '', int $sincemessageid = 0, int $limit = 60): array {
+        global $DB;
+
+        if ($userid <= 0 || $groupid <= 0) {
+            return ['ok' => false, 'message' => 'Not available.'];
+        }
+        $group = $DB->get_record('local_prequran_class_group', ['id' => $groupid]);
+        if (!$group) {
+            return ['ok' => false, 'message' => 'Not available.'];
+        }
+        $policy = self::support_effective_policy((int)($group->workspaceid ?? 0), 0);
+        if (empty($policy['class_group_enabled'])) {
+            // Off is a policy decision, and the panels do not mount when this
+            // says so -- the Raise-hand rule again: no control that reaches
+            // nothing.
+            return ['ok' => false, 'enabled' => false, 'message' => 'Class chat is not enabled here.'];
+        }
+
+        try {
+            $opened = self::support_open_class_group_thread($groupid, $policy, '', $body, $userid);
+        } catch (\Throwable $e) {
+            return ['ok' => false, 'enabled' => true, 'message' => 'Class chat could not be opened.'];
+        }
+        $threadid = (int)($opened['conversation']['id'] ?? 0);
+        if ($threadid <= 0) {
+            return ['ok' => false, 'enabled' => true, 'message' => 'Class chat could not be opened.'];
+        }
+        $thread = $DB->get_record('local_prequran_comm_thread', ['id' => $threadid], '*', MUST_EXIST);
+
+        $limit = max(1, min(200, $limit));
+        $rows = $DB->get_records_select('local_prequran_comm_message',
+            "threadid = :t AND id > :since AND status = 'visible'",
+            ['t' => $threadid, 'since' => max(0, $sincemessageid)], 'id ASC', '*', 0, $limit);
+
+        $senderids = [];
+        foreach ($rows as $row) {
+            $senderids[(int)$row->senderid] = true;
+        }
+        $names = [];
+        if ($senderids) {
+            [$insql, $inparams] = $DB->get_in_or_equal(array_keys($senderids));
+            foreach ($DB->get_records_select('user', "id $insql", $inparams, '', 'id, firstname, lastname') as $u) {
+                $names[(int)$u->id] = trim((string)$u->firstname) !== '' ? (string)$u->firstname : ('User ' . (int)$u->id);
+            }
+        }
+
+        $teacherid = (int)($thread->assignedto ?? 0);
+        $messages = [];
+        foreach ($rows as $row) {
+            if (!self::support_message_visible_to_user($row, $thread, $userid)) {
+                continue;
+            }
+            $messages[] = [
+                'id' => (int)$row->id,
+                'senderid' => (int)$row->senderid,
+                'name' => $names[(int)$row->senderid] ?? ('User ' . (int)$row->senderid),
+                'teacher' => (int)$row->senderid === $teacherid,
+                'mine' => (int)$row->senderid === $userid,
+                // Whether the ROOM saw it, so a learner's own bubble can say
+                // "only your teacher sees this" instead of letting a child
+                // believe the class read something the class cannot read.
+                'toteacheronly' => (string)($row->visibility ?? 'public') === 'group_teacher_only',
+                'body' => (string)$row->body,
+                'at' => (int)$row->timecreated,
+            ];
+        }
+
+        return [
+            'ok' => true,
+            'enabled' => true,
+            'threadid' => $threadid,
+            'groupid' => $groupid,
+            'grouptitle' => (string)($group->title ?? ''),
+            'teacherid' => $teacherid,
+            'isteacher' => $userid === $teacherid,
+            'messages' => $messages,
+            'servertime' => time(),
+        ];
+    }
+
+    protected static function support_open_class_group_thread(int $groupid, array $policy, string $subject, string $body, int $asuserid = 0): array {
         global $DB, $USER;
 
         if ($groupid <= 0) {
@@ -8200,7 +8300,9 @@ $validate = [
             throw new \moodle_exception('nopermissions', '', '', 'That class group has no teacher, so its chat cannot be opened.');
         }
 
-        $userid = (int)$USER->id;
+        // $asuserid is the token-authenticated learner from course_group_chat.php,
+        // where $USER is a cookieless guest; 0 means the session user as before.
+        $userid = $asuserid > 0 ? $asuserid : (int)$USER->id;
         $members = $DB->get_fieldset_select('local_prequran_group_member', 'studentid',
             'groupid = :g AND assignment_status = :a', ['g' => $groupid, 'a' => 'active']);
         $members = array_values(array_unique(array_map('intval', $members ?: [])));

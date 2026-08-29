@@ -94,6 +94,11 @@ $handurl = new moodle_url('/local/hubredirect/live_group_board_hand.php', [
     'teacherid' => $teacherid,
     'sesskey' => sesskey(),
 ]);
+$chaturl = new moodle_url('/local/hubredirect/live_group_board_chat.php', [
+    'workspaceid' => $workspaceid,
+    'teacherid' => $teacherid,
+    'sesskey' => sesskey(),
+]);
 
 $PAGE->set_context(context_system::instance());
 $PAGE->set_url(new moodle_url('/local/hubredirect/live_group_board.php', $urlparams));
@@ -181,6 +186,28 @@ echo $OUTPUT->header();
 .pqlgb-note b{color:var(--op-ink)}
 .pqlgb-noscript{padding:14px 16px;margin-bottom:16px;background:var(--op-warn-bg);border:1px solid var(--op-warn-line);border-radius:var(--op-radius);color:var(--op-warn-ink);font-size:13.5px;font-weight:700}
 @media (max-width:640px){.pqlgb-groups{grid-template-columns:1fr}}
+/* The classroom chat, on the right of the tiles. A column rather than an
+   overlay, because the board is left open all session and a drawer that covers
+   tiles hides the thing the page exists to show. */
+.pqlgb-cols{display:flex;gap:16px;align-items:start}
+.pqlgb-main{flex:1;min-width:0}
+.pqlgb-chat{width:320px;flex:0 0 320px;background:var(--op-surface);border:1px solid var(--op-line-strong);border-radius:10px;display:flex;flex-direction:column;max-height:78vh;position:sticky;top:12px}
+.pqlgb-chat-head{padding:10px 12px;border-bottom:1px solid var(--op-line-strong);font-weight:800;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.pqlgb-chat-tab{border:1px solid var(--op-line-strong);background:transparent;border-radius:999px;padding:3px 10px;font:inherit;font-size:12px;font-weight:700;cursor:pointer}
+.pqlgb-chat-tab.is-active{background:#cfe2ff;border-color:#9ec5fe;color:#052c65}
+.pqlgb-chat-msgs{flex:1;overflow-y:auto;padding:10px 12px;display:flex;flex-direction:column;gap:8px;min-height:120px}
+.pqlgb-chat-msg{max-width:92%;padding:7px 10px;border-radius:10px;background:#f1f3f5;font-size:13px;line-height:1.4}
+.pqlgb-chat-msg b{display:block;font-size:11px;margin-bottom:2px;opacity:.75}
+.pqlgb-chat-msg.is-mine{align-self:flex-end;background:#cfe2ff}
+/* A learner's message: only the teacher and the child see it, and the tint
+   says so — it must not read like something the room saw. */
+.pqlgb-chat-msg.is-private{background:#fff3cd;border:1px solid #ffe69c}
+.pqlgb-chat-msg.is-private small{display:block;font-size:10px;color:#664d03;margin-top:3px}
+.pqlgb-chat-empty{color:var(--op-muted,#6c757d);font-size:13px;padding:8px 2px}
+.pqlgb-chat-form{display:flex;gap:8px;padding:10px 12px;border-top:1px solid var(--op-line-strong)}
+.pqlgb-chat-form input{flex:1;border:1px solid var(--op-line-strong);border-radius:8px;padding:7px 10px;font:inherit;font-size:13px;min-width:0}
+.pqlgb-chat-form button{border:1px solid #052c65;background:#0d6efd;color:#fff;border-radius:8px;padding:7px 14px;font:inherit;font-size:13px;font-weight:700;cursor:pointer}
+@media (max-width:900px){.pqlgb-cols{flex-direction:column}.pqlgb-chat{width:100%;flex:1 1 auto;position:static;max-height:50vh}}
 </style>
 
 <div class="pqlgb">
@@ -223,9 +250,21 @@ echo $OUTPUT->header();
     <div class="pqlgb-empty pqlgb-group">The grouping tables are not installed on this site yet, so there are no groups to show.</div>
   <?php else: ?>
     <div class="pqlgb-totals" id="pqlgb-totals"></div>
-    <div class="pqlgb-groups" id="pqlgb-groups"></div>
-    <div class="pqlgb-note">
+    <div class="pqlgb-cols">
+      <div class="pqlgb-main">
+        <div class="pqlgb-groups" id="pqlgb-groups"></div>
+        <div class="pqlgb-note">
       <b>What these numbers are.</b> <b>Quiet for</b> is time since the learner's app last reported anything — it is the board's headline because it catches stuck, gone and disconnected alike, which look identical from the other room. <b>Left page</b> counts focus breaks in the chosen window: it is evidence, not prevention, because a web page can report that a learner left it and cannot stop them. <b>Wehel</b> is AI-tutor minutes <em>used</em> today, not minutes left. <b>This cycle</b> counts sections completed and quizzes scored inside the chosen window, from the timestamps the progress gateway now records (<code>_activity</code>). It reads <b>N+</b> where that unit began recording after the window opened &mdash; the count is a floor then, not a total. <b>Done</b> beside it is the running total for the unit, which is a different question and always was.
+        </div>
+      </div>
+      <aside class="pqlgb-chat" id="pqlgb-chat" hidden>
+        <div class="pqlgb-chat-head">Class chat<span id="pqlgb-chat-tabs"></span></div>
+        <div class="pqlgb-chat-msgs" id="pqlgb-chat-msgs"><div class="pqlgb-chat-empty">Loading&hellip;</div></div>
+        <form class="pqlgb-chat-form" id="pqlgb-chat-form">
+          <input id="pqlgb-chat-input" type="text" maxlength="1200" placeholder="Message the class&hellip;" autocomplete="off">
+          <button type="submit">Send</button>
+        </form>
+      </aside>
     </div>
   <?php endif; ?>
 </div>
@@ -236,6 +275,7 @@ echo $OUTPUT->header();
   var seed = <?php echo json_encode($board, JSON_HEX_TAG | JSON_HEX_AMP | JSON_UNESCAPED_SLASHES); ?>;
   var dataUrl = <?php echo json_encode($dataurl->out(false), JSON_HEX_TAG | JSON_HEX_AMP); ?>;
   var handUrl = <?php echo json_encode($handurl->out(false), JSON_HEX_TAG | JSON_HEX_AMP); ?>;
+  var chatUrl = <?php echo json_encode($chaturl->out(false), JSON_HEX_TAG | JSON_HEX_AMP); ?>;
   // Written for whoever is looking. The teacher-facing wording sent an
   // administrator away believing the board was broken, when they were simply
   // looking at their own groups and had none.
@@ -617,6 +657,126 @@ echo $OUTPUT->header();
   });
   // Ticks the quiet counters and the freshness line between polls.
   setInterval(function () { render(); paintFreshness(); }, 1000);
+
+  // --- the classroom chat ---------------------------------------------------
+  // One room per group, from the same exchange function the learner's app
+  // calls; this panel is only a second door onto it. The teacher's messages
+  // are public to the room; a learner's arrive here marked private, because
+  // the room's rule is that learners never read each other ("no
+  // student-to-student messaging", tools/check-class-group-chat.php).
+  //
+  // Appends by `since` id rather than repainting — the board's own render()
+  // rule applied to chat, so an open panel never eats a half-typed reply.
+  (function () {
+    var panel = document.getElementById("pqlgb-chat");
+    var tabsEl = document.getElementById("pqlgb-chat-tabs");
+    var msgsEl = document.getElementById("pqlgb-chat-msgs");
+    var form = document.getElementById("pqlgb-chat-form");
+    var input = document.getElementById("pqlgb-chat-input");
+    if (!panel || !tabsEl || !msgsEl || !form) { return; }
+
+    var CHAT_POLL_MS = 8000;
+    var activeGroup = 0;
+    var lastId = 0;
+    var chatDisabled = false;
+    var inflight = false;
+
+    function esc2(s) { var d = document.createElement("div"); d.textContent = s == null ? "" : String(s); return d.innerHTML; }
+
+    function groupsOnBoard() { return (board && board.groups) ? board.groups : []; }
+
+    function drawTabs() {
+      var groups = groupsOnBoard();
+      if (!groups.length) { panel.hidden = true; return; }
+      panel.hidden = chatDisabled;
+      if (!activeGroup && groups[0]) { activeGroup = groups[0].id; }
+      tabsEl.innerHTML = groups.map(function (g) {
+        return '<button type="button" class="pqlgb-chat-tab' + (g.id === activeGroup ? " is-active" : "") + '" data-chatgroup="' + g.id + '">' + esc2(g.title) + "</button>";
+      }).join("");
+    }
+
+    tabsEl.addEventListener("click", function (event) {
+      var btn = event.target.closest ? event.target.closest("[data-chatgroup]") : null;
+      if (!btn) { return; }
+      var next = Number(btn.getAttribute("data-chatgroup"));
+      if (!next || next === activeGroup) { return; }
+      activeGroup = next;
+      lastId = 0;
+      msgsEl.innerHTML = '<div class="pqlgb-chat-empty">Loading&hellip;</div>';
+      drawTabs();
+      pollChat();
+    });
+
+    function appendMessages(list) {
+      if (!list || !list.length) { return; }
+      var empty = msgsEl.querySelector(".pqlgb-chat-empty");
+      if (empty) { empty.remove(); }
+      var nearBottom = msgsEl.scrollHeight - msgsEl.scrollTop - msgsEl.clientHeight < 60;
+      list.forEach(function (m) {
+        if (m.id <= lastId) { return; }
+        lastId = Math.max(lastId, m.id);
+        var cls = "pqlgb-chat-msg" + (m.mine ? " is-mine" : "") + (m.toteacheronly ? " is-private" : "");
+        var who = m.mine ? "" : "<b>" + esc2(m.name) + (m.teacher ? " (teacher)" : "") + "</b>";
+        var priv = m.toteacheronly ? "<small>Only you and " + (m.mine ? "your teacher" : "this learner") + " can see this</small>" : "";
+        var el = document.createElement("div");
+        el.className = cls;
+        el.innerHTML = who + esc2(m.body) + priv;
+        msgsEl.appendChild(el);
+      });
+      if (nearBottom) { msgsEl.scrollTop = msgsEl.scrollHeight; }
+    }
+
+    function callChat(body) {
+      if (!activeGroup || inflight) { return Promise.resolve(null); }
+      inflight = true;
+      var params = new URLSearchParams();
+      params.set("groupid", String(activeGroup));
+      params.set("since", String(lastId));
+      if (body) { params.set("body", body); }
+      return fetch(chatUrl, {
+        method: "POST",
+        credentials: "same-origin",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: params.toString()
+      }).then(function (r) { return r.json(); }).then(function (payload) {
+        inflight = false;
+        if (!payload) { return null; }
+        if (payload.enabled === false) {
+          // The flag is off for this workspace. Hide rather than tease: a
+          // composer that can only be refused teaches the teacher to ignore
+          // the panel that one day works.
+          chatDisabled = true;
+          panel.hidden = true;
+          return null;
+        }
+        if (payload.ok) { appendMessages(payload.messages); }
+        return payload;
+      }).catch(function () { inflight = false; return null; });
+    }
+
+    function pollChat() {
+      if (document.hidden || chatDisabled) { return; }
+      callChat("");
+    }
+
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+      var text = (input.value || "").trim();
+      if (!text) { return; }
+      input.value = "";
+      callChat(text);
+    });
+
+    drawTabs();
+    pollChat();
+    setInterval(pollChat, CHAT_POLL_MS);
+    document.addEventListener("visibilitychange", function () {
+      if (!document.hidden) { pollChat(); }
+    });
+    // Tabs follow the board: a group renamed or added shows up on the next
+    // board poll without a reload.
+    setInterval(drawTabs, 5000);
+  })();
   document.addEventListener("visibilitychange", function () { if (!document.hidden) { poll(); } });
 })();
 </script>

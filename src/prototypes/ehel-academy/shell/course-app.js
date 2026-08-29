@@ -435,6 +435,7 @@ export function createCourseApp(config) {
   // needs Allow-Credentials — this one is token-authenticated and sends none,
   // like the progress gateway.
   const HAND_ENDPOINT = platformUrl("/local/hubredirect/course_hand_raise.php");
+  const CHAT_ENDPOINT = platformUrl("/local/hubredirect/course_group_chat.php");
 
   function mountHandRaise() {
     const actions = $(".top-actions");
@@ -520,6 +521,137 @@ export function createCourseApp(config) {
     });
   }
   mountHandRaise();
+
+  // --- the classroom chat, the learner's end --------------------------------
+  // Step 3 of the escalation ladder, which named a group chat the platform did
+  // not have. The room is ASYMMETRIC by safeguarding design ("no student-to-
+  // student messaging", stated twice in the requirements and gated by
+  // check-class-group-chat.php): the teacher's messages reach everyone, this
+  // learner's reach the teacher alone — and their own bubble says so, because
+  // a child must never believe the class read something the class cannot read.
+  //
+  // Mounts only when the server says the room exists and is enabled — the
+  // Raise-hand rule. The server derives WHICH room from the roster; the app
+  // never names a group.
+  function mountClassChat() {
+    const actions = $(".top-actions");
+    if (!actions || !launchToken || !launchEndpoint || $("#class-chat-toggle")) return;
+
+    // text/plain keeps this a SIMPLE request (no preflight), the hand's trick;
+    // a fetch rather than a beacon because the reply carries the messages.
+    const post = (body) => fetch(CHAT_ENDPOINT, {
+      method: "POST", mode: "cors", headers: { "Content-Type": "text/plain" },
+      body: JSON.stringify({ token: launchToken, ...body }),
+    }).then((response) => (response.ok ? response.json() : null)).catch(() => null);
+
+    let lastId = 0;
+    let open = false;
+    let unread = false;
+    let panel = null;
+    let msgsEl = null;
+    let button = null;
+
+    const paintButton = () => {
+      button.textContent = unread ? "💬 Class chat •" : "💬 Class chat";
+      button.title = unread
+        ? "Your teacher wrote something new."
+        : "Talk to your teacher. The class sees what your teacher writes; only your teacher sees what you write.";
+      button.style.background = unread ? "#1a67a3" : "white";
+      button.style.color = unread ? "#fff" : "";
+    };
+
+    const append = (list) => {
+      if (!list || !list.length) return;
+      let sawOther = false;
+      const nearBottom = msgsEl.scrollHeight - msgsEl.scrollTop - msgsEl.clientHeight < 60;
+      for (const m of list) {
+        if (m.id <= lastId) continue;
+        lastId = Math.max(lastId, m.id);
+        if (!m.mine) sawOther = true;
+        const el = document.createElement("div");
+        // Inline styles for the same reason the hand button carries them:
+        // course-ui.css is bundled into all six subjects' releases, so one
+        // cosmetic rule there makes five other app tiers stale.
+        el.style.cssText = "max-width:92%;padding:7px 10px;border-radius:10px;font-size:13px;line-height:1.4;"
+          + (m.mine ? "align-self:flex-end;background:#cfe2ff;" : "background:#f1f3f5;");
+        if (m.mine && m.toteacheronly) el.style.cssText += "background:#fff3cd;border:1px solid #ffe69c;";
+        const who = m.mine ? "" : `<b style="display:block;font-size:11px;opacity:.75">${escapeHtml(m.name)}${m.teacher ? " (teacher)" : ""}</b>`;
+        const note = m.mine && m.toteacheronly
+          ? '<small style="display:block;font-size:10px;color:#664d03;margin-top:3px">Only your teacher can see this</small>' : "";
+        el.innerHTML = who + escapeHtml(m.body) + note;
+        msgsEl.appendChild(el);
+      }
+      if (nearBottom) msgsEl.scrollTop = msgsEl.scrollHeight;
+      if (sawOther && !open) { unread = true; paintButton(); }
+    };
+
+    const poll = async (body) => {
+      const state = await post(body ? { body, since: lastId } : { since: lastId });
+      if (state && state.ok && state.enabled) append(state.messages);
+      return state;
+    };
+
+    const buildPanel = () => {
+      panel = document.createElement("div");
+      panel.id = "class-chat-panel";
+      panel.style.cssText = "position:fixed;right:12px;bottom:74px;z-index:55;width:min(320px,92vw);"
+        + "max-height:55vh;display:none;flex-direction:column;background:#fff;border:1px solid #cbd5e1;"
+        + "border-radius:12px;box-shadow:0 8px 30px rgba(0,0,0,.18);overflow:hidden";
+      panel.innerHTML = '<div style="padding:9px 12px;font-weight:800;font-size:13px;border-bottom:1px solid #e2e8f0">Class chat'
+        + '<div style="font-weight:400;font-size:11px;color:#64748b">Everyone sees your teacher. Only your teacher sees you.</div></div>'
+        + '<div id="class-chat-msgs" style="flex:1;overflow-y:auto;padding:10px 12px;display:flex;flex-direction:column;gap:8px;min-height:90px"></div>'
+        + '<form id="class-chat-form" style="display:flex;gap:8px;padding:9px 12px;border-top:1px solid #e2e8f0">'
+        + '<input id="class-chat-input" type="text" maxlength="1200" autocomplete="off" placeholder="Ask your teacher…" '
+        + 'style="flex:1;border:1px solid #cbd5e1;border-radius:8px;padding:7px 10px;font:inherit;font-size:13px;min-width:0">'
+        + '<button type="submit" style="border:1px solid #1a67a3;background:#1a67a3;color:#fff;border-radius:8px;padding:7px 12px;font:inherit;font-size:13px;cursor:pointer">Send</button></form>';
+      document.body.appendChild(panel);
+      msgsEl = panel.querySelector("#class-chat-msgs");
+      panel.querySelector("#class-chat-form").addEventListener("submit", (event) => {
+        event.preventDefault();
+        const inputEl = panel.querySelector("#class-chat-input");
+        const text = (inputEl.value || "").trim();
+        if (!text) return;
+        inputEl.value = "";
+        poll(text);
+      });
+    };
+
+    post({}).then((state) => {
+      if (!state || !state.ok || state.enabled === false) return;
+      button = document.createElement("button");
+      button.type = "button";
+      button.id = "class-chat-toggle";
+      button.className = "top-grade-picker top-class-chat";
+      button.style.cssText = "width:auto;padding:8px 12px;cursor:pointer";
+      paintButton();
+      buildPanel();
+      append(state.messages);
+      // Anything already in the room counts as read history, not news.
+      unread = false;
+      paintButton();
+      button.addEventListener("click", () => {
+        open = !open;
+        panel.style.display = open ? "flex" : "none";
+        if (open) {
+          unread = false;
+          paintButton();
+          poll();
+          msgsEl.scrollTop = msgsEl.scrollHeight;
+          panel.querySelector("#class-chat-input")?.focus();
+        }
+      });
+      actions.prepend(button);
+      // Polled CLOSED as well as open, so a teacher's "everyone stop and
+      // listen" reaches a child who never opened the panel — the unread dot is
+      // the whole point of the broadcast half. ONE fixed cadence: a ternary on
+      // `open` here would be evaluated once, at mount, when open is always
+      // false — a dynamic cadence that does not exist. Opening the panel polls
+      // immediately instead (the click handler above), which is the moment a
+      // faster poll was for.
+      setInterval(() => { if (!document.hidden) poll(); }, 15000);
+    });
+  }
+  mountClassChat();
   const emitProgressSummary = () => {
     const base = {
       type: "progress.summary", unit: PROGRESS_UNIT,

@@ -901,8 +901,65 @@ Rows are written only on a real transition, so pressing twenty times is one row.
 
 **Two limits the UI must keep stating.** Focus breaks are evidence, not
 prevention — a web page can report that a learner left it and cannot stop them.
-And the board is a monitoring surface, not attendance: it shows last-seen rather
-than marking anyone present.
+And outside a live room the board is a monitoring surface, not attendance: it
+shows last-seen rather than marking anyone present. (While a room IS running,
+the tile does carry a real attendance fact — the section below.)
+
+### The live class reaches the board, and the lookup that was blind to a running room
+
+One lookup, `pqlgb_group_next_session()` in `live_group_boardlib.php`, feeds
+three surfaces: the teacher's Go live header, the learner's Join pill in the
+app (delivered with every chat poll through the learner door), and — since
+2026-08-29 evening — the live-class flags on every tile. While a group's room
+is RUNNING, each tile says 🟢 "in live class · joined HH:MM" or 🟡 "not in
+live class yet"; the header says "In session". Verified on production with a
+real room and a real learner in it.
+
+- **JOINED is the measured fact and the only claim made.** The join action
+  writes `local_prequran_live_attendance` (`pql_mark_student_join`); BBB does
+  not reliably report leaving, so the flag says when they joined and never
+  "still in". A child in BBB has this app tab backgrounded, so without the flag
+  they read as quiet/gone on the very board that should show them doing the
+  right thing.
+- **No room running → no flag.** A screenshot with no flags and a header
+  showing "Go live" (the create fallback) means no room exists — the design
+  waiting for a class, not a fault. That reading was mistaken for a failure
+  once already.
+- **The bug the live test found: the lookup was TODAY-ONLY, and the room
+  everyone was in was scheduled for two days later.** The teacher's Go live on
+  the admin's recurring Monday session flipped it `status='live'` and it STAYED
+  live; a student joined it; the board was blind because
+  `scheduled_start < end-of-day` excluded it. A `status='live'` session is now
+  admitted whatever its date — bounded by the same `scheduled_end + after`
+  window the join door enforces — and a running room BEATS a merely-scheduled
+  one for the group's slot ("earliest wins" alone would hide the live room
+  behind an upcoming slot).
+- **A session leaves `live` only when a cron sweeps rows past their
+  `scheduled_end`** (`live_session_reminders.php` → `awaiting_review`). So a
+  future-dated session left live stays "open" — to the board AND the join
+  door, same rule — until its scheduled end passes: days for an off-schedule
+  test, minutes for a real class. Platform semantics, deliberately mirrored
+  rather than second-guessed.
+- **"Pressed Go live" can create session A while the teacher joins session B.**
+  The create fallback lands on the sessions page, which lists everything; the
+  night this shipped the created session was never joined and the joined one
+  was the recurring session. Never assume the created session is the joined
+  one.
+- The diagnosis pattern that split four hypotheses in one run: a read-only
+  staged probe listing every session row of the last three hours with exactly
+  the fields the lookup filters on (groupid / status / bbb_created / times)
+  plus each row's attendance — which distinguishes create-failed, groupid=0,
+  lookup-blind and join-didn't-flip without a second round trip.
+
+The Join pill earned its own three lessons the same evening, all one shape —
+two rules for one fact: it first hardcoded a 10-minute lead while the door
+reads config (`bbb_join_window_before/after_minutes` — and after is **180**
+on this install, not the 15 default); then mirroring the door exactly kept the
+pill red for three hours over a dead room in `awaiting_review`. The settled
+split: the door answers "would you be admitted", the pill and the header
+answer "is there a class" — a session past its scheduled end is only a class
+while the room is live, and `joinable` is computed by the door's own
+expression so the pill can never say yes where the door says no.
 
 ### The classroom chat: built INSIDE "no student-to-student messaging"
 

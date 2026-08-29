@@ -571,13 +571,37 @@ export function createCourseApp(config) {
         if (m.screenshot) {
           appendShotBubble(m);
           continue;
-        }"""
-assert s.count(old) == 1, "renderer branch"
-s = s.replace(old, new)
+        }
+        const el = document.createElement("div");
+        // Inline styles for the same reason the hand button carries them:
+        // course-ui.css is bundled into all six subjects' releases, so one
+        // cosmetic rule there makes five other app tiers stale.
+        el.style.cssText = "max-width:92%;padding:7px 10px;border-radius:10px;font-size:13px;line-height:1.4;"
+          + (m.mine ? "align-self:flex-end;background:#cfe2ff;" : "background:#f1f3f5;");
+        if (m.mine && m.toteacheronly) el.style.cssText += "background:#fff3cd;border:1px solid #ffe69c;";
+        // No "(teacher)" suffix — the server sends staff as "Teacher" outright,
+        // so the suffix would double it. Students arrive as first names.
+        const who = m.mine ? "" : `<b style="display:block;font-size:11px;opacity:.75">${escapeHtml(m.name)}</b>`;
+        const note = m.mine && m.toteacheronly
+          ? '<small style="display:block;font-size:10px;color:#664d03;margin-top:3px">Only your teacher can see this</small>' : "";
+        // An answer-to-class arrives with the question and without the asker.
+        // The asker's own panel says "You asked" -- they know; nobody else does.
+        const quote = m.quote
+          ? `<span style="display:block;font-size:11px;font-style:italic;opacity:.8;border-left:3px solid #9ec5fe;padding-left:6px;margin-bottom:4px">${m.quote.mine ? "You asked" : "Someone asked"}: ${escapeHtml(m.quote.body)}</span>` : "";
+        el.innerHTML = who + quote + escapeHtml(m.body) + note;
+        msgsEl.appendChild(el);
+      }
+      if (nearBottom) msgsEl.scrollTop = msgsEl.scrollHeight;
+      if (sawOther && !open) { unread = true; paintButton(); }
+    };
 
-# ---- 2. the capture machinery, inside mountClassChat ------------------------
-old = """    const buildPanel = () => {"""
-new = """    // A screenshot bubble: the image is fetched lazily per message through the
+    const poll = async (body) => {
+      const state = await post(body ? { body, since: lastId } : { since: lastId });
+      if (state && state.ok && state.enabled) append(state.messages);
+      return state;
+    };
+
+    // A screenshot bubble: the image is fetched lazily per message through the
     // same door, which re-runs the visibility check -- so a bubble and its
     // pixels can never diverge in who may see them. "Expired" is a real state:
     // images age out after 30 days while the message row stays.
@@ -586,12 +610,12 @@ new = """    // A screenshot bubble: the image is fetched lazily per message thr
       el.style.cssText = "max-width:92%;padding:7px 10px;border-radius:10px;font-size:12px;"
         + (m.mine ? "align-self:flex-end;background:#fff3cd;border:1px solid #ffe69c;" : "background:#f1f3f5;");
       el.innerHTML = (m.mine ? "" : `<b style="display:block;font-size:11px;opacity:.75">${escapeHtml(m.name)}</b>`)
-        + '<span>\\uD83D\\uDCF7 Screenshot</span>'
+        + '<span>📷 Screenshot</span>'
         + (m.mine ? '<small style="display:block;font-size:10px;color:#664d03;margin-top:3px">Only your teacher can see this</small>' : "");
       msgsEl.appendChild(el);
       post({ image: m.id }).then((img) => {
         if (!img || !img.ok) return;
-        if (img.gone) { el.querySelector("span").textContent = "\\uD83D\\uDCF7 Screenshot (expired)"; return; }
+        if (img.gone) { el.querySelector("span").textContent = "📷 Screenshot (expired)"; return; }
         const pic = document.createElement("img");
         pic.src = "data:image/jpeg;base64," + img.jpegbase64;
         pic.alt = "Screenshot";
@@ -617,11 +641,21 @@ new = """    // A screenshot bubble: the image is fetched lazily per message thr
       const lucideTag = document.querySelector('script[src*="lucide.min.js"]');
       if (!lucideTag) return reject(new Error("no anchor"));
       const tag = document.createElement("script");
-      tag.src = lucideTag.src.replace(/lucide\\.min\\.js.*$/, "html2canvas.min.js");
+      tag.src = lucideTag.src.replace(/lucide\.min\.js.*$/, "html2canvas.min.js");
       tag.onload = () => (window.html2canvas ? resolve(window.html2canvas) : reject(new Error("no symbol")));
       tag.onerror = () => reject(new Error("load failed"));
       document.head.appendChild(tag);
     });
+
+    const shotFailNote = (text) => {
+      if (!msgsEl) return;
+      const note = document.createElement("div");
+      note.textContent = text;
+      note.style.cssText = "align-self:flex-end;font-size:11px;color:#664d03;background:#fff3cd;"
+        + "border:1px solid #ffe69c;border-radius:8px;padding:4px 8px";
+      msgsEl.appendChild(note);
+      msgsEl.scrollTop = msgsEl.scrollHeight;
+    };
 
     const captureAndPreview = async (cameraBtn) => {
       cameraBtn.disabled = true;
@@ -629,8 +663,8 @@ new = """    // A screenshot bubble: the image is fetched lazily per message thr
         const h2c = await loadCapturer();
         const target = document.querySelector("#content") || document.body;
         const canvas = await h2c(target, { logging: false, useCORS: false, scale: 1 });
-        // Downscale to <=1280 wide and re-encode as JPEG: the server caps at
-        // 500KB decoded and a retina PNG of a full page is several megabytes.
+        // Downscale to <=1280 wide, JPEG at 0.7: the server caps at 500KB
+        // decoded and a retina render of a full page is several megabytes.
         const w = Math.min(1280, canvas.width);
         const scaled = document.createElement("canvas");
         scaled.width = w;
@@ -661,58 +695,14 @@ new = """    // A screenshot bubble: the image is fetched lazily per message thr
           // A refused shot must SAY so -- a picture that silently never
           // appears is the same wound as every silent failure fixed today.
           if (!state || !state.ok || state.shotrejected) {
-            const note = document.createElement("div");
-            note.textContent = "The picture did not send. Try again, or describe the problem in a message.";
-            note.style.cssText = "align-self:flex-end;font-size:11px;color:#664d03;background:#fff3cd;"
-              + "border:1px solid #ffe69c;border-radius:8px;padding:4px 8px";
-            msgsEl.appendChild(note);
-            msgsEl.scrollTop = msgsEl.scrollHeight;
+            shotFailNote("The picture did not send. Try again, or describe the problem in a message.");
           }
         });
       } catch (e) {
-        /* capture failed: say so briefly rather than nothing */
-        const note = document.createElement("div");
-        note.textContent = "The picture could not be taken. You can describe the problem in a message instead.";
-        note.style.cssText = "align-self:flex-end;font-size:11px;color:#664d03;background:#fff3cd;"
-          + "border:1px solid #ffe69c;border-radius:8px;padding:4px 8px";
-        if (msgsEl) msgsEl.appendChild(note);
+        shotFailNote("The picture could not be taken. You can describe the problem in a message instead.");
       } finally {
         cameraBtn.disabled = false;
       }
-    };
-
-    const buildPanel = () => {
-        if (m.screenshot) {
-          appendShotBubble(m);
-          continue;
-        }
-        const el = document.createElement("div");
-        // Inline styles for the same reason the hand button carries them:
-        // course-ui.css is bundled into all six subjects' releases, so one
-        // cosmetic rule there makes five other app tiers stale.
-        el.style.cssText = "max-width:92%;padding:7px 10px;border-radius:10px;font-size:13px;line-height:1.4;"
-          + (m.mine ? "align-self:flex-end;background:#cfe2ff;" : "background:#f1f3f5;");
-        if (m.mine && m.toteacheronly) el.style.cssText += "background:#fff3cd;border:1px solid #ffe69c;";
-        // No "(teacher)" suffix — the server sends staff as "Teacher" outright,
-        // so the suffix would double it. Students arrive as first names.
-        const who = m.mine ? "" : `<b style="display:block;font-size:11px;opacity:.75">${escapeHtml(m.name)}</b>`;
-        const note = m.mine && m.toteacheronly
-          ? '<small style="display:block;font-size:10px;color:#664d03;margin-top:3px">Only your teacher can see this</small>' : "";
-        // An answer-to-class arrives with the question and without the asker.
-        // The asker's own panel says "You asked" -- they know; nobody else does.
-        const quote = m.quote
-          ? `<span style="display:block;font-size:11px;font-style:italic;opacity:.8;border-left:3px solid #9ec5fe;padding-left:6px;margin-bottom:4px">${m.quote.mine ? "You asked" : "Someone asked"}: ${escapeHtml(m.quote.body)}</span>` : "";
-        el.innerHTML = who + quote + escapeHtml(m.body) + note;
-        msgsEl.appendChild(el);
-      }
-      if (nearBottom) msgsEl.scrollTop = msgsEl.scrollHeight;
-      if (sawOther && !open) { unread = true; paintButton(); }
-    };
-
-    const poll = async (body) => {
-      const state = await post(body ? { body, since: lastId } : { since: lastId });
-      if (state && state.ok && state.enabled) append(state.messages);
-      return state;
     };
 
     const buildPanel = () => {

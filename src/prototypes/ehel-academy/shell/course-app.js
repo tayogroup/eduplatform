@@ -584,7 +584,7 @@ export function createCourseApp(config) {
           el.style.cssText = "max-width:100%;padding:9px 12px;border-radius:10px;font-size:13px;line-height:1.4;"
             + "background:#052c65;color:#fff;font-weight:700;";
           el.innerHTML = '<span style="display:block;font-size:10px;letter-spacing:.06em;'
-            + 'text-transform:uppercase;opacity:.85;margin-bottom:3px">\uD83D\uDCE2 Announcement</span>'
+            + 'text-transform:uppercase;opacity:.85;margin-bottom:3px">\uD83D\uDCE2 Teacher Message!</span>'
             + escapeHtml(m.body);
           msgsEl.appendChild(el);
           continue;

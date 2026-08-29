@@ -831,7 +831,7 @@ a.pqlgb-golive{text-decoration:none;display:inline-block}
         // An announcement is the teacher's raised voice: banner-styled, so it
         // reads differently from conversation even in the scrollback.
         if (m.announcement) { cls += " is-announcement"; who = who ? who : ""; }
-        var megaphone = m.announcement ? '<span class="pqlgb-chat-mega">\uD83D\uDCE2 Announcement</span>' : "";
+        var megaphone = m.announcement ? '<span class="pqlgb-chat-mega">\uD83D\uDCE2 Teacher Message!</span>' : "";
         // An answered-to-class message carries its question, never its asker.
         var quote = m.quote
           ? '<span class="pqlgb-chat-quote">' + (m.quote.mine ? "You asked" : "Someone asked") + ": " + esc2(m.quote.body) + "</span>"

@@ -720,6 +720,18 @@ function pqlgb_group_next_session(array $groupids): array {
         // early.
         $teacherstarted = $hasbbbcreated
             && !empty($row->bbb_created) && (string)$row->status === 'live';
+        // A session past its scheduled end is only ON if the room is still
+        // live (overtime -- the teacher has not left). The configured
+        // after-window (here 180 minutes) keeps the JOIN DOOR open that long,
+        // and mirroring it faithfully made the pill say "Join class" three
+        // hours after a forty-minute class ended, over a dead room in
+        // awaiting_review. The door answers "would you be admitted"; the pill
+        // and the board answer "is there a class" -- and an ended class with
+        // nobody in the room is not one. Skipped entirely, so the teacher's
+        // header falls back to Go live and the child's pill disappears.
+        if ($now > (int)$row->scheduled_end && !$teacherstarted) {
+            continue;
+        }
         $joinable = !($now > ((int)$row->scheduled_end + $after))
             && !(!$teacherstarted && $now < ((int)$row->scheduled_start - $before));
         $out[$gid] = [

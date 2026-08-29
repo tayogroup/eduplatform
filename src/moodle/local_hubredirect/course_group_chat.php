@@ -123,4 +123,14 @@ if (strlen($screenshot) > 800000) {
 }
 
 $result = local_prequran_external::class_group_chat_exchange($userid, (int)$grouprow->id, $body, $since, 60, 0, $screenshot);
+
+// The group's class on TODAY's calendar, from the same lookup the teacher's
+// Go live uses -- so the two ends can never disagree about which session is
+// due. The app draws a Join button from this; the JOIN itself goes through
+// live_sessions.php, which owns the join window, the approval states and the
+// waiting room, and must keep owning them.
+if (is_array($result) && !empty($result['ok'])) {
+    $next = pqlgb_group_next_session([(int)$grouprow->id]);
+    $result['livesession'] = $next[(int)$grouprow->id] ?? null;
+}
 echo json_encode($result, JSON_UNESCAPED_SLASHES);

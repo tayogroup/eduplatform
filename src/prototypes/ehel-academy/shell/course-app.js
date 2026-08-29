@@ -659,9 +659,55 @@ export function createCourseApp(config) {
       }
     };
 
+    // THE STUDENT'S GO LIVE, beside Raise hand. The server sends the group's
+    // class on today's calendar with every chat poll -- the same lookup the
+    // teacher's Go live uses, so the two ends cannot disagree about which
+    // session is due. The link lands on live_sessions.php, which owns the join
+    // window, approval states and waiting room; this button only says THAT
+    // there is a class and WHEN, never re-implements whether joining is
+    // allowed. Removed again when the calendar empties, so it can never offer
+    // a class that is over -- the Raise-hand rule, applied to a link.
+    let liveBtn = null;
+    const paintLive = (sess) => {
+      const actions = $(".top-actions");
+      if (!sess || !sess.id || !actions) {
+        if (liveBtn) { liveBtn.remove(); liveBtn = null; }
+        return;
+      }
+      if (!liveBtn) {
+        liveBtn = document.createElement("a");
+        liveBtn.id = "class-go-live";
+        liveBtn.className = "top-grade-picker top-class-live";
+        liveBtn.target = "_blank";
+        liveBtn.rel = "noopener";
+        liveBtn.style.cssText = "width:auto;padding:8px 12px;cursor:pointer;border-radius:999px;"
+          + "text-decoration:none;display:inline-flex;align-items:center";
+        liveBtn.href = platformUrl("/local/hubredirect/live_sessions.php");
+        actions.prepend(liveBtn);
+      }
+      if (sess.due) {
+        liveBtn.textContent = "🔴 Join class";
+        liveBtn.title = "Your class is ready. Press to join your teacher.";
+        liveBtn.style.background = "#b02a37";
+        liveBtn.style.color = "#fff";
+        liveBtn.style.borderColor = "#b02a37";
+      } else {
+        const when = new Date(sess.start * 1000);
+        const hh = ("0" + when.getHours()).slice(-2) + ":" + ("0" + when.getMinutes()).slice(-2);
+        liveBtn.textContent = "🔴 Class at " + hh;
+        liveBtn.title = "Your class starts at " + hh + ". The button turns red when it is time.";
+        liveBtn.style.background = "white";
+        liveBtn.style.color = "";
+        liveBtn.style.borderColor = "";
+      }
+    };
+
     const poll = async (body) => {
       const state = await post(body ? { body, since: lastId } : { since: lastId });
-      if (state && state.ok && state.enabled) append(state.messages);
+      if (state && state.ok && state.enabled) {
+        append(state.messages);
+        paintLive(state.livesession);
+      }
       return state;
     };
 
@@ -852,6 +898,7 @@ export function createCourseApp(config) {
         }
       });
       actions.prepend(button);
+      paintLive(state.livesession);
       // Polled CLOSED as well as open, so a teacher's "everyone stop and
       // listen" reaches a child who never opened the panel — the unread dot is
       // the whole point of the broadcast half. ONE fixed cadence: a ternary on

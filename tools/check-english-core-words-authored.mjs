@@ -105,6 +105,14 @@ function shows(sentence, word) {
     const parts = word.split("-").map((p) => p.replace(/[^a-z]/gi, ""));
     const joined = parts.join("[- ]?");
     if (new RegExp(`\\b${joined}(?:s|ed|ing)?\\b`, "i").test(sentence)) return true;
+    // A hyphenated verb ending in a silent e drops it before -ed and -ing, exactly as
+    // an unhyphenated one does: re-evaluate becomes re-evaluated. The line above only
+    // appends endings whole, so "She re-evaluated her argument" was reported as never
+    // using `re-evaluate`. The non-hyphen path further down has always handled the
+    // e-drop; the hyphen path was written without it. Fifth form rule added to this
+    // function after it accused correct content, and the fifth found the same way.
+    const hstem = joined.replace(/e$/, "");
+    if (hstem !== joined && new RegExp(`\\b${hstem}(?:ed|ing|es)\\b`, "i").test(sentence)) return true;
   }
   const w = word.replace(/[^a-z]/gi, "");
   if (!w) return true;

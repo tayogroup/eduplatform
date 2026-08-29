@@ -66,7 +66,7 @@ if ($ispost) {
         $teacherid = (int)($body['teacherid'] ?? 0);
         $title = trim(clean_param((string)($body['title'] ?? ''), PARAM_TEXT));
         $start = pqwls_parse_datetime(clean_param((string)($body['scheduled_start'] ?? ''), PARAM_TEXT));
-        $duration = max(15, min(240, (int)($body['duration_minutes'] ?? 60)));
+        $duration = pqh_live_duration_clamp((int)$USER->id, (int)($body['duration_minutes'] ?? 60));
         $selectedstudents = array_map('intval', array_values((array)($body['studentids'] ?? [])));
         $recurring = (bool)clean_param($body['recurring_enabled'] ?? 0, PARAM_BOOL);
         $recurrencecount = max(1, min(52, (int)($body['recurrence_count'] ?? 4)));
@@ -174,6 +174,7 @@ echo json_encode([
     'workspaceid' => $workspaceid,
     'tables_ready' => pqh_table_exists_safe('local_prequran_live_session'),
     'series_ready' => pqwls_series_ready(),
+    'duration_max' => pqh_live_duration_cap_minutes((int)$USER->id),
     'counts' => $sessioncounts,
     'sessioncount' => count($sessions),
     'teachers' => $teacherout,

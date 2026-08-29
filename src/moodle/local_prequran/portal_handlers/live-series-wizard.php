@@ -108,7 +108,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
         $title = trim(clean_param((string)($body['title'] ?? ''), PARAM_TEXT));
         $date = trim(clean_param((string)($body['sessiondate'] ?? ''), PARAM_TEXT));
         $time = trim(clean_param((string)($body['sessiontime'] ?? ''), PARAM_TEXT));
-        $duration = (int)($body['duration'] ?? 60);
+        $duration = pqh_live_duration_clamp((int)$USER->id, (int)($body['duration'] ?? 60));
         $lessonid = clean_param((string)($body['lessonid'] ?? ''), PARAM_ALPHANUMEXT);
         $unitid = clean_param((string)($body['unitid'] ?? ''), PARAM_ALPHANUMEXT);
         if ($lessonid === '') {
@@ -312,7 +312,7 @@ $lessonid = trim(optional_param('lessonid', 'alphabet', PARAM_TEXT));
 $unitid = trim(optional_param('unitid', 'alphabet_listen', PARAM_TEXT));
 $sessiondate = optional_param('sessiondate', '', PARAM_TEXT);
 $sessiontime = optional_param('sessiontime', '', PARAM_TEXT);
-$duration = max(15, min(240, optional_param('duration', 60, PARAM_INT)));
+$duration = pqh_live_duration_clamp((int)$USER->id, optional_param('duration', 60, PARAM_INT));
 $pattern = optional_param('recurrence_pattern', 'weekdays', PARAM_ALPHANUMEXT);
 $count = max(1, min(60, optional_param('recurrence_count', 8, PARAM_INT)));
 $untilraw = optional_param('recurrence_until', '', PARAM_TEXT);
@@ -359,7 +359,7 @@ echo json_encode([
     'isadmin' => $pqlswisadmin,
     'workspaceid' => $pqlswworkspaceid,
     'cancreate' => $cancreate,
-    'durations' => [45, 60, 75, 90],
+    'durations' => pqh_live_duration_options((int)$USER->id),
     'patterns' => [
         ['value' => 'daily', 'label' => 'Daily'],
         ['value' => 'weekly', 'label' => 'Weekly'],

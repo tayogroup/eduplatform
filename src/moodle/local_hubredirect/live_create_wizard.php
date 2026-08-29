@@ -706,7 +706,7 @@ $unitid = trim(optional_param('unitid', 'alphabet_listen', PARAM_TEXT));
 $sessiondate = optional_param('sessiondate', '', PARAM_TEXT);
 $sessiontime = optional_param('sessiontime', '', PARAM_TEXT);
 $timezone = pqlwiz_valid_timezone(optional_param('timezone', pqlwiz_default_schedule_timezone(), PARAM_TEXT));
-$duration = max(15, min(240, optional_param('duration', 60, PARAM_INT)));
+$duration = pqh_live_duration_clamp((int)$USER->id, optional_param('duration', 60, PARAM_INT));
 $sessiontype = pqlwiz_normalize_session_type(optional_param('session_type', 'teacher_led', PARAM_ALPHANUMEXT));
 $teacherrequired = !in_array($sessiontype, ['supervised_practice', 'parent_meeting'], true);
 $meetingroom = pqlwiz_session_is_meeting_type($sessiontype);
@@ -1059,7 +1059,7 @@ body.pqh-live-create-wizard-page .main-inner{margin:0!important;padding:0!import
             </div>
             <div class="pqlwiz-field"><label for="timezone">Class timezone</label><input class="pqlwiz-input" id="timezone" name="timezone" type="text" value="<?php echo s($timezone); ?>" placeholder="Africa/Nairobi" required><p class="pqlwiz-meta">Use Africa/Nairobi for East Africa Time. The saved class time and all schedule pages will display using this timezone.</p></div>
             <div class="pqlwiz-field"><label for="duration">Duration</label><select class="pqlwiz-select" id="duration" name="duration">
-              <?php foreach ([45, 60, 75, 90] as $minutes): ?><option value="<?php echo (int)$minutes; ?>" <?php echo $duration === $minutes ? 'selected' : ''; ?>><?php echo (int)$minutes; ?> minutes</option><?php endforeach; ?>
+              <?php foreach (pqh_live_duration_options((int)$USER->id) as $minutes): ?><option value="<?php echo (int)$minutes; ?>" <?php echo $duration === $minutes ? 'selected' : ''; ?>><?php echo (int)$minutes; ?> minutes</option><?php endforeach; ?>
             </select></div>
             <div class="pqlwiz-actions">
               <a class="pqlwiz-btn pqlwiz-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_create_wizard.php', $params + ['step' => 3]))->out(false); ?>">Back</a>

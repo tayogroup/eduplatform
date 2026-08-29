@@ -1728,7 +1728,7 @@ if ($error === '' && data_submitted() && optional_param('action', '', PARAM_ALPH
     $title = trim(optional_param('title', '', PARAM_TEXT));
     $date = trim(optional_param('sessiondate', '', PARAM_TEXT));
     $time = trim(optional_param('sessiontime', '', PARAM_TEXT));
-    $duration = optional_param('duration', 60, PARAM_INT);
+    $duration = pqh_live_duration_clamp((int)$USER->id, optional_param('duration', 60, PARAM_INT));
     $lessonid = optional_param('lessonid', '', PARAM_ALPHANUMEXT);
     $unitid = optional_param('unitid', '', PARAM_ALPHANUMEXT);
     if ($lessonid === '') {
@@ -2126,7 +2126,7 @@ body.pqh-live-page .main-inner{margin:0!important;padding:0!important;max-width:
           <div class="pql-field">
             <label for="duration">Duration</label>
             <select class="pql-select" id="duration" name="duration">
-              <?php foreach ([60, 45, 75, 90] as $minutes): ?>
+              <?php foreach (pqh_live_duration_options((int)$USER->id) as $minutes): ?>
                 <option value="<?php echo (int)$minutes; ?>" <?php echo (int)$prefillduration === $minutes ? 'selected' : ''; ?>><?php echo (int)$minutes; ?> minutes</option>
               <?php endforeach; ?>
             </select>

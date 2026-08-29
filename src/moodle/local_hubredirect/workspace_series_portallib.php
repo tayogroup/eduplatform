@@ -140,7 +140,7 @@ function pqwserl_notify_series_change(stdClass $series, string $subject, string 
 }
 
 function pqwserl_update_series(int $workspaceid, int $seriesid): void {
-    global $DB;
+    global $DB, $USER;
     $series = pqwserl_get_series($workspaceid, $seriesid);
     if (!$series) {
         throw new invalid_parameter_exception('Recurring series was not found in this workspace.');
@@ -150,7 +150,7 @@ function pqwserl_update_series(int $workspaceid, int $seriesid): void {
     if ($title === '') {
         throw new invalid_parameter_exception('Series title is required.');
     }
-    $duration = max(15, min(240, optional_param('duration_minutes', 60, PARAM_INT)));
+    $duration = pqh_live_duration_clamp((int)$USER->id, optional_param('duration_minutes', 60, PARAM_INT));
     $lessonid = trim(optional_param('lessonid', '', PARAM_ALPHANUMEXT));
     $unitid = trim(optional_param('unitid', '', PARAM_ALPHANUMEXT));
     $now = time();

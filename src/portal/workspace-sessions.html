@@ -161,6 +161,9 @@
       $("#create-form").querySelector("button[type=submit]").disabled = true;
     }
     if (!d.series_ready) { const r = $("#recurring"); r.disabled = true; }
+    // 90-minute cap for everyone, administrators up to 240 — the server clamps
+    // regardless, this keeps the form from accepting a length it would lose.
+    if (d.duration_max) { $("#create-form").duration_minutes.max = Number(d.duration_max); }
     $("#create-panel").hidden = false;
 
     const sessions = d.sessions || [];

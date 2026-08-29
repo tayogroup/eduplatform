@@ -251,6 +251,9 @@
     $("#reschedule_date").value = dateVal(s.scheduled_start);
     $("#reschedule_time").value = timeVal(s.scheduled_start);
     $("#reschedule_duration").value = Math.max(15, Math.ceil((s.scheduled_end - s.scheduled_start) / 60));
+    // 90-minute cap for everyone, administrators up to 240 — the server clamps
+    // regardless, this keeps the form from accepting a length it would lose.
+    if (d.duration_max) { $("#reschedule_duration").max = Number(d.duration_max); }
     $("#cancellation_reason").value = s.cancellation_reason || "";
     $("#lifecycle-panel").hidden = false;
     $("#roster").innerHTML = (d.roster || []).map((r) => studentCard(r, d)).join("") ||

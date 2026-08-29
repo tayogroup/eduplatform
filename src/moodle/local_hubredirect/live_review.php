@@ -238,7 +238,7 @@ if (data_submitted() && optional_param('action', '', PARAM_ALPHANUMEXT) === 'res
     }
     $date = optional_param('reschedule_date', '', PARAM_TEXT);
     $time = optional_param('reschedule_time', '', PARAM_TEXT);
-    $duration = max(15, optional_param('reschedule_duration', 60, PARAM_INT));
+    $duration = pqh_live_duration_clamp((int)$USER->id, optional_param('reschedule_duration', 60, PARAM_INT));
     $tz = core_date::get_server_timezone();
     $start = trim($date) !== '' && trim($time) !== '' ? strtotime($date . ' ' . $time . ' ' . $tz) : false;
     if (!$start) {
@@ -654,7 +654,7 @@ body.pqh-live-review-page .main-inner{margin:0!important;padding:0!important;max
             </div>
             <div class="pqlr-field">
               <label for="reschedule_duration">Minutes</label>
-              <input class="pqlr-input" id="reschedule_duration" type="number" min="15" step="15" name="reschedule_duration" value="<?php echo (int)max(15, ceil(((int)$session->scheduled_end - (int)$session->scheduled_start) / 60)); ?>">
+              <input class="pqlr-input" id="reschedule_duration" type="number" min="15" max="<?php echo (int)pqh_live_duration_cap_minutes((int)$USER->id); ?>" step="15" name="reschedule_duration" value="<?php echo (int)max(15, ceil(((int)$session->scheduled_end - (int)$session->scheduled_start) / 60)); ?>">
             </div>
             <button class="pqlr-btn pqlr-btn--light" type="submit">Reschedule</button>
           </div>

@@ -371,7 +371,7 @@ if ($ready && $action === 'update_series') {
     $lessonid = optional_param('lessonid', '', PARAM_ALPHANUMEXT);
     $unitid = optional_param('unitid', '', PARAM_ALPHANUMEXT);
     $starttime = optional_param('start_time', '', PARAM_TEXT);
-    $duration = max(15, optional_param('duration_minutes', 60, PARAM_INT));
+    $duration = pqh_live_duration_clamp((int)$USER->id, optional_param('duration_minutes', 60, PARAM_INT));
     $studentids = pqlser_parse_students(optional_param('studentids_raw', '', PARAM_RAW));
     if ($teacherid <= 0 || trim($title) === '' || trim($lessonid) === '' || trim($unitid) === '' || !$studentids) {
         pqh_access_denied('Complete the required series fields before saving.', $seriesurl, 'Live class series form incomplete');
@@ -881,7 +881,7 @@ body.pqh-live-series-page .main-inner{margin:0!important;padding:0!important;max
                     <div><label class="pqlser-label" for="time-<?php echo (int)$series->id; ?>">Class Time</label><input class="pqlser-input" id="time-<?php echo (int)$series->id; ?>" name="start_time" type="time" value="<?php echo s(substr((string)$series->start_time, 0, 5)); ?>" required></div>
                     <div><label class="pqlser-label" for="lesson-<?php echo (int)$series->id; ?>">Lesson ID</label><input class="pqlser-input" id="lesson-<?php echo (int)$series->id; ?>" name="lessonid" value="<?php echo s((string)$series->lessonid); ?>" required></div>
                     <div><label class="pqlser-label" for="unit-<?php echo (int)$series->id; ?>">Unit ID</label><input class="pqlser-input" id="unit-<?php echo (int)$series->id; ?>" name="unitid" value="<?php echo s((string)$series->unitid); ?>" required></div>
-                    <div><label class="pqlser-label" for="duration-<?php echo (int)$series->id; ?>">Minutes</label><input class="pqlser-input" id="duration-<?php echo (int)$series->id; ?>" name="duration_minutes" type="number" min="15" max="240" step="15" value="<?php echo (int)$series->duration_minutes; ?>" required></div>
+                    <div><label class="pqlser-label" for="duration-<?php echo (int)$series->id; ?>">Minutes</label><input class="pqlser-input" id="duration-<?php echo (int)$series->id; ?>" name="duration_minutes" type="number" min="15" max="<?php echo (int)pqh_live_duration_cap_minutes((int)$USER->id); ?>" step="15" value="<?php echo (int)$series->duration_minutes; ?>" required></div>
                   </div>
                   <div style="margin-top:10px"><label class="pqlser-label" for="students-<?php echo (int)$series->id; ?>">Active Student IDs for Future Sessions</label><textarea class="pqlser-textarea" id="students-<?php echo (int)$series->id; ?>" name="studentids_raw" required><?php echo s(implode(', ', $studentids)); ?></textarea></div>
                   <p class="pqlser-meta">Saving updates the series and future sessions only. Completed and cancelled sessions keep their historical records.</p>

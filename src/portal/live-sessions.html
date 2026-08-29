@@ -294,6 +294,12 @@
           `<label><input type="checkbox" name="studentids" value="${Number(st.studentid)}" ${d.teacherstudents.length === 1 ? "checked" : ""}> ${esc(st.name)}</label>`
         ).join("") || "<div class='muted' style='padding:10px'>No assigned students found. Add a student to this workspace first, then return here.</div>";
       }
+      // The server decides which lengths this user may schedule (90-minute
+      // cap for everyone, administrators up to 240) — render its list rather
+      // than a hardcoded one, so an admin sees the long options and a teacher
+      // is never offered a length the server would clamp away.
+      $("#create-form").duration.innerHTML = (d.durations || [45, 60, 75, 90]).map((m) =>
+        `<option value="${Number(m)}" ${Number(m) === 60 ? "selected" : ""}>${Number(m)} minutes</option>`).join("");
       $("#series-warning").hidden = !!d.series_ready;
       if (!d.series_ready) {
         ["recurring_enabled", "recurrence_pattern", "recurrence_count", "recurrence_until"].forEach((n) => { if ($("#create-form")[n]) $("#create-form")[n].disabled = true; });

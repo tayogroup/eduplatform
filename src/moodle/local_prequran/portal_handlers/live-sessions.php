@@ -354,7 +354,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
         $title = trim(clean_param((string)($body['title'] ?? ''), PARAM_TEXT));
         $date = trim(clean_param((string)($body['sessiondate'] ?? ''), PARAM_TEXT));
         $time = trim(clean_param((string)($body['sessiontime'] ?? ''), PARAM_TEXT));
-        $duration = (int)($body['duration'] ?? 60);
+        $duration = pqh_live_duration_clamp((int)$USER->id, (int)($body['duration'] ?? 60));
         $lessonid = clean_param((string)($body['lessonid'] ?? ''), PARAM_ALPHANUMEXT);
         $unitid = clean_param((string)($body['unitid'] ?? ''), PARAM_ALPHANUMEXT);
         if ($lessonid === '') {
@@ -641,6 +641,7 @@ echo json_encode([
     'recordingdefault' => $recordingdefault,
     'series_ready' => pqlsesl_series_ready(),
     'default_timezone' => pqlsesl_default_schedule_timezone(),
+    'durations' => pqh_live_duration_options($userid),
     'teacherstudents' => $teacherstudents,
     'classgroups' => $classgroups,
     'upcoming' => array_values($sessions),

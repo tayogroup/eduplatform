@@ -324,7 +324,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $teacherid = optional_param('teacherid', 0, PARAM_INT);
         $title = trim(optional_param('title', '', PARAM_TEXT));
         $start = pqwls_parse_datetime(optional_param('scheduled_start', '', PARAM_TEXT));
-        $duration = max(15, min(240, optional_param('duration_minutes', 60, PARAM_INT)));
+        $duration = pqh_live_duration_clamp((int)$USER->id, optional_param('duration_minutes', 60, PARAM_INT));
         $selectedstudents = optional_param_array('studentids', [], PARAM_INT);
         $recurring = optional_param('recurring_enabled', 0, PARAM_BOOL);
         $recurrencecount = max(1, min(52, optional_param('recurrence_count', 4, PARAM_INT)));
@@ -430,7 +430,7 @@ body.pqw-sessions-page #page,body.pqw-sessions-page #page-content,body.pqw-sessi
             <?php foreach ($teachers as $teacher): ?><option value="<?php echo (int)$teacher->userid; ?>"><?php echo s(fullname($teacher) . ' #' . (int)$teacher->userid); ?></option><?php endforeach; ?>
           </select></div>
           <div class="pqwls-field"><label>Start</label><input class="pqwls-input" name="scheduled_start" type="datetime-local" required></div>
-          <div class="pqwls-field"><label>Duration minutes</label><input class="pqwls-input" name="duration_minutes" type="number" min="15" max="240" value="60"></div>
+          <div class="pqwls-field"><label>Duration minutes</label><input class="pqwls-input" name="duration_minutes" type="number" min="15" max="<?php echo (int)pqh_live_duration_cap_minutes((int)$USER->id); ?>" value="60"></div>
           <div class="pqwls-recurring">
             <label class="pqwls-check"><input type="checkbox" name="recurring_enabled" value="1" <?php echo pqwls_series_ready() ? '' : 'disabled'; ?>> Repeat weekly</label>
             <?php if (!pqwls_series_ready()): ?><span class="pqwls-muted">Run the live-series upgrade before creating recurring sessions.</span><?php endif; ?>

@@ -61,6 +61,44 @@ function pqh_can_view_sqa_dashboard(int $userid): bool {
     return pqh_can_manage_academy_operations($userid) || pqh_is_sqa_tester($userid);
 }
 
+/**
+ * How long a live class may be scheduled for, in minutes, by this user.
+ *
+ * 90 for everyone; administrators (site admins and school principals, via
+ * pqh_can_manage_academy_operations) may overwrite up to 240 (4 hours).
+ * The cap is keyed on the ACTOR doing the scheduling, not the teacher the
+ * session is created for - "an administrator may schedule a long class for a
+ * teacher" is the point, "a teacher may by naming an admin" is not.
+ *
+ * Every BBB room gets a further 30-minute grace on top at the create call
+ * sites ("+ 30" on scheduled_end - scheduled_start), so the longest room an
+ * administrator can start runs 4.5 hours. local_prequran_bbb_meeting_defaults()
+ * in local/prequran/locallib.php holds that 270-minute room ceiling and must
+ * move together with this cap.
+ */
+function pqh_live_duration_cap_minutes(int $userid): int {
+    return pqh_can_manage_academy_operations($userid) ? 240 : 90;
+}
+
+function pqh_live_duration_clamp(int $userid, int $minutes): int {
+    return max(15, min(pqh_live_duration_cap_minutes($userid), $minutes));
+}
+
+/**
+ * The duration choices a scheduling form offers this user, capped by
+ * pqh_live_duration_cap_minutes - so the form never offers a length the
+ * server would silently clamp away.
+ */
+function pqh_live_duration_options(int $userid): array {
+    $cap = pqh_live_duration_cap_minutes($userid);
+    return array_values(array_filter(
+        [45, 60, 75, 90, 120, 150, 180, 210, 240],
+        static function (int $minutes) use ($cap): bool {
+            return $minutes <= $cap;
+        }
+    ));
+}
+
 function pqh_require_academy_operations(string $message, ?moodle_url $returnurl = null, string $title = 'Platform operations access required'): void {
     global $USER;
     if (pqh_can_manage_academy_operations((int)$USER->id)) {

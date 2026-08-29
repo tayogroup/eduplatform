@@ -112,7 +112,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
         $title = trim(clean_param((string)($body['title'] ?? ''), PARAM_TEXT));
         $date = trim(clean_param((string)($body['sessiondate'] ?? ''), PARAM_TEXT));
         $time = trim(clean_param((string)($body['sessiontime'] ?? ''), PARAM_TEXT));
-        $duration = (int)($body['duration'] ?? 60);
+        $duration = pqh_live_duration_clamp((int)$USER->id, (int)($body['duration'] ?? 60));
         $lessonid = clean_param((string)($body['lessonid'] ?? ''), PARAM_ALPHANUMEXT);
         $unitid = clean_param((string)($body['unitid'] ?? ''), PARAM_ALPHANUMEXT);
         if ($lessonid === '') {
@@ -318,7 +318,7 @@ $unitid = trim(optional_param('unitid', 'alphabet_listen', PARAM_TEXT));
 $sessiondate = optional_param('sessiondate', '', PARAM_TEXT);
 $sessiontime = optional_param('sessiontime', '', PARAM_TEXT);
 $timezone = pqlsesl_valid_timezone(optional_param('timezone', pqlsesl_default_schedule_timezone(), PARAM_TEXT));
-$duration = max(15, min(240, optional_param('duration', 60, PARAM_INT)));
+$duration = pqh_live_duration_clamp((int)$USER->id, optional_param('duration', 60, PARAM_INT));
 $sessiontype = pqlcwl_normalize_session_type(optional_param('session_type', 'teacher_led', PARAM_ALPHANUMEXT));
 $teacherrequired = !in_array($sessiontype, ['supervised_practice', 'parent_meeting'], true);
 $meetingroom = pqlcwl_session_is_meeting_type($sessiontype);
@@ -415,7 +415,7 @@ echo json_encode([
     'cancreate' => $cancreate,
     'recordingdefault' => $recordingdefault,
     'default_timezone' => pqlsesl_default_schedule_timezone(),
-    'durations' => [45, 60, 75, 90],
+    'durations' => pqh_live_duration_options((int)$USER->id),
     'weekdays' => pqlcwl_weekdays(),
     'session_types' => $sessiontypesout,
     'practice_modes' => $practicemodesout,

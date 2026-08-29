@@ -185,6 +185,9 @@
     ef.lessonid.value = s.lessonid || "";
     ef.unitid.value = s.unitid || "";
     ef.duration_minutes.value = s.duration_minutes || 60;
+    // 90-minute cap for everyone, administrators up to 240 — the server clamps
+    // regardless, this keeps the form from accepting a length it would lose.
+    if (d.duration_max) { ef.duration_minutes.max = Number(d.duration_max); }
     ef.onsubmit = (ev) => { ev.preventDefault(); send({
       do: "update_series", seriesid: s.id,
       title: ef.title.value, lessonid: ef.lessonid.value, unitid: ef.unitid.value,

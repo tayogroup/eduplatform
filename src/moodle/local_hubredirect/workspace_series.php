@@ -184,7 +184,7 @@ function pqwser_update_series(int $workspaceid, int $seriesid): void {
     if ($title === '') {
         throw new invalid_parameter_exception('Series title is required.');
     }
-    $duration = max(15, min(240, optional_param('duration_minutes', 60, PARAM_INT)));
+    $duration = pqh_live_duration_clamp((int)$USER->id, optional_param('duration_minutes', 60, PARAM_INT));
     $lessonid = trim(optional_param('lessonid', '', PARAM_ALPHANUMEXT));
     $unitid = trim(optional_param('unitid', '', PARAM_ALPHANUMEXT));
     $now = time();
@@ -436,7 +436,7 @@ body.pqw-series-page #page,body.pqw-series-page #page-content,body.pqw-series-pa
             <div class="pqwser-field"><label>Title</label><input class="pqwser-input" name="title" required value="<?php echo s((string)$selectedseries->title); ?>"></div>
             <div class="pqwser-field"><label>Lesson ID</label><input class="pqwser-input" name="lessonid" value="<?php echo s((string)($selectedseries->lessonid ?? '')); ?>"></div>
             <div class="pqwser-field"><label>Unit ID</label><input class="pqwser-input" name="unitid" value="<?php echo s((string)($selectedseries->unitid ?? '')); ?>"></div>
-            <div class="pqwser-field"><label>Duration minutes</label><input class="pqwser-input" name="duration_minutes" type="number" min="15" max="240" value="<?php echo (int)($selectedseries->duration_minutes ?? 60); ?>"></div>
+            <div class="pqwser-field"><label>Duration minutes</label><input class="pqwser-input" name="duration_minutes" type="number" min="15" max="<?php echo (int)pqh_live_duration_cap_minutes((int)$USER->id); ?>" value="<?php echo (int)($selectedseries->duration_minutes ?? 60); ?>"></div>
             <button class="pqwser-btn" type="submit">Update future classes</button>
           </form>
           <form class="pqwser-panel" method="post">

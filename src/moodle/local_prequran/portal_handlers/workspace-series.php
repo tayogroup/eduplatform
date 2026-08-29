@@ -149,6 +149,7 @@ foreach ($sessions as $s) {
 echo json_encode([
     'ok' => true,
     'ready' => pqwserl_ready(),
+    'duration_max' => pqh_live_duration_cap_minutes((int)$USER->id),
     'workspace' => ['id' => (int)$workspace->id, 'name' => (string)$workspace->name],
     'workspaceid' => $workspaceid,
     'seriesid' => $selectedseries ? (int)$selectedseries->id : 0,

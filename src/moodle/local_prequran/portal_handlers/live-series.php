@@ -94,7 +94,7 @@ if ($ispost) {
         $lessonid = optional_param('lessonid', '', PARAM_ALPHANUMEXT);
         $unitid = optional_param('unitid', '', PARAM_ALPHANUMEXT);
         $starttime = optional_param('start_time', '', PARAM_TEXT);
-        $duration = max(15, optional_param('duration_minutes', 60, PARAM_INT));
+        $duration = pqh_live_duration_clamp((int)$USER->id, optional_param('duration_minutes', 60, PARAM_INT));
         $studentids = pqlserl_parse_students(optional_param('studentids_raw', '', PARAM_RAW));
         if ($teacherid <= 0 || trim($title) === '' || trim($lessonid) === '' || trim($unitid) === '' || !$studentids) {
             pqpd_fail(403, 'Complete the required series fields before saving.');
@@ -575,6 +575,7 @@ echo json_encode([
     'ready' => $ready,
     'brand' => $brandname,
     'canoperate' => $canoperate,
+    'duration_max' => pqh_live_duration_cap_minutes((int)$USER->id),
     'ack_ready' => pqlserl_ack_ready(),
     'series' => $seriesout,
     'names' => pqpd_names($nameids),

@@ -154,7 +154,19 @@ function local_prequran_bbb_meeting_defaults(array $meeting): array {
         'duration' => 90,
     ];
 
-    return array_merge($defaults, $meeting);
+    $merged = array_merge($defaults, $meeting);
+    // A room never outlives 4.5 hours: 270 = the 240-minute administrator
+    // scheduling cap (pqh_live_duration_cap_minutes in
+    // local/hubredirect/accesslib.php - everyone else stops at 90) plus the
+    // 30-minute grace the create call sites add so a class is not cut off at
+    // its scheduled end. This is the one choke point every BBB create passes
+    // through, so a stored schedule that predates the cap cannot mint a
+    // longer room either.
+    if ((int)$merged['duration'] > 270) {
+        $merged['duration'] = 270;
+    }
+
+    return $merged;
 }
 
 /**

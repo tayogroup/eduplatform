@@ -178,7 +178,7 @@ if ($ispost) {
         }
         $date = clean_param((string)($body['reschedule_date'] ?? ''), PARAM_TEXT);
         $time = clean_param((string)($body['reschedule_time'] ?? ''), PARAM_TEXT);
-        $duration = max(15, (int)($body['reschedule_duration'] ?? 60));
+        $duration = pqh_live_duration_clamp((int)$USER->id, (int)($body['reschedule_duration'] ?? 60));
         $tz = core_date::get_server_timezone();
         $start = trim($date) !== '' && trim($time) !== '' ? strtotime($date . ' ' . $time . ' ' . $tz) : false;
         if (!$start) {
@@ -543,6 +543,7 @@ echo json_encode([
     'ok' => true,
     'ready' => true,
     'brand' => $brandname,
+    'duration_max' => pqh_live_duration_cap_minutes((int)$USER->id),
     'session' => [
         'id' => (int)$session->id,
         'title' => (string)$session->title,

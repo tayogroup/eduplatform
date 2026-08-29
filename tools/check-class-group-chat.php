@@ -114,12 +114,17 @@ $check = static function (string $why, bool $ok) use (&$pass, &$fail): void {
 };
 
 // ---- the stamp --------------------------------------------------------------
+// Role-based, not assigned-teacher-based: the first live test had a site admin
+// supervising the board, and their messages to the class were stamped as
+// learner messages -- invisible to every child. Staff are not students.
 $check("a teacher's message in the room is public",
-    PQ_Gate_Harness::support_message_visibility_for($groupthread, $TEACHER) === 'public');
+    PQ_Gate_Harness::support_message_visibility_for($groupthread, $TEACHER, false) === 'public');
+$check("STAFF who are not the assigned teacher are still public (the admin case)",
+    PQ_Gate_Harness::support_message_visibility_for($groupthread, $ADMINISH, false) === 'public');
 $check("a learner's message in the room is teacher-only",
-    PQ_Gate_Harness::support_message_visibility_for($groupthread, $LEARNER_A) === 'group_teacher_only');
+    PQ_Gate_Harness::support_message_visibility_for($groupthread, $LEARNER_A, true) === 'group_teacher_only');
 $check("a 1:1 thread is untouched (still public)",
-    PQ_Gate_Harness::support_message_visibility_for($oldthread, $LEARNER_A) === 'public');
+    PQ_Gate_Harness::support_message_visibility_for($oldthread, $LEARNER_A, true) === 'public');
 
 // ---- the view, which is the half that protects children ---------------------
 $teachermsg = $msg($TEACHER, 'public');
@@ -139,7 +144,7 @@ $check("a random authenticated user is refused",
 // A message wrongly stamped public in the room would leak whatever the view
 // rule says — the two halves must FAIL SAFE together, so assert the round trip:
 // stamp a learner message, then show it to another learner.
-$roundtrip = $msg($LEARNER_A, PQ_Gate_Harness::support_message_visibility_for($groupthread, $LEARNER_A));
+$roundtrip = $msg($LEARNER_A, PQ_Gate_Harness::support_message_visibility_for($groupthread, $LEARNER_A, true));
 $check("ROUND TRIP: stamped by one half, refused by the other",
     !PQ_Gate_Harness::support_message_visible_to_user($roundtrip, $groupthread, $LEARNER_B));
 

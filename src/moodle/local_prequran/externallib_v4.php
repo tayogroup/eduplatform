@@ -7853,11 +7853,20 @@ $validate = [
      * exist and are already applied on BOTH read paths (get_conversation and
      * live_poll). Nothing about the store, the polling or the audit changes.
      */
-    protected static function support_message_visibility_for($thread, int $senderid): string {
+    protected static function support_message_visibility_for($thread, int $senderid, bool $senderisstudent): string {
         if ((string)($thread->type ?? '') !== 'class_group') {
             return 'public';
         }
-        return $senderid === (int)($thread->assignedto ?? 0) ? 'public' : 'group_teacher_only';
+        // BY ROLE, NOT BY BEING THE ASSIGNED TEACHER. The first version said
+        // "public only if sender === thread->assignedto", and the first real
+        // test caught it: a site admin supervising the board sent to the class
+        // and their messages were stamped as LEARNER messages -- amber on their
+        // own panel, invisible to every child. The safeguarding rule is "no
+        // student-to-student messaging"; staff are not students, and any staff
+        // member who can reply here at all has already passed
+        // support_can_reply_thread's capability check. Only a student's
+        // message narrows to the teacher.
+        return $senderisstudent ? 'group_teacher_only' : 'public';
     }
 
     protected static function support_message_visible_to_user($message, $thread, int $userid): bool {
@@ -8389,7 +8398,9 @@ $validate = [
                 'templatekey' => '',
                 'status' => 'visible',
                 'moderationflags' => '',
-                'visibility' => $isteacher ? 'public' : 'group_teacher_only',
+                'visibility' => self::support_message_visibility_for(
+                    (object)['type' => 'class_group', 'assignedto' => $teacherid],
+                    $userid, $ismember && !$isteacher),
                 'ticketid' => 0,
                 'timecreated' => $now,
                 'timemodified' => $now,
@@ -8479,7 +8490,14 @@ $validate = [
             'templatekey' => '',
             'status' => 'visible',
             'moderationflags' => '',
-            'visibility' => self::support_message_visibility_for($thread, (int)$USER->id),
+            // A student in a class_group room is always a participant seeded from
+            // the roster with role 'student' (a revoked one cannot reply at
+            // all), so the participant row is the authoritative answer to "is
+            // this sender a child". Staff replying via capability have no row,
+            // which correctly reads as not-a-student.
+            'visibility' => self::support_message_visibility_for($thread, (int)$USER->id,
+                (string)$DB->get_field('local_prequran_comm_participant', 'role',
+                    ['threadid' => (int)$thread->id, 'userid' => (int)$USER->id]) === 'student'),
             'ticketid' => empty($thread->linkedticketid) ? 0 : (int)$thread->linkedticketid,
             'timecreated' => $now,
             'timemodified' => $now,

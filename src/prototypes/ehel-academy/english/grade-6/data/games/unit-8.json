@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: A practice session in which performers work through a play, concert or show before the real event.",
+          "prompt": "Which word means: A way in which two things are not the same.",
           "choices": [
-            "rehearsal",
-            "eternal",
-            "ancestral"
+            "difference",
+            "pixel",
+            "assertion"
           ],
-          "answer": "rehearsal",
-          "explanation": "rehearsal: A practice session in which performers work through a play, concert or show before the real event."
+          "answer": "difference",
+          "explanation": "difference: A way in which two things are not the same."
         },
         {
-          "prompt": "Which word means: A type of government where a king or queen rules the country.",
+          "prompt": "Which word means: A sudden, surprising change in the direction of a story.",
           "choices": [
-            "rehearsal",
-            "eternal",
-            "monarchy"
+            "difference",
+            "pixel",
+            "twist"
           ],
-          "answer": "monarchy",
-          "explanation": "monarchy: A type of government where a king or queen rules the country."
+          "answer": "twist",
+          "explanation": "twist: A sudden, surprising change in the direction of a story."
         },
         {
-          "prompt": "Which word means: A perfect place where everything is good and everyone is happy.",
+          "prompt": "Which word means: Strongly disagreed with something or actively worked against it.",
           "choices": [
-            "eternal",
-            "utopia",
-            "rehearsal"
+            "pixel",
+            "opposed",
+            "difference"
           ],
-          "answer": "utopia",
-          "explanation": "utopia: A perfect place where everything is good and everyone is happy."
+          "answer": "opposed",
+          "explanation": "opposed: Strongly disagreed with something or actively worked against it."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A young person who learns a trade or skill by working beside an experienced worker.",
-          "answer": "apprentice"
+          "clue": "The pleasure you get from doing something.",
+          "answer": "enjoyment"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Related to a system in the past where people worked for a lord in exchange for land and protection.",
-          "answer": "feudal"
+          "clue": "A person who makes films, often responsible for directing or producing them.",
+          "answer": "filmmaker"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A perfect place where everything is good and everyone is happy.",
-          "answer": "utopia"
+          "clue": "Small broken pieces or parts left over from something larger that no longer exists whole.",
+          "answer": "fragments"
         }
       ]
     },
@@ -83,55 +83,47 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "hall.",
-            "school",
+            "evidence.",
+            "their",
+            "is",
+            "reports",
+            "two",
+            "the",
+            "between",
+            "difference",
+            "The"
+          ],
+          "answer": "The difference between the two reports is their evidence."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "years.",
+            "for",
+            "corner",
             "the",
             "in",
-            "rehearsal",
-            "a",
-            "holds",
-            "club",
-            "drama",
-            "the",
-            "Monday,",
-            "Every"
+            "idle",
+            "sat",
+            "radio",
+            "old",
+            "The"
           ],
-          "answer": "Every Monday, the drama club holds a rehearsal in the school hall."
+          "answer": "The old radio sat idle in the corner for years."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "lord.",
-            "the",
-            "to",
-            "crops",
-            "their",
-            "of",
-            "part",
-            "give",
-            "would",
-            "farmers",
-            "system,",
-            "feudal",
-            "a",
-            "In"
+            "interest.",
+            "great",
+            "with",
+            "discoveries",
+            "African",
+            "tracked",
+            "universities",
+            "International"
           ],
-          "answer": "In a feudal system, farmers would give part of their crops to the lord."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "butter.",
-            "make",
-            "to",
-            "cream",
-            "the",
-            "churn",
-            "to",
-            "need",
-            "We"
-          ],
-          "answer": "We need to churn the cream to make butter."
+          "answer": "International universities tracked African discoveries with great interest."
         }
       ]
     },
@@ -236,7 +228,7 @@
         },
         {
           "prompt": "Speaking 5: Retell a Scene from the Story",
-          "target": "We need to churn the cream to make butter."
+          "target": "International universities tracked African discoveries with great interest."
         }
       ]
     },
@@ -251,62 +243,51 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "ago.",
-            "generations",
-            "four",
-            "down",
-            "written",
-            "were",
-            "that",
-            "recipes",
-            "ancestral",
-            "the",
-            "cooks",
-            "still",
-            "family",
-            "Nora's"
-          ],
-          "answer": "Nora's family still cooks the ancestral recipes that were written down four generations ago."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "further.",
-            "explain",
-            "to",
-            "him",
-            "asked",
-            "teacher",
-            "the",
-            "so",
-            "answer,",
-            "partial",
-            "a",
-            "gave",
-            "only",
-            "Theo"
-          ],
-          "answer": "Theo only gave a partial answer, so the teacher asked him to explain further."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "monuments.",
-            "and",
-            "museums",
-            "famous",
-            "its",
-            "admire",
-            "to",
-            "year",
-            "each",
-            "Paris",
-            "visit",
-            "tourists",
+            "family.",
+            "our",
+            "about",
+            "stories",
             "of",
-            "Millions"
+            "legacy",
+            "a",
+            "me",
+            "left",
+            "grandfather",
+            "My"
           ],
-          "answer": "Millions of tourists visit Paris each year to admire its famous museums and monuments."
+          "answer": "My grandfather left me a legacy of stories about our family."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "field.",
+            "quiet",
+            "the",
+            "across",
+            "drifted",
+            "traffic",
+            "distant",
+            "of",
+            "hum",
+            "The"
+          ],
+          "answer": "The hum of distant traffic drifted across the quiet field."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "outcome.",
+            "possible",
+            "every",
+            "showed",
+            "chart",
+            "the",
+            "on",
+            "paths",
+            "branching",
+            "The"
+          ],
+          "answer": "The branching paths on the chart showed every possible outcome."
         }
       ]
     },
@@ -319,34 +300,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'racial' mean in this unit?",
+          "prompt": "What does 'shovel' mean in this unit?",
           "choices": [
-            "Related to a person's race or ethnic background.",
-            "A practice session in which performers work through a play, concert or show before the real event.",
-            "Lasting for all time and never coming to an end."
+            "A shovel is a tool with a long handle and a wide blade, used for digging or moving earth.",
+            "A way in which two things are not the same.",
+            "One of the tiny dots that together make a screen image."
           ],
-          "answer": "Related to a person's race or ethnic background.",
-          "explanation": "racial: Related to a person's race or ethnic background."
+          "answer": "A shovel is a tool with a long handle and a wide blade, used for digging or moving earth.",
+          "explanation": "shovel: A shovel is a tool with a long handle and a wide blade, used for digging or moving earth."
         },
         {
-          "prompt": "What does 'archaeological' mean in this unit?",
+          "prompt": "What does 'imprisonment' mean in this unit?",
           "choices": [
-            "A practice session in which performers work through a play, concert or show before the real event.",
-            "Lasting for all time and never coming to an end.",
-            "Related to the study of ancient cultures by looking at their buildings, tools, and objects."
+            "A way in which two things are not the same.",
+            "One of the tiny dots that together make a screen image.",
+            "The state of being kept in prison, or the act of putting someone in prison."
           ],
-          "answer": "Related to the study of ancient cultures by looking at their buildings, tools, and objects.",
-          "explanation": "archaeological: Related to the study of ancient cultures by looking at their buildings, tools, and objects."
+          "answer": "The state of being kept in prison, or the act of putting someone in prison.",
+          "explanation": "imprisonment: The state of being kept in prison, or the act of putting someone in prison."
         },
         {
-          "prompt": "What does 'eternal' mean in this unit?",
+          "prompt": "What does 'pixel' mean in this unit?",
           "choices": [
-            "Belonging to, or handed down from, family members who lived long ago.",
-            "Lasting for all time and never coming to an end.",
-            "A practice session in which performers work through a play, concert or show before the real event."
+            "A strong statement that something is true.",
+            "One of the tiny dots that together make a screen image.",
+            "A way in which two things are not the same."
           ],
-          "answer": "Lasting for all time and never coming to an end.",
-          "explanation": "eternal: Lasting for all time and never coming to an end."
+          "answer": "One of the tiny dots that together make a screen image.",
+          "explanation": "pixel: One of the tiny dots that together make a screen image."
         }
       ]
     },
@@ -359,34 +340,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'advert'?",
+          "prompt": "What type of word is 'proof'?",
           "choices": [
             "Noun",
             "Verb",
             "Adjective"
           ],
           "answer": "Noun",
-          "explanation": "Advert is used as a noun in this dictionary sense."
+          "explanation": "Proof is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'cyanide'?",
+          "prompt": "What type of word is 'partial'?",
           "choices": [
+            "Noun",
             "Verb",
-            "Adjective",
-            "Noun"
+            "Adjective"
           ],
-          "answer": "Noun",
-          "explanation": "Cyanide is used as a noun in this dictionary sense."
+          "answer": "Adjective",
+          "explanation": "Partial is used as an adjective in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'admiral'?",
+          "prompt": "What type of word is 'composer'?",
           "choices": [
             "Adjective",
             "Noun",
             "Verb"
           ],
           "answer": "Noun",
-          "explanation": "Admiral is used as a noun in this dictionary sense."
+          "explanation": "Composer is used as a noun in this dictionary sense."
         }
       ]
     },
@@ -402,16 +383,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "eternal",
-              "Lasting for all time and never coming to an end."
+              "excitement",
+              "A strong feeling of eagerness about something happening."
             ],
             [
-              "classical",
-              "Belonging to a long, respected tradition of art, music or writing from the distant past."
+              "plagiarism",
+              "Passing off someone else's work as your own."
             ],
             [
-              "dynasty",
-              "A series of rulers from the same family or group over a long time."
+              "series",
+              "A group of related television programmes or books released one after another."
             ]
           ]
         },
@@ -419,16 +400,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "terror",
-              "A strong feeling of fear or being very scared."
+              "inspiring",
+              "Making someone feel encouraged or filled with a strong desire to do something."
             ],
             [
-              "suburbs",
-              "An area where people live that is outside of a big city, usually with houses and parks."
+              "tape",
+              "Tape is a long, narrow strip of material used to mark, fasten, or seal something."
             ],
             [
-              "hospitable",
-              "Friendly and welcoming to guests or strangers."
+              "sought",
+              "Sought means tried hard to find, get, or achieve something."
             ]
           ]
         },
@@ -436,16 +417,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "archaeological",
-              "Related to the study of ancient cultures by looking at their buildings, tools, and objects."
+              "adverbs",
+              "Words that describe how, when or where an action happens, such as often or usually."
             ],
             [
-              "cemetery",
-              "A place where people are buried after they die."
+              "candlelight",
+              "The soft light given off by a burning candle."
             ],
             [
-              "Paris",
-              "The capital city of France, known for its art, fashion, and famous landmarks like the Eiffel Tower."
+              "legacy",
+              "Something that is passed down from the past, like traditions, stories, or values."
             ]
           ]
         }

@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: Not thinking that you are better than others; modest.",
+          "prompt": "Which word means: Giving up something important or valuable for the sake of something else.",
           "choices": [
-            "humble",
-            "meagre",
-            "sensitive"
+            "sacrifice",
+            "production",
+            "sample"
           ],
-          "answer": "humble",
-          "explanation": "humble: Not thinking that you are better than others; modest."
+          "answer": "sacrifice",
+          "explanation": "sacrifice: Giving up something important or valuable for the sake of something else."
         },
         {
-          "prompt": "Which word means: Someone who is very forceful or ready to fight.",
+          "prompt": "Which word means: To look at two or more things closely to see how they are different or alike.",
           "choices": [
-            "humble",
-            "meagre",
-            "aggressive"
+            "sacrifice",
+            "production",
+            "compare"
           ],
-          "answer": "aggressive",
-          "explanation": "aggressive: Someone who is very forceful or ready to fight."
+          "answer": "compare",
+          "explanation": "compare: To look at two or more things closely to see how they are different or alike."
         },
         {
-          "prompt": "Which word means: In a way that is very noticeable or surprising.",
+          "prompt": "Which word means: Turned over suddenly, or moved as if turning over, often used to describe a nervous feeling.",
           "choices": [
-            "meagre",
-            "dramatically",
-            "humble"
+            "production",
+            "flipped",
+            "sacrifice"
           ],
-          "answer": "dramatically",
-          "explanation": "dramatically: In a way that is very noticeable or surprising."
+          "answer": "flipped",
+          "explanation": "flipped: Turned over suddenly, or moved as if turning over, often used to describe a nervous feeling."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "In a way that shows you really want to do something.",
-          "answer": "eagerly"
+          "clue": "Honest, and truly meaning the words that you choose to say.",
+          "answer": "sincere"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Very large or heavy.",
-          "answer": "massive"
+          "clue": "At a low cost, without spending very much money.",
+          "answer": "cheaply"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A special right or advantage that only some people have.",
-          "answer": "privilege"
+          "clue": "The part of your body where food goes after you swallow it, often mentioned when you feel nervous.",
+          "answer": "stomach"
         }
       ]
     },
@@ -83,44 +83,52 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "presents.",
-            "birthday",
-            "her",
-            "opened",
-            "eagerly",
-            "She"
-          ],
-          "answer": "She eagerly opened her birthday presents."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "fabulous!",
-            "was",
-            "birthday",
-            "my",
-            "for",
-            "made",
-            "mum",
-            "my",
-            "cake",
-            "The"
-          ],
-          "answer": "The cake my mum made for my birthday was fabulous!"
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "arrived.",
-            "storm",
+            "sincere.",
+            "most",
             "the",
-            "when",
-            "dramatically",
-            "changed",
-            "weather",
+            "also",
+            "was",
+            "pile",
+            "the",
+            "in",
+            "essay",
+            "quietest",
             "The"
           ],
-          "answer": "The weather changed dramatically when the storm arrived."
+          "answer": "The quietest essay in the pile was also the most sincere."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "community.",
+            "your",
+            "strengthening",
+            "of",
+            "way",
+            "one",
+            "is",
+            "have",
+            "you",
+            "what",
+            "Sharing"
+          ],
+          "answer": "Sharing what you have is one way of strengthening your community."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "mentioned.",
+            "name",
+            "her",
+            "heard",
+            "she",
+            "when",
+            "up",
+            "perked",
+            "ears",
+            "Amal's"
+          ],
+          "answer": "Amal's ears perked up when she heard her name mentioned."
         }
       ]
     },
@@ -217,11 +225,11 @@
       "rounds": [
         {
           "prompt": "Speaking 1: Explain a Money Word",
-          "target": "She eagerly opened her birthday presents."
+          "target": "The quietest essay in the pile was also the most sincere."
         },
         {
           "prompt": "Speaking 3: My Saving Plan Talk",
-          "target": "The cake my mum made for my birthday was fabulous!"
+          "target": "Sharing what you have is one way of strengthening your community."
         },
         {
           "prompt": "Speaking 5: At the Market Role-Play",
@@ -240,61 +248,52 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "begin.",
-            "to",
-            "fundraiser",
-            "charity",
-            "the",
-            "for",
-            "hall",
-            "the",
-            "outside",
-            "eagerly",
-            "waited",
-            "pupils",
-            "younger",
+            "strangers.",
+            "at",
+            "loudly",
+            "barked",
+            "and",
+            "aggressive",
+            "was",
+            "dog",
             "The"
           ],
-          "answer": "The younger pupils waited eagerly outside the hall for the charity fundraiser to begin."
+          "answer": "The dog was aggressive and barked loudly at strangers."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "summer.",
-            "that",
-            "failed",
-            "harvest",
-            "the",
-            "after",
-            "prices",
-            "in",
-            "rise",
-            "noticeable",
+            "fortune.",
             "a",
-            "was",
-            "There"
+            "owning",
+            "than",
+            "more",
+            "matter",
+            "can",
+            "well",
+            "income",
+            "small",
+            "a",
+            "Managing"
           ],
-          "answer": "There was a noticeable rise in prices after the harvest failed that summer."
+          "answer": "Managing a small income well can matter more than owning a fortune."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "crisis.",
-            "financial",
-            "sudden",
+            "ended.",
+            "finally",
+            "exam",
             "the",
-            "during",
-            "savings",
-            "their",
-            "lost",
-            "family",
-            "the",
-            "that",
-            "unfortunate",
-            "was",
-            "It"
+            "when",
+            "relief",
+            "of",
+            "sigh",
+            "a",
+            "breathed",
+            "Nora"
           ],
-          "answer": "It was unfortunate that the family lost their savings during the sudden financial crisis."
+          "answer": "Nora breathed a sigh of relief when the exam finally ended."
         }
       ]
     },
@@ -307,34 +306,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'massive' mean in this unit?",
+          "prompt": "What does 'responsibility' mean in this unit?",
           "choices": [
-            "Very large or heavy.",
-            "Not thinking that you are better than others; modest.",
-            "Not enough; very small in amount or quality."
+            "A duty or task that you are expected to look after and be accountable for.",
+            "Giving up something important or valuable for the sake of something else.",
+            "The process of making or creating something."
           ],
-          "answer": "Very large or heavy.",
-          "explanation": "massive: Very large or heavy."
+          "answer": "A duty or task that you are expected to look after and be accountable for.",
+          "explanation": "responsibility: A duty or task that you are expected to look after and be accountable for."
         },
         {
-          "prompt": "What does 'unavailable' mean in this unit?",
+          "prompt": "What does 'adapted' mean in this unit?",
           "choices": [
-            "Not thinking that you are better than others; modest.",
-            "Not enough; very small in amount or quality.",
-            "Not able to be used or not present."
+            "Giving up something important or valuable for the sake of something else.",
+            "The process of making or creating something.",
+            "Changed in order to suit new conditions or circumstances."
           ],
-          "answer": "Not able to be used or not present.",
-          "explanation": "unavailable: Not able to be used or not present."
+          "answer": "Changed in order to suit new conditions or circumstances.",
+          "explanation": "adapted: Changed in order to suit new conditions or circumstances."
         },
         {
-          "prompt": "What does 'meagre' mean in this unit?",
+          "prompt": "What does 'production' mean in this unit?",
           "choices": [
-            "Easily affected by things around you, like feelings or physical things.",
-            "Not enough; very small in amount or quality.",
-            "Not thinking that you are better than others; modest."
+            "A small amount of something taken to study or test the rest of it.",
+            "The process of making or creating something.",
+            "Giving up something important or valuable for the sake of something else."
           ],
-          "answer": "Not enough; very small in amount or quality.",
-          "explanation": "meagre: Not enough; very small in amount or quality."
+          "answer": "The process of making or creating something.",
+          "explanation": "production: The process of making or creating something."
         }
       ]
     },
@@ -347,34 +346,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'substantial'?",
+          "prompt": "What type of word is 'leg'?",
           "choices": [
-            "Adjective",
             "Noun",
-            "Verb"
+            "Verb",
+            "Adjective"
           ],
-          "answer": "Adjective",
-          "explanation": "Substantial is used as an adjective in this dictionary sense."
+          "answer": "Noun",
+          "explanation": "Leg is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'unavoidable'?",
+          "prompt": "What type of word is 'extensive'?",
           "choices": [
             "Noun",
             "Verb",
             "Adjective"
           ],
           "answer": "Adjective",
-          "explanation": "Unavoidable is used as an adjective in this dictionary sense."
+          "explanation": "Extensive is used as an adjective in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'frustrated'?",
+          "prompt": "What type of word is 'phone'?",
           "choices": [
-            "Verb",
             "Adjective",
-            "Noun"
+            "Noun",
+            "Verb"
           ],
-          "answer": "Adjective",
-          "explanation": "Frustrated is used as an adjective in this dictionary sense."
+          "answer": "Noun",
+          "explanation": "Phone is used as a noun in this dictionary sense."
         }
       ]
     },
@@ -390,16 +389,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "meagre",
-              "Not enough; very small in amount or quality."
+              "achievement",
+              "Something that has been accomplished through effort and skill."
             ],
             [
-              "uncomfortable",
-              "Feeling uneasy or not relaxed."
+              "substantial",
+              "Large in amount or importance."
             ],
             [
-              "hospitable",
-              "Friendly and welcoming to guests or visitors."
+              "nice",
+              "Pleasant, enjoyable, or good to have, though not always necessary."
             ]
           ]
         },
@@ -407,16 +406,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "massive",
-              "Very large or heavy."
+              "sells",
+              "Gives something to someone else in exchange for money."
             ],
             [
-              "noticeable",
-              "Easy to see or notice; clear enough to be seen."
+              "neither",
+              "Not one and not the other, when talking about two people or things."
             ],
             [
-              "fragile",
-              "Easily broken or damaged."
+              "bare",
+              "Empty, plain, or without any decoration."
             ]
           ]
         },
@@ -424,16 +423,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "privilege",
-              "A special right or advantage that only some people have."
+              "didn't",
+              "A short way of writing 'did not', used to say something failed to happen in the past."
             ],
             [
-              "unpopular",
-              "Not liked or enjoyed by many people."
+              "tone",
+              "The way something is said, which shows a certain feeling or attitude."
             ],
             [
-              "adapt",
-              "To change something so that it works better in a new situation."
+              "aggressive",
+              "Someone who is very forceful or ready to fight."
             ]
           ]
         }

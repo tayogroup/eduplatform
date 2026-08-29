@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: Something that can cause harm or danger.",
+          "prompt": "Which word means: A strong wish to learn or find out about something.",
           "choices": [
-            "threat",
-            "dictator",
-            "hardship"
+            "curiosity",
+            "diffusion",
+            "web"
           ],
-          "answer": "threat",
-          "explanation": "threat: Something that can cause harm or danger."
+          "answer": "curiosity",
+          "explanation": "curiosity: A strong wish to learn or find out about something."
         },
         {
-          "prompt": "Which word means: A ceremony to remember and say goodbye to someone who has died.",
+          "prompt": "Which word means: A slender, long-necked antelope found in East Africa that stands to feed on leaves.",
           "choices": [
-            "threat",
-            "dictator",
-            "funeral"
+            "curiosity",
+            "diffusion",
+            "gerenuk"
           ],
-          "answer": "funeral",
-          "explanation": "funeral: A ceremony to remember and say goodbye to someone who has died."
+          "answer": "gerenuk",
+          "explanation": "gerenuk: A slender, long-necked antelope found in East Africa that stands to feed on leaves."
         },
         {
-          "prompt": "Which word means: Something that can be seen or noticed.",
+          "prompt": "Which word means: A feeling of great sadness.",
           "choices": [
-            "dictator",
-            "observable",
-            "threat"
+            "diffusion",
+            "sorrow",
+            "curiosity"
           ],
-          "answer": "observable",
-          "explanation": "observable: Something that can be seen or noticed."
+          "answer": "sorrow",
+          "explanation": "sorrow: A feeling of great sadness."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Dangerous and not safe, often because it is not what it seems.",
-          "answer": "treacherous"
+          "clue": "Causing very great harm or damage.",
+          "answer": "disastrous"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A ceremony to remember and say goodbye to someone who has died.",
-          "answer": "funeral"
+          "clue": "To feed on leaves, twigs, or shoots from bushes and trees.",
+          "answer": "browse"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A person or thing that comes into a place and takes control without permission.",
-          "answer": "invader"
+          "clue": "The state of being joined together as one, working for the same goal.",
+          "answer": "unity"
         }
       ]
     },
@@ -83,53 +83,49 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "storm.",
-            "coming",
+            "hours.",
+            "for",
+            "watching",
+            "biologist",
+            "field",
             "a",
-            "of",
-            "threat",
-            "a",
-            "are",
-            "clouds",
-            "dark",
-            "The"
+            "keeps",
+            "what",
+            "is",
+            "Curiosity"
           ],
-          "answer": "The dark clouds are a threat of a coming storm."
+          "answer": "Curiosity is what keeps a field biologist watching for hours."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "village.",
+            "looks.",
+            "it",
+            "than",
+            "break",
+            "to",
+            "easier",
+            "is",
+            "balance",
+            "That"
+          ],
+          "answer": "That balance is easier to break than it looks."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "square.",
+            "village",
             "the",
+            "through",
+            "rows",
+            "tight",
             "in",
-            "gatherings",
-            "prohibit",
-            "to",
-            "tried",
+            "marched",
             "soldiers",
             "The"
           ],
-          "answer": "The soldiers tried to prohibit gatherings in the village."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "village.",
-            "the",
-            "control",
-            "to",
-            "stamps",
-            "and",
-            "papers",
-            "with",
-            "bureaucracy",
-            "a",
-            "up",
-            "set",
-            "soldiers",
-            "The"
-          ],
-          "answer": "The soldiers set up a bureaucracy with papers and stamps to control the village."
+          "answer": "The soldiers marched in tight rows through the village square."
         }
       ]
     },
@@ -226,11 +222,11 @@
       "rounds": [
         {
           "prompt": "Speaking 1: Vocabulary Expert Interview",
-          "target": "The dark clouds are a threat of a coming storm."
+          "target": "Curiosity is what keeps a field biologist watching for hours."
         },
         {
           "prompt": "Speaking 3: Present Your Animal Report",
-          "target": "The soldiers tried to prohibit gatherings in the village."
+          "target": "That balance is easier to break than it looks."
         },
         {
           "prompt": "Speaking 5: Habitat Guessing Game",
@@ -249,58 +245,54 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "water.",
-            "unsafe",
-            "of",
-            "because",
-            "spreading",
-            "was",
-            "typhoid",
-            "that",
-            "warned",
-            "worker",
-            "health",
+            "leaders.",
+            "their",
+            "choose",
+            "or",
+            "freely",
+            "speak",
+            "to",
+            "people",
+            "allow",
+            "not",
+            "did",
+            "dictator",
             "The"
           ],
-          "answer": "The health worker warned that typhoid was spreading because of unsafe water."
+          "answer": "The dictator did not allow people to speak freely or choose their leaders."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "farmer.",
-            "old",
+            "away.",
+            "stay",
+            "rains",
             "the",
-            "for",
-            "cheer",
-            "to",
-            "river",
-            "the",
-            "beside",
-            "gathered",
-            "crowd",
-            "A"
+            "week",
+            "every",
+            "with",
+            "drier",
+            "grows",
+            "land",
+            "The"
           ],
-          "answer": "A crowd gathered beside the river to cheer for the old farmer."
+          "answer": "The land grows drier with every week the rains stay away."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "land.",
-            "grazing",
-            "healthy",
-            "on",
-            "depended",
-            "who",
-            "herders",
-            "to",
-            "hardship",
-            "terrible",
-            "brought",
-            "drought",
-            "of",
-            "Years"
+            "house.",
+            "Amal's",
+            "behind",
+            "tree",
+            "the",
+            "from",
+            "mangoes",
+            "picked",
+            "children",
+            "The"
           ],
-          "answer": "Years of drought brought terrible hardship to herders who depended on healthy grazing land."
+          "answer": "The children picked mangoes from the tree behind Amal's house."
         }
       ]
     },
@@ -313,34 +305,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'bureaucracy' mean in this unit?",
+          "prompt": "What does 'vultures' mean in this unit?",
           "choices": [
-            "A system of managing a government or organisation with many rules and officials.",
-            "Something that can cause harm or danger.",
-            "A leader who has complete power and makes all the rules without asking others."
+            "Large birds that mostly eat the bodies of dead animals instead of hunting live prey.",
+            "A strong wish to learn or find out about something.",
+            "The spreading of a substance from where there is more to where there is less."
           ],
-          "answer": "A system of managing a government or organisation with many rules and officials.",
-          "explanation": "bureaucracy: A system of managing a government or organisation with many rules and officials."
+          "answer": "Large birds that mostly eat the bodies of dead animals instead of hunting live prey.",
+          "explanation": "vultures: Large birds that mostly eat the bodies of dead animals instead of hunting live prey."
         },
         {
-          "prompt": "What does 'crimson' mean in this unit?",
+          "prompt": "What does 'sunset' mean in this unit?",
           "choices": [
-            "Something that can cause harm or danger.",
-            "A leader who has complete power and makes all the rules without asking others.",
-            "A deep, rich red colour, like fresh blood or a glowing evening sunset."
+            "A strong wish to learn or find out about something.",
+            "The spreading of a substance from where there is more to where there is less.",
+            "The time of day when the sun goes down and disappears from the sky."
           ],
-          "answer": "A deep, rich red colour, like fresh blood or a glowing evening sunset.",
-          "explanation": "crimson: A deep, rich red colour, like fresh blood or a glowing evening sunset."
+          "answer": "The time of day when the sun goes down and disappears from the sky.",
+          "explanation": "sunset: The time of day when the sun goes down and disappears from the sky."
         },
         {
-          "prompt": "What does 'dictator' mean in this unit?",
+          "prompt": "What does 'diffusion' mean in this unit?",
           "choices": [
-            "A difficult situation that causes suffering or trouble.",
-            "A leader who has complete power and makes all the rules without asking others.",
-            "Something that can cause harm or danger."
+            "A closely connected network in which every part relies on the others.",
+            "The spreading of a substance from where there is more to where there is less.",
+            "A strong wish to learn or find out about something."
           ],
-          "answer": "A leader who has complete power and makes all the rules without asking others.",
-          "explanation": "dictator: A leader who has complete power and makes all the rules without asking others."
+          "answer": "The spreading of a substance from where there is more to where there is less.",
+          "explanation": "diffusion: The spreading of a substance from where there is more to where there is less."
         }
       ]
     },
@@ -353,34 +345,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'starvation'?",
+          "prompt": "What type of word is 'ruler'?",
           "choices": [
             "Noun",
             "Verb",
             "Adjective"
           ],
           "answer": "Noun",
-          "explanation": "Starvation is used as a noun in this dictionary sense."
+          "explanation": "Ruler is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'violent'?",
+          "prompt": "What type of word is 'bureaucracy'?",
           "choices": [
-            "Noun",
             "Verb",
-            "Adjective"
-          ],
-          "answer": "Adjective",
-          "explanation": "Violent is used as an adjective in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'endure'?",
-          "choices": [
             "Adjective",
-            "Verb",
             "Noun"
           ],
-          "answer": "Verb",
-          "explanation": "Endure is used as a verb in this dictionary sense."
+          "answer": "Noun",
+          "explanation": "Bureaucracy is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'passages'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Passages is used as a noun in this dictionary sense."
         }
       ]
     },
@@ -396,16 +388,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "dictator",
-              "A leader who has complete power and makes all the rules without asking others."
+              "equipped",
+              "Supplied with what is needed for a task."
             ],
             [
-              "persecute",
-              "To treat someone badly or unfairly because of their beliefs or identity."
+              "adjacent",
+              "Next to or beside something else."
             ],
             [
-              "proclaimed",
-              "To say something loudly or officially."
+              "predators",
+              "Animals that hunt and eat other animals for food."
             ]
           ]
         },
@@ -413,16 +405,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "refuse",
-              "To say no to something or not accept it."
+              "stands",
+              "To be in an upright position, supported by the feet or legs."
             ],
             [
-              "abolitionist",
-              "A person who wants to end something, especially slavery."
+              "toads",
+              "Small, jumping animals with rough skin that live near water and on land."
             ],
             [
-              "typhoid",
-              "A serious illness caused by bacteria that can spread through dirty water or food."
+              "grey",
+              "Having the colour that is a mixture of black and white."
             ]
           ]
         },
@@ -430,16 +422,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "crimson",
-              "A deep, rich red colour, like fresh blood or a glowing evening sunset."
+              "fully",
+              "Completely and in every possible way, leaving nothing out."
             ],
             [
-              "crowd",
-              "A large group of people gathered together."
+              "whose",
+              "Belonging to which person, used to show ownership."
             ],
             [
-              "disturbing",
-              "Making someone feel worried, upset or deeply uncomfortable about something."
+              "proclaimed",
+              "To say something loudly or officially."
             ]
           ]
         }

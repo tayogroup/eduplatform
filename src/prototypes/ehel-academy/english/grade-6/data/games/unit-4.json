@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: A narrow body of water between two pieces of land.",
+          "prompt": "Which word means: Something that gets in the way of what you are doing.",
           "choices": [
-            "straits",
-            "excursion",
-            "territory"
+            "hindrance",
+            "cloud-based",
+            "solved"
           ],
-          "answer": "straits",
-          "explanation": "straits: A narrow body of water between two pieces of land."
+          "answer": "hindrance",
+          "explanation": "hindrance: Something that gets in the way of what you are doing."
         },
         {
-          "prompt": "Which word means: A person who sees something happen with their own eyes.",
+          "prompt": "Which word means: Showing with clear evidence that something is true.",
           "choices": [
-            "straits",
-            "excursion",
-            "eyewitness"
+            "hindrance",
+            "cloud-based",
+            "proving"
           ],
-          "answer": "eyewitness",
-          "explanation": "eyewitness: A person who sees something happen with their own eyes."
+          "answer": "proving",
+          "explanation": "proving: Showing with clear evidence that something is true."
         },
         {
-          "prompt": "Which word means: Something that has been set up or created and exists for a long time.",
+          "prompt": "Which word means: Made a loud, high-pitched sound, from fear, pain, or great force.",
           "choices": [
-            "excursion",
-            "established",
-            "straits"
+            "cloud-based",
+            "screamed",
+            "hindrance"
           ],
-          "answer": "established",
-          "explanation": "established: Something that has been set up or created and exists for a long time."
+          "answer": "screamed",
+          "explanation": "screamed: Made a loud, high-pitched sound, from fear, pain, or great force."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A person who travels to new places to discover things.",
-          "answer": "explorer"
+          "clue": "Time when you are free to do as you please.",
+          "answer": "leisure"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A group of people who have the most power, wealth, or talent in a society.",
-          "answer": "elite"
+          "clue": "A thought, plan or suggestion that comes into someone's mind.",
+          "answer": "idea"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A promise to do something or to be loyal to someone or something.",
-          "answer": "commitment"
+          "clue": "Made a loud, high-pitched sound, from fear, pain, or great force.",
+          "answer": "screamed"
         }
       ]
     },
@@ -83,53 +83,51 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "ocean.",
-            "the",
-            "in",
-            "island",
-            "new",
+            "game.",
+            "outdoor",
+            "our",
+            "to",
+            "hindrance",
             "a",
-            "found",
-            "explorer",
+            "was",
+            "rain",
             "The"
           ],
-          "answer": "The explorer found a new island in the ocean."
+          "answer": "The rain was a hindrance to our outdoor game."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "tomorrow.",
-            "sunny",
-            "be",
-            "or",
-            "rain",
-            "will",
-            "it",
-            "if",
-            "understand",
-            "us",
-            "helps",
-            "Meteorology"
-          ],
-          "answer": "Meteorology helps us understand if it will rain or be sunny tomorrow."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "play.",
-            "to",
-            "class",
-            "our",
-            "for",
-            "game",
-            "new",
+            "panel.",
+            "solar",
+            "simple",
             "a",
-            "propose",
-            "to",
-            "want",
-            "I"
+            "using",
+            "phones",
+            "their",
+            "charge",
+            "now",
+            "can",
+            "Families"
           ],
-          "answer": "I want to propose a new game for our class to play."
+          "answer": "Families can now charge their phones using a simple solar panel."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "manner.",
+            "steady",
+            "and",
+            "calm",
+            "a",
+            "in",
+            "spoke",
+            "Tariq",
+            "danger,",
+            "the",
+            "Despite"
+          ],
+          "answer": "Despite the danger, Tariq spoke in a calm and steady manner."
         }
       ]
     },
@@ -230,11 +228,11 @@
         },
         {
           "prompt": "Speaking 3: Technology Discussion",
-          "target": "Meteorology helps us understand if it will rain or be sunny tomorrow."
+          "target": "Families can now charge their phones using a simple solar panel."
         },
         {
           "prompt": "Speaking 5: Vocabulary Expert Interview",
-          "target": "I want to propose a new game for our class to play."
+          "target": "Despite the danger, Tariq spoke in a calm and steady manner."
         }
       ]
     },
@@ -249,58 +247,55 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "territory.",
-            "treasured",
-            "were",
-            "it",
-            "if",
-            "as",
-            "workshop",
+            "carefully.",
+            "procedure",
+            "the",
+            "follow",
+            "to",
+            "need",
+            "we",
+            "experiment,",
+            "the",
+            "start",
+            "we",
+            "Before"
+          ],
+          "answer": "Before we start the experiment, we need to follow the procedure carefully."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "rose.",
+            "water",
+            "the",
+            "before",
+            "riverbed",
+            "the",
+            "cross",
+            "to",
+            "able",
+            "was",
+            "Tariq"
+          ],
+          "answer": "Tariq was able to cross the riverbed before the water rose."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "tracks.",
+            "the",
+            "follow",
+            "to",
+            "hurry",
             "his",
-            "within",
-            "ideas",
+            "in",
+            "burning",
+            "fire",
             "the",
-            "guarded",
-            "inventor",
-            "The"
+            "left",
+            "Tariq"
           ],
-          "answer": "The inventor guarded the ideas within his workshop as if it were treasured territory."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "results.",
-            "changing",
-            "experiment's",
-            "the",
-            "check",
-            "to",
-            "monitor",
-            "glowing",
-            "the",
-            "watched",
-            "scientist",
-            "The"
-          ],
-          "answer": "The scientist watched the glowing monitor to check the experiment's changing results."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "waste.",
-            "their",
-            "of",
-            "dispose",
-            "factories",
-            "how",
-            "regulate",
-            "to",
-            "introduced",
-            "were",
-            "laws",
-            "New"
-          ],
-          "answer": "New laws were introduced to regulate how factories dispose of their waste."
+          "answer": "Tariq left the fire burning in his hurry to follow the tracks."
         }
       ]
     },
@@ -313,34 +308,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'meteorology' mean in this unit?",
+          "prompt": "What does 'candles' mean in this unit?",
           "choices": [
-            "The study of weather and how it changes.",
-            "A narrow body of water between two pieces of land.",
-            "A short trip or journey, usually for fun or learning."
+            "Sticks of wax with a wick in the middle that burn to give light.",
+            "Something that gets in the way of what you are doing.",
+            "Stored and run on distant servers rather than on your own device."
           ],
-          "answer": "The study of weather and how it changes.",
-          "explanation": "meteorology: The study of weather and how it changes."
+          "answer": "Sticks of wax with a wick in the middle that burn to give light.",
+          "explanation": "candles: Sticks of wax with a wick in the middle that burn to give light."
         },
         {
-          "prompt": "What does 'propose' mean in this unit?",
+          "prompt": "What does 'ridge' mean in this unit?",
           "choices": [
-            "A narrow body of water between two pieces of land.",
-            "A short trip or journey, usually for fun or learning.",
-            "To suggest an idea or plan for others to think about."
+            "Something that gets in the way of what you are doing.",
+            "Stored and run on distant servers rather than on your own device.",
+            "A long, narrow strip of high land, often along the top of hills."
           ],
-          "answer": "To suggest an idea or plan for others to think about.",
-          "explanation": "propose: To suggest an idea or plan for others to think about."
+          "answer": "A long, narrow strip of high land, often along the top of hills.",
+          "explanation": "ridge: A long, narrow strip of high land, often along the top of hills."
         },
         {
-          "prompt": "What does 'excursion' mean in this unit?",
+          "prompt": "What does 'cloud-based' mean in this unit?",
           "choices": [
-            "An area of land that belongs to a person, group, or country.",
-            "A short trip or journey, usually for fun or learning.",
-            "A narrow body of water between two pieces of land."
+            "Found the answer to a difficult problem.",
+            "Stored and run on distant servers rather than on your own device.",
+            "Something that gets in the way of what you are doing."
           ],
-          "answer": "A short trip or journey, usually for fun or learning.",
-          "explanation": "excursion: A short trip or journey, usually for fun or learning."
+          "answer": "Stored and run on distant servers rather than on your own device.",
+          "explanation": "cloud-based: Stored and run on distant servers rather than on your own device."
         }
       ]
     },
@@ -353,34 +348,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'procedure'?",
+          "prompt": "What type of word is 'sour'?",
           "choices": [
+            "Adjective",
             "Noun",
+            "Verb"
+          ],
+          "answer": "Adjective",
+          "explanation": "Sour is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'physicist'?",
+          "choices": [
             "Verb",
-            "Adjective"
+            "Adjective",
+            "Noun"
           ],
           "answer": "Noun",
-          "explanation": "Procedure is used as a noun in this dictionary sense."
+          "explanation": "Physicist is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'consists'?",
-          "choices": [
-            "Noun",
-            "Adjective",
-            "Verb"
-          ],
-          "answer": "Verb",
-          "explanation": "Consists is used as a verb in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'civilisation'?",
+          "prompt": "What type of word is 'era'?",
           "choices": [
             "Adjective",
             "Noun",
             "Verb"
           ],
           "answer": "Noun",
-          "explanation": "Civilisation is used as a noun in this dictionary sense."
+          "explanation": "Era is used as a noun in this dictionary sense."
         }
       ]
     },
@@ -396,16 +391,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "excursion",
-              "A short trip or journey, usually for fun or learning."
+              "nuisance",
+              "Something or someone that causes trouble or annoyance."
             ],
             [
-              "navigation",
-              "The process of finding your way from one place to another."
+              "commence",
+              "To begin, especially something formal or planned."
             ],
             [
-              "nomad",
-              "A person who moves from place to place instead of living in one home."
+              "proposed",
+              "Suggested an idea or plan for other people to consider."
             ]
           ]
         },
@@ -413,16 +408,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "meteorology",
-              "The study of weather and how it changes."
+              "idea",
+              "A thought, plan or suggestion that comes into someone's mind."
             ],
             [
-              "production",
-              "The process of making or creating something."
+              "alive",
+              "Living, not dead; still having life."
             ],
             [
-              "extended",
-              "Made longer in time or space."
+              "cart",
+              "A vehicle with wheels, often pulled by an animal or a person, used to carry heavy loads."
             ]
           ]
         },
@@ -430,16 +425,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "propose",
-              "To suggest an idea or plan for others to think about."
+              "rock",
+              "A hard, solid piece of stone that forms part of the earth's surface."
             ],
             [
-              "relocate",
-              "To move to a different place."
+              "support",
+              "To provide what is needed for someone or something to succeed or continue."
             ],
             [
-              "chaos",
-              "A state of complete confusion and disorder."
+              "caravan",
+              "A group of people travelling together, often across a desert."
             ]
           ]
         }

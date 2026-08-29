@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: Not allowed by law or rules",
+          "prompt": "Which word means: To make room for someone, or to change a plan to suit them.",
           "choices": [
-            "illegal",
-            "entry",
-            "supplied"
+            "accommodate",
+            "trace",
+            "would"
           ],
-          "answer": "illegal",
-          "explanation": "illegal: Not allowed by law or rules"
+          "answer": "accommodate",
+          "explanation": "accommodate: To make room for someone, or to change a plan to suit them."
         },
         {
-          "prompt": "Which word means: A person who moves to a new region to live there and build a home",
+          "prompt": "Which word means: Coming before all the others in time, order, or importance.",
           "choices": [
-            "illegal",
-            "entry",
-            "settler"
+            "accommodate",
+            "trace",
+            "first"
           ],
-          "answer": "settler",
-          "explanation": "settler: A person who moves to a new region to live there and build a home"
+          "answer": "first",
+          "explanation": "first: Coming before all the others in time, order, or importance."
         },
         {
-          "prompt": "Which word means: The official approval of something, like a law or agreement",
+          "prompt": "Which word means: A place where children go to learn and study together.",
           "choices": [
-            "entry",
-            "ratification",
-            "illegal"
+            "trace",
+            "school",
+            "accommodate"
           ],
-          "answer": "ratification",
-          "explanation": "ratification: The official approval of something, like a law or agreement"
+          "answer": "school",
+          "explanation": "school: A place where children go to learn and study together."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A person who legally belongs to a country and shares its rights and duties",
-          "answer": "citizen"
+          "clue": "Doing something for love of it rather than for pay.",
+          "answer": "amateur"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "The activity of fighting in a war",
-          "answer": "warfare"
+          "clue": "A feeling caused by something happening that was unexpected.",
+          "answer": "surprise"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A room or space used for a special purpose",
-          "answer": "chamber"
+          "clue": "A talk given out loud to an audience, usually to explain or persuade.",
+          "answer": "speech"
         }
       ]
     },
@@ -83,50 +83,51 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "property.",
-            "else's",
-            "someone",
-            "steal",
-            "to",
-            "illegal",
-            "is",
-            "It"
-          ],
-          "answer": "It is illegal to steal someone else's property."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "river.",
-            "the",
-            "beside",
-            "cabin",
-            "a",
-            "built",
-            "valley",
-            "the",
-            "in",
-            "settler",
-            "first",
-            "The"
-          ],
-          "answer": "The first settler in the valley built a cabin beside the river."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "freely.",
-            "live",
-            "could",
-            "they",
-            "meant",
-            "slaves",
-            "the",
+            "once.",
+            "at",
+            "6",
+            "Year",
             "of",
-            "emancipation",
+            "whole",
+            "the",
+            "accommodate",
+            "can",
+            "hall",
             "The"
           ],
-          "answer": "The emancipation of the slaves meant they could live freely."
+          "answer": "The hall can accommodate the whole of Year 6 at once."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "weather.",
+            "dry",
+            "of",
+            "months",
+            "after",
+            "rain",
+            "the",
+            "for",
+            "grateful",
+            "were",
+            "farmers",
+            "The"
+          ],
+          "answer": "The farmers were grateful for the rain after months of dry weather."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "heard.",
+            "be",
+            "to",
+            "chance",
+            "a",
+            "deserved",
+            "citizen",
+            "Every"
+          ],
+          "answer": "Every citizen deserved a chance to be heard."
         }
       ]
     },
@@ -223,15 +224,15 @@
       "rounds": [
         {
           "prompt": "Speaking 1: Retell a Fable from Memory",
-          "target": "It is illegal to steal someone else's property."
+          "target": "The hall can accommodate the whole of Year 6 at once."
         },
         {
           "prompt": "Speaking 3: Discuss a Moral Dilemma",
-          "target": "The first settler in the valley built a cabin beside the river."
+          "target": "The farmers were grateful for the rain after months of dry weather."
         },
         {
           "prompt": "Speaking 5: Vocabulary Expert Interview",
-          "target": "The emancipation of the slaves meant they could live freely."
+          "target": "Every citizen deserved a chance to be heard."
         }
       ]
     },
@@ -246,60 +247,50 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "dishonest.",
-            "as",
-            "well",
-            "as",
-            "illegal",
-            "is",
-            "essay",
-            "else's",
-            "someone",
-            "copying",
-            "that",
-            "explained",
-            "teacher",
+            "music.",
+            "beautiful",
+            "making",
+            "harmony,",
+            "in",
+            "sang",
+            "choir",
             "The"
           ],
-          "answer": "The teacher explained that copying someone else's essay is illegal as well as dishonest."
+          "answer": "The choir sang in harmony, making beautiful music."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "reached.",
-            "finally",
-            "was",
-            "decision",
-            "difficult",
+            "exam?",
             "the",
-            "before",
-            "carefully",
-            "evidence",
-            "the",
-            "studied",
-            "juror",
-            "Each"
+            "during",
+            "helpless",
+            "so",
+            "look",
+            "Sami",
+            "did",
+            "Why"
           ],
-          "answer": "Each juror studied the evidence carefully before the difficult decision was finally reached."
+          "answer": "Why did Sami look so helpless during the exam?"
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "race.",
-            "charity",
-            "the",
-            "of",
-            "mile",
-            "hard",
-            "every",
-            "through",
-            "her",
-            "carried",
-            "determination",
-            "fierce",
-            "Her"
+            "room.",
+            "government",
+            "real",
+            "a",
+            "like",
+            "look",
+            "to",
+            "rearranged",
+            "been",
+            "had",
+            "hall",
+            "school",
+            "The"
           ],
-          "answer": "Her fierce determination carried her through every hard mile of the charity race."
+          "answer": "The school hall had been rearranged to look like a real government room."
         }
       ]
     },
@@ -312,34 +303,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'juror' mean in this unit?",
+          "prompt": "What does 'week' mean in this unit?",
           "choices": [
-            "A person chosen to help decide a court case",
-            "Not allowed by law or rules",
-            "The act of going into a place, or the way to get in"
+            "A period of seven days.",
+            "To make room for someone, or to change a plan to suit them.",
+            "To follow something back to where it started."
           ],
-          "answer": "A person chosen to help decide a court case",
-          "explanation": "juror: A person chosen to help decide a court case"
+          "answer": "A period of seven days.",
+          "explanation": "week: A period of seven days."
         },
         {
-          "prompt": "What does 'nationalism' mean in this unit?",
+          "prompt": "What does 'clapped' mean in this unit?",
           "choices": [
-            "Not allowed by law or rules",
-            "The act of going into a place, or the way to get in",
-            "The belief that your country is important and worth being proud of"
+            "To make room for someone, or to change a plan to suit them.",
+            "To follow something back to where it started.",
+            "Hit your hands together, usually to show approval or praise."
           ],
-          "answer": "The belief that your country is important and worth being proud of",
-          "explanation": "nationalism: The belief that your country is important and worth being proud of"
+          "answer": "Hit your hands together, usually to show approval or praise.",
+          "explanation": "clapped: Hit your hands together, usually to show approval or praise."
         },
         {
-          "prompt": "What does 'entry' mean in this unit?",
+          "prompt": "What does 'trace' mean in this unit?",
           "choices": [
-            "Gave or provided something that was needed",
-            "The act of going into a place, or the way to get in",
-            "Not allowed by law or rules"
+            "Used to talk about something that happened often in the past, or something imagined.",
+            "To follow something back to where it started.",
+            "To make room for someone, or to change a plan to suit them."
           ],
-          "answer": "The act of going into a place, or the way to get in",
-          "explanation": "entry: The act of going into a place, or the way to get in"
+          "answer": "To follow something back to where it started.",
+          "explanation": "trace: To follow something back to where it started."
         }
       ]
     },
@@ -352,34 +343,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'chamber'?",
+          "prompt": "What type of word is 'much'?",
+          "choices": [
+            "Pronoun",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Pronoun",
+          "explanation": "Much is used as a pronoun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'illegal'?",
           "choices": [
             "Noun",
             "Verb",
             "Adjective"
           ],
-          "answer": "Noun",
-          "explanation": "Chamber is used as a noun in this dictionary sense."
+          "answer": "Adjective",
+          "explanation": "Illegal is used as an adjective in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'parliament'?",
-          "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
-          ],
-          "answer": "Noun",
-          "explanation": "Parliament is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'censor'?",
+          "prompt": "What type of word is 'must'?",
           "choices": [
             "Adjective",
             "Verb",
             "Noun"
           ],
           "answer": "Verb",
-          "explanation": "Censor is used as a verb in this dictionary sense."
+          "explanation": "Must is used as a verb in this dictionary sense."
         }
       ]
     },
@@ -395,16 +386,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "entry",
-              "The act of going into a place, or the way to get in"
+              "amateur",
+              "Doing something for love of it rather than for pay."
             ],
             [
-              "harmony",
-              "A pleasing combination of things that work well together; peace"
+              "weaving",
+              "The craft of making cloth by crossing threads over and under each other."
             ],
             [
-              "warfare",
-              "The activity of fighting in a war"
+              "like",
+              "Similar to, or in the same way as, something else."
             ]
           ]
         },
@@ -412,16 +403,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "juror",
-              "A person chosen to help decide a court case"
+              "surprise",
+              "A feeling caused by something happening that was unexpected."
             ],
             [
-              "reflect",
-              "To think carefully about something; to show an image"
+              "honest",
+              "Truthful and sincere, not lying or pretending."
             ],
             [
-              "reflected",
-              "Showed or bounced back an image or light; thought carefully"
+              "northern",
+              "Situated in or coming from the north."
             ]
           ]
         },
@@ -429,16 +420,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "determination",
-              "The quality of trying hard even when something is difficult"
+              "desks",
+              "Tables, often with a flat top, that people sit at to write or work."
             ],
             [
-              "confederation",
-              "A group of states working together while keeping their own governments"
+              "back",
+              "The rear part of something, or the position furthest from the front."
             ],
             [
-              "liberator",
-              "A person who helps free others from control or oppression"
+              "air",
+              "The invisible mixture of gases around the earth that people and animals breathe."
             ]
           ]
         }

@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: Not allowed by the law or by the rules everyone agrees to follow.",
+          "prompt": "Which word means: A guess about what will happen in the future.",
           "choices": [
-            "illegal",
-            "entry",
-            "originally"
+            "prediction",
+            "acquire",
+            "prioritise"
           ],
-          "answer": "illegal",
-          "explanation": "illegal: Not allowed by the law or by the rules everyone agrees to follow."
+          "answer": "prediction",
+          "explanation": "prediction: A guess about what will happen in the future."
         },
         {
-          "prompt": "Which word means: A ruler who holds complete power and makes every rule without asking anyone.",
+          "prompt": "Which word means: The number placed in front of a letter in algebra.",
           "choices": [
-            "illegal",
-            "entry",
-            "dictator"
+            "prediction",
+            "acquire",
+            "coefficient"
           ],
-          "answer": "dictator",
-          "explanation": "dictator: A ruler who holds complete power and makes every rule without asking anyone."
+          "answer": "coefficient",
+          "explanation": "coefficient: The number placed in front of a letter in algebra."
         },
         {
-          "prompt": "Which word means: Good sense and deep understanding gained from experience and careful thought.",
+          "prompt": "Which word means: Dangerous and unsafe, often because a place is not what it first seems.",
           "choices": [
-            "entry",
-            "wisdom",
-            "illegal"
+            "acquire",
+            "treacherous",
+            "prediction"
           ],
-          "answer": "wisdom",
-          "explanation": "wisdom: Good sense and deep understanding gained from experience and careful thought."
+          "answer": "treacherous",
+          "explanation": "treacherous: Dangerous and unsafe, often because a place is not what it first seems."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A person who legally belongs to a country and shares its rights and duties.",
-          "answer": "citizen"
+          "clue": "The heavy feeling you carry inside when something makes you unhappy.",
+          "answer": "sadness"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Describing a fraction whose top number is the larger one.",
+          "answer": "improper"
         },
         {
           "prompt": "Build the word that matches the clue.",
           "clue": "A ruler who holds complete power and makes every rule without asking anyone.",
           "answer": "dictator"
-        },
-        {
-          "prompt": "Build the word that matches the clue.",
-          "clue": "Good sense and deep understanding gained from experience and careful thought.",
-          "answer": "wisdom"
         }
       ]
     },
@@ -83,61 +83,50 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "illegal.",
+            "fair.",
+            "year's",
+            "next",
+            "at",
+            "stalls",
+            "new-clothes",
+            "outnumber",
+            "will",
+            "stalls",
+            "second-hand",
+            "that",
             "is",
-            "essay",
-            "classmate's",
-            "a",
-            "copying",
-            "why",
-            "explained",
-            "Amal",
-            "review,",
-            "1",
-            "Unit",
-            "our",
-            "In"
+            "prediction",
+            "My"
           ],
-          "answer": "In our Unit 1 review, Amal explained why copying a classmate's essay is illegal."
+          "answer": "My prediction is that second-hand stalls will outnumber new-clothes stalls at next year's fair."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "care.",
-            "great",
-            "with",
-            "income",
-            "meagre",
-            "a",
-            "managing",
-            "family",
-            "a",
-            "showed",
-            "review",
-            "5",
-            "Unit",
+            "abandoned.",
+            "was",
+            "settlement",
+            "the",
+            "why",
+            "about",
+            "theorise",
+            "Historians"
+          ],
+          "answer": "Historians theorise about why the settlement was abandoned."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "test.",
+            "every",
+            "in",
+            "superior",
+            "proved",
+            "design",
+            "second",
             "The"
           ],
-          "answer": "The Unit 5 review showed a family managing a meagre income with great care."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "judge.",
-            "the",
-            "before",
-            "honestly",
-            "speak",
-            "to",
-            "asked",
-            "was",
-            "1",
-            "Unit",
-            "in",
-            "citizen",
-            "Each"
-          ],
-          "answer": "Each citizen in Unit 1 was asked to speak honestly before the judge."
+          "answer": "The second design proved superior in every test."
         }
       ]
     },
@@ -238,7 +227,7 @@
         },
         {
           "prompt": "Research vocabulary in context",
-          "target": "The Unit 5 review showed a family managing a meagre income with great care."
+          "target": "Historians theorise about why the settlement was abandoned."
         },
         {
           "prompt": "Question-and-answer defence",
@@ -257,54 +246,58 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "him.",
-            "question",
-            "to",
-            "dared",
-            "that",
-            "newspaper",
-            "every",
-            "silenced",
-            "dictator",
-            "harsh",
+            "soup.",
+            "hot",
+            "in",
+            "warming",
+            "spoon",
+            "metal",
+            "a",
+            "using",
+            "conduction",
+            "explained",
+            "review",
+            "7",
+            "Unit",
             "The"
           ],
-          "answer": "The harsh dictator silenced every newspaper that dared to question him."
+          "answer": "The Unit 7 review explained conduction using a metal spoon warming in hot soup."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "workshop.",
+            "snowfall.",
+            "heavy",
             "the",
-            "joined",
-            "who",
-            "apprentice",
-            "every",
-            "with",
-            "wisdom",
-            "his",
-            "shared",
-            "carpenter",
-            "old",
+            "after",
+            "dangerous",
+            "more",
+            "even",
+            "grew",
+            "pass",
+            "mountain",
+            "treacherous",
             "The"
           ],
-          "answer": "The old carpenter shared his wisdom with every apprentice who joined the workshop."
+          "answer": "The treacherous mountain pass grew even more dangerous after the heavy snowfall."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "made.",
-            "carpenter",
-            "master",
-            "the",
-            "move",
-            "every",
-            "watched",
-            "apprentice",
-            "eager",
-            "The"
+            "bar.",
+            "metal",
+            "a",
+            "along",
+            "quickly",
+            "heat",
+            "carries",
+            "conduction",
+            "how",
+            "showed",
+            "Sarah",
+            "Doctor"
           ],
-          "answer": "The eager apprentice watched every move the master carpenter made."
+          "answer": "Doctor Sarah showed how conduction carries heat quickly along a metal bar."
         }
       ]
     },
@@ -317,34 +310,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'straits' mean in this unit?",
+          "prompt": "What does 'dilation' mean in this unit?",
           "choices": [
-            "A narrow strip of sea that joins two larger areas of water together.",
-            "Not allowed by the law or by the rules everyone agrees to follow.",
-            "The act of going into a place, or the way that leads inside it."
+            "Making a shape larger or smaller while keeping its proportions.",
+            "A guess about what will happen in the future.",
+            "To get or gain something, usually by effort or learning."
           ],
-          "answer": "A narrow strip of sea that joins two larger areas of water together.",
-          "explanation": "straits: A narrow strip of sea that joins two larger areas of water together."
+          "answer": "Making a shape larger or smaller while keeping its proportions.",
+          "explanation": "dilation: Making a shape larger or smaller while keeping its proportions."
         },
         {
-          "prompt": "What does 'text' mean in this unit?",
+          "prompt": "What does 'excursion' mean in this unit?",
           "choices": [
-            "Not allowed by the law or by the rules everyone agrees to follow.",
-            "The act of going into a place, or the way that leads inside it.",
-            "A piece of written work, such as a passage, article or message, that you read."
+            "A guess about what will happen in the future.",
+            "To get or gain something, usually by effort or learning.",
+            "A short journey made for pleasure, discovery or learning, then a return home."
           ],
-          "answer": "A piece of written work, such as a passage, article or message, that you read.",
-          "explanation": "text: A piece of written work, such as a passage, article or message, that you read."
+          "answer": "A short journey made for pleasure, discovery or learning, then a return home.",
+          "explanation": "excursion: A short journey made for pleasure, discovery or learning, then a return home."
         },
         {
-          "prompt": "What does 'entry' mean in this unit?",
+          "prompt": "What does 'acquire' mean in this unit?",
           "choices": [
-            "At the very beginning, or in the first place before anything changed.",
-            "The act of going into a place, or the way that leads inside it.",
-            "Not allowed by the law or by the rules everyone agrees to follow."
+            "To decide which things matter most and do them first.",
+            "To get or gain something, usually by effort or learning.",
+            "A guess about what will happen in the future."
           ],
-          "answer": "The act of going into a place, or the way that leads inside it.",
-          "explanation": "entry: The act of going into a place, or the way that leads inside it."
+          "answer": "To get or gain something, usually by effort or learning.",
+          "explanation": "acquire: To get or gain something, usually by effort or learning."
         }
       ]
     },
@@ -357,34 +350,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'eagerly'?",
+          "prompt": "What type of word is 'geographic'?",
           "choices": [
-            "Adverb",
+            "Adjective",
             "Noun",
             "Verb"
           ],
-          "answer": "Adverb",
-          "explanation": "Eagerly is used as an adverb in this dictionary sense."
+          "answer": "Adjective",
+          "explanation": "Geographic is used as an adjective in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'excavation'?",
+          "prompt": "What type of word is 'conduction'?",
           "choices": [
             "Verb",
             "Adjective",
             "Noun"
           ],
           "answer": "Noun",
-          "explanation": "Excavation is used as a noun in this dictionary sense."
+          "explanation": "Conduction is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'agency'?",
+          "prompt": "What type of word is 'annotate'?",
           "choices": [
             "Adjective",
-            "Noun",
-            "Verb"
+            "Verb",
+            "Noun"
           ],
-          "answer": "Noun",
-          "explanation": "Agency is used as a noun in this dictionary sense."
+          "answer": "Verb",
+          "explanation": "Annotate is used as a verb in this dictionary sense."
         }
       ]
     },
@@ -400,16 +393,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "entry",
-              "The act of going into a place, or the way that leads inside it."
+              "certainty",
+              "Being sure that something is true."
             ],
             [
-              "originally",
-              "At the very beginning, or in the first place before anything changed."
+              "hypothesise",
+              "To suggest an explanation that can then be tested."
             ],
             [
-              "threat",
-              "Something that could cause harm, danger or trouble to living things."
+              "annotate",
+              "To add notes to a text explaining or commenting on it."
             ]
           ]
         },
@@ -417,16 +410,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "straits",
-              "A narrow strip of sea that joins two larger areas of water together."
+              "improper",
+              "Describing a fraction whose top number is the larger one."
             ],
             [
-              "caravan",
-              "A group of people and animals travelling together, often across a wide desert."
+              "superior",
+              "Better than something else, or higher in rank."
             ],
             [
-              "meagre",
-              "Very small in amount or quality, and clearly not enough for what is needed."
+              "geographic",
+              "Connected to the physical features of the Earth and how places are arranged."
             ]
           ]
         },
@@ -434,16 +427,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "text",
-              "A piece of written work, such as a passage, article or message, that you read."
+              "oppress",
+              "To treat people cruelly and unfairly so that they feel weak and powerless."
+            ],
+            [
+              "meagre",
+              "Very small in amount or quality, and clearly not enough for what is needed."
             ],
             [
               "pollination",
               "The moving of pollen between flowers so that plants can make seeds and fruit."
-            ],
-            [
-              "rehearsal",
-              "A practice performance held before the real event so that everything runs smoothly."
             ]
           ]
         }

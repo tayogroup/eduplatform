@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: The process of cutting down or removing trees from a forest or area of land.",
+          "prompt": "Which word means: The power to form new ideas or pictures in your mind that are not in front of you.",
           "choices": [
-            "deforestation",
-            "altitude",
-            "peppermint"
+            "imagination",
+            "discursive",
+            "tremendous"
           ],
-          "answer": "deforestation",
-          "explanation": "deforestation: The process of cutting down or removing trees from a forest or area of land."
+          "answer": "imagination",
+          "explanation": "imagination: The power to form new ideas or pictures in your mind that are not in front of you."
         },
         {
-          "prompt": "Which word means: Giving up something important or valuable for the sake of something else.",
+          "prompt": "Which word means: To reach a place after travelling, or for something to finally happen.",
           "choices": [
-            "deforestation",
-            "altitude",
-            "sacrifice"
+            "imagination",
+            "discursive",
+            "arrive"
           ],
-          "answer": "sacrifice",
-          "explanation": "sacrifice: Giving up something important or valuable for the sake of something else."
+          "answer": "arrive",
+          "explanation": "arrive: To reach a place after travelling, or for something to finally happen."
         },
         {
-          "prompt": "Which word means: To move to a different place.",
+          "prompt": "Which word means: To suffer badly or die because of not having enough food.",
           "choices": [
-            "altitude",
-            "relocate",
-            "deforestation"
+            "discursive",
+            "starve",
+            "imagination"
           ],
-          "answer": "relocate",
-          "explanation": "relocate: To move to a different place."
+          "answer": "starve",
+          "explanation": "starve: To suffer badly or die because of not having enough food."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "The height of something above sea level or ground level.",
-          "answer": "altitude"
+          "clue": "Good at making people believe or agree with an idea.",
+          "answer": "persuasive"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Doing very well and growing strong or healthy.",
-          "answer": "thriving"
+          "clue": "The parts of a town or city that are furthest from its centre.",
+          "answer": "outskirts"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "To hit something with a lot of force; to come into conflict.",
-          "answer": "collide"
+          "clue": "A sum of money given by an organisation to help pay for a particular project.",
+          "answer": "grant"
         }
       ]
     },
@@ -83,58 +83,54 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "floods.",
-            "cause",
+            "patience.",
+            "of",
+            "deal",
+            "great",
+            "a",
             "and",
-            "trees",
+            "imagination",
+            "needs",
+            "painter",
+            "A"
+          ],
+          "answer": "A painter needs imagination and a great deal of patience."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "garden.",
+            "a",
+            "into",
+            "valley",
+            "dusty",
+            "a",
+            "turned",
+            "trying",
+            "keep",
+            "to",
+            "willingness",
+            "Their"
+          ],
+          "answer": "Their willingness to keep trying turned a dusty valley into a garden."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "down.",
+            "knocked",
+            "had",
+            "storm",
             "the",
-            "in",
-            "live",
-            "that",
-            "animals",
-            "harm",
-            "can",
-            "Deforestation"
-          ],
-          "answer": "Deforestation can harm animals that live in the trees and cause floods."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "theirs.",
-            "forgot",
-            "who",
-            "friend",
-            "a",
+            "tree",
+            "every",
+            "replant",
             "to",
-            "lunch",
-            "her",
-            "giving",
-            "by",
-            "sacrifice",
-            "a",
-            "made",
-            "She"
+            "promised",
+            "students",
+            "The"
           ],
-          "answer": "She made a sacrifice by giving her lunch to a friend who forgot theirs."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "work.",
-            "for",
-            "month",
-            "next",
-            "city",
-            "new",
-            "a",
-            "to",
-            "relocate",
-            "will",
-            "family",
-            "My"
-          ],
-          "answer": "My family will relocate to a new city next month for work."
+          "answer": "The students promised to replant every tree the storm had knocked down."
         }
       ]
     },
@@ -231,15 +227,15 @@
       "rounds": [
         {
           "prompt": "Speaking 1: Vocabulary Expert Interview",
-          "target": "Deforestation can harm animals that live in the trees and cause floods."
+          "target": "A painter needs imagination and a great deal of patience."
         },
         {
           "prompt": "Speaking 3: Four-Minute Unit Talk",
-          "target": "She made a sacrifice by giving her lunch to a friend who forgot theirs."
+          "target": "Their willingness to keep trying turned a dusty valley into a garden."
         },
         {
           "prompt": "Speaking 5: Retell the Story",
-          "target": "My family will relocate to a new city next month for work."
+          "target": "The students promised to replant every tree the storm had knocked down."
         }
       ]
     },
@@ -254,56 +250,48 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "exams.",
-            "his",
-            "pass",
-            "him",
+            "together.",
+            "learn",
+            "countries",
+            "different",
+            "many",
+            "from",
+            "students",
+            "because",
+            "pluralistic",
+            "is",
+            "school",
+            "Our"
+          ],
+          "answer": "Our school is pluralistic because students from many different countries learn together."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "useful.",
+            "still",
+            "but",
+            "worn",
+            "were",
+            "brushes",
+            "donated",
+            "The"
+          ],
+          "answer": "The donated brushes were worn but still useful."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "compost.",
+            "carry",
             "helped",
-            "day",
-            "every",
-            "studying",
-            "to",
-            "commitment",
-            "His"
+            "elders",
+            "and",
+            "holes",
+            "dug",
+            "Students"
           ],
-          "answer": "His commitment to studying every day helped him pass his exams."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "boldly.",
-            "paint",
-            "to",
-            "her",
-            "encouraged",
-            "teacher",
-            "her",
-            "once",
-            "flourished",
-            "artist",
-            "young",
-            "The"
-          ],
-          "answer": "The young artist flourished once her teacher encouraged her to paint boldly."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "village.",
-            "whole",
-            "the",
-            "for",
-            "rice",
-            "grow",
-            "to",
-            "hillsides",
-            "terraced",
-            "the",
-            "cultivate",
-            "farmers",
-            "The"
-          ],
-          "answer": "The farmers cultivate the terraced hillsides to grow rice for the whole village."
+          "answer": "Students dug holes and elders helped carry compost."
         }
       ]
     },
@@ -316,34 +304,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'flourished' mean in this unit?",
+          "prompt": "What does 'soon' mean in this unit?",
           "choices": [
-            "To grow or develop in a healthy way; to be successful.",
-            "The process of cutting down or removing trees from a forest or area of land.",
-            "The height of something above sea level or ground level."
+            "In a short time from now, or happening quickly after something else.",
+            "The power to form new ideas or pictures in your mind that are not in front of you.",
+            "Discussing a subject from several sides rather than arguing one."
           ],
-          "answer": "To grow or develop in a healthy way; to be successful.",
-          "explanation": "flourished: To grow or develop in a healthy way; to be successful."
+          "answer": "In a short time from now, or happening quickly after something else.",
+          "explanation": "soon: In a short time from now, or happening quickly after something else."
         },
         {
-          "prompt": "What does 'transform' mean in this unit?",
+          "prompt": "What does 'fluttered' mean in this unit?",
           "choices": [
-            "The process of cutting down or removing trees from a forest or area of land.",
-            "The height of something above sea level or ground level.",
-            "To change something into a different form or appearance."
+            "The power to form new ideas or pictures in your mind that are not in front of you.",
+            "Discussing a subject from several sides rather than arguing one.",
+            "Moved lightly and quickly, especially by flapping wings or fluttering in a breeze."
           ],
-          "answer": "To change something into a different form or appearance.",
-          "explanation": "transform: To change something into a different form or appearance."
+          "answer": "Moved lightly and quickly, especially by flapping wings or fluttering in a breeze.",
+          "explanation": "fluttered: Moved lightly and quickly, especially by flapping wings or fluttering in a breeze."
         },
         {
-          "prompt": "What does 'altitude' mean in this unit?",
+          "prompt": "What does 'discursive' mean in this unit?",
           "choices": [
-            "A type of plant with a strong, fresh smell and taste, often used in teas and sweets.",
-            "The height of something above sea level or ground level.",
-            "The process of cutting down or removing trees from a forest or area of land."
+            "Very great in size, amount, or force.",
+            "Discussing a subject from several sides rather than arguing one.",
+            "The power to form new ideas or pictures in your mind that are not in front of you."
           ],
-          "answer": "The height of something above sea level or ground level.",
-          "explanation": "altitude: The height of something above sea level or ground level."
+          "answer": "Discussing a subject from several sides rather than arguing one.",
+          "explanation": "discursive: Discussing a subject from several sides rather than arguing one."
         }
       ]
     },
@@ -356,34 +344,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'access'?",
+          "prompt": "What type of word is 'sing'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Sing is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'occasional'?",
           "choices": [
             "Noun",
             "Verb",
             "Adjective"
           ],
-          "answer": "Noun",
-          "explanation": "Access is used as a noun in this dictionary sense."
+          "answer": "Adjective",
+          "explanation": "Occasional is used as an adjective in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'sculpture'?",
-          "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
-          ],
-          "answer": "Noun",
-          "explanation": "Sculpture is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'activism'?",
+          "prompt": "What type of word is 'packet'?",
           "choices": [
             "Adjective",
             "Noun",
             "Verb"
           ],
           "answer": "Noun",
-          "explanation": "Activism is used as a noun in this dictionary sense."
+          "explanation": "Packet is used as a noun in this dictionary sense."
         }
       ]
     },
@@ -399,16 +387,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "altitude",
-              "The height of something above sea level or ground level."
+              "organisation",
+              "A group of people who work together for a common purpose."
             ],
             [
-              "turbine",
-              "A machine that uses the movement of air or water to create energy or power."
+              "decisive",
+              "Settling something firmly, or able to decide quickly."
             ],
             [
-              "preserve",
-              "To keep something in its original state or condition so it is not damaged or spoiled."
+              "paintbrush",
+              "A tool with bristles on a handle, used for putting paint onto a surface."
             ]
           ]
         },
@@ -416,16 +404,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "thriving",
-              "Doing very well and growing strong or healthy."
+              "decorate",
+              "To make something look more attractive by adding colour or design to it."
             ],
             [
-              "disgrace",
-              "A feeling of shame or loss of respect because of something bad that has happened."
+              "adjective",
+              "A word that describes a noun, telling us more about it."
             ],
             [
-              "classmate",
-              "A student who is in the same class as you at school."
+              "graph",
+              "A diagram that uses lines, bars or points to show how numbers change or compare."
             ]
           ]
         },
@@ -433,16 +421,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "transform",
-              "To change something into a different form or appearance."
+              "grant",
+              "A sum of money given by an organisation to help pay for a particular project."
             ],
             [
-              "cursive",
-              "A style of writing where the letters are connected together."
+              "caring",
+              "Looking after someone or something and feeling concerned about their wellbeing."
             ],
             [
-              "spacecraft",
-              "A vehicle that is designed to travel in outer space."
+              "analyse",
+              "To look closely at something to understand it better."
             ]
           ]
         }

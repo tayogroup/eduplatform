@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: The ability to make good choices and decisions based on knowledge and experience.",
+          "prompt": "Which word means: A notice or message made to persuade people to buy or support something.",
           "choices": [
-            "wisdom",
-            "text",
-            "observation"
+            "advertisement",
+            "treaty",
+            "briefcases"
           ],
-          "answer": "wisdom",
-          "explanation": "wisdom: The ability to make good choices and decisions based on knowledge and experience."
+          "answer": "advertisement",
+          "explanation": "advertisement: A notice or message made to persuade people to buy or support something."
         },
         {
-          "prompt": "Which word means: Related to the law or rules that people must follow.",
+          "prompt": "Which word means: Disagreements or arguments between two or more people.",
           "choices": [
-            "wisdom",
-            "text",
-            "legal"
+            "advertisement",
+            "treaty",
+            "disputes"
           ],
-          "answer": "legal",
-          "explanation": "legal: Related to the law or rules that people must follow."
+          "answer": "disputes",
+          "explanation": "disputes: Disagreements or arguments between two or more people."
         },
         {
-          "prompt": "Which word means: The movement of people or animals from one place to another.",
+          "prompt": "Which word means: Names given to a person's job, a book, or a piece of work.",
           "choices": [
-            "text",
-            "migration",
-            "wisdom"
+            "treaty",
+            "titles",
+            "advertisement"
           ],
-          "answer": "migration",
-          "explanation": "migration: The movement of people or animals from one place to another."
+          "answer": "titles",
+          "explanation": "titles: Names given to a person's job, a book, or a piece of work."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A written text for a play, film, or show that tells what the characters say and do.",
-          "answer": "script"
+          "clue": "An agreement between groups to work together for a shared purpose.",
+          "answer": "alliance"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Saying what is wrong or bad about something.",
-          "answer": "criticism"
+          "clue": "Small, fried pastries filled with meat or vegetables, popular as a snack.",
+          "answer": "sambusas"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Long periods of time, each one lasting one hundred years.",
-          "answer": "centuries"
+          "clue": "An object, such as a box or jar, used for holding or storing something.",
+          "answer": "container"
         }
       ]
     },
@@ -83,58 +83,49 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "rehearsal.",
+            "delivered.",
+            "product",
             "the",
-            "during",
-            "script",
-            "the",
-            "from",
-            "lines",
-            "their",
-            "read",
-            "actors",
+            "than",
+            "more",
+            "promised",
+            "advertisement",
             "The"
           ],
-          "answer": "The actors read their lines from the script during the rehearsal."
+          "answer": "The advertisement promised more than the product delivered."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "improve.",
-            "me",
-            "help",
-            "to",
-            "essay",
-            "my",
-            "on",
-            "criticism",
-            "some",
-            "me",
-            "gave",
-            "teacher",
-            "The"
-          ],
-          "answer": "The teacher gave me some criticism on my essay to help me improve."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "winter.",
-            "the",
-            "for",
-            "places",
-            "warmer",
-            "to",
-            "migration",
-            "long",
+            "shoulder.",
+            "his",
+            "in",
+            "pain",
+            "sharp",
             "a",
-            "make",
-            "birds",
-            "many",
-            "year,",
-            "Every"
+            "described",
+            "patient",
+            "The"
           ],
-          "answer": "Every year, many birds make a long migration to warmer places for the winter."
+          "answer": "The patient described a sharp pain in his shoulder."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "food.",
+            "unsafe",
+            "selling",
+            "of",
+            "her",
+            "accused",
+            "officials",
+            "after",
+            "arrested",
+            "was",
+            "Dina",
+            "Mama"
+          ],
+          "answer": "Mama Dina was arrested after officials accused her of selling unsafe food."
         }
       ]
     },
@@ -239,7 +230,7 @@
         },
         {
           "prompt": "Speaking 5: Four-Minute Unit Talk",
-          "target": "Every year, many birds make a long migration to warmer places for the winter."
+          "target": "Mama Dina was arrested after officials accused her of selling unsafe food."
         }
       ]
     },
@@ -254,61 +245,55 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "inventors.",
-            "famous",
-            "about",
-            "assembly",
-            "the",
-            "for",
-            "script",
-            "the",
-            "from",
-            "lines",
-            "their",
-            "rehearsed",
-            "pupils",
+            "together.",
+            "learn",
+            "everyone",
+            "helps",
+            "class",
+            "our",
+            "into",
+            "students",
+            "new",
+            "of",
+            "integration",
             "The"
           ],
-          "answer": "The pupils rehearsed their lines from the script for the assembly about famous inventors."
+          "answer": "The integration of new students into our class helps everyone learn together."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "conditions.",
-            "protected",
-            "carefully",
-            "under",
-            "only",
-            "part-time",
-            "work",
+            "carefully.",
+            "ingredients",
+            "his",
+            "prepare",
             "to",
-            "teenagers",
+            "dawn",
+            "before",
+            "wakes",
+            "Omar"
+          ],
+          "answer": "Omar wakes before dawn to prepare his ingredients carefully."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "see.",
+            "to",
+            "court",
+            "whole",
+            "the",
             "for",
-            "legal",
-            "is",
-            "It"
+            "container",
+            "the",
+            "up",
+            "hold",
+            "officer",
+            "the",
+            "watched",
+            "Amal"
           ],
-          "answer": "It is legal for teenagers to work part-time only under carefully protected conditions."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "teaching.",
-            "careful",
-            "through",
-            "son",
-            "to",
-            "father",
-            "from",
-            "trades",
-            "their",
-            "passed",
-            "craftsmen",
-            "skilled",
-            "centuries,",
-            "For"
-          ],
-          "answer": "For centuries, skilled craftsmen passed their trades from father to son through careful teaching."
+          "answer": "Amal watched the officer hold up the container for the whole court to see."
         }
       ]
     },
@@ -321,34 +306,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'integration' mean in this unit?",
+          "prompt": "What does 'experience' mean in this unit?",
           "choices": [
-            "The process of combining different things to make a whole.",
-            "The ability to make good choices and decisions based on knowledge and experience.",
-            "The written words in a book, article, or message."
+            "Knowledge or skill that you gain by doing something over a period of time.",
+            "A notice or message made to persuade people to buy or support something.",
+            "A formal written agreement between countries."
           ],
-          "answer": "The process of combining different things to make a whole.",
-          "explanation": "integration: The process of combining different things to make a whole."
+          "answer": "Knowledge or skill that you gain by doing something over a period of time.",
+          "explanation": "experience: Knowledge or skill that you gain by doing something over a period of time."
         },
         {
-          "prompt": "What does 'vacuole' mean in this unit?",
+          "prompt": "What does 'don' mean in this unit?",
           "choices": [
-            "The ability to make good choices and decisions based on knowledge and experience.",
-            "The written words in a book, article, or message.",
-            "A small space inside a cell that holds water, nutrients, or waste."
+            "A notice or message made to persuade people to buy or support something.",
+            "A formal written agreement between countries.",
+            "To put on a piece of clothing."
           ],
-          "answer": "A small space inside a cell that holds water, nutrients, or waste.",
-          "explanation": "vacuole: A small space inside a cell that holds water, nutrients, or waste."
+          "answer": "To put on a piece of clothing.",
+          "explanation": "don: To put on a piece of clothing."
         },
         {
-          "prompt": "What does 'text' mean in this unit?",
+          "prompt": "What does 'treaty' mean in this unit?",
           "choices": [
-            "The act of watching something carefully to learn more about it.",
-            "The written words in a book, article, or message.",
-            "The ability to make good choices and decisions based on knowledge and experience."
+            "Bags with handles that professionals use to carry papers and documents to work.",
+            "A formal written agreement between countries.",
+            "A notice or message made to persuade people to buy or support something."
           ],
-          "answer": "The written words in a book, article, or message.",
-          "explanation": "text: The written words in a book, article, or message."
+          "answer": "A formal written agreement between countries.",
+          "explanation": "treaty: A formal written agreement between countries."
         }
       ]
     },
@@ -361,34 +346,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'commodity'?",
+          "prompt": "What type of word is 'banana'?",
           "choices": [
             "Noun",
             "Verb",
             "Adjective"
           ],
           "answer": "Noun",
-          "explanation": "Commodity is used as a noun in this dictionary sense."
+          "explanation": "Banana is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'presence'?",
+          "prompt": "What type of word is 'segregation'?",
           "choices": [
             "Verb",
             "Adjective",
             "Noun"
           ],
           "answer": "Noun",
-          "explanation": "Presence is used as a noun in this dictionary sense."
+          "explanation": "Segregation is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'consent'?",
+          "prompt": "What type of word is 'commentator'?",
           "choices": [
             "Adjective",
             "Noun",
             "Verb"
           ],
           "answer": "Noun",
-          "explanation": "Consent is used as a noun in this dictionary sense."
+          "explanation": "Commentator is used as a noun in this dictionary sense."
         }
       ]
     },
@@ -404,16 +389,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "text",
-              "The written words in a book, article, or message."
+              "classification",
+              "The sorting of things into groups by what they have in common."
             ],
             [
-              "caption",
-              "A short description or title that explains a picture or a video."
+              "mediation",
+              "The settling of a dispute with the help of a neutral person."
             ],
             [
-              "defence",
-              "The action of protecting someone or something from harm or danger."
+              "seam",
+              "The line where two pieces of cloth are joined together by sewing."
             ]
           ]
         },
@@ -421,16 +406,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "segregation",
-              "The act of keeping different groups of people apart from each other."
+              "courtrooms",
+              "Rooms where legal trials take place in front of a judge."
             ],
             [
-              "profession",
-              "A job that requires special training or education."
+              "views",
+              "A person's opinions or beliefs about a particular subject."
             ],
             [
-              "efficient",
-              "Doing something in a way that saves time and energy."
+              "courthouse",
+              "A building that contains courtrooms, where legal trials and hearings take place."
             ]
           ]
         },
@@ -438,16 +423,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "vacuole",
-              "A small space inside a cell that holds water, nutrients, or waste."
+              "bailiff",
+              "A court official who keeps order and announces people during a trial."
             ],
             [
-              "refuse",
-              "To say no to something; to not accept."
+              "targeted",
+              "Deliberately chose someone or something for special, often unfair, attention."
             ],
             [
-              "allies",
-              "Friends or partners who help each other."
+              "defence",
+              "The action of protecting someone or something from harm or danger."
             ]
           ]
         }

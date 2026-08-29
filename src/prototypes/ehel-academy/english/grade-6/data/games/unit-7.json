@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: The way heat or electricity moves through a material.",
+          "prompt": "Which word means: The person who makes or invents something.",
           "choices": [
-            "conduction",
-            "stratosphere",
-            "mechanisation"
+            "creator",
+            "density",
+            "translation"
           ],
-          "answer": "conduction",
-          "explanation": "conduction: The way heat or electricity moves through a material."
+          "answer": "creator",
+          "explanation": "creator: The person who makes or invents something."
         },
         {
-          "prompt": "Which word means: A person who believes that everyone should share things equally and that the government should help make this happen.",
+          "prompt": "Which word means: Recovery is the process of returning to a normal, healthy state after a difficult event.",
           "choices": [
-            "conduction",
-            "stratosphere",
-            "socialist"
+            "creator",
+            "density",
+            "recovery"
           ],
-          "answer": "socialist",
-          "explanation": "socialist: A person who believes that everyone should share things equally and that the government should help make this happen."
+          "answer": "recovery",
+          "explanation": "recovery: Recovery is the process of returning to a normal, healthy state after a difficult event."
         },
         {
-          "prompt": "Which word means: The process of changing something from one form to another.",
+          "prompt": "Which word means: A device that makes a person's voice louder so more people can hear it.",
           "choices": [
-            "stratosphere",
-            "conversion",
-            "conduction"
+            "density",
+            "microphone",
+            "creator"
           ],
-          "answer": "conversion",
-          "explanation": "conversion: The process of changing something from one form to another."
+          "answer": "microphone",
+          "explanation": "microphone: A device that makes a person's voice louder so more people can hear it."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "The process of transferring pollen from one flower to another to help plants make seeds.",
-          "answer": "pollination"
+          "clue": "The state of relying on something else.",
+          "answer": "dependency"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A person who believes in a system where the government owns everything and shares it equally among people.",
-          "answer": "communist"
+          "clue": "A stage is a particular point or step in a process that develops over time.",
+          "answer": "stage"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "The ability to start something on your own without being told.",
-          "answer": "initiative"
+          "clue": "Happening by itself, without a person having to make it happen each time.",
+          "answer": "automatic"
         }
       ]
     },
@@ -83,55 +83,52 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "flowers.",
-            "between",
-            "pollen",
-            "moving",
-            "by",
-            "pollination",
-            "with",
-            "help",
-            "Bees"
-          ],
-          "answer": "Bees help with pollination by moving pollen between flowers."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "money.",
-            "earn",
-            "to",
-            "things",
-            "sell",
-            "and",
-            "shops",
-            "own",
-            "their",
-            "start",
-            "can",
-            "people",
-            "capitalism,",
-            "In"
-          ],
-          "answer": "In capitalism, people can start their own shops and sell things to earn money."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "one.",
-            "got",
-            "child",
-            "every",
-            "so",
-            "fair,",
-            "was",
-            "toys",
+            "it.",
+            "patented",
+            "never",
+            "design",
             "the",
             "of",
-            "distribution",
+            "creator",
             "The"
           ],
-          "answer": "The distribution of the toys was fair, so every child got one."
+          "answer": "The creator of the design never patented it."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "animal.",
+            "wild",
+            "a",
+            "like",
+            "howled",
+            "wind",
+            "the",
+            "while",
+            "rooftops",
+            "the",
+            "hammered",
+            "Rain"
+          ],
+          "answer": "Rain hammered the rooftops while the wind howled like a wild animal."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "region.",
+            "the",
+            "across",
+            "machines",
+            "farming",
+            "modern",
+            "of",
+            "expansion",
+            "the",
+            "described",
+            "plan",
+            "The"
+          ],
+          "answer": "The plan described the expansion of modern farming machines across the region."
         }
       ]
     },
@@ -228,15 +225,15 @@
       "rounds": [
         {
           "prompt": "Speaking 1: News Presenter Role-Play",
-          "target": "Bees help with pollination by moving pollen between flowers."
+          "target": "The creator of the design never patented it."
         },
         {
           "prompt": "Speaking 3: Discussion, How Should We Prepare?",
-          "target": "In capitalism, people can start their own shops and sell things to earn money."
+          "target": "Rain hammered the rooftops while the wind howled like a wild animal."
         },
         {
           "prompt": "Speaking 5: Safety Broadcast Read-Aloud",
-          "target": "The distribution of the toys was fair, so every child got one."
+          "target": "The plan described the expansion of modern farming machines across the region."
         }
       ]
     },
@@ -251,60 +248,54 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "weekend.",
-            "this",
-            "homework",
-            "no",
-            "be",
-            "would",
-            "there",
-            "that",
-            "declaration",
+            "days.",
+            "hardest",
+            "the",
+            "through",
+            "community",
+            "a",
+            "carry",
+            "can",
+            "allies",
+            "Loyal"
+          ],
+          "answer": "Loyal allies can carry a community through the hardest days."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "recovery.",
+            "town's",
+            "the",
+            "of",
+            "stage",
+            "every",
+            "showing",
+            "wall",
+            "picture",
             "a",
             "made",
-            "teacher",
+            "class",
             "The"
           ],
-          "answer": "The teacher made a declaration that there would be no homework this weekend."
+          "answer": "The class made a picture wall showing every stage of the town's recovery."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "permission.",
-            "clear",
-            "her",
-            "without",
-            "reprinted",
-            "be",
-            "cannot",
-            "stories",
-            "author's",
-            "an",
-            "copyright,",
-            "of",
-            "Because"
-          ],
-          "answer": "Because of copyright, an author's stories cannot be reprinted without her clear permission."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "higher.",
-            "maize",
-            "of",
-            "price",
+            "meeting.",
             "the",
-            "pushed",
-            "it",
-            "drought",
+            "before",
+            "calculation",
             "the",
-            "after",
-            "prices;",
-            "rising",
-            "means",
-            "Inflation"
+            "fixing",
+            "into",
+            "effort",
+            "real",
+            "put",
+            "Sami"
           ],
-          "answer": "Inflation means rising prices; after the drought it pushed the price of maize higher."
+          "answer": "Sami put real effort into fixing the calculation before the meeting."
         }
       ]
     },
@@ -317,34 +308,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'communist' mean in this unit?",
+          "prompt": "What does 'low' mean in this unit?",
           "choices": [
-            "A person who believes in a system where the government owns everything and shares it equally among people.",
-            "The way heat or electricity moves through a material.",
-            "The layer of air above the weather layer, where planes fly and the ozone layer is found."
+            "Close to the ground or not very high compared with other things nearby.",
+            "The person who makes or invents something.",
+            "How much mass is packed into a given space."
           ],
-          "answer": "A person who believes in a system where the government owns everything and shares it equally among people.",
-          "explanation": "communist: A person who believes in a system where the government owns everything and shares it equally among people."
+          "answer": "Close to the ground or not very high compared with other things nearby.",
+          "explanation": "low: Close to the ground or not very high compared with other things nearby."
         },
         {
-          "prompt": "What does 'commitment' mean in this unit?",
+          "prompt": "What does 'limit' mean in this unit?",
           "choices": [
-            "The way heat or electricity moves through a material.",
-            "The layer of air above the weather layer, where planes fly and the ozone layer is found.",
-            "A promise to do something or to be loyal to someone or something."
+            "The person who makes or invents something.",
+            "How much mass is packed into a given space.",
+            "To stop something from growing or going beyond a certain amount."
           ],
-          "answer": "A promise to do something or to be loyal to someone or something.",
-          "explanation": "commitment: A promise to do something or to be loyal to someone or something."
+          "answer": "To stop something from growing or going beyond a certain amount.",
+          "explanation": "limit: To stop something from growing or going beyond a certain amount."
         },
         {
-          "prompt": "What does 'stratosphere' mean in this unit?",
+          "prompt": "What does 'density' mean in this unit?",
           "choices": [
-            "The process of using machines to do work instead of people.",
-            "The layer of air above the weather layer, where planes fly and the ozone layer is found.",
-            "The way heat or electricity moves through a material."
+            "Sliding a shape to a new position without turning or resizing it.",
+            "How much mass is packed into a given space.",
+            "The person who makes or invents something."
           ],
-          "answer": "The layer of air above the weather layer, where planes fly and the ozone layer is found.",
-          "explanation": "stratosphere: The layer of air above the weather layer, where planes fly and the ozone layer is found."
+          "answer": "How much mass is packed into a given space.",
+          "explanation": "density: How much mass is packed into a given space."
         }
       ]
     },
@@ -357,34 +348,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'distribution'?",
+          "prompt": "What type of word is 'converting'?",
           "choices": [
-            "Noun",
             "Verb",
+            "Noun",
             "Adjective"
           ],
-          "answer": "Noun",
-          "explanation": "Distribution is used as a noun in this dictionary sense."
+          "answer": "Verb",
+          "explanation": "Converting is used as a verb in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'expression'?",
+          "prompt": "What type of word is 'administration'?",
           "choices": [
             "Verb",
             "Adjective",
             "Noun"
           ],
           "answer": "Noun",
-          "explanation": "Expression is used as a noun in this dictionary sense."
+          "explanation": "Administration is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'capitalist'?",
+          "prompt": "What type of word is 'hear'?",
           "choices": [
             "Adjective",
-            "Noun",
-            "Verb"
+            "Verb",
+            "Noun"
           ],
-          "answer": "Noun",
-          "explanation": "Capitalist is used as a noun in this dictionary sense."
+          "answer": "Verb",
+          "explanation": "Hear is used as a verb in this dictionary sense."
         }
       ]
     },
@@ -400,16 +391,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "stratosphere",
-              "The layer of air above the weather layer, where planes fly and the ozone layer is found."
+              "descriptive",
+              "Giving a clear picture of what something is like."
             ],
             [
-              "illustration",
-              "A picture or drawing that helps explain something."
+              "quadrilateral",
+              "A flat shape with four straight sides."
             ],
             [
-              "socialism",
-              "A system where the government controls important things like schools and hospitals to help everyone equally."
+              "pulled",
+              "Pulled means used force to move something towards you or along a surface."
             ]
           ]
         },
@@ -417,16 +408,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "communist",
-              "A person who believes in a system where the government owns everything and shares it equally among people."
+              "picture",
+              "A picture is a drawing, painting, or photograph that shows how something looks."
             ],
             [
-              "preparation",
-              "The process of getting ready for something."
+              "placed",
+              "Put something carefully in a particular position or spot."
             ],
             [
-              "inflation",
-              "When prices for things go up, so you need more money to buy the same things."
+              "expansion",
+              "The process of something growing larger or covering more area than before."
             ]
           ]
         },
@@ -434,16 +425,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "initiative",
-              "The ability to start something on your own without being told."
+              "claps",
+              "The sounds people make by striking their hands together, usually to show approval."
             ],
             [
-              "declaration",
-              "A formal statement or announcement about something important."
+              "confirmed",
+              "Showed or stated that something is true or correct."
             ],
             [
-              "presence",
-              "The state of being in a place or being with someone."
+              "socialist",
+              "A person who believes that everyone should share things equally and that the government should help make this happen."
             ]
           ]
         }

@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: Relating to the physical features of the Earth, such as mountains, rivers and where places lie.",
+          "prompt": "Which word means: Uncomfortable or a little difficult, especially with other people.",
           "choices": [
-            "geographic",
-            "imagination",
-            "observation"
+            "awkward",
+            "self-discipline",
+            "exercise"
           ],
-          "answer": "geographic",
-          "explanation": "geographic: Relating to the physical features of the Earth, such as mountains, rivers and where places lie."
+          "answer": "awkward",
+          "explanation": "awkward: Uncomfortable or a little difficult, especially with other people."
         },
         {
-          "prompt": "Which word means: A solid, three-dimensional artwork shaped from materials like stone, clay or metal.",
+          "prompt": "Which word means: A quick response of the body or mind to something that happens.",
           "choices": [
-            "geographic",
-            "imagination",
-            "sculpture"
+            "awkward",
+            "self-discipline",
+            "reaction"
           ],
-          "answer": "sculpture",
-          "explanation": "sculpture: A solid, three-dimensional artwork shaped from materials like stone, clay or metal."
+          "answer": "reaction",
+          "explanation": "reaction: A quick response of the body or mind to something that happens."
         },
         {
-          "prompt": "Which word means: Connected to the natural world and how human actions affect it.",
+          "prompt": "Which word means: Keeps happening or going on without coming to a stop.",
           "choices": [
-            "imagination",
-            "environmental",
-            "geographic"
+            "self-discipline",
+            "continues",
+            "awkward"
           ],
-          "answer": "environmental",
-          "explanation": "environmental: Connected to the natural world and how human actions affect it."
+          "answer": "continues",
+          "explanation": "continues: Keeps happening or going on without coming to a stop."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "At the very beginning, or in the first place before anything changed.",
-          "answer": "originally"
+          "clue": "Something bought cheaply, or an agreement about a price.",
+          "answer": "bargain"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A solid, three-dimensional artwork shaped from materials like stone, clay or metal.",
-          "answer": "sculpture"
+          "clue": "People who have won a competition or are the very best at something.",
+          "answer": "champions"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Able to be replaced or used again, like energy from the sun or the wind.",
-          "answer": "renewable"
+          "clue": "Making something happen, especially something bad or unexpected.",
+          "answer": "causing"
         }
       ]
     },
@@ -83,54 +83,47 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "river.",
+            "whistle.",
             "the",
-            "of",
-            "line",
-            "winding",
-            "the",
-            "followed",
-            "border",
-            "geographic",
-            "the",
-            "map,",
-            "the",
-            "On"
+            "after",
+            "silence",
+            "awkward",
+            "an",
+            "was",
+            "There"
           ],
-          "answer": "On the map, the geographic border followed the winding line of the river."
+          "answer": "There was an awkward silence after the whistle."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "texture.",
-            "their",
-            "of",
-            "because",
-            "different",
-            "completely",
-            "feel",
-            "glass",
-            "and",
-            "Wool"
+            "midday.",
+            "at",
+            "outside",
+            "train",
+            "to",
+            "hot",
+            "too",
+            "was",
+            "It"
           ],
-          "answer": "Wool and glass feel completely different because of their texture."
+          "answer": "It was too hot to train outside at midday."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "lands.",
-            "many",
-            "from",
-            "music",
-            "with",
-            "square",
+            "incredible.",
+            "was",
+            "water",
+            "released",
+            "plants",
             "the",
-            "filled",
-            "festival",
-            "multicultural",
-            "A"
+            "which",
+            "at",
+            "rate",
+            "The"
           ],
-          "answer": "A multicultural festival filled the square with music from many lands."
+          "answer": "The rate at which the plants released water was incredible."
         }
       ]
     },
@@ -227,7 +220,7 @@
       "rounds": [
         {
           "prompt": "Speaking 1: Sports Interview Role-Play",
-          "target": "On the map, the geographic border followed the winding line of the river."
+          "target": "There was an awkward silence after the whistle."
         },
         {
           "prompt": "Speaking 3: Fact or Opinion Listening Game",
@@ -250,55 +243,50 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "grow.",
-            "plants",
-            "helps",
-            "and",
-            "Earth",
-            "the",
-            "warms",
-            "radiation",
-            "sun's",
-            "The"
-          ],
-          "answer": "The sun's radiation warms the Earth and helps plants grow."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "welcoming.",
-            "and",
-            "bright",
-            "modern,",
-            "is",
-            "centre",
-            "sports",
-            "new",
-            "the",
+            "texture.",
+            "their",
             "of",
-            "architecture",
-            "The"
+            "because",
+            "different",
+            "completely",
+            "feel",
+            "glass",
+            "and",
+            "Wool"
           ],
-          "answer": "The architecture of the new sports centre is modern, bright and welcoming."
+          "answer": "Wool and glass feel completely different because of their texture."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "fertile.",
-            "region",
-            "whole",
-            "the",
-            "keep",
-            "helps",
+            "talent.",
+            "raw",
+            "than",
+            "more",
+            "matters",
+            "discipline",
             "that",
-            "water",
-            "release",
-            "leaves",
-            "the",
-            "transpiration,",
-            "Through"
+            "say",
+            "often",
+            "champions",
+            "World"
           ],
-          "answer": "Through transpiration, the leaves release water that helps keep the whole region fertile."
+          "answer": "World champions often say that discipline matters more than raw talent."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "question.",
+            "Amal's",
+            "answering",
+            "before",
+            "slowly",
+            "beard",
+            "his",
+            "stroked",
+            "He"
+          ],
+          "answer": "He stroked his beard slowly before answering Amal's question."
         }
       ]
     },
@@ -311,34 +299,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'text' mean in this unit?",
+          "prompt": "What does 'health' mean in this unit?",
           "choices": [
-            "A piece of writing that you can read closely, study and discuss.",
-            "Relating to the physical features of the Earth, such as mountains, rivers and where places lie.",
-            "The power to form new ideas or pictures in your mind that are not in front of you."
+            "The condition of your body and mind, and how well it is working.",
+            "Uncomfortable or a little difficult, especially with other people.",
+            "Making yourself do what you planned, even when you would rather not."
           ],
-          "answer": "A piece of writing that you can read closely, study and discuss.",
-          "explanation": "text: A piece of writing that you can read closely, study and discuss."
+          "answer": "The condition of your body and mind, and how well it is working.",
+          "explanation": "health: The condition of your body and mind, and how well it is working."
         },
         {
-          "prompt": "What does 'transpiration' mean in this unit?",
+          "prompt": "What does 'loud' mean in this unit?",
           "choices": [
-            "Relating to the physical features of the Earth, such as mountains, rivers and where places lie.",
-            "The power to form new ideas or pictures in your mind that are not in front of you.",
-            "The way plants release water into the air through tiny openings in their leaves."
+            "Uncomfortable or a little difficult, especially with other people.",
+            "Making yourself do what you planned, even when you would rather not.",
+            "Producing a lot of noise, or easily heard."
           ],
-          "answer": "The way plants release water into the air through tiny openings in their leaves.",
-          "explanation": "transpiration: The way plants release water into the air through tiny openings in their leaves."
+          "answer": "Producing a lot of noise, or easily heard.",
+          "explanation": "loud: Producing a lot of noise, or easily heard."
         },
         {
-          "prompt": "What does 'imagination' mean in this unit?",
+          "prompt": "What does 'self-discipline' mean in this unit?",
           "choices": [
-            "The act of watching something carefully to notice details and learn about it.",
-            "The power to form new ideas or pictures in your mind that are not in front of you.",
-            "Relating to the physical features of the Earth, such as mountains, rivers and where places lie."
+            "To move your body on purpose so that you become fitter and stronger.",
+            "Making yourself do what you planned, even when you would rather not.",
+            "Uncomfortable or a little difficult, especially with other people."
           ],
-          "answer": "The power to form new ideas or pictures in your mind that are not in front of you.",
-          "explanation": "imagination: The power to form new ideas or pictures in your mind that are not in front of you."
+          "answer": "Making yourself do what you planned, even when you would rather not.",
+          "explanation": "self-discipline: Making yourself do what you planned, even when you would rather not."
         }
       ]
     },
@@ -351,34 +339,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'propaganda'?",
+          "prompt": "What type of word is 'light'?",
           "choices": [
             "Noun",
             "Verb",
             "Adjective"
           ],
           "answer": "Noun",
-          "explanation": "Propaganda is used as a noun in this dictionary sense."
+          "explanation": "Light is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'plague'?",
+          "prompt": "What type of word is 'texture'?",
           "choices": [
             "Verb",
             "Adjective",
             "Noun"
           ],
           "answer": "Noun",
-          "explanation": "Plague is used as a noun in this dictionary sense."
+          "explanation": "Texture is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'sedition'?",
+          "prompt": "What type of word is 'lentils'?",
           "choices": [
             "Adjective",
             "Noun",
             "Verb"
           ],
           "answer": "Noun",
-          "explanation": "Sedition is used as a noun in this dictionary sense."
+          "explanation": "Lentils is used as a noun in this dictionary sense."
         }
       ]
     },
@@ -394,16 +382,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "imagination",
-              "The power to form new ideas or pictures in your mind that are not in front of you."
+              "bruise",
+              "A dark mark on the skin where it has been struck."
             ],
             [
-              "deteriorate",
-              "To slowly become worse or drop in quality or condition."
+              "adaptable",
+              "Able to change easily to suit a new situation."
             ],
             [
-              "texture",
-              "The way a surface feels when you touch it, such as rough, smooth or bumpy."
+              "diet",
+              "The usual food and drink a person has."
             ]
           ]
         },
@@ -411,16 +399,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "text",
-              "A piece of writing that you can read closely, study and discuss."
+              "concentration",
+              "The ability to keep your full attention on one thing without being distracted."
             ],
             [
-              "radioactive",
-              "Giving off dangerous, invisible energy or tiny particles that can harm living things."
+              "fair",
+              "Treating people equally and in a way that is right and reasonable."
             ],
             [
-              "multicultural",
-              "Including many different cultures, traditions and ways of life together."
+              "soil",
+              "The loose top layer of earth in which plants grow and take root."
             ]
           ]
         },
@@ -428,16 +416,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "renewable",
-              "Able to be replaced or used again, like energy from the sun or the wind."
+              "involve",
+              "To include something as a necessary part of a situation."
             ],
             [
-              "translucent",
-              "Letting some light pass through without being completely see-through."
+              "floating",
+              "Staying on the surface of a liquid or moving gently through the air without sinking."
             ],
             [
-              "radiation",
-              "Energy that travels out from a source as heat, light or invisible rays."
+              "observation",
+              "The act of watching something carefully to notice details and learn about it."
             ]
           ]
         }

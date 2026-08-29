@@ -461,6 +461,21 @@ a.pqlgb-golive{text-decoration:none;display:inline-block}
     if (tile.leftearly > 0) {
       flags.push('<span class="pqlgb-flag pqlgb-flag--bad">left early</span>');
     }
+    // The live room, while one is running: who is in, who has not arrived.
+    // A child in BBB has this app tab backgrounded, so without this flag they
+    // read as quiet/gone on the very board that should show them doing the
+    // right thing. JOINED is the measured fact (the join action's attendance
+    // row); BBB does not reliably report leaving, so the flag says when they
+    // joined and never claims "still in".
+    if (tile.liveclass) {
+      if (tile.liveclass.joined > 0) {
+        var jt = new Date(tile.liveclass.joined * 1000);
+        flags.push('<span class="pqlgb-flag pqlgb-flag--ok">in live class &middot; joined '
+          + ("0" + jt.getHours()).slice(-2) + ":" + ("0" + jt.getMinutes()).slice(-2) + "</span>");
+      } else {
+        flags.push('<span class="pqlgb-flag pqlgb-flag--warn">not in live class yet</span>');
+      }
+    }
     // Presence first: a learner IN the tutor right now is a different thing
     // from one who used it earlier, and it is the one that changes what a
     // teacher does next -- they are already getting help, so leave them.

@@ -745,6 +745,10 @@ function pqlgb_group_next_session(array $groupids): array {
             // The learner's red pill: red ONLY when the join action would say
             // yes right now.
             'joinable' => $joinable,
+            // The room is actually running (teacher in). What the board's
+            // attendance flags hang off: attendance is only worth showing
+            // while there is a class to be in.
+            'live' => $teacherstarted,
         ];
     }
     return $out;
@@ -774,6 +778,29 @@ function pqlgb_build(int $teacherid, int $workspaceid, int $windowminutes, strin
     $learning = pqlgb_learning_time($userids);
     $hands = pqlgb_hand_state($userids);
     $nextsessions = pqlgb_group_next_session(array_map('intval', array_keys($groups)));
+    // Who has JOINED each live room, from the attendance rows the join action
+    // writes (pql_mark_student_join). JOINED is the measured fact -- BBB does
+    // not reliably report leaving -- so the tile says joined-at, never
+    // claims "still in". Only queried for rooms that are actually live.
+    $liveattendance = [];
+    if (pqlgb_table_exists('local_prequran_live_attendance')) {
+        foreach ($nextsessions as $gid => $sess) {
+            if (empty($sess['live'])) {
+                continue;
+            }
+            try {
+                foreach ($DB->get_records('local_prequran_live_attendance',
+                        ['sessionid' => (int)$sess['id']], '', 'id, studentid, join_time, leave_time') as $arow) {
+                    $liveattendance[$gid][(int)$arow->studentid] = [
+                        'joined' => (int)$arow->join_time,
+                        'left' => (int)$arow->leave_time,
+                    ];
+                }
+            } catch (Throwable $e) {
+                // attendance is decoration on the board; never break the build
+            }
+        }
+    }
 
     $board = ['generated' => $now, 'window' => $windowminutes, 'env' => $env, 'groups' => [], 'totals' => [
         'learners' => 0, 'quiet' => 0, 'breaks' => 0, 'leftearly' => 0, 'hands' => 0,
@@ -819,6 +846,11 @@ function pqlgb_build(int $teacherid, int $workspaceid, int $windowminutes, strin
                 'learnremaining' => (int)($learning[$userid]['remaining'] ?? 0),
                 'learntarget' => (int)($learning[$userid]['target'] ?? 0),
                 'learncounted' => !empty($learning[$userid]['counted']),
+                // null = no live room for this group right now; otherwise the
+                // learner's attendance in it (joined 0 = has not joined yet).
+                'liveclass' => !empty($nextsessions[$groupid]['live'])
+                    ? ($liveattendance[$groupid][$userid] ?? ['joined' => 0, 'left' => 0])
+                    : null,
                 'handup' => !empty($hand['up']),
                 'handsince' => !empty($hand['up']) ? (int)$hand['since'] : 0,
                 'donewindow' => $snap ? (int)$snap['donewindow'] : 0,

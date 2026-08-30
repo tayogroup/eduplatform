@@ -82,9 +82,17 @@ windows).
 Students join content-first by design (since 2026-08-30): their sidebar
 starts collapsed, so slides and your shared screen use the full width of
 their window. A student can still open chat and the users list with the
-toggle at the top left. True browser fullscreen cannot be pushed to
-students — it always needs their own click (the deck's Fullscreen button,
-or the expand icon on the share).
+toggle at the top left.
+
+**The last step is the student's own click, and it cannot be automated** —
+browsers only grant fullscreen from a click on the page, so no setting can
+do it for them. Teach it as a class ritual (verified in class 2026-08-30):
+
+> "When I share my screen, press the **expand arrows (⛶) at the top-right
+> corner of the shared screen**."
+
+One instruction, once — fullscreen swallows the dark bands around the
+share and fills the student's whole display. Esc brings them back.
 
 ## Student webcams are off by policy
 

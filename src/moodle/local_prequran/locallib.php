@@ -157,6 +157,11 @@ function local_prequran_bbb_meeting_defaults(array $meeting): array {
         // create path already passed this explicitly; putting it here covers
         // the externallib join door and any future create call site too.
         'lockSettingsDisableCam' => true,
+        // BBB only binds room locks to users AS THEY JOIN when lockOnJoin is
+        // true. That is BBB's own default, but this is a hosted server whose
+        // config we do not control -- stated explicitly, the cam lock above
+        // cannot be undone by a provider-side default flip.
+        'lockSettingsLockOnJoin' => true,
         'maxParticipants' => (int)get_config('local_prequran', 'bbb_max_participants_default') ?: 12,
         'duration' => 90,
     ];

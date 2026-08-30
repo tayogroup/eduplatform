@@ -12,13 +12,27 @@ BBB has no way to push fullscreen to students, and browsers themselves forbid
 it (fullscreen needs a local click on each device). Use the recipe below
 instead; it is reflected on the students' side.
 
-Verified in our rooms on 2026-08-30. Two options this section used to
-recommend do NOT exist here, so do not go looking for them: there is no
-"Share camera as content" on the toolbar camera button, and the Layouts
-dialog has no "Focus on video" — this server's video-focused layout is
-called **Grid layout**.
+### Best: share your camera as the lesson content
 
-### The recipe: Pin + Grid layout, pushed to everyone
+Enabled for rooms created from 2026-08-30 (it used to be switched off in our
+room settings — in an older room, use the recipe below instead).
+
+1. Find the **camera button in the bottom toolbar** — the one you click to
+   turn your webcam on or off — and click the **small arrow (caret) beside
+   it**, not the camera icon itself. (This option is NOT in the menu on your
+   video tile.)
+2. Choose **"Share camera as content"**.
+
+Your camera fills the main canvas (the presentation area) for you **and every
+student**, exactly like a screen share — one click, no layout fiddling. Stop
+the share to bring the presentation back for everyone. A camera shared as
+content occupies the presentation slot, so it cannot run at the same time as
+a screen share.
+
+### Fallback: Pin + Grid layout, pushed to everyone
+
+Verified in our rooms on 2026-08-30. Note the Layouts dialog has no "Focus on
+video" — this server's video-focused layout is called **Grid layout**.
 
 1. **Pin your webcam**: dropdown on your own video tile → **Pin**. A
    moderator's pin is room-wide — your camera stays visible and prioritised

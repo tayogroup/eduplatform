@@ -137,17 +137,21 @@ const AUDIO_IS_DEV = ["localhost", "127.0.0.1"].includes(location.hostname);
 //   the per-clip rule above they need a stamp: same path, same URL, new bytes.
 //   All were confirmed byte-identical on STORAGE before this shipped, which is
 //   what makes the stamp cover them rather than merely mention them.
-//   Grade 8's 15 are deliberately NOT covered, and must not be read as
-//   included because they were re-recorded in the same stretch of work. Its
-//   three inherited cards — concede, systematic, attribute — were re-narrated
-//   onto filenames that already exist, and storage still holds the OLD bytes.
-//   Checked rather than assumed: systematic-sentence-4 differs on storage
-//   while the grade 5 and grade 6 samples match, because grade 8's media has
-//   never been uploaded. By the ordering rule directly below, a clip reaching
-//   storage AFTER its stamp is live is pinned again under the new URL for a
-//   year, so those 15 want the stamp that ships after grade 8's media upload,
-//   not this one. Stamping them here would look like coverage and be the
-//   opposite.
+//   ALSO carried by this stamp, and this paragraph is a correction of what it
+//   said when the constant was first bumped. It read that grade 8's 15 were
+//   "deliberately NOT covered" and wanted the NEXT stamp, because at that
+//   moment grade 8's media had never been uploaded and storage still held the
+//   old bytes for its three inherited cards (concede, systematic, attribute).
+//   That was true when written and stopped being true a few hours later: grade
+//   8 was deployed, and 1,761 clips went to storage — grade 8's 1,743 and, in
+//   the same run, the 18 that re-recorded grade 1's orange, bed and sleep.
+//   20260830a was still UNRELEASED when they landed (the live app was v339,
+//   carrying 20260828b), so the release that first carries this stamp refetches
+//   all 33 along with everything else. That is the 20260827a case in the
+//   paragraph above, arriving the same way round.
+//   The ordering rule below is what decides this, and it turns on when the
+//   stamp goes LIVE rather than when it is committed. A stamp sitting in the
+//   repo pins nothing.
 const AUDIO_RELEASE = "20260830a";
 function withAudioRelease(url) {
   // Dev serves from disk with no caching worth defeating, and a bare filename

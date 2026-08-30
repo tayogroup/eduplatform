@@ -65,7 +65,18 @@ const readJson = (file) => JSON.parse(fs.readFileSync(file, "utf8"));
 // story words — an English reader legitimately says "the children ran to the
 // gate". What is diagnostic is the learner as SOMEBODY ELSE'S CHARGE, or the
 // page addressing the adult directly.
-const ADULT_ADDRESSED = /\byour child\b|\bthe child (?:draws|writes|circles|points|says|will|can|needs|should)\b|\blet (?:the|your) (?:child|learner)\b|\bhelp your child\b|\bnote for the teacher\b|\bteacher (?:lesson plan|guide|notes)\b|\bweekly objectives\b|\bchildren will (?:be able to|begin to)\b|\bby the end of week \d|(?:^|[.!?]\s+)(?:Model|Remind|Encourage|Prompt|Praise|Coach)\s+(?:the|them|your)\b|\bthe child's own\b/i;
+// "children will be able to" needs its objective framing. Bare, it is also
+// ordinary topic prose: a Grade 6 close reading about a solar lamp says "If
+// families and schools use inventions like the SunJar, children will be able
+// to study after sunset" — the passage's subject, not an adult being
+// addressed. Requiring "by the end of ..." in front loses exactly that one
+// string across all 81 units (683 matches to 682, nothing else gained or
+// lost) and keeps all 16 real objectives in Grade 1 Unit 0, which read "By
+// the end of Week 3, children will be able to:".
+// Anchoring to the start of a sentence was tried first and is exactly wrong:
+// those objectives put the phrase after a comma too, so it took the detector
+// from 17 matches to 0.
+const ADULT_ADDRESSED = /\byour child\b|\bthe child (?:draws|writes|circles|points|says|will|can|needs|should)\b|\blet (?:the|your) (?:child|learner)\b|\bhelp your child\b|\bnote for the teacher\b|\bteacher (?:lesson plan|guide|notes)\b|\bweekly objectives\b|\bby the end of [^.!?]{0,40}?children will (?:be able to|begin to)\b|\bby the end of week \d|(?:^|[.!?]\s+)(?:Model|Remind|Encourage|Prompt|Praise|Coach)\s+(?:the|them|your)\b|\bthe child's own\b/i;
 // The last two alternatives above were added after a browser pass found a
 // Grade 1 grammar card telling the five-year-old reading it to "Model the short
 // /a/ first, then let them copy" — teacher guidance rendered plainly at

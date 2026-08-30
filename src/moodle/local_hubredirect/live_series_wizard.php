@@ -260,7 +260,20 @@ $pattern = optional_param('recurrence_pattern', 'weekdays', PARAM_ALPHANUMEXT);
 $count = max(1, min(60, optional_param('recurrence_count', 8, PARAM_INT)));
 $untilraw = optional_param('recurrence_until', '', PARAM_TEXT);
 $weekdays = optional_param_array('recurrence_weekdays', [], PARAM_INT);
+if (!$weekdays) {
+    // A redirect cannot carry an array parameter, so the create page's
+    // bounce-back (below) sends the weekdays as one CSV value instead.
+    $weekdayscsv = trim(optional_param('recurrence_weekdays_csv', '', PARAM_TEXT));
+    if ($weekdayscsv !== '') {
+        $weekdays = array_values(array_unique(array_map('intval', explode(',', $weekdayscsv))));
+    }
+}
 $recording = optional_param('recording_enabled', 0, PARAM_BOOL);
+// Set only by live_sessions.php when a create THIS WIZARD submitted was
+// refused: the refusal used to render over there, which read from the wizard
+// as a silent failure -- the series simply did not appear.
+$wizarderror = optional_param('wizarderror', '', PARAM_ALPHA);
+$wizardmsg = trim(optional_param('wizardmsg', '', PARAM_TEXT));
 $datevalue = pqlsw_clean_date($sessiondate, 0);
 $start = ($datevalue > 0 && pqlsw_minutes($sessiontime) >= 0) ? usergetmidnight($datevalue) + (pqlsw_minutes($sessiontime) * MINSECS) : 0;
 $until = $untilraw !== '' ? pqlsw_clean_date($untilraw, 0) + DAYSECS - 1 : ($start > 0 ? $start + (30 * DAYSECS) : 0);
@@ -309,6 +322,17 @@ body.pqh-live-series-wizard-page #page,body.pqh-live-series-wizard-page #page-co
 <?php echo pqh_design_shell_html('pqlsw-shell'); ?><div class="pqlsw-wrap">
   <section class="pqlsw-top pqh-workspace-top"><div><h1 class="pqlsw-title pqh-workspace-title">Guided Recurring Class Series Wizard</h1><p class="pqlsw-sub pqh-workspace-sub">Preview every generated class date before creating a recurring BBB live-session series.</p></div><div class="pqlsw-actions pqh-workspace-actions"><?php echo pqh_live_session_explainer_link(); ?><a class="pqlsw-btn pqlsw-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_create_wizard.php', $urlparams))->out(false); ?>">Single session wizard</a><?php if ($pqlswisadmin): ?><a class="pqlsw-btn pqlsw-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_capacity.php', $urlparams))->out(false); ?>">Capacity</a><?php endif; ?><a class="pqlsw-btn pqlsw-btn--light" href="<?php echo $dashboardurl->out(false); ?>">Dashboard</a><a class="pqlsw-btn" href="<?php echo (new moodle_url('/local/hubredirect/live_sessions.php', $urlparams))->out(false); ?>">Live sessions</a></div></section>
   <section class="pqlsw-steps"><?php foreach ([1 => 'Teacher', 2 => 'Students', 3 => 'Lesson', 4 => 'Recurrence', 5 => 'Safety', 6 => 'Review'] as $num => $label): ?><div class="pqlsw-step <?php echo $step === $num ? 'pqlsw-step--active' : ''; ?>"><?php echo (int)$num; ?>. <?php echo s($label); ?></div><?php endforeach; ?></section>
+  <?php if ($wizarderror !== ''): ?>
+    <div class="pqlsw-alert pqlsw-alert--bad"><?php
+        if ($wizarderror === 'reasonrequired') {
+            echo 'The series was NOT created: conflicts exist and the override reason was left empty. Tick the override box AND type a reason, or clear the conflicting sessions first.';
+        } else if ($wizarderror === 'conflict') {
+            echo 'The series was NOT created: it collides with existing sessions. Cancel or reschedule the conflicting sessions listed below, or use the admin conflict override with a reason.';
+        } else {
+            echo 'The series was NOT created. ' . s($wizardmsg !== '' ? $wizardmsg : 'The live sessions page refused the submission.');
+        }
+    ?></div>
+  <?php endif; ?>
   <section class="pqlsw-panel">
     <?php if (!pqlsw_ready()): ?><div class="pqlsw-empty">Recurring wizard requires the Phase 16 series table/columns.</div>
     <?php elseif ($step === 1): ?>

@@ -1904,6 +1904,41 @@ if ($error === '' && data_submitted() && optional_param('action', '', PARAM_ALPH
     }
 }
 
+if ($error !== '' && !empty($createdfromwizard) && !empty($recurring)) {
+    // Only the SERIES wizard both marks created_from_wizard and posts
+    // recurring_enabled=1; the single-session wizard hands off to this
+    // page's own prefilled form, whose user is already here and reads the
+    // error where it renders. Bounce only the series case.
+    // The wizard submitted this create and it was refused. Rendering the
+    // refusal here strands it on a page the wizard user is not reading --
+    // measured as "no message, session simply not created" -- so send it
+    // back to the wizard's review step with the state it posted. Weekdays
+    // travel as CSV because a redirect cannot carry an array parameter.
+    $wizardcode = 'other';
+    if (!empty($conflicts)) {
+        $wizardcode = ($overrideconflicts && $overridereason === '') ? 'reasonrequired' : 'conflict';
+    }
+    redirect(pql_url('/local/hubredirect/live_series_wizard.php', $urlparams, [
+        'step' => 6,
+        'teacherid' => $teacherid,
+        'groupid' => $groupid,
+        'studentids_raw' => implode(', ', $studentids),
+        'title' => $title,
+        'lessonid' => $lessonid,
+        'unitid' => $unitid,
+        'sessiondate' => $date,
+        'sessiontime' => $time,
+        'duration' => $duration,
+        'recurrence_pattern' => $recurrencepattern,
+        'recurrence_count' => $recurrencecount,
+        'recurrence_until' => $recurrenceuntil,
+        'recurrence_weekdays_csv' => implode(',', array_map('intval', $recurrenceweekdays)),
+        'recording_enabled' => 1,
+        'wizarderror' => $wizardcode,
+        'wizardmsg' => core_text::substr($error, 0, 400),
+    ]));
+}
+
 $createdcount = optional_param('created', 0, PARAM_INT);
 if ($createdcount > 0) {
     $notice = $createdcount > 1 ? $createdcount . ' recurring live sessions created.' : 'Live session created.';

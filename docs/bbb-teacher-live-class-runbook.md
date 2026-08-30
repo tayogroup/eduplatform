@@ -55,6 +55,30 @@ filling it.
 - To go back to the slides: same dialog → **Smart layout** (or **Focus on
   presentation**) → "Update to everyone" ON → **Update**.
 
+## Sharing your screen without it freezing
+
+Seen live 2026-08-30: a teacher shared the lesson tab, switched back to the
+class, and every student watched a frozen page saying "This video is playing
+in Picture-in-Picture mode."
+
+The mechanics: a **tab** share captures only that tab's own pixels. When you
+switch away from a tab with a playing video, the browser pops the video out
+into a floating Picture-in-Picture window — which is a separate window
+OUTSIDE the tab — so the shared tab freezes on a placeholder. A minimized
+**window** share freezes the same way (Windows stops painting minimized
+windows).
+
+- **Quick fix mid-class**: close the floating video (its ✕) or click back
+  into the lesson tab — the video returns into the page and the share
+  resumes for students.
+- **Sturdy setup 1 — share your entire screen**: everything visible is
+  captured, Picture-in-Picture included.
+- **Sturdy setup 2 — two windows side by side**: the class in one window,
+  the lesson in the other; share the lesson WINDOW and keep it visible —
+  never minimize it while sharing.
+- **Sharing a tab that plays video? Tick "Also share tab audio"** in the
+  share picker, or students see the video and hear nothing.
+
 ## Student webcams are off by policy
 
 Rooms are created with student webcam sharing locked (owner decision,

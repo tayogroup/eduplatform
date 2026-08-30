@@ -142,6 +142,13 @@ const dupList = (arr) => { const seen = new Set(), d = new Set(); for (const x o
 // The headword: masterWord when present (Grade 1), else the vocabularyId slug
 // tail (Grades 3–8 omit masterWord). Multi-word slugs use "-" so keep the tail.
 function wordOf(e) {
+  // displayWord first, because it is the form the SENTENCES contain. Grade 1
+  // stores "thank you" with masterWord "thankyou" — one token, no separator —
+  // so the multi-word split below cannot recover the two words, and all six of
+  // that entry's correct sentences read as missing their own word. Measured
+  // across every entry with sentences (12,968), the two fields disagree on that
+  // one entry, and displayWord is right about it.
+  if (e.displayWord) return e.displayWord;
   if (e.masterWord) return e.masterWord;
   const m = /-([a-z][a-z-]*?)$/i.exec(e.vocabularyId || "");
   return m ? m[1].replace(/-/g, " ") : "";
@@ -270,8 +277,11 @@ function validate(file) {
     if (missing > 1) wordMissing++;
     const mw = words(e.childMeaning).length;
     if (e.childMeaning && (mw < 5 || mw > 22)) meaningLen++;
-    // every discrete vocab sentence: capital start + terminal punctuation
-    for (const s of [e.exampleSentence, ...ps]) { if (!s) continue; const t = s.trim(); if (/^[a-z]/.test(t) || !/[.!?"]$/.test(t)) sentMech++; }
+    // Every discrete vocab sentence: capital start + terminal punctuation.
+    // The closing quote may be curly: 475 vocab sentences use curly quotes as
+    // house style and 2 END with one, correctly, after a full stop inside it.
+    // Accepting only the straight " failed those two for their typography.
+    for (const s of [e.exampleSentence, ...ps]) { if (!s) continue; const t = s.trim(); if (/^[a-z]/.test(t) || !/[.!?"”]$/.test(t)) sentMech++; }
     // spellingPractice should spell the word
     const sp = /:\s*(.+)$/.exec(e.spellingPractice || "");
     if (sp && w) { const letters = sp[1].replace(/[^a-z]/gi, "").toLowerCase(); const bare = w.replace(/[^a-z]/gi, "").toLowerCase(); if (letters && bare && letters !== bare) spellMismatch++; }

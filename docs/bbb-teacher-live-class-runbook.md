@@ -17,17 +17,20 @@ instead; it is reflected on the students' side.
 Enabled for rooms created from 2026-08-30 (it used to be switched off in our
 room settings — in an older room, use the recipe below instead).
 
-1. Find the **camera button in the bottom toolbar** — the one you click to
-   turn your webcam on or off — and click the **small arrow (caret) beside
-   it**, not the camera icon itself. (This option is NOT in the menu on your
-   video tile.)
-2. Choose **"Share camera as content"**.
+1. **Turn your regular webcam OFF first** (the camera button in the bottom
+   toolbar). A camera cannot be a webcam tile and presented content at the
+   same time — if you skip this step the dialog says "This camera is already
+   being shared" (its Stop sharing button does the same thing).
+2. Click the **small arrow (caret) beside the toolbar camera button**, not
+   the camera icon itself. (This option is NOT in the menu on your video
+   tile.)
+3. Choose the present-camera option — the dialog is titled **"Present
+   Camera"** — pick your camera and start.
 
 Your camera fills the main canvas (the presentation area) for you **and every
-student**, exactly like a screen share — one click, no layout fiddling. Stop
-the share to bring the presentation back for everyone. A camera shared as
-content occupies the presentation slot, so it cannot run at the same time as
-a screen share.
+student**, exactly like a screen share — no layout fiddling. Stop the share
+to bring the presentation back for everyone. A presented camera occupies the
+presentation slot, so it cannot run at the same time as a screen share.
 
 ### Fallback: Pin + Grid layout, pushed to everyone
 

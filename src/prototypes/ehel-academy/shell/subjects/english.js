@@ -130,7 +130,25 @@ const AUDIO_IS_DEV = ["localhost", "127.0.0.1"].includes(location.hostname);
 //   audio to storage FIRST, stamp shipped after. A clip uploaded onto an
 //   unchanged filename AFTER its stamp is already live is pinned again under
 //   the new URL, for a year, and needs the next stamp.
-const AUDIO_RELEASE = "20260828b";
+// 20260830a: 21 clips re-recorded onto their EXISTING filenames since
+//   20260828b, all of them in grades that are deployed — grade 1's two
+//   readings and grade 4's one (the "Grandma" repair), plus 18 vocabulary
+//   sentences in grades 5 and 6 that the Core-words restructure rewrote. By
+//   the per-clip rule above they need a stamp: same path, same URL, new bytes.
+//   All were confirmed byte-identical on STORAGE before this shipped, which is
+//   what makes the stamp cover them rather than merely mention them.
+//   Grade 8's 15 are deliberately NOT covered, and must not be read as
+//   included because they were re-recorded in the same stretch of work. Its
+//   three inherited cards — concede, systematic, attribute — were re-narrated
+//   onto filenames that already exist, and storage still holds the OLD bytes.
+//   Checked rather than assumed: systematic-sentence-4 differs on storage
+//   while the grade 5 and grade 6 samples match, because grade 8's media has
+//   never been uploaded. By the ordering rule directly below, a clip reaching
+//   storage AFTER its stamp is live is pinned again under the new URL for a
+//   year, so those 15 want the stamp that ships after grade 8's media upload,
+//   not this one. Stamping them here would look like coverage and be the
+//   opposite.
+const AUDIO_RELEASE = "20260830a";
 function withAudioRelease(url) {
   // Dev serves from disk with no caching worth defeating, and a bare filename
   // is easier to grep for in the network panel.

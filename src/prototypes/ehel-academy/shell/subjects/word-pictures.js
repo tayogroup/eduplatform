@@ -642,6 +642,35 @@ export const WORD_PICTURES = {
   minus: "➖", plus: "➕", subtract: "➖",
   virus: "🦠", wooden: "🪵",
 
+  // --- Grade 4 Core words --------------------------------------------------
+  // Added 2026-08-28 with the Grade 4 Core-word restructure: 412 new words, of
+  // which 71 already had a picture. These forty are the ones that could take a
+  // picture that IS the word. The other 301 are absent on purpose, and what is
+  // missing is more telling than what is here — Grade 4's vocabulary is where
+  // the course turns academic. Unit 7 is thirty words for character and feeling
+  // (empathy, tolerance, reliability, motivation), unit 10 is the writing
+  // vocabulary (inference, metaphor, stanza, genre), and units 3 and 8 are
+  // evaluating adjectives (essential, appropriate, significant). None can be
+  // drawn without a caption, which is the failure this file exists to prevent.
+  //
+  // SIX HONEST CANDIDATES WERE REJECTED for colliding INSIDE one unit, the same
+  // rule the Grade 3 block records: germ 🦠 against bacteria (unit 3), election
+  // 🗳️ against candidate and democracy 🏛️ against politician (both unit 6), and
+  // two of actor/actress/drama, which all wanted 🎭 in unit 10 — drama keeps it,
+  // because the masks depict a play rather than a person.
+  //
+  // The check that found them is worth more than the list: a same-unit
+  // collision is invisible when you add pictures one word at a time, which is
+  // how they get added.
+  telephone: "☎️", transport: "🚌", supermarket: "🏪", geography: "🗺️",
+  agreement: "🤝", payment: "💵", invention: "💡", protection: "🛡️", incorrect: "❌",
+  operation: "⚙️", drama: "🎭", button: "🔘", database: "🗄️", download: "⬇️",
+  upload: "⬆️", image: "🖼️", online: "🌐", password: "🔑", privacy: "🔒",
+  profile: "👤", robot: "🤖", storage: "💾", video: "📹", device: "📱", gravity: "🍎",
+  vibration: "📳", extinct: "🦕", skeleton: "🦴", marriage: "💍", wealth: "💰",
+  research: "🔬", construct: "🏗️", locate: "📍", inspect: "🔍", confirm: "✅",
+  pedestrian: "🚶🏾", success: "🏆", compass: "🧭", globe: "🌍", currency: "💱",
+
   // --- Grades 7-8 ----------------------------------------------------------
   stool: "🪑", camp: "⛺", knife: "🔪", feast: "🍽️",
   procession: "🚶🏾", footpath: "🚶🏾", festival: "🎉", ceremony: "🎉",
@@ -767,6 +796,53 @@ export const WORD_PICTURES = {
   zero: "0️⃣", no: "❌",
   // 🙏🏾 is the thanking gesture, not prayer, in the sense this word teaches.
   thankyou: "🙏🏾",
+
+  // --- Grade 2 Core words --------------------------------------------------
+  // 190 of the 400 had a picture; these are the ones where an honest one exists.
+  //
+  // Thirteen were found mechanically, by asking which missing lemma already has
+  // a pictured INFLECTION — "boots" was here and "boot" was not. That scan is
+  // cheap and its answers are honest by construction, with one exception it
+  // also produced and which is the reason to read its output rather than apply
+  // it: "glasses" is pictured 👓, and Grade 2's `glass` is the MATERIAL, "a hard
+  // material you can see through". Spectacles beside it would be the polysemy
+  // trap this file exists to prevent, so `glass` is deliberately absent.
+  //
+  // All 42 were audited the other direction too, as the note under
+  // GRADE_WORD_PICTURES requires: every grade that teaches these words was
+  // compared for sense. Six differ only in wording (person, rock, wood,
+  // whisper, screen, disappointed all mean the same thing at every grade they
+  // appear), so none needed a per-grade override.
+  snail: "🐌", boot: "🥾", rock: "🪨", wood: "🪵", wall: "🧱", branch: "🌿",
+  clothes: "👕", toy: "🧸", money: "💰", coin: "🪙", bike: "🚲", gate: "🚪",
+  mosque: "🕌", church: "⛪", computer: "💻", screen: "🖥️", cube: "🧊",
+  tune: "🎵", game: "🎲", rubbish: "🗑️", paragraph: "📄", message: "💬",
+  people: "👥", person: "🧑🏾", police: "👮🏾",
+  danger: "⚠️", sound: "🔊", kilogram: "⚖️",
+  // Seasons: two name what the season DOES, so the picture is the season.
+  // `summer` shares ☀️ with sun, the way sunny and sunshine already do.
+  autumn: "🍂", winter: "❄️", summer: "☀️",
+  sail: "⛵", climb: "🧗🏾", grow: "🌱", cross: "🚸", bake: "🥖",
+  wait: "⏳", promise: "🤝🏾", notice: "👀", whisper: "🤫",
+  shiny: "✨", disappointed: "😞", embarrassed: "😳",
+  //
+  // Left deliberately unpictured, with the reason, so the next pass does not
+  // re-propose them:
+  //   thunder   🌩️ is already `lightning`, and this unit teaches them APART --
+  //             "thunder comes after the lightning", sound against light. One
+  //             picture for both would teach that they are the same event.
+  //   stairs    🪜 is a ladder, which is a different object.
+  //   bottle    🍼 is a baby's bottle; the word here is a drinks bottle.
+  //   stone     `rock` already carries 🪨 and the two meanings are the same
+  //             shape; a second identical picture teaches a distinction that
+  //             is not there.
+  //   tail, shadow, season, material, floor, roof, towel, litre, tray, sight
+  //             no emoji means the word.
+  //   neighbour, baker, worker, leader, group, community
+  //             roles with no picture that is not just "a person".
+  //   title, character, setting, ending, solution, fact, opinion, meaning,
+  //   tale, conversation, story, theme, subject, place
+  //             abstractions that would need a caption to read as the word.
 };
 
 // Where one lemma is two different words.
@@ -838,6 +914,16 @@ export const GRADE_WORD_PICTURES = {
     light: "", well: "", may: "",
     left: "", right: "", hard: "", point: "", square: "", turn: "",
     underground: "", mask: "🎭",
+    // Four pairs that the GRADE 4 CORE-WORD ALLOCATION put in one unit, each
+    // already carrying the same picture from an earlier grade. The pictures are
+    // right and the collision is new: it was the allocation that made these
+    // words unit-mates, so the fix belongs at this grade and must not blank them
+    // for the grades where they never meet. One of each pair keeps the picture —
+    // the one it depicts more literally.
+    platform: "",    // vs software 💻 (unit 1) — software is the program
+    court: "",       // vs justice ⚖️ (unit 6) — the scales ARE justice
+    appreciate: "",  // vs gratitude 🙏🏾 (unit 7) — the hands are the thanks
+    clause: "",      // vs script 📜 (unit 10) — the scroll is the script
   },
   // Grades 5-8 re-teach a third wave of these, and the pattern is consistent
   // enough to be worth naming: the upper grades take a concrete word a young

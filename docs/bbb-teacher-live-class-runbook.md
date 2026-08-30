@@ -79,6 +79,13 @@ windows).
 - **Sharing a tab that plays video? Tick "Also share tab audio"** in the
   share picker, or students see the video and hear nothing.
 
+Students join content-first by design (since 2026-08-30): their sidebar
+starts collapsed, so slides and your shared screen use the full width of
+their window. A student can still open chat and the users list with the
+toggle at the top left. True browser fullscreen cannot be pushed to
+students — it always needs their own click (the deck's Fullscreen button,
+or the expand icon on the share).
+
 ## Student webcams are off by policy
 
 Rooms are created with student webcam sharing locked (owner decision,

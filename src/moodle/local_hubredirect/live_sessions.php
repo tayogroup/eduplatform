@@ -1684,7 +1684,16 @@ if ($error === '' && optional_param('action', '', PARAM_ALPHANUMEXT) === 'join')
                 'userdata-prequran-sessionid' => (int)$session->id,
                 'userdata-prequran-workspaceid' => $workspaceid > 0 ? $workspaceid : (int)($session->workspaceid ?? 0),
                 'userdata-prequran-studentid' => $studentid,
-            ]
+            ] + (in_array($role, ['teacher', 'admin_observer'], true) ? [] : [
+                // Content-first for learners (owner, 2026-08-30: "make the
+                // screen share fullscreen by default"): the sidebar starts
+                // collapsed, so slides and a shared screen use the full
+                // width. True browser fullscreen cannot be forced -- it
+                // needs the student's own click -- so maximizing the stage
+                // is the whole lever. The toggle still opens chat and the
+                // users list; teachers keep the sidebar for the roster.
+                'userdata-bbb_show_participants_on_login' => 'false',
+            ])
         );
     } catch (Throwable $e) {
         pql_audit((int)$session->id, 'bbb_join_failed', 'session', (int)$session->id, ['error' => $e->getMessage()]);

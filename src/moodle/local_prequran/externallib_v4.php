@@ -6459,6 +6459,12 @@ $validate = [
             in_array($role, ['teacher', 'admin_observer'], true) ? self::live_bbb_password($session, 'moderator') : self::live_bbb_password($session, 'attendee'),
             (int)$USER->id,
             ['userdata-prequran-role' => $role]
+                + (in_array($role, ['teacher', 'admin_observer'], true) ? [] : [
+                    // Learners join content-first: sidebar collapsed so the
+                    // stage (slides / screen share) uses the full width.
+                    // Mirrors the hubredirect join door.
+                    'userdata-bbb_show_participants_on_login' => 'false',
+                ])
         );
         self::live_mark_student_join($session, $participant, $role);
         self::live_audit((int)$session->id, 'join_url_created', 'user', (int)$USER->id, ['role' => $role]);

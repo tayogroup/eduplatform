@@ -94,6 +94,25 @@ do it for them. Teach it as a class ritual (verified in class 2026-08-30):
 One instruction, once — fullscreen swallows the dark bands around the
 share and fills the student's whole display. Esc brings them back.
 
+## Showing a website to the class
+
+Sharing a website link as content embeds that site in a frame inside the
+class — and **websites choose whether they allow that**. Most big sites
+(news, Google, social media) refuse, and every student then sees a browser
+error naming the site ("will not allow Firefox to display the page if
+another site has embedded it" — seen live with CNN, 2026-08-30). That is
+the site's own security policy, enforced by the student's browser; no
+setting on our side or BBB's can override it.
+
+- **Embedding works for**: purpose-built educational embeds, our own
+  lesson pages, and YouTube — use the dedicated **Share an external
+  video** feature for video sites.
+- **For everything else, screen share the site**: open it in its own
+  window and share that window (see "Sharing your screen" above — keep
+  the window visible). Screen share captures pixels, so no site can
+  refuse it, and the students' content-first layout and the ⛶ click work
+  the same as any share.
+
 ## Student webcams are off by policy
 
 Rooms are created with student webcam sharing locked (owner decision,

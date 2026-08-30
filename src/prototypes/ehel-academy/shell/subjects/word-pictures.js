@@ -601,6 +601,47 @@ export const WORD_PICTURES = {
   container: "📦", carton: "📦", illustration: "🖼️", gallery: "🖼️",
   mural: "🖼️", congregation: "👥", sunglasses: "🕶️", suit: "👔",
 
+  // --- Grade 3 Core words --------------------------------------------------
+  // Added 2026-08-28 with the Grade 3 Core-word restructure, which brought 448
+  // new words in at 33% pictured. Only these twenty could take a picture that
+  // IS the word; the other 281 are absent on purpose, and the shape of what is
+  // missing is the point. Unit 6 is 45 describing words (accurate, available,
+  // formal, rare) and unit 10 is the grammar vocabulary (noun, prefix, tense,
+  // punctuation) — neither can be drawn without a caption, which is the failure
+  // this file exists to prevent.
+  //
+  // A DUPLICATE INSIDE ONE UNIT IS FINE FOR RELATED WORDS AND WRONG FOR
+  // CONTRASTED ONES, which is not the rule I started with. Five candidates were
+  // held back for sharing a picture with another word in the same unit — until
+  // measuring showed this file ALREADY does that fifteen times over at Grade 3
+  // alone: huge and enormous both 🐘, journey and travel both 🧳, gas and oxygen
+  // both 💨, creature and species both 🐾. The stricter rule was mine, not the
+  // file's.
+  //
+  // And the maths precedent runs the other way: a unit's word list is a CONTRAST
+  // SET, so an absence is read as a statement. `notebook` pictured beside a bare
+  // `workbook` tells a child a workbook is not a book. So workbook, camera,
+  // website and electricity are in, sharing with notebook, photograph, internet
+  // and electric — all near-synonyms, where one picture for two words teaches
+  // nothing false.
+  //
+  // AFRICA, ASIA AND EUROPE STAY OUT on the same reasoning read the other way.
+  // 🌍 draws Europe and Africa together, so it is honest for both — and that is
+  // exactly the problem: they are CONTRASTED here, in the unit that teaches
+  // continents, and one glyph for two of them teaches that they are the same
+  // place. Synonyms may share; opposites may not.
+  graph: "📈", television: "📺", email: "📧", printer: "🖨️",
+  workbook: "📓", camera: "📷", website: "🌐", electricity: "⚡",
+  chef: "🧑🏾‍🍳", factory: "🏭", government: "🏛️", university: "🎓",
+  bear: "🐻", pear: "🍐", divide: "➗", multiply: "✖️",
+  bone: "🦴", magnet: "🧲", knee: "🦵", liquid: "💧",
+  // The SIGN is the picture, and `subtract` shares it with `minus` for the same
+  // reason workbook shares with notebook: they are the sign and the action, not
+  // two different things, and a bare `subtract` beside a pictured `minus` would
+  // be the misleading absence rather than the safe one.
+  minus: "➖", plus: "➕", subtract: "➖",
+  virus: "🦠", wooden: "🪵",
+
   // --- Grades 7-8 ----------------------------------------------------------
   stool: "🪑", camp: "⛺", knife: "🔪", feast: "🍽️",
   procession: "🚶🏾", footpath: "🚶🏾", festival: "🎉", ceremony: "🎉",

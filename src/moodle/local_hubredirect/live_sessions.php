@@ -1613,7 +1613,13 @@ if ($error === '' && optional_param('action', '', PARAM_ALPHANUMEXT) === 'join')
                 // switches to webcams when nothing is.
                 'meetingLayout' => 'SMART_LAYOUT',
                 'lockSettingsDisableCam' => true,
-                'disabledFeatures' => 'virtualBackgrounds,customVirtualBackgrounds,cameraAsContent',
+                // cameraAsContent is deliberately NOT in this list (owner,
+                // 2026-08-30): it lets the teacher put their camera in the
+                // presentation area for the whole room in one click. It is
+                // presenter-gated by BBB, and with student webcams locked
+                // above, in practice only the teacher can use it. Keep this
+                // in step with the portal_handlers/live-sessions.php twin.
+                'disabledFeatures' => 'virtualBackgrounds,customVirtualBackgrounds',
             ];
             $xml = local_prequran_bbb_create_meeting($meetingparams);
         } catch (Throwable $e) {

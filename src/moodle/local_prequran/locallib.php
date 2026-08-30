@@ -150,6 +150,13 @@ function local_prequran_bbb_meeting_defaults(array $meeting): array {
         'autoStartRecording' => false,
         'allowStartStopRecording' => false,
         'muteOnStart' => true,
+        // Owner, 2026-08-30: students never share webcams. This locks the
+        // camera for viewers only -- the teacher joins as moderator and is
+        // unaffected, and a moderator can still unlock one student in-room
+        // (participant menu) for the rare case that needs it. The portal
+        // create path already passed this explicitly; putting it here covers
+        // the externallib join door and any future create call site too.
+        'lockSettingsDisableCam' => true,
         'maxParticipants' => (int)get_config('local_prequran', 'bbb_max_participants_default') ?: 12,
         'duration' => 90,
     ];

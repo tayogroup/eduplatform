@@ -37,3 +37,19 @@ filling it.
   the pin keeps you visible but not dominant.
 - To go back to the slides: same dialog → **Smart layout** (or **Focus on
   presentation**) → "Update to everyone" ON → **Update**.
+
+## Student webcams are off by policy
+
+Rooms are created with student webcam sharing locked (owner decision,
+2026-08-30 — `lockSettingsDisableCam` in
+`local_prequran_bbb_meeting_defaults`). Students see no working camera
+button; the teacher joins as moderator and is unaffected. This also means
+Grid layout above is always the teacher's face alone.
+
+- **To let ONE student share** (a show-and-tell, a reading check): click that
+  student's name in the participants list → **Unlock user**. Lock them again
+  the same way afterwards.
+- **In a room created before this shipped**, lock it by hand: gear icon above
+  the participants list → **Lock viewers** → turn **Share webcam** to locked
+  → **Apply**. Lock settings are baked in at room creation, so an
+  already-running room keeps whatever it started with until it ends.

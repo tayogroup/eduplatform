@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: To talk about something with other people.",
+          "prompt": "Which word means: To look after somebody because you want them to be well.",
           "choices": [
-            "discuss",
-            "listen",
-            "offer"
+            "care",
+            "belong",
+            "enter"
           ],
-          "answer": "discuss",
-          "explanation": "discuss: To talk about something with other people."
+          "answer": "care",
+          "explanation": "care: To look after somebody because you want them to be well."
         },
         {
-          "prompt": "Which word means: To finish something or make it whole.",
+          "prompt": "Which word means: To have used a broom to push dirt and leaves away.",
           "choices": [
-            "discuss",
-            "listen",
-            "complete"
+            "care",
+            "belong",
+            "swept"
           ],
-          "answer": "complete",
-          "explanation": "complete: To finish something or make it whole."
+          "answer": "swept",
+          "explanation": "swept: To have used a broom to push dirt and leaves away."
         },
         {
-          "prompt": "Which word means: To go from one place to another, often far away.",
+          "prompt": "Which word means: Was resting flat in one place, like something lying on the ground.",
           "choices": [
-            "listen",
-            "travel",
-            "discuss"
+            "belong",
+            "lay",
+            "care"
           ],
-          "answer": "travel",
-          "explanation": "travel: To go from one place to another, often far away."
+          "answer": "lay",
+          "explanation": "lay: Was resting flat in one place, like something lying on the ground."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "To use your ears to hear carefully.",
-          "answer": "listen"
+          "clue": "To be brave enough to do something.",
+          "answer": "dare"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "To take something away from a place.",
-          "answer": "remove"
+          "clue": "Not fixed tightly in place and able to move or fall.",
+          "answer": "loose"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "To get away from a place or a situation.",
-          "answer": "escape"
+          "clue": "In a careful way, paying close attention to small details.",
+          "answer": "closely"
         }
       ]
     },
@@ -83,43 +83,45 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "group.",
-            "a",
-            "in",
-            "ideas",
-            "our",
-            "discuss",
-            "will",
-            "We"
+            "clinic.",
+            "the",
+            "at",
+            "everybody",
+            "of",
+            "care",
+            "great",
+            "takes",
+            "Sarah",
+            "Doctor"
           ],
-          "answer": "We will discuss our ideas in a group."
+          "answer": "Doctor Sarah takes great care of everybody at the clinic."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "in.",
-            "come",
-            "you",
-            "before",
-            "shoes",
-            "your",
-            "remove",
-            "Please"
+            "corridor.",
+            "the",
+            "down",
+            "running",
+            "of",
+            "instead",
+            "walked",
+            "Nora"
           ],
-          "answer": "Please remove your shoes before you come in."
+          "answer": "Nora walked instead of running down the corridor."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "pencil.",
-            "lost",
-            "my",
-            "for",
-            "search",
-            "us",
-            "Let"
+            "shake.",
+            "wall",
+            "the",
+            "made",
+            "wind",
+            "strong",
+            "The"
           ],
-          "answer": "Let us search for my lost pencil."
+          "answer": "The strong wind made the wall shake."
         }
       ]
     },
@@ -239,45 +241,42 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "home.",
-            "basket",
-            "heavy",
+            "wall.",
             "the",
-            "carry",
-            "to",
-            "offer",
-            "will",
-            "Nora"
+            "into",
+            "stone",
+            "last",
+            "the",
+            "fitted",
+            "Sami"
           ],
-          "answer": "Nora will offer to carry the heavy basket home."
+          "answer": "Sami fitted the last stone into the wall."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "plants.",
-            "young",
+            "shop.",
+            "little",
             "the",
-            "protect",
-            "will",
-            "fence",
+            "past",
+            "walked",
+            "We"
+          ],
+          "answer": "We walked past the little shop."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "enough.",
             "strong",
-            "A"
-          ],
-          "answer": "A strong fence will protect the young plants."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "garden.",
-            "school",
+            "not",
+            "was",
+            "paint",
             "the",
-            "behind",
-            "happen",
-            "did",
-            "strange",
-            "Something"
+            "said",
+            "Sami"
           ],
-          "answer": "Something strange did happen behind the school garden."
+          "answer": "Sami said the paint was not strong enough."
         }
       ]
     },
@@ -290,34 +289,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'remove' mean in this unit?",
+          "prompt": "What does 'hiding' mean in this unit?",
           "choices": [
-            "To take something away from a place.",
-            "To talk about something with other people.",
-            "To use your ears to hear carefully."
+            "Keeping out of sight so that others cannot easily find you.",
+            "To look after somebody because you want them to be well.",
+            "To be a member of a group, or to have a proper place."
           ],
-          "answer": "To take something away from a place.",
-          "explanation": "remove: To take something away from a place."
+          "answer": "Keeping out of sight so that others cannot easily find you.",
+          "explanation": "hiding: Keeping out of sight so that others cannot easily find you."
         },
         {
-          "prompt": "What does 'escape' mean in this unit?",
+          "prompt": "What does 'completed' mean in this unit?",
           "choices": [
-            "To talk about something with other people.",
-            "To use your ears to hear carefully.",
-            "To get away from a place or a situation."
+            "To look after somebody because you want them to be well.",
+            "To be a member of a group, or to have a proper place.",
+            "Finished doing something all the way to the very end."
           ],
-          "answer": "To get away from a place or a situation.",
-          "explanation": "escape: To get away from a place or a situation."
+          "answer": "Finished doing something all the way to the very end.",
+          "explanation": "completed: Finished doing something all the way to the very end."
         },
         {
-          "prompt": "What does 'listen' mean in this unit?",
+          "prompt": "What does 'belong' mean in this unit?",
           "choices": [
-            "To say kindly that you will give or do something.",
-            "To use your ears to hear carefully.",
-            "To talk about something with other people."
+            "To go into a place.",
+            "To be a member of a group, or to have a proper place.",
+            "To look after somebody because you want them to be well."
           ],
-          "answer": "To use your ears to hear carefully.",
-          "explanation": "listen: To use your ears to hear carefully."
+          "answer": "To be a member of a group, or to have a proper place.",
+          "explanation": "belong: To be a member of a group, or to have a proper place."
         }
       ]
     },
@@ -330,34 +329,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'protect'?",
+          "prompt": "What type of word is 'frame'?",
           "choices": [
-            "Verb",
             "Noun",
+            "Verb",
             "Adjective"
           ],
-          "answer": "Verb",
-          "explanation": "Protect is used as a verb in this dictionary sense."
+          "answer": "Noun",
+          "explanation": "Frame is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'celebrate'?",
+          "prompt": "What type of word is 'leaf'?",
           "choices": [
-            "Noun",
+            "Verb",
             "Adjective",
-            "Verb"
+            "Noun"
           ],
-          "answer": "Verb",
-          "explanation": "Celebrate is used as a verb in this dictionary sense."
+          "answer": "Noun",
+          "explanation": "Leaf is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'build'?",
+          "prompt": "What type of word is 'mark'?",
           "choices": [
             "Adjective",
             "Verb",
             "Noun"
           ],
           "answer": "Verb",
-          "explanation": "Build is used as a verb in this dictionary sense."
+          "explanation": "Mark is used as a verb in this dictionary sense."
         }
       ]
     },
@@ -373,16 +372,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "offer",
-              "To say kindly that you will give or do something."
+              "bear",
+              "A large, heavy wild animal with thick fur."
             ],
             [
-              "build",
-              "To make something by putting parts together."
+              "depend",
+              "To need somebody or something for help."
             ],
             [
-              "complete",
-              "To finish something or make it whole."
+              "introduce",
+              "To bring in something new, or to make people known to each other."
             ]
           ]
         },
@@ -390,16 +389,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "develop",
-              "To grow or become better over time."
+              "removed",
+              "To have taken something away from a place."
             ],
             [
-              "protect",
-              "To keep someone or something safe from harm."
+              "shop",
+              "A small building or room where things are sold."
             ],
             [
-              "escape",
-              "To get away from a place or a situation."
+              "shake",
+              "To move quickly from side to side or up and down."
             ]
           ]
         },
@@ -407,16 +406,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "search",
-              "To look carefully for something."
+              "block",
+              "To stop something or someone from moving past or getting through."
             ],
             [
-              "happen",
-              "To take place or occur."
+              "shyly",
+              "In a quiet, nervous way, without much confidence."
             ],
             [
-              "discuss",
-              "To talk about something with other people."
+              "anyway",
+              "Even though something might stop you, you do it all the same."
             ]
           ]
         }

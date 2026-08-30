@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: To use your eyes to look at something.",
+          "prompt": "Which word means: A ship is a very big boat that carries people across the sea.",
           "choices": [
-            "see",
-            "smell",
-            "eyes"
+            "ship",
+            "chat",
+            "listen"
           ],
-          "answer": "see",
-          "explanation": "see: To use your eyes to look at something."
+          "answer": "ship",
+          "explanation": "ship: A ship is a very big boat that carries people across the sea."
         },
         {
-          "prompt": "Which word means: The two parts at the end of your arms.",
+          "prompt": "Which word means: More than one foot. We stand and walk on our feet.",
           "choices": [
-            "see",
-            "smell",
-            "hands"
+            "ship",
+            "chat",
+            "feet"
           ],
-          "answer": "hands",
-          "explanation": "hands: The two parts at the end of your arms."
+          "answer": "feet",
+          "explanation": "feet: More than one foot. We stand and walk on our feet."
         },
         {
-          "prompt": "Which word means: Something flat is smooth with no bumps or hills.",
+          "prompt": "Which word means: A drum is a musical instrument you hit to make a beat.",
           "choices": [
-            "smell",
-            "flat",
-            "see"
+            "chat",
+            "drum",
+            "ship"
           ],
-          "answer": "flat",
-          "explanation": "flat: Something flat is smooth with no bumps or hills."
+          "answer": "drum",
+          "explanation": "drum: A drum is a musical instrument you hit to make a beat."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "To use your ears to know a sound.",
-          "answer": "hear"
+          "clue": "A place in town where we buy food and things.",
+          "answer": "shop"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "The five thin parts on each of your hands.",
-          "answer": "fingers"
+          "clue": "More than one foot. We stand and walk on our feet.",
+          "answer": "feet"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Something short is not very long or tall.",
-          "answer": "short"
+          "clue": "A violin is a musical instrument you play with a bow.",
+          "answer": "violin"
         }
       ]
     },
@@ -83,38 +83,40 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "tonight.",
-            "moon",
+            "sea.",
+            "to",
+            "out",
+            "sailed",
+            "ship",
+            "The"
+          ],
+          "answer": "The ship sailed out to sea."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "pancakes.",
             "the",
-            "see",
+            "smell",
             "can",
-            "I"
-          ],
-          "answer": "I can see the moon tonight."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "eating.",
-            "before",
-            "hands",
-            "my",
-            "wash",
-            "I"
-          ],
-          "answer": "I wash my hands before eating."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "now.",
-            "short",
-            "very",
-            "is",
-            "pencil",
+            "nose",
             "My"
           ],
-          "answer": "My pencil is very short now."
+          "answer": "My nose can smell the pancakes."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "things.",
+            "touch",
+            "to",
+            "hands",
+            "her",
+            "used",
+            "Amal",
+            "Last,"
+          ],
+          "answer": "Last, Amal used her hands to touch things."
         }
       ]
     },
@@ -234,39 +236,39 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "hall.",
-            "the",
-            "from",
-            "bell",
-            "the",
-            "hear",
-            "I"
+            "soft.",
+            "very",
+            "feels",
+            "fur",
+            "kitten's",
+            "The"
           ],
-          "answer": "I hear the bell from the hall."
+          "answer": "The kitten's fur feels very soft."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "pot.",
+            "big",
+            "a",
+            "from",
+            "spices",
+            "smelled",
+            "Amal"
+          ],
+          "answer": "Amal smelled spices from a big pot."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
             "soft.",
             "and",
-            "warm",
+            "pink",
             "is",
-            "blanket",
+            "tongue",
             "My"
           ],
-          "answer": "My blanket is warm and soft."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "long.",
-            "and",
-            "warm",
-            "is",
-            "scarf",
-            "My"
-          ],
-          "answer": "My scarf is warm and long."
+          "answer": "My tongue is pink and soft."
         }
       ]
     },
@@ -279,34 +281,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'soft' mean in this unit?",
+          "prompt": "What does 'because' mean in this unit?",
           "choices": [
-            "Something soft feels gentle and nice to touch.",
-            "To use your eyes to look at something.",
-            "To use your nose to find out what something is like."
+            "This word tells you the reason for something.",
+            "A ship is a very big boat that carries people across the sea.",
+            "Chat means to talk with someone in a friendly way."
           ],
-          "answer": "Something soft feels gentle and nice to touch.",
-          "explanation": "soft: Something soft feels gentle and nice to touch."
+          "answer": "This word tells you the reason for something.",
+          "explanation": "because: This word tells you the reason for something."
         },
         {
-          "prompt": "What does 'long' mean in this unit?",
+          "prompt": "What does 'eyes' mean in this unit?",
           "choices": [
-            "To use your eyes to look at something.",
-            "To use your nose to find out what something is like.",
-            "Something long goes a big way from end to end."
+            "A ship is a very big boat that carries people across the sea.",
+            "Chat means to talk with someone in a friendly way.",
+            "The two parts of your face that help you see."
           ],
-          "answer": "Something long goes a big way from end to end.",
-          "explanation": "long: Something long goes a big way from end to end."
+          "answer": "The two parts of your face that help you see.",
+          "explanation": "eyes: The two parts of your face that help you see."
         },
         {
-          "prompt": "What does 'smell' mean in this unit?",
+          "prompt": "What does 'chat' mean in this unit?",
           "choices": [
-            "The two parts of your face that help you see.",
-            "To use your nose to find out what something is like.",
-            "To use your eyes to look at something."
+            "To keep quiet and hear carefully with your ears.",
+            "Chat means to talk with someone in a friendly way.",
+            "A ship is a very big boat that carries people across the sea."
           ],
-          "answer": "To use your nose to find out what something is like.",
-          "explanation": "smell: To use your nose to find out what something is like."
+          "answer": "Chat means to talk with someone in a friendly way.",
+          "explanation": "chat: Chat means to talk with someone in a friendly way."
         }
       ]
     },
@@ -319,34 +321,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'cold'?",
+          "prompt": "What type of word is 'thankful'?",
           "choices": [
             "Adjective",
             "Noun",
             "Verb"
           ],
           "answer": "Adjective",
-          "explanation": "Cold is used as an adjective in this dictionary sense."
+          "explanation": "Thankful is used as an adjective in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'sweeter'?",
+          "prompt": "What type of word is 'long'?",
           "choices": [
             "Noun",
             "Verb",
             "Adjective"
           ],
           "answer": "Adjective",
-          "explanation": "Sweeter is used as an adjective in this dictionary sense."
+          "explanation": "Long is used as an adjective in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'nose'?",
+          "prompt": "What type of word is 'ear'?",
           "choices": [
             "Adjective",
             "Noun",
             "Verb"
           ],
           "answer": "Noun",
-          "explanation": "Nose is used as a noun in this dictionary sense."
+          "explanation": "Ear is used as a noun in this dictionary sense."
         }
       ]
     },
@@ -362,16 +364,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "smell",
-              "To use your nose to find out what something is like."
+              "dish",
+              "A dish is a shallow bowl you put food in."
             ],
             [
-              "eyes",
-              "The two parts of your face that help you see."
+              "leg",
+              "The long part of your body that you walk and run with."
             ],
             [
-              "tongue",
-              "The soft pink part inside your mouth that tastes food."
+              "ear",
+              "The part of your head that you hear with."
             ]
           ]
         },
@@ -379,16 +381,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "soft",
-              "Something soft feels gentle and nice to touch."
+              "taste",
+              "To use your tongue to know if food is sweet or salty."
             ],
             [
-              "quiet",
-              "A quiet sound is very small and soft."
+              "calling",
+              "Calling means shouting or saying something loudly so people can hear you."
             ],
             [
-              "juicy",
-              "Something juicy is full of juice that wets your fingers."
+              "thankful",
+              "Thankful means you feel glad and want to say thank you."
             ]
           ]
         },
@@ -396,16 +398,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
+              "different",
+              "Different means not the same as something else."
+            ],
+            [
+              "soft",
+              "Something soft feels gentle and nice to touch."
+            ],
+            [
               "long",
               "Something long goes a big way from end to end."
-            ],
-            [
-              "louder",
-              "Making a bigger sound than another person or thing."
-            ],
-            [
-              "colder",
-              "Feeling more cold than another thing you touch."
             ]
           ]
         }

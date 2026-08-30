@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: The usual weather in a place over a long time.",
+          "prompt": "Which word means: A soldier long ago who wore armour and rode a horse.",
           "choices": [
-            "climate",
-            "weather",
-            "temperature"
+            "knight",
+            "breathe",
+            "electricity"
           ],
-          "answer": "climate",
-          "explanation": "climate: The usual weather in a place over a long time."
+          "answer": "knight",
+          "explanation": "knight: A soldier long ago who wore armour and rode a horse."
         },
         {
-          "prompt": "Which word means: A very tall hill with steep sides.",
+          "prompt": "Which word means: A group of living things that are alike and can have young together.",
           "choices": [
-            "climate",
-            "weather",
-            "mountain"
+            "knight",
+            "breathe",
+            "species"
           ],
-          "answer": "mountain",
-          "explanation": "mountain: A very tall hill with steep sides."
+          "answer": "species",
+          "explanation": "species: A group of living things that are alike and can have young together."
         },
         {
-          "prompt": "Which word means: To go and look at new places.",
+          "prompt": "Which word means: Amazing means so wonderful or surprising that it is hard to believe.",
           "choices": [
-            "weather",
-            "explore",
-            "climate"
+            "breathe",
+            "amazing",
+            "knight"
           ],
-          "answer": "explore",
-          "explanation": "explore: To go and look at new places."
+          "answer": "amazing",
+          "explanation": "amazing: Amazing means so wonderful or surprising that it is hard to believe."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "What the sky and air are like today.",
-          "answer": "weather"
+          "clue": "To cover something by folding paper or cloth around it.",
+          "answer": "wrap"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A big area with many trees.",
-          "answer": "forest"
+          "clue": "A group of living things that are alike and can have young together.",
+          "answer": "species"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Power that helps things move or work.",
-          "answer": "energy"
+          "clue": "A storm is very wild weather with strong wind, rain, and sometimes thunder.",
+          "answer": "storm"
         }
       ]
     },
@@ -83,43 +83,39 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "climate.",
-            "dry",
-            "hot,",
-            "a",
-            "has",
-            "desert",
+            "armour.",
+            "silver",
+            "heavy",
+            "wore",
+            "knight",
             "The"
           ],
-          "answer": "The desert has a hot, dry climate."
+          "answer": "The knight wore heavy silver armour."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "mountain.",
-            "the",
-            "of",
-            "top",
+            "organism.",
+            "tiny",
+            "very",
+            "a",
+            "is",
+            "germ",
+            "A"
+          ],
+          "answer": "A germ is a very tiny organism."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "days.",
+            "sunny",
             "on",
-            "snow",
-            "white",
-            "saw",
-            "We"
+            "hat",
+            "a",
+            "Wear"
           ],
-          "answer": "We saw white snow on top of the mountain."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "tomorrow.",
-            "path",
-            "forest",
-            "the",
-            "explore",
-            "will",
-            "We"
-          ],
-          "answer": "We will explore the forest path tomorrow."
+          "answer": "Wear a hat on sunny days."
         }
       ]
     },
@@ -239,48 +235,43 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "December.",
-            "to",
-            "January",
-            "from",
-            "warm",
-            "stays",
-            "climate",
-            "island",
-            "Our"
-          ],
-          "answer": "Our island climate stays warm from January to December."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "mountain.",
+            "waves.",
             "the",
             "of",
-            "side",
+            "top",
             "the",
-            "up",
-            "winds",
-            "track",
-            "narrow",
-            "A"
+            "covered",
+            "foam",
+            "White"
           ],
-          "answer": "A narrow track winds up the side of the mountain."
+          "answer": "White foam covered the top of the waves."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "river.",
+            "us.",
+            "above",
+            "branches",
             "the",
-            "beside",
-            "caves",
-            "the",
-            "explore",
-            "will",
-            "we",
-            "Tomorrow"
+            "in",
+            "sat",
+            "nest",
+            "bird's",
+            "A"
           ],
-          "answer": "Tomorrow we will explore the caves beside the river."
+          "answer": "A bird's nest sat in the branches above us."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "edge.",
+            "sharp",
+            "a",
+            "had",
+            "rock",
+            "The"
+          ],
+          "answer": "The rock had a sharp edge."
         }
       ]
     },
@@ -293,34 +284,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'forest' mean in this unit?",
+          "prompt": "What does 'expect' mean in this unit?",
           "choices": [
-            "A big area with many trees.",
-            "The usual weather in a place over a long time.",
-            "What the sky and air are like today."
+            "To think something will probably happen.",
+            "A soldier long ago who wore armour and rode a horse.",
+            "To take air into your body and let it out again."
           ],
-          "answer": "A big area with many trees.",
-          "explanation": "forest: A big area with many trees."
+          "answer": "To think something will probably happen.",
+          "explanation": "expect: To think something will probably happen."
         },
         {
-          "prompt": "What does 'energy' mean in this unit?",
+          "prompt": "What does 'sharp' mean in this unit?",
           "choices": [
-            "The usual weather in a place over a long time.",
-            "What the sky and air are like today.",
-            "Power that helps things move or work."
+            "A soldier long ago who wore armour and rode a horse.",
+            "To take air into your body and let it out again.",
+            "Sharp means having a thin edge or point that can cut or poke you."
           ],
-          "answer": "Power that helps things move or work.",
-          "explanation": "energy: Power that helps things move or work."
+          "answer": "Sharp means having a thin edge or point that can cut or poke you.",
+          "explanation": "sharp: Sharp means having a thin edge or point that can cut or poke you."
         },
         {
-          "prompt": "What does 'weather' mean in this unit?",
+          "prompt": "What does 'breathe' mean in this unit?",
           "choices": [
-            "How hot or cold something is.",
-            "What the sky and air are like today.",
-            "The usual weather in a place over a long time."
+            "The power that runs lights and machines.",
+            "To take air into your body and let it out again.",
+            "A soldier long ago who wore armour and rode a horse."
           ],
-          "answer": "What the sky and air are like today.",
-          "explanation": "weather: What the sky and air are like today."
+          "answer": "To take air into your body and let it out again.",
+          "explanation": "breathe: To take air into your body and let it out again."
         }
       ]
     },
@@ -333,34 +324,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'coast'?",
+          "prompt": "What type of word is 'footprints'?",
           "choices": [
             "Noun",
             "Verb",
             "Adjective"
           ],
           "answer": "Noun",
-          "explanation": "Coast is used as a noun in this dictionary sense."
+          "explanation": "Footprints is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'metal'?",
+          "prompt": "What type of word is 'photograph'?",
           "choices": [
             "Verb",
             "Adjective",
             "Noun"
           ],
           "answer": "Noun",
-          "explanation": "Metal is used as a noun in this dictionary sense."
+          "explanation": "Photograph is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'sunshine'?",
+          "prompt": "What type of word is 'muscle'?",
           "choices": [
             "Adjective",
             "Noun",
             "Verb"
           ],
           "answer": "Noun",
-          "explanation": "Sunshine is used as a noun in this dictionary sense."
+          "explanation": "Muscle is used as a noun in this dictionary sense."
         }
       ]
     },
@@ -376,16 +367,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "temperature",
-              "How hot or cold something is."
+              "wrist",
+              "The thin part of your arm where it joins your hand."
             ],
             [
-              "sunshine",
-              "The light and warmth that come from the sun."
+              "cycle",
+              "A set of events that happen again and again in the same order."
             ],
             [
-              "mountain",
-              "A very tall hill with steep sides."
+              "mineral",
+              "A hard natural substance found in the ground."
             ]
           ]
         },
@@ -393,16 +384,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "beach",
-              "Land with sand near the sea."
+              "completely",
+              "Fully, with nothing left out."
             ],
             [
-              "coast",
-              "The land next to the sea."
+              "splash",
+              "To hit water and make it fly up in small drops."
             ],
             [
-              "explore",
-              "To go and look at new places."
+              "finger",
+              "One of the five long parts at the end of your hand."
             ]
           ]
         },
@@ -410,16 +401,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "matter",
-              "What everything is made of; it takes up space."
+              "storm",
+              "A storm is very wild weather with strong wind, rain, and sometimes thunder."
             ],
             [
-              "metal",
-              "A hard, shiny material used to make things."
+              "natural",
+              "Natural means made by nature, not by people."
             ],
             [
-              "climate",
-              "The usual weather in a place over a long time."
+              "mind",
+              "To mind means to feel upset or bothered by something."
             ]
           ]
         }

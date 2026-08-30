@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: A word or symbol that shows how many things there are.",
+          "prompt": "Which word means: A young sheep, or the meat from it.",
           "choices": [
-            "number",
-            "million",
-            "fact"
+            "lamb",
+            "latitude",
+            "land"
           ],
-          "answer": "number",
-          "explanation": "number: A word or symbol that shows how many things there are."
+          "answer": "lamb",
+          "explanation": "lamb: A young sheep, or the meat from it."
         },
         {
-          "prompt": "Which word means: Putting numbers together to find how many you have altogether.",
+          "prompt": "Which word means: To check that something is true or correct.",
           "choices": [
-            "number",
-            "million",
-            "addition"
+            "lamb",
+            "latitude",
+            "verify"
           ],
-          "answer": "addition",
-          "explanation": "addition: Putting numbers together to find how many you have altogether."
+          "answer": "verify",
+          "explanation": "verify: To check that something is true or correct."
         },
         {
-          "prompt": "Which word means: How big or how small something is when you look at it.",
+          "prompt": "Which word means: A person who helps you learn something new.",
           "choices": [
-            "million",
-            "size",
-            "number"
+            "latitude",
+            "tutor",
+            "lamb"
           ],
-          "answer": "size",
-          "explanation": "size: How big or how small something is when you look at it."
+          "answer": "tutor",
+          "explanation": "tutor: A person who helps you learn something new."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A very big number written 1,000,000, or one thousand thousands.",
-          "answer": "million"
+          "clue": "The short thick finger at the side of your hand.",
+          "answer": "thumb"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Putting numbers together to find how many you have altogether.",
-          "answer": "addition"
+          "clue": "How much something is worth, or the amount a number stands for.",
+          "answer": "value"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A unit of length equal to one hundred centimetres.",
-          "answer": "metre"
+          "clue": "A straight tool used to measure or draw lines.",
+          "answer": "ruler"
         }
       ]
     },
@@ -83,40 +83,42 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "seven.",
-            "is",
-            "number",
-            "favourite",
-            "My"
+            "stall.",
+            "market",
+            "his",
+            "at",
+            "beef",
+            "and",
+            "lamb",
+            "sells",
+            "Omar"
           ],
-          "answer": "My favourite number is seven."
+          "answer": "Omar sells lamb and beef at his market stall."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "4.",
-            "equals",
-            "2",
-            "minus",
-            "6",
-            "subtraction,",
-            "In"
-          ],
-          "answer": "In subtraction, 6 minus 2 equals 4."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "kilos.",
-            "3",
-            "is",
-            "watermelon",
+            "morning.",
+            "every",
+            "temperature",
             "the",
-            "of",
-            "weight",
-            "The"
+            "Record"
           ],
-          "answer": "The weight of the watermelon is 3 kilos."
+          "answer": "Record the temperature every morning."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "dates.",
+            "of",
+            "amount",
+            "same",
+            "the",
+            "received",
+            "cousin",
+            "Each"
+          ],
+          "answer": "Each cousin received the same amount of dates."
         }
       ]
     },
@@ -236,51 +238,42 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "shells.",
-            "of",
-            "number",
-            "total",
-            "the",
-            "find",
-            "to",
-            "addition",
-            "used",
-            "team",
-            "Our"
+            "page.",
+            "Sami's",
+            "on",
+            "straight",
+            "isn't",
+            "line",
+            "The"
           ],
-          "answer": "Our team used addition to find the total number of shells."
+          "answer": "The line isn't straight on Sami's page."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "wide.",
-            "metre",
-            "one",
-            "almost",
+            "week?",
+            "this",
+            "test",
+            "maths",
+            "the",
             "is",
-            "door",
-            "classroom",
-            "Our"
+            "date",
+            "What"
           ],
-          "answer": "Our classroom door is almost one metre wide."
+          "answer": "What date is the maths test this week?"
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "shells.",
-            "375",
-            "is",
-            "total",
+            "scales.",
             "the",
-            "confirms",
-            "Yasmin",
-            "Teacher",
-            "and",
-            "375,",
-            "reports",
-            "Amal"
+            "using",
+            "bag",
+            "the",
+            "measured",
+            "Sami"
           ],
-          "answer": "Amal reports 375, and Teacher Yasmin confirms the total is 375 shells."
+          "answer": "Sami measured the bag using the scales."
         }
       ]
     },
@@ -293,34 +286,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'subtraction' mean in this unit?",
+          "prompt": "What does 'despite' mean in this unit?",
           "choices": [
-            "Taking one number away from another to see what is left.",
-            "A word or symbol that shows how many things there are.",
-            "A very big number written 1,000,000, or one thousand thousands."
+            "Even though something might have stopped it.",
+            "A young sheep, or the meat from it.",
+            "How far north or south a place is from the middle of Earth."
           ],
-          "answer": "Taking one number away from another to see what is left.",
-          "explanation": "subtraction: Taking one number away from another to see what is left."
+          "answer": "Even though something might have stopped it.",
+          "explanation": "despite: Even though something might have stopped it."
         },
         {
-          "prompt": "What does 'metre' mean in this unit?",
+          "prompt": "What does 'grams' mean in this unit?",
           "choices": [
-            "A word or symbol that shows how many things there are.",
-            "A very big number written 1,000,000, or one thousand thousands.",
-            "A unit of length equal to one hundred centimetres."
+            "A young sheep, or the meat from it.",
+            "How far north or south a place is from the middle of Earth.",
+            "A unit used to measure how heavy something is."
           ],
-          "answer": "A unit of length equal to one hundred centimetres.",
-          "explanation": "metre: A unit of length equal to one hundred centimetres."
+          "answer": "A unit used to measure how heavy something is.",
+          "explanation": "grams: A unit used to measure how heavy something is."
         },
         {
-          "prompt": "What does 'million' mean in this unit?",
+          "prompt": "What does 'latitude' mean in this unit?",
           "choices": [
-            "Something that is true and can be checked or proven.",
-            "A very big number written 1,000,000, or one thousand thousands.",
-            "A word or symbol that shows how many things there are."
+            "Land is the ground or the country where people live.",
+            "How far north or south a place is from the middle of Earth.",
+            "A young sheep, or the meat from it."
           ],
-          "answer": "A very big number written 1,000,000, or one thousand thousands.",
-          "explanation": "million: A very big number written 1,000,000, or one thousand thousands."
+          "answer": "How far north or south a place is from the middle of Earth.",
+          "explanation": "latitude: How far north or south a place is from the middle of Earth."
         }
       ]
     },
@@ -333,34 +326,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'division'?",
+          "prompt": "What type of word is 'buckle'?",
           "choices": [
             "Noun",
             "Verb",
             "Adjective"
           ],
           "answer": "Noun",
-          "explanation": "Division is used as a noun in this dictionary sense."
+          "explanation": "Buckle is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'weight'?",
+          "prompt": "What type of word is 'pattern'?",
           "choices": [
             "Verb",
             "Adjective",
             "Noun"
           ],
           "answer": "Noun",
-          "explanation": "Weight is used as a noun in this dictionary sense."
+          "explanation": "Pattern is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'pattern'?",
+          "prompt": "What type of word is 'subtract'?",
           "choices": [
             "Adjective",
-            "Noun",
-            "Verb"
+            "Verb",
+            "Noun"
           ],
-          "answer": "Noun",
-          "explanation": "Pattern is used as a noun in this dictionary sense."
+          "answer": "Verb",
+          "explanation": "Subtract is used as a verb in this dictionary sense."
         }
       ]
     },
@@ -376,16 +369,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "fact",
-              "Something that is true and can be checked or proven."
+              "comb",
+              "A flat tool with teeth for tidying your hair."
             ],
             [
-              "pattern",
-              "A design or sequence of things that repeats in the same order."
+              "coast",
+              "The land next to the sea."
             ],
             [
-              "addition",
-              "Putting numbers together to find how many you have altogether."
+              "degree",
+              "A unit for measuring temperature or an angle."
             ]
           ]
         },
@@ -393,16 +386,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "multiplication",
-              "Adding the same number many times to find a total quickly."
+              "weight",
+              "How heavy something is when you put it on the scales."
             ],
             [
-              "division",
-              "Splitting a number into equal parts so everyone gets the same."
+              "plenty",
+              "More than enough."
             ],
             [
-              "size",
-              "How big or how small something is when you look at it."
+              "tool",
+              "A thing you use to help you do a job."
             ]
           ]
         },
@@ -410,16 +403,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "height",
-              "How tall a person or thing is from bottom to top."
+              "repeated",
+              "Said or did something again after the first time."
             ],
             [
-              "weight",
-              "How heavy something is when you put it on the scales."
+              "fewer",
+              "A smaller number of things than before."
             ],
             [
-              "number",
-              "A word or symbol that shows how many things there are."
+              "fact",
+              "Something that is true and can be checked or proven."
             ]
           ]
         }

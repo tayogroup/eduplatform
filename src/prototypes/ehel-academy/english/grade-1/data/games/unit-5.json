@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: A big farm animal that gives us milk.",
+          "prompt": "Which word means: The big hot star that gives us light in the day.",
           "choices": [
-            "cow",
-            "chick",
-            "pig"
+            "sun",
+            "rug",
+            "rabbit"
           ],
-          "answer": "cow",
-          "explanation": "cow: A big farm animal that gives us milk."
+          "answer": "sun",
+          "explanation": "sun: The big hot star that gives us light in the day."
         },
         {
-          "prompt": "Which word means: The loud, short sound that a duck makes near the water.",
+          "prompt": "Which word means: You use this word when you talk about yourself.",
           "choices": [
-            "cow",
-            "chick",
-            "quack"
+            "sun",
+            "rug",
+            "me"
           ],
-          "answer": "quack",
-          "explanation": "quack: The loud, short sound that a duck makes near the water."
+          "answer": "me",
+          "explanation": "me: You use this word when you talk about yourself."
         },
         {
-          "prompt": "Which word means: Something a hen lays that we can cook and eat.",
+          "prompt": "Which word means: A baby bird that has just come out of its shell.",
           "choices": [
+            "rug",
             "chick",
-            "egg",
-            "cow"
+            "sun"
           ],
-          "answer": "egg",
-          "explanation": "egg: Something a hen lays that we can cook and eat."
+          "answer": "chick",
+          "explanation": "chick: A baby bird that has just come out of its shell."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A female farm bird that lays eggs for us.",
-          "answer": "hen"
+          "clue": "A cup is a small container you drink from.",
+          "answer": "cup"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "The soft, gentle sound that a sheep makes in the field.",
-          "answer": "baa"
+          "clue": "Were means the same as are, but it already happened.",
+          "answer": "were"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Giving food to animals or people so they are not hungry.",
-          "answer": "feeding"
+          "clue": "A pink farm animal with a curly tail and flat nose.",
+          "answer": "pig"
         }
       ]
     },
@@ -83,40 +83,39 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "field.",
-            "the",
-            "in",
-            "grass",
-            "eats",
-            "cow",
+            "school.",
+            "our",
+            "on",
+            "shines",
+            "sun",
             "The"
           ],
-          "answer": "The cow eats grass in the field."
+          "answer": "The sun shines on our school."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "field.",
+            "grass.",
             "the",
-            "in",
-            "baa",
-            "says",
-            "sheep",
+            "through",
+            "moved",
+            "snake",
             "The"
           ],
-          "answer": "The sheep says baa in the field."
+          "answer": "The snake moved through the grass."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "hens.",
-            "hungry",
+            "cow.",
             "the",
-            "feeding",
-            "is",
-            "Sami"
+            "from",
+            "milk",
+            "fresh",
+            "drank",
+            "Amal"
           ],
-          "answer": "Sami is feeding the hungry hens."
+          "answer": "Amal drank fresh milk from the cow."
         }
       ]
     },
@@ -236,15 +235,26 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "nest.",
-            "warm",
-            "her",
-            "in",
-            "sits",
-            "hen",
+            "barn.",
+            "the",
+            "inside",
+            "sleeps",
+            "cow",
             "The"
           ],
-          "answer": "The hen sits in her warm nest."
+          "answer": "The cow sleeps inside the barn."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "Adam.",
+            "to",
+            "ball",
+            "the",
+            "threw",
+            "Sami"
+          ],
+          "answer": "Sami threw the ball to Adam."
         },
         {
           "prompt": "Put this unit sentence in order.",
@@ -256,17 +266,6 @@
             "The"
           ],
           "answer": "The happy horse goes neigh."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "hands.",
-            "gentle",
-            "takes",
-            "seeds",
-            "Planting"
-          ],
-          "answer": "Planting seeds takes gentle hands."
         }
       ]
     },
@@ -279,34 +278,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'oink' mean in this unit?",
+          "prompt": "What does 'of' mean in this unit?",
           "choices": [
-            "The short, snuffly sound that a pig makes in the mud.",
-            "A big farm animal that gives us milk.",
-            "A baby bird that has just come out of its shell."
+            "This word shows what something belongs to or is made from.",
+            "The big hot star that gives us light in the day.",
+            "A rug is a soft mat that covers part of a floor."
           ],
-          "answer": "The short, snuffly sound that a pig makes in the mud.",
-          "explanation": "oink: The short, snuffly sound that a pig makes in the mud."
+          "answer": "This word shows what something belongs to or is made from.",
+          "explanation": "of: This word shows what something belongs to or is made from."
         },
         {
-          "prompt": "What does 'picking' mean in this unit?",
+          "prompt": "What does 'neigh' mean in this unit?",
           "choices": [
-            "A big farm animal that gives us milk.",
-            "A baby bird that has just come out of its shell.",
-            "Taking fruit or vegetables off a plant with your hands."
+            "The big hot star that gives us light in the day.",
+            "A rug is a soft mat that covers part of a floor.",
+            "The loud, high sound that a horse makes in its stall."
           ],
-          "answer": "Taking fruit or vegetables off a plant with your hands.",
-          "explanation": "picking: Taking fruit or vegetables off a plant with your hands."
+          "answer": "The loud, high sound that a horse makes in its stall.",
+          "explanation": "neigh: The loud, high sound that a horse makes in its stall."
         },
         {
-          "prompt": "What does 'chick' mean in this unit?",
+          "prompt": "What does 'rug' mean in this unit?",
           "choices": [
-            "A pink farm animal with a curly tail and flat nose.",
-            "A baby bird that has just come out of its shell.",
-            "A big farm animal that gives us milk."
+            "A soft animal with long ears that hops and eats carrots.",
+            "A rug is a soft mat that covers part of a floor.",
+            "The big hot star that gives us light in the day."
           ],
-          "answer": "A baby bird that has just come out of its shell.",
-          "explanation": "chick: A baby bird that has just come out of its shell."
+          "answer": "A rug is a soft mat that covers part of a floor.",
+          "explanation": "rug: A rug is a soft mat that covers part of a floor."
         }
       ]
     },
@@ -319,34 +318,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'tractor'?",
+          "prompt": "What type of word is 'happily'?",
+          "choices": [
+            "Adverb",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Adverb",
+          "explanation": "Happily is used as an adverb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'driving'?",
           "choices": [
             "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Noun",
-          "explanation": "Tractor is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'potatoes'?",
-          "choices": [
-            "Verb",
             "Adjective",
-            "Noun"
+            "Verb"
           ],
-          "answer": "Noun",
-          "explanation": "Potatoes is used as a noun in this dictionary sense."
+          "answer": "Verb",
+          "explanation": "Driving is used as a verb in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'goat'?",
+          "prompt": "What type of word is 'monkey'?",
           "choices": [
             "Adjective",
             "Noun",
             "Verb"
           ],
           "answer": "Noun",
-          "explanation": "Goat is used as a noun in this dictionary sense."
+          "explanation": "Monkey is used as a noun in this dictionary sense."
         }
       ]
     },
@@ -362,16 +361,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "chick",
-              "A baby bird that has just come out of its shell."
+              "bus",
+              "A long vehicle that carries many people at once."
             ],
             [
-              "pig",
-              "A pink farm animal with a curly tail and flat nose."
+              "frog",
+              "A small green animal that hops and lives near water."
             ],
             [
-              "moo",
-              "The deep, long sound that a cow makes in the field."
+              "elephant",
+              "A very big grey animal with a long trunk and huge ears."
             ]
           ]
         },
@@ -379,16 +378,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "neigh",
-              "The loud, high sound that a horse makes in its stall."
+              "were",
+              "Were means the same as are, but it already happened."
             ],
             [
-              "barn",
-              "A big farm building where animals and hay stay."
+              "before",
+              "Before means earlier than something else happens."
             ],
             [
-              "wheat",
-              "A tall farm plant we use to make bread."
+              "verse",
+              "Verse means one part of a song or poem."
             ]
           ]
         },
@@ -396,16 +395,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "planting",
-              "Putting seeds into the soil so plants can grow."
+              "goose",
+              "A big farm bird with a very long neck."
             ],
             [
-              "growing",
-              "Getting bigger, like a plant or a child."
+              "barn",
+              "A big farm building where animals and hay stay."
             ],
             [
-              "carrots",
-              "Long orange vegetables that grow under the soil."
+              "driving",
+              "Making a car, bus or tractor move along."
             ]
           ]
         }

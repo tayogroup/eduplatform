@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: Food made of two pieces of bread with meat, cheese, or vegetables inside.",
+          "prompt": "Which word means: In a glad and cheerful way.",
           "choices": [
-            "sandwich",
-            "lamb",
-            "spice"
+            "happily",
+            "symptom",
+            "essential"
           ],
-          "answer": "sandwich",
-          "explanation": "sandwich: Food made of two pieces of bread with meat, cheese, or vegetables inside."
+          "answer": "happily",
+          "explanation": "happily: In a glad and cheerful way."
         },
         {
-          "prompt": "Which word means: Hard to bite, so you need to chew it a lot.",
+          "prompt": "Which word means: A farm is land where people grow crops or keep animals for food.",
           "choices": [
-            "sandwich",
-            "lamb",
-            "chewy"
+            "happily",
+            "symptom",
+            "farm"
           ],
-          "answer": "chewy",
-          "explanation": "chewy: Hard to bite, so you need to chew it a lot."
+          "answer": "farm",
+          "explanation": "farm: A farm is land where people grow crops or keep animals for food."
         },
         {
-          "prompt": "Which word means: Large farm animals such as cows and bulls, kept for milk and meat.",
+          "prompt": "Which word means: To give food to a person or animal.",
           "choices": [
-            "lamb",
-            "cattle",
-            "sandwich"
+            "symptom",
+            "feed",
+            "happily"
           ],
-          "answer": "cattle",
-          "explanation": "cattle: Large farm animals such as cows and bulls, kept for milk and meat."
+          "answer": "feed",
+          "explanation": "feed: To give food to a person or animal."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A young sheep, or the meat from it.",
-          "answer": "lamb"
+          "clue": "In a way that shows you feel unhappy.",
+          "answer": "sadly"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Very dangerous; able to cause death.",
-          "answer": "deadly"
+          "clue": "Protect means to keep something or someone safe from harm.",
+          "answer": "protect"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Hard work, or the people who do it.",
-          "answer": "labour"
+          "clue": "Very valuable and important; not to be wasted.",
+          "answer": "precious"
         }
       ]
     },
@@ -83,41 +83,45 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "lunch.",
-            "for",
-            "sandwich",
-            "chicken",
-            "a",
-            "ate",
-            "I"
-          ],
-          "answer": "I ate a chicken sandwich for lunch."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "chewy.",
-            "very",
-            "was",
-            "meat",
-            "dried",
-            "The"
-          ],
-          "answer": "The dried meat was very chewy."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "field.",
+            "fruit.",
+            "fresh",
             "the",
-            "to",
-            "cattle",
-            "his",
-            "led",
-            "farmer",
+            "shared",
+            "happily",
+            "children",
             "The"
           ],
-          "answer": "The farmer led his cattle to the field."
+          "answer": "The children happily shared the fresh fruit."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "tree.",
+            "tallest",
+            "the",
+            "than",
+            "higher",
+            "flew",
+            "kite",
+            "The"
+          ],
+          "answer": "The kite flew higher than the tallest tree."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "loud.",
+            "so",
+            "was",
+            "storm",
+            "the",
+            "because",
+            "sleep",
+            "not",
+            "could",
+            "Noah"
+          ],
+          "answer": "Noah could not sleep because the storm was so loud."
         }
       ]
     },
@@ -222,7 +226,7 @@
         },
         {
           "prompt": "Speaking 5: Explain the Journey to Your Plate",
-          "target": "The farmer led his cattle to the field."
+          "target": "Noah could not sleep because the storm was so loud."
         }
       ]
     },
@@ -237,46 +241,45 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "trip.",
-            "school",
+            "guests.",
             "the",
             "for",
-            "sandwich",
-            "cheese",
-            "a",
-            "packs",
-            "Amal"
+            "rice",
+            "and",
+            "lamb",
+            "cooked",
+            "We"
           ],
-          "answer": "Amal packs a cheese sandwich for the school trip."
+          "answer": "We cooked lamb and rice for the guests."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "deadly.",
-            "be",
-            "could",
-            "that",
-            "plant",
-            "a",
-            "taste",
-            "Never"
+            "notebook.",
+            "his",
+            "into",
+            "line",
+            "favourite",
+            "his",
+            "copied",
+            "Noah"
           ],
-          "answer": "Never taste a plant that could be deadly."
+          "answer": "Noah copied his favourite line into his notebook."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "weeks.",
-            "for",
-            "busy",
-            "village",
-            "whole",
+            "dates.",
+            "sweet",
             "the",
-            "keeps",
-            "labour",
-            "Harvest"
+            "into",
+            "bit",
+            "he",
+            "as",
+            "grinned",
+            "Theo"
           ],
-          "answer": "Harvest labour keeps the whole village busy for weeks."
+          "answer": "Theo grinned as he bit into the sweet dates."
         }
       ]
     },
@@ -289,34 +292,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'gather' mean in this unit?",
+          "prompt": "What does 'healthy' mean in this unit?",
           "choices": [
-            "To collect things or bring people together.",
-            "Food made of two pieces of bread with meat, cheese, or vegetables inside.",
-            "A young sheep, or the meat from it."
+            "Healthy means good for your body, or being well and strong.",
+            "In a glad and cheerful way.",
+            "A sign in your body that shows you may be ill."
           ],
-          "answer": "To collect things or bring people together.",
-          "explanation": "gather: To collect things or bring people together."
+          "answer": "Healthy means good for your body, or being well and strong.",
+          "explanation": "healthy: Healthy means good for your body, or being well and strong."
         },
         {
-          "prompt": "What does 'pesticide' mean in this unit?",
+          "prompt": "What does 'kitchen' mean in this unit?",
           "choices": [
-            "Food made of two pieces of bread with meat, cheese, or vegetables inside.",
-            "A young sheep, or the meat from it.",
-            "A chemical used to kill insects that harm plants."
+            "In a glad and cheerful way.",
+            "A sign in your body that shows you may be ill.",
+            "The room where food is cooked and prepared."
           ],
-          "answer": "A chemical used to kill insects that harm plants.",
-          "explanation": "pesticide: A chemical used to kill insects that harm plants."
+          "answer": "The room where food is cooked and prepared.",
+          "explanation": "kitchen: The room where food is cooked and prepared."
         },
         {
-          "prompt": "What does 'lamb' mean in this unit?",
+          "prompt": "What does 'symptom' mean in this unit?",
           "choices": [
-            "A part of a plant, like pepper, that adds flavour to food.",
-            "A young sheep, or the meat from it.",
-            "Food made of two pieces of bread with meat, cheese, or vegetables inside."
+            "So necessary that it cannot be left out.",
+            "A sign in your body that shows you may be ill.",
+            "In a glad and cheerful way."
           ],
-          "answer": "A young sheep, or the meat from it.",
-          "explanation": "lamb: A young sheep, or the meat from it."
+          "answer": "A sign in your body that shows you may be ill.",
+          "explanation": "symptom: A sign in your body that shows you may be ill."
         }
       ]
     },
@@ -329,34 +332,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'cancer'?",
+          "prompt": "What type of word is 'poisoning'?",
           "choices": [
             "Noun",
             "Verb",
             "Adjective"
           ],
           "answer": "Noun",
-          "explanation": "Cancer is used as a noun in this dictionary sense."
+          "explanation": "Poisoning is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'debt'?",
+          "prompt": "What type of word is 'deadly'?",
           "choices": [
+            "Noun",
             "Verb",
-            "Adjective",
-            "Noun"
+            "Adjective"
           ],
-          "answer": "Noun",
-          "explanation": "Debt is used as a noun in this dictionary sense."
+          "answer": "Adjective",
+          "explanation": "Deadly is used as an adjective in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'fresh'?",
+          "prompt": "What type of word is 'delightful'?",
           "choices": [
             "Verb",
             "Adjective",
             "Noun"
           ],
           "answer": "Adjective",
-          "explanation": "Fresh is used as an adjective in this dictionary sense."
+          "explanation": "Delightful is used as an adjective in this dictionary sense."
         }
       ]
     },
@@ -372,16 +375,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "rice",
-              "Small white or brown grains that people cook and eat."
+              "safely",
+              "In a way that avoids harm or danger."
             ],
             [
-              "bakery",
-              "A place where bread and cakes are made and sold."
+              "source",
+              "The place where something comes from."
             ],
             [
-              "chewy",
-              "Hard to bite, so you need to chew it a lot."
+              "aware",
+              "Knowing that something exists or is happening."
             ]
           ]
         },
@@ -389,16 +392,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "gather",
-              "To collect things or bring people together."
+              "wash",
+              "Wash means to clean something using water and sometimes soap."
             ],
             [
-              "stomach",
-              "The part of your body where food goes after you eat it."
+              "dizzy",
+              "Dizzy means feeling like everything around you is spinning."
             ],
             [
-              "cattle",
-              "Large farm animals such as cows and bulls, kept for milk and meat."
+              "belly",
+              "Your belly is the front part of your body below your chest, your stomach."
             ]
           ]
         },
@@ -406,16 +409,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "pesticide",
-              "A chemical used to kill insects that harm plants."
+              "illness",
+              "A period of being unwell or having a disease."
             ],
             [
-              "famine",
-              "A time when many people do not have enough food to eat."
+              "stall",
+              "A small table or stand where things are sold, often at a market."
             ],
             [
-              "comma",
-              "A small mark ( , ) used to show a pause or to separate items in a list."
+              "fresh",
+              "New and clean; not old or spoiled."
             ]
           ]
         }

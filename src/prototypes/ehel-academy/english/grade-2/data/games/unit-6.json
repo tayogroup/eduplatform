@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: An insect with large, colourful wings that flies from flower to flower.",
+          "prompt": "Which word means: To move your body around so that you face another way.",
           "choices": [
-            "butterfly",
-            "ant",
-            "spider"
+            "turn",
+            "cover",
+            "pretty"
           ],
-          "answer": "butterfly",
-          "explanation": "butterfly: An insect with large, colourful wings that flies from flower to flower."
+          "answer": "turn",
+          "explanation": "turn: To move your body around so that you face another way."
         },
         {
-          "prompt": "Which word means: The body parts that some insects and birds use for flying.",
+          "prompt": "Which word means: Closely means paying very careful attention to something.",
           "choices": [
-            "butterfly",
-            "ant",
-            "wings"
+            "turn",
+            "cover",
+            "closely"
           ],
-          "answer": "wings",
-          "explanation": "wings: The body parts that some insects and birds use for flying."
+          "answer": "closely",
+          "explanation": "closely: Closely means paying very careful attention to something."
         },
         {
-          "prompt": "Which word means: In a higher place than something else, without touching it.",
+          "prompt": "Which word means: Pulling means moving something towards you by holding and tugging it.",
           "choices": [
-            "ant",
-            "above",
-            "butterfly"
+            "cover",
+            "pulling",
+            "turn"
           ],
-          "answer": "above",
-          "explanation": "above: In a higher place than something else, without touching it."
+          "answer": "pulling",
+          "explanation": "pulling: Pulling means moving something towards you by holding and tugging it."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A small jumping insect that makes a chirping sound with its wings.",
-          "answer": "cricket"
+          "clue": "To burn means to be on fire, or to be hurt by heat.",
+          "answer": "burn"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "The body parts that some insects and birds use for flying.",
-          "answer": "wings"
+          "clue": "Closely means paying very careful attention to something.",
+          "answer": "closely"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "To move through the air, usually by using wings.",
-          "answer": "fly"
+          "clue": "Pulling means moving something towards you by holding and tugging it.",
+          "answer": "pulling"
         }
       ]
     },
@@ -83,47 +83,45 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "nectar.",
-            "drink",
+            "bell.",
+            "the",
+            "hears",
+            "he",
+            "when",
+            "window",
+            "the",
+            "face",
             "to",
-            "flower",
-            "red",
-            "the",
-            "on",
-            "landed",
-            "butterfly",
-            "The"
+            "turns",
+            "Sami"
           ],
-          "answer": "The butterfly landed on the red flower to drink nectar."
+          "answer": "Sami turns to face the window when he hears the bell."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "wings.",
-            "have",
-            "always",
-            "not",
-            "do",
-            "ants",
-            "but",
-            "wings,",
-            "colourful",
-            "have",
-            "Butterflies"
+            "grass.",
+            "tall",
+            "the",
+            "among",
+            "hid",
+            "rabbit",
+            "The"
           ],
-          "answer": "Butterflies have colourful wings, but ants do not always have wings."
+          "answer": "The rabbit hid among the tall grass."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "flower.",
+            "grass.",
             "the",
-            "above",
-            "is",
-            "bee",
+            "into",
+            "quietly",
+            "settled",
+            "cricket",
             "The"
           ],
-          "answer": "The bee is above the flower."
+          "answer": "The cricket settled quietly into the grass."
         }
       ]
     },
@@ -243,47 +241,42 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "wall.",
-            "garden",
-            "warm",
+            "nectar.",
+            "collecting",
+            "flowers",
             "the",
-            "on",
-            "rested",
-            "butterfly",
-            "blue",
-            "A"
-          ],
-          "answer": "A blue butterfly rested on the warm garden wall."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "see.",
-            "could",
-            "we",
-            "than",
-            "faster",
-            "wings",
-            "small",
-            "its",
-            "beat",
+            "around",
+            "buzzed",
             "bee",
             "The"
           ],
-          "answer": "The bee beat its small wings faster than we could see."
+          "answer": "The bee buzzed around the flowers collecting nectar."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "sunflowers.",
-            "tall",
-            "the",
-            "above",
-            "floated",
-            "butterfly",
-            "A"
+            "leaf.",
+            "a",
+            "under",
+            "bug",
+            "a",
+            "found",
+            "Leo"
           ],
-          "answer": "A butterfly floated above the tall sunflowers."
+          "answer": "Leo found a bug under a leaf."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "puddles.",
+            "muddy",
+            "in",
+            "stamp",
+            "to",
+            "likes",
+            "Adam"
+          ],
+          "answer": "Adam likes to stamp in muddy puddles."
         }
       ]
     },
@@ -296,34 +289,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'anthill' mean in this unit?",
+          "prompt": "What does 'sunshine' mean in this unit?",
           "choices": [
-            "The home that ants build, often with many rooms under the ground.",
-            "An insect with large, colourful wings that flies from flower to flower.",
-            "A small insect that lives in large groups and works with others."
+            "Sunshine is the warm, bright light that comes from the sun.",
+            "To move your body around so that you face another way.",
+            "To cover means to put something over the top of it."
           ],
-          "answer": "The home that ants build, often with many rooms under the ground.",
-          "explanation": "anthill: The home that ants build, often with many rooms under the ground."
+          "answer": "Sunshine is the warm, bright light that comes from the sun.",
+          "explanation": "sunshine: Sunshine is the warm, bright light that comes from the sun."
         },
         {
-          "prompt": "What does 'fly' mean in this unit?",
+          "prompt": "What does 'buzz' mean in this unit?",
           "choices": [
-            "An insect with large, colourful wings that flies from flower to flower.",
-            "A small insect that lives in large groups and works with others.",
-            "To move through the air, usually by using wings."
+            "To move your body around so that you face another way.",
+            "To cover means to put something over the top of it.",
+            "A buzz is the low humming sound a bee or fly makes."
           ],
-          "answer": "To move through the air, usually by using wings.",
-          "explanation": "fly: To move through the air, usually by using wings."
+          "answer": "A buzz is the low humming sound a bee or fly makes.",
+          "explanation": "buzz: A buzz is the low humming sound a bee or fly makes."
         },
         {
-          "prompt": "What does 'ant' mean in this unit?",
+          "prompt": "What does 'cover' mean in this unit?",
           "choices": [
-            "A small animal with eight legs that spins webs to catch insects.",
-            "A small insect that lives in large groups and works with others.",
-            "An insect with large, colourful wings that flies from flower to flower."
+            "Pretty means nice or lovely to look at.",
+            "To cover means to put something over the top of it.",
+            "To move your body around so that you face another way."
           ],
-          "answer": "A small insect that lives in large groups and works with others.",
-          "explanation": "ant: A small insect that lives in large groups and works with others."
+          "answer": "To cover means to put something over the top of it.",
+          "explanation": "cover: To cover means to put something over the top of it."
         }
       ]
     },
@@ -336,34 +329,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'in'?",
+          "prompt": "What type of word is 'hear'?",
           "choices": [
-            "Position",
+            "Verb",
             "Noun",
-            "Verb"
-          ],
-          "answer": "Position",
-          "explanation": "In is used as a position in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'chirp'?",
-          "choices": [
-            "Noun",
-            "Adjective",
-            "Verb"
+            "Adjective"
           ],
           "answer": "Verb",
-          "explanation": "Chirp is used as a verb in this dictionary sense."
+          "explanation": "Hear is used as a verb in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'insect'?",
+          "prompt": "What type of word is 'on'?",
           "choices": [
-            "Adjective",
             "Noun",
-            "Verb"
+            "Verb",
+            "Position"
           ],
-          "answer": "Noun",
-          "explanation": "Insect is used as a noun in this dictionary sense."
+          "answer": "Position",
+          "explanation": "On is used as a position in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'busy'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Adjective",
+          "explanation": "Busy is used as an adjective in this dictionary sense."
         }
       ]
     },
@@ -379,16 +372,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "ant",
-              "A small insect that lives in large groups and works with others."
+              "hurt",
+              "To hurt means to feel pain, or to cause pain."
             ],
             [
-              "spider",
-              "A small animal with eight legs that spins webs to catch insects."
+              "curious",
+              "Wanting to learn or find out about something."
             ],
             [
-              "legs",
-              "The body parts that animals use for walking, standing or jumping."
+              "Earth",
+              "Our planet. It turns round, which gives us day and night."
             ]
           ]
         },
@@ -396,16 +389,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "anthill",
-              "The home that ants build, often with many rooms under the ground."
+              "abdomen",
+              "The abdomen is the back part of an insect's body, behind the thorax."
             ],
             [
-              "on",
-              "Touching the top or the surface of something else."
+              "grandpa",
+              "Grandpa is another word for your mother's or father's father."
             ],
             [
-              "between",
-              "In the middle of two other things, with one on each side."
+              "forever",
+              "Forever means for all time, without ever stopping or ending."
             ]
           ]
         },
@@ -413,16 +406,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "fly",
-              "To move through the air, usually by using wings."
+              "leave",
+              "Leave means to go away from a place or to let something stay where it is."
             ],
             [
-              "crawl",
-              "To move slowly along the ground or across a surface."
+              "chance",
+              "A chance is a moment when it is possible for something to happen."
             ],
             [
-              "collect",
-              "To gather things together and bring them to one place."
+              "web",
+              "The net of thin silk that a spider spins to catch insects."
             ]
           ]
         }

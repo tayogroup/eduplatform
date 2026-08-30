@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: To go somewhere on your own two feet.",
+          "prompt": "Which word means: Something long goes a big way from end to end.",
           "choices": [
-            "walk",
-            "bicycle",
-            "plane"
+            "long",
+            "above",
+            "outside"
           ],
-          "answer": "walk",
-          "explanation": "walk: To go somewhere on your own two feet."
+          "answer": "long",
+          "explanation": "long: Something long goes a big way from end to end."
         },
         {
-          "prompt": "Which word means: To make a car or bus go where you want.",
+          "prompt": "Which word means: Was means the same as is, but it already happened.",
           "choices": [
-            "walk",
-            "bicycle",
-            "drive"
+            "long",
+            "above",
+            "was"
           ],
-          "answer": "drive",
-          "explanation": "drive: To make a car or bus go where you want."
+          "answer": "was",
+          "explanation": "was: Was means the same as is, but it already happened."
         },
         {
-          "prompt": "Which word means: Moving very quickly, so you get there in no time.",
+          "prompt": "Which word means: A vehicle with two wheels that you ride by pedalling.",
           "choices": [
+            "above",
             "bicycle",
-            "fast",
-            "walk"
+            "long"
           ],
-          "answer": "fast",
-          "explanation": "fast: Moving very quickly, so you get there in no time."
+          "answer": "bicycle",
+          "explanation": "bicycle: A vehicle with two wheels that you ride by pedalling."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A long vehicle that carries many people at once.",
-          "answer": "bus"
+          "clue": "To make a tune with your voice, like a song.",
+          "answer": "sing"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Parts that wipe rain off a car window.",
-          "answer": "wipers"
+          "clue": "Was means the same as is, but it already happened.",
+          "answer": "was"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Moving gently without hurrying, so you take a long time.",
-          "answer": "slow"
+          "clue": "A vehicle with two wheels that you ride by pedalling.",
+          "answer": "bicycle"
         }
       ]
     },
@@ -83,37 +83,35 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "morning.",
-            "every",
-            "school",
-            "to",
-            "walk",
-            "We"
-          ],
-          "answer": "We walk to school every morning."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "school.",
-            "to",
-            "us",
-            "drive",
-            "will",
-            "Dad"
-          ],
-          "answer": "Dad will drive us to school."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "slow.",
-            "very",
+            "long.",
+            "and",
+            "warm",
             "is",
-            "tractor",
-            "The"
+            "scarf",
+            "My"
           ],
-          "answer": "The tractor is very slow."
+          "answer": "My scarf is warm and long."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "Adam.",
+            "was",
+            "name",
+            "His"
+          ],
+          "answer": "His name was Adam."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "swallow.",
+            "little",
+            "a",
+            "was",
+            "Lulu"
+          ],
+          "answer": "Lulu was a little swallow."
         }
       ]
     },
@@ -189,14 +187,14 @@
           "explanation": "Mum says, 'First we walk. Then we go by bus.'"
         },
         {
-          "prompt": "How do we know Grandmother was glad to see Amal?",
+          "prompt": "How do we know Grandma was glad to see Amal?",
           "choices": [
             "It goes on the ___. (for example: on the road.)",
             "She called out to her, and Amal ran and hugged her",
             "Slow and bumpy"
           ],
           "answer": "She called out to her, and Amal ran and hugged her",
-          "explanation": "Grandmother calls, 'Amal! You came to see me!' and Amal gives her a big hug."
+          "explanation": "Grandma calls, 'Amal! You came to see me!' and Amal gives her a big hug."
         }
       ]
     },
@@ -233,39 +231,40 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "school.",
-            "our",
-            "outside",
-            "stops",
-            "bus",
-            "The"
+            "bus.",
+            "by",
+            "town",
+            "to",
+            "travel",
+            "We"
           ],
-          "answer": "The bus stops outside our school."
+          "answer": "We travel to town by bus."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "high.",
-            "very",
-            "fly",
-            "can",
-            "kite",
-            "My"
-          ],
-          "answer": "My kite can fly very high."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "road.",
-            "our",
+            "bus.",
+            "the",
             "on",
-            "stop",
-            "will",
-            "bus",
+            "ding",
+            "a",
+            "heard",
+            "I"
+          ],
+          "answer": "I heard a ding on the bus."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "side.",
+            "to",
+            "side",
+            "from",
+            "move",
+            "wipers",
             "The"
           ],
-          "answer": "The bus will stop on our road."
+          "answer": "The wipers move from side to side."
         }
       ]
     },
@@ -278,34 +277,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'float' mean in this unit?",
+          "prompt": "What does 'what' mean in this unit?",
           "choices": [
-            "To stay on top of water without sinking.",
-            "To go somewhere on your own two feet.",
-            "A vehicle with two wheels that you ride by pedalling."
+            "This word asks about a thing.",
+            "Something long goes a big way from end to end.",
+            "In a higher place than something else, without touching it."
           ],
-          "answer": "To stay on top of water without sinking.",
-          "explanation": "float: To stay on top of water without sinking."
+          "answer": "This word asks about a thing.",
+          "explanation": "what: This word asks about a thing."
         },
         {
-          "prompt": "What does 'go' mean in this unit?",
+          "prompt": "What does 'bell' mean in this unit?",
           "choices": [
-            "To go somewhere on your own two feet.",
-            "A vehicle with two wheels that you ride by pedalling.",
-            "To start moving or leave for another place."
+            "Something long goes a big way from end to end.",
+            "In a higher place than something else, without touching it.",
+            "A part that rings to tell people you are coming."
           ],
-          "answer": "To start moving or leave for another place.",
-          "explanation": "go: To start moving or leave for another place."
+          "answer": "A part that rings to tell people you are coming.",
+          "explanation": "bell: A part that rings to tell people you are coming."
         },
         {
-          "prompt": "What does 'bicycle' mean in this unit?",
+          "prompt": "What does 'above' mean in this unit?",
           "choices": [
-            "A vehicle with wings that flies high in the sky.",
-            "A vehicle with two wheels that you ride by pedalling.",
-            "To go somewhere on your own two feet."
+            "Outside means not inside a building.",
+            "In a higher place than something else, without touching it.",
+            "Something long goes a big way from end to end."
           ],
-          "answer": "A vehicle with two wheels that you ride by pedalling.",
-          "explanation": "bicycle: A vehicle with two wheels that you ride by pedalling."
+          "answer": "In a higher place than something else, without touching it.",
+          "explanation": "above: In a higher place than something else, without touching it."
         }
       ]
     },
@@ -318,34 +317,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'town'?",
+          "prompt": "What type of word is 'goodbye'?",
           "choices": [
+            "Interjection",
             "Noun",
-            "Verb",
-            "Adjective"
+            "Verb"
           ],
-          "answer": "Noun",
-          "explanation": "Town is used as a noun in this dictionary sense."
+          "answer": "Interjection",
+          "explanation": "Goodbye is used as an interjection in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'red'?",
+          "prompt": "What type of word is 'stop'?",
           "choices": [
             "Noun",
             "Verb",
             "Adjective"
           ],
           "answer": "Adjective",
-          "explanation": "Red is used as an adjective in this dictionary sense."
+          "explanation": "Stop is used as an adjective in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'seat'?",
+          "prompt": "What type of word is 'my'?",
           "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
+            "Verb",
+            "Pronoun",
+            "Noun"
           ],
-          "answer": "Noun",
-          "explanation": "Seat is used as a noun in this dictionary sense."
+          "answer": "Pronoun",
+          "explanation": "My is used as a pronoun in this dictionary sense."
         }
       ]
     },
@@ -361,16 +360,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "car",
-              "A vehicle with four wheels that a family rides in."
+              "ring",
+              "Ring means to make a clear, loud sound like a bell."
             ],
             [
-              "plane",
-              "A vehicle with wings that flies high in the sky."
+              "beside",
+              "Beside means next to something or someone."
             ],
             [
-              "sails",
-              "Big sheets of cloth that catch wind and move a boat."
+              "my",
+              "A small word that shows something belongs to you."
             ]
           ]
         },
@@ -378,16 +377,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "fly",
-              "To move through the air, like a bird or a plane."
+              "has",
+              "We use has with he, she and it to show that someone owns something."
             ],
             [
-              "sit down",
-              "To put your body onto a chair or the floor."
+              "back",
+              "Back means to move or turn towards where you started."
             ],
             [
-              "road",
-              "A long hard path where cars and buses travel."
+              "lake",
+              "A lake is a big area of water with land all around it."
             ]
           ]
         },
@@ -395,16 +394,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "stop",
-              "To finish moving and stay still in one place."
+              "train",
+              "A long vehicle that travels on metal tracks."
             ],
             [
-              "long",
-              "Going a big distance from one end to the other."
+              "fly",
+              "To move through the air, like a bird or a plane."
             ],
             [
-              "blue",
-              "The colour of the sky and the deep sea."
+              "slow",
+              "Moving gently without hurrying, so you take a long time."
             ]
           ]
         }

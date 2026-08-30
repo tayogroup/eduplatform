@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: A round, crunchy fruit that is red or green.",
+          "prompt": "Which word means: Happy means you feel good and want to smile.",
           "choices": [
-            "apple",
-            "mother",
-            "cow"
+            "happy",
+            "today",
+            "five"
           ],
-          "answer": "apple",
-          "explanation": "apple: A round, crunchy fruit that is red or green."
+          "answer": "happy",
+          "explanation": "happy: Happy means you feel good and want to smile."
         },
         {
-          "prompt": "Which word means: A round toy you can kick, throw or bounce.",
+          "prompt": "Which word means: To do something kind that makes things easier for someone.",
           "choices": [
-            "apple",
-            "mother",
-            "ball"
+            "happy",
+            "today",
+            "help"
           ],
-          "answer": "ball",
-          "explanation": "ball: A round toy you can kick, throw or bounce."
+          "answer": "help",
+          "explanation": "help: To do something kind that makes things easier for someone."
         },
         {
-          "prompt": "Which word means: A soft pet with whiskers that purrs and chases mice.",
+          "prompt": "Which word means: Finally means at last, after everything else is done.",
           "choices": [
-            "mother",
-            "cat",
-            "apple"
+            "today",
+            "finally",
+            "happy"
           ],
-          "answer": "cat",
-          "explanation": "cat: A soft pet with whiskers that purrs and chases mice."
+          "answer": "finally",
+          "explanation": "finally: Finally means at last, after everything else is done."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A flat top on legs where we eat or write.",
-          "answer": "table"
+          "clue": "Sad means you feel unhappy, like when something upsets you.",
+          "answer": "sad"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A seat with a back and four legs for one person.",
-          "answer": "chair"
+          "clue": "Into means going to the inside of something.",
+          "answer": "into"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A smooth white board the teacher writes on at school.",
-          "answer": "whiteboard"
+          "clue": "A reflection is thinking back about what you did and learned.",
+          "answer": "reflection"
         }
       ]
     },
@@ -83,38 +83,36 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "break.",
-            "at",
-            "apple",
-            "an",
-            "eats",
-            "Sami"
-          ],
-          "answer": "Sami eats an apple at break."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "white.",
-            "and",
-            "red",
+            "today.",
+            "happy",
             "is",
-            "ball",
-            "My"
+            "Adam"
           ],
-          "answer": "My ball is red and white."
+          "answer": "Adam is happy today."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "bed.",
-            "my",
-            "on",
-            "sleeps",
-            "cat",
-            "The"
+            "Amal.",
+            "said",
+            "helping,\"",
+            "for",
+            "you",
+            "\"Thank"
           ],
-          "answer": "The cat sleeps on my bed."
+          "answer": "\"Thank you for helping,\" said Amal."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "work.",
+            "of",
+            "pieces",
+            "favourite",
+            "three",
+            "Choose"
+          ],
+          "answer": "Choose three favourite pieces of work."
         }
       ]
     },
@@ -234,40 +232,39 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "tree.",
-            "tall",
-            "a",
-            "on",
-            "grows",
-            "apple",
-            "An"
-          ],
-          "answer": "An apple grows on a tall tree."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
             "chair.",
-            "the",
-            "under",
-            "rolled",
-            "ball",
-            "The"
+            "little",
+            "my",
+            "on",
+            "sit",
+            "I"
           ],
-          "answer": "The ball rolled under the chair."
+          "answer": "I sit on my little chair."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "bowl.",
-            "a",
-            "from",
-            "milk",
-            "drinks",
-            "cat",
-            "The"
+            "water.",
+            "with",
+            "experiments",
+            "fun",
+            "did",
+            "We"
           ],
-          "answer": "The cat drinks milk from a bowl."
+          "answer": "We did fun experiments with water."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "bedtime.",
+            "at",
+            "me",
+            "with",
+            "reads",
+            "mother",
+            "My"
+          ],
+          "answer": "My mother reads with me at bedtime."
         }
       ]
     },
@@ -280,34 +277,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'mum' mean in this unit?",
+          "prompt": "What does 'folder' mean in this unit?",
           "choices": [
-            "A warm, friendly name that children use for their own mother.",
-            "A round, crunchy fruit that is red or green.",
-            "The woman who looks after you and loves you at home."
+            "A folder is a flat cover that keeps your papers safe together.",
+            "Happy means you feel good and want to smile.",
+            "Today means this day, the one we are in now."
           ],
-          "answer": "A warm, friendly name that children use for their own mother.",
-          "explanation": "mum: A warm, friendly name that children use for their own mother."
+          "answer": "A folder is a flat cover that keeps your papers safe together.",
+          "explanation": "folder: A folder is a flat cover that keeps your papers safe together."
         },
         {
-          "prompt": "What does 'father' mean in this unit?",
+          "prompt": "What does 'square' mean in this unit?",
           "choices": [
-            "A round, crunchy fruit that is red or green.",
-            "The woman who looks after you and loves you at home.",
-            "The man who looks after you and loves you at home."
+            "Happy means you feel good and want to smile.",
+            "Today means this day, the one we are in now.",
+            "A shape with four straight sides that are all the same."
           ],
-          "answer": "The man who looks after you and loves you at home.",
-          "explanation": "father: The man who looks after you and loves you at home."
+          "answer": "A shape with four straight sides that are all the same.",
+          "explanation": "square: A shape with four straight sides that are all the same."
         },
         {
-          "prompt": "What does 'mother' mean in this unit?",
+          "prompt": "What does 'today' mean in this unit?",
           "choices": [
-            "A big farm animal that gives us milk.",
-            "The woman who looks after you and loves you at home.",
-            "A round, crunchy fruit that is red or green."
+            "The number 5. It is how many fingers are on one hand.",
+            "Today means this day, the one we are in now.",
+            "Happy means you feel good and want to smile."
           ],
-          "answer": "The woman who looks after you and loves you at home.",
-          "explanation": "mother: The woman who looks after you and loves you at home."
+          "answer": "Today means this day, the one we are in now.",
+          "explanation": "today: Today means this day, the one we are in now."
         }
       ]
     },
@@ -320,34 +317,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'bus'?",
+          "prompt": "What type of word is 'pattern'?",
           "choices": [
             "Noun",
             "Verb",
             "Adjective"
           ],
           "answer": "Noun",
-          "explanation": "Bus is used as a noun in this dictionary sense."
+          "explanation": "Pattern is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'car'?",
+          "prompt": "What type of word is 'whiteboard'?",
           "choices": [
             "Verb",
             "Adjective",
             "Noun"
           ],
           "answer": "Noun",
-          "explanation": "Car is used as a noun in this dictionary sense."
+          "explanation": "Whiteboard is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'walk'?",
+          "prompt": "What type of word is 'worried'?",
           "choices": [
+            "Verb",
             "Adjective",
-            "Noun",
-            "Verb"
+            "Noun"
           ],
-          "answer": "Noun",
-          "explanation": "Walk is used as a noun in this dictionary sense."
+          "answer": "Adjective",
+          "explanation": "Worried is used as an adjective in this dictionary sense."
         }
       ]
     },
@@ -363,16 +360,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "mother",
-              "The woman who looks after you and loves you at home."
+              "kind",
+              "Kind means you are gentle and helpful to other people."
             ],
             [
-              "cow",
-              "A big farm animal that gives us milk."
+              "night",
+              "Night is the time of day when it is dark outside."
             ],
             [
-              "water",
-              "The clear drink we need every day to stay healthy."
+              "excited",
+              "Excited means you feel very happy about something coming soon."
             ]
           ]
         },
@@ -380,16 +377,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "mum",
-              "A warm, friendly name that children use for their own mother."
+              "into",
+              "Into means going to the inside of something."
             ],
             [
-              "hen",
-              "A female farm bird that lays the eggs we eat."
+              "experiments",
+              "Experiments are tests we do to find out how something works."
             ],
             [
-              "rain",
-              "Water falling from the clouds in many small drops."
+              "label",
+              "A label is a short word or name written next to a picture."
             ]
           ]
         },
@@ -397,16 +394,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "father",
-              "The man who looks after you and loves you at home."
+              "reflection",
+              "A reflection is thinking back about what you did and learned."
             ],
             [
-              "chick",
-              "A baby bird that has just come out of its egg."
+              "shop",
+              "A place where people sell food, clothes or toys."
             ],
             [
-              "drop",
-              "A very small round bit of liquid, like one tear."
+              "cat",
+              "A soft pet with whiskers that purrs and chases mice."
             ]
           ]
         }

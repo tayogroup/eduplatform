@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: The air you take in and let out of your lungs.",
+          "prompt": "Which word means: In a fast way, taking little time.",
           "choices": [
-            "breath",
-            "sweat",
-            "surface"
+            "quickly",
+            "resource",
+            "lesser"
           ],
-          "answer": "breath",
-          "explanation": "breath: The air you take in and let out of your lungs."
+          "answer": "quickly",
+          "explanation": "quickly: In a fast way, taking little time."
         },
         {
-          "prompt": "Which word means: A large field of grass and flowers where animals graze.",
+          "prompt": "Which word means: Seen means looked at and noticed with your eyes, usually after have or had.",
           "choices": [
-            "breath",
-            "sweat",
-            "meadow"
+            "quickly",
+            "resource",
+            "seen"
           ],
-          "answer": "meadow",
-          "explanation": "meadow: A large field of grass and flowers where animals graze."
+          "answer": "seen",
+          "explanation": "seen: Seen means looked at and noticed with your eyes, usually after have or had."
         },
         {
-          "prompt": "Which word means: Covered with, or full of, snow.",
+          "prompt": "Which word means: A piece of clothing worn on the top part of the body.",
           "choices": [
-            "sweat",
-            "snowy",
-            "breath"
+            "resource",
+            "shirt",
+            "quickly"
           ],
-          "answer": "snowy",
-          "explanation": "snowy: Covered with, or full of, snow."
+          "answer": "shirt",
+          "explanation": "shirt: A piece of clothing worn on the top part of the body."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "The clear water that comes from your skin when you are hot.",
-          "answer": "sweat"
+          "clue": "Taking a long time; at a gentle pace.",
+          "answer": "slowly"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A part of the sea or a lake that is partly surrounded by land.",
-          "answer": "bay"
+          "clue": "Study means to spend time learning about something carefully.",
+          "answer": "study"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A mountain that can erupt with hot lava, ash, and gas.",
-          "answer": "volcano"
+          "clue": "Covered in water or another liquid; not dry.",
+          "answer": "wet"
         }
       ]
     },
@@ -83,46 +83,43 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "speak.",
-            "to",
-            "started",
-            "I",
-            "before",
-            "breath",
-            "deep",
-            "a",
-            "took",
-            "I"
-          ],
-          "answer": "I took a deep breath before I started to speak."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "bay.",
+            "sky.",
             "the",
-            "into",
-            "safely",
-            "sailed",
-            "boats",
-            "small",
+            "across",
+            "quickly",
+            "moved",
+            "clouds",
+            "rain",
             "The"
           ],
-          "answer": "The small boats sailed safely into the bay."
+          "answer": "The rain clouds moved quickly across the sky."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "light.",
+            "wind.",
             "the",
-            "charge",
+            "in",
+            "bend",
             "to",
-            "power",
-            "solar",
-            "used",
-            "We"
+            "began",
+            "branch",
+            "The"
           ],
-          "answer": "We used solar power to charge the light."
+          "answer": "The branch began to bend in the wind."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "correctly.",
+            "and",
+            "quickly",
+            "question",
+            "the",
+            "answered",
+            "Leo"
+          ],
+          "answer": "Leo answered the question quickly and correctly."
         }
       ]
     },
@@ -242,51 +239,47 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "roots.",
-            "thin",
-            "their",
-            "through",
-            "soil",
-            "the",
+            "face.",
+            "my",
             "from",
-            "moisture",
-            "pull",
-            "Plants"
+            "sweat",
+            "the",
+            "wiped",
+            "I",
+            "sun,",
+            "the",
+            "in",
+            "running",
+            "After"
           ],
-          "answer": "Plants pull moisture from the soil through their thin roots."
+          "answer": "After running in the sun, I wiped the sweat from my face."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "sea.",
-            "warm",
-            "the",
-            "crossing",
-            "was",
-            "hurricane",
-            "a",
-            "that",
-            "warned",
-            "reports",
-            "News"
+            "tonight.",
+            "tight",
+            "shut",
+            "are",
+            "windows",
+            "your",
+            "sure",
+            "Make"
           ],
-          "answer": "News reports warned that a hurricane was crossing the warm sea."
+          "answer": "Make sure your windows are shut tight tonight."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "overnight.",
-            "out",
-            "left",
-            "we",
-            "cheese",
+            "sunshine.",
             "the",
-            "on",
-            "appeared",
-            "mould",
-            "Green"
+            "in",
+            "brightly",
+            "sparkled",
+            "puddles",
+            "The"
           ],
-          "answer": "Green mould appeared on the cheese we left out overnight."
+          "answer": "The puddles sparkled brightly in the sunshine."
         }
       ]
     },
@@ -299,34 +292,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'storm' mean in this unit?",
+          "prompt": "What does 'hear' mean in this unit?",
           "choices": [
-            "A time of heavy rain, wind, or snow, sometimes with thunder.",
-            "The air you take in and let out of your lungs.",
-            "The clear water that comes from your skin when you are hot."
+            "To hear means to notice a sound with your ears.",
+            "In a fast way, taking little time.",
+            "Something useful from nature that people can use."
           ],
-          "answer": "A time of heavy rain, wind, or snow, sometimes with thunder.",
-          "explanation": "storm: A time of heavy rain, wind, or snow, sometimes with thunder."
+          "answer": "To hear means to notice a sound with your ears.",
+          "explanation": "hear: To hear means to notice a sound with your ears."
         },
         {
-          "prompt": "What does 'solar' mean in this unit?",
+          "prompt": "What does 'iron' mean in this unit?",
           "choices": [
-            "The air you take in and let out of your lungs.",
-            "The clear water that comes from your skin when you are hot.",
-            "To do with the sun."
+            "In a fast way, taking little time.",
+            "Something useful from nature that people can use.",
+            "Iron is a strong grey metal used to make tools and machines."
           ],
-          "answer": "To do with the sun.",
-          "explanation": "solar: To do with the sun."
+          "answer": "Iron is a strong grey metal used to make tools and machines.",
+          "explanation": "iron: Iron is a strong grey metal used to make tools and machines."
         },
         {
-          "prompt": "What does 'sweat' mean in this unit?",
+          "prompt": "What does 'resource' mean in this unit?",
           "choices": [
-            "The top or outside part of something.",
-            "The clear water that comes from your skin when you are hot.",
-            "The air you take in and let out of your lungs."
+            "Smaller or less important than something else.",
+            "Something useful from nature that people can use.",
+            "In a fast way, taking little time."
           ],
-          "answer": "The clear water that comes from your skin when you are hot.",
-          "explanation": "sweat: The clear water that comes from your skin when you are hot."
+          "answer": "Something useful from nature that people can use.",
+          "explanation": "resource: Something useful from nature that people can use."
         }
       ]
     },
@@ -339,34 +332,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'tornado'?",
+          "prompt": "What type of word is 'run'?",
           "choices": [
-            "Noun",
             "Verb",
+            "Noun",
             "Adjective"
           ],
-          "answer": "Noun",
-          "explanation": "Tornado is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'roam'?",
-          "choices": [
-            "Noun",
-            "Adjective",
-            "Verb"
-          ],
           "answer": "Verb",
-          "explanation": "Roam is used as a verb in this dictionary sense."
+          "explanation": "Run is used as a verb in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'canyon'?",
+          "prompt": "What type of word is 'sweat'?",
           "choices": [
+            "Verb",
             "Adjective",
-            "Noun",
-            "Verb"
+            "Noun"
           ],
           "answer": "Noun",
-          "explanation": "Canyon is used as a noun in this dictionary sense."
+          "explanation": "Sweat is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'green'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Adjective",
+          "explanation": "Green is used as an adjective in this dictionary sense."
         }
       ]
     },
@@ -382,16 +375,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "moisture",
-              "A small amount of water in the air or on a surface."
+              "quietly",
+              "Without making much noise."
             ],
             [
-              "fur",
-              "The soft hair that covers some animals' bodies."
+              "visible",
+              "Able to be seen."
             ],
             [
-              "meadow",
-              "A large field of grass and flowers where animals graze."
+              "dry",
+              "Dry means having no water in it or on it, so it is not wet."
             ]
           ]
         },
@@ -399,16 +392,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "storm",
-              "A time of heavy rain, wind, or snow, sometimes with thunder."
+              "temperature",
+              "Temperature is a measurement of how hot or cold something is."
             ],
             [
-              "hurricane",
-              "A very strong storm with heavy wind and rain."
+              "extra",
+              "Extra means more than what is usual or needed."
             ],
             [
-              "snowy",
-              "Covered with, or full of, snow."
+              "beautiful",
+              "Very pleasing to look at or hear."
             ]
           ]
         },
@@ -416,16 +409,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "solar",
-              "To do with the sun."
+              "frightening",
+              "Making you feel scared or afraid."
             ],
             [
-              "mould",
-              "A soft, fuzzy growth that forms on old food or wet things."
+              "dripping",
+              "Dripping means letting small drops of water fall steadily."
             ],
             [
-              "royal",
-              "Grand or special, or to do with kings and queens."
+              "neither",
+              "Neither means not one and not the other of two things."
             ]
           ]
         }

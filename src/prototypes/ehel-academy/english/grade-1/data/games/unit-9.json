@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: A place in town where we buy food and things.",
+          "prompt": "Which word means: A flag is a piece of cloth with a pattern that stands for a country.",
           "choices": [
-            "shop",
-            "school",
-            "library"
+            "flag",
+            "sand",
+            "give"
           ],
-          "answer": "shop",
-          "explanation": "shop: A place in town where we buy food and things."
+          "answer": "flag",
+          "explanation": "flag: A flag is a piece of cloth with a pattern that stands for a country."
         },
         {
-          "prompt": "Which word means: A person who helps you get better when you are ill.",
+          "prompt": "Which word means: Covered with mud, dust or marks, needing a wash.",
           "choices": [
-            "shop",
-            "school",
-            "doctor"
+            "flag",
+            "sand",
+            "dirty"
           ],
-          "answer": "doctor",
-          "explanation": "doctor: A person who helps you get better when you are ill."
+          "answer": "dirty",
+          "explanation": "dirty: Covered with mud, dust or marks, needing a wash."
         },
         {
-          "prompt": "Which word means: To start moving, like when the light turns green.",
+          "prompt": "Which word means: A city is a big town with many streets, buildings and people.",
           "choices": [
-            "school",
-            "go",
-            "shop"
+            "sand",
+            "city",
+            "flag"
           ],
-          "answer": "go",
-          "explanation": "go: To start moving, like when the light turns green."
+          "answer": "city",
+          "explanation": "city: A city is a big town with many streets, buildings and people."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A busy place with many stalls selling fruit and vegetables.",
-          "answer": "market"
+          "clue": "Swim means to move through water using your arms and legs.",
+          "answer": "swim"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "The person who sells you things inside a shop.",
-          "answer": "shopkeeper"
+          "clue": "With no dirt on it, washed and fresh.",
+          "answer": "clean"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "The colour of grass, and of the light meaning go.",
-          "answer": "green"
+          "clue": "Along means moving forward beside or through the length of something.",
+          "answer": "along"
         }
       ]
     },
@@ -83,38 +83,36 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "shop.",
-            "corner",
-            "the",
-            "at",
-            "bread",
-            "buy",
-            "We"
+            "colours.",
+            "three",
+            "has",
+            "flag",
+            "Our"
           ],
-          "answer": "We buy bread at the corner shop."
+          "answer": "Our flag has three colours."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "change.",
-            "his",
-            "Sami",
-            "gives",
-            "shopkeeper",
-            "The"
+            "curly.",
+            "and",
+            "short",
+            "is",
+            "hair",
+            "My"
           ],
-          "answer": "The shopkeeper gives Sami his change."
+          "answer": "My hair is short and curly."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "stop.",
-            "means",
-            "light",
-            "red",
-            "The"
+            "girl.",
+            "polite",
+            "a",
+            "is",
+            "Amal"
           ],
-          "answer": "The red light means stop."
+          "answer": "Amal is a polite girl."
         }
       ]
     },
@@ -234,39 +232,41 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "market.",
+            "stop.",
+            "bus",
             "the",
             "at",
-            "shop",
-            "people",
-            "Many"
+            "quietly",
+            "wait",
+            "We"
           ],
-          "answer": "Many people shop at the market."
+          "answer": "We wait quietly at the bus stop."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "helps.",
-            "and",
-            "shares",
-            "friend",
-            "good",
-            "A"
+            "across.",
+            "walk",
+            "to",
+            "hand",
+            "Mum's",
+            "held",
+            "Amal"
           ],
-          "answer": "A good friend shares and helps."
+          "answer": "Amal held Mum's hand to walk across."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "move.",
-            "cars",
+            "night.",
+            "all",
+            "hospital",
             "the",
-            "lets",
-            "light",
-            "green",
-            "A"
+            "in",
+            "work",
+            "Nurses"
           ],
-          "answer": "A green light lets the cars move."
+          "answer": "Nurses work in the hospital all night."
         }
       ]
     },
@@ -279,34 +279,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'neighbour' mean in this unit?",
+          "prompt": "What does 'dry' mean in this unit?",
           "choices": [
-            "A person who lives in the house next to yours.",
-            "A place in town where we buy food and things.",
-            "The place where children come to learn and play together."
+            "Having no water on it at all, like sand in sunshine.",
+            "A flag is a piece of cloth with a pattern that stands for a country.",
+            "Sand is tiny bits of rock you find on a beach."
           ],
-          "answer": "A person who lives in the house next to yours.",
-          "explanation": "neighbour: A person who lives in the house next to yours."
+          "answer": "Having no water on it at all, like sand in sunshine.",
+          "explanation": "dry: Having no water on it at all, like sand in sunshine."
         },
         {
-          "prompt": "What does 'green' mean in this unit?",
+          "prompt": "What does 'hospital' mean in this unit?",
           "choices": [
-            "A place in town where we buy food and things.",
-            "The place where children come to learn and play together.",
-            "The colour of grass, and of the light meaning go."
+            "A flag is a piece of cloth with a pattern that stands for a country.",
+            "Sand is tiny bits of rock you find on a beach.",
+            "A big building where doctors and nurses help sick people."
           ],
-          "answer": "The colour of grass, and of the light meaning go.",
-          "explanation": "green: The colour of grass, and of the light meaning go."
+          "answer": "A big building where doctors and nurses help sick people.",
+          "explanation": "hospital: A big building where doctors and nurses help sick people."
         },
         {
-          "prompt": "What does 'school' mean in this unit?",
+          "prompt": "What does 'sand' mean in this unit?",
           "choices": [
-            "A quiet building where you can read books and borrow them to take home.",
-            "The place where children come to learn and play together.",
-            "A place in town where we buy food and things."
+            "Give means to hand something to someone.",
+            "Sand is tiny bits of rock you find on a beach.",
+            "A flag is a piece of cloth with a pattern that stands for a country."
           ],
-          "answer": "The place where children come to learn and play together.",
-          "explanation": "school: The place where children come to learn and play together."
+          "answer": "Sand is tiny bits of rock you find on a beach.",
+          "explanation": "sand: Sand is tiny bits of rock you find on a beach."
         }
       ]
     },
@@ -319,34 +319,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'far'?",
+          "prompt": "What type of word is 'calm'?",
           "choices": [
             "Adjective",
             "Noun",
             "Verb"
           ],
           "answer": "Adjective",
-          "explanation": "Far is used as an adjective in this dictionary sense."
+          "explanation": "Calm is used as an adjective in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'quiet'?",
+          "prompt": "What type of word is 'next to'?",
           "choices": [
             "Noun",
             "Verb",
-            "Adjective"
+            "Position"
           ],
-          "answer": "Adjective",
-          "explanation": "Quiet is used as an adjective in this dictionary sense."
+          "answer": "Position",
+          "explanation": "Next to is used as a position in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'bus stop'?",
+          "prompt": "What type of word is 'walk'?",
           "choices": [
             "Adjective",
             "Noun",
             "Verb"
           ],
           "answer": "Noun",
-          "explanation": "Bus stop is used as a noun in this dictionary sense."
+          "explanation": "Walk is used as a noun in this dictionary sense."
         }
       ]
     },
@@ -362,16 +362,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "school",
-              "The place where children come to learn and play together."
+              "stop",
+              "To finish moving and stay still in one place."
             ],
             [
-              "park",
-              "A green place in town with grass, trees and swings."
+              "drink",
+              "To take water or milk into your mouth and swallow."
             ],
             [
-              "teacher",
-              "A person who helps children learn new things at school."
+              "walk",
+              "To go somewhere on your own two feet."
             ]
           ]
         },
@@ -379,16 +379,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "friend",
-              "Someone you like to play with and help every day."
+              "hard",
+              "Something hard does not bend when you press it."
             ],
             [
-              "there",
-              "This word means in that place, away from you."
+              "lights",
+              "Lights are the coloured signals that tell cars and people when to stop or go."
             ],
             [
-              "stop",
-              "To end moving and stand still, like at a red light."
+              "calm",
+              "Calm means quiet and peaceful, without noise or worry."
             ]
           ]
         },
@@ -396,16 +396,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "green",
-              "The colour of grass, and of the light meaning go."
+              "dong",
+              "Dong is the sound a big bell makes when it rings."
             ],
             [
-              "small",
-              "Little in size, like a bird or a coin."
+              "bus stop",
+              "The place where you wait for a bus to come."
             ],
             [
-              "clean",
-              "Free from dirt and dust, fresh and tidy."
+              "next to",
+              "Right beside something, with nothing standing in between the two."
             ]
           ]
         }

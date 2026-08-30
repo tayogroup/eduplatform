@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: Letters and packages that are sent or delivered.",
+          "prompt": "Which word means: A machine that lets you speak to somebody far away.",
           "choices": [
-            "mail",
-            "language",
-            "agree"
+            "telephone",
+            "media",
+            "convenient"
           ],
-          "answer": "mail",
-          "explanation": "mail: Letters and packages that are sent or delivered."
+          "answer": "telephone",
+          "explanation": "telephone: A machine that lets you speak to somebody far away."
         },
         {
-          "prompt": "Which word means: The hard work you put into doing something.",
+          "prompt": "Which word means: Young people who are not yet adults.",
           "choices": [
-            "mail",
-            "language",
-            "effort"
+            "telephone",
+            "media",
+            "children"
           ],
-          "answer": "effort",
-          "explanation": "effort: The hard work you put into doing something."
+          "answer": "children",
+          "explanation": "children: Young people who are not yet adults."
         },
         {
-          "prompt": "Which word means: Treating everyone equally and in the same way.",
+          "prompt": "Which word means: A word that shows something has to happen or is very necessary.",
           "choices": [
-            "language",
-            "fair",
-            "mail"
+            "media",
+            "must",
+            "telephone"
           ],
-          "answer": "fair",
-          "explanation": "fair: Treating everyone equally and in the same way."
+          "answer": "must",
+          "explanation": "must: A word that shows something has to happen or is very necessary."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A way people talk and write to share ideas and feelings.",
-          "answer": "language"
+          "clue": "Ways of carrying people or goods from one place to another.",
+          "answer": "transport"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "To learn something very well.",
-          "answer": "master"
+          "clue": "A place where children go to learn new things.",
+          "answer": "school"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Something that is needed or very important.",
-          "answer": "necessary"
+          "clue": "A word that shows something has to happen or is very necessary.",
+          "answer": "must"
         }
       ]
     },
@@ -83,46 +83,43 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "today.",
-            "mail",
-            "the",
-            "in",
-            "letter",
-            "a",
-            "received",
-            "I"
+            "eat.",
+            "to",
+            "down",
+            "sat",
+            "we",
+            "as",
+            "just",
+            "rang",
+            "telephone",
+            "The"
           ],
-          "answer": "I received a letter in the mail today."
+          "answer": "The telephone rang just as we sat down to eat."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "plants.",
-            "the",
-            "watering",
-            "by",
-            "garden",
-            "the",
-            "maintain",
-            "father",
-            "my",
-            "help",
-            "I"
-          ],
-          "answer": "I help my father maintain the garden by watering the plants."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "o'clock.",
-            "three",
+            "running.",
             "at",
-            "school",
-            "leave",
-            "will",
-            "We"
+            "fast",
+            "very",
+            "is",
+            "Sami"
           ],
-          "answer": "We will leave school at three o'clock."
+          "answer": "Sami is very fast at running."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "worked.",
+            "Omar",
+            "hard",
+            "how",
+            "showed",
+            "report",
+            "Amal's"
+          ],
+          "answer": "Amal's report showed how hard Omar worked."
         }
       ]
     },
@@ -242,52 +239,44 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "break.",
+            "today.",
+            "mail",
             "the",
-            "after",
-            "story",
-            "the",
-            "continue",
-            "will",
-            "class",
-            "The"
-          ],
-          "answer": "The class will continue the story after the break."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "morning.",
-            "this",
-            "school",
-            "to",
-            "path",
-            "usual",
-            "her",
-            "took",
-            "Amal"
-          ],
-          "answer": "Amal took her usual path to school this morning."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "language.",
-            "and",
-            "effort",
-            "mail,",
-            "define",
-            "options",
-            "other",
-            "the",
-            "time;",
-            "quiet",
-            "calm,",
+            "in",
+            "letter",
             "a",
-            "names",
-            "Peace"
+            "received",
+            "I"
           ],
-          "answer": "Peace names a calm, quiet time; the other options define mail, effort and language."
+          "answer": "I received a letter in the mail today."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "Theo?",
+            "help,",
+            "to",
+            "wants",
+            "who",
+            "else",
+            "anyone",
+            "there",
+            "Is"
+          ],
+          "answer": "Is there anyone else who wants to help, Theo?"
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "question.",
+            "customer's",
+            "every",
+            "to",
+            "kindly",
+            "replied",
+            "Omar"
+          ],
+          "answer": "Omar replied kindly to every customer's question."
         }
       ]
     },
@@ -300,34 +289,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'maintain' mean in this unit?",
+          "prompt": "What does 'water' mean in this unit?",
           "choices": [
-            "To keep something in good condition, or to make it stay the same.",
-            "Letters and packages that are sent or delivered.",
-            "A way people talk and write to share ideas and feelings."
+            "Water is the clear liquid we drink and use for washing.",
+            "A machine that lets you speak to somebody far away.",
+            "The ways news and stories reach people, such as television and the internet."
           ],
-          "answer": "To keep something in good condition, or to make it stay the same.",
-          "explanation": "maintain: To keep something in good condition, or to make it stay the same."
+          "answer": "Water is the clear liquid we drink and use for washing.",
+          "explanation": "water: Water is the clear liquid we drink and use for washing."
         },
         {
-          "prompt": "What does 'cancel' mean in this unit?",
+          "prompt": "What does 'library' mean in this unit?",
           "choices": [
-            "Letters and packages that are sent or delivered.",
-            "A way people talk and write to share ideas and feelings.",
-            "To say that something will not happen any more."
+            "A machine that lets you speak to somebody far away.",
+            "The ways news and stories reach people, such as television and the internet.",
+            "A room or building full of books that people can read or borrow."
           ],
-          "answer": "To say that something will not happen any more.",
-          "explanation": "cancel: To say that something will not happen any more."
+          "answer": "A room or building full of books that people can read or borrow.",
+          "explanation": "library: A room or building full of books that people can read or borrow."
         },
         {
-          "prompt": "What does 'language' mean in this unit?",
+          "prompt": "What does 'media' mean in this unit?",
           "choices": [
-            "To have the same opinion, or to say yes to something.",
-            "A way people talk and write to share ideas and feelings.",
-            "Letters and packages that are sent or delivered."
+            "Easy to use or do, because it saves you time or trouble.",
+            "The ways news and stories reach people, such as television and the internet.",
+            "A machine that lets you speak to somebody far away."
           ],
-          "answer": "A way people talk and write to share ideas and feelings.",
-          "explanation": "language: A way people talk and write to share ideas and feelings."
+          "answer": "The ways news and stories reach people, such as television and the internet.",
+          "explanation": "media: The ways news and stories reach people, such as television and the internet."
         }
       ]
     },
@@ -340,34 +329,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'daily'?",
+          "prompt": "What type of word is 'often'?",
           "choices": [
-            "Adjective",
+            "Adverb",
             "Noun",
             "Verb"
           ],
-          "answer": "Adjective",
-          "explanation": "Daily is used as an adjective in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'really'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adverb"
-          ],
           "answer": "Adverb",
-          "explanation": "Really is used as an adverb in this dictionary sense."
+          "explanation": "Often is used as an adverb in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'gain'?",
+          "prompt": "What type of word is 'mail'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Mail is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'sitting'?",
           "choices": [
             "Adjective",
             "Verb",
             "Noun"
           ],
           "answer": "Verb",
-          "explanation": "Gain is used as a verb in this dictionary sense."
+          "explanation": "Sitting is used as a verb in this dictionary sense."
         }
       ]
     },
@@ -383,16 +372,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "citizen",
-              "A person who belongs to a country and has rights there."
+              "supermarket",
+              "A large shop that sells food and many other everyday things."
             ],
             [
-              "continue",
-              "To keep doing something without stopping."
+              "robot",
+              "A machine that can be programmed to do a job by itself."
             ],
             [
-              "effort",
-              "The hard work you put into doing something."
+              "size",
+              "How big or small something is."
             ]
           ]
         },
@@ -400,16 +389,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "maintain",
-              "To keep something in good condition, or to make it stay the same."
+              "stop",
+              "To no longer move, or to no longer do something."
             ],
             [
-              "balance",
-              "Having an equal, steady amount on each side; not too much of one thing."
+              "talk",
+              "When you talk, you use words to share your thoughts with someone."
             ],
             [
-              "fair",
-              "Treating everyone equally and in the same way."
+              "sort",
+              "To put things into groups or in a certain order."
             ]
           ]
         },
@@ -417,16 +406,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "cancel",
-              "To say that something will not happen any more."
+              "manage",
+              "To successfully deal with or organise something, even if it is difficult."
             ],
             [
-              "peace",
-              "A time when there is calm and quiet, with no fighting or trouble."
+              "meaning",
+              "The idea or message that a word, story, or action is trying to show."
             ],
             [
-              "clearly",
-              "In a way that is easy to see, hear, or understand."
+              "week",
+              "A period of seven days, from one Monday to the next."
             ]
           ]
         }

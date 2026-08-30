@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: Help or work done for others.",
+          "prompt": "Which word means: Not careful, so you make mistakes or break things.",
           "choices": [
-            "service",
-            "deliver",
-            "thought"
+            "careless",
+            "responsibility",
+            "revise"
           ],
-          "answer": "service",
-          "explanation": "service: Help or work done for others."
+          "answer": "careless",
+          "explanation": "careless: Not careful, so you make mistakes or break things."
         },
         {
-          "prompt": "Which word means: Something difficult; or, to test someone.",
+          "prompt": "Which word means: In addition, and going further than that.",
           "choices": [
-            "service",
-            "deliver",
-            "challenge"
+            "careless",
+            "responsibility",
+            "furthermore"
           ],
-          "answer": "challenge",
-          "explanation": "challenge: Something difficult; or, to test someone."
+          "answer": "furthermore",
+          "explanation": "furthermore: In addition, and going further than that."
         },
         {
-          "prompt": "Which word means: Shaped like a circle, with a curved edge all the way round.",
+          "prompt": "Which word means: Spun means turned round and round quickly.",
           "choices": [
-            "deliver",
-            "circular",
-            "service"
+            "responsibility",
+            "spun",
+            "careless"
           ],
-          "answer": "circular",
-          "explanation": "circular: Shaped like a circle, with a curved edge all the way round."
+          "answer": "spun",
+          "explanation": "spun: Spun means turned round and round quickly."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "To bring something to a person or place.",
-          "answer": "deliver"
+          "clue": "Not able to work, or of no use at all.",
+          "answer": "useless"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Something more important than other things.",
-          "answer": "priority"
+          "clue": "A round object that turns to help a vehicle or cart move.",
+          "answer": "wheel"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Simple, not fancy or decorated.",
-          "answer": "plain"
+          "clue": "A voice is the sound a person makes when they speak or sing.",
+          "answer": "voice"
         }
       ]
     },
@@ -83,41 +83,46 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "town.",
+            "over.",
+            "pot",
+            "paint",
             "the",
-            "for",
-            "service",
-            "book",
-            "free",
-            "a",
-            "started",
-            "library",
-            "The"
+            "knocked",
+            "elbow",
+            "careless",
+            "A"
           ],
-          "answer": "The library started a free book service for the town."
+          "answer": "A careless elbow knocked the paint pot over."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "priority.",
-            "top",
-            "our",
-            "is",
-            "Safety"
+            "own.",
+            "its",
+            "of",
+            "voice",
+            "a",
+            "wind",
+            "the",
+            "gives",
+            "Personification"
           ],
-          "answer": "Safety is our top priority."
+          "answer": "Personification gives the wind a voice of its own."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "shirt.",
-            "blue",
-            "plain",
+            "box.",
+            "cardboard",
             "a",
-            "wore",
-            "He"
+            "into",
+            "books",
+            "old",
+            "the",
+            "packed",
+            "Amal"
           ],
-          "answer": "He wore a plain blue shirt."
+          "answer": "Amal packed the old books into a cardboard box."
         }
       ]
     },
@@ -237,51 +242,45 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "morning.",
-            "Saturday",
-            "every",
-            "neighbours",
-            "older",
-            "to",
-            "meals",
-            "hot",
-            "deliver",
-            "Volunteers"
-          ],
-          "answer": "Volunteers deliver hot meals to older neighbours every Saturday morning."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "twice.",
-            "fact",
-            "every",
-            "checking",
-            "on",
-            "depends",
-            "report",
-            "a",
-            "of",
-            "quality",
-            "The"
-          ],
-          "answer": "The quality of a report depends on checking every fact twice."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "cooking.",
-            "start",
-            "you",
-            "before",
-            "rice",
-            "of",
-            "quantity",
+            "article.",
             "the",
-            "measure",
-            "Please"
+            "for",
+            "fact",
+            "important",
+            "an",
+            "was",
+            "It"
           ],
-          "answer": "Please measure the quantity of rice before you start cooking."
+          "answer": "It was an important fact for the article."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "paper.",
+            "the",
+            "see",
+            "to",
+            "desk",
+            "the",
+            "over",
+            "leaning",
+            "kept",
+            "Sami"
+          ],
+          "answer": "Sami kept leaning over the desk to see the paper."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "year.",
+            "this",
+            "old",
+            "years",
+            "twelve",
+            "is",
+            "Maya"
+          ],
+          "answer": "Maya is twelve years old this year."
         }
       ]
     },
@@ -294,34 +293,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'quality' mean in this unit?",
+          "prompt": "What does 'headline' mean in this unit?",
           "choices": [
-            "How good or bad something is.",
-            "Help or work done for others.",
-            "To bring something to a person or place."
+            "The large title printed at the top of a newspaper story.",
+            "Not careful, so you make mistakes or break things.",
+            "A duty that you are expected to look after."
           ],
-          "answer": "How good or bad something is.",
-          "explanation": "quality: How good or bad something is."
+          "answer": "The large title printed at the top of a newspaper story.",
+          "explanation": "headline: The large title printed at the top of a newspaper story."
         },
         {
-          "prompt": "What does 'quantity' mean in this unit?",
+          "prompt": "What does 'interviewed' mean in this unit?",
           "choices": [
-            "Help or work done for others.",
-            "To bring something to a person or place.",
-            "An amount or number of something."
+            "Not careful, so you make mistakes or break things.",
+            "A duty that you are expected to look after.",
+            "Interviewed means asked someone questions to find out information."
           ],
-          "answer": "An amount or number of something.",
-          "explanation": "quantity: An amount or number of something."
+          "answer": "Interviewed means asked someone questions to find out information.",
+          "explanation": "interviewed: Interviewed means asked someone questions to find out information."
         },
         {
-          "prompt": "What does 'deliver' mean in this unit?",
+          "prompt": "What does 'responsibility' mean in this unit?",
           "choices": [
-            "An idea or opinion in your mind.",
-            "To bring something to a person or place.",
-            "Help or work done for others."
+            "To go over work again to improve or learn it.",
+            "A duty that you are expected to look after.",
+            "Not careful, so you make mistakes or break things."
           ],
-          "answer": "To bring something to a person or place.",
-          "explanation": "deliver: To bring something to a person or place."
+          "answer": "A duty that you are expected to look after.",
+          "explanation": "responsibility: A duty that you are expected to look after."
         }
       ]
     },
@@ -334,34 +333,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'fiction'?",
+          "prompt": "What type of word is 'scissors'?",
           "choices": [
             "Noun",
             "Verb",
             "Adjective"
           ],
           "answer": "Noun",
-          "explanation": "Fiction is used as a noun in this dictionary sense."
+          "explanation": "Scissors is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'tease'?",
+          "prompt": "What type of word is 'quality'?",
           "choices": [
-            "Noun",
+            "Verb",
             "Adjective",
-            "Verb"
+            "Noun"
           ],
-          "answer": "Verb",
-          "explanation": "Tease is used as a verb in this dictionary sense."
+          "answer": "Noun",
+          "explanation": "Quality is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'knowledge'?",
+          "prompt": "What type of word is 'debate'?",
           "choices": [
             "Adjective",
             "Noun",
             "Verb"
           ],
           "answer": "Noun",
-          "explanation": "Knowledge is used as a noun in this dictionary sense."
+          "explanation": "Debate is used as a noun in this dictionary sense."
         }
       ]
     },
@@ -377,16 +376,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "information",
-              "Facts or details about something."
+              "agreement",
+              "When two or more people decide on the same thing."
             ],
             [
-              "discover",
-              "To find or learn something new."
+              "mention",
+              "To speak or write about something briefly."
             ],
             [
-              "challenge",
-              "Something difficult; or, to test someone."
+              "categorise",
+              "To sort things into groups by what they have in common."
             ]
           ]
         },
@@ -394,16 +393,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "quality",
-              "How good or bad something is."
+              "chapter",
+              "A numbered part of a book that tells one section of the story."
             ],
             [
-              "scientist",
-              "A person who studies science."
+              "leaning",
+              "To bend your body to rest against something."
             ],
             [
-              "circular",
-              "Shaped like a circle, with a curved edge all the way round."
+              "teased",
+              "Made playful, gentle jokes about someone in the past."
             ]
           ]
         },
@@ -411,16 +410,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "quantity",
-              "An amount or number of something."
+              "teaching",
+              "Teaching means helping someone learn something new."
             ],
             [
-              "erase",
-              "To remove marks or mistakes."
+              "laugh",
+              "A laugh is the sound you make when something is funny."
             ],
             [
-              "divorce",
-              "When two married people end their marriage."
+              "priority",
+              "Something more important than other things."
             ]
           ]
         }

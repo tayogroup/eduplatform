@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: Things that are used for a special job or task, like tools or machines.",
+          "prompt": "Which word means: Something new that somebody has made for the first time.",
           "choices": [
-            "equipment",
-            "folder",
-            "shield"
+            "invention",
+            "radius",
+            "creative"
           ],
-          "answer": "equipment",
-          "explanation": "equipment: Things that are used for a special job or task, like tools or machines."
+          "answer": "invention",
+          "explanation": "invention: Something new that somebody has made for the first time."
         },
         {
-          "prompt": "Which word means: Useful materials or tools for work or learning, like books, tools, or money.",
+          "prompt": "Which word means: Fragile means easy to break, so it must be handled with care.",
           "choices": [
-            "equipment",
-            "folder",
-            "resources"
+            "invention",
+            "radius",
+            "fragile"
           ],
-          "answer": "resources",
-          "explanation": "resources: Useful materials or tools for work or learning, like books, tools, or money."
+          "answer": "fragile",
+          "explanation": "fragile: Fragile means easy to break, so it must be handled with care."
         },
         {
-          "prompt": "Which word means: A cream or gel you put on a toothbrush to clean your teeth.",
+          "prompt": "Which word means: Lying over something so that it cannot be seen.",
           "choices": [
-            "folder",
-            "toothpaste",
-            "equipment"
+            "radius",
+            "covering",
+            "invention"
           ],
-          "answer": "toothpaste",
-          "explanation": "toothpaste: A cream or gel you put on a toothbrush to clean your teeth."
+          "answer": "covering",
+          "explanation": "covering: Lying over something so that it cannot be seen."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A cover or container used to hold papers and keep them tidy.",
-          "answer": "folder"
+          "clue": "A piece of writing or speech that tells what something is like.",
+          "answer": "description"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A piece of cloth that hangs in front of a window or on a stage.",
-          "answer": "curtain"
+          "clue": "Rakes are garden tools with a row of teeth used to gather leaves or soil.",
+          "answer": "rakes"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A space or room at the top of a house, just under the roof.",
-          "answer": "attic"
+          "clue": "Small pieces of paper or plastic with a sticky back and a picture on them.",
+          "answer": "stickers"
         }
       ]
     },
@@ -83,51 +83,43 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "goalposts.",
-            "and",
-            "ball",
+            "invention.",
+            "life-changing",
             "a",
-            "like",
-            "football,",
-            "play",
-            "to",
-            "equipment",
-            "special",
-            "need",
-            "We"
+            "was",
+            "telephone",
+            "The"
           ],
-          "answer": "We need special equipment to play football, like a ball and goalposts."
+          "answer": "The telephone was a life-changing invention."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "project.",
-            "art",
-            "our",
-            "for",
-            "paper",
+            "tool.",
+            "new",
+            "the",
+            "regarding",
+            "question",
+            "a",
+            "have",
+            "I"
+          ],
+          "answer": "I have a question regarding the new tool."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "neighbour.",
+            "his",
+            "to",
+            "hello",
+            "out",
+            "called",
             "and",
-            "pencils",
-            "like",
-            "resources",
-            "need",
-            "We"
+            "waved",
+            "Sami"
           ],
-          "answer": "We need resources like pencils and paper for our art project."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "day.",
-            "every",
-            "toothpaste",
-            "use",
-            "to",
-            "forget",
-            "not",
-            "Do"
-          ],
-          "answer": "Do not forget to use toothpaste every day."
+          "answer": "Sami waved and called out hello to his neighbour."
         }
       ]
     },
@@ -247,52 +239,38 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "rang.",
-            "bell",
-            "the",
-            "before",
-            "folder",
-            "card",
-            "a",
-            "into",
-            "drawings",
-            "her",
-            "slid",
-            "Amal"
+            "arrives.",
+            "she",
+            "when",
+            "Grandma",
+            "to",
+            "Wave"
           ],
-          "answer": "Amal slid her drawings into a card folder before the bell rang."
+          "answer": "Wave to Grandma when she arrives."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "began.",
-            "concert",
-            "the",
-            "until",
-            "stage",
-            "the",
-            "hid",
-            "curtain",
-            "blue",
-            "A"
+            "ago.",
+            "years",
+            "two",
+            "town",
+            "this",
+            "to",
+            "moved",
+            "Sami"
           ],
-          "answer": "A blue curtain hid the stage until the concert began."
+          "answer": "Sami moved to this town two years ago."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "library.",
-            "old",
-            "the",
-            "above",
-            "light",
-            "attic",
-            "the",
-            "in",
-            "floated",
-            "Dust"
+            "outside.",
+            "it",
+            "tested",
+            "They"
           ],
-          "answer": "Dust floated in the attic light above the old library."
+          "answer": "They tested it outside."
         }
       ]
     },
@@ -305,34 +283,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'curtain' mean in this unit?",
+          "prompt": "What does 'twinkling' mean in this unit?",
           "choices": [
-            "A piece of cloth that hangs in front of a window or on a stage.",
-            "Things that are used for a special job or task, like tools or machines.",
-            "A cover or container used to hold papers and keep them tidy."
+            "Twinkling means shining with a light that flickers on and off.",
+            "Something new that somebody has made for the first time.",
+            "The distance from the centre of a circle to its edge."
           ],
-          "answer": "A piece of cloth that hangs in front of a window or on a stage.",
-          "explanation": "curtain: A piece of cloth that hangs in front of a window or on a stage."
+          "answer": "Twinkling means shining with a light that flickers on and off.",
+          "explanation": "twinkling: Twinkling means shining with a light that flickers on and off."
         },
         {
-          "prompt": "What does 'attic' mean in this unit?",
+          "prompt": "What does 'drove' mean in this unit?",
           "choices": [
-            "Things that are used for a special job or task, like tools or machines.",
-            "A cover or container used to hold papers and keep them tidy.",
-            "A space or room at the top of a house, just under the roof."
+            "Something new that somebody has made for the first time.",
+            "The distance from the centre of a circle to its edge.",
+            "Controlled and moved a vehicle, such as a car or bus."
           ],
-          "answer": "A space or room at the top of a house, just under the roof.",
-          "explanation": "attic: A space or room at the top of a house, just under the roof."
+          "answer": "Controlled and moved a vehicle, such as a car or bus.",
+          "explanation": "drove: Controlled and moved a vehicle, such as a car or bus."
         },
         {
-          "prompt": "What does 'folder' mean in this unit?",
+          "prompt": "What does 'radius' mean in this unit?",
           "choices": [
-            "A flat object that protects you from something harmful.",
-            "A cover or container used to hold papers and keep them tidy.",
-            "Things that are used for a special job or task, like tools or machines."
+            "Using new and clever ideas to make or design something.",
+            "The distance from the centre of a circle to its edge.",
+            "Something new that somebody has made for the first time."
           ],
-          "answer": "A cover or container used to hold papers and keep them tidy.",
-          "explanation": "folder: A cover or container used to hold papers and keep them tidy."
+          "answer": "The distance from the centre of a circle to its edge.",
+          "explanation": "radius: The distance from the centre of a circle to its edge."
         }
       ]
     },
@@ -345,34 +323,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'utensil'?",
+          "prompt": "What type of word is 'foil'?",
           "choices": [
             "Noun",
             "Verb",
             "Adjective"
           ],
           "answer": "Noun",
-          "explanation": "Utensil is used as a noun in this dictionary sense."
+          "explanation": "Foil is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'helicopter'?",
+          "prompt": "What type of word is 'curtain'?",
           "choices": [
             "Verb",
             "Adjective",
             "Noun"
           ],
           "answer": "Noun",
-          "explanation": "Helicopter is used as a noun in this dictionary sense."
+          "explanation": "Curtain is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'hardware'?",
+          "prompt": "What type of word is 'remarkable'?",
           "choices": [
+            "Verb",
             "Adjective",
-            "Noun",
-            "Verb"
+            "Noun"
           ],
-          "answer": "Noun",
-          "explanation": "Hardware is used as a noun in this dictionary sense."
+          "answer": "Adjective",
+          "explanation": "Remarkable is used as an adjective in this dictionary sense."
         }
       ]
     },
@@ -388,16 +366,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "briefcase",
-              "A strong bag used to carry papers and important work things."
+              "protection",
+              "Something that keeps a person or thing safe from harm."
             ],
             [
-              "stapler",
-              "A tool that holds pieces of paper together with a small metal clip."
+              "compose",
+              "To write or put together a piece of music or writing."
             ],
             [
-              "machinery",
-              "Big machines that work together to do a heavy job."
+              "logical",
+              "Sensible, and following clear steps of reasoning."
             ]
           ]
         },
@@ -405,16 +383,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "ingredient",
-              "Something you use to make food or a dish."
+              "shovels",
+              "Shovels are tools with a flat blade used for digging or moving earth."
             ],
             [
-              "microwave",
-              "A machine that cooks or heats food quickly."
+              "curved",
+              "Curved means bent smoothly, not straight or flat."
             ],
             [
-              "toothbrush",
-              "A small tool with a handle and bristles for cleaning your teeth."
+              "hello",
+              "Hello is a friendly word people say when they meet or greet someone."
             ]
           ]
         },
@@ -422,16 +400,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "plastic",
-              "A strong, light material that can be shaped into many things."
+              "future",
+              "The time that has not happened yet."
             ],
             [
-              "telescope",
-              "A tool that helps you see things that are far away, like the stars."
+              "addressed",
+              "Wrote a name and place on something, like a letter, to show who should get it."
             ],
             [
-              "ambulance",
-              "A special vehicle that takes sick or hurt people to the hospital."
+              "machinery",
+              "Big machines that work together to do a heavy job."
             ]
           ]
         }

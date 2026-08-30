@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: The people who live with you and love you.",
+          "prompt": "Which word means: To hit water and make it fly up in small drops.",
           "choices": [
-            "family",
-            "friend",
-            "author"
+            "splash",
+            "article",
+            "grammar"
           ],
-          "answer": "family",
-          "explanation": "family: The people who live with you and love you."
+          "answer": "splash",
+          "explanation": "splash: To hit water and make it fly up in small drops."
         },
         {
-          "prompt": "Which word means: The third month of the year, when heavy rains often arrive.",
+          "prompt": "Which word means: Writing about real things that are true.",
           "choices": [
-            "family",
-            "friend",
-            "March"
+            "splash",
+            "article",
+            "nonfiction"
           ],
-          "answer": "March",
-          "explanation": "March: The third month of the year, when heavy rains often arrive."
+          "answer": "nonfiction",
+          "explanation": "nonfiction: Writing about real things that are true."
         },
         {
-          "prompt": "Which word means: Nice and helpful to other people.",
+          "prompt": "Which word means: Seventh means the one that comes after sixth, in position number seven.",
           "choices": [
-            "friend",
-            "kind",
-            "family"
+            "article",
+            "seventh",
+            "splash"
           ],
-          "answer": "kind",
-          "explanation": "kind: Nice and helpful to other people."
+          "answer": "seventh",
+          "explanation": "seventh: Seventh means the one that comes after sixth, in position number seven."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A mother or a father who looks after you.",
-          "answer": "parent"
+          "clue": "A thin cord used for tying things.",
+          "answer": "string"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "The fourth month of the year, when flowers bloom in many places.",
-          "answer": "april"
+          "clue": "The order in which things happen.",
+          "answer": "sequence"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Happy to talk to people and play with them.",
-          "answer": "friendly"
+          "clue": "Eighth means the one that comes after seventh, in position number eight.",
+          "answer": "eighth"
         }
       ]
     },
@@ -83,47 +83,45 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "me.",
-            "and",
-            "sister,",
-            "my",
-            "dad,",
-            "my",
-            "mum,",
-            "my",
-            "has",
-            "family",
-            "My"
-          ],
-          "answer": "My family has my mum, my dad, my sister, and me."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "March.",
+            "rain.",
+            "after",
+            "puddles",
+            "the",
             "in",
-            "come",
-            "often",
-            "rains",
-            "The"
+            "splash",
+            "to",
+            "likes",
+            "Leo"
           ],
-          "answer": "The rains often come in March."
+          "answer": "Leo likes to splash in the puddles after rain."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "pupil.",
-            "new",
+            "class.",
+            "the",
+            "to",
+            "speech",
+            "short",
             "a",
-            "with",
-            "lunch",
-            "her",
-            "shared",
-            "girl",
-            "kind",
-            "The"
+            "gave",
+            "Amal"
           ],
-          "answer": "The kind girl shared her lunch with a new pupil."
+          "answer": "Amal gave a short speech to the class."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "question.",
+            "careful",
+            "a",
+            "for",
+            "partner",
+            "her",
+            "asked",
+            "Amal"
+          ],
+          "answer": "Amal asked her partner for a careful question."
         }
       ]
     },
@@ -243,50 +241,42 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "folder.",
-            "her",
-            "of",
-            "front",
+            "January.",
+            "in",
+            "begins",
+            "year",
+            "school",
+            "The"
+          ],
+          "answer": "The school year begins in January."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "first.",
+            "chart",
+            "his",
+            "present",
+            "will",
+            "Sami"
+          ],
+          "answer": "Sami will present his chart first."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "showcase.",
+            "3",
+            "Year",
             "the",
-            "at",
-            "tree",
-            "family",
-            "a",
-            "put",
-            "Amal"
-          ],
-          "answer": "Amal put a family tree at the front of her folder."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "March.",
-            "of",
-            "most",
             "for",
-            "indoors",
-            "class",
-            "our",
-            "kept",
-            "rain",
-            "Heavy"
+            "pages",
+            "six",
+            "chooses",
+            "student",
+            "Every"
           ],
-          "answer": "Heavy rain kept our class indoors for most of March."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "draft.",
-            "partner's",
-            "every",
-            "on",
-            "comment",
-            "kind",
-            "one",
-            "wrote",
-            "Nora"
-          ],
-          "answer": "Nora wrote one kind comment on every partner's draft."
+          "answer": "Every student chooses six pages for the Year 3 showcase."
         }
       ]
     },
@@ -299,34 +289,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'doctor' mean in this unit?",
+          "prompt": "What does 'least' mean in this unit?",
           "choices": [
-            "A person who helps sick people feel better.",
-            "The people who live with you and love you.",
-            "A person you like and spend time with."
+            "Least means the smallest amount or number of something.",
+            "To hit water and make it fly up in small drops.",
+            "A small word such as a, an or the, used before a noun."
           ],
-          "answer": "A person who helps sick people feel better.",
-          "explanation": "doctor: A person who helps sick people feel better."
+          "answer": "Least means the smallest amount or number of something.",
+          "explanation": "least: Least means the smallest amount or number of something."
         },
         {
-          "prompt": "What does 'honest' mean in this unit?",
+          "prompt": "What does 'teacher' mean in this unit?",
           "choices": [
-            "The people who live with you and love you.",
-            "A person you like and spend time with.",
-            "Always telling the truth, even when it is hard."
+            "To hit water and make it fly up in small drops.",
+            "A small word such as a, an or the, used before a noun.",
+            "A person who helps us learn new things."
           ],
-          "answer": "Always telling the truth, even when it is hard.",
-          "explanation": "honest: Always telling the truth, even when it is hard."
+          "answer": "A person who helps us learn new things.",
+          "explanation": "teacher: A person who helps us learn new things."
         },
         {
-          "prompt": "What does 'friend' mean in this unit?",
+          "prompt": "What does 'article' mean in this unit?",
           "choices": [
-            "A person who writes books or stories.",
-            "A person you like and spend time with.",
-            "The people who live with you and love you."
+            "The rules for how we put words together to speak and write.",
+            "A small word such as a, an or the, used before a noun.",
+            "To hit water and make it fly up in small drops."
           ],
-          "answer": "A person you like and spend time with.",
-          "explanation": "friend: A person you like and spend time with."
+          "answer": "A small word such as a, an or the, used before a noun.",
+          "explanation": "article: A small word such as a, an or the, used before a noun."
         }
       ]
     },
@@ -339,34 +329,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'listen'?",
+          "prompt": "What type of word is 'onward'?",
           "choices": [
-            "Verb",
+            "Adverb",
             "Noun",
+            "Verb"
+          ],
+          "answer": "Adverb",
+          "explanation": "Onward is used as an adverb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'friendly'?",
+          "choices": [
+            "Noun",
+            "Verb",
             "Adjective"
           ],
-          "answer": "Verb",
-          "explanation": "Listen is used as a verb in this dictionary sense."
+          "answer": "Adjective",
+          "explanation": "Friendly is used as an adjective in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'sunshine'?",
+          "prompt": "What type of word is 'singular'?",
           "choices": [
-            "Verb",
             "Adjective",
-            "Noun"
+            "Noun",
+            "Verb"
           ],
           "answer": "Noun",
-          "explanation": "Sunshine is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'graduate'?",
-          "choices": [
-            "Adjective",
-            "Verb",
-            "Noun"
-          ],
-          "answer": "Verb",
-          "explanation": "Graduate is used as a verb in this dictionary sense."
+          "explanation": "Singular is used as a noun in this dictionary sense."
         }
       ]
     },
@@ -382,16 +372,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "friend",
-              "A person you like and spend time with."
+              "thread",
+              "A very thin line of cotton used for sewing."
             ],
             [
-              "author",
-              "A person who writes books or stories."
+              "diary",
+              "A book where you write what happens each day."
             ],
             [
-              "January",
-              "The first month of the year."
+              "reader",
+              "A person who reads, or a book used for reading."
             ]
           ]
         },
@@ -399,16 +389,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "doctor",
-              "A person who helps sick people feel better."
+              "display",
+              "Things put out where people can see them."
             ],
             [
-              "hospital",
-              "A place where doctors and nurses care for people who are sick or hurt."
+              "stand",
+              "A stand is a frame or holder that keeps things upright so people can see them."
             ],
             [
-              "offer",
-              "To say kindly that you will give or do something."
+              "schemes",
+              "Schemes are careful plans or ideas for doing something."
             ]
           ]
         },
@@ -416,16 +406,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "honest",
-              "Always telling the truth, even when it is hard."
+              "ninth",
+              "Ninth means the one that comes after eighth, in position number nine."
             ],
             [
-              "weather",
-              "What the sky and air are like today."
+              "January",
+              "The first month of the year."
             ],
             [
-              "number",
-              "A word or symbol that shows how many things there are."
+              "kind",
+              "Nice and helpful to other people."
             ]
           ]
         }

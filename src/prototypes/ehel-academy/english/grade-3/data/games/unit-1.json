@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: The people who live with you and love you.",
+          "prompt": "Which word means: To shout happily to show you are pleased or to support someone.",
           "choices": [
-            "family",
-            "parent",
-            "friend"
+            "cheer",
+            "shy",
+            "myself"
           ],
-          "answer": "family",
-          "explanation": "family: The people who live with you and love you."
+          "answer": "cheer",
+          "explanation": "cheer: To shout happily to show you are pleased or to support someone."
         },
         {
-          "prompt": "Which word means: An older person, or someone who has learned more.",
+          "prompt": "Which word means: A person who is not named or known.",
           "choices": [
-            "family",
-            "parent",
-            "senior"
+            "cheer",
+            "shy",
+            "someone"
           ],
-          "answer": "senior",
-          "explanation": "senior: An older person, or someone who has learned more."
+          "answer": "someone",
+          "explanation": "someone: A person who is not named or known."
         },
         {
-          "prompt": "Which word means: Something you must do or take care of.",
+          "prompt": "Which word means: Spoke very quietly and softly.",
           "choices": [
-            "parent",
-            "duty",
-            "family"
+            "shy",
+            "whispered",
+            "cheer"
           ],
-          "answer": "duty",
-          "explanation": "duty: Something you must do or take care of."
+          "answer": "whispered",
+          "explanation": "whispered: Spoke very quietly and softly."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A mother or a father who looks after you.",
-          "answer": "parent"
+          "clue": "A round part that turns to make a cart or a vehicle move.",
+          "answer": "wheel"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "To act in a good and kind way.",
-          "answer": "behave"
+          "clue": "To put something in place, ready for use.",
+          "answer": "set"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "How well your body and your mind feel.",
-          "answer": "health"
+          "clue": "A word used to agree with something, or to say it is true.",
+          "answer": "yes"
         }
       ]
     },
@@ -83,53 +83,44 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "me.",
-            "and",
-            "sister,",
-            "my",
-            "dad,",
-            "my",
-            "mum,",
-            "my",
-            "has",
-            "family",
-            "My"
-          ],
-          "answer": "My family has my mum, my dad, my sister, and me."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "room.",
-            "their",
-            "find",
-            "children",
-            "younger",
-            "the",
-            "helped",
-            "student",
-            "senior",
+            "Sami.",
+            "for",
+            "cheer",
+            "to",
+            "began",
+            "class",
+            "whole",
             "The"
           ],
-          "answer": "The senior student helped the younger children find their room."
+          "answer": "The whole class began to cheer for Sami."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "bag.",
-            "her",
-            "with",
-            "sister",
-            "little",
-            "my",
-            "help",
-            "to",
-            "duty",
-            "my",
-            "is",
-            "It"
+            "ones.",
+            "blue",
+            "the",
+            "than",
+            "better",
+            "shoes",
+            "red",
+            "the",
+            "like",
+            "I"
           ],
-          "answer": "It is my duty to help my little sister with her bag."
+          "answer": "I like the red shoes better than the blue ones."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "class.",
+            "in",
+            "well",
+            "listens",
+            "always",
+            "Amal"
+          ],
+          "answer": "Amal always listens well in class."
         }
       ]
     },
@@ -249,46 +240,43 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "mornings.",
-            "Saturday",
-            "on",
-            "dinner",
-            "cook",
-            "family",
+            "early.",
+            "homework",
             "her",
-            "helps",
+            "finished",
+            "actually",
             "Amal"
           ],
-          "answer": "Amal helps her family cook dinner on Saturday mornings."
+          "answer": "Amal actually finished her homework early."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "now.",
-            "school",
-            "big",
+            "makes.",
+            "Hana",
+            "Grandma",
+            "one",
             "the",
-            "at",
-            "senior",
-            "a",
-            "is",
-            "Adam"
+            "like",
+            "tastes",
+            "soup",
+            "This"
           ],
-          "answer": "Adam is a senior at the big school now."
+          "answer": "This soup tastes like the one Grandma Hana makes."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "happier.",
-            "family",
-            "my",
-            "makes",
-            "home",
-            "at",
-            "duty",
-            "Every"
+            "play.",
+            "the",
+            "in",
+            "rude",
+            "be",
+            "to",
+            "pretended",
+            "Nora"
           ],
-          "answer": "Every duty at home makes my family happier."
+          "answer": "Nora pretended to be rude in the play."
         }
       ]
     },
@@ -301,34 +289,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'behave' mean in this unit?",
+          "prompt": "What does 'running' mean in this unit?",
           "choices": [
-            "To act in a good and kind way.",
-            "The people who live with you and love you.",
-            "A mother or a father who looks after you."
+            "Moving quickly on your legs, faster than walking.",
+            "To shout happily to show you are pleased or to support someone.",
+            "Feeling a little nervous around people you do not know."
           ],
-          "answer": "To act in a good and kind way.",
-          "explanation": "behave: To act in a good and kind way."
+          "answer": "Moving quickly on your legs, faster than walking.",
+          "explanation": "running: Moving quickly on your legs, faster than walking."
         },
         {
-          "prompt": "What does 'health' mean in this unit?",
+          "prompt": "What does 'ground' mean in this unit?",
           "choices": [
-            "The people who live with you and love you.",
-            "A mother or a father who looks after you.",
-            "How well your body and your mind feel."
+            "To shout happily to show you are pleased or to support someone.",
+            "Feeling a little nervous around people you do not know.",
+            "The surface of the earth that you walk on."
           ],
-          "answer": "How well your body and your mind feel.",
-          "explanation": "health: How well your body and your mind feel."
+          "answer": "The surface of the earth that you walk on.",
+          "explanation": "ground: The surface of the earth that you walk on."
         },
         {
-          "prompt": "What does 'parent' mean in this unit?",
+          "prompt": "What does 'shy' mean in this unit?",
           "choices": [
-            "A person you like and spend time with.",
-            "A mother or a father who looks after you.",
-            "The people who live with you and love you."
+            "A word you use to talk about doing something to or for you.",
+            "Feeling a little nervous around people you do not know.",
+            "To shout happily to show you are pleased or to support someone."
           ],
-          "answer": "A mother or a father who looks after you.",
-          "explanation": "parent: A mother or a father who looks after you."
+          "answer": "Feeling a little nervous around people you do not know.",
+          "explanation": "shy: Feeling a little nervous around people you do not know."
         }
       ]
     },
@@ -341,34 +329,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'respect'?",
+          "prompt": "What type of word is 'bit'?",
           "choices": [
             "Noun",
             "Verb",
             "Adjective"
           ],
           "answer": "Noun",
-          "explanation": "Respect is used as a noun in this dictionary sense."
+          "explanation": "Bit is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'private'?",
+          "prompt": "What type of word is 'next'?",
           "choices": [
             "Noun",
             "Verb",
             "Adjective"
           ],
           "answer": "Adjective",
-          "explanation": "Private is used as an adjective in this dictionary sense."
+          "explanation": "Next is used as an adjective in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'student'?",
+          "prompt": "What type of word is 'always'?",
           "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
+            "Verb",
+            "Adverb",
+            "Noun"
           ],
-          "answer": "Noun",
-          "explanation": "Student is used as a noun in this dictionary sense."
+          "answer": "Adverb",
+          "explanation": "Always is used as an adverb in this dictionary sense."
         }
       ]
     },
@@ -384,16 +372,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "friend",
-              "A person you like and spend time with."
+              "steep",
+              "Rising or falling very sharply, so it is hard to climb."
             ],
             [
-              "student",
-              "A person who goes to school to learn new things."
+              "unkind",
+              "Not nice or gentle, and likely to hurt someone's feelings."
             ],
             [
-              "senior",
-              "An older person, or someone who has learned more."
+              "brother",
+              "A boy or man who has the same parents as you."
             ]
           ]
         },
@@ -401,16 +389,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "behaviour",
-              "The way a person acts towards other people."
+              "set",
+              "To put something in place, ready for use."
             ],
             [
-              "respect",
-              "Being kind to people and listening when they speak."
+              "corridor",
+              "A long, narrow hallway inside a building that joins rooms together."
             ],
             [
-              "duty",
-              "Something you must do or take care of."
+              "working",
+              "Doing a job or a task that needs effort."
             ]
           ]
         },
@@ -418,16 +406,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "safety",
-              "Being safe and not in danger."
+              "hands",
+              "The parts of your body at the end of your arms, used for holding things."
             ],
             [
-              "private",
-              "Just for you or a small group, not for everyone."
+              "write",
+              "To put words or letters onto paper using a pen or pencil."
             ],
             [
-              "family",
-              "The people who live with you and love you."
+              "completely",
+              "Fully, with nothing left out."
             ]
           ]
         }

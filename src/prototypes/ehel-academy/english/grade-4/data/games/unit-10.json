@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: Letters and packages that are sent or delivered.",
+          "prompt": "Which word means: Not able to be done or to happen.",
           "choices": [
-            "mail",
-            "citizen",
-            "sweat"
+            "impossible",
+            "clause",
+            "idiom"
           ],
-          "answer": "mail",
-          "explanation": "mail: Letters and packages that are sent or delivered."
+          "answer": "impossible",
+          "explanation": "impossible: Not able to be done or to happen."
         },
         {
-          "prompt": "Which word means: Small white or brown grains that people cook and eat.",
+          "prompt": "Which word means: When several words close together begin with the same sound.",
           "choices": [
-            "mail",
-            "citizen",
-            "rice"
+            "impossible",
+            "clause",
+            "alliteration"
           ],
-          "answer": "rice",
-          "explanation": "rice: Small white or brown grains that people cook and eat."
+          "answer": "alliteration",
+          "explanation": "alliteration: When several words close together begin with the same sound."
         },
         {
-          "prompt": "Which word means: A person who cleans and takes care of a building.",
+          "prompt": "Which word means: Coming after fourth and before sixth in a list or order.",
           "choices": [
-            "citizen",
-            "caretaker",
-            "mail"
+            "clause",
+            "fifth",
+            "impossible"
           ],
-          "answer": "caretaker",
-          "explanation": "caretaker: A person who cleans and takes care of a building."
+          "answer": "fifth",
+          "explanation": "fifth: Coming after fourth and before sixth in a list or order."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A way people talk and write to share ideas and feelings.",
-          "answer": "language"
+          "clue": "A person who performs a role in a play or film.",
+          "answer": "actor"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A part of a plant, like pepper, that adds flavour to food.",
-          "answer": "spice"
+          "clue": "A type of writing, music or film.",
+          "answer": "genre"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A person who builds things from wood.",
-          "answer": "carpenter"
+          "clue": "Coming after seventh and before ninth in a list or order.",
+          "answer": "eighth"
         }
       ]
     },
@@ -83,54 +83,45 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "hall.",
-            "the",
-            "up",
-            "setting",
-            "still",
-            "were",
-            "we",
-            "while",
-            "arrived",
-            "mail",
-            "morning",
-            "The"
-          ],
-          "answer": "The morning mail arrived while we were still setting up the hall."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "season.",
-            "all",
-            "sits",
-            "water",
-            "the",
-            "where",
-            "fields",
-            "wet",
+            "once.",
+            "at",
+            "places",
+            "two",
             "in",
-            "grows",
-            "Rice"
+            "be",
+            "to",
+            "impossible",
+            "is",
+            "It"
           ],
-          "answer": "Rice grows in wet fields where the water sits all season."
+          "answer": "It is impossible to be in two places at once."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "came.",
-            "visitors",
+            "thoughtful.",
+            "was",
+            "question",
             "the",
-            "before",
-            "hour",
-            "an",
-            "hall",
-            "the",
-            "unlocked",
-            "caretaker",
-            "The"
+            "to",
+            "response",
+            "Her"
           ],
-          "answer": "The caretaker unlocked the hall an hour before the visitors came."
+          "answer": "Her response to the question was thoughtful."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "talk.",
+            "her",
+            "prepare",
+            "to",
+            "week",
+            "one",
+            "had",
+            "Amal"
+          ],
+          "answer": "Amal had one week to prepare her talk."
         }
       ]
     },
@@ -250,51 +241,50 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "out.",
-            "went",
-            "invitations",
-            "Exhibition",
+            "bread.",
+            "bakery",
             "the",
-            "before",
-            "mail",
-            "the",
-            "sorted",
-            "Omar"
+            "beside",
+            "lamb",
+            "fresh",
+            "sold",
+            "stall",
+            "market",
+            "The"
           ],
-          "answer": "Omar sorted the mail before the Exhibition invitations went out."
+          "answer": "The market stall sold fresh lamb beside the bakery bread."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "hall.",
-            "the",
-            "in",
+            "night.",
+            "last",
+            "talk",
+            "my",
+            "practise",
+            "me",
             "helped",
-            "who",
-            "everybody",
-            "for",
-            "rice",
-            "cooked",
-            "Hana",
-            "Grandma"
+            "sister",
+            "My"
           ],
-          "answer": "Grandma Hana cooked rice for everybody who helped in the hall."
+          "answer": "My sister helped me practise my talk last night."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "begins.",
-            "lesson",
-            "first",
+            "Exhibition.",
             "the",
-            "before",
-            "corridor",
-            "the",
-            "sweeps",
-            "caretaker",
-            "Our"
+            "for",
+            "title",
+            "one",
+            "on",
+            "agree",
+            "to",
+            "had",
+            "class",
+            "The"
           ],
-          "answer": "Our caretaker sweeps the corridor before the first lesson begins."
+          "answer": "The class had to agree on one title for the Exhibition."
         }
       ]
     },
@@ -307,34 +297,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'service' mean in this unit?",
+          "prompt": "What does 'lay' mean in this unit?",
           "choices": [
-            "Help or work done for others.",
-            "Letters and packages that are sent or delivered.",
-            "A person who belongs to a country and has rights there."
+            "Was resting flat somewhere, the past tense of the word lie.",
+            "Not able to be done or to happen.",
+            "A group of words containing a verb, part of a sentence."
           ],
-          "answer": "Help or work done for others.",
-          "explanation": "service: Help or work done for others."
+          "answer": "Was resting flat somewhere, the past tense of the word lie.",
+          "explanation": "lay: Was resting flat somewhere, the past tense of the word lie."
         },
         {
-          "prompt": "What does 'labourer' mean in this unit?",
+          "prompt": "What does 'breath' mean in this unit?",
           "choices": [
-            "Letters and packages that are sent or delivered.",
-            "A person who belongs to a country and has rights there.",
-            "A person who does hard work, often with their hands."
+            "Not able to be done or to happen.",
+            "A group of words containing a verb, part of a sentence.",
+            "The air you take in and let out of your lungs."
           ],
-          "answer": "A person who does hard work, often with their hands.",
-          "explanation": "labourer: A person who does hard work, often with their hands."
+          "answer": "The air you take in and let out of your lungs.",
+          "explanation": "breath: The air you take in and let out of your lungs."
         },
         {
-          "prompt": "What does 'citizen' mean in this unit?",
+          "prompt": "What does 'clause' mean in this unit?",
           "choices": [
-            "The clear water that comes from your skin when you are hot.",
-            "A person who belongs to a country and has rights there.",
-            "Letters and packages that are sent or delivered."
+            "A phrase whose meaning is not what the words say.",
+            "A group of words containing a verb, part of a sentence.",
+            "Not able to be done or to happen."
           ],
-          "answer": "A person who belongs to a country and has rights there.",
-          "explanation": "citizen: A person who belongs to a country and has rights there."
+          "answer": "A group of words containing a verb, part of a sentence.",
+          "explanation": "clause: A group of words containing a verb, part of a sentence."
         }
       ]
     },
@@ -347,34 +337,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'accelerate'?",
-          "choices": [
-            "Verb",
-            "Noun",
-            "Adjective"
-          ],
-          "answer": "Verb",
-          "explanation": "Accelerate is used as a verb in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'doubtful'?",
+          "prompt": "What type of word is 'partner'?",
           "choices": [
             "Noun",
             "Verb",
             "Adjective"
           ],
-          "answer": "Adjective",
-          "explanation": "Doubtful is used as an adjective in this dictionary sense."
+          "answer": "Noun",
+          "explanation": "Partner is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'surface'?",
+          "prompt": "What type of word is 'carpenter'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Carpenter is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'reference'?",
           "choices": [
             "Adjective",
             "Noun",
             "Verb"
           ],
           "answer": "Noun",
-          "explanation": "Surface is used as a noun in this dictionary sense."
+          "explanation": "Reference is used as a noun in this dictionary sense."
         }
       ]
     },
@@ -390,16 +380,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "citizen",
-              "A person who belongs to a country and has rights there."
+              "actress",
+              "A woman or girl who performs a role in a play or film."
             ],
             [
-              "sweat",
-              "The clear water that comes from your skin when you are hot."
+              "drama",
+              "A play written for the stage, radio or screen."
             ],
             [
-              "sandwich",
-              "Food made of two pieces of bread with meat, cheese, or vegetables inside."
+              "quotation",
+              "Words someone said or wrote, repeated by another person."
             ]
           ]
         },
@@ -407,16 +397,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "service",
-              "Help or work done for others."
+              "apostrophe",
+              "A mark showing a missing letter or who owns something."
             ],
             [
-              "thought",
-              "An idea or opinion in your mind."
+              "clauses",
+              "Parts of a sentence that each have their own subject and verb."
             ],
             [
-              "proceed",
-              "To go forward or to keep going."
+              "rehearsed",
+              "Practised something carefully before doing it for real."
             ]
           ]
         },
@@ -424,16 +414,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "labourer",
-              "A person who does hard work, often with their hands."
+              "seventh",
+              "Coming after sixth and before eighth in a list or order."
             ],
             [
-              "anxious",
-              "Feeling very worried, with lots of worried thoughts."
+              "sandwich",
+              "Food made of two pieces of bread with meat, cheese, or vegetables inside."
             ],
             [
-              "equipment",
-              "Things that are used for a special job or task, like tools or machines."
+              "caretaker",
+              "A person who cleans and takes care of a building."
             ]
           ]
         }

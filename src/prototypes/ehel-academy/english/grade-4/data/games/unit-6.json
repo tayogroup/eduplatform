@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: A person who cleans and takes care of a building.",
+          "prompt": "Which word means: Learning about things at school or at home.",
           "choices": [
-            "caretaker",
-            "carpenter",
-            "engineer"
+            "education",
+            "colleague",
+            "manager"
           ],
-          "answer": "caretaker",
-          "explanation": "caretaker: A person who cleans and takes care of a building."
+          "answer": "education",
+          "explanation": "education: Learning about things at school or at home."
         },
         {
-          "prompt": "Which word means: A person chosen to help make the laws for a country.",
+          "prompt": "Which word means: A person who carries messages from one person to another.",
           "choices": [
-            "caretaker",
-            "carpenter",
-            "senator"
+            "education",
+            "colleague",
+            "messenger"
           ],
-          "answer": "senator",
-          "explanation": "senator: A person chosen to help make the laws for a country."
+          "answer": "messenger",
+          "explanation": "messenger: A person who carries messages from one person to another."
         },
         {
-          "prompt": "Which word means: Someone who is brave or helps others.",
+          "prompt": "Which word means: Wow is a word people say when something surprises or amazes them.",
           "choices": [
-            "carpenter",
-            "hero",
-            "caretaker"
+            "colleague",
+            "wow",
+            "education"
           ],
-          "answer": "hero",
-          "explanation": "hero: Someone who is brave or helps others."
+          "answer": "wow",
+          "explanation": "wow: Wow is a word people say when something surprises or amazes them."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A person who builds things from wood.",
-          "answer": "carpenter"
+          "clue": "A happy time when people do something special together.",
+          "answer": "celebration"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A person who helps people understand and follow the law.",
-          "answer": "lawyer"
+          "clue": "Someone who is brave or helps others.",
+          "answer": "hero"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A person who leaves home because it is not safe.",
-          "answer": "refugee"
+          "clue": "Magic is something amazing that seems impossible to explain.",
+          "answer": "magic"
         }
       ]
     },
@@ -83,44 +83,46 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "tidy.",
-            "and",
-            "clean",
-            "school",
-            "our",
-            "keeps",
-            "caretaker",
-            "The"
-          ],
-          "answer": "The caretaker keeps our school clean and tidy."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "rules.",
-            "school",
-            "new",
-            "about",
-            "spoke",
-            "senator",
-            "The"
-          ],
-          "answer": "The senator spoke about new school rules."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "cat.",
-            "the",
-            "saving",
-            "for",
-            "hero",
-            "a",
+            "education.",
+            "my",
+            "of",
+            "part",
+            "important",
+            "an",
             "is",
-            "firefighter",
+            "home",
+            "at",
+            "Reading"
+          ],
+          "answer": "Reading at home is an important part of my education."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "justice.",
+            "deliver",
+            "to",
+            "exists",
+            "court",
             "The"
           ],
-          "answer": "The firefighter is a hero for saving the cat."
+          "answer": "The court exists to deliver justice."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "site.",
+            "building",
+            "the",
+            "on",
+            "day",
+            "every",
+            "boots",
+            "strong",
+            "wears",
+            "Elena"
+          ],
+          "answer": "Elena wears strong boots every day on the building site."
         }
       ]
     },
@@ -225,7 +227,7 @@
         },
         {
           "prompt": "Speaking 5: Welcome a New Neighbour",
-          "target": "The firefighter is a hero for saving the cat."
+          "target": "Elena wears strong boots every day on the building site."
         }
       ]
     },
@@ -240,52 +242,43 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "high.",
+            "became.",
+            "drums",
+            "the",
+            "loud",
+            "how",
+            "minded",
+            "parade",
+            "the",
+            "at",
+            "Nobody"
+          ],
+          "answer": "Nobody at the parade minded how loud the drums became."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "family.",
+            "her",
+            "in",
+            "youngest",
+            "the",
             "is",
-            "sun",
-            "the",
-            "before",
-            "gate",
-            "school",
-            "the",
-            "unlocks",
-            "caretaker",
-            "Our"
+            "Amal"
           ],
-          "answer": "Our caretaker unlocks the school gate before the sun is high."
+          "answer": "Amal is the youngest in her family."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "school.",
-            "the",
-            "near",
-            "roads",
-            "safer",
-            "about",
-            "letter",
-            "our",
-            "read",
-            "senator",
-            "One"
+            "loudly.",
+            "rang",
+            "bell",
+            "bicycle",
+            "messenger's",
+            "The"
           ],
-          "answer": "One senator read our letter about safer roads near the school."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "broom.",
-            "a",
-            "holding",
-            "and",
-            "tired,",
-            "quiet,",
-            "be",
-            "can",
-            "hero",
-            "A"
-          ],
-          "answer": "A hero can be quiet, tired, and holding a broom."
+          "answer": "The messenger's bicycle bell rang loudly."
         }
       ]
     },
@@ -298,34 +291,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'military' mean in this unit?",
+          "prompt": "What does 'deciding' mean in this unit?",
           "choices": [
-            "The group of people trained to protect a country.",
-            "A person who cleans and takes care of a building.",
-            "A person who builds things from wood."
+            "Thinking carefully and then choosing what to do.",
+            "Learning about things at school or at home.",
+            "A person who works with you at your job."
           ],
-          "answer": "The group of people trained to protect a country.",
-          "explanation": "military: The group of people trained to protect a country."
+          "answer": "Thinking carefully and then choosing what to do.",
+          "explanation": "deciding: Thinking carefully and then choosing what to do."
         },
         {
-          "prompt": "What does 'immigrant' mean in this unit?",
+          "prompt": "What does 'ignore' mean in this unit?",
           "choices": [
-            "A person who cleans and takes care of a building.",
-            "A person who builds things from wood.",
-            "A person who moves to live in another country."
+            "Learning about things at school or at home.",
+            "A person who works with you at your job.",
+            "Ignore means to pay no attention to someone or something on purpose."
           ],
-          "answer": "A person who moves to live in another country.",
-          "explanation": "immigrant: A person who moves to live in another country."
+          "answer": "Ignore means to pay no attention to someone or something on purpose.",
+          "explanation": "ignore: Ignore means to pay no attention to someone or something on purpose."
         },
         {
-          "prompt": "What does 'carpenter' mean in this unit?",
+          "prompt": "What does 'colleague' mean in this unit?",
           "choices": [
-            "A person who designs or builds machines, roads, or buildings.",
-            "A person who builds things from wood.",
-            "A person who cleans and takes care of a building."
+            "A person who is in charge of a business or a team.",
+            "A person who works with you at your job.",
+            "Learning about things at school or at home."
           ],
-          "answer": "A person who builds things from wood.",
-          "explanation": "carpenter: A person who builds things from wood."
+          "answer": "A person who works with you at your job.",
+          "explanation": "colleague: A person who works with you at your job."
         }
       ]
     },
@@ -338,34 +331,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'messenger'?",
+          "prompt": "What type of word is 'can't'?",
           "choices": [
-            "Noun",
             "Verb",
+            "Noun",
             "Adjective"
           ],
-          "answer": "Noun",
-          "explanation": "Messenger is used as a noun in this dictionary sense."
+          "answer": "Verb",
+          "explanation": "Can't is used as a verb in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'bachelor'?",
+          "prompt": "What type of word is 'labourer'?",
           "choices": [
             "Verb",
             "Adjective",
             "Noun"
           ],
           "answer": "Noun",
-          "explanation": "Bachelor is used as a noun in this dictionary sense."
+          "explanation": "Labourer is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'governor'?",
+          "prompt": "What type of word is 'charity'?",
           "choices": [
             "Adjective",
             "Noun",
             "Verb"
           ],
           "answer": "Noun",
-          "explanation": "Governor is used as a noun in this dictionary sense."
+          "explanation": "Charity is used as a noun in this dictionary sense."
         }
       ]
     },
@@ -381,16 +374,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "labourer",
-              "A person who does hard work, often with their hands."
+              "competition",
+              "An event where people try their best to win."
             ],
             [
-              "merchant",
-              "A person who buys and sells things, often in a market."
+              "expert",
+              "A person with great knowledge or skill in a subject."
             ],
             [
-              "senator",
-              "A person chosen to help make the laws for a country."
+              "victim",
+              "A person who has been hurt or harmed by something."
             ]
           ]
         },
@@ -398,16 +391,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "military",
-              "The group of people trained to protect a country."
-            ],
-            [
-              "photographer",
-              "A person who takes pictures with a camera."
-            ],
-            [
               "hero",
               "Someone who is brave or helps others."
+            ],
+            [
+              "travelled",
+              "Went from one place to another, often across a long distance."
+            ],
+            [
+              "exception",
+              "Something that is different and does not follow the usual rule."
             ]
           ]
         },
@@ -415,16 +408,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "immigrant",
-              "A person who moves to live in another country."
+              "posed",
+              "Posed means stood still in a certain way so a photograph could be taken."
             ],
             [
-              "consumer",
-              "A person who buys or uses things."
+              "capes",
+              "Capes are long pieces of cloth worn over the shoulders, often by heroes in stories."
             ],
             [
-              "personal",
-              "Something that belongs to you or is about you."
+              "caretaker",
+              "A person who cleans and takes care of a building."
             ]
           ]
         }

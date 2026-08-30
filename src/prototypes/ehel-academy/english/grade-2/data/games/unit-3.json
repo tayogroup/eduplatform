@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: The top part of your body, with your eyes, ears, nose and mouth.",
+          "prompt": "Which word means: To keep means to have something and not give it away.",
           "choices": [
-            "head",
-            "arm",
-            "finger"
+            "keep",
+            "wake",
+            "heavy"
           ],
-          "answer": "head",
-          "explanation": "head: The top part of your body, with your eyes, ears, nose and mouth."
+          "answer": "keep",
+          "explanation": "keep: To keep means to have something and not give it away."
         },
         {
-          "prompt": "Which word means: To jump up and down on one foot.",
+          "prompt": "Which word means: To play means to have fun with games or toys.",
           "choices": [
-            "head",
-            "arm",
-            "hop"
+            "keep",
+            "wake",
+            "play"
           ],
-          "answer": "hop",
-          "explanation": "hop: To jump up and down on one foot."
+          "answer": "play",
+          "explanation": "play: To play means to have fun with games or toys."
         },
         {
-          "prompt": "Which word means: The clear drink that your body needs every single day.",
+          "prompt": "Which word means: Cheering means shouting happily to show support for someone.",
           "choices": [
-            "arm",
-            "water",
-            "head"
+            "wake",
+            "cheering",
+            "keep"
           ],
-          "answer": "water",
-          "explanation": "water: The clear drink that your body needs every single day."
+          "answer": "cheering",
+          "explanation": "cheering: Cheering means shouting happily to show support for someone."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "The long part of your body from your shoulder to your hand.",
-          "answer": "arm"
+          "clue": "A boot is a strong shoe that covers your foot and ankle.",
+          "answer": "boot"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "To push yourself off the ground with both feet.",
-          "answer": "jump"
+          "clue": "A banana is a long yellow fruit that you peel before eating.",
+          "answer": "banana"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "To rest with your eyes closed, usually at night.",
-          "answer": "sleep"
+          "clue": "Won means you came first or did the best in a race, game or competition.",
+          "answer": "won"
         }
       ]
     },
@@ -83,45 +83,45 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "outside.",
-            "head",
-            "my",
-            "on",
-            "hat",
-            "sun",
-            "a",
-            "wear",
-            "I"
+            "further.",
+            "ball",
+            "the",
+            "turning",
+            "Adam,",
+            "said",
+            "watching,”",
+            "“Keep"
           ],
-          "answer": "I wear a sun hat on my head outside."
+          "answer": "“Keep watching,” said Adam, turning the ball further."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "garden.",
+            "song.",
+            "the",
+            "during",
+            "action",
+            "funny",
+            "a",
+            "did",
+            "Sami"
+          ],
+          "answer": "Sami did a funny action during the song."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "race.",
+            "hop",
             "the",
             "in",
-            "rabbits",
-            "little",
-            "like",
-            "hop",
-            "children",
-            "The"
+            "way",
+            "whole",
+            "the",
+            "hopped",
+            "Zuri"
           ],
-          "answer": "The children hop like little rabbits in the garden."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "thirsty.",
-            "feel",
-            "I",
-            "when",
-            "water",
-            "drink",
-            "I"
-          ],
-          "answer": "I drink water when I feel thirsty."
+          "answer": "Zuri hopped the whole way in the hop race."
         }
       ]
     },
@@ -241,49 +241,42 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "school.",
-            "before",
-            "head",
-            "her",
-            "on",
-            "hat",
-            "warm",
+            "shelf.",
+            "top",
+            "the",
+            "for",
+            "reaching",
+            "was",
+            "Sami"
+          ],
+          "answer": "Sami was reaching for the top shelf."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "school?",
+            "at",
+            "day",
+            "normal",
             "a",
-            "puts",
-            "Amal"
+            "today",
+            "Was"
           ],
-          "answer": "Amal puts a warm hat on her head before school."
+          "answer": "Was today a normal day at school?"
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "playground.",
-            "the",
-            "across",
-            "way",
-            "the",
-            "all",
-            "hop",
-            "can",
-            "Leo"
+            "play.",
+            "and",
+            "move",
+            "to",
+            "day",
+            "another",
+            "is",
+            "Tomorrow"
           ],
-          "answer": "Leo can hop all the way across the playground."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "race.",
-            "the",
-            "before",
-            "water",
-            "cold",
-            "with",
-            "bottle",
-            "his",
-            "fills",
-            "Leo"
-          ],
-          "answer": "Leo fills his bottle with cold water before the race."
+          "answer": "Tomorrow is another day to move and play."
         }
       ]
     },
@@ -296,34 +289,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'clap' mean in this unit?",
+          "prompt": "What does 'special' mean in this unit?",
           "choices": [
-            "To hit your two hands together to make a sound.",
-            "The top part of your body, with your eyes, ears, nose and mouth.",
-            "The long part of your body from your shoulder to your hand."
+            "Special means not ordinary, and different in a good way.",
+            "To keep means to have something and not give it away.",
+            "To wake means to stop sleeping and open your eyes."
           ],
-          "answer": "To hit your two hands together to make a sound.",
-          "explanation": "clap: To hit your two hands together to make a sound."
+          "answer": "Special means not ordinary, and different in a good way.",
+          "explanation": "special: Special means not ordinary, and different in a good way."
         },
         {
-          "prompt": "What does 'energy' mean in this unit?",
+          "prompt": "What does 'ostrich' mean in this unit?",
           "choices": [
-            "The top part of your body, with your eyes, ears, nose and mouth.",
-            "The long part of your body from your shoulder to your hand.",
-            "The power you get from food and rest to play and learn."
+            "To keep means to have something and not give it away.",
+            "To wake means to stop sleeping and open your eyes.",
+            "An ostrich is a very large bird with long legs that cannot fly."
           ],
-          "answer": "The power you get from food and rest to play and learn.",
-          "explanation": "energy: The power you get from food and rest to play and learn."
+          "answer": "An ostrich is a very large bird with long legs that cannot fly.",
+          "explanation": "ostrich: An ostrich is a very large bird with long legs that cannot fly."
         },
         {
-          "prompt": "What does 'arm' mean in this unit?",
+          "prompt": "What does 'wake' mean in this unit?",
           "choices": [
-            "One of the five long parts at the end of your hand.",
-            "The long part of your body from your shoulder to your hand.",
-            "The top part of your body, with your eyes, ears, nose and mouth."
+            "Hard to lift because it weighs a lot.",
+            "To wake means to stop sleeping and open your eyes.",
+            "To keep means to have something and not give it away."
           ],
-          "answer": "The long part of your body from your shoulder to your hand.",
-          "explanation": "arm: The long part of your body from your shoulder to your hand."
+          "answer": "To wake means to stop sleeping and open your eyes.",
+          "explanation": "wake: To wake means to stop sleeping and open your eyes."
         }
       ]
     },
@@ -336,34 +329,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'healthy'?",
+          "prompt": "What type of word is 'relay'?",
           "choices": [
-            "Adjective",
             "Noun",
-            "Verb"
+            "Verb",
+            "Adjective"
           ],
-          "answer": "Adjective",
-          "explanation": "Healthy is used as an adjective in this dictionary sense."
+          "answer": "Noun",
+          "explanation": "Relay is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'reach'?",
+          "prompt": "What type of word is 'wave'?",
           "choices": [
             "Noun",
             "Adjective",
             "Verb"
           ],
           "answer": "Verb",
-          "explanation": "Reach is used as a verb in this dictionary sense."
+          "explanation": "Wave is used as a verb in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'toe'?",
+          "prompt": "What type of word is 'along'?",
           "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
+            "Verb",
+            "Preposition",
+            "Noun"
           ],
-          "answer": "Noun",
-          "explanation": "Toe is used as a noun in this dictionary sense."
+          "answer": "Preposition",
+          "explanation": "Along is used as a preposition in this dictionary sense."
         }
       ]
     },
@@ -379,16 +372,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "hand",
-              "The part at the end of your arm, with a thumb and fingers."
+              "cool",
+              "Cool means a little bit cold, but not too cold."
             ],
             [
-              "tummy",
-              "The front part of your body below your chest, also called the stomach."
+              "strong",
+              "Having lots of power in your body or your muscles."
             ],
             [
-              "hop",
-              "To jump up and down on one foot."
+              "learn",
+              "Learn means to find out how to do something new."
             ]
           ]
         },
@@ -396,16 +389,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "clap",
-              "To hit your two hands together to make a sound."
+              "banana",
+              "A banana is a long yellow fruit that you peel before eating."
             ],
             [
-              "exercise",
-              "Moving your body on purpose to keep it fit and strong."
+              "bounce",
+              "To bounce means to spring up again after hitting something."
             ],
             [
-              "strong",
-              "Having lots of power in your body or your muscles."
+              "hopped",
+              "Hopped means jumped on one foot."
             ]
           ]
         },
@@ -413,16 +406,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "energy",
-              "The power you get from food and rest to play and learn."
+              "rubbing",
+              "Rubbing means moving your hand back and forth over something, often because it hurts."
             ],
             [
-              "turn",
-              "To move your body around so that you face another way."
+              "ball",
+              "A ball is a round object that you can throw, kick or bounce."
             ],
             [
-              "flap",
-              "To move your arms up and down like the wings of a bird."
+              "tummy",
+              "The front part of your body below your chest, also called the stomach."
             ]
           ]
         }

@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: A flat top with legs where we work or eat.",
+          "prompt": "Which word means: A soft pet animal that says miaow and has long whiskers.",
           "choices": [
-            "table",
-            "whiteboard",
-            "book"
+            "cat",
+            "van",
+            "jam"
           ],
-          "answer": "table",
-          "explanation": "table: A flat top with legs where we work or eat."
+          "answer": "cat",
+          "explanation": "cat: A soft pet animal that says miaow and has long whiskers."
         },
         {
-          "prompt": "Which word means: The colour of a tomato, a strawberry or a fire engine.",
+          "prompt": "Which word means: A small word you use when you talk about yourself.",
           "choices": [
-            "table",
-            "whiteboard",
-            "red"
+            "cat",
+            "van",
+            "I"
           ],
-          "answer": "red",
-          "explanation": "red: The colour of a tomato, a strawberry or a fire engine."
+          "answer": "I",
+          "explanation": "I: A small word you use when you talk about yourself."
         },
         {
-          "prompt": "Which word means: A grown-up who helps you learn new things at school.",
+          "prompt": "Which word means: Luck is when good things happen without you trying.",
           "choices": [
-            "whiteboard",
-            "teacher",
-            "table"
+            "van",
+            "luck",
+            "cat"
           ],
-          "answer": "teacher",
-          "explanation": "teacher: A grown-up who helps you learn new things at school."
+          "answer": "luck",
+          "explanation": "luck: Luck is when good things happen without you trying."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A seat with a back and four legs for one person.",
-          "answer": "chair"
+          "clue": "A long piece of wood you hold to hit a ball.",
+          "answer": "bat"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "The colour of the sky on a sunny day.",
-          "answer": "blue"
+          "clue": "Yes is the word we use to agree with something.",
+          "answer": "yes"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Someone you like, play with and are kind to.",
-          "answer": "friend"
+          "clue": "A bench is a long seat for more than one person.",
+          "answer": "bench"
         }
       ]
     },
@@ -83,37 +83,40 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "table.",
+            "door.",
             "the",
-            "on",
-            "books",
-            "our",
-            "put",
-            "We"
+            "by",
+            "sits",
+            "cat",
+            "little",
+            "A"
           ],
-          "answer": "We put our books on the table."
+          "answer": "A little cat sits by the door."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "red.",
-            "bright",
-            "is",
-            "jumper",
-            "My"
-          ],
-          "answer": "My jumper is bright red."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "read.",
-            "me",
-            "helps",
+            "book.",
+            "the",
+            "opens",
             "teacher",
-            "My"
+            "The"
           ],
-          "answer": "My teacher helps me read."
+          "answer": "The teacher opens the book."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "teacher.",
+            "her",
+            "after",
+            "poem",
+            "the",
+            "repeat",
+            "will",
+            "Amal"
+          ],
+          "answer": "Amal will repeat the poem after her teacher."
         }
       ]
     },
@@ -214,7 +217,7 @@
         },
         {
           "prompt": "Speaking 3 - Ask and answer",
-          "target": "My jumper is bright red."
+          "target": "The teacher opens the book."
         },
         {
           "prompt": "Speaking 5 - Role-play",
@@ -233,37 +236,35 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "table.",
-            "the",
-            "on",
-            "sit",
-            "books",
-            "Our"
-          ],
-          "answer": "Our books sit on the table."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "red.",
-            "and",
-            "shiny",
+            "pink.",
+            "soft",
             "is",
-            "apple",
-            "The"
+            "dress",
+            "Her"
           ],
-          "answer": "The apple is shiny and red."
+          "answer": "Her dress is soft pink."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "morning.",
-            "every",
-            "smiles",
-            "teacher",
-            "Our"
+            "first.",
+            "hand",
+            "his",
+            "raised",
+            "Sami"
           ],
-          "answer": "Our teacher smiles every morning."
+          "answer": "Sami raised his hand first."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "Amal.",
+            "to",
+            "next",
+            "stood",
+            "Sami"
+          ],
+          "answer": "Sami stood next to Amal."
         }
       ]
     },
@@ -276,34 +277,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'green' mean in this unit?",
+          "prompt": "What does 'first' mean in this unit?",
           "choices": [
-            "The colour of grass and of leaves on a tree.",
-            "A flat top with legs where we work or eat.",
-            "A big white board the teacher writes on with special pens."
+            "First means coming before every other one.",
+            "A soft pet animal that says miaow and has long whiskers.",
+            "A big car with lots of room for boxes or people."
           ],
-          "answer": "The colour of grass and of leaves on a tree.",
-          "explanation": "green: The colour of grass and of leaves on a tree."
+          "answer": "First means coming before every other one.",
+          "explanation": "first: First means coming before every other one."
         },
         {
-          "prompt": "What does 'boy' mean in this unit?",
+          "prompt": "What does 'night' mean in this unit?",
           "choices": [
-            "A flat top with legs where we work or eat.",
-            "A big white board the teacher writes on with special pens.",
-            "A young male child, like a brother or a school friend."
+            "A soft pet animal that says miaow and has long whiskers.",
+            "A big car with lots of room for boxes or people.",
+            "Night is the time of day when it is dark outside."
           ],
-          "answer": "A young male child, like a brother or a school friend.",
-          "explanation": "boy: A young male child, like a brother or a school friend."
+          "answer": "Night is the time of day when it is dark outside.",
+          "explanation": "night: Night is the time of day when it is dark outside."
         },
         {
-          "prompt": "What does 'whiteboard' mean in this unit?",
+          "prompt": "What does 'van' mean in this unit?",
           "choices": [
-            "Pages joined together with stories, pictures or words to read.",
-            "A big white board the teacher writes on with special pens.",
-            "A flat top with legs where we work or eat."
+            "Sweet, sticky food made from fruit. We spread it on bread.",
+            "A big car with lots of room for boxes or people.",
+            "A soft pet animal that says miaow and has long whiskers."
           ],
-          "answer": "A big white board the teacher writes on with special pens.",
-          "explanation": "whiteboard: A big white board the teacher writes on with special pens."
+          "answer": "A big car with lots of room for boxes or people.",
+          "explanation": "van: A big car with lots of room for boxes or people."
         }
       ]
     },
@@ -316,34 +317,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'white'?",
+          "prompt": "What type of word is 'while'?",
           "choices": [
-            "Adjective",
+            "Conjunction",
             "Noun",
             "Verb"
           ],
-          "answer": "Adjective",
-          "explanation": "White is used as an adjective in this dictionary sense."
+          "answer": "Conjunction",
+          "explanation": "While is used as a conjunction in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'sing'?",
+          "prompt": "What type of word is 'friend'?",
           "choices": [
-            "Noun",
+            "Verb",
             "Adjective",
-            "Verb"
+            "Noun"
           ],
-          "answer": "Verb",
-          "explanation": "Sing is used as a verb in this dictionary sense."
+          "answer": "Noun",
+          "explanation": "Friend is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'ruler'?",
+          "prompt": "What type of word is 'class'?",
           "choices": [
             "Adjective",
             "Noun",
             "Verb"
           ],
           "answer": "Noun",
-          "explanation": "Ruler is used as a noun in this dictionary sense."
+          "explanation": "Class is used as a noun in this dictionary sense."
         }
       ]
     },
@@ -359,16 +360,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "whiteboard",
-              "A big white board the teacher writes on with special pens."
+              "hat",
+              "Something you wear on your head to keep warm or shady."
             ],
             [
-              "book",
-              "Pages joined together with stories, pictures or words to read."
+              "tap",
+              "A tap lets water come out when you turn it."
             ],
             [
-              "crayon",
-              "A coloured wax stick that we use for colouring pictures."
+              "school",
+              "The place where children go to learn and play."
             ]
           ]
         },
@@ -376,16 +377,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "green",
-              "The colour of grass and of leaves on a tree."
+              "and",
+              "This word joins two things together."
             ],
             [
-              "purple",
-              "A colour made from red and blue, like a grape."
+              "lady",
+              "A lady is a grown-up woman."
             ],
             [
-              "pink",
-              "A light colour made from red and white, like a flower."
+              "learned",
+              "Learned means you found out something new."
             ]
           ]
         },
@@ -393,16 +394,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "boy",
-              "A young male child, like a brother or a school friend."
+              "shy",
+              "Shy means you feel a little nervous around new people."
             ],
             [
-              "write",
-              "To make letters and words with a pencil or pen."
+              "crayon",
+              "A coloured wax stick that we use for colouring pictures."
             ],
             [
-              "listen",
-              "To keep quiet and hear carefully with your ears."
+              "teacher",
+              "A grown-up who helps you learn new things at school."
             ]
           ]
         }

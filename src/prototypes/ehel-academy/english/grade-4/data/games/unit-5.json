@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: To run fast on four legs, like a horse.",
+          "prompt": "Which word means: Something that a person or a thing does.",
           "choices": [
-            "gallop",
-            "accelerate",
-            "spiral"
+            "action",
+            "maintain",
+            "complain"
           ],
-          "answer": "gallop",
-          "explanation": "gallop: To run fast on four legs, like a horse."
+          "answer": "action",
+          "explanation": "action: Something that a person or a thing does."
         },
         {
-          "prompt": "Which word means: To look at something for a long time.",
+          "prompt": "Which word means: Crossed means moved from one side of something to the other.",
           "choices": [
-            "gallop",
-            "accelerate",
-            "gaze"
+            "action",
+            "maintain",
+            "crossed"
           ],
-          "answer": "gaze",
-          "explanation": "gaze: To look at something for a long time."
+          "answer": "crossed",
+          "explanation": "crossed: Crossed means moved from one side of something to the other."
         },
         {
-          "prompt": "Which word means: To feel pain or sadness.",
+          "prompt": "Which word means: Doing or saying the same thing that someone else did or said.",
           "choices": [
-            "accelerate",
-            "suffer",
-            "gallop"
+            "maintain",
+            "copying",
+            "action"
           ],
-          "answer": "suffer",
-          "explanation": "suffer: To feel pain or sadness."
+          "answer": "copying",
+          "explanation": "copying: Doing or saying the same thing that someone else did or said."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "To go faster, or to make something go faster.",
-          "answer": "accelerate"
+          "clue": "Putting numbers together to find how many you have altogether.",
+          "answer": "addition"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "To look at something to make sure it is correct or safe.",
-          "answer": "check"
+          "clue": "Arms are the two long parts of your body between your shoulders and hands.",
+          "answer": "arms"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "To make someone feel very happy and interested.",
-          "answer": "excite"
+          "clue": "A large wild cat with a golden coat, known for its loud roar.",
+          "answer": "lion"
         }
       ]
     },
@@ -83,46 +83,44 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "field.",
+            "plant.",
+            "falling",
             "the",
-            "across",
-            "gallop",
-            "to",
-            "began",
-            "horse",
+            "saved",
+            "action",
+            "quick",
+            "Her"
+          ],
+          "answer": "Her quick action saved the falling plant."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "line.",
+            "finish",
+            "the",
+            "saw",
+            "and",
+            "ahead",
+            "looked",
+            "Samira"
+          ],
+          "answer": "Samira looked ahead and saw the finish line."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "rested.",
+            "she",
+            "after",
+            "eased",
+            "leg",
+            "her",
+            "in",
+            "pain",
             "The"
           ],
-          "answer": "The horse began to gallop across the field."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "sky.",
-            "night",
-            "the",
-            "in",
-            "stars",
-            "the",
-            "at",
-            "gaze",
-            "to",
-            "likes",
-            "She"
-          ],
-          "answer": "She likes to gaze at the stars in the night sky."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "water.",
-            "no",
-            "have",
-            "they",
-            "when",
-            "suffer",
-            "Plants"
-          ],
-          "answer": "Plants suffer when they have no water."
+          "answer": "The pain in her leg eased after she rested."
         }
       ]
     },
@@ -223,7 +221,7 @@
         },
         {
           "prompt": "Speaking 3: Act and Guess",
-          "target": "She likes to gaze at the stars in the night sky."
+          "target": "Samira looked ahead and saw the finish line."
         },
         {
           "prompt": "Speaking 5: Talk About a Good Choice",
@@ -242,48 +240,49 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "beach.",
-            "sandy",
-            "the",
-            "along",
-            "gallop",
-            "to",
-            "loves",
-            "horse",
+            "up.",
+            "stood",
+            "never",
+            "that",
+            "ear",
+            "one",
+            "had",
+            "dog",
+            "little",
             "The"
           ],
-          "answer": "The horse loves to gallop along the sandy beach."
+          "answer": "The little dog had one ear that never stood up."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "hilltop.",
+            "fence.",
             "the",
-            "from",
-            "flock",
-            "the",
-            "at",
-            "gaze",
-            "would",
-            "shepherd",
-            "The"
+            "in",
+            "gap",
+            "narrow",
+            "a",
+            "through",
+            "squeezed",
+            "cat",
+            "A"
           ],
-          "answer": "The shepherd would gaze at the flock from the hilltop."
+          "answer": "A cat squeezed through a narrow gap in the fence."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "come.",
-            "not",
-            "do",
-            "rains",
+            "hole.",
             "the",
-            "when",
-            "badly",
-            "suffer",
-            "Crops"
+            "near",
+            "rocks",
+            "the",
+            "over",
+            "carefully",
+            "stepped",
+            "Amal"
           ],
-          "answer": "Crops suffer badly when the rains do not come."
+          "answer": "Amal stepped carefully over the rocks near the hole."
         }
       ]
     },
@@ -296,34 +295,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'signal' mean in this unit?",
+          "prompt": "What does 'cat' mean in this unit?",
           "choices": [
-            "A sign or message that tells you something.",
-            "To run fast on four legs, like a horse.",
-            "To go faster, or to make something go faster."
+            "A cat is a small furry animal that many people keep as a pet.",
+            "Something that a person or a thing does.",
+            "To keep something in good condition, or to make it stay the same."
           ],
-          "answer": "A sign or message that tells you something.",
-          "explanation": "signal: A sign or message that tells you something."
+          "answer": "A cat is a small furry animal that many people keep as a pet.",
+          "explanation": "cat: A cat is a small furry animal that many people keep as a pet."
         },
         {
-          "prompt": "What does 'rescue' mean in this unit?",
+          "prompt": "What does 'paw' mean in this unit?",
           "choices": [
-            "To run fast on four legs, like a horse.",
-            "To go faster, or to make something go faster.",
-            "To save someone or something from danger."
+            "Something that a person or a thing does.",
+            "To keep something in good condition, or to make it stay the same.",
+            "The foot of an animal such as a dog or cat."
           ],
-          "answer": "To save someone or something from danger.",
-          "explanation": "rescue: To save someone or something from danger."
+          "answer": "The foot of an animal such as a dog or cat.",
+          "explanation": "paw: The foot of an animal such as a dog or cat."
         },
         {
-          "prompt": "What does 'accelerate' mean in this unit?",
+          "prompt": "What does 'maintain' mean in this unit?",
           "choices": [
-            "A shape that curls round and round, moving out from the centre.",
-            "To go faster, or to make something go faster.",
-            "To run fast on four legs, like a horse."
+            "To say that you are unhappy about something.",
+            "To keep something in good condition, or to make it stay the same.",
+            "Something that a person or a thing does."
           ],
-          "answer": "To go faster, or to make something go faster.",
-          "explanation": "accelerate: To go faster, or to make something go faster."
+          "answer": "To keep something in good condition, or to make it stay the same.",
+          "explanation": "maintain: To keep something in good condition, or to make it stay the same."
         }
       ]
     },
@@ -336,34 +335,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'whistle'?",
+          "prompt": "What type of word is 'straw'?",
           "choices": [
             "Noun",
             "Verb",
             "Adjective"
           ],
           "answer": "Noun",
-          "explanation": "Whistle is used as a noun in this dictionary sense."
+          "explanation": "Straw is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'admit'?",
+          "prompt": "What type of word is 'rate'?",
           "choices": [
-            "Noun",
+            "Verb",
             "Adjective",
-            "Verb"
+            "Noun"
           ],
-          "answer": "Verb",
-          "explanation": "Admit is used as a verb in this dictionary sense."
+          "answer": "Noun",
+          "explanation": "Rate is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'peek'?",
+          "prompt": "What type of word is 'scan'?",
           "choices": [
             "Adjective",
             "Verb",
             "Noun"
           ],
           "answer": "Verb",
-          "explanation": "Peek is used as a verb in this dictionary sense."
+          "explanation": "Scan is used as a verb in this dictionary sense."
         }
       ]
     },
@@ -379,16 +378,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "proceed",
-              "To go forward or to keep going."
+              "operation",
+              "The way a machine or a plan works when it is running."
             ],
             [
-              "rate",
-              "How fast something happens, or how much of it there is."
+              "accomplish",
+              "To succeed in doing something you set out to do."
             ],
             [
-              "gaze",
-              "To look at something for a long time."
+              "influence",
+              "The power to change how someone thinks or acts."
             ]
           ]
         },
@@ -396,16 +395,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "signal",
-              "A sign or message that tells you something."
+              "homemade",
+              "Homemade means made at home rather than bought from a shop."
             ],
             [
-              "squeeze",
-              "To press something tightly with your hands."
+              "fly",
+              "To fly means to move through the air, usually using wings."
             ],
             [
-              "suffer",
-              "To feel pain or sadness."
+              "eased",
+              "Eased means became less worried, painful or difficult."
             ]
           ]
         },
@@ -413,16 +412,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "rescue",
-              "To save someone or something from danger."
+              "wider",
+              "Bigger from one side to the other; more spread out."
             ],
             [
-              "prevent",
-              "To stop something from happening."
+              "halfway",
+              "At the middle point between the beginning and the end."
             ],
             [
-              "greedy",
-              "Wanting more food, money, or things than you need."
+              "proceed",
+              "To go forward or to keep going."
             ]
           ]
         }

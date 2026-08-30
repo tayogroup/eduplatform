@@ -122,7 +122,22 @@ function speakingTarget(task, fallback) {
 
 function buildPack(grade, unit, dictionary) {
   const entries = new Map(dictionary.entries.map((entry) => [entry.dictionaryEntryId, entry]));
-  const vocabulary = unit.dictionaryLinks.map((link) => ({ link, entry: entries.get(link.dictionaryEntryId) })).filter((item) => item.entry);
+  const allLinks = unit.dictionaryLinks.map((link) => ({ link, entry: entries.get(link.dictionaryEntryId) })).filter((item) => item.entry);
+  // One card per word. A word taught as a Core word can ALSO survive as a
+  // glossary link in a unit built before the content builder deduped them --
+  // 89 such links across grades 1-4, none at all above -- and two links for
+  // one word put the same "What does 'recycle' mean in this unit?" prompt in
+  // a pack twice, which the unit validator fails as a duplicate round.
+  // The Core link wins where there is one: its meaning is what the unit
+  // teaches, and the glossary copy is the stale wording it displaced.
+  const coreGroups = new Set((unit.vocabularyGroups || []).filter((group) => group.strand && group.strand !== "glossary").map((group) => group.id));
+  const byWord = new Map();
+  for (const item of allLinks) {
+    const key = String(item.entry.displayWord).toLowerCase();
+    const held = byWord.get(key);
+    if (!held || (coreGroups.has(item.link.groupId) && !coreGroups.has(held.link.groupId))) byWord.set(key, item);
+  }
+  const vocabulary = [...byWord.values()];
   const selected = sample(vocabulary, 12);
   const shortWords = vocabulary.filter((item) => /^[A-Za-z]{3,11}$/.test(item.entry.displayWord));
   const spellingWords = sample(shortWords.length >= 3 ? shortWords : vocabulary, 3, 1);

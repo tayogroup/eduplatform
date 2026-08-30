@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: The clear liquid we drink, and that fills rivers and rain.",
+          "prompt": "Which word means: A bird that swims on water and says quack.",
           "choices": [
-            "water",
-            "drop",
-            "dry"
+            "duck",
+            "grass",
+            "fruit"
           ],
-          "answer": "water",
-          "explanation": "water: The clear liquid we drink, and that fills rivers and rain."
+          "answer": "duck",
+          "explanation": "duck: A bird that swims on water and says quack."
         },
         {
-          "prompt": "Which word means: Water that falls from clouds and fills puddles and rivers.",
+          "prompt": "Which word means: A leaf is a flat green part that grows on a plant.",
           "choices": [
-            "water",
-            "drop",
-            "rain"
+            "duck",
+            "grass",
+            "leaf"
           ],
-          "answer": "rain",
-          "explanation": "rain: Water that falls from clouds and fills puddles and rivers."
+          "answer": "leaf",
+          "explanation": "leaf: A leaf is a flat green part that grows on a plant."
         },
         {
-          "prompt": "Which word means: Describes a bright day with warm sun and few clouds.",
+          "prompt": "Which word means: A dream is the pictures and stories your mind makes while you sleep.",
           "choices": [
-            "drop",
-            "sunny",
-            "water"
+            "grass",
+            "dream",
+            "duck"
           ],
-          "answer": "sunny",
-          "explanation": "sunny: Describes a bright day with warm sun and few clouds."
+          "answer": "dream",
+          "explanation": "dream: A dream is the pictures and stories your mind makes while you sleep."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Drops of water that fall down from grey clouds.",
-          "answer": "rain"
+          "clue": "A sock is soft clothing you wear on your foot.",
+          "answer": "sock"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Lots of water moving along the land to the sea.",
-          "answer": "river"
+          "clue": "A tiny thing you plant so a new plant grows.",
+          "answer": "seed"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Describes a sky covered with grey or white clouds.",
-          "answer": "cloudy"
+          "clue": "Facing means turning to look towards something or someone.",
+          "answer": "facing"
         }
       ]
     },
@@ -83,39 +83,36 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "school.",
-            "after",
-            "water",
-            "cool",
-            "drinks",
-            "Samira"
+            "quack.",
+            "quack,",
+            "says",
+            "duck",
+            "The"
           ],
-          "answer": "Samira drinks cool water after school."
+          "answer": "The duck says quack, quack."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "village.",
-            "our",
-            "in",
-            "well",
-            "the",
-            "fills",
-            "Rain"
-          ],
-          "answer": "Rain fills the well in our village."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "warm.",
-            "very",
-            "and",
-            "sunny",
+            "tonight.",
+            "bright",
             "is",
-            "Today"
+            "moon",
+            "The"
           ],
-          "answer": "Today is sunny and very warm."
+          "answer": "The moon is bright tonight."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "low.",
+            "very",
+            "was",
+            "water",
+            "well",
+            "The"
+          ],
+          "answer": "The well water was very low."
         }
       ]
     },
@@ -235,39 +232,40 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "tall.",
-            "grow",
-            "plant",
-            "every",
-            "helps",
-            "Water"
+            "clean.",
+            "are",
+            "they",
+            "until",
+            "hands",
+            "her",
+            "washes",
+            "Maya"
           ],
-          "answer": "Water helps every plant grow tall."
+          "answer": "Maya washes her hands until they are clean."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "bridge.",
-            "old",
+            "light?",
+            "or",
+            "heavy",
+            "bag",
             "the",
-            "under",
-            "runs",
-            "river",
-            "The"
+            "Is"
           ],
-          "answer": "The river runs under the old bridge."
+          "answer": "Is the bag heavy or light?"
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "rain.",
-            "some",
-            "bring",
-            "often",
-            "skies",
-            "Cloudy"
+            "puddle?",
+            "the",
+            "in",
+            "splashing",
+            "Sami",
+            "Is"
           ],
-          "answer": "Cloudy skies often bring some rain."
+          "answer": "Is Sami splashing in the puddle?"
         }
       ]
     },
@@ -280,34 +278,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'sea' mean in this unit?",
+          "prompt": "What does 'town' mean in this unit?",
           "choices": [
-            "A huge amount of salty water with waves and fish.",
-            "The clear liquid we drink, and that fills rivers and rain.",
-            "One tiny round bit of water, smaller than your fingertip."
+            "A place with many houses, shops and roads.",
+            "A bird that swims on water and says quack.",
+            "Grass is the green plant that covers the ground."
           ],
-          "answer": "A huge amount of salty water with waves and fish.",
-          "explanation": "sea: A huge amount of salty water with waves and fish."
+          "answer": "A place with many houses, shops and roads.",
+          "explanation": "town: A place with many houses, shops and roads."
         },
         {
-          "prompt": "What does 'windy' mean in this unit?",
+          "prompt": "What does 'sailed' mean in this unit?",
           "choices": [
-            "The clear liquid we drink, and that fills rivers and rain.",
-            "One tiny round bit of water, smaller than your fingertip.",
-            "Describes weather when strong air pushes and moves things."
+            "A bird that swims on water and says quack.",
+            "Grass is the green plant that covers the ground.",
+            "Sailed means a boat moved smoothly along on the water."
           ],
-          "answer": "Describes weather when strong air pushes and moves things.",
-          "explanation": "windy: Describes weather when strong air pushes and moves things."
+          "answer": "Sailed means a boat moved smoothly along on the water.",
+          "explanation": "sailed: Sailed means a boat moved smoothly along on the water."
         },
         {
-          "prompt": "What does 'drop' mean in this unit?",
+          "prompt": "What does 'grass' mean in this unit?",
           "choices": [
-            "Having no water on it at all, like sand in sunshine.",
-            "One tiny round bit of water, smaller than your fingertip.",
-            "The clear liquid we drink, and that fills rivers and rain."
+            "Sweet food that grows on trees and plants, like apples.",
+            "Grass is the green plant that covers the ground.",
+            "A bird that swims on water and says quack."
           ],
-          "answer": "One tiny round bit of water, smaller than your fingertip.",
-          "explanation": "drop: One tiny round bit of water, smaller than your fingertip."
+          "answer": "Grass is the green plant that covers the ground.",
+          "explanation": "grass: Grass is the green plant that covers the ground."
         }
       ]
     },
@@ -320,34 +318,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'grow plants'?",
+          "prompt": "What type of word is 'drip'?",
           "choices": [
-            "Verb",
             "Noun",
+            "Verb",
             "Adjective"
           ],
-          "answer": "Verb",
-          "explanation": "Grow plants is used as a verb in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'turtle'?",
-          "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
-          ],
           "answer": "Noun",
-          "explanation": "Turtle is used as a noun in this dictionary sense."
+          "explanation": "Drip is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'float'?",
+          "prompt": "What type of word is 'cloudy'?",
           "choices": [
-            "Adjective",
+            "Noun",
             "Verb",
+            "Adjective"
+          ],
+          "answer": "Adjective",
+          "explanation": "Cloudy is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'thirsty'?",
+          "choices": [
+            "Verb",
+            "Adjective",
             "Noun"
           ],
-          "answer": "Verb",
-          "explanation": "Float is used as a verb in this dictionary sense."
+          "answer": "Adjective",
+          "explanation": "Thirsty is used as an adjective in this dictionary sense."
         }
       ]
     },
@@ -363,16 +361,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "drop",
-              "One tiny round bit of water, smaller than your fingertip."
+              "clock",
+              "A round face with hands that tells us the time."
             ],
             [
-              "dry",
-              "Having no water on it at all, like sand in sunshine."
+              "bread",
+              "Bread is a soft food made from flour and baked."
             ],
             [
-              "sink",
-              "To go down under the water instead of staying on top."
+              "hungry",
+              "Hungry means you want something to eat."
             ]
           ]
         },
@@ -380,16 +378,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "sea",
-              "A huge amount of salty water with waves and fish."
+              "soil",
+              "The brown earth on the ground where plants grow."
             ],
             [
-              "wash",
-              "To make something clean again using water and a little soap."
+              "waste",
+              "To waste something means to use it carelessly and lose it."
             ],
             [
-              "rainy",
-              "Describes a day when rain keeps falling from the sky."
+              "grey",
+              "Grey is the colour between black and white, like rain clouds."
             ]
           ]
         },
@@ -397,16 +395,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "windy",
-              "Describes weather when strong air pushes and moves things."
+              "forth",
+              "Forth means moving forward, the way we rock back and forth."
             ],
             [
-              "frog",
-              "A small green animal that hops and swims in ponds."
+              "clean",
+              "With no dirt on it, washed and fresh."
             ],
             [
-              "crocodile",
-              "A long river animal with sharp teeth and short legs."
+              "cloudy",
+              "Describes a sky covered with grey or white clouds."
             ]
           ]
         }

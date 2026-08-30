@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: A shape with four straight sides that are all the same length.",
+          "prompt": "Which word means: A pet animal that barks, wags its tail and likes long walks.",
           "choices": [
-            "square",
-            "rectangle",
-            "green"
+            "dog",
+            "hop",
+            "colour"
           ],
-          "answer": "square",
-          "explanation": "square: A shape with four straight sides that are all the same length."
+          "answer": "dog",
+          "explanation": "dog: A pet animal that barks, wags its tail and likes long walks."
         },
         {
-          "prompt": "Which word means: A shiny grey colour, like a spoon or a coin.",
+          "prompt": "Which word means: The colour of soil, tree trunks and warm bread.",
           "choices": [
-            "square",
-            "rectangle",
-            "silver"
+            "dog",
+            "hop",
+            "brown"
           ],
-          "answer": "silver",
-          "explanation": "silver: A shiny grey colour, like a spoon or a coin."
+          "answer": "brown",
+          "explanation": "brown: The colour of soil, tree trunks and warm bread."
         },
         {
-          "prompt": "Which word means: A man in stories who rules a whole country.",
+          "prompt": "Which word means: Gentlemen is a polite word for men.",
           "choices": [
-            "rectangle",
-            "king",
-            "square"
+            "hop",
+            "gentlemen",
+            "dog"
           ],
-          "answer": "king",
-          "explanation": "king: A man in stories who rules a whole country."
+          "answer": "gentlemen",
+          "explanation": "gentlemen: Gentlemen is a polite word for men."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A round shape with no corners, like the sun.",
-          "answer": "circle"
+          "clue": "Very warm, like sunshine at noon or fresh soup.",
+          "answer": "hot"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A shiny yellow colour, like a special ring.",
-          "answer": "gold"
+          "clue": "The colour of milk, fresh snow and clean paper.",
+          "answer": "white"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A brave person in stories who helps people in trouble.",
-          "answer": "superhero"
+          "clue": "Sometimes means something happens now and then, but not always.",
+          "answer": "sometimes"
         }
       ]
     },
@@ -83,39 +83,39 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "paper.",
-            "his",
-            "on",
-            "square",
+            "dog.",
+            "brown",
+            "big",
             "a",
-            "draws",
-            "Sami"
+            "sees",
+            "Adam"
           ],
-          "answer": "Sami draws a square on his paper."
+          "answer": "Adam sees a big brown dog."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "silver.",
-            "star",
-            "paper",
-            "her",
-            "paints",
-            "Maya"
+            "blue.",
+            "deep",
+            "looks",
+            "sea",
+            "The"
           ],
-          "answer": "Maya paints her paper star silver."
+          "answer": "The sea looks deep blue."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "superhero.",
-            "a",
-            "as",
-            "up",
-            "dresses",
-            "Sami"
+            "neat.",
+            "mat",
+            "the",
+            "make",
+            "to",
+            "again",
+            "tried",
+            "Amal"
           ],
-          "answer": "Sami dresses up as a superhero."
+          "answer": "Amal tried again to make the mat neat."
         }
       ]
     },
@@ -235,39 +235,41 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "circle.",
+            "shirt.",
+            "clean",
             "a",
-            "is",
-            "table",
+            "on",
+            "puts",
+            "Theo"
+          ],
+          "answer": "Theo puts on a clean shirt."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "mat.",
+            "a",
+            "weave",
+            "to",
+            "how",
+            "Amal",
+            "showed",
+            "Grandma"
+          ],
+          "answer": "Grandma showed Amal how to weave a mat."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "mat.",
             "the",
             "on",
-            "plate",
-            "The"
+            "morning",
+            "all",
+            "worked",
+            "Grandma"
           ],
-          "answer": "The plate on the table is a circle."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "warm.",
-            "head",
-            "my",
-            "keeps",
-            "hat",
-            "My"
-          ],
-          "answer": "My hat keeps my head warm."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "pilot.",
-            "a",
-            "is",
-            "uncle",
-            "My"
-          ],
-          "answer": "My uncle is a pilot."
+          "answer": "Grandma worked all morning on the mat."
         }
       ]
     },
@@ -280,34 +282,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'shirt' mean in this unit?",
+          "prompt": "What does 'shape' mean in this unit?",
           "choices": [
-            "Clothing for your top, with sleeves and buttons.",
-            "A shape with four straight sides that are all the same length.",
-            "A shape with four sides, two long and two short."
+            "A shape is the outline of something, like a circle or a square.",
+            "A pet animal that barks, wags its tail and likes long walks.",
+            "Hop means to jump quickly on one or both feet."
           ],
-          "answer": "Clothing for your top, with sleeves and buttons.",
-          "explanation": "shirt: Clothing for your top, with sleeves and buttons."
+          "answer": "A shape is the outline of something, like a circle or a square.",
+          "explanation": "shape: A shape is the outline of something, like a circle or a square."
         },
         {
-          "prompt": "What does 'cook' mean in this unit?",
+          "prompt": "What does 'worked' mean in this unit?",
           "choices": [
-            "A shape with four straight sides that are all the same length.",
-            "A shape with four sides, two long and two short.",
-            "A person who makes food for other people to eat."
+            "A pet animal that barks, wags its tail and likes long walks.",
+            "Hop means to jump quickly on one or both feet.",
+            "Worked means did a job or task, often for a long time."
           ],
-          "answer": "A person who makes food for other people to eat.",
-          "explanation": "cook: A person who makes food for other people to eat."
+          "answer": "Worked means did a job or task, often for a long time.",
+          "explanation": "worked: Worked means did a job or task, often for a long time."
         },
         {
-          "prompt": "What does 'rectangle' mean in this unit?",
+          "prompt": "What does 'hop' mean in this unit?",
           "choices": [
-            "The colour of fresh grass and new leaves.",
-            "A shape with four sides, two long and two short.",
-            "A shape with four straight sides that are all the same length."
+            "A colour is what we see, like red, blue or green.",
+            "Hop means to jump quickly on one or both feet.",
+            "A pet animal that barks, wags its tail and likes long walks."
           ],
-          "answer": "A shape with four sides, two long and two short.",
-          "explanation": "rectangle: A shape with four sides, two long and two short."
+          "answer": "Hop means to jump quickly on one or both feet.",
+          "explanation": "hop: Hop means to jump quickly on one or both feet."
         }
       ]
     },
@@ -320,34 +322,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'glasses'?",
+          "prompt": "What type of word is 'smile'?",
           "choices": [
             "Noun",
             "Verb",
             "Adjective"
           ],
           "answer": "Noun",
-          "explanation": "Glasses is used as a noun in this dictionary sense."
+          "explanation": "Smile is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'help'?",
+          "prompt": "What type of word is 'superhero'?",
           "choices": [
-            "Noun",
+            "Verb",
             "Adjective",
-            "Verb"
+            "Noun"
           ],
-          "answer": "Verb",
-          "explanation": "Help is used as a verb in this dictionary sense."
+          "answer": "Noun",
+          "explanation": "Superhero is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'purple'?",
+          "prompt": "What type of word is 'young'?",
           "choices": [
             "Verb",
             "Adjective",
             "Noun"
           ],
           "answer": "Adjective",
-          "explanation": "Purple is used as an adjective in this dictionary sense."
+          "explanation": "Young is used as an adjective in this dictionary sense."
         }
       ]
     },
@@ -363,16 +365,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "triangle",
-              "A shape with three straight sides and three pointy corners."
+              "top",
+              "The top is the highest part of something."
             ],
             [
-              "green",
-              "The colour of fresh grass and new leaves."
+              "star",
+              "A tiny point of light in the night sky. The sun is a star."
             ],
             [
-              "black",
-              "The darkest colour, like the sky at night."
+              "old",
+              "Old means having lived or been here for a long time."
             ]
           ]
         },
@@ -380,16 +382,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "hat",
-              "Something you wear on your head to keep it warm."
+              "grey",
+              "Grey is the colour between black and white, like rain clouds."
             ],
             [
-              "trousers",
-              "Clothing for your legs, with one part for each leg."
+              "started",
+              "Started means began doing something."
             ],
             [
-              "clown",
-              "A funny person in a costume who makes people laugh."
+              "rush",
+              "To rush means to hurry and move very quickly."
             ]
           ]
         },
@@ -397,16 +399,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "pilot",
-              "The person who flies an aeroplane through the sky."
+              "flap",
+              "To flap means to move quickly up and down, like a bird's wings."
             ],
             [
-              "paint",
-              "To put colour on paper with a brush."
+              "gold",
+              "A shiny yellow colour, like a special ring."
             ],
             [
-              "thank",
-              "To tell someone you are happy for their kindness."
+              "king",
+              "A man in stories who rules a whole country."
             ]
           ]
         }

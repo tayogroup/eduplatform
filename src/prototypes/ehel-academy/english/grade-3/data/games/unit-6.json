@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: Nice and helpful to other people.",
+          "prompt": "Which word means: Easy to see through, or easy to understand.",
           "choices": [
-            "kind",
-            "friendly",
-            "honest"
+            "clear",
+            "certain",
+            "formal"
           ],
-          "answer": "kind",
-          "explanation": "kind: Nice and helpful to other people."
+          "answer": "clear",
+          "explanation": "clear: Easy to see through, or easy to understand."
         },
         {
-          "prompt": "Which word means: Doing many things and having little free time.",
+          "prompt": "Which word means: Without any doubt at all.",
           "choices": [
-            "kind",
-            "friendly",
-            "busy"
+            "clear",
+            "certain",
+            "certainly"
           ],
-          "answer": "busy",
-          "explanation": "busy: Doing many things and having little free time."
+          "answer": "certainly",
+          "explanation": "certainly: Without any doubt at all."
         },
         {
-          "prompt": "Which word means: Hard or bumpy; not smooth.",
+          "prompt": "Which word means: The time in the middle of the day when people stop to eat lunch.",
           "choices": [
-            "friendly",
-            "rough",
-            "kind"
+            "certain",
+            "lunchtime",
+            "clear"
           ],
-          "answer": "rough",
-          "explanation": "rough: Hard or bumpy; not smooth."
+          "answer": "lunchtime",
+          "explanation": "lunchtime: The time in the middle of the day when people stop to eat lunch."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Happy to talk to people and play with them.",
-          "answer": "friendly"
+          "clue": "A strong feeling you get when you think something might hurt you.",
+          "answer": "fear"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Quiet and gentle, and not angry or excited.",
-          "answer": "calm"
+          "clue": "Very likely, but not for sure.",
+          "answer": "probably"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Strong and hard to break, tear or hurt.",
-          "answer": "tough"
+          "clue": "Not nice or gentle, and likely to hurt someone's feelings.",
+          "answer": "unkind"
         }
       ]
     },
@@ -83,50 +83,44 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "pupil.",
-            "new",
-            "a",
-            "with",
-            "lunch",
-            "her",
-            "shared",
-            "girl",
-            "kind",
-            "The"
-          ],
-          "answer": "The kind girl shared her lunch with a new pupil."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "now.",
-            "right",
-            "talk",
-            "to",
-            "busy",
-            "too",
+            "blue.",
+            "and",
+            "clear",
             "was",
-            "teacher",
+            "pool",
+            "the",
+            "in",
+            "water",
             "The"
           ],
-          "answer": "The teacher was too busy to talk right now."
+          "answer": "The water in the pool was clear and blue."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "far.",
-            "walking",
-            "for",
-            "good",
-            "are",
-            "they",
-            "so",
-            "tough,",
-            "are",
-            "boots",
-            "My"
+            "market.",
+            "public",
+            "busy",
+            "the",
+            "at",
+            "fruit",
+            "sells",
+            "Omar"
           ],
-          "answer": "My boots are tough, so they are good for walking far."
+          "answer": "Omar sells fruit at the busy public market."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "rain.",
+            "the",
+            "after",
+            "wet",
+            "were",
+            "stones",
+            "The"
+          ],
+          "answer": "The stones were wet after the rain."
         }
       ]
     },
@@ -246,46 +240,47 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "tripped.",
-            "who",
-            "boy",
+            "grass.",
             "the",
-            "helped",
-            "she",
-            "so",
-            "kind,",
-            "is",
-            "Nora"
-          ],
-          "answer": "Nora is kind, so she helped the boy who tripped."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "morning.",
-            "this",
-            "flat",
-            "and",
-            "calm",
-            "looked",
-            "sea",
+            "on",
+            "loudly",
+            "laughing",
+            "were",
+            "pupils",
             "The"
           ],
-          "answer": "The sea looked calm and flat this morning."
+          "answer": "The pupils were laughing loudly on the grass."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "tears.",
-            "never",
-            "it",
-            "so",
-            "tough,",
-            "is",
-            "bag",
-            "This"
+            "road.",
+            "paved",
+            "a",
+            "over",
+            "smoothly",
+            "glide",
+            "wheels",
+            "Bicycle"
           ],
-          "answer": "This bag is tough, so it never tears."
+          "answer": "Bicycle wheels glide smoothly over a paved road."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "heavy.",
+            "too",
+            "was",
+            "it",
+            "but",
+            "box,",
+            "the",
+            "lift",
+            "to",
+            "tried",
+            "Sami"
+          ],
+          "answer": "Sami tried to lift the box, but it was too heavy."
         }
       ]
     },
@@ -298,34 +293,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'calm' mean in this unit?",
+          "prompt": "What does 'theirs' mean in this unit?",
           "choices": [
-            "Quiet and gentle, and not angry or excited.",
-            "Nice and helpful to other people.",
-            "Happy to talk to people and play with them."
+            "Theirs means something that belongs to them.",
+            "Easy to see through, or easy to understand.",
+            "Completely sure about something."
           ],
-          "answer": "Quiet and gentle, and not angry or excited.",
-          "explanation": "calm: Quiet and gentle, and not angry or excited."
+          "answer": "Theirs means something that belongs to them.",
+          "explanation": "theirs: Theirs means something that belongs to them."
         },
         {
-          "prompt": "What does 'similar' mean in this unit?",
+          "prompt": "What does 'strength' mean in this unit?",
           "choices": [
-            "Nice and helpful to other people.",
-            "Happy to talk to people and play with them.",
-            "Almost the same as something else, but not exactly."
+            "Easy to see through, or easy to understand.",
+            "Completely sure about something.",
+            "How strong and powerful a person or thing is."
           ],
-          "answer": "Almost the same as something else, but not exactly.",
-          "explanation": "similar: Almost the same as something else, but not exactly."
+          "answer": "How strong and powerful a person or thing is.",
+          "explanation": "strength: How strong and powerful a person or thing is."
         },
         {
-          "prompt": "What does 'friendly' mean in this unit?",
+          "prompt": "What does 'certain' mean in this unit?",
           "choices": [
-            "Always telling the truth, even when it is hard.",
-            "Happy to talk to people and play with them.",
-            "Nice and helpful to other people."
+            "Serious and polite, following the proper rules.",
+            "Completely sure about something.",
+            "Easy to see through, or easy to understand."
           ],
-          "answer": "Happy to talk to people and play with them.",
-          "explanation": "friendly: Happy to talk to people and play with them."
+          "answer": "Completely sure about something.",
+          "explanation": "certain: Completely sure about something."
         }
       ]
     },
@@ -338,34 +333,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'popular'?",
+          "prompt": "What type of word is 'scooter'?",
           "choices": [
-            "Adjective",
             "Noun",
-            "Verb"
+            "Verb",
+            "Adjective"
           ],
-          "answer": "Adjective",
-          "explanation": "Popular is used as an adjective in this dictionary sense."
+          "answer": "Noun",
+          "explanation": "Scooter is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'favourite'?",
+          "prompt": "What type of word is 'kind'?",
           "choices": [
             "Noun",
             "Verb",
             "Adjective"
           ],
           "answer": "Adjective",
-          "explanation": "Favourite is used as an adjective in this dictionary sense."
+          "explanation": "Kind is used as an adjective in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'care'?",
+          "prompt": "What type of word is 'possible'?",
           "choices": [
-            "Adjective",
             "Verb",
+            "Adjective",
             "Noun"
           ],
-          "answer": "Verb",
-          "explanation": "Care is used as a verb in this dictionary sense."
+          "answer": "Adjective",
+          "explanation": "Possible is used as an adjective in this dictionary sense."
         }
       ]
     },
@@ -381,16 +376,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "honest",
-              "Always telling the truth, even when it is hard."
+              "deer",
+              "A wild animal with long thin legs that runs very fast."
             ],
             [
-              "kindness",
-              "The act of being kind and helpful to somebody."
+              "exact",
+              "Completely correct, with no mistake at all."
             ],
             [
-              "busy",
-              "Doing many things and having little free time."
+              "personal",
+              "Something that belongs to you or is about you."
             ]
           ]
         },
@@ -398,16 +393,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "able",
-              "Having the skill or the strength to do something."
+              "definitely",
+              "For certain, with no doubt at all."
             ],
             [
-              "popular",
-              "Liked and chosen by many different people."
+              "wheels",
+              "Wheels are the round parts that turn to let something like a bike or car move."
             ],
             [
-              "rough",
-              "Hard or bumpy; not smooth."
+              "prefers",
+              "Prefers means likes one thing more than another."
             ]
           ]
         },
@@ -415,16 +410,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "similar",
-              "Almost the same as something else, but not exactly."
+              "naughtiest",
+              "Behaving the worst and causing the most trouble, more than anyone else."
             ],
             [
-              "favourite",
-              "The one you like the most of all."
+              "owner",
+              "A person who something belongs to."
             ],
             [
-              "kind",
-              "Nice and helpful to other people."
+              "noisiest",
+              "Making the most loud and unpleasant sound, more than anyone else."
             ]
           ]
         }

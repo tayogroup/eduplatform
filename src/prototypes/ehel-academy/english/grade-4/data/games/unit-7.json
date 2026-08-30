@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: Feeling worried or a little afraid about something that might happen.",
+          "prompt": "Which word means: A choice you make after thinking about it.",
           "choices": [
-            "nervous",
-            "anxious",
-            "doubtful"
+            "decision",
+            "attitude",
+            "patience"
           ],
-          "answer": "nervous",
-          "explanation": "nervous: Feeling worried or a little afraid about something that might happen."
+          "answer": "decision",
+          "explanation": "decision: A choice you make after thinking about it."
         },
         {
-          "prompt": "Which word means: Kind and soft in the way you act; not rough or loud.",
+          "prompt": "Which word means: Not often; hardly ever.",
           "choices": [
-            "nervous",
-            "anxious",
-            "gentle"
+            "decision",
+            "attitude",
+            "rarely"
           ],
-          "answer": "gentle",
-          "explanation": "gentle: Kind and soft in the way you act; not rough or loud."
+          "answer": "rarely",
+          "explanation": "rarely: Not often; hardly ever."
         },
         {
-          "prompt": "Which word means: Very bad or cruel, wanting to cause harm to other people.",
+          "prompt": "Which word means: Dresses are pieces of clothing that women and girls wear, covering the body in one piece.",
           "choices": [
-            "anxious",
-            "evil",
-            "nervous"
+            "attitude",
+            "dresses",
+            "decision"
           ],
-          "answer": "evil",
-          "explanation": "evil: Very bad or cruel, wanting to cause harm to other people."
+          "answer": "dresses",
+          "explanation": "dresses: Dresses are pieces of clothing that women and girls wear, covering the body in one piece."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Feeling very worried, with lots of worried thoughts that will not go away.",
-          "answer": "anxious"
+          "clue": "A conversation where people share ideas about a topic.",
+          "answer": "discussion"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Showing good manners and treating other people kindly with your words.",
-          "answer": "polite"
+          "clue": "Next to or together with something or someone.",
+          "answer": "alongside"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Quiet and a little afraid to talk to people you do not know.",
-          "answer": "shy"
+          "clue": "Backgrounds are the different families, cultures or places that people come from.",
+          "answer": "backgrounds"
         }
       ]
     },
@@ -83,46 +83,42 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "school.",
-            "at",
-            "test",
-            "spelling",
-            "big",
-            "her",
-            "before",
-            "nervous",
-            "felt",
-            "Amal"
-          ],
-          "answer": "Amal felt nervous before her big spelling test at school."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "you.",
-            "thank",
-            "and",
-            "please",
-            "say",
+            "make.",
             "to",
-            "polite",
-            "is",
+            "decision",
+            "hard",
+            "a",
+            "was",
             "It"
           ],
-          "answer": "It is polite to say please and thank you."
+          "answer": "It was a hard decision to make."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "mother.",
+            "identity.",
             "her",
+            "of",
+            "part",
+            "is",
+            "language",
+            "Her"
+          ],
+          "answer": "Her language is part of her identity."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "curtain.",
+            "the",
             "behind",
-            "hid",
-            "girl",
-            "shy",
+            "neatly",
+            "stacked",
+            "were",
+            "props",
             "The"
           ],
-          "answer": "The shy girl hid behind her mother."
+          "answer": "The props were stacked neatly behind the curtain."
         }
       ]
     },
@@ -242,50 +238,43 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "anxious.",
-            "very",
-            "feel",
-            "me",
-            "made",
-            "results",
-            "exam",
-            "the",
-            "for",
-            "Waiting"
+            "morning.",
+            "tomorrow",
+            "costume",
+            "your",
+            "forget",
+            "mustn't",
+            "You"
           ],
-          "answer": "Waiting for the exam results made me feel very anxious."
+          "answer": "You mustn't forget your costume tomorrow morning."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "coat.",
-            "her",
-            "me",
-            "lend",
-            "to",
-            "Nora",
-            "of",
-            "generous",
+            "childhood.",
+            "their",
+            "from",
+            "stories",
+            "shared",
+            "grandparents",
+            "Sami's"
+          ],
+          "answer": "Sami's grandparents shared stories from their childhood."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "over.",
+            "fell",
+            "nearly",
+            "he",
+            "hard",
+            "so",
+            "laughing",
             "was",
-            "It"
+            "Sami"
           ],
-          "answer": "It was generous of Nora to lend me her coat."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "family.",
-            "every",
-            "of",
-            "traditions",
-            "ethnic",
-            "the",
-            "celebrates",
-            "fair",
-            "school",
-            "Our"
-          ],
-          "answer": "Our school fair celebrates the ethnic traditions of every family."
+          "answer": "Sami was laughing so hard he nearly fell over."
         }
       ]
     },
@@ -298,34 +287,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'generous' mean in this unit?",
+          "prompt": "What does 'tricky' mean in this unit?",
           "choices": [
-            "Happy to share what you have, or to give things to others.",
-            "Feeling worried or a little afraid about something that might happen.",
-            "Feeling very worried, with lots of worried thoughts that will not go away."
+            "Difficult to do or understand, needing extra care or thought.",
+            "A choice you make after thinking about it.",
+            "The way you think and feel, shown in how you act."
           ],
-          "answer": "Happy to share what you have, or to give things to others.",
-          "explanation": "generous: Happy to share what you have, or to give things to others."
+          "answer": "Difficult to do or understand, needing extra care or thought.",
+          "explanation": "tricky: Difficult to do or understand, needing extra care or thought."
         },
         {
-          "prompt": "What does 'ethnic' mean in this unit?",
+          "prompt": "What does 'student' mean in this unit?",
           "choices": [
-            "Feeling worried or a little afraid about something that might happen.",
-            "Feeling very worried, with lots of worried thoughts that will not go away.",
-            "Belonging to a group who share the same culture, language or history."
+            "A choice you make after thinking about it.",
+            "The way you think and feel, shown in how you act.",
+            "A student is a person who is learning at a school or college."
           ],
-          "answer": "Belonging to a group who share the same culture, language or history.",
-          "explanation": "ethnic: Belonging to a group who share the same culture, language or history."
+          "answer": "A student is a person who is learning at a school or college.",
+          "explanation": "student: A student is a person who is learning at a school or college."
         },
         {
-          "prompt": "What does 'anxious' mean in this unit?",
+          "prompt": "What does 'attitude' mean in this unit?",
           "choices": [
-            "Not sure that something is true or that it will really happen.",
-            "Feeling very worried, with lots of worried thoughts that will not go away.",
-            "Feeling worried or a little afraid about something that might happen."
+            "Being able to wait calmly without getting cross.",
+            "The way you think and feel, shown in how you act.",
+            "A choice you make after thinking about it."
           ],
-          "answer": "Feeling very worried, with lots of worried thoughts that will not go away.",
-          "explanation": "anxious: Feeling very worried, with lots of worried thoughts that will not go away."
+          "answer": "The way you think and feel, shown in how you act.",
+          "explanation": "attitude: The way you think and feel, shown in how you act."
         }
       ]
     },
@@ -338,34 +327,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'humorous'?",
+          "prompt": "What type of word is 'audience'?",
           "choices": [
-            "Adjective",
             "Noun",
-            "Verb"
+            "Verb",
+            "Adjective"
           ],
-          "answer": "Adjective",
-          "explanation": "Humorous is used as an adjective in this dictionary sense."
+          "answer": "Noun",
+          "explanation": "Audience is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'frequent'?",
+          "prompt": "What type of word is 'selfish'?",
           "choices": [
             "Noun",
             "Verb",
             "Adjective"
           ],
           "answer": "Adjective",
-          "explanation": "Frequent is used as an adjective in this dictionary sense."
+          "explanation": "Selfish is used as an adjective in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'proud'?",
+          "prompt": "What type of word is 'emotion'?",
           "choices": [
-            "Verb",
             "Adjective",
-            "Noun"
+            "Noun",
+            "Verb"
           ],
-          "answer": "Adjective",
-          "explanation": "Proud is used as an adjective in this dictionary sense."
+          "answer": "Noun",
+          "explanation": "Emotion is used as a noun in this dictionary sense."
         }
       ]
     },
@@ -381,16 +370,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "terrified",
-              "Feeling extremely frightened by something that scares you very badly indeed."
+              "division",
+              "Splitting a number into equal parts so everyone gets the same."
             ],
             [
-              "curious",
-              "Really wanting to know or learn something new about the world."
+              "gratitude",
+              "The feeling of being thankful for something."
             ],
             [
-              "gentle",
-              "Kind and soft in the way you act; not rough or loud."
+              "conflict",
+              "A serious disagreement between people or groups."
             ]
           ]
         },
@@ -398,16 +387,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "generous",
-              "Happy to share what you have, or to give things to others."
+              "alongside",
+              "Next to or together with something or someone."
             ],
             [
-              "serious",
-              "Not joking or silly; important and needing your full attention."
+              "head",
+              "The top part of your body, where your brain, eyes and ears are."
             ],
             [
-              "evil",
-              "Very bad or cruel, wanting to cause harm to other people."
+              "third",
+              "Coming after the second thing in a list or in order."
             ]
           ]
         },
@@ -415,16 +404,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "ethnic",
-              "Belonging to a group who share the same culture, language or history."
+              "crown",
+              "A crown is a special decorated headpiece worn by a king or queen."
             ],
             [
-              "risky",
-              "Likely to be dangerous, or to end with a bad result."
+              "putting",
+              "Putting means placing something somewhere, or getting something ready to happen."
             ],
             [
-              "dishwasher",
-              "A machine that washes dirty plates, cups and spoons for you."
+              "generous",
+              "Happy to share what you have, or to give things to others."
             ]
           ]
         }

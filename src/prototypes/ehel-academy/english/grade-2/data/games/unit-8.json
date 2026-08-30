@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: A building where a family lives, with walls, a roof and rooms.",
+          "prompt": "Which word means: The word that people call you when they talk to you.",
           "choices": [
-            "house",
-            "hut",
-            "nest"
+            "name",
+            "garden",
+            "towel"
           ],
-          "answer": "house",
-          "explanation": "house: A building where a family lives, with walls, a roof and rooms."
+          "answer": "name",
+          "explanation": "name: The word that people call you when they talk to you."
         },
         {
-          "prompt": "Which word means: A room with a sink and a toilet, used for washing.",
+          "prompt": "Which word means: Lonely means feeling sad because you are alone.",
           "choices": [
-            "house",
-            "hut",
-            "bathroom"
+            "name",
+            "garden",
+            "lonely"
           ],
-          "answer": "bathroom",
-          "explanation": "bathroom: A room with a sink and a toilet, used for washing."
+          "answer": "lonely",
+          "explanation": "lonely: Lonely means feeling sad because you are alone."
         },
         {
-          "prompt": "Which word means: An opening in a wall with glass that lets light in.",
+          "prompt": "Which word means: A piece of furniture with doors and shelves, used to store things.",
           "choices": [
-            "hut",
-            "window",
-            "house"
+            "garden",
+            "cupboard",
+            "name"
           ],
-          "answer": "window",
-          "explanation": "window: An opening in a wall with glass that lets light in."
+          "answer": "cupboard",
+          "explanation": "cupboard: A piece of furniture with doors and shelves, used to store things."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A set of rooms to live in inside a bigger building.",
-          "answer": "flat"
+          "clue": "A game is something you play, often with rules.",
+          "answer": "game"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A room where people sleep and keep their clothes.",
-          "answer": "bedroom"
+          "clue": "To pack means to put things neatly into a bag or a box.",
+          "answer": "pack"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A long, soft seat made for two or three people.",
-          "answer": "sofa"
+          "clue": "Loved very much, or used to speak kindly to someone.",
+          "answer": "dear"
         }
       ]
     },
@@ -83,45 +83,52 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "garden.",
-            "small",
-            "a",
-            "with",
-            "house",
-            "a",
-            "in",
-            "lives",
-            "family",
-            "My"
-          ],
-          "answer": "My family lives in a house with a small garden."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "bathroom.",
+            "page.",
             "the",
-            "in",
-            "hands",
-            "my",
-            "wash",
-            "I"
+            "of",
+            "top",
+            "the",
+            "at",
+            "name",
+            "her",
+            "writes",
+            "Amal"
           ],
-          "answer": "I wash my hands in the bathroom."
+          "answer": "Amal writes her name at the top of the page."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "breakfast.",
+            "classroom.",
+            "the",
+            "into",
+            "walked",
+            "uniform",
+            "blue",
+            "a",
+            "in",
+            "woman",
+            "tall",
+            "a",
+            "lunch,",
             "before",
-            "bed",
-            "my",
-            "make",
-            "I",
-            "morning",
-            "Every"
+            "Just"
           ],
-          "answer": "Every morning I make my bed before breakfast."
+          "answer": "Just before lunch, a tall woman in a blue uniform walked into the classroom."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "bed.",
+            "the",
+            "on",
+            "pillow",
+            "clean",
+            "a",
+            "put",
+            "She"
+          ],
+          "answer": "She put a clean pillow on the bed."
         }
       ]
     },
@@ -241,6 +248,33 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
+            "hole.",
+            "its",
+            "into",
+            "ran",
+            "rabbit",
+            "The"
+          ],
+          "answer": "The rabbit ran into its hole."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "weekend.",
+            "all",
+            "garden",
+            "the",
+            "in",
+            "father",
+            "his",
+            "helped",
+            "Idris"
+          ],
+          "answer": "Idris helped his father in the garden all weekend."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
             "floor.",
             "fifth",
             "the",
@@ -252,38 +286,6 @@
             "Leo"
           ],
           "answer": "Leo lives in a flat on the fifth floor."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "floor.",
-            "room",
-            "living",
-            "the",
-            "on",
-            "lies",
-            "rug",
-            "red",
-            "bright",
-            "A"
-          ],
-          "answer": "A bright red rug lies on the living room floor."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "bottom.",
-            "to",
-            "top",
-            "from",
-            "room",
-            "my",
-            "tidy",
-            "I",
-            "Saturday",
-            "On"
-          ],
-          "answer": "On Saturday I tidy my room from top to bottom."
         }
       ]
     },
@@ -296,34 +298,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'dining room' mean in this unit?",
+          "prompt": "What does 'rabbit' mean in this unit?",
           "choices": [
-            "A room where people sit at a table to eat meals.",
-            "A building where a family lives, with walls, a roof and rooms.",
-            "A small, simple house with only one or two rooms."
+            "A small furry animal with long ears that lives in a hole in the ground.",
+            "The word that people call you when they talk to you.",
+            "A garden is a piece of ground where people grow plants, flowers or vegetables."
           ],
-          "answer": "A room where people sit at a table to eat meals.",
-          "explanation": "dining room: A room where people sit at a table to eat meals."
+          "answer": "A small furry animal with long ears that lives in a hole in the ground.",
+          "explanation": "rabbit: A small furry animal with long ears that lives in a hole in the ground."
         },
         {
-          "prompt": "What does 'sweep the floor' mean in this unit?",
+          "prompt": "What does 'flat' mean in this unit?",
           "choices": [
-            "A building where a family lives, with walls, a roof and rooms.",
-            "A small, simple house with only one or two rooms.",
-            "To clean the floor by brushing the dust away with a broom."
+            "The word that people call you when they talk to you.",
+            "A garden is a piece of ground where people grow plants, flowers or vegetables.",
+            "A set of rooms to live in inside a bigger building."
           ],
-          "answer": "To clean the floor by brushing the dust away with a broom.",
-          "explanation": "sweep the floor: To clean the floor by brushing the dust away with a broom."
+          "answer": "A set of rooms to live in inside a bigger building.",
+          "explanation": "flat: A set of rooms to live in inside a bigger building."
         },
         {
-          "prompt": "What does 'hut' mean in this unit?",
+          "prompt": "What does 'garden' mean in this unit?",
           "choices": [
-            "A home that a bird builds to keep its eggs safe.",
-            "A small, simple house with only one or two rooms.",
-            "A building where a family lives, with walls, a roof and rooms."
+            "A towel is cloth you use to dry yourself.",
+            "A garden is a piece of ground where people grow plants, flowers or vegetables.",
+            "The word that people call you when they talk to you."
           ],
-          "answer": "A small, simple house with only one or two rooms.",
-          "explanation": "hut: A small, simple house with only one or two rooms."
+          "answer": "A garden is a piece of ground where people grow plants, flowers or vegetables.",
+          "explanation": "garden: A garden is a piece of ground where people grow plants, flowers or vegetables."
         }
       ]
     },
@@ -336,34 +338,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'sink'?",
+          "prompt": "What type of word is 'welcoming'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Adjective",
+          "explanation": "Welcoming is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'tidy my room'?",
           "choices": [
             "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Noun",
-          "explanation": "Sink is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'stilt house'?",
-          "choices": [
-            "Verb",
             "Adjective",
-            "Noun"
+            "Verb"
           ],
-          "answer": "Noun",
-          "explanation": "Stilt house is used as a noun in this dictionary sense."
+          "answer": "Verb",
+          "explanation": "Tidy my room is used as a verb in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'bedroom'?",
+          "prompt": "What type of word is 'basket'?",
           "choices": [
             "Adjective",
             "Noun",
             "Verb"
           ],
           "answer": "Noun",
-          "explanation": "Bedroom is used as a noun in this dictionary sense."
+          "explanation": "Basket is used as a noun in this dictionary sense."
         }
       ]
     },
@@ -379,16 +381,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "hut",
-              "A small, simple house with only one or two rooms."
+              "late",
+              "Late means after the time you should have come."
             ],
             [
-              "hive",
-              "A home where bees live together and make their honey."
+              "stairs",
+              "Stairs are steps that take you up or down inside a building."
             ],
             [
-              "kitchen",
-              "A room where food is cooked and dishes are washed."
+              "bowl",
+              "A bowl is a round, deep dish for holding food."
             ]
           ]
         },
@@ -396,16 +398,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "dining room",
-              "A room where people sit at a table to eat meals."
+              "off",
+              "Off means away from, or not switched on."
             ],
             [
-              "chair",
-              "A seat with a back and legs, made for one person."
+              "floods",
+              "To cover a place with water, usually after very heavy rain."
             ],
             [
-              "rug",
-              "A soft mat that covers part of the floor."
+              "pies",
+              "Foods made with pastry, often filled with fruit or vegetables, then baked."
             ]
           ]
         },
@@ -413,16 +415,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "tidy my room",
-              "To put every toy, book and piece of clothing back in its place."
+              "drips",
+              "To let small drops of liquid fall, one at a time."
             ],
             [
-              "wash the dishes",
-              "To clean the plates, cups and pots in water."
+              "hive",
+              "A home where bees live together and make their honey."
             ],
             [
-              "cave house",
-              "A home that people dig into the rock of a cliff."
+              "make my bed",
+              "To pull the sheets flat and tidy the cover on your bed."
             ]
           ]
         }

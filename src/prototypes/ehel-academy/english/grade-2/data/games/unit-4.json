@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: A dark shape made when something blocks the light.",
+          "prompt": "Which word means: The brightness that lets us see things.",
           "choices": [
-            "shadow",
-            "sun",
-            "sky"
+            "light",
+            "spring",
+            "discover"
           ],
-          "answer": "shadow",
-          "explanation": "shadow: A dark shape made when something blocks the light."
+          "answer": "light",
+          "explanation": "light: The brightness that lets us see things."
         },
         {
-          "prompt": "Which word means: The time when the sun goes down in the evening.",
+          "prompt": "Which word means: A clock is a machine that shows us what time it is.",
           "choices": [
-            "shadow",
-            "sun",
-            "sunset"
+            "light",
+            "spring",
+            "clock"
           ],
-          "answer": "sunset",
-          "explanation": "sunset: The time when the sun goes down in the evening."
+          "answer": "clock",
+          "explanation": "clock: A clock is a machine that shows us what time it is."
         },
         {
-          "prompt": "Which word means: Near the ground or below another level.",
+          "prompt": "Which word means: Stopped something from moving or passing through.",
           "choices": [
-            "sun",
-            "low",
-            "shadow"
+            "spring",
+            "blocked",
+            "light"
           ],
-          "answer": "low",
-          "explanation": "low: Near the ground or below another level."
+          "answer": "blocked",
+          "explanation": "blocked: Stopped something from moving or passing through."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "The brightness that lets us see things.",
-          "answer": "light"
-        },
-        {
-          "prompt": "Build the word that matches the clue.",
-          "clue": "The bright round object we see in the night sky.",
-          "answer": "moon"
-        },
-        {
-          "prompt": "Build the word that matches the clue.",
           "clue": "Giving out or sending back a lot of light.",
           "answer": "bright"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A number tells us how many things there are or which one comes next.",
+          "answer": "number"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Started to happen or started to do something.",
+          "answer": "began"
         }
       ]
     },
@@ -83,46 +83,48 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "shines.",
-            "sun",
+            "window.",
+            "kitchen",
             "the",
-            "when",
-            "me",
-            "follows",
-            "shadow",
-            "My"
-          ],
-          "answer": "My shadow follows me when the sun shines."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "orange.",
-            "turns",
-            "sky",
-            "the",
-            "and",
-            "down",
-            "goes",
-            "sun",
-            "the",
-            "sunset",
-            "At"
-          ],
-          "answer": "At sunset the sun goes down and the sky turns orange."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "evening.",
-            "the",
-            "in",
-            "low",
-            "is",
-            "sun",
+            "through",
+            "came",
+            "light",
+            "morning",
             "The"
           ],
-          "answer": "The sun is low in the evening."
+          "answer": "The morning light came through the kitchen window."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "disappeared.",
+            "almost",
+            "has",
+            "shadow",
+            "my",
+            "and",
+            "feet,",
+            "my",
+            "at",
+            "down",
+            "look",
+            "I"
+          ],
+          "answer": "I look down at my feet, and my shadow has almost disappeared."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "map.",
+            "old",
+            "the",
+            "on",
+            "spot",
+            "a",
+            "found",
+            "Amal"
+          ],
+          "answer": "Amal found a spot on the old map."
         }
       ]
     },
@@ -242,47 +244,42 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "path.",
-            "sandy",
-            "the",
-            "on",
-            "long",
-            "grow",
-            "shadow",
-            "her",
-            "watched",
-            "Amal"
-          ],
-          "answer": "Amal watched her shadow grow long on the sandy path."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "sunset.",
-            "at",
-            "golden",
-            "looks",
-            "town",
-            "whole",
-            "The"
-          ],
-          "answer": "The whole town looks golden at sunset."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "sea.",
-            "the",
-            "over",
-            "low",
-            "hangs",
-            "sun",
-            "the",
-            "evening",
+            "breakfast.",
+            "eat",
+            "we",
+            "morning",
             "the",
             "In"
           ],
-          "answer": "In the evening the sun hangs low over the sea."
+          "answer": "In the morning we eat breakfast."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "aloud.",
+            "story",
+            "the",
+            "read",
+            "to",
+            "adult",
+            "an",
+            "asked",
+            "Amal"
+          ],
+          "answer": "Amal asked an adult to read the story aloud."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "space?",
+            "about",
+            "curious",
+            "so",
+            "Zuri",
+            "is",
+            "Why"
+          ],
+          "answer": "Why is Zuri so curious about space?"
         }
       ]
     },
@@ -295,34 +292,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'star' mean in this unit?",
+          "prompt": "What does 'stretching' mean in this unit?",
           "choices": [
-            "A tiny point of light in the night sky. The sun is a star.",
-            "A dark shape made when something blocks the light.",
-            "The star that gives Earth light and heat in the day."
+            "Stretching means becoming longer or reaching further out.",
+            "The brightness that lets us see things.",
+            "The season between winter and summer, when flowers begin to grow."
           ],
-          "answer": "A tiny point of light in the night sky. The sun is a star.",
-          "explanation": "star: A tiny point of light in the night sky. The sun is a star."
+          "answer": "Stretching means becoming longer or reaching further out.",
+          "explanation": "stretching: Stretching means becoming longer or reaching further out."
         },
         {
-          "prompt": "What does 'blue' mean in this unit?",
+          "prompt": "What does 'slipped' mean in this unit?",
           "choices": [
-            "A dark shape made when something blocks the light.",
-            "The star that gives Earth light and heat in the day.",
-            "Having the colour of a clear daytime sky."
+            "The brightness that lets us see things.",
+            "The season between winter and summer, when flowers begin to grow.",
+            "Moved away quietly and quickly, or slid without meaning to."
           ],
-          "answer": "Having the colour of a clear daytime sky.",
-          "explanation": "blue: Having the colour of a clear daytime sky."
+          "answer": "Moved away quietly and quickly, or slid without meaning to.",
+          "explanation": "slipped: Moved away quietly and quickly, or slid without meaning to."
         },
         {
-          "prompt": "What does 'sun' mean in this unit?",
+          "prompt": "What does 'spring' mean in this unit?",
           "choices": [
-            "The space above the Earth that you see when you look up.",
-            "The star that gives Earth light and heat in the day.",
-            "A dark shape made when something blocks the light."
+            "To find or learn something new.",
+            "The season between winter and summer, when flowers begin to grow.",
+            "The brightness that lets us see things."
           ],
-          "answer": "The star that gives Earth light and heat in the day.",
-          "explanation": "sun: The star that gives Earth light and heat in the day."
+          "answer": "The season between winter and summer, when flowers begin to grow.",
+          "explanation": "spring: The season between winter and summer, when flowers begin to grow."
         }
       ]
     },
@@ -335,34 +332,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'short'?",
+          "prompt": "What type of word is 'spinning'?",
           "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Adjective",
-          "explanation": "Short is used as an adjective in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'windy'?",
-          "choices": [
-            "Noun",
             "Verb",
+            "Noun",
             "Adjective"
           ],
-          "answer": "Adjective",
-          "explanation": "Windy is used as an adjective in this dictionary sense."
+          "answer": "Verb",
+          "explanation": "Spinning is used as a verb in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'midday'?",
+          "prompt": "What type of word is 'day'?",
           "choices": [
+            "Verb",
             "Adjective",
-            "Noun",
-            "Verb"
+            "Noun"
           ],
           "answer": "Noun",
-          "explanation": "Midday is used as a noun in this dictionary sense."
+          "explanation": "Day is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'describe'?",
+          "choices": [
+            "Adjective",
+            "Verb",
+            "Noun"
+          ],
+          "answer": "Verb",
+          "explanation": "Describe is used as a verb in this dictionary sense."
         }
       ]
     },
@@ -378,16 +375,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "sun",
-              "The star that gives Earth light and heat in the day."
+              "high",
+              "Far above the ground or above another level."
             ],
             [
-              "sky",
-              "The space above the Earth that you see when you look up."
+              "heat",
+              "Heat is how warm something is."
             ],
             [
-              "evening",
-              "The part of the day before night, when the sun sets."
+              "interesting",
+              "Interesting means it makes you want to know more."
             ]
           ]
         },
@@ -395,16 +392,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "star",
-              "A tiny point of light in the night sky. The sun is a star."
+              "hour",
+              "An hour is a unit of time made up of sixty minutes."
             ],
             [
-              "night",
-              "The time when your part of Earth faces away from the sun and it is dark."
+              "rooftops",
+              "Rooftops are the tops of houses and buildings."
             ],
             [
-              "high",
-              "Far above the ground or above another level."
+              "spot",
+              "A small mark or place that you can point to."
             ]
           ]
         },
@@ -412,16 +409,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "dark",
-              "Having very little light, so it is hard to see."
+              "anyway",
+              "Despite what was just said, or no matter what happens."
             ],
             [
-              "sunny",
-              "Bright with plenty of sunshine and very few clouds."
+              "cold",
+              "Having a low temperature, not warm at all."
             ],
             [
-              "rainy",
-              "With rain falling, or with rain likely to fall."
+              "star",
+              "A tiny point of light in the night sky. The sun is a star."
             ]
           ]
         }

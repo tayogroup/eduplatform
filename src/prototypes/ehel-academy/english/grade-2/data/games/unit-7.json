@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: Putting seeds or young plants into the soil so they can grow.",
+          "prompt": "Which word means: A boat is something people use to travel or sail across water.",
           "choices": [
-            "planting",
-            "watering",
-            "litter"
+            "boat",
+            "branch",
+            "save"
           ],
-          "answer": "planting",
-          "explanation": "planting: Putting seeds or young plants into the soil so they can grow."
+          "answer": "boat",
+          "explanation": "boat: A boat is something people use to travel or sail across water."
         },
         {
-          "prompt": "Which word means: The main part of a plant that holds up the leaves.",
+          "prompt": "Which word means: Since means from a time in the past until now.",
           "choices": [
-            "planting",
-            "watering",
-            "stem"
+            "boat",
+            "branch",
+            "since"
           ],
-          "answer": "stem",
-          "explanation": "stem: The main part of a plant that holds up the leaves."
+          "answer": "since",
+          "explanation": "since: Since means from a time in the past until now."
         },
         {
-          "prompt": "Which word means: The brown earth on the ground where plants grow.",
+          "prompt": "Which word means: To fold means to bend something over onto itself, like paper or cloth.",
           "choices": [
-            "watering",
-            "soil",
-            "planting"
+            "branch",
+            "fold",
+            "boat"
           ],
-          "answer": "soil",
-          "explanation": "soil: The brown earth on the ground where plants grow."
+          "answer": "fold",
+          "explanation": "fold: To fold means to bend something over onto itself, like paper or cloth."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Giving water to plants so that they do not dry out.",
-          "answer": "watering"
+          "clue": "A coat is warm clothing you wear outside over your other clothes.",
+          "answer": "coat"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "The colourful part of a plant that makes new seeds.",
-          "answer": "flower"
+          "clue": "Although means even though something else is true.",
+          "answer": "although"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "The planet that we all live on; it is our home.",
-          "answer": "earth"
+          "clue": "Petals are the soft, colourful parts of a flower.",
+          "answer": "petals"
         }
       ]
     },
@@ -83,48 +83,48 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "shade.",
-            "us",
-            "gives",
-            "and",
-            "air",
+            "boat.",
             "the",
-            "clean",
-            "helps",
-            "trees",
-            "Planting"
+            "from",
+            "city",
+            "whole",
+            "the",
+            "saw",
+            "Amal"
           ],
-          "answer": "Planting trees helps clean the air and gives us shade."
+          "answer": "Amal saw the whole city from the boat."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "leaves.",
+            "sweet.",
+            "are",
+            "mangoes",
             "the",
-            "reach",
-            "to",
-            "stem",
-            "the",
-            "up",
-            "travels",
-            "Water"
-          ],
-          "answer": "Water travels up the stem to reach the leaves."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "soil.",
-            "dark",
-            "soft,",
-            "the",
+            "when",
+            "June,",
             "in",
-            "well",
-            "grew",
-            "seeds",
-            "The"
+            "is",
+            "birthday",
+            "Amal's"
           ],
-          "answer": "The seeds grew well in the soft, dark soil."
+          "answer": "Amal's birthday is in June, when the mangoes are sweet."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "day.",
+            "each",
+            "gas",
+            "of",
+            "amount",
+            "small",
+            "a",
+            "in",
+            "take",
+            "Trees"
+          ],
+          "answer": "Trees take in a small amount of gas each day."
         }
       ]
     },
@@ -244,48 +244,47 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "river.",
+            "Saturday.",
+            "on",
+            "stream",
             "the",
-            "beside",
-            "tree",
-            "young",
-            "a",
-            "planting",
-            "is",
-            "Amal"
+            "to",
+            "down",
+            "walked",
+            "class",
+            "The"
           ],
-          "answer": "Amal is planting a young tree beside the river."
+          "answer": "The class walked down to the stream on Saturday."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
             "soil.",
-            "soft",
-            "the",
-            "through",
-            "up",
-            "pushed",
-            "stem",
-            "green",
-            "thin",
-            "A"
-          ],
-          "answer": "A thin green stem pushed up through the soft soil."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "soil.",
-            "soft",
             "the",
             "in",
-            "hole",
-            "small",
-            "a",
-            "dug",
+            "digging",
+            "after",
+            "dirty",
+            "were",
+            "hands",
+            "Adam's"
+          ],
+          "answer": "Adam's hands were dirty after digging in the soil."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "litter.",
+            "up",
+            "picking",
+            "morning",
+            "the",
+            "spent",
+            "Adam",
+            "and",
             "Amal"
           ],
-          "answer": "Amal dug a small hole in the soft soil."
+          "answer": "Amal and Adam spent the morning picking up litter."
         }
       ]
     },
@@ -298,34 +297,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'flower' mean in this unit?",
+          "prompt": "What does 'families' mean in this unit?",
           "choices": [
-            "The colourful part of a plant that makes new seeds.",
-            "Putting seeds or young plants into the soil so they can grow.",
-            "Giving water to plants so that they do not dry out."
+            "Families are groups of people, like parents and children, who live together.",
+            "A boat is something people use to travel or sail across water.",
+            "A branch is a part of a tree that grows out from the trunk."
           ],
-          "answer": "The colourful part of a plant that makes new seeds.",
-          "explanation": "flower: The colourful part of a plant that makes new seeds."
+          "answer": "Families are groups of people, like parents and children, who live together.",
+          "explanation": "families: Families are groups of people, like parents and children, who live together."
         },
         {
-          "prompt": "What does 'glad' mean in this unit?",
+          "prompt": "What does 'dried' mean in this unit?",
           "choices": [
-            "Putting seeds or young plants into the soil so they can grow.",
-            "Giving water to plants so that they do not dry out.",
-            "Feeling happy and pleased about something good that has happened."
+            "A boat is something people use to travel or sail across water.",
+            "A branch is a part of a tree that grows out from the trunk.",
+            "Dried means became dry after losing water or moisture."
           ],
-          "answer": "Feeling happy and pleased about something good that has happened.",
-          "explanation": "glad: Feeling happy and pleased about something good that has happened."
+          "answer": "Dried means became dry after losing water or moisture.",
+          "explanation": "dried: Dried means became dry after losing water or moisture."
         },
         {
-          "prompt": "What does 'watering' mean in this unit?",
+          "prompt": "What does 'branch' mean in this unit?",
           "choices": [
-            "Rubbish that people drop on the ground in public places.",
-            "Giving water to plants so that they do not dry out.",
-            "Putting seeds or young plants into the soil so they can grow."
+            "To save means to keep something so you do not lose or waste it.",
+            "A branch is a part of a tree that grows out from the trunk.",
+            "A boat is something people use to travel or sail across water."
           ],
-          "answer": "Giving water to plants so that they do not dry out.",
-          "explanation": "watering: Giving water to plants so that they do not dry out."
+          "answer": "A branch is a part of a tree that grows out from the trunk.",
+          "explanation": "branch: A branch is a part of a tree that grows out from the trunk."
         }
       ]
     },
@@ -338,34 +337,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'air'?",
+          "prompt": "What type of word is 'ourselves'?",
           "choices": [
+            "Pronoun",
             "Noun",
-            "Verb",
-            "Adjective"
+            "Verb"
           ],
-          "answer": "Noun",
-          "explanation": "Air is used as a noun in this dictionary sense."
+          "answer": "Pronoun",
+          "explanation": "Ourselves is used as a pronoun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'appreciate'?",
+          "prompt": "What type of word is 'leaves'?",
           "choices": [
-            "Noun",
+            "Verb",
             "Adjective",
-            "Verb"
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Leaves is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'return'?",
+          "choices": [
+            "Adjective",
+            "Verb",
+            "Noun"
           ],
           "answer": "Verb",
-          "explanation": "Appreciate is used as a verb in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'roots'?",
-          "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Noun",
-          "explanation": "Roots is used as a noun in this dictionary sense."
+          "explanation": "Return is used as a verb in this dictionary sense."
         }
       ]
     },
@@ -381,16 +380,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "picking up",
-              "Lifting things off the ground and taking them away."
+              "soap",
+              "Something you use with water to wash your hands and body clean."
             ],
             [
-              "recycling",
-              "Turning used things, like paper or glass, into something new."
+              "metal",
+              "Metal is a hard, shiny material used to make things like tools and coins."
             ],
             [
-              "stem",
-              "The main part of a plant that holds up the leaves."
+              "leave",
+              "Leave means to go away from a place, or to let something stay."
             ]
           ]
         },
@@ -398,16 +397,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "flower",
-              "The colourful part of a plant that makes new seeds."
+              "unless",
+              "Unless means it will only happen if something else does not."
             ],
             [
-              "tree",
-              "A tall plant with a wooden trunk, branches and leaves."
+              "dirty",
+              "Dirty means covered in mud, dust or waste, not clean."
             ],
             [
-              "soil",
-              "The brown earth on the ground where plants grow."
+              "moss",
+              "Moss is a soft, green plant that grows on walls, rocks or trees."
             ]
           ]
         },
@@ -415,16 +414,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "glad",
-              "Feeling happy and pleased about something good that has happened."
+              "agrees",
+              "Agrees means says yes to the same idea as someone else."
             ],
             [
-              "thankful",
-              "Feeling glad for something good and wanting to say thank you."
+              "cared",
+              "Cared means looked after someone or something and wanted them to be well."
             ],
             [
-              "important",
-              "Mattering a lot, so that we must care about it."
+              "stem",
+              "The main part of a plant that holds up the leaves."
             ]
           ]
         }

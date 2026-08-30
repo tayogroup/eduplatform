@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: The word that people call you when they talk to you.",
+          "prompt": "Which word means: A cube is a solid shape with six flat, square sides.",
           "choices": [
-            "name",
-            "head",
-            "butterfly"
+            "cube",
+            "beginning",
+            "meaning"
           ],
-          "answer": "name",
-          "explanation": "name: The word that people call you when they talk to you."
+          "answer": "cube",
+          "explanation": "cube: A cube is a solid shape with six flat, square sides."
         },
         {
-          "prompt": "Which word means: A person whose job is to clean the windows of houses and shops.",
+          "prompt": "Which word means: Yet means up to now, or so far.",
           "choices": [
-            "name",
-            "head",
-            "window cleaner"
+            "cube",
+            "beginning",
+            "yet"
           ],
-          "answer": "window cleaner",
-          "explanation": "window cleaner: A person whose job is to clean the windows of houses and shops."
+          "answer": "yet",
+          "explanation": "yet: Yet means up to now, or so far."
         },
         {
-          "prompt": "Which word means: The part at the end of your arm, with a thumb and fingers.",
+          "prompt": "Which word means: Ticked means marked something with a small check mark to show it is done.",
           "choices": [
-            "head",
-            "hand",
-            "name"
+            "beginning",
+            "ticked",
+            "cube"
           ],
-          "answer": "hand",
-          "explanation": "hand: The part at the end of your arm, with a thumb and fingers."
+          "answer": "ticked",
+          "explanation": "ticked: Ticked means marked something with a small check mark to show it is done."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A person who lives near you, on your street or in your building.",
-          "answer": "neighbour"
+          "clue": "A tune is the pattern of notes that makes a song.",
+          "answer": "tune"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A person you work or play with in a pair.",
-          "answer": "partner"
+          "clue": "Perhaps means maybe, when you are not sure.",
+          "answer": "perhaps"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "The star that gives Earth light and heat in the day.",
-          "answer": "sun"
+          "clue": "A mistake is something you get wrong by accident.",
+          "answer": "mistake"
         }
       ]
     },
@@ -83,55 +83,44 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "book.",
-            "my",
-            "on",
+            "paper.",
+            "of",
+            "out",
+            "cube",
+            "a",
+            "built",
+            "Leo"
+          ],
+          "answer": "Leo built a cube out of paper."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "Theo.",
+            "neighbour",
+            "her",
+            "about",
+            "poem",
+            "a",
+            "lay",
             "it",
-            "write",
-            "I",
-            "and",
-            "Amal,",
-            "is",
-            "name",
-            "My"
+            "Behind"
           ],
-          "answer": "My name is Amal, and I write it on my book."
+          "answer": "Behind it lay a poem about her neighbour Theo."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "pole.",
-            "long",
-            "very",
-            "a",
-            "and",
-            "cloth",
-            "a",
-            "bucket,",
-            "a",
-            "carries",
-            "cleaner",
-            "window",
-            "The"
-          ],
-          "answer": "The window cleaner carries a bucket, a cloth and a very long pole."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "west.",
-            "the",
+            "sentence.",
+            "this",
             "in",
-            "sets",
-            "and",
-            "east",
+            "stop",
+            "full",
+            "missing",
             "the",
-            "in",
-            "rises",
-            "sun",
-            "The"
+            "Find"
           ],
-          "answer": "The sun rises in the east and sets in the west."
+          "answer": "Find the missing full stop in this sentence."
         }
       ]
     },
@@ -232,7 +221,7 @@
         },
         {
           "prompt": "Speaking 3 — Read Aloud with Expression",
-          "target": "The window cleaner carries a bucket, a cloth and a very long pole."
+          "target": "Behind it lay a poem about her neighbour Theo."
         },
         {
           "prompt": "Speaking 5 — Answer a Visitor's Question",
@@ -251,46 +240,44 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "neighbour.",
-            "helpful",
-            "a",
-            "about",
-            "page",
-            "booklet",
-            "whole",
-            "a",
-            "wrote",
+            "bag.",
+            "school",
+            "my",
+            "carry",
+            "to",
+            "arms",
+            "my",
+            "use",
+            "I"
+          ],
+          "answer": "I use my arms to carry my school bag."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "carefully?",
+            "brief",
+            "the",
+            "read",
+            "you",
+            "Did"
+          ],
+          "answer": "Did you read the brief carefully?"
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "page.",
+            "sky",
+            "the",
+            "on",
+            "shadow",
+            "own",
+            "her",
+            "drew",
             "Amal"
           ],
-          "answer": "Amal wrote a whole booklet page about a helpful neighbour."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "day.",
-            "showcase",
-            "on",
-            "classroom",
-            "the",
-            "filled",
-            "light",
-            "Morning"
-          ],
-          "answer": "Morning light filled the classroom on showcase day."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "audience.",
-            "showcase",
-            "the",
-            "for",
-            "ready",
-            "were",
-            "chairs",
-            "Thirty"
-          ],
-          "answer": "Thirty chairs were ready for the showcase audience."
+          "answer": "Amal drew her own shadow on the sky page."
         }
       ]
     },
@@ -303,34 +290,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'light' mean in this unit?",
+          "prompt": "What does 'added' mean in this unit?",
           "choices": [
-            "The brightness that lets us see things.",
-            "The word that people call you when they talk to you.",
-            "The top part of your body, with your eyes, ears, nose and mouth."
+            "Added means put something extra into a piece of writing or a drawing.",
+            "A cube is a solid shape with six flat, square sides.",
+            "The beginning is the first part, before the middle and the end."
           ],
-          "answer": "The brightness that lets us see things.",
-          "explanation": "light: The brightness that lets us see things."
+          "answer": "Added means put something extra into a piece of writing or a drawing.",
+          "explanation": "added: Added means put something extra into a piece of writing or a drawing."
         },
         {
-          "prompt": "What does 'thirty' mean in this unit?",
+          "prompt": "What does 'shadow' mean in this unit?",
           "choices": [
-            "The word that people call you when they talk to you.",
-            "The top part of your body, with your eyes, ears, nose and mouth.",
-            "The number 30, which is three groups of ten ones."
+            "A cube is a solid shape with six flat, square sides.",
+            "The beginning is the first part, before the middle and the end.",
+            "A dark shape made when something blocks the light."
           ],
-          "answer": "The number 30, which is three groups of ten ones.",
-          "explanation": "thirty: The number 30, which is three groups of ten ones."
+          "answer": "A dark shape made when something blocks the light.",
+          "explanation": "shadow: A dark shape made when something blocks the light."
         },
         {
-          "prompt": "What does 'head' mean in this unit?",
+          "prompt": "What does 'beginning' mean in this unit?",
           "choices": [
-            "An insect with large, colourful wings that flies from flower to flower.",
-            "The top part of your body, with your eyes, ears, nose and mouth.",
-            "The word that people call you when they talk to you."
+            "The meaning is what a word or a story is telling you.",
+            "The beginning is the first part, before the middle and the end.",
+            "A cube is a solid shape with six flat, square sides."
           ],
-          "answer": "The top part of your body, with your eyes, ears, nose and mouth.",
-          "explanation": "head: The top part of your body, with your eyes, ears, nose and mouth."
+          "answer": "The beginning is the first part, before the middle and the end.",
+          "explanation": "beginning: The beginning is the first part, before the middle and the end."
         }
       ]
     },
@@ -343,34 +330,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'shopping centre'?",
+          "prompt": "What type of word is 'fixing'?",
           "choices": [
-            "Noun",
             "Verb",
+            "Noun",
             "Adjective"
           ],
-          "answer": "Noun",
-          "explanation": "Shopping centre is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'spell'?",
-          "choices": [
-            "Noun",
-            "Adjective",
-            "Verb"
-          ],
           "answer": "Verb",
-          "explanation": "Spell is used as a verb in this dictionary sense."
+          "explanation": "Fixing is used as a verb in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'house'?",
+          "prompt": "What type of word is 'sun'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Sun is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'conversation'?",
           "choices": [
             "Adjective",
             "Noun",
             "Verb"
           ],
           "answer": "Noun",
-          "explanation": "House is used as a noun in this dictionary sense."
+          "explanation": "Conversation is used as a noun in this dictionary sense."
         }
       ]
     },
@@ -386,16 +373,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "head",
-              "The top part of your body, with your eyes, ears, nose and mouth."
+              "use",
+              "To use something means to do a job with it."
             ],
             [
-              "butterfly",
-              "An insect with large, colourful wings that flies from flower to flower."
+              "information",
+              "Facts or details about something."
             ],
             [
-              "library",
-              "A building where you can read books and borrow them to take home."
+              "discuss",
+              "To talk about something with other people."
             ]
           ]
         },
@@ -403,16 +390,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "light",
-              "The brightness that lets us see things."
+              "together",
+              "Together means with each other, in the same place."
             ],
             [
-              "watering",
-              "Giving water to plants so that they do not dry out."
+              "clearly",
+              "Clearly means in a way that is easy to hear, see or understand."
             ],
             [
-              "like",
-              "To enjoy something or to think that it is good."
+              "fix",
+              "Fix means to make something right after you find a mistake in it."
             ]
           ]
         },
@@ -420,16 +407,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "thirty",
-              "The number 30, which is three groups of ten ones."
+              "easel",
+              "An easel is a wooden stand that holds your picture while you paint or draw."
             ],
             [
-              "hut",
-              "A small, simple house with only one or two rooms."
+              "library",
+              "A building where you can read books and borrow them to take home."
             ],
             [
-              "reporter",
-              "A person who finds out news and writes or tells stories about it."
+              "hand",
+              "The part at the end of your arm, with a thumb and fingers."
             ]
           ]
         }

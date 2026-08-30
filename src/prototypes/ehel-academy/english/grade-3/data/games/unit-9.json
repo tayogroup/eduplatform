@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: A thought or plan that comes to you in your own mind.",
+          "prompt": "Which word means: A game between two teams or two players.",
           "choices": [
-            "idea",
-            "imagine",
-            "reason"
+            "match",
+            "produce",
+            "useful"
           ],
-          "answer": "idea",
-          "explanation": "idea: A thought or plan that comes to you in your own mind."
+          "answer": "match",
+          "explanation": "match: A game between two teams or two players."
         },
         {
-          "prompt": "Which word means: A feeling inside you that helps you notice or understand something.",
+          "prompt": "Which word means: Almost the same as something else, but not exactly.",
           "choices": [
-            "idea",
-            "imagine",
-            "sense"
+            "match",
+            "produce",
+            "similar"
           ],
-          "answer": "sense",
-          "explanation": "sense: A feeling inside you that helps you notice or understand something."
+          "answer": "similar",
+          "explanation": "similar: Almost the same as something else, but not exactly."
         },
         {
-          "prompt": "Which word means: Feeling that nothing will get better, however hard you keep trying.",
+          "prompt": "Which word means: To choose what you will do after thinking about it.",
           "choices": [
-            "imagine",
-            "hopeless",
-            "idea"
+            "produce",
+            "decide",
+            "match"
           ],
-          "answer": "hopeless",
-          "explanation": "hopeless: Feeling that nothing will get better, however hard you keep trying."
+          "answer": "decide",
+          "explanation": "decide: To choose what you will do after thinking about it."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "To make a picture of something inside your mind before it happens.",
-          "answer": "imagine"
+          "clue": "A small piece of cloth sewn over a hole.",
+          "answer": "patch"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "The heavy feeling you carry inside when something makes you unhappy.",
-          "answer": "sadness"
+          "clue": "Some person, when you do not say exactly who.",
+          "answer": "somebody"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "So pleasant that you feel happy while you are doing it.",
-          "answer": "enjoyable"
+          "clue": "Showing good sense and thinking carefully before you act.",
+          "answer": "sensible"
         }
       ]
     },
@@ -83,51 +83,41 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "play.",
-            "can",
-            "we",
-            "game",
-            "fun",
-            "a",
-            "for",
-            "idea",
-            "an",
-            "have",
-            "I"
+            "Saturday.",
+            "on",
+            "match",
+            "the",
+            "won",
+            "team",
+            "Our"
           ],
-          "answer": "I have an idea for a fun game we can play."
+          "answer": "Our team won the match on Saturday."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "soon.",
-            "rain",
-            "might",
-            "it",
-            "that",
-            "sense",
-            "a",
-            "had",
-            "I"
+            "evidence.",
+            "strong",
+            "were",
+            "footprints",
+            "muddy",
+            "The"
           ],
-          "answer": "I had a sense that it might rain soon."
+          "answer": "The muddy footprints were strong evidence."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "toy.",
-            "lost",
-            "my",
-            "find",
-            "not",
-            "could",
-            "I",
-            "when",
-            "hopeless",
-            "felt",
-            "I"
+            "inside.",
+            "stayed",
+            "they",
+            "so",
+            "bad,",
+            "was",
+            "weather",
+            "The"
           ],
-          "answer": "I felt hopeless when I could not find my lost toy."
+          "answer": "The weather was bad, so they stayed inside."
         }
       ]
     },
@@ -247,49 +237,43 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "paper.",
-            "folded",
-            "small",
-            "a",
-            "on",
-            "idea",
-            "best",
-            "her",
-            "wrote",
-            "Amal"
-          ],
-          "answer": "Amal wrote her best idea on a small folded paper."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "rain.",
-            "of",
-            "sense",
-            "the",
-            "with",
+            "plays.",
             "music",
-            "write",
-            "to",
-            "wants",
-            "Amal"
+            "whenever",
+            "dancing",
+            "loves",
+            "Maya"
           ],
-          "answer": "Amal wants to write music with the sense of rain."
+          "answer": "Maya loves dancing whenever music plays."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "ill.",
-            "was",
-            "father",
-            "his",
-            "while",
-            "hopeless",
-            "felt",
-            "child",
-            "One"
+            "paper.",
+            "of",
+            "sheet",
+            "blank",
+            "a",
+            "up",
+            "held",
+            "Amal"
           ],
-          "answer": "One child felt hopeless while his father was ill."
+          "answer": "Amal held up a blank sheet of paper."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "story.",
+            "his",
+            "told",
+            "he",
+            "as",
+            "away",
+            "far",
+            "seemed",
+            "Sami"
+          ],
+          "answer": "Sami seemed far away as he told his story."
         }
       ]
     },
@@ -302,34 +286,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'sadness' mean in this unit?",
+          "prompt": "What does 'dream' mean in this unit?",
           "choices": [
-            "The heavy feeling you carry inside when something makes you unhappy.",
-            "A thought or plan that comes to you in your own mind.",
-            "To make a picture of something inside your mind before it happens."
+            "A dream is a picture or story that happens in your mind while you sleep.",
+            "A game between two teams or two players.",
+            "To make something."
           ],
-          "answer": "The heavy feeling you carry inside when something makes you unhappy.",
-          "explanation": "sadness: The heavy feeling you carry inside when something makes you unhappy."
+          "answer": "A dream is a picture or story that happens in your mind while you sleep.",
+          "explanation": "dream: A dream is a picture or story that happens in your mind while you sleep."
         },
         {
-          "prompt": "What does 'allow' mean in this unit?",
+          "prompt": "What does 'glad' mean in this unit?",
           "choices": [
-            "A thought or plan that comes to you in your own mind.",
-            "To make a picture of something inside your mind before it happens.",
-            "To let somebody do something, or to give them your permission."
+            "A game between two teams or two players.",
+            "To make something.",
+            "Feeling happy and pleased about something."
           ],
-          "answer": "To let somebody do something, or to give them your permission.",
-          "explanation": "allow: To let somebody do something, or to give them your permission."
+          "answer": "Feeling happy and pleased about something.",
+          "explanation": "glad: Feeling happy and pleased about something."
         },
         {
-          "prompt": "What does 'imagine' mean in this unit?",
+          "prompt": "What does 'produce' mean in this unit?",
           "choices": [
-            "The cause that explains why something happens or why you did it.",
-            "To make a picture of something inside your mind before it happens.",
-            "A thought or plan that comes to you in your own mind."
+            "Helpful, and good for doing a job.",
+            "To make something.",
+            "A game between two teams or two players."
           ],
-          "answer": "To make a picture of something inside your mind before it happens.",
-          "explanation": "imagine: To make a picture of something inside your mind before it happens."
+          "answer": "To make something.",
+          "explanation": "produce: To make something."
         }
       ]
     },
@@ -342,34 +326,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'thoughtful'?",
+          "prompt": "What type of word is 'rush'?",
           "choices": [
-            "Adjective",
+            "Verb",
             "Noun",
-            "Verb"
+            "Adjective"
           ],
-          "answer": "Adjective",
-          "explanation": "Thoughtful is used as an adjective in this dictionary sense."
+          "answer": "Verb",
+          "explanation": "Rush is used as a verb in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'enjoy'?",
+          "prompt": "What type of word is 'imagine'?",
           "choices": [
             "Noun",
             "Adjective",
             "Verb"
           ],
           "answer": "Verb",
-          "explanation": "Enjoy is used as a verb in this dictionary sense."
+          "explanation": "Imagine is used as a verb in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'choice'?",
+          "prompt": "What type of word is 'reason'?",
           "choices": [
             "Adjective",
             "Noun",
             "Verb"
           ],
           "answer": "Noun",
-          "explanation": "Choice is used as a noun in this dictionary sense."
+          "explanation": "Reason is used as a noun in this dictionary sense."
         }
       ]
     },
@@ -385,16 +369,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "reason",
-              "The cause that explains why something happens or why you did it."
+              "fetch",
+              "To go and bring something back."
             ],
             [
-              "purpose",
-              "The job that something is made for, or why a person does it."
+              "report",
+              "A short paper or talk that tells about something."
             ],
             [
-              "sense",
-              "A feeling inside you that helps you notice or understand something."
+              "wildlife",
+              "The wild animals and plants of a place."
             ]
           ]
         },
@@ -402,16 +386,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "experience",
-              "Something that happened to you and stays inside your memory."
+              "anybody",
+              "Any person at all, no matter who."
             ],
             [
-              "thoughtful",
-              "Kind, because you stop and think about what other people need."
+              "blank",
+              "Something blank has nothing written, drawn, or filled in on it yet."
             ],
             [
-              "hopeless",
-              "Feeling that nothing will get better, however hard you keep trying."
+              "locked",
+              "If something is locked, it is shut tightly, often with a key, or kept held in and not let out."
             ]
           ]
         },
@@ -419,12 +403,12 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "allow",
-              "To let somebody do something, or to give them your permission."
+              "suggestion",
+              "An idea that you offer for other people to think about."
             ],
             [
-              "enjoy",
-              "To like doing something so much that you want more of it."
+              "dancing",
+              "Moving your body to music in a fun and lively way."
             ],
             [
               "idea",

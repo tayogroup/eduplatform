@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: A building where you can read books and borrow them to take home.",
+          "prompt": "Which word means: A bike has two wheels and you ride it by pushing the pedals.",
           "choices": [
-            "library",
-            "shopping centre",
-            "ferry"
+            "bike",
+            "market",
+            "screen"
           ],
-          "answer": "library",
-          "explanation": "library: A building where you can read books and borrow them to take home."
+          "answer": "bike",
+          "explanation": "bike: A bike has two wheels and you ride it by pushing the pedals."
         },
         {
-          "prompt": "Which word means: A flying machine that can go straight up and hover in one place.",
+          "prompt": "Which word means: At every time, with no exceptions at all.",
           "choices": [
-            "library",
-            "shopping centre",
-            "helicopter"
+            "bike",
+            "market",
+            "always"
           ],
-          "answer": "helicopter",
-          "explanation": "helicopter: A flying machine that can go straight up and hover in one place."
+          "answer": "always",
+          "explanation": "always: At every time, with no exceptions at all."
         },
         {
-          "prompt": "Which word means: A slow sea animal with a hard shell on its back.",
+          "prompt": "Which word means: Excuse means to politely get someone's attention, or to forgive a small mistake.",
           "choices": [
-            "shopping centre",
-            "turtle",
-            "library"
+            "market",
+            "excuse",
+            "bike"
           ],
-          "answer": "turtle",
-          "explanation": "turtle: A slow sea animal with a hard shell on its back."
+          "answer": "excuse",
+          "explanation": "excuse: Excuse means to politely get someone's attention, or to forgive a small mistake."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A train that runs in tunnels below the city streets.",
-          "answer": "underground"
+          "clue": "While means during the same time that something else is happening.",
+          "answer": "while"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A drawing that shows you where places are.",
-          "answer": "map"
+          "clue": "Sometimes means now and then, but not always.",
+          "answer": "sometimes"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "So good or so surprising that you want to tell everybody.",
-          "answer": "amazing"
+          "clue": "A daughter is a girl or woman who is someone's child.",
+          "answer": "daughter"
         }
       ]
     },
@@ -83,47 +83,41 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "sea.",
-            "the",
-            "about",
-            "books",
-            "borrow",
-            "to",
-            "library",
+            "park.",
             "the",
             "to",
-            "go",
-            "I"
+            "bike",
+            "his",
+            "rode",
+            "Leo"
           ],
-          "answer": "I go to the library to borrow books about the sea."
+          "answer": "Leo rode his bike to the park."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "helicopter.",
+            "Leo?",
+            "day,",
+            "special",
             "a",
-            "from",
-            "city",
-            "whole",
-            "the",
-            "saw",
-            "We"
+            "today",
+            "Is"
           ],
-          "answer": "We saw the whole city from a helicopter."
+          "answer": "Is today a special day, Leo?"
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "shell.",
-            "its",
-            "into",
-            "head",
-            "its",
-            "pulled",
-            "turtle",
-            "The"
+            "bay.",
+            "the",
+            "cross",
+            "boat",
+            "small",
+            "a",
+            "watched",
+            "They"
           ],
-          "answer": "The turtle pulled its head into its shell."
+          "answer": "They watched a small boat cross the bay."
         }
       ]
     },
@@ -243,47 +237,41 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "morning.",
-            "every",
-            "o'clock",
-            "nine",
-            "at",
-            "opens",
-            "library",
-            "city",
-            "Our"
-          ],
-          "answer": "Our city library opens at nine o'clock every morning."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "hospital.",
-            "the",
-            "of",
-            "roof",
-            "the",
-            "on",
-            "lands",
-            "helicopter",
+            "carry.",
+            "to",
+            "heavy",
+            "quite",
+            "was",
+            "bag",
             "The"
           ],
-          "answer": "The helicopter lands on the roof of the hospital."
+          "answer": "The bag was quite heavy to carry."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "time.",
-            "long",
-            "very",
-            "a",
-            "for",
-            "live",
-            "can",
-            "turtle",
-            "A"
+            "aquarium.",
+            "the",
+            "leave",
+            "to",
+            "want",
+            "didn't",
+            "Adam"
           ],
-          "answer": "A turtle can live for a very long time."
+          "answer": "Adam didn't want to leave the aquarium."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "Adam.",
+            "with",
+            "market",
+            "the",
+            "explore",
+            "will",
+            "I"
+          ],
+          "answer": "I will explore the market with Adam."
         }
       ]
     },
@@ -296,34 +284,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'map' mean in this unit?",
+          "prompt": "What does 'keeper' mean in this unit?",
           "choices": [
-            "A drawing that shows you where places are.",
-            "A building where you can read books and borrow them to take home.",
-            "A large building with many different shops inside it."
+            "A keeper is a person whose job is to look after animals.",
+            "A bike has two wheels and you ride it by pushing the pedals.",
+            "A busy place where people buy and sell food and other things."
           ],
-          "answer": "A drawing that shows you where places are.",
-          "explanation": "map: A drawing that shows you where places are."
+          "answer": "A keeper is a person whose job is to look after animals.",
+          "explanation": "keeper: A keeper is a person whose job is to look after animals."
         },
         {
-          "prompt": "What does 'amazing' mean in this unit?",
+          "prompt": "What does 'bit' mean in this unit?",
           "choices": [
-            "A building where you can read books and borrow them to take home.",
-            "A large building with many different shops inside it.",
-            "So good or so surprising that you want to tell everybody."
+            "A bike has two wheels and you ride it by pushing the pedals.",
+            "A busy place where people buy and sell food and other things.",
+            "A bit means a small amount of something."
           ],
-          "answer": "So good or so surprising that you want to tell everybody.",
-          "explanation": "amazing: So good or so surprising that you want to tell everybody."
+          "answer": "A bit means a small amount of something.",
+          "explanation": "bit: A bit means a small amount of something."
         },
         {
-          "prompt": "What does 'shopping centre' mean in this unit?",
+          "prompt": "What does 'market' mean in this unit?",
           "choices": [
-            "A boat that carries people and cars across water.",
-            "A large building with many different shops inside it.",
-            "A building where you can read books and borrow them to take home."
+            "A screen is the flat part of a computer that shows pictures and words.",
+            "A busy place where people buy and sell food and other things.",
+            "A bike has two wheels and you ride it by pushing the pedals."
           ],
-          "answer": "A large building with many different shops inside it.",
-          "explanation": "shopping centre: A large building with many different shops inside it."
+          "answer": "A busy place where people buy and sell food and other things.",
+          "explanation": "market: A busy place where people buy and sell food and other things."
         }
       ]
     },
@@ -336,34 +324,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'octopus'?",
+          "prompt": "What type of word is 'we'll'?",
           "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Noun",
-          "explanation": "Octopus is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'huge'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Adjective",
-          "explanation": "Huge is used as an adjective in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'market'?",
-          "choices": [
-            "Adjective",
+            "Phrase",
             "Noun",
             "Verb"
           ],
-          "answer": "Noun",
-          "explanation": "Market is used as a noun in this dictionary sense."
+          "answer": "Phrase",
+          "explanation": "We'll is used as a phrase in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'straight ahead'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Phrase"
+          ],
+          "answer": "Phrase",
+          "explanation": "Straight ahead is used as a phrase in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'patient'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Adjective",
+          "explanation": "Patient is used as an adjective in this dictionary sense."
         }
       ]
     },
@@ -379,16 +367,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "underground",
-              "A train that runs in tunnels below the city streets."
+              "hope",
+              "To hope means to wish that something good will happen."
             ],
             [
-              "Ferris wheel",
-              "A very big wheel at a park that you ride for fun."
+              "church",
+              "A church is a building where Christians go to pray."
             ],
             [
-              "helicopter",
-              "A flying machine that can go straight up and hover in one place."
+              "upset",
+              "Upset means feeling sad or worried about something."
             ]
           ]
         },
@@ -396,16 +384,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "map",
-              "A drawing that shows you where places are."
+              "never",
+              "Never means not at any time."
             ],
             [
-              "aquarium",
-              "A building where sea animals live in big glass tanks."
+              "didn't",
+              "Didn't is a short way of saying did not."
             ],
             [
-              "penguin",
-              "A black-and-white bird that swims well but cannot fly."
+              "shaped",
+              "Shaped means having a certain form or outline, like a circle or a wave."
             ]
           ]
         },
@@ -413,16 +401,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "amazing",
-              "So good or so surprising that you want to tell everybody."
+              "stranger",
+              "A stranger is a person you have never met before."
             ],
             [
-              "clever",
-              "Quick to learn new things and to solve problems."
+              "drop",
+              "Drop means to let something fall from your hand."
             ],
             [
-              "scary",
-              "Making you feel afraid, even when you are quite safe."
+              "directions",
+              "Words that tell you which way to go."
             ]
           ]
         }

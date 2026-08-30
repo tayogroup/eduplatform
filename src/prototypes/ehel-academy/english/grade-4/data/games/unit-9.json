@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: Travelling to new places for fun or to learn about them.",
+          "prompt": "Which word means: Different from what people expect, or not common at all.",
           "choices": [
-            "tourism",
-            "airport",
-            "railway"
+            "unusual",
+            "equator",
+            "duration"
           ],
-          "answer": "tourism",
-          "explanation": "tourism: Travelling to new places for fun or to learn about them."
+          "answer": "unusual",
+          "explanation": "unusual: Different from what people expect, or not common at all."
         },
         {
-          "prompt": "Which word means: A big shopping centre with many shops under one roof.",
+          "prompt": "Which word means: The size of one part compared with the whole.",
           "choices": [
-            "tourism",
-            "airport",
-            "mall"
+            "unusual",
+            "equator",
+            "proportion"
           ],
-          "answer": "mall",
-          "explanation": "mall: A big shopping centre with many shops under one roof."
+          "answer": "proportion",
+          "explanation": "proportion: The size of one part compared with the whole."
         },
         {
-          "prompt": "Which word means: A machine that carries people up and down between floors.",
+          "prompt": "Which word means: Coming after the third one in a list or order.",
           "choices": [
-            "airport",
-            "lift",
-            "tourism"
+            "equator",
+            "fourth",
+            "unusual"
           ],
-          "answer": "lift",
-          "explanation": "lift: A machine that carries people up and down between floors."
+          "answer": "fourth",
+          "explanation": "fourth: Coming after the third one in a list or order."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A place where aeroplanes take off and land.",
-          "answer": "airport"
+          "clue": "To write something again, in a better way.",
+          "answer": "rewrite"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A big shopping centre with many shops under one roof.",
-          "answer": "mall"
+          "clue": "When two halves of a shape match exactly.",
+          "answer": "symmetry"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Something you pay to use for a short time.",
-          "answer": "hire"
+          "clue": "Ours means something that belongs to us, not to somebody else.",
+          "answer": "ours"
         }
       ]
     },
@@ -83,44 +83,42 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "summer.",
-            "every",
-            "coast",
-            "the",
+            "here.",
+            "snow",
+            "see",
             "to",
-            "visitors",
-            "many",
-            "brings",
-            "Tourism"
+            "unusual",
+            "is",
+            "It"
           ],
-          "answer": "Tourism brings many visitors to the coast every summer."
+          "answer": "It is unusual to see snow here."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "mall.",
+            "kilograms.",
+            "two",
+            "is",
+            "rock",
             "the",
-            "at",
-            "shoes",
-            "new",
-            "bought",
-            "We"
+            "of",
+            "mass",
+            "The"
           ],
-          "answer": "We bought new shoes at the mall."
+          "answer": "The mass of the rock is two kilograms."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "floor.",
-            "fifth",
+            "arrives.",
+            "train",
             "the",
-            "to",
-            "lift",
-            "the",
-            "took",
+            "until",
+            "leaving",
+            "aren't",
             "We"
           ],
-          "answer": "We took the lift to the fifth floor."
+          "answer": "We aren't leaving until the train arrives."
         }
       ]
     },
@@ -240,50 +238,45 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "desks.",
-            "check-in",
+            "summer.",
+            "every",
+            "coast",
+            "the",
+            "to",
+            "visitors",
+            "many",
+            "brings",
+            "Tourism"
+          ],
+          "answer": "Tourism brings many visitors to the coast every summer."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "track.",
+            "railway",
+            "the",
+            "beside",
+            "grew",
+            "maize",
             "of",
-            "full",
-            "hall",
-            "long",
-            "a",
-            "has",
-            "airport",
-            "The"
+            "rows",
+            "Tall"
           ],
-          "answer": "The airport has a long hall full of check-in desks."
+          "answer": "Tall rows of maize grew beside the railway track."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "lunchtime.",
-            "at",
-            "rice",
-            "hot",
-            "serves",
-            "station",
-            "the",
-            "near",
-            "restaurant",
-            "The"
+            "hair!",
+            "grey",
+            "me",
+            "give",
+            "to",
+            "going",
+            "You're"
           ],
-          "answer": "The restaurant near the station serves hot rice at lunchtime."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "city.",
-            "the",
-            "in",
-            "taxi",
-            "a",
-            "than",
-            "less",
-            "costs",
-            "hire",
-            "Bicycle"
-          ],
-          "answer": "Bicycle hire costs less than a taxi in the city."
+          "answer": "You're going to give me grey hair!"
         }
       ]
     },
@@ -296,34 +289,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'restaurant' mean in this unit?",
+          "prompt": "What does 'separated' mean in this unit?",
           "choices": [
-            "A place where people buy and eat meals that cooks make.",
-            "Travelling to new places for fun or to learn about them.",
-            "A place where aeroplanes take off and land."
+            "Moved apart from someone or something, or kept apart.",
+            "Different from what people expect, or not common at all.",
+            "The imaginary line around the middle of the Earth."
           ],
-          "answer": "A place where people buy and eat meals that cooks make.",
-          "explanation": "restaurant: A place where people buy and eat meals that cooks make."
+          "answer": "Moved apart from someone or something, or kept apart.",
+          "explanation": "separated: Moved apart from someone or something, or kept apart."
         },
         {
-          "prompt": "What does 'hire' mean in this unit?",
+          "prompt": "What does 'that's' mean in this unit?",
           "choices": [
-            "Travelling to new places for fun or to learn about them.",
-            "A place where aeroplanes take off and land.",
-            "Something you pay to use for a short time."
+            "Different from what people expect, or not common at all.",
+            "The imaginary line around the middle of the Earth.",
+            "A short form of the two words used to point out or explain something nearby."
           ],
-          "answer": "Something you pay to use for a short time.",
-          "explanation": "hire: Something you pay to use for a short time."
+          "answer": "A short form of the two words used to point out or explain something nearby.",
+          "explanation": "that's: A short form of the two words used to point out or explain something nearby."
         },
         {
-          "prompt": "What does 'airport' mean in this unit?",
+          "prompt": "What does 'equator' mean in this unit?",
           "choices": [
-            "The track that trains travel along.",
-            "A place where aeroplanes take off and land.",
-            "Travelling to new places for fun or to learn about them."
+            "The length of time that something lasts.",
+            "The imaginary line around the middle of the Earth.",
+            "Different from what people expect, or not common at all."
           ],
-          "answer": "A place where aeroplanes take off and land.",
-          "explanation": "airport: A place where aeroplanes take off and land."
+          "answer": "The imaginary line around the middle of the Earth.",
+          "explanation": "equator: The imaginary line around the middle of the Earth."
         }
       ]
     },
@@ -336,34 +329,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'entrance'?",
+          "prompt": "What type of word is 'i'd'?",
           "choices": [
+            "Phrase",
             "Noun",
-            "Verb",
-            "Adjective"
+            "Verb"
           ],
-          "answer": "Noun",
-          "explanation": "Entrance is used as a noun in this dictionary sense."
+          "answer": "Phrase",
+          "explanation": "I'd is used as a phrase in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'horizon'?",
+          "prompt": "What type of word is 'factories'?",
           "choices": [
             "Verb",
             "Adjective",
             "Noun"
           ],
           "answer": "Noun",
-          "explanation": "Horizon is used as a noun in this dictionary sense."
+          "explanation": "Factories is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'nation'?",
+          "prompt": "What type of word is 'currency'?",
           "choices": [
             "Adjective",
             "Noun",
             "Verb"
           ],
           "answer": "Noun",
-          "explanation": "Nation is used as a noun in this dictionary sense."
+          "explanation": "Currency is used as a noun in this dictionary sense."
         }
       ]
     },
@@ -379,16 +372,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "station",
-              "A place where trains or buses stop to pick up people."
+              "preview",
+              "A look at something before it is finished or shown."
             ],
             [
-              "capital",
-              "The main city of a country, where the government is."
+              "territory",
+              "An area of land that belongs to a person, group or country."
             ],
             [
-              "museum",
-              "A building where you see old or special things and learn about them."
+              "capacity",
+              "The amount that a container can hold."
             ]
           ]
         },
@@ -396,16 +389,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "office",
-              "A place where people work at desks."
+              "excluding",
+              "Not counting; leaving something out."
             ],
             [
-              "neighbourhood",
-              "The area around your home."
+              "maize",
+              "A tall plant grown for its yellow grain, also called corn."
             ],
             [
-              "corridor",
-              "A long path inside a building that joins rooms."
+              "it's",
+              "A short way of saying 'it is' or 'it has'."
             ]
           ]
         },
@@ -413,16 +406,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "customer",
-              "A person who buys something from a shop or business."
+              "okay",
+              "A word used to show that something is fine or agreed."
             ],
             [
-              "event",
-              "Something special that happens, like a party or a game."
+              "million",
+              "A very large number, equal to a thousand thousand."
             ],
             [
-              "equator",
-              "The imaginary line around the middle of the Earth."
+              "office",
+              "A place where people work at desks."
             ]
           ]
         }

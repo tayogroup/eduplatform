@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: The first month of the year.",
+          "prompt": "Which word means: The surface of the earth that you walk on.",
           "choices": [
-            "January",
-            "February",
-            "April"
+            "ground",
+            "half",
+            "manage"
           ],
-          "answer": "January",
-          "explanation": "January: The first month of the year."
+          "answer": "ground",
+          "explanation": "ground: The surface of the earth that you walk on."
         },
         {
-          "prompt": "Which word means: The seventh month of the year, often very warm.",
+          "prompt": "Which word means: To wake means to stop sleeping and open your eyes.",
           "choices": [
-            "January",
-            "February",
-            "July"
+            "ground",
+            "half",
+            "wake"
           ],
-          "answer": "July",
-          "explanation": "July: The seventh month of the year, often very warm."
+          "answer": "wake",
+          "explanation": "wake: To wake means to stop sleeping and open your eyes."
         },
         {
-          "prompt": "Which word means: A paper or digital tool that shows the days, weeks and months of a year.",
+          "prompt": "Which word means: Proudly means in a way that shows you feel happy and pleased about something you did.",
           "choices": [
-            "February",
-            "calendar",
-            "January"
+            "half",
+            "proudly",
+            "ground"
           ],
-          "answer": "calendar",
-          "explanation": "calendar: A paper or digital tool that shows the days, weeks and months of a year."
+          "answer": "proudly",
+          "explanation": "proudly: Proudly means in a way that shows you feel happy and pleased about something you did."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "The second month of the year, and the shortest with twenty-eight days.",
-          "answer": "february"
+          "clue": "Shaped like a circle or a ball.",
+          "answer": "round"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "The eighth month of the year, and a common time for family travel.",
-          "answer": "august"
+          "clue": "To stretch means to reach your arms or legs out to feel less stiff.",
+          "answer": "stretch"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A period of one hundred years.",
-          "answer": "century"
+          "clue": "Proudly means in a way that shows you feel happy and pleased about something you did.",
+          "answer": "proudly"
         }
       ]
     },
@@ -83,40 +83,44 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "January.",
-            "in",
-            "begins",
-            "year",
-            "school",
-            "The"
+            "ground.",
+            "the",
+            "off",
+            "up",
+            "books",
+            "the",
+            "picked",
+            "Amal"
           ],
-          "answer": "The school year begins in January."
+          "answer": "Amal picked the books up off the ground."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "July.",
-            "in",
-            "family",
-            "visit",
-            "to",
-            "go",
-            "We"
-          ],
-          "answer": "We go to visit family in July."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "day.",
-            "one",
-            "in",
-            "hours",
-            "24",
+            "ready.",
             "are",
-            "There"
+            "you",
+            "so",
+            "beforehand",
+            "bag",
+            "your",
+            "Pack"
           ],
-          "answer": "There are 24 hours in one day."
+          "answer": "Pack your bag beforehand so you are ready."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "mornings.",
+            "cool",
+            "on",
+            "jacket",
+            "light",
+            "a",
+            "wears",
+            "Idris"
+          ],
+          "answer": "Idris wears a light jacket on cool mornings."
         }
       ]
     },
@@ -236,47 +240,42 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "calendar.",
+            "paint.",
             "the",
-            "on",
-            "day",
-            "extra",
-            "one",
-            "gains",
-            "February",
-            "fourth",
-            "Every"
+            "over",
+            "knock",
+            "to",
+            "mean",
+            "not",
+            "did",
+            "Sami"
           ],
-          "answer": "Every fourth February gains one extra day on the calendar."
+          "answer": "Sami did not mean to knock over the paint."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "journey.",
-            "August",
+            "today?",
+            "classroom",
             "the",
-            "before",
-            "night",
-            "the",
-            "packed",
-            "are",
-            "Bags"
+            "sweeping",
+            "is",
+            "Who"
           ],
-          "answer": "Bags are packed the night before the August journey."
+          "answer": "Who is sweeping the classroom today?"
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "century.",
-            "whole",
-            "one",
-            "showing",
-            "timeline",
+            "colour.",
+            "different",
             "a",
-            "drew",
-            "Amal"
+            "square",
+            "every",
+            "coloured",
+            "Sami"
           ],
-          "answer": "Amal drew a timeline showing one whole century."
+          "answer": "Sami coloured every square a different colour."
         }
       ]
     },
@@ -289,34 +288,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'August' mean in this unit?",
+          "prompt": "What does 'neighbour' mean in this unit?",
           "choices": [
-            "The eighth month of the year, and a common time for family travel.",
-            "The first month of the year.",
-            "The second month of the year, and the shortest with twenty-eight days."
+            "A neighbour is a person who lives near you.",
+            "The surface of the earth that you walk on.",
+            "One of two equal parts of something."
           ],
-          "answer": "The eighth month of the year, and a common time for family travel.",
-          "explanation": "August: The eighth month of the year, and a common time for family travel."
+          "answer": "A neighbour is a person who lives near you.",
+          "explanation": "neighbour: A neighbour is a person who lives near you."
         },
         {
-          "prompt": "What does 'century' mean in this unit?",
+          "prompt": "What does 'sky' mean in this unit?",
           "choices": [
-            "The first month of the year.",
-            "The second month of the year, and the shortest with twenty-eight days.",
-            "A period of one hundred years."
+            "The surface of the earth that you walk on.",
+            "One of two equal parts of something.",
+            "The sky is the space above the earth where you see clouds, the sun, and stars."
           ],
-          "answer": "A period of one hundred years.",
-          "explanation": "century: A period of one hundred years."
+          "answer": "The sky is the space above the earth where you see clouds, the sun, and stars.",
+          "explanation": "sky: The sky is the space above the earth where you see clouds, the sun, and stars."
         },
         {
-          "prompt": "What does 'February' mean in this unit?",
+          "prompt": "What does 'half' mean in this unit?",
           "choices": [
-            "The fourth month of the year, when flowers bloom in many places.",
-            "The second month of the year, and the shortest with twenty-eight days.",
-            "The first month of the year."
+            "To be able to do something, even if it is difficult.",
+            "One of two equal parts of something.",
+            "The surface of the earth that you walk on."
           ],
-          "answer": "The second month of the year, and the shortest with twenty-eight days.",
-          "explanation": "February: The second month of the year, and the shortest with twenty-eight days."
+          "answer": "One of two equal parts of something.",
+          "explanation": "half: One of two equal parts of something."
         }
       ]
     },
@@ -329,34 +328,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is '(December)'?",
+          "prompt": "What type of word is 'rivers'?",
           "choices": [
             "Noun",
             "Verb",
             "Adjective"
           ],
           "answer": "Noun",
-          "explanation": "(December) is used as a noun in this dictionary sense."
+          "explanation": "Rivers is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'soon'?",
+          "prompt": "What type of word is 'July'?",
           "choices": [
-            "Noun",
             "Verb",
-            "Adverb"
-          ],
-          "answer": "Adverb",
-          "explanation": "Soon is used as an adverb in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'May'?",
-          "choices": [
             "Adjective",
-            "Noun",
-            "Verb"
+            "Noun"
           ],
           "answer": "Noun",
-          "explanation": "May is used as a noun in this dictionary sense."
+          "explanation": "July is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'normal'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Adjective",
+          "explanation": "Normal is used as an adjective in this dictionary sense."
         }
       ]
     },
@@ -372,16 +371,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "March",
-              "The third month of the year, when heavy rains often arrive."
+              "pound",
+              "To hit something hard, again and again."
             ],
             [
-              "May",
-              "The fifth month of the year, which comes between April and June."
+              "journey",
+              "A trip from one place to another."
             ],
             [
-              "July",
-              "The seventh month of the year, often very warm."
+              "ancient",
+              "Very old, belonging to a time long before ours."
             ]
           ]
         },
@@ -389,16 +388,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "September",
-              "The ninth month of the year, when school often starts again."
+              "wash",
+              "To wash means to clean something with water."
             ],
             [
-              "November",
-              "The eleventh month of the year, after October and before December."
+              "yard",
+              "A yard is an open space next to a house."
             ],
             [
-              "calendar",
-              "A paper or digital tool that shows the days, weeks and months of a year."
+              "jacket",
+              "A jacket is a short coat you wear to stay warm."
             ]
           ]
         },
@@ -406,16 +405,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "century",
-              "A period of one hundred years."
+              "heart",
+              "A heart is the shape people draw to mean love, or the organ inside your chest that pumps blood."
             ],
             [
-              "future",
-              "The time that has not happened yet, coming after today."
+              "hung",
+              "Hung means put something up so that it hangs from a point above."
             ],
             [
-              "sooner",
-              "Earlier than something else, coming before another time."
+              "May",
+              "The fifth month of the year, which comes between April and June."
             ]
           ]
         }

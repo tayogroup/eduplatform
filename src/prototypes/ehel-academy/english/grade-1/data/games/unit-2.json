@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: The woman who has you as her child and cares for you.",
+          "prompt": "Which word means: Something a hen lays that we can cook and eat.",
           "choices": [
-            "mother",
-            "dad",
-            "grandma"
+            "egg",
+            "men",
+            "father"
           ],
-          "answer": "mother",
-          "explanation": "mother: The woman who has you as her child and cares for you."
+          "answer": "egg",
+          "explanation": "egg: Something a hen lays that we can cook and eat."
         },
         {
-          "prompt": "Which word means: Small dry food we eat in a bowl with milk.",
+          "prompt": "Which word means: Good means nice, kind, or done well.",
           "choices": [
-            "mother",
-            "dad",
-            "cereal"
+            "egg",
+            "men",
+            "good"
           ],
-          "answer": "cereal",
-          "explanation": "cereal: Small dry food we eat in a bowl with milk."
+          "answer": "good",
+          "explanation": "good: Good means nice, kind, or done well."
         },
         {
-          "prompt": "Which word means: The number 5. It is how many fingers are on one hand.",
+          "prompt": "Which word means: About means on the subject of, or concerning something.",
           "choices": [
-            "dad",
-            "five",
-            "mother"
+            "men",
+            "about",
+            "egg"
           ],
-          "answer": "five",
-          "explanation": "five: The number 5. It is how many fingers are on one hand."
+          "answer": "about",
+          "explanation": "about: About means on the subject of, or concerning something."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Another word for mother that we use at home.",
-          "answer": "mum"
+          "clue": "A female farm bird that lays eggs for us.",
+          "answer": "hen"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A white drink that comes from cows and goats.",
-          "answer": "milk"
+          "clue": "This word means in that place, away from you.",
+          "answer": "there"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "The number 6. It comes after five and before seven.",
-          "answer": "six"
+          "clue": "Yum is a word we say when food tastes really good.",
+          "answer": "yum"
         }
       ]
     },
@@ -83,38 +83,41 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "food.",
-            "lovely",
-            "cooks",
-            "mother",
-            "My"
+            "nest.",
+            "the",
+            "in",
+            "warm",
+            "is",
+            "egg",
+            "The"
           ],
-          "answer": "My mother cooks lovely food."
+          "answer": "The egg is warm in the nest."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "milk.",
-            "cold",
-            "with",
-            "cereal",
-            "eat",
-            "I"
-          ],
-          "answer": "I eat cereal with cold milk."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "hand.",
-            "my",
+            "mat.",
+            "the",
             "on",
-            "fingers",
-            "five",
-            "have",
-            "I"
+            "sits",
+            "cat",
+            "The"
           ],
-          "answer": "I have five fingers on my hand."
+          "answer": "The cat sits on the mat."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "ten.",
+            "to",
+            "way",
+            "the",
+            "all",
+            "counting",
+            "is",
+            "Amal"
+          ],
+          "answer": "Amal is counting all the way to ten."
         }
       ]
     },
@@ -234,36 +237,38 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "dinner.",
-            "before",
-            "room",
-            "your",
-            "tidy",
-            "Please"
+            "cereal.",
+            "my",
+            "with",
+            "strawberries",
+            "eat",
+            "I"
           ],
-          "answer": "Please tidy your room before dinner."
+          "answer": "I eat strawberries with my cereal."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "Saturday.",
-            "on",
-            "pancakes",
-            "makes",
-            "Mum"
+            "toy.",
+            "a",
+            "brother",
+            "her",
+            "gave",
+            "Amal"
           ],
-          "answer": "Mum makes pancakes on Saturday."
+          "answer": "Amal gave her brother a toy."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "legs.",
-            "four",
-            "has",
-            "chair",
-            "The"
+            "road.",
+            "the",
+            "cross",
+            "children",
+            "help",
+            "Grown-ups"
           ],
-          "answer": "The chair has four legs."
+          "answer": "Grown-ups help children cross the road."
         }
       ]
     },
@@ -276,34 +281,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'fruit' mean in this unit?",
+          "prompt": "What does 'woke' mean in this unit?",
           "choices": [
-            "Sweet food that grows on trees and plants, like apples.",
-            "The woman who has you as her child and cares for you.",
-            "Another word for father that we use at home."
+            "Woke means you opened your eyes and stopped sleeping.",
+            "Something a hen lays that we can cook and eat.",
+            "Men means more than one man."
           ],
-          "answer": "Sweet food that grows on trees and plants, like apples.",
-          "explanation": "fruit: Sweet food that grows on trees and plants, like apples."
+          "answer": "Woke means you opened your eyes and stopped sleeping.",
+          "explanation": "woke: Woke means you opened your eyes and stopped sleeping."
         },
         {
-          "prompt": "What does 'nine' mean in this unit?",
+          "prompt": "What does 'cereal' mean in this unit?",
           "choices": [
-            "The woman who has you as her child and cares for you.",
-            "Another word for father that we use at home.",
-            "The number 9. It comes after eight and before ten."
+            "Something a hen lays that we can cook and eat.",
+            "Men means more than one man.",
+            "Small dry food we eat in a bowl with milk."
           ],
-          "answer": "The number 9. It comes after eight and before ten.",
-          "explanation": "nine: The number 9. It comes after eight and before ten."
+          "answer": "Small dry food we eat in a bowl with milk.",
+          "explanation": "cereal: Small dry food we eat in a bowl with milk."
         },
         {
-          "prompt": "What does 'dad' mean in this unit?",
+          "prompt": "What does 'men' mean in this unit?",
           "choices": [
-            "The mother of your mum or your dad.",
-            "Another word for father that we use at home.",
-            "The woman who has you as her child and cares for you."
+            "The man who has you as his child and cares for you.",
+            "Men means more than one man.",
+            "Something a hen lays that we can cook and eat."
           ],
-          "answer": "Another word for father that we use at home.",
-          "explanation": "dad: Another word for father that we use at home."
+          "answer": "Men means more than one man.",
+          "explanation": "men: Men means more than one man."
         }
       ]
     },
@@ -316,34 +321,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'two'?",
+          "prompt": "What type of word is 'practise'?",
           "choices": [
-            "Number",
+            "Verb",
             "Noun",
-            "Verb"
-          ],
-          "answer": "Number",
-          "explanation": "Two is used as a number in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'talk'?",
-          "choices": [
-            "Noun",
-            "Adjective",
-            "Verb"
+            "Adjective"
           ],
           "answer": "Verb",
-          "explanation": "Talk is used as a verb in this dictionary sense."
+          "explanation": "Practise is used as a verb in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'grown-ups'?",
+          "prompt": "What type of word is 'nine'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Number"
+          ],
+          "answer": "Number",
+          "explanation": "Nine is used as a number in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'friend'?",
           "choices": [
             "Adjective",
             "Noun",
             "Verb"
           ],
           "answer": "Noun",
-          "explanation": "Grown-ups is used as a noun in this dictionary sense."
+          "explanation": "Friend is used as a noun in this dictionary sense."
         }
       ]
     },
@@ -359,16 +364,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "father",
-              "The man who has you as his child and cares for you."
+              "bed",
+              "A bed is where you lie down and sleep."
             ],
             [
-              "grandma",
-              "The mother of your mum or your dad."
+              "girl",
+              "A young female child, like a sister or a school friend."
             ],
             [
-              "grown-ups",
-              "People who are big, like mums, dads and teachers."
+              "family",
+              "The people you live with and love, like parents and children."
             ]
           ]
         },
@@ -376,16 +381,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "noodles",
-              "Long thin strips of food that we cook and eat."
+              "there",
+              "This word means in that place, away from you."
             ],
             [
-              "grapes",
-              "Small round fruits that grow together in a bunch."
+              "everyone",
+              "Everyone means every single person in a group."
             ],
             [
-              "three",
-              "The number 3. It comes after two and before four."
+              "families",
+              "Families are groups of people, like parents and children, who love and care for each other."
             ]
           ]
         },
@@ -393,16 +398,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "seven",
-              "The number 7. It comes after six and before eight."
+              "hugged",
+              "Hugged means put your arms around someone to show love."
             ],
             [
-              "work",
-              "To do a job that needs care and effort."
+              "banana",
+              "A long, curved yellow fruit that is soft and white inside."
             ],
             [
-              "laugh",
-              "To make a happy sound when something is funny."
+              "nine",
+              "The number 9. It comes after eight and before ten."
             ]
           ]
         }

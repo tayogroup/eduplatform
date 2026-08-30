@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: A person who lives near you, on your street or in your building.",
+          "prompt": "Which word means: One of the seven parts of a week.",
           "choices": [
-            "neighbour",
-            "window cleaner",
-            "reporter"
+            "day",
+            "shopkeeper",
+            "pass"
           ],
-          "answer": "neighbour",
-          "explanation": "neighbour: A person who lives near you, on your street or in your building."
+          "answer": "day",
+          "explanation": "day: One of the seven parts of a week."
         },
         {
-          "prompt": "Which word means: Strong shoes that cover your feet and part of your legs.",
+          "prompt": "Which word means: Wear means to have clothes or equipment on your body.",
           "choices": [
-            "neighbour",
-            "window cleaner",
-            "boots"
+            "day",
+            "shopkeeper",
+            "wear"
           ],
-          "answer": "boots",
-          "explanation": "boots: Strong shoes that cover your feet and part of your legs."
+          "answer": "wear",
+          "explanation": "wear: Wear means to have clothes or equipment on your body."
         },
         {
-          "prompt": "Which word means: A person who grows food and looks after farm animals.",
+          "prompt": "Which word means: A friendly word for your mother.",
           "choices": [
-            "window cleaner",
-            "farmer",
-            "neighbour"
+            "shopkeeper",
+            "mum",
+            "day"
           ],
-          "answer": "farmer",
-          "explanation": "farmer: A person who grows food and looks after farm animals."
+          "answer": "mum",
+          "explanation": "mum: A friendly word for your mother."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A person who finds out news and writes or tells stories about it.",
-          "answer": "reporter"
+          "clue": "To stay means to keep still, or to remain in one place.",
+          "answer": "stay"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "The special set of clothes that people wear for their job or school.",
-          "answer": "uniform"
+          "clue": "Wear means to have clothes or equipment on your body.",
+          "answer": "wear"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Doing something that makes a job easier or better for someone.",
-          "answer": "helping"
+          "clue": "Full of people, noise or things happening.",
+          "answer": "busy"
         }
       ]
     },
@@ -83,51 +83,43 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "house.",
-            "blue",
+            "register.",
             "the",
-            "in",
-            "lives",
-            "he",
-            "and",
-            "neighbour,",
-            "our",
+            "with",
+            "begins",
+            "day",
+            "school",
+            "Every"
+          ],
+          "answer": "Every school day begins with the register."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "danger.",
             "is",
-            "Theo"
-          ],
-          "answer": "Theo is our neighbour, and he lives in the blue house."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "safe.",
-            "head",
-            "her",
-            "keep",
+            "there",
+            "when",
+            "help",
             "to",
-            "helmet",
-            "a",
-            "wears",
-            "firefighter",
-            "The"
+            "hurry",
+            "Firefighters"
           ],
-          "answer": "The firefighter wears a helmet to keep her head safe."
+          "answer": "Firefighters hurry to help when there is danger."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "morning.",
-            "every",
-            "words",
-            "English",
-            "new",
-            "read",
-            "us",
-            "helps",
-            "Yasmin",
-            "Teacher"
+            "scared.",
+            "feels",
+            "she",
+            "when",
+            "training",
+            "her",
+            "trusts",
+            "Leila"
           ],
-          "answer": "Teacher Yasmin helps us read new English words every morning."
+          "answer": "Leila trusts her training when she feels scared."
         }
       ]
     },
@@ -224,7 +216,7 @@
       "rounds": [
         {
           "prompt": "Speaking 1 — Describe a Job",
-          "target": "Theo is our neighbour, and he lives in the blue house."
+          "target": "Every school day begins with the register."
         },
         {
           "prompt": "Speaking Game — Who Am I?",
@@ -247,55 +239,43 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "morning.",
-            "this",
-            "city",
+            "field.",
+            "green",
             "the",
-            "to",
-            "bus",
-            "blue",
-            "the",
-            "driving",
-            "is",
-            "Nadia"
-          ],
-          "answer": "Nadia is driving the blue bus to the city this morning."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "rooms.",
-            "dark",
-            "for",
-            "front",
-            "the",
-            "on",
-            "light",
-            "small",
-            "a",
-            "has",
-            "helmet",
-            "yellow",
-            "The"
-          ],
-          "answer": "The yellow helmet has a small light on the front for dark rooms."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "hot.",
-            "gets",
-            "sun",
-            "the",
-            "before",
-            "trough",
-            "water",
-            "the",
-            "fills",
+            "across",
+            "walked",
             "farmer",
             "The"
           ],
-          "answer": "The farmer fills the water trough before the sun gets hot."
+          "answer": "The farmer walked across the green field."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "coat.",
+            "his",
+            "without",
+            "house",
+            "the",
+            "left",
+            "Theo"
+          ],
+          "answer": "Theo left the house without his coat."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "mother.",
+            "her",
+            "said",
+            "fire,”",
+            "the",
+            "out",
+            "putting",
+            "are",
+            "“They"
+          ],
+          "answer": "“They are putting out the fire,” said her mother."
         }
       ]
     },
@@ -308,34 +288,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'gloves' mean in this unit?",
+          "prompt": "What does 'tried' mean in this unit?",
           "choices": [
-            "Coverings for your hands, with a separate part for each finger.",
-            "A person who lives near you, on your street or in your building.",
-            "A person whose job is to clean the windows of houses and shops."
+            "Tried means made an attempt to do something.",
+            "One of the seven parts of a week.",
+            "A person who owns or looks after a shop and sells things."
           ],
-          "answer": "Coverings for your hands, with a separate part for each finger.",
-          "explanation": "gloves: Coverings for your hands, with a separate part for each finger."
+          "answer": "Tried means made an attempt to do something.",
+          "explanation": "tried: Tried means made an attempt to do something."
+        },
+        {
+          "prompt": "What does 'brought' mean in this unit?",
+          "choices": [
+            "One of the seven parts of a week.",
+            "A person who owns or looks after a shop and sells things.",
+            "Carried something to a place, or took something along."
+          ],
+          "answer": "Carried something to a place, or took something along.",
+          "explanation": "brought: Carried something to a place, or took something along."
         },
         {
           "prompt": "What does 'shopkeeper' mean in this unit?",
           "choices": [
-            "A person who lives near you, on your street or in your building.",
-            "A person whose job is to clean the windows of houses and shops.",
-            "A person who owns or looks after a shop and sells things."
+            "To pass means to go by, or to hand something to someone.",
+            "A person who owns or looks after a shop and sells things.",
+            "One of the seven parts of a week."
           ],
           "answer": "A person who owns or looks after a shop and sells things.",
           "explanation": "shopkeeper: A person who owns or looks after a shop and sells things."
-        },
-        {
-          "prompt": "What does 'window cleaner' mean in this unit?",
-          "choices": [
-            "A person who finds out news and writes or tells stories about it.",
-            "A person whose job is to clean the windows of houses and shops.",
-            "A person who lives near you, on your street or in your building."
-          ],
-          "answer": "A person whose job is to clean the windows of houses and shops.",
-          "explanation": "window cleaner: A person whose job is to clean the windows of houses and shops."
         }
       ]
     },
@@ -348,34 +328,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'nurse'?",
+          "prompt": "What type of word is 'training'?",
           "choices": [
             "Noun",
             "Verb",
             "Adjective"
           ],
           "answer": "Noun",
-          "explanation": "Nurse is used as a noun in this dictionary sense."
+          "explanation": "Training is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'growing'?",
+          "prompt": "What type of word is 'reporter'?",
           "choices": [
-            "Noun",
+            "Verb",
             "Adjective",
-            "Verb"
-          ],
-          "answer": "Verb",
-          "explanation": "Growing is used as a verb in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'firefighter'?",
-          "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
+            "Noun"
           ],
           "answer": "Noun",
-          "explanation": "Firefighter is used as a noun in this dictionary sense."
+          "explanation": "Reporter is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'most'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Adjective",
+          "explanation": "Most is used as an adjective in this dictionary sense."
         }
       ]
     },
@@ -391,16 +371,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "police officer",
-              "A person who keeps people safe and helps everyone follow the rules."
+              "tray",
+              "A flat container used for carrying or holding things."
             ],
             [
-              "bus driver",
-              "A person whose job is to drive a bus and carry passengers safely."
+              "village",
+              "A village is a small group of houses and streets, smaller than a town."
             ],
             [
-              "helmet",
-              "A hard hat that protects your head from knocks and falling things."
+              "many",
+              "Many means a large number of people or things."
             ]
           ]
         },
@@ -408,16 +388,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "mask",
-              "A covering that goes over your nose and mouth to protect them."
+              "hot",
+              "Hot means having a very high temperature."
             ],
             [
-              "doctor",
-              "A person who helps people who are ill and makes them better."
+              "left",
+              "Left means went away from a place."
             ],
             [
-              "teacher",
-              "A person whose job is to help other people learn new things."
+              "forward",
+              "Forward means towards the front, in the direction ahead."
             ]
           ]
         },
@@ -425,16 +405,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "helping",
-              "Doing something that makes a job easier or better for someone."
+              "passengers",
+              "People who travel in a car, bus, train or plane, but do not drive it."
             ],
             [
-              "rescuing",
-              "Saving a person or an animal from danger and bringing them somewhere safe."
+              "raced",
+              "Ran or moved somewhere as fast as possible."
             ],
             [
-              "driving",
-              "Making a car, bus or lorry move and steering it along the road."
+              "window cleaner",
+              "A person whose job is to clean the windows of houses and shops."
             ]
           ]
         }

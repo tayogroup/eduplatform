@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: A person who helps sick people feel better.",
+          "prompt": "Which word means: A sound, especially one that is loud or sudden.",
           "choices": [
-            "doctor",
-            "officer",
-            "sailor"
+            "noise",
+            "dentist",
+            "soldier"
           ],
-          "answer": "doctor",
-          "explanation": "doctor: A person who helps sick people feel better."
+          "answer": "noise",
+          "explanation": "noise: A sound, especially one that is loud or sudden."
         },
         {
-          "prompt": "Which word means: A place where people solve problems fairly using the laws.",
+          "prompt": "Which word means: A large building where machines make things.",
           "choices": [
-            "doctor",
-            "officer",
-            "court"
+            "noise",
+            "dentist",
+            "factory"
           ],
-          "answer": "court",
-          "explanation": "court: A place where people solve problems fairly using the laws."
+          "answer": "factory",
+          "explanation": "factory: A large building where machines make things."
         },
         {
-          "prompt": "Which word means: A door or way to go out of a place; to go out.",
+          "prompt": "Which word means: On or into a bus, ship, plane or train.",
           "choices": [
-            "officer",
-            "exit",
-            "doctor"
+            "dentist",
+            "aboard",
+            "noise"
           ],
-          "answer": "exit",
-          "explanation": "exit: A door or way to go out of a place; to go out."
+          "answer": "aboard",
+          "explanation": "aboard: On or into a bus, ship, plane or train."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A person who helps keep people safe and makes sure rules are followed.",
-          "answer": "officer"
+          "clue": "The decision you make when you pick one thing from two or more.",
+          "answer": "choice"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A school for older students and adults.",
-          "answer": "college"
+          "clue": "A place where people study after they leave school.",
+          "answer": "university"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A small group of homes in the countryside, smaller than a town.",
-          "answer": "village"
+          "clue": "A place where a bus, car or journey pauses for a short while.",
+          "answer": "stop"
         }
       ]
     },
@@ -83,41 +83,40 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "hospital.",
-            "the",
-            "at",
-            "works",
-            "doctor",
-            "The"
-          ],
-          "answer": "The doctor works at the hospital."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "station.",
-            "police",
-            "the",
-            "to",
-            "next",
+            "Sami?",
+            "noise,",
+            "strange",
+            "that",
             "is",
-            "court",
-            "The"
+            "What"
           ],
-          "answer": "The court is next to the police station."
+          "answer": "What is that strange noise, Sami?"
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "village.",
-            "quiet",
-            "a",
-            "in",
-            "lives",
-            "grandmother",
-            "My"
+            "songs.",
+            "wonderful",
+            "many",
+            "has",
+            "culture",
+            "Our"
           ],
-          "answer": "My grandmother lives in a quiet village."
+          "answer": "Our culture has many wonderful songs."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "friend.",
+            "his",
+            "with",
+            "school",
+            "to",
+            "walks",
+            "usually",
+            "Sami"
+          ],
+          "answer": "Sami usually walks to school with his friend."
         }
       ]
     },
@@ -237,49 +236,40 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "unwell.",
-            "feel",
-            "I",
-            "whenever",
-            "temperature",
-            "my",
-            "checks",
-            "Sarah",
-            "Doctor"
+            "market.",
+            "the",
+            "to",
+            "catch",
+            "his",
+            "carried",
+            "sailor",
+            "The"
           ],
-          "answer": "Doctor Sarah checks my temperature whenever I feel unwell."
+          "answer": "The sailor carried his catch to the market."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "college.",
-            "county",
+            "job.",
+            "everyone's",
+            "is",
+            "tidy",
+            "classroom",
             "the",
-            "at",
-            "safety",
-            "and",
-            "health",
-            "studies",
-            "Adam"
+            "Keeping"
           ],
-          "answer": "Adam studies health and safety at the county college."
+          "answer": "Keeping the classroom tidy is everyone's job."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "village.",
-            "the",
-            "through",
-            "way",
-            "her",
-            "on",
-            "farms",
-            "green",
-            "past",
-            "walks",
+            "mangoes.",
+            "ripe",
+            "sweet",
+            "loves",
             "Amal"
           ],
-          "answer": "Amal walks past green farms on her way through the village."
+          "answer": "Amal loves sweet ripe mangoes."
         }
       ]
     },
@@ -292,34 +282,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'college' mean in this unit?",
+          "prompt": "What does 'sick' mean in this unit?",
           "choices": [
-            "A school for older students and adults.",
-            "A person who helps sick people feel better.",
-            "A person who helps keep people safe and makes sure rules are followed."
+            "Sick means feeling unwell or having an illness.",
+            "A sound, especially one that is loud or sudden.",
+            "A doctor who looks after your teeth."
           ],
-          "answer": "A school for older students and adults.",
-          "explanation": "college: A school for older students and adults."
+          "answer": "Sick means feeling unwell or having an illness.",
+          "explanation": "sick: Sick means feeling unwell or having an illness."
         },
         {
-          "prompt": "What does 'village' mean in this unit?",
+          "prompt": "What does 'counties' mean in this unit?",
           "choices": [
-            "A person who helps sick people feel better.",
-            "A person who helps keep people safe and makes sure rules are followed.",
-            "A small group of homes in the countryside, smaller than a town."
+            "A sound, especially one that is loud or sudden.",
+            "A doctor who looks after your teeth.",
+            "Large areas of land with their own name and border, like parts of a country."
           ],
-          "answer": "A small group of homes in the countryside, smaller than a town.",
-          "explanation": "village: A small group of homes in the countryside, smaller than a town."
+          "answer": "Large areas of land with their own name and border, like parts of a country.",
+          "explanation": "counties: Large areas of land with their own name and border, like parts of a country."
         },
         {
-          "prompt": "What does 'officer' mean in this unit?",
+          "prompt": "What does 'dentist' mean in this unit?",
           "choices": [
-            "A person who works on a boat or ship at sea.",
-            "A person who helps keep people safe and makes sure rules are followed.",
-            "A person who helps sick people feel better."
+            "A person who serves in the army.",
+            "A doctor who looks after your teeth.",
+            "A sound, especially one that is loud or sudden."
           ],
-          "answer": "A person who helps keep people safe and makes sure rules are followed.",
-          "explanation": "officer: A person who helps keep people safe and makes sure rules are followed."
+          "answer": "A doctor who looks after your teeth.",
+          "explanation": "dentist: A doctor who looks after your teeth."
         }
       ]
     },
@@ -332,34 +322,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'garden'?",
+          "prompt": "What type of word is 'everywhere'?",
           "choices": [
+            "Adverb",
             "Noun",
-            "Verb",
-            "Adjective"
+            "Verb"
           ],
-          "answer": "Noun",
-          "explanation": "Garden is used as a noun in this dictionary sense."
+          "answer": "Adverb",
+          "explanation": "Everywhere is used as an adverb in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'border'?",
+          "prompt": "What type of word is 'sailor'?",
           "choices": [
             "Verb",
             "Adjective",
             "Noun"
           ],
           "answer": "Noun",
-          "explanation": "Border is used as a noun in this dictionary sense."
+          "explanation": "Sailor is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'hospital'?",
+          "prompt": "What type of word is 'nation'?",
           "choices": [
             "Adjective",
             "Noun",
             "Verb"
           ],
           "answer": "Noun",
-          "explanation": "Hospital is used as a noun in this dictionary sense."
+          "explanation": "Nation is used as a noun in this dictionary sense."
         }
       ]
     },
@@ -375,16 +365,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "sailor",
-              "A person who works on a boat or ship at sea."
+              "enjoy",
+              "To like doing something so much that you want more of it."
             ],
             [
-              "hospital",
-              "A place where doctors and nurses care for people who are sick or hurt."
+              "mechanic",
+              "A person whose job is mending machines and cars."
             ],
             [
-              "court",
-              "A place where people solve problems fairly using the laws."
+              "crowd",
+              "A crowd is a large group of people gathered together in one place."
             ]
           ]
         },
@@ -392,16 +382,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "market",
-              "A place where people buy and sell food and other things."
+              "beneath",
+              "Under or below something."
             ],
             [
-              "garden",
-              "A place where plants, flowers or vegetables grow."
+              "sell",
+              "To sell means to give something to someone else in exchange for money."
             ],
             [
-              "village",
-              "A small group of homes in the countryside, smaller than a town."
+              "green",
+              "Green is the colour of grass and fresh leaves."
             ]
           ]
         },
@@ -409,16 +399,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "county",
-              "A part of a country that has its own towns and rules."
+              "stop",
+              "A place where a bus, car or journey pauses for a short while."
             ],
             [
-              "address",
-              "The name of the place where someone lives."
+              "roots",
+              "The parts of a plant under the ground, or the place where a person's family began."
             ],
             [
-              "doctor",
-              "A person who helps sick people feel better."
+              "officer",
+              "A person who helps keep people safe and makes sure rules are followed."
             ]
           ]
         }

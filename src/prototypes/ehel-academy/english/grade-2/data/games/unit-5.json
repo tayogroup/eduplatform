@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: The number 10, which is one whole group of ten ones.",
+          "prompt": "Which word means: A park is a green place outside with grass and trees where you can play.",
           "choices": [
-            "ten",
-            "forty",
-            "seventy"
+            "park",
+            "compare",
+            "centre"
           ],
-          "answer": "ten",
-          "explanation": "ten: The number 10, which is one whole group of ten ones."
+          "answer": "park",
+          "explanation": "park: A park is a green place outside with grass and trees where you can play."
         },
         {
-          "prompt": "Which word means: A shape with three straight sides and three pointed corners.",
+          "prompt": "Which word means: Drawing over the lines of a shape with a finger or pencil.",
           "choices": [
-            "ten",
-            "forty",
-            "triangle"
+            "park",
+            "compare",
+            "tracing"
           ],
-          "answer": "triangle",
-          "explanation": "triangle: A shape with three straight sides and three pointed corners."
+          "answer": "tracing",
+          "explanation": "tracing: Drawing over the lines of a shape with a finger or pencil."
         },
         {
-          "prompt": "Which word means: Large in size; it takes up a lot of space.",
+          "prompt": "Which word means: Fourteen is the number 14, which is one more than thirteen.",
           "choices": [
-            "forty",
-            "big",
-            "ten"
+            "compare",
+            "fourteen",
+            "park"
           ],
-          "answer": "big",
-          "explanation": "big: Large in size; it takes up a lot of space."
+          "answer": "fourteen",
+          "explanation": "fourteen: Fourteen is the number 14, which is one more than thirteen."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "The number 20, which is two groups of ten ones.",
-          "answer": "twenty"
+          "clue": "Having very little light, so it is hard to see.",
+          "answer": "dark"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A shape with four sides, where the two sides opposite each other match.",
-          "answer": "rectangle"
+          "clue": "A shelf or stand where books are kept and lined up.",
+          "answer": "bookshelf"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Little in size; it does not take up much space.",
-          "answer": "small"
+          "clue": "To argue means to disagree with someone and talk crossly about it.",
+          "answer": "argue"
         }
       ]
     },
@@ -83,42 +83,43 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "hands.",
-            "two",
-            "my",
-            "on",
-            "fingers",
-            "ten",
+            "house?",
+            "your",
+            "near",
+            "park",
+            "a",
+            "there",
+            "Is"
+          ],
+          "answer": "Is there a park near your house?"
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "winter.",
+            "this",
+            "garden",
+            "the",
+            "in",
+            "birds",
+            "fewer",
             "are",
             "There"
           ],
-          "answer": "There are ten fingers on my two hands."
+          "answer": "There are fewer birds in the garden this winter."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "shape.",
-            "triangle",
-            "a",
-            "has",
-            "roof",
-            "The"
-          ],
-          "answer": "The roof has a triangle shape."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "big.",
-            "very",
-            "is",
-            "zoo",
+            "sky.",
+            "night",
             "the",
-            "at",
-            "elephant",
-            "The"
+            "filled",
+            "stars",
+            "thousand",
+            "A"
           ],
-          "answer": "The elephant at the zoo is very big."
+          "answer": "A thousand stars filled the night sky."
         }
       ]
     },
@@ -215,7 +216,7 @@
       "rounds": [
         {
           "prompt": "Speaking 1 — Count in Tens",
-          "target": "There are ten fingers on my two hands."
+          "target": "Is there a park near your house?"
         },
         {
           "prompt": "Speaking Game — Bigger, Longer, Taller",
@@ -238,49 +239,45 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "cup.",
-            "little",
-            "first",
+            "sky.",
             "the",
-            "into",
-            "beans",
-            "ten",
-            "put",
-            "Amal"
-          ],
-          "answer": "Amal put ten beans into the first little cup."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "triangle.",
+            "in",
+            "circle",
             "a",
-            "is",
-            "plate",
-            "my",
-            "on",
-            "watermelon",
-            "of",
-            "slice",
+            "like",
+            "looks",
+            "sun",
             "The"
           ],
-          "answer": "The slice of watermelon on my plate is a triangle."
+          "answer": "The sun looks like a circle in the sky."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "arms.",
-            "his",
+            "shapes?",
             "of",
-            "both",
-            "with",
-            "basket",
-            "big",
+            "number",
+            "total",
             "the",
-            "lifted",
-            "Sami"
+            "is",
+            "What"
           ],
-          "answer": "Sami lifted the big basket with both of his arms."
+          "answer": "What is the total number of shapes?"
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "garden.",
+            "the",
+            "in",
+            "shapes",
+            "round",
+            "for",
+            "hunting",
+            "went",
+            "Kiki"
+          ],
+          "answer": "Kiki went hunting for round shapes in the garden."
         }
       ]
     },
@@ -293,34 +290,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'pattern' mean in this unit?",
+          "prompt": "What does 'starting' mean in this unit?",
           "choices": [
-            "A design that repeats the same thing again and again.",
-            "The number 10, which is one whole group of ten ones.",
-            "The number 40, which is four groups of ten ones."
+            "The place or point where something begins.",
+            "A park is a green place outside with grass and trees where you can play.",
+            "To compare means to look at two things to see how they differ."
           ],
-          "answer": "A design that repeats the same thing again and again.",
-          "explanation": "pattern: A design that repeats the same thing again and again."
+          "answer": "The place or point where something begins.",
+          "explanation": "starting: The place or point where something begins."
         },
         {
-          "prompt": "What does 'short' mean in this unit?",
+          "prompt": "What does 'less' mean in this unit?",
           "choices": [
-            "The number 10, which is one whole group of ten ones.",
-            "The number 40, which is four groups of ten ones.",
-            "Not long; it measures only a little from one end to the other."
+            "A park is a green place outside with grass and trees where you can play.",
+            "To compare means to look at two things to see how they differ.",
+            "Less means a smaller amount of something."
           ],
-          "answer": "Not long; it measures only a little from one end to the other.",
-          "explanation": "short: Not long; it measures only a little from one end to the other."
+          "answer": "Less means a smaller amount of something.",
+          "explanation": "less: Less means a smaller amount of something."
         },
         {
-          "prompt": "What does 'forty' mean in this unit?",
+          "prompt": "What does 'compare' mean in this unit?",
           "choices": [
-            "The number 70, which is seven groups of ten ones.",
-            "The number 40, which is four groups of ten ones.",
-            "The number 10, which is one whole group of ten ones."
+            "The centre is the point right in the middle.",
+            "To compare means to look at two things to see how they differ.",
+            "A park is a green place outside with grass and trees where you can play."
           ],
-          "answer": "The number 40, which is four groups of ten ones.",
-          "explanation": "forty: The number 40, which is four groups of ten ones."
+          "answer": "To compare means to look at two things to see how they differ.",
+          "explanation": "compare: To compare means to look at two things to see how they differ."
         }
       ]
     },
@@ -333,34 +330,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'height'?",
+          "prompt": "What type of word is 'footstep'?",
           "choices": [
             "Noun",
             "Verb",
             "Adjective"
           ],
           "answer": "Noun",
-          "explanation": "Height is used as a noun in this dictionary sense."
+          "explanation": "Footstep is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'narrow'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Adjective",
-          "explanation": "Narrow is used as an adjective in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'one hundred'?",
+          "prompt": "What type of word is 'weight'?",
           "choices": [
             "Verb",
-            "Number",
+            "Adjective",
             "Noun"
           ],
-          "answer": "Number",
-          "explanation": "One hundred is used as a number in this dictionary sense."
+          "answer": "Noun",
+          "explanation": "Weight is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'understand'?",
+          "choices": [
+            "Adjective",
+            "Verb",
+            "Noun"
+          ],
+          "answer": "Verb",
+          "explanation": "Understand is used as a verb in this dictionary sense."
         }
       ]
     },
@@ -376,16 +373,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "thirty",
-              "The number 30, which is three groups of ten ones."
+              "card",
+              "A card is a stiff piece of paper you write on or play with."
             ],
             [
-              "seventy",
-              "The number 70, which is seven groups of ten ones."
+              "difficult",
+              "Difficult means hard to do."
             ],
             [
-              "circle",
-              "A round shape with no corners and no straight sides."
+              "point",
+              "To point means to show where something is by using your finger or another object."
             ]
           ]
         },
@@ -393,16 +390,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "heart",
-              "A shape with two round tops and one point at the bottom."
+              "repeats",
+              "Happens again in the same way, over and over."
             ],
             [
-              "centimetre",
-              "A small unit of length; one hundred of them make one metre."
+              "ago",
+              "In the past, before now."
             ],
             [
-              "weight",
-              "How heavy or how light something is when you lift it."
+              "thousand",
+              "A thousand is the number 1,000, which is ten groups of one hundred."
             ]
           ]
         },
@@ -410,16 +407,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "long",
-              "Measuring a lot from one end to the other end."
+              "argued",
+              "Argued means people disagreed with each other and spoke about it crossly."
             ],
             [
-              "heavy",
-              "Hard to lift because it weighs a lot."
+              "thirty",
+              "The number 30, which is three groups of ten ones."
             ],
             [
-              "high",
-              "Far up above the ground."
+              "length",
+              "How long something is from one end to the other end."
             ]
           ]
         }

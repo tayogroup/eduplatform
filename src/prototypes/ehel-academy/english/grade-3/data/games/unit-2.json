@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: A person who helps us learn new things.",
+          "prompt": "Which word means: To stay on top of water without sinking.",
           "choices": [
-            "teacher",
-            "author",
-            "library"
+            "float",
+            "heading",
+            "email"
           ],
-          "answer": "teacher",
-          "explanation": "teacher: A person who helps us learn new things."
+          "answer": "float",
+          "explanation": "float: To stay on top of water without sinking."
         },
         {
-          "prompt": "Which word means: The rules for how we put words together to speak and write.",
+          "prompt": "Which word means: Not one single person.",
           "choices": [
-            "teacher",
-            "author",
-            "grammar"
+            "float",
+            "heading",
+            "nobody"
           ],
-          "answer": "grammar",
-          "explanation": "grammar: The rules for how we put words together to speak and write."
+          "answer": "nobody",
+          "explanation": "nobody: Not one single person."
         },
         {
-          "prompt": "Which word means: A game or test to see who is best.",
+          "prompt": "Which word means: Already means something happened before now, or sooner than expected.",
           "choices": [
-            "author",
-            "contest",
-            "teacher"
+            "heading",
+            "already",
+            "float"
           ],
-          "answer": "contest",
-          "explanation": "contest: A game or test to see who is best."
+          "answer": "already",
+          "explanation": "already: Already means something happened before now, or sooner than expected."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A person who writes books or stories.",
-          "answer": "author"
+          "clue": "The part inside your neck that food and air pass through.",
+          "answer": "throat"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A time when we learn something new in school.",
-          "answer": "lesson"
+          "clue": "Usual and not different from what happens most of the time.",
+          "answer": "normal"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A short paper or talk that tells about something.",
-          "answer": "report"
+          "clue": "Graduated means finished a school or a level of learning successfully.",
+          "answer": "graduated"
         }
       ]
     },
@@ -83,44 +83,43 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "homework.",
-            "mathematics",
-            "my",
-            "with",
-            "me",
-            "helps",
-            "teacher",
+            "float.",
+            "can",
+            "boat",
+            "paper",
             "My"
           ],
-          "answer": "My teacher helps me with my mathematics homework."
+          "answer": "My paper boat can float."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "correctly.",
-            "write",
-            "can",
-            "we",
-            "so",
-            "grammar",
-            "learn",
-            "We"
-          ],
-          "answer": "We learn grammar so we can write correctly."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "animal.",
-            "favourite",
-            "my",
-            "about",
-            "report",
+            "draw.",
             "a",
-            "wrote",
-            "I"
+            "was",
+            "match",
+            "the",
+            "of",
+            "result",
+            "The"
           ],
-          "answer": "I wrote a report about my favourite animal."
+          "answer": "The result of the match was a draw."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "contest.",
+            "next",
+            "the",
+            "for",
+            "better",
+            "prepare",
+            "to",
+            "agreed",
+            "class",
+            "Our"
+          ],
+          "answer": "Our class agreed to prepare better for the next contest."
         }
       ]
     },
@@ -241,51 +240,42 @@
           "prompt": "Put this unit sentence in order.",
           "tokens": [
             "shelf.",
-            "one",
-            "on",
-            "author",
-            "that",
-            "by",
-            "book",
-            "every",
-            "keeps",
-            "library",
-            "The"
-          ],
-          "answer": "The library keeps every book by that author on one shelf."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "plenty.",
-            "us",
-            "teach",
-            "still",
-            "can",
-            "prepositions",
-            "about",
-            "lesson",
-            "short",
-            "A"
-          ],
-          "answer": "A short lesson about prepositions can still teach us plenty."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "plan.",
-            "to",
-            "easier",
-            "much",
-            "writing",
             "the",
-            "makes",
-            "topic",
-            "clear",
-            "a",
-            "Choosing"
+            "on",
+            "books",
+            "the",
+            "sort",
+            "helped",
+            "Maya"
           ],
-          "answer": "Choosing a clear topic makes the writing much easier to plan."
+          "answer": "Maya helped sort the books on the shelf."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "Maya?",
+            "week,",
+            "this",
+            "read",
+            "you",
+            "did",
+            "books",
+            "many",
+            "How"
+          ],
+          "answer": "How many books did you read this week, Maya?"
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "class.",
+            "the",
+            "at",
+            "smiled",
+            "judge",
+            "Another"
+          ],
+          "answer": "Another judge smiled at the class."
         }
       ]
     },
@@ -298,34 +288,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'lesson' mean in this unit?",
+          "prompt": "What does 'important' mean in this unit?",
           "choices": [
-            "A time when we learn something new in school.",
-            "A person who helps us learn new things.",
-            "A person who writes books or stories."
+            "Mattering a great deal and needing your care or attention.",
+            "To stay on top of water without sinking.",
+            "The title written at the top of a page or a piece of writing."
           ],
-          "answer": "A time when we learn something new in school.",
-          "explanation": "lesson: A time when we learn something new in school."
+          "answer": "Mattering a great deal and needing your care or attention.",
+          "explanation": "important: Mattering a great deal and needing your care or attention."
         },
         {
-          "prompt": "What does 'topic' mean in this unit?",
+          "prompt": "What does 'turn' mean in this unit?",
           "choices": [
-            "A person who helps us learn new things.",
-            "A person who writes books or stories.",
-            "The subject or idea we talk or write about."
+            "To stay on top of water without sinking.",
+            "The title written at the top of a page or a piece of writing.",
+            "A turn is the moment when it is your time to do something."
           ],
-          "answer": "The subject or idea we talk or write about.",
-          "explanation": "topic: The subject or idea we talk or write about."
+          "answer": "A turn is the moment when it is your time to do something.",
+          "explanation": "turn: A turn is the moment when it is your time to do something."
         },
         {
-          "prompt": "What does 'author' mean in this unit?",
+          "prompt": "What does 'heading' mean in this unit?",
           "choices": [
-            "A place where you can find and borrow books.",
-            "A person who writes books or stories.",
-            "A person who helps us learn new things."
+            "A message you send to somebody through a computer.",
+            "The title written at the top of a page or a piece of writing.",
+            "To stay on top of water without sinking."
           ],
-          "answer": "A person who writes books or stories.",
-          "explanation": "author: A person who writes books or stories."
+          "answer": "The title written at the top of a page or a piece of writing.",
+          "explanation": "heading: The title written at the top of a page or a piece of writing."
         }
       ]
     },
@@ -338,34 +328,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'prepare'?",
+          "prompt": "What type of word is 'include'?",
           "choices": [
             "Verb",
             "Noun",
             "Adjective"
           ],
           "answer": "Verb",
-          "explanation": "Prepare is used as a verb in this dictionary sense."
+          "explanation": "Include is used as a verb in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'supply'?",
+          "prompt": "What type of word is 'author'?",
           "choices": [
             "Verb",
             "Adjective",
             "Noun"
           ],
           "answer": "Noun",
-          "explanation": "Supply is used as a noun in this dictionary sense."
+          "explanation": "Author is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'mathematics'?",
+          "prompt": "What type of word is 'task'?",
           "choices": [
             "Adjective",
             "Noun",
             "Verb"
           ],
           "answer": "Noun",
-          "explanation": "Mathematics is used as a noun in this dictionary sense."
+          "explanation": "Task is used as a noun in this dictionary sense."
         }
       ]
     },
@@ -381,16 +371,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "library",
-              "A place where you can find and borrow books."
+              "coach",
+              "A person who trains a team and helps them play better."
             ],
             [
-              "graduate",
-              "To finish school or a class."
+              "photograph",
+              "A photograph is a picture taken with a camera."
             ],
             [
-              "grammar",
-              "The rules for how we put words together to speak and write."
+              "project",
+              "A piece of work you plan and finish over some time."
             ]
           ]
         },
@@ -398,16 +388,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "education",
-              "Learning about things at school or at home."
+              "pack",
+              "To put things together neatly into a bag, box, or case."
             ],
             [
-              "prepare",
-              "To get ready for something."
+              "check",
+              "To look at something carefully to make sure it is right."
             ],
             [
-              "contest",
-              "A game or test to see who is best."
+              "clever",
+              "Quick to learn, understand, and think of good ideas."
             ]
           ]
         },
@@ -415,16 +405,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "topic",
-              "The subject or idea we talk or write about."
+              "worked",
+              "Worked means did a job or task, often for a period of time."
             ],
             [
-              "supply",
-              "Things we use at school or home, like pencils and paper."
+              "winners",
+              "Winners are the people who succeed or come first in a contest."
             ],
             [
-              "teacher",
-              "A person who helps us learn new things."
+              "loudest",
+              "Loudest means making the most noise of all."
             ]
           ]
         }

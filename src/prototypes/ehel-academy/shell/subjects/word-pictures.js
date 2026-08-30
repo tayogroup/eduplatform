@@ -691,6 +691,41 @@ export const WORD_PICTURES = {
   fail: "❌", correspondence: "✉️", enquire: "❓", warranty: "📜",
   clause: "📜",
   // bank is deliberately absent — see the note above.
+
+  // ── Grade 1 Core words ──────────────────────────────────────────────────
+  // The Core-words restructure added 398 taught words to Grade 1, 198 of them
+  // new master entries, so the earlier Grade 1 pass had never seen them. It
+  // left Core-word coverage at 58% (231 of 398).
+  //
+  // What follows is only the words a picture can honestly BE. The rest of the
+  // 167 stay bare on purpose and are the bulk of them: every pronoun (20),
+  // position word (16), preposition (7), conjunction (5) and article (3), the
+  // auxiliaries (am, is, are, was, were, be, have, has, do, does, will, would,
+  // could, should), and the dimension adjectives (long, short, thin, thick,
+  // far, full, empty, much) — none of which a picture can show without a
+  // caption, which is the failure this file exists to prevent.
+  //
+  // Four cases decided against a picture that looked available:
+  //   grey     the colour set here is coloured squares (red 🟥, brown 🟫) and
+  //            Unicode has no grey one. ☁️ would be a cloud, not the colour.
+  //   sand     🏖️ is a beach; the word is what the beach is made of.
+  //   line     ➖ reads as a minus sign, not "a long thin mark".
+  //   hungry   no emoji means it; 😋 is enjoying food, the opposite state.
+  //
+  // Duplicates below are intentional and already the file's habit — table and
+  // eat both draw 🍽️. look and watch are both eyes because both ARE eyes.
+  bat: "🏏", fan: "🪭", cap: "🧢", tag: "🏷️", home: "🏠", net: "🥅",
+  child: "🧒🏾", pin: "📌", page: "📄", fox: "🦊", pot: "🍲", cot: "🛏️",
+  colour: "🎨", cup: "🥤", nut: "🌰", hug: "🤗", animal: "🐾", tiger: "🐅",
+  snake: "🐍", ship: "🚢", shell: "🐚", chip: "🍟", sock: "🧦", quiz: "❓",
+  food: "🍽️", cake: "🍰", tent: "⛺",
+  count: "🔢", look: "👀", watch: "👀", chat: "💬", swim: "🏊🏾",
+  angry: "😠", afraid: "😨", tired: "😴",
+  // Completes the keycap run the map already has from one to ten, and answers
+  // "yes ✅" the way the set already implies.
+  zero: "0️⃣", no: "❌",
+  // 🙏🏾 is the thanking gesture, not prayer, in the sense this word teaches.
+  thankyou: "🙏🏾",
 };
 
 // Where one lemma is two different words.
@@ -787,6 +822,10 @@ export const GRADE_WORD_PICTURES = {
     right: "✅", stop: "🚏",
     // added with the Intensive English pass, see the note below
     entry: "", serve: "",
+    // Grade 1's Core words gave "zero" the keycap 0️⃣ that completes its one-to-ten
+    // run. Grade 5 does not teach the number: it teaches the ZERO CONDITIONAL, a
+    // grammar term, and a keycap beside it names the wrong thing entirely.
+    zero: "",
   },
   6: {
     like: "", kind: "", square: "", ruler: "👑", hunt: "🏹", play: "⚽",
@@ -815,6 +854,10 @@ export const GRADE_WORD_PICTURES = {
     // Added with the Intensive English pass: those words entered the shared map
     // for a beginner course and English teaches four of them differently.
     platform: "", serve: "",
+    // Same pattern again, from the Grade 1 Core-words pass: 📌 is honest for the
+    // pushpin Grade 1 teaches, and Grade 8's "pin" is the verb -- to fix
+    // something to a point in time. The pin in the picture is the wrong word.
+    pin: "",
     // Grade 8 is where this pattern peaks, and the Grades 5-8 audit found ten of
     // them at this grade alone. It re-teaches concrete words in FIGURATIVE
     // senses, and the picture kept following the concrete one: a bird beside

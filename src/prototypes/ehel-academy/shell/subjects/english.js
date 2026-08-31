@@ -11334,6 +11334,7 @@ function renderWordCarousel() {
   const stopShow = ({ finished = false } = {}) => {
     if (showTicket === null) return;
     showTicket = null;
+    clearTapCheck();
     // A natural finish leaves the player alone — its last clip already ended,
     // and stopAudio would also knock over anything the learner starts next.
     if (!finished) stopAudio();
@@ -11362,7 +11363,62 @@ function renderWordCarousel() {
     player.addEventListener("pause", finish);
     player.addEventListener("ended", finish);
   }).then(() => showLive(ticket));
+  // ===================== the tap check =====================
+  // Every fifth word the show pauses and asks for one back: the target's clip
+  // plays again and the learner taps the word they heard, from three big
+  // cards. This is the interactive half of the owner's "interactive video" —
+  // retrieval practice is what turns watching into learning, and
+  // hearing-then-finding the WRITTEN word is the Core-words skill itself.
+  //
+  // It keeps the show's rules. It marks NOTHING — a right tap earns the clip
+  // again and the show moves on, never a tick. And it never traps a learner:
+  // two misses light the right card up and the show carries on regardless.
+  // Its taps are the one deck touch that must NOT stop the show, so the stop
+  // handlers below exempt the panel the way they exempt the Stop button.
+  let tapCheckPanel = null;
+  const clearTapCheck = () => { tapCheckPanel?.remove(); tapCheckPanel = null; };
+  const tapCheck = (ticket, pool) => new Promise((resolve) => {
+    const target = pool[Math.floor(Math.random() * pool.length)];
+    const cards = [target, ...pool.filter((item) => item !== target).slice(0, 2)];
+    for (let i = cards.length - 1; i > 0; i -= 1) { const j = Math.floor(Math.random() * (i + 1)); [cards[i], cards[j]] = [cards[j], cards[i]]; }
+    const panel = document.createElement("div");
+    panel.className = "wc-tapcheck";
+    panel.innerHTML = `<p class="wc-tapcheck-ask">Tap the word you heard</p>
+      <div class="wc-tapcheck-cards">${cards.map((item) => `<button type="button" class="wc-tapcheck-card" data-tap-word="${esc(item.vocabularyId)}">${dictionaryPicture(item.master) ? `<span class="wc-tapcheck-pic" aria-hidden="true">${dictionaryPicture(item.master)}</span>` : ""}<span class="wc-tapcheck-word" lang="en">${esc(item.master.displayWord)}</span></button>`).join("")}</div>
+      <button type="button" class="gc-btn ghost small wc-tapcheck-again">${icon("volume-2")} Hear it again</button>`;
+    deck.root.querySelector(".gc-carousel").appendChild(panel);
+    tapCheckPanel = panel;
+    icons();
+    const say = () => playAudio(target.master.audio.normal, { rate: AI_NARRATION_RATE, start: target.master.audio.cueStart, end: target.master.audio.cueEnd });
+    say();
+    let misses = 0;
+    let settled = false;
+    const done = () => { if (settled) return; settled = true; clearTapCheck(); resolve(); };
+    panel.addEventListener("click", (event) => {
+      if (!showLive(ticket)) return done();
+      if (event.target.closest(".wc-tapcheck-again")) return say();
+      const card = event.target.closest(".wc-tapcheck-card");
+      if (!card || settled) return undefined;
+      if (card.dataset.tapWord === target.vocabularyId) {
+        card.classList.add("is-right");
+        say();
+        setTimeout(done, 1100);
+      } else {
+        card.classList.add("is-wrong");
+        misses += 1;
+        say();
+        if (misses >= 2) {
+          panel.querySelector(`[data-tap-word="${CSS.escape(target.vocabularyId)}"]`)?.classList.add("is-right");
+          setTimeout(done, 1600);
+        }
+      }
+      return undefined;
+    });
+  }).then(() => showLive(ticket));
+
   const runShow = async (ticket) => {
+    // The words a check may ask back: heard in THIS run, with a clip to play.
+    const heard = [];
     for (let position = Math.max(0, deck.index); position < words.length; position += 1) {
       if (!showLive(ticket)) return;
       deck.goTo(position);
@@ -11371,6 +11427,7 @@ function renderWordCarousel() {
       if (item.master?.audio?.available) {
         if (!(await showClip(ticket, () => playAudio(item.master.audio.normal, { rate: AI_NARRATION_RATE, start: item.master.audio.cueStart, end: item.master.audio.cueEnd })))) return;
         if (!(await showDelay(400, ticket))) return;
+        heard.push(item);
       }
       if (item.meaningAudio?.available) {
         if (!(await showClip(ticket, () => playAudio(item.meaningAudio.source, { rate: AI_NARRATION_RATE, start: item.meaningAudio.cueStart, end: item.meaningAudio.cueEnd })))) return;
@@ -11381,6 +11438,13 @@ function renderWordCarousel() {
         if (!(await showClip(ticket, () => playAudio(sentence.source, { rate: AI_NARRATION_RATE, start: sentence.cueStart, end: sentence.cueEnd })))) return;
       }
       if (!(await showDelay(800, ticket))) return;
+      // A check every fifth word, over the last five heard — and only
+      // mid-show: the last word's check would delay the finish for a quiz
+      // about a word still on screen.
+      if ((position + 1) % 5 === 0 && position < words.length - 1 && heard.length >= 3) {
+        if (!(await tapCheck(ticket, heard.slice(-5)))) return;
+        if (!(await showDelay(500, ticket))) return;
+      }
     }
     stopShow({ finished: true });
     toast("That is every word! Mark the ones you know with “I know this word”.");
@@ -11397,11 +11461,11 @@ function renderWordCarousel() {
   // dot handler runs its own goTo. The swipe path never fires a click, so the
   // viewport's touchstart is covered separately.
   deck.root.addEventListener("click", (event) => {
-    if (event.target.closest("#word-show")) return;
+    if (event.target.closest("#word-show") || event.target.closest(".wc-tapcheck")) return;
     stopShow();
   }, true);
   deck.root.addEventListener("touchstart", (event) => {
-    if (event.target.closest("#word-show")) return;
+    if (event.target.closest("#word-show") || event.target.closest(".wc-tapcheck")) return;
     stopShow();
   }, { passive: true, capture: true });
 

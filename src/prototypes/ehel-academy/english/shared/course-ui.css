@@ -312,6 +312,19 @@ body.deck-theatre .gc-wrap:not(.is-theatre) { display: none; }
 .wc-scene { width: min(320px, 84%); margin: 0 auto -2px; }
 .wc-scene svg { display: block; width: 100%; height: auto; }
 @media (max-width: 640px) { .wc-scene { width: min(250px, 90%); } }
+/* The word show's tap check: pauses the show over the carousel and asks for
+   one word back. Sits inside .gc-carousel (position:relative), above the
+   arrows (z-index 2). Its taps are exempted from the show's stop handlers. */
+.wc-tapcheck { position: absolute; inset: 0; z-index: 3; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 18px; background: #17324de6; border-radius: 18px; }
+.wc-tapcheck-ask { margin: 0; color: #fff; font: var(--weight-bold, 700) 24px var(--font-serif, serif); }
+.wc-tapcheck-cards { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+.wc-tapcheck-card { display: flex; flex-direction: column; align-items: center; gap: 6px; min-width: 120px; padding: 18px 20px; border: none; border-radius: 16px; background: #fff; cursor: pointer; box-shadow: 0 8px 22px #00000040; transition: transform .15s; }
+.wc-tapcheck-card:hover { transform: translateY(-3px); }
+.wc-tapcheck-pic { font-size: 44px; line-height: 1; }
+.wc-tapcheck-word { font: var(--weight-bold, 700) 26px var(--font-serif, serif); color: #17324d; }
+.wc-tapcheck-card.is-right { background: #e5f7e9; outline: 4px solid #3f9c5c; }
+.wc-tapcheck-card.is-wrong { background: #fdecea; outline: 4px solid #e2504c; opacity: .7; }
+@media (max-width: 640px) { .wc-tapcheck-word { font-size: 20px; } .wc-tapcheck-pic { font-size: 34px; } .wc-tapcheck-card { min-width: 92px; padding: 12px 14px; } }
 .wc-sentence { width: 100%; max-width: 520px; background: #eef4fa; border-radius: 14px; padding: 14px 16px; display: grid; gap: 8px; }
 .wc-sentence small { color: #5a6f88; letter-spacing: .04em; text-transform: uppercase; font-size: 12px; }
 .wc-sentence p { margin: 0; font-size: 18px; line-height: 1.5; color: #17324d; }

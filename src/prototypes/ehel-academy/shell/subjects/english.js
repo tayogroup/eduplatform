@@ -13,6 +13,7 @@ import { createDeck } from "../deck.js?v=deck-1";
 import { wordPicture } from "./word-pictures.js?v=pictures-1";
 import { coreWordScene } from "./english-core-word-scenes.js?v=scenes-1";
 import { createGameZone } from "./english-kid-games.js?v=kid-games-1";
+import { createSpeakingStudio } from "./english-kid-speaking.js?v=kid-speaking-1";
 import { cursiveWord, cursiveCanWrite } from "./cursive-strokes.js?v=cursive-1";
 import { SCHOOL_CALENDAR, calendarTerm, termDatesLabel, termWeekTotal, halfTermRow, formatDay } from "../study-plan.js?v=study-plan-2";
 import { platformHeaders, askWehel, focusModule, setFocusModule, onFocusChange, modulesFromSections, outlineFromManifest, unitFetcher, browserSpeechSupported, speakBrowser, speechRateForGrade, stopBrowserSpeech, speechRecognitionCtor, recognizeSpeech, wehelIcon, platformUrl, PLATFORM_ORIGIN } from "../wehel.js?v=wehel-4";
@@ -10073,7 +10074,7 @@ function collectPageNarration() {
   // one go — 25 practice questions, or an English unit's several hundred words.
   // The slide the learner is on is what "this page" means there, and the deck
   // already marks it: every other slide is `inert` (deck.js :: syncReachable).
-  const source = $("#classic-design") || $("#app .gc-slide:not([inert])") || $("#app");
+  const source = $("#classic-design") || $("#app .gc-slide:not([inert])") || $("#app .ks-narrate") || $("#app");
   if (!source) return currentPageNarration;
   const copy = source.cloneNode(true);
   copy.querySelectorAll("button, .audio-source, .status-chip, script, style, [hidden], [aria-hidden='true'], details:not([open]) > *:not(summary)").forEach((element) => element.remove());
@@ -11231,7 +11232,6 @@ const DECK_INTROS = {
   reading: { title: "Read the story", steps: [["book-open", "One page at a time. Read it, or listen to it."], DECK_STEP_LISTEN, ["check", "On the last page, press “I have read this text”."]] },
   comprehension: { title: "Think about the story", steps: [["list-checks", "One question at a time. Say your answer, then press “Check guidance” to see a good answer."], DECK_STEP_NEXT, ["check", "On the last slide, press “Finish comprehension”."]] },
   grammar: { title: "Say the patterns", steps: [["braces", "One pattern at a time. Say it out loud and try the practice."], DECK_STEP_LISTEN, ["check", "Go through every pattern to the last slide to finish."]] },
-  speaking: { title: "Use your voice", steps: [["messages-square", "One practice at a time. Press “Hear model”, then say it yourself."], ["mic", "Press Record to record yourself, then Submit."], DECK_STEP_NEXT] },
   writing: { title: "Plan, write and improve", steps: [["pencil-line", "One task at a time. Write your own sentences in the box — at least eight words."], ["send", "Press “Submit this draft” to save your writing."], DECK_STEP_NEXT] },
   activities: { title: "Learn by doing", steps: [["shapes", "One activity at a time. Do each step, then tap its circle to tick it off."], ["pencil", "Write your answer on the line, or press “Draw it” to draw one."], ["check", "When every step is ticked, press “Mark complete”."]] },
 };
@@ -12774,8 +12774,85 @@ function renderGrammarCarousel() {
   });
 }
 
+// --- the Grades 1-4 Speaking Studio -------------------------------------------
+// Owner, 2026-09-01: Speaking was not interactive, interesting or engaging for
+// the youngest learners. renderSpeakingClassic below is what Grades 5-8 and a
+// tutoring learner still get, unchanged — and it is now the only other renderer:
+// renderSpeakingCarousel was the deck this replaced, and it went with the deck.
+//
+// The route asks DECK_PAGE, which is the question the rest of the subject asks
+// and already carries both boundaries: the grade line at 4, and the tutoring
+// exemption (a learner arriving from a search on one problem gets the original
+// page at every grade, CLAUDE.md). So the studio stands exactly where the deck
+// stood and nothing else has to be gated for it.
+//
+// The CONTENT is untouched. english-kid-speaking.js reads the same `speaking`
+// array, plays the same clip, scores against the same pronunciation endpoint and
+// finishes through the same complete("speaking") — so check:english sees what it
+// always saw and nothing is re-narrated or re-billed. What is new is that the
+// model lines are lifted out of the paragraph they were buried in.
+const KID_SPEAKING = DECK_PAGE;
+// Keyed on the task array itself, so a repaint inside a unit keeps the studio's
+// own place — which practice is open, which step — instead of dropping the
+// learner back at the map mid-practice. Same rule, same reason, as kidGames().
+let speakingStudio = null;
+let speakingStudioTasks = null;
+function kidSpeaking() {
+  if (speakingStudio && speakingStudioTasks === course.speaking) return speakingStudio;
+  speakingStudioTasks = course.speaking;
+  speakingStudio = createSpeakingStudio({
+    tasks: course.speaking,
+    unit: { no: course.unit.unitNo, title: course.unit.unitTitle },
+    icon, icons, escapeHtml, toast,
+    // This unit's OWN vocabulary, which is what a blank in "I like ______" wants
+    // to be filled from — the words the rest of the unit has been teaching. The
+    // story glossary is left out for the same reason Core words leaves it out:
+    // taughtWords() is the set the unit asks a learner to know.
+    //
+    // Minus the words that cannot fill a blank. The first build offered the whole
+    // list, so "I like ______" invited a seven-year-old to choose `if`, `about`
+    // or `around`. Every Grades 1-4 dictionary entry carries a partOfSpeech
+    // (4,962 of 4,962, measured), so this needs no per-blank authoring — and an
+    // entry with NO part of speech is kept rather than dropped, because that is
+    // the stub linkedWords() mints when a dictionary lags its unit, and a lag
+    // must not empty the tray.
+    //
+    // Adverbs stay. They are wrong for "I like ___" and right for the Grade 3-4
+    // frames ("I usually ______ before school"), and this is a word bank rather
+    // than an answer key: nothing a child picks is marked wrong, because their
+    // own sentence has no wrong word in it.
+    wordBank: () => {
+      const CONTENT_WORDS = new Set(["noun", "verb", "adjective", "number", "adverb"]);
+      const seen = new Set();
+      const words = [];
+      for (const item of taughtWords()) {
+        const word = item.master?.displayWord || item.displayWord;
+        const partOfSpeech = String(item.master?.partOfSpeech || "").trim().toLowerCase();
+        if (!word || seen.has(word.toLowerCase())) continue;
+        if (partOfSpeech && !CONTENT_WORDS.has(partOfSpeech)) continue;
+        seen.add(word.toLowerCase());
+        words.push(word);
+      }
+      // Picturable first, and only that — Array#sort is stable, so within each
+      // half the unit's own teaching order survives.
+      return words.sort((a, b) => (wordPicture(b, gradeNumber) ? 1 : 0) - (wordPicture(a, gradeNumber) ? 1 : 0));
+    },
+    wordPicture: (word) => wordPicture(word, gradeNumber),
+    soundOn: () => audioEnabled,
+    playClip: (source, button) => playAudio(source, { rate: AI_NARRATION_RATE, button }),
+    speak: (text, button) => playGameInstruction(text, button),
+    speakingPanel: (options) => kidSpeakingPanel({ ...options, idPrefix: "ks-", flow: false }),
+    hasRecording: (id) => recordings.has(id),
+    stateFor: (id) => (progress.speaking || {})[id],
+    saveState: (id, value) => { progress.speaking ||= {}; progress.speaking[id] = value; saveProgress(); },
+    sectionDone: () => progress.completed.includes("speaking"),
+    finishSection: (message) => complete("speaking", message),
+  });
+  return speakingStudio;
+}
+
 function renderSpeaking() {
-  if (DECK_PAGE) return renderDeckOnly(renderSpeakingCarousel);
+  if (KID_SPEAKING) return kidSpeaking().render();
   return renderSpeakingClassic();
 }
 
@@ -12783,24 +12860,26 @@ function renderSpeaking() {
 // on the speaking practices themselves. It was wired only into the game and the
 // tutor page, so this section recorded a learner's voice and then did nothing
 // with it — "your recording stays on this device", and no way to find out
-// whether it was any good. Both callers go through the shared
-// submitSpeakingRecording, so this adds a third caller rather than a second
-// implementation, and the ids are per-task because Speaking shows six at once.
-// Both halves at Grades 1-4 draw this, so it is written once. The recording id
-// is deliberately the SAME in both — toggleRecording resolves the status line
-// and the <audio> from the pressed button's own region, so one id is correct and
-// the two designs share a learner's recording rather than each holding half of
-// it. Only the feedback element takes a prefix, because that one is looked up by
-// id and a duplicate id would send the deck's result into the original above it.
-function speakingCoachHtml(task, { idPrefix = "", buttonClass = "button primary" } = {}) {
+// whether it was any good. Every caller goes through the shared
+// submitSpeakingRecording, so this adds one more caller rather than a second
+// implementation, and the ids are per-task because the card grid shows six at
+// once.
+//
+// This is the GRADES 5-8 (and tutoring) recorder now. The Grades 1-4 deck drew
+// it too, which is why it took an idPrefix and a buttonClass: the deck and the
+// card grid carried the same ids on one page, and a duplicate feedback id sent
+// the deck's result into the card above it. That deck is gone — the Speaking
+// Studio replaced it — so both parameters went with it, and Grades 1-4 reach the
+// same recorder through kidSpeakingPanel instead.
+function speakingCoachHtml(task) {
   const id = task.speakingId;
   const review = speakingReviewState.get(id);
   const recorded = recordings.has(id);
   return `<div class="recorder"><button class="record-button" data-record="${id}" type="button" aria-label="Start recording for ${escapeHtml(task.title)}">${icon("mic")}</button><div><strong data-record-status="${id}" role="status" aria-live="polite" aria-atomic="true">${recorded ? "Recording ready. Listen back." : "Ready to record"}</strong><small> Your recording stays on this device until you submit it.</small></div></div>
     <audio data-playback="${id}" controls ${recorded ? "" : "hidden"} aria-label="Your recording for ${escapeHtml(task.title)}"></audio>
     <div class="speaking-flow"><span class="flow-step active"><strong>1</strong> Record</span><span class="flow-step ${recorded ? "active" : ""}"><strong>2</strong> Listen</span><span class="flow-step ${review?.listened ? "active" : ""}"><strong>3</strong> Submit</span><span class="flow-step ${review?.feedback ? "active" : ""}"><strong>4</strong> Feedback</span></div>
-    <button class="${buttonClass}" data-speaking-submit="${id}" type="button" ${review?.listened ? "" : "disabled"}>${icon("send")} Submit for pronunciation check</button>
-    <div id="${idPrefix}speaking-feedback-${id}" role="status" aria-live="polite" aria-atomic="true">${pronunciationFeedbackHtml(review?.feedback)}</div>`;
+    <button class="button primary" data-speaking-submit="${id}" type="button" ${review?.listened ? "" : "disabled"}>${icon("send")} Submit for pronunciation check</button>
+    <div id="speaking-feedback-${id}" role="status" aria-live="polite" aria-atomic="true">${pronunciationFeedbackHtml(review?.feedback)}</div>`;
 }
 
 function renderSpeakingClassic() {
@@ -12829,71 +12908,6 @@ function renderSpeakingClassic() {
     submitSpeakingRecording(id, speakingModelText(task), event.currentTarget, { feedbackSelector: `#speaking-feedback-${id}` });
   }));
   $("#speaking-done").addEventListener("click", () => complete("speaking", "Speaking practice complete."));
-}
-
-// Speaking as a deck: one practice per slide — hear the model, then record
-// yourself, with nothing else on screen competing for a young learner's turn.
-//
-// The recorder keeps the same data-record / data-record-status / data-playback
-// attributes the card grid used, because toggleRecording() addresses them by
-// selector from outside the renderer. Slides are never repainted here, so a
-// recording made on slide 3 is still attached to its player when the learner
-// swipes back to it.
-function renderSpeakingCarousel() {
-  const esc = escapeHtml;
-  const tasks = course.speaking;
-  const slides = tasks.map((task, index) => `<section class="gc-slide gc-v${index % 5}"><div class="gc-inner">
-      <span class="gc-eyebrow">Practice ${task.sequence} of ${tasks.length} · ${esc(task.activityType)}</span>
-      <h3 class="gc-title">${esc(task.title)}</h3>
-      <p class="gc-note gc-try">${esc(task.instructionsAndModelLines)}</p>
-      ${task.audio?.available
-        ? `<div class="gc-actions">
-             <button class="gc-btn play" type="button" data-model="${esc(task.speakingId)}" data-rate="${AI_NARRATION_RATE}">${icon("volume-2")} Hear model</button>
-             <button class="gc-btn ghost" type="button" data-model="${esc(task.speakingId)}" data-rate="${AI_NARRATION_RATE}">${icon("rotate-ccw")} Replay</button>
-           </div>
-           <small class="gc-source">ElevenLabs · approved Ehel voice · ${AI_NARRATION_RATE_LABEL}</small>`
-        : `<span class="audio-pending">${icon("clock-3")} ElevenLabs model audio pending</span>`}
-      ${task.recordingRequired ? speakingCoachHtml(task, { idPrefix: "deck-", buttonClass: "gc-btn" }) : ""}
-    </div></section>`);
-
-  mountDeck({
-    heading: "Use your voice",
-    label: "Practice",
-    intro: deckIntro("speaking"),
-    finish: ["speaking", `I finished all ${tasks.length} speaking practices`],
-    slides,
-    onClick: (event) => {
-      const target = event.target.closest("[data-model], [data-record], [data-speaking-submit], [data-deck-finish]");
-      if (!target) return undefined;
-      if (target.dataset.deckFinish) return complete("speaking", "Speaking practice complete.");
-      if (target.dataset.record) return toggleRecording(target.dataset.record, target);
-      if (target.dataset.speakingSubmit) {
-        const id = target.dataset.speakingSubmit;
-        const speaking = tasks.find((item) => item.speakingId === id);
-        // The deck's own feedback element, not the original's above it.
-        return submitSpeakingRecording(id, speakingModelText(speaking), target, { feedbackSelector: `#deck-speaking-feedback-${id}` });
-      }
-      const task = tasks.find((item) => item.speakingId === target.dataset.model);
-      return playAudio(task.audio.source, { rate: Number(target.dataset.rate), button: target });
-    },
-  });
-
-  // "Listened to the end" is not a click, so it cannot come through the deck's
-  // delegated handler and has to be bound after the deck is mounted. Scoped to
-  // the deck's own region: the original above carries the same data-playback
-  // ids, and a document-wide bind would arm the wrong half's Submit.
-  const deckRegion = deckMount ? $(deckMount) : null;
-  (deckRegion ? [...deckRegion.querySelectorAll("[data-playback]")] : []).forEach((audio) => {
-    audio.addEventListener("ended", () => {
-      const id = audio.dataset.playback;
-      const review = speakingReviewState.get(id) || { feedback: null };
-      review.listened = true;
-      speakingReviewState.set(id, review);
-      const submit = deckRegion.querySelector(`[data-speaking-submit="${id}"]`);
-      if (submit) submit.disabled = false;
-      toast("You listened to the full recording. It is ready to submit.");
-    });
-  });
 }
 
 async function toggleRecording(taskId, button) {
@@ -12934,6 +12948,36 @@ async function toggleRecording(taskId, button) {
       audio.dispatchEvent(new CustomEvent("recordingready"));
       icons();
     });
+    // The level the microphone is actually hearing, published on the button
+    // that started it. A five-year-old cannot tell a live microphone from a dead
+    // one, and the Speaking Studio draws a ring around this. A second
+    // getUserMedia in the renderer would mean two permission prompts for one
+    // press, so the stream that already exists is the one that is measured, and a
+    // renderer that ignores the event is exactly as it was — which is every
+    // renderer but the studio. Wrapped whole: a browser that refuses an
+    // AudioContext must lose the animation and keep the recording.
+    try {
+      const AudioCtor = window.AudioContext || window.webkitAudioContext;
+      if (AudioCtor) {
+        const meterContext = new AudioCtor();
+        const analyser = meterContext.createAnalyser();
+        analyser.fftSize = 256;
+        meterContext.createMediaStreamSource(stream).connect(analyser);
+        const samples = new Uint8Array(analyser.frequencyBinCount);
+        const readLevel = () => {
+          // Stops itself on the recorder rather than on a flag of its own: the
+          // loop must end when the recording does, and the recorder is the only
+          // thing that knows when that was.
+          if (mediaRecorder?.state !== "recording") { meterContext.close().catch(() => {}); return; }
+          analyser.getByteTimeDomainData(samples);
+          let peak = 0;
+          for (const sample of samples) peak = Math.max(peak, Math.abs(sample - 128));
+          button.dispatchEvent(new CustomEvent("recordinglevel", { detail: { level: Math.min(1, peak / 64) } }));
+          requestAnimationFrame(readLevel);
+        };
+        mediaRecorder.addEventListener("start", () => requestAnimationFrame(readLevel), { once: true });
+      }
+    } catch { /* the meter is decoration; the recording is not */ }
     mediaRecorder.start();
     find(`[data-record-status="${taskId}"]`).textContent = "Recording… tap to stop";
     button.classList.add("recording");
@@ -13688,30 +13732,49 @@ function kidGames() {
 }
 
 // The recorder stays here: it owns MediaRecorder, the saved blobs, the listened
-// gate and the pronunciation endpoint, and a second copy of any of that in the
-// games module would be a second thing to keep in step. The park draws the stage
-// around this markup and this binding.
-function kidSpeakingPanel({ recordingId, target, onResult }) {
+// gate and the pronunciation endpoint, and a second copy of any of that in a
+// renderer would be a second thing to keep in step. The Game Park draws the
+// stage around this markup and this binding, and since 2026-09-01 so does the
+// Speaking Studio.
+//
+// The two ask for different chrome around the same recorder, so there are two
+// options and both default to what the park already had: `idPrefix` keeps the
+// element ids unique when a second caller exists (the park stays on
+// `game-speaking-submit` / `game-speaking-feedback`, byte for byte), and `flow`
+// draws the four-step Record · Listen · Submit · Feedback strip, which the
+// studio suppresses because its own step ladder already says where the learner
+// is and two progress indicators for one action disagree the moment either
+// moves.
+function kidSpeakingPanel({ recordingId, target, onResult, idPrefix = "game-", flow = true }) {
   const review = speakingReviewState.get(recordingId);
+  const submitId = `${idPrefix}speaking-submit`;
+  const feedbackId = `${idPrefix}speaking-feedback`;
+  const flowHtml = flow ? `<div class="speaking-flow"><span class="flow-step active"><strong>1</strong> Record</span><span class="flow-step ${review ? "active" : ""}"><strong>2</strong> Listen</span><span class="flow-step ${review?.listened ? "active" : ""}"><strong>3</strong> Submit</span><span class="flow-step ${review?.feedback ? "active" : ""}"><strong>4</strong> Feedback</span></div>` : "";
   return {
-    html: `<div class="speaking-flow"><span class="flow-step active"><strong>1</strong> Record</span><span class="flow-step ${review ? "active" : ""}"><strong>2</strong> Listen</span><span class="flow-step ${review?.listened ? "active" : ""}"><strong>3</strong> Submit</span><span class="flow-step ${review?.feedback ? "active" : ""}"><strong>4</strong> Feedback</span></div><div class="recorder"><button class="record-button" data-record="${recordingId}" type="button" aria-label="Record your answer">${icon("mic")}</button><div><strong data-record-status="${recordingId}" role="status" aria-live="polite" aria-atomic="true">${recordings.has(recordingId) ? "Recording ready. Listen back." : "Press to record"}</strong><small> Your recording stays on this device until you send it.</small></div></div><audio data-playback="${recordingId}" controls ${recordings.has(recordingId) ? "" : "hidden"} aria-label="Your recording"></audio><button class="button primary game-speaking-submit" id="game-speaking-submit" type="button" ${review?.listened ? "" : "disabled"}>${icon("send")} Send it to be checked</button><div id="game-speaking-feedback" role="status" aria-live="polite" aria-atomic="true">${pronunciationFeedbackHtml(review?.feedback)}</div>`,
+    html: `${flowHtml}<div class="recorder"><button class="record-button" data-record="${recordingId}" type="button" aria-label="Record your answer">${icon("mic")}</button><div><strong data-record-status="${recordingId}" role="status" aria-live="polite" aria-atomic="true">${recordings.has(recordingId) ? "Recording ready. Listen back." : "Press to record"}</strong><small> Your recording stays on this device until you send it.</small></div></div><audio data-playback="${recordingId}" controls ${recordings.has(recordingId) ? "" : "hidden"} aria-label="Your recording"></audio><button class="button primary game-speaking-submit" id="${submitId}" type="button" ${review?.listened ? "" : "disabled"}>${icon("send")} Send it to be checked</button><div id="${feedbackId}" role="status" aria-live="polite" aria-atomic="true">${pronunciationFeedbackHtml(review?.feedback)}</div>`,
     bind: () => {
       const recordButton = $(`[data-record="${recordingId}"]`);
       const playback = $(`[data-playback="${recordingId}"]`);
       const saved = recordings.get(recordingId);
       if (saved) playback.src = saved.url;
       recordButton.addEventListener("click", () => toggleRecording(recordingId, recordButton));
-      playback.addEventListener("recordingready", () => { $("#game-speaking-submit").disabled = true; $("#game-speaking-feedback").innerHTML = ""; });
+      playback.addEventListener("recordingready", () => { $(`#${submitId}`).disabled = true; $(`#${feedbackId}`).innerHTML = ""; });
       playback.addEventListener("ended", () => {
         const state = speakingReviewState.get(recordingId) || { feedback: null };
         state.listened = true;
         speakingReviewState.set(recordingId, state);
-        $("#game-speaking-submit").disabled = false;
+        $(`#${submitId}`).disabled = false;
         toast("You listened to the whole recording. It is ready to send.");
       });
-      $("#game-speaking-submit").addEventListener("click", (event) => submitSpeakingRecording(recordingId, target, event.currentTarget, {
-        feedbackSelector: "#game-speaking-feedback",
-        onFeedback: (feedback) => onResult(feedback.score >= 65),
+      $(`#${submitId}`).addEventListener("click", (event) => submitSpeakingRecording(recordingId, target, event.currentTarget, {
+        feedbackSelector: `#${feedbackId}`,
+        // The park asks "was that right" and the studio wants the score itself,
+        // to show a percentage and to award its third star. So the verdict stays
+        // FIRST and the whole feedback object rides beside it: english-kid-games.js
+        // is written `onResult: (ok) => settle(ok, …)` and passing it the object
+        // instead would make every failed attempt truthy — a pass, silently, on
+        // every speaking round in the park. Additive, or not at all.
+        onFeedback: (feedback) => onResult(feedback.score >= 65, feedback),
       }));
     },
   };

@@ -500,7 +500,16 @@ def create_lecture(grade: int, unit_number: int, model=None) -> None:
     subprocess.run([
         ffmpeg, "-y", "-f", "concat", "-safe", "0", "-i", str(concat), "-i", str(audio),
         "-vf", "fps=12,format=yuv420p", "-c:v", "libx264", "-preset", "veryfast", "-crf", "23",
-        "-c:a", "aac", "-b:a", "160k", "-ar", "48000", "-shortest", "-movflags", "+faststart", str(video),
+        "-c:a", "aac", "-b:a", "160k", "-ar", "48000",
+        # -t as well as -shortest. -shortest alone overshot: the concat demuxer's
+        # trailing entry (the last image, repeated with no duration) kept emitting
+        # frames past the end of the audio, and -shortest only stops at the next
+        # packet boundary. Measured across all 64 lectures before this was added:
+        # a median 8.45s and up to 10.4s of the closing slide held in silence,
+        # 63 of 64 over three seconds. A child watching a frozen slide for eight
+        # seconds after the voice stops cannot tell that from a broken video.
+        "-t", f"{audio_duration:.3f}",
+        "-shortest", "-movflags", "+faststart", str(video),
     ], check=True, capture_output=True)
     # One cue per SENTENCE, not one per slide. A slide's narration is a whole
     # paragraph, and a cue is rendered in full for its entire duration, so the

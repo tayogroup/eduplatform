@@ -9973,13 +9973,21 @@ document.addEventListener("keydown", (event) => { if (event.key === "Escape") hi
 // deployed shell serves, so the two must not drift.
 const SHARED_AUDIO = /(^|\/)media\/audio\/grade-\d+\//;
 
-// lectureVideo and lecturePoster keep a stable filename across a re-render —
-// unlike an individual clip's `source`, there is no `?a=` stamp anywhere on
-// this path, so a browser that already played a lecture caches the OLD file
-// for a year and a redeploy at the same URL never reaches it. lectureCaptions
-// does not need this: its filename is a content hash (version-lecture-
-// captions.js), so a caption edit already mints a new URL on its own.
-const CACHE_BUST_ASSET_KEYS = new Set(["lectureVideo", "lecturePoster"]);
+// EMPTY since 2026-08-31, and the reason it can be is that the problem moved
+// rather than went away. lectureVideo and lecturePoster used to keep a stable
+// filename across a re-render, so a browser that had played a lecture cached
+// the old file for a year and a redeploy at the same URL never reached it —
+// hence the `?a=` stamp. version-lecture-video.js now content-hashes both
+// (teacher-lecture.d03d1aa2.mp4), exactly as version-lecture-captions.js has
+// hashed the .vtt since 2026-08-07, so a re-render mints a new URL on its own
+// and the stamp is redundant: measured 2026-08-31, 128 of 128 lectureVideo and
+// lecturePoster references across all seven grades carry an 8-hex suffix.
+//
+// Keep the SET rather than deleting the mechanism. It is the one lever English
+// has for the general hazard — same text, new recording, same URL — and the
+// five hash-named subjects have no equivalent at all. Anything that ships at a
+// stable path and can be re-rendered belongs in here.
+const CACHE_BUST_ASSET_KEYS = new Set();
 
 function resolveGradeAssets(value) {
   const assetKeys = new Set(["source", "normal", "slow", "image", "lectureVideo", "lecturePoster", "lectureCaptions"]);

@@ -137,6 +137,9 @@ def rebuild(grade: int, unit_number: int, model, dry: bool) -> dict | None:
             "-vf", "fps=12,format=yuv420p", "-c:v", "libx264", "-preset", "veryfast", "-crf", "23",
             # The audio is copied, never re-encoded: this run must not touch the
             # recording it is measuring.
+            # -t for the same reason as the generator: -shortest alone leaves the
+            # closing slide held in silence past the end of the audio.
+            "-t", f"{duration:.3f}",
             "-c:a", "copy", "-shortest", "-movflags", "+faststart", str(rebuilt))
         shutil.copyfile(rebuilt, video_path)
 

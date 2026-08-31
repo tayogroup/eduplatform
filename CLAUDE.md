@@ -1257,9 +1257,14 @@ knowing before adding an endpoint:
 
 | how the gate finds it | endpoints | Allow-Headers | probed |
 | --- | --- | --- | --- |
-| `platformUrl("…")` in `shell/*.js` | 7 (the six Wehel/quiz calls, plus this one) | `Authorization, Content-Type, Accept` | yes |
+| `platformUrl("…")` in `shell/*.js` | 8 probed (the six Wehel/quiz calls, this one, and `course_group_chat.php`) | `Authorization, Content-Type, Accept` | yes |
 | the gateway's minting line in `progress_gatewaylib.php` | `progress_gateway.php` | `Authorization, Content-Type` | yes |
 | a URL parameter | `course_focus_event.php`, `practice_coach_event.php` | `Content-Type` only | **never** |
+
+`live_sessions.php` matches the `platformUrl` rule too and is deliberately NOT
+probed — it is a link target, and no preflight is ever sent for a link, so the
+gate names it and skips it. That is why a healthy run prints **9** preflights
+(8 from this table's first row, plus the gateway) while ten paths match.
 
 Being callable through `platformUrl` is what buys an endpoint gate coverage;
 matching the contract is the price. **Every endpoint the gate probes must allow
@@ -2711,9 +2716,15 @@ of defect this file is about, so the terminal paths set `process.exitCode` and
 let node drain.
 
 **A floor cannot see a partial parse, and this gate proved it on itself.** It
-refuses below 5 endpoints; the true number is 7; a release tree missing
-`src/moodle/local_prequran` yields 6, which clears the floor. It ran that way
-inside a real release on 2026-08-27 and printed a tick over six of seven. Two
+refuses below 5 endpoints; the true number is 9; a release tree missing
+`src/moodle/local_prequran` yields 8, which clears the floor. It ran that way
+inside a real release on 2026-08-27 — when those numbers were 7 and 6 — and
+printed a tick over six of seven. The count has grown twice since without this
+floor moving, which makes the point harder rather than softer: it now sits FOUR
+below the true count. Both figures here were stale until 2026-08-31, and not
+because anyone mis-measured — `course_group_chat.php` shipped with the classroom
+chat and nobody updated a count two sections away. Adding an endpoint means
+updating this number in the same commit. Two
 guards now cover what the floor cannot: the gateway's source file must be
 READABLE (absent → exit 2, naming the archive recipe), and the gateway must
 appear in the discovered list even when the file is present (a moved minting

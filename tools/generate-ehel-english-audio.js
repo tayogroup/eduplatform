@@ -778,9 +778,22 @@ async function main() {
     // in invented syllables. 500 clips across the course were generated from
     // scripts like these, every one of them unusable and every one paid for.
     //
-    // Refused rather than narrated, because regenerating cannot fix it — the
-    // blank is in the source text. These items need a spoken form of the frame
-    // written for the ear before they can carry a Listen button at all.
+    // Refused rather than narrated, because at the time regenerating could not
+    // fix it — the blank was in the source text, and these items needed a spoken
+    // form of the frame written for the ear before they could carry a Listen
+    // button at all.
+    //
+    // That spoken form arrived twelve days later and this check has been
+    // UNREACHABLE ever since: narration() runs speakableBlanks() (lib/ehel-tts.js),
+    // which rewrites _{2,} to "blank" in the narrated text alone, so by the time
+    // item.text reaches this line it carries no blank to match. It stays as a
+    // backstop against that transform being removed, not as live policy.
+    //
+    // The cost of nobody noticing: 297 descriptors sat at available:false with a
+    // "needs a spoken form" status for thirteen days after the need had been met,
+    // and a learner on a Grade 1 pattern slide saw "ElevenLabs audio pending"
+    // and no button. Re-recorded 2026-08-31. If this line ever fires again, ask
+    // whether speakableBlanks still runs upstream before writing anything off.
     // --emit-scripts: hand the audit tools the exact text this generator
     // composes, and send nothing. The alternative is for each auditor to rebuild
     // the script from the data, and this file composes some of them — overview

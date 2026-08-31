@@ -15,6 +15,24 @@ than removed, so the item still records that narration is owed — these need a
 spoken form of the frame ("This is a blank", or the pattern read with a pause)
 written for the ear before they can carry a button again.
 
+SUPERSEDED, 2026-08-31. speakableBlanks() in lib/ehel-tts.js (added 2026-08-18,
+twelve days after this tool) is that spoken form: it rewrites _{2,} to "blank" in
+the narrated text alone, leaving the displayed "___" untouched. narration()
+applies it before the generator's refusal sees the text, so the refusal cannot
+fire. The 297 descriptors it had marked were re-narrated on 2026-08-31.
+
+This tool tested the RAW field, which is how it came to disagree with the
+generator it was written to mirror: run unchanged today it would silence 560
+working clips -- the 297 just recorded and the 263 that have been live since
+August -- and delete their mp3s. So the rule below is now the generator's REAL
+rule, blank transform included (speakable()), which is what the docstring
+already claimed and no longer had. It therefore matches nothing.
+
+Kept, not deleted: it is the repair for the state the refusal creates, and the
+refusal survives as a backstop against speakableBlanks being removed. If it ever
+finds work again, that is the signal to check the transform upstream rather than
+to suppress a clip.
+
 The rule matches the generator's, and each category's text is composed the way
 the generator composes it, so the two cannot disagree about what has a blank.
 
@@ -37,6 +55,23 @@ sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 ROOT = Path(__file__).resolve().parents[1]
 ENGLISH = ROOT / "src" / "prototypes" / "ehel-academy" / "english"
 BLANK = re.compile(r"_{2,}")
+
+
+def speakable(text):
+    """The generator's narration() transform, for the part that matters here.
+
+    lib/ehel-tts.js :: speakableBlanks() rewrites a run of underscores to the
+    word "blank" in the text SENT to ElevenLabs, never in the text displayed.
+    generate-ehel-english-audio.js applies it before its refusal tests for a
+    blank, so a script that still looks unnarratable in the raw field is
+    perfectly narratable by the time the refusal sees it.
+
+    Mirroring it here is what keeps this tool and that refusal answering the
+    same question. Without it this tool answers a question the generator
+    stopped asking on 2026-08-18, and every clip recorded since is a candidate
+    for deletion.
+    """
+    return BLANK.sub("blank", str(text))
 REASON = "Refused - the script is a fill-in-the-blank frame; needs a spoken form"
 
 # (list key, descriptor key, how the generator builds the script for that item)
@@ -95,7 +130,7 @@ def main() -> None:
             changed = False
             for list_key, descriptor_key, script_of in SHAPES:
                 for item in unit.get(list_key) or []:
-                    if not BLANK.search(script_of(item)):
+                    if not BLANK.search(speakable(script_of(item))):
                         continue
                     descriptor = item.get(descriptor_key)
                     if not descriptor or descriptor.get("available") is not True:
@@ -117,7 +152,7 @@ def main() -> None:
                 descriptor = (unit.get("overviewAudio") or {}).get(panel)
                 if not descriptor or descriptor.get("available") is not True:
                     continue
-                if not BLANK.search(script_of(unit)):
+                if not BLANK.search(speakable(script_of(unit))):
                     continue
                 found[f"g{grade} overview-{panel}"] += 1
                 source = descriptor.get("source") or descriptor.get("normal") or ""

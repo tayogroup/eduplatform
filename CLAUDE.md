@@ -2030,6 +2030,49 @@ only lever — see "Re-rendering without a text change strands every learner who
 already listened" below. A repair that renames the file is immune to that for
 free, which is a real reason to prefer one, and is unrelated to the manifest.
 
+#### A suppression outlives its cause, and nothing is looking for that
+
+A Grade 1 pattern slide read "ElevenLabs audio pending" with no Listen button.
+The descriptor said `available: false, status: "Refused - the script is a
+fill-in-the-blank frame; needs a spoken form"`, and that was true when it was
+written and false for thirteen days before anyone asked.
+
+Two commits, twelve days apart, disagree. `c21fa23c9` (2026-08-06) made the
+generator refuse any script holding a run of underscores and deleted the 562
+clips already made from one, because ElevenLabs improvises into the gap -- "This
+is a dirisan dog". Re-recording could not help while the blank was in the source
+text, so the descriptors were kept as a record that narration was owed.
+`e7a80279e` (2026-08-18) then fixed the cause: `speakableBlanks()` in
+`lib/ehel-tts.js` rewrites `_{2,}` to "blank" in the narrated text alone, leaving
+the displayed `___` untouched. `narration()` applies it BEFORE the refusal tests
+the text, so the refusal has been unreachable ever since -- and 297 descriptors
+went on declaring a need that had been met. 265 clips whose scripts contain
+blanks had been live and shipped that way the whole time, which is what makes it
+a stale record rather than an open question. Re-recorded 2026-08-31, 85,175
+characters.
+
+**Nothing in the repo could report this, and that is the transferable half.**
+Every gate passed throughout: `check:english` green, audio integrity green, the
+staleness checker green -- a suppressed descriptor is a legitimate state, so a
+gate cannot tell "we decided not to narrate this" from "we forgot to come back".
+`available: false` is the one descriptor value that means *work is owed*, and
+nothing counts them or asks how old they are. The 5,586 `meanings` placeholders
+sitting behind the same flag are why a bare count would not do it either.
+
+**And the repair tool goes dangerous in silence when the thing it repairs is
+fixed.** `suppress-ehel-english-blank-narration.py` tested the RAW field while
+the generator tests `narration(text)`, so the two answered opposite questions
+from 2026-08-18 onward -- and the destructive one was in the tool that deletes
+files. Run unchanged on 2026-08-31 it proposed to silence **560** working clips
+and delete their mp3s. Its own docstring promised the two rules could not
+disagree. It now mirrors the transform (`speakable()`), so `--dry` reports 0; the
+560 is the mutation test, since that is what the broken version reported.
+
+Nobody was going to run it, which is exactly why it was worth running `--dry`
+rather than reasoning about it. Same shape as the dead second gate in Science:
+a line that is correct, unreachable, and one upstream change away from meaning
+something else.
+
 #### The defect no check here can catch: the voice says the wrong word
 
 `toe` in the Grade 2 dictionary was narrated as "two". The entry was right, the

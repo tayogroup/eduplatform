@@ -77,7 +77,11 @@ const CAST = [...new Set([
         // readings but are named cast in the Grade 3 ebook kit (CLAUDE.md), so they
         // are not strangers to a Grade 3 child.
         3: ["Amal", "Yasmin", "Nora", "Sami", "Leo", "Hana", "Daniel", "Mina", "Maya", "Omar",
-            "Theo", "Nadia", "Rami"] }[GRADE] ?? []),
+            "Theo", "Nadia", "Rami"],
+        // Teacher Yasmin appears three times in the Grade 6 readings — below
+        // the derivation's five-name threshold, but she is this school's own
+        // teacher, not a stranger. Same precedent as the Grade 3 extras above.
+        6: ["Yasmin"] }[GRADE] ?? []),
 ])];
 
 // UK spellings are the house style (owner decision, 2026-08-17).

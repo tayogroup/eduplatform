@@ -10514,7 +10514,7 @@ function renderLectureClassic() {
   // degrades to the old lecture rather than to a broken one.
   const lectureSlides = Array.isArray(course.visual.lectureSlides) ? course.visual.lectureSlides : [];
   $("#app").innerHTML = `${pageHeader("Begin here", "Teacher audiovisual lecture", lectureSlides.length > 1
-    ? "One slide at a time. Each slide reads itself aloud and then waits — use the arrows to move on when you are ready."
+    ? "Press play and the whole lesson runs through. The arrows jump to a slide if you want to hear one again."
     : "Watch and listen before you begin the independent lesson. Captions are available in the player.")}
     <div class="lecture-layout">
       <section class="panel video-shell"><div class="lecture-stage"><video id="lecture-video" controls preload="metadata" poster="${course.visual.lecturePoster}"><source src="${course.visual.lectureVideo}" type="video/mp4"><track kind="captions" src="${course.visual.lectureCaptions}" srclang="en" label="English" default></video>${lectureSlides.length > 1 ? `<button class="lecture-nav prev" id="slide-prev" type="button" aria-label="Previous slide">${icon("chevron-left")}</button><button class="lecture-nav next" id="slide-next" type="button" aria-label="Next slide">${icon("chevron-right")}</button>` : ""}</div><div class="video-footer"><p id="video-status">Teacher Musa · Unit ${course.unit.unitNo} lecture</p><button class="button gold" id="lecture-done" type="button" ${progress.completed.includes("lecture") ? "" : "disabled"}>${progress.completed.includes("lecture") ? icon("check") + " Lecture complete" : icon("play") + " Watch to complete"}</button></div></section>
@@ -10575,10 +10575,18 @@ function renderLectureClassic() {
     if (lectureVideo.duration && lectureVideo.duration - lectureVideo.currentTime <= 1) armFinish();
   });
 
-  // --- one slide at a time -------------------------------------------------
-  // The video is not stopped from playing on: it is paused the moment it
-  // reaches the end of the slide being watched. So a slide reads itself aloud
-  // and then waits, and the arrows are what move the lecture forward.
+  // --- the lecture plays straight through ----------------------------------
+  // It used to PARK at every slide boundary: the video was paused a frame
+  // short of each change and the learner pressed an arrow to carry on. That
+  // made a 133-second Grade 1 lecture into six forced clicks, and it cut the
+  // narration into pieces the voice was never recorded in — it is one
+  // continuous ElevenLabs take of the whole script. So the clock runs, the
+  // slides follow it, and the arrows are navigation (jump to a slide) rather
+  // than a gate (permission to continue). Owner, 2026-08-31.
+  //
+  // Grade 2's nine lectures come from a different generator and carry no
+  // lectureSlides at all, so they have always behaved this way; this is the
+  // other 64 catching up with them.
   function showStatus() {
     if (!lectureSlides.length) {
       $("#video-status").textContent = `Teacher Musa · ${lectureLength || `Unit ${course.unit.unitNo} lecture`}`;
@@ -10591,12 +10599,12 @@ function renderLectureClassic() {
   if (lectureSlides.length > 1) {
     const prev = $("#slide-prev");
     const next = $("#slide-next");
-    // The slide being watched is authoritative; it is only re-derived from the
-    // clock when the learner moves the clock themselves. Deriving it on every
-    // timeupdate looked tidier and was wrong: the moment playback crossed into
-    // the next slide the boundary check started testing the NEXT slide's end,
-    // so the stop was silently skipped. It survived only while the slides had a
-    // gap between them wide enough for a timeupdate to land in.
+    // The clock is authoritative now. It could not be while the player parked:
+    // the moment playback crossed into the next slide, a clock-derived index
+    // started testing the NEXT slide’s end and the stop was silently skipped.
+    // With nothing to stop, that hazard is gone and the simpler rule is also
+    // the correct one — the slide shown is the slide the video is inside,
+    // whether the learner got there by watching, scrubbing or an arrow.
     const slideAt = (time) => {
       let found = 0;
       lectureSlides.forEach((slide, index) => { if (time >= slide.start - 0.02) found = index; });
@@ -10605,52 +10613,34 @@ function renderLectureClassic() {
     const syncNav = () => {
       prev.disabled = slideIndex === 0;
       next.disabled = slideIndex === lectureSlides.length - 1;
-      // On the last slide the lecture has been walked to its end, so the finish
-      // button becomes pressable — whether or not the clock reaches the end.
+      // Reaching the last slide still ARMS the finish button, exactly as
+      // before. `ended` completes on its own, but a stalled buffer or a player
+      // that never fires it would otherwise leave somebody who listened to the
+      // whole lecture with no way to say so — and this section is the only
+      // door into the rest of the unit.
       if (slideIndex === lectureSlides.length - 1) armFinish();
       showStatus();
     };
-    // Parked a frame short of the change, never on it: at the boundary itself
-    // the video already shows the next slide, and the label would follow.
-    const PARK_BEFORE_END = 0.05;
-    let parking = false;
     const goToSlide = (index) => {
       slideIndex = Math.max(0, Math.min(lectureSlides.length - 1, index));
-      parking = true;
       lectureVideo.currentTime = lectureSlides[slideIndex].start;
       syncNav();
-      // A click is a user gesture, so this play() is always allowed — which is
-      // what makes "arrive at a slide and it reads itself" possible at all.
+      // A click is a user gesture, so this play() is always allowed.
       lectureVideo.play().catch(() => { /* the learner can press play */ });
     };
     prev.addEventListener("click", () => goToSlide(slideIndex - 1));
     next.addEventListener("click", () => goToSlide(slideIndex + 1));
-    // Pressing play while parked at the end of a slide means "carry on", so the
-    // next slide becomes the one being watched — otherwise it would stop again
-    // immediately on the boundary it is already sitting on.
-    lectureVideo.addEventListener("play", () => {
-      const slide = lectureSlides[slideIndex];
-      if (slideIndex < lectureSlides.length - 1 && lectureVideo.currentTime >= slide.end - 0.15) {
-        slideIndex += 1;
-        syncNav();
-      }
-    });
-    lectureVideo.addEventListener("timeupdate", () => {
-      if (lectureVideo.paused) return;
-      const slide = lectureSlides[slideIndex];
-      if (lectureVideo.currentTime >= slide.end - PARK_BEFORE_END) {
-        lectureVideo.pause();
-        parking = true;
-        lectureVideo.currentTime = slide.end - PARK_BEFORE_END;
-        if (slideIndex === lectureSlides.length - 1) finishLecture();
-      }
-    });
-    lectureVideo.addEventListener("seeked", () => {
-      // Our own parking seek must not be read as the learner jumping somewhere.
-      if (parking) { parking = false; return; }
-      slideIndex = slideAt(lectureVideo.currentTime);
+    // Follow the clock. Both events matter: `timeupdate` moves the label as the
+    // lecture plays on through a boundary, `seeked` catches the learner
+    // dragging the bar, which fires no timeupdate while the video is paused.
+    const followClock = () => {
+      const index = slideAt(lectureVideo.currentTime);
+      if (index === slideIndex) return;
+      slideIndex = index;
       syncNav();
-    });
+    };
+    lectureVideo.addEventListener("timeupdate", followClock);
+    lectureVideo.addEventListener("seeked", followClock);
     syncNav();
   }
   showStatus();

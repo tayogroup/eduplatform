@@ -14,7 +14,8 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageEnhance, ImageFont
 
 sys.path.insert(0, str(Path(__file__).resolve().parent / "lib"))
-from ehel_lecture_captions import caption_cues, render_vtt  # noqa: E402
+from ehel_lecture_captions import balance_lines, chunk_narration, render_vtt  # noqa: E402
+import ehel_lecture_alignment as alignment_lib  # noqa: E402
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -404,8 +405,15 @@ def main() -> None:
     parser.add_argument("--unit", type=int)
     parser.add_argument("--all-missing", action="store_true")
     parser.add_argument("--force", action="store_true")
+    parser.add_argument("--whisper-model", default="base",
+                        help="Whisper model used to time the slides (base is enough for alignment)")
     args = parser.parse_args()
     load_env()
+    # Loaded here, before a single character is bought: the aligner is now part
+    # of rendering a lecture, so discovering it is missing after the narration
+    # has been paid for is a bill for a lecture that cannot be finished. Loading
+    # it once also keeps --all-missing from re-reading the model 64 times.
+    model = alignment_lib.load_model(args.whisper_model)
 
     if args.all_missing:
         targets: list[tuple[int, int]] = []
@@ -425,15 +433,15 @@ def main() -> None:
         print(f"Preparing {len(targets)} missing teacher lectures.")
         for index, (grade, unit_number) in enumerate(targets, start=1):
             print(f"\n[{index}/{len(targets)}] Grade {grade}, Unit {unit_number}", flush=True)
-            create_lecture(grade, unit_number)
+            create_lecture(grade, unit_number, model)
         return
 
     if args.grade is None or args.unit is None:
         parser.error("Use --grade and --unit, or --all-missing.")
-    create_lecture(args.grade, args.unit)
+    create_lecture(args.grade, args.unit, model)
 
 
-def create_lecture(grade: int, unit_number: int) -> None:
+def create_lecture(grade: int, unit_number: int, model=None) -> None:
     grade_root = ENGLISH_ROOT / f"grade-{grade}"
     unit_path = grade_root / "data" / "units" / f"unit-{unit_number}.json"
     dictionary_path = grade_root / "data" / f"master-dictionary.grade{grade}.json"
@@ -457,9 +465,22 @@ def create_lecture(grade: int, unit_number: int) -> None:
     print("Generating complete ElevenLabs narration", flush=True)
     create_audio(narration, audio)
     audio_duration = duration(audio, ffprobe)
-    weights = [max(1, len(slide["narration"].split())) for slide in slides]
-    total_weight = sum(weights)
-    durations = [audio_duration * weight / total_weight for weight in weights]
+
+    # Where each slide changes is MEASURED against the recording, never guessed.
+    # This used to weight the total duration by word count — every word assumed
+    # to take the same time — which put the picture up to 5.9 seconds away from
+    # the voice and landed 82% of slide changes in the middle of a sentence.
+    # ehel_lecture_alignment says why, and realign-ehel-lecture-video.py shares
+    # this exact code so a re-render can no longer undo a re-timing.
+    print("Timing the slides against the narration", flush=True)
+    wav = alignment_lib.extract_wav(audio, work_dir / "narration.wav", ffmpeg)
+    spoken = alignment_lib.transcribe(wav, model or alignment_lib.load_model())
+    script_words, ranges = alignment_lib.slide_word_ranges(slides)
+    alignment = alignment_lib.Alignment(script_words, spoken, audio_duration)
+    switches = alignment_lib.switch_times(slides, ranges, alignment)
+    durations = alignment_lib.hold_durations(switches, audio_duration)
+    print(f"  aligned {alignment.matched}/{alignment.count} words", flush=True)
+
     slide_paths: list[Path] = []
     for index, slide in enumerate(slides):
         image = slide_dir / f"slide-{index + 1:02d}.png"
@@ -484,22 +505,14 @@ def create_lecture(grade: int, unit_number: int) -> None:
     # One cue per SENTENCE, not one per slide. A slide's narration is a whole
     # paragraph, and a cue is rendered in full for its entire duration, so the
     # old one-cue-per-slide form put 585 characters over the video for 44
-    # seconds. ehel_lecture_captions shares the slide's span out between the
-    # sentences; recut-ehel-lecture-captions.py applies the same split to the
-    # lectures rendered before this fix.
-    cues: list[tuple[float, float, str]] = []
-    slide_times: list[dict] = []
-    cursor = 0.0
-    for slide, clip_duration in zip(slides, durations):
-        cues.extend(caption_cues(slide["narration"], cursor, cursor + clip_duration))
-        # Recorded, not thrown away: the player pauses at each slide, and these
-        # times are not recoverable afterwards — reproducing them by word-count
-        # weighting misses some lectures by over five seconds (see
-        # backfill-ehel-lecture-slides.py, which had to read them back out of
-        # the caption file for the lectures rendered before this).
-        slide_times.append({"start": round(cursor, 3), "end": round(cursor + clip_duration, 3),
-                            "title": slide.get("title", "")})
-        cursor += clip_duration
+    # seconds. The cue times come from the same word-level alignment as the
+    # slide changes, so a cue now appears when its words are spoken — the gap
+    # ehel_lecture_captions documents as unclosable "without word-level timings
+    # from the voice provider" is closed by measuring them ourselves.
+    cues = alignment_lib.caption_cues_from_alignment(
+        slides, ranges, alignment, switches, audio_duration, chunk_narration, balance_lines)
+    slide_times = alignment_lib.slide_times(slides, switches, audio_duration)
+
     caption_path = output_dir / "teacher-lecture.vtt"
     caption_path.write_text(render_vtt(cues), encoding="utf-8")
     (output_dir / "teacher-lecture-script.json").write_text(json.dumps({"voiceId": VOICE_ID, "modelId": MODEL_ID, "slides": slides}, indent=2) + "\n", encoding="utf-8")

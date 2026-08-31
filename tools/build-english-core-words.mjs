@@ -193,7 +193,12 @@ for (const cu of core.units) {
   for (const g of cu.groups) {
     groups.push({ id: g.id, number: groups.length + 1, title: g.title, strand: g.strand });
     g.words.forEach((w, i) => {
-      const existing = taughtLink.get(w);
+      // taughtLink is keyed lowercase; looking it up with the raw word missed
+      // every capitalised headword (Africa, Cartesian, pH), which read as
+      // never-taught on EVERY rebuild — clearing their generated audio and
+      // re-minting their ids each time. Found when a rebuild silently un-voiced
+      // the three continents at Grade 4.
+      const existing = taughtLink.get(String(w).toLowerCase());
       const d = draft.get(w);
       // Authored first; otherwise whatever the reviewed draft resolved, which
       // may have come from a glossary link or another grade.
@@ -221,7 +226,7 @@ for (const cu of core.units) {
         authoredCount += 1;
         links.push({
           ...(existing ?? {}),
-          vocabularyId: existing?.vocabularyId ?? `${IDP}-u${cu.unitNo}-core-${w.replace(/[^a-z]/g, "")}`,
+          vocabularyId: existing?.vocabularyId ?? `${IDP}-u${cu.unitNo}-core-${w.toLowerCase().replace(/[^a-z]/g, "")}`,
           unitId: doc.unit.unitId,
           dictionaryEntryId: existing?.dictionaryEntryId ?? masterFor(w)?.dictionaryEntryId ?? null,
           masterWord: w,
@@ -247,7 +252,7 @@ for (const cu of core.units) {
       } else {
         missing.push({ unit: cu.unitNo, word: w, hasMasterEntry: Boolean(masterFor(w)), hadPartialLink: Boolean(existing) });
         links.push({
-          vocabularyId: `${IDP}-u${cu.unitNo}-core-${w.replace(/[^a-z]/g, "")}`,
+          vocabularyId: `${IDP}-u${cu.unitNo}-core-${w.toLowerCase().replace(/[^a-z]/g, "")}`,
           unitId: doc.unit.unitId,
           dictionaryEntryId: masterFor(w)?.dictionaryEntryId ?? null,
           groupId: g.id, groupTitle: g.title, sequence: i + 1,

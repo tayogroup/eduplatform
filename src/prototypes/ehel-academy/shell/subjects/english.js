@@ -12,6 +12,7 @@ import { createCourseApp } from "../course-app.js?v=t2";
 import { createDeck } from "../deck.js?v=deck-1";
 import { wordPicture } from "./word-pictures.js?v=pictures-1";
 import { coreWordScene } from "./english-core-word-scenes.js?v=scenes-1";
+import { createGameZone } from "./english-kid-games.js?v=kid-games-1";
 import { cursiveWord, cursiveCanWrite } from "./cursive-strokes.js?v=cursive-1";
 import { SCHOOL_CALENDAR, calendarTerm, termDatesLabel, termWeekTotal, halfTermRow, formatDay } from "../study-plan.js?v=study-plan-2";
 import { platformHeaders, askWehel, focusModule, setFocusModule, onFocusChange, modulesFromSections, outlineFromManifest, unitFetcher, browserSpeechSupported, speakBrowser, speechRateForGrade, stopBrowserSpeech, speechRecognitionCtor, recognizeSpeech, wehelIcon, platformUrl, PLATFORM_ORIGIN } from "../wehel.js?v=wehel-4";
@@ -576,6 +577,15 @@ const listNames = (items, key = "title") => {
   const names = items.map((item) => (/[“"]/.test(item[key]) ? item[key] : `“${item[key]}”`));
   return names.length <= 1 ? names.join("") : `${names.slice(0, -1).join(", ")} and ${names[names.length - 1]}`;
 };
+// How many challenges a game holds, as a phrase, or "a few things" when the pack
+// is not uniform — the guide must not promise a number that only some games keep.
+function gameRoundCountWord() {
+  const counts = new Set((gamePack?.games || []).map((game) => game.rounds.length));
+  if (counts.size !== 1) return "a few things";
+  const [count] = [...counts];
+  return `${["no", "one", "two", "three", "four", "five", "six"][count] || count} thing${count === 1 ? "" : "s"}`;
+}
+
 const SECTION_GUIDES = {
   lecture: () => (course.visual.lectureMode === "capstone-launch" || unitNumber === CAPSTONE_UNIT
     ? {
@@ -698,7 +708,22 @@ const SECTION_GUIDES = {
     ],
     finish: "Press “Finish activities” at the bottom when you have done them all.",
   }),
-  games: () => ({
+  // Two versions, because at Grades 1-4 this describes the Game Park and above
+  // it describes the game zone — the same three things to do, in each page's
+  // own furniture. A guide that names a control the child cannot see is the
+  // failure recorded against the deck-only change in CLAUDE.md.
+  games: () => (gradeNumber <= 4 ? {
+    steps: [
+      `There are ${gamePack?.games?.length ?? "several"} game cards. Press one to play it.`,
+      // Read from the pack rather than written as "three": every pack authored so
+      // far gives each game three rounds, and a sentence that says so is a claim
+      // about content this file does not own.
+      `Each game asks you ${gameRoundCountWord()}. Get one right and you win a star.`,
+      "Press Listen if you want to hear the question, and Hint if you get stuck.",
+      "Play every game once. You can play again as many times as you like.",
+    ],
+    finish: "When you have played them all, press “I have played them all”. If you win two stars in every game, this part finishes by itself.",
+  } : {
     steps: [
       `There are ${gamePack?.games?.length ?? "several"} games. Press a game to open it.`,
       "Play the game. You earn stars and XP for what you know. Hints and retries are always there — use them.",
@@ -13613,11 +13638,81 @@ function gameProgress(gameId) {
   return progress.games[gameId] || { bestScore: 0, attempts: 0, xp: 0 };
 }
 
+// --- the Grades 1-4 Game Park -------------------------------------------------
+// Owner, 2026-08-31: the games were not interactive, attractive or engaging for
+// the youngest learners. Everything below this pair of functions is the ORIGINAL
+// renderer and is what Grades 5-8 still get, unchanged — by Grade 5 a learner
+// scans a page, which is the same line the whole subject draws at 4 (see
+// BOTH_DESIGNS above, and the hard rule in CLAUDE.md). What changed at 1-4 is the
+// paint and the hands-on-ness: cards to pop, letters to drag, cards to flip.
+//
+// The PACK is untouched. english-kid-games.js reads the same games/unit-N.json,
+// asks the same questions in the same order with the same distractors and the
+// same explanations, and writes the same {bestScore, attempts, xp} per game. So
+// no content is re-authored, `check:english` sees what it always saw, and a
+// child's existing ticks and stars mean exactly what they meant yesterday.
+const KID_GAMES = gradeNumber <= 4;
+// Rebuilt when the unit changes, and keyed on the pack object itself so a
+// re-render inside a unit keeps the zone's own state (which game is open, which
+// round) instead of dropping the learner back at the park mid-game.
+let kidGamesZone = null;
+let kidGamesPack = null;
+function kidGames() {
+  if (kidGamesZone && kidGamesPack === gamePack) return kidGamesZone;
+  kidGamesPack = gamePack;
+  kidGamesZone = createGameZone({
+    pack: gamePack,
+    unit: { no: course.unit.unitNo, title: course.unit.unitTitle },
+    gradeLabel,
+    icon, icons, escapeHtml, toast,
+    wordPicture: (word) => wordPicture(word, gradeNumber),
+    soundOn: () => audioEnabled,
+    speak: (text, button) => playGameInstruction(text, button),
+    progressFor: gameProgress,
+    saveResult: (gameId, result) => { progress.games ||= {}; progress.games[gameId] = result; saveProgress(); },
+    sectionDone: () => progress.completed.includes("games"),
+    finishSection: (message) => complete("games", message),
+    speakingPanel: kidSpeakingPanel,
+  });
+  return kidGamesZone;
+}
+
+// The recorder stays here: it owns MediaRecorder, the saved blobs, the listened
+// gate and the pronunciation endpoint, and a second copy of any of that in the
+// games module would be a second thing to keep in step. The park draws the stage
+// around this markup and this binding.
+function kidSpeakingPanel({ recordingId, target, onResult }) {
+  const review = speakingReviewState.get(recordingId);
+  return {
+    html: `<div class="speaking-flow"><span class="flow-step active"><strong>1</strong> Record</span><span class="flow-step ${review ? "active" : ""}"><strong>2</strong> Listen</span><span class="flow-step ${review?.listened ? "active" : ""}"><strong>3</strong> Submit</span><span class="flow-step ${review?.feedback ? "active" : ""}"><strong>4</strong> Feedback</span></div><div class="recorder"><button class="record-button" data-record="${recordingId}" type="button" aria-label="Record your answer">${icon("mic")}</button><div><strong data-record-status="${recordingId}" role="status" aria-live="polite" aria-atomic="true">${recordings.has(recordingId) ? "Recording ready. Listen back." : "Press to record"}</strong><small> Your recording stays on this device until you send it.</small></div></div><audio data-playback="${recordingId}" controls ${recordings.has(recordingId) ? "" : "hidden"} aria-label="Your recording"></audio><button class="button primary game-speaking-submit" id="game-speaking-submit" type="button" ${review?.listened ? "" : "disabled"}>${icon("send")} Send it to be checked</button><div id="game-speaking-feedback" role="status" aria-live="polite" aria-atomic="true">${pronunciationFeedbackHtml(review?.feedback)}</div>`,
+    bind: () => {
+      const recordButton = $(`[data-record="${recordingId}"]`);
+      const playback = $(`[data-playback="${recordingId}"]`);
+      const saved = recordings.get(recordingId);
+      if (saved) playback.src = saved.url;
+      recordButton.addEventListener("click", () => toggleRecording(recordingId, recordButton));
+      playback.addEventListener("recordingready", () => { $("#game-speaking-submit").disabled = true; $("#game-speaking-feedback").innerHTML = ""; });
+      playback.addEventListener("ended", () => {
+        const state = speakingReviewState.get(recordingId) || { feedback: null };
+        state.listened = true;
+        speakingReviewState.set(recordingId, state);
+        $("#game-speaking-submit").disabled = false;
+        toast("You listened to the whole recording. It is ready to send.");
+      });
+      $("#game-speaking-submit").addEventListener("click", (event) => submitSpeakingRecording(recordingId, target, event.currentTarget, {
+        feedbackSelector: "#game-speaking-feedback",
+        onFeedback: (feedback) => onResult(feedback.score >= 65),
+      }));
+    },
+  };
+}
+
 function renderGames() {
   if (!gamePack) {
     $("#app").innerHTML = `${pageHeader("Game zone", "Games coming soon", "This unit's curriculum-linked games are still being prepared.", "Pilot pending")}`;
     return;
   }
+  if (KID_GAMES) return kidGames().render();
   if (activeGameId) return renderActiveGame();
   const mastered = gamePack.games.filter((game) => gameProgress(game.id).bestScore >= gamePack.masteryScore).length;
   // Games is the one section with no deck, so it had no "I have finished this"
